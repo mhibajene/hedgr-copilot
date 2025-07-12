@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "jsx": "react-jsx",
+
+    // emit only types for downstream consumers
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "outDir": "dist",
+    "rootDir": "src",
+
+    // enforce strictness
+    "strict": true,
+
+    // so imports like `import { Banner } from '@hedgr/ui'` resolve
+    "baseUrl": ".",
+    "paths": {
+      "@hedgr/ui": ["src"]
+    },
+
+    // pick up the React typings we just installed
+    "types": ["react"]
+  },
+  "include": ["src"]
+}

@@ -1,4 +1,5 @@
 module.exports = {
+  darkMode: 'class',
   content: [
     './apps/frontend/pages/**/*.{js,ts,jsx,tsx}',
     './apps/frontend/components/**/*.{js,ts,jsx,tsx}',
@@ -13,5 +14,4 @@ module.exports = {
       }
     }
   },
-  darkMode: 'class'
 }

@@ -5,9 +5,10 @@
   "workspaces": ["apps/*", "packages/*"],
   "scripts": {
     "dev": "turbo run dev",
-    "build": "turbo run build",
     "lint": "turbo run lint",
-    "test": "turbo run test"
+    "test": "turbo run test",
+    "build:ui": "pnpm --filter @hedgr/ui run build",
+    "build": "pnpm run build:ui && turbo run build"
   },
   "devDependencies": {
     "turbo": "latest"
