@@ -1,6 +1,14 @@
 // packages/ui/src/index.tsx
 import React, { useEffect, useState } from 'react';
 
+export function Banner({ children }: { children: React.ReactNode }): JSX.Element {
+  return (
+    <div className="bg-gradient-to-r from-hedgr-start via-hedgr-middle to-hedgr-end p-8 rounded-lg text-center">
+      {children}
+    </div>
+  );
+}
+
 export function DarkModeToggle(): JSX.Element {
   // state starts as 'light' and will be updated on mount
   const [mode, setMode] = useState<'light' | 'dark'>('light');
