@@ -5,6 +5,10 @@
     "moduleResolution": "node",
     "jsx": "react-jsx",
 
+    // allow default-import from CommonJS modules (React’s typings)
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+
     // emit only types for downstream consumers
     "declaration": true,
     "emitDeclarationOnly": true,
@@ -14,14 +18,17 @@
     // enforce strictness
     "strict": true,
 
+    // make `JSX` namespace available
+    "lib": ["DOM", "ESNext"],
+    
     // so imports like `import { Banner } from '@hedgr/ui'` resolve
     "baseUrl": ".",
     "paths": {
       "@hedgr/ui": ["src"]
     },
 
-    // pick up the React typings we just installed
-    "types": ["react"]
+    // pick up the React typings installed
+    "types": ["react", "react-dom"]
   },
   "include": ["src"]
 }
