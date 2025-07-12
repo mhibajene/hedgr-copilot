@@ -2,17 +2,9 @@
 
 /* Import Inter from Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
-
-/* Tailwind base/reset */
 @tailwind base;
-
-/* Your own component resets or utilities could go here */
 @tailwind components;
-
-/* Tailwind utilities */
 @tailwind utilities;
-
-/* Force Inter as the default font */
 html {
   font-family: 'Inter', sans-serif;
 }
