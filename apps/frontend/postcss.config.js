@@ -1,6 +1,11 @@
+// apps/frontend/postcss.config.js
+const path = require('path')
+
 module.exports = {
   plugins: {
-    '@tailwindcss/postcss': {},
+    '@tailwindcss/postcss': {
+      config: path.resolve(__dirname, '../../tailwind.config.js')
+    },
     autoprefixer: {},
   },
 }

@@ -1,10 +1,12 @@
+
+/** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: 'class',
   content: [
-    './apps/frontend/pages/**/*.{js,ts,jsx,tsx}',
-    './apps/frontend/components/**/*.{js,ts,jsx,tsx}',
-    './packages/ui/src/**/*.{js,ts,jsx,tsx}'
+    './apps/frontend/pages/**/*.{js,jsx,ts,tsx}',
+    './apps/frontend/components/**/*.{js,jsx,ts,tsx}',
+    './packages/ui/src/**/*.{js,jsx,ts,tsx}',
   ],
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
@@ -14,4 +16,5 @@ module.exports = {
       }
     }
   },
+  plugins: [],
 }
