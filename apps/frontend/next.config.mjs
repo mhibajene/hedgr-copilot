@@ -1,16 +1,7 @@
-// apps/frontend/next.config.mjs
-
-/** @type {import('next').NextConfig} */
+// import { join } from 'path';
 const nextConfig = {
-  // Tell Next to compile our shared UI package with SWC
-  transpilePackages: ['@hedgr/ui'],
-
-  // Optional: allow HMR from your Replit preview URL
-  // allowedDevOrigins: ['https://<your-replit-subdomain>.repl.co'],
-
-  // Preserve other flags
   reactStrictMode: true,
-  // …images, i18n, env, etc.
+  transpilePackages: ['@hedgr/ui'],
+  experimental: { appDir: true },
 };
-
 export default nextConfig;
