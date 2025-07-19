@@ -4,13 +4,9 @@
      "jsx": "preserve",
      "baseUrl": ".",
      "paths": {
-      "@hedgr/ui": [
-        "../../packages/ui/src/index.tsx"
-      ],
-      "@hedgr/config": [
-        "../../packages/config"
-      ]
-    },
+       "@hedgr/ui": ["../../packages/ui/src"],
+       "@hedgr/config": ["../../packages/config"]
+     }
    },
    "include": ["next-env.d.ts","**/*.ts","**/*.tsx"],
    "exclude": ["node_modules"]

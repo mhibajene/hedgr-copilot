@@ -1,5 +1,5 @@
-
-import React, { useState, useEffect } from 'react';
+// packages/ui/src/index.tsx
+import React, { useEffect, useState } from 'react';
 
 export function Banner({ children }: { children: React.ReactNode }): JSX.Element {
   return (
@@ -9,46 +9,38 @@ export function Banner({ children }: { children: React.ReactNode }): JSX.Element
   );
 }
 
-export function DarkModeToggle() {
+export function DarkModeToggle(): JSX.Element {
+  // state starts as 'light' and will be updated on mount
   const [mode, setMode] = useState<'light' | 'dark'>('light');
 
-  // Initialize mode from localStorage on mount
+  // on mount, pick up saved theme or OS preference
   useEffect(() => {
-    const savedMode = localStorage.getItem('theme') as 'light' | 'dark' | null;
-    if (savedMode) {
-      setMode(savedMode);
-    } else {
-      // Check system preference
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      setMode(prefersDark ? 'dark' : 'light');
-    }
+    const stored = localStorage.getItem('theme') as 'light' | 'dark' | null;
+    const prefersDark =
+      window.matchMedia('(prefers-color-scheme: dark)').matches;
+    setMode(stored ?? (prefersDark ? 'dark' : 'light'));
   }, []);
 
   // whenever mode changes, toggle class + persist
   useEffect(() => {
-    const body = document.body;
+    const root = document.documentElement;
     if (mode === 'dark') {
-      body.classList.add('dark');
+      root.classList.add('dark');
       localStorage.setItem('theme', 'dark');
     } else {
-      body.classList.remove('dark');
+      root.classList.remove('dark');
       localStorage.setItem('theme', 'light');
     }
   }, [mode]);
 
-  const toggleMode = () => {
-    setMode(mode === 'light' ? 'dark' : 'light');
-  };
-
+  // render the toggle button
   return (
     <button
-      onClick={toggleMode}
-      className="p-2 rounded-md bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200 transition-colors"
-      aria-label={`Switch to ${mode === 'light' ? 'dark' : 'light'} mode`}
+      aria-label="Toggle dark mode"
+      onClick={() => setMode((prev) => (prev === 'dark' ? 'light' : 'dark'))}
+      className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700"
     >
-      {mode === 'light' ? '🌙' : '☀️'}
+      {mode === 'dark' ? '🌙' : '☀️'}
     </button>
-  );
-}
   );
 }
