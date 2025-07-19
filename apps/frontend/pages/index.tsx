@@ -6,6 +6,9 @@ export default function Home() {
       <DarkModeToggle />
       <Banner>
         <h1 className="text-4xl font-bold">Hello Hedgr</h1>
+        <div className="mt-4 p-4 bg-gray-200 dark:bg-gray-800">
+          Test Dark Mode
+        </div>
       </Banner>
     </main>
   );
