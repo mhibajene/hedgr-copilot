@@ -9,11 +9,9 @@
 @layer base {
   body {
     margin: 0;
+    @apply bg-white text-gray-900 transition-colors duration-300;
   }
-  html {
-    @apply bg-white text-gray-900;
-  }
-  html.dark {
+  body.dark {
     @apply bg-gray-900 text-gray-100;
   }
   html {

@@ -23,12 +23,12 @@ export function DarkModeToggle(): JSX.Element {
 
   // whenever mode changes, toggle class + persist
   useEffect(() => {
-    const root = document.documentElement;
+    const body = document.body;
     if (mode === 'dark') {
-      root.classList.add('dark');
+      body.classList.add('dark');
       localStorage.setItem('theme', 'dark');
     } else {
-      root.classList.remove('dark');
+      body.classList.remove('dark');
       localStorage.setItem('theme', 'light');
     }
   }, [mode]);
