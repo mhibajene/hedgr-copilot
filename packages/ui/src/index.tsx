@@ -50,3 +50,5 @@ export function DarkModeToggle() {
     </button>
   );
 }
+  );
+}
