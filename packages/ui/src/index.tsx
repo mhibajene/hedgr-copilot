@@ -1,24 +1,19 @@
-// packages/ui/src/index.tsx
-import React, { useEffect, useState } from 'react';
 
-export function Banner({ children }: { children: React.ReactNode }): JSX.Element {
-  return (
-    <div className="bg-gradient-to-r from-hedgr-start via-hedgr-middle to-hedgr-end p-8 rounded-lg text-center">
-      {children}
-    </div>
-  );
-}
+import React, { useState, useEffect } from 'react';
 
-export function DarkModeToggle(): JSX.Element {
-  // state starts as 'light' and will be updated on mount
+export function DarkModeToggle() {
   const [mode, setMode] = useState<'light' | 'dark'>('light');
 
-  // on mount, pick up saved theme or OS preference
+  // Initialize mode from localStorage on mount
   useEffect(() => {
-    const stored = localStorage.getItem('theme') as 'light' | 'dark' | null;
-    const prefersDark =
-      window.matchMedia('(prefers-color-scheme: dark)').matches;
-    setMode(stored ?? (prefersDark ? 'dark' : 'light'));
+    const savedMode = localStorage.getItem('theme') as 'light' | 'dark' | null;
+    if (savedMode) {
+      setMode(savedMode);
+    } else {
+      // Check system preference
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      setMode(prefersDark ? 'dark' : 'light');
+    }
   }, []);
 
   // whenever mode changes, toggle class + persist
@@ -33,14 +28,17 @@ export function DarkModeToggle(): JSX.Element {
     }
   }, [mode]);
 
-  // render the toggle button
+  const toggleMode = () => {
+    setMode(mode === 'light' ? 'dark' : 'light');
+  };
+
   return (
     <button
-      aria-label="Toggle dark mode"
-      onClick={() => setMode((prev) => (prev === 'dark' ? 'light' : 'dark'))}
-      className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700"
+      onClick={toggleMode}
+      className="p-2 rounded-md bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200 transition-colors"
+      aria-label={`Switch to ${mode === 'light' ? 'dark' : 'light'} mode`}
     >
-      {mode === 'dark' ? '🌙' : '☀️'}
+      {mode === 'light' ? '🌙' : '☀️'}
     </button>
   );
 }
