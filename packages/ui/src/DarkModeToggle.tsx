@@ -15,6 +15,11 @@ export function DarkModeToggle() {
       setMode(osDark ? 'dark' : 'light')
       document.documentElement.classList.toggle('dark', osDark)
     }
+    console.log(
+      '%c[DarkModeToggle:init] html.classList:',
+      'color: #50a0df; font-weight: bold;',
+      document.documentElement.classList.toString()
+    )
   }, [])
 
   const toggle = () => {
@@ -22,6 +27,11 @@ export function DarkModeToggle() {
     setMode(next)
     document.documentElement.classList.toggle('dark', next === 'dark')
     localStorage.setItem('theme', next)
+    console.log(
+      '%c[DarkModeToggle] html.classList:',
+      'color: #8250df; font-weight: bold;',
+      document.documentElement.classList.toString()
+    )
   }
 
   return (
