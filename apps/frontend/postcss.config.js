@@ -3,7 +3,10 @@ const path = require('path')
 
 module.exports = {
   plugins: {
-    '@tailwindcss/postcss': {config: './tailwind.config.js'},
+    // points Tailwind to the monorepo root config
+    tailwindcss: {
+      config: path.resolve(__dirname, '../..', 'tailwind.config.js'),
+    },
     autoprefixer: {},
   },
 }
