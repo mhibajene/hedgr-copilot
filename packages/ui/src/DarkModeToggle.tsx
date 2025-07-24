@@ -7,40 +7,40 @@ export function DarkModeToggle() {
   // On mount: read saved theme or OS preference
   useEffect(() => {
     const saved = localStorage.getItem('theme') as 'light' | 'dark' | null
-    if (saved) {
-      setMode(saved)
-      document.documentElement.classList.toggle('dark', saved === 'dark')
+    const initial = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+    setMode(initial)
+    if (initial === 'dark') {
+      document.documentElement.classList.add('dark')
     } else {
-      const osDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-      setMode(osDark ? 'dark' : 'light')
-      document.documentElement.classList.toggle('dark', osDark)
+      document.documentElement.classList.remove('dark')
     }
-    console.log(
-      '%c[DarkModeToggle:init] html.classList:',
-      'color: #50a0df; font-weight: bold;',
-      document.documentElement.classList.toString()
-    )
-  }, [])
+  }, []) 
 
   const toggle = () => {
+  // compute the next theme
     const next = mode === 'dark' ? 'light' : 'dark'
     setMode(next)
-    document.documentElement.classList.toggle('dark', next === 'dark')
+    if (next === 'dark') {
+      document.documentElement.classList.add('dark')
+    } else {
+      document.documentElement.classList.remove('dark')
+    }
+
+    // persist + debug
     localStorage.setItem('theme', next)
     console.log(
-      '%c[DarkModeToggle] html.classList:',
-      'color: #8250df; font-weight: bold;',
+      '[DarkModeToggle] html.classList:',
       document.documentElement.classList.toString()
     )
-  }
+   }   
 
   return (
-    <button
+     <button
       onClick={toggle}
       aria-label="Toggle Dark Mode"
       className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:opacity-80 transition"
-    >
+     >
       {mode === 'dark' ? '🌙' : '☀️'}
-    </button>
-  )
-}
+     </button>
+    )
+  } 
