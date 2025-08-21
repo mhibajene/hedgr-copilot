@@ -1,15 +1,22 @@
-// apps/frontend/pages/index.tsx
-import { Banner, DarkModeToggle } from '@hedgr/ui'
+import Head from 'next/head'
+import { DarkModeToggle, Banner } from '@hedgr/ui'
 
 export default function Home() {
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center bg-white dark:bg-gray-900">
-      <DarkModeToggle />
-      <Banner>
-        <h1 className="text-4xl font-bold dark:text-gray-100">
-          Hello Hedgr
-        </h1>
-      </Banner>
-    </main>
+    <>
+      <Head><title>Hedgr</title></Head>
+      <main className="min-h-screen bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-100">
+        <div className="mx-auto max-w-2xl p-6 space-y-6">
+          <div className="flex items-center justify-between">
+            <h1 className="text-2xl font-semibold">Hello Hedgr</h1>
+            <DarkModeToggle />
+          </div>
+          <Banner />
+          <p className="text-sm opacity-70">
+            Toggle should flip background & text between light and dark.
+          </p>
+        </div>
+      </main>
+    </>
   )
 }
