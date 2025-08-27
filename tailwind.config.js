@@ -1,20 +1,10 @@
-
 /** @type {import('tailwindcss').Config} */
-module.exports = {
-  content: [
-    './apps/frontend/pages/**/*.{js,jsx,ts,tsx}',
-    './apps/frontend/components/**/*.{js,jsx,ts,tsx}',
-    './packages/ui/src/**/*.{js,jsx,ts,tsx}',
-  ],
+export default {
   darkMode: 'class',
-  theme: {
-    extend: {
-      colors: {
-        'hedgr-start': '#00bfa6',
-        'hedgr-middle': '#00897b',
-        'hedgr-end': '#00695c'
-      }
-    }
-  },
+  content: [
+    './apps/**/*.{js,ts,jsx,tsx,mdx}',
+    './packages/**/*.{js,ts,jsx,tsx,mdx}',
+  ],
+  theme: { extend: {} },
   plugins: [],
 }

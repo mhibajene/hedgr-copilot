@@ -1,15 +1,12 @@
 /* apps/frontend/styles/globals.css */
 
-/* Import Inter from Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+/* Tailwind v4 import */
 @import "tailwindcss";
-html {
-  font-family: 'Inter', sans-serif;
+
+main {
+  @apply bg-white text-gray-900;
 }
 
-/* Ensure unstyled areas flip dark/light */
-@layer base {
-  body {
-    @apply bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-100;
-  }
+.dark main {
+  @apply bg-gray-950 text-gray-100;
 }
