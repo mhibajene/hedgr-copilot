@@ -1,18 +1,40 @@
 name: CI
-
 on:
-  push:
-    branches: [ main ]
+  push: { branches: [ main ] }
   pull_request:
-    branches: [ main ]
+
+permissions:
+  contents: read
+  id-token: write   # required for OIDC
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: pnpm/action-setup@v2
+      - uses: actions/checkout@v4
+
+      # Fetch secrets from Doppler using GitHub OIDC (no static tokens)
+      - uses: dopplerhq/secrets-fetch-action@v1
+        id: doppler
         with:
-          version: latest
-      - run: pnpm install
-      - run: pnpm build
+          auth-method: oidc
+          doppler-identity-id: ${{ vars.DOPPLER_SERVICE_IDENTITY_ID }}
+          doppler-project: hedgr-copilot
+          # PRs use dev; pushes to main use stg
+          doppler-config: ${{ github.event_name == 'pull_request' && 'dev' || 'stg' }}
+          inject-env-vars: true
+
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+
+      - uses: pnpm/action-setup@v4
+        with: { version: 9 }
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Build
+        run: pnpm -w build
+
+      - name: Test
+        run: pnpm -w test
