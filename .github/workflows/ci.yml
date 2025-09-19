@@ -22,7 +22,7 @@ jobs:
       # Repo secrets aren't exposed to forked PRs; guard to avoid a hard failure
       - name: Fetch secrets from Doppler
         if: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.fork == false }}
-        uses: dopplerhq/secrets-fetch-action@v1
+        uses: dopplerhq/secrets-fetch-action@v1.3.0
         with:
           auth-method: token
           doppler-token: ${{ env.DOPPLER_TOKEN }}
