@@ -1,0 +1,6 @@
+setup:
+  - project: hedgr-copilot
+    config: dev
+flags:
+  env-warning: true
+  update-check: true
