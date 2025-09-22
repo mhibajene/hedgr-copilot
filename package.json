@@ -9,10 +9,11 @@
   "scripts": {
     "validate:env:frontend": "tsx scripts/validate-env.ts",
     "dev": "turbo run dev",
-    "lint": "turbo run lint",
+    "lint": "pnpm -r --if-present run lint",
     "test": "turbo run test",
     "build:ui": "pnpm --filter @hedgr/ui run build",
-    "build": "pnpm run build:ui && turbo run build"
+    "build": "pnpm run build:ui && turbo run build",
+    "typecheck": "pnpm -r --if-present run typecheck"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.11",
