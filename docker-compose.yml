@@ -22,8 +22,10 @@ services:
       - /app/node_modules
       - /app/apps/frontend/node_modules
     command: >
-      bash -lc "
+      bash -lc"
+        set -euo pipefail
         corepack enable &&
+        corepack install &&
         pnpm --version &&
         pnpm install --frozen-lockfile &&
         pnpm --filter ./apps/frontend dev
