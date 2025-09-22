@@ -1,7 +1,7 @@
 {
   "name": "hedgr-copilot",
   "private": true,
-  "packageManager": "pnpm@10.13.1",
+  "packageManager": "pnpm@10.17.0",
   "workspaces": [
     "apps/*",
     "packages/*"
