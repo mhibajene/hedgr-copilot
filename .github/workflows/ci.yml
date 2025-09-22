@@ -1,13 +1,44 @@
 name: CI
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
   pull_request:
-
-permissions:
-  contents: read
+  workflow_dispatch:
 
 jobs:
+  check:
+    name: Fork-safe checks (typecheck/lint)
+    runs-on: ubuntu-latest
+    # No secrets; read-only token so forks are safe
+    permissions:
+      contents: read
+    # Ensure this job only runs for push/PR events (workflow can have other events)
+    if: ${{ github.event_name == 'pull_request' || github.event_name == 'push' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node (use repo's Node version file if present)
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'pnpm'
+
+      - name: Enable Corepack (respect packageManager pnpm version)
+        run: corepack enable
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Typecheck (workspace)
+        run: pnpm -w typecheck
+
+      - name: Lint (workspace)
+       run: pnpm -w lint
+
   build:
     runs-on: ubuntu-latest
 
@@ -40,6 +71,9 @@ jobs:
 
       - name: Install
         run: pnpm install --frozen-lockfile
+
+      - name: Validate frontend env
+        run: pnpm run validate:env:frontend
 
       - name: Build
         run: pnpm -w build
