@@ -72,6 +72,9 @@ jobs:
       - name: Install
         run: pnpm install --frozen-lockfile
 
+      - name: Validate frontend env
+        run: pnpm run validate:env:frontend
+
       - name: Build
         run: pnpm -w build
 
