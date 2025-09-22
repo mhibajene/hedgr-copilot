@@ -5,31 +5,30 @@ services:
     ports:
       - "3000:3000"
     environment:
-      # Required app vars — passed through from host (Doppler)
+      # Required app vars — Doppler injects at runtime
       NEXT_PUBLIC_APP_ENV: ${NEXT_PUBLIC_APP_ENV}
       API_BASE_URL: ${API_BASE_URL}
-      # Optional app vars — pass through if present
+      # Optional
       POSTHOG_KEY: ${POSTHOG_KEY:-}
       SENTRY_DSN: ${SENTRY_DSN:-}
-      # Local dev ergonomics
+      # Dev ergonomics
       NODE_ENV: development
       NEXT_TELEMETRY_DISABLED: "1"
     volumes:
       - ./:/app
-      # Speed up installs across container restarts
       - pnpm-store:/root/.local/share/pnpm/store
-      # Keep node_modules writable in the container without touching host
       - /app/node_modules
       - /app/apps/frontend/node_modules
-    command: >
-      bash -lc"
-        set -euo pipefail
-        corepack enable &&
-        corepack install &&
-        pnpm --version &&
-        pnpm install --frozen-lockfile &&
-        pnpm --filter ./apps/frontend dev
-      "
+    command:
+      - bash
+      - -lc
+      - |
+          set -euo pipefail
+          corepack enable
+          corepack install
+          pnpm --version
+          pnpm install --frozen-lockfile
+          pnpm --filter ./apps/frontend dev
 
 volumes:
   pnpm-store:
