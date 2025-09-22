@@ -1,0 +1,4 @@
+allowed:
+  - esbuild
+  - sharp
+  - "@tailwindcss/oxide"
