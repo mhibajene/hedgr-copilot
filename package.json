@@ -85,7 +85,8 @@
     "onlyBuiltDependencies": [
       "esbuild",
       "sharp",
-      "@tailwindcss/oxide"
+      "@tailwindcss/oxide",
+      "unrs-resolver"
     ]
   }
 }
