@@ -1,6 +1,6 @@
 import { describe, it, beforeEach, afterEach, expect, vi } from 'vitest'
 
-// We re-create virtual mocks fresh per test for isolation.
+// Fresh virtual mocks per test (no real packages required)
 let ph: { init: ReturnType<typeof vi.fn>; capture: ReturnType<typeof vi.fn> }
 let sentry: { init: ReturnType<typeof vi.fn> }
 
@@ -11,7 +11,6 @@ async function loadAnalytics() {
 }
 
 beforeEach(() => {
-  // Fresh mocks & clean module cache/env for each test
   ph = { init: vi.fn(), capture: vi.fn() }
   sentry = { init: vi.fn() }
 
@@ -53,7 +52,6 @@ describe('analytics env gating', () => {
   it('no-ops in dev when keys are missing', async () => {
     vi.stubEnv('NEXT_PUBLIC_APP_ENV', 'dev')
     // No PostHog/Sentry keys
-
     const { initAnalytics, track } = await loadAnalytics()
     await initAnalytics()
     track('evt')
@@ -92,7 +90,7 @@ describe('analytics env gating', () => {
     await initAnalytics()
 
     expect(sentry.init).toHaveBeenCalledTimes(1)
-    expect(sentry.init.mock.calls[0][0]).toMatchObject({
+    expect((sentry.init as any).mock.calls[0][0]).toMatchObject({
       dsn: 'dsn_test',
       environment: 'dev',
       tracesSampleRate: 0,
