@@ -34,6 +34,7 @@ export async function initAnalytics(): Promise<void> {
             api_host: PH_HOST,
             capture_pageview: false,
             disable_session_recording: true,
+            // keep data ephemeral in dev
             persistence: 'memory',
             // defensively scrub common PII keys
             sanitize_properties: (props: Record<string, unknown>) => {
@@ -55,8 +56,8 @@ export async function initAnalytics(): Promise<void> {
   if (SENTRY_DSN) {
     tasks.push(
       import('@sentry/browser')
-        .then((sentry) => {
-          sentry.init({
+        .then((Sentry) => {
+          Sentry.init({
             dsn: SENTRY_DSN,
             environment: ENV,
             tracesSampleRate: 0,
@@ -68,7 +69,7 @@ export async function initAnalytics(): Promise<void> {
               return event;
             },
           });
-          sentryRef = sentry;
+          sentryRef = Sentry;
         })
         .catch(() => {
           // Package not installed or failed to load → remain no-op
