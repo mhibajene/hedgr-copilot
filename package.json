@@ -13,7 +13,10 @@
     "test": "turbo run test",
     "build:ui": "pnpm --filter @hedgr/ui run build",
     "build": "pnpm run build:ui && turbo run build",
-    "typecheck": "pnpm -r --if-present run typecheck"
+    "typecheck": "pnpm -r --if-present run typecheck",
+    "validate": "pnpm -w test && pnpm -w typecheck && pnpm -w lint",
+    "dev:cli": "doppler run -- pnpm dev",
+    "dev:docker": "doppler run -- docker compose up --build frontend"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.11",
