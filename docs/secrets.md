@@ -1,89 +1,46 @@
-# Secrets (managed by Doppler)
+## Observability (optional, dev-safe)
 
-## Environments / Configs
-- dev → `dev`
-- stg → `stg`
-- prod → `prd` (create when ready)
+Hedgr Copilot’s analytics/error reporting is **off by default** and **dev-gated**.
 
-## Required (apps/frontend)
-- NEXT_PUBLIC_APP_ENV
-- API_BASE_URL
-- POSTHOG_KEY
-- SENTRY_DSN
+**Runtime gates**
+- Only runs on the client.
+- Only runs when `NEXT_PUBLIC_APP_ENV === "dev"`.
+- Only initialises a given tool when its keys are present.
+- Dynamic imports mean missing packages simply **no-op** (no hard dependency).
 
-## Local dev (one-time + run)
-1) `doppler login` (if not done)
-2) `doppler setup -p hedgr-copilot -c dev`
-3) `doppler run -- pnpm dev`  → dev toast confirms injectio
+**Supported providers**
+- **PostHog** (event analytics; **no session recording** in our config)
+- **Sentry (browser)** (error reporting; PII scrubbing enabled)
 
-# Secrets & Environment — Hedgr Copilot (Frontend)
+**Env vars (set in Doppler → `dev_config_dev` / `stg_config_stg`)**
+- `NEXT_PUBLIC_APP_ENV=dev` (only `dev` enables analytics code paths)
+- PostHog (optional):
+-  - `NEXT_PUBLIC_POSTHOG_KEY=<ph_project_key>`
+-  - `NEXT_PUBLIC_POSTHOG_HOST=<https://your-posthog-host>`
+- Sentry (optional):
+-  - `NEXT_PUBLIC_SENTRY_DSN=<sentry_dsn>`
 
-Hedgr uses **Doppler** as the single source of truth for environment variables.  
-**Never** commit `.env*` files to git.
+**Enable in dev**
+1) In Doppler `dev_config_dev`, add any of the keys above you wish to test.  
+2) Start the app:
+- CLI: `pnpm run dev:cli`
+- Docker: `pnpm run dev:docker`
+3) Events/errors remain **local/dev only**; staging/prod do not initialise because `NEXT_PUBLIC_APP_ENV !== "dev"`.
 
-## Doppler Project / Configs
-- **Project:** `hedgr-copilot`
-- **Configs:**
-  - `dev_config_dev` → local/dev usage
-  - `stg_config_stg` → staging/main branch CI
+**(Optional) Staging dry-run**
+- Keep `NEXT_PUBLIC_APP_ENV=dev` **only on a developer machine** to validate dashboards without exposing real users.
+- Do **not** set `NEXT_PUBLIC_APP_ENV=dev` in shared staging deployments.
 
-## Frontend Variables (validated)
-Validation is enforced in two places:
-1) **Build-time script:** `pnpm run validate:env:frontend` (runs in secret-based CI build)  
-2) **Import-time guard:** `apps/frontend/config/env.ts` throws early if invalid
+**Privacy stance (PII-aware defaults)**
+- PostHog: session recording disabled; pageview autocapture disabled; a sanitizer strips common identifiers (`email`, `name`, `phone`, `username`) from event properties.
+- Sentry: we drop `user`, `request`, and all `breadcrumbs` via `beforeSend`.
+- Do not include user PII in `track()` calls.
 
-### Required (build fails if missing/invalid)
-- `NEXT_PUBLIC_APP_ENV` — one of **`dev` | `stg` | `prod`**
-  - Drives client-side behavior and observability toggles.
-- `API_BASE_URL` — **http(s) URL** to the backend API
-  - Example: `https://api.dev.hedgr.local` (dev) or `https://api.stg.hedgr.xyz` (stg)
+**Event naming guidelines**
+- Use `kebab-case` or `snake_case` for events (e.g., `wallet_opened`, `kyc_start`).
+- Include minimal context only (e.g., `screen: 'home'`, `flow: 'onboarding'`).
+- Never include emails, phone numbers, wallet addresses, tx hashes, or any unique identifiers.
 
-### Optional (warn only, feature disabled if absent)
-- `POSTHOG_KEY` — PostHog public key (analytics)
-- `SENTRY_DSN` — Sentry client DSN (error reporting)
-
-## Local development (dev config)
-```bash
-doppler setup -p hedgr-copilot -c dev_config_dev
-doppler run -- pnpm dev
-```
-> Doppler injects the variables into the dev process. No local `.env` files needed.
-
-To set or update a secret locally in the dev config:
-```bash
-doppler secrets set API_BASE_URL --project hedgr-copilot --config dev_config_dev --value "http://localhost:4000"
-doppler secrets set NEXT_PUBLIC_APP_ENV --project hedgr-copilot --config dev_config_dev --value "dev"
-```
-
-## CI behavior (summary)
-- **Fork-safe `check` job:** runs typecheck/lint only — **no secrets required**.
-- **Secret-based `build` job:** fetches secrets via Doppler and runs:
-  1) `pnpm run validate:env:frontend`
-  2) `pnpm -w build`
-
-## Troubleshooting validation failures
-The validator prints actionable errors. Examples:
-```
-❌ Frontend env validation failed:
- - NEXT_PUBLIC_APP_ENV must be one of dev, stg, prod
- - API_BASE_URL must be a valid http(s) URL
-
-Fix locally:
-  doppler setup -p hedgr-copilot -c dev_config_dev
-  doppler run -- pnpm dev
-```
-
-### Common fixes
-- Ensure **`NEXT_PUBLIC_APP_ENV`** is exactly one of `dev`, `stg`, `prod`.
-- Ensure **`API_BASE_URL`** is a full URL with `http://` or `https://`.
-- For missing optional keys, you’ll see warnings only; features will be disabled safely.
-
-## Quick reference
-```bash
-# run validator manually
-pnpm run validate:env:frontend
-
-# typical local dev flow
-doppler setup -p hedgr-copilot -c dev_config_dev
-doppler run -- pnpm dev
-```
+**Troubleshooting**
+- If packages aren’t installed in the workspace, analytics silently no-ops.
+- If only some keys are present, only that provider initialises.

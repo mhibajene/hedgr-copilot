@@ -13,12 +13,15 @@
     "test": "turbo run test",
     "build:ui": "pnpm --filter @hedgr/ui run build",
     "build": "pnpm run build:ui && turbo run build",
-    "typecheck": "pnpm -r --if-present run typecheck"
+    "typecheck": "pnpm -r --if-present run typecheck",
+    "validate": "pnpm -w test && pnpm -w typecheck && pnpm -w lint",
+    "dev:cli": "doppler run -- pnpm --filter @hedgr/frontend dev",
+    "dev:docker": "doppler run -- docker compose up --build frontend"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.11",
     "tsx": "^4.7.0",
-    "turbo": "latest"
+    "turbo": "^2.5.4"
   },
   "version": "1.0.0",
   "main": "index.js",
@@ -49,14 +52,11 @@
     "minizlib": "^3.0.2",
     "mkdirp": "^3.0.1",
     "nanoid": "^3.3.11",
-    "next": "^15.3.5",
     "node-releases": "^2.0.19",
     "normalize-range": "^0.1.2",
     "picocolors": "^1.1.1",
     "postcss": "^8.4.31",
     "postcss-value-parser": "^4.2.0",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
     "scheduler": "^0.26.0",
     "semver": "^7.7.2",
     "sharp": "^0.34.3",
@@ -82,7 +82,8 @@
     "onlyBuiltDependencies": [
       "esbuild",
       "sharp",
-      "@tailwindcss/oxide"
+      "@tailwindcss/oxide",
+      "unrs-resolver"
     ]
   }
 }

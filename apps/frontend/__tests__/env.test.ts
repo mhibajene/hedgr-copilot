@@ -1,0 +1,101 @@
+import { describe, it, beforeEach, afterEach, expect, vi } from 'vitest'
+
+// We re-create virtual mocks fresh per test for isolation.
+let ph: { init: ReturnType<typeof vi.fn>; capture: ReturnType<typeof vi.fn> }
+let sentry: { init: ReturnType<typeof vi.fn> }
+
+async function loadAnalytics() {
+  // Import the SUT AFTER mocks & env are set, so module state reflects current test.
+  const mod = await import('../lib/analytics')
+  return mod
+}
+
+beforeEach(() => {
+  // Fresh mocks & clean module cache/env for each test
+  ph = { init: vi.fn(), capture: vi.fn() }
+  sentry = { init: vi.fn() }
+
+  vi.resetModules()
+  vi.clearAllMocks()
+  vi.unstubAllEnvs()
+
+  // Client-only gate: make code think it's running in a browser
+  ;(globalThis as any).window = {}
+
+  // Provide virtual modules so runtime doesn't try to resolve real packages.
+  // Use doMock so the mock applies for this test's dynamic import timing.
+  vi.doMock('posthog-js', () => ({ default: ph } as any))
+  vi.doMock('@sentry/browser', () => sentry as any)
+})
+
+afterEach(() => {
+  // Clean up the window stub to avoid bleed between tests
+  // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
+  delete (globalThis as any).window
+})
+
+describe('analytics env gating', () => {
+  it('no-ops outside dev even if keys are set', async () => {
+    vi.stubEnv('NEXT_PUBLIC_APP_ENV', 'prod')
+    vi.stubEnv('NEXT_PUBLIC_POSTHOG_KEY', 'ph_test')
+    vi.stubEnv('NEXT_PUBLIC_POSTHOG_HOST', 'https://ph.example')
+    vi.stubEnv('NEXT_PUBLIC_SENTRY_DSN', 'dsn_test')
+
+    const { initAnalytics, track } = await loadAnalytics()
+    await initAnalytics()
+    track('evt')
+
+    expect(ph.init).not.toHaveBeenCalled()
+    expect(ph.capture).not.toHaveBeenCalled()
+    expect(sentry.init).not.toHaveBeenCalled()
+  })
+
+  it('no-ops in dev when keys are missing', async () => {
+    vi.stubEnv('NEXT_PUBLIC_APP_ENV', 'dev')
+    // No PostHog/Sentry keys
+
+    const { initAnalytics, track } = await loadAnalytics()
+    await initAnalytics()
+    track('evt')
+
+    expect(ph.init).not.toHaveBeenCalled()
+    expect(ph.capture).not.toHaveBeenCalled()
+    expect(sentry.init).not.toHaveBeenCalled()
+  })
+
+  it('initializes PostHog in dev when key+host present and captures events', async () => {
+    vi.stubEnv('NEXT_PUBLIC_APP_ENV', 'dev')
+    vi.stubEnv('NEXT_PUBLIC_POSTHOG_KEY', 'ph_test')
+    vi.stubEnv('NEXT_PUBLIC_POSTHOG_HOST', 'https://ph.example')
+
+    const { initAnalytics, track } = await loadAnalytics()
+    await initAnalytics()
+    track('evt', { a: 1 })
+
+    expect(ph.init).toHaveBeenCalledTimes(1)
+    const [key, opts] = ph.init.mock.calls[0]
+    expect(key).toBe('ph_test')
+    expect(opts).toMatchObject({
+      api_host: 'https://ph.example',
+      capture_pageview: false,
+      disable_session_recording: true,
+      persistence: 'memory',
+    })
+    expect(ph.capture).toHaveBeenCalledWith('evt', { a: 1 })
+  })
+
+  it('initializes Sentry in dev when DSN present', async () => {
+    vi.stubEnv('NEXT_PUBLIC_APP_ENV', 'dev')
+    vi.stubEnv('NEXT_PUBLIC_SENTRY_DSN', 'dsn_test')
+
+    const { initAnalytics } = await loadAnalytics()
+    await initAnalytics()
+
+    expect(sentry.init).toHaveBeenCalledTimes(1)
+    expect(sentry.init.mock.calls[0][0]).toMatchObject({
+      dsn: 'dsn_test',
+      environment: 'dev',
+      tracesSampleRate: 0,
+    })
+  })
+})

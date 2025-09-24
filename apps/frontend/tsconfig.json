@@ -1,13 +1,40 @@
 {
-   "extends": "../../tsconfig.base.json",
-   "compilerOptions": {
-     "jsx": "preserve",
-     "baseUrl": ".",
-     "paths": {
-       "@hedgr/ui": ["../../packages/ui/src"],
-       "@hedgr/config": ["../../packages/config"]
-     }
-   },
-   "include": ["next-env.d.ts","**/*.ts","**/*.tsx"],
-   "exclude": ["node_modules"]
- }
+  "compilerOptions": {
+    "target": "ES2020",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": false,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["*"],
+      "@hedgr/ui": ["../../packages/ui/src"],
+      "@hedgr/ui/*": ["../../packages/ui/src/*"]
+    },
+    "types": ["node"]
+  },
+  "files": ["next-env.d.ts"],
+  "include": [
+    "types/**/*.d.ts",
+    "pages/**/*.ts",
+    "pages/**/*.tsx",
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/__tests__/**",
+    "**/*.test.ts",
+    "**/*.test.tsx"
+  ]
+}
