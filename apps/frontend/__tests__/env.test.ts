@@ -1,4 +1,4 @@
-import { describe, it, beforeEach, expect, vi } from 'vitest'
+import { describe, it, beforeEach, afterEach, expect, vi } from 'vitest'
 
 // We re-create virtual mocks fresh per test for isolation.
 let ph: { init: ReturnType<typeof vi.fn>; capture: ReturnType<typeof vi.fn> }
@@ -19,10 +19,19 @@ beforeEach(() => {
   vi.clearAllMocks()
   vi.unstubAllEnvs()
 
+  // Client-only gate: make code think it's running in a browser
+  ;(globalThis as any).window = {}
+
   // Provide virtual modules so runtime doesn't try to resolve real packages.
   // Vitest types in this repo accept 1–2 args; omit `{ virtual: true }`
   vi.mock('posthog-js', () => ({ default: ph } as any))
-  vi.mock('@sentry/browser', () => sentry as any)    
+  vi.mock('@sentry/browser', () => sentry as any)
+})
+
+afterEach(() => {
+  // Clean up the window stub to avoid bleed between tests
+  // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
+  delete (globalThis as any).window
 })
 
 describe('analytics env gating', () => {

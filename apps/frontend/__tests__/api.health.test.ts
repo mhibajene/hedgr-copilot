@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import handler from '../pages/api/health'
 
@@ -37,7 +38,7 @@ describe('/api/health', () => {
 
     // Freshness check (not a hard requirement, but useful)
     const now = Date.now()
-    const diff = now - Date.parse(ts)
+    const t = now - Date.parse(ts)
     expect(Math.abs(now - t)).toBeLessThan(2000) // within 2s
   })
 })
