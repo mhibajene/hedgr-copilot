@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * Dev-safe analytics initializer for PostHog & Sentry.
  * - Client-only
@@ -9,7 +8,6 @@
  */
 
 let posthogRef: any | null = null;
-let sentryRef: any | null = null;
 let initialised = false;
 
 export async function initAnalytics(): Promise<void> {
@@ -62,6 +60,7 @@ export async function initAnalytics(): Promise<void> {
             environment: ENV,
             tracesSampleRate: 0,
             // Type explicitly to satisfy noImplicitAny without adding Sentry types
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             beforeSend(event: any) {
               if (event.user) delete event.user;
               if (event.request) delete event.request;
@@ -69,7 +68,6 @@ export async function initAnalytics(): Promise<void> {
               return event;
             },
           });
-          sentryRef = Sentry;
         })
         .catch(() => {
           // package missing or failed to load -> remain no-op
