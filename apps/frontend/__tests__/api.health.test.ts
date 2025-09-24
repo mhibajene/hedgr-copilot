@@ -37,8 +37,7 @@ describe('/api/health', () => {
      expect(Number.isNaN(Date.parse(ts))).toBe(false)
 
     // Freshness check (not a hard requirement, but useful)
-    const now = Date.now()
-    const t = now - Date.parse(ts)
-    expect(Math.abs(now - t)).toBeLessThan(2000) // within 2s
+    const diff = Math.abs(Date.now() - Date.parse(ts))
+    expect(diff).toBeLessThan(2000) // within 2s
   })
 })

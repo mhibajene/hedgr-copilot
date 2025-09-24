@@ -23,9 +23,9 @@ beforeEach(() => {
   ;(globalThis as any).window = {}
 
   // Provide virtual modules so runtime doesn't try to resolve real packages.
-  // Vitest types in this repo accept 1–2 args; omit `{ virtual: true }`
-  vi.mock('posthog-js', () => ({ default: ph } as any))
-  vi.mock('@sentry/browser', () => sentry as any)
+  // Use doMock so the mock applies for this test's dynamic import timing.
+  vi.doMock('posthog-js', () => ({ default: ph } as any))
+  vi.doMock('@sentry/browser', () => sentry as any)
 })
 
 afterEach(() => {
