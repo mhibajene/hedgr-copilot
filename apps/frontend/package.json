@@ -10,7 +10,7 @@
     "lint": "eslint . --max-warnings=0",
     "lint:fix": "eslint . --fix",
     "test": "vitest run --passWithNoTests",
-    "test:watch": "vitest"            
+    "test:watch": "vitest"
   },
   "dependencies": {
     "@hedgr/ui": "workspace:*",
