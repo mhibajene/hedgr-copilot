@@ -1,14 +1,16 @@
-// Flat ESLint config for ESLint v9+ in ESM mode
-// Import Next's flat config (ESLint v9 flat config)
-import next from 'eslint-config-next';
+import js from '@eslint/js';
+import tseslint from 'typescript-eslint';
 
 export default [
   // Ignore build artifacts
-  {
-    ignores: ['.next/**', 'dist/**', 'coverage/**', 'node_modules/**'],
-  },
-  // Next.js recommended rules (includes TS/React setup)
-  ...next,
+  { ignores: ['.next/**', 'dist/**', 'coverage/**', 'node_modules/**'] },
+
+  // Base JS rules
+  js.configs.recommended,
+
+  // TypeScript (no type-checking to keep config simple/fast)
+  ...tseslint.configs.recommended,
+
   // Vitest globals for test files
   {
     files: ['**/*.test.{ts,tsx}', '**/__tests__/**/*.{ts,tsx}'],
