@@ -71,7 +71,7 @@ describe('analytics env gating', () => {
     track('evt', { a: 1 })
 
     expect(ph.init).toHaveBeenCalledTimes(1)
-    const [key, opts] = ph.init.mock.calls[0]
+    const [key, opts] = (ph.init as any).mock.calls[0]
     expect(key).toBe('ph_test')
     expect(opts).toMatchObject({
       api_host: 'https://ph.example',
