@@ -1,92 +1,85 @@
-declare global {
-  // eslint-disable-next-line no-var
-  var __HEDGR_ANALYTICS_INIT: boolean | undefined;
-}
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/**
+ * Dev-safe analytics initialiser for PostHog & Sentry.
+ * - Client-only
+ * - Only runs when NEXT_PUBLIC_APP_ENV === 'dev'
+ * - Only runs when respective keys are present
+ * - Dynamic imports -> if packages are not installed, this no-ops silently
+ * - PII-safety: PostHog sanitizes common identifiers, session replay disabled; Sentry strips user/request/breadcrumbs
+ */
 
-type Properties = Record<string, unknown>;
-type PostHogLike = {
-  capture?: (event: string, properties?: Properties) => void;
-  init?: (...args: unknown[]) => void;
-};
-
-let posthogRef: PostHogLike | null = null;
-let initialized = false;
-let sentryReady = false;
-
-const isBrowser = (): boolean => typeof window !== 'undefined';
-
-const isDevEnv = (): boolean => {
-  // Gate on explicit NEXT_PUBLIC_APP_ENV
-  return process.env.NEXT_PUBLIC_APP_ENV === 'dev';
-};
+let posthogRef: any | null = null;
+let sentryRef: any | null = null;
+let initialised = false;
 
 export async function initAnalytics(): Promise<void> {
-  if (!isBrowser()) return; // server-side: never initialize
+  const isClient = typeof window !== 'undefined';
+  const ENV = process.env.NEXT_PUBLIC_APP_ENV;
+  const IS_DEV = ENV === 'dev';
+  const PH_KEY = process.env.NEXT_PUBLIC_POSTHOG_KEY;
+  const PH_HOST = process.env.NEXT_PUBLIC_POSTHOG_HOST; // require explicit host to avoid accidental exfil
+  const SENTRY_DSN = process.env.NEXT_PUBLIC_SENTRY_DSN;
 
-  // Guard against double-inits across Fast Refresh by using a global flag
-  if (globalThis.__HEDGR_ANALYTICS_INIT) return;
-  if (initialized) return;
+  if (!isClient || !IS_DEV || initialised) return;
+  initialised = true;
 
-  // Only consider initializing in dev, and only if at least one key exists
-  const posthogKey = process.env.NEXT_PUBLIC_POSTHOG_KEY;
-  const sentryDsn = process.env.NEXT_PUBLIC_SENTRY_DSN;
-  if (!isDevEnv() || (!posthogKey && !sentryDsn)) {
-    initialized = true; // stay no-op
-    globalThis.__HEDGR_ANALYTICS_INIT = true;
-    return;
+  const tasks: Promise<void>[] = [];
+
+  if (PH_KEY && PH_HOST) {
+    tasks.push(
+      import('posthog-js')
+        .then((ph) => {
+          const posthog = ph.default;
+          posthog.init(PH_KEY, {
+            api_host: PH_HOST,
+            capture_pageview: false,
+            disable_session_recording: true,
+            persistence: 'memory',
+            property_blacklist: ['email', 'name', 'phone', 'username'],
+          });
+          posthogRef = posthog;
+        })
+        .catch(() => {
+          // Package not installed or failed to load → remain no-op
+        })
+    );
   }
 
-  if (posthogKey) {
-    try {
-      const mod: unknown = await import('posthog-js');
-      // posthog-js default export is the client
-      const posthog = (mod as { default?: PostHogLike }).default ?? (mod as PostHogLike);
-      const host = process.env.NEXT_PUBLIC_POSTHOG_HOST || 'https://us.i.posthog.com';
-      // Extremely conservative defaults for dev: no PII, no autocapture
-      posthog.init?.(posthogKey, {
-        api_host: host,
-        autocapture: false,
-        capture_pageview: false,
-        capture_pageleave: false,
-        disable_session_recording: true,
-        request_batching: true,
-      });
-      posthogRef = posthog;
-    } catch {
-      // Package not installed or failed to load → remain no-op
-      posthogRef = null;
-    }
+  if (SENTRY_DSN) {
+    tasks.push(
+      import('@sentry/browser')
+        .then((sentry) => {
+          sentry.init({
+            dsn: SENTRY_DSN,
+            environment: ENV,
+            tracesSampleRate: 0,
+            beforeSend(event) {
+              // Strip PII
+              if (event.user) delete event.user;
+              if (event.request) delete event.request;
+              if (event.breadcrumbs) event.breadcrumbs = [];
+              return event;
+            },
+          });
+          sentryRef = sentry;
+        })
+        .catch(() => {
+          // Package not installed or failed to load → remain no-op
+        })
+    );
   }
 
-  if (sentryDsn) {
-    try {
-      const Sentry = (await import('@sentry/browser')) as {
-        init?: (cfg: Record<string, unknown>) => void;
-        captureException?: (e: unknown) => void;
-      };
-      // In dev we sample nothing by default; this is opt-in only.
-      Sentry.init?.({
-        dsn: sentryDsn,
-        environment: process.env.NEXT_PUBLIC_APP_ENV,
-        sampleRate: 0,        // error events
-        tracesSampleRate: 0,  // performance events
-      });
-      sentryReady = true;
-    } catch {
-      sentryReady = false;
-    }
-  }
-
-  initialized = true;
-  globalThis.__HEDGR_ANALYTICS_INIT = true;
+  await Promise.all(tasks);
 }
 
-export function track(event: string, properties?: Properties): void {
-  if (!isBrowser()) return;
-  if (!isDevEnv()) return;
+export function track(event: string, properties?: Record<string, unknown>): void {
+  const isClient = typeof window !== 'undefined';
+  const ENV = process.env.NEXT_PUBLIC_APP_ENV;
+  const IS_DEV = ENV === 'dev';
+  if (!isClient || !IS_DEV || !posthogRef) return;
   try {
-    posthogRef?.capture?.(event, properties);
+    posthogRef.capture(event, properties);
   } catch {
-    // swallow
+    // noop in dev
   }
 }
