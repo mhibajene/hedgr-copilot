@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /**
- * Dev-safe analytics initialiser for PostHog & Sentry.
+ * Dev-safe analytics initializer for PostHog & Sentry.
  * - Client-only
  * - Only runs when NEXT_PUBLIC_APP_ENV === 'dev'
- * - Only runs when respective keys are present
- * - Dynamic imports -> if packages are not installed, this no-ops silently
- * - PII-safety: PostHog sanitizes common identifiers, session replay disabled; Sentry strips user/request/breadcrumbs
+ * - Provider init only when keys are present
+ * - Dynamic imports; if pkgs missing, silently no-op
+ * - PII-safety: PostHog sanitize_properties; Sentry beforeSend scrubs
  */
 
 let posthogRef: any | null = null;
@@ -17,7 +17,7 @@ export async function initAnalytics(): Promise<void> {
   const ENV = process.env.NEXT_PUBLIC_APP_ENV;
   const IS_DEV = ENV === 'dev';
   const PH_KEY = process.env.NEXT_PUBLIC_POSTHOG_KEY;
-  const PH_HOST = process.env.NEXT_PUBLIC_POSTHOG_HOST; // require explicit host to avoid accidental exfil
+  const PH_HOST = process.env.NEXT_PUBLIC_POSTHOG_HOST; // explicit host required
   const SENTRY_DSN = process.env.NEXT_PUBLIC_SENTRY_DSN;
 
   if (!isClient || !IS_DEV || initialised) return;
@@ -34,12 +34,11 @@ export async function initAnalytics(): Promise<void> {
             api_host: PH_HOST,
             capture_pageview: false,
             disable_session_recording: true,
-            // keep data ephemeral in dev
+            // keep ephemeral in dev
             persistence: 'memory',
             // defensively scrub common PII keys
             sanitize_properties: (props: Record<string, unknown>) => {
               for (const k of ['email', 'name', 'phone', 'username']) {
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 delete (props as any)[k];
               }
               return props;
@@ -48,7 +47,7 @@ export async function initAnalytics(): Promise<void> {
           posthogRef = posthog;
         })
         .catch(() => {
-          // Package not installed or failed to load → remain no-op
+          // package missing or failed to load -> remain no-op
         })
     );
   }
@@ -62,7 +61,6 @@ export async function initAnalytics(): Promise<void> {
             environment: ENV,
             tracesSampleRate: 0,
             beforeSend(event) {
-              // Strip PII
               if (event.user) delete event.user;
               if (event.request) delete event.request;
               if (event.breadcrumbs) event.breadcrumbs = [];
@@ -72,7 +70,7 @@ export async function initAnalytics(): Promise<void> {
           sentryRef = Sentry;
         })
         .catch(() => {
-          // Package not installed or failed to load → remain no-op
+          // package missing or failed to load -> remain no-op
         })
     );
   }
