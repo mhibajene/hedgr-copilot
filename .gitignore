@@ -70,3 +70,5 @@ Thumbs.db
 # ─────────────────────────────────────────────────────────────────────────────
 *.seed
 *.pid
+# TypeScript build info
+*.tsbuildinfo
