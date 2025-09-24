@@ -35,7 +35,14 @@ export async function initAnalytics(): Promise<void> {
             capture_pageview: false,
             disable_session_recording: true,
             persistence: 'memory',
-            property_blacklist: ['email', 'name', 'phone', 'username'],
+            // defensively scrub common PII keys
+            sanitize_properties: (props: Record<string, unknown>) => {
+              for (const k of ['email', 'name', 'phone', 'username']) {
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                delete (props as any)[k];
+              }
+              return props;
+            },
           });
           posthogRef = posthog;
         })
