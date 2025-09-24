@@ -1,6 +1,6 @@
 // Flat ESLint config for ESLint v9+ in ESM mode
 // 1) Apply Rushstack modern module resolution patch (needed by Next config)
-import '@rushstack/eslint-patch/modern-module-resolution';
+import '@rushstack/eslint-patch/modern-module-resolution.js';
 // 2) Import Next's flat config
 import next from 'eslint-config-next';
 
