@@ -61,7 +61,8 @@ export async function initAnalytics(): Promise<void> {
             dsn: SENTRY_DSN,
             environment: ENV,
             tracesSampleRate: 0,
-            beforeSend(event) {
+            // Type explicitly to satisfy noImplicitAny without adding Sentry types
+            beforeSend(event: any) {
               if (event.user) delete event.user;
               if (event.request) delete event.request;
               if (event.breadcrumbs) event.breadcrumbs = [];
