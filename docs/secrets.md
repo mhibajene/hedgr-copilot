@@ -1,46 +1,68 @@
+# Secrets & Config (Doppler as source of truth)
+
+Hedgr Copilot uses **Doppler** for all configuration and secrets.  
+Do **not** commit `.env*` files.
+
+## Environments
+- Doppler project: `hedgr-copilot`
+- Configs:
+  - `dev_config_dev` (local development)
+  - `stg_config_stg` (staging)
+  - `prod_config_prod` (production) — if/when applicable
+
+## Core Variables (common)
+- App/runtime secrets live in the relevant package's namespace.
+- Never hardcode secrets in code, tests, or CI workflows.
+
+---
+
 ## Observability (optional, dev-safe)
 
-Hedgr Copilot’s analytics/error reporting is **off by default** and **dev-gated**.
+**Default:** Off in all environments.  
+**Gates:** Enables **only** when:
+1) Running in the browser, and  
+2) `NEXT_PUBLIC_APP_ENV === "dev"`, and  
+3) Provider keys exist.
 
-**Runtime gates**
-- Only runs on the client.
-- Only runs when `NEXT_PUBLIC_APP_ENV === "dev"`.
-- Only initialises a given tool when its keys are present.
-- Dynamic imports mean missing packages simply **no-op** (no hard dependency).
+**Providers**
+- **PostHog** (event analytics) — session recording disabled
+- **Sentry (browser)** (error reporting) — PII scrubbed
 
-**Supported providers**
-- **PostHog** (event analytics; **no session recording** in our config)
-- **Sentry (browser)** (error reporting; PII scrubbing enabled)
+**Env vars (set in Doppler)**
+- `NEXT_PUBLIC_APP_ENV`  
+  - Use `dev` to enable analytics/error-reporting code paths locally.
+  - Any other value (`stg`, `prod`, empty) keeps observability **off**.
+- PostHog (optional)
+  - `NEXT_PUBLIC_POSTHOG_KEY`
+  - `NEXT_PUBLIC_POSTHOG_HOST` (explicit host required)
+- Sentry (optional)
+  - `NEXT_PUBLIC_SENTRY_DSN`
 
-**Env vars (set in Doppler → `dev_config_dev` / `stg_config_stg`)**
-- `NEXT_PUBLIC_APP_ENV=dev` (only `dev` enables analytics code paths)
-- PostHog (optional):
--  - `NEXT_PUBLIC_POSTHOG_KEY=<ph_project_key>`
--  - `NEXT_PUBLIC_POSTHOG_HOST=<https://your-posthog-host>`
-- Sentry (optional):
--  - `NEXT_PUBLIC_SENTRY_DSN=<sentry_dsn>`
+**Enable in local dev**
+1) `doppler setup -p hedgr-copilot -c dev_config_dev`  
+2) Set `NEXT_PUBLIC_APP_ENV=dev` and any provider keys you want to test  
+3) Start: `pnpm run dev:cli` (or `pnpm run dev:docker`)
 
-**Enable in dev**
-1) In Doppler `dev_config_dev`, add any of the keys above you wish to test.  
-2) Start the app:
-- CLI: `pnpm run dev:cli`
-- Docker: `pnpm run dev:docker`
-3) Events/errors remain **local/dev only**; staging/prod do not initialise because `NEXT_PUBLIC_APP_ENV !== "dev"`.
+**Staging / Production**
+- Keep `NEXT_PUBLIC_APP_ENV` **not equal to** `dev` → observability remains **off**.
+- If you need to validate dashboards, do it on a **developer machine** with `dev` gating; don't enable in shared staging.
 
-**(Optional) Staging dry-run**
-- Keep `NEXT_PUBLIC_APP_ENV=dev` **only on a developer machine** to validate dashboards without exposing real users.
-- Do **not** set `NEXT_PUBLIC_APP_ENV=dev` in shared staging deployments.
+**Privacy posture**
+- **PostHog**: `capture_pageview: false`, `disable_session_recording: true`, `persistence: "memory"`, and a `sanitize_properties` function strips `email`, `name`, `phone`, `username`.
+- **Sentry**: `tracesSampleRate: 0` and `beforeSend` removes `user`, `request`, and clears `breadcrumbs`.
+- Never send wallet addresses, transaction hashes, national IDs, phone numbers, emails, or device identifiers.
 
-**Privacy stance (PII-aware defaults)**
-- PostHog: session recording disabled; pageview autocapture disabled; a sanitizer strips common identifiers (`email`, `name`, `phone`, `username`) from event properties.
-- Sentry: we drop `user`, `request`, and all `breadcrumbs` via `beforeSend`.
-- Do not include user PII in `track()` calls.
-
-**Event naming guidelines**
-- Use `kebab-case` or `snake_case` for events (e.g., `wallet_opened`, `kyc_start`).
-- Include minimal context only (e.g., `screen: 'home'`, `flow: 'onboarding'`).
-- Never include emails, phone numbers, wallet addresses, tx hashes, or any unique identifiers.
+**Event naming**
+- Use `snake_case` (e.g., `onboarding_started`, `backup_prompt_shown`).
+- Keep properties minimal, non-identifying (e.g., `{ screen: "home" }`).
 
 **Troubleshooting**
-- If packages aren’t installed in the workspace, analytics silently no-ops.
-- If only some keys are present, only that provider initialises.
+- Missing packages (`posthog-js`, `@sentry/browser`) → dynamic imports **no-op** (by design).
+- Only some keys present → only that provider initialises.
+- Nothing initialises? Check `NEXT_PUBLIC_APP_ENV` is exactly `dev`.
+
+---
+
+## Health/Version (for smoke checks)
+- `/api/health` → `200 { status: "ok", ts: "<ISO>" }`
+- `/api/version` → `200 { version: "<apps/frontend package version>" }`

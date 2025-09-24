@@ -17,27 +17,29 @@ function createMockRes(): NextApiResponse & { _json?: unknown } {
 }
 
 describe('/api/health', () => {
-    it('returns 200 with status ok and ISO timestamp', () => {
+  it('returns 200 with status ok and ISO timestamp', () => {
     const req = {} as NextApiRequest
     const res = createMockRes()
     handler(req, res)
+
     expect(res.statusCode).toBe(200)
     expect(res._json).toBeDefined()
 
     // Shape + type assertions
     expect(res._json).toEqual(
-        expect.objectContaining({
-            status: 'ok',
-            ts: expect.any(String),
-        })
+      expect.objectContaining({
+        status: 'ok',
+        ts: expect.any(String),
+      })
     )
-     // ISO-8601 (UTC, allow optional milliseconds)
-     const { ts } = res._json as { ts: string }
-     expect(ts).toMatch(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/)
-     expect(Number.isNaN(Date.parse(ts))).toBe(false)
 
-    // Freshness check (not a hard requirement, but useful)
+    const { ts } = res._json as { ts: string }
+    // ISO-8601 UTC, optional milliseconds
+    expect(ts).toMatch(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{3})?Z$/)
+    expect(Number.isNaN(Date.parse(ts))).toBe(false)
+
+    // Freshness: within 2s of now
     const diff = Math.abs(Date.now() - Date.parse(ts))
-    expect(diff).toBeLessThan(2000) // within 2s
+    expect(diff).toBeLessThan(2000)
   })
 })

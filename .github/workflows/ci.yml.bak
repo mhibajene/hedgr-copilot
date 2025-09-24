@@ -1,0 +1,48 @@
+name: CI
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    # Use child configs you selected: dev_config_dev for PRs, stg_config_stg for main
+    env:
+      DOPPLER_TOKEN: ${{ github.event_name == 'pull_request' && secrets.DOPPLER_TOKEN_DEV || secrets.DOPPLER_TOKEN_STG }}
+      DOPPLER_CONFIG: ${{ github.event_name == 'pull_request' && 'dev_config_dev' || 'stg_config_stg' }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # Repo secrets aren't exposed to forked PRs; guard to avoid a hard failure
+      - name: Fetch secrets from Doppler
+        if: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.fork == false }}
+        uses: dopplerhq/secrets-fetch-action@v1
+        with:
+          auth-method: token
+          doppler-token: ${{ env.DOPPLER_TOKEN }}
+          doppler-project: hedgr-copilot
+          doppler-config: ${{ env.DOPPLER_CONFIG }}
+          inject-env-vars: true
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Build
+        run: pnpm -w build
+
+      - name: Test
+        run: pnpm -w test
