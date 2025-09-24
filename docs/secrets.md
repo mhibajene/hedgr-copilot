@@ -24,7 +24,7 @@ Do **not** commit `.env*` files.
 2) `NEXT_PUBLIC_APP_ENV === "dev"`, and  
 3) Provider keys exist.
 
-**Supported providers**
+**Providers**
 - **PostHog** (event analytics) — session recording disabled
 - **Sentry (browser)** (error reporting) — PII scrubbed
 
@@ -52,7 +52,7 @@ Do **not** commit `.env*` files.
 - **Sentry**: `tracesSampleRate: 0` and `beforeSend` removes `user`, `request`, and clears `breadcrumbs`.
 - Never send wallet addresses, transaction hashes, national IDs, phone numbers, emails, or device identifiers.
 
-**Event naming guidelines**
+**Event naming**
 - Use `snake_case` (e.g., `onboarding_started`, `backup_prompt_shown`).
 - Keep properties minimal, non-identifying (e.g., `{ screen: "home" }`).
 
