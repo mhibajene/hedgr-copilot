@@ -1,43 +1,92 @@
-import { _buildEnvFor } from "../config/env";
+import { describe, it, beforeEach, expect, vi } from 'vitest'
 
-// Keep test output clean (suppress optional warnings)
-const originalWarn = console.warn;
-beforeAll(() => {
-  process.env.NODE_ENV = "test";
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  console.warn = () => {};
-});
-afterAll(() => {
-  console.warn = originalWarn;
-});
+// We re-create virtual mocks fresh per test for isolation.
+let ph: { init: ReturnType<typeof vi.fn>; capture: ReturnType<typeof vi.fn> }
+let sentry: { init: ReturnType<typeof vi.fn> }
 
-describe("frontend env validation", () => {
-  it("passes with a valid dev env", () => {
-    const env = _buildEnvFor({
-      NEXT_PUBLIC_APP_ENV: "dev",
-      API_BASE_URL: "https://api.example.dev",
-    } as unknown as NodeJS.ProcessEnv);
+async function loadAnalytics() {
+  // Import the SUT AFTER mocks & env are set, so module state reflects current test.
+  const mod = await import('../lib/analytics')
+  return mod
+}
 
-    expect(env).toMatchObject({
-      NEXT_PUBLIC_APP_ENV: "dev",
-      API_BASE_URL: "https://api.example.dev",
-    });
-  });
+beforeEach(() => {
+  // Fresh mocks & clean module cache/env for each test
+  ph = { init: vi.fn(), capture: vi.fn() }
+  sentry = { init: vi.fn() }
 
-  it("fails when API_BASE_URL is missing", () => {
-    expect(() =>
-      _buildEnvFor({
-        NEXT_PUBLIC_APP_ENV: "dev",
-      } as unknown as NodeJS.ProcessEnv)
-    ).toThrow(/API_BASE_URL/i);
-  });
+  vi.resetModules()
+  vi.clearAllMocks()
+  vi.unstubAllEnvs()
 
-  it("fails when NEXT_PUBLIC_APP_ENV is invalid", () => {
-    expect(() =>
-      _buildEnvFor({
-        NEXT_PUBLIC_APP_ENV: "invalid",
-        API_BASE_URL: "https://api.example.dev",
-      } as unknown as NodeJS.ProcessEnv)
-    ).toThrow(/NEXT_PUBLIC_APP_ENV/i);
-  });
-});
+  // Provide virtual modules so runtime doesn't try to resolve real packages.
+  // Vitest types in this repo accept 1–2 args; omit `{ virtual: true }`
+  vi.mock('posthog-js', () => ({ default: ph } as any))
+  vi.mock('@sentry/browser', () => sentry as any)    
+})
+
+describe('analytics env gating', () => {
+  it('no-ops outside dev even if keys are set', async () => {
+    vi.stubEnv('NEXT_PUBLIC_APP_ENV', 'prod')
+    vi.stubEnv('NEXT_PUBLIC_POSTHOG_KEY', 'ph_test')
+    vi.stubEnv('NEXT_PUBLIC_POSTHOG_HOST', 'https://ph.example')
+    vi.stubEnv('NEXT_PUBLIC_SENTRY_DSN', 'dsn_test')
+
+    const { initAnalytics, track } = await loadAnalytics()
+    await initAnalytics()
+    track('evt')
+
+    expect(ph.init).not.toHaveBeenCalled()
+    expect(ph.capture).not.toHaveBeenCalled()
+    expect(sentry.init).not.toHaveBeenCalled()
+  })
+
+  it('no-ops in dev when keys are missing', async () => {
+    vi.stubEnv('NEXT_PUBLIC_APP_ENV', 'dev')
+    // No PostHog/Sentry keys
+
+    const { initAnalytics, track } = await loadAnalytics()
+    await initAnalytics()
+    track('evt')
+
+    expect(ph.init).not.toHaveBeenCalled()
+    expect(ph.capture).not.toHaveBeenCalled()
+    expect(sentry.init).not.toHaveBeenCalled()
+  })
+
+  it('initializes PostHog in dev when key+host present and captures events', async () => {
+    vi.stubEnv('NEXT_PUBLIC_APP_ENV', 'dev')
+    vi.stubEnv('NEXT_PUBLIC_POSTHOG_KEY', 'ph_test')
+    vi.stubEnv('NEXT_PUBLIC_POSTHOG_HOST', 'https://ph.example')
+
+    const { initAnalytics, track } = await loadAnalytics()
+    await initAnalytics()
+    track('evt', { a: 1 })
+
+    expect(ph.init).toHaveBeenCalledTimes(1)
+    const [key, opts] = ph.init.mock.calls[0]
+    expect(key).toBe('ph_test')
+    expect(opts).toMatchObject({
+      api_host: 'https://ph.example',
+      capture_pageview: false,
+      disable_session_recording: true,
+      persistence: 'memory',
+    })
+    expect(ph.capture).toHaveBeenCalledWith('evt', { a: 1 })
+  })
+
+  it('initializes Sentry in dev when DSN present', async () => {
+    vi.stubEnv('NEXT_PUBLIC_APP_ENV', 'dev')
+    vi.stubEnv('NEXT_PUBLIC_SENTRY_DSN', 'dsn_test')
+
+    const { initAnalytics } = await loadAnalytics()
+    await initAnalytics()
+
+    expect(sentry.init).toHaveBeenCalledTimes(1)
+    expect(sentry.init.mock.calls[0][0]).toMatchObject({
+      dsn: 'dsn_test',
+      environment: 'dev',
+      tracesSampleRate: 0,
+    })
+  })
+})
