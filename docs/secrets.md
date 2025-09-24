@@ -27,10 +27,19 @@ Hedgr Copilot’s analytics/error reporting is **off by default** and **dev-gate
 - Docker: `pnpm run dev:docker`
 3) Events/errors remain **local/dev only**; staging/prod do not initialise because `NEXT_PUBLIC_APP_ENV !== "dev"`.
 
+**(Optional) Staging dry-run**
+- Keep `NEXT_PUBLIC_APP_ENV=dev` **only on a developer machine** to validate dashboards without exposing real users.
+- Do **not** set `NEXT_PUBLIC_APP_ENV=dev` in shared staging deployments.
+
 **Privacy stance (PII-aware defaults)**
 - PostHog: session recording disabled; pageview autocapture disabled; a sanitizer strips common identifiers (`email`, `name`, `phone`, `username`) from event properties.
 - Sentry: we drop `user`, `request`, and all `breadcrumbs` via `beforeSend`.
 - Do not include user PII in `track()` calls.
+
+**Event naming guidelines**
+- Use `kebab-case` or `snake_case` for events (e.g., `wallet_opened`, `kyc_start`).
+- Include minimal context only (e.g., `screen: 'home'`, `flow: 'onboarding'`).
+- Never include emails, phone numbers, wallet addresses, tx hashes, or any unique identifiers.
 
 **Troubleshooting**
 - If packages aren’t installed in the workspace, analytics silently no-ops.
