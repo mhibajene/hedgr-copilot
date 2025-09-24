@@ -7,7 +7,11 @@
  * - PII-safety: PostHog sanitize_properties; Sentry beforeSend scrubs
  */
 
-let posthogRef: any | null = null;
+type PosthogClient = {
+  capture: (event: string, properties?: Record<string, unknown>) => void;
+};
+
+let posthogRef: PosthogClient | null = null;
 let initialised = false;
 
 export async function initAnalytics(): Promise<void> {
@@ -27,7 +31,10 @@ export async function initAnalytics(): Promise<void> {
     tasks.push(
       import('posthog-js')
         .then((ph) => {
-          const posthog = ph.default;
+          const posthog = ph.default as {
+            init: (key: string, opts: Record<string, unknown>) => void;
+            capture: (event: string, properties?: Record<string, unknown>) => void;
+          };
           posthog.init(PH_KEY, {
             api_host: PH_HOST,
             capture_pageview: false,
@@ -43,7 +50,8 @@ export async function initAnalytics(): Promise<void> {
               return props;
             },
           });
-          posthogRef = posthog;
+          // keep only the surface we use to avoid leaking types
+          posthogRef = { capture: posthog.capture.bind(posthog) };
         })
         .catch(() => {
           // package missing or failed to load -> remain no-op
