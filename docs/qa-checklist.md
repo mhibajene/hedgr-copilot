@@ -16,11 +16,13 @@
 - [ ] `pnpm -w test` green
 - [ ] `pnpm -w typecheck` passes
 - [ ] `pnpm -w lint` passes
+- [ ] CI version guard step passes (no `latest`/`*` versions or disallowed patterns)
 
 ## Security & Config
 - [ ] No `.env*` files; secrets come from Doppler
 - [ ] No new hardcoded secrets, tokens, or URLs leaking private infra
 - [ ] Feature flags and env gates documented
+- [ ] No tracked build artifacts (e.g., `*.tsbuildinfo`)
 
 ## Docs
 - [ ] PR includes updates to `docs/secrets.md` / `docs/observability.md` if behaviour changed
