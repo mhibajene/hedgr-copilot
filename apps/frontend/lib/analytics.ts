@@ -77,13 +77,14 @@ export async function initAnalytics(): Promise<void> {
           // Accept both shapes: named exports or default export
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const anyPh = phMod as any;
-          // Prefer named exports; fallback to default. Only require `init` to exist.
-          const posthog =
-            (anyPh && typeof anyPh.init === 'function')
-              ? anyPh
-              : (anyPh?.default && typeof anyPh.default.init === 'function'
-                  ? anyPh.default
-                  : null);
+          // Try common export shapes from mocks/bundlers:
+          const candidates = [
+            anyPh,
+            anyPh?.default,
+            anyPh?.posthog,
+            anyPh?.default?.posthog,
+          ];
+          const posthog = candidates.find((c) => c && typeof c.init === 'function');
           if (!posthog) {
             return; // unsupported shape -> no-op
           }
@@ -102,10 +103,10 @@ export async function initAnalytics(): Promise<void> {
             },
           };
           if (PH_HOST) opts.api_host = PH_HOST;
-          posthog.init(PH_KEY, opts);
+          (posthog as any).init(PH_KEY, opts);
           // keep only the surface we use to avoid leaking types
-          if (typeof posthog.capture === 'function') {
-            posthogRef = { capture: posthog.capture.bind(posthog) };
+          if (typeof (posthog as any).capture === 'function') {
+            posthogRef = { capture: (posthog as any).capture.bind(posthog) };
           } else {
             posthogRef = null;
           }
