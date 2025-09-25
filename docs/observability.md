@@ -1,55 +1,52 @@
-# Observability (PostHog + Sentry) — Dev-Safe
+# Observability (PostHog & Sentry)
 
-This project ships **optional, off-by-default** observability for analytics (PostHog) and error reporting (Sentry).
+Goal: developer-centric telemetry that is **off by default**, **no PII**, and easy to enable in **dev/stg**.
 
-## Quick Facts
-- **Off by default** in all environments.
-- **Dev-only** activation via `NEXT_PUBLIC_APP_ENV=dev`.
-- **Key-present-only**: each provider initialises only if its keys are set.
-- **Client-only**: initialisation runs in the browser.
-- **No PII**: session recording disabled; properties sanitized; Sentry drops user/request/breadcrumbs.
+## TL;DR
+- Off everywhere by default.
+- **Enable in dev** by setting `NEXT_PUBLIC_APP_ENV=dev` and provider keys in Doppler.
+- **Enable in stg (optional, narrow)** only for short, intentional validation windows.
+- No session recording; properties scrubbed; errors scrubbed.
 
-## Enabling (local dev)
-1. In Doppler (`dev_config_dev`), set:
-   - `NEXT_PUBLIC_APP_ENV=dev`
-   - PostHog (optional):  
-     `NEXT_PUBLIC_POSTHOG_KEY`, `NEXT_PUBLIC_POSTHOG_HOST`
-   - Sentry (optional):  
-     `NEXT_PUBLIC_SENTRY_DSN`
-2. Start app:
-   ```bash
-   pnpm run dev:cli
-   # or
-   pnpm run dev:docker
-   ```
-3. Trigger events with `track('event_name', { minimal: 'context' })`.
+## Env Matrix
+| Env | `NEXT_PUBLIC_APP_ENV` | PostHog/Sentry keys present | Result |
+|-----|------------------------|-----------------------------|--------|
+| Local dev | `dev` | Yes | Initializes (client-only) |
+| Local dev | `dev` | No  | No-op |
+| Staging   | `stg` | Any | **Off by default** (recommended) |
+| Production| `prod`| Any | **Off by default** |
 
-## Staging/Production
-- Keep `NEXT_PUBLIC_APP_ENV` **not equal to** `dev` → observability code paths **no-op**.
-- If analytics validation is needed, test **locally** with `dev` gating instead of enabling in shared environments.
+> If you must validate in `stg`, temporarily set `NEXT_PUBLIC_APP_ENV=dev` in a **personal** dev config or a temporary staging config, then revert. Do **not** enable globally.
 
-## Privacy & PII Posture
-- **PostHog config**:
-  - `capture_pageview: false`, `disable_session_recording: true`, `persistence: 'memory'`
-  - Property sanitizer removes `email`, `name`, `phone`, `username`.
-- **Sentry config**:
-  - `tracesSampleRate: 0` by default in dev
-  - `beforeSend` strips `user`, `request`, all `breadcrumbs`
-- Never send wallet addresses, tx hashes, national IDs, or device identifiers.
+## How to enable (dev)
+```bash
+doppler login
+doppler setup -p hedgr-copilot -c dev_config_dev
+# In Doppler → dev_config_dev, set:
+# NEXT_PUBLIC_APP_ENV=dev
+# NEXT_PUBLIC_POSTHOG_KEY=<key> (optional)
+# NEXT_PUBLIC_POSTHOG_HOST=<host> (optional, required to init PostHog)
+# NEXT_PUBLIC_SENTRY_DSN=<dsn>   (optional)
+pnpm run dev:cli   # or: pnpm run dev:docker
+```
 
-## Event Naming & Usage
-- Prefer `snake_case` events: `onboarding_started`, `backup_prompt_shown`.
-- Keep properties minimal and non-identifying. Good: `{ screen: 'home' }`. Avoid: `{ userEmail: '...' }`.
-- Use `track()` from `apps/frontend/lib/analytics.ts`.
+## Privacy & Safety
+- **PostHog**: `capture_pageview: false`, `disable_session_recording: true`, `persistence: "memory"`, `sanitize_properties` removes `email`, `name`, `phone`, `username`.
+- **Sentry**: `tracesSampleRate: 0`, `beforeSend` clears `user`, `request`, and `breadcrumbs`.
+- Never log/send: wallet addresses, tx hashes, national IDs, phone numbers, emails, device IDs.
 
-## Debugging & Troubleshooting
-- Missing packages → dynamic imports **no-op** (intentional).
-- Only some keys present → only that provider initialises.
-- To confirm PostHog init in dev, open browser console and check network calls to your PostHog host after a `track()`.
-- To confirm Sentry, manually throw in a dev-only path and verify no PII is attached.
+## Event naming & payloads
+- `snake_case` event names: `onboarding_started`, `backup_prompt_shown`, `send_flow_opened`.
+- Keep props lean and non-identifying: `{ screen: "home", action: "click" }`.
+- Prefer **aggregated** counts over granular user paths.
 
-## Sample Dashboards (TODO)
-- PostHog: `onboarding funnel`, `weekly active`, `feature usage`
-- Sentry: `top errors`, `release trends`, `frontend regression`
+## Troubleshooting
+- Nothing initialises? Confirm:
+  - You're in the **browser** (client-only).
+  - `NEXT_PUBLIC_APP_ENV === "dev"`.
+  - Keys exist for the provider you expect.
+- Packages missing? Dynamic imports will **no-op** (intentional). Install only if you need to validate locally.
 
-> Questions? See `docs/secrets.md` for environment wiring and the Doppler policy.
+## Sample dashboards (TODO)
+- PostHog: basic event volume, onboarding funnel, feature adoption.
+- Sentry: top error groups, recent releases, error rate trend.
