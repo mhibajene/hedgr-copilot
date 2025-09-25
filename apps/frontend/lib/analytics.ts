@@ -14,21 +14,22 @@ type PosthogClient = {
 let posthogRef: PosthogClient | null = null;
 let initialised = false;
 
-// Avoid bundler resolution for optional deps, but keep Vitest-friendly imports so vi.mock works.
+// Avoid bundler resolution in app runtime, but allow Vitest to mock by using static literals.
 const dynamicImport = async <T = unknown>(mod: string): Promise<T> => {
-  // In Vitest, prefer native dynamic import so mocked modules are intercepted.
-  // Vitest exposes `import.meta.vitest` and a global `vi`.
   try {
-    // @ts-expect-error vitest flag
+    // Vitest exposes global `vi` or `import.meta.vitest`
+    // @ts-expect-error vitest global in tests
     const isVitest = (typeof vi !== 'undefined') || (typeof import.meta !== 'undefined' && (import.meta as any).vitest);
     if (isVitest) {
-      // @vite-ignore keeps Vite from trying to pre-bundle a dynamic string
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore - dynamic import with variable is valid at runtime
-      return await import(/* @vite-ignore */ mod) as T;
+      if (mod === 'posthog-js') {
+        return (await import('posthog-js')) as T;
+      }
+      if (mod === '@sentry/browser') {
+        return (await import('@sentry/browser')) as T;
+      }
     }
   } catch {
-    // noop — fall through to bundler-safe importer
+    // ignore and fall through
   }
   // Default: runtime-only importer that bundlers cannot statically analyze.
   // eslint-disable-next-line @typescript-eslint/no-implied-eval
