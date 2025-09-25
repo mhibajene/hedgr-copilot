@@ -9,8 +9,14 @@
     "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.vitest.json --noEmit",
     "lint": "eslint . --max-warnings=0",
     "lint:fix": "eslint . --fix",
-    "test": "vitest run --passWithNoTests",
-    "test:watch": "vitest"
+    "test": "vitest run __tests__ --passWithNoTests",
+    "test:watch": "vitest",
+    "build:test": "next build",
+    "serve:test": "next build && next start -p 3000",
+    "e2e": "playwright test",
+    "e2e:ci": "playwright test --reporter=line",
+    "e2e:headed": "playwright test --headed",
+    "e2e:update": "playwright test -u"
   },
   "dependencies": {
     "@hedgr/ui": "workspace:*",
@@ -19,6 +25,7 @@
     "react-dom": "^19.1.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.48.2",
     "@eslint/js": "^9.11.0",
     "@tailwindcss/postcss": "^4.1.11",
     "@types/node": "^24.0.13",
