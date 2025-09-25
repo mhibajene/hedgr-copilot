@@ -52,7 +52,14 @@ export async function initAnalytics(): Promise<void> {
   const PH_HOST = process.env.NEXT_PUBLIC_POSTHOG_HOST; // explicit host required
   const SENTRY_DSN = process.env.NEXT_PUBLIC_SENTRY_DSN;
 
-  if (!isClient || !IS_DEV || initialised) return;
+  // In Vitest, allow re-initialization for each test run so spies/mocks can observe init().
+  const forceReinit = isInVitest();
+  if (!isClient || !IS_DEV || (initialised && !forceReinit)) return;
+  if (forceReinit) {
+    // Reset state so tests can assert init calls deterministically.
+    posthogRef = null;
+    initialised = false;
+  }
 
   const tasks: Promise<void>[] = [];
 
