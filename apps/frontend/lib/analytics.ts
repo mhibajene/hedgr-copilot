@@ -34,11 +34,21 @@ const isInVitest = (): boolean => {
 const dynamicImport = async <T = unknown>(mod: string): Promise<T> => {
   try {
     if (isInVitest()) {
+      // Prefer ESM import so vi.mock can intercept…
       if (mod === 'posthog-js') {
-        return (await import('posthog-js')) as T;
+        try { return (await import('posthog-js')) as T } catch { /* fall through */ }
       }
       if (mod === '@sentry/browser') {
-        return (await import('@sentry/browser')) as T;
+        try { return (await import('@sentry/browser')) as T } catch { /* fall through */ }
+      }
+      // …but in case the transform pipeline misses it, fall back to Node require.
+      try {
+        const { createRequire } = await import('node:module');
+        const req = createRequire(import.meta.url);
+        // eslint-disable-next-line @typescript-eslint/no-var-requires
+        return req(mod) as T;
+      } catch {
+        // ignore and let the runtime path handle it
       }
     }
   } catch {
