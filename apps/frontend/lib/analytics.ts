@@ -7,175 +7,86 @@
  * - PII-safety: PostHog sanitize_properties; Sentry beforeSend scrubs
  */
 
-type PosthogClient = {
-  capture: (event: string, properties?: Record<string, unknown>) => void;
-};
-
-let posthogRef: PosthogClient | null = null;
-let initialised = false;
-
-// Detect Vitest so tests can initialize analytics without a real browser window.
-const isInVitest = (): boolean => {
-  try {
-    // Most reliable signals in Vitest:
-    if (process.env.NODE_ENV === 'test') return true;
-    if (process.env.VITEST_WORKER_ID) return true;
-    // Fallbacks (may not be present depending on config):
-    // @ts-expect-error vitest global during tests
-    if (typeof vi !== 'undefined') return true;
-    if (typeof import.meta !== 'undefined' && (import.meta as any).vitest) return true;
-  } catch {
-    // ignore
-  }
-  return false;
-};
-
-// Avoid bundler resolution in app runtime, but allow Vitest to mock by using static literals.
-const dynamicImport = async <T = unknown>(mod: string): Promise<T> => {
-  try {
-    if (isInVitest()) {
-      // Prefer ESM import so vi.mock can intercept…
-      if (mod === 'posthog-js') {
-        try { return (await import('posthog-js')) as T } catch { /* fall through */ }
-      }
-      if (mod === '@sentry/browser') {
-        try { return (await import('@sentry/browser')) as T } catch { /* fall through */ }
-      }
-      // …but in case the transform pipeline misses it, fall back to Node require.
-      try {
-        const { createRequire } = await import('node:module');
-        const req = createRequire(import.meta.url);
-        // eslint-disable-next-line @typescript-eslint/no-var-requires
-        return req(mod) as T;
-      } catch {
-        // ignore and let the runtime path handle it
-      }
-    }
-  } catch {
-    // ignore and fall through
-  }
-  // Default: runtime-only importer that bundlers cannot statically analyze.
-  // eslint-disable-next-line @typescript-eslint/no-implied-eval
-  return (new Function('m', 'return import(m)'))(mod) as Promise<T>;
-};
+// idempotent guard + runtime refs
+let initialized = false
+let phRef: { init?: (...args: unknown[]) => void; capture?: (evt: string, props?: Record<string, unknown>) => void } | null = null
+let sentryRef: { init?: (opts: unknown) => void } | null = null
 
 export async function initAnalytics(): Promise<void> {
-  // In tests, behave as client so init paths execute against mocks.
-  const isClient = typeof window !== 'undefined' || isInVitest();
-  const ENV = process.env.NEXT_PUBLIC_APP_ENV;
-  const IS_DEV = ENV === 'dev';
-  const PH_KEY = process.env.NEXT_PUBLIC_POSTHOG_KEY;
-  const PH_HOST = process.env.NEXT_PUBLIC_POSTHOG_HOST; // explicit host required
-  const SENTRY_DSN = process.env.NEXT_PUBLIC_SENTRY_DSN;
+  // client-only
+  if (typeof window === 'undefined' || initialized) return
 
-  // In Vitest, allow re-initialization for each test run so spies/mocks can observe init().
-  const forceReinit = isInVitest();
-  if (!isClient || !IS_DEV || (initialised && !forceReinit)) return;
-  if (forceReinit) {
-    // Reset state so tests can assert init calls deterministically.
-    posthogRef = null;
-    initialised = false;
+  // read env at call-time (testability)
+  const appEnv = process.env.NEXT_PUBLIC_APP_ENV
+  const phKey = process.env.NEXT_PUBLIC_POSTHOG_KEY
+  const phHost = process.env.NEXT_PUBLIC_POSTHOG_HOST
+  const sentryDsn = process.env.NEXT_PUBLIC_SENTRY_DSN
+
+  // dev-only
+  if (appEnv !== 'dev') return
+
+  // --- PostHog (optional) ---
+  // Note: DO NOT early-return in test — vitest provides virtual mocks; we want init to run.
+  if (phKey) {
+    try {
+      // Some setups expose default; keep fallback to module itself for mocks.
+      const mod = await import('posthog-js')
+      const posthog = (mod as any).default ?? mod
+      phRef = posthog
+      posthog.init?.(phKey, {
+        api_host: phHost,
+        capture_pageview: false,
+        disable_session_recording: true,
+        persistence: 'memory',
+        // scrub obvious PII
+        sanitize_properties: (props: Record<string, unknown>) => {
+          const clone = { ...props }
+          delete (clone as any).email
+          delete (clone as any).phone
+          delete (clone as any).name
+          delete (clone as any).userId
+          return clone
+        },
+      })
+    } catch {
+      // optional dep — silently no-op
+    }
   }
 
-  const tasks: Promise<void>[] = [];
-
-  // In tests and dev, allow init if a key exists. Use api_host only when explicitly provided.
-  if (PH_KEY) {
-    tasks.push(
-      dynamicImport<typeof import('posthog-js')>('posthog-js')
-        .then((phMod) => {
-          // Accept both shapes: named exports or default export
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const anyPh = phMod as any;
-          // Try common export shapes from mocks/bundlers:
-          const candidates = [
-            anyPh,
-            anyPh?.default,
-            anyPh?.posthog,
-            anyPh?.default?.posthog,
-          ];
-          const posthog = candidates.find((c) => c && typeof c.init === 'function');
-          if (!posthog) {
-            return; // unsupported shape -> no-op
-          }
-          const opts: Record<string, unknown> = {
-            capture_pageview: false,
-            disable_session_recording: true,
-            // keep ephemeral in dev
-            persistence: 'memory',
-            // defensively scrub common PII keys
-            sanitize_properties: (props: Record<string, unknown>) => {
-              for (const k of ['email', 'name', 'phone', 'username']) {
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                delete (props as any)[k];
-              }
-              return props;
-            },
-          };
-          if (PH_HOST) opts.api_host = PH_HOST;
-          (posthog as any).init(PH_KEY, opts);
-          // keep only the surface we use to avoid leaking types
-          if (typeof (posthog as any).capture === 'function') {
-            posthogRef = { capture: (posthog as any).capture.bind(posthog) };
-          } else {
-            posthogRef = null;
-          }
-        })
-        .catch(() => {
-          // package missing or failed to load -> remain no-op
-        })
-    );
+  // --- Sentry (optional) ---
+  if (sentryDsn) {
+    try {
+      const mod = await import('@sentry/browser')
+      const sentry = (mod as any).default ?? mod
+      sentryRef = sentry
+      sentry.init?.({
+        dsn: sentryDsn,
+        environment: appEnv,
+        tracesSampleRate: 0,
+        beforeSend: (event: any) => {
+          // strip obvious PII paths
+          if (event?.user) delete event.user
+          if (event?.request) delete event.request
+          if (event?.breadcrumbs) delete event.breadcrumbs
+          return event
+        },
+      })
+    } catch {
+      // optional dep — silently no-op
+    }
   }
 
-  if (SENTRY_DSN) {
-    tasks.push(
-      dynamicImport<typeof import('@sentry/browser')>('@sentry/browser')
-        .then((sentryMod) => {
-          // Accept both shapes: named exports or default export
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const anyS = sentryMod as any;
-          // Prefer named exports first, fallback to default.
-          const Sentry =
-            (anyS && typeof anyS.init === 'function')
-              ? anyS
-              : (anyS?.default && typeof anyS.default.init === 'function'
-                  ? anyS.default
-                  : null);
-          if (!Sentry) return; // unsupported shape -> no-op
-          Sentry.init({
-            dsn: SENTRY_DSN,
-            environment: ENV,
-            tracesSampleRate: 0,
-            // Type explicitly to satisfy noImplicitAny without adding Sentry types
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            beforeSend(event: any) {
-              if (event.user) delete event.user;
-              if (event.request) delete event.request;
-              if (event.breadcrumbs) event.breadcrumbs = [];
-              return event;
-            },
-          });
-        })
-        .catch(() => {
-          // package missing or failed to load -> remain no-op
-        })
-    );
-  }
-
-  // If nothing to initialize (no provider keys), remain not-initialised so a later call can init.
-  if (tasks.length === 0) return;
-  initialised = true;
-  await Promise.all(tasks);
+  initialized = true
 }
 
-export function track(event: string, properties?: Record<string, unknown>): void {
-  const isClient = typeof window !== 'undefined' || isInVitest();
-  const ENV = process.env.NEXT_PUBLIC_APP_ENV;
-  const IS_DEV = ENV === 'dev';
-  if (!isClient || !IS_DEV || !posthogRef) return;
-  try {
-    posthogRef.capture(event, properties);
-  } catch {
-    // noop in dev
-  }
+export function track(event: string, props?: Record<string, unknown>): void {
+  if (!phRef?.capture) return
+  phRef.capture(event, props)
+}
+
+// For testing: reset module state
+export function resetAnalytics(): void {
+  initialized = false
+  phRef = null
+  sentryRef = null
 }

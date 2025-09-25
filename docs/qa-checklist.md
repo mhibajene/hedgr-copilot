@@ -3,6 +3,7 @@
 ## Smoke / Uptime
 - [ ] `/api/health` responds `200` with `{ status: "ok", ts: <ISO> }`
 - [ ] `/api/version` responds `200` with `{ version: <pkg.version> }`
+- [ ] **E2E smoke** (Playwright): `pnpm --filter @hedgr/frontend run e2e`
 
 ## Observability (dev-safe)
 - [ ] By default (no keys / non-dev), PostHog & Sentry do **not** initialise

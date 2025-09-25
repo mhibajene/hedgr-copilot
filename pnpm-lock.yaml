@@ -179,7 +179,7 @@ importers:
         specifier: ^9.11.0
         version: 9.36.0
       '@playwright/test':
-        specifier: ^1.48.2
+        specifier: ^1.55.1
         version: 1.55.1
       '@tailwindcss/postcss':
         specifier: ^4.1.11

@@ -22,9 +22,12 @@ beforeEach(() => {
   ;(globalThis as any).window = {}
 
   // Provide virtual modules so runtime doesn't try to resolve real packages.
-  // Use static virtual mocks so dynamic import() always resolves to these stubs.
-  vi.mock('posthog-js', () => ({ default: ph } as any), { virtual: true })
-  vi.mock('@sentry/browser', () => sentry as any, { virtual: true })
+  // Use doMock for dynamic imports to work properly
+  vi.doMock('posthog-js', () => ({ default: ph } as any))
+  vi.doMock('@sentry/browser', () => ({ default: sentry } as any))
+  
+  // Reset the initialized state for each test
+  vi.resetModules()
 })
 
 afterEach(() => {
@@ -66,7 +69,8 @@ describe('analytics env gating', () => {
     vi.stubEnv('NEXT_PUBLIC_POSTHOG_KEY', 'ph_test')
     vi.stubEnv('NEXT_PUBLIC_POSTHOG_HOST', 'https://ph.example')
 
-    const { initAnalytics, track } = await loadAnalytics()
+    const { initAnalytics, track, resetAnalytics } = await loadAnalytics()
+    resetAnalytics() // Reset state before test
     await initAnalytics()
     track('evt', { a: 1 })
 
@@ -86,7 +90,9 @@ describe('analytics env gating', () => {
     vi.stubEnv('NEXT_PUBLIC_APP_ENV', 'dev')
     vi.stubEnv('NEXT_PUBLIC_SENTRY_DSN', 'dsn_test')
 
-    const { initAnalytics } = await loadAnalytics()
+    const { initAnalytics, resetAnalytics } = await loadAnalytics()
+    resetAnalytics() // Reset state before test
+    
     await initAnalytics()
 
     expect(sentry.init).toHaveBeenCalledTimes(1)
