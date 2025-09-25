@@ -77,11 +77,11 @@ export async function initAnalytics(): Promise<void> {
           // Accept both shapes: named exports or default export
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const anyPh = phMod as any;
-          // Prefer named exports; fallback to default (mirrors Sentry logic).
+          // Prefer named exports; fallback to default. Only require `init` to exist.
           const posthog =
-            (anyPh && typeof anyPh.init === 'function' && typeof anyPh.capture === 'function')
+            (anyPh && typeof anyPh.init === 'function')
               ? anyPh
-              : (anyPh?.default && typeof anyPh.default.init === 'function' && typeof anyPh.default.capture === 'function'
+              : (anyPh?.default && typeof anyPh.default.init === 'function'
                   ? anyPh.default
                   : null);
           if (!posthog) {
@@ -104,7 +104,11 @@ export async function initAnalytics(): Promise<void> {
           if (PH_HOST) opts.api_host = PH_HOST;
           posthog.init(PH_KEY, opts);
           // keep only the surface we use to avoid leaking types
-          posthogRef = { capture: posthog.capture.bind(posthog) };
+          if (typeof posthog.capture === 'function') {
+            posthogRef = { capture: posthog.capture.bind(posthog) };
+          } else {
+            posthogRef = null;
+          }
         })
         .catch(() => {
           // package missing or failed to load -> remain no-op
