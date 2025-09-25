@@ -70,11 +70,14 @@ export async function initAnalytics(): Promise<void> {
           // Accept both shapes: named exports or default export
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const anyPh = phMod as any;
+          // Prefer named exports (so tests spying on `ph.init` see calls), fallback to default.
           const posthog =
-            anyPh?.default && typeof anyPh.default.init === 'function'
-              ? anyPh.default
-              : anyPh;
-          if (!posthog || typeof posthog.init !== 'function' || typeof posthog.capture !== 'function') {
+            (anyPh && typeof anyPh.init === 'function' && typeof anyPh.capture === 'function')
+              ? anyPh
+              : (anyPh?.default && typeof anyPh.default.init === 'function' && typeof anyPh.default.capture === 'function'
+                  ? anyPh.default
+                  : null);
+          if (!posthog) {
             return; // unsupported shape -> no-op
           }
           posthog.init(PH_KEY, {
@@ -108,12 +111,13 @@ export async function initAnalytics(): Promise<void> {
           // Accept both shapes: named exports or default export
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const anyS = sentryMod as any;
+          // Prefer named exports first, fallback to default.
           const Sentry =
-            anyS && typeof anyS.init === 'function'
+            (anyS && typeof anyS.init === 'function')
               ? anyS
-              : anyS?.default && typeof anyS.default.init === 'function'
-              ? anyS.default
-              : null;
+              : (anyS?.default && typeof anyS.default.init === 'function'
+                  ? anyS.default
+                  : null);
           if (!Sentry) return; // unsupported shape -> no-op
           Sentry.init({
             dsn: SENTRY_DSN,
