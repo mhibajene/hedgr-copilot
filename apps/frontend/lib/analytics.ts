@@ -14,6 +14,11 @@ type PosthogClient = {
 let posthogRef: PosthogClient | null = null;
 let initialised = false;
 
+// Avoid bundler resolution for optional deps: create a runtime-only importer.
+// eslint-disable-next-line @typescript-eslint/no-implied-eval
+const dynamicImport = <T = unknown>(mod: string): Promise<T> =>
+  (new Function('m', 'return import(m)'))(mod) as Promise<T>;
+
 export async function initAnalytics(): Promise<void> {
   const isClient = typeof window !== 'undefined';
   const ENV = process.env.NEXT_PUBLIC_APP_ENV;
@@ -29,7 +34,7 @@ export async function initAnalytics(): Promise<void> {
 
   if (PH_KEY && PH_HOST) {
     tasks.push(
-      import('posthog-js')
+      dynamicImport<typeof import('posthog-js')>('posthog-js')
         .then((ph) => {
           const posthog = ph.default as {
             init: (key: string, opts: Record<string, unknown>) => void;
@@ -61,7 +66,7 @@ export async function initAnalytics(): Promise<void> {
 
   if (SENTRY_DSN) {
     tasks.push(
-      import('@sentry/browser')
+      dynamicImport<typeof import('@sentry/browser')>('@sentry/browser')
         .then((Sentry) => {
           Sentry.init({
             dsn: SENTRY_DSN,
