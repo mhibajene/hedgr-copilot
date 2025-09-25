@@ -14,13 +14,20 @@ type PosthogClient = {
 let posthogRef: PosthogClient | null = null;
 let initialised = false;
 
+// Detect Vitest so tests can initialize analytics without a real browser window.
+const isInVitest = (): boolean => {
+  try {
+    // @ts-expect-error vitest global during tests
+    return (typeof vi !== 'undefined') || (typeof import.meta !== 'undefined' && (import.meta as any).vitest);
+  } catch {
+    return false;
+  }
+};
+
 // Avoid bundler resolution in app runtime, but allow Vitest to mock by using static literals.
 const dynamicImport = async <T = unknown>(mod: string): Promise<T> => {
   try {
-    // Vitest exposes global `vi` or `import.meta.vitest`
-    // @ts-expect-error vitest global in tests
-    const isVitest = (typeof vi !== 'undefined') || (typeof import.meta !== 'undefined' && (import.meta as any).vitest);
-    if (isVitest) {
+    if (isInVitest()) {
       if (mod === 'posthog-js') {
         return (await import('posthog-js')) as T;
       }
@@ -37,7 +44,8 @@ const dynamicImport = async <T = unknown>(mod: string): Promise<T> => {
 };
 
 export async function initAnalytics(): Promise<void> {
-  const isClient = typeof window !== 'undefined';
+  // In tests, behave as client so init paths execute against mocks.
+  const isClient = typeof window !== 'undefined' || isInVitest();
   const ENV = process.env.NEXT_PUBLIC_APP_ENV;
   const IS_DEV = ENV === 'dev';
   const PH_KEY = process.env.NEXT_PUBLIC_POSTHOG_KEY;
@@ -111,7 +119,7 @@ export async function initAnalytics(): Promise<void> {
 }
 
 export function track(event: string, properties?: Record<string, unknown>): void {
-  const isClient = typeof window !== 'undefined';
+  const isClient = typeof window !== 'undefined' || isInVitest();
   const ENV = process.env.NEXT_PUBLIC_APP_ENV;
   const IS_DEV = ENV === 'dev';
   if (!isClient || !IS_DEV || !posthogRef) return;
