@@ -69,7 +69,8 @@ export async function initAnalytics(): Promise<void> {
 
   const tasks: Promise<void>[] = [];
 
-  if (PH_KEY && PH_HOST) {
+  // In tests and dev, allow init if a key exists. Use api_host only when explicitly provided.
+  if (PH_KEY) {
     tasks.push(
       dynamicImport<typeof import('posthog-js')>('posthog-js')
         .then((phMod) => {
@@ -86,8 +87,7 @@ export async function initAnalytics(): Promise<void> {
           if (!posthog) {
             return; // unsupported shape -> no-op
           }
-          posthog.init(PH_KEY, {
-            api_host: PH_HOST,
+          const opts: Record<string, unknown> = {
             capture_pageview: false,
             disable_session_recording: true,
             // keep ephemeral in dev
@@ -100,7 +100,9 @@ export async function initAnalytics(): Promise<void> {
               }
               return props;
             },
-          });
+          };
+          if (PH_HOST) opts.api_host = PH_HOST;
+          posthog.init(PH_KEY, opts);
           // keep only the surface we use to avoid leaking types
           posthogRef = { capture: posthog.capture.bind(posthog) };
         })
