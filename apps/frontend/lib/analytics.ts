@@ -59,11 +59,17 @@ export async function initAnalytics(): Promise<void> {
   if (PH_KEY && PH_HOST) {
     tasks.push(
       dynamicImport<typeof import('posthog-js')>('posthog-js')
-        .then((ph) => {
-          const posthog = ph.default as {
-            init: (key: string, opts: Record<string, unknown>) => void;
-            capture: (event: string, properties?: Record<string, unknown>) => void;
-          };
+        .then((phMod) => {
+          // Accept both shapes: named exports or default export
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const anyPh = phMod as any;
+          const posthog =
+            anyPh?.default && typeof anyPh.default.init === 'function'
+              ? anyPh.default
+              : anyPh;
+          if (!posthog || typeof posthog.init !== 'function' || typeof posthog.capture !== 'function') {
+            return; // unsupported shape -> no-op
+          }
           posthog.init(PH_KEY, {
             api_host: PH_HOST,
             capture_pageview: false,
@@ -91,7 +97,17 @@ export async function initAnalytics(): Promise<void> {
   if (SENTRY_DSN) {
     tasks.push(
       dynamicImport<typeof import('@sentry/browser')>('@sentry/browser')
-        .then((Sentry) => {
+        .then((sentryMod) => {
+          // Accept both shapes: named exports or default export
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const anyS = sentryMod as any;
+          const Sentry =
+            anyS && typeof anyS.init === 'function'
+              ? anyS
+              : anyS?.default && typeof anyS.default.init === 'function'
+              ? anyS.default
+              : null;
+          if (!Sentry) return; // unsupported shape -> no-op
           Sentry.init({
             dsn: SENTRY_DSN,
             environment: ENV,
