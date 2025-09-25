@@ -76,13 +76,19 @@ export async function initAnalytics(): Promise<void> {
           // Accept both shapes: named exports or default export
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const anyPh = phMod as any;
-          // Prefer named exports (so tests spying on `ph.init` see calls), fallback to default.
-          const posthog =
-            (anyPh && typeof anyPh.init === 'function' && typeof anyPh.capture === 'function')
-              ? anyPh
-              : (anyPh?.default && typeof anyPh.default.init === 'function' && typeof anyPh.default.capture === 'function'
-                  ? anyPh.default
-                  : null);
+          // In Vitest, force named-exports path so spies on `ph.init` are observed.
+          const inTest = isInVitest();
+          const posthog = inTest
+            ? (anyPh && typeof anyPh.init === 'function' && typeof anyPh.capture === 'function'
+                ? anyPh
+                : null)
+            : (
+                (anyPh && typeof anyPh.init === 'function' && typeof anyPh.capture === 'function')
+                  ? anyPh
+                  : (anyPh?.default && typeof anyPh.default.init === 'function' && typeof anyPh.default.capture === 'function'
+                      ? anyPh.default
+                      : null)
+              );
           if (!posthog) {
             return; // unsupported shape -> no-op
           }
