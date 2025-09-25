@@ -22,9 +22,9 @@ beforeEach(() => {
   ;(globalThis as any).window = {}
 
   // Provide virtual modules so runtime doesn't try to resolve real packages.
-  // Use doMock so the mock applies for this test's dynamic import timing.
-  vi.doMock('posthog-js', () => ({ default: ph } as any))
-  vi.doMock('@sentry/browser', () => sentry as any)
+  // Use static virtual mocks so dynamic import() always resolves to these stubs.
+  vi.mock('posthog-js', () => ({ default: ph } as any), { virtual: true })
+  vi.mock('@sentry/browser', () => sentry as any, { virtual: true })
 })
 
 afterEach(() => {
