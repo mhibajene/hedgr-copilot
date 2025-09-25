@@ -41,7 +41,7 @@ jobs:
         run: pnpm -w install --frozen-lockfile
 
       - name: Install Playwright browsers
-        run: pnpm --filter @hedgr/frontend exec playwright install --with-deps
+        run: pnpm --filter @hedgr/frontend install && pnpm --filter @hedgr/frontend exec playwright install --with-deps
 
       - name: Run Playwright (line reporter)
         run: pnpm --filter @hedgr/frontend run e2e:ci
