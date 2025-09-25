@@ -14,10 +14,26 @@ type PosthogClient = {
 let posthogRef: PosthogClient | null = null;
 let initialised = false;
 
-// Avoid bundler resolution for optional deps: create a runtime-only importer.
-// eslint-disable-next-line @typescript-eslint/no-implied-eval
-const dynamicImport = <T = unknown>(mod: string): Promise<T> =>
-  (new Function('m', 'return import(m)'))(mod) as Promise<T>;
+// Avoid bundler resolution for optional deps, but keep Vitest-friendly imports so vi.mock works.
+const dynamicImport = async <T = unknown>(mod: string): Promise<T> => {
+  // In Vitest, prefer native dynamic import so mocked modules are intercepted.
+  // Vitest exposes `import.meta.vitest` and a global `vi`.
+  try {
+    // @ts-expect-error vitest flag
+    const isVitest = (typeof vi !== 'undefined') || (typeof import.meta !== 'undefined' && (import.meta as any).vitest);
+    if (isVitest) {
+      // @vite-ignore keeps Vite from trying to pre-bundle a dynamic string
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore - dynamic import with variable is valid at runtime
+      return await import(/* @vite-ignore */ mod) as T;
+    }
+  } catch {
+    // noop — fall through to bundler-safe importer
+  }
+  // Default: runtime-only importer that bundlers cannot statically analyze.
+  // eslint-disable-next-line @typescript-eslint/no-implied-eval
+  return (new Function('m', 'return import(m)'))(mod) as Promise<T>;
+};
 
 export async function initAnalytics(): Promise<void> {
   const isClient = typeof window !== 'undefined';
