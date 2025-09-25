@@ -17,11 +17,17 @@ let initialised = false;
 // Detect Vitest so tests can initialize analytics without a real browser window.
 const isInVitest = (): boolean => {
   try {
+    // Most reliable signals in Vitest:
+    if (process.env.NODE_ENV === 'test') return true;
+    if (process.env.VITEST_WORKER_ID) return true;
+    // Fallbacks (may not be present depending on config):
     // @ts-expect-error vitest global during tests
-    return (typeof vi !== 'undefined') || (typeof import.meta !== 'undefined' && (import.meta as any).vitest);
+    if (typeof vi !== 'undefined') return true;
+    if (typeof import.meta !== 'undefined' && (import.meta as any).vitest) return true;
   } catch {
-    return false;
+    // ignore
   }
+  return false;
 };
 
 // Avoid bundler resolution in app runtime, but allow Vitest to mock by using static literals.
