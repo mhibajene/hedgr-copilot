@@ -44,7 +44,6 @@ export async function initAnalytics(): Promise<void> {
   const SENTRY_DSN = process.env.NEXT_PUBLIC_SENTRY_DSN;
 
   if (!isClient || !IS_DEV || initialised) return;
-  initialised = true;
 
   const tasks: Promise<void>[] = [];
 
@@ -104,6 +103,9 @@ export async function initAnalytics(): Promise<void> {
     );
   }
 
+  // If nothing to initialize (no provider keys), remain not-initialised so a later call can init.
+  if (tasks.length === 0) return;
+  initialised = true;
   await Promise.all(tasks);
 }
 
