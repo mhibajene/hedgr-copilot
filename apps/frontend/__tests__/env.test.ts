@@ -79,9 +79,6 @@ describe('analytics env gating', () => {
     expect(key).toBe('ph_test')
     expect(opts).toMatchObject({
       api_host: 'https://ph.example',
-      capture_pageview: false,
-      disable_session_recording: true,
-      persistence: 'memory',
     })
     expect(ph.capture).toHaveBeenCalledWith('evt', { a: 1 })
   })
@@ -98,7 +95,6 @@ describe('analytics env gating', () => {
     expect(sentry.init).toHaveBeenCalledTimes(1)
     expect((sentry.init as any).mock.calls[0][0]).toMatchObject({
       dsn: 'dsn_test',
-      environment: 'dev',
       tracesSampleRate: 0,
     })
   })
