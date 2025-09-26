@@ -43,6 +43,9 @@ jobs:
           # sanity: list workspaces to confirm node_modules are linked
           pnpm -r ls --depth=0
 
+      - name: Build UI package
+        run: pnpm --filter @hedgr/ui run build
+
       - name: Build frontend (smoke)
         run: pnpm --filter @hedgr/frontend run build
 
