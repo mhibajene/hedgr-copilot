@@ -72,3 +72,9 @@ Thumbs.db
 *.pid
 # TypeScript build info
 *.tsbuildinfo
+
+# Playwright artifacts
+playwright-report/
+apps/frontend/playwright-report/
+test-results/
+apps/frontend/test-results/

@@ -11,11 +11,14 @@
 
     // emit only types for downstream consumers
     "declaration": true,
+    "declarationMap": true,
     "outDir": "dist",
     "rootDir": "src",
 
     // enforce strictness
     "strict": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
 
     // make `JSX` namespace available
     "lib": ["DOM", "ESNext"],

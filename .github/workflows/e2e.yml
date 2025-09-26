@@ -1,0 +1,56 @@
+name: E2E (Playwright)
+
+permissions:
+  contents: read
+
+on:
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch: {}
+
+concurrency:
+  group: e2e-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  e2e:
+    name: E2E smoke (@hedgr/frontend)
+    # Fork-safe: only run for PRs from this repo
+    if: ${{ github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository) }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: ""
+          package_json_file: package.json
+          run_install: false
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Install deps
+        run: |
+          pnpm -r install --frozen-lockfile
+          # sanity: list workspaces to confirm node_modules are linked
+          pnpm -r ls --depth=0
+
+      - name: Build UI package
+        run: pnpm --filter @hedgr/ui run build
+
+      - name: Build frontend (smoke)
+        run: pnpm --filter @hedgr/frontend run build
+
+      - name: Install Playwright browsers
+        run: pnpm --filter @hedgr/frontend exec playwright install --with-deps
+
+      - name: Run Playwright (line reporter)
+        run: pnpm --filter @hedgr/frontend run e2e:ci
