@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   transpilePackages: ['@hedgr/ui'],
-  webpack: (config, { isServer }) => {
+  webpack: (config) => {
     // Handle optional analytics modules
     config.resolve.fallback = {
       ...config.resolve.fallback,

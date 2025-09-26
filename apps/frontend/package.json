@@ -21,11 +21,12 @@
   "dependencies": {
     "@hedgr/ui": "workspace:*",
     "next": "^15.3.5",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.11.0",
+    "@next/eslint-plugin-next": "^15.5.4",
     "@playwright/test": "^1.55.1",
     "@sentry/browser": "^8.40.0",
     "@tailwindcss/postcss": "^4.1.11",
