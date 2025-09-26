@@ -23,28 +23,36 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup pnpm
+      - name: Setup pnpm (use version from packageManager)
         uses: pnpm/action-setup@v4
         with:
-          version: ""
-          package_json_file: package.json
           run_install: false
 
-      - name: Setup Node
+      - name: Setup Node (w/ pnpm cache)
         uses: actions/setup-node@v4
         with:
-          node-version: 20
-          cache: pnpm
-          cache-dependency-path: pnpm-lock.yaml
+          node-version: '20'
+          cache: 'pnpm'
+          cache-dependency-path: 'pnpm-lock.yaml'
 
       - name: Install deps
-        run: |
-          pnpm -r install --frozen-lockfile
-          # sanity: list workspaces to confirm node_modules are linked
-          pnpm -r ls --depth=0
+        run: pnpm -r install --frozen-lockfile
 
-      - name: Build UI package
-        run: pnpm --filter @hedgr/ui run build
+      # ---- Performance caches ----
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('apps/frontend/package.json') }}
+          restore-keys: |
+            ${{ runner.os }}-playwright-
+
+      # ---- Fast-fail guard before heavy Next build ----
+      - name: Verify @hedgr/ui is resolvable from frontend
+        run: pnpm --filter @hedgr/frontend exec node -e "require.resolve('@hedgr/ui'); console.log('ui-ok')"
+
+      - name: Build UI package (if present)
+        run: pnpm --filter @hedgr/ui --if-present run build
 
       - name: Build frontend (smoke)
         run: pnpm --filter @hedgr/frontend run build
