@@ -78,7 +78,7 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
+  "description": "Hedgr Copilot - AI-powered trading assistant",
   "pnpm": {
     "overrides": {
       "react": "19.1.1",
