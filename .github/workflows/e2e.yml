@@ -38,7 +38,10 @@ jobs:
           cache-dependency-path: pnpm-lock.yaml
 
       - name: Install deps
-        run: pnpm -w install --frozen-lockfile
+        run: |
+          pnpm -r install --frozen-lockfile
+          # sanity: list workspaces to confirm node_modules are linked
+          pnpm -r ls --depth=0
 
       - name: Build frontend (smoke)
         run: pnpm --filter @hedgr/frontend run build
