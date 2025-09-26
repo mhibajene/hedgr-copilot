@@ -6,9 +6,9 @@
   "sideEffects": false,
   "exports": {
     ".": {
-      "types": "./src/index.ts",
-      "source": "./src/index.ts",
-      "default": "./src/index.ts"
+      "types": "./src/index.tsx",
+      "source": "./src/index.tsx",
+      "default": "./src/index.tsx"
     }
   },
   "scripts": {
