@@ -1,10 +1,36 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:recommended", ":pinVersions", ":semanticCommits"],
+  "extends": [
+    "config:recommended",
+    ":pinVersions",
+    ":semanticCommits"
+  ],
   "rangeStrategy": "pin",
-  "labels": ["deps"],
+  "labels": ["deps", "renovate"],
+  "timezone": "Africa/Nairobi",
+  "schedule": ["after 21:00 on sunday"],
+  "lockFileMaintenance": {
+    "enabled": true,
+    "schedule": ["after 21:00 on sunday"]
+  },
+  "rebaseWhen": "conflicted",
+  "dependencyDashboard": true,
+  "prHourlyLimit": 2,
+  "requiredStatusChecks": ["validate", "E2E smoke (@hedgr/frontend)"],
   "packageRules": [
     { "matchManagers": ["pnpm"], "enabled": true },
-    { "matchPackagePatterns": ["^next$", "^react$", "^react-dom$"], "groupName": "framework" }
+
+    { "groupName": "react-next", "matchPackagePatterns": ["^next", "^react$", "^react-dom$"] },
+    { "groupName": "typescript", "matchPackagePatterns": ["^typescript$", "^@types/"] },
+    { "groupName": "eslint", "matchPackagePatterns": ["^eslint", "^@eslint/", "eslint-"] },
+    { "groupName": "playwright", "matchPackagePatterns": ["^@playwright/", "^playwright$"] },
+    { "groupName": "tailwind", "matchPackagePatterns": ["^tailwind", "^@tailwind"] },
+    { "groupName": "turbo", "matchPackagePatterns": ["^turbo$", "^@turbo/"] },
+
+    {
+      "matchUpdateTypes": ["patch", "minor"],
+      "matchDepTypes": ["devDependencies"],
+      "automerge": true
+    }
   ]
 }

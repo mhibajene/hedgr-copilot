@@ -13,3 +13,8 @@
 
 # Docs
 /docs/**            @mhibajene
+
+# Explicit policy files (clarity)
+/.github/CODEOWNERS                   @mhibajene
+/renovate.json                        @mhibajene
+/.github/pull_request_template.md     @mhibajene

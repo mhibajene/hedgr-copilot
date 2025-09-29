@@ -1,18 +1,24 @@
-import { defineConfig } from '@playwright/test'
+import { defineConfig, devices } from '@playwright/test'
 
 export default defineConfig({
   testDir: './tests-e2e',
   timeout: 30_000,
+  expect: { timeout: 10_000 },
   fullyParallel: true,
-  reporter: [['list']],
+  retries: process.env.CI ? 1 : 0,
   use: {
-    baseURL: process.env.PLAYWRIGHT_BASE_URL || 'http://localhost:3000',
+    baseURL: 'http://127.0.0.1:3000',
+    headless: true,
+    trace: 'retain-on-failure',
+    video: 'retain-on-failure',
   },
   webServer: {
-    // Build + start for a predictable environment (no Doppler needed)
-    command: 'pnpm run serve:test',
-    url: 'http://localhost:3000/api/health',
+    command: 'pnpm --filter @hedgr/frontend start', // next start on built output
+    url: 'http://127.0.0.1:3000',
     reuseExistingServer: !process.env.CI,
-    timeout: 120_000,
+    timeout: 180_000, // CI buffer
   },
+  projects: [
+    { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
+  ],
 })

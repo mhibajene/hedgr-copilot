@@ -1,0 +1,52 @@
+name: E2E smoke (@hedgr/frontend)
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  e2e:
+    name: E2E smoke (@hedgr/frontend)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Enable Corepack (pnpm)
+        run: |
+          corepack enable
+          corepack install
+
+      - name: Use Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+
+      - name: Install (frozen lockfile)
+        run: pnpm -r install --frozen-lockfile
+
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('**/pnpm-lock.yaml') }}
+
+      - name: Install Playwright (with deps)
+        run: pnpm --filter @hedgr/frontend exec playwright install --with-deps
+
+      # Fork safety: no secrets, no analytics
+      - name: Set CI-safe env
+        run: |
+          echo "NEXT_PUBLIC_APP_ENV=dev" >> $GITHUB_ENV
+          echo "POSTHOG_KEY=" >> $GITHUB_ENV
+          echo "SENTRY_DSN=" >> $GITHUB_ENV
+
+      - name: Build frontend (prod mode)
+        run: pnpm --filter @hedgr/frontend build
+
+      - name: Run Playwright (CI)
+        run: pnpm --filter @hedgr/frontend run e2e:ci
