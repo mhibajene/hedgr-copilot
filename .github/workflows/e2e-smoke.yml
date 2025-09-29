@@ -28,6 +28,10 @@ jobs:
           node -v
           pnpm -v
 
+      - name: Guard: lockfile/manifest drift
+        run: node scripts/ci/guard-lock-drift.mjs
+        working-directory: .
+
       - name: Use Node.js 20
         uses: actions/setup-node@v4
         with:
