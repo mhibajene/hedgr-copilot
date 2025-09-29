@@ -40,7 +40,7 @@ jobs:
         run: pnpm -w typecheck
 
       - name: Lint (workspace)
-       run: pnpm -w lint
+        run: pnpm -w lint
 
   build:
     runs-on: ubuntu-latest
