@@ -21,18 +21,24 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # Node first, then Corepack for correct pnpm version
+      - name: Use Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+
       - name: Enable Corepack + pin pnpm
         run: |
           corepack enable
           corepack install
           node -v
           pnpm -v
+        working-directory: .
 
-      - name: Use Node.js 20
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'pnpm'
+      - name: Guard: lockfile/manifest drift
+        run: node scripts/ci/guard-lock-drift.mjs
+        working-directory: .
 
       - name: Install (frozen lockfile)
         run: pnpm -r install --frozen-lockfile
@@ -43,9 +49,6 @@ jobs:
         with:
           path: ~/.cache/ms-playwright
           key: ${{ runner.os }}-playwright-${{ hashFiles('**/pnpm-lock.yaml') }}
-
-      - name: Install Playwright (with deps)
-        run: pnpm exec playwright install --with-deps
 
       - name: CI-safe env
         run: |
@@ -58,6 +61,9 @@ jobs:
 
       - name: Build (prod)
         run: pnpm build
+
+      - name: Install Playwright (with deps)
+        run: pnpm exec playwright install --with-deps
 
       - name: Run Playwright (CI)
         run: pnpm run e2e:ci
