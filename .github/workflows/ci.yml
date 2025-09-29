@@ -10,10 +10,8 @@ jobs:
   check:
     name: Fork-safe checks (typecheck/lint)
     runs-on: ubuntu-latest
-    # No secrets; read-only token so forks are safe
     permissions:
       contents: read
-    # Ensure this job only runs for push/PR events (workflow can have other events)
     if: ${{ github.event_name == 'pull_request' || github.event_name == 'push' }}
     steps:
       - name: Checkout
@@ -21,17 +19,27 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup Node (use repo's Node version file if present)
+      # Prefer repo-pinned Node from .nvmrc if present…
+      - name: Setup Node from .nvmrc (if present)
+        if: ${{ hashFiles('.nvmrc') != '' }}
         uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
+          cache: 'pnpm'
+
+      # …otherwise fall back to Node 20 (canonical)
+      - name: Setup Node 20 (fallback)
+        if: ${{ hashFiles('.nvmrc') == '' }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
           cache: 'pnpm'
 
       - name: Enable Corepack (respect packageManager pnpm version)
         run: corepack enable
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm -r install --frozen-lockfile
 
       - name: Guard versions (no "latest" or "*")
         run: pnpm run ci:guard:versions
@@ -44,8 +52,6 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
-
-    # Use child configs you selected: dev_config_dev for PRs, stg_config_stg for main
     env:
       DOPPLER_TOKEN: ${{ github.event_name == 'pull_request' && secrets.DOPPLER_TOKEN_DEV || secrets.DOPPLER_TOKEN_STG }}
       DOPPLER_CONFIG: ${{ github.event_name == 'pull_request' && 'dev_config_dev' || 'stg_config_stg' }}
@@ -53,7 +59,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Repo secrets aren't exposed to forked PRs; guard to avoid a hard failure
       - name: Fetch secrets from Doppler
         if: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.fork == false }}
         uses: dopplerhq/secrets-fetch-action@v1.3.0
@@ -73,7 +78,7 @@ jobs:
           run_install: false
 
       - name: Install
-        run: pnpm install --frozen-lockfile
+        run: pnpm -r install --frozen-lockfile
 
       - name: Validate frontend env
         run: pnpm run validate:env:frontend
