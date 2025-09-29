@@ -18,6 +18,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # Always pick Node first so Corepack resolves the right pnpm
+      - name: Use Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+
       - name: Enable Corepack + pin pnpm
         run: |
           corepack enable
@@ -27,12 +34,6 @@ jobs:
 
       - name: Guard: lockfile/manifest drift
         run: node scripts/ci/guard-lock-drift.mjs
-
-      - name: Use Node.js 20
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'pnpm'
 
       - name: Install (frozen lockfile)
         run: pnpm -r install --frozen-lockfile
@@ -44,4 +45,4 @@ jobs:
         run: pnpm -w lint
 
       - name: Unit tests
-        run: pnpm -w test
+        run: pnpm -w test -- --run
