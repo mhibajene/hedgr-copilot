@@ -7,18 +7,19 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: e2e-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   e2e:
     name: E2E smoke (@hedgr/frontend)
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/frontend
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Enable Corepack (pnpm)
-        run: |
-          corepack enable
-          corepack install
+      - uses: actions/checkout@v4
 
       - name: Use Node.js 20
         uses: actions/setup-node@v4
@@ -26,8 +27,16 @@ jobs:
           node-version: '20'
           cache: 'pnpm'
 
+      - name: Enable Corepack + pin pnpm
+        run: |
+          corepack enable
+          corepack install
+          node -v
+          pnpm -v
+
       - name: Install (frozen lockfile)
         run: pnpm -r install --frozen-lockfile
+        working-directory: .
 
       - name: Cache Playwright browsers
         uses: actions/cache@v4
@@ -36,17 +45,19 @@ jobs:
           key: ${{ runner.os }}-playwright-${{ hashFiles('**/pnpm-lock.yaml') }}
 
       - name: Install Playwright (with deps)
-        run: pnpm --filter @hedgr/frontend exec playwright install --with-deps
+        run: pnpm exec playwright install --with-deps
 
-      # Fork safety: no secrets, no analytics
-      - name: Set CI-safe env
+      - name: CI-safe env
         run: |
+          echo "CI=1" >> $GITHUB_ENV
+          echo "NODE_ENV=production" >> $GITHUB_ENV
+          echo "NEXT_TELEMETRY_DISABLED=1" >> $GITHUB_ENV
           echo "NEXT_PUBLIC_APP_ENV=dev" >> $GITHUB_ENV
           echo "POSTHOG_KEY=" >> $GITHUB_ENV
           echo "SENTRY_DSN=" >> $GITHUB_ENV
 
-      - name: Build frontend (prod mode)
-        run: pnpm --filter @hedgr/frontend build
+      - name: Build (prod)
+        run: pnpm build
 
       - name: Run Playwright (CI)
-        run: pnpm --filter @hedgr/frontend run e2e:ci
+        run: pnpm run e2e:ci

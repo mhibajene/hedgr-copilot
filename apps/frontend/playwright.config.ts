@@ -13,10 +13,10 @@ export default defineConfig({
     video: 'retain-on-failure',
   },
   webServer: {
-    command: 'pnpm --filter @hedgr/frontend start', // next start on built output
+    command: 'next start -p 3000', // run on already-built output
     url: 'http://127.0.0.1:3000',
     reuseExistingServer: !process.env.CI,
-    timeout: 180_000, // CI buffer
+    timeout: 180_000,
   },
   projects: [
     { name: 'chromium', use: { ...devices['Desktop Chrome'] } },

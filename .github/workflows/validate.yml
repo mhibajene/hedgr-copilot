@@ -7,24 +7,29 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: validate-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   validate:
     name: validate
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Enable Corepack (pnpm)
-        run: |
-          corepack enable
-          corepack install  # honors repo-pinned packageManager
+      - uses: actions/checkout@v4
 
       - name: Use Node.js 20
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'pnpm'
+
+      - name: Enable Corepack + pin pnpm
+        run: |
+          corepack enable
+          corepack install
+          node -v
+          pnpm -v
 
       - name: Install (frozen lockfile)
         run: pnpm -r install --frozen-lockfile
