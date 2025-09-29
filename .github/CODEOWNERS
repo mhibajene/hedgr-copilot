@@ -1,0 +1,15 @@
+# .github/CODEOWNERS
+# Default: everything requires a review from repo owner(s)
+*                   @mhibajene
+
+# Frontend app
+/apps/frontend/**   @mhibajene
+
+# UI package
+/packages/ui/**     @mhibajene
+
+# CI workflows
+/.github/**         @mhibajene
+
+# Docs
+/docs/**            @mhibajene

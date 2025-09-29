@@ -16,9 +16,7 @@
     "incremental": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["*"],
-      "@hedgr/ui": ["../../packages/ui/src"],
-      "@hedgr/ui/*": ["../../packages/ui/src/*"]
+      "@/*": ["*"]
     },
     "types": ["node"]
   },

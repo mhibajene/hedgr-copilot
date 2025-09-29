@@ -2,7 +2,7 @@
 import type { AppProps } from 'next/app'
 import { useEffect } from 'react'
 import type { FC } from 'react'
-import { initAnalytics } from '../lib/analytics'
+// import { initAnalytics } from '../lib/analytics'
 import '../styles/globals.css'
 import { Inter } from 'next/font/google'
 import dynamic from "next/dynamic";
@@ -12,7 +12,12 @@ const DevSecretsToast = dynamic(() => import('../components/DevSecretsToast'), {
 
 export default function App({ Component, pageProps }: AppProps) {
   useEffect(() => {
-    void initAnalytics();
+    // Dynamic import to avoid build-time resolution of optional dependencies
+    import('../lib/analytics').then(({ initAnalytics }) => {
+      void initAnalytics();
+    }).catch(() => {
+      // Silently fail if analytics can't be loaded
+    });
   }, []);
 
   return (

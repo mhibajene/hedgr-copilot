@@ -1,5 +1,6 @@
-import js from '@eslint/js';
-import tseslint from 'typescript-eslint';
+import js from '@eslint/js'
+import tseslint from 'typescript-eslint'
+import nextPlugin from '@next/eslint-plugin-next'
 
 export default [
   // Ignore build artifacts & generated types
@@ -13,6 +14,17 @@ export default [
 
   // TypeScript (no type-checking to keep config simple/fast)
   ...tseslint.configs.recommended,
+
+  // Next.js rules
+  {
+    plugins: {
+      '@next/next': nextPlugin,
+    },
+    rules: {
+      ...nextPlugin.configs.recommended.rules,
+      ...nextPlugin.configs['core-web-vitals'].rules,
+    },
+  },
 
   // Ensure TS parser for TS/TSX
   {
@@ -64,4 +76,4 @@ export default [
       '@typescript-eslint/no-unused-vars': 'off',
     },
   },
-];
+]

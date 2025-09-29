@@ -34,3 +34,30 @@ See: `docs/observability.md`
 ## Smoke checks
 - `GET /api/health` → `200 { status: "ok", ts: "<ISO>" }`
 - `GET /api/version` → `200 { version: "<apps/frontend package version>" }`
+
+## CI & E2E
+
+We run two required checks on PRs:
+
+- **Validate**: `pnpm -w validate` (unit tests + typecheck + lint)
+- **E2E (Playwright)**: headless smoke against the Next.js app
+
+### Run locally
+
+```bash
+# Install everything
+pnpm -w install
+
+# Build & test the UI package once if you change it
+pnpm --filter @hedgr/ui run build
+
+# Validate all (fast fail)
+pnpm -w validate
+
+# Install Playwright browsers (first run)
+pnpm --filter @hedgr/frontend exec playwright install --with-deps
+
+# Run E2E locally (uses dev server spun up by Playwright)
+pnpm --filter @hedgr/frontend run e2e   # headed
+pnpm --filter @hedgr/frontend run e2e:ci # headless, CI-like
+```

@@ -17,9 +17,12 @@
     "validate": "pnpm -w test && pnpm -w typecheck && pnpm -w lint",
     "dev:cli": "doppler run -- pnpm --filter @hedgr/frontend dev",
     "dev:docker": "doppler run -- docker compose up --build frontend",
-    "ci:guard:versions": "node ./scripts/ci/guard-no-latest.mjs"
+    "ci:guard:versions": "node ./scripts/ci/guard-no-latest.mjs",
+    "changeset": "changeset",
+    "version-packages": "changeset version && pnpm -w install"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.29.7",
     "@tailwindcss/postcss": "^4.1.11",
     "tsx": "^4.7.0",
     "turbo": "^2.5.4"
@@ -78,8 +81,12 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
+  "description": "Hedgr Copilot - AI-powered trading assistant",
   "pnpm": {
+    "overrides": {
+      "react": "19.1.1",
+      "react-dom": "19.1.1"
+    },
     "onlyBuiltDependencies": [
       "esbuild",
       "sharp",
