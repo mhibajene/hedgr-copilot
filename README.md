@@ -63,5 +63,11 @@ QA process: docs/qa-checklist.md. New PRs auto-use .github/pull_request_template
 - Pass validate and check the QA checklist.
 - Follow repo coding standards (TypeScript, tests with Vitest, ESLint v9).
 
+### How PRs get merged
+- **Auto-merge enabled**: PRs automatically merge once all conditions are met
+- **Required checks**: Fork-safe CI, E2E tests, and at least 1 approving review
+- **Branch protection**: Must be up-to-date with main branch
+- **Pre-merge validation**: Run `pnpm run validate` and `pnpm --filter @hedgr/frontend run e2e:ci` locally before creating PRs
+
 ## License
 TBD.

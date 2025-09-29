@@ -61,3 +61,24 @@ pnpm --filter @hedgr/frontend exec playwright install --with-deps
 pnpm --filter @hedgr/frontend run e2e   # headed
 pnpm --filter @hedgr/frontend run e2e:ci # headless, CI-like
 ```
+
+## Validation & Branch Protection
+
+### Pre-PR Validation
+Before creating a PR, run these commands to ensure your changes pass CI:
+
+```bash
+# Run all validation checks (equivalent to CI)
+pnpm run validate
+
+# Run E2E tests in CI mode
+pnpm --filter @hedgr/frontend run e2e:ci
+```
+
+### Branch Protection Rules
+- **Auto-merge enabled**: PRs automatically merge once all checks pass
+- **Required checks**: 
+  - Fork-safe CI (typecheck + lint)
+  - E2E (Playwright) smoke tests
+  - At least 1 approving review
+- **Up-to-date requirement**: Branch must be current with main
