@@ -41,4 +41,4 @@ jobs:
         run: pnpm -w lint
 
       - name: Unit tests
-        run: pnpm -w test -- --run
+        run: pnpm -w test
