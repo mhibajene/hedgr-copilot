@@ -3,6 +3,7 @@ on:
   pull_request:
   push:
     branches: [main]
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -25,8 +26,7 @@ jobs:
       - name: Use Node.js 20
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'pnpm'
+          node-version: '20'     # NOTE: no 'cache: pnpm' here
 
       - name: Enable Corepack + pin pnpm
         run: |
@@ -36,7 +36,21 @@ jobs:
           pnpm -v
         working-directory: .
 
-      - name: Guard: lockfile/manifest drift
+      # Cache pnpm store AFTER pnpm is available
+      - name: Compute pnpm store path
+        id: pnpm_store
+        run: echo "path=$(pnpm store path --silent)" >> "$GITHUB_OUTPUT"
+        working-directory: .
+
+      - name: Cache pnpm store
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.pnpm_store.outputs.path }}
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
+
+      - name: "Guard: lockfile/manifest drift"
         run: node scripts/ci/guard-lock-drift.mjs
         working-directory: .
 
@@ -58,6 +72,7 @@ jobs:
           echo "NEXT_PUBLIC_APP_ENV=dev" >> $GITHUB_ENV
           echo "POSTHOG_KEY=" >> $GITHUB_ENV
           echo "SENTRY_DSN=" >> $GITHUB_ENV
+        working-directory: .
 
       - name: Build (prod)
         run: pnpm build

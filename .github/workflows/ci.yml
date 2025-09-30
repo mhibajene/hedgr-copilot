@@ -10,10 +10,8 @@ jobs:
   check:
     name: Fork-safe checks (typecheck/lint)
     runs-on: ubuntu-latest
-    # No secrets; read-only token so forks are safe
     permissions:
       contents: read
-    # Ensure this job only runs for push/PR events (workflow can have other events)
     if: ${{ github.event_name == 'pull_request' || github.event_name == 'push' }}
     steps:
       - name: Checkout
@@ -21,17 +19,43 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup Node (use repo's Node version file if present)
+      # Use repo's Node (from .nvmrc) if present, else fall back to Node 20.
+      - name: Setup Node from .nvmrc (if present)
+        if: ${{ hashFiles('.nvmrc') != '' }}
         uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
-          cache: 'pnpm'
+          # NOTE: no cache here; pnpm not installed yet
 
-      - name: Enable Corepack (respect packageManager pnpm version)
-        run: corepack enable
+      - name: Setup Node 20 (fallback)
+        if: ${{ hashFiles('.nvmrc') == '' }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
 
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+      # Install/activate repo-pinned pnpm via Corepack
+      - name: Enable Corepack and install pinned pnpm
+        run: |
+          corepack enable
+          corepack install
+          node -v
+          pnpm -v
+
+      # Cache pnpm store (keyed by lockfile)
+      - name: Compute pnpm store path
+        id: pnpm_store
+        run: echo "path=$(pnpm store path --silent)" >> "$GITHUB_OUTPUT"
+
+      - name: Cache pnpm store
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.pnpm_store.outputs.path }}
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
+
+      - name: Install dependencies (frozen)
+        run: pnpm -r install --frozen-lockfile
 
       - name: Guard versions (no "latest" or "*")
         run: pnpm run ci:guard:versions
@@ -40,12 +64,10 @@ jobs:
         run: pnpm -w typecheck
 
       - name: Lint (workspace)
-       run: pnpm -w lint
+        run: pnpm -w lint
 
   build:
     runs-on: ubuntu-latest
-
-    # Use child configs you selected: dev_config_dev for PRs, stg_config_stg for main
     env:
       DOPPLER_TOKEN: ${{ github.event_name == 'pull_request' && secrets.DOPPLER_TOKEN_DEV || secrets.DOPPLER_TOKEN_STG }}
       DOPPLER_CONFIG: ${{ github.event_name == 'pull_request' && 'dev_config_dev' || 'stg_config_stg' }}
@@ -53,7 +75,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Repo secrets aren't exposed to forked PRs; guard to avoid a hard failure
       - name: Fetch secrets from Doppler
         if: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.fork == false }}
         uses: dopplerhq/secrets-fetch-action@v1.3.0
@@ -73,7 +94,7 @@ jobs:
           run_install: false
 
       - name: Install
-        run: pnpm install --frozen-lockfile
+        run: pnpm -r install --frozen-lockfile
 
       - name: Validate frontend env
         run: pnpm run validate:env:frontend
