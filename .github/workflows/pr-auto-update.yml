@@ -1,0 +1,61 @@
+name: PR auto-update (merge main -> PR heads)
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "0 */6 * * *"    # safety sweep every 6h (UTC)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: pr-auto-update-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Update open PR branches
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+
+            // List open PRs targeting main
+            const prs = await github.paginate(
+              github.rest.pulls.list,
+              { owner, repo, state: 'open', base: 'main', per_page: 100 }
+            );
+
+            let touched = 0;
+            for (const pr of prs) {
+              // Only update branches we can push to (internal branches or forks with maintainer edits)
+              const isInternal = pr.head.repo && pr.head.repo.full_name === `${owner}/${repo}`;
+              const canModify = pr.maintainer_can_modify !== false;
+
+              if (!isInternal && !canModify) {
+                core.info(`Skip #${pr.number}: external fork without maintainer access`);
+                continue;
+              }
+              if (pr.draft) {
+                core.info(`Skip #${pr.number}: draft`);
+                continue;
+              }
+
+              try {
+                await github.rest.pulls.updateBranch({
+                  owner, repo, pull_number: pr.number,
+                });
+                core.info(`Updated #${pr.number} (${pr.head.ref})`);
+                touched++;
+              } catch (e) {
+                // Common reasons: already up to date, update not allowed, merge conflict
+                core.warning(`Could not update #${pr.number}: ${e.message}`);
+              }
+            }
+            core.summary.addHeading('PR auto-update results')
+              .addRaw(`Updated: ${touched} PR(s)`).write();
