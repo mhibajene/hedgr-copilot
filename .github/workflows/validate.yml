@@ -23,7 +23,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'pnpm'
 
       - name: Enable Corepack + pin pnpm
         run: |
@@ -31,6 +30,12 @@ jobs:
           corepack install
           node -v
           pnpm -v
+
+      - name: Lint workflows (actionlint)
+        uses: rhysd/actionlint@v1
+
+      - name: Guard: workflow invariants
+        run: node scripts/ci/guard-workflows.mjs
 
       - name: Guard: lockfile/manifest drift
         run: node scripts/ci/guard-lock-drift.mjs
