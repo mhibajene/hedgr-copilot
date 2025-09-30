@@ -37,7 +37,7 @@ jobs:
           pnpm -v
         working-directory: .
 
-      - name: Guard: lockfile/manifest drift
+      - name: "Guard: lockfile/manifest drift"
         run: node scripts/ci/guard-lock-drift.mjs
         working-directory: .
 
@@ -59,6 +59,7 @@ jobs:
           echo "NEXT_PUBLIC_APP_ENV=dev" >> $GITHUB_ENV
           echo "POSTHOG_KEY=" >> $GITHUB_ENV
           echo "SENTRY_DSN=" >> $GITHUB_ENV
+        working-directory: .
 
       - name: Build (prod)
         run: pnpm build
