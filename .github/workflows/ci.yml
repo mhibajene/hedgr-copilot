@@ -19,26 +19,42 @@ jobs:
         with:
           fetch-depth: 0
 
-      # Prefer repo-pinned Node from .nvmrc if present…
+      # Use repo's Node (from .nvmrc) if present, else fall back to Node 20.
       - name: Setup Node from .nvmrc (if present)
         if: ${{ hashFiles('.nvmrc') != '' }}
         uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
-          cache: 'pnpm'
+          # NOTE: no cache here; pnpm not installed yet
 
-      # …otherwise fall back to Node 20 (canonical)
       - name: Setup Node 20 (fallback)
         if: ${{ hashFiles('.nvmrc') == '' }}
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'pnpm'
 
-      - name: Enable Corepack (respect packageManager pnpm version)
-        run: corepack enable
+      # Install/activate repo-pinned pnpm via Corepack
+      - name: Enable Corepack and install pinned pnpm
+        run: |
+          corepack enable
+          corepack install
+          node -v
+          pnpm -v
 
-      - name: Install dependencies
+      # Cache pnpm store (keyed by lockfile)
+      - name: Compute pnpm store path
+        id: pnpm_store
+        run: echo "path=$(pnpm store path --silent)" >> "$GITHUB_OUTPUT"
+
+      - name: Cache pnpm store
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.pnpm_store.outputs.path }}
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
+
+      - name: Install dependencies (frozen)
         run: pnpm -r install --frozen-lockfile
 
       - name: Guard versions (no "latest" or "*")
