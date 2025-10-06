@@ -17,7 +17,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # Node resolution (prefer .nvmrc; fallback to 20)
       - name: Setup Node from .nvmrc (if present)
         if: ${{ hashFiles('.nvmrc') != '' }}
         uses: actions/setup-node@v4
@@ -30,7 +29,6 @@ jobs:
         with:
           node-version: '20'
 
-      # Corepack + repo-pinned pnpm
       - name: Enable Corepack & install pinned pnpm
         run: |
           corepack enable
@@ -38,7 +36,6 @@ jobs:
           node -v
           pnpm -v
 
-      # Cache pnpm store keyed by lockfile
       - name: Compute pnpm store path
         id: pnpm_store
         run: echo "path=$(pnpm store path --silent)" >> "$GITHUB_OUTPUT"
@@ -51,7 +48,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-
 
-      # Optional guards (non-fatal)
       - name: Guard workflows (optional)
         run: node scripts/ci/guard-workflows.mjs
         continue-on-error: true
@@ -60,7 +56,6 @@ jobs:
         run: node scripts/ci/guard-lock-drift.mjs
         continue-on-error: true
 
-      # Install & validate
       - name: Install dependencies (frozen)
         run: pnpm -r install --frozen-lockfile
 
@@ -86,8 +81,5 @@ jobs:
             const required = ['product:approved','qa:approved'];
             const labels = (context.payload.pull_request?.labels ?? []).map(l => l.name);
             const missing = required.filter(x => !labels.includes(x));
-            if (missing.length) {
-              core.setFailed(`Missing required QA labels: ${missing.join(', ')}`);
-            } else {
-              core.info('QA labels present ✔');
-            }
+            if (missing.length) core.setFailed(`Missing required QA labels: ${missing.join(', ')}`);
+            else core.info('QA labels present ✔');
