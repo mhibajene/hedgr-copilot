@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# macOS-safe, idempotent label bootstrap (no read -d '')
 create() { gh label create "$1" --color "$2" --description "$3" --force >/dev/null || true; }
 
+# Core QA labels
 create "product:approved" "2ea043" "Product content approved (HedgrOps)"
 create "qa:approved"      "2ea043" "QA pre-merge approval (Codex)"
 create "qa:blocked"       "cf222e" "QA: merge blocked"
