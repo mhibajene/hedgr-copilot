@@ -1,20 +1,10 @@
-# .github/CODEOWNERS
-# Default: everything requires a review from repo owner(s)
-*                   @mhibajene
+# Default
+*                       @mhibajene
 
-# Frontend app
-/apps/frontend/**   @mhibajene
+# App & UI
+/apps/**                @mhibajene
+/packages/ui/**         @mhibajene
 
-# UI package
-/packages/ui/**     @mhibajene
-
-# CI workflows
-/.github/**         @mhibajene
-
-# Docs
-/docs/**            @mhibajene
-
-# Explicit policy files (clarity)
-/.github/CODEOWNERS                   @mhibajene
-/renovate.json                        @mhibajene
-/.github/pull_request_template.md     @mhibajene
+# CI/workflows & guards
+/.github/**             @mhibajene
+/scripts/ci/**          @mhibajene
