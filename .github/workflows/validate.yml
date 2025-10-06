@@ -17,7 +17,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # Node version resolution (prefer .nvmrc; fallback to 20)
+      # Node resolution (prefer .nvmrc; fallback to 20)
       - name: Setup Node from .nvmrc (if present)
         if: ${{ hashFiles('.nvmrc') != '' }}
         uses: actions/setup-node@v4
@@ -38,7 +38,7 @@ jobs:
           node -v
           pnpm -v
 
-      # Cache pnpm store (lockfile keyed)
+      # Cache pnpm store keyed by lockfile
       - name: Compute pnpm store path
         id: pnpm_store
         run: echo "path=$(pnpm store path --silent)" >> "$GITHUB_OUTPUT"
@@ -51,7 +51,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-
 
-      # Guard scripts (keep them if present)
+      # Optional guards (non-fatal)
       - name: Guard workflows (optional)
         run: node scripts/ci/guard-workflows.mjs
         continue-on-error: true
@@ -60,11 +60,10 @@ jobs:
         run: node scripts/ci/guard-lock-drift.mjs
         continue-on-error: true
 
-      # Install (frozen)
+      # Install & validate
       - name: Install dependencies (frozen)
         run: pnpm -r install --frozen-lockfile
 
-      # Typecheck / Lint / Unit
       - name: Typecheck (workspace)
         run: pnpm -w typecheck
 
