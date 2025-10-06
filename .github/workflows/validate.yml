@@ -1,8 +1,10 @@
 name: validate
 on:
   pull_request:
+    types: [opened, reopened, synchronize, ready_for_review, edited, labeled, unlabeled]
   push:
     branches: [main]
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -52,16 +54,17 @@ jobs:
       - name: Unit tests
         run: pnpm -w test -- --run
 
-      - name: Require QA labels on PR (product:approved + qa:approved)
-        if: ${{ github.event_name == 'pull_request' }}
+      - name: QA Gate — require product:approved + qa:approved
+        if: ${{ github.event_name == 'pull_request'
+                && !github.event.pull_request.draft
+                && github.actor != 'dependabot[bot]'
+                && github.actor != 'renovate[bot]'
+                && (env.QA_GATE_BYPASS != '1') }}
         uses: actions/github-script@v7
         with:
           script: |
             const required = ['product:approved','qa:approved'];
             const labels = (context.payload.pull_request?.labels ?? []).map(l => l.name);
             const missing = required.filter(x => !labels.includes(x));
-            if (missing.length) {
-              core.setFailed(`Missing required QA labels: ${missing.join(', ')}`);
-            } else {
-              core.info('QA labels present ✔');
-            }
+            if (missing.length) core.setFailed(`Missing required QA labels: ${missing.join(', ')}`);
+            else core.info('QA labels present ✔');

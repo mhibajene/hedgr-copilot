@@ -1,17 +1,12 @@
 #!/usr/bin/env bash
 set -euo pipefail
-OWNER_REPO="$(gh repo view --json nameWithOwner -q .nameWithOwner 2>/dev/null || true)"
-[ -z "${OWNER_REPO}" ] && { echo "ERROR: gh not authenticated or outside a repo"; exit 1; }
 
-read -r -d '' LABELS <<'EOF'
-product:approved|2ea043|Product content approved (HedgrOps)
-qa:approved|2ea043|QA pre-merge approval (Codex)
-qa:blocked|cf222e|QA: merge blocked
-qa:warning|d4c5f9|QA: non-blocking issues
-EOF
+create() { gh label create "$1" --color "$2" --description "$3" --force >/dev/null || true; }
 
-while IFS='|' read -r name color desc; do
-  echo "Upserting: ${name}"
-  gh label create "${name}" --color "${color}" --description "${desc}" --force >/dev/null || true
-done <<< "${LABELS}"
+create "product:approved" "2ea043" "Product content approved (HedgrOps)"
+create "qa:approved"      "2ea043" "QA pre-merge approval (Codex)"
+create "qa:blocked"       "cf222e" "QA: merge blocked"
+create "qa:warning"       "d4c5f9" "QA: non-blocking issues"
+create "needs:qa"         "fbca04" "Request Codex QA review"
+
 echo "✅ Labels ready."
