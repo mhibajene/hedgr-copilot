@@ -8,6 +8,7 @@ export type AppEnv = (typeof ALLOWED_APP_ENVS)[number];
 export type Env = {
   NEXT_PUBLIC_APP_ENV: AppEnv;
   API_BASE_URL: string;
+  NEXT_PUBLIC_AUTH_MODE?: string;
   POSTHOG_KEY?: string;
   SENTRY_DSN?: string;
 };
@@ -38,6 +39,7 @@ function buildEnv(from: NodeJS.ProcessEnv): Env {
 
   const NEXT_PUBLIC_APP_ENV = from.NEXT_PUBLIC_APP_ENV?.trim();
   const API_BASE_URL = from.API_BASE_URL?.trim();
+  const NEXT_PUBLIC_AUTH_MODE = from.NEXT_PUBLIC_AUTH_MODE?.trim();
   const POSTHOG_KEY = from.POSTHOG_KEY?.trim();
   const SENTRY_DSN = from.SENTRY_DSN?.trim();
 
@@ -68,6 +70,7 @@ function buildEnv(from: NodeJS.ProcessEnv): Env {
   return {
     NEXT_PUBLIC_APP_ENV: NEXT_PUBLIC_APP_ENV as AppEnv,
     API_BASE_URL: API_BASE_URL as string,
+    ...(NEXT_PUBLIC_AUTH_MODE ? { NEXT_PUBLIC_AUTH_MODE } : {}),
     ...(POSTHOG_KEY ? { POSTHOG_KEY } : {}),
     ...(SENTRY_DSN ? { SENTRY_DSN } : {}),
   };
