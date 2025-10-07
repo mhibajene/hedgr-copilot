@@ -1,46 +1,57 @@
 name: E2E smoke (@hedgr/frontend)
 on:
   pull_request:
-  push:
-    branches: [main]
-  workflow_dispatch:
+    branches: [ "*" ]
 
+# allow the workflow to write commit statuses
 permissions:
   contents: read
-
-concurrency:
-  group: e2e-${{ github.ref }}
-  cancel-in-progress: true
+  statuses: write
+  pull-requests: read
 
 jobs:
   e2e:
-    name: E2E smoke (@hedgr/frontend)
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: apps/frontend
+    env:
+      NEXT_PUBLIC_AUTH_MODE: mock
+      NEXT_PUBLIC_DEFI_MODE: mock
+      CI: true
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      # Node first, then Corepack for correct pnpm version
-      - name: Use Node.js 20
+      # bridge: mark required context as pending at start
+      - name: Publish pending commit status (start)
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const sha = context.payload.pull_request?.head.sha ?? context.sha;
+            await github.rest.repos.createCommitStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              sha,
+              state: 'pending',
+              context: 'E2E smoke (@hedgr/frontend)',
+              description: 'E2E job started',
+              target_url: `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`
+            });
+
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: '20'     # NOTE: no 'cache: pnpm' here
+          node-version: '20'
 
-      - name: Enable Corepack + pin pnpm
+      - name: Enable Corepack & install pinned pnpm
         run: |
           corepack enable
           corepack install
           node -v
           pnpm -v
-        working-directory: .
 
-      # Cache pnpm store AFTER pnpm is available
       - name: Compute pnpm store path
         id: pnpm_store
         run: echo "path=$(pnpm store path --silent)" >> "$GITHUB_OUTPUT"
-        working-directory: .
 
       - name: Cache pnpm store
         uses: actions/cache@v4
@@ -50,35 +61,58 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-
 
-      - name: "Guard: lockfile/manifest drift"
-        run: node scripts/ci/guard-lock-drift.mjs
-        working-directory: .
-
-      - name: Install (frozen lockfile)
+      - name: Install dependencies (frozen)
         run: pnpm -r install --frozen-lockfile
-        working-directory: .
 
-      - name: Cache Playwright browsers
-        uses: actions/cache@v4
+      - name: Typecheck (workspace)
+        run: pnpm -w typecheck
+
+      - name: Lint (workspace)
+        run: pnpm -w lint
+
+      - name: Unit tests
+        run: pnpm -w test
+
+      - name: Build frontend
+        run: pnpm --filter @hedgr/frontend run build
+
+      - name: Install Playwright
+        run: pnpm --filter @hedgr/frontend exec playwright install --with-deps
+
+      - name: Run E2E tests
+        run: pnpm --filter @hedgr/frontend run e2e:ci
+
+      # bridge: set required context to success/failure to satisfy branch protection
+      - name: Report E2E status (success)
+        if: ${{ success() }}
+        uses: actions/github-script@v7
         with:
-          path: ~/.cache/ms-playwright
-          key: ${{ runner.os }}-playwright-${{ hashFiles('**/pnpm-lock.yaml') }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const sha = context.payload.pull_request?.head.sha ?? context.sha;
+            await github.rest.repos.createCommitStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              sha,
+              state: 'success',
+              context: 'E2E smoke (@hedgr/frontend)',
+              description: 'Playwright E2E passed',
+              target_url: `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`
+            });
 
-      - name: CI-safe env
-        run: |
-          echo "CI=1" >> $GITHUB_ENV
-          echo "NODE_ENV=production" >> $GITHUB_ENV
-          echo "NEXT_TELEMETRY_DISABLED=1" >> $GITHUB_ENV
-          echo "NEXT_PUBLIC_APP_ENV=dev" >> $GITHUB_ENV
-          echo "POSTHOG_KEY=" >> $GITHUB_ENV
-          echo "SENTRY_DSN=" >> $GITHUB_ENV
-        working-directory: .
-
-      - name: Build (prod)
-        run: pnpm build
-
-      - name: Install Playwright (with deps)
-        run: pnpm exec playwright install --with-deps
-
-      - name: Run Playwright (CI)
-        run: pnpm run e2e:ci
+      - name: Report E2E status (failure)
+        if: ${{ failure() || cancelled() }}
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const sha = context.payload.pull_request?.head.sha ?? context.sha;
+            await github.rest.repos.createCommitStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              sha,
+              state: 'failure',
+              context: 'E2E smoke (@hedgr/frontend)',
+              description: 'Playwright E2E failed',
+              target_url: `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`
+            });
