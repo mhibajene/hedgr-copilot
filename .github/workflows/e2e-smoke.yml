@@ -12,19 +12,16 @@ jobs:
       CI: true
     steps:
       - uses: actions/checkout@v4
-      # Install pnpm first so setup-node's cache=pnpm can resolve store path
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 9
-          run_install: false
-
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: pnpm
-      - run: corepack enable
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+          run_install: false
       - run: pnpm -v
       - run: pnpm -r install --frozen-lockfile
       - run: pnpm -w typecheck && pnpm -w lint && pnpm -w test
