@@ -50,6 +50,9 @@ jobs:
       - name: Unit tests
         run: pnpm -w test
 
+      - name: Build frontend
+        run: pnpm --filter @hedgr/frontend run build
+
       - name: Install Playwright
         run: pnpm --filter @hedgr/frontend exec playwright install --with-deps
 
