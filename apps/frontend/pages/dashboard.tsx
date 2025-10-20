@@ -8,14 +8,15 @@ import { mockDefi } from '../lib/defi/mock';
 export default function DashboardPage() {
   const router = useRouter();
   const isAuthed = useUserStore((s) => s.isAuthed);
+  const hasHydrated = useUserStore((s) => s._hasHydrated);
   const logout = useUserStore((s) => s.logout);
   const balance = useWalletStore((s) => s.usdBalance);
   const [persistedBalance, setPersistedBalance] = useState<number | null>(null);
   const [apy, setApy] = useState<number | null>(null);
 
   useEffect(() => {
-    if (!isAuthed) router.replace('/login');
-  }, [isAuthed, router]);
+    if (hasHydrated && !isAuthed) router.replace('/login');
+  }, [isAuthed, hasHydrated, router]);
 
   useEffect(() => { 
     mockDefi.getNetApy().then(setApy); 

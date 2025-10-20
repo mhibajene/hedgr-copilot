@@ -3,7 +3,12 @@ import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 
 export type UserSession = { email?: string; isAuthed: boolean };
-export type UserStore = UserSession & { login: (email: string) => void; logout: () => void };
+export type UserStore = UserSession & { 
+  _hasHydrated: boolean;
+  login: (email: string) => void; 
+  logout: () => void;
+  setHasHydrated: (state: boolean) => void;
+};
 
 type StorageLike = {
   getItem: (name: string) => string | null;
@@ -27,9 +32,17 @@ export const useUserStore = create<UserStore>()(
     (set) => ({
       email: undefined,
       isAuthed: false,
+      _hasHydrated: false,
       login: (email) => set({ email, isAuthed: true }),
       logout: () => set({ email: undefined, isAuthed: false }),
+      setHasHydrated: (state) => set({ _hasHydrated: state }),
     }),
-    { name: 'hedgr:user', storage: createJSONStorage(storageProvider) }
+    { 
+      name: 'hedgr:user', 
+      storage: createJSONStorage(storageProvider),
+      onRehydrateStorage: () => (state) => {
+        state?.setHasHydrated(true);
+      },
+    }
   )
 );
