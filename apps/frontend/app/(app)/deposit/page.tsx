@@ -21,6 +21,15 @@ export default function DepositPage() {
       if (s === 'CONFIRMED') {
         clearInterval(h);
         credit(usdToCredit);
+        // Force-flush persisted wallet state so that navigating to /dashboard
+        // immediately after this page shows the correct balance, even if the
+        // zustand persistence layer hasn't flushed yet.
+        try {
+          if (typeof window !== 'undefined') {
+            const next = useWalletStore.getState().usdBalance;
+            window.localStorage.setItem('hedgr:wallet', JSON.stringify({ state: { usdBalance: +next.toFixed(2) }, version: 0 }));
+          }
+        } catch {}
         setStatus('CONFIRMED');
       }
     }, 500);
