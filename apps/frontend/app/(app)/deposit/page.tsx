@@ -29,7 +29,10 @@ export default function DepositPage() {
             const next = useWalletStore.getState().usdBalance;
             window.localStorage.setItem('hedgr:wallet', JSON.stringify({ state: { usdBalance: +next.toFixed(2) }, version: 0 }));
           }
-        } catch {}
+        } catch {
+          // Intentionally ignore storage write errors (e.g., disabled storage in CI)
+          void 0;
+        }
         setStatus('CONFIRMED');
       }
     }, 500);
