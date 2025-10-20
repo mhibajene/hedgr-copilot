@@ -10,6 +10,7 @@ export default function DashboardPage() {
   const isAuthed = useUserStore((s) => s.isAuthed);
   const logout = useUserStore((s) => s.logout);
   const balance = useWalletStore((s) => s.usdBalance);
+  const [persistedBalance, setPersistedBalance] = useState<number | null>(null);
   const [apy, setApy] = useState<number | null>(null);
 
   useEffect(() => {
@@ -18,6 +19,21 @@ export default function DashboardPage() {
 
   useEffect(() => { 
     mockDefi.getNetApy().then(setApy); 
+  }, []);
+
+  // Ensure balance shows correctly immediately after a deposit, even before
+  // zustand persistence finishes hydration in this route bundle.
+  useEffect(() => {
+    try {
+      if (typeof window === 'undefined') return;
+      const raw = window.localStorage.getItem('hedgr:wallet');
+      if (!raw) return;
+      const parsed = JSON.parse(raw) as { state?: { usdBalance?: number } };
+      const stored = parsed?.state?.usdBalance;
+      if (typeof stored === 'number') setPersistedBalance(+stored.toFixed(2));
+    } catch {
+      // ignore malformed storage
+    }
   }, []);
 
   if (!isAuthed) return <div className="p-6">Redirecting…</div>;
@@ -33,7 +49,7 @@ export default function DashboardPage() {
         <div className="grid gap-4 md:grid-cols-2">
           <div className="rounded-2xl shadow p-4">
             <div className="text-sm opacity-70">USD Balance</div>
-            <div className="text-3xl font-bold">${balance.toFixed(2)}</div>
+            <div className="text-3xl font-bold">${(persistedBalance ?? balance).toFixed(2)}</div>
           </div>
           <div className="rounded-2xl shadow p-4">
             <div className="text-sm opacity-70">APY</div>
