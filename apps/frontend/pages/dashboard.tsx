@@ -49,7 +49,7 @@ export default function DashboardPage() {
         <div className="grid gap-4 md:grid-cols-2">
           <div className="rounded-2xl shadow p-4">
             <div className="text-sm opacity-70">USD Balance</div>
-            <div className="text-3xl font-bold">${(persistedBalance ?? balance).toFixed(2)}</div>
+            <div className="text-3xl font-bold">${(Math.max(persistedBalance ?? 0, balance)).toFixed(2)}</div>
           </div>
           <div className="rounded-2xl shadow p-4">
             <div className="text-sm opacity-70">APY</div>
