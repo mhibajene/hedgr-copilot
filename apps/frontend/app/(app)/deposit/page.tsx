@@ -9,6 +9,7 @@ export default function DepositPage() {
   const [zmw, setZmw] = useState(100);
   const [usdPreview, setUsdPreview] = useState(0);
   const [txId, setTxId] = useState<string | null>(null);
+  const [usdToCredit, setUsdToCredit] = useState(0);
   const [status, setStatus] = useState<'IDLE' | 'PENDING' | 'CONFIRMED'>('IDLE');
 
   useEffect(() => { setUsdPreview(zmwToUsd(zmw)); }, [zmw]);
@@ -19,15 +20,16 @@ export default function DepositPage() {
       const s = await momoMock.status(txId);
       if (s === 'CONFIRMED') {
         clearInterval(h);
-        credit(usdPreview);
+        credit(usdToCredit);
         setStatus('CONFIRMED');
       }
     }, 500);
     return () => clearInterval(h);
-  }, [txId, credit, usdPreview]);
+  }, [txId, usdToCredit, credit]);
 
   const confirm = async () => {
     setStatus('PENDING');
+    setUsdToCredit(usdPreview);
     const tx = await momoMock.createDeposit(zmw);
     setTxId(tx.id);
   };
