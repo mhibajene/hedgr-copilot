@@ -49,10 +49,16 @@ export default function DepositPage() {
   return (
     <main className="p-6 space-y-4 max-w-xl">
       <h1 className="text-2xl font-semibold">Deposit</h1>
-      <label className="block space-y-2">
-        <span>Amount (ZMW)</span>
-        <input type="number" value={zmw} onChange={(e) => setZmw(parseFloat(e.target.value))} className="border rounded-xl p-3 w-full" />
-      </label>
+      <div className="block space-y-2">
+        <label htmlFor="amount-zmw">Amount (ZMW)</label>
+        <input
+          id="amount-zmw"
+          type="number"
+          value={zmw}
+          onChange={(e) => setZmw(Number(e.target.value || 0))}
+          className="border rounded-xl p-3 w-full"
+        />
+      </div>
       <div className="rounded-xl p-3 bg-gray-50">FX Preview: <strong>${usdPreview.toFixed(2)}</strong></div>
       <button onClick={confirm} disabled={status==='PENDING'} className="rounded-xl p-3 shadow">{status==='PENDING'?'Processing…':'Confirm'}</button>
       {status==='CONFIRMED' && <div className="text-green-600">Deposit CONFIRMED</div>}
