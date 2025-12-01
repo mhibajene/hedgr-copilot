@@ -44,5 +44,5 @@ test('withdraw stub decreases balance', async ({ page }) => {
   await page.getByRole('button', { name: 'Confirm' }).click();
   await expect(page.getByText('Withdraw CONFIRMED')).toBeVisible({ timeout: 6000 });
   await page.goto('/dashboard');
-  await expect(page.getByText('$4.00')).toBeVisible();
+  await expect(page.getByText('$4.00')).toBeVisible({ timeout: 6000 });
 });

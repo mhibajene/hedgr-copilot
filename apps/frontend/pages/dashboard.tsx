@@ -22,8 +22,9 @@ export default function DashboardPage() {
     mockDefi.getNetApy().then(setApy); 
   }, []);
 
-  // Ensure balance shows correctly immediately after a deposit, even before
+  // Ensure balance shows correctly immediately after a deposit/withdraw, even before
   // zustand persistence finishes hydration in this route bundle.
+  // Re-read on route changes to pick up updates from other pages.
   useEffect(() => {
     try {
       if (typeof window === 'undefined') return;
@@ -35,7 +36,7 @@ export default function DashboardPage() {
     } catch {
       // ignore malformed storage
     }
-  }, []);
+  }, [router.asPath]);
 
   if (!isAuthed) return <div className="p-6">Redirecting…</div>;
 
