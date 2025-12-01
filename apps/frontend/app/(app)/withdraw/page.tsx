@@ -52,16 +52,14 @@ export default function WithdrawPage() {
     <main className="p-6 space-y-4 max-w-xl">
       <h1 className="text-2xl font-semibold">Withdraw</h1>
       <div>Current balance: <strong>${balance.toFixed(2)}</strong></div>
-      <div className="block space-y-2">
-        <label htmlFor="amount-usd">Amount (USD)</label>
-        <input
-          id="amount-usd"
-          type="number"
-          value={usd}
-          onChange={(e) => setUsd(Number(e.target.value || 0))}
-          className="border rounded-xl p-3 w-full"
-        />
-      </div>
+      <label htmlFor="amount-usd" className="block space-y-2">Amount (USD)</label>
+      <input
+        id="amount-usd"
+        type="number"
+        value={usd}
+        onChange={(e) => setUsd(Number(e.target.value || 0))}
+        className="border rounded-xl p-3 w-full"
+      />
       <button onClick={confirm} disabled={status==='PENDING' || usd<=0 || usd>balance} className="rounded-xl p-3 shadow">{status==='PENDING'?'Processing…':'Confirm'}</button>
       {status==='CONFIRMED' && <div className="text-green-600">Withdraw CONFIRMED</div>}
     </main>
