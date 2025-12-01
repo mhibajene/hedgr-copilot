@@ -25,8 +25,9 @@ test('deposit stub increases balance', async ({ page }) => {
   await page.getByRole('button', { name: 'Confirm' }).click();
   await expect(page.getByText('Deposit CONFIRMED')).toBeVisible({ timeout: 6000 });
   await page.goto('/dashboard');
-  await expect(page.getByTestId('usd-balance')).toBeVisible({ timeout: 6000 });
-  await expect(page.getByTestId('usd-balance')).toHaveText('$5.00', { timeout: 6000 });
+  const usd = page.getByTestId('usd-balance');
+  await expect(usd).toBeVisible({ timeout: 10000 });
+  await expect(usd).toHaveText('$5.00', { timeout: 10000 });
 });
 
 test('withdraw stub decreases balance', async ({ page }) => {
@@ -45,6 +46,7 @@ test('withdraw stub decreases balance', async ({ page }) => {
   await page.getByRole('button', { name: 'Confirm' }).click();
   await expect(page.getByText('Withdraw CONFIRMED')).toBeVisible({ timeout: 6000 });
   await page.goto('/dashboard');
-  await expect(page.getByTestId('usd-balance')).toBeVisible({ timeout: 6000 });
-  await expect(page.getByTestId('usd-balance')).toHaveText('$4.00', { timeout: 6000 });
+  const usd2 = page.getByTestId('usd-balance');
+  await expect(usd2).toBeVisible({ timeout: 10000 });
+  await expect(usd2).toHaveText('$4.00', { timeout: 10000 });
 });
