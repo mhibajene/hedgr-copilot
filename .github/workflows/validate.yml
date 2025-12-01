@@ -41,6 +41,9 @@ jobs:
       - name: Install dependencies (frozen)
         run: pnpm -r install --frozen-lockfile
 
+      - name: Guard route conflicts
+        run: node scripts/ci/guard-route-conflicts.mjs
+
       - name: Typecheck (workspace)
         run: pnpm -w typecheck
 
