@@ -1,5 +1,7 @@
 'use client';
 
+import { useLedgerStore } from '../state/ledger';
+
 export type WithdrawStatus = 'PENDING' | 'CONFIRMED' | 'FAILED';
 
 export type WithdrawTx = { id: string; amountUSD: number; createdAt: number };
@@ -19,9 +21,26 @@ const DELAY_MS = clamp(DEFAULT_DELAY, 200, 5000);
 export const withdrawMock = {
   async createWithdraw(amountUSD: number): Promise<WithdrawTx> {
     const id = uid();
+    const createdAt = Date.now();
+    
     reg.set(id, { status: 'PENDING' });
-    setTimeout(() => reg.set(id, { status: 'CONFIRMED' }), DELAY_MS);
-    return { id, amountUSD, createdAt: Date.now() };
+    
+    // Append to ledger
+    useLedgerStore.getState().append({
+      id,
+      type: 'WITHDRAW',
+      amountUSD,
+      status: 'PENDING',
+      createdAt,
+    });
+    
+    // Confirm after delay
+    setTimeout(() => {
+      reg.set(id, { status: 'CONFIRMED' });
+      useLedgerStore.getState().confirm(id);
+    }, DELAY_MS);
+    
+    return { id, amountUSD, createdAt };
   },
   async status(id: string): Promise<WithdrawStatus> { return reg.get(id)?.status ?? 'FAILED'; },
 };
