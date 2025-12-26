@@ -1,7 +1,7 @@
 // CoinGecko FX provider (server-only, isolated)
 // Must never run in CI - guard with env check
 
-import { getFxMode } from '../fx';
+import { getFxMode } from '../../fx';
 
 export interface FxRate {
   base: string;
@@ -15,14 +15,14 @@ export interface FxRate {
  * @throws Error if called in CI or when FX_MODE is not coingecko
  */
 export async function fetchCoinGeckoRate(): Promise<FxRate> {
-  // Guard: Never run in CI
-  if (process.env.CI === 'true' || process.env.NEXT_PUBLIC_FX_MODE !== 'coingecko') {
-    throw new Error('CoinGecko provider must not run in CI. Use FX_MODE=fixed instead.');
-  }
-
   // Guard: Ensure we're in coingecko mode
   if (getFxMode() !== 'coingecko') {
     throw new Error('CoinGecko provider requires NEXT_PUBLIC_FX_MODE=coingecko');
+  }
+
+  // Guard: Never run in CI
+  if (process.env.CI === 'true') {
+    throw new Error('CoinGecko provider must not run in CI. Use FX_MODE=fixed instead.');
   }
 
   // Note: CoinGecko doesn't have direct ZMW/USD pair

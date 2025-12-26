@@ -41,6 +41,26 @@ describe('FX Service', () => {
     test('converts 50 ZMW to 2.50 USD', () => {
       expect(zmwToUsd(50)).toBe(2.5);
     });
+
+    test('throws error for negative input', () => {
+      expect(() => zmwToUsd(-100)).toThrow('zmwToUsd: amount must be a finite, non-negative number');
+    });
+
+    test('throws error for NaN input', () => {
+      expect(() => zmwToUsd(NaN)).toThrow('zmwToUsd: amount must be a finite, non-negative number');
+    });
+
+    test('throws error for Infinity input', () => {
+      expect(() => zmwToUsd(Infinity)).toThrow('zmwToUsd: amount must be a finite, non-negative number');
+    });
+
+    test('throws error for -Infinity input', () => {
+      expect(() => zmwToUsd(-Infinity)).toThrow('zmwToUsd: amount must be a finite, non-negative number');
+    });
+
+    test('handles zero input', () => {
+      expect(zmwToUsd(0)).toBe(0);
+    });
   });
 
   describe('FX API endpoint', () => {
