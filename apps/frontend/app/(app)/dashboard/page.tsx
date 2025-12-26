@@ -4,14 +4,14 @@ import { useEffect, useState } from 'react';
 
 import { useWalletStore } from '../../../lib/state/wallet';
 
-import { mockDefi } from '../../../lib/defi/mock';
+import { defiAdapter } from '../../../lib/defi';
 
 export default function DashboardPage() {
   const balance = useWalletStore((s) => s.usdBalance);
   const [apy, setApy] = useState<number | null>(null);
   const [ready, setReady] = useState(false);
 
-  useEffect(() => { mockDefi.getNetApy().then(setApy); }, []);
+  useEffect(() => { defiAdapter.getNetApy().then(setApy); }, []);
 
   useEffect(() => { setReady(true); }, []); // ensure client hydration complete
 
