@@ -4,6 +4,13 @@ import { zmwToUsd } from '../../../lib/fx';
 import { momoMock } from '../../../lib/payments/momo.mock';
 import { useWalletStore } from '../../../lib/state/wallet';
 
+interface FxRate {
+  base: string;
+  quote: string;
+  rate: number;
+  ts: number;
+}
+
 export default function DepositPage() {
   const credit = useWalletStore((s) => s.creditUSD);
   const [zmw, setZmw] = useState(100);
@@ -11,8 +18,32 @@ export default function DepositPage() {
   const [txId, setTxId] = useState<string | null>(null);
   const [usdToCredit, setUsdToCredit] = useState(0);
   const [status, setStatus] = useState<'IDLE' | 'PENDING' | 'CONFIRMED'>('IDLE');
+  const [fxRate, setFxRate] = useState<FxRate | null>(null);
 
-  useEffect(() => { setUsdPreview(zmwToUsd(zmw)); }, [zmw]);
+  useEffect(() => {
+    const fetchFxRate = async () => {
+      try {
+        const response = await fetch('/api/fx');
+        const data: FxRate = await response.json();
+        setFxRate(data);
+        // Update preview with fetched rate
+        setUsdPreview(+(zmw / data.rate).toFixed(2));
+      } catch (error) {
+        console.error('Failed to fetch FX rate:', error);
+        // Fallback to default calculation
+        setUsdPreview(zmwToUsd(zmw));
+      }
+    };
+    fetchFxRate();
+  }, []);
+
+  useEffect(() => {
+    if (fxRate) {
+      setUsdPreview(+(zmw / fxRate.rate).toFixed(2));
+    } else {
+      setUsdPreview(zmwToUsd(zmw));
+    }
+  }, [zmw, fxRate]);
 
   useEffect(() => {
     if (!txId) return;
@@ -49,6 +80,11 @@ export default function DepositPage() {
   return (
     <main className="p-6 space-y-4 max-w-xl">
       <h1 className="text-2xl font-semibold">Deposit</h1>
+      {fxRate && (
+        <div className="inline-flex items-center px-3 py-1 rounded-full bg-blue-100 text-blue-800 text-sm font-medium">
+          1 {fxRate.base} = {fxRate.rate} {fxRate.quote}
+        </div>
+      )}
       <div className="block space-y-2">
         <label htmlFor="amount-zmw">Amount (ZMW)</label>
         <input

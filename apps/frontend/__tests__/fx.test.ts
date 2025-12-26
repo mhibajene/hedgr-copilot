@@ -1,0 +1,95 @@
+import { test, expect, describe, beforeEach, vi } from 'vitest';
+import { getFxMode, FX_RATE_ZMW_PER_USD_DEFAULT, zmwToUsd } from '../lib/fx';
+
+describe('FX Service', () => {
+  beforeEach(() => {
+    vi.resetModules();
+    delete process.env.NEXT_PUBLIC_FX_MODE;
+  });
+
+  describe('getFxMode', () => {
+    test('returns fixed by default', () => {
+      expect(getFxMode()).toBe('fixed');
+    });
+
+    test('returns fixed when NEXT_PUBLIC_FX_MODE=fixed', () => {
+      process.env.NEXT_PUBLIC_FX_MODE = 'fixed';
+      expect(getFxMode()).toBe('fixed');
+    });
+
+    test('returns coingecko when NEXT_PUBLIC_FX_MODE=coingecko', () => {
+      process.env.NEXT_PUBLIC_FX_MODE = 'coingecko';
+      expect(getFxMode()).toBe('coingecko');
+    });
+  });
+
+  describe('FX_RATE_ZMW_PER_USD_DEFAULT', () => {
+    test('default rate is 20', () => {
+      expect(FX_RATE_ZMW_PER_USD_DEFAULT).toBe(20);
+    });
+  });
+
+  describe('zmwToUsd', () => {
+    test('converts 100 ZMW to 5.00 USD', () => {
+      expect(zmwToUsd(100)).toBe(5);
+    });
+
+    test('converts 200 ZMW to 10.00 USD', () => {
+      expect(zmwToUsd(200)).toBe(10);
+    });
+
+    test('converts 50 ZMW to 2.50 USD', () => {
+      expect(zmwToUsd(50)).toBe(2.5);
+    });
+  });
+
+  describe('FX API endpoint', () => {
+    test('fixed mode returns constant rate 20', async () => {
+      process.env.NEXT_PUBLIC_FX_MODE = 'fixed';
+      process.env.CI = undefined;
+      
+      const { GET } = await import('../app/api/fx/route');
+      const response = await GET();
+      const data = await response.json();
+      
+      expect(data.rate).toBe(20);
+      expect(data.base).toBe('USD');
+      expect(data.quote).toBe('ZMW');
+      expect(typeof data.ts).toBe('number');
+    });
+
+    test('falls back to fixed rate in CI', async () => {
+      process.env.NEXT_PUBLIC_FX_MODE = 'coingecko';
+      process.env.CI = 'true';
+      
+      const { GET } = await import('../app/api/fx/route');
+      const response = await GET();
+      const data = await response.json();
+      
+      expect(data.rate).toBe(20);
+      expect(data.base).toBe('USD');
+      expect(data.quote).toBe('ZMW');
+    });
+  });
+
+  describe('CoinGecko provider', () => {
+    test('throws error when called in CI', async () => {
+      process.env.NEXT_PUBLIC_FX_MODE = 'coingecko';
+      process.env.CI = 'true';
+      
+      const { fetchCoinGeckoRate } = await import('../lib/fx/providers/coingecko');
+      
+      await expect(fetchCoinGeckoRate()).rejects.toThrow('CoinGecko provider must not run in CI');
+    });
+
+    test('throws error when FX_MODE is not coingecko', async () => {
+      process.env.NEXT_PUBLIC_FX_MODE = 'fixed';
+      process.env.CI = undefined;
+      
+      const { fetchCoinGeckoRate } = await import('../lib/fx/providers/coingecko');
+      
+      await expect(fetchCoinGeckoRate()).rejects.toThrow('CoinGecko provider requires NEXT_PUBLIC_FX_MODE=coingecko');
+    });
+  });
+});
+
