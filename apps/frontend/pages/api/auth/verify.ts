@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+import type { NextApiRequest, NextApiResponse } from 'next';
 import { Magic } from '@magic-sdk/admin';
 
 let magicAdminInstance: Magic | null = null;
@@ -14,46 +14,35 @@ function getMagicAdmin(): Magic {
   return magicAdminInstance;
 }
 
-export async function POST(request: NextRequest) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed' });
+  }
+
   try {
-    const body = await request.json();
-    const didToken = body.didToken;
+    const { didToken } = req.body;
 
     if (!didToken || typeof didToken !== 'string') {
-      return NextResponse.json(
-        { error: 'Missing or invalid didToken' },
-        { status: 401 }
-      );
+      return res.status(401).json({ error: 'Missing or invalid didToken' });
     }
 
     const magic = getMagicAdmin();
     const metadata = await magic.users.getMetadataByToken(didToken);
 
     if (!metadata || !metadata.email) {
-      return NextResponse.json(
-        { error: 'Invalid token or missing email' },
-        { status: 401 }
-      );
+      return res.status(401).json({ error: 'Invalid token or missing email' });
     }
 
     // Establish session - using Zustand via server action or httpOnly cookie
     // For now, we'll return success and let client handle session
     // In a real implementation, you'd set an httpOnly cookie here
-    const response = NextResponse.json(
-      { ok: true, email: metadata.email },
-      { status: 200 }
-    );
-
-    // TODO: Set httpOnly session cookie here
-    // response.cookies.set('session', sessionToken, { httpOnly: true, secure: true });
-
-    return response;
+    return res.status(200).json({ ok: true, email: metadata.email });
   } catch (error) {
     console.error('Magic verify error:', error);
-    return NextResponse.json(
-      { error: 'Token verification failed' },
-      { status: 401 }
-    );
+    return res.status(401).json({ error: 'Token verification failed' });
   }
 }
 

@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { NextRequest } from 'next/server';
+import type { NextApiRequest, NextApiResponse } from 'next';
 
 // Mock Magic Admin SDK before importing the route
 const mockGetMetadataByToken = vi.fn();
@@ -27,21 +27,24 @@ describe('auth.magic', () => {
       issuer: 'did:magic:123',
     });
 
-    const { POST } = await import('../app/api/auth/verify/route');
-    const request = new NextRequest('http://localhost/api/auth/verify', {
+    const handler = (await import('../pages/api/auth/verify')).default;
+    
+    const req = {
       method: 'POST',
-      body: JSON.stringify({ didToken: 'valid-did-token' }),
-      headers: { 'Content-Type': 'application/json' },
-    });
+      body: { didToken: 'valid-did-token' },
+    } as NextApiRequest;
+
+    const res = {
+      status: vi.fn().mockReturnThis(),
+      json: vi.fn().mockReturnThis(),
+    } as unknown as NextApiResponse;
 
     // Execute
-    const response = await POST(request);
-    const data = await response.json();
+    await handler(req, res);
 
     // Assert
-    expect(response.status).toBe(200);
-    expect(data.ok).toBe(true);
-    expect(data.email).toBe('test@hedgr.app');
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith({ ok: true, email: 'test@hedgr.app' });
     expect(mockGetMetadataByToken).toHaveBeenCalledWith('valid-did-token');
   });
 
@@ -49,20 +52,24 @@ describe('auth.magic', () => {
     // Setup
     mockGetMetadataByToken.mockRejectedValue(new Error('Invalid token'));
 
-    const { POST } = await import('../app/api/auth/verify/route');
-    const request = new NextRequest('http://localhost/api/auth/verify', {
+    const handler = (await import('../pages/api/auth/verify')).default;
+    
+    const req = {
       method: 'POST',
-      body: JSON.stringify({ didToken: 'invalid-did-token' }),
-      headers: { 'Content-Type': 'application/json' },
-    });
+      body: { didToken: 'invalid-did-token' },
+    } as NextApiRequest;
+
+    const res = {
+      status: vi.fn().mockReturnThis(),
+      json: vi.fn().mockReturnThis(),
+    } as unknown as NextApiResponse;
 
     // Execute
-    const response = await POST(request);
-    const data = await response.json();
+    await handler(req, res);
 
     // Assert
-    expect(response.status).toBe(401);
-    expect(data.error).toBeDefined();
+    expect(res.status).toHaveBeenCalledWith(401);
+    expect(res.json).toHaveBeenCalledWith({ error: expect.any(String) });
     expect(mockGetMetadataByToken).toHaveBeenCalledWith('invalid-did-token');
   });
 });

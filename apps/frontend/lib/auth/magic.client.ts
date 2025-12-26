@@ -18,6 +18,9 @@ function getMagicInstance(): Magic {
 export async function loginWithEmail(email: string): Promise<string> {
   const magic = getMagicInstance();
   const didToken = await magic.auth.loginWithEmailOTP({ email });
+  if (!didToken) {
+    throw new Error('Magic login failed: no DID token returned');
+  }
   return didToken;
 }
 
