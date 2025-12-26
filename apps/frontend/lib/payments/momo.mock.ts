@@ -1,5 +1,7 @@
 'use client';
 import type { DepositProvider, DepositTx, TxStatus } from './provider';
+import { useLedgerStore } from '../state/ledger';
+import { zmwToUsd } from '../fx';
 
 const reg = new Map<string, { status: TxStatus }>();
 let seq = 0;
@@ -12,9 +14,28 @@ const DELAY_MS = clamp(DEFAULT_DELAY, 200, 5000);
 export const momoMock: DepositProvider = {
   async createDeposit(amountZMW: number): Promise<DepositTx> {
     const id = uid();
+    const createdAt = Date.now();
+    const amountUSD = zmwToUsd(amountZMW);
+    
     reg.set(id, { status: 'PENDING' });
-    setTimeout(() => reg.set(id, { status: 'CONFIRMED' }), DELAY_MS);
-    return { id, amountZMW, createdAt: Date.now() };
+    
+    // Append to ledger
+    useLedgerStore.getState().append({
+      id,
+      type: 'DEPOSIT',
+      amountUSD,
+      amountZMW,
+      status: 'PENDING',
+      createdAt,
+    });
+    
+    // Confirm after delay
+    setTimeout(() => {
+      reg.set(id, { status: 'CONFIRMED' });
+      useLedgerStore.getState().confirm(id);
+    }, DELAY_MS);
+    
+    return { id, amountZMW, createdAt };
   },
   async status(id: string): Promise<TxStatus> {
     return reg.get(id)?.status ?? 'FAILED';
