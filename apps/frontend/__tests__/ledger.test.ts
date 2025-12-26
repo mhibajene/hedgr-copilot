@@ -1,3 +1,5 @@
+// @vitest-environment jsdom
+
 import { describe, test, expect, beforeEach } from 'vitest';
 import { useLedgerStore } from '../lib/state/ledger';
 import type { Tx } from '../lib/state/ledger';
@@ -21,20 +23,22 @@ const localStorageMock = (() => {
   };
 })();
 
+// Set up localStorage mock before tests run
+Object.defineProperty(window, 'localStorage', {
+  value: localStorageMock,
+  writable: true,
+  configurable: true,
+});
+
 describe('LedgerStore', () => {
   beforeEach(() => {
-    // Reset store before each test
-    useLedgerStore.getState().clear();
+    // Clear localStorage first
     localStorageMock.clear();
-    // Mock window.localStorage
-    Object.defineProperty(window, 'localStorage', {
-      value: localStorageMock,
-      writable: true,
-    });
+    // Reset store after localStorage is cleared
+    useLedgerStore.getState().clear();
   });
 
   test('append → confirmed → list contains entry', () => {
-    const store = useLedgerStore.getState();
     const tx: Tx = {
       id: 'tx_1',
       type: 'DEPOSIT',
@@ -44,22 +48,23 @@ describe('LedgerStore', () => {
       createdAt: Date.now(),
     };
 
-    store.append(tx);
-    expect(store.transactions).toHaveLength(1);
-    expect(store.transactions[0]).toMatchObject({
+    useLedgerStore.getState().append(tx);
+    const state1 = useLedgerStore.getState();
+    expect(state1.transactions).toHaveLength(1);
+    expect(state1.transactions[0]).toMatchObject({
       id: 'tx_1',
       type: 'DEPOSIT',
       amountUSD: 5.0,
       status: 'PENDING',
     });
 
-    store.confirm('tx_1');
-    expect(store.transactions[0].status).toBe('CONFIRMED');
-    expect(store.transactions[0].confirmedAt).toBeDefined();
+    useLedgerStore.getState().confirm('tx_1');
+    const state2 = useLedgerStore.getState();
+    expect(state2.transactions[0].status).toBe('CONFIRMED');
+    expect(state2.transactions[0].confirmedAt).toBeDefined();
   });
 
-  test('persist works after page reload (mock localStorage)', () => {
-    const store = useLedgerStore.getState();
+  test('persist works after page reload (mock localStorage)', async () => {
     const tx: Tx = {
       id: 'tx_2',
       type: 'WITHDRAW',
@@ -68,12 +73,15 @@ describe('LedgerStore', () => {
       createdAt: Date.now(),
     };
 
-    store.append(tx);
-    expect(store.transactions).toHaveLength(1);
+    useLedgerStore.getState().append(tx);
+    const state = useLedgerStore.getState();
+    expect(state.transactions).toHaveLength(1);
 
-    // Simulate page reload by creating a new store instance
-    // In a real scenario, Zustand persist would rehydrate from localStorage
-    const stored = localStorageMock.getItem('hedgr:ledger');
+    // Wait for Zustand persist to write to localStorage (it's async)
+    await new Promise((resolve) => setTimeout(resolve, 50));
+
+    // Check both our mock and window.localStorage (they should be the same)
+    const stored = window.localStorage.getItem('hedgr:ledger') || localStorageMock.getItem('hedgr:ledger');
     expect(stored).toBeTruthy();
     if (stored) {
       const parsed = JSON.parse(stored);
