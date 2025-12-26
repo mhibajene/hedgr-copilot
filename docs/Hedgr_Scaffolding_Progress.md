@@ -387,3 +387,438 @@ doppler run -- docker compose up --build frontend
 	•	Extend env tests with malformed URL and snapshot error messages.
 	•	Apply similar env validation to backend services when introduced.
 	•	Add a PR template referencing checks and env expectations.
+
+Hedgr Scaffolding Progress — 0.4
+
+Branch: chore/0.4-scripts-qol (+ follow-ups: ci/e2e-smoke, chore/ui-typecheck-react-dom-types)
+PR: #15 (plus small supporting PRs)
+Owner: @musalwa
+Date: 2025-09-29
+
+⸻
+
+1) Objective
+
+Establish a hardened CI/CD baseline and local dev loop:
+	•	Deterministic installs and repo-pinned tooling.
+	•	Fork-safe validation (no secrets on external PRs).
+	•	Minimal E2E “smoke” that proves the app boots.
+	•	Dev-safe observability (PostHog/Sentry) behind strict env gates.
+	•	Branch protection requiring green checks.
+
+⸻
+
+2) Summary of Changes
+	•	CI
+	•	.github/workflows/validate.yml: unit, typecheck, lint with frozen lockfile and repo-pinned pnpm/corepack.
+	•	.github/workflows/e2e-smoke.yml: Playwright webServer boot + 2 smoke specs; artifact retention and headless mode.
+	•	Branch protection: require “E2E smoke (@hedgr/frontend)”, linear history, reviews, no force-push.
+	•	Frontend & Tests
+	•	Analytics refactor: call-time env reads, dynamic optional deps, PII scrub (PostHog sanitize_properties, Sentry beforeSend), idempotent init.
+	•	Vitest env tests + stable virtual mocks, resetAnalytics() for isolation.
+	•	Health/version API tests hardened (shape, ISO timestamp, freshness).
+	•	Tooling & Types
+	•	ESLint v9 migration (eslint.config.mjs) + Next.js plugin.
+	•	TS configs split for app/tests; paths aligned for Next transpile.
+	•	@hedgr/ui peer alignment & typecheck fix (react-dom types), removed problematic TS path alias to ensure proper transpilation in CI.
+	•	Docs & DX
+	•	README.md (root) and docs/local-dev.md, docs/secrets.md updated for Doppler + Docker flows.
+	•	Docker dev: deterministic corepack/pnpm, no “ignored scripts” warnings.
+
+⸻
+
+3) Files Touched / Added
+	•	Workflows:
+		.github/workflows/validate.yml, .github/workflows/e2e-smoke.yml
+
+	•	Frontend (apps/frontend):
+		•	Tests: __tests__/env.test.ts, __tests__/api.health.test.ts, tests-e2e/*.spec.ts, playwright.config.ts
+		•	App: lib/analytics.ts, pages/_app.tsx, pages/index.tsx, pages/api/{health.ts,version.ts}
+		•	Config: eslint.config.mjs, tsconfig.json, tsconfig.vitest.json, package.json
+	•	UI pkg (packages/ui):
+			tsconfig.json, src/Banner.tsx (types/imports)
+	•	Root:
+		package.json, pnpm-lock.yaml, README.md, docs/{local-dev.md,secrets.md}
+
+	•	Dev (where applicable):
+		Dockerfile, docker-compose.yml (frontend target)
+
+⸻
+
+4) QA / Dev Hand-off
+
+Local (CLI)
+
+doppler setup -p hedgr-copilot -c dev_config_dev
+doppler run -- pnpm dev
+
+	•	App starts; invalid envs fail-fast with actionable errors.
+
+Local (Docker)
+
+docker compose down -v
+doppler run -- docker compose up --build frontend
+
+	•	PNPM version matches repo pin (via corepack).
+	•	No “ignored build scripts” warnings (sharp/oxide/esbuild built).
+	•	Next.js running at http://localhost:3000.
+
+Validation
+
+pnpm run validate            # runs tests, typecheck, lint (workspace-wide)
+pnpm --filter @hedgr/frontend exec playwright install
+pnpm --filter @hedgr/frontend run e2e      # local
+pnpm --filter @hedgr/frontend run e2e:ci   # CI parity
+
+Branch Protection
+	•	Required check: E2E smoke (@hedgr/frontend) gates merges.
+	•	Auto-merge enabled; still requires 1 review (self-approval blocked by GitHub).
+
+⸻
+
+5) Acceptance Criteria (0.4)
+	•	CI validate job (unit/typecheck/lint) passes with frozen lockfile.
+	•	E2E smoke passes in CI and is required for merging to main.
+	•	Frontend analytics honors dev-only gates; optional deps do not break CI.
+	•	Local dev (CLI & Docker) works with Doppler-provided env; failures are clear.
+	•	@hedgr/ui compiles in CI (types and React peer alignment).
+
+⸻
+
+6) Security Notes
+	•	Fork PRs run no secrets; internal PRs/main use Doppler.
+	•	PII scrubbing active in analytics; observability disabled outside dev or without keys.
+	•	Branch protection: linear history, review required, admins enforced.
+	•	Versions pinned; no latest / loose ranges; frozen lockfile in CI.
+
+⸻
+
+7) Risk & Rollback
+	•	Risk: E2E flakes (timing/port) could block merges.
+		Mitigation: small timeouts, single page smoke, CI retry once.
+	•	Risk: Workspace peer drift (React) can break builds.
+		Mitigation: enforce Renovate + peer alignment, CI “smoke build” step.
+	•	Rollback: Temporarily remove required E2E status and/or disable e2e workflow; revert analytics gating if needed. No data migration impact.
+
+⸻
+
+8) Decision Filters (Hedgr)
+	•	Security First: fork-safe CI; strict env gates; PII scrub.
+	•	User-Centricity: fast feedback; misconfigurations caught before release.
+	•	Scalability: monorepo scripts + Docker/Doppler workflows scale across contributors.
+	•	Low-Cost to Test: deterministic installs, minimal smoke E2E.
+	•	Local Relevance: reduced setup friction across macOS/Linux via Docker/corepack.
+
+⸻
+
+9) Commands Quick Sheet
+•	Checks
+
+	pnpm -w test
+	pnpm -w typecheck
+	pnpm -w lint
+	pnpm run validate
+
+
+•	E2E
+
+	pnpm --filter @hedgr/frontend exec playwright install
+	pnpm --filter @hedgr/frontend run e2e
+	pnpm --filter @hedgr/frontend run e2e:ci
+
+
+•	Local Dev
+
+	doppler setup -p hedgr-copilot -c dev_config_dev
+	doppler run -- pnpm dev
+
+
+•	Docker Dev
+
+	doppler run -- docker compose up --build frontend
+
+
+
+⸻
+
+10) Follow-ups
+	•	Make unit/typecheck/lint required checks alongside E2E in branch protection.
+	•	Add Renovate (/renovate.json) for controlled updates; group by workspace.
+	•	Add CODEOWNERS and PR template nudging validation commands and env expectations.
+	•	Broaden E2E: basic nav + API assertions; attach HTML report artifact on failure.
+	•	Cache tuning: Turbo remote cache + Playwright browsers cache in CI.
+	•	Optional: preview deployments per PR (e.g., Vercel) once secrets posture is finalized.
+
+	HedgrOps Feature Close-Out Template
+
+HedgrOps Close-Out — Sprint 0.5: CI/CD Hardening, E2E Reliability & Dependency Hygiene
+
+1) Metadata
+	•	Feature ID: SPRINT-0.5
+	•	Owner: @mhibajene
+	•	Type: chore / infra
+	•	Risk Level: medium
+	•	Branch:
+	•	primary: chore/0.5-ci-e2e-renovate
+	•	follow-ups: chore/0.5-enforce-ci-lock-guard, chore/0.5-ui-peers-react19, chore/0.5-ci-pr-auto-update, chore/0.5-ci-never-again-guards
+	•	PR: #17, #18, #19, #20, (auto-update PR)
+	•	Date Shipped: 2025-09-30
+
+⸻
+
+2) CONTRACT (Source of Truth)
+	•	Summary: Keep main green by default via deterministic installs, fork-safe CI, reliable Playwright E2E smoke, Renovate hygiene, and codified guardrails (branch protection + CODEOWNERS + docs).
+	•	Acceptance Criteria (Gherkin):
+	•	Given a PR to main when CI runs then required checks validate and E2E smoke (@hedgr/frontend) both pass.
+	•	Given a fork PR when CI runs then no secrets are used and typecheck/lint/unit still pass.
+	•	Given Renovate opens PRs when checks pass then patch/minor devDependencies auto-merge; majors require manual review; groups = React/Next, TS/@types, ESLint, Playwright, Tailwind, Turbo.
+	•	Given E2E when executed in CI then browsers are installed, analytics calls are blocked, app builds/starts, and smoke spec passes reliably (2×).
+	•	Rollout Plan: land #17 (core), then enforcement (#18), UI peer alignment (#19), YAML/PNPM fixes (#20), add PR auto-update workflow; restore/confirm required checks; enable auto-merge (squash).
+	•	Rollback Plan: revert individual PR(s); temporarily remove E2E smoke (@hedgr/frontend) from required checks if hotfix needed; guard scripts are no-op on revert.
+	•	Telemetry Plan:
+	•	CI metrics: job duration & success rate for validate, E2E smoke.
+	•	Playwright artifacts: traces/videos on failure.
+	•	Actionlint/guard logs in validate.
+	•	Security Notes: fork-safe posture (no secrets on PR from forks), analytics (PostHog/Sentry) blocked in tests, CODEOWNERS on policy files, strict branch protection.
+	•	Coverage Targets: FE unit (baseline unchanged); E2E smoke enforced. (No BE in this sprint.)
+
+⸻
+
+3) Implementation (Cursor)
+	•	DIFF Summary:
+	•	Files Touched:
+	•	renovate.json :: grouping, schedule, required checks, safe auto-merge.
+	•	.github/CODEOWNERS :: explicit ownership for policy files.
+	•	.github/workflows/validate.yml :: Node→Corepack order, frozen installs, actionlint + guard steps.
+	•	.github/workflows/e2e-smoke.yml :: prod build, guard, pnpm store cache (post-Corepack), workflow_dispatch, canonical name.
+	•	.github/workflows/ci.yml :: fork-safe checks job; Node fallback + Corepack; fixed indentation.
+	•	.github/workflows/pr-auto-update.yml :: auto-update PR branches when main moves.
+	•	scripts/ci/guard-lock-drift.mjs :: fail on lock/manifest drift.
+	•	scripts/ci/guard-workflows.mjs :: invariants (YAML colon, pnpm cache misuse, E2E naming, .nvmrc).
+	•	apps/frontend/playwright.config.ts :: prod server bring-up, timeouts.
+	•	apps/frontend/tests-e2e/smoke.spec.ts :: health/version poll + analytics blocking.
+	•	packages/ui/package.json :: peers → react/react-dom ^19.0.0.
+	•	package.json, pnpm-lock.yaml, .nvmrc :: turbo/pnpm alignment, determinism, Node 20 pin.
+	•	docs/ci.md, docs/renovate.md :: run-books and policy.
+	•	Tests Added/Updated:
+	•	apps/frontend/tests-e2e/smoke.spec.ts :: @smoke basic app up + health; analytics stubs.
+	•	Validations Added: actionlint workflow lint; custom guards for lockfile and workflow invariants.
+	•	PR Body: captured the scope above; emphasized required checks, fork-safety, Renovate policy, and E2E hermeticity.
+	•	Runbook Entry: CI/E2E runbook with recovery steps (reset required checks, trigger workflow_dispatch, lockfile remediation, pnpm/Corepack order); added weekly audit commands.
+
+⸻
+
+4) QA (Codex)
+
+Pre-Merge Audit
+	•	BLOCKERS: Resolved — lockfile drift, duplicate E2E context, YAML colon error, pnpm-not-found due to setup-node cache: pnpm.
+	•	WARNINGS: Watch PR noise from Renovate after first window; split groups if needed.
+	•	TEST_MAP:
+	•	Given E2E runs in CI ... Then smoke passes 2× → smoke.spec.ts
+	•	TELEMETRY_MAP:
+	•	CI job duration/success → GitHub Actions logs (validate/e2e).
+	•	Guard results → scripts/ci/guard-*.mjs console output in validate.
+	•	APPROVAL: YES
+
+Post-CI Audit
+	•	CI Summary:
+	•	Playwright: 100% pass (smoke only; no failing specs post-fixes).
+	•	Lighthouse: N/A (not in scope this sprint).
+	•	Semgrep: N/A (not enabled this sprint).
+	•	Size-limit: N/A (no bundle policy this sprint).
+	•	Coverage: FE unit unchanged; E2E smoke enforced.
+	•	GAPS:
+	•	TEST_GAP: no critical-flow E2E yet (onboarding/deposit/withdraw).
+	•	IMPLEMENTATION_GAP: DS tokens/primitives not finalized.
+	•	APPROVAL: YES
+
+⸻
+
+5) CI & Deployment
+	•	Preview URL: N/A (infrastructure change).
+	•	Staging Checks: validate ✅, E2E smoke ✅ on PR and on main.
+	•	Canary Status: N/A
+	•	Final Deployment: merge commits of PRs #17 #18 #19 #20 + auto-update workflow PR into main.
+
+⸻
+
+6) Build Health Notes
+	•	Incidents During Cycle: Yes — lockfile drift (turbo), YAML syntax error, pnpm not found due to premature caching, missing .nvmrc. All remediated and guarded.
+	•	Most Missed Acceptance Criteria: N/A (all contract items satisfied after remediation).
+	•	Most Common CI Failures: Early-step install failures; now prevented by guards and Corepack-first ordering.
+	•	Prompt Adjustments: Added “Never-Again” guards + actionlint; clarified E2E workflow naming and dispatch.
+	•	Coverage Deltas: FE unit — no change; E2E smoke now enforced.
+
+⸻
+
+7) Sign-Off
+	•	HedgrOps (Product Lead): ✅ mhibajene / 2025-09-30
+	•	Cursor (Engineer): ✅ cursor-bot / 2025-09-30
+	•	Codex (QA): ✅ hedgrops-qa / 2025-09-30
+
+⸻
+
+8) Archive Links
+	•	CONTRACT JSON / plan: Sprint 0.5 contract (this thread + repo /docs/ci.md, /docs/renovate.md)
+	•	PRs: #17 (core), #18 (CI enforcement), #19 (UI peers React 19), #20 (E2E YAML/PNPM fixes), auto-update PR
+	•	CI Run: latest successful runs for validate and E2E smoke (@hedgr/frontend) on main
+	•	Runbook Update: /docs/ci.md
+	•	Observability Dashboards: GitHub Actions (validate, e2e), Playwright artifacts (traces/videos on failure)
+
+⸻
+
+Next Sprint (seed)
+	•	Contracts for Phase 2–4: Auth & App Shell (Magic.link), Deposit (MTN MoMo → USDC), Aave balances/yield, Withdraw + FX module, with critical-flow E2E.
+
+⸻
+
+Hedgr Scaffolding Progress — 0.6
+
+Feature: Sprint 0.6 — Auth Shell, DeFi Mock, Deposit, Withdraw
+Owner: (@mhibajene)
+Date Shipped: 2025-12-01
+Risk: low
+
+⸻
+
+1) Metadata
+	•	Branches (micro-contracts)
+	•	feat/0.6-auth-app-shell
+	•	feat/0.6-defi-mock
+	•	feat/0.6-deposit-stub
+	•	feat/0.6-withdraw-stub
+	•	Required Checks (branch protection)
+	•	validate
+	•	E2E smoke (@hedgr/frontend) (commit status context)
+	•	Flags (CI defaults)
+	•	NEXT_PUBLIC_AUTH_MODE=mock
+	•	NEXT_PUBLIC_DEFI_MODE=mock
+	•	NEXT_PUBLIC_MOMO_CONFIRM_DELAY_MS=1500
+	•	NEXT_PUBLIC_WITHDRAW_CONFIRM_DELAY_MS=1500
+
+⸻
+
+2) Contract (Source of Truth)
+	•	Goal: Ship mock-first critical flows with deterministic E2E: login → dashboard APY → deposit ↑ → withdraw ↓.
+	•	Acceptance (Gherkin)
+	•	Auth:
+Given NEXT_PUBLIC_AUTH_MODE=mock when user submits /login then redirect /dashboard and session is set.
+	•	DeFi:
+Given mock mode when /dashboard loads then APY > 0 and USD balance renders.
+	•	Deposit:
+Given a deposit of 100 ZMW when status becomes CONFIRMED ≤5s then USD balance increases by 100/20 = $5.00.
+	•	Withdraw:
+Given a USD withdraw of $1.00 when status becomes CONFIRMED ≤5s then USD balance decreases accordingly ($4.00 after seeded deposit).
+	•	Non-negotiables: Security first • No secrets in CI/E2E • Types clean • Unit + E2E present • Deterministic installs (corepack, pnpm --frozen-lockfile) • Fork-safe • Rollback via single revert or flag.
+
+⸻
+
+3) Implementation
+	•	Frontend (App Router)
+	•	Auth Shell: mock email login; Zustand session store; guarded app layout with sign-out.
+	•	apps/frontend/lib/state/user.ts
+	•	apps/frontend/lib/auth/magic.ts (mock only)
+	•	apps/frontend/app/(auth)/login/page.tsx
+	•	apps/frontend/app/(app)/layout.tsx
+	•	Health/Version APIs:
+	•	apps/frontend/app/api/health/route.ts → { status: "ok" }
+	•	apps/frontend/app/api/version/route.ts → { version }
+	•	DeFi (Mock 5% APY) + Wallet Store:
+	•	apps/frontend/lib/state/wallet.ts (credit/debit USD, persisted)
+	•	apps/frontend/lib/defi/types.ts, apps/frontend/lib/defi/mock.ts (returns 0.05)
+	•	apps/frontend/app/(app)/dashboard/page.tsx (shows USD balance + APY)
+	•	Stable selector: data-testid="usd-balance"; hydration guard to always render the element.
+	•	Deposit (ZMW→USD) Stub + FX:
+	•	apps/frontend/lib/fx.ts (FX_RATE_ZMW_PER_USD=20, zmwToUsd())
+	•	apps/frontend/lib/payments/provider.ts (interfaces)
+	•	apps/frontend/lib/payments/momo.mock.ts (deterministic confirm; default 1500ms)
+	•	apps/frontend/app/(app)/deposit/page.tsx (amount → FX preview → confirm → credit on CONFIRMED)
+	•	Withdraw (USD→ZMW) Stub:
+	•	apps/frontend/lib/payments/withdraw.mock.ts (deterministic confirm; default 1500ms)
+	•	apps/frontend/app/(app)/withdraw/page.tsx (amount → confirm → debit on CONFIRMED)
+	•	E2E/Unit Tests
+	•	Unit:
+	•	__tests__/auth.spec.ts (login sets session)
+	•	__tests__/defi.spec.ts (APY positive; wallet mirrors updates)
+	•	__tests__/fx.spec.ts (100 ZMW → $5.00)
+	•	E2E (Playwright):
+	•	tests-e2e/critical.spec.ts
+	•	login works (mock)
+	•	dashboard shows APY
+	•	deposit 100 ZMW → $5.00
+	•	withdraw $1.00 → $4.00
+	•	Determinism: confirmation delays fixed; tests assert via getByTestId('usd-balance').
+	•	Next.js Router Cleanup
+	•	Removed conflicting Pages Router routes (e.g., pages/dashboard.tsx) to use App Router only.
+
+⸻
+
+4) QA (Codex)
+	•	Pre-merge diff gate: enforced Solo QA Gate: PRs required labels product:approved, qa:approved, plus area:* and risk:*.
+	•	Checks Codex verified:
+	•	Workflow names unchanged (validate, E2E smoke (@hedgr/frontend))
+	•	.nvmrc = 20
+	•	pnpm -r install --frozen-lockfile
+	•	pnpm -w typecheck && pnpm -w lint && pnpm -w test
+	•	pnpm --filter @hedgr/frontend exec playwright install --with-deps
+	•	pnpm --filter @hedgr/frontend run e2e:ci
+	•	No any/@ts-ignore w/o justification; no console.log in app code; E2E hermetic (analytics/network blocked).
+	•	AC → Tests mapping:
+	•	Auth redirect/session → auth.spec.ts + E2E login ✅
+	•	APY pill + balance → defi.spec.ts + E2E dashboard ✅
+	•	Deposit 100 ZMW → $5.00 → fx.spec.ts + E2E deposit ✅
+	•	Withdraw decreases balance → E2E withdraw ✅
+
+⸻
+
+5) Post-CI Audit
+	•	Outcomes: All four PRs green on validate and E2E smoke (@hedgr/frontend); auto-merge (squash) used.
+	•	Stability fixes applied during PRs:
+	•	pnpm bootstrap before setup-node@v4 cache: pnpm
+	•	Commit-status bridge to satisfy required context E2E smoke (@hedgr/frontend)
+	•	Deterministic mock confirmations (deposit/withdraw)
+	•	Removed over-aggressive addInitScript(localStorage.clear) that wiped state on navigation
+	•	Added data-testid="usd-balance" and hydration guard to eliminate element-not-found races.
+	•	Residual risk: low; mocks are deterministic; selectors stable.
+
+⸻
+
+6) CI & Deployment
+	•	Workflows:
+	•	.github/workflows/validate.yml — frozen lockfile, typecheck, lint, unit
+	•	.github/workflows/e2e-smoke.yml — build, Playwright install, e2e:ci, and commit-status reporter (context: E2E smoke (@hedgr/frontend))
+	•	Permissions: statuses: write for commit-status bridge.
+	•	Node/PNPM: .nvmrc=20, corepack enable, repo-pinned pnpm; pnpm store cache enabled.
+	•	Branch Protection: requires both contexts above; linear history; conversation resolution.
+	•	Labels policy: PRs must include product:approved, qa:approved, one area:*, one risk:*.
+
+⸻
+
+7) Build Health Notes
+	•	Incidents & Remediations
+	•	pnpm not found due to premature setup-node cache: pnpm → fixed by pnpm/action-setup before setup-node.
+	•	Duplicate required check (context vs job name) → fixed with commit-status bridge via actions/github-script (github.rest.repos.createCommitStatus).
+	•	Next.js route conflict (pages/* vs app/*) → removed conflicting Pages Router files.
+	•	E2E flakes from random confirmation delays → mocks made deterministic; optional *_CONFIRM_DELAY_MS flags added.
+	•	State wipe across navigations → removed global addInitScript(localStorage.clear); tests assert via stable testid.
+	•	Guardrails added: Runbook labels requirement; optional route-conflict guard script (planned).
+
+⸻
+
+8) Archive Links
+	•	PRs (titles)
+	•	feat(auth): mock login + app shell + health/version (S06-AUTH)
+	•	feat(defi): dashboard balance + APY pill (mock) (S06-DEFIMOCK)
+	•	feat(payments): deposit stub (MoMo mock) + FX util (S06-DEPOSIT)
+	•	feat(payments): withdraw stub (MoMo mock) (S06-WITHDRAW)
+	•	chore(ci): pnpm bootstrap + test flag cleanup (CI fix)
+	•	chore(ci): align E2E required check via commit status (E2E context bridge)
+	•	Runbook updates: label policy (area:*, risk:*) and CI context notes.
+	•	Artifacts: Playwright traces/videos attached on prior failing runs; final green runs on main.
+
+⸻
+
+DoD: All 4 micro-contracts merged to main; E2E smoke asserts login, dashboard APY, deposit↑, withdraw↓; branch protection and runbook updated.
+
+
+
