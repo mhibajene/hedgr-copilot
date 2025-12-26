@@ -40,6 +40,8 @@
     "types/**/*.d.ts",
     "pages/**/*.ts",
     "pages/**/*.tsx",
+    "app/**/*.ts",
+    "app/**/*.tsx",
     "src/**/*.ts",
     "src/**/*.tsx",
     ".next/types/**/*.ts"
