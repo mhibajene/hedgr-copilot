@@ -71,7 +71,7 @@ test('activity page shows confirmed transactions', async ({ page }) => {
 
   // Check Activity page shows two CONFIRMED entries
   await page.goto('/activity');
-  await expect(page.getByText('Activity')).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Activity' })).toBeVisible();
   
   // Wait for transactions to appear and confirm they are CONFIRMED
   const confirmedBadges = page.getByText('CONFIRMED');
@@ -79,7 +79,7 @@ test('activity page shows confirmed transactions', async ({ page }) => {
   const count = await confirmedBadges.count();
   expect(count).toBeGreaterThanOrEqual(2);
   
-  // Verify we see both Deposit and Withdraw
-  await expect(page.getByText('Deposit')).toBeVisible();
-  await expect(page.getByText('Withdraw')).toBeVisible();
+  // Verify we see both Deposit and Withdraw in the activity list
+  await expect(page.getByRole('main').getByText('Deposit')).toBeVisible();
+  await expect(page.getByRole('main').getByText('Withdraw')).toBeVisible();
 });
