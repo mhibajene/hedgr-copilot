@@ -1,4 +1,4 @@
-import { describe, test, expect, beforeEach, vi } from 'vitest';
+import { describe, test, expect, beforeEach } from 'vitest';
 import { useLedgerStore } from '../lib/state/ledger';
 import type { Tx } from '../lib/state/ledger';
 

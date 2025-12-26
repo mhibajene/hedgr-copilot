@@ -31,7 +31,7 @@ const memoryStorage: Storage = {
 
 export const useLedgerStore = create<LedgerStore>()(
   persist(
-    (set, get) => ({
+    (set) => ({
       transactions: [],
       append: (tx) => set((state) => ({ transactions: [...state.transactions, tx] })),
       confirm: (id) =>
