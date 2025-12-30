@@ -70,12 +70,13 @@ export default function WithdrawPage() {
     if (usd <= 0 || usd > available) return;
 
     setStatus('PENDING');
+    
     const tx = await withdrawMock.createWithdraw(usd);
-    setTxId(tx.id);
     
     const mode = getBalanceMode();
     if (mode === 'ledger') {
       // SSoT: Record pending withdrawal in ledger
+      // Note: appendTx guards against duplicates internally
       appendTx({
         id: tx.id,
         type: 'WITHDRAW',
@@ -84,6 +85,8 @@ export default function WithdrawPage() {
         createdAt: Date.now(),
       });
     }
+    
+    setTxId(tx.id);
   };
 
   return (

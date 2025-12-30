@@ -13,7 +13,7 @@ test.beforeEach(async ({ context }) => {
 
 test.describe('Balance SSoT - Ledger as Single Source of Truth', () => {
   test.beforeEach(async ({ page }) => {
-    // Clear localStorage before each test
+    // Clear localStorage before each test for hermetic state
     await page.goto('/');
     await page.evaluate(() => {
       window.localStorage.clear();
@@ -41,8 +41,8 @@ test.describe('Balance SSoT - Ledger as Single Source of Truth', () => {
     // Verify initial balance is 0
     await expect(balanceEl).toHaveText('$0.00');
 
-    // Navigate to deposit page
-    await page.click('text=Deposit');
+    // Navigate to deposit page using nav link
+    await page.getByRole('link', { name: 'Deposit' }).click();
     await expect(page).toHaveURL(/\/deposit/);
 
     // Enter deposit amount (100 ZMW)
@@ -55,15 +55,15 @@ test.describe('Balance SSoT - Ledger as Single Source of Truth', () => {
     await expect(fxPreview).toBeVisible();
 
     // Click confirm to initiate deposit
-    await page.click('text=Confirm');
+    await page.getByRole('button', { name: 'Confirm' }).click();
 
     // Wait for confirmation (mock should confirm quickly)
     const confirmationMsg = page.getByTestId('deposit-confirmed');
     await expect(confirmationMsg).toBeVisible({ timeout: 10000 });
     await expect(confirmationMsg).toHaveText('Deposit CONFIRMED');
 
-    // Navigate to dashboard
-    await page.click('text=Dashboard');
+    // Navigate to dashboard using nav link
+    await page.getByRole('link', { name: 'Dashboard' }).click();
     await expect(page).toHaveURL(/\/dashboard/);
 
     // Balance should now be updated (100 ZMW at default rate of 20 = $5.00)
@@ -82,19 +82,26 @@ test.describe('Balance SSoT - Ledger as Single Source of Truth', () => {
     await amountInput.clear();
     await amountInput.fill('200');
 
-    await page.click('text=Confirm');
+    await page.getByRole('button', { name: 'Confirm' }).click();
 
     // Wait for confirmation
     const confirmationMsg = page.getByTestId('deposit-confirmed');
     await expect(confirmationMsg).toBeVisible({ timeout: 10000 });
 
-    // Navigate to activity page
-    await page.click('text=Activity');
+    // Navigate to activity page using nav link
+    await page.getByRole('link', { name: 'Activity' }).click();
     await expect(page).toHaveURL(/\/activity/);
 
-    // Should see the deposit entry
-    await expect(page.locator('text=Deposit')).toBeVisible();
-    await expect(page.locator('text=CONFIRMED')).toBeVisible();
+    // Should see the deposit entry using unambiguous test IDs
+    const activityList = page.getByTestId('activity-list');
+    await expect(activityList).toBeVisible();
+    
+    // Use specific test ID for deposit row (not ambiguous text selector)
+    const depositRow = page.getByTestId('activity-row-deposit');
+    await expect(depositRow.first()).toBeVisible();
+    
+    // Verify CONFIRMED status badge
+    await expect(page.getByTestId('status-confirmed').first()).toBeVisible();
   });
 
   test('balance endpoint returns correct shape', async ({ page }) => {
@@ -125,11 +132,11 @@ test.describe('Balance SSoT - Ledger as Single Source of Truth', () => {
     await amountInput.clear();
     await amountInput.fill('100');
     
-    await page.click('text=Confirm');
+    await page.getByRole('button', { name: 'Confirm' }).click();
     await expect(page.getByTestId('deposit-confirmed')).toBeVisible({ timeout: 10000 });
 
-    // Navigate to withdraw page
-    await page.click('text=Withdraw');
+    // Navigate to withdraw page using nav link
+    await page.getByRole('link', { name: 'Withdraw' }).click();
     await expect(page).toHaveURL(/\/withdraw/);
 
     // Should show current balance
@@ -141,4 +148,3 @@ test.describe('Balance SSoT - Ledger as Single Source of Truth', () => {
     expect(balanceValue).toMatch(/\$\d+\.\d{2}/);
   });
 });
-

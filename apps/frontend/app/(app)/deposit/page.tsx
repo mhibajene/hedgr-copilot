@@ -103,12 +103,13 @@ export default function DepositPage() {
   const confirm = async () => {
     setStatus('PENDING');
     setUsdToCredit(usdPreview);
+    
     const tx = await momoMock.createDeposit(zmw);
-    setTxId(tx.id);
     
     const mode = getBalanceMode();
     if (mode === 'ledger') {
       // SSoT: Record pending deposit in ledger
+      // Note: appendTx guards against duplicates internally
       appendTx({
         id: tx.id,
         type: 'DEPOSIT',
@@ -118,6 +119,8 @@ export default function DepositPage() {
         createdAt: Date.now(),
       });
     }
+    
+    setTxId(tx.id);
   };
 
   return (

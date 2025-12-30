@@ -31,9 +31,14 @@ const memoryStorage: Storage = {
 
 export const useLedgerStore = create<LedgerStore>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       transactions: [],
-      append: (tx) => set((state) => ({ transactions: [...state.transactions, tx] })),
+      append: (tx) => {
+        // Guard: Prevent duplicate transactions (handles React Strict Mode double-invocation)
+        const existing = get().transactions.find((t) => t.id === tx.id);
+        if (existing) return;
+        set((state) => ({ transactions: [...state.transactions, tx] }));
+      },
       confirm: (id) =>
         set((state) => ({
           transactions: state.transactions.map((tx) =>
@@ -56,4 +61,3 @@ export const useLedgerStore = create<LedgerStore>()(
     }
   )
 );
-
