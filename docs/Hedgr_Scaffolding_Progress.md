@@ -820,5 +820,255 @@ Given a USD withdraw of $1.00 when status becomes CONFIRMED ≤5s then USD balan
 
 DoD: All 4 micro-contracts merged to main; E2E smoke asserts login, dashboard APY, deposit↑, withdraw↓; branch protection and runbook updated.
 
+Below is a paste-ready Scaffolding Progress Summary for Sprint 0.7, matching the structure + tone of the prior sprint reports (esp. 0.6) in docs/Hedgr_Scaffolding_Progress.md.
+
+⸻
+
+Hedgr Scaffolding Progress — 0.7
+
+Feature: Sprint 0.7 — SSoT Flags, Magic Auth (flagged), Server FX, Aave APY Adapter (flagged), Ledger Activity
+Owner: (@musalwa)
+Date Shipped: 2025-12-26
+Risk: low
+
+⸻
+	1.	Metadata
+•	Branches (micro-contracts)
+•	feat/0.7-auth-magic
+•	feat/0.7-fx-service
+•	feat/0.7-defi-aave-adapter
+•	feat/0.7-ledger-activity
+•	Required Checks (branch protection)
+•	validate
+•	E2E smoke (@hedgr/frontend) (strict up-to-date ON)
+•	Flags (CI defaults)
+•	NEXT_PUBLIC_AUTH_MODE=mock (mock|magic)
+•	NEXT_PUBLIC_DEFI_MODE=mock (mock|aave)
+•	NEXT_PUBLIC_FX_MODE=fixed (fixed|coingecko)
+•	NEXT_PUBLIC_MOMO_CONFIRM_DELAY_MS=1500
+•	NEXT_PUBLIC_WITHDRAW_CONFIRM_DELAY_MS=1500
+
+⸻
+	2.	Contract (Source of Truth)
+•	Goal: Land flag-driven “real provider” scaffolds while keeping CI/E2E hermetic (mock/fixed). Add persisted Activity ledger + E2E coverage.
+•	Acceptance (Gherkin)
+•	Auth (Magic, flagged):
+Given NEXT_PUBLIC_AUTH_MODE=magic and valid keys, when OTP verifies then session is established and user redirects to /dashboard (CI remains mock).
+•	FX Service:
+Given NEXT_PUBLIC_FX_MODE=fixed, when user deposits 100 ZMW then the credited amount is $5.00 and an FX pill is visible; CoinGecko mode is local-only.
+•	DeFi (Aave APY, flagged):
+Given NEXT_PUBLIC_DEFI_MODE=aave (local), when dashboard loads then APY renders from adapter and is labeled as Aave; CI remains mock APY 5%.
+•	Ledger / Activity:
+Given user completes deposit 100 ZMW and withdraw $1.00, when visiting /activity then two CONFIRMED entries appear within ≤5s.
+•	Non-negotiables: Security first • No live network in CI/E2E • Types clean • Unit + E2E present • Deterministic installs (corepack, pnpm –frozen-lockfile) • Fork-safe • Rollback via single revert or flag.
+
+⸻
+	3.	Implementation
+•	Frontend Routing Guardrails
+•	Resolved Next.js route conflicts (Pages vs App Router duplication) to ensure production build stability.
+•	Auth (Magic OTP behind flag; default mock)
+•	apps/frontend/lib/auth/mode.ts → getAuthMode(): mock|magic (default mock)
+•	apps/frontend/lib/auth/magic.client.ts → Magic client init + loginWithEmail() returns DID token
+•	/apps/frontend/api/auth/verify route → verifies DID token using secret; establishes session (server-only)
+•	Login UI branches by auth mode; CI remains mock.
+•	FX Service (Server FX endpoint + optional provider)
+•	apps/frontend/lib/fx.ts → FX_RATE_ZMW_PER_USD_DEFAULT=20, getFxMode(), zmwToUsd()
+•	/apps/frontend/api/fx route → returns { base:‘USD’, quote:‘ZMW’, rate, ts }
+•	apps/frontend/lib/fx/providers/coingecko.ts → server-only provider; guarded to never execute in CI
+•	Deposit page consumes /api/fx and credits using returned rate; fixed mode supports 100 ZMW → $5.00.
+•	DeFi (Aave adapter behind flag)
+•	apps/frontend/lib/defi/aave.ts → getNetApyAave()
+•	apps/frontend/lib/defi/index.ts → mode switch (mock vs aave)
+•	Dashboard labels APY source when mode=aave; CI remains mock APY 5%.
+•	Ledger / Activity (persisted tx history)
+•	apps/frontend/lib/state/ledger.ts → persisted Zustand ledger store
+•	Tx model: { id, type, amountUSD, amountZMW?, status, createdAt, confirmedAt? }
+•	Momo/Withdraw mocks append PENDING → confirm after deterministic delay
+•	apps/frontend/app/(app)/activity/page.tsx → activity list with status badges, grouped by day
+•	apps/frontend/app/(app)/layout.tsx → nav includes “Activity”
+•	Dashboard keeps data-testid=“usd-balance” for stable E2E assertions.
+
+⸻
+	4.	QA (Codex)
+•	Pre-merge diff gate: enforced Solo QA Gate: PRs required labels product:approved, qa:approved, plus area:* and risk:*.
+•	Checks Codex verified:
+•	CI defaults remain mock/fixed; live providers never exercised in CI/E2E.
+•	Deterministic installs preserved: corepack enable + pnpm –frozen-lockfile
+•	No workflows renamed; required contexts unchanged.
+•	Unit tests added/updated:
+•	auth.magic.test.ts (verify endpoint success/failure; SDK mocked)
+•	fx.test.ts (fixed=20; zmwToUsd; provider mocked)
+•	defi.aave.test.ts (adapter mocked; mode switch)
+•	ledger.test.ts (lifecycle + persistence in jsdom)
+•	E2E:
+•	critical.spec.ts updated to include Activity flow assertions and stable selectors/roles.
+
+⸻
+	5.	Post-CI Audit
+•	Outcomes: All micro-contract PRs green on validate and E2E smoke (@hedgr/frontend); auto-merge (squash) used.
+•	Stability fixes applied during PRs:
+•	Next.js build blockers:
+•	Route conflict fix (duplicate /login in pages/* vs app/*), aligned routing to avoid build-time collisions.
+•	FX provider build fix: corrected bad relative import in coingecko provider; ensured provider isolation.
+•	Vitest environment fix: ledger persistence tests moved to jsdom to access window/localStorage deterministically.
+•	E2E strict locator fix: replaced ambiguous getByText(‘Activity’) with role-based locator for deterministic strict mode behavior.
+•	Residual risk: low; live integrations remain flagged and are local-only.
+
+⸻
+	6.	CI & Deployment
+•	Workflows (unchanged)
+•	.github/workflows/validate.yml — frozen lockfile, typecheck, lint, unit
+•	.github/workflows/e2e-smoke.yml — build, Playwright install, e2e:ci, artifacts on failure
+•	Node/PNPM: .nvmrc=20, corepack enable, repo-pinned pnpm; pnpm store cache enabled.
+•	Branch Protection: validate + E2E smoke required; strict up-to-date ON; linear history.
+•	Rollback posture: single revert or flip flags (AUTH_MODE=mock, FX_MODE=fixed, DEFI_MODE=mock).
+
+⸻
+	7.	Build Health Notes
+•	Incidents & Remediations
+•	Next.js “conflicting app and page file”:
+•	Cause: duplicate route definitions (pages/login.tsx vs app/(auth)/login/page.tsx).
+•	Fix: remove conflicting route; align router usage for canonical paths.
+•	Webpack module not found (CoinGecko provider):
+•	Cause: incorrect relative import path in coingecko.ts.
+•	Fix: correct import path/remove unnecessary coupling; keep provider server-only and guarded.
+•	Lint failure (unused var in ledger store):
+•	Cause: unused persist initializer arg.
+•	Fix: remove unused arg; keep lint strict.
+•	Unit test window/localStorage failures:
+•	Cause: Node test env + premature store import.
+•	Fix: jsdom env + use built-in localStorage; clear between tests.
+•	E2E strict mode violations:
+•	Cause: ambiguous locators matching nav + heading.
+•	Fix: role-based selectors (heading/link) for deterministic strict mode.
+•	Guardrails reinforced:
+•	Prefer role-based locators in Playwright.
+•	Avoid Pages/App router duplication (route-conflict rule-of-thumb documented in sprint notes).
+
+⸻
+	8.	Archive Links
+•	PRs (titles)
+•	feat(auth): enable Magic OTP behind flag (default mock)
+•	feat(fx): server fx endpoint + provider hook (fixed by default)
+•	feat(defi): aave adapter (read APY behind flag)
+•	feat(ledger): persisted transaction history + activity page
+•	Artifacts: Playwright traces/videos attached on prior failing runs; final green runs on main.
+•	Runbook updates: flags/secrets notes; live-provider guidance (local only); E2E selector guidance (role-based).
+
+⸻
+
+DoD: All 4 micro-contracts merged to main; E2E smoke asserts login (mock), dashboard APY (mock), deposit↑, withdraw↓, Activity shows two CONFIRMED entries; branch protection and runbook remain green.
+
+⸻
+
+# S08 — Balance SSoT: Ledger as Single Source of Truth
+
+## **Objective**
+
+Establish the ledger as the single source of truth (SSoT) for all user-facing balance displays. All balance values must be derived exclusively from ledger transactions, with a clear rollback path via feature flag.
+
+## **Implementation Summary**
+
+### Backend / API
+
+- **Ledger Projection Function**: `computeBalanceFromLedger(transactions)` in `lib/state/balance.ts`
+  - Reads from ledger transactions
+  - Handles deposits, withdrawals, reversals, and failed transactions predictably
+  - Returns: `{ total, available, pending, currency, asOf }`
+
+- **Canonical Balance Endpoint**: `GET /api/balance`
+  - Response shape: `{ total, available, pending, currency, asOf }`
+  - Uses ledger projection only when `BALANCE_FROM_LEDGER=true` (default)
+  - Also supports `POST /api/balance` with transactions in request body
+
+### Frontend
+
+- **useBalance() Hook**: `lib/hooks/useBalance.ts`
+  - Single source of truth for balance display in React components
+  - Returns: `{ total, available, pending, currency, asOf, isLoading, error, refresh }`
+  - Automatically computes from ledger store when SSoT is enabled
+
+- **Refactored Components**:
+  - Dashboard: Uses `useBalance()` exclusively
+  - Withdraw page: Uses `useBalance()` for available balance display
+  - Deposit/Withdraw flows: Record transactions in ledger store
+
+### Feature Flag / Rollback
+
+- **Flag**: `NEXT_PUBLIC_BALANCE_FROM_LEDGER`
+- **Default**: `true` (SSoT enabled)
+- **Rollback**:
+  1. Set `NEXT_PUBLIC_BALANCE_FROM_LEDGER=false` in environment
+  2. Or revert the `feature/S08-balance-ssot` branch (single revert)
+
+### Tests
+
+- **Unit Tests** (`__tests__/balance.projection.test.ts`):
+  - Deposit → increases correct fields
+  - Withdrawal → decreases correct fields
+  - Failed/reversed transactions → no net effect
+  - Floating point precision handling
+  - Complex multi-transaction scenarios
+
+- **API Tests** (`__tests__/api.balance.test.ts`):
+  - Correct response shape
+  - Balance computation from ledger
+  - Graceful handling of invalid input
+  - Feature flag behavior
+
+- **E2E Tests** (`tests-e2e/balance-ssot.spec.ts`):
+  - Initial zero balance display
+  - Deposit flow updates balance card
+  - Activity entry appears after deposit
+  - Withdraw page shows current balance
+
+## **Files Changed**
+
+```
+apps/frontend/
+├── lib/
+│   ├── state/
+│   │   ├── balance.ts          # Ledger projection function
+│   │   └── balance.mode.ts     # Feature flag configuration
+│   └── hooks/
+│       └── useBalance.ts       # Canonical balance hook
+├── app/
+│   ├── api/balance/route.ts    # Balance API endpoint
+│   └── (app)/
+│       ├── dashboard/page.tsx  # Refactored to use useBalance()
+│       ├── deposit/page.tsx    # Records transactions in ledger
+│       └── withdraw/page.tsx   # Uses useBalance(), records in ledger
+├── config/env.ts               # Added BALANCE_FROM_LEDGER type
+├── __tests__/
+│   ├── balance.projection.test.ts
+│   └── api.balance.test.ts
+└── tests-e2e/
+    └── balance-ssot.spec.ts
+
+env/templates/frontend.env.schema  # Added BALANCE_FROM_LEDGER
+```
+
+## **Balance Projection Rules**
+
+| Transaction Type | Status    | Effect on Balance                      |
+|-----------------|-----------|----------------------------------------|
+| DEPOSIT         | CONFIRMED | +amount to `available` and `total`     |
+| DEPOSIT         | PENDING   | +amount to `pending` and `total`       |
+| DEPOSIT         | FAILED    | No effect (reversal)                   |
+| WITHDRAW        | CONFIRMED | -amount from `available` and `total`   |
+| WITHDRAW        | PENDING   | -amount from `available`, shown in `pending` |
+| WITHDRAW        | FAILED    | No effect (reversal)                   |
+
+## **Acceptance Criteria** ✅
+
+- [x] All balance displays sourced via canonical balance endpoint/hook using ledger-derived data only
+- [x] Single authoritative backend code path for balance computation
+- [x] Feature flag (`NEXT_PUBLIC_BALANCE_FROM_LEDGER`) with documented rollback
+- [x] Unit tests for deposits, withdrawals, reversals/failed tx
+- [x] API tests for /api/balance shape and values
+- [x] E2E: Deposit flow changes balance card and shows activity entry
+- [x] CI envs use mock/fixed modes (no live networks)
+
+⸻
 
 

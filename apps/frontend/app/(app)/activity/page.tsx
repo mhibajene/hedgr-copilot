@@ -30,15 +30,21 @@ function getStatusBadge(status: Tx['status']) {
   switch (status) {
     case 'CONFIRMED':
       return (
-        <span className={`${baseClasses} bg-green-100 text-green-800`}>CONFIRMED</span>
+        <span className={`${baseClasses} bg-green-100 text-green-800`} data-testid="status-confirmed">
+          CONFIRMED
+        </span>
       );
     case 'PENDING':
       return (
-        <span className={`${baseClasses} bg-yellow-100 text-yellow-800`}>PENDING</span>
+        <span className={`${baseClasses} bg-yellow-100 text-yellow-800`} data-testid="status-pending">
+          PENDING
+        </span>
       );
     case 'FAILED':
       return (
-        <span className={`${baseClasses} bg-red-100 text-red-800`}>FAILED</span>
+        <span className={`${baseClasses} bg-red-100 text-red-800`} data-testid="status-failed">
+          FAILED
+        </span>
       );
   }
 }
@@ -71,7 +77,7 @@ export default function ActivityPage() {
           <p>No transactions yet</p>
         </div>
       ) : (
-        <div className="space-y-6">
+        <div className="space-y-6" data-testid="activity-list">
           {Array.from(grouped.entries()).map(([day, txs]) => (
             <div key={day} className="space-y-3">
               <h2 className="text-sm font-medium text-gray-700 uppercase tracking-wide">
@@ -81,12 +87,18 @@ export default function ActivityPage() {
                 {txs.map((tx) => (
                   <div
                     key={tx.id}
+                    data-testid={`activity-row-${tx.type.toLowerCase()}`}
+                    data-activity-type={tx.type}
+                    data-activity-status={tx.status}
                     className="rounded-xl border p-4 bg-white shadow-sm hover:shadow-md transition-shadow"
                   >
                     <div className="flex items-center justify-between">
                       <div className="flex-1">
                         <div className="flex items-center gap-3 mb-2">
-                          <span className="font-medium">
+                          <span 
+                            className="font-medium"
+                            data-testid={`activity-type-${tx.type.toLowerCase()}`}
+                          >
                             {tx.type === 'DEPOSIT' ? 'Deposit' : 'Withdraw'}
                           </span>
                           {getStatusBadge(tx.status)}
@@ -116,4 +128,3 @@ export default function ActivityPage() {
     </main>
   );
 }
-
