@@ -961,4 +961,114 @@ DoD: All 4 micro-contracts merged to main; E2E smoke asserts login (mock), dashb
 
 ⸻
 
+# S08 — Balance SSoT: Ledger as Single Source of Truth
+
+## **Objective**
+
+Establish the ledger as the single source of truth (SSoT) for all user-facing balance displays. All balance values must be derived exclusively from ledger transactions, with a clear rollback path via feature flag.
+
+## **Implementation Summary**
+
+### Backend / API
+
+- **Ledger Projection Function**: `computeBalanceFromLedger(transactions)` in `lib/state/balance.ts`
+  - Reads from ledger transactions
+  - Handles deposits, withdrawals, reversals, and failed transactions predictably
+  - Returns: `{ total, available, pending, currency, asOf }`
+
+- **Canonical Balance Endpoint**: `GET /api/balance`
+  - Response shape: `{ total, available, pending, currency, asOf }`
+  - Uses ledger projection only when `BALANCE_FROM_LEDGER=true` (default)
+  - Also supports `POST /api/balance` with transactions in request body
+
+### Frontend
+
+- **useBalance() Hook**: `lib/hooks/useBalance.ts`
+  - Single source of truth for balance display in React components
+  - Returns: `{ total, available, pending, currency, asOf, isLoading, error, refresh }`
+  - Automatically computes from ledger store when SSoT is enabled
+
+- **Refactored Components**:
+  - Dashboard: Uses `useBalance()` exclusively
+  - Withdraw page: Uses `useBalance()` for available balance display
+  - Deposit/Withdraw flows: Record transactions in ledger store
+
+### Feature Flag / Rollback
+
+- **Flag**: `NEXT_PUBLIC_BALANCE_FROM_LEDGER`
+- **Default**: `true` (SSoT enabled)
+- **Rollback**:
+  1. Set `NEXT_PUBLIC_BALANCE_FROM_LEDGER=false` in environment
+  2. Or revert the `feature/S08-balance-ssot` branch (single revert)
+
+### Tests
+
+- **Unit Tests** (`__tests__/balance.projection.test.ts`):
+  - Deposit → increases correct fields
+  - Withdrawal → decreases correct fields
+  - Failed/reversed transactions → no net effect
+  - Floating point precision handling
+  - Complex multi-transaction scenarios
+
+- **API Tests** (`__tests__/api.balance.test.ts`):
+  - Correct response shape
+  - Balance computation from ledger
+  - Graceful handling of invalid input
+  - Feature flag behavior
+
+- **E2E Tests** (`tests-e2e/balance-ssot.spec.ts`):
+  - Initial zero balance display
+  - Deposit flow updates balance card
+  - Activity entry appears after deposit
+  - Withdraw page shows current balance
+
+## **Files Changed**
+
+```
+apps/frontend/
+├── lib/
+│   ├── state/
+│   │   ├── balance.ts          # Ledger projection function
+│   │   └── balance.mode.ts     # Feature flag configuration
+│   └── hooks/
+│       └── useBalance.ts       # Canonical balance hook
+├── app/
+│   ├── api/balance/route.ts    # Balance API endpoint
+│   └── (app)/
+│       ├── dashboard/page.tsx  # Refactored to use useBalance()
+│       ├── deposit/page.tsx    # Records transactions in ledger
+│       └── withdraw/page.tsx   # Uses useBalance(), records in ledger
+├── config/env.ts               # Added BALANCE_FROM_LEDGER type
+├── __tests__/
+│   ├── balance.projection.test.ts
+│   └── api.balance.test.ts
+└── tests-e2e/
+    └── balance-ssot.spec.ts
+
+env/templates/frontend.env.schema  # Added BALANCE_FROM_LEDGER
+```
+
+## **Balance Projection Rules**
+
+| Transaction Type | Status    | Effect on Balance                      |
+|-----------------|-----------|----------------------------------------|
+| DEPOSIT         | CONFIRMED | +amount to `available` and `total`     |
+| DEPOSIT         | PENDING   | +amount to `pending` and `total`       |
+| DEPOSIT         | FAILED    | No effect (reversal)                   |
+| WITHDRAW        | CONFIRMED | -amount from `available` and `total`   |
+| WITHDRAW        | PENDING   | -amount from `available`, shown in `pending` |
+| WITHDRAW        | FAILED    | No effect (reversal)                   |
+
+## **Acceptance Criteria** ✅
+
+- [x] All balance displays sourced via canonical balance endpoint/hook using ledger-derived data only
+- [x] Single authoritative backend code path for balance computation
+- [x] Feature flag (`NEXT_PUBLIC_BALANCE_FROM_LEDGER`) with documented rollback
+- [x] Unit tests for deposits, withdrawals, reversals/failed tx
+- [x] API tests for /api/balance shape and values
+- [x] E2E: Deposit flow changes balance card and shows activity entry
+- [x] CI envs use mock/fixed modes (no live networks)
+
+⸻
+
 

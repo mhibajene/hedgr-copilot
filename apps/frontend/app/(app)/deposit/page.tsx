@@ -1,8 +1,12 @@
 'use client';
+
 import { useState, useEffect } from 'react';
 import { zmwToUsd } from '../../../lib/fx';
 import { momoMock } from '../../../lib/payments/momo.mock';
+import { useBalance } from '../../../lib/hooks/useBalance';
+import { useLedgerStore } from '../../../lib/state/ledger';
 import { useWalletStore } from '../../../lib/state/wallet';
+import { getBalanceMode } from '../../../lib/state/balance.mode';
 
 interface FxRate {
   base: string;
@@ -12,12 +16,19 @@ interface FxRate {
 }
 
 export default function DepositPage() {
-  const credit = useWalletStore((s) => s.creditUSD);
+  const { refresh } = useBalance();
+  const appendTx = useLedgerStore((s) => s.append);
+  const confirmTx = useLedgerStore((s) => s.confirm);
+  const failTx = useLedgerStore((s) => s.fail);
+  
+  // Legacy wallet store for backward compatibility
+  const creditWallet = useWalletStore((s) => s.creditUSD);
+  
   const [zmw, setZmw] = useState(100);
   const [usdPreview, setUsdPreview] = useState(0);
   const [txId, setTxId] = useState<string | null>(null);
   const [usdToCredit, setUsdToCredit] = useState(0);
-  const [status, setStatus] = useState<'IDLE' | 'PENDING' | 'CONFIRMED'>('IDLE');
+  const [status, setStatus] = useState<'IDLE' | 'PENDING' | 'CONFIRMED' | 'FAILED'>('IDLE');
   const [fxRate, setFxRate] = useState<FxRate | null>(null);
 
   useEffect(() => {
@@ -51,30 +62,62 @@ export default function DepositPage() {
       const s = await momoMock.status(txId);
       if (s === 'CONFIRMED') {
         clearInterval(h);
-        credit(usdToCredit);
-        // Force-flush persisted wallet state so that navigating to /dashboard
-        // immediately after this page shows the correct balance, even if the
-        // zustand persistence layer hasn't flushed yet.
-        try {
-          if (typeof window !== 'undefined') {
-            const next = useWalletStore.getState().usdBalance;
-            window.localStorage.setItem('hedgr:wallet', JSON.stringify({ state: { usdBalance: +next.toFixed(2) }, version: 0 }));
+        
+        const mode = getBalanceMode();
+        if (mode === 'ledger') {
+          // SSoT: Confirm transaction in ledger
+          confirmTx(txId);
+        } else {
+          // Legacy: Update wallet store
+          creditWallet(usdToCredit);
+          // Force-flush persisted wallet state
+          try {
+            if (typeof window !== 'undefined') {
+              const next = useWalletStore.getState().usdBalance;
+              window.localStorage.setItem('hedgr:wallet', JSON.stringify({ state: { usdBalance: +next.toFixed(2) }, version: 0 }));
+            }
+          } catch {
+            void 0;
           }
-        } catch {
-          // Intentionally ignore storage write errors (e.g., disabled storage in CI)
-          void 0;
         }
+        
+        refresh();
         setStatus('CONFIRMED');
+      } else if (s === 'FAILED') {
+        clearInterval(h);
+        
+        const mode = getBalanceMode();
+        if (mode === 'ledger') {
+          // SSoT: Mark transaction as failed (no net effect on balance)
+          failTx(txId);
+        }
+        // Legacy mode: no action needed for failed tx
+        
+        refresh();
+        setStatus('FAILED');
       }
     }, 500);
     return () => clearInterval(h);
-  }, [txId, usdToCredit, credit]);
+  }, [txId, usdToCredit, creditWallet, confirmTx, failTx, refresh]);
 
   const confirm = async () => {
     setStatus('PENDING');
     setUsdToCredit(usdPreview);
     const tx = await momoMock.createDeposit(zmw);
     setTxId(tx.id);
+    
+    const mode = getBalanceMode();
+    if (mode === 'ledger') {
+      // SSoT: Record pending deposit in ledger
+      appendTx({
+        id: tx.id,
+        type: 'DEPOSIT',
+        amountUSD: usdPreview,
+        amountZMW: zmw,
+        status: 'PENDING',
+        createdAt: Date.now(),
+      });
+    }
   };
 
   return (
@@ -96,9 +139,15 @@ export default function DepositPage() {
         />
       </div>
       <div className="rounded-xl p-3 bg-gray-50">FX Preview: <strong>${usdPreview.toFixed(2)}</strong></div>
-      <button onClick={confirm} disabled={status==='PENDING'} className="rounded-xl p-3 shadow">{status==='PENDING'?'Processing…':'Confirm'}</button>
-      {status==='CONFIRMED' && <div className="text-green-600">Deposit CONFIRMED</div>}
+      <button 
+        onClick={confirm} 
+        disabled={status === 'PENDING'} 
+        className="rounded-xl p-3 shadow"
+      >
+        {status === 'PENDING' ? 'Processing…' : 'Confirm'}
+      </button>
+      {status === 'CONFIRMED' && <div className="text-green-600" data-testid="deposit-confirmed">Deposit CONFIRMED</div>}
+      {status === 'FAILED' && <div className="text-red-600">Deposit FAILED</div>}
     </main>
   );
 }
-
