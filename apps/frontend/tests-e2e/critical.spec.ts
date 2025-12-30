@@ -127,9 +127,11 @@ test('activity page shows confirmed transactions', async ({ page }) => {
   const activityList = page.getByTestId('activity-list');
   await expect(activityList).toBeVisible({ timeout: 10000 });
   
-  // Verify CONFIRMED status badges (at least 2)
-  const confirmedBadges = page.getByTestId('status-confirmed');
-  await expect(confirmedBadges.first()).toBeVisible({ timeout: 10000 });
+  // Verify SUCCESS status badges via lifecycle-aware TxStatusPill selectors (at least 2)
+  const confirmedBadges = page.locator(
+    '[data-testid="tx-status-pill"][data-status="SUCCESS"]'
+  );
+  await expect(confirmedBadges.first()).toBeVisible({ timeout: 10_000 });
   const count = await confirmedBadges.count();
   expect(count).toBeGreaterThanOrEqual(2);
   

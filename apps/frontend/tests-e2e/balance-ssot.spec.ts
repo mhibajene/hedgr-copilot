@@ -100,8 +100,11 @@ test.describe('Balance SSoT - Ledger as Single Source of Truth', () => {
     const depositRow = page.getByTestId('activity-row-deposit');
     await expect(depositRow.first()).toBeVisible();
     
-    // Verify CONFIRMED status badge
-    await expect(page.getByTestId('status-confirmed').first()).toBeVisible();
+    // Verify SUCCESS status via lifecycle-aware TxStatusPill selector
+    const confirmedPill = page.locator(
+      '[data-testid="tx-status-pill"][data-status="SUCCESS"]'
+    );
+    await expect(confirmedPill.first()).toBeVisible({ timeout: 10_000 });
   });
 
   test('balance endpoint returns correct shape', async ({ page }) => {
