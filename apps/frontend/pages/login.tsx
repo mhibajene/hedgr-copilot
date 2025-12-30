@@ -5,6 +5,7 @@ import { getAuthMode } from '../lib/auth/mode';
 import { loginWithEmail as loginWithEmailMock } from '../lib/auth/magic';
 import { loginWithEmail as loginWithEmailMagic } from '../lib/auth/magic.client';
 import { useUserStore } from '../lib/state/user';
+import { TrustDisclosureBanner } from '../components';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -54,24 +55,27 @@ export default function LoginPage() {
   };
 
   return (
-    <main className="min-h-screen grid place-items-center p-6">
-      <form onSubmit={submit} className="w-full max-w-sm space-y-4 rounded-2xl shadow p-6">
-        <h1 className="text-xl font-semibold">Log in</h1>
-        {error && (
-          <div className="text-red-600 text-sm">{error}</div>
-        )}
-        <input
-          type="email"
-          placeholder="you@example.com"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          className="w-full border rounded-xl p-3"
-        />
-        <button disabled={busy} className="w-full rounded-xl p-3 shadow">
-          {busy ? 'Signing in…' : 'Continue'}
-        </button>
-      </form>
-    </main>
+    <>
+      <TrustDisclosureBanner data-testid="login-trust-disclosure" />
+      <main className="min-h-screen grid place-items-center p-6">
+        <form onSubmit={submit} className="w-full max-w-sm space-y-4 rounded-2xl shadow p-6">
+          <h1 className="text-xl font-semibold">Log in</h1>
+          {error && (
+            <div className="text-red-600 text-sm">{error}</div>
+          )}
+          <input
+            type="email"
+            placeholder="you@example.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            className="w-full border rounded-xl p-3"
+          />
+          <button disabled={busy} className="w-full rounded-xl p-3 shadow">
+            {busy ? 'Signing in…' : 'Continue'}
+          </button>
+        </form>
+      </main>
+    </>
   );
 }

@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { TrustDisclosureBanner } from '../../components';
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -11,10 +12,12 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     { href: '/deposit', label: 'Deposit' },
     { href: '/withdraw', label: 'Withdraw' },
     { href: '/activity', label: 'Activity' },
+    { href: '/settings', label: 'Settings' },
   ];
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <TrustDisclosureBanner dismissible />
       <nav className="bg-white border-b shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
