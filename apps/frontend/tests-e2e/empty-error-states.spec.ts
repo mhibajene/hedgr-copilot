@@ -83,7 +83,7 @@ test.describe('Empty and Error States', () => {
     // Navigate to withdraw
     await page.goto('/withdraw');
     await waitForPageLoaded(page);
-    await expect(page.getByRole('heading', { name: 'Withdraw' })).toBeVisible();
+    await expect(page.getByRole('heading', { level: 1, name: 'Withdraw' })).toBeVisible();
 
     // Page should either show no-funds state, or the withdraw form
     const noFundsState = page.getByTestId('withdraw-no-funds');
