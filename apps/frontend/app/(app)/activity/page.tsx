@@ -4,6 +4,7 @@ import { useState, useMemo } from 'react';
 import { useLedgerStore } from '../../../lib/state/ledger';
 import { TxStatusPill, TxDetailModal } from '../../../components';
 import { txToLifecycle, type TxLifecycle } from '../../../lib/tx';
+import { EmptyState } from '@hedgr/ui';
 
 function formatDate(timestamp: number): string {
   const date = new Date(timestamp);
@@ -38,6 +39,8 @@ function groupByDay(transactions: TxLifecycle[]): Map<string, TxLifecycle[]> {
   }
   return groups;
 }
+
+type FilterType = 'all' | 'deposits' | 'withdrawals';
 
 function TransactionTypeIcon({ type }: { type: 'DEPOSIT' | 'WITHDRAW' }) {
   if (type === 'DEPOSIT') {
@@ -146,6 +149,7 @@ export default function ActivityPage() {
   const transactions = useLedgerStore((s) => s.transactions);
   const [selectedTx, setSelectedTx] = useState<TxLifecycle | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [filter, setFilter] = useState<FilterType>('all');
 
   // Convert legacy transactions to lifecycle format
   const lifecycleTxs = useMemo(
@@ -153,10 +157,17 @@ export default function ActivityPage() {
     [transactions]
   );
 
+  // Apply filter
+  const filteredTxs = useMemo(() => {
+    if (filter === 'all') return lifecycleTxs;
+    if (filter === 'deposits') return lifecycleTxs.filter((tx) => tx.type === 'DEPOSIT');
+    return lifecycleTxs.filter((tx) => tx.type === 'WITHDRAW');
+  }, [lifecycleTxs, filter]);
+
   // Sort freshest first
   const sorted = useMemo(
-    () => [...lifecycleTxs].sort((a, b) => b.createdAt - a.createdAt),
-    [lifecycleTxs]
+    () => [...filteredTxs].sort((a, b) => b.createdAt - a.createdAt),
+    [filteredTxs]
   );
 
   const grouped = useMemo(() => groupByDay(sorted), [sorted]);
@@ -172,6 +183,66 @@ export default function ActivityPage() {
     setTimeout(() => setSelectedTx(null), 150);
   };
 
+  // Render empty state based on context
+  const renderEmptyState = () => {
+    // No transactions at all
+    if (transactions.length === 0) {
+      return (
+        <EmptyState
+          title="No transactions yet"
+          description="Your deposit and withdrawal history will appear here once you make your first transaction."
+          icon={
+            <svg
+              className="h-12 w-12 text-gray-300"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={1}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+              />
+            </svg>
+          }
+          primaryAction={{ label: 'Make your first deposit', href: '/deposit' }}
+          data-testid="activity-empty-state"
+        />
+      );
+    }
+
+    // Filter returned zero results
+    if (filteredTxs.length === 0 && filter !== 'all') {
+      const filterLabel = filter === 'deposits' ? 'deposits' : 'withdrawals';
+      return (
+        <EmptyState
+          title={`No ${filterLabel} found`}
+          description={`You haven't made any ${filterLabel} yet. Try changing your filter or make a new transaction.`}
+          icon={
+            <svg
+              className="h-12 w-12 text-gray-300"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={1}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+              />
+            </svg>
+          }
+          primaryAction={{ label: 'Show all transactions', onClick: () => setFilter('all') }}
+          data-testid="activity-filter-empty-state"
+        />
+      );
+    }
+
+    return null;
+  };
+
   return (
     <main className="p-6 space-y-6 max-w-4xl">
       <div className="flex items-center justify-between">
@@ -183,28 +254,28 @@ export default function ActivityPage() {
         )}
       </div>
 
-      {transactions.length === 0 ? (
-        <div className="text-center py-16">
-          <div className="mx-auto h-16 w-16 rounded-full bg-gray-100 flex items-center justify-center mb-4">
-            <svg
-              className="h-8 w-8 text-gray-400"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+      {/* Filter buttons - only show when there are transactions */}
+      {transactions.length > 0 && (
+        <div className="flex gap-2">
+          {(['all', 'deposits', 'withdrawals'] as const).map((f) => (
+            <button
+              key={f}
+              onClick={() => setFilter(f)}
+              className={`px-4 py-2 text-sm font-medium rounded-lg transition-colors ${
+                filter === f
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+              }`}
+              data-testid={`filter-${f}`}
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={1.5}
-                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
-              />
-            </svg>
-          </div>
-          <p className="text-gray-500 font-medium">No transactions yet</p>
-          <p className="text-sm text-gray-400 mt-1">
-            Your deposit and withdrawal history will appear here
-          </p>
+              {f === 'all' ? 'All' : f === 'deposits' ? 'Deposits' : 'Withdrawals'}
+            </button>
+          ))}
         </div>
+      )}
+
+      {sorted.length === 0 ? (
+        renderEmptyState()
       ) : (
         <div className="space-y-6" data-testid="activity-list">
           {Array.from(grouped.entries()).map(([day, txs]) => (

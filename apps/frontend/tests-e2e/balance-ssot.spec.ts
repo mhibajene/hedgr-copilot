@@ -41,8 +41,8 @@ test.describe('Balance SSoT - Ledger as Single Source of Truth', () => {
     // Verify initial balance is 0
     await expect(balanceEl).toHaveText('$0.00');
 
-    // Navigate to deposit page using nav link
-    await page.getByRole('link', { name: 'Deposit' }).click();
+    // Navigate to deposit page using nav link (explicit selector to avoid CTA ambiguity)
+    await page.getByRole('link', { name: 'Deposit', exact: true }).click();
     await expect(page).toHaveURL(/\/deposit/);
 
     // Enter deposit amount (100 ZMW)
