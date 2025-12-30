@@ -331,20 +331,22 @@ test.describe('Transaction Lifecycle - Activity Display', () => {
     await expect(page.getByTestId('tx-detail-id')).toBeVisible();
     await expect(page.getByTestId('tx-detail-timeline')).toBeVisible();
 
-    // Close via close button
+    // Close via close button (primary close path)
     await page.getByTestId('tx-detail-close').click();
-    await expect(modal).not.toBeVisible();
-
-    // Reopen and close via backdrop
-    await txRow.click();
-    await expect(modal).toBeVisible();
-    await page.getByTestId('tx-detail-backdrop').click();
     await expect(modal).not.toBeVisible();
 
     // Reopen and close via Escape key
     await txRow.click();
     await expect(modal).toBeVisible();
     await page.keyboard.press('Escape');
+    await expect(modal).not.toBeVisible();
+
+    // Reopen and close via backdrop click (constrained to safe position to avoid modal content interception)
+    await txRow.click();
+    await expect(modal).toBeVisible();
+    const backdrop = page.getByTestId('tx-detail-backdrop');
+    // Click near the top-left corner where no modal content exists
+    await backdrop.click({ position: { x: 10, y: 10 } });
     await expect(modal).not.toBeVisible();
   });
 });
