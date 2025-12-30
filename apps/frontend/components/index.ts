@@ -7,4 +7,5 @@
 export { TxStatusPill, type TxStatusPillProps } from './TxStatusPill';
 export { TxDetailModal, type TxDetailModalProps } from './TxDetailModal';
 export { default as DevSecretsToast } from './DevSecretsToast';
+export { TrustDisclosureBanner, type TrustDisclosureBannerProps } from './TrustDisclosureBanner';
 
