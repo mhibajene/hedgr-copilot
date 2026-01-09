@@ -74,9 +74,10 @@ describe('chat client stub', () => {
       throw new Error('Network calls should not be made');
     });
 
-    const xhrSpy = vi.spyOn(global, 'XMLHttpRequest').mockImplementation(() => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const xhrSpy = vi.spyOn(global, 'XMLHttpRequest').mockImplementation((): any => {
       throw new Error('Network calls should not be made');
-    } as any);
+    });
 
     const promise = sendMessage('test');
     await vi.runAllTimersAsync();

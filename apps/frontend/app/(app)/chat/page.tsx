@@ -72,7 +72,7 @@ export default function ChatPage() {
         timestamp: Date.now(),
       };
       setMessages((prev) => [...prev, assistantMessage]);
-    } catch (error) {
+    } catch {
       const errorMessage: Message = {
         id: `error-${Date.now()}`,
         role: 'assistant',

@@ -4,7 +4,7 @@ import { test, expect } from '@playwright/test';
 const ANALYTICS_HOSTS = [/posthog\./i, /sentry\./i];
 
 test.describe('Chat Page', () => {
-  test.beforeEach(async ({ context, page }) => {
+  test.beforeEach(async ({ context }) => {
     // Block analytics
     await context.route('**/*', (route) => {
       const url = route.request().url();
