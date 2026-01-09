@@ -1,13 +1,13 @@
 // Frontend env validation & typing (no external deps).
-// Required: NEXT_PUBLIC_APP_ENV ∈ {dev,stg,prod}, API_BASE_URL (valid URL)
-// Optional: POSTHOG_KEY, SENTRY_DSN
+// Required: NEXT_PUBLIC_APP_ENV ∈ {dev,stg,prod}
+// Optional: API_BASE_URL (validated at runtime when used), POSTHOG_KEY, SENTRY_DSN
 
 const ALLOWED_APP_ENVS = ["dev", "stg", "prod"] as const;
 export type AppEnv = (typeof ALLOWED_APP_ENVS)[number];
 
 export type Env = {
   NEXT_PUBLIC_APP_ENV: AppEnv;
-  API_BASE_URL: string;
+  API_BASE_URL?: string;
   NEXT_PUBLIC_AUTH_MODE?: string;
   NEXT_PUBLIC_BALANCE_FROM_LEDGER?: string;
   NEXT_PUBLIC_FEATURE_COPILOT_ENABLED?: string;
@@ -50,9 +50,7 @@ function buildEnv(from: NodeJS.ProcessEnv): Env {
   if (!isAllowedAppEnv(NEXT_PUBLIC_APP_ENV)) {
     errors.push(`NEXT_PUBLIC_APP_ENV must be one of ${ALLOWED_APP_ENVS.join(", ")}`);
   }
-  if (!isValidUrl(API_BASE_URL)) {
-    errors.push("API_BASE_URL must be a valid http(s) URL");
-  }
+  // API_BASE_URL is validated at runtime when actually used (not at build time)
 
   if (errors.length) {
     const help = [
@@ -73,13 +71,40 @@ function buildEnv(from: NodeJS.ProcessEnv): Env {
 
   return {
     NEXT_PUBLIC_APP_ENV: NEXT_PUBLIC_APP_ENV as AppEnv,
-    API_BASE_URL: API_BASE_URL as string,
+    ...(API_BASE_URL ? { API_BASE_URL } : {}),
     ...(NEXT_PUBLIC_AUTH_MODE ? { NEXT_PUBLIC_AUTH_MODE } : {}),
     ...(NEXT_PUBLIC_BALANCE_FROM_LEDGER ? { NEXT_PUBLIC_BALANCE_FROM_LEDGER } : {}),
     ...(NEXT_PUBLIC_FEATURE_COPILOT_ENABLED ? { NEXT_PUBLIC_FEATURE_COPILOT_ENABLED } : {}),
     ...(POSTHOG_KEY ? { POSTHOG_KEY } : {}),
     ...(SENTRY_DSN ? { SENTRY_DSN } : {}),
   };
+}
+
+/**
+ * Get and validate API_BASE_URL at runtime.
+ * Call this function when making API calls that require API_BASE_URL.
+ * 
+ * @throws Error if API_BASE_URL is missing or invalid
+ * @returns Valid API_BASE_URL string
+ */
+export function getApiBaseUrl(): string {
+  const apiBaseUrl = env.API_BASE_URL || process.env.API_BASE_URL?.trim();
+  
+  if (!apiBaseUrl) {
+    throw new Error(
+      'API_BASE_URL is required but not set. ' +
+      'Set it in your environment or Doppler config. ' +
+      'Example: API_BASE_URL=http://localhost:3000'
+    );
+  }
+  
+  if (!isValidUrl(apiBaseUrl)) {
+    throw new Error(
+      `API_BASE_URL must be a valid http(s) URL, got: ${apiBaseUrl}`
+    );
+  }
+  
+  return apiBaseUrl;
 }
 
 /**

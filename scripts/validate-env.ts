@@ -24,11 +24,10 @@ function main() {
   if (!isAllowedAppEnv(NEXT_PUBLIC_APP_ENV)) {
     errors.push(`NEXT_PUBLIC_APP_ENV must be one of ${ALLOWED_APP_ENVS.join(", ")}`);
   }
-  if (!isValidUrl(API_BASE_URL)) {
-    errors.push("API_BASE_URL must be a valid http(s) URL");
-  }
+  // API_BASE_URL is validated at runtime when actually used (not at build time)
   if (!POSTHOG_KEY) warnings.push("Optional POSTHOG_KEY not set (analytics disabled)");
   if (!SENTRY_DSN) warnings.push("Optional SENTRY_DSN not set (error reporting disabled)");
+  if (!API_BASE_URL) warnings.push("Optional API_BASE_URL not set (will be validated at runtime when used)");
 
   if (warnings.length) console.warn(warnings.map(w => `[warn] ${w}`).join("\n"));
 

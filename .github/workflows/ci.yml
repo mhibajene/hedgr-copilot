@@ -73,7 +73,7 @@ jobs:
       DOPPLER_CONFIG: ${{ github.event_name == 'pull_request' && 'dev_config_dev' || 'stg_config_stg' }}
       # CI-safe defaults for when Doppler is skipped (forked PRs) or missing vars
       NEXT_PUBLIC_APP_ENV: dev
-      API_BASE_URL: http://localhost:3000
+      # API_BASE_URL is validated at runtime when used, not at build time
 
     steps:
       - uses: actions/checkout@v4
