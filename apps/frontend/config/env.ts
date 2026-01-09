@@ -10,6 +10,7 @@ export type Env = {
   API_BASE_URL: string;
   NEXT_PUBLIC_AUTH_MODE?: string;
   NEXT_PUBLIC_BALANCE_FROM_LEDGER?: string;
+  NEXT_PUBLIC_FEATURE_COPILOT_ENABLED?: string;
   POSTHOG_KEY?: string;
   SENTRY_DSN?: string;
 };
@@ -42,6 +43,7 @@ function buildEnv(from: NodeJS.ProcessEnv): Env {
   const API_BASE_URL = from.API_BASE_URL?.trim();
   const NEXT_PUBLIC_AUTH_MODE = from.NEXT_PUBLIC_AUTH_MODE?.trim();
   const NEXT_PUBLIC_BALANCE_FROM_LEDGER = from.NEXT_PUBLIC_BALANCE_FROM_LEDGER?.trim();
+  const NEXT_PUBLIC_FEATURE_COPILOT_ENABLED = from.NEXT_PUBLIC_FEATURE_COPILOT_ENABLED?.trim();
   const POSTHOG_KEY = from.POSTHOG_KEY?.trim();
   const SENTRY_DSN = from.SENTRY_DSN?.trim();
 
@@ -74,9 +76,18 @@ function buildEnv(from: NodeJS.ProcessEnv): Env {
     API_BASE_URL: API_BASE_URL as string,
     ...(NEXT_PUBLIC_AUTH_MODE ? { NEXT_PUBLIC_AUTH_MODE } : {}),
     ...(NEXT_PUBLIC_BALANCE_FROM_LEDGER ? { NEXT_PUBLIC_BALANCE_FROM_LEDGER } : {}),
+    ...(NEXT_PUBLIC_FEATURE_COPILOT_ENABLED ? { NEXT_PUBLIC_FEATURE_COPILOT_ENABLED } : {}),
     ...(POSTHOG_KEY ? { POSTHOG_KEY } : {}),
     ...(SENTRY_DSN ? { SENTRY_DSN } : {}),
   };
+}
+
+/**
+ * Check if Copilot feature is enabled.
+ * Requires explicit 'true' value to be enabled.
+ */
+export function isCopilotEnabled(): boolean {
+  return env.NEXT_PUBLIC_FEATURE_COPILOT_ENABLED === 'true';
 }
 
 export const env: Env = buildEnv(process.env);

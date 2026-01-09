@@ -298,3 +298,4 @@ export function TxDetailModal({
 
 export default TxDetailModal;
 
+

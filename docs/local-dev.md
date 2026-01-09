@@ -4,7 +4,7 @@
 - Node 20 (Corepack enabled), pnpm via Corepack
 - Doppler CLI logged in
   ```bash
-  doppler login
+  doppler login 
   doppler setup -p hedgr-copilot -c dev_config_dev
   ```
 

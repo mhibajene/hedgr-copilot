@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { TrustDisclosureBanner } from '../../components';
+import { isCopilotEnabled } from '../../config/env';
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -13,6 +14,8 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     { href: '/withdraw', label: 'Withdraw' },
     { href: '/activity', label: 'Activity' },
     { href: '/settings', label: 'Settings' },
+    // Conditionally add Copilot link
+    ...(isCopilotEnabled() ? [{ href: '/chat', label: 'Copilot' }] : []),
   ];
 
   return (
@@ -27,6 +30,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                   <Link
                     key={link.href}
                     href={link.href}
+                    data-testid={link.href === '/chat' ? 'nav-copilot-link' : undefined}
                     className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${
                       pathname === link.href
                         ? 'border-blue-500 text-gray-900'
