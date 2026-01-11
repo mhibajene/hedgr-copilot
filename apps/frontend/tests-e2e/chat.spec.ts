@@ -29,12 +29,25 @@ async function openNavIfCollapsed(page: Page) {
   const toggleVisible = await toggle.isVisible().catch(() => false);
   if (toggleVisible) {
     await toggle.click();
+    await expect(page.getByTestId('app-nav')).toBeVisible({ timeout: 10_000 });
   }
 
-  // After toggling (or if toggle isn't present), wait for any visible Copilot link.
-  await expect(page.getByTestId('nav-copilot-link').filter({ has: page.locator(':visible') })).toBeVisible({
-    timeout: 10_000,
-  });
+  // After toggling (or if toggle isn't present), wait until ANY Copilot link is actually visible.
+  // (Do not rely on locator.filter({ has: ':visible' }) — it doesn't mean what we want here.)
+  await page.waitForFunction(
+    () => {
+      const els = Array.from(document.querySelectorAll('[data-testid="nav-copilot-link"]'));
+      return els.some((el) => {
+        if (!(el instanceof HTMLElement)) return false;
+        const style = window.getComputedStyle(el);
+        if (style.display === 'none' || style.visibility === 'hidden' || style.opacity === '0') return false;
+        const rect = el.getBoundingClientRect();
+        return rect.width > 0 && rect.height > 0;
+      });
+    },
+    undefined,
+    { timeout: 10_000 },
+  );
 }
 
 /** Click the first visible instance of a locator (useful for responsive duplicated nav links) */
