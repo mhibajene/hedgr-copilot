@@ -15,22 +15,59 @@ async function waitForDashboardReady(page: Page) {
 
 /** Handle responsive nav - open hamburger menu if nav is collapsed */
 async function openNavIfCollapsed(page: Page) {
-  // Desktop nav link (first one, visible on md+ screens)
-  const desktopLink = page.getByTestId('nav-links').getByTestId('nav-copilot-link');
+  // If any Copilot link is already visible (desktop nav), nothing to do.
+  const copilotLinks = page.getByTestId('nav-copilot-link');
+  const linkCount = await copilotLinks.count();
+  for (let i = 0; i < linkCount; i++) {
+    const link = copilotLinks.nth(i);
+    const visible = await link.isVisible().catch(() => false);
+    if (visible) return;
+  }
 
-  // Check if desktop link is visible
-  const isDesktopVisible = await desktopLink.isVisible().catch(() => false);
-  if (isDesktopVisible) return;
-
-  // Mobile view: open hamburger menu
+  // Otherwise, attempt to open the mobile nav (hamburger) if present.
   const toggle = page.getByTestId('nav-toggle');
   const toggleVisible = await toggle.isVisible().catch(() => false);
   if (toggleVisible) {
     await toggle.click();
-    // Wait for mobile nav link to be visible
-    const mobileLink = page.getByTestId('nav-links-mobile').getByTestId('nav-copilot-link');
-    await expect(mobileLink).toBeVisible({ timeout: 5_000 });
   }
+
+  // After toggling (or if toggle isn't present), wait for any visible Copilot link.
+  await expect(page.getByTestId('nav-copilot-link').filter({ has: page.locator(':visible') })).toBeVisible({
+    timeout: 10_000,
+  });
+}
+
+/** Click the first visible instance of a locator (useful for responsive duplicated nav links) */
+async function clickFirstVisible(page: Page, loc: ReturnType<Page['locator']>) {
+  const n = await loc.count();
+  for (let i = 0; i < n; i++) {
+    const candidate = loc.nth(i);
+    const visible = await candidate.isVisible().catch(() => false);
+    if (visible) {
+      await candidate.click();
+      return;
+    }
+  }
+
+  // Debug: dump nav HTML to make CI failures actionable
+  const nav = page.getByTestId('app-nav');
+  const navHtml = await nav
+    .evaluate((el) => (el instanceof HTMLElement ? el.innerHTML : ''))
+    .catch(() => '');
+
+  throw new Error(
+    `No visible nav link found for locator. Found ${n} candidate(s). app-nav HTML (truncated):\n${navHtml.slice(0, 2000)}`,
+  );
+}
+
+/** Navigate from dashboard to chat page */
+async function gotoChatFromDashboard(page: Page) {
+  await openNavIfCollapsed(page);
+
+  const copilotLinks = page.getByTestId('nav-copilot-link');
+  await clickFirstVisible(page, copilotLinks);
+
+  await expect(page).toHaveURL(/\/chat/, { timeout: 10_000 });
 }
 
 /** Complete login and wait for dashboard to be ready */
@@ -39,22 +76,6 @@ async function loginAndWaitForDashboardReady(page: Page) {
   await page.getByPlaceholder('you@example.com').fill('test@hedgr.app');
   await page.getByRole('button', { name: 'Continue' }).click();
   await waitForDashboardReady(page);
-}
-
-/** Navigate from dashboard to chat page */
-async function gotoChatFromDashboard(page: Page) {
-  await openNavIfCollapsed(page);
-  
-  // Get the visible copilot link (desktop or mobile)
-  const desktopLink = page.getByTestId('nav-links').getByTestId('nav-copilot-link');
-  const mobileLink = page.getByTestId('nav-links-mobile').getByTestId('nav-copilot-link');
-  
-  const isDesktopVisible = await desktopLink.isVisible().catch(() => false);
-  const copilotLink = isDesktopVisible ? desktopLink : mobileLink;
-  
-  await expect(copilotLink).toBeVisible({ timeout: 10_000 });
-  await copilotLink.click();
-  await expect(page).toHaveURL(/\/chat/, { timeout: 10_000 });
 }
 
 // ============================================================================
