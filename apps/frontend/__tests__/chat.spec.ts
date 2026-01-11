@@ -69,15 +69,34 @@ describe('chat client stub', () => {
   });
 
   it('does not make network calls', async () => {
-    // Mock fetch and XMLHttpRequest to ensure no network calls
-    const fetchSpy = vi.spyOn(global, 'fetch').mockImplementation(() => {
-      throw new Error('Network calls should not be made');
-    });
+    // Ensure no network calls are made. In Node test environments, XMLHttpRequest may not exist.
+    // We stub globals and assert they were not invoked.
+    const fetchSpy = vi
+      .spyOn(globalThis as unknown as { fetch: typeof fetch }, 'fetch')
+      .mockImplementation(() => {
+        throw new Error('Network calls should not be made');
+      });
 
+    // Stub XMLHttpRequest only if it exists; otherwise create a stub to detect usage.
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const xhrSpy = vi.spyOn(global, 'XMLHttpRequest').mockImplementation((): any => {
-      throw new Error('Network calls should not be made');
-    });
+    const hadXHR = typeof (globalThis as any).XMLHttpRequest !== 'undefined';
+    let xhrStub: ReturnType<typeof vi.fn> | null = null;
+
+    if (hadXHR) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      xhrStub = vi.fn((): any => {
+        throw new Error('Network calls should not be made');
+      });
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      vi.spyOn(globalThis as any, 'XMLHttpRequest').mockImplementation(xhrStub);
+    } else {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      xhrStub = vi.fn((): any => {
+        throw new Error('Network calls should not be made');
+      });
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      vi.stubGlobal('XMLHttpRequest', xhrStub);
+    }
 
     const promise = sendMessage('test');
     await vi.runAllTimersAsync();
@@ -85,9 +104,17 @@ describe('chat client stub', () => {
 
     // Verify no network calls were made
     expect(fetchSpy).not.toHaveBeenCalled();
-    expect(xhrSpy).not.toHaveBeenCalled();
+    if (xhrStub) {
+      expect(xhrStub).not.toHaveBeenCalled();
+    }
 
     fetchSpy.mockRestore();
-    xhrSpy.mockRestore();
+
+    if (!hadXHR) {
+      vi.unstubAllGlobals();
+    } else {
+      // Restore spies created via vi.spyOn
+      vi.restoreAllMocks();
+    }
   });
 });
