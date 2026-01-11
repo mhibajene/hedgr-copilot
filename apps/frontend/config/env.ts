@@ -39,15 +39,19 @@ function warnOptional(key: string) {
 function buildEnv(from: NodeJS.ProcessEnv): Env {
   const errors: string[] = [];
 
-  const NEXT_PUBLIC_APP_ENV = from.NEXT_PUBLIC_APP_ENV?.trim();
+  // Note: In Next.js client bundles, process.env.NEXT_PUBLIC_* is statically replaced.
+  // When passed as an object, the replacement doesn't work. So we access directly and fallback.
+  const NEXT_PUBLIC_APP_ENV = (from.NEXT_PUBLIC_APP_ENV?.trim() || process.env.NEXT_PUBLIC_APP_ENV?.trim() || 'dev') as AppEnv;
   const API_BASE_URL = from.API_BASE_URL?.trim();
-  const NEXT_PUBLIC_AUTH_MODE = from.NEXT_PUBLIC_AUTH_MODE?.trim();
-  const NEXT_PUBLIC_BALANCE_FROM_LEDGER = from.NEXT_PUBLIC_BALANCE_FROM_LEDGER?.trim();
-  const NEXT_PUBLIC_FEATURE_COPILOT_ENABLED = from.NEXT_PUBLIC_FEATURE_COPILOT_ENABLED?.trim();
+  const NEXT_PUBLIC_AUTH_MODE = from.NEXT_PUBLIC_AUTH_MODE?.trim() || process.env.NEXT_PUBLIC_AUTH_MODE?.trim();
+  const NEXT_PUBLIC_BALANCE_FROM_LEDGER = from.NEXT_PUBLIC_BALANCE_FROM_LEDGER?.trim() || process.env.NEXT_PUBLIC_BALANCE_FROM_LEDGER?.trim();
+  const NEXT_PUBLIC_FEATURE_COPILOT_ENABLED = from.NEXT_PUBLIC_FEATURE_COPILOT_ENABLED?.trim() || process.env.NEXT_PUBLIC_FEATURE_COPILOT_ENABLED?.trim();
   const POSTHOG_KEY = from.POSTHOG_KEY?.trim();
   const SENTRY_DSN = from.SENTRY_DSN?.trim();
 
-  if (!isAllowedAppEnv(NEXT_PUBLIC_APP_ENV)) {
+  // Skip validation for NEXT_PUBLIC_APP_ENV since we have a default fallback
+  if (!isAllowedAppEnv(NEXT_PUBLIC_APP_ENV) && typeof window === 'undefined') {
+    // Only validate server-side where we expect the env var to be properly set
     errors.push(`NEXT_PUBLIC_APP_ENV must be one of ${ALLOWED_APP_ENVS.join(", ")}`);
   }
   // API_BASE_URL is validated at runtime when actually used (not at build time)
