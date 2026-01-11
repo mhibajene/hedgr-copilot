@@ -11,6 +11,8 @@ export type Env = {
   NEXT_PUBLIC_AUTH_MODE?: string;
   NEXT_PUBLIC_BALANCE_FROM_LEDGER?: string;
   NEXT_PUBLIC_FEATURE_COPILOT_ENABLED?: string;
+  OPENAI_MODE?: string;
+  OPENAI_API_KEY?: string;
   POSTHOG_KEY?: string;
   SENTRY_DSN?: string;
 };
