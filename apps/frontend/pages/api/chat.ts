@@ -99,7 +99,7 @@ export default async function handler(
     let normalizedMessages: Message[];
     try {
       normalizedMessages = normalizeMessages(messages);
-    } catch (error) {
+    } catch {
       // normalizeMessages throws if all user messages are empty
       return sendError(
         res,
