@@ -23,6 +23,12 @@ test.describe('Transaction Lifecycle - Activity Display', () => {
   test('successful transaction shows SUCCESS status pill and completed timeline', async ({
     page,
   }) => {
+    // Login first to establish authenticated session
+    await page.goto('/login');
+    await page.getByPlaceholder('you@example.com').fill('test@hedgr.app');
+    await page.getByRole('button', { name: 'Continue' }).click();
+    await expect(page).toHaveURL(/\/dashboard/);
+    
     // Perform a deposit
     await page.goto('/deposit');
 
@@ -86,8 +92,13 @@ test.describe('Transaction Lifecycle - Activity Display', () => {
   test('in-progress transaction shows PENDING_INIT status pill (fixture)', async ({
     page,
   }) => {
+    // Login first to establish authenticated session
+    await page.goto('/login');
+    await page.getByPlaceholder('you@example.com').fill('test@hedgr.app');
+    await page.getByRole('button', { name: 'Continue' }).click();
+    await expect(page).toHaveURL(/\/dashboard/);
+    
     // Inject a pending transaction fixture directly via localStorage
-    await page.goto('/');
     await page.evaluate(() => {
       const pendingTx = {
         id: 'tx_pending_fixture',
@@ -145,8 +156,13 @@ test.describe('Transaction Lifecycle - Activity Display', () => {
   test('failed transaction shows FAILED status pill with readable error in detail view (fixture)', async ({
     page,
   }) => {
+    // Login first to establish authenticated session
+    await page.goto('/login');
+    await page.getByPlaceholder('you@example.com').fill('test@hedgr.app');
+    await page.getByRole('button', { name: 'Continue' }).click();
+    await expect(page).toHaveURL(/\/dashboard/);
+    
     // Inject a failed transaction fixture directly via localStorage
-    await page.goto('/');
     await page.evaluate(() => {
       const failedTx = {
         id: 'tx_failed_fixture',
@@ -208,8 +224,13 @@ test.describe('Transaction Lifecycle - Activity Display', () => {
   });
 
   test('no raw/low-level statuses visible in UI', async ({ page }) => {
+    // Login first to establish authenticated session
+    await page.goto('/login');
+    await page.getByPlaceholder('you@example.com').fill('test@hedgr.app');
+    await page.getByRole('button', { name: 'Continue' }).click();
+    await expect(page).toHaveURL(/\/dashboard/);
+    
     // Inject transactions with various internal statuses
-    await page.goto('/');
     await page.evaluate(() => {
       const transactions = [
         {
@@ -271,6 +292,12 @@ test.describe('Transaction Lifecycle - Activity Display', () => {
   });
 
   test('TxStatusPill has stable data-testid selectors', async ({ page }) => {
+    // Login first to establish authenticated session
+    await page.goto('/login');
+    await page.getByPlaceholder('you@example.com').fill('test@hedgr.app');
+    await page.getByRole('button', { name: 'Continue' }).click();
+    await expect(page).toHaveURL(/\/dashboard/);
+    
     // Perform a deposit to get a real transaction
     await page.goto('/deposit');
 
@@ -296,8 +323,13 @@ test.describe('Transaction Lifecycle - Activity Display', () => {
   });
 
   test('transaction detail modal can be opened and closed', async ({ page }) => {
+    // Login first to establish authenticated session
+    await page.goto('/login');
+    await page.getByPlaceholder('you@example.com').fill('test@hedgr.app');
+    await page.getByRole('button', { name: 'Continue' }).click();
+    await expect(page).toHaveURL(/\/dashboard/);
+    
     // Inject a transaction
-    await page.goto('/');
     await page.evaluate(() => {
       const tx = {
         id: 'tx_modal_test',

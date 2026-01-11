@@ -30,19 +30,18 @@ export type UseBalanceResult = BalanceProjection & {
 export function useBalance(): UseBalanceResult {
   const transactions = useLedgerStore((s) => s.transactions);
   const walletBalance = useWalletStore((s) => s.usdBalance);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [balance, setBalance] = useState<BalanceProjection>({
     total: 0,
     available: 0,
     pending: 0,
     currency: 'USD',
-    asOf: Date.now(),
+    asOf: 0, // Use stable initial value to avoid SSR/client hydration mismatch
   });
 
   const computeBalance = useCallback(() => {
     try {
-      setIsLoading(true);
       setError(null);
 
       const mode = getBalanceMode();

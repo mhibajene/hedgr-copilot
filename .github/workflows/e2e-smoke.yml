@@ -16,6 +16,8 @@ jobs:
       NEXT_PUBLIC_AUTH_MODE: mock
       NEXT_PUBLIC_DEFI_MODE: mock
       NEXT_PUBLIC_FX_MODE: fixed
+      NEXT_PUBLIC_APP_ENV: dev
+      # API_BASE_URL is validated at runtime when used, not at build time
       CI: true
     steps:
       - name: Checkout

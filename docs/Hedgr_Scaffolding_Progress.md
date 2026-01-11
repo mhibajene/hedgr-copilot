@@ -961,114 +961,138 @@ DoD: All 4 micro-contracts merged to main; E2E smoke asserts login (mock), dashb
 
 ⸻
 
-# S08 — Balance SSoT: Ledger as Single Source of Truth
+Hedgr Scaffolding Progress — 0.8  ￼
 
-## **Objective**
+Feature: Sprint 0.8 — Product Hardening & Trust Foundations (Ledger SSoT, Tx Lifecycle, Trust Disclosures, Empty/Error States)
+Owner: (@musalwa)
+Date Shipped: 2025-12-30
+Risk: low
 
-Establish the ledger as the single source of truth (SSoT) for all user-facing balance displays. All balance values must be derived exclusively from ledger transactions, with a clear rollback path via feature flag.
+⸻
+	1.	Metadata
 
-## **Implementation Summary**
+	•	Micro-contracts / PRs
+	•	feat(balance): implement ledger as single source of truth for balances (S08)
+	•	feat(activity): implement clear transaction lifecycle (S08-TX-LIFECYCLE)
+	•	feat(trust): S08 — User & CI Trust/Environment Disclosures
+	•	feat(ui): S08 - Harden Empty & Error States Across Core Pages
+	•	Required Checks (branch protection)
+	•	validate
+	•	E2E smoke (@hedgr/frontend) (strict up-to-date ON)
+	•	Flags (CI defaults – unchanged)
+	•	NEXT_PUBLIC_AUTH_MODE=mock
+	•	NEXT_PUBLIC_DEFI_MODE=mock
+	•	NEXT_PUBLIC_FX_MODE=fixed
+	•	NEXT_PUBLIC_MOMO_CONFIRM_DELAY_MS=1500
+	•	NEXT_PUBLIC_WITHDRAW_CONFIRM_DELAY_MS=1500
 
-### Backend / API
+⸻
+	2.	Contract (Source of Truth)
 
-- **Ledger Projection Function**: `computeBalanceFromLedger(transactions)` in `lib/state/balance.ts`
-  - Reads from ledger transactions
-  - Handles deposits, withdrawals, reversals, and failed transactions predictably
-  - Returns: `{ total, available, pending, currency, asOf }`
+	•	Goal: Make the app feel trustworthy by ensuring the ledger is the single source of truth for balances, clarifying transaction lifecycle, surfacing environment/trust disclosures, and replacing blank/raw-error states with guided UX.
+	•	Acceptance (Gherkin-style)
+	•	Ledger / Balance SSoT
+	•	Given a user completes a deposit when they return to /dashboard then the USD balance is derived from the ledger-backed balance endpoint only and matches the ledger projection.
+	•	Transaction Lifecycle
+	•	Given a transaction is created when the user views /activity then each item shows a public lifecycle status (e.g. PENDING_INIT, IN_PROGRESS, SUCCESS, FAILED, REVERSED, EXPIRED) with a consistent status pill and detail view.
+	•	Trust & Environment Disclosures
+	•	Given the app is running in mock/fixed mode when a user visits dashboard/onboarding/settings then a trust banner explains that balances, FX and DeFi are simulated; and when CI runs then trust:check asserts AUTH/FX/DEFI modes are safe.
+	•	Empty & Error States
+	•	Given a user has no transactions or zero balance when they visit dashboard, activity, deposit or withdraw then they see a friendly empty state with clear next actions instead of a blank area.
+	•	Given an API call fails on a core page when the page renders then an ErrorState with retry appears and no raw JS error/stack trace is shown.
+	•	Non-negotiables: Security first • No live networks in CI/E2E • Ledger is SSoT for balances • Types clean • Unit + E2E present for all micro-contracts • Deterministic installs (corepack + pnpm –frozen-lockfile) • Fork-safe • Rollback via single revert or flag.
 
-- **Canonical Balance Endpoint**: `GET /api/balance`
-  - Response shape: `{ total, available, pending, currency, asOf }`
-  - Uses ledger projection only when `BALANCE_FROM_LEDGER=true` (default)
-  - Also supports `POST /api/balance` with transactions in request body
+⸻
+	3.	Implementation
 
-### Frontend
+	•	Ledger as SSoT for balances (S08-BALANCE-SSOT)
+	•	Introduced a canonical ledger-backed balance projection and API (e.g. /api/balance) returning { total, available, pending, currency, asOf }.
+	•	Implemented a shared useBalance hook on the frontend; dashboard and other surfaces now read balance only via this hook.
+	•	Ensured deposit/withdraw mocks write ledger entries that drive the balance projection; removed any client-side “shadow math.”
+	•	Wrapped new behavior behind a feature flag (BALANCE_FROM_LEDGER / equivalent) with a documented rollback path.
+	•	Clear transaction lifecycle in activity (S08-TX-LIFECYCLE)
+	•	Defined a public transaction status enum and mapping from internal states → public statuses.
+	•	Updated the Activity page to render a shared TxStatusPill with data-testid="tx-status-pill" and data-status="SUCCESS" | "FAILED" | ... for hermetic selectors.
+	•	Added a transaction detail modal showing lifecycle timeline (created → in progress → completed/failed), timestamps, type, amount and internal ID for debugging.
+	•	Updated E2E suites (tx-lifecycle.spec.ts, critical.spec.ts) to assert lifecycle states and use the new stable selectors.
+	•	User & CI trust/environment disclosures (S08-TRUST-DISCLOSURES)
+	•	Implemented a reusable TrustDisclosureBanner component and surfaced it on dashboard, onboarding/first-run and Settings → “Trust & Risk”.
+	•	Added a trust:check script wired into validate that logs AUTH/FX/DEFI modes and fails CI if any mode is “live” or misconfigured.
+	•	Documented environment modes and disclosure behavior in docs/trust.md.
+	•	Hardened empty & error states (S08-EMPTY-ERROR-STATES)
+	•	Created shared EmptyState and ErrorState UI primitives with title/description and primary/secondary actions.
+	•	Wired empty/error states into dashboard (first-time users), activity (no transactions / no results), deposit (no methods / FX failure), withdraw (no balance / methods), and settings/profile missing-data cases.
+	•	Standardized withdraw “no funds to withdraw” state with withdraw-no-funds test ID; ensured withdraw form and empty state never conflict.
+	•	Added E2E coverage in empty-error-states.spec.ts for new/zero-balance users, error handling, and absence of raw JS errors across core pages.
+	•	Tests & Tooling
+	•	New and updated Playwright specs: balance-ssot.spec.ts, tx-lifecycle.spec.ts, empty-error-states.spec.ts, plus critical.spec.ts adjustments.
+	•	All specs use role- and data-testid-based selectors; analytics / external calls continue to be blocked for hermetic E2E.
 
-- **useBalance() Hook**: `lib/hooks/useBalance.ts`
-  - Single source of truth for balance display in React components
-  - Returns: `{ total, available, pending, currency, asOf, isLoading, error, refresh }`
-  - Automatically computes from ledger store when SSoT is enabled
+⸻
+	4.	QA (Codex)
 
-- **Refactored Components**:
-  - Dashboard: Uses `useBalance()` exclusively
-  - Withdraw page: Uses `useBalance()` for available balance display
-  - Deposit/Withdraw flows: Record transactions in ledger store
+	•	Solo QA Gate enforced on all four micro-contract PRs: labels product:approved, qa:approved, one area:*, one risk:*.
+	•	Verified:
+	•	Ledger-backed balance endpoint is canonical and used by dashboard/tests.
+	•	Public transaction status enum is exhaustive and correctly mapped; no raw internal statuses appear in the UI.
+	•	Trust banner visible in mock/fixed environments; trust:check fails CI if AUTH/FX/DEFI diverge from defaults.
+	•	Empty/Error states cover dashboard, activity, deposit, withdraw and settings—with no raw error strings rendered.
+	•	Checked invariants:
+	•	CI flags unchanged: AUTH_MODE=mock, FX_MODE=fixed, DEFI_MODE=mock.
+	•	validate and E2E smoke (@hedgr/frontend) green on all PRs; tests remain hermetic (no live network).
 
-### Feature Flag / Rollback
+⸻
+	5.	Post-CI Audit
 
-- **Flag**: `NEXT_PUBLIC_BALANCE_FROM_LEDGER`
-- **Default**: `true` (SSoT enabled)
-- **Rollback**:
-  1. Set `NEXT_PUBLIC_BALANCE_FROM_LEDGER=false` in environment
-  2. Or revert the `feature/S08-balance-ssot` branch (single revert)
+	•	Outcomes:
+	•	All four S08 micro-contract PRs merged to main with green validate + E2E smoke (@hedgr/frontend); auto-merge (squash) posture maintained.
+	•	Stability fixes applied during the sprint:
+	•	Playwright strict-mode violations
+	•	Ambiguous text=Deposit / getByRole('link', { name: 'Deposit' }) and heading selectors were replaced with:
+	•	getByRole('link', { name: 'Deposit', exact: true }) or dedicated test IDs.
+	•	getByRole('heading', { level: 1, name: 'Withdraw' }) instead of generic heading matches.
+	•	Status badge selectors updated from legacy status-confirmed to lifecycle-aware data-testid="tx-status-pill"[data-status="SUCCESS"].
+	•	Modal close flakiness
+	•	Transaction detail modal test updated to close via explicit close button + Escape key instead of fragile backdrop clicks; backdrop behavior left as implementation detail.
+	•	E2E balance expectations
+	•	Adjusted critical.spec.ts expectations to match ledger-driven balance math (no more “shadow” client calculations).
+	•	Residual risk: low; selectors are now canonical and lifecycle/ledger behavior is covered by both unit and E2E tests.
 
-### Tests
+⸻
+	6.	CI & Deployment
 
-- **Unit Tests** (`__tests__/balance.projection.test.ts`):
-  - Deposit → increases correct fields
-  - Withdrawal → decreases correct fields
-  - Failed/reversed transactions → no net effect
-  - Floating point precision handling
-  - Complex multi-transaction scenarios
+	•	Workflows (unchanged structurally):
+	•	.github/workflows/validate.yml — frozen lockfile, typecheck, lint, unit, plus trust:check.
+	•	.github/workflows/e2e-smoke.yml — build, Playwright install, e2e:ci, artifacts on failure.
+	•	Node/PNPM: .nvmrc=20, corepack enable, repo-pinned pnpm; pnpm store cache enabled.
+	•	Branch Protection:
+	•	Required checks: validate + E2E smoke (@hedgr/frontend); strict up-to-date ON; linear history; label policy enforced via runbook.
+	•	Rollback posture:
+	•	Ledger SSoT and lifecycle changes guarded by flags and isolated contracts; rollback via single PR revert and/or flag flip.
 
-- **API Tests** (`__tests__/api.balance.test.ts`):
-  - Correct response shape
-  - Balance computation from ledger
-  - Graceful handling of invalid input
-  - Feature flag behavior
+⸻
+	7.	Build Health Notes
 
-- **E2E Tests** (`tests-e2e/balance-ssot.spec.ts`):
-  - Initial zero balance display
-  - Deposit flow updates balance card
-  - Activity entry appears after deposit
-  - Withdraw page shows current balance
+	•	Incidents & Remediations
+	•	Multiple Playwright strict-mode errors caused by added empty-state CTAs and headings; mitigated by adopting consistent role + data-testid selectors.
+	•	One flake around backdrop click on TxDetailModal; resolved by making tests use close button + Escape key only.
+	•	Minor expectation drift in legacy E2E tests after ledger SSoT; corrected to assert against ledger-driven values.
+	•	Guardrails reinforced
+	•	Prefer data-testid + ARIA roles over generic text locators for E2E.
+	•	Avoid testing fragile behaviors (e.g., backdrop click geometry) at full-E2E level unless critical to user contract.
+	•	Keep balance- and status-related assertions flowing through ledger and lifecycle enums exclusively.
 
-## **Files Changed**
+⸻
+	8.	Archive Links
 
-```
-apps/frontend/
-├── lib/
-│   ├── state/
-│   │   ├── balance.ts          # Ledger projection function
-│   │   └── balance.mode.ts     # Feature flag configuration
-│   └── hooks/
-│       └── useBalance.ts       # Canonical balance hook
-├── app/
-│   ├── api/balance/route.ts    # Balance API endpoint
-│   └── (app)/
-│       ├── dashboard/page.tsx  # Refactored to use useBalance()
-│       ├── deposit/page.tsx    # Records transactions in ledger
-│       └── withdraw/page.tsx   # Uses useBalance(), records in ledger
-├── config/env.ts               # Added BALANCE_FROM_LEDGER type
-├── __tests__/
-│   ├── balance.projection.test.ts
-│   └── api.balance.test.ts
-└── tests-e2e/
-    └── balance-ssot.spec.ts
-
-env/templates/frontend.env.schema  # Added BALANCE_FROM_LEDGER
-```
-
-## **Balance Projection Rules**
-
-| Transaction Type | Status    | Effect on Balance                      |
-|-----------------|-----------|----------------------------------------|
-| DEPOSIT         | CONFIRMED | +amount to `available` and `total`     |
-| DEPOSIT         | PENDING   | +amount to `pending` and `total`       |
-| DEPOSIT         | FAILED    | No effect (reversal)                   |
-| WITHDRAW        | CONFIRMED | -amount from `available` and `total`   |
-| WITHDRAW        | PENDING   | -amount from `available`, shown in `pending` |
-| WITHDRAW        | FAILED    | No effect (reversal)                   |
-
-## **Acceptance Criteria** ✅
-
-- [x] All balance displays sourced via canonical balance endpoint/hook using ledger-derived data only
-- [x] Single authoritative backend code path for balance computation
-- [x] Feature flag (`NEXT_PUBLIC_BALANCE_FROM_LEDGER`) with documented rollback
-- [x] Unit tests for deposits, withdrawals, reversals/failed tx
-- [x] API tests for /api/balance shape and values
-- [x] E2E: Deposit flow changes balance card and shows activity entry
-- [x] CI envs use mock/fixed modes (no live networks)
+	•	PRs (titles)
+	•	feat(balance): implement ledger as single source of truth for balances (S08)
+	•	feat(activity): implement clear transaction lifecycle (S08-TX-LIFECYCLE)
+	•	feat(trust): S08 — User & CI Trust/Environment Disclosures
+	•	feat(ui): S08 - Harden Empty & Error States Across Core Pages
+	•	Artifacts: Playwright traces/videos for prior failing runs; final green runs for validate and E2E smoke (@hedgr/frontend) on main.
+	•	Runbook updates: trust/env docs, SSoT/lifecycle notes, and selector best-practices for E2E.
 
 ⸻
 
-
+DoD: All 4 Sprint 0.8 micro-contracts merged to main; ledger is the single source of truth for balances; activity clearly shows transaction lifecycle; trust disclosures visible in UI and CI; empty/error states hardened across core pages; CI defaults and branch protection remain green and unchanged.

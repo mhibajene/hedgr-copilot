@@ -71,6 +71,9 @@ jobs:
     env:
       DOPPLER_TOKEN: ${{ github.event_name == 'pull_request' && secrets.DOPPLER_TOKEN_DEV || secrets.DOPPLER_TOKEN_STG }}
       DOPPLER_CONFIG: ${{ github.event_name == 'pull_request' && 'dev_config_dev' || 'stg_config_stg' }}
+      # CI-safe defaults for when Doppler is skipped (forked PRs) or missing vars
+      NEXT_PUBLIC_APP_ENV: dev
+      # API_BASE_URL is validated at runtime when used, not at build time
 
     steps:
       - uses: actions/checkout@v4

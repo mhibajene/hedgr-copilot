@@ -21,7 +21,11 @@ test.describe('Balance SSoT - Ledger as Single Source of Truth', () => {
   });
 
   test('dashboard shows zero balance initially', async ({ page }) => {
-    await page.goto('/dashboard');
+    // Login first to establish authenticated session
+    await page.goto('/login');
+    await page.getByPlaceholder('you@example.com').fill('test@hedgr.app');
+    await page.getByRole('button', { name: 'Continue' }).click();
+    await expect(page).toHaveURL(/\/dashboard/);
     
     // Wait for the balance element to be visible
     const balanceEl = page.getByTestId('usd-balance');
@@ -32,9 +36,13 @@ test.describe('Balance SSoT - Ledger as Single Source of Truth', () => {
   });
 
   test('deposit flow updates balance correctly', async ({ page }) => {
-    // Start at dashboard to see initial balance
-    await page.goto('/dashboard');
+    // Login first to establish authenticated session
+    await page.goto('/login');
+    await page.getByPlaceholder('you@example.com').fill('test@hedgr.app');
+    await page.getByRole('button', { name: 'Continue' }).click();
+    await expect(page).toHaveURL(/\/dashboard/);
     
+    // Start at dashboard to see initial balance
     const balanceEl = page.getByTestId('usd-balance');
     await expect(balanceEl).toBeVisible();
     
@@ -75,6 +83,12 @@ test.describe('Balance SSoT - Ledger as Single Source of Truth', () => {
   });
 
   test('activity page shows deposit entry after successful deposit', async ({ page }) => {
+    // Login first to establish authenticated session
+    await page.goto('/login');
+    await page.getByPlaceholder('you@example.com').fill('test@hedgr.app');
+    await page.getByRole('button', { name: 'Continue' }).click();
+    await expect(page).toHaveURL(/\/dashboard/);
+    
     // Perform a deposit first
     await page.goto('/deposit');
 
@@ -128,6 +142,12 @@ test.describe('Balance SSoT - Ledger as Single Source of Truth', () => {
   });
 
   test('withdraw page shows current balance from ledger', async ({ page }) => {
+    // Login first to establish authenticated session
+    await page.goto('/login');
+    await page.getByPlaceholder('you@example.com').fill('test@hedgr.app');
+    await page.getByRole('button', { name: 'Continue' }).click();
+    await expect(page).toHaveURL(/\/dashboard/);
+    
     // First, make a deposit to have some balance
     await page.goto('/deposit');
     

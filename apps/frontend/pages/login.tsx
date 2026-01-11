@@ -1,6 +1,5 @@
 'use client';
 import { useState } from 'react';
-import { useRouter } from 'next/router';
 import { getAuthMode } from '../lib/auth/mode';
 import { loginWithEmail as loginWithEmailMock } from '../lib/auth/magic';
 import { loginWithEmail as loginWithEmailMagic } from '../lib/auth/magic.client';
@@ -8,7 +7,6 @@ import { useUserStore } from '../lib/state/user';
 import { TrustDisclosureBanner } from '../components';
 
 export default function LoginPage() {
-  const router = useRouter();
   const [email, setEmail] = useState('');
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -23,7 +21,7 @@ export default function LoginPage() {
       if (authMode === 'mock') {
         // Mock login flow
         await loginWithEmailMock(email);
-        router.replace('/dashboard');
+        window.location.href = '/dashboard';
       } else {
         // Magic login flow
         const didToken = await loginWithEmailMagic(email);
@@ -45,7 +43,7 @@ export default function LoginPage() {
         // Set session in Zustand store
         useUserStore.getState().login(verifiedEmail);
         
-        router.replace('/dashboard');
+        window.location.href = '/dashboard';
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Login failed');
