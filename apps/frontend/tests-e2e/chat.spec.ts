@@ -1,41 +1,91 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, Page } from '@playwright/test';
 
-// Block analytics and external calls for test hermeticity
+// Block analytics + external calls for test hermeticity (allow local app traffic)
 const ANALYTICS_HOSTS = [/posthog\./i, /sentry\./i];
+
+// ============================================================================
+// Test Helpers - DRY login/navigation logic
+// ============================================================================
+
+/** Wait for nav to be ready after login */
+async function waitForDashboardReady(page: Page) {
+  await expect(page).toHaveURL(/\/dashboard/, { timeout: 10_000 });
+  await expect(page.getByTestId('app-nav')).toBeVisible({ timeout: 10_000 });
+}
+
+/** Handle responsive nav - open hamburger menu if nav is collapsed */
+async function openNavIfCollapsed(page: Page) {
+  // Desktop nav link (first one, visible on md+ screens)
+  const desktopLink = page.getByTestId('nav-links').getByTestId('nav-copilot-link');
+
+  // Check if desktop link is visible
+  const isDesktopVisible = await desktopLink.isVisible().catch(() => false);
+  if (isDesktopVisible) return;
+
+  // Mobile view: open hamburger menu
+  const toggle = page.getByTestId('nav-toggle');
+  const toggleVisible = await toggle.isVisible().catch(() => false);
+  if (toggleVisible) {
+    await toggle.click();
+    // Wait for mobile nav link to be visible
+    const mobileLink = page.getByTestId('nav-links-mobile').getByTestId('nav-copilot-link');
+    await expect(mobileLink).toBeVisible({ timeout: 5_000 });
+  }
+}
+
+/** Complete login and wait for dashboard to be ready */
+async function loginAndWaitForDashboardReady(page: Page) {
+  await page.goto('/login');
+  await page.getByPlaceholder('you@example.com').fill('test@hedgr.app');
+  await page.getByRole('button', { name: 'Continue' }).click();
+  await waitForDashboardReady(page);
+}
+
+/** Navigate from dashboard to chat page */
+async function gotoChatFromDashboard(page: Page) {
+  await openNavIfCollapsed(page);
+  
+  // Get the visible copilot link (desktop or mobile)
+  const desktopLink = page.getByTestId('nav-links').getByTestId('nav-copilot-link');
+  const mobileLink = page.getByTestId('nav-links-mobile').getByTestId('nav-copilot-link');
+  
+  const isDesktopVisible = await desktopLink.isVisible().catch(() => false);
+  const copilotLink = isDesktopVisible ? desktopLink : mobileLink;
+  
+  await expect(copilotLink).toBeVisible({ timeout: 10_000 });
+  await copilotLink.click();
+  await expect(page).toHaveURL(/\/chat/, { timeout: 10_000 });
+}
+
+// ============================================================================
+// Test Suite
+// ============================================================================
 
 test.describe('Chat Page', () => {
   test.beforeEach(async ({ context }) => {
-    // Block analytics
+    // Block analytics + external calls for test hermeticity (allow local app traffic)
     await context.route('**/*', (route) => {
       const url = route.request().url();
-      if (ANALYTICS_HOSTS.some((rx) => rx.test(url))) return route.abort();
-      return route.continue();
-    });
 
-    // Block all network requests to ensure stub-only behavior
-    await context.route('**/*', (route) => {
-      const url = route.request().url();
-      // Allow same-origin requests for navigation, but block external API calls
-      if (url.startsWith('http://localhost') || url.startsWith('https://localhost')) {
+      // 1) Block analytics / telemetry (hermetic)
+      if (ANALYTICS_HOSTS.some((rx) => rx.test(url))) return route.abort();
+
+      // 2) Allow local app requests (Next assets, navigation, same-origin APIs)
+      const isLocalOrigin = /^https?:\/\/(localhost|127\.0\.0\.1|\[::1\])(?::\d+)?\//i.test(url);
+      if (isLocalOrigin) {
+        // Block Copilot chat API to ensure stub-only behavior
+        if (url.includes('/api/chat')) return route.abort();
         return route.continue();
       }
-      // Block any external API calls
-      if (url.includes('/api/chat') || url.includes('openai') || url.includes('anthropic')) {
-        return route.abort();
-      }
-      return route.continue();
+
+      // 3) Block any external calls (OpenAI/Anthropic/etc.)
+      return route.abort();
     });
   });
 
   test('navigates to chat page and renders interface', async ({ page }) => {
-    await page.goto('/login');
-    await page.getByPlaceholder('you@example.com').fill('test@hedgr.app');
-    await page.getByRole('button', { name: 'Continue' }).click();
-    await expect(page).toHaveURL(/\/dashboard/);
-
-    // Navigate to chat
-    await page.getByTestId('nav-copilot-link').click();
-    await expect(page).toHaveURL(/\/chat/);
+    await loginAndWaitForDashboardReady(page);
+    await gotoChatFromDashboard(page);
 
     // Verify chat interface elements
     await expect(page.getByTestId('chat-disclaimer')).toBeVisible();
@@ -44,13 +94,8 @@ test.describe('Chat Page', () => {
   });
 
   test('sends message and shows typing indicator', async ({ page }) => {
-    await page.goto('/login');
-    await page.getByPlaceholder('you@example.com').fill('test@hedgr.app');
-    await page.getByRole('button', { name: 'Continue' }).click();
-    await expect(page).toHaveURL(/\/dashboard/);
-
-    await page.getByTestId('nav-copilot-link').click();
-    await expect(page).toHaveURL(/\/chat/);
+    await loginAndWaitForDashboardReady(page);
+    await gotoChatFromDashboard(page);
 
     // Send message
     await page.getByTestId('chat-input').fill('hedgr');
@@ -66,13 +111,8 @@ test.describe('Chat Page', () => {
   });
 
   test('shows assistant reply after typing', async ({ page }) => {
-    await page.goto('/login');
-    await page.getByPlaceholder('you@example.com').fill('test@hedgr.app');
-    await page.getByRole('button', { name: 'Continue' }).click();
-    await expect(page).toHaveURL(/\/dashboard/);
-
-    await page.getByTestId('nav-copilot-link').click();
-    await expect(page).toHaveURL(/\/chat/);
+    await loginAndWaitForDashboardReady(page);
+    await gotoChatFromDashboard(page);
 
     // Send message
     await page.getByTestId('chat-input').fill('hedgr');
@@ -88,13 +128,8 @@ test.describe('Chat Page', () => {
   });
 
   test('disclaimer is always visible', async ({ page }) => {
-    await page.goto('/login');
-    await page.getByPlaceholder('you@example.com').fill('test@hedgr.app');
-    await page.getByRole('button', { name: 'Continue' }).click();
-    await expect(page).toHaveURL(/\/dashboard/);
-
-    await page.getByTestId('nav-copilot-link').click();
-    await expect(page).toHaveURL(/\/chat/);
+    await loginAndWaitForDashboardReady(page);
+    await gotoChatFromDashboard(page);
 
     // Verify disclaimer is visible
     const disclaimer = page.getByTestId('chat-disclaimer');
@@ -111,13 +146,8 @@ test.describe('Chat Page', () => {
   });
 
   test('shows offline banner when network is offline', async ({ page, context }) => {
-    await page.goto('/login');
-    await page.getByPlaceholder('you@example.com').fill('test@hedgr.app');
-    await page.getByRole('button', { name: 'Continue' }).click();
-    await expect(page).toHaveURL(/\/dashboard/);
-
-    await page.getByTestId('nav-copilot-link').click();
-    await expect(page).toHaveURL(/\/chat/);
+    await loginAndWaitForDashboardReady(page);
+    await gotoChatFromDashboard(page);
 
     // Simulate offline
     await context.setOffline(true);
@@ -134,13 +164,8 @@ test.describe('Chat Page', () => {
   });
 
   test('handles multiple messages', async ({ page }) => {
-    await page.goto('/login');
-    await page.getByPlaceholder('you@example.com').fill('test@hedgr.app');
-    await page.getByRole('button', { name: 'Continue' }).click();
-    await expect(page).toHaveURL(/\/dashboard/);
-
-    await page.getByTestId('nav-copilot-link').click();
-    await expect(page).toHaveURL(/\/chat/);
+    await loginAndWaitForDashboardReady(page);
+    await gotoChatFromDashboard(page);
 
     // Send first message
     await page.getByTestId('chat-input').fill('hedgr');
