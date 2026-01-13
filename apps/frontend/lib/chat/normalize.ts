@@ -5,10 +5,52 @@ const SYSTEM_POLICY_V1 = {
   content: 'You are Hedgr Copilot, an educational assistant for savings and financial planning. You provide helpful explanations about balances, transactions, FX rates, and guide users through safe financial actions. You do not provide investment advice or execute transactions.',
 };
 
+// ============================================================================
+// Content Normalization Helpers
+// ============================================================================
+
+/**
+ * Normalize newlines to \n.
+ * Converts \r\n (Windows) and \r (old Mac) to \n (Unix).
+ */
+function normalizeNewlines(content: string): string {
+  return content.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+}
+
+/**
+ * Collapse repeated whitespace (spaces/tabs) to single space.
+ * Preserves newlines.
+ */
+function collapseWhitespace(content: string): string {
+  // Replace multiple spaces/tabs with single space (but preserve newlines)
+  return content.replace(/[^\S\n]+/g, ' ');
+}
+
+/**
+ * Normalize message content for deterministic caching:
+ * 1. Normalize newlines to \n
+ * 2. Collapse repeated whitespace to single space
+ * 3. Trim leading/trailing whitespace
+ */
+function normalizeContent(content: string): string {
+  let normalized = normalizeNewlines(content);
+  normalized = collapseWhitespace(normalized);
+  normalized = normalized.trim();
+  return normalized;
+}
+
+// ============================================================================
+// Message Normalization
+// ============================================================================
+
 /**
  * Normalizes messages for processing:
+ * - Normalizes newlines to \n
+ * - Collapses repeated whitespace to single space
  * - Trims content of all messages
  * - Drops empty user messages
+ * - Preserves casing and punctuation
+ * - Includes full message history
  * - Prepends SYSTEM_POLICY_V1 system message
  * 
  * @param messages - Array of messages to normalize
@@ -16,14 +58,14 @@ const SYSTEM_POLICY_V1 = {
  * @throws Error if all user messages are empty after trimming
  */
 export function normalizeMessages(messages: Message[]): Message[] {
-  // Trim all message content
-  const trimmed = messages.map((msg) => ({
+  // Normalize all message content
+  const normalized = messages.map((msg) => ({
     ...msg,
-    content: msg.content.trim(),
+    content: normalizeContent(msg.content),
   }));
 
   // Filter out empty user messages
-  const filtered = trimmed.filter((msg) => {
+  const filtered = normalized.filter((msg) => {
     if (msg.role === 'user') {
       return msg.content.length > 0;
     }
