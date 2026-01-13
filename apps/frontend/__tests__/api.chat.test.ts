@@ -7,10 +7,14 @@ vi.mock('../lib/chat/mode', () => ({
   getChatMode: vi.fn(() => 'stub'),
 }));
 
-vi.mock('../lib/chat/cache', () => ({
-  getCachedResponse: vi.fn(() => null),
-  setCachedResponse: vi.fn(),
+vi.mock('../lib/server/semanticCache', () => ({
+  isCacheEnabled: vi.fn(() => true),
+  parseCacheHeader: vi.fn(() => 'none'),
+  makeCacheKey: vi.fn(() => 'mock-cache-key'),
+  getCachedReply: vi.fn(() => null),
+  setCachedReply: vi.fn(),
   clearCache: vi.fn(),
+  getPromptVersion: vi.fn(() => 'v1'),
 }));
 
 vi.mock('../lib/chat/copilotModel', () => ({
@@ -26,10 +30,13 @@ vi.mock('../lib/chat/providers/openai', () => ({
 type MockRes = Partial<NextApiResponse> & {
   _json?: unknown;
   statusCode?: number;
+  _headers?: Record<string, string>;
 };
 
-function createMockRes(): NextApiResponse & { _json?: unknown } {
-  const res: MockRes = {};
+function createMockRes(): NextApiResponse & { _json?: unknown; _headers?: Record<string, string> } {
+  const res: MockRes = {
+    _headers: {},
+  };
   res.status = (code: number) => {
     res.statusCode = code;
     return res as NextApiResponse;
@@ -38,13 +45,17 @@ function createMockRes(): NextApiResponse & { _json?: unknown } {
     res._json = data;
     return res as NextApiResponse;
   };
-  return res as NextApiResponse & { _json?: unknown };
+  res.setHeader = (name: string, value: string) => {
+    res._headers![name] = value;
+    return res as NextApiResponse;
+  };
+  return res as NextApiResponse & { _json?: unknown; _headers?: Record<string, string> };
 }
 
 describe('/api/chat', () => {
   beforeEach(async () => {
     vi.clearAllMocks();
-    const { clearCache } = await import('../lib/chat/cache');
+    const { clearCache } = await import('../lib/server/semanticCache');
     clearCache();
   });
 
@@ -139,10 +150,11 @@ describe('/api/chat', () => {
 
     const req = {
       method: 'POST',
+      headers: {},
       body: {
         message: 'Hello',
       },
-    } as NextApiRequest;
+    } as unknown as NextApiRequest;
     const res = createMockRes();
 
     await handler(req, res);
@@ -152,7 +164,10 @@ describe('/api/chat', () => {
       expect.arrayContaining([
         expect.objectContaining({ role: 'system' }),
         expect.objectContaining({ role: 'user', content: 'Hello' }),
-      ])
+      ]),
+      expect.objectContaining({
+        userId: 'anon',
+      })
     );
   });
 
@@ -165,12 +180,13 @@ describe('/api/chat', () => {
 
     const req = {
       method: 'POST',
+      headers: {},
       body: {
         messages: [
           { role: 'user', content: '  Hello  ' },
         ],
       },
-    } as NextApiRequest;
+    } as unknown as NextApiRequest;
     const res = createMockRes();
 
     await handler(req, res);
@@ -190,10 +206,11 @@ describe('/api/chat', () => {
 
     const req = {
       method: 'POST',
+      headers: {},
       body: {
         messages: [{ role: 'user', content: 'Hello' }],
       },
-    } as NextApiRequest;
+    } as unknown as NextApiRequest;
     const res = createMockRes();
 
     await handler(req, res);
@@ -208,6 +225,57 @@ describe('/api/chat', () => {
     });
   });
 
+  it('sets x-copilot-source response header', async () => {
+    const { CopilotModel } = await import('../lib/chat/copilotModel');
+    vi.mocked(CopilotModel.generateReply).mockResolvedValue({
+      message: { role: 'assistant', content: 'Test response' },
+      source: 'cache',
+    });
+
+    const req = {
+      method: 'POST',
+      headers: {},
+      body: {
+        messages: [{ role: 'user', content: 'Hello' }],
+      },
+    } as unknown as NextApiRequest;
+    const res = createMockRes();
+
+    await handler(req, res);
+
+    expect(res.statusCode).toBe(200);
+    expect(res._headers!['x-copilot-source']).toBe('cache');
+  });
+
+  it('passes x-copilot-cache header to CopilotModel', async () => {
+    const { CopilotModel } = await import('../lib/chat/copilotModel');
+    vi.mocked(CopilotModel.generateReply).mockResolvedValue({
+      message: { role: 'assistant', content: 'Test response' },
+      source: 'stub',
+    });
+
+    const req = {
+      method: 'POST',
+      headers: {
+        'x-copilot-cache': 'bypass',
+      },
+      body: {
+        messages: [{ role: 'user', content: 'Hello' }],
+      },
+    } as unknown as NextApiRequest;
+    const res = createMockRes();
+
+    await handler(req, res);
+
+    expect(res.statusCode).toBe(200);
+    expect(CopilotModel.generateReply).toHaveBeenCalledWith(
+      expect.any(Array),
+      expect.objectContaining({
+        cacheHeader: 'bypass',
+      })
+    );
+  });
+
   it('returns 503 for missing API key', async () => {
     const { CopilotModel } = await import('../lib/chat/copilotModel');
     const { getChatMode } = await import('../lib/chat/mode');
@@ -220,10 +288,11 @@ describe('/api/chat', () => {
 
     const req = {
       method: 'POST',
+      headers: {},
       body: {
         messages: [{ role: 'user', content: 'Hello' }],
       },
-    } as NextApiRequest;
+    } as unknown as NextApiRequest;
     const res = createMockRes();
 
     await handler(req, res);
@@ -246,10 +315,11 @@ describe('/api/chat', () => {
 
     const req = {
       method: 'POST',
+      headers: {},
       body: {
         messages: [{ role: 'user', content: 'Hello' }],
       },
-    } as NextApiRequest;
+    } as unknown as NextApiRequest;
     const res = createMockRes();
 
     await handler(req, res);
@@ -277,5 +347,98 @@ describe('/api/chat', () => {
 
     expect(res._json).toHaveProperty('requestId');
     expect((res._json as { requestId: string }).requestId).toBeTruthy();
+  });
+});
+
+describe('/api/chat cache integration', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
+  it('first request returns source=stub (cache miss)', async () => {
+    const { CopilotModel } = await import('../lib/chat/copilotModel');
+    vi.mocked(CopilotModel.generateReply).mockResolvedValue({
+      message: { role: 'assistant', content: 'Fresh response' },
+      source: 'stub',
+    });
+
+    const req = {
+      method: 'POST',
+      headers: {},
+      body: {
+        messages: [{ role: 'user', content: 'Hello' }],
+      },
+    } as unknown as NextApiRequest;
+    const res = createMockRes();
+
+    await handler(req, res);
+
+    expect(res.statusCode).toBe(200);
+    expect((res._json as { source: string }).source).toBe('stub');
+    expect(res._headers!['x-copilot-source']).toBe('stub');
+  });
+
+  it('second identical request returns source=cache (cache hit)', async () => {
+    const { CopilotModel } = await import('../lib/chat/copilotModel');
+    
+    // First call - returns from provider
+    vi.mocked(CopilotModel.generateReply).mockResolvedValueOnce({
+      message: { role: 'assistant', content: 'First response' },
+      source: 'stub',
+    });
+
+    // Second call - returns from cache
+    vi.mocked(CopilotModel.generateReply).mockResolvedValueOnce({
+      message: { role: 'assistant', content: 'First response' },
+      source: 'cache',
+    });
+
+    const req = {
+      method: 'POST',
+      headers: {},
+      body: {
+        messages: [{ role: 'user', content: 'Hello' }],
+      },
+    } as unknown as NextApiRequest;
+
+    // First request
+    const res1 = createMockRes();
+    await handler(req, res1);
+    expect((res1._json as { source: string }).source).toBe('stub');
+
+    // Second request (same messages)
+    const res2 = createMockRes();
+    await handler(req, res2);
+    expect((res2._json as { source: string }).source).toBe('cache');
+    expect(res2._headers!['x-copilot-source']).toBe('cache');
+  });
+
+  it('bypass header skips cache', async () => {
+    const { CopilotModel } = await import('../lib/chat/copilotModel');
+    vi.mocked(CopilotModel.generateReply).mockResolvedValue({
+      message: { role: 'assistant', content: 'Fresh response' },
+      source: 'stub',
+    });
+
+    const req = {
+      method: 'POST',
+      headers: {
+        'x-copilot-cache': 'bypass',
+      },
+      body: {
+        messages: [{ role: 'user', content: 'Hello' }],
+      },
+    } as unknown as NextApiRequest;
+    const res = createMockRes();
+
+    await handler(req, res);
+
+    expect(res.statusCode).toBe(200);
+    expect((res._json as { source: string }).source).toBe('stub');
+    expect(res._headers!['x-copilot-source']).toBe('stub');
   });
 });

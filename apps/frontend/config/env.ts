@@ -13,6 +13,7 @@ export type Env = {
   NEXT_PUBLIC_FEATURE_COPILOT_ENABLED?: string;
   OPENAI_MODE?: string;
   OPENAI_API_KEY?: string;
+  COPILOT_CACHE_ENABLED?: string;
   POSTHOG_KEY?: string;
   SENTRY_DSN?: string;
 };
@@ -48,6 +49,7 @@ function buildEnv(from: NodeJS.ProcessEnv): Env {
   const NEXT_PUBLIC_AUTH_MODE = from.NEXT_PUBLIC_AUTH_MODE?.trim() || process.env.NEXT_PUBLIC_AUTH_MODE?.trim();
   const NEXT_PUBLIC_BALANCE_FROM_LEDGER = from.NEXT_PUBLIC_BALANCE_FROM_LEDGER?.trim() || process.env.NEXT_PUBLIC_BALANCE_FROM_LEDGER?.trim();
   const NEXT_PUBLIC_FEATURE_COPILOT_ENABLED = from.NEXT_PUBLIC_FEATURE_COPILOT_ENABLED?.trim() || process.env.NEXT_PUBLIC_FEATURE_COPILOT_ENABLED?.trim();
+  const COPILOT_CACHE_ENABLED = from.COPILOT_CACHE_ENABLED?.trim() || process.env.COPILOT_CACHE_ENABLED?.trim();
   const POSTHOG_KEY = from.POSTHOG_KEY?.trim();
   const SENTRY_DSN = from.SENTRY_DSN?.trim();
 
@@ -81,6 +83,7 @@ function buildEnv(from: NodeJS.ProcessEnv): Env {
     ...(NEXT_PUBLIC_AUTH_MODE ? { NEXT_PUBLIC_AUTH_MODE } : {}),
     ...(NEXT_PUBLIC_BALANCE_FROM_LEDGER ? { NEXT_PUBLIC_BALANCE_FROM_LEDGER } : {}),
     ...(NEXT_PUBLIC_FEATURE_COPILOT_ENABLED ? { NEXT_PUBLIC_FEATURE_COPILOT_ENABLED } : {}),
+    ...(COPILOT_CACHE_ENABLED ? { COPILOT_CACHE_ENABLED } : {}),
     ...(POSTHOG_KEY ? { POSTHOG_KEY } : {}),
     ...(SENTRY_DSN ? { SENTRY_DSN } : {}),
   };

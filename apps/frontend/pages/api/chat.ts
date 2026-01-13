@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { CopilotModel } from '../../lib/chat/copilotModel';
 import { normalizeMessages } from '../../lib/chat/normalize';
 import type { Message } from '../../lib/chat/normalize';
+import type { CacheContext } from '../../lib/chat/copilotModel';
 
 type ErrorCode = 'SERVICE_UNAVAILABLE' | 'INVALID_REQUEST' | 'INTERNAL_ERROR' | 'METHOD_NOT_ALLOWED';
 
@@ -42,6 +43,36 @@ function sendError(
     error: { code, message },
     requestId,
   });
+}
+
+/**
+ * Extract userId from request.
+ * 
+ * Currently returns 'anon' as placeholder.
+ * In production, this should extract from:
+ * - Session cookie
+ * - Authorization header (JWT/Magic token)
+ * - x-user-id header (for trusted internal services)
+ */
+function extractUserId(req: NextApiRequest): string {
+  // TODO: Implement actual auth extraction when auth is fully integrated
+  // For now, check for x-user-id header (trusted internal services) or return 'anon'
+  const userId = req.headers['x-user-id'];
+  if (typeof userId === 'string' && userId.length > 0) {
+    return userId;
+  }
+  return 'anon';
+}
+
+/**
+ * Get the cache control header from request.
+ */
+function getCacheHeader(req: NextApiRequest): string | null {
+  const header = req.headers['x-copilot-cache'];
+  if (Array.isArray(header)) {
+    return header[0] ?? null;
+  }
+  return header ?? null;
 }
 
 export default async function handler(
@@ -95,7 +126,7 @@ export default async function handler(
       );
     }
 
-    // Normalize messages (trim, drop empty, prepend system message)
+    // Normalize messages (trim, collapse whitespace, normalize newlines, drop empty, prepend system message)
     let normalizedMessages: Message[];
     try {
       normalizedMessages = normalizeMessages(messages);
@@ -110,8 +141,18 @@ export default async function handler(
       );
     }
 
-    // Generate reply
-    const reply = await CopilotModel.generateReply(normalizedMessages);
+    // Build cache context
+    const cacheContext: CacheContext = {
+      userId: extractUserId(req),
+      cacheHeader: getCacheHeader(req),
+      model: 'gpt-4o-mini', // Default model used by OpenAI provider
+    };
+
+    // Generate reply with cache integration
+    const reply = await CopilotModel.generateReply(normalizedMessages, cacheContext);
+
+    // Set cache source header for observability
+    res.setHeader('x-copilot-source', reply.source);
 
     return res.status(200).json(reply);
   } catch (error) {
