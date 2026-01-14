@@ -6,7 +6,7 @@ import { getDefiMode } from '../lib/defi/mode';
 import { getFxMode } from '../lib/fx';
 import { 
   isMarketSwitcherEnabled, 
-  resolveMarket, 
+  useSelectedMarket,
   setMarket, 
   MARKET_CONFIG,
   type MarketCode 
@@ -70,16 +70,12 @@ export function TrustDisclosureBanner({
 
   // Market switcher state (only if enabled)
   const marketSwitcherEnabled = isMarketSwitcherEnabled();
-  const currentMarket = marketSwitcherEnabled ? resolveMarket() : null;
+  const selectedMarket = useSelectedMarket();
+  const currentMarket = marketSwitcherEnabled ? selectedMarket : null;
 
   const handleMarketChange = (newMarket: MarketCode) => {
     if (!marketSwitcherEnabled) return;
-    try {
-      setMarket(newMarket);
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error('Failed to change market:', error);
-    }
+    setMarket(newMarket);
   };
 
   if (variant === 'compact') {
