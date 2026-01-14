@@ -5,6 +5,7 @@ import { useBalance } from '../../../lib/hooks/useBalance';
 import { defiAdapter } from '../../../lib/defi';
 import { useLedgerStore } from '../../../lib/state/ledger';
 import { EmptyState, ErrorState } from '@hedgr/ui';
+import { BalanceWithLocalEstimate } from '../../../components';
 
 export default function DashboardPage() {
   const { total, available, pending, isLoading, error, currency, refresh } = useBalance();
@@ -94,14 +95,14 @@ export default function DashboardPage() {
       <div className="grid gap-4 md:grid-cols-3">
         <div className="rounded-2xl shadow p-4 bg-white">
           <div className="text-sm opacity-70">Available Balance</div>
-          <div
-            className="text-3xl font-bold"
-            data-testid="usd-balance"
-            aria-label="USD Balance amount"
-          >
-            {isLoading ? '...' : `$${ready ? available.toFixed(2) : '0.00'}`}
-          </div>
-          <div className="text-xs text-gray-500 mt-1">{currency}</div>
+          {isLoading ? (
+            <div className="text-3xl font-bold">...</div>
+          ) : (
+            <BalanceWithLocalEstimate 
+              usdAmount={ready ? available : 0} 
+              data-testid="usd-balance"
+            />
+          )}
         </div>
         {pending !== 0 && (
           <div className="rounded-2xl shadow p-4 bg-white">
@@ -115,10 +116,10 @@ export default function DashboardPage() {
         {total !== available && (
           <div className="rounded-2xl shadow p-4 bg-white">
             <div className="text-sm opacity-70">Total (incl. pending)</div>
-            <div className="text-3xl font-bold text-gray-600">
-              ${total.toFixed(2)}
-            </div>
-            <div className="text-xs text-gray-500 mt-1">{currency}</div>
+            <BalanceWithLocalEstimate 
+              usdAmount={total} 
+              className="text-gray-600"
+            />
           </div>
         )}
         <div className="rounded-2xl shadow p-4 bg-white">

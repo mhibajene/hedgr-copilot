@@ -7,6 +7,7 @@ import { useLedgerStore } from '../../../lib/state/ledger';
 import { useWalletStore } from '../../../lib/state/wallet';
 import { getBalanceMode } from '../../../lib/state/balance.mode';
 import { EmptyState, ErrorState } from '@hedgr/ui';
+import { BalanceWithLocalEstimate } from '../../../components';
 
 interface WithdrawMethod {
   id: string;
@@ -246,7 +247,7 @@ export default function WithdrawPage() {
     <main className="p-6 space-y-4 max-w-xl">
       <h1 className="text-2xl font-semibold">Withdraw</h1>
       <div className="rounded-xl p-3 bg-gray-50">
-        Current balance: <strong>${available.toFixed(2)}</strong>
+        Current balance: <BalanceWithLocalEstimate usdAmount={available} inline />
       </div>
       <label htmlFor="amount-usd" className="block space-y-2">Amount (USD)</label>
       <input
