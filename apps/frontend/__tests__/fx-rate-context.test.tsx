@@ -12,6 +12,7 @@ global.fetch = vi.fn();
 vi.mock('../config/market', () => ({
   resolveMarket: () => 'ZM',
   resolveLocalCurrencyCode: () => 'ZMW',
+  useSelectedMarket: () => 'ZM',
 }));
 
 // Mock getFxMode

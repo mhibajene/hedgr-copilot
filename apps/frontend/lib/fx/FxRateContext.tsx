@@ -1,13 +1,13 @@
 'use client';
 
 import React, { createContext, useContext, useEffect, useState, useMemo, useCallback, useRef } from 'react';
-import { resolveLocalCurrencyCode, resolveMarket } from '../../config/market';
+import { resolveLocalCurrencyCode, useSelectedMarket } from '../../config/market';
 import { getFxMode } from '../fx';
 
 export interface FxRateData {
   base: string;
   quote: string;
-  rate: number;
+  rate: number | null;
   timestamp: number;
   isLoading: boolean;
   error: string | null;
@@ -41,7 +41,11 @@ export function FxRateProvider({ children }: { children: React.ReactNode }) {
   const [error, setError] = useState<string | null>(null);
   const abortControllerRef = useRef<AbortController | null>(null);
 
-  const fetchFxRate = useCallback(async () => {
+  // Use reactive market selection
+  const market = useSelectedMarket();
+  const quote = useMemo(() => resolveLocalCurrencyCode(market), [market]);
+
+  const fetchFxRate = useCallback(async (quoteToFetch: string) => {
     // Cancel any in-flight request
     if (abortControllerRef.current) {
       abortControllerRef.current.abort();
@@ -54,11 +58,7 @@ export function FxRateProvider({ children }: { children: React.ReactNode }) {
     setError(null);
 
     try {
-      // Resolve current market and quote
-      const market = resolveMarket();
-      const quote = resolveLocalCurrencyCode(market);
-      
-      const response = await fetch(`/api/fx?quote=${encodeURIComponent(quote)}`, {
+      const response = await fetch(`/api/fx?quote=${encodeURIComponent(quoteToFetch)}`, {
         signal: abortController.signal,
       });
 
@@ -102,30 +102,25 @@ export function FxRateProvider({ children }: { children: React.ReactNode }) {
         console.error('FX API failed in live mode:', errorMessage);
       }
 
-      // Keep last-good rate if we have one (rate is not reset to null)
-      // Only set timestamp to 0 to indicate staleness
-      // Use ref to check rate without adding it to dependencies
-      setTimestamp((prevTimestamp) => {
-        if (rate === null) return 0;
-        return prevTimestamp;
-      });
+      // Keep last-good rate/timestamp unchanged on error
+      // UI will show unavailable because error is set
     } finally {
       setIsLoading(false);
       abortControllerRef.current = null;
     }
   }, []);
 
-  // Fetch on mount
+  // Fetch on mount and when quote changes
   useEffect(() => {
-    fetchFxRate();
+    // Clear state immediately on quote change for fresh state
+    setRate(null);
+    setTimestamp(0);
+    setError(null);
+    fetchFxRate(quote);
 
-    // Cleanup: abort any pending request on unmount
-    return () => {
-      if (abortControllerRef.current) {
-        abortControllerRef.current.abort();
-      }
-    };
-  }, [fetchFxRate]);
+    // Cleanup: abort any pending request on unmount or quote change
+    return () => abortControllerRef.current?.abort();
+  }, [quote, fetchFxRate]);
 
   // Calculate staleness
   const isStale = useMemo(() => {
@@ -133,22 +128,27 @@ export function FxRateProvider({ children }: { children: React.ReactNode }) {
     return Date.now() - timestamp > STALENESS_THRESHOLD_MS;
   }, [timestamp]);
 
-  // Get quote currency from market config
-  const quoteCurrency = useMemo(() => resolveLocalCurrencyCode(), []);
+  // Quote currency from reactive market
+  const quoteCurrency = quote;
+
+  // Create stable refresh function bound to current quote
+  const refresh = useCallback(() => {
+    fetchFxRate(quote);
+  }, [fetchFxRate, quote]);
 
   // Memoize context value
   const value = useMemo<FxRateData>(
     () => ({
       base: 'USD',
       quote: quoteCurrency,
-      rate: rate ?? 0, // Use 0 if null (consumers should check for validity)
+      rate,
       timestamp,
       isLoading,
       error,
       isStale,
-      refresh: fetchFxRate,
+      refresh,
     }),
-    [quoteCurrency, rate, timestamp, isLoading, error, isStale, fetchFxRate]
+    [quoteCurrency, rate, timestamp, isLoading, error, isStale, refresh]
   );
 
   return <FxRateContext.Provider value={value}>{children}</FxRateContext.Provider>;
@@ -174,5 +174,5 @@ export function useFxRate(): FxRateData {
  * Helper to check if FX rate is available and valid
  */
 export function isFxRateAvailable(fxRate: FxRateData): boolean {
-  return !fxRate.isLoading && !fxRate.error && fxRate.rate > 0 && fxRate.timestamp > 0;
+  return !fxRate.isLoading && !fxRate.error && (fxRate.rate ?? 0) > 0 && fxRate.timestamp > 0;
 }

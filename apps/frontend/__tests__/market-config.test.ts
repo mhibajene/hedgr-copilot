@@ -6,6 +6,7 @@ import {
   setMarket,
   isMarketSwitcherEnabled,
   MARKET_CONFIG,
+  MARKET_STORAGE_KEY,
   type MarketCode,
 } from '../config/market';
 
@@ -39,9 +40,9 @@ describe('Market Config', () => {
           key: vi.fn(),
           length: 0,
         },
-        location: {
-          reload: vi.fn(),
-        },
+        dispatchEvent: vi.fn(),
+        addEventListener: vi.fn(),
+        removeEventListener: vi.fn(),
       };
     }
     
@@ -51,6 +52,12 @@ describe('Market Config', () => {
   afterEach(() => {
     process.env = originalEnv;
     vi.restoreAllMocks();
+  });
+
+  describe('MARKET_STORAGE_KEY', () => {
+    test('exports correct storage key value', () => {
+      expect(MARKET_STORAGE_KEY).toBe('hedgr.market');
+    });
   });
 
   describe('MARKET_CONFIG', () => {
@@ -92,22 +99,22 @@ describe('Market Config', () => {
       expect(resolveMarket()).toBe('NG');
     });
 
-    test('returns localStorage value when market switcher enabled', () => {
-      process.env.NEXT_PUBLIC_ENABLE_MARKET_SWITCHER = 'true';
-      localStorageMock['hedgr:demo-market'] = 'KE';
+    test('returns localStorage value when set', () => {
+      localStorageMock['hedgr.market'] = 'KE';
       expect(resolveMarket()).toBe('KE');
     });
 
-    test('ignores localStorage when market switcher disabled', () => {
+    test('reads localStorage regardless of market switcher flag (for reactive reads)', () => {
       process.env.NEXT_PUBLIC_ENABLE_MARKET_SWITCHER = 'false';
-      localStorageMock['hedgr:demo-market'] = 'KE';
-      expect(resolveMarket()).toBe('ZM');
+      localStorageMock['hedgr.market'] = 'KE';
+      // localStorage is always read for reactive market resolution
+      expect(resolveMarket()).toBe('KE');
     });
 
     test('falls back to env when localStorage has invalid value', () => {
       process.env.NEXT_PUBLIC_ENABLE_MARKET_SWITCHER = 'true';
       process.env.NEXT_PUBLIC_DEFAULT_MARKET = 'NG';
-      localStorageMock['hedgr:demo-market'] = 'INVALID' as MarketCode;
+      localStorageMock['hedgr.market'] = 'INVALID' as MarketCode;
       expect(resolveMarket()).toBe('NG');
     });
 
@@ -184,14 +191,15 @@ describe('Market Config', () => {
       expect(() => setMarket('INVALID' as MarketCode)).toThrow('Invalid market code');
     });
 
-    test('saves valid market to localStorage', () => {
+    test('saves valid market to localStorage and dispatches event', () => {
       process.env.NEXT_PUBLIC_ENABLE_MARKET_SWITCHER = 'true';
       
       // Mock is already set up in beforeEach
       setMarket('NG');
       
-      expect(localStorageMock['hedgr:demo-market']).toBe('NG');
-      expect(global.window.location.reload).toHaveBeenCalled();
+      expect(localStorageMock['hedgr.market']).toBe('NG');
+      // Should dispatch event for reactivity (no reload)
+      expect(global.window.dispatchEvent).toHaveBeenCalled();
     });
   });
 });
