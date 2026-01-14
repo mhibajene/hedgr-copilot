@@ -197,6 +197,58 @@ describe('/api/chat', () => {
     expect(callArgs[1].content).toBe('Hello'); // Trimmed
   });
 
+  it('system message is first in message array', async () => {
+    const { CopilotModel } = await import('../lib/chat/copilotModel');
+    vi.mocked(CopilotModel.generateReply).mockResolvedValue({
+      message: { role: 'assistant', content: 'Test response' },
+      source: 'stub',
+    });
+
+    const req = {
+      method: 'POST',
+      headers: {},
+      body: {
+        messages: [{ role: 'user', content: 'Hello' }],
+      },
+    } as unknown as NextApiRequest;
+    const res = createMockRes();
+
+    await handler(req, res);
+
+    expect(res.statusCode).toBe(200);
+    const callArgs = vi.mocked(CopilotModel.generateReply).mock.calls[0][0];
+    expect(callArgs[0].role).toBe('system');
+    expect(callArgs.length).toBeGreaterThan(1);
+  });
+
+  it('system message contains canonical prompt text', async () => {
+    const { CopilotModel } = await import('../lib/chat/copilotModel');
+    vi.mocked(CopilotModel.generateReply).mockResolvedValue({
+      message: { role: 'assistant', content: 'Test response' },
+      source: 'stub',
+    });
+
+    const req = {
+      method: 'POST',
+      headers: {},
+      body: {
+        messages: [{ role: 'user', content: 'Hello' }],
+      },
+    } as unknown as NextApiRequest;
+    const res = createMockRes();
+
+    await handler(req, res);
+
+    expect(res.statusCode).toBe(200);
+    const callArgs = vi.mocked(CopilotModel.generateReply).mock.calls[0][0];
+    const systemMessage = callArgs[0];
+    expect(systemMessage.role).toBe('system');
+    expect(systemMessage.content).toContain('Hedgr Copilot');
+    expect(systemMessage.content).toContain('NOT a financial advisor');
+    expect(systemMessage.content).toContain('Environment:');
+    expect(systemMessage.content).toContain('Mode:');
+  });
+
   it('returns correct response shape with source', async () => {
     const { CopilotModel } = await import('../lib/chat/copilotModel');
     vi.mocked(CopilotModel.generateReply).mockResolvedValue({

@@ -304,7 +304,7 @@ describe('semanticCache', () => {
 
   describe('getPromptVersion', () => {
     it('returns the prompt version constant', () => {
-      expect(getPromptVersion()).toBe('v1');
+      expect(getPromptVersion()).toBe('v2');
     });
   });
 

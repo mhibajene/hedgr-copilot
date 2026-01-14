@@ -3,6 +3,8 @@ import { CopilotModel } from '../../lib/chat/copilotModel';
 import { normalizeMessages } from '../../lib/chat/normalize';
 import type { Message } from '../../lib/chat/normalize';
 import type { CacheContext } from '../../lib/chat/copilotModel';
+import { buildSystemPrompt, buildContextBlock } from '../../lib/server/copilotPrompt';
+import type { Environment, DataMode } from '../../lib/server/copilotPrompt';
 
 type ErrorCode = 'SERVICE_UNAVAILABLE' | 'INVALID_REQUEST' | 'INTERNAL_ERROR' | 'METHOD_NOT_ALLOWED';
 
@@ -75,6 +77,37 @@ function getCacheHeader(req: NextApiRequest): string | null {
   return header ?? null;
 }
 
+/**
+ * Get the deployment environment from NEXT_PUBLIC_APP_ENV.
+ * Defaults to 'dev' if not set or invalid.
+ */
+function getEnvironment(): Environment {
+  const env = process.env.NEXT_PUBLIC_APP_ENV;
+  if (env === 'stg' || env === 'prod') {
+    return env;
+  }
+  return 'dev';
+}
+
+/**
+ * Determine data mode based on system mode flags.
+ * Returns 'mock' if ANY integration is in mock mode, otherwise 'live'.
+ * 
+ * Aligns with TrustDisclosureBanner logic.
+ */
+function getDataMode(): DataMode {
+  const authMode = process.env.NEXT_PUBLIC_AUTH_MODE;
+  const defiMode = process.env.NEXT_PUBLIC_DEFI_MODE;
+  const fxMode = process.env.NEXT_PUBLIC_FX_MODE;
+
+  // If any subsystem is in mock mode, the entire system is in mock mode
+  const isAuthMock = authMode !== 'magic';
+  const isDefiMock = defiMode !== 'aave';
+  const isFxMock = fxMode !== 'coingecko';
+
+  return (isAuthMock || isDefiMock || isFxMock) ? 'mock' : 'live';
+}
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<SuccessResponse | ErrorResponse>
@@ -126,7 +159,7 @@ export default async function handler(
       );
     }
 
-    // Normalize messages (trim, collapse whitespace, normalize newlines, drop empty, prepend system message)
+    // Normalize messages (trim, collapse whitespace, normalize newlines, drop empty)
     let normalizedMessages: Message[];
     try {
       normalizedMessages = normalizeMessages(messages);
@@ -141,6 +174,23 @@ export default async function handler(
       );
     }
 
+    // Determine environment and data mode
+    const environment = getEnvironment();
+    const dataMode = getDataMode();
+
+    // Build system prompt + context block
+    const systemPrompt = buildSystemPrompt(environment, dataMode);
+    const contextBlock = buildContextBlock(); // Empty for v1
+
+    // Construct system message
+    const systemMessage: Message = {
+      role: 'system',
+      content: contextBlock ? `${systemPrompt}\n\n${contextBlock}` : systemPrompt,
+    };
+
+    // Assemble final message stack (system message first, immutable order)
+    const messagesWithSystem = [systemMessage, ...normalizedMessages];
+
     // Build cache context
     const cacheContext: CacheContext = {
       userId: extractUserId(req),
@@ -149,7 +199,7 @@ export default async function handler(
     };
 
     // Generate reply with cache integration
-    const reply = await CopilotModel.generateReply(normalizedMessages, cacheContext);
+    const reply = await CopilotModel.generateReply(messagesWithSystem, cacheContext);
 
     // Set cache source header for observability
     res.setHeader('x-copilot-source', reply.source);
