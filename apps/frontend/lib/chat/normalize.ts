@@ -1,10 +1,5 @@
 export type Message = { role: 'user' | 'assistant' | 'system'; content: string };
 
-const SYSTEM_POLICY_V1 = {
-  role: 'system' as const,
-  content: 'You are Hedgr Copilot, an educational assistant for savings and financial planning. You provide helpful explanations about balances, transactions, FX rates, and guide users through safe financial actions. You do not provide investment advice or execute transactions.',
-};
-
 // ============================================================================
 // Content Normalization Helpers
 // ============================================================================
@@ -51,10 +46,12 @@ function normalizeContent(content: string): string {
  * - Drops empty user messages
  * - Preserves casing and punctuation
  * - Includes full message history
- * - Prepends SYSTEM_POLICY_V1 system message
+ * 
+ * Note: System message composition is handled by the API layer.
+ * This function only normalizes user and assistant messages.
  * 
  * @param messages - Array of messages to normalize
- * @returns Normalized message array with system message prepended
+ * @returns Normalized message array (user and assistant messages only)
  * @throws Error if all user messages are empty after trimming
  */
 export function normalizeMessages(messages: Message[]): Message[] {
@@ -76,12 +73,6 @@ export function normalizeMessages(messages: Message[]): Message[] {
   const hasUserMessage = filtered.some((msg) => msg.role === 'user');
   if (!hasUserMessage) {
     throw new Error('At least one non-empty user message is required');
-  }
-
-  // Prepend system message if not already present
-  const hasSystemMessage = filtered.some((msg) => msg.role === 'system');
-  if (!hasSystemMessage) {
-    return [SYSTEM_POLICY_V1, ...filtered];
   }
 
   return filtered;

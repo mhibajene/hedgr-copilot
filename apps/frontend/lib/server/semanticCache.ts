@@ -20,7 +20,7 @@ import type { Message } from '../chat/normalize';
 
 const CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes
 const CACHE_MAX_ENTRIES = 500;
-const PROMPT_VERSION = 'v1';
+const PROMPT_VERSION = 'v2'; // Updated for canonical system prompt (S09-COPILOT-PROMPT)
 
 // ============================================================================
 // Types
