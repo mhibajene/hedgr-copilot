@@ -49,9 +49,10 @@ describe('BalanceWithLocalEstimate', () => {
       vi.mocked(useFxRate).mockReturnValue(mockFxRate);
       vi.mocked(isFxRateAvailable).mockReturnValue(true);
 
-      render(<BalanceWithLocalEstimate usdAmount={50} />);
+      render(<BalanceWithLocalEstimate usdAmount={50} data-testid="usd-balance" />);
 
-      expect(screen.getByTestId('usd-amount').textContent).toBe('$50.00');
+      // The passed data-testid now goes on the USD element itself
+      expect(screen.getByTestId('usd-balance').textContent).toBe('$50.00');
     });
 
     test('shows local estimate with ≈ symbol when FX available', () => {
@@ -71,8 +72,9 @@ describe('BalanceWithLocalEstimate', () => {
 
       render(<BalanceWithLocalEstimate usdAmount={50} />);
 
-      const localEstimate = screen.getByTestId('local-estimate');
-      expect(localEstimate.textContent).toBe('≈ ZK 1000.00');
+      // Local estimate now uses unified 'local-balance' testid
+      const localEstimate = screen.getByTestId('local-balance');
+      expect(localEstimate.textContent).toBe('≈ ZMW 1,000.00');
     });
 
     test('calculates conversion correctly for different amounts', () => {
@@ -91,10 +93,10 @@ describe('BalanceWithLocalEstimate', () => {
       vi.mocked(isFxRateAvailable).mockReturnValue(true);
 
       const { rerender } = render(<BalanceWithLocalEstimate usdAmount={100} />);
-      expect(screen.getByTestId('local-estimate').textContent).toBe('≈ ZK 2000.00');
+      expect(screen.getByTestId('local-balance').textContent).toBe('≈ ZMW 2,000.00');
 
       rerender(<BalanceWithLocalEstimate usdAmount={25.50} />);
-      expect(screen.getByTestId('local-estimate').textContent).toBe('≈ ZK 510.00');
+      expect(screen.getByTestId('local-balance').textContent).toBe('≈ ZMW 510.00');
     });
 
     test('shows fallback text when FX unavailable (loading)', () => {
@@ -114,8 +116,8 @@ describe('BalanceWithLocalEstimate', () => {
 
       render(<BalanceWithLocalEstimate usdAmount={50} />);
 
-      expect(screen.getByTestId('local-unavailable').textContent).toBe('Local estimate unavailable');
-      expect(screen.queryByTestId('local-estimate')).toBeNull();
+      // Now uses unified 'local-balance' testid for both available and unavailable states
+      expect(screen.getByTestId('local-balance').textContent).toBe('Local estimate unavailable');
     });
 
     test('shows fallback text when FX unavailable (error)', () => {
@@ -135,8 +137,7 @@ describe('BalanceWithLocalEstimate', () => {
 
       render(<BalanceWithLocalEstimate usdAmount={50} />);
 
-      expect(screen.getByTestId('local-unavailable').textContent).toBe('Local estimate unavailable');
-      expect(screen.queryByTestId('local-estimate')).toBeNull();
+      expect(screen.getByTestId('local-balance').textContent).toBe('Local estimate unavailable');
     });
 
     test('shows fallback text when rate is zero', () => {
@@ -156,10 +157,10 @@ describe('BalanceWithLocalEstimate', () => {
 
       render(<BalanceWithLocalEstimate usdAmount={50} />);
 
-      expect(screen.getByTestId('local-unavailable').textContent).toBe('Local estimate unavailable');
+      expect(screen.getByTestId('local-balance').textContent).toBe('Local estimate unavailable');
     });
 
-    test('applies custom className', () => {
+    test('applies custom className to container', () => {
       const mockFxRate: FxRateData = {
         base: 'USD',
         quote: 'ZMW',
@@ -174,10 +175,11 @@ describe('BalanceWithLocalEstimate', () => {
       vi.mocked(useFxRate).mockReturnValue(mockFxRate);
       vi.mocked(isFxRateAvailable).mockReturnValue(true);
 
-      render(<BalanceWithLocalEstimate usdAmount={50} className="text-gray-600" data-testid="custom-balance" />);
+      const { container } = render(<BalanceWithLocalEstimate usdAmount={50} className="text-gray-600" />);
 
-      const container = screen.getByTestId('custom-balance');
-      expect(container.className).toContain('text-gray-600');
+      // className now applies to the container div (parent of USD element)
+      const wrapper = container.firstChild as HTMLElement;
+      expect(wrapper.className).toContain('text-gray-600');
     });
   });
 
@@ -199,10 +201,11 @@ describe('BalanceWithLocalEstimate', () => {
 
       render(<BalanceWithLocalEstimate usdAmount={50} inline data-testid="inline-balance" />);
 
-      const container = screen.getByTestId('inline-balance');
-      expect(container.tagName).toBe('SPAN');
-      expect(container.textContent).toContain('$50.00');
-      expect(screen.getByTestId('local-estimate').textContent).toBe('≈ ZK 1000.00');
+      // In inline mode, the testid goes on the <strong> element containing USD
+      const usdElement = screen.getByTestId('inline-balance');
+      expect(usdElement.tagName).toBe('STRONG');
+      expect(usdElement.textContent).toBe('$50.00');
+      expect(screen.getByTestId('local-balance').textContent).toBe('≈ ZMW 1,000.00');
     });
 
     test('shows compact unavailable text in inline mode', () => {
@@ -222,12 +225,13 @@ describe('BalanceWithLocalEstimate', () => {
 
       render(<BalanceWithLocalEstimate usdAmount={50} inline />);
 
-      expect(screen.getByTestId('local-unavailable').textContent).toBe('(estimate unavailable)');
+      // Uses unified 'local-balance' testid
+      expect(screen.getByTestId('local-balance').textContent).toBe('(estimate unavailable)');
     });
   });
 
-  describe('Currency symbol display', () => {
-    test('uses currency symbol from market config', () => {
+  describe('Currency code display', () => {
+    test('uses currency code from market config (not symbol)', () => {
       const mockFxRate: FxRateData = {
         base: 'USD',
         quote: 'ZMW',
@@ -244,8 +248,8 @@ describe('BalanceWithLocalEstimate', () => {
 
       render(<BalanceWithLocalEstimate usdAmount={50} />);
 
-      // Should use 'ZK' symbol from mocked market config
-      expect(screen.getByTestId('local-estimate').textContent).toBe('≈ ZK 1000.00');
+      // Should use 'ZMW' currency code from mocked market config
+      expect(screen.getByTestId('local-balance').textContent).toBe('≈ ZMW 1,000.00');
     });
   });
 
@@ -265,10 +269,10 @@ describe('BalanceWithLocalEstimate', () => {
       vi.mocked(useFxRate).mockReturnValue(mockFxRate);
       vi.mocked(isFxRateAvailable).mockReturnValue(true);
 
-      render(<BalanceWithLocalEstimate usdAmount={0} />);
+      render(<BalanceWithLocalEstimate usdAmount={0} data-testid="usd-balance" />);
 
-      expect(screen.getByTestId('usd-amount').textContent).toBe('$0.00');
-      expect(screen.getByTestId('local-estimate').textContent).toBe('≈ ZK 0.00');
+      expect(screen.getByTestId('usd-balance').textContent).toBe('$0.00');
+      expect(screen.getByTestId('local-balance').textContent).toBe('≈ ZMW 0.00');
     });
 
     test('handles decimal USD amounts', () => {
@@ -286,10 +290,10 @@ describe('BalanceWithLocalEstimate', () => {
       vi.mocked(useFxRate).mockReturnValue(mockFxRate);
       vi.mocked(isFxRateAvailable).mockReturnValue(true);
 
-      render(<BalanceWithLocalEstimate usdAmount={123.45} />);
+      render(<BalanceWithLocalEstimate usdAmount={123.45} data-testid="usd-balance" />);
 
-      expect(screen.getByTestId('usd-amount').textContent).toBe('$123.45');
-      expect(screen.getByTestId('local-estimate').textContent).toBe('≈ ZK 2469.00');
+      expect(screen.getByTestId('usd-balance').textContent).toBe('$123.45');
+      expect(screen.getByTestId('local-balance').textContent).toBe('≈ ZMW 2,469.00');
     });
   });
 });

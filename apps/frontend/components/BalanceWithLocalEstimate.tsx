@@ -3,6 +3,7 @@
 import React from 'react';
 import { useFxRate, isFxRateAvailable } from '../lib/fx/FxRateContext';
 import { getCurrentMarketConfig } from '../config/market';
+import { formatLocalCurrency } from '../lib/utils/money';
 
 export interface BalanceWithLocalEstimateProps {
   usdAmount: number;
@@ -54,23 +55,23 @@ export function BalanceWithLocalEstimate({
   // Format USD amount
   const formattedUsd = `$${usdAmount.toFixed(2)}`;
   
-  // Format local amount with currency symbol
+  // Format local amount with currency code (not symbol)
   const formattedLocal = hasFxRate 
-    ? `≈ ${marketConfig.localCurrencySymbol} ${localAmount.toFixed(2)}`
+    ? `≈ ${formatLocalCurrency(localAmount, marketConfig.localCurrency)}`
     : null;
 
   if (inline) {
     // Inline mode: compact rendering for text flows
     return (
-      <span className={className} data-testid={dataTestId}>
-        <strong>{formattedUsd}</strong>
+      <span className={className}>
+        <strong data-testid={dataTestId}>{formattedUsd}</strong>
         {formattedLocal && (
-          <span className="text-xs text-gray-500 ml-2" data-testid="local-estimate">
+          <span className="text-xs text-gray-500 ml-2" data-testid="local-balance">
             {formattedLocal}
           </span>
         )}
         {!formattedLocal && (
-          <span className="text-xs text-gray-400 ml-2" data-testid="local-unavailable">
+          <span className="text-xs text-gray-400 ml-2" data-testid="local-balance">
             (estimate unavailable)
           </span>
         )}
@@ -80,21 +81,21 @@ export function BalanceWithLocalEstimate({
 
   // Block mode: card-style rendering
   return (
-    <div className={className} data-testid={dataTestId}>
+    <div className={className}>
       <div
         className="text-3xl font-bold"
-        data-testid="usd-amount"
+        data-testid={dataTestId}
         aria-label="USD Balance amount"
       >
         {formattedUsd}
       </div>
       {formattedLocal && (
-        <div className="text-xs text-gray-500 mt-1" data-testid="local-estimate">
+        <div className="text-xs text-gray-500 mt-1" data-testid="local-balance">
           {formattedLocal}
         </div>
       )}
       {!formattedLocal && (
-        <div className="text-xs text-gray-400 mt-1" data-testid="local-unavailable">
+        <div className="text-xs text-gray-400 mt-1" data-testid="local-balance">
           Local estimate unavailable
         </div>
       )}
