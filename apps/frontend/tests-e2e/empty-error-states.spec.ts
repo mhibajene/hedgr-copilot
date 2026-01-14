@@ -132,7 +132,7 @@ test.describe('Empty and Error States', () => {
     await expect(page.getByRole('heading', { name: 'Deposit' })).toBeVisible();
     
     // Page should be functional
-    await expect(page.getByLabel('Amount (ZMW)')).toBeVisible();
+    await expect(page.getByTestId('deposit-amount')).toBeVisible();
     await expect(page.getByRole('button', { name: 'Confirm' })).toBeVisible();
   });
 
@@ -190,7 +190,7 @@ test.describe('State Transitions', () => {
     // Make a deposit
     await page.goto('/deposit');
     await waitForPageLoaded(page);
-    await page.getByLabel('Amount (ZMW)').fill('200');
+    await page.getByTestId('deposit-amount').fill('200');
     await page.getByRole('button', { name: 'Confirm' }).click();
     await expect(page.getByText('Deposit CONFIRMED')).toBeVisible({ timeout: 10000 });
 
@@ -215,7 +215,7 @@ test.describe('State Transitions', () => {
     // Make a deposit
     await page.goto('/deposit');
     await waitForPageLoaded(page);
-    await page.getByLabel('Amount (ZMW)').fill('100');
+    await page.getByTestId('deposit-amount').fill('100');
     await page.getByRole('button', { name: 'Confirm' }).click();
     await expect(page.getByText('Deposit CONFIRMED')).toBeVisible({ timeout: 10000 });
 

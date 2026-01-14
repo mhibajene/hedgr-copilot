@@ -58,7 +58,14 @@ test('deposit stub increases balance', async ({ page }) => {
   await expect(initialBalance).toHaveText('$0.00', { timeout: 5000 });
   
   await page.goto('/deposit');
-  await page.getByLabel('Amount (ZMW)').fill('100');
+  
+  // Verify deposit input is clearable/editable
+  const depositInput = page.getByTestId('deposit-amount');
+  await depositInput.fill('');
+  await expect(depositInput).toHaveValue('');
+  await depositInput.fill('100');
+  await expect(depositInput).toHaveValue('100');
+  
   await page.getByRole('button', { name: 'Confirm' }).click();
   await expect(page.getByText('Deposit CONFIRMED')).toBeVisible({ timeout: 6000 });
   await page.goto('/dashboard');
@@ -82,7 +89,7 @@ test('withdraw stub decreases balance', async ({ page }) => {
   await expect(initialBalance).toHaveText('$0.00', { timeout: 5000 });
   
   await page.goto('/deposit');
-  await page.getByLabel('Amount (ZMW)').fill('100');
+  await page.getByTestId('deposit-amount').fill('100');
   await page.getByRole('button', { name: 'Confirm' }).click();
   await expect(page.getByText('Deposit CONFIRMED')).toBeVisible({ timeout: 6000 });
 
@@ -109,7 +116,7 @@ test('activity page shows confirmed transactions', async ({ page }) => {
 
   // Deposit 100 ZMW
   await page.goto('/deposit');
-  await page.getByLabel('Amount (ZMW)').fill('100');
+  await page.getByTestId('deposit-amount').fill('100');
   await page.getByRole('button', { name: 'Confirm' }).click();
   await expect(page.getByText('Deposit CONFIRMED')).toBeVisible({ timeout: 6000 });
 

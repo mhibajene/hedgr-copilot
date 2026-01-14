@@ -32,8 +32,8 @@ test.describe('Transaction Lifecycle - Activity Display', () => {
     // Perform a deposit
     await page.goto('/deposit');
 
-    const amountInput = page.locator('#amount-zmw');
-    await amountInput.clear();
+    const amountInput = page.getByTestId('deposit-amount');
+    await amountInput.fill('');
     await amountInput.fill('100');
 
     await page.getByRole('button', { name: 'Confirm' }).click();
@@ -301,8 +301,8 @@ test.describe('Transaction Lifecycle - Activity Display', () => {
     // Perform a deposit to get a real transaction
     await page.goto('/deposit');
 
-    const amountInput = page.locator('#amount-zmw');
-    await amountInput.clear();
+    const amountInput = page.getByTestId('deposit-amount');
+    await amountInput.fill('');
     await amountInput.fill('50');
 
     await page.getByRole('button', { name: 'Confirm' }).click();
