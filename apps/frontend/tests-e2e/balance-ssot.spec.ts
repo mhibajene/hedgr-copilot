@@ -54,8 +54,8 @@ test.describe('Balance SSoT - Ledger as Single Source of Truth', () => {
     await expect(page).toHaveURL(/\/deposit/);
 
     // Enter deposit amount (100 ZMW)
-    const amountInput = page.locator('#amount-zmw');
-    await amountInput.clear();
+    const amountInput = page.getByTestId('deposit-amount');
+    await amountInput.fill('');
     await amountInput.fill('100');
 
     // Check FX preview is shown
@@ -92,8 +92,8 @@ test.describe('Balance SSoT - Ledger as Single Source of Truth', () => {
     // Perform a deposit first
     await page.goto('/deposit');
 
-    const amountInput = page.locator('#amount-zmw');
-    await amountInput.clear();
+    const amountInput = page.getByTestId('deposit-amount');
+    await amountInput.fill('');
     await amountInput.fill('200');
 
     await page.getByRole('button', { name: 'Confirm' }).click();
@@ -151,8 +151,8 @@ test.describe('Balance SSoT - Ledger as Single Source of Truth', () => {
     // First, make a deposit to have some balance
     await page.goto('/deposit');
     
-    const amountInput = page.locator('#amount-zmw');
-    await amountInput.clear();
+    const amountInput = page.getByTestId('deposit-amount');
+    await amountInput.fill('');
     await amountInput.fill('100');
     
     await page.getByRole('button', { name: 'Confirm' }).click();

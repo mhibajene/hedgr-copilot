@@ -1,20 +1,14 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { zmwToUsd } from '../../../lib/fx';
 import { momoMock } from '../../../lib/payments/momo.mock';
 import { useBalance } from '../../../lib/hooks/useBalance';
 import { useLedgerStore } from '../../../lib/state/ledger';
 import { useWalletStore } from '../../../lib/state/wallet';
 import { getBalanceMode } from '../../../lib/state/balance.mode';
+import { useFxRate, isFxRateAvailable } from '../../../lib/fx/FxRateContext';
+import { resolveMarket, resolveLocalCurrencyCode } from '../../../config/market';
 import { EmptyState, ErrorState } from '@hedgr/ui';
-
-interface FxRate {
-  base: string;
-  quote: string;
-  rate: number;
-  ts: number;
-}
 
 interface PaymentMethod {
   id: string;
@@ -31,19 +25,28 @@ export default function DepositPage() {
   // Legacy wallet store for backward compatibility
   const creditWallet = useWalletStore((s) => s.creditUSD);
   
-  const [zmw, setZmw] = useState(100);
-  const [usdPreview, setUsdPreview] = useState(0);
+  // FX SSoT
+  const fx = useFxRate();
+  const market = resolveMarket();
+  const fallbackQuote = resolveLocalCurrencyCode(market);
+  const quote = fx.quote ?? fallbackQuote;
+  const rate = isFxRateAvailable(fx) ? fx.rate : null;
+  
+  // Amount input as string for better UX
+  const [amountLocalStr, setAmountLocalStr] = useState<string>('100');
   const [txId, setTxId] = useState<string | null>(null);
   const [usdToCredit, setUsdToCredit] = useState(0);
   const [status, setStatus] = useState<'IDLE' | 'PENDING' | 'CONFIRMED' | 'FAILED'>('IDLE');
-  const [fxRate, setFxRate] = useState<FxRate | null>(null);
-  const [fxError, setFxError] = useState<string | null>(null);
-  const [fxLoading, setFxLoading] = useState(true);
   
   // Payment methods state
   const [paymentMethods, setPaymentMethods] = useState<PaymentMethod[]>([]);
   const [methodsLoading, setMethodsLoading] = useState(true);
   const [methodsError, setMethodsError] = useState<string | null>(null);
+
+  // Compute preview deterministically
+  // TODO: Store non-ZMW local amounts later (e.g., KES, GHS) when multi-market support lands
+  const amountLocalNum = amountLocalStr === '' ? null : parseInt(amountLocalStr, 10);
+  const usdPreview = (amountLocalNum !== null && rate !== null) ? +(amountLocalNum / rate).toFixed(2) : 0;
 
   // Fetch payment methods
   useEffect(() => {
@@ -65,37 +68,6 @@ export default function DepositPage() {
     };
     fetchPaymentMethods();
   }, []);
-
-  // Fetch FX rate
-  useEffect(() => {
-    const fetchFxRate = async () => {
-      setFxLoading(true);
-      setFxError(null);
-      try {
-        const response = await fetch('/api/fx');
-        if (!response.ok) throw new Error('Failed to fetch rate');
-        const data: FxRate = await response.json();
-        setFxRate(data);
-        // Update preview with fetched rate
-        setUsdPreview(+(zmw / data.rate).toFixed(2));
-      } catch {
-        setFxError('Unable to load exchange rate');
-        // Fallback to default calculation
-        setUsdPreview(zmwToUsd(zmw));
-      } finally {
-        setFxLoading(false);
-      }
-    };
-    fetchFxRate();
-  }, []);
-
-  useEffect(() => {
-    if (fxRate) {
-      setUsdPreview(+(zmw / fxRate.rate).toFixed(2));
-    } else {
-      setUsdPreview(zmwToUsd(zmw));
-    }
-  }, [zmw, fxRate]);
 
   useEffect(() => {
     if (!txId) return;
@@ -142,10 +114,14 @@ export default function DepositPage() {
   }, [txId, usdToCredit, creditWallet, confirmTx, failTx, refresh]);
 
   const confirm = async () => {
+    // Guard: ensure valid amount and FX rate available
+    if (amountLocalNum === null || amountLocalNum <= 0) return;
+    if (rate === null) return;
+    
     setStatus('PENDING');
     setUsdToCredit(usdPreview);
     
-    const tx = await momoMock.createDeposit(zmw);
+    const tx = await momoMock.createDeposit(amountLocalNum);
     
     const mode = getBalanceMode();
     if (mode === 'ledger') {
@@ -155,7 +131,7 @@ export default function DepositPage() {
         id: tx.id,
         type: 'DEPOSIT',
         amountUSD: usdPreview,
-        amountZMW: zmw,
+        amountZMW: quote === 'ZMW' ? amountLocalNum : undefined,
         status: 'PENDING',
         createdAt: Date.now(),
       });
@@ -177,6 +153,9 @@ export default function DepositPage() {
   };
 
   const availableMethods = paymentMethods.filter((m) => m.available);
+
+  // Confirm button disabled logic
+  const isConfirmDisabled = status === 'PENDING' || amountLocalNum === null || amountLocalNum <= 0 || rate === null;
 
   // Error state for loading payment methods
   if (methodsError) {
@@ -240,35 +219,43 @@ export default function DepositPage() {
     <main className="p-6 space-y-4 max-w-xl">
       <h1 className="text-2xl font-semibold">Deposit</h1>
       
-      {/* FX Rate display with error handling */}
-      {fxLoading ? (
+      {/* FX Rate display */}
+      {fx.isLoading ? (
         <div className="inline-flex items-center px-3 py-1 rounded-full bg-gray-100 text-gray-500 text-sm">
           Loading rate...
         </div>
-      ) : fxError ? (
-        <div className="inline-flex items-center px-3 py-1 rounded-full bg-amber-100 text-amber-800 text-sm">
-          Using fallback rate
-        </div>
-      ) : fxRate && (
+      ) : rate !== null && (
         <div className="inline-flex items-center px-3 py-1 rounded-full bg-blue-100 text-blue-800 text-sm font-medium">
-          1 {fxRate.base} = {fxRate.rate} {fxRate.quote}
+          1 USD = {rate} {quote}
         </div>
       )}
       
       <div className="block space-y-2">
-        <label htmlFor="amount-zmw">Amount (ZMW)</label>
+        <label htmlFor="deposit-amount">Amount ({quote})</label>
         <input
-          id="amount-zmw"
-          type="number"
-          value={zmw}
-          onChange={(e) => setZmw(Number(e.target.value || 0))}
+          id="deposit-amount"
+          type="text"
+          inputMode="numeric"
+          value={amountLocalStr}
+          onChange={(e) => {
+            const next = e.target.value;
+            if (next === '' || /^\d*$/.test(next)) setAmountLocalStr(next);
+          }}
+          onBlur={() => {
+            if (amountLocalStr === '') return;
+            const parsed = parseInt(amountLocalStr, 10);
+            if (!Number.isFinite(parsed)) return; // Never set "NaN"
+            setAmountLocalStr(String(parsed));
+          }}
+          data-testid="deposit-amount"
+          aria-label="Deposit amount"
           className="border rounded-xl p-3 w-full"
         />
       </div>
       <div className="rounded-xl p-3 bg-gray-50">FX Preview: <strong>${usdPreview.toFixed(2)}</strong></div>
       <button 
         onClick={confirm} 
-        disabled={status === 'PENDING'} 
+        disabled={isConfirmDisabled} 
         className="rounded-xl p-3 shadow w-full bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
       >
         {status === 'PENDING' ? 'Processing…' : 'Confirm'}
