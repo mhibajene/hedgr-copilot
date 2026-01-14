@@ -64,12 +64,17 @@ describe('FX Service', () => {
   });
 
   describe('FX API endpoint', () => {
-    test('fixed mode returns constant rate 20', async () => {
+    test('fixed mode returns constant rate 20 for ZMW', async () => {
       process.env.NEXT_PUBLIC_FX_MODE = 'fixed';
       process.env.CI = undefined;
       
       const { GET } = await import('../app/api/fx/route');
-      const response = await GET();
+      const mockRequest = {
+        nextUrl: {
+          searchParams: new URLSearchParams('quote=ZMW')
+        }
+      } as any;
+      const response = await GET(mockRequest);
       const data = await response.json();
       
       expect(data.rate).toBe(20);
@@ -78,17 +83,57 @@ describe('FX Service', () => {
       expect(typeof data.ts).toBe('number');
     });
 
-    test('falls back to fixed rate in CI', async () => {
+    test('fixed mode returns rate 1500 for NGN', async () => {
+      process.env.NEXT_PUBLIC_FX_MODE = 'fixed';
+      process.env.CI = undefined;
+      
+      const { GET } = await import('../app/api/fx/route');
+      const mockRequest = {
+        nextUrl: {
+          searchParams: new URLSearchParams('quote=NGN')
+        }
+      } as any;
+      const response = await GET(mockRequest);
+      const data = await response.json();
+      
+      expect(data.rate).toBe(1500);
+      expect(data.base).toBe('USD');
+      expect(data.quote).toBe('NGN');
+    });
+
+    test('fixed mode returns rate 130 for KES', async () => {
+      process.env.NEXT_PUBLIC_FX_MODE = 'fixed';
+      process.env.CI = undefined;
+      
+      const { GET } = await import('../app/api/fx/route');
+      const mockRequest = {
+        nextUrl: {
+          searchParams: new URLSearchParams('quote=KES')
+        }
+      } as any;
+      const response = await GET(mockRequest);
+      const data = await response.json();
+      
+      expect(data.rate).toBe(130);
+      expect(data.base).toBe('USD');
+      expect(data.quote).toBe('KES');
+    });
+
+    test('returns 503 in CI when mode is coingecko', async () => {
       process.env.NEXT_PUBLIC_FX_MODE = 'coingecko';
       process.env.CI = 'true';
       
       const { GET } = await import('../app/api/fx/route');
-      const response = await GET();
+      const mockRequest = {
+        nextUrl: {
+          searchParams: new URLSearchParams('quote=ZMW')
+        }
+      } as any;
+      const response = await GET(mockRequest);
       const data = await response.json();
       
-      expect(data.rate).toBe(20);
-      expect(data.base).toBe('USD');
-      expect(data.quote).toBe('ZMW');
+      expect(response.status).toBe(503);
+      expect(data.error).toContain('FX unavailable in CI');
     });
   });
 
@@ -99,7 +144,7 @@ describe('FX Service', () => {
       
       const { fetchCoinGeckoRate } = await import('../lib/fx/providers/coingecko');
       
-      await expect(fetchCoinGeckoRate()).rejects.toThrow('CoinGecko provider must not run in CI');
+      await expect(fetchCoinGeckoRate('ZMW')).rejects.toThrow('CoinGecko provider must not run in CI');
     });
 
     test('throws error when FX_MODE is not coingecko', async () => {
@@ -108,7 +153,7 @@ describe('FX Service', () => {
       
       const { fetchCoinGeckoRate } = await import('../lib/fx/providers/coingecko');
       
-      await expect(fetchCoinGeckoRate()).rejects.toThrow('CoinGecko provider requires NEXT_PUBLIC_FX_MODE=coingecko');
+      await expect(fetchCoinGeckoRate('ZMW')).rejects.toThrow('CoinGecko provider requires NEXT_PUBLIC_FX_MODE=coingecko');
     });
   });
 });
