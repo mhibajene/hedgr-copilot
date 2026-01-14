@@ -4,6 +4,13 @@ import { useState } from 'react';
 import { getAuthMode } from '../lib/auth/mode';
 import { getDefiMode } from '../lib/defi/mode';
 import { getFxMode } from '../lib/fx';
+import { 
+  isMarketSwitcherEnabled, 
+  resolveMarket, 
+  setMarket, 
+  MARKET_CONFIG,
+  type MarketCode 
+} from '../config/market';
 
 export type TrustDisclosureBannerProps = {
   /** Compact variant for inline/settings use */
@@ -60,6 +67,20 @@ export function TrustDisclosureBanner({
     { label: 'DeFi', value: defiMode, isLive: defiMode !== 'mock' },
     { label: 'FX', value: fxMode, isLive: fxMode !== 'fixed' },
   ];
+
+  // Market switcher state (only if enabled)
+  const marketSwitcherEnabled = isMarketSwitcherEnabled();
+  const currentMarket = marketSwitcherEnabled ? resolveMarket() : null;
+
+  const handleMarketChange = (newMarket: MarketCode) => {
+    if (!marketSwitcherEnabled) return;
+    try {
+      setMarket(newMarket);
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error('Failed to change market:', error);
+    }
+  };
 
   if (variant === 'compact') {
     return (
@@ -137,6 +158,21 @@ export function TrustDisclosureBanner({
                   {badge.label}: {badge.value}
                 </span>
               ))}
+              {marketSwitcherEnabled && currentMarket && (
+                <select
+                  value={currentMarket}
+                  onChange={(e) => handleMarketChange(e.target.value as MarketCode)}
+                  className="text-xs px-2 py-0.5 rounded bg-white/30 text-white font-medium border border-white/40 hover:bg-white/40 transition-colors"
+                  title="Demo market selection (affects currency display)"
+                  data-testid="market-switcher"
+                >
+                  {Object.values(MARKET_CONFIG).map((market) => (
+                    <option key={market.code} value={market.code} className="text-gray-900">
+                      Market: {market.name} ({market.localCurrency})
+                    </option>
+                  ))}
+                </select>
+              )}
             </div>
             {learnMoreUrl && (
               <a

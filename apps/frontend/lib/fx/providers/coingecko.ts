@@ -11,10 +11,11 @@ export interface FxRate {
 }
 
 /**
- * Fetches USD/ZMW rate from CoinGecko API
+ * Fetches USD/local rate from CoinGecko API
+ * @param quote - The quote currency (e.g., 'ZMW', 'NGN', 'KES')
  * @throws Error if called in CI or when FX_MODE is not coingecko
  */
-export async function fetchCoinGeckoRate(): Promise<FxRate> {
+export async function fetchCoinGeckoRate(quote: string): Promise<FxRate> {
   // Guard: Ensure we're in coingecko mode
   if (getFxMode() !== 'coingecko') {
     throw new Error('CoinGecko provider requires NEXT_PUBLIC_FX_MODE=coingecko');
@@ -25,10 +26,10 @@ export async function fetchCoinGeckoRate(): Promise<FxRate> {
     throw new Error('CoinGecko provider must not run in CI. Use FX_MODE=fixed instead.');
   }
 
-  // Note: CoinGecko doesn't have direct ZMW/USD pair
+  // Note: CoinGecko doesn't have direct local currency/USD pairs for all currencies
   // This is a placeholder implementation
   // In production, you would:
-  // 1. Fetch USD/ZMW from a provider that supports it
+  // 1. Fetch USD/local from a provider that supports it
   // 2. Or use a proxy rate (e.g., USD/ZAR * ZAR/ZMW approximation)
   // 3. Handle rate limits and errors appropriately
 
@@ -42,11 +43,11 @@ export async function fetchCoinGeckoRate(): Promise<FxRate> {
   }
 
   // Placeholder: Return default rate for now
-  // TODO: Implement actual ZMW/USD fetching logic
+  // TODO: Implement actual local currency/USD fetching logic based on quote
   return {
     base: 'USD',
-    quote: 'ZMW',
-    rate: 20, // Placeholder
+    quote,
+    rate: 20, // Placeholder - should vary by currency
     ts: Date.now(),
   };
 }
