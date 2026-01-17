@@ -17,8 +17,11 @@ export default defineConfig({
     url: 'http://127.0.0.1:3000',
     reuseExistingServer: !process.env.CI,
     timeout: 180_000,
-    // Note: NEXT_PUBLIC_FEATURE_COPILOT_ENABLED must be set at build time
-    // for the feature to be enabled in E2E tests
+    env: {
+      NEXT_PUBLIC_FEATURE_COPILOT_ENABLED: 'true',
+      // Copilot E2E safety tests require this flag to be baked into the Next build.
+      // Do NOT remove unless Copilot is intentionally disabled.
+    },
   },
   projects: [
     { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
