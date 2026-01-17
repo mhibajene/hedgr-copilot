@@ -75,11 +75,10 @@ test.describe('Chat Page', () => {
       // 1) Block analytics / telemetry (hermetic)
       if (ANALYTICS_HOSTS.some((rx) => rx.test(url))) return route.abort();
 
-      // 2) Allow local app requests (Next assets, navigation, same-origin APIs)
+      // 2) Allow local app requests (Next assets, navigation, APIs)
+      // Note: /api/chat uses server-side stub mode in CI (CI=true forces stub)
       const isLocalOrigin = /^https?:\/\/(localhost|127\.0\.0\.1|\[::1\])(?::\d+)?\//i.test(url);
       if (isLocalOrigin) {
-        // Block Copilot chat API to ensure stub-only behavior
-        if (url.includes('/api/chat')) return route.abort();
         return route.continue();
       }
 

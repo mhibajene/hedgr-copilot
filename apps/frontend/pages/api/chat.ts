@@ -5,9 +5,10 @@ import type { Message } from '../../lib/chat/normalize';
 import type { CacheContext } from '../../lib/chat/copilotModel';
 import { buildSystemPrompt, buildContextBlock } from '../../lib/server/copilotPrompt';
 import type { Environment, DataMode } from '../../lib/server/copilotPrompt';
-import { enforcePolicy } from '../../lib/server/copilotPolicy';
+import { enforcePolicy, ADVICE_REFUSAL_RESPONSE } from '../../lib/server/copilotPolicy';
 import { deriveRecommendation } from '../../lib/server/copilotSignals';
 import type { CopilotSignals } from '../../lib/server/copilotSignals';
+import { isInvestmentAdviceRequest } from '../../lib/server/copilotIntent';
 
 type ErrorCode = 'SERVICE_UNAVAILABLE' | 'INVALID_REQUEST' | 'INTERNAL_ERROR' | 'METHOD_NOT_ALLOWED';
 
@@ -175,6 +176,29 @@ export default async function handler(
         400,
         requestId
       );
+    }
+
+    // ──────────────────────────────────────────────────────────────────────────
+    // Intent-Based Refusal (Pre-Model Check)
+    // ──────────────────────────────────────────────────────────────────────────
+    // Refuse investment advice requests BEFORE invoking the model.
+    // This is a policy decision, not a model decision — deterministic across stub/live.
+    const lastUserMessage = normalizedMessages
+      .slice()
+      .reverse()
+      .find((m) => m.role === 'user');
+
+    if (lastUserMessage && isInvestmentAdviceRequest(lastUserMessage.content)) {
+      res.setHeader('x-copilot-source', 'policy');
+      res.setHeader('x-copilot-recommendation', 'refused');
+
+      return res.status(200).json({
+        message: {
+          role: 'assistant',
+          content: ADVICE_REFUSAL_RESPONSE,
+        },
+        source: 'stub', // Marked as stub since model was not invoked
+      });
     }
 
     // Determine environment and data mode
