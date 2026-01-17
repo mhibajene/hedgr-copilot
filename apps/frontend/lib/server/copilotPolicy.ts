@@ -417,9 +417,18 @@ export function enforcePolicy(params: PolicyParams): string {
 }
 
 // ============================================================================
-// Exported Constants (for testing)
+// Exported Constants
 // ============================================================================
 
+/**
+ * Canonical refusal response for investment advice requests.
+ * Exported for use in intent-based refusal at API boundary.
+ */
+export { ADVICE_REFUSAL_RESPONSE };
+
+/**
+ * Constants bundle for testing.
+ */
 export const POLICY_CONSTANTS = {
   WAIT_PHRASE_RECOMMEND,
   WAIT_PHRASE_CONTROL,
