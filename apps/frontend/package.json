@@ -14,7 +14,7 @@
     "build:test": "next build",
     "serve:test": "next build && next start -p 3000",
     "e2e": "playwright test",
-    "e2e:ci": "playwright test --reporter=dot",
+    "e2e:ci": "NEXT_PUBLIC_FEATURE_COPILOT_ENABLED=true pnpm build && playwright test --reporter=dot",
     "e2e:headed": "playwright test --headed",
     "e2e:update": "playwright test -u"
   },
