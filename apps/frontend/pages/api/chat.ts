@@ -5,6 +5,9 @@ import type { Message } from '../../lib/chat/normalize';
 import type { CacheContext } from '../../lib/chat/copilotModel';
 import { buildSystemPrompt, buildContextBlock } from '../../lib/server/copilotPrompt';
 import type { Environment, DataMode } from '../../lib/server/copilotPrompt';
+import { enforcePolicy } from '../../lib/server/copilotPolicy';
+import { deriveRecommendation } from '../../lib/server/copilotSignals';
+import type { CopilotSignals } from '../../lib/server/copilotSignals';
 
 type ErrorCode = 'SERVICE_UNAVAILABLE' | 'INVALID_REQUEST' | 'INTERNAL_ERROR' | 'METHOD_NOT_ALLOWED';
 
@@ -201,10 +204,41 @@ export default async function handler(
     // Generate reply with cache integration
     const reply = await CopilotModel.generateReply(messagesWithSystem, cacheContext);
 
+    // ──────────────────────────────────────────────────────────────────────────
+    // Policy Enforcement Layer
+    // ──────────────────────────────────────────────────────────────────────────
+    // Apply trust-first policy enforcement on model output.
+    // This runs BEFORE caching to ensure cached responses are also policy-compliant.
+    //
+    // Note: Signal derivation is placeholder until full signal integration.
+    // In production, signals should be derived from real market/user data.
+
+    // Derive recommendation from signals (placeholder signals for v1)
+    const signals: CopilotSignals = {
+      environment: { environment },
+      // Market and user signals will be integrated in future tickets
+      // For now, default to conservative "wait" recommendation
+    };
+    const recommendation = deriveRecommendation(signals);
+
+    // Enforce policy on model output
+    const enforcedContent = enforcePolicy({
+      content: reply.message.content,
+      recommendation,
+      environment,
+    });
+
     // Set cache source header for observability
     res.setHeader('x-copilot-source', reply.source);
+    res.setHeader('x-copilot-recommendation', recommendation);
 
-    return res.status(200).json(reply);
+    return res.status(200).json({
+      ...reply,
+      message: {
+        ...reply.message,
+        content: enforcedContent,
+      },
+    });
   } catch (error) {
     // Log error internally for debugging
     console.error('Chat API error:', error);

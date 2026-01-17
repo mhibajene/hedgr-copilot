@@ -251,8 +251,10 @@ describe('/api/chat', () => {
 
   it('returns correct response shape with source', async () => {
     const { CopilotModel } = await import('../lib/chat/copilotModel');
+    // Use content that already has WAIT phrases to avoid policy prepending
+    const policyCompliantContent = "I recommend waiting before making changes. You're always in control of your savings decisions.";
     vi.mocked(CopilotModel.generateReply).mockResolvedValue({
-      message: { role: 'assistant', content: 'Test response' },
+      message: { role: 'assistant', content: policyCompliantContent },
       source: 'stub',
     });
 
@@ -268,13 +270,16 @@ describe('/api/chat', () => {
     await handler(req, res);
 
     expect(res.statusCode).toBe(200);
-    expect(res._json).toEqual({
+    // Policy layer may add environment disclosure for non-prod, so check structure
+    expect(res._json).toMatchObject({
       message: {
         role: 'assistant',
-        content: 'Test response',
       },
       source: 'stub',
     });
+    // Content should contain original response (policy preserves compliant content)
+    expect(res._json.message.content).toContain("recommend waiting");
+    expect(res._json.message.content).toContain("always in control");
   });
 
   it('sets x-copilot-source response header', async () => {
