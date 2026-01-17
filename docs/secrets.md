@@ -44,3 +44,11 @@ Do **not** commit `.env*` files.
 ## Health/Version (for smoke checks)
 - `/api/health` → `200 { status: "ok", ts: "<ISO>" }`
 - `/api/version` → `200 { version: "<apps/frontend package version>" }`
+
+---
+
+## Copilot Feature Flags
+
+For Copilot-specific flags (`OPENAI_MODE`, `FEATURE_COPILOT_ENABLED`, `COPILOT_CACHE_ENABLED`), rollout procedures, and rollback playbooks, see:
+
+> **[docs/copilot/flags-and-rollout.md](./copilot/flags-and-rollout.md)** — Single source of truth for Copilot ops
