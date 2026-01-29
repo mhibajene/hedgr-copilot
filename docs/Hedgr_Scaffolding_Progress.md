@@ -1096,3 +1096,196 @@ Risk: low
 ⸻
 
 DoD: All 4 Sprint 0.8 micro-contracts merged to main; ledger is the single source of truth for balances; activity clearly shows transaction lifecycle; trust disclosures visible in UI and CI; empty/error states hardened across core pages; CI defaults and branch protection remain green and unchanged.
+
+
+Hedgr Scaffolding Progress — 0.9
+
+Feature: Sprint 0.9 — Trust-First AI Copilot (Foundations)
+Owner: (@musalwa)
+Date Shipped: 2026-01-17
+Risk: medium (AI surface, mitigated via strict guardrails)
+
+⸻
+
+1) Metadata
+
+Micro-contracts / PRs
+	•	feat(S09-CHAT-UI): Copilot chat shell + UX primitives
+	•	feat(S09-AI-ENDPOINT): Stubbed OpenAI endpoint with env gating
+	•	feat(S09-SEMANTIC-CACHE): Deterministic semantic cache
+	•	feat(S09-COPILOT-CONTEXTS): Canonical system prompt + safety context
+	•	feat(S09-COPILOT-SIGNALS): Trust-first signal → recommendation mapping
+	•	feat(S09-COPILOT-POLICY): Server-side response enforcement
+	•	feat(S09-COPILOT-RESPONSES): Canonical response templates
+	•	test(S09-COPILOT-SAFETY): E2E safety & refusal enforcement
+	•	docs(S09): Copilot flags, rollout, rollback documentation
+
+Required Checks (branch protection)
+	•	validate
+	•	E2E smoke (@hedgr/frontend)
+
+Flags (CI defaults)
+	•	NEXT_PUBLIC_FEATURE_COPILOT_ENABLED=false
+	•	OPENAI_MODE=stub
+	•	COPILOT_CACHE_ENABLED=true
+
+⸻
+
+2) Contract (Source of Truth)
+
+Goal:
+Ship Hedgr Copilot v1 as a trust-first, advisory-only AI assistant that is safe by construction, non-actionable, and fully gated behind feature flags—without impacting core wallet functionality.
+
+Acceptance (Gherkin-style)
+	•	Copilot Access
+	•	Given Copilot is enabled at build time
+When a user visits /chat
+Then a clearly labeled “AI assistant · Not financial advice” surface is shown
+	•	Safety & Refusal
+	•	Given a user asks “What should I invest in?”
+Then Copilot refuses and explains it cannot provide financial advice
+	•	Trust Posture
+	•	Given conditions are uncertain or signals are missing
+Then Copilot recommends waiting and reinforces user control
+	•	Resilience
+	•	Given Copilot is unavailable
+Then balances, deposits, and withdrawals remain unaffected
+
+Non-negotiables
+	•	Security first • No transaction execution • No financial advice
+	•	Deterministic behavior • No live OpenAI in CI/E2E
+	•	Rollback via flag or single revert
+
+⸻
+
+3) Implementation
+
+Copilot Chat Surface
+	•	/chat page with:
+	•	Chat bubbles, typing indicator, offline banner
+	•	Persistent disclaimer (data-testid="chat-disclaimer")
+	•	Shared TrustDisclosureBanner
+	•	Navigation entry gated by NEXT_PUBLIC_FEATURE_COPILOT_ENABLED
+
+AI Endpoint & Environment Gating
+	•	/api/chat endpoint with:
+	•	Stub vs live mode (OPENAI_MODE)
+	•	CI hard-forced to stub
+	•	Graceful 503 handling (no stack/API leakage)
+
+Canonical Prompt Architecture
+	•	Immutable system prompt enforcing:
+	•	Advisory-only role
+	•	“Not a financial advisor”
+	•	Environment + data mode disclosure
+	•	Permission to recommend waiting / inaction
+	•	Context block assembled only from curated internal sources (FAQ + trust context)
+
+Trust-First Decision Stack
+	•	Signals: market, yield, user, environment
+	•	Recommendations: proceed | proceed_cautiously | wait
+	•	Missing or conflicting signals → wait (default)
+
+Policy Enforcement Layer
+	•	Server-side sanitization of model output:
+	•	Advice detection → canonical refusal
+	•	Urgency / hype language stripped
+	•	Required WAIT phrases auto-enforced
+	•	Runs after model generation, before response
+
+Response Templates
+	•	Canonical, deterministic templates for:
+	•	proceed
+	•	proceed_cautiously
+	•	wait
+	•	refusal
+	•	Enforced structure:
+	1.	Acknowledge
+	2.	Recommend / refuse
+	3.	Explain why
+	4.	Reinforce user control
+
+Caching
+	•	In-process semantic cache with:
+	•	Normalized prompt keys
+	•	TTL + size bounds
+	•	Prompt versioning for safe invalidation
+
+⸻
+
+4) QA (Codex)
+
+Unit Coverage
+	•	Prompt construction (disclaimers, environment, determinism)
+	•	Signal → recommendation mapping (all unsafe permutations)
+	•	Policy enforcement (urgency removal, refusal override)
+	•	Response template snapshots
+
+E2E Safety Coverage
+	•	chat-safety.spec.ts:
+	•	Trust banner + disclaimer always visible
+	•	Investment advice prompt → refusal
+	•	Copilot outage does not affect balances
+
+Hermetic Guarantees
+	•	No live OpenAI calls
+	•	Analytics blocked
+	•	Stable selectors (data-testid only)
+
+⸻
+
+5) Post-CI Audit
+
+Outcomes
+	•	All Sprint 0.9 PRs merged with green validate + E2E smoke
+	•	Copilot remains disabled by default in CI and prod
+	•	Safety tests act as hard gates, not best-effort checks
+
+Stability Fixes
+	•	Build-time vs runtime flag distinction documented and enforced
+	•	Typing indicator tests aligned with API-backed chat flow
+	•	E2E config updated to ensure Copilot availability is explicit
+
+Residual Risk
+	•	Medium (AI surface), mitigated by:
+	•	Multi-layer safety (prompt + policy + tests)
+	•	Feature flag default-off posture
+
+⸻
+
+6) CI & Deployment
+	•	Copilot fully flag-controlled:
+	•	Enable via NEXT_PUBLIC_FEATURE_COPILOT_ENABLED=true at build time
+	•	Rollback options:
+	•	Flip feature flag
+	•	Force OPENAI_MODE=stub
+	•	Revert Copilot PRs (no data migration)
+
+⸻
+
+7) Build Health Notes
+
+Incidents & Remediations
+	•	E2E failures due to missing build-time flags → fixed via explicit CI wiring
+	•	Legacy chat tests adjusted to reflect API-routed chat client
+	•	Added README + docs to prevent recurrence
+
+Guardrails Reinforced
+	•	Feature-gated E2E must fail loud if disabled
+	•	Prefer server-side policy enforcement over prompt-only safety
+	•	Treat AI output as untrusted until sanitized
+
+⸻
+
+8) Archive Links
+	•	PRs: Sprint 0.9 Copilot micro-contracts
+	•	Docs:
+	•	docs/flag-and-rollout.md
+	•	Copilot Trust Charter
+	•	Artifacts:
+	•	Playwright traces/videos for safety tests
+
+⸻
+
+DoD:
+Hedgr Copilot v1 foundations shipped with trust-first architecture, deterministic safety, and flag-controlled rollout, without compromising core wallet stability or CI integrity. 
