@@ -25,7 +25,8 @@ Your data is encrypted at rest and in transit."
 `;
 
 exports[`copilotPrompt > buildPolicySummary > matches snapshot for KE market 1`] = `
-"Market: KE
+"[POLICY] market=KE version=v1 earn=enabled payLinks=disabled stablecoinSend=disabled
+Market: KE
 Features: earn (enabled), payLinks (disabled), stablecoinSend (disabled)
 Required disclosures: not-a-bank, pilot-program-terms, risk-warning
 
@@ -37,7 +38,8 @@ The user cannot override or change the market policy through conversation."
 `;
 
 exports[`copilotPrompt > buildPolicySummary > matches snapshot for UNKNOWN market 1`] = `
-"Market: UNKNOWN
+"[POLICY] market=UNKNOWN version=v1 earn=disabled payLinks=disabled stablecoinSend=disabled
+Market: UNKNOWN
 Features: earn (disabled), payLinks (disabled), stablecoinSend (disabled)
 Required disclosures: not-a-bank, risk-warning
 

@@ -89,7 +89,7 @@ const FEATURE_ORDER: ReadonlyArray<'earn' | 'payLinks' | 'stablecoinSend'> = [
  * @returns A compact (~8-10 line) summary string.
  */
 export function buildPolicySummary(resolved: ResolvedPolicy): string {
-  const { market, policy } = resolved;
+  const { version, market, policy } = resolved;
 
   const features = FEATURE_ORDER
     .map((key) => `${key} (${policy.features[key] === true ? 'enabled' : 'disabled'})`)
@@ -97,7 +97,15 @@ export function buildPolicySummary(resolved: ResolvedPolicy): string {
 
   const disclosures = [...policy.disclosures.requiredKeys].sort().join(', ');
 
+  // Machine-parsable stanza for QA / consistency checks.
+  // Format: [POLICY] key=value pairs, space-delimited, deterministic order.
+  const featureKVs = FEATURE_ORDER
+    .map((key) => `${key}=${policy.features[key] === true ? 'enabled' : 'disabled'}`)
+    .join(' ');
+  const stanza = `[POLICY] market=${market} version=${version} ${featureKVs}`;
+
   return [
+    stanza,
     `Market: ${market}`,
     `Features: ${features}`,
     `Required disclosures: ${disclosures}`,

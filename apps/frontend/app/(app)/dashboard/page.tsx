@@ -5,7 +5,7 @@ import { useBalance } from '../../../lib/hooks/useBalance';
 import { defiAdapter } from '../../../lib/defi';
 import { useLedgerStore } from '../../../lib/state/ledger';
 import { EmptyState, ErrorState } from '@hedgr/ui';
-import { BalanceWithLocalEstimate } from '../../../components';
+import { BalanceWithLocalEstimate, PolicyDisclosure } from '../../../components';
 import { usePolicy } from '../../../lib/policy/usePolicy';
 
 export default function DashboardPage() {
@@ -150,6 +150,9 @@ export default function DashboardPage() {
           />
         </div>
       )}
+
+      {/* Policy-required disclosures (self-hiding when empty) */}
+      <PolicyDisclosure />
     </main>
   );
 }
