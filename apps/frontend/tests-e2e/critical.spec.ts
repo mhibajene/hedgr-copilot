@@ -36,12 +36,14 @@ test('mock login works', async ({ page }) => {
   await expect(page).toHaveURL(/\/dashboard/);
 });
 
-test('yield visible on dashboard', async ({ page }) => {
+test('dashboard shows balance summary', async ({ page }) => {
   await page.goto('/login');
   await page.getByPlaceholder('you@example.com').fill('a@b.com');
   await page.getByRole('button', { name: 'Continue' }).click();
   await expect(page).toHaveURL(/\/dashboard/);
-  await expect(page.getByText('APY')).toBeVisible();
+
+  // Stable invariant: balances visible (not policy-gated)
+  await expect(page.getByTestId('usd-balance')).toBeVisible({ timeout: 10_000 });
 });
 
 test('deposit stub increases balance', async ({ page }) => {
