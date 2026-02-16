@@ -5,20 +5,47 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { TrustDisclosureBanner } from '../../components';
 import { isCopilotEnabled } from '../../config/env';
+import { usePolicy } from '@/lib/policy/usePolicy';
+
+// ---------------------------------------------------------------------------
+// Nav-link type — `feature` ties the link to a policy flag; `shipped` guards
+// links whose routes have not been built yet (deny-by-default).
+// ---------------------------------------------------------------------------
+
+type NavLink = {
+  href: string;
+  label: string;
+  feature?: 'earn' | 'payLinks' | 'stablecoinSend';
+  testId?: string;
+  /** Set to `false` for gated links whose route does not exist yet. */
+  shipped?: boolean;
+};
 
 export function AppLayoutClient({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [isNavOpen, setIsNavOpen] = useState(false);
+  const { status, isFeatureEnabled } = usePolicy();
 
-  const navLinks = [
+  const allNavLinks: NavLink[] = [
     { href: '/dashboard', label: 'Dashboard' },
     { href: '/deposit', label: 'Deposit' },
     { href: '/withdraw', label: 'Withdraw' },
     { href: '/activity', label: 'Activity' },
     { href: '/settings', label: 'Settings' },
-    // Conditionally add Copilot link
-    ...(isCopilotEnabled() ? [{ href: '/chat', label: 'Copilot' }] : []),
+    // Policy-gated — flip shipped→true once each route is built
+    { href: '/earn', label: 'Earn', feature: 'earn', testId: 'nav-earn-link', shipped: false },
+    { href: '/paylinks', label: 'PayLinks', feature: 'payLinks', testId: 'nav-paylinks-link', shipped: false },
+    { href: '/send', label: 'Send', feature: 'stablecoinSend', testId: 'nav-send-link', shipped: false },
+    // Env-gated
+    ...(isCopilotEnabled() ? [{ href: '/chat', label: 'Copilot', testId: 'nav-copilot-link' }] : []),
   ];
+
+  // Hide unshipped links, and only show gated links once policy is ready.
+  const navLinks = allNavLinks.filter((link) => {
+    if (link.shipped === false) return false;
+    if (link.feature) return status === 'ready' && isFeatureEnabled(link.feature);
+    return true;
+  });
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -58,7 +85,7 @@ export function AppLayoutClient({ children }: { children: React.ReactNode }) {
                   <Link
                     key={link.href}
                     href={link.href}
-                    data-testid={link.href === '/chat' ? 'nav-copilot-link' : undefined}
+                    data-testid={link.testId}
                     className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${
                       pathname === link.href
                         ? 'border-blue-500 text-gray-900'
@@ -83,7 +110,7 @@ export function AppLayoutClient({ children }: { children: React.ReactNode }) {
               <Link
                 key={link.href}
                 href={link.href}
-                data-testid={link.href === '/chat' ? 'nav-copilot-link' : undefined}
+                data-testid={link.testId}
                 onClick={() => setIsNavOpen(false)}
                 className={`block px-3 py-2 rounded-md text-base font-medium ${
                   pathname === link.href

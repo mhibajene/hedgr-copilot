@@ -5,10 +5,12 @@ import { useBalance } from '../../../lib/hooks/useBalance';
 import { defiAdapter } from '../../../lib/defi';
 import { useLedgerStore } from '../../../lib/state/ledger';
 import { EmptyState, ErrorState } from '@hedgr/ui';
-import { BalanceWithLocalEstimate } from '../../../components';
+import { BalanceWithLocalEstimate, PolicyDisclosure } from '../../../components';
+import { usePolicy } from '../../../lib/policy/usePolicy';
 
 export default function DashboardPage() {
   const { total, available, pending, isLoading, error, currency, refresh } = useBalance();
+  const { isFeatureEnabled } = usePolicy();
   const transactions = useLedgerStore((s) => s.transactions);
   const [apy, setApy] = useState<number | null>(null);
   const [apyError, setApyError] = useState<string | null>(null);
@@ -122,16 +124,18 @@ export default function DashboardPage() {
             />
           </div>
         )}
-        <div className="rounded-2xl shadow p-4 bg-white">
-          <div className="text-sm opacity-70">APY</div>
-          {apyError ? (
-            <div className="text-sm text-red-500 mt-2">{apyError}</div>
-          ) : (
-            <div className="text-3xl font-bold">
-              {apy !== null ? `${(apy * 100).toFixed(2)}%` : '—'}
-            </div>
-          )}
-        </div>
+        {isFeatureEnabled('earn') && (
+          <div className="rounded-2xl shadow p-4 bg-white" data-testid="dashboard-earn-tile">
+            <div className="text-sm opacity-70">APY</div>
+            {apyError ? (
+              <div className="text-sm text-red-500 mt-2">{apyError}</div>
+            ) : (
+              <div className="text-3xl font-bold">
+                {apy !== null ? `${(apy * 100).toFixed(2)}%` : '—'}
+              </div>
+            )}
+          </div>
+        )}
       </div>
 
       {/* Recommended Actions - show empty state when applicable */}
@@ -146,6 +150,9 @@ export default function DashboardPage() {
           />
         </div>
       )}
+
+      {/* Policy-required disclosures (self-hiding when empty) */}
+      <PolicyDisclosure />
     </main>
   );
 }
