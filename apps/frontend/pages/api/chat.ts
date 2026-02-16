@@ -3,8 +3,9 @@ import { CopilotModel } from '../../lib/chat/copilotModel';
 import { normalizeMessages } from '../../lib/chat/normalize';
 import type { Message } from '../../lib/chat/normalize';
 import type { CacheContext } from '../../lib/chat/copilotModel';
-import { buildSystemPrompt, buildContextBlock } from '../../lib/server/copilotPrompt';
+import { buildSystemPrompt, buildContextBlock, buildPolicySummary } from '../../lib/server/copilotPrompt';
 import type { Environment, DataMode } from '../../lib/server/copilotPrompt';
+import { resolvePolicyFromEnv } from '../../lib/policy/resolve';
 import { enforcePolicy, ADVICE_REFUSAL_RESPONSE } from '../../lib/server/copilotPolicy';
 import { deriveRecommendation } from '../../lib/server/copilotSignals';
 import type { CopilotSignals } from '../../lib/server/copilotSignals';
@@ -205,9 +206,19 @@ export default async function handler(
     const environment = getEnvironment();
     const dataMode = getDataMode();
 
+    // Resolve market policy for prompt context (fail gracefully)
+    let policyContext = '';
+    try {
+      const resolved = resolvePolicyFromEnv();
+      policyContext = buildPolicySummary(resolved);
+    } catch {
+      // Policy resolution failed — no policy context injected.
+      // Copilot will operate without market-specific constraints.
+    }
+
     // Build system prompt + context block
     const systemPrompt = buildSystemPrompt(environment, dataMode);
-    const contextBlock = buildContextBlock(); // Empty for v1
+    const contextBlock = buildContextBlock({ policyContext });
 
     // Construct system message
     const systemMessage: Message = {

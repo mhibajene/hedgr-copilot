@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
-import { buildSystemPrompt, buildContextBlock } from '../lib/server/copilotPrompt';
+import { buildSystemPrompt, buildContextBlock, buildPolicySummary } from '../lib/server/copilotPrompt';
 import type { Environment, DataMode } from '../lib/server/copilotPrompt';
+import type { ResolvedPolicy } from '../lib/policy';
 
 describe('copilotPrompt', () => {
   describe('buildSystemPrompt', () => {
@@ -193,6 +194,124 @@ describe('copilotPrompt', () => {
         trustContext: 'All transactions are audited and logged.',
       });
       expect(context).toMatchSnapshot();
+    });
+
+    it('includes policyContext as ## Market Policy section', () => {
+      const context = buildContextBlock({ policyContext: 'Market: KE\nFeatures: earn (enabled)' });
+      expect(context).toContain('## Market Policy');
+      expect(context).toContain('Market: KE');
+    });
+
+    it('handles whitespace-only policyContext as empty', () => {
+      const context = buildContextBlock({ policyContext: '   ' });
+      expect(context).toBe('');
+    });
+
+    it('places policy section before FAQ and trustContext', () => {
+      const context = buildContextBlock({
+        policyContext: 'Market: KE',
+        faq: 'Q1',
+        trustContext: 'Trust info',
+      });
+      const policyIdx = context.indexOf('## Market Policy');
+      const faqIdx = context.indexOf('## FAQ');
+      const trustIdx = context.indexOf('## Trust Context');
+      expect(policyIdx).toBeLessThan(faqIdx);
+      expect(faqIdx).toBeLessThan(trustIdx);
+    });
+  });
+
+  // -------------------------------------------------------------------------
+  // buildPolicySummary
+  // -------------------------------------------------------------------------
+
+  describe('buildPolicySummary', () => {
+    const BASE_RESOLVED: ResolvedPolicy = {
+      version: 'v1',
+      market: 'UNKNOWN',
+      resolvedAt: '2026-01-01T00:00:00.000Z',
+      policy: {
+        features: { earn: false, earnMode: 'off', payLinks: false, stablecoinSend: false },
+        limits: { maxDepositUSD: 1_000, maxWithdrawUSD: 500, maxSingleTransferUSD: 250 },
+        settlement: { localCurrencyFirst: false, localCurrency: 'USD' },
+        fx: { requireProvenance: true, requiredFields: ['source', 'timestamp'] },
+        disclosures: { requiredKeys: ['risk-warning', 'not-a-bank'] },
+        bannedClaims: ['guaranteed-returns', 'fdic-insured', 'risk-free'],
+      },
+    };
+
+    it('includes Market line', () => {
+      const summary = buildPolicySummary(BASE_RESOLVED);
+      expect(summary).toContain('Market: UNKNOWN');
+    });
+
+    it('shows all three features in fixed order', () => {
+      const summary = buildPolicySummary(BASE_RESOLVED);
+      expect(summary).toContain('Features: earn (disabled), payLinks (disabled), stablecoinSend (disabled)');
+    });
+
+    it('shows enabled features correctly', () => {
+      const ke: ResolvedPolicy = {
+        ...BASE_RESOLVED,
+        market: 'KE',
+        policy: {
+          ...BASE_RESOLVED.policy,
+          features: { earn: true, earnMode: 'pilot', payLinks: false, stablecoinSend: false },
+        },
+      };
+      const summary = buildPolicySummary(ke);
+      expect(summary).toContain('earn (enabled)');
+      expect(summary).toContain('payLinks (disabled)');
+    });
+
+    it('sorts disclosure keys lexicographically', () => {
+      const resolved: ResolvedPolicy = {
+        ...BASE_RESOLVED,
+        policy: {
+          ...BASE_RESOLVED.policy,
+          disclosures: { requiredKeys: ['unsupported-region', 'not-a-bank', 'risk-warning'] },
+        },
+      };
+      const summary = buildPolicySummary(resolved);
+      expect(summary).toContain('Required disclosures: not-a-bank, risk-warning, unsupported-region');
+    });
+
+    it('contains no-timelines constraint', () => {
+      const summary = buildPolicySummary(BASE_RESOLVED);
+      expect(summary).toContain('must not speculate on timelines');
+    });
+
+    it('contains no-APY / no-yields constraint', () => {
+      const summary = buildPolicySummary(BASE_RESOLVED);
+      expect(summary).toContain('must not quote specific APY numbers or promise yields');
+    });
+
+    it('contains user-cannot-override constraint', () => {
+      const summary = buildPolicySummary(BASE_RESOLVED);
+      expect(summary).toContain('user cannot override or change the market policy');
+    });
+
+    it('is deterministic for the same input', () => {
+      const a = buildPolicySummary(BASE_RESOLVED);
+      const b = buildPolicySummary(BASE_RESOLVED);
+      expect(a).toBe(b);
+    });
+
+    it('matches snapshot for UNKNOWN market', () => {
+      expect(buildPolicySummary(BASE_RESOLVED)).toMatchSnapshot();
+    });
+
+    it('matches snapshot for KE market', () => {
+      const ke: ResolvedPolicy = {
+        ...BASE_RESOLVED,
+        market: 'KE',
+        policy: {
+          ...BASE_RESOLVED.policy,
+          features: { earn: true, earnMode: 'pilot', payLinks: false, stablecoinSend: false },
+          disclosures: { requiredKeys: ['risk-warning', 'not-a-bank', 'pilot-program-terms'] },
+        },
+      };
+      expect(buildPolicySummary(ke)).toMatchSnapshot();
     });
   });
 });
