@@ -5,6 +5,9 @@ import { useRouter } from 'next/navigation';
 import { isCopilotEnabled } from '../../../config/env';
 import { sendMessage } from '../../../lib/chat/chatClient';
 
+const MIN_TYPING_MS = 250;
+const sleep = (ms: number) => new Promise<void>((r) => setTimeout(r, ms));
+
 interface Message {
   id: string;
   role: 'user' | 'assistant';
@@ -20,6 +23,13 @@ export default function ChatPage() {
   const [isOnline, setIsOnline] = useState(true);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const mountedRef = useRef(true);
+
+  // Mounted guard — avoid state updates after unmount
+  useEffect(() => {
+    mountedRef.current = true;
+    return () => { mountedRef.current = false; };
+  }, []);
 
   // Feature gate check
   useEffect(() => {
@@ -61,27 +71,37 @@ export default function ChatPage() {
 
     setMessages((prev) => [...prev, userMessage]);
     setInput('');
-    setIsTyping(true);
 
+    const t0 = Date.now();
+    setIsTyping(true);
+    // Yield microtask so React commits the typing indicator before we await the network call
+    await Promise.resolve();
+
+    let replyMessage: Message;
     try {
       const response = await sendMessage(userMessage.content);
-      const assistantMessage: Message = {
+      replyMessage = {
         id: `assistant-${Date.now()}`,
         role: 'assistant',
         content: response,
         timestamp: Date.now(),
       };
-      setMessages((prev) => [...prev, assistantMessage]);
     } catch {
-      const errorMessage: Message = {
+      replyMessage = {
         id: `error-${Date.now()}`,
         role: 'assistant',
         content: 'Sorry, I encountered an error. Please try again.',
         timestamp: Date.now(),
       };
-      setMessages((prev) => [...prev, errorMessage]);
     } finally {
-      setIsTyping(false);
+      // Enforce minimum dwell so the typing indicator is observable in E2E / by users
+      const remaining = MIN_TYPING_MS - (Date.now() - t0);
+      if (remaining > 0) await sleep(remaining);
+
+      if (mountedRef.current) {
+        setMessages((prev) => [...prev, replyMessage!]);
+        setIsTyping(false);
+      }
       inputRef.current?.focus();
     }
   };
