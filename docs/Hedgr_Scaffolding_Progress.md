@@ -1289,3 +1289,260 @@ Guardrails Reinforced
 
 DoD:
 Hedgr Copilot v1 foundations shipped with trust-first architecture, deterministic safety, and flag-controlled rollout, without compromising core wallet stability or CI integrity. 
+
+⸻
+
+Hedgr Scaffolding Progress — 1.0
+
+Feature: Sprint 1.0 — Market Policy Core (MC-1)
+Owner: (@musalwa)
+Date Shipped: 2026-02-16
+Risk: low (isolated compliance layer, no business-logic mutation)
+
+⸻
+
+1. Metadata
+
+Micro-contracts / PRs
+	•	feat(MC1-SCHEMA): Policy schema + typed contracts (Zod)
+	•	feat(MC1-BASELINE): GM-RP baseline policy defaults
+	•	feat(MC1-OVERLAYS): Market overlays (ZW, ZA, KE, UNKNOWN)
+	•	feat(MC1-RESOLVE): Deterministic policy resolver
+	•	feat(MC1-API): GET /api/policy endpoint
+	•	test(MC1): Policy resolve + API validation tests
+
+Required Checks (branch protection)
+	•	validate
+	•	E2E smoke (@hedgr/frontend)
+
+Environment Defaults (CI-safe)
+	•	NEXT_PUBLIC_MARKET_MODE=manual
+	•	NEXT_PUBLIC_MARKET_SELECTED=UNKNOWN
+	•	MARKET_POLICY_VERSION=v1
+
+⸻
+
+2. Contract (Source of Truth)
+
+Goal:
+Introduce a deterministic, server-validated Market Policy Core as a dedicated compliance layer, separate from existing market configuration. Ensure deny-by-default posture and CI-safe defaults.
+
+Acceptance (Gherkin-style)
+	•	Deterministic Resolution
+	•	Given NEXT_PUBLIC_MARKET_SELECTED=ZW
+When resolvePolicy() is called
+Then the returned policy equals baseline + ZW overlay and passes schema validation
+	•	Conservative Fallback
+	•	Given market UNKNOWN
+When policy resolves
+Then high-risk features (earn, payLinks, stablecoinSend) are disabled
+	•	API Contract
+	•	Given a GET request to /api/policy
+When the server resolves policy
+Then the response returns { version, market, resolvedAt, policy }
+And policy passes the canonical schema
+	•	CI Safety
+	•	Given CI runs with defaults
+Then market resolves to UNKNOWN
+And no live detection or external lookup occurs
+
+Non-negotiables
+	•	Deny-by-default
+	•	No implicit geo-detection in MC-1
+	•	Schema-validated output only
+	•	No mutation of business logic
+	•	Fully hermetic tests (no network)
+	•	Rollback via single revert or env default
+
+⸻
+
+3. Implementation
+
+Policy Layer (Isolated Compliance Module)
+
+Location:
+
+apps/frontend/lib/policy/
+  schema.ts
+  defaults.ts
+  overlays.ts
+  resolve.ts
+  index.ts
+
+Schema (Zod)
+	•	Explicit Market enum: 'ZW' | 'ZA' | 'KE' | 'UNKNOWN'
+	•	PolicyVersion: 'v1'
+	•	Structured domains:
+	•	features
+	•	limits
+	•	settlement
+	•	fx
+	•	disclosures
+	•	bannedClaims
+	•	All outputs pass runtime validation
+	•	Types inferred from schema (no duplication)
+
+GM-RP Baseline (Global Minimum Risk Policy)
+	•	earn: false
+	•	payLinks: false
+	•	stablecoinSend: false
+	•	fx.requireProvenance = true
+	•	requiredFields = [‘source’, ‘timestamp’]
+	•	Conservative limits
+	•	Non-empty bannedClaims + required disclosure keys
+
+Market Overlays
+	•	ZW
+	•	localCurrencyFirst: true
+	•	localCurrency: ‘ZWL’
+	•	All high-risk features disabled
+	•	ZA
+	•	stablecoinSend disabled (travel-rule future gate)
+	•	KE
+	•	earn enabled (or earnMode=‘pilot’)
+	•	Strict limits + disclosures
+	•	UNKNOWN
+	•	Strongest deny posture
+	•	All high-risk features disabled
+
+Merge order:
+
+baseline → overlay(market) → schema validate → response
+
+Resolver
+
+resolvePolicy({ market, mode })
+	•	Manual mode (default)
+	•	Auto mode stubbed → resolves to UNKNOWN (no detection yet)
+	•	Deterministic shallow merge
+	•	Schema validation before return
+	•	No I/O, no secrets, no fetch
+
+API
+
+GET /api/policy
+
+Returns:
+
+{
+  "version": "v1",
+  "market": "ZW",
+  "resolvedAt": "ISO_TIMESTAMP",
+  "policy": { ...validated policy }
+}
+
+	•	Hermetic
+	•	No side effects
+	•	Uses env defaults safely
+
+⸻
+
+4. QA (Codex)
+
+Unit Tests
+	•	policy.resolve.test.ts
+	•	ZW merge correctness
+	•	UNKNOWN conservative fallback
+	•	Schema rejection on invalid config
+	•	Deterministic outputs (same inputs → same policy)
+	•	api.policy.test.ts
+	•	Direct handler invocation
+	•	Response shape validation
+	•	Schema parse success
+	•	resolvedAt is ISO timestamp
+
+CI Invariants Verified
+	•	Defaults resolve to UNKNOWN in CI
+	•	No live detection
+	•	No mutation of app business logic
+	•	No network calls
+	•	All policy objects serializable and static
+
+All validate + E2E smoke checks green across PRs.
+
+⸻
+
+5. Post-CI Audit
+
+Outcomes
+	•	MC-1 merged cleanly to main
+	•	No regressions in deposit/withdraw/dashboard flows
+	•	E2E smoke unchanged and green
+
+Stability Fixes Applied During Sprint
+	•	Ensured overlays are pure data (no functions)
+	•	Ensured shallow merge to avoid unexpected nested mutation
+	•	Prevented accidental dependency on legacy config/market.ts
+	•	Ensured env coercion fallback to UNKNOWN if invalid
+
+Residual Risk
+	•	Low. Policy layer is currently read-only and not yet enforced in UI gating (planned MC-2).
+
+⸻
+
+6. CI & Deployment
+
+Workflows (unchanged structurally)
+	•	.github/workflows/validate.yml
+	•	.github/workflows/e2e-smoke.yml
+
+Determinism
+	•	.nvmrc=20
+	•	corepack enable
+	•	pnpm –frozen-lockfile
+	•	No new external dependencies except zod (runtime validation)
+
+Rollback Posture
+	•	Single revert of MC-1 PR
+	•	Or force NEXT_PUBLIC_MARKET_SELECTED=UNKNOWN
+	•	No data migration impact
+
+⸻
+
+7. Build Health Notes
+
+Incidents & Remediations
+	•	Minor type drift during Zod inference → resolved via explicit schema inference
+	•	Ensured no cross-import from config/market.ts
+	•	Guarded against accidental deep merges
+
+Guardrails Reinforced
+	•	Policy as configuration, not business logic
+	•	Deny-by-default for UNKNOWN
+	•	Always validate before returning policy
+	•	Never silently coerce invalid structures
+
+⸻
+
+8. Architecture Snapshot
+
+Env (market, mode)
+        ↓
+defaults.ts (GM-RP baseline)
+        ↓
+overlays.ts (ZW | ZA | KE | UNKNOWN)
+        ↓
+resolve.ts (merge + validate)
+        ↓
+schema.ts (Zod enforcement)
+        ↓
+GET /api/policy
+        ↓
+Future consumers (UI gating, compliance checks)
+
+⸻
+
+9. Definition of Done
+	•	Policy schema implemented and enforced
+	•	GM-RP baseline + overlays defined
+	•	Deterministic resolvePolicy()
+	•	GET /api/policy returns validated contract
+	•	Unit + integration tests green
+	•	CI defaults conservative (UNKNOWN/manual)
+	•	No changes to wallet logic
+	•	Branch protection remains green
+
+⸻
+
+DoD:
+Sprint 1.0 establishes Hedgr’s Market Policy Core as a deterministic, deny-by-default compliance layer with schema enforcement and CI-safe defaults, laying the foundation for UI gating and market-aware feature control in MC-2 without impacting existing product flows.
