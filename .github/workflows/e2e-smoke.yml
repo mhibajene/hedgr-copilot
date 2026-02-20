@@ -102,7 +102,7 @@ jobs:
         run: |
           set -euo pipefail
           : > apps/backend/backend.log
-          nohup python -m src.app \
+          nohup python -m src.app --port "${BACKEND_PORT}" \
             > apps/backend/backend.log 2>&1 &
           echo $! > apps/backend/backend.pid
         env:
