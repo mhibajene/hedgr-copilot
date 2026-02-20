@@ -15,7 +15,7 @@ jobs:
     env:
       NEXT_PUBLIC_AUTH_MODE: mock
       NEXT_PUBLIC_DEFI_MODE: mock
-      NEXT_PUBLIC_FX_MODE: stub
+      NEXT_PUBLIC_FX_MODE: fixed
       NEXT_PUBLIC_APP_ENV: dev
       BACKEND_PORT: "5050"
       NEXT_PUBLIC_API_BASE_URL: http://localhost:5050
@@ -83,6 +83,9 @@ jobs:
 
       - name: Build frontend
         run: pnpm --filter @hedgr/frontend run build
+        env:
+          NEXT_PUBLIC_FX_MODE: stub
+          NEXT_PUBLIC_API_BASE_URL: http://localhost:${{ env.BACKEND_PORT }}
 
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -129,6 +132,9 @@ jobs:
 
       - name: Run E2E tests
         run: pnpm --filter @hedgr/frontend run e2e:ci
+        env:
+          NEXT_PUBLIC_FX_MODE: stub
+          NEXT_PUBLIC_API_BASE_URL: http://localhost:${{ env.BACKEND_PORT }}
 
       - name: Upload backend logs (on failure)
         if: ${{ failure() || cancelled() }}
