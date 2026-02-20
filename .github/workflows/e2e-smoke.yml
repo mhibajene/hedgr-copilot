@@ -17,7 +17,9 @@ jobs:
       NEXT_PUBLIC_DEFI_MODE: mock
       NEXT_PUBLIC_FX_MODE: fixed
       NEXT_PUBLIC_APP_ENV: dev
-      # API_BASE_URL is validated at runtime when used, not at build time
+      BACKEND_PORT: "5050"
+      NEXT_PUBLIC_API_BASE_URL: http://localhost:5050
+      OPENAI_MODE: stub
       CI: true
     steps:
       - name: Checkout
@@ -81,12 +83,67 @@ jobs:
 
       - name: Build frontend
         run: pnpm --filter @hedgr/frontend run build
+        env:
+          NEXT_PUBLIC_FX_MODE: stub
+          NEXT_PUBLIC_API_BASE_URL: http://localhost:${{ env.BACKEND_PORT }}
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install backend (editable, with test extras)
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e "apps/backend[test]"
 
       - name: Install Playwright
         run: pnpm --filter @hedgr/frontend exec playwright install --with-deps
 
+      - name: Start stub backend (STUB_MODE)
+        run: |
+          set -euo pipefail
+          : > apps/backend/backend.log
+          nohup python -m src.app --port "${BACKEND_PORT}" \
+            > apps/backend/backend.log 2>&1 &
+          echo $! > apps/backend/backend.pid
+        env:
+          STUB_MODE: "true"
+          PORT: ${{ env.BACKEND_PORT }}
+          PYTHONUNBUFFERED: "1"
+
+      - name: Wait for backend readiness (/v1/health)
+        run: |
+          set -euo pipefail
+          url="http://localhost:${BACKEND_PORT}/v1/health"
+          echo "Polling: $url"
+          for i in {1..45}; do
+            if curl -fsS "$url" >/dev/null; then
+              echo "Backend ready"
+              exit 0
+            fi
+            echo "Not ready yet ($i/45)..." && sleep 1
+          done
+          echo "Backend failed to become ready in time"
+          echo "---- backend.log (tail) ----"
+          tail -n 200 apps/backend/backend.log || true
+          exit 1
+
       - name: Run E2E tests
         run: pnpm --filter @hedgr/frontend run e2e:ci
+        env:
+          NEXT_PUBLIC_FX_MODE: stub
+          NEXT_PUBLIC_API_BASE_URL: http://localhost:${{ env.BACKEND_PORT }}
+
+      - name: Upload backend logs (on failure)
+        if: ${{ failure() || cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-log
+          path: apps/backend/backend.log
+          if-no-files-found: warn
+          retention-days: 7
 
       # bridge: set required context to success/failure to satisfy branch protection
       - name: Report E2E status (success)
