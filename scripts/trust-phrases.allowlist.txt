@@ -1,0 +1,24 @@
+# Trust Phrase Allowlist
+# ---------------------
+# Substring exceptions (case-insensitive): if a flagged line also
+# contains one of these substrings, the match is skipped.
+#
+# File exceptions: prefix with "file:" to skip an entire file.
+# Path is relative to repo root.
+
+# --- Substring exceptions ---
+
+# Engineering comments using "guaranteed" in a type-safety context
+is guaranteed
+
+# Policy config arrays that define banned claims (the definition itself)
+bannedclaims
+
+# JSDoc annotations
+@returns
+
+# --- File exceptions ---
+
+# The copilot policy engine defines the runtime urgency blacklist.
+# It must reference banned phrases to enforce them.
+file:apps/frontend/lib/server/copilotPolicy.ts
