@@ -5,20 +5,17 @@
 #
 # File exceptions: prefix with "file:" to skip an entire file.
 # Path is relative to repo root.
-
-# --- Substring exceptions ---
-
-# Engineering comments using "guaranteed" in a type-safety context
-is guaranteed
-
-# Policy config arrays that define banned claims (the definition itself)
-bannedclaims
-
-# JSDoc annotations
-@returns
+#
+# Prefer file: exemptions over substrings — they are narrower and
+# cannot accidentally suppress user-facing copy in other files.
 
 # --- File exceptions ---
 
 # The copilot policy engine defines the runtime urgency blacklist.
 # It must reference banned phrases to enforce them.
 file:apps/frontend/lib/server/copilotPolicy.ts
+
+# Policy config files that declare bannedClaims arrays containing
+# banned phrase tokens (the definitions, not user-facing copy).
+file:apps/frontend/lib/policy/defaults.ts
+file:apps/frontend/lib/policy/overlays.ts

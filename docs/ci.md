@@ -54,24 +54,31 @@ pnpm run validate
 | get rich | Unrealistic promise |
 | instant profit | Unrealistic promise |
 
-### How to allowlist a phrase
+### How to allowlist
 
-Add a case-insensitive substring to `scripts/trust-phrases.allowlist.txt`.
-If a flagged line also contains one of those substrings, the match is skipped.
+Exemptions live in `scripts/trust-phrases.allowlist.txt`. Two mechanisms
+are supported, in order of preference:
 
-For example, disclaimer copy like *"Returns are not guaranteed"* can be
-allowlisted by adding:
+**1. File exemption (preferred)** — skip an entire non-user-facing file:
+
+```
+file:apps/frontend/lib/server/copilotPolicy.ts
+```
+
+Use this for policy-engine / config files that *define* banned phrases
+rather than display them to users.
+
+**2. Substring exemption (use sparingly)** — if a flagged line also
+contains the substring, the match is skipped:
 
 ```
 not guaranteed
 ```
 
-To exempt an entire file (e.g. the policy engine that defines the banned
-phrases at runtime), use the `file:` prefix with a repo-relative path:
-
-```
-file:apps/frontend/lib/server/copilotPolicy.ts
-```
+Substring exemptions are case-insensitive and match anywhere on the
+line. Because they apply globally across all scanned files, they carry
+higher risk of masking real violations. Prefer `file:` exemptions or
+rephrasing the source instead.
 
 ### Example failure output
 
