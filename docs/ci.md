@@ -3,6 +3,7 @@
 ## Checks
 - validate → unit, typecheck, lint
 - E2E smoke (@hedgr/frontend) → Playwright against prod build
+- Agent Evidence Pack → enforces evidence artifacts on `source:agent` PRs
 
 ## Fork Safety
 - Fork PRs run validate only; no secrets; analytics disabled via network block.
