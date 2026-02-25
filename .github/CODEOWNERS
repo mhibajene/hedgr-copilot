@@ -8,3 +8,15 @@
 # CI/workflows & guards
 /.github/**             @mhibajene
 /scripts/ci/**          @mhibajene
+
+# Agent + money-path guardrails (Hedgr)
+
+# Shared UI primitives used by money UX
+packages/ui/                      @hedgr-platform @hedgr-product
+
+# Governance, ADRs, copilot guides, and system scaffolding
+docs/                             @hedgr-product @hedgr-security
+
+# CI and trust scripts (hermetic CI, provider guards)
+scripts/                          @hedgr-platform @hedgr-security
+.github/workflows/                @hedgr-platform @hedgr-security
