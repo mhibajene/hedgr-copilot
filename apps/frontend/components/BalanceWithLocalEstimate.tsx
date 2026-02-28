@@ -49,7 +49,7 @@ export function BalanceWithLocalEstimate({
   // Check if FX rate is available and valid
   const hasFxRate = isFxRateAvailable(fxRate);
   
-  // Calculate local currency amount (rate is guaranteed non-null when hasFxRate is true)
+  // Calculate local currency amount (rate is always non-null when hasFxRate is true)
   const localAmount = hasFxRate && fxRate.rate !== null ? usdAmount * fxRate.rate : 0;
   
   // Format USD amount

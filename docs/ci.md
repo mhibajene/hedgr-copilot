@@ -19,6 +19,94 @@ pnpm --filter @hedgr/frontend run e2e:ci
 ---
 
 
+## Trust Phrase Check (banned copy guard)
+
+Scans `apps/frontend` for promotional or misleading phrases that violate
+Hedgr's trust posture (e.g. "guaranteed", "risk-free", "act now").
+
+### Why it exists
+
+Financial-adjacent products must never use urgency/guarantee language.
+This check catches trust-breaking copy before it ships.
+
+### Run locally
+
+```bash
+pnpm run trust:phrases
+```
+
+Or as part of the full validation pipeline:
+
+```bash
+pnpm run validate
+```
+
+### Banned phrases (case-insensitive)
+
+| Phrase | Rationale |
+|---|---|
+| guaranteed | Implies certainty of outcome |
+| risk-free | Denies inherent market risk |
+| deposit now | Urgency nudge |
+| act now | Urgency nudge |
+| hurry | Urgency nudge |
+| limited time | Artificial scarcity |
+| get rich | Unrealistic promise |
+| instant profit | Unrealistic promise |
+
+### How to allowlist
+
+Exemptions live in `scripts/trust-phrases.allowlist.txt`. Two mechanisms
+are supported, in order of preference:
+
+**1. File exemption (preferred)** — skip an entire non-user-facing file:
+
+```
+file:apps/frontend/lib/server/copilotPolicy.ts
+```
+
+Use this for policy-engine / config files that *define* banned phrases
+rather than display them to users.
+
+**2. Substring exemption (use sparingly)** — if a flagged line also
+contains the substring, the match is skipped:
+
+```
+not guaranteed
+```
+
+Substring exemptions are case-insensitive and match anywhere on the
+line. Because they apply globally across all scanned files, they carry
+higher risk of masking real violations. Prefer `file:` exemptions or
+rephrasing the source instead.
+
+### Example failure output
+
+```
+🔐 Trust Phrase Check — Scanning apps/frontend for banned copy
+
+  Scanning 42 file(s)...
+
+Trust phrase violations found
+
+  apps/frontend/src/components/Hero.tsx
+    line 12: "guaranteed" → <p>Guaranteed 10% returns every month</p>
+    line 18: "risk-free" → <span>Risk-free investing</span>
+
+  apps/frontend/src/pages/promo.tsx
+    line 5: "act now" → <h2>Act now — limited slots!</h2>
+    line 5: "limited time" → <h2>Act now — limited slots!</h2>
+
+❌ 4 violation(s) in 2 file(s).
+
+Fix: Remove or rephrase the flagged copy.
+     To allowlist, add a substring to scripts/trust-phrases.allowlist.txt
+```
+
+*(The above is a mocked example — no banned phrases exist in the current codebase.)*
+
+---
+
 ## Known CI Footguns (Read Before Debugging)
 
 This section documents **recurring CI failure patterns specific to this repo**.
