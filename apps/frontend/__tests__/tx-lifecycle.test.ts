@@ -3,6 +3,7 @@
 import { describe, test, expect } from 'vitest';
 import {
   mapInternalStatusToPublicStatus,
+  mapLedgerStatusToPublicStatus,
   txToLifecycle,
   generateTimelineSteps,
   isTerminalStatus,
@@ -13,6 +14,27 @@ import {
   PublicTxStatusLabels,
 } from '../lib/tx';
 import type { Tx } from '../lib/state/ledger';
+
+function mkTx(
+  txn_ref: string,
+  type: Tx['type'],
+  status: Tx['status'],
+  amount_usd: number,
+  extra?: Partial<Tx>
+): Tx {
+  const now = Date.now();
+  return {
+    txn_ref,
+    type,
+    status,
+    amount_zmw: 0,
+    amount_usd,
+    fx_rate: 1,
+    created_at: now,
+    updated_at: now,
+    ...extra,
+  };
+}
 
 describe('Transaction Lifecycle - Status Mapping', () => {
   describe('mapInternalStatusToPublicStatus', () => {
@@ -82,20 +104,25 @@ describe('Transaction Lifecycle - Status Mapping', () => {
     });
   });
 
+  describe('mapLedgerStatusToPublicStatus', () => {
+    test('maps ledger pending/settled/failed to public status', () => {
+      expect(mapLedgerStatusToPublicStatus('pending')).toBe(PublicTxStatus.PENDING_INIT);
+      expect(mapLedgerStatusToPublicStatus('settled')).toBe(PublicTxStatus.SUCCESS);
+      expect(mapLedgerStatusToPublicStatus('failed')).toBe(PublicTxStatus.FAILED);
+    });
+  });
+
   describe('txToLifecycle', () => {
-    test('converts a PENDING transaction correctly', () => {
-      const tx: Tx = {
-        id: 'tx_1',
-        type: 'DEPOSIT',
-        amountUSD: 10.0,
-        amountZMW: 200,
-        status: 'PENDING',
-        createdAt: 1000,
-      };
+    test('converts a pending transaction correctly', () => {
+      const tx = mkTx('tx-ref-1', 'deposit', 'pending', 10.0, {
+        amount_zmw: 200,
+        created_at: 1000,
+        updated_at: 1000,
+      });
 
       const lifecycle = txToLifecycle(tx);
 
-      expect(lifecycle.id).toBe('tx_1');
+      expect(lifecycle.id).toBe('tx-ref-1');
       expect(lifecycle.type).toBe('DEPOSIT');
       expect(lifecycle.amountUSD).toBe(10.0);
       expect(lifecycle.amountZMW).toBe(200);
@@ -106,15 +133,11 @@ describe('Transaction Lifecycle - Status Mapping', () => {
       expect(lifecycle.failureReason).toBeUndefined();
     });
 
-    test('converts a CONFIRMED transaction correctly', () => {
-      const tx: Tx = {
-        id: 'tx_2',
-        type: 'WITHDRAW',
-        amountUSD: 5.0,
-        status: 'CONFIRMED',
-        createdAt: 1000,
-        confirmedAt: 2000,
-      };
+    test('converts a settled transaction correctly', () => {
+      const tx = mkTx('tx-ref-2', 'withdrawal', 'settled', 5.0, {
+        created_at: 1000,
+        updated_at: 2000,
+      });
 
       const lifecycle = txToLifecycle(tx);
 
@@ -124,33 +147,26 @@ describe('Transaction Lifecycle - Status Mapping', () => {
       expect(lifecycle.failureReason).toBeUndefined();
     });
 
-    test('converts a FAILED transaction with failure reason', () => {
-      const tx: Tx = {
-        id: 'tx_3',
-        type: 'DEPOSIT',
-        amountUSD: 15.0,
-        status: 'FAILED',
-        createdAt: 1000,
-        confirmedAt: 2000,
-      };
+    test('converts a failed transaction with failure reason', () => {
+      const tx = mkTx('tx-ref-3', 'deposit', 'failed', 15.0, {
+        created_at: 1000,
+        updated_at: 2000,
+        failure_reason: 'Network error',
+      });
 
       const lifecycle = txToLifecycle(tx);
 
       expect(lifecycle.status).toBe(PublicTxStatus.FAILED);
       expect(lifecycle.completedAt).toBe(2000);
-      expect(lifecycle.failureReason).toBeDefined();
+      expect(lifecycle.failureReason).toBe('Network error');
     });
   });
 
   describe('generateTimelineSteps', () => {
     test('generates correct timeline for PENDING_INIT status', () => {
-      const tx = txToLifecycle({
-        id: 'tx_1',
-        type: 'DEPOSIT',
-        amountUSD: 10.0,
-        status: 'PENDING',
-        createdAt: 1000,
-      });
+      const tx = txToLifecycle(
+        mkTx('tx_1', 'deposit', 'pending', 10.0, { created_at: 1000, updated_at: 1000 })
+      );
 
       const steps = generateTimelineSteps(tx);
 
@@ -166,14 +182,9 @@ describe('Transaction Lifecycle - Status Mapping', () => {
     });
 
     test('generates correct timeline for SUCCESS status', () => {
-      const tx = txToLifecycle({
-        id: 'tx_2',
-        type: 'DEPOSIT',
-        amountUSD: 10.0,
-        status: 'CONFIRMED',
-        createdAt: 1000,
-        confirmedAt: 2000,
-      });
+      const tx = txToLifecycle(
+        mkTx('tx_2', 'deposit', 'settled', 10.0, { created_at: 1000, updated_at: 2000 })
+      );
 
       const steps = generateTimelineSteps(tx);
 
@@ -185,14 +196,9 @@ describe('Transaction Lifecycle - Status Mapping', () => {
     });
 
     test('generates correct timeline for FAILED status', () => {
-      const tx = txToLifecycle({
-        id: 'tx_3',
-        type: 'DEPOSIT',
-        amountUSD: 10.0,
-        status: 'FAILED',
-        createdAt: 1000,
-        confirmedAt: 2000,
-      });
+      const tx = txToLifecycle(
+        mkTx('tx_3', 'deposit', 'failed', 10.0, { created_at: 1000, updated_at: 2000 })
+      );
 
       const steps = generateTimelineSteps(tx);
 

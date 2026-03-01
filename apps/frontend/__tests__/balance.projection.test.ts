@@ -4,11 +4,32 @@ import { describe, test, expect } from 'vitest';
 import { computeBalanceFromLedger, getUserBalanceFromLedger } from '../lib/state/balance';
 import type { Tx } from '../lib/state/ledger';
 
+function mkTx(
+  txn_ref: string,
+  type: Tx['type'],
+  status: Tx['status'],
+  amount_usd: number,
+  extra?: Partial<Tx>
+): Tx {
+  const now = Date.now();
+  return {
+    txn_ref,
+    type,
+    status,
+    amount_zmw: 0,
+    amount_usd,
+    fx_rate: 1,
+    created_at: now,
+    updated_at: now,
+    ...extra,
+  };
+}
+
 describe('Balance Projection from Ledger', () => {
   describe('computeBalanceFromLedger', () => {
     test('empty ledger returns zero balances', () => {
       const result = computeBalanceFromLedger([]);
-      
+
       expect(result.total).toBe(0);
       expect(result.available).toBe(0);
       expect(result.pending).toBe(0);
@@ -18,14 +39,7 @@ describe('Balance Projection from Ledger', () => {
 
     test('confirmed deposit increases available balance', () => {
       const transactions: Tx[] = [
-        {
-          id: 'tx_1',
-          type: 'DEPOSIT',
-          amountUSD: 100,
-          status: 'CONFIRMED',
-          createdAt: Date.now(),
-          confirmedAt: Date.now(),
-        },
+        mkTx('ref1', 'deposit', 'settled', 100),
       ];
 
       const result = computeBalanceFromLedger(transactions);
@@ -37,13 +51,7 @@ describe('Balance Projection from Ledger', () => {
 
     test('pending deposit increases pending and total but not available', () => {
       const transactions: Tx[] = [
-        {
-          id: 'tx_1',
-          type: 'DEPOSIT',
-          amountUSD: 50,
-          status: 'PENDING',
-          createdAt: Date.now(),
-        },
+        mkTx('ref1', 'deposit', 'pending', 50),
       ];
 
       const result = computeBalanceFromLedger(transactions);
@@ -55,21 +63,8 @@ describe('Balance Projection from Ledger', () => {
 
     test('failed deposit has no effect on balance', () => {
       const transactions: Tx[] = [
-        {
-          id: 'tx_1',
-          type: 'DEPOSIT',
-          amountUSD: 100,
-          status: 'CONFIRMED',
-          createdAt: Date.now(),
-          confirmedAt: Date.now(),
-        },
-        {
-          id: 'tx_2',
-          type: 'DEPOSIT',
-          amountUSD: 50,
-          status: 'FAILED',
-          createdAt: Date.now(),
-        },
+        mkTx('ref1', 'deposit', 'settled', 100),
+        mkTx('ref2', 'deposit', 'failed', 50),
       ];
 
       const result = computeBalanceFromLedger(transactions);
@@ -81,22 +76,8 @@ describe('Balance Projection from Ledger', () => {
 
     test('confirmed withdrawal decreases available balance', () => {
       const transactions: Tx[] = [
-        {
-          id: 'tx_1',
-          type: 'DEPOSIT',
-          amountUSD: 100,
-          status: 'CONFIRMED',
-          createdAt: Date.now(),
-          confirmedAt: Date.now(),
-        },
-        {
-          id: 'tx_2',
-          type: 'WITHDRAW',
-          amountUSD: 30,
-          status: 'CONFIRMED',
-          createdAt: Date.now(),
-          confirmedAt: Date.now(),
-        },
+        mkTx('ref1', 'deposit', 'settled', 100),
+        mkTx('ref2', 'withdrawal', 'settled', 30),
       ];
 
       const result = computeBalanceFromLedger(transactions);
@@ -108,55 +89,25 @@ describe('Balance Projection from Ledger', () => {
 
     test('pending withdrawal reduces available and shows as negative pending', () => {
       const transactions: Tx[] = [
-        {
-          id: 'tx_1',
-          type: 'DEPOSIT',
-          amountUSD: 100,
-          status: 'CONFIRMED',
-          createdAt: Date.now(),
-          confirmedAt: Date.now(),
-        },
-        {
-          id: 'tx_2',
-          type: 'WITHDRAW',
-          amountUSD: 25,
-          status: 'PENDING',
-          createdAt: Date.now(),
-        },
+        mkTx('ref1', 'deposit', 'settled', 100),
+        mkTx('ref2', 'withdrawal', 'pending', 25),
       ];
 
       const result = computeBalanceFromLedger(transactions);
 
-      // Available is reduced by pending withdrawal (hold)
       expect(result.available).toBe(75);
-      // Pending shows negative for pending withdrawals
       expect(result.pending).toBe(-25);
-      // Total is available + pending deposits (none here)
       expect(result.total).toBe(75);
     });
 
     test('failed/reversed withdrawal has no net effect on balance', () => {
       const transactions: Tx[] = [
-        {
-          id: 'tx_1',
-          type: 'DEPOSIT',
-          amountUSD: 100,
-          status: 'CONFIRMED',
-          createdAt: Date.now(),
-          confirmedAt: Date.now(),
-        },
-        {
-          id: 'tx_2',
-          type: 'WITHDRAW',
-          amountUSD: 50,
-          status: 'FAILED',
-          createdAt: Date.now(),
-        },
+        mkTx('ref1', 'deposit', 'settled', 100),
+        mkTx('ref2', 'withdrawal', 'failed', 50),
       ];
 
       const result = computeBalanceFromLedger(transactions);
 
-      // Failed withdrawal should not affect balance
       expect(result.available).toBe(100);
       expect(result.total).toBe(100);
       expect(result.pending).toBe(0);
@@ -164,110 +115,39 @@ describe('Balance Projection from Ledger', () => {
 
     test('complex scenario: multiple deposits and withdrawals', () => {
       const transactions: Tx[] = [
-        // Initial deposit: +100
-        {
-          id: 'tx_1',
-          type: 'DEPOSIT',
-          amountUSD: 100,
-          status: 'CONFIRMED',
-          createdAt: Date.now(),
-          confirmedAt: Date.now(),
-        },
-        // Second deposit: +50
-        {
-          id: 'tx_2',
-          type: 'DEPOSIT',
-          amountUSD: 50,
-          status: 'CONFIRMED',
-          createdAt: Date.now(),
-          confirmedAt: Date.now(),
-        },
-        // Withdrawal: -30
-        {
-          id: 'tx_3',
-          type: 'WITHDRAW',
-          amountUSD: 30,
-          status: 'CONFIRMED',
-          createdAt: Date.now(),
-          confirmedAt: Date.now(),
-        },
-        // Failed deposit: no effect
-        {
-          id: 'tx_4',
-          type: 'DEPOSIT',
-          amountUSD: 1000,
-          status: 'FAILED',
-          createdAt: Date.now(),
-        },
-        // Pending deposit: +20 pending
-        {
-          id: 'tx_5',
-          type: 'DEPOSIT',
-          amountUSD: 20,
-          status: 'PENDING',
-          createdAt: Date.now(),
-        },
-        // Pending withdrawal: -10 available, -10 pending
-        {
-          id: 'tx_6',
-          type: 'WITHDRAW',
-          amountUSD: 10,
-          status: 'PENDING',
-          createdAt: Date.now(),
-        },
+        mkTx('ref1', 'deposit', 'settled', 100),
+        mkTx('ref2', 'deposit', 'settled', 50),
+        mkTx('ref3', 'withdrawal', 'settled', 30),
+        mkTx('ref4', 'deposit', 'failed', 1000),
+        mkTx('ref5', 'deposit', 'pending', 20),
+        mkTx('ref6', 'withdrawal', 'pending', 10),
       ];
 
       const result = computeBalanceFromLedger(transactions);
 
-      // Available: 100 + 50 - 30 - 10 (pending hold) = 110
       expect(result.available).toBe(110);
-      // Pending: +20 (deposit) - 10 (withdrawal) = 10
       expect(result.pending).toBe(10);
-      // Total: 110 + 20 = 130
       expect(result.total).toBe(130);
     });
 
     test('handles floating point precision correctly', () => {
       const transactions: Tx[] = [
-        {
-          id: 'tx_1',
-          type: 'DEPOSIT',
-          amountUSD: 0.1,
-          status: 'CONFIRMED',
-          createdAt: Date.now(),
-          confirmedAt: Date.now(),
-        },
-        {
-          id: 'tx_2',
-          type: 'DEPOSIT',
-          amountUSD: 0.2,
-          status: 'CONFIRMED',
-          createdAt: Date.now(),
-          confirmedAt: Date.now(),
-        },
+        mkTx('ref1', 'deposit', 'settled', 0.1),
+        mkTx('ref2', 'deposit', 'settled', 0.2),
       ];
 
       const result = computeBalanceFromLedger(transactions);
 
-      // Should be 0.30, not 0.30000000000000004
       expect(result.available).toBe(0.3);
     });
 
     test('balance never goes negative', () => {
       const transactions: Tx[] = [
-        {
-          id: 'tx_1',
-          type: 'WITHDRAW',
-          amountUSD: 100,
-          status: 'CONFIRMED',
-          createdAt: Date.now(),
-          confirmedAt: Date.now(),
-        },
+        mkTx('ref1', 'withdrawal', 'settled', 100),
       ];
 
       const result = computeBalanceFromLedger(transactions);
 
-      // Should clamp to 0, not go negative
       expect(result.available).toBe(0);
     });
   });
@@ -275,14 +155,7 @@ describe('Balance Projection from Ledger', () => {
   describe('getUserBalanceFromLedger', () => {
     test('computes balance for user from transactions', () => {
       const transactions: Tx[] = [
-        {
-          id: 'tx_1',
-          type: 'DEPOSIT',
-          amountUSD: 100,
-          status: 'CONFIRMED',
-          createdAt: Date.now(),
-          confirmedAt: Date.now(),
-        },
+        mkTx('ref1', 'deposit', 'settled', 100),
       ];
 
       const result = getUserBalanceFromLedger('user_123', transactions);
@@ -293,4 +166,3 @@ describe('Balance Projection from Ledger', () => {
     });
   });
 });
-

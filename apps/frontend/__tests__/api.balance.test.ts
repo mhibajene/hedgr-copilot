@@ -50,22 +50,27 @@ describe('/api/balance endpoint', () => {
 
     const { GET } = await import('../app/api/balance/route');
 
+    const now = Date.now();
     const ledgerData = [
       {
-        id: 'tx_1',
-        type: 'DEPOSIT',
-        amountUSD: 100,
-        status: 'CONFIRMED',
-        createdAt: Date.now(),
-        confirmedAt: Date.now(),
+        txn_ref: 'tx_1',
+        type: 'deposit',
+        status: 'settled',
+        amount_zmw: 0,
+        amount_usd: 100,
+        fx_rate: 1,
+        created_at: now,
+        updated_at: now,
       },
       {
-        id: 'tx_2',
-        type: 'WITHDRAW',
-        amountUSD: 25,
-        status: 'CONFIRMED',
-        createdAt: Date.now(),
-        confirmedAt: Date.now(),
+        txn_ref: 'tx_2',
+        type: 'withdrawal',
+        status: 'settled',
+        amount_zmw: 0,
+        amount_usd: 25,
+        fx_rate: 1,
+        created_at: now,
+        updated_at: now,
       },
     ];
 
@@ -113,21 +118,27 @@ describe('/api/balance endpoint', () => {
 
     const { POST } = await import('../app/api/balance/route');
 
+    const now = Date.now();
     const transactions = [
       {
-        id: 'tx_1',
-        type: 'DEPOSIT',
-        amountUSD: 200,
-        status: 'CONFIRMED',
-        createdAt: Date.now(),
-        confirmedAt: Date.now(),
+        txn_ref: 'tx_1',
+        type: 'deposit',
+        status: 'settled',
+        amount_zmw: 0,
+        amount_usd: 200,
+        fx_rate: 1,
+        created_at: now,
+        updated_at: now,
       },
       {
-        id: 'tx_2',
-        type: 'DEPOSIT',
-        amountUSD: 50,
-        status: 'PENDING',
-        createdAt: Date.now(),
+        txn_ref: 'tx_2',
+        type: 'deposit',
+        status: 'pending',
+        amount_zmw: 0,
+        amount_usd: 50,
+        fx_rate: 1,
+        created_at: now,
+        updated_at: now,
       },
     ];
 
@@ -159,13 +170,17 @@ describe('/api/balance endpoint', () => {
     
     const { GET } = await import('../app/api/balance/route');
 
+    const now = Date.now();
     const ledgerData = [
       {
-        id: 'tx_1',
-        type: 'DEPOSIT',
-        amountUSD: 100,
-        status: 'CONFIRMED',
-        createdAt: Date.now(),
+        txn_ref: 'tx_1',
+        type: 'deposit',
+        status: 'settled',
+        amount_zmw: 0,
+        amount_usd: 100,
+        fx_rate: 1,
+        created_at: now,
+        updated_at: now,
       },
     ];
 
@@ -175,7 +190,6 @@ describe('/api/balance endpoint', () => {
     const data = await response.json();
 
     expect(response.status).toBe(200);
-    // In wallet mode, API returns zeros (client handles balance)
     expect(data.available).toBe(0);
   });
 });

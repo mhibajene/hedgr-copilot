@@ -98,24 +98,21 @@ test.describe('Transaction Lifecycle - Activity Display', () => {
     await page.getByRole('button', { name: 'Continue' }).click();
     await expect(page).toHaveURL(/\/dashboard/);
     
-    // Inject a pending transaction fixture directly via localStorage
+    // Inject a pending transaction fixture directly via localStorage (ledger contract shape)
     await page.evaluate(() => {
+      const now = Date.now();
       const pendingTx = {
-        id: 'tx_pending_fixture',
-        type: 'DEPOSIT',
-        amountUSD: 25.0,
-        amountZMW: 500,
-        status: 'PENDING',
-        createdAt: Date.now(),
+        txn_ref: 'tx_pending_fixture',
+        type: 'deposit',
+        status: 'pending',
+        amount_zmw: 500,
+        amount_usd: 25.0,
+        fx_rate: 20,
+        created_at: now,
+        updated_at: now,
       };
 
-      const ledgerState = {
-        state: {
-          transactions: [pendingTx],
-        },
-        version: 0,
-      };
-
+      const ledgerState = { version: 2, transactions: [pendingTx] };
       window.localStorage.setItem('hedgr:ledger', JSON.stringify(ledgerState));
     });
 
@@ -162,25 +159,22 @@ test.describe('Transaction Lifecycle - Activity Display', () => {
     await page.getByRole('button', { name: 'Continue' }).click();
     await expect(page).toHaveURL(/\/dashboard/);
     
-    // Inject a failed transaction fixture directly via localStorage
+    // Inject a failed transaction fixture directly via localStorage (ledger contract shape)
     await page.evaluate(() => {
+      const now = Date.now();
       const failedTx = {
-        id: 'tx_failed_fixture',
-        type: 'WITHDRAW',
-        amountUSD: 50.0,
-        status: 'FAILED',
-        createdAt: Date.now() - 60000, // 1 minute ago
-        confirmedAt: Date.now(),
-        failureReason: 'Insufficient funds in source account',
+        txn_ref: 'tx_failed_fixture',
+        type: 'withdrawal',
+        status: 'failed',
+        amount_zmw: 0,
+        amount_usd: 50.0,
+        fx_rate: 0,
+        created_at: now - 60000,
+        updated_at: now,
+        failure_reason: 'Insufficient funds in source account',
       };
 
-      const ledgerState = {
-        state: {
-          transactions: [failedTx],
-        },
-        version: 0,
-      };
-
+      const ledgerState = { version: 2, transactions: [failedTx] };
       window.localStorage.setItem('hedgr:ledger', JSON.stringify(ledgerState));
     });
 
@@ -230,31 +224,33 @@ test.describe('Transaction Lifecycle - Activity Display', () => {
     await page.getByRole('button', { name: 'Continue' }).click();
     await expect(page).toHaveURL(/\/dashboard/);
     
-    // Inject transactions with various internal statuses
+    // Inject transactions (ledger contract shape: pending → PENDING_INIT, settled → SUCCESS)
     await page.evaluate(() => {
+      const now = Date.now();
       const transactions = [
         {
-          id: 'tx_1',
-          type: 'DEPOSIT',
-          amountUSD: 10.0,
-          status: 'PENDING', // Internal status
-          createdAt: Date.now(),
+          txn_ref: 'tx_1',
+          type: 'deposit',
+          status: 'pending',
+          amount_zmw: 0,
+          amount_usd: 10.0,
+          fx_rate: 1,
+          created_at: now,
+          updated_at: now,
         },
         {
-          id: 'tx_2',
-          type: 'WITHDRAW',
-          amountUSD: 5.0,
-          status: 'CONFIRMED', // Internal status
-          createdAt: Date.now() - 1000,
-          confirmedAt: Date.now(),
+          txn_ref: 'tx_2',
+          type: 'withdrawal',
+          status: 'settled',
+          amount_zmw: 0,
+          amount_usd: 5.0,
+          fx_rate: 0,
+          created_at: now - 1000,
+          updated_at: now,
         },
       ];
 
-      const ledgerState = {
-        state: { transactions },
-        version: 0,
-      };
-
+      const ledgerState = { version: 2, transactions };
       window.localStorage.setItem('hedgr:ledger', JSON.stringify(ledgerState));
     });
 
@@ -329,21 +325,23 @@ test.describe('Transaction Lifecycle - Activity Display', () => {
     await page.getByRole('button', { name: 'Continue' }).click();
     await expect(page).toHaveURL(/\/dashboard/);
     
-    // Inject a transaction
+    // Inject a transaction (ledger contract shape)
     await page.evaluate(() => {
+      const now = Date.now();
       const tx = {
-        id: 'tx_modal_test',
-        type: 'DEPOSIT',
-        amountUSD: 100.0,
-        amountZMW: 2000,
-        status: 'CONFIRMED',
-        createdAt: Date.now(),
-        confirmedAt: Date.now(),
+        txn_ref: 'tx_modal_test',
+        type: 'deposit',
+        status: 'settled',
+        amount_zmw: 2000,
+        amount_usd: 100.0,
+        fx_rate: 20,
+        created_at: now,
+        updated_at: now,
       };
 
       window.localStorage.setItem(
         'hedgr:ledger',
-        JSON.stringify({ state: { transactions: [tx] }, version: 0 })
+        JSON.stringify({ version: 2, transactions: [tx] })
       );
     });
 
