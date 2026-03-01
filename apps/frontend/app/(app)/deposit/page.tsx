@@ -6,9 +6,10 @@ import { useBalance } from '../../../lib/hooks/useBalance';
 import { useLedgerStore } from '../../../lib/state/ledger';
 import { useWalletStore } from '../../../lib/state/wallet';
 import { getBalanceMode } from '../../../lib/state/balance.mode';
-import { useFxRate, isFxRateAvailable } from '../../../lib/fx/FxRateContext';
+import { useLatestFx } from '../../../lib/hooks/useLatestFx';
 import { resolveMarket, resolveLocalCurrencyCode } from '../../../config/market';
 import { EmptyState, ErrorState } from '@hedgr/ui';
+import { FxRateBlock } from '../../../components';
 
 interface PaymentMethod {
   id: string;
@@ -25,12 +26,11 @@ export default function DepositPage() {
   // Legacy wallet store for backward compatibility
   const creditWallet = useWalletStore((s) => s.creditUSD);
   
-  // FX SSoT
-  const fx = useFxRate();
+  // FX from backend contract (canonical for this screen)
+  const fx = useLatestFx('USDZMW');
   const market = resolveMarket();
-  const fallbackQuote = resolveLocalCurrencyCode(market);
-  const quote = fx.quote ?? fallbackQuote;
-  const rate = isFxRateAvailable(fx) ? fx.rate : null;
+  const quote = resolveLocalCurrencyCode(market);
+  const rate = fx.status === 'success' && fx.data ? fx.data.rate : null;
   
   // Amount input as string for better UX
   const [amountLocalStr, setAmountLocalStr] = useState<string>('100');
@@ -185,6 +185,16 @@ export default function DepositPage() {
     );
   }
 
+  // FX error: guided ErrorState + Retry (no raw errors)
+  if (fx.status === 'error') {
+    return (
+      <main className="p-6 space-y-4 max-w-xl">
+        <h1 className="text-2xl font-semibold">Deposit</h1>
+        <FxRateBlock fx={fx} quoteLabel={quote} data-testid="deposit-fx-error" />
+      </main>
+    );
+  }
+
   // Empty state for no available payment methods
   if (availableMethods.length === 0) {
     return (
@@ -219,17 +229,8 @@ export default function DepositPage() {
     <main className="p-6 space-y-4 max-w-xl">
       <h1 className="text-2xl font-semibold">Deposit</h1>
       
-      {/* FX Rate display */}
-      {fx.isLoading ? (
-        <div className="inline-flex items-center px-3 py-1 rounded-full bg-gray-100 text-gray-500 text-sm">
-          Loading rate...
-        </div>
-      ) : rate !== null && (
-        <div className="inline-flex items-center px-3 py-1 rounded-full bg-blue-100 text-blue-800 text-sm font-medium">
-          1 USD = {rate} {quote}
-        </div>
-      )}
-      
+      <FxRateBlock fx={fx} quoteLabel={quote} data-testid="deposit-fx-block" />
+
       <div className="block space-y-2">
         <label htmlFor="deposit-amount">Amount ({quote})</label>
         <input

@@ -7,7 +7,9 @@ import { useLedgerStore } from '../../../lib/state/ledger';
 import { useWalletStore } from '../../../lib/state/wallet';
 import { getBalanceMode } from '../../../lib/state/balance.mode';
 import { EmptyState, ErrorState } from '@hedgr/ui';
-import { BalanceWithLocalEstimate } from '../../../components';
+import { BalanceWithLocalEstimate, FxRateBlock } from '../../../components';
+import { useLatestFx } from '../../../lib/hooks/useLatestFx';
+import { resolveMarket, resolveLocalCurrencyCode } from '../../../config/market';
 
 interface WithdrawMethod {
   id: string;
@@ -17,6 +19,8 @@ interface WithdrawMethod {
 
 export default function WithdrawPage() {
   const { available, refresh, isLoading: balanceLoading, error: balanceError } = useBalance();
+  const fx = useLatestFx('USDZMW');
+  const quote = resolveLocalCurrencyCode(resolveMarket());
   const appendTx = useLedgerStore((s) => s.append);
   const confirmTx = useLedgerStore((s) => s.confirm);
   const failTx = useLedgerStore((s) => s.fail);
@@ -213,6 +217,16 @@ export default function WithdrawPage() {
     );
   }
 
+  // FX error: guided ErrorState + Retry (no raw errors)
+  if (fx.status === 'error') {
+    return (
+      <main className="p-6 space-y-4 max-w-xl">
+        <h1 className="text-2xl font-semibold">Withdraw</h1>
+        <FxRateBlock fx={fx} quoteLabel={quote} data-testid="withdraw-fx-error" />
+      </main>
+    );
+  }
+
   // Empty state for zero balance
   if (available === 0) {
     return (
@@ -246,6 +260,7 @@ export default function WithdrawPage() {
   return (
     <main className="p-6 space-y-4 max-w-xl">
       <h1 className="text-2xl font-semibold">Withdraw</h1>
+      <FxRateBlock fx={fx} quoteLabel={quote} data-testid="withdraw-fx-block" />
       <div className="rounded-xl p-3 bg-gray-50">
         Current balance: <BalanceWithLocalEstimate usdAmount={available} inline />
       </div>
