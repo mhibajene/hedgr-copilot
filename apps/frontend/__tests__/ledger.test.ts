@@ -1,66 +1,110 @@
 // @vitest-environment jsdom
 
 import { describe, test, expect, beforeEach } from 'vitest';
-import { useLedgerStore } from '../lib/state/ledger';
+import { useLedgerStore, LEDGER_SCHEMA_VERSION } from '../lib/state/ledger';
 import type { Tx } from '../lib/state/ledger';
 
 describe('LedgerStore', () => {
   beforeEach(() => {
-    // Clear localStorage first
     window.localStorage.clear();
-    // Reset store after localStorage is cleared
     useLedgerStore.getState().clear();
   });
 
-  test('append → confirmed → list contains entry', () => {
+  test('append → confirm → list contains entry', () => {
+    const now = Date.now();
     const tx: Tx = {
-      id: 'tx_1',
-      type: 'DEPOSIT',
-      amountUSD: 5.0,
-      amountZMW: 100,
-      status: 'PENDING',
-      createdAt: Date.now(),
+      txn_ref: 'tx-ref-1',
+      type: 'deposit',
+      status: 'pending',
+      amount_zmw: 100,
+      amount_usd: 5.0,
+      fx_rate: 20,
+      created_at: now,
+      updated_at: now,
     };
 
     useLedgerStore.getState().append(tx);
     const state1 = useLedgerStore.getState();
     expect(state1.transactions).toHaveLength(1);
     expect(state1.transactions[0]).toMatchObject({
-      id: 'tx_1',
-      type: 'DEPOSIT',
-      amountUSD: 5.0,
-      status: 'PENDING',
+      txn_ref: 'tx-ref-1',
+      type: 'deposit',
+      amount_usd: 5.0,
+      status: 'pending',
     });
 
-    useLedgerStore.getState().confirm('tx_1');
+    useLedgerStore.getState().confirm('tx-ref-1');
     const state2 = useLedgerStore.getState();
-    expect(state2.transactions[0].status).toBe('CONFIRMED');
-    expect(state2.transactions[0].confirmedAt).toBeDefined();
+    expect(state2.transactions[0].status).toBe('settled');
   });
 
   test('persist works after page reload (mock localStorage)', async () => {
+    const now = Date.now();
     const tx: Tx = {
-      id: 'tx_2',
-      type: 'WITHDRAW',
-      amountUSD: 1.0,
-      status: 'PENDING',
-      createdAt: Date.now(),
+      txn_ref: 'tx-ref-2',
+      type: 'withdrawal',
+      status: 'pending',
+      amount_zmw: 0,
+      amount_usd: 1.0,
+      fx_rate: 0,
+      created_at: now,
+      updated_at: now,
     };
 
     useLedgerStore.getState().append(tx);
     const state = useLedgerStore.getState();
     expect(state.transactions).toHaveLength(1);
 
-    // Wait for Zustand persist to write to localStorage (it's async and debounced)
-    // Zustand persist batches writes, so we need to wait a bit longer
     await new Promise((resolve) => setTimeout(resolve, 200));
 
-    // Assert against window.localStorage
     const stored = window.localStorage.getItem('hedgr:ledger');
     expect(stored).toBeTruthy();
     const parsed = JSON.parse(stored!);
-    expect(parsed.state.transactions).toHaveLength(1);
-    expect(parsed.state.transactions[0].id).toBe('tx_2');
+    expect(parsed.version).toBe(LEDGER_SCHEMA_VERSION);
+    expect(parsed.transactions).toHaveLength(1);
+    expect(parsed.transactions[0].txn_ref).toBe('tx-ref-2');
+  });
+
+  test('version mismatch on load clears ledger (safe evolution)', async () => {
+    const now = Date.now();
+    const tx: Tx = {
+      txn_ref: 'old-ref',
+      type: 'deposit',
+      status: 'pending',
+      amount_zmw: 100,
+      amount_usd: 5,
+      fx_rate: 20,
+      created_at: now,
+      updated_at: now,
+    };
+    window.localStorage.setItem(
+      'hedgr:ledger',
+      JSON.stringify({ version: 1, transactions: [tx] })
+    );
+    useLedgerStore.persist.rehydrate();
+    await new Promise((r) => setTimeout(r, 50));
+    const state = useLedgerStore.getState();
+    expect(state.transactions).toHaveLength(0);
+  });
+
+  test('idempotency: same txn_ref appended twice results in one entry', () => {
+    const now = Date.now();
+    const tx: Tx = {
+      txn_ref: 'same-ref',
+      type: 'deposit',
+      status: 'pending',
+      amount_zmw: 50,
+      amount_usd: 2.5,
+      fx_rate: 20,
+      created_at: now,
+      updated_at: now,
+    };
+
+    useLedgerStore.getState().append(tx);
+    useLedgerStore.getState().append(tx);
+
+    const state = useLedgerStore.getState();
+    expect(state.transactions).toHaveLength(1);
+    expect(state.transactions[0].txn_ref).toBe('same-ref');
   });
 });
-

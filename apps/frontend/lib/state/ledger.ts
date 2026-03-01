@@ -1,38 +1,37 @@
 'use client';
 import { create } from 'zustand';
-import { persist, createJSONStorage } from 'zustand/middleware';
+import { persist, type StateStorage } from 'zustand/middleware';
+
+/** Bump when ledger Tx shape or persisted format changes; mismatch on load → clear. */
+export const LEDGER_SCHEMA_VERSION = 2;
 
 /**
- * Internal transaction status - maps to public status via status-mapper
- * @see lib/tx/status-mapper.ts
+ * Ledger transaction contract — txn_ref is canonical identifier.
+ * Status uses backend-aligned values: pending | settled | failed.
+ * @see docs/contracts and Sprint 1.1 MC-S11-005
  */
-export type TxInternalStatus = 'PENDING' | 'CONFIRMED' | 'FAILED';
+export type LedgerTxStatus = 'pending' | 'settled' | 'failed';
 
 export type Tx = {
-  id: string;
-  type: 'DEPOSIT' | 'WITHDRAW';
-  amountUSD: number;
-  amountZMW?: number;
-  status: TxInternalStatus;
-  createdAt: number;
-  /** Timestamp when the transaction was confirmed/completed */
-  confirmedAt?: number;
-  /** Timestamp of last status update */
-  updatedAt?: number;
-  /** Reason for failure (user-friendly) */
-  failureReason?: string;
+  txn_ref: string;
+  type: 'deposit' | 'withdrawal';
+  status: LedgerTxStatus;
+  amount_zmw: number;
+  amount_usd: number;
+  fx_rate: number;
+  created_at: number;
+  updated_at: number;
+  /** Set when status is 'failed' */
+  failure_reason?: string;
 };
 
 export type LedgerStore = {
   transactions: Tx[];
   append: (tx: Tx) => void;
-  confirm: (id: string) => void;
-  fail: (id: string, reason?: string) => void;
-  /** Update transaction status with optional metadata */
-  updateStatus: (id: string, status: TxInternalStatus, metadata?: { failureReason?: string }) => void;
+  confirm: (txn_ref: string) => void;
+  fail: (txn_ref: string, reason?: string) => void;
   clear: () => void;
-  /** Get a single transaction by ID */
-  getById: (id: string) => Tx | undefined;
+  getByTxnRef: (txn_ref: string) => Tx | undefined;
 };
 
 const memoryStorage: Storage = {
@@ -44,72 +43,85 @@ const memoryStorage: Storage = {
   length: 0,
 };
 
+type PersistedLedger = { version: number; transactions: Tx[] };
+
+/** Zustand persist calls setItem(name, object) and getItem returns object | null. */
+function createLedgerStorage(base: Storage): StateStorage {
+  return {
+    getItem: (name: string) => {
+      const raw = base.getItem(name);
+      if (raw == null) return null;
+      try {
+        const parsed = JSON.parse(raw) as PersistedLedger;
+        if (parsed.version !== LEDGER_SCHEMA_VERSION) return null;
+        return { state: { transactions: parsed.transactions ?? [] }, version: 0 };
+      } catch {
+        return null;
+      }
+    },
+    setItem: (name: string, value: unknown): void => {
+      try {
+        const obj = value as { state?: { transactions?: Tx[] } };
+        const transactions = obj?.state?.transactions ?? [];
+        const toStore: PersistedLedger = {
+          version: LEDGER_SCHEMA_VERSION,
+          transactions,
+        };
+        base.setItem(name, JSON.stringify(toStore));
+      } catch {
+        // no-op on write error
+      }
+    },
+    removeItem: (name: string): void => base.removeItem(name),
+  };
+}
+
 export const useLedgerStore = create<LedgerStore>()(
   persist(
     (set, get) => ({
       transactions: [],
       append: (tx) => {
-        // Guard: Prevent duplicate transactions (handles React Strict Mode double-invocation)
-        const existing = get().transactions.find((t) => t.id === tx.id);
+        // Idempotency: if ledger already has this txn_ref, do not duplicate
+        const existing = get().transactions.find((t) => t.txn_ref === tx.txn_ref);
         if (existing) return;
         set((state) => ({
           transactions: [
             ...state.transactions,
-            { ...tx, updatedAt: tx.createdAt },
+            { ...tx, updated_at: tx.updated_at ?? tx.created_at },
           ],
         }));
       },
-      confirm: (id) =>
+      confirm: (txn_ref) =>
         set((state) => ({
-          transactions: state.transactions.map((tx) =>
-            tx.id === id
+          transactions: state.transactions.map((t) =>
+            t.txn_ref === txn_ref
               ? {
-                  ...tx,
-                  status: 'CONFIRMED' as const,
-                  confirmedAt: Date.now(),
-                  updatedAt: Date.now(),
+                  ...t,
+                  status: 'settled' as const,
+                  updated_at: Date.now(),
                 }
-              : tx
+              : t
           ),
         })),
-      fail: (id, reason) =>
+      fail: (txn_ref, reason) =>
         set((state) => ({
-          transactions: state.transactions.map((tx) =>
-            tx.id === id
+          transactions: state.transactions.map((t) =>
+            t.txn_ref === txn_ref
               ? {
-                  ...tx,
-                  status: 'FAILED' as const,
-                  updatedAt: Date.now(),
-                  confirmedAt: Date.now(),
-                  failureReason: reason ?? 'Transaction could not be processed',
+                  ...t,
+                  status: 'failed' as const,
+                  updated_at: Date.now(),
+                  failure_reason: reason ?? 'Transaction could not be processed',
                 }
-              : tx
-          ),
-        })),
-      updateStatus: (id, status, metadata) =>
-        set((state) => ({
-          transactions: state.transactions.map((tx) =>
-            tx.id === id
-              ? {
-                  ...tx,
-                  status,
-                  updatedAt: Date.now(),
-                  ...(status === 'CONFIRMED' || status === 'FAILED'
-                    ? { confirmedAt: Date.now() }
-                    : {}),
-                  ...(metadata?.failureReason
-                    ? { failureReason: metadata.failureReason }
-                    : {}),
-                }
-              : tx
+              : t
           ),
         })),
       clear: () => set({ transactions: [] }),
-      getById: (id) => get().transactions.find((tx) => tx.id === id),
+      getByTxnRef: (txn_ref) => get().transactions.find((t) => t.txn_ref === txn_ref),
     }),
     {
       name: 'hedgr:ledger',
-      storage: createJSONStorage(() =>
+      storage: createLedgerStorage(
         typeof window !== 'undefined' ? window.localStorage : (memoryStorage as unknown as Storage)
       ),
     }

@@ -21,7 +21,6 @@ export default function WithdrawPage() {
   const { available, refresh, isLoading: balanceLoading, error: balanceError } = useBalance();
   const fx = useLatestFx('USDZMW');
   const quote = resolveLocalCurrencyCode(resolveMarket());
-  const appendTx = useLedgerStore((s) => s.append);
   const confirmTx = useLedgerStore((s) => s.confirm);
   const failTx = useLedgerStore((s) => s.fail);
   
@@ -29,7 +28,7 @@ export default function WithdrawPage() {
   const debitWallet = useWalletStore((s) => s.debitUSD);
   
   const [usd, setUsd] = useState(1);
-  const [txId, setTxId] = useState<string | null>(null);
+  const [txnRef, setTxnRef] = useState<string | null>(null);
   const [status, setStatus] = useState<'IDLE' | 'PENDING' | 'CONFIRMED' | 'FAILED'>('IDLE');
   
   // Withdraw methods state
@@ -60,72 +59,50 @@ export default function WithdrawPage() {
   }, []);
 
   useEffect(() => {
-    if (!txId) return;
+    if (!txnRef) return;
 
     const h = setInterval(async () => {
-      const s = await withdrawMock.status(txId);
+      const s = await withdrawMock.status(txnRef);
       if (s === 'CONFIRMED') {
         clearInterval(h);
-        
         const mode = getBalanceMode();
         if (mode === 'ledger') {
-          // SSoT: Confirm transaction in ledger
-          confirmTx(txId);
+          confirmTx(txnRef);
         } else {
-          // Legacy: Update wallet store
           debitWallet(usd);
-          // Force-flush persisted wallet state
           try {
             if (typeof window !== 'undefined') {
               const next = useWalletStore.getState().usdBalance;
-              window.localStorage.setItem('hedgr:wallet', JSON.stringify({ state: { usdBalance: +next.toFixed(2) }, version: 0 }));
+              window.localStorage.setItem(
+                'hedgr:wallet',
+                JSON.stringify({ state: { usdBalance: +next.toFixed(2) }, version: 0 })
+              );
             }
           } catch {
             void 0;
           }
         }
-        
         refresh();
         setStatus('CONFIRMED');
       } else if (s === 'FAILED') {
         clearInterval(h);
-        
-        const mode = getBalanceMode();
-        if (mode === 'ledger') {
-          // SSoT: Mark transaction as failed (reversal - no net effect)
-          failTx(txId);
+        if (getBalanceMode() === 'ledger') {
+          failTx(txnRef);
         }
-        // Legacy mode: no action needed for failed tx
-        
         refresh();
         setStatus('FAILED');
       }
     }, 500);
 
     return () => clearInterval(h);
-  }, [txId, debitWallet, usd, confirmTx, failTx, refresh]);
+  }, [txnRef, debitWallet, usd, confirmTx, failTx, refresh]);
 
   const confirm = async () => {
     if (usd <= 0 || usd > available) return;
 
     setStatus('PENDING');
-    
     const tx = await withdrawMock.createWithdraw(usd);
-    
-    const mode = getBalanceMode();
-    if (mode === 'ledger') {
-      // SSoT: Record pending withdrawal in ledger
-      // Note: appendTx guards against duplicates internally
-      appendTx({
-        id: tx.id,
-        type: 'WITHDRAW',
-        amountUSD: usd,
-        status: 'PENDING',
-        createdAt: Date.now(),
-      });
-    }
-    
-    setTxId(tx.id);
+    setTxnRef(tx.txn_ref);
   };
 
   const retryLoadMethods = () => {

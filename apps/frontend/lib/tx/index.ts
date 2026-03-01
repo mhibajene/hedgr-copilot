@@ -14,6 +14,8 @@ export {
 
 export {
   mapInternalStatusToPublicStatus,
+  mapLedgerStatusToPublicStatus,
+  LEDGER_STATUS_MAP,
   txToLifecycle,
   generateTimelineSteps,
   isTerminalStatus,
