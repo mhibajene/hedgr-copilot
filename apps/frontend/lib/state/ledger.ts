@@ -1,6 +1,6 @@
 'use client';
 import { create } from 'zustand';
-import { persist, type StateStorage } from 'zustand/middleware';
+import { persist, type PersistStorage, type StorageValue } from 'zustand/middleware';
 
 /** Bump when ledger Tx shape or persisted format changes; mismatch on load → clear. */
 export const LEDGER_SCHEMA_VERSION = 2;
@@ -43,12 +43,16 @@ const memoryStorage: Storage = {
   length: 0,
 };
 
+/** Persisted slice only (actions are not serialized). Must match partialize. */
+export type LedgerPersistedState = { transactions: Tx[] };
+
+/** JSON shape stored in underlying Storage (includes schema version). */
 type PersistedLedger = { version: number; transactions: Tx[] };
 
-/** Zustand persist calls setItem(name, object) and getItem returns object | null. */
-function createLedgerStorage(base: Storage): StateStorage {
+/** Custom persist adapter: validates LEDGER_SCHEMA_VERSION and returns StorageValue. */
+function createLedgerStorage(base: Storage): PersistStorage<LedgerPersistedState> {
   return {
-    getItem: (name: string) => {
+    getItem: (name: string): StorageValue<LedgerPersistedState> | null => {
       const raw = base.getItem(name);
       if (raw == null) return null;
       try {
@@ -59,10 +63,9 @@ function createLedgerStorage(base: Storage): StateStorage {
         return null;
       }
     },
-    setItem: (name: string, value: unknown): void => {
+    setItem: (name: string, value: StorageValue<LedgerPersistedState>): void => {
       try {
-        const obj = value as { state?: { transactions?: Tx[] } };
-        const transactions = obj?.state?.transactions ?? [];
+        const transactions = value.state.transactions ?? [];
         const toStore: PersistedLedger = {
           version: LEDGER_SCHEMA_VERSION,
           transactions,
@@ -124,6 +127,7 @@ export const useLedgerStore = create<LedgerStore>()(
       storage: createLedgerStorage(
         typeof window !== 'undefined' ? window.localStorage : (memoryStorage as unknown as Storage)
       ),
+      partialize: (state) => ({ transactions: state.transactions }),
     }
   )
 );
