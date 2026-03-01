@@ -55,16 +55,6 @@ export const InternalTxStatus = {
 
 export type InternalTxStatus = (typeof InternalTxStatus)[keyof typeof InternalTxStatus];
 
-/** Human-readable labels for public statuses */
-export const PublicTxStatusLabels: Record<PublicTxStatus, string> = {
-  [PublicTxStatus.PENDING_INIT]: 'Pending',
-  [PublicTxStatus.IN_PROGRESS]: 'Processing',
-  [PublicTxStatus.SUCCESS]: 'Completed',
-  [PublicTxStatus.FAILED]: 'Failed',
-  [PublicTxStatus.REVERSED]: 'Reversed',
-  [PublicTxStatus.EXPIRED]: 'Expired',
-};
-
 /** Extended transaction type with full lifecycle support */
 export type TxLifecycle = {
   id: string;

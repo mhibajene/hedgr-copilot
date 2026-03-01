@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 
-import { describe, test, expect, beforeEach } from 'vitest';
+import { describe, test, expect, beforeEach, vi } from 'vitest';
 import { useLedgerStore, LEDGER_SCHEMA_VERSION } from '../lib/state/ledger';
 import type { Tx } from '../lib/state/ledger';
 
@@ -11,6 +11,7 @@ describe('LedgerStore', () => {
   });
 
   test('append → confirm → list contains entry', () => {
+    const nowSpy = vi.spyOn(Date, 'now').mockReturnValue(2000);
     const now = Date.now();
     const tx: Tx = {
       txn_ref: 'tx-ref-1',
@@ -36,6 +37,7 @@ describe('LedgerStore', () => {
     useLedgerStore.getState().confirm('tx-ref-1');
     const state2 = useLedgerStore.getState();
     expect(state2.transactions[0].status).toBe('settled');
+    nowSpy.mockRestore();
   });
 
   test('persist works after page reload (mock localStorage)', async () => {
@@ -106,5 +108,122 @@ describe('LedgerStore', () => {
     const state = useLedgerStore.getState();
     expect(state.transactions).toHaveLength(1);
     expect(state.transactions[0].txn_ref).toBe('same-ref');
+  });
+
+  test('upsertTx creates if missing', () => {
+    const tx: Tx = {
+      txn_ref: 'new-ref',
+      type: 'deposit',
+      status: 'pending',
+      amount_zmw: 100,
+      amount_usd: 5,
+      fx_rate: 20,
+      created_at: 1000,
+      updated_at: 1000,
+    };
+    useLedgerStore.getState().upsertTx(tx);
+    const state = useLedgerStore.getState();
+    expect(state.transactions).toHaveLength(1);
+    expect(state.transactions[0]).toMatchObject({
+      txn_ref: 'new-ref',
+      type: 'deposit',
+      status: 'pending',
+      amount_zmw: 100,
+      amount_usd: 5,
+      created_at: 1000,
+      updated_at: 1000,
+    });
+  });
+
+  test('upsertTx merges allowed fields', () => {
+    const tx: Tx = {
+      txn_ref: 'merge-ref',
+      type: 'deposit',
+      status: 'pending',
+      amount_zmw: 100,
+      amount_usd: 5,
+      fx_rate: 20,
+      created_at: 1000,
+      updated_at: 1000,
+    };
+    useLedgerStore.getState().append(tx);
+    useLedgerStore.getState().upsertTx({
+      txn_ref: 'merge-ref',
+      status: 'settled',
+      updated_at: 2000,
+    });
+    const state = useLedgerStore.getState();
+    expect(state.transactions).toHaveLength(1);
+    expect(state.transactions[0].status).toBe('settled');
+    expect(state.transactions[0].updated_at).toBe(2000);
+    expect(state.transactions[0].amount_zmw).toBe(100);
+    expect(state.transactions[0].created_at).toBe(1000);
+  });
+
+  test('upsertTx does not overwrite immutables', () => {
+    const tx: Tx = {
+      txn_ref: 'immutable-ref',
+      type: 'deposit',
+      status: 'pending',
+      amount_zmw: 100,
+      amount_usd: 5,
+      fx_rate: 20,
+      created_at: 1000,
+      updated_at: 1000,
+    };
+    useLedgerStore.getState().append(tx);
+    useLedgerStore.getState().upsertTx({
+      txn_ref: 'immutable-ref',
+      amount_zmw: 999,
+      fx_rate: 999,
+      status: 'failed',
+      updated_at: 2000,
+    });
+    const state = useLedgerStore.getState();
+    expect(state.transactions).toHaveLength(1);
+    expect(state.transactions[0].amount_zmw).toBe(100);
+    expect(state.transactions[0].fx_rate).toBe(20);
+    expect(state.transactions[0].status).toBe('failed');
+    expect(state.transactions[0].updated_at).toBe(2000);
+  });
+
+  test('fail sets failure_reason', () => {
+    const nowSpy = vi.spyOn(Date, 'now').mockReturnValue(2000);
+    const tx: Tx = {
+      txn_ref: 'fail-ref',
+      type: 'withdrawal',
+      status: 'pending',
+      amount_zmw: 0,
+      amount_usd: 10,
+      fx_rate: 0,
+      created_at: 1000,
+      updated_at: 1000,
+    };
+    useLedgerStore.getState().append(tx);
+    useLedgerStore.getState().fail('fail-ref', 'X');
+    const state = useLedgerStore.getState();
+    expect(state.transactions).toHaveLength(1);
+    expect(state.transactions[0].status).toBe('failed');
+    expect(state.transactions[0].failure_reason).toBe('X');
+    nowSpy.mockRestore();
+  });
+
+  test('no duplicate entries: upsertTx twice with same txn_ref', () => {
+    const tx: Tx = {
+      txn_ref: 'dup-ref',
+      type: 'deposit',
+      status: 'pending',
+      amount_zmw: 50,
+      amount_usd: 2.5,
+      fx_rate: 20,
+      created_at: 1000,
+      updated_at: 1000,
+    };
+    useLedgerStore.getState().upsertTx(tx);
+    useLedgerStore.getState().upsertTx({ ...tx, status: 'settled', updated_at: 2000 });
+    const state = useLedgerStore.getState();
+    expect(state.transactions).toHaveLength(1);
+    expect(state.transactions[0].status).toBe('settled');
+    expect(state.transactions[0].updated_at).toBe(2000);
   });
 });

@@ -1,6 +1,7 @@
 'use client';
 
-import { PublicTxStatus, PublicTxStatusLabels } from '../lib/tx';
+import React from 'react';
+import { PublicTxStatus, getPresentationForPublicStatus } from '../lib/tx';
 
 export interface TxStatusPillProps {
   status: PublicTxStatus;
@@ -14,7 +15,8 @@ export interface TxStatusPillProps {
  * TxStatusPill - Reusable transaction status indicator
  *
  * Displays a status pill with consistent styling and data-testid attributes
- * for stable E2E selectors.
+ * for stable E2E selectors. Label and tone come from the canonical STATUS_MAP
+ * via getPresentationForPublicStatus.
  *
  * Usage:
  * ```tsx
@@ -30,23 +32,8 @@ export function TxStatusPill({
   size = 'sm',
   className = '',
 }: TxStatusPillProps) {
-  const label = PublicTxStatusLabels[status];
+  const { label, tone } = getPresentationForPublicStatus(status);
   const sizeClasses = size === 'sm' ? 'px-2.5 py-0.5 text-xs' : 'px-3 py-1 text-sm';
-
-  const statusStyles: Record<PublicTxStatus, string> = {
-    [PublicTxStatus.PENDING_INIT]:
-      'bg-amber-50 text-amber-700 ring-1 ring-inset ring-amber-600/20',
-    [PublicTxStatus.IN_PROGRESS]:
-      'bg-blue-50 text-blue-700 ring-1 ring-inset ring-blue-700/20',
-    [PublicTxStatus.SUCCESS]:
-      'bg-emerald-50 text-emerald-700 ring-1 ring-inset ring-emerald-600/20',
-    [PublicTxStatus.FAILED]:
-      'bg-red-50 text-red-700 ring-1 ring-inset ring-red-600/20',
-    [PublicTxStatus.REVERSED]:
-      'bg-purple-50 text-purple-700 ring-1 ring-inset ring-purple-600/20',
-    [PublicTxStatus.EXPIRED]:
-      'bg-gray-50 text-gray-600 ring-1 ring-inset ring-gray-500/20',
-  };
 
   const baseClasses = 'inline-flex items-center rounded-full font-medium';
 
@@ -54,7 +41,7 @@ export function TxStatusPill({
     <span
       data-testid="tx-status-pill"
       data-status={status}
-      className={`${baseClasses} ${sizeClasses} ${statusStyles[status]} ${className}`}
+      className={`${baseClasses} ${sizeClasses} ${tone} ${className}`}
     >
       {/* Animated dot for in-progress states */}
       {(status === PublicTxStatus.PENDING_INIT ||
