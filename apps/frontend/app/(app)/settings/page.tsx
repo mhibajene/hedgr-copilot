@@ -127,12 +127,20 @@ export default function SettingsPage() {
           </div>
         </div>
 
-        <div className="text-sm text-gray-500">
-          <a 
-            href="/docs/trust" 
+        <div className="text-sm text-gray-500 space-y-2">
+          <p>
+            <a
+              href="/settings/trust"
+              className="text-blue-600 hover:text-blue-800 underline"
+            >
+              View full Trust &amp; Risk disclosure →
+            </a>
+          </p>
+          <a
+            href="/docs/trust"
             className="text-blue-600 hover:text-blue-800 underline"
           >
-            Read our full Trust & Environment documentation →
+            Read our full Trust &amp; Environment documentation →
           </a>
         </div>
       </section>
