@@ -4,6 +4,8 @@ import { describe, test, expect } from 'vitest';
 import {
   mapInternalStatusToPublicStatus,
   mapLedgerStatusToPublicStatus,
+  getStatusPresentation,
+  getPresentationForPublicStatus,
   txToLifecycle,
   generateTimelineSteps,
   isTerminalStatus,
@@ -11,7 +13,6 @@ import {
   isErrorStatus,
   PublicTxStatus,
   InternalTxStatus,
-  PublicTxStatusLabels,
 } from '../lib/tx';
 import type { Tx } from '../lib/state/ledger';
 
@@ -234,23 +235,47 @@ describe('Transaction Lifecycle - Status Mapping', () => {
     });
   });
 
-  describe('PublicTxStatusLabels', () => {
-    test('all public statuses have human-readable labels', () => {
-      const allStatuses = Object.values(PublicTxStatus);
-      for (const status of allStatuses) {
-        expect(PublicTxStatusLabels[status]).toBeDefined();
-        expect(typeof PublicTxStatusLabels[status]).toBe('string');
-        expect(PublicTxStatusLabels[status].length).toBeGreaterThan(0);
+  describe('getStatusPresentation (ledger status)', () => {
+    test('returns publicStatus, label, and tone for each LedgerTxStatus', () => {
+      const pending = getStatusPresentation('pending');
+      expect(pending.publicStatus).toBe(PublicTxStatus.PENDING_INIT);
+      expect(pending.label).toBe('Pending');
+      expect(pending.tone).toBeTruthy();
+      expect(pending.tone.length).toBeGreaterThan(0);
+
+      const settled = getStatusPresentation('settled');
+      expect(settled.publicStatus).toBe(PublicTxStatus.SUCCESS);
+      expect(settled.label).toBe('Completed');
+      expect(settled.tone).toBeTruthy();
+
+      const failed = getStatusPresentation('failed');
+      expect(failed.publicStatus).toBe(PublicTxStatus.FAILED);
+      expect(failed.label).toBe('Failed');
+      expect(failed.tone).toBeTruthy();
+    });
+  });
+
+  describe('getPresentationForPublicStatus', () => {
+    test('returns label and tone for every PublicTxStatus', () => {
+      const statuses = Object.values(PublicTxStatus);
+      for (const status of statuses) {
+        const { label, tone } = getPresentationForPublicStatus(status);
+        expect(label).toBeDefined();
+        expect(typeof label).toBe('string');
+        expect(label.length).toBeGreaterThan(0);
+        expect(tone).toBeDefined();
+        expect(typeof tone).toBe('string');
+        expect(tone.length).toBeGreaterThan(0);
       }
     });
 
-    test('labels are user-friendly', () => {
-      expect(PublicTxStatusLabels[PublicTxStatus.PENDING_INIT]).toBe('Pending');
-      expect(PublicTxStatusLabels[PublicTxStatus.IN_PROGRESS]).toBe('Processing');
-      expect(PublicTxStatusLabels[PublicTxStatus.SUCCESS]).toBe('Completed');
-      expect(PublicTxStatusLabels[PublicTxStatus.FAILED]).toBe('Failed');
-      expect(PublicTxStatusLabels[PublicTxStatus.REVERSED]).toBe('Reversed');
-      expect(PublicTxStatusLabels[PublicTxStatus.EXPIRED]).toBe('Expired');
+    test('labels match canonical copy', () => {
+      expect(getPresentationForPublicStatus(PublicTxStatus.PENDING_INIT).label).toBe('Pending');
+      expect(getPresentationForPublicStatus(PublicTxStatus.IN_PROGRESS).label).toBe('Processing');
+      expect(getPresentationForPublicStatus(PublicTxStatus.SUCCESS).label).toBe('Completed');
+      expect(getPresentationForPublicStatus(PublicTxStatus.FAILED).label).toBe('Failed');
+      expect(getPresentationForPublicStatus(PublicTxStatus.REVERSED).label).toBe('Reversed');
+      expect(getPresentationForPublicStatus(PublicTxStatus.EXPIRED).label).toBe('Expired');
     });
   });
 });

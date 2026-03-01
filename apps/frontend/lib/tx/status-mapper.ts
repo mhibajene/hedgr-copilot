@@ -15,7 +15,6 @@ import type { Tx, LedgerTxStatus } from '../state/ledger';
 
 /**
  * Ledger status → Public status. Single map for lifecycle rendering.
- * Activity label and tone derive from PublicTxStatus (PublicTxStatusLabels in types).
  */
 export const LEDGER_STATUS_MAP: Record<LedgerTxStatus, PublicTxStatus> = {
   pending: PublicTxStatus.PENDING_INIT,
@@ -23,8 +22,69 @@ export const LEDGER_STATUS_MAP: Record<LedgerTxStatus, PublicTxStatus> = {
   failed: PublicTxStatus.FAILED,
 };
 
+/**
+ * Single authority for public status label and pill tone (style).
+ * Keyed by PublicTxStatus so all 6 statuses have one place for label + tone.
+ */
+export const STATUS_MAP: Record<PublicTxStatus, { label: string; tone: string }> = {
+  [PublicTxStatus.PENDING_INIT]: {
+    label: 'Pending',
+    tone: 'bg-amber-50 text-amber-700 ring-1 ring-inset ring-amber-600/20',
+  },
+  [PublicTxStatus.IN_PROGRESS]: {
+    label: 'Processing',
+    tone: 'bg-blue-50 text-blue-700 ring-1 ring-inset ring-blue-700/20',
+  },
+  [PublicTxStatus.SUCCESS]: {
+    label: 'Completed',
+    tone: 'bg-emerald-50 text-emerald-700 ring-1 ring-inset ring-emerald-600/20',
+  },
+  [PublicTxStatus.FAILED]: {
+    label: 'Failed',
+    tone: 'bg-red-50 text-red-700 ring-1 ring-inset ring-red-600/20',
+  },
+  [PublicTxStatus.REVERSED]: {
+    label: 'Reversed',
+    tone: 'bg-purple-50 text-purple-700 ring-1 ring-inset ring-purple-600/20',
+  },
+  [PublicTxStatus.EXPIRED]: {
+    label: 'Expired',
+    tone: 'bg-gray-50 text-gray-600 ring-1 ring-inset ring-gray-500/20',
+  },
+};
+
+const FALLBACK_PRESENTATION: { label: string; tone: string } = {
+  label: 'Unknown',
+  tone: 'bg-gray-50 text-gray-600 ring-1 ring-inset ring-gray-500/20',
+};
+
 export function mapLedgerStatusToPublicStatus(status: LedgerTxStatus): PublicTxStatus {
   return LEDGER_STATUS_MAP[status];
+}
+
+/**
+ * Returns label, tone, and publicStatus for a ledger status.
+ * Use when converting from ledger Tx to presentation (e.g. txToLifecycle uses publicStatus only).
+ */
+export function getStatusPresentation(status: LedgerTxStatus): {
+  label: string;
+  tone: string;
+  publicStatus: PublicTxStatus;
+} {
+  const publicStatus = mapLedgerStatusToPublicStatus(status);
+  return { ...STATUS_MAP[publicStatus], publicStatus };
+}
+
+/**
+ * Returns label and tone for a public status. Used by TxStatusPill.
+ * Defensive fallback if status is unknown at runtime.
+ */
+export function getPresentationForPublicStatus(publicStatus: PublicTxStatus): {
+  label: string;
+  tone: string;
+} {
+  const entry = STATUS_MAP[publicStatus];
+  return entry ?? FALLBACK_PRESENTATION;
 }
 
 /**

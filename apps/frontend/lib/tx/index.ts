@@ -7,7 +7,6 @@
 export {
   PublicTxStatus,
   InternalTxStatus,
-  PublicTxStatusLabels,
   type TxLifecycle,
   type TxTimelineStep,
 } from './types';
@@ -16,6 +15,9 @@ export {
   mapInternalStatusToPublicStatus,
   mapLedgerStatusToPublicStatus,
   LEDGER_STATUS_MAP,
+  STATUS_MAP,
+  getStatusPresentation,
+  getPresentationForPublicStatus,
   txToLifecycle,
   generateTimelineSteps,
   isTerminalStatus,
