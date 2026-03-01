@@ -133,7 +133,7 @@ export default function SettingsPage() {
               href="/settings/trust"
               className="text-blue-600 hover:text-blue-800 underline"
             >
-              View full Trust &amp; Risk disclosure →
+              View full disclosure →
             </a>
           </p>
           <a
