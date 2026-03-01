@@ -45,6 +45,9 @@ jobs:
       - name: Trust check (environment safety)
         run: pnpm -w trust:check
 
+      - name: Trust phrase check (banned copy)
+        run: pnpm -w trust:phrases
+
       - name: Guard route conflicts
         run: node scripts/ci/guard-route-conflicts.mjs
 

@@ -1,0 +1,53 @@
+name: Agent Evidence Pack Check
+
+on:
+  pull_request:
+    types: [opened, edited, labeled, unlabeled, synchronize]
+
+jobs:
+  evidence-pack:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check agent PR evidence pack
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const pr = context.payload.pull_request;
+            const labels = pr.labels.map(l => l.name);
+
+            if (!labels.includes('source:agent')) {
+              core.info('Label "source:agent" not present — skipping evidence pack check.');
+              return;
+            }
+
+            const body = pr.body || '';
+            const errors = [];
+
+            const hasEvidencePack =
+              body.includes('## 3) Evidence pack') ||
+              body.toLowerCase().includes('evidence pack');
+
+            if (!hasEvidencePack) {
+              errors.push(
+                'PR body is missing the "Evidence pack" section. ' +
+                'Agent PRs must include "## 3) Evidence pack" (or "Evidence pack") in the PR body.'
+              );
+            }
+
+            const urlPattern = /https?:\/\//;
+            if (!urlPattern.test(body)) {
+              errors.push(
+                'PR body contains no artifact links (URLs). ' +
+                'Agent PRs must include at least one http(s) URL linking to evidence artifacts.'
+              );
+            }
+
+            if (errors.length > 0) {
+              core.setFailed(
+                'Agent Evidence Pack check failed:\n' +
+                errors.map(e => `  • ${e}`).join('\n') +
+                '\n\nPlease update the PR body to include the Evidence Pack section with artifact links.'
+              );
+            } else {
+              core.info('Agent Evidence Pack check passed.');
+            }
