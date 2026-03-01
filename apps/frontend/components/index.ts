@@ -9,5 +9,6 @@ export { TxDetailModal, type TxDetailModalProps } from './TxDetailModal';
 export { default as DevSecretsToast } from './DevSecretsToast';
 export { TrustDisclosureBanner, type TrustDisclosureBannerProps } from './TrustDisclosureBanner';
 export { BalanceWithLocalEstimate, type BalanceWithLocalEstimateProps } from './BalanceWithLocalEstimate';
+export { FxRateBlock, formatFxUpdatedAt, type FxRateBlockProps } from './FxRateBlock';
 export { PolicyDisclosure, type PolicyDisclosureProps, type DisclosureKey, DISCLOSURE_COPY } from './PolicyDisclosure';
 
