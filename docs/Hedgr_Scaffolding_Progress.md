@@ -1546,3 +1546,170 @@ Future consumers (UI gating, compliance checks)
 
 DoD:
 Sprint 1.0 establishes Hedgr’s Market Policy Core as a deterministic, deny-by-default compliance layer with schema enforcement and CI-safe defaults, laying the foundation for UI gating and market-aware feature control in MC-2 without impacting existing product flows.
+
+⸻
+
+Hedgr Scaffolding Progress — 1.1
+
+Feature: Sprint 1.1 — Backend Stub, E2E Hermeticity, Tx Contract & Trust Disclosures (S11 / MC-S11)
+Owner: (@musalwa)
+Date Shipped: 2026-03-01
+Risk: low (stub-only backend, frontend contract alignment, trust copy; no live providers in CI)
+
+⸻
+
+1. Metadata
+
+Micro-contracts / PRs
+	•	#61 feat(S11-API): add flask backend stub contract routes
+	•	#62 chore(S11-CI): wire stub backend into E2E smoke workflow
+	•	#63 Agent PR enforcement rules (agent template, CODEOWNERS, agent-evidence-pack workflow)
+	•	#65 chore: dogfood agent evidence check (docs/ci.md)
+	•	#66 Playwright E2E smoke pack (smoke-pack.spec.ts, HTML reporter, trace on first retry)
+	•	#67 Trust phrase check (forbidden-words guard)
+	•	#68 feat: complete semantic tone system in dashboard variants
+	•	#69 feat(frontend): MC-S11-004 FX via backend contract
+	•	#70 feat(frontend): Tx contract alignment — txn_ref, ledger schema v2, postDeposit (MC-S11-005)
+	•	#71 refactor(s1.1h): single STATUS_MAP for tx status + docs reorg
+	•	#72 feat(frontend): Trust & Risk disclosures page (MC-S11-006)
+
+Required Checks (branch protection)
+	•	validate
+	•	E2E smoke (@hedgr/frontend)
+
+Environment Defaults (CI-safe)
+	•	Backend: STUB_MODE=true; PORT from env; /v1/health readiness gate before Playwright
+	•	Frontend: NEXT_PUBLIC_API_BASE_URL set in E2E workflow; NEXT_PUBLIC_FX_MODE=stub; OPENAI_MODE=stub
+	•	No live FX, auth, or AI in CI
+
+⸻
+
+2. Contract (Source of Truth)
+
+Goal:
+Introduce a minimal Flask backend stub implementing the S11 API contract; wire it into E2E so Playwright runs against frontend + backend while remaining hermetic. Align frontend deposit/ledger and FX to that contract (txn_ref, schema v2, GET /v1/fx/latest). Centralise tx status presentation (STATUS_MAP) and add a dedicated Trust & Risk disclosure page. Enforce agent PR discipline (evidence pack) and harden E2E (smoke pack, trust phrase checks).
+
+Acceptance (Gherkin-style)
+	•	Backend Stub
+	•	Given STUB_MODE=true when the backend runs then GET /v1/health returns { "status": "ok" }; GET /v1/fx/latest?pair=USDZMW returns deterministic rate; POST /v1/deposits and POST /v1/withdrawals accept txn_ref and return 202 idempotently; errors use { error: { code, message } }.
+	•	E2E Hermeticity
+	•	Given a PR triggers E2E when the workflow runs then Python 3.11 installs backend, backend starts on 5050, health is polled until ready, then Playwright runs with NEXT_PUBLIC_API_BASE_URL pointing at stub; no live external calls.
+	•	FX via Backend
+	•	Given the frontend needs an FX rate when in E2E or stub mode then it calls GET /v1/fx/latest; if backend is down then ErrorState is shown and no raw error is displayed.
+	•	Tx Contract & Ledger
+	•	Given a user confirms a deposit when the frontend runs then a txn_ref (UUID v4) is generated, POST /v1/deposits is called, and one ledger entry keyed by txn_ref is appended; ledger schema v2 (txn_ref, type, status, amount_zmw, amount_usd, fx_rate, created_at, updated_at); version mismatch on load clears store.
+	•	Status Presentation
+	•	Given ledger uses pending/settled/failed when the UI shows status then label and tone come from STATUS_MAP only (TxStatusPill and Activity use getPresentationForPublicStatus).
+	•	Trust & Risk
+	•	Given a user is on Settings when they click "View full disclosure →" then they see /settings/trust with who-holds-funds copy, environment badge (mock/stub/live from AUTH_MODE/FX_MODE), and no forbidden words (guarantee, fully secure, insured). getEnvironmentMode() in lib/env/mode.ts drives badge.
+	•	Agent & E2E Discipline
+	•	Given a PR has label source:agent when the body lacks Evidence pack section or artifact links then agent-evidence-pack workflow fails. Smoke pack covers landing, login, dashboard, deposit, settings, nav with role/data-testid selectors; no ambiguous getByText in strict mode.
+
+Non-negotiables
+	•	Hermetic E2E (no live FX, auth, DeFi, or AI in CI)
+	•	Backend stub only; no production data or live providers
+	•	Single STATUS_MAP for tx status; no duplicate tone maps
+	•	Trust copy free of forbidden phrases; env mode explicit
+	•	Rollback via single revert or env/flag defaults
+
+⸻
+
+3. Implementation
+
+Backend (apps/backend)
+	•	Flask app replacing Poetry/FastAPI placeholder. Endpoints: GET /v1/health, GET /v1/fx/latest?pair=, POST /v1/deposits, POST /v1/withdrawals. Idempotency by txn_ref; 202 with depositId/withdrawalId. Entrypoint: python -m src (src/__main__.py). pytest: health, fx deterministic rate, deposit idempotency.
+
+CI (E2E)
+	•	.github/workflows: Python 3.11, pip install -e "apps/backend[test]", nohup start backend with STUB_MODE=true, poll /v1/health up to 45s, then Playwright. Env: BACKEND_PORT, NEXT_PUBLIC_API_BASE_URL, OPENAI_MODE=stub, NEXT_PUBLIC_FX_MODE=stub. backend.log uploaded on failure.
+
+Agent Process
+	•	.github/PULL_REQUEST_TEMPLATE/agent.md, CODEOWNERS for packages/ui, docs, scripts, .github/workflows. .github/workflows/agent-evidence-pack.yml: fails when PR has source:agent and body missing Evidence pack or artifact URLs. docs/ci.md updated to mention evidence check.
+
+Frontend — FX (MC-S11-004)
+	•	FX rate sourced from GET /v1/fx/latest when using backend; graceful ErrorState on failure. No change to live FX in CI.
+
+Frontend — Tx & Ledger (MC-S11-005)
+	•	lib/deposits/client.ts: generate txn_ref, POST /v1/deposits. Ledger: schema v2 (version: 2, transactions keyed by txn_ref); append idempotent; version mismatch clears store. Deposit page: postDeposit + append; withdraw and activity use new shape. LEDGER_STATUS_MAP; idempotency guard. E2E fixtures updated to schema v2.
+
+Frontend — Status (S1.1H)
+	•	lib/tx/status-mapper.ts: STATUS_MAP (PublicTxStatus → label, tone). TxStatusPill and Activity use getPresentationForPublicStatus only; PublicTxStatusLabels removed. Docs reorg: docs/ops, docs/architecture, docs/modules, docs/contracts, docs/ui.
+
+Frontend — Trust & Risk (MC-S11-006)
+	•	Route app/(app)/settings/trust/page.tsx: Who holds my funds?, Environment (badge from getEnvironmentMode()), What Hedgr Controls, What Hedgr Does Not Control. lib/env/mode.ts: getEnvironmentMode() → 'mock'|'stub'|'live' (AUTH_MODE precedence; FX_MODE stub/fixed → stub). Settings link "View full disclosure →" to /settings/trust (label shortened to avoid Playwright strict locator collision with "Trust & Risk" heading). Unit tests: __tests__/env/mode.test.ts, __tests__/trust.test.tsx (no forbidden words).
+
+E2E & Trust
+	•	tests-e2e/smoke-pack.spec.ts: 6 tests (landing, login, dashboard, settings trust section, deposit, nav). Trust phrase check: no "guarantee", "fully secure", "insured" in trust copy. Locators: role and data-testid; page.getByText('Trust & Risk') unique (single h2).
+
+⸻
+
+4. QA (Codex)
+
+Unit Tests
+	•	Backend: health, fx deterministic, deposit idempotency. Frontend: getEnvironmentMode(), policy/API (existing), postDeposit client, ledger append/persist/version mismatch, balance projection, status-mapper and TxStatusPill, trust page copy and badge.
+
+CI Invariants Verified
+	•	E2E runs with stub backend; health gate passes; no live network. validate and E2E smoke (@hedgr/frontend) green. Agent evidence-pack fails only when source:agent and body missing evidence.
+
+All validate + E2E smoke checks green across Sprint 1.1 PRs.
+
+⸻
+
+5. Post-CI Audit
+
+Outcomes
+	•	Backend stub and E2E wiring merged; frontend uses /v1/health, /v1/fx/latest, POST /v1/deposits; ledger schema v2 and txn_ref contract in place; STATUS_MAP single source for tx UI; Trust & Risk page and env mode shipped; agent evidence pack and smoke pack enforced.
+
+Stability Fixes Applied During Sprint
+	•	MC-S11-006-FIX: Playwright strict locator collision on Settings — link text "View full Trust & Risk disclosure →" changed to "View full disclosure →" so page.getByText('Trust & Risk') resolves to a single element (h2).
+
+Residual Risk
+	•	Low. Backend is stub-only; FX and deposit flows remain flag/env controlled; Trust page is static and copy-only.
+
+⸻
+
+6. CI & Deployment
+
+Workflows
+	•	.github/workflows/validate.yml
+	•	.github/workflows/e2e-smoke.yml (backend start, health gate, Playwright)
+	•	.github/workflows/agent-evidence-pack.yml (evidence pack for source:agent PRs)
+
+Determinism
+	•	Node 20; Python 3.11 for backend. pnpm –frozen-lockfile; corepack. No live providers in CI.
+
+Rollback Posture
+	•	Revert individual PR or set STUB_MODE / NEXT_PUBLIC_API_BASE_URL to skip backend in E2E if needed. Ledger schema v2 mismatch clears store (no migration).
+
+⸻
+
+7. Build Health Notes
+
+Incidents & Remediations
+	•	Strict-mode collision on "Trust & Risk" (heading + link) resolved by shortening link label to "View full disclosure →" (MC-S11-006-FIX).
+
+Guardrails Reinforced
+	•	E2E: prefer role and data-testid; avoid getByText for text that appears in multiple elements. Backend: stub-only in CI; health gate before Playwright.
+
+⸻
+
+8. Architecture Snapshot
+
+CI: checkout → setup Node + pnpm → setup Python → install backend → start backend (STUB_MODE) → poll /v1/health → build frontend → Playwright (NEXT_PUBLIC_API_BASE_URL)
+
+Frontend: FX via GET /v1/fx/latest; deposit via POST /v1/deposits + txn_ref; ledger schema v2; STATUS_MAP → TxStatusPill/Activity; getEnvironmentMode() → Trust page badge; /settings/trust static copy.
+
+⸻
+
+9. Definition of Done
+	•	Flask backend stub implements /v1/health, /v1/fx/latest, POST /v1/deposits, POST /v1/withdrawals with idempotent txn_ref and standard error shape.
+	•	E2E workflow starts backend, passes health gate, runs Playwright with stub; no live external calls.
+	•	Frontend FX and deposit use backend contract; ledger schema v2 and txn_ref canonical; STATUS_MAP single source for tx status display.
+	•	Trust & Risk page at /settings/trust with env badge and no forbidden words; Settings link unique for locators.
+	•	Agent evidence-pack and smoke pack in place; validate and E2E smoke green.
+	•	Branch protection and CI defaults unchanged for non-S11 paths.
+
+⸻
+
+DoD:
+Sprint 1.1 delivers the S11 backend stub, hermetic E2E with backend wiring, frontend contract alignment (FX, txn_ref, ledger schema v2, STATUS_MAP), Trust & Risk disclosure page and env mode, agent PR evidence discipline, and Playwright smoke pack—without introducing live providers or weakening selector discipline in CI.
+
