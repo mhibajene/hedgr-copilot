@@ -4,7 +4,7 @@ The Solo QA Gate enforces deliberate QA sign-off through label requirements in t
 
 ### Process
 1) **Open PR** (template appears). Fill AC & tests sections.
-2) **Run local checks**: `pnpm -w typecheck | pnpm -w lint | pnpm -w test -- --run`, then `e2e:ci`.
+2) **Run local checks**: `pnpm -w typecheck | pnpm -w lint | pnpm -w test -- -- --run`, then `e2e:ci`.
 3) **Apply labels** (all required to keep Solo QA Gate green):
    - `product:approved` (content matches CONTRACT)
    - `qa:approved` (pre-merge QA checklist done)
@@ -29,4 +29,14 @@ The Solo QA Gate enforces deliberate QA sign-off through label requirements in t
 **CLI shortcut**
 ```bash
 gh pr edit $PR --add-label "product:approved,qa:approved,area:ci,risk:low"
+```
+
+### Local E2E Parity
+- Local `e2e:ci` runs should mirror `.github/workflows/e2e-smoke.yml`, especially for deposit/withdraw and FX-backed flows.
+- If `/deposit` renders `Unable to load exchange rate` or Playwright cannot find `data-testid="deposit-amount"`, verify the local backend stub is running and `NEXT_PUBLIC_API_BASE_URL` is pointed at it.
+- Recommended local parity sequence:
+```bash
+python3.11 -m pip install -e "apps/backend[test]"
+STUB_MODE=true PORT=5050 PYTHONUNBUFFERED=1 python3.11 -m src.app --port 5050
+NEXT_PUBLIC_AUTH_MODE=mock NEXT_PUBLIC_DEFI_MODE=mock NEXT_PUBLIC_FX_MODE=stub NEXT_PUBLIC_APP_ENV=dev NEXT_PUBLIC_API_BASE_URL=http://localhost:5050 NEXT_PUBLIC_FEATURE_COPILOT_ENABLED=true pnpm --filter @hedgr/frontend e2e:ci
 ```
