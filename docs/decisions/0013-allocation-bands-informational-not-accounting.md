@@ -71,6 +71,13 @@ The ledger remains the sole source of truth for financial state shown to the use
 
 ---
 
+## Related ADRs
+
+- [ADR 0014 — Stability Engine Is Read-Only in Sprint 2](./0014-stability-engine-read-only-in-sprint-2.md)
+- [ADR 0015 — Stability Engine Is the System Center](./0015-stability-engine-is-the-system-center.md)
+
+---
+
 ## Follow-ups
 
 - Add copy guidance for allocation bands in the UX layer.

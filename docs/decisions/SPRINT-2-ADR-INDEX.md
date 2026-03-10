@@ -1,0 +1,144 @@
+# Sprint 2 ADR Index
+
+## Purpose
+
+This index lists the architecture decisions that govern Sprint 2 of Hedgr's Stability Engine Foundation.
+
+Sprint 2 is read-only, posture-first, and non-executing. These ADRs exist to ensure implementation remains aligned with Hedgr's Stability-Engine-led roadmap, trust-first UX doctrine, and ledger-first architecture.
+
+---
+
+## Sprint 2 Doctrine Summary
+
+- Stability Engine is the system center
+- Sprint 2 engine surfaces are read-only
+- Allocation bands are informational, not accounting
+- Ledger remains canonical
+- UX must communicate posture calmly and truthfully
+- No execution semantics should enter Sprint 2
+
+---
+
+## Governing ADRs
+
+### ADR 0015 — Stability Engine Is the System Center
+**Why it matters**  
+Defines the Stability Engine as Hedgr's product core and re-centers roadmap, backlog, and architecture around it.
+
+**Constrains**
+- Sprint 2 planning
+- ticket sequencing
+- UX role
+- Copilot role
+- release framing
+
+**Prevents**
+- wallet-first drift
+- feature-led sequencing
+- Copilot overreach
+- APY-led framing
+
+**File**  
+`docs/decisions/0015-stability-engine-is-the-system-center.md`
+
+---
+
+### ADR 0014 — Stability Engine Is Read-Only in Sprint 2
+**Why it matters**  
+Defines the read-only architectural boundary for Sprint 2 engine work.
+
+**Constrains**
+- `EngineState` contract
+- mock provider
+- simulator behavior
+- UI responsibilities
+
+**Prevents**
+- execution leakage
+- premature backend coupling
+- treasury instruction semantics in frontend state
+- routing/mutation creep
+
+**File**  
+`docs/decisions/0014-stability-engine-read-only-in-sprint-2.md`
+
+---
+
+### ADR 0013 — Allocation Bands Are Informational, Not Accounting
+**Why it matters**  
+Protects against using engine posture and allocation bands as accounting truth.
+
+**Constrains**
+- allocation band UI
+- `EngineState` semantics
+- explanatory copy
+- dashboard interpretation
+
+**Prevents**
+- shadow accounting
+- ledger duplication
+- misleading "funds already moved" UX
+- balance-like misuse of target percentages
+
+**File**  
+`docs/decisions/0013-allocation-bands-informational-not-accounting.md`
+
+---
+
+## Ticket Mapping
+
+### MC-S2-001 — Canonical EngineState contract
+**Governed by**
+- ADR 0014
+- ADR 0013
+- ADR 0015
+
+### MC-S2-002 — Mock engine state provider
+**Governed by**
+- ADR 0014
+- ADR 0015
+
+### MC-S2-003 — Posture badge + notice banner
+**Governed by**
+- ADR 0014
+- ADR 0015
+
+### MC-S2-004 — Allocation bands UI
+**Governed by**
+- ADR 0013
+- ADR 0014
+- ADR 0015
+
+### MC-S2-005 — Local posture simulator
+**Governed by**
+- ADR 0014
+- ADR 0015
+
+### MC-S2-006 — Canonical notice copy
+**Governed by**
+- ADR 0013
+- ADR 0014
+- ADR 0015
+
+---
+
+## Usage Rule
+
+Before implementing any Sprint 2 ticket:
+
+1. Check the relevant ADRs in this index.
+2. Confirm the ticket does not violate read-only boundaries.
+3. Confirm the ticket does not introduce accounting or execution semantics.
+4. Confirm the output supports calm, trust-first, posture-based UX.
+
+If a ticket conflicts with one of these ADRs, stop and escalate before implementing.
+
+---
+
+## Follow-up
+
+Update this index whenever:
+
+- a new Sprint 2 ADR is accepted
+- a ticket gains or loses doctrinal dependencies
+- Sprint 2 scope materially changes
