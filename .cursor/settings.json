@@ -6,5 +6,11 @@
     "figma": {
       "enabled": true
     }
+  },
+  "editor": {
+    "defaultPatchMode": "diff"
+  },
+  "assistant": {
+    "preferSmallDiffs": true
   }
 }
