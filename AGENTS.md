@@ -64,3 +64,83 @@ When implementing:
 ## 8) Decision Logging (ADR)
 Material decisions must be logged as ADRs under docs/ using the HedgrOps ADR standard.
 Examples: architecture boundary, custody/trust posture, compliance posture, sequencing decisions.
+
+# AGENTS.md — Hedgr Repo Execution Standard (v2)
+
+Status: Binding (Repo workflow, engineering conventions, CI posture)
+Scope: apps/, packages/, scripts/, .github/, docs/
+
+## 1) Purpose
+AGENTS.md defines how work is executed in this repo:
+- repo layout and boundaries
+- CI expectations and hermetic rules
+- environment flags and defaults
+- implementation workflow conventions
+
+For doctrine, architecture, product/system invariants, and anti-drift rules, `.cursorrules` is the governing authority.
+
+For patch execution discipline, `.cursor/rules.md` applies.
+
+## 2) Repo Layout (canonical)
+- apps/frontend/  — Next.js app (App Router + Pages Router), API routes, Vitest, ESLint
+- apps/backend/   — Flask backend service boundary; currently limited in scope but part of the canonical system structure
+- packages/ui/    — Shared UI library (`@hedgr/ui`)
+- packages/config/— Shared config surface (future)
+- docs/           — Doctrine, ADRs, architecture, contracts, copilot, ops, and scaffolding records
+- scripts/        — CI and repo guard scripts (trust checks, workflow guards, validation)
+- .github/        — CI workflows, templates, automation
+
+## 3) Non-Negotiables
+- Security and trust before speed.
+- CI/E2E must remain hermetic: no live external calls.
+- Deny-by-default: mock/stub modes in CI.
+- Rollback must be possible via flag or single revert.
+- Respect current sprint posture and implementation boundaries.
+
+## 4) Required CI Checks (branch protection)
+- validate
+- E2E smoke (@hedgr/frontend)
+
+(Workflow names must remain stable once enforced.)
+
+## 5) Environment Flags (defaults are CI-safe)
+
+Frontend:
+- NEXT_PUBLIC_AUTH_MODE=mock
+- NEXT_PUBLIC_FX_MODE=stub
+- NEXT_PUBLIC_MARKET_MODE=manual
+- NEXT_PUBLIC_MARKET_SELECTED=UNKNOWN
+- NEXT_PUBLIC_API_BASE_URL=http://localhost:5050
+
+Backend:
+- STUB_MODE=true
+
+AI:
+- OPENAI_MODE=stub
+
+## 6) Testing Standards
+- Unit: Vitest (frontend)
+- E2E: Playwright smoke (frontend)
+- Stable selectors: prefer role-based selectors and `data-testid`; avoid brittle DOM chains.
+- No test depends on external services (CoinGecko, MTN, Aave, OpenAI, Magic).
+- Behavior changes should ship with corresponding test updates unless explicitly waived.
+
+## 7) Execution Rules
+When implementing:
+- Reference exact file paths.
+- Prefer small PRs: one boundary change per branch.
+- Add or extend tests in the same PR when touching contract surfaces.
+- Default to reversible designs (flags + stubs).
+- Never merge a PR that introduces a live network dependency in CI.
+- Do not violate `.cursorrules` or current ADR constraints for implementation convenience.
+
+## 8) Decision Logging (ADR)
+Material decisions must be logged as ADRs under `docs/decisions/` using:
+`docs/doctrine/hedgrops-decision-governance-and-adr-export-standard.md`
+
+Examples:
+- architecture boundaries
+- custody and trust posture
+- compliance posture
+- sequencing decisions
+- policy or engine control changes
