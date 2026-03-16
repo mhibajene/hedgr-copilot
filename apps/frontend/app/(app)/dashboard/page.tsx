@@ -1,15 +1,18 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { EnginePostureHeader } from './EnginePostureHeader';
 import { useBalance } from '../../../lib/hooks/useBalance';
 import { defiAdapter } from '../../../lib/defi';
 import { useLedgerStore } from '../../../lib/state/ledger';
 import { EmptyState, ErrorState } from '@hedgr/ui';
 import { BalanceWithLocalEstimate, PolicyDisclosure } from '../../../components';
+import { useEngineState } from '../../../lib/engine/useEngineState';
 import { usePolicy } from '../../../lib/policy/usePolicy';
 
 export default function DashboardPage() {
   const { total, available, pending, isLoading, error, currency, refresh } = useBalance();
+  const engineState = useEngineState();
   const { isFeatureEnabled } = usePolicy();
   const transactions = useLedgerStore((s) => s.transactions);
   const [apy, setApy] = useState<number | null>(null);
@@ -32,7 +35,7 @@ export default function DashboardPage() {
   if (error) {
     return (
       <main className="p-6 space-y-6">
-        <h1 className="text-2xl font-semibold">Dashboard</h1>
+        <EnginePostureHeader engineState={engineState} />
         <ErrorState
           title="Unable to load your balance"
           description="We couldn't fetch your account balance. Please try again."
@@ -45,7 +48,7 @@ export default function DashboardPage() {
 
   return (
     <main className="p-6 space-y-6">
-      <h1 className="text-2xl font-semibold">Dashboard</h1>
+      <EnginePostureHeader engineState={engineState} />
       
       {/* Welcome banner for first-time users - shown alongside balance */}
       {isFirstTimeUser && (
