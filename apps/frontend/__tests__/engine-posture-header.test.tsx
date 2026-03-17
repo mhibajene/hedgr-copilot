@@ -4,7 +4,6 @@ import React from 'react';
 import { afterEach, describe, expect, test, vi } from 'vitest';
 import { cleanup, render, screen } from '@testing-library/react';
 import { EnginePostureHeader } from '../app/(app)/dashboard/EnginePostureHeader';
-import { ENGINE_NOTICE_COPY } from '../lib/engine/notices';
 import { getMockEngineState } from '../lib/engine/mock';
 
 afterEach(() => {
@@ -32,14 +31,20 @@ describe('EnginePostureHeader', () => {
     expect(screen.queryByTestId('engine-posture-banner')).toBeNull();
   });
 
-  test('renders the notice banner for a non-normal posture with notice copy', () => {
-    render(<EnginePostureHeader engineState={getMockEngineState('tightening')} />);
+  test.each(['tightening', 'tightened', 'recovery'] as const)(
+    'renders the notice banner through the shipped engine state path for %s posture',
+    (posture) => {
+      const engineState = getMockEngineState(posture);
 
-    const banner = screen.getByTestId('engine-posture-banner');
-    expect(banner).toBeDefined();
-    expect(screen.getByText(ENGINE_NOTICE_COPY.tightening.title)).toBeDefined();
-    expect(screen.getByText(ENGINE_NOTICE_COPY.tightening.body)).toBeDefined();
-  });
+      render(<EnginePostureHeader engineState={engineState} />);
+
+      const banner = screen.getByTestId('engine-posture-banner');
+      expect(banner).toBeDefined();
+      expect(banner.getAttribute('role')).toBe('status');
+      expect(screen.getByText(engineState.notice!.title)).toBeDefined();
+      expect(screen.getByText(engineState.notice!.body)).toBeDefined();
+    },
+  );
 
   test('warns and does not invent a banner when a non-normal posture lacks notice copy', () => {
     const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});

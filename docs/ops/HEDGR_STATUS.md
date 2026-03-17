@@ -1,26 +1,25 @@
-
-
-# HEDGR_STATUS
-
 Status: Active hand-off file  
-Purpose: Strategic context bridge between ChatGPT UI sessions and Cursor  
-Last updated: 2026-03-15
+Purpose: Strategic and implementation continuity bridge between ChatGPT UI sessions and Cursor  
+Last updated: 2026-03-17
 
 ---
 
 ## 1. Current strategic posture
 
-Hedgr is now formally positioned as a **Global Stability Wallet** built around the **Hedgr Stability Engine**.
+Hedgr is being built as a **financial stability operating system** centered on the **Hedgr Stability Engine**.
 
-The repo is no longer being treated as a simple frontend implementation surface. It is now governed as a doctrine-aware monorepo containing:
+The wallet is not the conceptual center of the system. The wallet is proof of the system thesis.
 
-- product surfaces
-- system controls
-- policy and trust layers
-- architecture doctrine
-- ADR-backed implementation posture
+Current doctrinal framing:
 
-The architectural center of the system is the **Hedgr Stability Engine**.
+- Hedgr is not a wallet; the wallet is proof
+- The Stability Engine is the system center
+- Governance is the moat
+- Liquidity comes before yield
+- Withdrawal integrity comes before optimization
+- Risk must remain visible
+- Allocation communication must not become shadow accounting
+- Copilot remains advisory and subordinate
 
 Core operating principle:
 
@@ -28,58 +27,53 @@ Core operating principle:
 
 ---
 
-## 2. Active sprint alignment
+## 2. Current sprint posture
 
-The current sprint posture is governed by Sprint 2 doctrine.
+The repo is currently governed by the read-only Stability Engine foundation and governance-hardening posture established across Sprint 2 through Sprint 4.
 
-Important constraints:
+Current posture is:
 
-- the Stability Engine is **read-only and informational** in the active sprint
-- allocation bands remain **informational**, not accounting truth, unless superseding doctrine explicitly changes that posture
-- no hidden execution, fund movement, or autonomous reallocation should be introduced
+- read-only
+- posture-first
+- non-executing
+- trust-first
+- conservative and reversible
+- frontend-centered for current engine work
+- governance-constrained
+
+Important active constraints:
+
+- the Stability Engine remains **read-only and informational**
+- allocation bands remain **informational**, not accounting truth
+- no hidden execution, fund movement, or autonomous reallocation may be introduced
+- no ledger duplication or balance truth should be implied by engine UI
+- no live backend engine coupling should be introduced in the current phase
 - runtime policy and trust constraints remain first-class control layers
-- implementation should remain conservative, reversible, and testable
+- local simulation may exist only as a dev-safe validation aid, not as runtime authority
 
-Relevant governing ADRs:
-
-- `docs/decisions/0011-stability-engine-is-read-only-sprint-2.md`
-- `docs/decisions/0014-stability-engine-read-only-in-sprint-2.md`
-- `docs/decisions/0015-stability-engine-is-the-system-center.md`
-- `docs/decisions/SPRINT-2-ADR-INDEX.md`
+This phase is still about establishing and hardening the Stability Engine boundary, not extending into execution architecture.
 
 ---
 
-## 3. Doctrine layer established
+## 3. Governing references that must be read first
 
-The repo doctrine has now been materially upgraded.
+Before implementing or reviewing continuation work, read in this order:
 
-Canonical doctrine files now include:
+1. `AGENTS.md`
+2. `docs/decisions/0015-stability-engine-is-the-system-center.md`
+3. `docs/decisions/0014-stability-engine-read-only-in-sprint-2.md`
+4. `docs/decisions/0013-allocation-bands-informational-not-accounting.md`
+5. `docs/decisions/SPRINT-2-ADR-INDEX.md`
 
-- `docs/doctrine/hedgr-whitepaper.md`
-- `docs/doctrine/hedgr-mvp-project-specification.md`
-- `docs/doctrine/hedgr-system-overview.md`
-- `docs/doctrine/hedgr-product-surfaces.md`
-- `docs/doctrine/hedgr-stability-engine.md`
+These are binding references for current implementation posture.
 
-Historical artifacts preserved:
-
-- `docs/doctrine/hedgr-whitepaper-v0.md`
-- `docs/doctrine/hedgr-mvp-project-specification-v0.md`
-
-Additional doctrine and governance files in force:
-
-- `docs/doctrine/hedgr-constitutional-charter.md`
-- `docs/doctrine/hedgr-ux-constitution.md`
-- `docs/doctrine/hedgr-default-allocation-policy.md`
-- `docs/doctrine/hedgrops-decision-governance-and-adr-export-standard.md`
+Do not silently reconcile conflicts. Surface them explicitly.
 
 ---
 
-## 4. Governance stack now in place
+## 4. Governance stack in force
 
-Repo governance has been tightened and aligned.
-
-Current hierarchy:
+Current repo governance hierarchy:
 
 1. `.cursorrules` — doctrine, architecture, UX/policy posture, anti-drift authority
 2. `.cursor/rules.md` — patch execution discipline
@@ -87,19 +81,19 @@ Current hierarchy:
 4. `.github/PULL_REQUEST_TEMPLATE/agent.md` — review/evidence workflow
 5. `README.md` — repo front door and current implementation posture
 
-This means Cursor should now behave as a **doctrine-constrained co-architect**, not a generic coding assistant.
+Cursor should behave as a **doctrine-constrained co-architect**, not a generic coding assistant.
 
 ---
 
 ## 5. Product and architecture framing
 
-Hedgr is now clearly framed as a financial stability operating system with three product surfaces:
+Hedgr has three product surfaces:
 
 - **Hedgr Wallet** — consumer stability wallet
 - **Hedgr Pro** — treasury platform for SMEs and professional users
 - **Hedgr APIs** — infrastructure layer for fintechs and partners
 
-All product surfaces are downstream interfaces into the shared system core:
+All product surfaces are downstream interfaces into the shared core:
 
 - Hedgr Stability Engine
 - Yield Routing Engine
@@ -107,66 +101,343 @@ All product surfaces are downstream interfaces into the shared system core:
 - payment rails
 - AI Copilot
 
-The Stability Engine remains the canonical allocator of capital within the Hedgr system.
+The **Hedgr Stability Engine** is the canonical allocator of capital in Hedgr’s target system design.
+
+In the current implemented phase, it remains read-only and informational.
+
+Yield routing is subordinate to engine safety constraints.
 
 ---
 
-## 6. Repo implementation posture
+## 6. Implementation state already completed
 
-Current implementation posture:
+The following work is already completed and should be treated as current implementation truth.
 
-- trust-first
-- policy-aware
-- doctrine-constrained
-- hermetic in CI / E2E
-- reversible by default
+### MC-S2-001 — Canonical EngineState contract
+
+Completed and merged:
+
+- `apps/frontend/lib/engine/types.ts`
+
+Canonical contract:
+
+```ts
+export type EnginePosture =
+  | 'normal'
+  | 'tightening'
+  | 'tightened'
+  | 'recovery';
+
+export interface EngineNotice {
+  title: string;
+  body: string;
+}
+
+export interface EngineState {
+  posture: EnginePosture;
+  liquidityTargetPct: number;
+  coreTargetPct: number;
+  yieldCapPct: number;
+  notice?: EngineNotice;
+  updatedAt: string;
+}
+
+Implementation decisions already established:
+	•	created under repo-native pattern: apps/frontend/lib/<domain>/types.ts
+	•	named exports only
+	•	no barrel export added
+	•	no runtime code added
+	•	no tests added
+	•	no policy, accounting, ledger, or execution semantics introduced
+
+This is the canonical posture representation boundary.
+
+Do not reshape it casually.
+
+MC-S2-002 — Mock engine state provider
+
+Completed and merged:
+	•	apps/frontend/lib/engine/mock.ts
+	•	apps/frontend/lib/engine/useEngineState.ts
+
+Implementation decisions already established:
+	•	deterministic mock provider added
+	•	hook remains thin and synchronous
+	•	default posture resolves to normal
+	•	posture state remains centrally sourced from engine modules
+	•	no backend, policy, wallet, tx, or ledger coupling added
+	•	no execution semantics introduced
+	•	no accounting semantics introduced
+
+Expected provider shape already established:
+	•	getMockEngineState(posture?: EnginePosture): EngineState
+	•	useEngineState(): EngineState
+
+Mock states are deterministic and informational only.
+
+They are used to support:
+	•	posture-first UI rendering
+	•	trust expression
+	•	safe local validation
+
+They are not:
+	•	balances
+	•	settled allocations
+	•	ledger truth
+	•	execution intent
+	•	policy output
+
+MC-S2-003 — Posture badge + notice banner
+
+Completed and merged.
+
+Implemented outcome:
+	•	dashboard header now exposes Stability Engine posture
+	•	posture badge renders from engine state
+	•	notice banner appears for non-normal posture states
+	•	trust communication remains calm, descriptive, and non-promissory
+	•	UI remains read-only and posture-expressive only
+
+Implementation decisions already established:
+	•	engine posture is surfaced through existing engine state consumption
+	•	no execution or accounting meaning was added
+	•	no policy logic was moved into posture presentation
+	•	no simulator coupling was introduced into the UI surface
+
+MC-S4-001 — Canonical Stability notice copy contract
+
+Completed and merged.
+
+Implemented outcome:
+	•	canonical notice copy source now exists for non-normal posture states
+	•	provisional inline copy is no longer the governing source
+	•	notice language is centralized and trust-safe
+	•	normal posture remains notice-free by default
+
+Implementation decisions already established:
+	•	canonical notice ownership lives in engine-local copy definitions
+	•	UI continues rendering from EngineState.notice
+	•	mock/provider layers remain read-only and deterministic
+	•	this did not become a generalized notification system
+
+MC-S4-002 — Local posture simulator with hard dev-only boundaries
+
+Completed and merged.
+
+Implemented outcome:
+	•	local posture simulation now exists for frontend validation
+	•	simulation remains isolated from product/runtime semantics
+	•	default behavior remains deterministic and resolves to normal when no approved override is present
+	•	simulator is ignored in CI, test, production, and other non-local contexts recognized by repo-native mode detection
+
+Implementation decisions already established:
+	•	simulator logic is isolated in an adjacent engine-local utility
+	•	useEngineState() remains thin and parameterless
+	•	mock.ts remains the sole EngineState assembly point
+	•	UI consumers remain simulator-unaware
+	•	simulation is explicit, local-only, reversible, and non-canonical
+	•	no persistence, backend coupling, policy logic, execution semantics, or accounting semantics were introduced
+
+Simulation doctrine now in force:
+	•	simulation is for local frontend validation only
+	•	simulation must never become runtime authority
+	•	query param presence alone must never activate simulation outside approved local/development-safe contexts
+	•	simulator behavior is not product behavior
+
+⸻
+
+7. Current sequence and next ticket
+
+Current progression:
+
+Foundation and trust-expression work completed
+	•	MC-S2-001 — Create canonical EngineState contract ✅
+	•	MC-S2-002 — Create mock engine state provider ✅
+	•	MC-S2-003 — Build posture badge + notice banner ✅
+	•	MC-S4-001 — Canonical Stability notice copy contract ✅
+	•	MC-S4-002 — Local posture simulator with hard dev-only boundaries ✅
+
+Current next ticket
+	•	MC-S4-003 — Stability Engine trust-surface test coverage ⏭ current next ticket
+
+Do not skip sequencing unless there is a clear repo-level reason.
+
+Current continuation instruction:
+
+Proceed with MC-S4-003 only unless explicitly instructed otherwise.
+
+⸻
+
+8. MC-S4-003 implementation brief
+
+Objective:
+
+Add repo-native test coverage for the shipped Stability Engine trust surfaces so the read-only posture boundary is harder to regress.
+
+Expected scope:
+	•	posture badge rendering coverage
+	•	notice banner visibility/behavior coverage
+	•	canonical notice rendering coverage where relevant
+	•	simulator resolver coverage for allowed values, fallback behavior, and local-only guardrails
+	•	only the minimum test surface needed to validate current shipped behavior
+
+Constraints:
+	•	no new execution semantics
+	•	no accounting semantics
+	•	no backend engine coupling
+	•	no new simulator authority
+	•	no policy logic embedded into posture objects
+	•	no route-level integration testing unless a repo-native pattern already exists
+	•	no new testing framework
+	•	no widening into product/runtime config work
+
+Test intent:
+	•	verify badge rendering across supported posture states
+	•	verify non-normal notice banner visibility behavior
+	•	verify normal posture remains banner-free
+	•	verify simulator resolver handles:
+	•	allowed posture values
+	•	invalid values
+	•	missing values
+	•	non-local guardrails
+	•	preserve behavioral assertions rather than tautological source-equality tests
+
+Expected implementation return after completing the ticket:
+	1.	what changed
+	2.	why it changed
+	3.	convention decisions taken
+	4.	risks or follow-ups
+	5.	whether the ticket is fully complete against acceptance criteria
+
+Do not continue automatically to the next ticket.
+
+⸻
+
+9. Repo implementation posture and conventions
+
+Current repo posture:
+	•	trust-first
+	•	policy-aware
+	•	doctrine-constrained
+	•	hermetic in CI / E2E
+	•	reversible by default
 
 Important repo constraints:
+	•	Doppler is the canonical secrets source
+	•	do not introduce new long-lived .env workflows as source of truth
+	•	no live external provider dependencies in CI / E2E
+	•	tests should move with behavior changes
+	•	trust, disclosure, and policy consistency are part of the implementation contract
 
-- Doppler is the canonical secrets source
-- do not introduce new long-lived `.env` workflows as source of truth
-- no live external provider dependencies in CI / E2E
-- tests should move with behavior changes
-- trust, disclosure, and policy consistency are part of the implementation contract
+Relevant frontend repo context already established:
+	•	apps/frontend/lib/engine/ is the correct engine domain location
+	•	types.ts pattern already exists in repo-native domain folders
+	•	barrels are selective, not mandatory
+	•	named exports are acceptable and currently aligned
+	•	no evidence currently requires a new engine/index.ts barrel
+	•	engine-local utilities may be added where they preserve boundary clarity and keep UI consumers thin
 
----
+Also inspect and follow:
+	•	existing conventions across apps/frontend
+	•	shared type/export/barrel conventions
+	•	tsconfig alias rules
+	•	lint, formatting, and test conventions
 
-## 7. What Cursor should assume right now
+Do not proceed in a way that conflicts with AGENTS.md.
 
-When working from this hand-off file, Cursor should assume:
+⸻
 
-- doctrine takes precedence over implementation convenience
-- the engine is the system center
-- Sprint 2 is read-only for the Stability Engine
-- allocation outputs are informational unless doctrine explicitly changes that
-- policy-core and trust disclosures must remain consistent with engine and UI behavior
-- small, reversible, well-tested patches are preferred
-- if a requested change creates doctrinal ambiguity, doctrine should be consulted or extended before architecture drift is introduced
+10. Architectural boundaries for remaining work
 
----
+Current phase may include:
+	•	canonical frontend engine state contract
+	•	deterministic engine mock state provider
+	•	posture communication UI
+	•	allocation target visualization
+	•	local posture simulation for frontend validation
+	•	canonical explanatory notice copy
+	•	repo-native trust-surface tests for shipped behavior
+	•	narrow documentation reconciliation directly required by shipped changes
 
-## 8. Immediate next-use guidance
+Current phase must not include:
+	•	balances as engine truth
+	•	ledger duplication
+	•	transaction mutation
+	•	rebalance execution
+	•	DeFi routing
+	•	live backend engine coupling
+	•	live signals
+	•	market-policy availability logic inside posture state
+	•	directive Copilot behavior
+	•	APY-led framing
+	•	generalized runtime control planes
 
-Use this file as the quick strategic primer before asking Cursor to:
+Core implementation rule:
 
-- review or implement sprint tickets
-- scaffold system work touching allocation, policy, trust, or Copilot behavior
-- assess whether a requested change needs an ADR
-- understand current repo governance and architecture posture
+Every current ticket must strengthen one of these only:
+	1.	engine representation
+	2.	trust expression of engine posture
+	3.	safe local simulation for UI validation
+	4.	regression resistance for already-shipped trust surfaces
+
+Reject or challenge any implementation that introduces:
+	•	execution semantics
+	•	accounting semantics
+	•	policy coupling inside posture objects
+	•	hype semantics
+	•	hidden risk
+	•	simulation as runtime authority
+
+⸻
+
+11. Deferred architecture guidance
+
+The next architecture layer is not yet in active implementation scope.
+
+Do not treat completion of simulation and trust-surface hardening as permission to introduce:
+	•	backend engine computation
+	•	live posture signals
+	•	execution-intent contracts
+	•	policy-engine merging
+	•	ledger mutation from engine outputs
+
+Any future ADR or architecture track for backend coupling, live coupling, or execution intent must remain deferred governance work until the read-only frontend boundary is fully validated and explicitly expanded by doctrine.
+
+Hand-off principle:
+
+Finish the boundary. Prove the boundary. Document the boundary. Do not widen it casually.
+
+If a future task creates doctrinal ambiguity, pause and surface the ambiguity before coding.
+
+⸻
+
+12. Immediate next-use guidance
+
+Use this file as the quick continuity primer before asking Cursor to:
+	•	continue Stability Engine trust-surface hardening
+	•	review or implement tickets touching engine posture, simulation, allocation, policy, trust, or Copilot behavior
+	•	assess whether a requested change needs an ADR
+	•	understand current repo governance and architecture posture
 
 For deeper context, open next:
+	1.	docs/decisions/SPRINT-2-ADR-INDEX.md
+	2.	docs/decisions/0015-stability-engine-is-the-system-center.md
+	3.	docs/decisions/0014-stability-engine-read-only-in-sprint-2.md
+	4.	docs/decisions/0013-allocation-bands-informational-not-accounting.md
+	5.	.cursorrules
 
-1. `docs/decisions/SPRINT-2-ADR-INDEX.md`
-2. `docs/doctrine/hedgr-stability-engine.md`
-3. `docs/doctrine/hedgr-system-overview.md`
-4. `.cursorrules`
+⸻
 
----
+13. Naming note
 
-## 9. Naming note
+The intended hand-off file name is HEDGR_STATUS.md.
 
-The intended hand-off file name is **`HEDGR_STATUS.md`**.
+Continue using:
 
-If any notes or instructions reference `HEGDR_STATUS.md`, treat that as a typo and continue using:
+docs/ops/HEDGR_STATUS.md
 
-`docs/ops/HEDGR_STATUS.md`
+Recommended next ticket title for Cursor:
+**MC-S4-003 — Stability Engine trust-surface test coverage**
+
+Suggested branch:
+`feat/mc-s4-003-engine-trust-surface-tests`

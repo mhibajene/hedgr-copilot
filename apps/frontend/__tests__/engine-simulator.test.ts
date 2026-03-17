@@ -54,6 +54,15 @@ describe('engine simulator', () => {
     );
   });
 
+  test('disables the simulator in production environment', () => {
+    process.env.NODE_ENV = 'production';
+
+    expect(isLocalEngineSimulatorEnabled()).toBe(false);
+    expect(resolveEngineSimulatorPosture('?enginePosture=tightening')).toBe(
+      'normal',
+    );
+  });
+
   test('returns the requested posture only for valid local overrides', () => {
     expect(resolveEngineSimulatorPosture('?enginePosture=tightening')).toBe(
       'tightening',
@@ -62,6 +71,8 @@ describe('engine simulator', () => {
 
   test('falls back to normal when the override is missing or invalid', () => {
     expect(resolveEngineSimulatorPosture(undefined)).toBe('normal');
+    expect(resolveEngineSimulatorPosture('')).toBe('normal');
+    expect(resolveEngineSimulatorPosture('?enginePosture=')).toBe('normal');
     expect(resolveEngineSimulatorPosture('?enginePosture=invalid')).toBe(
       'normal',
     );
