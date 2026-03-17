@@ -4,6 +4,7 @@ import React from 'react';
 import { afterEach, describe, expect, test, vi } from 'vitest';
 import { cleanup, render, screen } from '@testing-library/react';
 import { EnginePostureHeader } from '../app/(app)/dashboard/EnginePostureHeader';
+import { ENGINE_NOTICE_COPY } from '../lib/engine/notices';
 import { getMockEngineState } from '../lib/engine/mock';
 
 afterEach(() => {
@@ -36,12 +37,8 @@ describe('EnginePostureHeader', () => {
 
     const banner = screen.getByTestId('engine-posture-banner');
     expect(banner).toBeDefined();
-    expect(screen.getByText('Protection posture tightening')).toBeDefined();
-    expect(
-      screen.getByText(
-        'Provisional notice: the engine is increasing liquidity targets while conditions remain under review.',
-      ),
-    ).toBeDefined();
+    expect(screen.getByText(ENGINE_NOTICE_COPY.tightening.title)).toBeDefined();
+    expect(screen.getByText(ENGINE_NOTICE_COPY.tightening.body)).toBeDefined();
   });
 
   test('warns and does not invent a banner when a non-normal posture lacks notice copy', () => {

@@ -1,8 +1,8 @@
+import { ENGINE_NOTICE_COPY } from './notices';
 import type { EnginePosture, EngineState } from './types';
 
 const STATIC_UPDATED_AT = '2026-03-08T00:00:00.000Z';
 
-// Provisional notice copy only. Canonical explanatory copy is deferred to MC-S2-006.
 const MOCK_ENGINE_STATES: Record<EnginePosture, EngineState> = {
   normal: {
     posture: 'normal',
@@ -16,10 +16,7 @@ const MOCK_ENGINE_STATES: Record<EnginePosture, EngineState> = {
     liquidityTargetPct: 40,
     coreTargetPct: 45,
     yieldCapPct: 15,
-    notice: {
-      title: 'Protection posture tightening',
-      body: 'Provisional notice: the engine is increasing liquidity targets while conditions remain under review.',
-    },
+    notice: ENGINE_NOTICE_COPY.tightening,
     updatedAt: STATIC_UPDATED_AT,
   },
   tightened: {
@@ -27,10 +24,7 @@ const MOCK_ENGINE_STATES: Record<EnginePosture, EngineState> = {
     liquidityTargetPct: 55,
     coreTargetPct: 35,
     yieldCapPct: 10,
-    notice: {
-      title: 'Protection posture tightened',
-      body: 'Provisional notice: the engine is holding a more defensive target mix with higher liquidity priority.',
-    },
+    notice: ENGINE_NOTICE_COPY.tightened,
     updatedAt: STATIC_UPDATED_AT,
   },
   recovery: {
@@ -38,10 +32,7 @@ const MOCK_ENGINE_STATES: Record<EnginePosture, EngineState> = {
     liquidityTargetPct: 35,
     coreTargetPct: 50,
     yieldCapPct: 15,
-    notice: {
-      title: 'Protection posture recovering',
-      body: 'Provisional notice: the engine is moving toward a steadier target posture while preserving liquidity discipline.',
-    },
+    notice: ENGINE_NOTICE_COPY.recovery,
     updatedAt: STATIC_UPDATED_AT,
   },
 };
