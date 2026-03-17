@@ -35,7 +35,7 @@ Hedgr is built through a governed system, not ad hoc execution.
 
 3. System Roles
 
-🧠 HedgrOps (Co-Architect + Control Plane)
+HedgrOps (Co-Architect + Control Plane)
 
 HedgrOps is not just coordinating work — it actively shapes the system architecture while governing execution.
 
@@ -60,7 +60,7 @@ Governance
 
 ⸻
 
-⚙️ Cursor (Execution Engine)
+Cursor (Execution Engine)
 
 Responsibilities
 	•	read repo state (status + doctrine + ADRs)
@@ -75,7 +75,7 @@ Non-responsibilities
 
 ⸻
 
-🧱 Repository (Institutional OS)
+Repository (Institutional OS)
 
 The repo is the single source of truth for:
 	•	doctrine (docs/doctrine/)
@@ -86,7 +86,7 @@ The repo is the single source of truth for:
 
 ⸻
 
-🔌 MCP Server (Future Interface Layer)
+MCP Server (Future Interface Layer)
 
 Location
 	•	tools/hedgrops-mcp/
