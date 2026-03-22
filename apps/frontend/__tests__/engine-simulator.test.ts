@@ -63,6 +63,12 @@ describe('engine simulator', () => {
     );
   });
 
+  test('returns the requested posture only for valid local overrides', () => {
+    expect(resolveEngineSimulatorPosture('?enginePosture=tightening')).toBe(
+      'normal',
+    );
+  });
+
   test.each([
     ['normal'],
     ['tightening'],

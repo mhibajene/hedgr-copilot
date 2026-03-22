@@ -442,7 +442,11 @@ Recommended next ticket title for Cursor:
 Suggested branch:
 `feat/mc-s4-003-engine-trust-surface-tests`
 
----
+⸻
+
+13. Naming note
+
+The intended hand-off file name is HEDGR_STATUS.md.
 
 ## 14. Cursor execution ticket — MC-S4-003
 
