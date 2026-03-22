@@ -441,3 +441,143 @@ Recommended next ticket title for Cursor:
 
 Suggested branch:
 `feat/mc-s4-003-engine-trust-surface-tests`
+
+⸻
+
+13. Naming note
+
+The intended hand-off file name is HEDGR_STATUS.md.
+
+## 14. Cursor execution ticket — MC-S4-003
+
+**Ticket:** MC-S4-003 — Stability Engine trust-surface test coverage  
+**Suggested branch:** `feat/mc-s4-003-engine-trust-surface-tests`
+
+### Objective
+
+Add repo-native test coverage for the shipped Stability Engine trust surfaces so the current read-only posture boundary is harder to regress.
+
+This ticket exists to harden already-shipped behavior, not to widen runtime behavior, architecture, or product semantics.
+
+### Mandatory pre-read before coding
+
+Read in this order before implementing:
+
+1. `AGENTS.md`
+2. `docs/ops/HEDGR_STATUS.md`
+3. `docs/decisions/SPRINT-2-ADR-INDEX.md`
+4. `docs/decisions/0015-stability-engine-is-the-system-center.md`
+5. `docs/decisions/0014-stability-engine-read-only-in-sprint-2.md`
+6. `docs/decisions/0013-allocation-bands-informational-not-accounting.md`
+
+If implementation pressure reveals a doctrinal conflict, stop and surface it explicitly.
+
+### In scope
+
+Add repo-native behavioral coverage for:
+
+- posture badge rendering across supported posture states
+- notice banner visibility and rendering behavior for non-`normal` posture states
+- confirmation that `normal` posture remains banner-free
+- simulator resolver behavior for:
+  - allowed posture values
+  - invalid values
+  - missing values
+  - local-only / non-local guardrails
+
+### Preferred test seam order
+
+Use the smallest valid seam first:
+
+1. existing or adjacent unit tests around `EnginePostureHeader.tsx`
+2. simulator-focused tests around `apps/frontend/lib/engine/simulator.ts`
+3. page-level composition coverage only if a real gap remains that unit tests cannot prove through existing seams
+
+### Likely files in scope
+
+Inspect and use only what is necessary:
+
+- `apps/frontend/__tests__/engine-posture-header.test.tsx`
+- `apps/frontend/__tests__/engine-simulator.test.ts`
+- `apps/frontend/app/(app)/dashboard/EnginePostureHeader.tsx`
+- `apps/frontend/app/(app)/dashboard/page.tsx`
+- `apps/frontend/lib/engine/notices.ts`
+- `apps/frontend/lib/engine/mock.ts`
+- `apps/frontend/lib/engine/simulator.ts`
+- `apps/frontend/lib/engine/useEngineState.ts`
+
+### Constraints
+
+Do not introduce:
+
+- backend calls
+- live signals
+- new execution semantics
+- accounting reinterpretation
+- policy logic inside posture objects
+- simulator redesign
+- runtime config expansion
+- new testing framework
+- snapshot tests unless an identical nearby repo-native pattern already exists
+
+Do not edit engine runtime behavior in this ticket unless a reviewable, behavior-preserving seam is strictly required to test an already-shipped path and cannot be covered through existing interfaces.
+
+### Test intent
+
+Tests should verify behavior through the shipped engine state and UI path.
+
+That means:
+
+- verify posture badge rendering for supported postures
+- verify notice rendering behavior through the shipped engine state/UI path
+- verify `normal` posture remains notice-free
+- avoid tautological tests that only prove a canonical source equals itself
+- keep route/page composition tests as a fallback only when unit seams cannot prove the shipped mount path
+
+A page-level test is justified only if unit tests cannot prove that the shipped dashboard composition still mounts the engine trust surface in the real page seam.
+
+### Acceptance criteria
+
+This ticket is complete when:
+
+1. repo-native tests cover posture badge rendering across supported postures
+2. repo-native tests cover non-`normal` notice banner visibility/behavior
+3. repo-native tests confirm `normal` posture remains banner-free
+4. repo-native tests cover simulator resolver behavior for allowed, invalid, and missing values
+5. simulator guardrail behavior is verified for non-local contexts using existing repo-native seams
+6. no new execution, accounting, backend, or policy semantics are introduced
+7. no new testing framework is introduced
+8. any testability change remains behavior-preserving and minimal
+9. the implementation report follows the standard hand-off return shape
+
+### Implementation report format
+
+After implementation, return:
+
+1. what changed
+2. why it changed
+3. convention decisions taken
+4. risks or follow-ups
+5. whether the ticket is fully complete against acceptance criteria
+
+Do not continue automatically to the next ticket.
+
+### Reversibility
+
+High.
+
+This ticket should only add or refine validation around already-shipped trust surfaces. It should not alter persisted state, ledger truth, backend behavior, or engine doctrine.
+
+### Revisit / kill criteria
+
+Revisit this test shape if:
+
+- the shipped engine trust surface moves materially to a different UI seam
+- simulator gating changes in a way that invalidates the current resolver boundary
+- existing repo-native test patterns prove insufficient for stable coverage
+
+Kill or replace this approach if:
+
+- test coverage starts forcing architecture changes that widen runtime semantics
+- route-level tests become the default without a real unit-gap justification
+- test code starts asserting implementation internals instead of shipped behavior

@@ -9,72 +9,101 @@ const ORIGINAL_NODE_ENV = process.env.NODE_ENV;
 const ORIGINAL_APP_ENV = process.env.NEXT_PUBLIC_APP_ENV;
 
 describe('engine simulator', () => {
-  beforeEach(() => {
-    vi.unstubAllEnvs();
-    process.env.CI = undefined;
-    process.env.NODE_ENV = 'development';
-    process.env.NEXT_PUBLIC_APP_ENV = 'dev';
-  });
-
   afterEach(() => {
     vi.unstubAllEnvs();
-    process.env.CI = ORIGINAL_CI;
+    if (ORIGINAL_CI === undefined) {
+      delete process.env.CI;
+    } else {
+      process.env.CI = ORIGINAL_CI;
+    }
     process.env.NODE_ENV = ORIGINAL_NODE_ENV;
     process.env.NEXT_PUBLIC_APP_ENV = ORIGINAL_APP_ENV;
   });
 
-  test('enables the simulator only in local dev context', () => {
-    expect(isLocalEngineSimulatorEnabled()).toBe(true);
+  /**
+   * Blocked contexts: simulator must be off; valid query params must not change posture.
+   */
+  describe('blocked contexts (fallback to normal)', () => {
+    test.each([
+      {
+        label: 'CI',
+        env: () => {
+          process.env.CI = 'true';
+          process.env.NODE_ENV = 'development';
+          process.env.NEXT_PUBLIC_APP_ENV = 'dev';
+        },
+      },
+      {
+        label: 'NODE_ENV=test',
+        env: () => {
+          delete process.env.CI;
+          process.env.NODE_ENV = 'test';
+          process.env.NEXT_PUBLIC_APP_ENV = 'dev';
+        },
+      },
+      {
+        label: 'NEXT_PUBLIC_APP_ENV not dev',
+        env: () => {
+          delete process.env.CI;
+          process.env.NODE_ENV = 'development';
+          process.env.NEXT_PUBLIC_APP_ENV = 'stg';
+        },
+      },
+      {
+        label: 'NODE_ENV=production',
+        env: () => {
+          delete process.env.CI;
+          process.env.NODE_ENV = 'production';
+          process.env.NEXT_PUBLIC_APP_ENV = 'dev';
+        },
+      },
+    ])('disables simulator when $label', ({ env }) => {
+      env();
+
+      expect(isLocalEngineSimulatorEnabled()).toBe(false);
+      expect(resolveEngineSimulatorPosture('?enginePosture=tightening')).toBe(
+        'normal',
+      );
+    });
   });
 
-  test('disables the simulator in CI even when the query param is present', () => {
-    process.env.CI = 'true';
+  /**
+   * Approved local/dev-safe context only: NODE_ENV=development, no CI, APP_ENV=dev.
+   * Valid enginePosture query values must resolve to that posture.
+   */
+  describe('approved local dev (valid overrides honored)', () => {
+    beforeEach(() => {
+      vi.unstubAllEnvs();
+      delete process.env.CI;
+      process.env.NODE_ENV = 'development';
+      process.env.NEXT_PUBLIC_APP_ENV = 'dev';
+    });
 
-    expect(isLocalEngineSimulatorEnabled()).toBe(false);
-    expect(resolveEngineSimulatorPosture('?enginePosture=tightening')).toBe(
-      'normal',
+    test('enables the simulator only in local dev context', () => {
+      expect(isLocalEngineSimulatorEnabled()).toBe(true);
+    });
+
+    test.each([
+      ['normal'],
+      ['tightening'],
+      ['tightened'],
+      ['recovery'],
+    ] as const)(
+      'resolves %s when enginePosture query matches',
+      (posture) => {
+        expect(
+          resolveEngineSimulatorPosture(`?enginePosture=${posture}`),
+        ).toBe(posture);
+      },
     );
-  });
 
-  test('disables the simulator in test environment', () => {
-    process.env.NODE_ENV = 'test';
-
-    expect(isLocalEngineSimulatorEnabled()).toBe(false);
-    expect(resolveEngineSimulatorPosture('?enginePosture=tightened')).toBe(
-      'normal',
-    );
-  });
-
-  test('disables the simulator outside local app env', () => {
-    process.env.NEXT_PUBLIC_APP_ENV = 'stg';
-
-    expect(isLocalEngineSimulatorEnabled()).toBe(false);
-    expect(resolveEngineSimulatorPosture('?enginePosture=recovery')).toBe(
-      'normal',
-    );
-  });
-
-  test('disables the simulator in production environment', () => {
-    process.env.NODE_ENV = 'production';
-
-    expect(isLocalEngineSimulatorEnabled()).toBe(false);
-    expect(resolveEngineSimulatorPosture('?enginePosture=tightening')).toBe(
-      'normal',
-    );
-  });
-
-  test('returns the requested posture only for valid local overrides', () => {
-    expect(resolveEngineSimulatorPosture('?enginePosture=tightening')).toBe(
-      'tightening',
-    );
-  });
-
-  test('falls back to normal when the override is missing or invalid', () => {
-    expect(resolveEngineSimulatorPosture(undefined)).toBe('normal');
-    expect(resolveEngineSimulatorPosture('')).toBe('normal');
-    expect(resolveEngineSimulatorPosture('?enginePosture=')).toBe('normal');
-    expect(resolveEngineSimulatorPosture('?enginePosture=invalid')).toBe(
-      'normal',
-    );
+    test('falls back to normal when the override is missing or invalid', () => {
+      expect(resolveEngineSimulatorPosture(undefined)).toBe('normal');
+      expect(resolveEngineSimulatorPosture('')).toBe('normal');
+      expect(resolveEngineSimulatorPosture('?enginePosture=')).toBe('normal');
+      expect(resolveEngineSimulatorPosture('?enginePosture=invalid')).toBe(
+        'normal',
+      );
+    });
   });
 });
