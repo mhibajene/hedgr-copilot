@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { EngineAllocationBands } from './EngineAllocationBands';
 import { EnginePostureHeader } from './EnginePostureHeader';
 import { useBalance } from '../../../lib/hooks/useBalance';
 import { defiAdapter } from '../../../lib/defi';
@@ -36,6 +37,7 @@ export default function DashboardPage() {
     return (
       <main className="p-6 space-y-6">
         <EnginePostureHeader engineState={engineState} />
+        <EngineAllocationBands engineState={engineState} />
         <ErrorState
           title="Unable to load your balance"
           description="We couldn't fetch your account balance. Please try again."
@@ -49,6 +51,7 @@ export default function DashboardPage() {
   return (
     <main className="p-6 space-y-6">
       <EnginePostureHeader engineState={engineState} />
+      <EngineAllocationBands engineState={engineState} />
       
       {/* Welcome banner for first-time users - shown alongside balance */}
       {isFirstTimeUser && (
