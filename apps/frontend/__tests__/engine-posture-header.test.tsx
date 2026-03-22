@@ -31,6 +31,17 @@ describe('EnginePostureHeader', () => {
     expect(screen.queryByTestId('engine-posture-banner')).toBeNull();
   });
 
+  test('does not render a notice banner for normal posture even if notice is present', () => {
+    const engineState = {
+      ...getMockEngineState('normal'),
+      notice: { title: 'Stray', body: 'Should not display for normal.' },
+    };
+
+    render(<EnginePostureHeader engineState={engineState} />);
+
+    expect(screen.queryByTestId('engine-posture-banner')).toBeNull();
+  });
+
   test.each(['tightening', 'tightened', 'recovery'] as const)(
     'renders the notice banner through the shipped engine state path for %s posture',
     (posture) => {
