@@ -298,9 +298,10 @@ Completed and merged:
 
 Current active ticket status:
 
-- There is currently **no active ticket assigned** in this handoff file after `MC-S2-004`.
-- Cursor should **not continue automatically** until the next ticket is explicitly recorded and reviewed.
-- Do not invent a new next ticket in this file without explicit review.
+- The current active ticket is `MC-S4-005` - Governance linkage for engine-facing changes.
+- This is a governance-hardening ticket, not a runtime or product-surface expansion ticket.
+- Cursor should use this file as the primary handoff artefact before planning or implementing that work.
+- Do not widen into backend engine computation, live signals, execution intent, or policy-engine convergence under this ticket.
 
 ---
 
@@ -414,11 +415,95 @@ If a future task creates doctrinal ambiguity, pause and surface the ambiguity be
 
 ---
 
-## 11. Immediate next-use guidance
+## 11. Current execution ticket - MC-S4-005
 
-Use this file as the continuity primer before asking Cursor to:
+**Ticket:** `MC-S4-005` - Governance linkage for engine-facing changes  
+**Suggested branch:** `feat/mc-s4-005-engine-governance-linkage`
 
-- review or implement tickets touching engine posture, simulation, allocation, policy, trust, or Copilot behavior
+### Objective
+
+Make Stability Engine-facing changes easier to review against doctrine by standardizing governance references in the execution path.
+
+This is a governance-hardening ticket.
+
+It exists to reduce future drift by making engine-facing work explicitly reviewable against:
+
+- `docs/ops/HEDGR_STATUS.md`
+- `docs/decisions/SPRINT-2-ADR-INDEX.md`
+- `docs/decisions/0015-stability-engine-is-the-system-center.md`
+- `docs/decisions/0014-stability-engine-read-only-in-sprint-2.md`
+- `docs/decisions/0013-allocation-bands-informational-not-accounting.md`
+
+### In scope
+
+A narrow governance refinement that may include:
+
+- explicit engine-change review anchors in repo workflow
+- lightweight guidance for future engine-facing tickets
+- clearer linkage between:
+  - `HEDGR_STATUS.md`
+  - the Sprint 2 ADR index
+  - relevant ADRs
+  - PR and review expectations
+
+### Must not do
+
+- create heavy bureaucracy
+- rewrite the repo governance stack
+- alter runtime or product behavior
+- introduce speculative architecture
+- widen into backend execution work
+- block normal delivery with unnecessary process friction
+
+### Likely implementation surface
+
+Inspect first:
+
+- `AGENTS.md`
+- `.github/PULL_REQUEST_TEMPLATE/agent.md`
+- `docs/ops/HEDGR_STATUS.md`
+- `.cursorrules`
+- `docs/decisions/SPRINT-2-ADR-INDEX.md`
+
+Recommend and implement only the smallest change set necessary.
+
+### Acceptance shape
+
+A good version of this ticket will ensure that future engine-facing work has:
+
+1. explicit governance references
+2. a visible doctrinal review path
+3. a lightweight but real anti-drift check
+4. no unnecessary process overhead
+
+### Implementation posture
+
+This ticket must preserve the current boundary:
+
+- read-only engine doctrine remains intact
+- no execution semantics are introduced
+- no accounting semantics are introduced
+- no backend coupling is introduced
+- no policy logic is moved into posture or trust surfaces
+
+### Implementation report format
+
+After implementation, return:
+
+1. what changed
+2. why it changed
+3. convention decisions taken
+4. risks or follow-ups
+5. whether the ticket is fully complete against acceptance criteria
+
+Do not continue automatically to a new ticket after this one.
+
+---
+
+## 12. Immediate next-use guidance
+
+Use this file as the continuity primer before asking Cursor to review or implement `MC-S4-005` or any future ticket touching engine posture, simulation, allocation, policy, trust, or Copilot behavior.
+
 - assess whether a requested change needs an ADR
 - understand current repo governance and architecture posture
 - confirm whether a proposed task fits the current read-only boundary
@@ -433,7 +518,7 @@ For deeper context, open next:
 
 ---
 
-## 12. Naming note
+## 13. Naming note
 
 The intended hand-off file name is `HEDGR_STATUS.md`.
 
