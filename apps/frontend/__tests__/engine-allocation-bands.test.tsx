@@ -26,11 +26,13 @@ describe('EngineAllocationBands', () => {
     expect(screen.getByText('Liquidity')).toBeDefined();
     expect(screen.getByText('Core allocation')).toBeDefined();
     expect(screen.getByText('Yield provision')).toBeDefined();
-    expect(
-      screen.getByText(
-        /informational only, not balances, settled allocations, or proof that funds have moved/i,
-      ),
-    ).toBeDefined();
+    const caption = screen.getByTestId('engine-allocation-bands-caption')
+      .textContent;
+    expect(caption).toMatch(/informational only/i);
+    expect(caption).toMatch(/not your balances/i);
+    expect(caption).toMatch(/ledger truth/i);
+    expect(caption).toMatch(/yield cap/i);
+    expect(caption).toMatch(/yield opportunity/i);
   });
 
   test('renders percentages from the supplied engine state', () => {

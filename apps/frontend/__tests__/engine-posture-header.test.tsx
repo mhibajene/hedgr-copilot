@@ -4,6 +4,7 @@ import React from 'react';
 import { afterEach, describe, expect, test, vi } from 'vitest';
 import { cleanup, render, screen } from '@testing-library/react';
 import { EnginePostureHeader } from '../app/(app)/dashboard/EnginePostureHeader';
+import { ENGINE_POSTURE_CONTEXT } from '../lib/engine/posture-context';
 import { getMockEngineState } from '../lib/engine/mock';
 
 afterEach(() => {
@@ -23,6 +24,9 @@ describe('EnginePostureHeader', () => {
     const badge = screen.getByTestId('engine-posture-badge');
     expect(badge.getAttribute('data-posture')).toBe(posture);
     expect(badge.textContent).toBe(label);
+    expect(screen.getByTestId('engine-posture-context').textContent).toBe(
+      ENGINE_POSTURE_CONTEXT[posture],
+    );
   });
 
   test('does not render a notice banner for normal posture', () => {
@@ -41,21 +45,6 @@ describe('EnginePostureHeader', () => {
 
     expect(screen.queryByTestId('engine-posture-banner')).toBeNull();
   });
-  test.each(['tightening', 'tightened', 'recovery'] as const)(
-    'renders the notice banner through the shipped engine state path for %s posture',
-    (posture) => {
-      const engineState = getMockEngineState(posture);
-
-      render(<EnginePostureHeader engineState={engineState} />);
-
-      const banner = screen.getByTestId('engine-posture-banner');
-      expect(banner).toBeDefined();
-      expect(banner.getAttribute('role')).toBe('status');
-      expect(screen.getByText(engineState.notice!.title)).toBeDefined();
-      expect(screen.getByText(engineState.notice!.body)).toBeDefined();
-    },
-  );
-
   test.each(['tightening', 'tightened', 'recovery'] as const)(
     'renders the notice banner through the shipped engine state path for %s posture',
     (posture) => {

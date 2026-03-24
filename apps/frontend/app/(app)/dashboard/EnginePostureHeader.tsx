@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { ENGINE_POSTURE_CONTEXT } from '../../../lib/engine/posture-context';
 import type { EnginePosture, EngineState } from '../../../lib/engine/types';
 
 const BADGE_LABELS: Record<EnginePosture, string> = {
@@ -43,6 +44,13 @@ export function EnginePostureHeader({ engineState }: EnginePostureHeaderProps) {
           {BADGE_LABELS[posture]}
         </span>
       </div>
+
+      <p
+        className="max-w-2xl text-sm text-slate-600"
+        data-testid="engine-posture-context"
+      >
+        {ENGINE_POSTURE_CONTEXT[posture]}
+      </p>
 
       {showNotice ? (
         <div
