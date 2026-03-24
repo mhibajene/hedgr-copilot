@@ -109,16 +109,35 @@ Protects against using engine posture and allocation bands as accounting truth.
 - ADR 0014
 - ADR 0015
 
-### MC-S2-005 — Local posture simulator
-**Governed by**
-- ADR 0014
-- ADR 0015
-
-### MC-S2-006 — Canonical notice copy
+### MC-S2-005 — Governance linkage for engine-facing changes
 **Governed by**
 - ADR 0013
 - ADR 0014
 - ADR 0015
+
+Documentation and review-path alignment only (e.g. `AGENTS.md`, PR template, handoff). No runtime or product-behavior change by itself.
+
+### Merged implementation ids (canonical merged truth)
+
+The following shipped under **`MC-S4-*`** ids; see **`docs/ops/HEDGR_STATUS.md`** for merged file lists and posture.
+
+#### MC-S4-001 — Canonical Stability notice copy contract
+**Governed by**
+- ADR 0013
+- ADR 0014
+- ADR 0015
+
+#### MC-S4-002 — Local posture simulator (hard dev-only boundaries)
+**Governed by**
+- ADR 0014
+- ADR 0015
+
+#### MC-S4-003 — Stability Engine trust-surface test coverage
+**Governed by**
+- ADR 0014
+- ADR 0015
+
+**Planning note:** Early drafts sometimes labeled simulator / notice work as `MC-S2-005` / `MC-S2-006`. **Merged truth** uses **`MC-S4-001`** / **`MC-S4-002`** / **`MC-S4-003`** as above. **`MC-S2-005`** is reserved for the Sprint 2 **governance-linkage** ticket in this index.
 
 ---
 

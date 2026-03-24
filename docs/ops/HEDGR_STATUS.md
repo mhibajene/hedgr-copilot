@@ -1,6 +1,6 @@
 Status: Canonical hand-off file
 Purpose: Strategic continuity, merged implementation truth, and next-ticket authority for Cursor execution
-Last updated: 2026-03-22
+Last updated: 2026-03-24
 
 ---
 
@@ -295,13 +295,13 @@ Completed and merged:
 - `MC-S4-002` - Local posture simulator with hard dev-only boundaries
 - `MC-S4-003` - Stability Engine trust-surface test coverage
 - `MC-S2-004` - Allocation bands UI
+- `MC-S2-005` - Governance linkage for engine-facing changes
 
 Current active ticket status:
 
-- The current active ticket is `MC-S4-005` - Governance linkage for engine-facing changes.
-- This is a governance-hardening ticket, not a runtime or product-surface expansion ticket.
-- Cursor should use this file as the primary handoff artefact before planning or implementing that work.
-- Do not widen into backend engine computation, live signals, execution intent, or policy-engine convergence under this ticket.
+- There is currently **no active ticket assigned** in this handoff file after `MC-S2-005`.
+- Cursor should **not continue automatically** until the next ticket is explicitly recorded and reviewed.
+- Do not invent a new next ticket in this file without explicit review.
 
 ---
 
@@ -415,10 +415,12 @@ If a future task creates doctrinal ambiguity, pause and surface the ambiguity be
 
 ---
 
-## 11. Current execution ticket - MC-S4-005
+## 11. Completed execution ticket - MC-S2-005 (governance linkage)
 
-**Ticket:** `MC-S4-005` - Governance linkage for engine-facing changes  
-**Suggested branch:** `feat/mc-s4-005-engine-governance-linkage`
+**Ticket:** `MC-S2-005` - Governance linkage for engine-facing changes  
+**Branch:** `feat/mc-s2-005-engine-governance-linkage`
+
+**Ticket id note:** `MC-S2-005` is the Sprint 2 program id for this governance work. Prior engine hardening merged under **`MC-S4-001`** through **`MC-S4-003`** (and related `MC-S2-*` items in §6); those merged ids remain canonical for what shipped.
 
 ### Objective
 
@@ -459,7 +461,7 @@ A narrow governance refinement that may include:
 
 Inspect first:
 
-- `AGENTS.md`
+- `AGENTS.md` (including **Engine-facing governance (Sprint 2)**)
 - `.github/PULL_REQUEST_TEMPLATE/agent.md`
 - `docs/ops/HEDGR_STATUS.md`
 - `.cursorrules`
@@ -486,23 +488,20 @@ This ticket must preserve the current boundary:
 - no backend coupling is introduced
 - no policy logic is moved into posture or trust surfaces
 
-### Implementation report format
+### Shipped summary
 
-After implementation, return:
+1. **`AGENTS.md`** — Added **Engine-facing governance (Sprint 2 Stability Engine)** (v1 and v2): ordered read list for `apps/frontend/lib/engine/**` and related trust surfaces.
+2. **`.github/PULL_REQUEST_TEMPLATE/agent.md`** — Conditional **Engine-facing PRs** blocks (compact in the first template half; full **§7a** chain + attestation checkboxes in the second).
+3. **`docs/decisions/SPRINT-2-ADR-INDEX.md`** — **`MC-S2-005`** governance row; **merged `MC-S4-*`** rows for notice, simulator, tests; planning note reconciling legacy `MC-S2-005`/`006` draft labels vs merged ids.
+4. **`docs/ops/HEDGR_STATUS.md`** — Normalized ticket id to **`MC-S2-005`**; cross-links to `AGENTS.md` engine subsection.
 
-1. what changed
-2. why it changed
-3. convention decisions taken
-4. risks or follow-ups
-5. whether the ticket is fully complete against acceptance criteria
-
-Do not continue automatically to a new ticket after this one.
+**Follow-ups:** None required for this ticket. Do not continue automatically to a new ticket; record the next ticket explicitly in §7 when approved.
 
 ---
 
 ## 12. Immediate next-use guidance
 
-Use this file as the continuity primer before asking Cursor to review or implement `MC-S4-005` or any future ticket touching engine posture, simulation, allocation, policy, trust, or Copilot behavior.
+Use this file as the continuity primer before asking Cursor to review or implement any future ticket touching engine posture, simulation, allocation, policy, trust, or Copilot behavior.
 
 - assess whether a requested change needs an ADR
 - understand current repo governance and architecture posture
