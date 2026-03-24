@@ -61,6 +61,18 @@ When implementing:
 - Default to reversible designs (flags + stubs).
 - Never merge a PR that introduces a live network dependency in CI.
 
+### Engine-facing governance (Sprint 2 Stability Engine)
+
+When changing **`apps/frontend/lib/engine/**`** or shipped Stability Engine trust surfaces (posture, notices, allocation bands, or simulator boundaries per `docs/ops/HEDGR_STATUS.md`), read **in order**:
+
+1. `docs/ops/HEDGR_STATUS.md`
+2. `docs/decisions/SPRINT-2-ADR-INDEX.md`
+3. `docs/decisions/0015-stability-engine-is-the-system-center.md`
+4. `docs/decisions/0014-stability-engine-read-only-in-sprint-2.md`
+5. `docs/decisions/0013-allocation-bands-informational-not-accounting.md`
+
+If anything conflicts, stop and surface it explicitly (do not silently reconcile).
+
 ## 8) Decision Logging (ADR)
 Material decisions must be logged as ADRs under docs/ using the HedgrOps ADR standard.
 Examples: architecture boundary, custody/trust posture, compliance posture, sequencing decisions.
@@ -133,6 +145,18 @@ When implementing:
 - Default to reversible designs (flags + stubs).
 - Never merge a PR that introduces a live network dependency in CI.
 - Do not violate `.cursorrules` or current ADR constraints for implementation convenience.
+
+### Engine-facing governance (Sprint 2 Stability Engine)
+
+When changing **`apps/frontend/lib/engine/**`** or shipped Stability Engine trust surfaces (posture, notices, allocation bands, or simulator boundaries per `docs/ops/HEDGR_STATUS.md`), read **in order**:
+
+1. `docs/ops/HEDGR_STATUS.md`
+2. `docs/decisions/SPRINT-2-ADR-INDEX.md`
+3. `docs/decisions/0015-stability-engine-is-the-system-center.md`
+4. `docs/decisions/0014-stability-engine-read-only-in-sprint-2.md`
+5. `docs/decisions/0013-allocation-bands-informational-not-accounting.md`
+
+If anything conflicts, stop and surface it explicitly (do not silently reconcile).
 
 ## 8) Decision Logging (ADR)
 Material decisions must be logged as ADRs under `docs/decisions/` using:

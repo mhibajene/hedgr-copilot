@@ -1,6 +1,6 @@
 Status: Canonical hand-off file
 Purpose: Strategic continuity, merged implementation truth, and next-ticket authority for Cursor execution
-Last updated: 2026-03-22
+Last updated: 2026-03-24
 
 ---
 
@@ -295,10 +295,11 @@ Completed and merged:
 - `MC-S4-002` - Local posture simulator with hard dev-only boundaries
 - `MC-S4-003` - Stability Engine trust-surface test coverage
 - `MC-S2-004` - Allocation bands UI
+- `MC-S2-005` - Governance linkage for engine-facing changes
 
 Current active ticket status:
 
-- There is currently **no active ticket assigned** in this handoff file after `MC-S2-004`.
+- There is currently **no active ticket assigned** in this handoff file after `MC-S2-005`.
 - Cursor should **not continue automatically** until the next ticket is explicitly recorded and reviewed.
 - Do not invent a new next ticket in this file without explicit review.
 
@@ -414,11 +415,94 @@ If a future task creates doctrinal ambiguity, pause and surface the ambiguity be
 
 ---
 
-## 11. Immediate next-use guidance
+## 11. Completed execution ticket - MC-S2-005 (governance linkage)
 
-Use this file as the continuity primer before asking Cursor to:
+**Ticket:** `MC-S2-005` - Governance linkage for engine-facing changes  
+**Branch:** `feat/mc-s2-005-engine-governance-linkage`
 
-- review or implement tickets touching engine posture, simulation, allocation, policy, trust, or Copilot behavior
+**Ticket id note:** `MC-S2-005` is the Sprint 2 program id for this governance work. Prior engine hardening merged under **`MC-S4-001`** through **`MC-S4-003`** (and related `MC-S2-*` items in §6); those merged ids remain canonical for what shipped.
+
+### Objective
+
+Make Stability Engine-facing changes easier to review against doctrine by standardizing governance references in the execution path.
+
+This is a governance-hardening ticket.
+
+It exists to reduce future drift by making engine-facing work explicitly reviewable against:
+
+- `docs/ops/HEDGR_STATUS.md`
+- `docs/decisions/SPRINT-2-ADR-INDEX.md`
+- `docs/decisions/0015-stability-engine-is-the-system-center.md`
+- `docs/decisions/0014-stability-engine-read-only-in-sprint-2.md`
+- `docs/decisions/0013-allocation-bands-informational-not-accounting.md`
+
+### In scope
+
+A narrow governance refinement that may include:
+
+- explicit engine-change review anchors in repo workflow
+- lightweight guidance for future engine-facing tickets
+- clearer linkage between:
+  - `HEDGR_STATUS.md`
+  - the Sprint 2 ADR index
+  - relevant ADRs
+  - PR and review expectations
+
+### Must not do
+
+- create heavy bureaucracy
+- rewrite the repo governance stack
+- alter runtime or product behavior
+- introduce speculative architecture
+- widen into backend execution work
+- block normal delivery with unnecessary process friction
+
+### Likely implementation surface
+
+Inspect first:
+
+- `AGENTS.md` (including **Engine-facing governance (Sprint 2)**)
+- `.github/PULL_REQUEST_TEMPLATE/agent.md`
+- `docs/ops/HEDGR_STATUS.md`
+- `.cursorrules`
+- `docs/decisions/SPRINT-2-ADR-INDEX.md`
+
+Recommend and implement only the smallest change set necessary.
+
+### Acceptance shape
+
+A good version of this ticket will ensure that future engine-facing work has:
+
+1. explicit governance references
+2. a visible doctrinal review path
+3. a lightweight but real anti-drift check
+4. no unnecessary process overhead
+
+### Implementation posture
+
+This ticket must preserve the current boundary:
+
+- read-only engine doctrine remains intact
+- no execution semantics are introduced
+- no accounting semantics are introduced
+- no backend coupling is introduced
+- no policy logic is moved into posture or trust surfaces
+
+### Shipped summary
+
+1. **`AGENTS.md`** — Added **Engine-facing governance (Sprint 2 Stability Engine)** (v1 and v2): ordered read list for `apps/frontend/lib/engine/**` and related trust surfaces.
+2. **`.github/PULL_REQUEST_TEMPLATE/agent.md`** — Conditional **Engine-facing PRs** blocks (compact in the first template half; full **§7a** chain + attestation checkboxes in the second).
+3. **`docs/decisions/SPRINT-2-ADR-INDEX.md`** — **`MC-S2-005`** governance row; **merged `MC-S4-*`** rows for notice, simulator, tests; planning note reconciling legacy `MC-S2-005`/`006` draft labels vs merged ids.
+4. **`docs/ops/HEDGR_STATUS.md`** — Normalized ticket id to **`MC-S2-005`**; cross-links to `AGENTS.md` engine subsection.
+
+**Follow-ups:** None required for this ticket. Do not continue automatically to a new ticket; record the next ticket explicitly in §7 when approved.
+
+---
+
+## 12. Immediate next-use guidance
+
+Use this file as the continuity primer before asking Cursor to review or implement any future ticket touching engine posture, simulation, allocation, policy, trust, or Copilot behavior.
+
 - assess whether a requested change needs an ADR
 - understand current repo governance and architecture posture
 - confirm whether a proposed task fits the current read-only boundary
@@ -433,7 +517,7 @@ For deeper context, open next:
 
 ---
 
-## 12. Naming note
+## 13. Naming note
 
 The intended hand-off file name is `HEDGR_STATUS.md`.
 

@@ -82,6 +82,17 @@ List any flags/env vars added/changed and their defaults.
 
 If dashboard/allocation touched: confirm non-negotiable hierarchy and weighting is preserved.
 
+### Engine-facing PRs (conditional)
+
+Only if this PR touches **`apps/frontend/lib/engine/**`** or Stability Engine trust surfaces described in **`docs/ops/HEDGR_STATUS.md`**.
+
+**Review chain (read in order):** `docs/ops/HEDGR_STATUS.md` → `docs/decisions/SPRINT-2-ADR-INDEX.md` → ADR 0015 → ADR 0014 → ADR 0013 (paths under `docs/decisions/`).
+
+**Attestation (author / reviewer):**
+- [ ] Sprint 2 read-only engine boundary respected (ADR 0014)
+- [ ] Allocation bands / engine targets informational, not accounting (ADR 0013)
+- [ ] No execution semantics, accounting authority, or live backend engine coupling introduced
+
 ---
 
 ## 7) Copilot-specific checks (only if Copilot touched)
@@ -246,6 +257,26 @@ If dashboard / allocation touched: confirm non-negotiable hierarchy and weightin
 - [ ] Allocation bands remain informational unless superseding doctrine explicitly authorizes otherwise
 
 If any of the above changed, cite the governing ADR or doctrine file.
+
+---
+
+## 7a) Engine-facing PRs (conditional)
+
+Only if this PR touches **`apps/frontend/lib/engine/**`** or engine trust surfaces called out in **`docs/ops/HEDGR_STATUS.md`**.
+
+**Review chain (read in order):**
+
+1. `docs/ops/HEDGR_STATUS.md`
+2. `docs/decisions/SPRINT-2-ADR-INDEX.md`
+3. `docs/decisions/0015-stability-engine-is-the-system-center.md`
+4. `docs/decisions/0014-stability-engine-read-only-in-sprint-2.md`
+5. `docs/decisions/0013-allocation-bands-informational-not-accounting.md`
+
+**Attestation (author / reviewer):**
+
+- [ ] Sprint 2 read-only engine boundary respected (ADR 0014)
+- [ ] Allocation bands / engine targets treated as informational, not accounting (ADR 0013)
+- [ ] No execution semantics, accounting authority, or live backend engine coupling introduced
 
 ---
 
