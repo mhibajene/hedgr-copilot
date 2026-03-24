@@ -40,9 +40,11 @@ export function EngineAllocationBands({
           className="max-w-2xl text-sm text-slate-600"
           data-testid="engine-allocation-bands-caption"
         >
-          Current system targets for liquidity, core stability, and yield
-          capacity. These bands are informational only, not balances, settled
-          allocations, or proof that funds have moved.
+          These percentages reflect system targets for liquidity, core stability,
+          and yield capacity in the current posture. They are informational
+          only—not your balances, settled positions, or ledger truth. A lower
+          yield cap leaves less room for yield opportunity within the target
+          structure.
         </p>
       </div>
 

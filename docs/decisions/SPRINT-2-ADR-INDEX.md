@@ -117,6 +117,14 @@ Protects against using engine posture and allocation bands as accounting truth.
 
 Documentation and review-path alignment only (e.g. `AGENTS.md`, PR template, handoff). No runtime or product-behavior change by itself.
 
+### MC-S2-006 — Stability communication copy
+**Governed by**
+- ADR 0013
+- ADR 0014
+- ADR 0015
+
+Product-facing trust copy for posture context, notices, and allocation panel; read-only informational framing only. See `docs/ops/HEDGR_STATUS.md` §6 (MC-S2-006).
+
 ### Merged implementation ids (canonical merged truth)
 
 The following shipped under **`MC-S4-*`** ids; see **`docs/ops/HEDGR_STATUS.md`** for merged file lists and posture.

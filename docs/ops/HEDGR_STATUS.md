@@ -282,6 +282,22 @@ Doctrine impact:
 - allocation bands remain informational, not accounting
 - the trust surface explains target posture without impersonating balances, settled allocations, or fund movement
 
+### MC-S2-006 - Stability communication copy
+
+Implementation truth:
+
+- canonical one-line posture context for every `EnginePosture` lives in `apps/frontend/lib/engine/posture-context.ts` (`ENGINE_POSTURE_CONTEXT`)
+- dashboard posture header renders that line (`data-testid="engine-posture-context"`) for all postures; notice banner copy remains in `apps/frontend/lib/engine/notices.ts` and is assembled via `apps/frontend/lib/engine/mock.ts` as before
+- notice bodies were refined for parallel structure, informational framing, protection vs yield opportunity (where relevant), and removal of wording that implied executed allocation, settled movement, or completed treasury action
+- allocation bands panel caption was refined (caption-first; band labels unchanged) to reinforce informational targets, ledger truth boundary, and yield-cap vs opportunity in calm language
+- trust-surface tests updated for posture context and phrase-level caption assertions; no `EngineState` reshaping
+
+Implementation posture preserved:
+
+- read-only engine doctrine intact
+- no execution, accounting, backend, or policy semantics introduced
+- no Copilot or simulator behavior changes
+
 ---
 
 ## 7. Current sequence and active status
@@ -296,12 +312,11 @@ Completed and merged:
 - `MC-S4-003` - Stability Engine trust-surface test coverage
 - `MC-S2-004` - Allocation bands UI
 - `MC-S2-005` - Governance linkage for engine-facing changes
+- `MC-S2-006` - Stability communication copy
 
 Current active ticket status:
 
-- There is currently **no active ticket assigned** in this handoff file after `MC-S2-005`.
-- Cursor should **not continue automatically** until the next ticket is explicitly recorded and reviewed.
-- Do not invent a new next ticket in this file without explicit review.
+- No Sprint 2 engine handoff ticket is recorded here as active. Record the next ticket explicitly in this section when approved.
 
 ---
 
@@ -499,7 +514,28 @@ This ticket must preserve the current boundary:
 
 ---
 
-## 12. Immediate next-use guidance
+## 12. Completed execution ticket - MC-S2-006 (stability communication copy)
+
+**Ticket:** `MC-S2-006` - Stability Communication Copy  
+**Branch:** `feat/mc-s2-006-stability-communication-copy`
+
+### Objective (as scoped)
+
+Define and ship canonical product-facing copy for the Stability Engine trust surfaces so posture, protection, and allocation-target messaging read consistently across the dashboard—without widening runtime semantics or overstating guarantees.
+
+### Shipped summary
+
+1. **`apps/frontend/lib/engine/posture-context.ts`** — `ENGINE_POSTURE_CONTEXT`: one short sentence per posture (definition only; no duplicated banner disclaimers).
+2. **`apps/frontend/app/(app)/dashboard/EnginePostureHeader.tsx`** — Renders posture context line (`engine-posture-context`).
+3. **`apps/frontend/lib/engine/notices.ts`** — Notice bodies refined: informational guidance about system intent; protection vs yield opportunity where relevant; removed wording that implied executed allocation, settled movement, or completed treasury action.
+4. **`apps/frontend/app/(app)/dashboard/EngineAllocationBands.tsx`** — Caption-only refinement for targets vs ledger truth and yield-cap vs opportunity (band labels unchanged).
+5. **`apps/frontend/__tests__/engine-posture-header.test.tsx`**, **`engine-allocation-bands.test.tsx`** — Posture context coverage; phrase-level caption assertions; removed duplicate `test.each` block.
+
+**Follow-ups:** None required for this ticket. Record the next ticket explicitly in §7 when approved.
+
+---
+
+## 13. Immediate next-use guidance
 
 Use this file as the continuity primer before asking Cursor to review or implement any future ticket touching engine posture, simulation, allocation, policy, trust, or Copilot behavior.
 
@@ -517,7 +553,7 @@ For deeper context, open next:
 
 ---
 
-## 13. Naming note
+## 14. Naming note
 
 The intended hand-off file name is `HEDGR_STATUS.md`.
 
