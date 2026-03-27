@@ -19,20 +19,28 @@ afterEach(() => {
 });
 
 describe('EngineAllocationBands', () => {
-  test('renders the target posture labels and required supporting copy', () => {
+  test('renders the target posture labels, caption, and trust legend', () => {
     render(<EngineAllocationBands engineState={makeEngineState()} />);
 
     expect(screen.getByText('Target posture')).toBeDefined();
     expect(screen.getByText('Liquidity')).toBeDefined();
     expect(screen.getByText('Core allocation')).toBeDefined();
     expect(screen.getByText('Yield provision')).toBeDefined();
+
+    expect(screen.getByTestId('engine-allocation-trust-legend')).toBeDefined();
+
     const caption = screen.getByTestId('engine-allocation-bands-caption')
       .textContent;
-    expect(caption).toMatch(/informational only/i);
-    expect(caption).toMatch(/not your balances/i);
-    expect(caption).toMatch(/ledger truth/i);
-    expect(caption).toMatch(/yield cap/i);
-    expect(caption).toMatch(/yield opportunity/i);
+    expect(caption).toMatch(/liquidity.*core stability.*yield capacity/is);
+    expect(caption).toMatch(/posture/i);
+
+    const legend = screen.getByTestId('engine-allocation-trust-legend')
+      .textContent;
+    expect(legend).toMatch(/informational.*system targets/is);
+    expect(legend).toMatch(/yield cap/i);
+    expect(legend).toMatch(/yield opportunity/i);
+    expect(legend).toMatch(/ledger/i);
+    expect(legend).toMatch(/targets do not mean funds have already moved/i);
   });
 
   test('renders percentages from the supplied engine state', () => {
