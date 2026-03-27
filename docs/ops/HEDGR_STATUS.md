@@ -313,10 +313,13 @@ Completed and merged:
 - `MC-S2-004` - Allocation bands UI
 - `MC-S2-005` - Governance linkage for engine-facing changes
 - `MC-S2-006` - Stability communication copy
+- `MC-S2-007` - Allocation trust legend and disclosure microcopy
 
 Current active ticket status:
 
-- No Sprint 2 engine handoff ticket is recorded here as active. Record the next ticket explicitly in this section when approved.
+- No single active execution ticket is recorded here. Record the next ticket explicitly in this section when approved.
+- Cursor should use this file as the primary handoff artefact before planning or implementing engine-facing work.
+- Do not widen into backend engine computation, live signals, execution intent, policy-engine convergence, or accounting reinterpretation without an explicit ticket and boundary check.
 
 ---
 
@@ -535,9 +538,27 @@ Define and ship canonical product-facing copy for the Stability Engine trust sur
 
 ---
 
-## 13. Immediate next-use guidance
+## 13. Completed execution ticket - MC-S2-007 (allocation trust legend and disclosure microcopy)
 
-Use this file as the continuity primer before asking Cursor to review or implement any future ticket touching engine posture, simulation, allocation, policy, trust, or Copilot behavior.
+**Ticket:** `MC-S2-007` - Allocation trust legend and disclosure microcopy  
+**Branch:** `feat/mc-s2-007-allocation-trust-legend`
+
+### Objective (as scoped)
+
+Add a compact explanatory trust layer near the Stability Engine allocation surface so users can clearly distinguish **targets**, **balances (ledger truth)**, and the fact that **targets do not mean funds have already moved**—without widening runtime semantics.
+
+### Shipped summary
+
+1. **`apps/frontend/app/(app)/dashboard/EngineAllocationBands.tsx`** — Short framing caption; compact 3-line trust legend (`data-testid="engine-allocation-trust-legend"`) beneath it with Targets / Balances / Movement; caption shortened so total copy stays scannable vs the prior single paragraph. `EnginePostureHeader.tsx` unchanged.
+2. **`apps/frontend/__tests__/engine-allocation-bands.test.tsx`** — Asserts legend container and phrase-level coverage for the three distinctions; caption assertions updated.
+
+**Follow-ups:** None required for this ticket. Record the next ticket explicitly in §7 when approved.
+
+---
+
+## 14. Immediate next-use guidance
+
+Use this file as the continuity primer before asking Cursor to review or implement the next engine-facing ticket (posture, simulation, allocation, policy, trust, or Copilot behavior).
 
 - assess whether a requested change needs an ADR
 - understand current repo governance and architecture posture
@@ -553,7 +574,7 @@ For deeper context, open next:
 
 ---
 
-## 14. Naming note
+## 15. Naming note
 
 The intended hand-off file name is `HEDGR_STATUS.md`.
 

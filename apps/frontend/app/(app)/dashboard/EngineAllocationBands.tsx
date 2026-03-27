@@ -29,7 +29,7 @@ export function EngineAllocationBands({
       className="space-y-4 rounded-2xl border border-slate-200 bg-slate-50/80 p-5"
       data-testid="engine-allocation-bands"
     >
-      <div className="space-y-1">
+      <div className="space-y-3">
         <h2
           id="engine-allocation-bands-title"
           className="text-base font-semibold text-slate-900"
@@ -40,12 +40,36 @@ export function EngineAllocationBands({
           className="max-w-2xl text-sm text-slate-600"
           data-testid="engine-allocation-bands-caption"
         >
-          These percentages reflect system targets for liquidity, core stability,
-          and yield capacity in the current posture. They are informational
-          only—not your balances, settled positions, or ledger truth. A lower
-          yield cap leaves less room for yield opportunity within the target
-          structure.
+          How the system weights liquidity, core stability, and yield capacity
+          for this posture.
         </p>
+        <ul
+          className="max-w-2xl list-none space-y-2 p-0 text-sm text-slate-600"
+          data-testid="engine-allocation-trust-legend"
+        >
+          <li>
+            <span className="font-medium text-slate-700">Targets</span>
+            <span className="text-slate-600">
+              {' '}
+              — Informational system targets only. A lower yield cap means less
+              yield opportunity within this structure.
+            </span>
+          </li>
+          <li>
+            <span className="font-medium text-slate-700">Balances</span>
+            <span className="text-slate-600">
+              {' '}
+              — Your ledger shows what you hold—not these percentages.
+            </span>
+          </li>
+          <li>
+            <span className="font-medium text-slate-700">Movement</span>
+            <span className="text-slate-600">
+              {' '}
+              — Targets do not mean funds have already moved.
+            </span>
+          </li>
+        </ul>
       </div>
 
       <div className="space-y-4">
