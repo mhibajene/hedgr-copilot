@@ -99,7 +99,8 @@ test('withdraw stub decreases balance', async ({ page }) => {
   await page.goto('/withdraw');
   await page.getByLabel('Amount (USD)').fill('1');
   await page.getByRole('button', { name: 'Confirm' }).click();
-  await expect(page.getByText('Withdraw CONFIRMED')).toBeVisible({ timeout: 6000 });
+  const withdrawStatus = page.getByTestId('withdraw-status-region');
+  await expect(withdrawStatus).toHaveAttribute('data-status', 'SUCCESS', { timeout: 6000 });
   await page.goto('/dashboard');
   const usd2 = page.getByTestId('usd-balance');
   await expect(usd2).toBeVisible({ timeout: 10000 });
@@ -126,7 +127,8 @@ test('activity page shows confirmed transactions', async ({ page }) => {
   await page.goto('/withdraw');
   await page.getByLabel('Amount (USD)').fill('1');
   await page.getByRole('button', { name: 'Confirm' }).click();
-  await expect(page.getByText('Withdraw CONFIRMED')).toBeVisible({ timeout: 6000 });
+  const withdrawStatus = page.getByTestId('withdraw-status-region');
+  await expect(withdrawStatus).toHaveAttribute('data-status', 'SUCCESS', { timeout: 6000 });
 
   // Check Activity page shows two CONFIRMED entries
   await page.goto('/activity');

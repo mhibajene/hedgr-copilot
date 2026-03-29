@@ -317,9 +317,11 @@ Completed and merged:
 
 Current active ticket status:
 
-- No single active execution ticket is recorded here. Record the next ticket explicitly in this section when approved.
-- Cursor should use this file as the primary handoff artefact before planning or implementing engine-facing work.
-- Do not widen into backend engine computation, live signals, execution intent, policy-engine convergence, or accounting reinterpretation without an explicit ticket and boundary check.
+- The current active ticket is `MC-S2-008` - Withdraw lifecycle integrity.
+- This is the first ticket in Phase 3 - Operational Trust.
+- This is a product-facing operational trust ticket, not a backend engine expansion or execution-intent ticket.
+- Cursor should use this file as the primary handoff artefact before planning or implementing that work.
+- Do not widen into backend engine computation, live signals, execution intent, policy-engine convergence, or accounting reinterpretation under this ticket.
 
 ---
 
@@ -556,9 +558,94 @@ Add a compact explanatory trust layer near the Stability Engine allocation surfa
 
 ---
 
-## 14. Immediate next-use guidance
+## 14. Current execution ticket - MC-S2-008 (withdraw lifecycle integrity)
 
-Use this file as the continuity primer before asking Cursor to review or implement the next engine-facing ticket (posture, simulation, allocation, policy, trust, or Copilot behavior).
+**Ticket:** `MC-S2-008` - Withdraw lifecycle integrity  
+**Branch:** `feat/mc-s2-008-withdraw-lifecycle-integrity`
+
+### Objective
+
+Define and harden the withdrawal lifecycle trust surface so users can clearly understand:
+
+- what stage a withdrawal is in
+- what is pending versus completed
+- what to expect when processing is delayed
+- that system protection does not imply withdrawal lockup
+
+This is the first ticket in **Phase 3 - Operational Trust**.
+
+It exists to make withdrawal state and progress legible and trust-safe without widening into backend execution guarantees, speculative settlement claims, or treasury-routing behavior.
+
+### In scope
+
+A narrow operational-trust refinement that may include:
+
+- clearer withdrawal lifecycle state meaning
+- trust-safe status language for withdrawal flow
+- calm communication for pending, processing, completed, failed, or delayed states
+- minimal UX clarification around withdrawal state and user expectations
+- minimal test updates for shipped behavior
+
+### Must not do
+
+- promise instant withdrawals
+- imply guaranteed settlement times
+- add false precision where systems remain asynchronous
+- widen into treasury routing
+- introduce backend capabilities not already present
+- couple this ticket to engine execution logic
+- introduce hype or false reassurance language
+
+### Likely implementation surface
+
+Inspect first:
+
+- withdrawal-related UI components and state surfaces in `apps/frontend`
+- existing status language and transaction / withdrawal status helpers
+- related tests under `apps/frontend/__tests__/`
+- `docs/ops/HEDGR_STATUS.md`
+- `docs/decisions/SPRINT-2-ADR-INDEX.md`
+
+Recommend and implement only the smallest change set necessary.
+
+### Acceptance shape
+
+A good version of this ticket will ensure that users can clearly understand:
+
+1. what stage a withdrawal is in
+2. what is pending versus completed
+3. what delayed or failed states mean
+4. that protection posture does not imply funds are trapped
+5. that no false certainty or guaranteed timing is being claimed
+
+### Implementation posture
+
+This ticket must preserve the current boundary:
+
+- read-only engine doctrine remains intact
+- no execution semantics are introduced
+- no accounting semantics are introduced
+- no backend coupling is introduced
+- no policy logic is moved into posture or trust surfaces
+- no false settlement certainty is introduced
+
+### Implementation report format
+
+After implementation, return:
+
+1. what changed
+2. why it changed
+3. convention decisions taken
+4. risks or follow-ups
+5. whether the ticket is fully complete against acceptance criteria
+
+Do not continue automatically to a new ticket after this one.
+
+---
+
+## 15. Immediate next-use guidance
+
+Use this file as the continuity primer before asking Cursor to review or implement `MC-S2-008` or any future ticket touching engine posture, simulation, allocation, policy, trust, Copilot behavior, or operational withdrawal clarity.
 
 - assess whether a requested change needs an ADR
 - understand current repo governance and architecture posture
@@ -574,8 +661,7 @@ For deeper context, open next:
 
 ---
 
-## 15. Naming note
-
+## 16. Naming note
 The intended hand-off file name is `HEDGR_STATUS.md`.
 
 Continue using:
