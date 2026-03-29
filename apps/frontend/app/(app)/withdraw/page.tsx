@@ -10,12 +10,37 @@ import { EmptyState, ErrorState } from '@hedgr/ui';
 import { BalanceWithLocalEstimate, FxRateBlock } from '../../../components';
 import { useLatestFx } from '../../../lib/hooks/useLatestFx';
 import { resolveMarket, resolveLocalCurrencyCode } from '../../../config/market';
+import { PublicTxStatus, getPresentationForPublicStatus } from '../../../lib/tx';
 
 interface WithdrawMethod {
   id: string;
   name: string;
   available: boolean;
 }
+
+type WithdrawPageStatus = 'IDLE' | 'PENDING' | 'CONFIRMED' | 'FAILED';
+
+const WITHDRAW_STATUS_CONTENT: Record<
+  Exclude<WithdrawPageStatus, 'IDLE' | 'FAILED'>,
+  {
+    publicStatus: PublicTxStatus;
+    title: string;
+    description: string;
+    disclosure?: string;
+  }
+> = {
+  PENDING: {
+    publicStatus: PublicTxStatus.IN_PROGRESS,
+    title: 'Withdrawal request submitted',
+    description: 'Your withdrawal is processing. Timing can vary during normal processing.',
+    disclosure: 'A protective posture does not by itself stop a withdrawal from processing.',
+  },
+  CONFIRMED: {
+    publicStatus: PublicTxStatus.SUCCESS,
+    title: 'Withdrawal completed',
+    description: 'Your withdrawal has completed and your available balance has been updated.',
+  },
+};
 
 export default function WithdrawPage() {
   const { available, refresh, isLoading: balanceLoading, error: balanceError } = useBalance();
@@ -29,7 +54,7 @@ export default function WithdrawPage() {
   
   const [usd, setUsd] = useState(1);
   const [txnRef, setTxnRef] = useState<string | null>(null);
-  const [status, setStatus] = useState<'IDLE' | 'PENDING' | 'CONFIRMED' | 'FAILED'>('IDLE');
+  const [status, setStatus] = useState<WithdrawPageStatus>('IDLE');
   
   // Withdraw methods state
   const [withdrawMethods, setWithdrawMethods] = useState<WithdrawMethod[]>([]);
@@ -119,6 +144,11 @@ export default function WithdrawPage() {
   };
 
   const availableMethods = withdrawMethods.filter((m) => m.available);
+  const activeStatus =
+    status === 'PENDING' || status === 'CONFIRMED' ? WITHDRAW_STATUS_CONTENT[status] : null;
+  const activeStatusPresentation = activeStatus
+    ? getPresentationForPublicStatus(activeStatus.publicStatus)
+    : null;
 
   // Error state for loading balance
   if (balanceError) {
@@ -260,11 +290,39 @@ export default function WithdrawPage() {
       >
         {status === 'PENDING' ? 'Processing…' : 'Confirm'}
       </button>
-      {status === 'CONFIRMED' && <div className="text-green-600">Withdraw CONFIRMED</div>}
+      {activeStatus && activeStatusPresentation && (
+        <section
+          data-testid="withdraw-status-region"
+          data-status={activeStatus.publicStatus}
+          className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm"
+        >
+          <div className="flex items-start justify-between gap-3">
+            <div className="space-y-1.5">
+              <p className="text-sm font-semibold text-gray-900" data-testid="withdraw-status-title">
+                {activeStatus.title}
+              </p>
+              <p className="text-sm text-gray-600" data-testid="withdraw-status-description">
+                {activeStatus.description}
+              </p>
+              {activeStatus.disclosure && (
+                <p className="text-sm text-gray-500" data-testid="withdraw-status-disclosure">
+                  {activeStatus.disclosure}
+                </p>
+              )}
+            </div>
+            <span
+              data-testid="withdraw-status-label"
+              className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${activeStatusPresentation.tone}`}
+            >
+              {activeStatusPresentation.label}
+            </span>
+          </div>
+        </section>
+      )}
       {status === 'FAILED' && (
         <ErrorState
           title="Withdrawal failed"
-          description="Your withdrawal could not be processed. Please try again."
+          description="This withdrawal could not be completed. Please try again."
           primaryAction={{ label: 'Try again', onClick: () => setStatus('IDLE') }}
           className="py-6"
           data-testid="withdraw-failed-state"

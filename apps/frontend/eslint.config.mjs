@@ -4,7 +4,18 @@ import nextPlugin from '@next/eslint-plugin-next'
 
 export default [
   // Ignore build artifacts & generated types
-  { ignores: ['.next/**', 'dist/**', 'coverage/**', 'node_modules/**', 'next-env.d.ts'] },
+  {
+    ignores: [
+      '.next/**',
+      'dist/**',
+      'coverage/**',
+      'node_modules/**',
+      'next-env.d.ts',
+      // Playwright HTML report + trace bundles (generated; not source)
+      'playwright-report/**',
+      'test-results/**',
+    ],
+  },
 
   // Don't fail for stray disable comments (we're migrating configs)
   { linterOptions: { reportUnusedDisableDirectives: false } },
