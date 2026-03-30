@@ -298,6 +298,22 @@ Implementation posture preserved:
 - no execution, accounting, backend, or policy semantics introduced
 - no Copilot or simulator behavior changes
 
+### MC-S2-008 - Withdraw lifecycle integrity
+
+Implementation truth:
+
+- the withdraw page surfaces a dedicated status region with presentation aligned to the existing tx-layer vocabulary (`getPresentationForPublicStatus` / public withdrawal statuses)
+- pending versus completed withdrawal meaning is clearer in user-facing titles and descriptions
+- processing-delay and in-flight copy is calm and avoids guaranteed timing or instant-settlement claims
+- a brief disclosure states that protective posture does not by itself stop a withdrawal from processing (no implication of withdrawal lockup)
+- RTL tests cover withdraw status presentation; critical E2E asserts the withdraw status region on the success path
+- no backend settlement guarantees, treasury-routing semantics, or engine execution logic were introduced
+
+Implementation posture preserved:
+
+- frontend operational-trust refinement only; read-only engine doctrine intact elsewhere
+- no new accounting authority, execution semantics, or policy logic in withdrawal surfaces
+
 ---
 
 ## 7. Current sequence and active status
@@ -314,14 +330,13 @@ Completed and merged:
 - `MC-S2-005` - Governance linkage for engine-facing changes
 - `MC-S2-006` - Stability communication copy
 - `MC-S2-007` - Allocation trust legend and disclosure microcopy
+- `MC-S2-008` - Withdraw lifecycle integrity
 
 Current active ticket status:
 
-- The current active ticket is `MC-S2-008` - Withdraw lifecycle integrity.
-- This is the first ticket in Phase 3 - Operational Trust.
-- This is a product-facing operational trust ticket, not a backend engine expansion or execution-intent ticket.
-- Cursor should use this file as the primary handoff artefact before planning or implementing that work.
-- Do not widen into backend engine computation, live signals, execution intent, policy-engine convergence, or accounting reinterpretation under this ticket.
+- No active ticket is currently assigned in this handoff file.
+- Cursor must not continue automatically into a new ticket.
+- The next ticket must be explicitly defined and recorded here before planning or implementation begins.
 
 ---
 
@@ -558,94 +573,28 @@ Add a compact explanatory trust layer near the Stability Engine allocation surfa
 
 ---
 
-## 14. Current execution ticket - MC-S2-008 (withdraw lifecycle integrity)
+## 14. Completed execution ticket - MC-S2-008 (withdraw lifecycle integrity)
 
 **Ticket:** `MC-S2-008` - Withdraw lifecycle integrity  
 **Branch:** `feat/mc-s2-008-withdraw-lifecycle-integrity`
 
-### Objective
+### Objective (as scoped)
 
-Define and harden the withdrawal lifecycle trust surface so users can clearly understand:
+Hardened the withdrawal lifecycle trust surface on the withdraw page so users can more clearly understand **what stage** a withdrawal is in, **what is pending versus completed**, and **what in-flight or delayed processing means**—with calm copy that does not promise guaranteed timing or instant settlement. Shipped wording clarifies that **protective posture does not imply withdrawal lockup** (and does not by itself stop processing). Scoped to **Phase 3 - Operational Trust** as a **frontend operational-trust** refinement only—no backend execution expansion, treasury-routing semantics, or guaranteed settlement claims.
 
-- what stage a withdrawal is in
-- what is pending versus completed
-- what to expect when processing is delayed
-- that system protection does not imply withdrawal lockup
+### Shipped summary
 
-This is the first ticket in **Phase 3 - Operational Trust**.
+1. **`apps/frontend/app/(app)/withdraw/page.tsx`** — Withdraw status region aligned to tx-layer vocabulary; clearer pending vs completed presentation; calm processing-delay copy; brief protection-vs-lockup line; stable test hooks (`withdraw-status-region`, status attributes) for regression coverage.
+2. **`apps/frontend/__tests__/withdraw.page.test.tsx`** — RTL tests for withdraw status presentation and trust-safe copy.
+3. **`apps/frontend/tests-e2e/critical.spec.ts`** — Critical E2E asserts withdraw status region on the success path.
 
-It exists to make withdrawal state and progress legible and trust-safe without widening into backend execution guarantees, speculative settlement claims, or treasury-routing behavior.
-
-### In scope
-
-A narrow operational-trust refinement that may include:
-
-- clearer withdrawal lifecycle state meaning
-- trust-safe status language for withdrawal flow
-- calm communication for pending, processing, completed, failed, or delayed states
-- minimal UX clarification around withdrawal state and user expectations
-- minimal test updates for shipped behavior
-
-### Must not do
-
-- promise instant withdrawals
-- imply guaranteed settlement times
-- add false precision where systems remain asynchronous
-- widen into treasury routing
-- introduce backend capabilities not already present
-- couple this ticket to engine execution logic
-- introduce hype or false reassurance language
-
-### Likely implementation surface
-
-Inspect first:
-
-- withdrawal-related UI components and state surfaces in `apps/frontend`
-- existing status language and transaction / withdrawal status helpers
-- related tests under `apps/frontend/__tests__/`
-- `docs/ops/HEDGR_STATUS.md`
-- `docs/decisions/SPRINT-2-ADR-INDEX.md`
-
-Recommend and implement only the smallest change set necessary.
-
-### Acceptance shape
-
-A good version of this ticket will ensure that users can clearly understand:
-
-1. what stage a withdrawal is in
-2. what is pending versus completed
-3. what delayed or failed states mean
-4. that protection posture does not imply funds are trapped
-5. that no false certainty or guaranteed timing is being claimed
-
-### Implementation posture
-
-This ticket must preserve the current boundary:
-
-- read-only engine doctrine remains intact
-- no execution semantics are introduced
-- no accounting semantics are introduced
-- no backend coupling is introduced
-- no policy logic is moved into posture or trust surfaces
-- no false settlement certainty is introduced
-
-### Implementation report format
-
-After implementation, return:
-
-1. what changed
-2. why it changed
-3. convention decisions taken
-4. risks or follow-ups
-5. whether the ticket is fully complete against acceptance criteria
-
-Do not continue automatically to a new ticket after this one.
+**Follow-ups:** No next ticket is active in this handoff until one is explicitly recorded in §7. Do not continue automatically to a new ticket.
 
 ---
 
 ## 15. Immediate next-use guidance
 
-Use this file as the continuity primer before asking Cursor to review or implement `MC-S2-008` or any future ticket touching engine posture, simulation, allocation, policy, trust, Copilot behavior, or operational withdrawal clarity.
+Use this file as the continuity primer before asking Cursor to review or implement the next explicitly approved ticket touching engine posture, simulation, allocation, policy, trust, Copilot behavior, or operational withdrawal clarity.
 
 - assess whether a requested change needs an ADR
 - understand current repo governance and architecture posture

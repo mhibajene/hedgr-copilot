@@ -11,13 +11,29 @@ const BANDS: Array<{
   key: 'liquidityTargetPct' | 'coreTargetPct' | 'yieldCapPct';
   label: string;
 }> = [
-  { key: 'liquidityTargetPct', label: 'Liquidity' },
-  { key: 'coreTargetPct', label: 'Core allocation' },
-  { key: 'yieldCapPct', label: 'Yield provision' },
+  { key: 'liquidityTargetPct', label: 'Available' },
+  { key: 'coreTargetPct', label: 'Core' },
+  { key: 'yieldCapPct', label: 'Growth capacity' },
 ];
 
 function formatPct(value: number) {
   return `${value}%`;
+}
+
+function bandDescription(
+  key: 'liquidityTargetPct' | 'coreTargetPct' | 'yieldCapPct',
+  value: number,
+): string {
+  switch (key) {
+    case 'liquidityTargetPct':
+      return 'Ready to use anytime.';
+    case 'coreTargetPct':
+      return 'Kept stable to preserve value.';
+    case 'yieldCapPct':
+      return `Up to ${formatPct(
+        value,
+      )} can support returns when conditions allow.`;
+  }
 }
 
 export function EngineAllocationBands({
@@ -40,7 +56,7 @@ export function EngineAllocationBands({
           className="max-w-2xl text-sm text-slate-600"
           data-testid="engine-allocation-bands-caption"
         >
-          How the system weights liquidity, core stability, and yield capacity
+          How the system balances availability, stability, and room for returns
           for this posture.
         </p>
         <ul
@@ -51,15 +67,16 @@ export function EngineAllocationBands({
             <span className="font-medium text-slate-700">Targets</span>
             <span className="text-slate-600">
               {' '}
-              — Informational system targets only. A lower yield cap means less
-              yield opportunity within this structure.
+              — Informational system targets only. A lower growth capacity
+              target means less yield opportunity within this structure.
             </span>
           </li>
           <li>
             <span className="font-medium text-slate-700">Balances</span>
             <span className="text-slate-600">
               {' '}
-              — Your ledger shows what you hold—not these percentages.
+              — Your ledger shows what you hold—not these percentages. The
+              “Available” band is a target share, not your spendable balance.
             </span>
           </li>
           <li>
@@ -75,12 +92,15 @@ export function EngineAllocationBands({
       <div className="space-y-4">
         {BANDS.map(({ key, label }) => {
           const value = engineState[key];
+          const descId = `engine-allocation-band-${key}-desc`;
+          const description = bandDescription(key, value);
 
           return (
             <div
               key={key}
               className="space-y-2"
               data-testid={`engine-allocation-band-${key}`}
+              aria-describedby={descId}
             >
               <div className="flex items-baseline justify-between gap-4">
                 <span className="text-sm font-medium text-slate-700">
@@ -90,6 +110,12 @@ export function EngineAllocationBands({
                   {formatPct(value)}
                 </span>
               </div>
+              <p
+                id={descId}
+                className="max-w-2xl text-xs leading-snug text-slate-600"
+              >
+                {description}
+              </p>
               <div
                 aria-hidden="true"
                 className="h-2 overflow-hidden rounded-full bg-slate-200"
