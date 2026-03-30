@@ -11,6 +11,11 @@ import {
 } from '@testing-library/react';
 import { EngineAllocationBands } from '../app/(app)/dashboard/EngineAllocationBands';
 import {
+  ENGINE_PROTECTIVE_GUIDANCE_FRAMING,
+  ENGINE_PROTECTIVE_GUIDANCE_POINTS,
+  ENGINE_PROTECTIVE_GUIDANCE_TITLE,
+} from '../lib/engine/protective-guidance-copy';
+import {
   ENGINE_STABILITY_EXPLAINER_FOOTER,
   ENGINE_STABILITY_EXPLAINER_INTRO,
   ENGINE_STABILITY_EXPLAINER_SUMMARY,
@@ -135,6 +140,36 @@ describe('EngineAllocationBands', () => {
     ).toContain('10%');
     expect(screen.queryByText(/available balance/i)).toBeNull();
     expect(screen.queryByText(/total \(incl\. pending\)/i)).toBeNull();
+  });
+
+  test('renders protective guidance in the allocation trust area with semantic contract', () => {
+    render(<EngineAllocationBands engineState={makeEngineState()} />);
+
+    const card = screen.getByTestId('engine-allocation-bands');
+    const guidance = within(card).getByTestId('engine-protective-guidance');
+    expect(guidance.textContent).toContain(ENGINE_PROTECTIVE_GUIDANCE_TITLE);
+    expect(guidance.textContent).toContain(ENGINE_PROTECTIVE_GUIDANCE_FRAMING);
+    for (const point of ENGINE_PROTECTIVE_GUIDANCE_POINTS) {
+      expect(guidance.textContent).toContain(point);
+    }
+
+    expect(guidance.textContent).toMatch(/protection.*liquidity|liquidity.*protection/i);
+    expect(guidance.textContent).toMatch(/growth capacity/i);
+    expect(guidance.textContent).toMatch(/Available/i);
+    expect(guidance.textContent).toMatch(/readiness/i);
+    expect(guidance.textContent).toMatch(
+      /does not by itself stop a withdrawal|withdrawal/i,
+    );
+    expect(guidance.textContent).toMatch(/lockup|processing/i);
+
+    expect(guidance.textContent).toMatch(/not completed movement/i);
+    expect(guidance.textContent).toMatch(/informational/i);
+
+    const explainer = within(card).getByTestId('engine-stability-explainer');
+    expect(
+      guidance.compareDocumentPosition(explainer) &
+        Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy();
   });
 
   test('renders the stability explainer with governed copy and disclosure toggle', () => {

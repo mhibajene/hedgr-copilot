@@ -328,6 +328,18 @@ Implementation posture preserved:
 
 - read-only engine doctrine intact; no execution, accounting, backend, policy runtime, simulator, or Copilot changes
 
+### MC-S2-010 - Stability Engine protective guidance layer
+
+Implementation truth:
+
+- a compact, **always-on** static guidance block is mounted in **`EngineAllocationBands`** after the band rows and **before** `EngineStabilityExplainer` (`EngineProtectiveGuidance`, `data-testid="engine-protective-guidance"`)
+- canonical copy lives in ticket-local `apps/frontend/lib/engine/protective-guidance-copy.ts`; principle-level only (protection-before-growth, Available continuity, withdrawal continuity)—**not** a duplicate of `ENGINE_POSTURE_CONTEXT` or notice copy, **not** a second `<details>` or banner
+- RTL tests assert semantic contract, canonical strings, and DOM order (protective guidance before explainer); dashboard tests assert mount on primary and balance-error paths
+
+Implementation posture preserved:
+
+- read-only engine doctrine intact; no execution, accounting, backend coupling, live signals, or policy threshold logic
+
 ### Allocation band label UX legibility (merged baseline)
 
 The following allocation trust-surface UX refinement is merged and part of the current dashboard baseline:
@@ -361,10 +373,11 @@ Completed and merged:
 - `MC-S2-007` - Allocation trust legend and disclosure microcopy
 - `MC-S2-008` - Withdraw lifecycle integrity
 - `MC-S2-009` - Stability Engine expandable explainability layer
+- `MC-S2-010` - Stability Engine protective guidance layer
 
 Current active ticket status:
 
-- **No approved next ticket** is recorded in this file until one is explicitly added under §7 and §15.
+- **Approved next ticket:** None recorded. Update this section when the next execution ticket is explicitly approved.
 - Cursor must not continue automatically into work beyond what is explicitly defined in this file.
 - Cursor must not drift beyond explicitly defined scope.
 
@@ -638,15 +651,35 @@ Add a compact, optional, read-only explainer on the dashboard that helps users u
 3. **`apps/frontend/app/(app)/dashboard/EngineAllocationBands.tsx`** — Mounts the explainer after the band rows.
 4. **`apps/frontend/__tests__/engine-allocation-bands.test.tsx`**, **`dashboard.page.test.tsx`** — Explainer coverage and dashboard mount.
 
-**Follow-ups:** Record the next approved ticket explicitly in §7 when chosen.
+**Follow-ups:** None required. Successor: `MC-S2-010` (§16).
 
 ---
 
-## 16. Immediate next-use guidance
+## 16. Completed execution ticket - MC-S2-010 (Stability Engine protective guidance layer)
+
+**Ticket:** `MC-S2-010` — Stability Engine protective guidance layer  
+**Suggested branch:** `feat/mc-s2-010-protective-guidance-layer`
+
+### Objective (as scoped)
+
+Add a compact, always-on, read-only trust layer on the dashboard allocation card that explains protective stance in plain language (protection-before-growth, Available continuity, withdrawal continuity), without duplicating posture context or notices or implying execution or ledger truth.
+
+### Shipped summary
+
+1. **`apps/frontend/lib/engine/protective-guidance-copy.ts`** — Principle-level canonical strings (title, framing, three bullets); does not duplicate `ENGINE_POSTURE_CONTEXT` or notice copy.
+2. **`apps/frontend/app/(app)/dashboard/EngineProtectiveGuidance.tsx`** — Static guidance block (`data-testid="engine-protective-guidance"`), not a second `<details>` or banner.
+3. **`apps/frontend/app/(app)/dashboard/EngineAllocationBands.tsx`** — Mounts protective guidance after band rows, before `EngineStabilityExplainer`.
+4. **`apps/frontend/__tests__/engine-allocation-bands.test.tsx`**, **`dashboard.page.test.tsx`** — Semantic contract, canonical copy, DOM order before explainer.
+
+**Follow-ups:** Record the next approved ticket in §7 when chosen.
+
+---
+
+## 17. Immediate next-use guidance
 
 Use this file as the continuity primer before asking Cursor to review or implement the next explicitly approved ticket touching engine posture, simulation, allocation, policy, trust, Copilot behavior, or operational withdrawal clarity.
 
-- for the most recently completed engine trust ticket, see §15 (`MC-S2-009`); for the next approved ticket, see §7 when set
+- for the most recently completed engine trust ticket, see §16 (`MC-S2-010`); for the active approved next ticket, see §7
 - assess whether a requested change needs an ADR
 - understand current repo governance and architecture posture
 - confirm whether a proposed task fits the current read-only boundary
@@ -661,7 +694,7 @@ For deeper context, open next:
 
 ---
 
-## 17. Naming note
+## 18. Naming note
 The intended hand-off file name is `HEDGR_STATUS.md`.
 
 Continue using:
