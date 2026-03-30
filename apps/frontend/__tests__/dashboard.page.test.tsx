@@ -103,6 +103,7 @@ describe('DashboardPage engine trust surface', () => {
     );
     expect(screen.getByTestId('engine-posture-banner')).toBeDefined();
     expect(screen.getByTestId('engine-allocation-bands')).toBeDefined();
+    expect(screen.getByTestId('engine-protective-guidance')).toBeDefined();
     expect(screen.getByTestId('engine-stability-explainer')).toBeDefined();
     expect(screen.getByText('Protection posture tightening')).toBeDefined();
   });
@@ -122,6 +123,7 @@ describe('DashboardPage engine trust surface', () => {
     );
     expect(screen.getByTestId('engine-posture-banner')).toBeDefined();
     expect(screen.getByTestId('engine-allocation-bands')).toBeDefined();
+    expect(screen.getByTestId('engine-protective-guidance')).toBeDefined();
     expect(screen.getByTestId('engine-stability-explainer')).toBeDefined();
     expect(screen.getByTestId('dashboard-error-state')).toBeDefined();
   });
