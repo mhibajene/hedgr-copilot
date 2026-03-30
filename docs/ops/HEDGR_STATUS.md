@@ -1,6 +1,6 @@
 Status: Canonical hand-off file
 Purpose: Strategic continuity, merged implementation truth, and next-ticket authority for Cursor execution
-Last updated: 2026-03-24
+Last updated: 2026-03-30
 
 ---
 
@@ -314,6 +314,35 @@ Implementation posture preserved:
 - frontend operational-trust refinement only; read-only engine doctrine intact elsewhere
 - no new accounting authority, execution semantics, or policy logic in withdrawal surfaces
 
+### MC-S2-009 - Stability Engine expandable explainability layer
+
+Implementation truth:
+
+- a compact, optional **`details` / `summary`** explainer is mounted **inside** the allocation bands section (`EngineAllocationBands`) after the target bands
+- canonical copy lives in ticket-local `apps/frontend/lib/engine/stability-explainer-copy.ts`; presentation in `apps/frontend/app/(app)/dashboard/EngineStabilityExplainer.tsx`
+- static copy only: principle-level posture (protection vs growth, caution level); **not** a duplicate of `ENGINE_POSTURE_CONTEXT` or a second notice system
+- plain-language definitions for **Available**, **Core**, and **Growth capacity** align with the merged allocation band label baseline; short principles on why the split exists and targets vs ledger truth
+- RTL tests cover explainer presence, governed copy, disclosure interaction, and a **limited** high-risk forbidden-phrase guard; dashboard page tests assert the explainer mount
+
+Implementation posture preserved:
+
+- read-only engine doctrine intact; no execution, accounting, backend, policy runtime, simulator, or Copilot changes
+
+### Allocation band label UX legibility (merged baseline)
+
+The following allocation trust-surface UX refinement is merged and part of the current dashboard baseline:
+
+- labels renamed for legibility:
+  - Liquidity → Available
+  - Core allocation → Core
+  - Yield provision → Growth capacity
+- supporting microcopy reinforces:
+  - available = ready to use
+  - core = kept stable to preserve value
+  - growth capacity = up to the displayed percentage can support returns when conditions allow
+
+This refinement is merged UX-legibility work only. It does not change posture logic, backend logic, accounting meaning, or the read-only boundary. Future ticket work must preserve this plainer-language vocabulary unless doctrine explicitly changes.
+
 ---
 
 ## 7. Current sequence and active status
@@ -331,12 +360,13 @@ Completed and merged:
 - `MC-S2-006` - Stability communication copy
 - `MC-S2-007` - Allocation trust legend and disclosure microcopy
 - `MC-S2-008` - Withdraw lifecycle integrity
+- `MC-S2-009` - Stability Engine expandable explainability layer
 
 Current active ticket status:
 
-- No active ticket is currently assigned in this handoff file.
-- Cursor must not continue automatically into a new ticket.
-- The next ticket must be explicitly defined and recorded here before planning or implementation begins.
+- **No approved next ticket** is recorded in this file until one is explicitly added under §7 and §15.
+- Cursor must not continue automatically into work beyond what is explicitly defined in this file.
+- Cursor must not drift beyond explicitly defined scope.
 
 ---
 
@@ -588,14 +618,35 @@ Hardened the withdrawal lifecycle trust surface on the withdraw page so users ca
 2. **`apps/frontend/__tests__/withdraw.page.test.tsx`** — RTL tests for withdraw status presentation and trust-safe copy.
 3. **`apps/frontend/tests-e2e/critical.spec.ts`** — Critical E2E asserts withdraw status region on the success path.
 
-**Follow-ups:** No next ticket is active in this handoff until one is explicitly recorded in §7. Do not continue automatically to a new ticket.
+**Follow-ups:** None required for this ticket. Record the next approved ticket explicitly in §7 when chosen.
 
 ---
 
-## 15. Immediate next-use guidance
+## 15. Completed execution ticket - MC-S2-009 (Stability Engine expandable explainability layer)
+
+**Ticket:** `MC-S2-009` — Stability Engine expandable explainability layer  
+**Suggested branch:** `feat/mc-s2-009-engine-explainability-layer`
+
+### Objective (as scoped)
+
+Add a compact, optional, read-only explainer on the dashboard that helps users understand Hedgr's allocation language in plain terms, without implying execution, ledger truth, or live policy logic.
+
+### Shipped summary
+
+1. **`apps/frontend/lib/engine/stability-explainer-copy.ts`** — Ticket-local canonical strings for summary, intro, three term definitions (Available / Core / Growth capacity), two principle lines, footer guardrail.
+2. **`apps/frontend/app/(app)/dashboard/EngineStabilityExplainer.tsx`** — Collapsed-by-default `details`/`summary` explainer (`data-testid="engine-stability-explainer"`).
+3. **`apps/frontend/app/(app)/dashboard/EngineAllocationBands.tsx`** — Mounts the explainer after the band rows.
+4. **`apps/frontend/__tests__/engine-allocation-bands.test.tsx`**, **`dashboard.page.test.tsx`** — Explainer coverage and dashboard mount.
+
+**Follow-ups:** Record the next approved ticket explicitly in §7 when chosen.
+
+---
+
+## 16. Immediate next-use guidance
 
 Use this file as the continuity primer before asking Cursor to review or implement the next explicitly approved ticket touching engine posture, simulation, allocation, policy, trust, Copilot behavior, or operational withdrawal clarity.
 
+- for the most recently completed engine trust ticket, see §15 (`MC-S2-009`); for the next approved ticket, see §7 when set
 - assess whether a requested change needs an ADR
 - understand current repo governance and architecture posture
 - confirm whether a proposed task fits the current read-only boundary
@@ -610,7 +661,7 @@ For deeper context, open next:
 
 ---
 
-## 16. Naming note
+## 17. Naming note
 The intended hand-off file name is `HEDGR_STATUS.md`.
 
 Continue using:

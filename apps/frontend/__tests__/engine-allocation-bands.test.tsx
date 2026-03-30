@@ -2,8 +2,19 @@
 
 import React from 'react';
 import { afterEach, describe, expect, test } from 'vitest';
-import { cleanup, render, screen, within } from '@testing-library/react';
+import {
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+  within,
+} from '@testing-library/react';
 import { EngineAllocationBands } from '../app/(app)/dashboard/EngineAllocationBands';
+import {
+  ENGINE_STABILITY_EXPLAINER_FOOTER,
+  ENGINE_STABILITY_EXPLAINER_INTRO,
+  ENGINE_STABILITY_EXPLAINER_SUMMARY,
+} from '../lib/engine/stability-explainer-copy';
 import { getMockEngineState } from '../lib/engine/mock';
 import type { EngineState } from '../lib/engine/types';
 
@@ -124,5 +135,35 @@ describe('EngineAllocationBands', () => {
     ).toContain('10%');
     expect(screen.queryByText(/available balance/i)).toBeNull();
     expect(screen.queryByText(/total \(incl\. pending\)/i)).toBeNull();
+  });
+
+  test('renders the stability explainer with governed copy and disclosure toggle', () => {
+    render(<EngineAllocationBands engineState={makeEngineState()} />);
+
+    const explainer = screen.getByTestId('engine-stability-explainer');
+    expect(explainer).toBeDefined();
+    expect(screen.getByText(ENGINE_STABILITY_EXPLAINER_SUMMARY)).toBeDefined();
+
+    const body = screen.getByTestId('engine-stability-explainer-body');
+    expect(body.textContent).toContain(ENGINE_STABILITY_EXPLAINER_INTRO);
+    expect(body.textContent).toContain(ENGINE_STABILITY_EXPLAINER_FOOTER);
+    expect(body.textContent).toMatch(/Available/);
+    expect(body.textContent).toMatch(/Core/);
+    expect(body.textContent).toMatch(/Growth capacity/);
+    expect(body.textContent).toMatch(/informational/i);
+    expect(body.textContent).toMatch(/ledger/i);
+
+    const forbidden = [
+      'your money is currently in',
+      'funds are placed into',
+      'the system has moved',
+      'rebalance',
+    ];
+    for (const phrase of forbidden) {
+      expect(body.textContent?.toLowerCase()).not.toContain(phrase);
+    }
+
+    fireEvent.click(screen.getByText(ENGINE_STABILITY_EXPLAINER_SUMMARY));
+    expect(body).toBeDefined();
   });
 });

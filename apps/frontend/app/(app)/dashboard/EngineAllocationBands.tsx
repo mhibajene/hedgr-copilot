@@ -2,6 +2,7 @@
 
 import React from 'react';
 import type { EngineState } from '../../../lib/engine/types';
+import { EngineStabilityExplainer } from './EngineStabilityExplainer';
 
 type EngineAllocationBandsProps = {
   engineState: EngineState;
@@ -129,6 +130,8 @@ export function EngineAllocationBands({
           );
         })}
       </div>
+
+      <EngineStabilityExplainer />
     </section>
   );
 }
