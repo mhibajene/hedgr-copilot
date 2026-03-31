@@ -365,6 +365,19 @@ Implementation posture preserved:
 
 - read-only engine doctrine intact; no reminders, notifications, live-monitoring claims, posture-conditioned prompting, or execution semantics
 
+### MC-S2-013 - Stability change signal
+
+Implementation truth:
+
+- a **review snapshot fingerprint** (`posture`, `liquidityTargetPct`, `coreTargetPct`, `yieldCapPct`) is defined in `apps/frontend/lib/engine/review-snapshot-fingerprint.ts`; a **single** `localStorage` key (`hedgr:engine-review-snapshot-fingerprint`) stores only the last-seen fingerprint—no feed, no backend
+- the change signal renders **inside** the existing review snapshot (`EngineStabilityReviewSnapshot.tsx`) **after** the cadence line and **before** the timestamp; **no** change line on first visit (prior reference required)
+- governed copy for unchanged / changed plus a one-line disclaimer (system targets vs ledger) lives in `apps/frontend/lib/engine/stability-review-snapshot-copy.ts`
+- RTL coverage in `apps/frontend/__tests__/engine-stability-review-snapshot.test.tsx` and `apps/frontend/__tests__/review-snapshot-fingerprint.test.ts`
+
+Implementation posture preserved:
+
+- read-only engine doctrine intact; no alerts, notifications, execution semantics, balance or performance framing, or live-monitoring theater
+
 ### Allocation band label UX legibility (merged baseline)
 
 The following allocation trust-surface UX refinement is merged and part of the current dashboard baseline:
@@ -401,6 +414,7 @@ Completed and merged:
 - `MC-S2-010` - Stability Engine protective guidance layer
 - `MC-S2-011` - Stability review snapshot
 - `MC-S2-012` - Stability review cadence cue
+- `MC-S2-013` - Stability change signal
 
 Current active ticket status:
 
@@ -770,15 +784,35 @@ Add a single static, read-only cadence line inside the existing Stability Engine
 2. **`apps/frontend/app/(app)/dashboard/EngineStabilityReviewSnapshot.tsx`** — Cadence line inside the review snapshot block (`data-testid="engine-stability-review-snapshot-cadence"`), before the timestamp line.
 3. **`apps/frontend/__tests__/engine-stability-review-snapshot.test.tsx`**, **`engine-allocation-bands.test.tsx`** — Contract presence for cadence copy; small high-risk denylist (e.g. urgency / alerting / monitoring phrasing).
 
+**Follow-ups:** None required for this ticket. Successor: **`MC-S2-013`** (§19); shipped — see §6.
+
+---
+
+## 19. Completed execution ticket - MC-S2-013 (Stability change signal)
+
+**Ticket:** `MC-S2-013` — Stability change signal  
+**Suggested branch:** `feat/mc-s2-013-stability-change-signal`
+
+### Objective (as scoped)
+
+Add a compact, read-only signal so users can tell whether the **informational system targets** in the review snapshot match or differ from their **last view in this browser**, without urgency, execution semantics, performance framing, or live-monitoring theater.
+
+### Shipped summary
+
+1. **`apps/frontend/lib/engine/review-snapshot-fingerprint.ts`** — `buildReviewSnapshotFingerprint`, `REVIEW_SNAPSHOT_FINGERPRINT_STORAGE_KEY` (`hedgr:engine-review-snapshot-fingerprint`).
+2. **`apps/frontend/lib/engine/stability-review-snapshot-copy.ts`** — `ENGINE_STABILITY_REVIEW_CHANGE_UNCHANGED`, `ENGINE_STABILITY_REVIEW_CHANGE_CHANGED`, `ENGINE_STABILITY_REVIEW_CHANGE_DISCLAIMER`.
+3. **`apps/frontend/app/(app)/dashboard/EngineStabilityReviewSnapshot.tsx`** — client `localStorage` compare; change lines after cadence, before timestamp (`data-testid` `engine-stability-review-snapshot-change-signal`, `engine-stability-review-snapshot-change-disclaimer`); no line until a prior fingerprint exists.
+4. **`apps/frontend/__tests__/engine-stability-review-snapshot.test.tsx`**, **`apps/frontend/__tests__/review-snapshot-fingerprint.test.ts`** — unchanged/changed/first-visit behavior, semantic and small high-risk denylist coverage.
+
 **Follow-ups:** None required for this ticket. Record the next approved ticket explicitly in §7 when chosen.
 
 ---
 
-## 19. Immediate next-use guidance
+## 20. Immediate next-use guidance
 
 Use this file as the continuity primer before asking Cursor to review or implement the next explicitly approved ticket touching engine posture, simulation, allocation, policy, trust, Copilot behavior, or operational withdrawal clarity.
 
-- for shipped review snapshot and cadence work, see §17 (`MC-S2-011`) and §18 (`MC-S2-012`); for the next approved ticket (if any), see §7 only
+- for shipped review snapshot, cadence, and change signal, see §17 (`MC-S2-011`), §18 (`MC-S2-012`), and §19 (`MC-S2-013`); for the next approved ticket (if any), see **§7** only
 - assess whether a requested change needs an ADR
 - understand current repo governance and architecture posture
 - confirm whether a proposed task fits the current read-only boundary
@@ -793,7 +827,7 @@ For deeper context, open next:
 
 ---
 
-## 20. Naming note
+## 21. Naming note
 The intended hand-off file name is `HEDGR_STATUS.md`.
 
 Continue using:
