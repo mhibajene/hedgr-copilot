@@ -353,6 +353,18 @@ Implementation posture preserved:
 
 - read-only engine doctrine intact; no execution, accounting, backend coupling, historical trends, notifications, or policy threshold semantics
 
+### MC-S2-012 - Stability review cadence cue
+
+Implementation truth:
+
+- one static, read-only cadence line (`ENGINE_STABILITY_REVIEW_CADENCE_CUE`) ships inside the existing review snapshot (`data-testid="engine-stability-review-snapshot-cadence"`), not as a separate trust surface
+- copy extends the same ticket-local module as MC-S2-011: `apps/frontend/lib/engine/stability-review-snapshot-copy.ts`; presentation remains in `apps/frontend/app/(app)/dashboard/EngineStabilityReviewSnapshot.tsx`
+- RTL coverage in `apps/frontend/__tests__/engine-stability-review-snapshot.test.tsx` (contract + small high-risk denylist); integration in `apps/frontend/__tests__/engine-allocation-bands.test.tsx`
+
+Implementation posture preserved:
+
+- read-only engine doctrine intact; no reminders, notifications, live-monitoring claims, posture-conditioned prompting, or execution semantics
+
 ### Allocation band label UX legibility (merged baseline)
 
 The following allocation trust-surface UX refinement is merged and part of the current dashboard baseline:
@@ -388,10 +400,11 @@ Completed and merged:
 - `MC-S2-009` - Stability Engine expandable explainability layer
 - `MC-S2-010` - Stability Engine protective guidance layer
 - `MC-S2-011` - Stability review snapshot
+- `MC-S2-012` - Stability review cadence cue
 
 Current active ticket status:
 
-- **Approved next ticket:** `MC-S2-012` — Stability review cadence cue. This is the **only** approved next ticket for Cursor to plan and execute against until this section is explicitly updated.
+- **Approved next ticket:** none recorded. Add the next explicitly approved micro-contract here before Cursor planning begins; until then, this is the **only** authority for “what runs next,” and it is empty by design.
 - Cursor must not continue automatically into work beyond what is explicitly defined in this file.
 - Cursor must not drift beyond explicitly defined scope.
 
@@ -718,7 +731,7 @@ Add a compact, always-on, read-only trust layer on the dashboard allocation card
 3. **`apps/frontend/app/(app)/dashboard/EngineAllocationBands.tsx`** — Mounts protective guidance after band rows, before `EngineStabilityExplainer`.
 4. **`apps/frontend/__tests__/engine-allocation-bands.test.tsx`**, **`dashboard.page.test.tsx`** — Semantic contract, canonical copy, DOM order before explainer.
 
-**Follow-ups:** None required for this ticket. The active approved next ticket is `MC-S2-012` — see §7 and §18.
+**Follow-ups:** None required for this ticket. Record the next approved ticket explicitly in §7 when chosen.
 
 ---
 
@@ -738,127 +751,26 @@ Add a compact, read-only dashboard summary that turns the current Stability Engi
 3. **`apps/frontend/app/(app)/dashboard/EngineAllocationBands.tsx`** — Mounts the snapshot within the Stability Engine trust cluster.
 4. **`apps/frontend/__tests__/engine-stability-review-snapshot.test.tsx`**, **`engine-allocation-bands.test.tsx`** — Rendering, stance copy, anti-drift coverage.
 
-**Follow-ups:** None required for this ticket. Successor: `MC-S2-012` (§7, §18).
+**Follow-ups:** None required for this ticket. Successor: `MC-S2-012` (§18); shipped — see §6.
 
 ---
 
-## 18. Active execution ticket - MC-S2-012 (Stability review cadence cue)
+## 18. Completed execution ticket - MC-S2-012 (Stability review cadence cue)
 
 **Ticket:** `MC-S2-012` — Stability review cadence cue  
 **Suggested branch:** `feat/mc-s2-012-review-cadence-cue`
 
-### Objective
+### Objective (as scoped)
 
-Add a compact, read-only cadence cue to the dashboard Stability Engine trust surface that reinforces calm recurring review behavior without introducing urgency, notifications, or runtime authority.
+Add a single static, read-only cadence line inside the existing Stability Engine review snapshot so users get a calm recurring-review rhythm cue—without alerts, reminders, live-monitoring semantics, or posture-conditioned prompting.
 
-This surface should help users understand:
+### Shipped summary
 
-- that Hedgr is designed to be reviewed regularly
-- that review is part of staying informed
-- that protective conditions may warrant attention without implying action pressure
+1. **`apps/frontend/lib/engine/stability-review-snapshot-copy.ts`** — `ENGINE_STABILITY_REVIEW_CADENCE_CUE` (extends the MC-S2-011 snapshot copy module; no separate cadence-only file).
+2. **`apps/frontend/app/(app)/dashboard/EngineStabilityReviewSnapshot.tsx`** — Cadence line inside the review snapshot block (`data-testid="engine-stability-review-snapshot-cadence"`), before the timestamp line.
+3. **`apps/frontend/__tests__/engine-stability-review-snapshot.test.tsx`**, **`engine-allocation-bands.test.tsx`** — Contract presence for cadence copy; small high-risk denylist (e.g. urgency / alerting / monitoring phrasing).
 
-without implying:
-
-- alerts
-- live monitoring guarantees
-- historical trend authority
-- execution intent
-- policy threshold firing
-- fund movement
-
-### Why this ticket exists now
-
-`MC-S2-011` introduced a calm review snapshot for the Stability Engine trust surface.
-
-The next meaningful gap is not more explanation or more status detail — it is reinforcing a repeatable review habit in a way that remains trust-first and non-dramatic.
-
-This ticket closes that gap by adding a lightweight cadence cue that helps Hedgr feel like a system users return to review regularly, without drifting into reminder mechanics, urgency language, or pseudo-operational alerting.
-
-### In scope
-
-- one compact dashboard cue adjacent to the review snapshot or within the same Stability Engine trust cluster
-- calm copy that reinforces review rhythm in plain language
-- reuse of existing engine trust language wherever possible
-- repo-native tests covering:
-  - rendering
-  - copy presence
-  - anti-drift guardrails against urgency, execution, or live-monitoring semantics
-
-### Out of scope
-
-- reminders or notifications
-- saved review history
-- backend scheduling
-- push, email, or WhatsApp prompts
-- historical trend logic
-- execution semantics
-- policy runtime expansion
-- Copilot involvement
-- gamification
-- streaks or reward framing
-
-### Must not do
-
-- create urgency
-- tell the user to act now
-- imply system-triggered review events as fact unless already represented in read-only state
-- introduce live-status theater
-- weaken trust-first posture with engagement tactics
-- duplicate existing snapshot, guidance, or explainer surfaces unnecessarily
-
-### User outcome
-
-After this ticket, a user should feel:
-
-- Hedgr is something to review calmly and regularly
-- the product supports disciplined oversight
-- checking in is about clarity, not reacting to hype
-
-### Likely implementation surface
-
-Inspect first:
-
-- `apps/frontend/app/(app)/dashboard/`
-- `apps/frontend/lib/engine/`
-- `apps/frontend/__tests__/`
-
-Most likely edit:
-
-- the existing dashboard Stability Engine trust cluster around the review snapshot
-- engine-local copy file(s) if a small canonical cadence-copy contract is needed
-- related RTL tests
-
-### Possible create
-
-- one small dashboard trust component for the cadence cue
-- one ticket-local engine copy module if needed
-
-### Acceptance shape
-
-A strong implementation will:
-
-1. add a compact cadence cue to the shipped Stability Engine dashboard trust area
-2. reinforce calm recurring review behavior without introducing urgency
-3. remain clearly read-only and informational
-4. avoid alert, notification, execution, or live-monitoring semantics
-5. preserve existing allocation-label baseline:
-   - Available
-   - Core
-   - Growth capacity
-6. include regression-resistant test coverage for the new cadence cue
-
-### Implementation posture
-
-- read-only
-- frontend-centered
-- informational only
-- calm and trust-first
-- recurring-review oriented
-- reversible
-- minimal surface area
-- doctrine-constrained
-
-This ticket should behave as a habit-reinforcing trust cue, not an alerting or operational control surface.
+**Follow-ups:** None required for this ticket. Record the next approved ticket explicitly in §7 when chosen.
 
 ---
 
@@ -866,7 +778,7 @@ This ticket should behave as a habit-reinforcing trust cue, not an alerting or o
 
 Use this file as the continuity primer before asking Cursor to review or implement the next explicitly approved ticket touching engine posture, simulation, allocation, policy, trust, Copilot behavior, or operational withdrawal clarity.
 
-- for the most recently completed engine trust ticket for the review snapshot, see §17 (`MC-S2-011`); for the active approved next ticket, see §7 and the full brief in §18 (`MC-S2-012`)
+- for shipped review snapshot and cadence work, see §17 (`MC-S2-011`) and §18 (`MC-S2-012`); for the next approved ticket (if any), see §7 only
 - assess whether a requested change needs an ADR
 - understand current repo governance and architecture posture
 - confirm whether a proposed task fits the current read-only boundary
