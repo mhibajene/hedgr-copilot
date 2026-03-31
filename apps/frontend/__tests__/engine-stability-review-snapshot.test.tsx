@@ -7,6 +7,7 @@ import { EngineStabilityReviewSnapshot } from '../app/(app)/dashboard/EngineStab
 import { formatEngineSnapshotUpdatedAt } from '../lib/engine/format-engine-snapshot-updated-at';
 import {
   ENGINE_STABILITY_REVIEW_AVAILABLE_CONTINUITY,
+  ENGINE_STABILITY_REVIEW_CADENCE_CUE,
   ENGINE_STABILITY_REVIEW_SNAPSHOT_TITLE,
   ENGINE_STABILITY_REVIEW_WITHDRAWAL_CONTINUITY,
   getEngineStabilityReviewSnapshotStance,
@@ -46,6 +47,7 @@ describe('EngineStabilityReviewSnapshot', () => {
     expect(snapshot.textContent).toContain(
       ENGINE_STABILITY_REVIEW_WITHDRAWAL_CONTINUITY,
     );
+    expect(snapshot.textContent).toContain(ENGINE_STABILITY_REVIEW_CADENCE_CUE);
 
     const formattedUpdatedAt = formatEngineSnapshotUpdatedAt(engineState.updatedAt);
     expect(snapshot.textContent).toContain(
@@ -65,13 +67,20 @@ describe('EngineStabilityReviewSnapshot', () => {
     ).toBe(getEngineStabilityReviewSnapshotStance(engineState.posture));
   });
 
-  test('avoids high-risk execution and live-monitoring language', () => {
+  test('keeps cadence language free of high-risk prompting and monitoring semantics', () => {
     render(<EngineStabilityReviewSnapshot engineState={makeEngineState()} />);
 
     const snapshotText =
       screen.getByTestId('engine-stability-review-snapshot').textContent ?? '';
 
-    for (const phrase of ['executed', 'rebalanced', 'settled', 'live', 'real-time']) {
+    for (const phrase of [
+      'act now',
+      'alert',
+      'reminder',
+      'notification',
+      'real-time',
+      'monitoring',
+    ]) {
       expect(snapshotText.toLowerCase()).not.toContain(phrase);
     }
   });

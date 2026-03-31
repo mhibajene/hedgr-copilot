@@ -4,6 +4,7 @@ import React from 'react';
 import { formatEngineSnapshotUpdatedAt } from '../../../lib/engine/format-engine-snapshot-updated-at';
 import {
   ENGINE_STABILITY_REVIEW_AVAILABLE_CONTINUITY,
+  ENGINE_STABILITY_REVIEW_CADENCE_CUE,
   ENGINE_STABILITY_REVIEW_SNAPSHOT_TITLE,
   ENGINE_STABILITY_REVIEW_WITHDRAWAL_CONTINUITY,
   getEngineStabilityReviewSnapshotStance,
@@ -33,6 +34,9 @@ export function EngineStabilityReviewSnapshot({
       </p>
       <p>{ENGINE_STABILITY_REVIEW_AVAILABLE_CONTINUITY}</p>
       <p>{ENGINE_STABILITY_REVIEW_WITHDRAWAL_CONTINUITY}</p>
+      <p data-testid="engine-stability-review-snapshot-cadence">
+        {ENGINE_STABILITY_REVIEW_CADENCE_CUE}
+      </p>
       <p
         className="text-xs leading-snug text-slate-500"
         data-testid="engine-stability-review-snapshot-updated-at"
