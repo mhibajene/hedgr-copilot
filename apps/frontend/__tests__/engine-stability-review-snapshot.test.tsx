@@ -1,19 +1,26 @@
 // @vitest-environment jsdom
 
 import React from 'react';
-import { afterEach, describe, expect, test } from 'vitest';
-import { cleanup, render, screen } from '@testing-library/react';
+import { afterEach, beforeEach, describe, expect, test } from 'vitest';
+import { cleanup, render, screen, waitFor } from '@testing-library/react';
 import { EngineStabilityReviewSnapshot } from '../app/(app)/dashboard/EngineStabilityReviewSnapshot';
 import { formatEngineSnapshotUpdatedAt } from '../lib/engine/format-engine-snapshot-updated-at';
 import {
   ENGINE_STABILITY_REVIEW_AVAILABLE_CONTINUITY,
   ENGINE_STABILITY_REVIEW_CADENCE_CUE,
+  ENGINE_STABILITY_REVIEW_CHANGE_CHANGED,
+  ENGINE_STABILITY_REVIEW_CHANGE_DISCLAIMER,
+  ENGINE_STABILITY_REVIEW_CHANGE_UNCHANGED,
   ENGINE_STABILITY_REVIEW_SNAPSHOT_TITLE,
   ENGINE_STABILITY_REVIEW_WITHDRAWAL_CONTINUITY,
   getEngineStabilityReviewSnapshotStance,
   getEngineStabilityReviewTimestampLine,
 } from '../lib/engine/stability-review-snapshot-copy';
 import { getMockEngineState } from '../lib/engine/mock';
+import {
+  buildReviewSnapshotFingerprint,
+  REVIEW_SNAPSHOT_FINGERPRINT_STORAGE_KEY,
+} from '../lib/engine/review-snapshot-fingerprint';
 import type { EngineState } from '../lib/engine/types';
 
 function makeEngineState(overrides: Partial<EngineState> = {}): EngineState {
@@ -23,12 +30,17 @@ function makeEngineState(overrides: Partial<EngineState> = {}): EngineState {
   };
 }
 
+beforeEach(() => {
+  window.localStorage.removeItem(REVIEW_SNAPSHOT_FINGERPRINT_STORAGE_KEY);
+});
+
 afterEach(() => {
   cleanup();
+  window.localStorage.removeItem(REVIEW_SNAPSHOT_FINGERPRINT_STORAGE_KEY);
 });
 
 describe('EngineStabilityReviewSnapshot', () => {
-  test('renders the minimal review snapshot contract', () => {
+  test('renders the minimal review snapshot contract', async () => {
     const engineState = makeEngineState({
       posture: 'tightened',
       updatedAt: '2026-03-08T00:00:00.000Z',
@@ -53,9 +65,15 @@ describe('EngineStabilityReviewSnapshot', () => {
     expect(snapshot.textContent).toContain(
       getEngineStabilityReviewTimestampLine(formattedUpdatedAt),
     );
+
+    await waitFor(() => {
+      expect(
+        screen.queryByTestId('engine-stability-review-snapshot-change-signal'),
+      ).toBeNull();
+    });
   });
 
-  test('uses the calmer stance copy for within-range postures', () => {
+  test('uses the calmer stance copy for within-range postures', async () => {
     const engineState = makeEngineState({
       posture: 'recovery',
     });
@@ -65,10 +83,122 @@ describe('EngineStabilityReviewSnapshot', () => {
     expect(
       screen.getByTestId('engine-stability-review-snapshot-stance').textContent,
     ).toBe(getEngineStabilityReviewSnapshotStance(engineState.posture));
+
+    await waitFor(() => {
+      expect(
+        screen.queryByTestId('engine-stability-review-snapshot-change-signal'),
+      ).toBeNull();
+    });
   });
 
-  test('keeps cadence language free of high-risk prompting and monitoring semantics', () => {
+  test('MC-S2-013: shows unchanged and disclaimer when prior fingerprint matches', async () => {
+    const engineState = makeEngineState();
+    window.localStorage.setItem(
+      REVIEW_SNAPSHOT_FINGERPRINT_STORAGE_KEY,
+      buildReviewSnapshotFingerprint(engineState),
+    );
+
+    render(<EngineStabilityReviewSnapshot engineState={engineState} />);
+
+    await waitFor(() => {
+      expect(
+        screen.getByTestId('engine-stability-review-snapshot-change-signal')
+          .textContent,
+      ).toBe(ENGINE_STABILITY_REVIEW_CHANGE_UNCHANGED);
+    });
+
+    const disclaimer = screen.getByTestId(
+      'engine-stability-review-snapshot-change-disclaimer',
+    );
+    expect(disclaimer.textContent).toBe(ENGINE_STABILITY_REVIEW_CHANGE_DISCLAIMER);
+    expect(disclaimer.textContent).toMatch(/system targets/i);
+    expect(disclaimer.textContent).toMatch(/ledger/i);
+    expect(disclaimer.textContent).toMatch(/funds moved|movement/i);
+
+    const cadence = screen.getByTestId('engine-stability-review-snapshot-cadence');
+    const changeLine = screen.getByTestId(
+      'engine-stability-review-snapshot-change-signal',
+    );
+    const updatedAt = screen.getByTestId('engine-stability-review-snapshot-updated-at');
+    expect(
+      cadence.compareDocumentPosition(changeLine) & Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy();
+    expect(
+      changeLine.compareDocumentPosition(updatedAt) & Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy();
+  });
+
+  test('MC-S2-013: shows changed when prior fingerprint differs', async () => {
+    window.localStorage.setItem(
+      REVIEW_SNAPSHOT_FINGERPRINT_STORAGE_KEY,
+      buildReviewSnapshotFingerprint(makeEngineState({ posture: 'normal' })),
+    );
+
+    const engineState = makeEngineState({ posture: 'tightened' });
+    render(<EngineStabilityReviewSnapshot engineState={engineState} />);
+
+    await waitFor(() => {
+      expect(
+        screen.getByTestId('engine-stability-review-snapshot-change-signal')
+          .textContent,
+      ).toBe(ENGINE_STABILITY_REVIEW_CHANGE_CHANGED);
+    });
+  });
+
+  test('MC-S2-013: change copy frames review snapshot and system targets', async () => {
+    window.localStorage.setItem(
+      REVIEW_SNAPSHOT_FINGERPRINT_STORAGE_KEY,
+      buildReviewSnapshotFingerprint(makeEngineState()),
+    );
+
     render(<EngineStabilityReviewSnapshot engineState={makeEngineState()} />);
+
+    await waitFor(() => {
+      const line = screen.getByTestId('engine-stability-review-snapshot-change-signal');
+      expect(line.textContent).toMatch(/review snapshot/i);
+      expect(line.textContent).toMatch(/informational system targets/i);
+    });
+  });
+
+  test('keeps snapshot language free of small high-risk urgency and execution semantics when change signal is shown', async () => {
+    window.localStorage.setItem(
+      REVIEW_SNAPSHOT_FINGERPRINT_STORAGE_KEY,
+      buildReviewSnapshotFingerprint(makeEngineState()),
+    );
+
+    render(<EngineStabilityReviewSnapshot engineState={makeEngineState()} />);
+
+    await waitFor(() => {
+      expect(
+        screen.getByTestId('engine-stability-review-snapshot-change-signal'),
+      ).toBeDefined();
+    });
+
+    const snapshotText =
+      screen.getByTestId('engine-stability-review-snapshot').textContent ?? '';
+
+    for (const phrase of [
+      'alert',
+      'notification',
+      'act now',
+      'real-time',
+      'monitoring',
+      'profit',
+      'rebalance',
+      'execute',
+    ]) {
+      expect(snapshotText.toLowerCase()).not.toContain(phrase);
+    }
+  });
+
+  test('keeps cadence language free of high-risk prompting and monitoring semantics', async () => {
+    render(<EngineStabilityReviewSnapshot engineState={makeEngineState()} />);
+
+    await waitFor(() => {
+      expect(
+        screen.queryByTestId('engine-stability-review-snapshot-change-signal'),
+      ).toBeNull();
+    });
 
     const snapshotText =
       screen.getByTestId('engine-stability-review-snapshot').textContent ?? '';
