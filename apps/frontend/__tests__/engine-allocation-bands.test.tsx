@@ -22,6 +22,7 @@ import {
 } from '../lib/engine/stability-explainer-copy';
 import {
   ENGINE_STABILITY_REVIEW_AVAILABLE_CONTINUITY,
+  ENGINE_STABILITY_REVIEW_CADENCE_CUE,
   ENGINE_STABILITY_REVIEW_SNAPSHOT_TITLE,
   ENGINE_STABILITY_REVIEW_WITHDRAWAL_CONTINUITY,
 } from '../lib/engine/stability-review-snapshot-copy';
@@ -178,6 +179,7 @@ describe('EngineAllocationBands', () => {
     expect(snapshot.textContent).toContain(
       ENGINE_STABILITY_REVIEW_WITHDRAWAL_CONTINUITY,
     );
+    expect(snapshot.textContent).toContain(ENGINE_STABILITY_REVIEW_CADENCE_CUE);
 
     const explainer = within(card).getByTestId('engine-stability-explainer');
     expect(

@@ -1,7 +1,7 @@
 import type { EnginePosture } from './types';
 
 /**
- * Ticket-local copy for MC-S2-011 review snapshot (embedded trust-cluster synthesis).
+ * Ticket-local copy for MC-S2-011 review snapshot and MC-S2-012 cadence cue.
  * Minimal scope only—does not duplicate ENGINE_POSTURE_CONTEXT or notice copy.
  */
 
@@ -25,6 +25,9 @@ export const ENGINE_STABILITY_REVIEW_AVAILABLE_CONTINUITY =
 
 export const ENGINE_STABILITY_REVIEW_WITHDRAWAL_CONTINUITY =
   'A protective posture does not by itself imply withdrawal lockup.';
+
+export const ENGINE_STABILITY_REVIEW_CADENCE_CUE =
+  'This snapshot supports calm regular review so more protective conditions stay visible without creating action pressure.';
 
 export function getEngineStabilityReviewTimestampLine(
   formattedUpdatedAt: string,
