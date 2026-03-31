@@ -20,6 +20,11 @@ import {
   ENGINE_STABILITY_EXPLAINER_INTRO,
   ENGINE_STABILITY_EXPLAINER_SUMMARY,
 } from '../lib/engine/stability-explainer-copy';
+import {
+  ENGINE_STABILITY_REVIEW_AVAILABLE_CONTINUITY,
+  ENGINE_STABILITY_REVIEW_SNAPSHOT_TITLE,
+  ENGINE_STABILITY_REVIEW_WITHDRAWAL_CONTINUITY,
+} from '../lib/engine/stability-review-snapshot-copy';
 import { getMockEngineState } from '../lib/engine/mock';
 import type { EngineState } from '../lib/engine/types';
 
@@ -165,9 +170,22 @@ describe('EngineAllocationBands', () => {
     expect(guidance.textContent).toMatch(/not completed movement/i);
     expect(guidance.textContent).toMatch(/informational/i);
 
+    const snapshot = within(card).getByTestId('engine-stability-review-snapshot');
+    expect(snapshot.textContent).toContain(ENGINE_STABILITY_REVIEW_SNAPSHOT_TITLE);
+    expect(snapshot.textContent).toContain(
+      ENGINE_STABILITY_REVIEW_AVAILABLE_CONTINUITY,
+    );
+    expect(snapshot.textContent).toContain(
+      ENGINE_STABILITY_REVIEW_WITHDRAWAL_CONTINUITY,
+    );
+
     const explainer = within(card).getByTestId('engine-stability-explainer');
     expect(
-      guidance.compareDocumentPosition(explainer) &
+      guidance.compareDocumentPosition(snapshot) &
+        Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy();
+    expect(
+      snapshot.compareDocumentPosition(explainer) &
         Node.DOCUMENT_POSITION_FOLLOWING,
     ).toBeTruthy();
   });
