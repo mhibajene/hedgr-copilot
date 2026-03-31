@@ -1,6 +1,6 @@
 Status: Canonical hand-off file
 Purpose: Strategic continuity, merged implementation truth, and next-ticket authority for Cursor execution
-Last updated: 2026-03-30
+Last updated: 2026-03-31
 
 ---
 
@@ -377,7 +377,7 @@ Completed and merged:
 
 Current active ticket status:
 
-- **Approved next ticket:** None recorded. Update this section when the next execution ticket is explicitly approved.
+- **Approved next ticket:** `MC-S2-011` — Stability review snapshot. This is the **only** approved next ticket for Cursor to plan and execute against until this section is explicitly updated.
 - Cursor must not continue automatically into work beyond what is explicitly defined in this file.
 - Cursor must not drift beyond explicitly defined scope.
 
@@ -422,6 +422,7 @@ Do not proceed in a way that conflicts with `AGENTS.md`.
 ---
 
 ## 9. Architectural boundaries for current work
+
 
 Current phase may include:
 
@@ -468,6 +469,38 @@ Reject or challenge any implementation that introduces:
 - hype semantics
 - hidden risk
 - simulation as runtime authority
+
+### Phase 3 planning lens - operational trust plus stickiness
+
+Phase 3 continuation planning may include **read-only stickiness surfaces** only where they strengthen operational trust without widening the engine boundary.
+
+Allowed planning direction inside Phase 3:
+
+- make the dashboard a clearer recurring stability review surface
+- strengthen habit loops through calm, informational status and review cues
+- add lightweight progress or review framing that helps users understand whether stability is improving, drifting, or holding
+- reinforce Hedgr as a financial control system through visibility, not automation authority
+- improve daily or weekly user return incentives without implying execution, rebalancing, or ledger mutation
+
+Examples that may fit Phase 3 if scoped narrowly and kept read-only:
+
+- a compact stability snapshot summary on the dashboard
+- informational progress framing such as stable / improving / drifting
+- a read-only review prompt or status cadence surface
+- explanatory activity or review history that describes what the system is signaling, not what funds have executed
+
+Phase 3 stickiness work must not introduce:
+
+- autonomous rebalancing semantics
+- executed movement language
+- balance partitioning as engine truth
+- growth-first or APY-led engagement mechanics
+- streaks, gamification, or reward framing that weakens trust posture
+- live backend coupling, runtime policy expansion, or hidden execution authority
+
+Planning principle:
+
+**Stickiness in the current phase must come from clarity, review habit, and trust reinforcement — not from automation theater or engagement gimmicks.**
 
 ---
 
@@ -671,15 +704,165 @@ Add a compact, always-on, read-only trust layer on the dashboard allocation card
 3. **`apps/frontend/app/(app)/dashboard/EngineAllocationBands.tsx`** — Mounts protective guidance after band rows, before `EngineStabilityExplainer`.
 4. **`apps/frontend/__tests__/engine-allocation-bands.test.tsx`**, **`dashboard.page.test.tsx`** — Semantic contract, canonical copy, DOM order before explainer.
 
-**Follow-ups:** Record the next approved ticket in §7 when chosen.
+**Follow-ups:** None required for this ticket. The active approved next ticket is `MC-S2-011` — see §7 and §17.
 
 ---
 
-## 17. Immediate next-use guidance
+## 17. Active execution ticket - MC-S2-011 (Stability review snapshot)
+
+**Ticket:** `MC-S2-011` — Stability review snapshot  
+**Suggested branch:** `feat/mc-s2-011-stability-review-snapshot`
+
+### Objective
+
+Add a compact, read-only dashboard summary that turns the current Stability Engine trust signals into a single calm review state for the user.
+
+This surface should help users quickly understand:
+
+- what the system is signaling now
+- whether conditions are steady or more cautious
+- that Available remains ready to use
+- that protective posture does not by itself imply withdrawal lockup
+- when the current snapshot was last updated
+
+without implying:
+
+- execution
+- fund movement
+- ledger truth
+- policy threshold activity
+- historical performance truth
+- runtime authority
+
+### Why this ticket exists now
+
+The current Stability Engine trust surface already explains:
+
+- posture visibility
+- notice states
+- allocation targets
+- trust legend and target-vs-balance distinctions
+- explainability of allocation language
+- protective guidance
+- withdrawal lifecycle integrity
+
+The next meaningful gap is recurring review legibility.
+
+Today, the system is understandable in parts, but it does not yet give users one compact, confidence-building review surface that makes Hedgr feel like a system to check regularly.
+
+This ticket closes that gap by turning existing read-only trust signals into a single operational review snapshot, without widening doctrine.
+
+### In scope
+
+- a compact, frontend-only dashboard review surface tied to the existing Stability Engine trust area
+- trust-safe synthesis of already-shipped signals only
+- plain-language snapshot framing that communicates:
+  - current protection stance
+  - Available continuity
+  - withdrawal continuity
+  - last updated time from existing engine state
+- calm recurring-review framing that supports habit formation through clarity, not urgency
+- reuse of existing engine-local posture and trust language wherever possible
+- repo-native tests covering:
+  - rendering
+  - copy presence
+  - `updatedAt` display behavior if included
+  - anti-drift guardrails against execution/accounting implications
+
+### Out of scope
+
+- backend engine computation
+- live posture signals
+- historical trend logic
+- saved review history
+- notifications
+- execution-intent contracts
+- policy threshold logic
+- ledger mutation
+- DeFi routing
+- treasury execution
+- new balance decomposition
+- reconciliation/accounting surfaces
+- Copilot behavior changes
+- generalized runtime control planes
+- gamification, streaks, or reward framing
+
+### Must not do
+
+- imply funds have moved
+- imply review state reflects executed treasury activity
+- imply policy thresholds have fired
+- create shadow accounting
+- duplicate `ENGINE_POSTURE_CONTEXT` or create a second notice system
+- introduce trend language that implies historical comparison unless supported by current read-only state
+- use urgency, alarmist framing, or growth-first engagement language
+
+### User outcome
+
+After this ticket, a user should be able to understand in one quick scan:
+
+- whether Hedgr is currently operating in a steadier or more cautious mode
+- that Available still means ready to use
+- that protective posture does not by itself mean withdrawal lockup
+- when the displayed system snapshot was last refreshed
+- that Hedgr is a system they can review calmly and regularly
+
+### Likely implementation surface
+
+Inspect first:
+
+- `apps/frontend/app/(app)/dashboard/`
+- `apps/frontend/lib/engine/`
+- `apps/frontend/__tests__/`
+
+Most likely edit:
+
+- existing dashboard Stability Engine trust-surface component(s)
+- engine-local copy file(s) if a small canonical snapshot copy contract is needed
+- related RTL tests
+
+### Possible create
+
+- one small dashboard trust component for the review snapshot
+- one ticket-local engine copy module if needed
+- one tiny engine-local formatting utility only if existing `updatedAt` handling is insufficient
+
+### Acceptance shape
+
+A strong implementation will:
+
+1. add a compact review snapshot to the shipped Stability Engine dashboard trust area
+2. unify existing trust-safe signals into one quick-scan review surface
+3. reinforce that Available remains understandable and ready to use
+4. clarify that posture alone does not imply withdrawal lockup
+5. surface `updatedAt` in a trust-safe, non-dramatic way
+6. avoid execution, accounting, historical-trend, or runtime-policy semantics
+7. preserve existing allocation-label baseline:
+   - Available
+   - Core
+   - Growth capacity
+8. include regression-resistant test coverage for the new review surface
+
+### Implementation posture
+
+- read-only
+- frontend-centered
+- informational only
+- calm and trust-first
+- recurring-review oriented
+- reversible
+- minimal surface area
+- doctrine-constrained
+
+This ticket should behave as a review surface, not an operational control surface.
+
+---
+
+## 18. Immediate next-use guidance
 
 Use this file as the continuity primer before asking Cursor to review or implement the next explicitly approved ticket touching engine posture, simulation, allocation, policy, trust, Copilot behavior, or operational withdrawal clarity.
 
-- for the most recently completed engine trust ticket, see §16 (`MC-S2-010`); for the active approved next ticket, see §7
+- for the most recently completed engine trust ticket, see §16 (`MC-S2-010`); for the active approved next ticket, see §7 and the full brief in §17 (`MC-S2-011`)
 - assess whether a requested change needs an ADR
 - understand current repo governance and architecture posture
 - confirm whether a proposed task fits the current read-only boundary
@@ -694,7 +877,7 @@ For deeper context, open next:
 
 ---
 
-## 18. Naming note
+## 19. Naming note
 The intended hand-off file name is `HEDGR_STATUS.md`.
 
 Continue using:
