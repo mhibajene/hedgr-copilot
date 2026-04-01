@@ -2,7 +2,7 @@ import type { EnginePosture } from './types';
 
 /**
  * Ticket-local copy for MC-S2-011 review snapshot, MC-S2-012 cadence cue,
- * and MC-S2-013 change signal (same-vs-last-view for informational targets only).
+ * MC-S2-013 change signal, and MC-S2-014 recent stability memory (same-vs-last-view).
  * Minimal scope only—does not duplicate ENGINE_POSTURE_CONTEXT or notice copy.
  */
 
@@ -46,3 +46,17 @@ export const ENGINE_STABILITY_REVIEW_CHANGE_CHANGED =
 /** Frames comparison as review/system targets—not balances or movement (ADR 0013). */
 export const ENGINE_STABILITY_REVIEW_CHANGE_DISCLAIMER =
   'This comparison is about system targets for this review only—not your ledger balances or whether funds moved.';
+
+/** MC-S2-014 — orientation-first; not interaction history, trail, or feed language. */
+export const ENGINE_STABILITY_REVIEW_MEMORY_TITLE = 'Recent stability reading';
+
+/** Memory aid in this browser only—not a system record or operational history. */
+export const ENGINE_STABILITY_REVIEW_MEMORY_DISCLAIMER =
+  'This is local memory for orientation in this browser only—not a record of balances, execution, or backend events.';
+
+/** Short row lines; same meaning as MC-S2-013, without repeating full paragraphs. */
+export const ENGINE_STABILITY_REVIEW_MEMORY_TARGETS_UNCHANGED =
+  'Informational targets unchanged since your prior check.';
+
+export const ENGINE_STABILITY_REVIEW_MEMORY_TARGETS_CHANGED =
+  'Informational targets differ from your prior check.';

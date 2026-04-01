@@ -11,6 +11,10 @@ import {
   ENGINE_STABILITY_REVIEW_CHANGE_CHANGED,
   ENGINE_STABILITY_REVIEW_CHANGE_DISCLAIMER,
   ENGINE_STABILITY_REVIEW_CHANGE_UNCHANGED,
+  ENGINE_STABILITY_REVIEW_MEMORY_DISCLAIMER,
+  ENGINE_STABILITY_REVIEW_MEMORY_TARGETS_CHANGED,
+  ENGINE_STABILITY_REVIEW_MEMORY_TARGETS_UNCHANGED,
+  ENGINE_STABILITY_REVIEW_MEMORY_TITLE,
   ENGINE_STABILITY_REVIEW_SNAPSHOT_TITLE,
   ENGINE_STABILITY_REVIEW_WITHDRAWAL_CONTINUITY,
   getEngineStabilityReviewSnapshotStance,
@@ -21,6 +25,7 @@ import {
   buildReviewSnapshotFingerprint,
   REVIEW_SNAPSHOT_FINGERPRINT_STORAGE_KEY,
 } from '../lib/engine/review-snapshot-fingerprint';
+import { REVIEW_SNAPSHOT_MEMORY_STORAGE_KEY } from '../lib/engine/review-snapshot-memory';
 import type { EngineState } from '../lib/engine/types';
 
 function makeEngineState(overrides: Partial<EngineState> = {}): EngineState {
@@ -32,11 +37,13 @@ function makeEngineState(overrides: Partial<EngineState> = {}): EngineState {
 
 beforeEach(() => {
   window.localStorage.removeItem(REVIEW_SNAPSHOT_FINGERPRINT_STORAGE_KEY);
+  window.localStorage.removeItem(REVIEW_SNAPSHOT_MEMORY_STORAGE_KEY);
 });
 
 afterEach(() => {
   cleanup();
   window.localStorage.removeItem(REVIEW_SNAPSHOT_FINGERPRINT_STORAGE_KEY);
+  window.localStorage.removeItem(REVIEW_SNAPSHOT_MEMORY_STORAGE_KEY);
 });
 
 describe('EngineStabilityReviewSnapshot', () => {
@@ -189,6 +196,109 @@ describe('EngineStabilityReviewSnapshot', () => {
     ]) {
       expect(snapshotText.toLowerCase()).not.toContain(phrase);
     }
+  });
+
+  test('MC-S2-014: does not show recent memory until a prior fingerprint enables comparison', async () => {
+    const engineState = makeEngineState();
+    render(<EngineStabilityReviewSnapshot engineState={engineState} />);
+
+    await waitFor(() => {
+      expect(
+        screen.queryByTestId('engine-stability-review-memory'),
+      ).toBeNull();
+    });
+  });
+
+  test('MC-S2-014: shows recent stability memory after a prior fingerprint exists', async () => {
+    const engineState = makeEngineState({ posture: 'tightened' });
+    window.localStorage.setItem(
+      REVIEW_SNAPSHOT_FINGERPRINT_STORAGE_KEY,
+      buildReviewSnapshotFingerprint(engineState),
+    );
+
+    render(<EngineStabilityReviewSnapshot engineState={engineState} />);
+
+    await waitFor(() => {
+      expect(screen.getByTestId('engine-stability-review-memory')).toBeTruthy();
+    });
+
+    const memory = screen.getByTestId('engine-stability-review-memory');
+    expect(memory.textContent).toContain(ENGINE_STABILITY_REVIEW_MEMORY_TITLE);
+    expect(memory.textContent).toContain(ENGINE_STABILITY_REVIEW_MEMORY_DISCLAIMER);
+    expect(memory.textContent).toContain(
+      getEngineStabilityReviewSnapshotStance(engineState.posture),
+    );
+    expect(memory.textContent).toContain(
+      ENGINE_STABILITY_REVIEW_MEMORY_TARGETS_UNCHANGED,
+    );
+
+    const entries = screen.getAllByTestId('engine-stability-review-memory-entry');
+    expect(entries.length).toBeGreaterThanOrEqual(1);
+    expect(entries.length).toBeLessThanOrEqual(2);
+  });
+
+  test('MC-S2-014: memory surface copy does not read as activity log, feed, or operational record', async () => {
+    window.localStorage.setItem(
+      REVIEW_SNAPSHOT_FINGERPRINT_STORAGE_KEY,
+      buildReviewSnapshotFingerprint(makeEngineState()),
+    );
+
+    render(<EngineStabilityReviewSnapshot engineState={makeEngineState()} />);
+
+    await waitFor(() => {
+      expect(screen.getByTestId('engine-stability-review-memory')).toBeTruthy();
+    });
+
+    const memoryText =
+      screen.getByTestId('engine-stability-review-memory').textContent ?? '';
+
+    for (const phrase of [
+      'history trail',
+      'recent review views',
+      'activity log',
+      'event feed',
+      'operational record',
+      'logged',
+    ]) {
+      expect(memoryText.toLowerCase()).not.toContain(phrase);
+    }
+
+    expect(memoryText).toContain(ENGINE_STABILITY_REVIEW_MEMORY_TITLE);
+    expect(memoryText).toContain(ENGINE_STABILITY_REVIEW_MEMORY_DISCLAIMER);
+  });
+
+  test('MC-S2-014: newest memory row reflects latest visit when targets change', async () => {
+    window.localStorage.setItem(
+      REVIEW_SNAPSHOT_FINGERPRINT_STORAGE_KEY,
+      buildReviewSnapshotFingerprint(makeEngineState({ posture: 'normal' })),
+    );
+
+    const { rerender } = render(
+      <EngineStabilityReviewSnapshot
+        engineState={makeEngineState({ posture: 'tightened' })}
+      />,
+    );
+
+    await waitFor(() => {
+      expect(screen.getByTestId('engine-stability-review-memory')).toBeTruthy();
+    });
+
+    expect(
+      screen.getByTestId('engine-stability-review-memory').textContent,
+    ).toContain(ENGINE_STABILITY_REVIEW_MEMORY_TARGETS_CHANGED);
+
+    rerender(
+      <EngineStabilityReviewSnapshot
+        engineState={makeEngineState({ posture: 'recovery' })}
+      />,
+    );
+
+    await waitFor(() => {
+      const text = screen.getByTestId('engine-stability-review-memory').textContent ?? '';
+      expect(text).toContain(
+        getEngineStabilityReviewSnapshotStance('recovery'),
+      );
+    });
   });
 
   test('keeps cadence language free of high-risk prompting and monitoring semantics', async () => {
