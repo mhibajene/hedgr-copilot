@@ -1,6 +1,6 @@
 Status: Canonical hand-off file
 Purpose: Strategic continuity, merged implementation truth, and next-ticket authority for Cursor execution
-Last updated: 2026-03-31
+Last updated: 2026-04-01
 
 ---
 
@@ -378,6 +378,19 @@ Implementation posture preserved:
 
 - read-only engine doctrine intact; no alerts, notifications, execution semantics, balance or performance framing, or live-monitoring theater
 
+### MC-S2-014 - Recent stability memory (v1)
+
+Implementation truth:
+
+- a **second** `localStorage` key (`hedgr:engine-review-snapshot-memory`) stores at most **two** recent comparison outcomes (newest-first)—append only when a prior fingerprint exists (same gate as MC-S2-013); not a feed, backend, or system-of-record surface
+- copy and helpers: `apps/frontend/lib/engine/review-snapshot-memory.ts`, orientation-first strings in `stability-review-snapshot-copy.ts` (`ENGINE_STABILITY_REVIEW_MEMORY_*`); presentation remains in `EngineStabilityReviewSnapshot.tsx` (`data-testid` `engine-stability-review-memory`, `engine-stability-review-memory-entry`)
+- **v1 scope:** minimal read-only **memory aid** for orientation (not a multi-entry history product); no user-facing “initial” row; timestamps visually secondary
+- RTL coverage in `apps/frontend/__tests__/engine-stability-review-snapshot.test.tsx`, `apps/frontend/__tests__/review-snapshot-memory.test.ts`
+
+Implementation posture preserved:
+
+- read-only engine doctrine intact; no execution semantics, balance or performance framing, or authoritative chronology
+
 ### Allocation band label UX legibility (merged baseline)
 
 The following allocation trust-surface UX refinement is merged and part of the current dashboard baseline:
@@ -415,11 +428,12 @@ Completed and merged:
 - `MC-S2-011` - Stability review snapshot
 - `MC-S2-012` - Stability review cadence cue
 - `MC-S2-013` - Stability change signal
+- `MC-S2-014` - Recent stability memory (v1)
 
 Current active ticket status:
 
-- **Approved next ticket:** none recorded. Add the next explicitly approved micro-contract here before Cursor planning begins; until then, this is the **only** authority for “what runs next,” and it is empty by design.
-- Cursor must not continue automatically into work beyond what is explicitly defined in this file.
+- **No approved next ticket** is recorded here until explicitly chosen and written into this section.
+- Cursor must not continue automatically into engine-facing work beyond what is explicitly defined in this file.
 - Cursor must not drift beyond explicitly defined scope.
 
 ---
@@ -804,15 +818,35 @@ Add a compact, read-only signal so users can tell whether the **informational sy
 3. **`apps/frontend/app/(app)/dashboard/EngineStabilityReviewSnapshot.tsx`** — client `localStorage` compare; change lines after cadence, before timestamp (`data-testid` `engine-stability-review-snapshot-change-signal`, `engine-stability-review-snapshot-change-disclaimer`); no line until a prior fingerprint exists.
 4. **`apps/frontend/__tests__/engine-stability-review-snapshot.test.tsx`**, **`apps/frontend/__tests__/review-snapshot-fingerprint.test.ts`** — unchanged/changed/first-visit behavior, semantic and small high-risk denylist coverage.
 
-**Follow-ups:** None required for this ticket. Record the next approved ticket explicitly in §7 when chosen.
+**Follow-ups:** None required for this ticket. Successor: **`MC-S2-014`** (§20); shipped — see §6.
 
 ---
 
-## 20. Immediate next-use guidance
+## 20. Completed execution ticket - MC-S2-014 (Stability review history trail / recent stability memory v1)
+
+**Ticket:** `MC-S2-014` — Stability review history trail (program id); **shipped v1** is a minimal **recent stability memory** surface—not a multi-entry history product.  
+**Suggested branch:** `feat/mc-s2-014-stability-review-history-trail`
+
+### Objective (as scoped)
+
+Add read-only, local-only memory for Stability Engine **review comparison outcomes** so users can retain a small amount of orientation over time, without implying execution, performance, policy actions, backend authority, or a system-of-record trail.
+
+### Shipped summary
+
+1. **`apps/frontend/lib/engine/review-snapshot-memory.ts`** — `REVIEW_SNAPSHOT_MEMORY_STORAGE_KEY`, `readReviewSnapshotMemory`, `appendReviewSnapshotMemoryAfterVisit`, cap **2** entries, append only when a prior fingerprint exists.
+2. **`apps/frontend/lib/engine/stability-review-snapshot-copy.ts`** — `ENGINE_STABILITY_REVIEW_MEMORY_TITLE`, `ENGINE_STABILITY_REVIEW_MEMORY_DISCLAIMER`, short `ENGINE_STABILITY_REVIEW_MEMORY_TARGETS_*` lines.
+3. **`apps/frontend/app/(app)/dashboard/EngineStabilityReviewSnapshot.tsx`** — memory block after change signal / disclaimer, before snapshot timestamp (`data-testid` `engine-stability-review-memory`, `engine-stability-review-memory-entry`); subdued entry timestamps.
+4. **`apps/frontend/__tests__/engine-stability-review-snapshot.test.tsx`**, **`apps/frontend/__tests__/review-snapshot-memory.test.ts`** — semantic contract, anti-drift vs feed/log phrasing, cap/ordering helpers.
+
+**Follow-ups:** Record the next approved ticket explicitly in **§7** when chosen.
+
+---
+
+## 21. Immediate next-use guidance
 
 Use this file as the continuity primer before asking Cursor to review or implement the next explicitly approved ticket touching engine posture, simulation, allocation, policy, trust, Copilot behavior, or operational withdrawal clarity.
 
-- for shipped review snapshot, cadence, and change signal, see §17 (`MC-S2-011`), §18 (`MC-S2-012`), and §19 (`MC-S2-013`); for the next approved ticket (if any), see **§7** only
+- for shipped review snapshot, cadence, change signal, and recent stability memory, see §17 (`MC-S2-011`), §18 (`MC-S2-012`), §19 (`MC-S2-013`), and §20 (`MC-S2-014`); for the next approved ticket, see **§7** only
 - assess whether a requested change needs an ADR
 - understand current repo governance and architecture posture
 - confirm whether a proposed task fits the current read-only boundary
@@ -827,7 +861,7 @@ For deeper context, open next:
 
 ---
 
-## 21. Naming note
+## 22. Naming note
 The intended hand-off file name is `HEDGR_STATUS.md`.
 
 Continue using:
