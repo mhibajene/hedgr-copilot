@@ -138,5 +138,15 @@ describe('WithdrawPage status surface', () => {
     expect(screen.getByTestId('withdraw-status-disclosure').textContent).toBe(
       'A protective posture does not by itself stop a withdrawal from processing.',
     );
+
+    const exceptionBlock = screen.getByTestId('withdraw-status-exception-clarification');
+    expect(exceptionBlock).toBeTruthy();
+    const exceptionText = exceptionBlock.textContent ?? '';
+    expect(exceptionText).toMatch(/not final yet/i);
+    expect(exceptionText).toMatch(/completion time|promised/i);
+    const lower = exceptionText.toLowerCase();
+    for (const bad of ['guaranteed', 'will complete', 'lockup', 'reallocated', 'immediately'] as const) {
+      expect(lower.includes(bad), `unexpected "${bad}"`).toBe(false);
+    }
   });
 });
