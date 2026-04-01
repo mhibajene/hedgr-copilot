@@ -25,4 +25,5 @@ export {
   isErrorStatus,
 } from './status-mapper';
 
+export { getExceptionPathClarificationLines } from './public-status-exception-clarification';
 

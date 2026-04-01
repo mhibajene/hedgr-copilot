@@ -391,6 +391,20 @@ Implementation posture preserved:
 
 - read-only engine doctrine intact; no execution semantics, balance or performance framing, or authoritative chronology
 
+### MC-S2-015 - Withdrawal exception state clarity
+
+Implementation truth:
+
+- canonical **non-final** exception-path clarification lines live in `apps/frontend/lib/tx/public-status-exception-clarification.ts` (`getExceptionPathClarificationLines`), keyed by existing `PublicTxStatus` only (`PENDING_INIT` and `IN_PROGRESS` share the same lines; terminal statuses return null)
+- exported from `apps/frontend/lib/tx/index.ts` for reuse beyond withdraw; copy is plain-language (still processing, not final, no promised completion time) and avoids default “under review” framing unless future UI truth supports it
+- the withdraw page mounts a **subordinate block inside** the existing status card (`data-testid="withdraw-status-exception-clarification"`) when the active public status is non-final — one cohesive trust surface with MC-S2-008’s status region
+- withdraw **v1** continues to surface **`IN_PROGRESS`** as the primary in-flight state from `WITHDRAW_STATUS_CONTENT`; mock behavior unchanged; failed path still uses `ErrorState` only
+- RTL: `apps/frontend/__tests__/public-status-exception-clarification.test.ts` (tx-layer trust contract); `apps/frontend/__tests__/withdraw.page.test.tsx` extended for the clarification block
+
+Implementation posture preserved:
+
+- read-only, informational, frontend-only; no new public status enum values, no backend or state-machine widening, no execution or accounting semantics
+
 ### Allocation band label UX legibility (merged baseline)
 
 The following allocation trust-surface UX refinement is merged and part of the current dashboard baseline:
@@ -429,12 +443,15 @@ Completed and merged:
 - `MC-S2-012` - Stability review cadence cue
 - `MC-S2-013` - Stability change signal
 - `MC-S2-014` - Recent stability memory (v1)
+- `MC-S2-015` - Withdrawal exception state clarity
 
 Current active ticket status:
 
-- **No approved next ticket** is recorded here until explicitly chosen and written into this section.
+- **No approved next ticket** is recorded in this file until explicitly added here. Cursor must not assume continuation beyond **§6** merged truth and current governance.
 - Cursor must not continue automatically into engine-facing work beyond what is explicitly defined in this file.
 - Cursor must not drift beyond explicitly defined scope.
+
+**Last completed ticket (summary):** `MC-S2-015` — Withdrawal exception state clarity — merged implementation truth in **§6** (`MC-S2-015`); shipped summary in **§21**.
 
 ---
 
@@ -838,15 +855,35 @@ Add read-only, local-only memory for Stability Engine **review comparison outcom
 3. **`apps/frontend/app/(app)/dashboard/EngineStabilityReviewSnapshot.tsx`** — memory block after change signal / disclaimer, before snapshot timestamp (`data-testid` `engine-stability-review-memory`, `engine-stability-review-memory-entry`); subdued entry timestamps.
 4. **`apps/frontend/__tests__/engine-stability-review-snapshot.test.tsx`**, **`apps/frontend/__tests__/review-snapshot-memory.test.ts`** — semantic contract, anti-drift vs feed/log phrasing, cap/ordering helpers.
 
+**Follow-ups:** Shipped successor **`MC-S2-015`** (§21); see **§6** merged truth.
+
+---
+
+## 21. Completed execution ticket - MC-S2-015 (Withdrawal exception state clarity)
+
+**Ticket:** `MC-S2-015` — Withdrawal exception state clarity  
+**Suggested branch:** `feat/mc-s2-015-withdrawal-exception-state-clarity`
+
+### Objective (as scoped)
+
+Add a compact, read-only trust layer on the withdraw surface so **non-final** withdrawal states (still processing, taking more time, not yet final) are easier to understand in plain language—without implying guaranteed timing, hidden movement, default lockup, or backend operational authority beyond surfaced status.
+
+### Shipped summary
+
+1. **`apps/frontend/lib/tx/public-status-exception-clarification.ts`** — `getExceptionPathClarificationLines` for in-flight `PublicTxStatus` values only; terminal statuses return null.
+2. **`apps/frontend/lib/tx/index.ts`** — re-exports the helper for shared tx-layer use.
+3. **`apps/frontend/app/(app)/withdraw/page.tsx`** — subordinate clarification block inside the existing status region (`withdraw-status-exception-clarification`).
+4. **`apps/frontend/__tests__/public-status-exception-clarification.test.ts`**, **`apps/frontend/__tests__/withdraw.page.test.tsx`** — trust-contract and withdraw integration coverage.
+
 **Follow-ups:** Record the next approved ticket explicitly in **§7** when chosen.
 
 ---
 
-## 21. Immediate next-use guidance
+## 22. Immediate next-use guidance
 
 Use this file as the continuity primer before asking Cursor to review or implement the next explicitly approved ticket touching engine posture, simulation, allocation, policy, trust, Copilot behavior, or operational withdrawal clarity.
 
-- for shipped review snapshot, cadence, change signal, and recent stability memory, see §17 (`MC-S2-011`), §18 (`MC-S2-012`), §19 (`MC-S2-013`), and §20 (`MC-S2-014`); for the next approved ticket, see **§7** only
+- for shipped review snapshot, cadence, change signal, and recent stability memory, see §17 (`MC-S2-011`), §18 (`MC-S2-012`), §19 (`MC-S2-013`), and §20 (`MC-S2-014`); for withdraw exception-path clarification, see **§6** (`MC-S2-015`) and **§21**; for the next approved ticket, see **§7** only
 - assess whether a requested change needs an ADR
 - understand current repo governance and architecture posture
 - confirm whether a proposed task fits the current read-only boundary
@@ -861,7 +898,7 @@ For deeper context, open next:
 
 ---
 
-## 22. Naming note
+## 23. Naming note
 The intended hand-off file name is `HEDGR_STATUS.md`.
 
 Continue using:

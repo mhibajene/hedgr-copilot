@@ -10,7 +10,11 @@ import { EmptyState, ErrorState } from '@hedgr/ui';
 import { BalanceWithLocalEstimate, FxRateBlock } from '../../../components';
 import { useLatestFx } from '../../../lib/hooks/useLatestFx';
 import { resolveMarket, resolveLocalCurrencyCode } from '../../../config/market';
-import { PublicTxStatus, getPresentationForPublicStatus } from '../../../lib/tx';
+import {
+  PublicTxStatus,
+  getExceptionPathClarificationLines,
+  getPresentationForPublicStatus,
+} from '../../../lib/tx';
 
 interface WithdrawMethod {
   id: string;
@@ -148,6 +152,9 @@ export default function WithdrawPage() {
     status === 'PENDING' || status === 'CONFIRMED' ? WITHDRAW_STATUS_CONTENT[status] : null;
   const activeStatusPresentation = activeStatus
     ? getPresentationForPublicStatus(activeStatus.publicStatus)
+    : null;
+  const exceptionClarificationLines = activeStatus
+    ? getExceptionPathClarificationLines(activeStatus.publicStatus)
     : null;
 
   // Error state for loading balance
@@ -317,6 +324,18 @@ export default function WithdrawPage() {
               {activeStatusPresentation.label}
             </span>
           </div>
+          {exceptionClarificationLines && exceptionClarificationLines.length > 0 && (
+            <div
+              className="mt-3 border-t border-gray-100 pt-3 space-y-2"
+              data-testid="withdraw-status-exception-clarification"
+            >
+              {exceptionClarificationLines.map((line, i) => (
+                <p key={i} className="text-sm text-gray-600">
+                  {line}
+                </p>
+              ))}
+            </div>
+          )}
         </section>
       )}
       {status === 'FAILED' && (
