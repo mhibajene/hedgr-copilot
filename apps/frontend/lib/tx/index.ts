@@ -31,3 +31,5 @@ export { getReconciliationClarificationLines } from './public-status-reconciliat
 
 export { getUnresolvedPathClarificationLines } from './public-status-unresolved-path-clarification';
 
+export { getNextStepGuidanceLines } from './public-status-next-step-guidance';
+

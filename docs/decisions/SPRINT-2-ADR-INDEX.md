@@ -21,6 +21,30 @@ Sprint 2 is read-only, posture-first, and non-executing. These ADRs exist to ens
 
 ## Governing ADRs
 
+### ADR 0016 — Warmth Layer as a doctrine-constrained retail refinement track during the read-only Stability Engine phase
+**Meta:** Proposed · UX/Trust · Short-term (MVP / immediate sprint) · Internal
+
+**Why it matters**  
+Defines the **Warmth Layer** as an allowed parallel track to refine retail presentation (layout, typography, microcopy, discoverability) while the Stability Engine remains read-only—without reframing product truth.
+
+**Notes**  
+Permits UI warmth refinement in parallel; does not widen truth boundaries or execution authority.
+
+**Constrains**
+- presentation and trust-legibility work running alongside the read-only engine phase
+- doctrine review for constrained surfaces called out in the ADR (e.g. Action Strip, Activity, onboarding warmth, context/review)
+
+**Prevents**
+- execution semantics and hidden fund movement
+- allocation as accounting truth and ledger duplication
+- APY-led framing and gamified stability language
+- engine authority beyond current phase posture
+
+**File**  
+`docs/decisions/0016-warmth-layer-doctrine-constrained-retail-refinement-track.md`
+
+---
+
 ### ADR 0015 — Stability Engine Is the System Center
 **Why it matters**  
 Defines the Stability Engine as Hedgr's product core and re-centers roadmap, backlog, and architecture around it.
@@ -157,6 +181,7 @@ Before implementing any Sprint 2 ticket:
 2. Confirm the ticket does not violate read-only boundaries.
 3. Confirm the ticket does not introduce accounting or execution semantics.
 4. Confirm the output supports calm, trust-first, posture-based UX.
+5. For Warmth Layer or adjacent retail presentation refinement on ADR 0016 constrained surfaces, confirm alignment with ADR 0016 (presentation only; no truth or execution widening).
 
 If a ticket conflicts with one of these ADRs, stop and escalate before implementing.
 
