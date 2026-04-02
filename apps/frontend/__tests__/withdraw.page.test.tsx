@@ -93,7 +93,7 @@ afterEach(() => {
 });
 
 describe('WithdrawPage status surface', () => {
-  test('does not show unresolved-path clarification when withdraw status card is absent', async () => {
+  test('does not show trust sub-strips when withdraw status card is absent', async () => {
     vi.useFakeTimers();
     vi.mocked(useBalance).mockReturnValue({
       total: 25,
@@ -115,6 +115,7 @@ describe('WithdrawPage status surface', () => {
       await vi.advanceTimersByTimeAsync(350);
     });
     expect(screen.queryByTestId('withdraw-status-unresolved-path-clarification')).toBeNull();
+    expect(screen.queryByTestId('withdraw-status-next-step-guidance')).toBeNull();
   });
 
   test('shows a clear processing status region after submit', async () => {
@@ -192,6 +193,27 @@ describe('WithdrawPage status surface', () => {
     const unLower = unresolvedText.toLowerCase();
     for (const bad of ['guaranteed', 'escalated', 'resolved soon', 'moved', 'reallocated', 'immediately'] as const) {
       expect(unLower.includes(bad), `unexpected "${bad}" in unresolved-path copy`).toBe(false);
+    }
+
+    const nextStepBlock = screen.getByTestId('withdraw-status-next-step-guidance');
+    const nextStepText = nextStepBlock.textContent ?? '';
+    expect(nextStepText).toMatch(/in progress|still in progress/i);
+    expect(nextStepText).toMatch(/gone quiet/i);
+    expect(nextStepText).toMatch(/does not mean failure/i);
+    expect(nextStepText).toMatch(/not shown yet|completion/i);
+    const nsLower = nextStepText.toLowerCase();
+    expect(nsLower.includes('loss'), 'should not imply loss').toBe(false);
+    expect(nsLower.includes('lockup'), 'should not imply lockup').toBe(false);
+    for (const bad of [
+      'guaranteed',
+      'escalate',
+      'support will',
+      'resolved soon',
+      'manually handled',
+      'immediately',
+      'completed now',
+    ] as const) {
+      expect(nsLower.includes(bad), `unexpected "${bad}" in next-step guidance copy`).toBe(false);
     }
   });
 });

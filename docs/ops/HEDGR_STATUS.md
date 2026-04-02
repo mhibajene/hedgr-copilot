@@ -441,6 +441,19 @@ Implementation posture preserved:
 
 - read-only, informational, frontend-only; no new public status enum values, no pseudo-state machine, no backend or escalation semantics
 
+### MC-S2-018 - Withdrawal next-step guidance baseline
+
+Implementation truth:
+
+- canonical **continuity-orientation** lines live in `apps/frontend/lib/tx/public-status-next-step-guidance.ts` (`getNextStepGuidanceLines`); **`PublicTxStatus.IN_PROGRESS` only** for v1; terminal statuses and `PENDING_INIT` return null; at most **two** short lines; copy-only helper (no workflow or transition semantics)
+- exported from `apps/frontend/lib/tx/index.ts`
+- the withdraw page mounts a **fourth subordinate block** inside the existing status card (`data-testid="withdraw-status-next-step-guidance"`) **below** the unresolved-path strip — same quiet presentation tier (`text-xs` / muted) as MC-S2-017; visibility tied to public status only
+- RTL: `apps/frontend/__tests__/public-status-next-step-guidance.test.ts`; `apps/frontend/__tests__/withdraw.page.test.tsx` extended for presence/absence and copy guardrails
+
+Implementation posture preserved:
+
+- read-only, informational, frontend-only; no new public status enum values, no procedural-sequence promises beyond existing UI truth, no backend or escalation semantics
+
 ### Allocation band label UX legibility (merged baseline)
 
 The following allocation trust-surface UX refinement is merged and part of the current dashboard baseline:
@@ -482,6 +495,7 @@ Completed and merged:
 - `MC-S2-015` - Withdrawal exception state clarity
 - `MC-S2-016` - Reconciliation visibility baseline
 - `MC-S2-017` - Withdrawal unresolved-path guidance
+- `MC-S2-018` - Withdrawal next-step guidance baseline
 
 Current active ticket status:
 
@@ -490,7 +504,7 @@ Current active ticket status:
 - Cursor must not continue automatically into work beyond what is explicitly defined in this file for an active ticket.
 - Cursor must not drift beyond explicitly defined scope.
 
-**Last completed ticket (summary):** `MC-S2-017` — Withdrawal unresolved-path guidance — merged implementation truth in **§6** (`MC-S2-017`); shipped summary in **§23**.
+**Last completed ticket (summary):** `MC-S2-018` — Withdrawal next-step guidance baseline — merged implementation truth in **§6** (`MC-S2-018`); shipped summary in **§24**.
 
 ---
 
@@ -954,15 +968,35 @@ Add a minimal third, read-only trust layer on the withdraw status card so **pers
 3. **`apps/frontend/app/(app)/withdraw/page.tsx`** — third subordinate block (`withdraw-status-unresolved-path-clarification`) below reconciliation; quieter typography than prior clarification strips; visibility tied to public status only (composition with MC-S2-015/016).
 4. **`apps/frontend/__tests__/public-status-unresolved-path-clarification.test.ts`**, **`apps/frontend/__tests__/withdraw.page.test.tsx`** — trust-contract and withdraw integration coverage.
 
+**Follow-ups:** Shipped successor **`MC-S2-018`** (§24); see **§6** merged truth.
+
+---
+
+## 24. Completed execution ticket - MC-S2-018 (Withdrawal next-step guidance baseline)
+
+**Ticket:** `MC-S2-018` — Withdrawal next-step guidance baseline  
+**Suggested branch:** `feat/mc-s2-018-withdrawal-next-step-guidance-baseline`
+
+### Objective (as scoped)
+
+Add a compact, read-only trust layer on the withdraw surface that gives calm **continuity orientation** when a withdrawal remains non-final (`IN_PROGRESS` in v1) — still in process, not silent or abandoned, non-finality not automatic failure — without support escalation, manual intervention, guaranteed timing, procedural step promises, or backend operational authority.
+
+### Shipped summary
+
+1. **`apps/frontend/lib/tx/public-status-next-step-guidance.ts`** — `getNextStepGuidanceLines`; **`IN_PROGRESS` only** for v1; terminals and `PENDING_INIT` return null; at most two short lines; copy-only seam.
+2. **`apps/frontend/lib/tx/index.ts`** — re-exports the helper.
+3. **`apps/frontend/app/(app)/withdraw/page.tsx`** — fourth subordinate block (`withdraw-status-next-step-guidance`) below MC-S2-017 unresolved-path strip; quiet `text-xs` / muted presentation.
+4. **`apps/frontend/__tests__/public-status-next-step-guidance.test.ts`**, **`apps/frontend/__tests__/withdraw.page.test.tsx`** — trust-contract and withdraw integration coverage.
+
 **Follow-ups:** None sequenced in **§7** until updated.
 
 ---
 
-## 24. Immediate next-use guidance
+## 25. Immediate next-use guidance
 
 Use this file as the continuity primer before asking Cursor to review or implement the next explicitly approved ticket touching engine posture, simulation, allocation, policy, trust, Copilot behavior, or operational withdrawal clarity.
 
-- for shipped review snapshot, cadence, change signal, and recent stability memory, see §17 (`MC-S2-011`), §18 (`MC-S2-012`), §19 (`MC-S2-013`), and §20 (`MC-S2-014`); for withdraw exception-path clarification, see **§6** (`MC-S2-015`) and **§21**; for withdraw reconciliation / completion-adjacent clarification, see **§6** (`MC-S2-016`) and **§22**; for withdraw unresolved-path guidance, see **§6** (`MC-S2-017`) and **§23**; for the current active ticket (if any), see **§7**
+- for shipped review snapshot, cadence, change signal, and recent stability memory, see §17 (`MC-S2-011`), §18 (`MC-S2-012`), §19 (`MC-S2-013`), and §20 (`MC-S2-014`); for withdraw exception-path clarification, see **§6** (`MC-S2-015`) and **§21**; for withdraw reconciliation / completion-adjacent clarification, see **§6** (`MC-S2-016`) and **§22**; for withdraw unresolved-path guidance, see **§6** (`MC-S2-017`) and **§23**; for withdraw next-step continuity guidance, see **§6** (`MC-S2-018`) and **§24**; for the current active ticket (if any), see **§7**
 - assess whether a requested change needs an ADR
 - understand current repo governance and architecture posture
 - confirm whether a proposed task fits the current read-only boundary
@@ -977,7 +1011,7 @@ For deeper context, open next:
 
 ---
 
-## 25. Naming note
+## 26. Naming note
 The intended hand-off file name is `HEDGR_STATUS.md`.
 
 Continue using:
