@@ -1,6 +1,6 @@
 Status: Canonical hand-off file
 Purpose: Strategic continuity, merged implementation truth, and next-ticket authority for Cursor execution
-Last updated: 2026-04-01
+Last updated: 2026-04-02
 
 ---
 
@@ -405,6 +405,20 @@ Implementation posture preserved:
 
 - read-only, informational, frontend-only; no new public status enum values, no backend or state-machine widening, no execution or accounting semantics
 
+### MC-S2-016 - Reconciliation visibility baseline
+
+Implementation truth:
+
+- canonical completion-adjacent non-finality lines live in `apps/frontend/lib/tx/public-status-reconciliation-clarification.ts` (`getReconciliationClarificationLines`); **`PublicTxStatus.IN_PROGRESS` only** for v1 (`PENDING_INIT` returns null); terminal statuses return null
+- separate module from MC-S2-015 exception-path clarification to keep trust contracts distinct; exported from `apps/frontend/lib/tx/index.ts`
+- the withdraw page mounts a **second subordinate block** inside the existing status card (`data-testid="withdraw-status-reconciliation-clarification"`) **below** the exception clarification — same visual pattern (border-t, compact body); not a competing status headline
+- v1 copy uses smallest safe user meaning: not final, still being confirmed, not automatically wrong; no promised timing; avoids default operations vocabulary in user-facing strings
+- RTL: `apps/frontend/__tests__/public-status-reconciliation-clarification.test.ts`; `apps/frontend/__tests__/withdraw.page.test.tsx` extended for the reconciliation block
+
+Implementation posture preserved:
+
+- read-only, informational, frontend-only; no new public status enum values, no backend or state-machine widening, no execution or accounting semantics
+
 ### Allocation band label UX legibility (merged baseline)
 
 The following allocation trust-surface UX refinement is merged and part of the current dashboard baseline:
@@ -444,14 +458,16 @@ Completed and merged:
 - `MC-S2-013` - Stability change signal
 - `MC-S2-014` - Recent stability memory (v1)
 - `MC-S2-015` - Withdrawal exception state clarity
+- `MC-S2-016` - Reconciliation visibility baseline
 
 Current active ticket status:
 
-- **No approved next ticket** is recorded in this file until explicitly added here. Cursor must not assume continuation beyond **§6** merged truth and current governance.
-- Cursor must not continue automatically into engine-facing work beyond what is explicitly defined in this file.
+- **No approved next ticket** is recorded in this file at this revision. When the next ticket is approved, record it here and add a brief **Active execution ticket** section immediately before **§23** (or renumber per repo convention).
+- Cursor must not assume continuation beyond **§6** merged truth and current governance.
+- Cursor must not continue automatically into work beyond what is explicitly defined in this file for an active ticket.
 - Cursor must not drift beyond explicitly defined scope.
 
-**Last completed ticket (summary):** `MC-S2-015` — Withdrawal exception state clarity — merged implementation truth in **§6** (`MC-S2-015`); shipped summary in **§21**.
+**Last completed ticket (summary):** `MC-S2-016` — Reconciliation visibility baseline — merged implementation truth in **§6** (`MC-S2-016`); shipped summary in **§22**.
 
 ---
 
@@ -875,15 +891,35 @@ Add a compact, read-only trust layer on the withdraw surface so **non-final** wi
 3. **`apps/frontend/app/(app)/withdraw/page.tsx`** — subordinate clarification block inside the existing status region (`withdraw-status-exception-clarification`).
 4. **`apps/frontend/__tests__/public-status-exception-clarification.test.ts`**, **`apps/frontend/__tests__/withdraw.page.test.tsx`** — trust-contract and withdraw integration coverage.
 
-**Follow-ups:** Record the next approved ticket explicitly in **§7** when chosen.
+**Follow-ups:** Shipped successor **`MC-S2-016`** (§22); see **§6** merged truth.
 
 ---
 
-## 22. Immediate next-use guidance
+## 22. Completed execution ticket - MC-S2-016 (Reconciliation visibility baseline)
+
+**Ticket:** `MC-S2-016` — Reconciliation visibility baseline  
+**Suggested branch:** `feat/mc-s2-016-reconciliation-visibility-baseline`
+
+### Objective (as scoped)
+
+Add a second, strictly subordinate read-only trust layer on the withdraw status card so the **completion-adjacent non-final** period is legible in plain language — not final, still being confirmed, not automatically wrong — without operations vocabulary, a second status source, timing guarantees, or settlement overclaim.
+
+### Shipped summary
+
+1. **`apps/frontend/lib/tx/public-status-reconciliation-clarification.ts`** — `getReconciliationClarificationLines`; **`IN_PROGRESS` only** for v1; terminals and `PENDING_INIT` return null.
+2. **`apps/frontend/lib/tx/index.ts`** — re-exports the helper.
+3. **`apps/frontend/app/(app)/withdraw/page.tsx`** — second subordinate block (`withdraw-status-reconciliation-clarification`) below MC-S2-015 exception clarification.
+4. **`apps/frontend/__tests__/public-status-reconciliation-clarification.test.ts`**, **`apps/frontend/__tests__/withdraw.page.test.tsx`** — trust-contract and withdraw integration coverage.
+
+**Follow-ups:** None recorded in this file. Record the next approved ticket in **§7** when chosen.
+
+---
+
+## 23. Immediate next-use guidance
 
 Use this file as the continuity primer before asking Cursor to review or implement the next explicitly approved ticket touching engine posture, simulation, allocation, policy, trust, Copilot behavior, or operational withdrawal clarity.
 
-- for shipped review snapshot, cadence, change signal, and recent stability memory, see §17 (`MC-S2-011`), §18 (`MC-S2-012`), §19 (`MC-S2-013`), and §20 (`MC-S2-014`); for withdraw exception-path clarification, see **§6** (`MC-S2-015`) and **§21**; for the next approved ticket, see **§7** only
+- for shipped review snapshot, cadence, change signal, and recent stability memory, see §17 (`MC-S2-011`), §18 (`MC-S2-012`), §19 (`MC-S2-013`), and §20 (`MC-S2-014`); for withdraw exception-path clarification, see **§6** (`MC-S2-015`) and **§21**; for withdraw reconciliation / completion-adjacent clarification, see **§6** (`MC-S2-016`) and **§22**; for active approved ticket status, see **§7**
 - assess whether a requested change needs an ADR
 - understand current repo governance and architecture posture
 - confirm whether a proposed task fits the current read-only boundary
@@ -898,7 +934,7 @@ For deeper context, open next:
 
 ---
 
-## 23. Naming note
+## 24. Naming note
 The intended hand-off file name is `HEDGR_STATUS.md`.
 
 Continue using:
