@@ -148,5 +148,16 @@ describe('WithdrawPage status surface', () => {
     for (const bad of ['guaranteed', 'will complete', 'lockup', 'reallocated', 'immediately'] as const) {
       expect(lower.includes(bad), `unexpected "${bad}"`).toBe(false);
     }
+
+    const reconciliationBlock = screen.getByTestId('withdraw-status-reconciliation-clarification');
+    const reconciliationText = reconciliationBlock.textContent ?? '';
+    expect(reconciliationText).toMatch(/not final/i);
+    expect(reconciliationText).toMatch(/confirm/i);
+    expect(reconciliationText).toMatch(/does not automatically mean something is wrong/i);
+    expect(reconciliationText).toMatch(/does not promise when/i);
+    const recLower = reconciliationText.toLowerCase();
+    for (const bad of ['guaranteed', 'settled', 'completed now', 'moved', 'reallocated', 'immediately'] as const) {
+      expect(recLower.includes(bad), `unexpected "${bad}" in reconciliation copy`).toBe(false);
+    }
   });
 });
