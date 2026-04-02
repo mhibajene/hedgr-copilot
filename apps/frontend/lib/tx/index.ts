@@ -29,3 +29,5 @@ export { getExceptionPathClarificationLines } from './public-status-exception-cl
 
 export { getReconciliationClarificationLines } from './public-status-reconciliation-clarification';
 
+export { getUnresolvedPathClarificationLines } from './public-status-unresolved-path-clarification';
+
