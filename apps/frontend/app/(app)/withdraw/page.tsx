@@ -15,6 +15,7 @@ import {
   getExceptionPathClarificationLines,
   getPresentationForPublicStatus,
   getReconciliationClarificationLines,
+  getUnresolvedPathClarificationLines,
 } from '../../../lib/tx';
 
 interface WithdrawMethod {
@@ -159,6 +160,9 @@ export default function WithdrawPage() {
     : null;
   const reconciliationClarificationLines = activeStatus
     ? getReconciliationClarificationLines(activeStatus.publicStatus)
+    : null;
+  const unresolvedPathClarificationLines = activeStatus
+    ? getUnresolvedPathClarificationLines(activeStatus.publicStatus)
     : null;
 
   // Error state for loading balance
@@ -347,6 +351,18 @@ export default function WithdrawPage() {
             >
               {reconciliationClarificationLines.map((line, i) => (
                 <p key={i} className="text-sm text-gray-600">
+                  {line}
+                </p>
+              ))}
+            </div>
+          )}
+          {unresolvedPathClarificationLines && unresolvedPathClarificationLines.length > 0 && (
+            <div
+              className="mt-3 border-t border-gray-100 pt-2 space-y-1"
+              data-testid="withdraw-status-unresolved-path-clarification"
+            >
+              {unresolvedPathClarificationLines.map((line, i) => (
+                <p key={i} className="text-xs text-gray-500 leading-relaxed">
                   {line}
                 </p>
               ))}

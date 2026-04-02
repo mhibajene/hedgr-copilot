@@ -4,6 +4,12 @@ Last updated: 2026-04-02
 
 ---
 
+## Notion governance (manual copy source)
+
+For Notion **Decision Log** and **Strategy & Insights** (or equivalent executive) surfaces, reconcile from `docs/ops/NOTION_GOVERNANCE_STAGING.md`. That staging file is derived from repo ADRs and this document; **do not** let Notion wording run ahead of or beyond repo truth.
+
+---
+
 ## 1. Current strategic posture
 
 Hedgr is being built as a **financial stability operating system** centered on the **Hedgr Stability Engine**.
@@ -50,6 +56,7 @@ Important active constraints:
 - no live backend engine coupling should be introduced in the current phase
 - runtime policy and trust constraints remain first-class control layers
 - local simulation may exist only as a dev-safe validation aid, not as runtime authority
+- **Warmth Layer (ADR 0016, Proposed):** parallel, doctrine-constrained **presentation** refinement only; does not alter read-only Stability Engine posture and must not introduce execution semantics, accounting truth, hidden reallocation, ledger duplication, yield-first emphasis, or gamified stability language (see `docs/decisions/0016-warmth-layer-doctrine-constrained-retail-refinement-track.md`)
 
 This phase is still about establishing and hardening the Stability Engine boundary, not extending into execution architecture.
 
@@ -67,6 +74,8 @@ Before implementing or reviewing continuation work, read in this order:
 6. `docs/decisions/0013-allocation-bands-informational-not-accounting.md`
 
 These are binding references for current implementation posture.
+
+**Proposed companion ADR:** `docs/decisions/0016-warmth-layer-doctrine-constrained-retail-refinement-track.md` — Warmth Layer parallel refinement track (presentation only, read-only engine posture unchanged). Read when implementing or reviewing work on surfaces scoped in that ADR.
 
 Do not silently reconcile conflicts. Surface them explicitly.
 
@@ -419,6 +428,19 @@ Implementation posture preserved:
 
 - read-only, informational, frontend-only; no new public status enum values, no backend or state-machine widening, no execution or accounting semantics
 
+### MC-S2-017 - Withdrawal unresolved-path guidance
+
+Implementation truth:
+
+- canonical minimal unresolved-path lines live in `apps/frontend/lib/tx/public-status-unresolved-path-clarification.ts` (`getUnresolvedPathClarificationLines`); **`PublicTxStatus.IN_PROGRESS` only** for v1; terminal statuses and `PENDING_INIT` return null; at most **two** short lines, calmer than MC-S2-015/016
+- exported from `apps/frontend/lib/tx/index.ts`; separate module from MC-S2-015/016 to keep trust contracts distinct
+- the withdraw page mounts a **third subordinate block** inside the existing status card (`data-testid="withdraw-status-unresolved-path-clarification"`) **below** reconciliation — **quieter** presentation (`text-xs` / muted) so it reads as a footnote, not a new primary status; **no** client timer or elapsed-time gate (status + copy composition only; same public truth as 015/016)
+- RTL: `apps/frontend/__tests__/public-status-unresolved-path-clarification.test.ts`; `apps/frontend/__tests__/withdraw.page.test.tsx` extended for presence/absence and copy guardrails
+
+Implementation posture preserved:
+
+- read-only, informational, frontend-only; no new public status enum values, no pseudo-state machine, no backend or escalation semantics
+
 ### Allocation band label UX legibility (merged baseline)
 
 The following allocation trust-surface UX refinement is merged and part of the current dashboard baseline:
@@ -459,15 +481,16 @@ Completed and merged:
 - `MC-S2-014` - Recent stability memory (v1)
 - `MC-S2-015` - Withdrawal exception state clarity
 - `MC-S2-016` - Reconciliation visibility baseline
+- `MC-S2-017` - Withdrawal unresolved-path guidance
 
 Current active ticket status:
 
-- **No approved next ticket** is recorded in this file at this revision. When the next ticket is approved, record it here and add a brief **Active execution ticket** section immediately before **§23** (or renumber per repo convention).
+- **No approved next ticket** is sequenced in this file until this section is updated. Do not treat any item as sequenced continuation work unless it appears here explicitly.
 - Cursor must not assume continuation beyond **§6** merged truth and current governance.
 - Cursor must not continue automatically into work beyond what is explicitly defined in this file for an active ticket.
 - Cursor must not drift beyond explicitly defined scope.
 
-**Last completed ticket (summary):** `MC-S2-016` — Reconciliation visibility baseline — merged implementation truth in **§6** (`MC-S2-016`); shipped summary in **§22**.
+**Last completed ticket (summary):** `MC-S2-017` — Withdrawal unresolved-path guidance — merged implementation truth in **§6** (`MC-S2-017`); shipped summary in **§23**.
 
 ---
 
@@ -911,15 +934,35 @@ Add a second, strictly subordinate read-only trust layer on the withdraw status 
 3. **`apps/frontend/app/(app)/withdraw/page.tsx`** — second subordinate block (`withdraw-status-reconciliation-clarification`) below MC-S2-015 exception clarification.
 4. **`apps/frontend/__tests__/public-status-reconciliation-clarification.test.ts`**, **`apps/frontend/__tests__/withdraw.page.test.tsx`** — trust-contract and withdraw integration coverage.
 
-**Follow-ups:** None recorded in this file. Record the next approved ticket in **§7** when chosen.
+**Follow-ups:** Shipped successor **`MC-S2-017`** (§23); see **§6** merged truth.
 
 ---
 
-## 23. Immediate next-use guidance
+## 23. Completed execution ticket - MC-S2-017 (Withdrawal unresolved-path guidance)
+
+**Ticket:** `MC-S2-017` — Withdrawal unresolved-path guidance  
+**Suggested branch:** `feat/mc-s2-017-withdrawal-unresolved-path-guidance`
+
+### Objective (as scoped)
+
+Add a minimal third, read-only trust layer on the withdraw status card so **persistent non-final** `PublicTxStatus.IN_PROGRESS` is legible as still unresolved and not silently forgotten — without loss/lockup/hidden-movement implications, new public statuses, client timers as pseudo-state, or escalation/support promises.
+
+### Shipped summary
+
+1. **`apps/frontend/lib/tx/public-status-unresolved-path-clarification.ts`** — `getUnresolvedPathClarificationLines`; **`IN_PROGRESS` only** for v1; at most two short lines.
+2. **`apps/frontend/lib/tx/index.ts`** — re-exports the helper.
+3. **`apps/frontend/app/(app)/withdraw/page.tsx`** — third subordinate block (`withdraw-status-unresolved-path-clarification`) below reconciliation; quieter typography than prior clarification strips; visibility tied to public status only (composition with MC-S2-015/016).
+4. **`apps/frontend/__tests__/public-status-unresolved-path-clarification.test.ts`**, **`apps/frontend/__tests__/withdraw.page.test.tsx`** — trust-contract and withdraw integration coverage.
+
+**Follow-ups:** None sequenced in **§7** until updated.
+
+---
+
+## 24. Immediate next-use guidance
 
 Use this file as the continuity primer before asking Cursor to review or implement the next explicitly approved ticket touching engine posture, simulation, allocation, policy, trust, Copilot behavior, or operational withdrawal clarity.
 
-- for shipped review snapshot, cadence, change signal, and recent stability memory, see §17 (`MC-S2-011`), §18 (`MC-S2-012`), §19 (`MC-S2-013`), and §20 (`MC-S2-014`); for withdraw exception-path clarification, see **§6** (`MC-S2-015`) and **§21**; for withdraw reconciliation / completion-adjacent clarification, see **§6** (`MC-S2-016`) and **§22**; for active approved ticket status, see **§7**
+- for shipped review snapshot, cadence, change signal, and recent stability memory, see §17 (`MC-S2-011`), §18 (`MC-S2-012`), §19 (`MC-S2-013`), and §20 (`MC-S2-014`); for withdraw exception-path clarification, see **§6** (`MC-S2-015`) and **§21**; for withdraw reconciliation / completion-adjacent clarification, see **§6** (`MC-S2-016`) and **§22**; for withdraw unresolved-path guidance, see **§6** (`MC-S2-017`) and **§23**; for the current active ticket (if any), see **§7**
 - assess whether a requested change needs an ADR
 - understand current repo governance and architecture posture
 - confirm whether a proposed task fits the current read-only boundary
@@ -934,7 +977,7 @@ For deeper context, open next:
 
 ---
 
-## 24. Naming note
+## 25. Naming note
 The intended hand-off file name is `HEDGR_STATUS.md`.
 
 Continue using:

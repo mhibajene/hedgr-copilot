@@ -93,6 +93,30 @@ afterEach(() => {
 });
 
 describe('WithdrawPage status surface', () => {
+  test('does not show unresolved-path clarification when withdraw status card is absent', async () => {
+    vi.useFakeTimers();
+    vi.mocked(useBalance).mockReturnValue({
+      total: 25,
+      available: 25,
+      pending: 0,
+      currency: 'USD',
+      asOf: 1,
+      isLoading: false,
+      error: null,
+      refresh: vi.fn(),
+    });
+    vi.mocked(useLatestFx).mockReturnValue({
+      status: 'success',
+      data: undefined,
+      retry: vi.fn(),
+    });
+    render(<WithdrawPage />);
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(350);
+    });
+    expect(screen.queryByTestId('withdraw-status-unresolved-path-clarification')).toBeNull();
+  });
+
   test('shows a clear processing status region after submit', async () => {
     vi.useFakeTimers();
 
@@ -158,6 +182,16 @@ describe('WithdrawPage status surface', () => {
     const recLower = reconciliationText.toLowerCase();
     for (const bad of ['guaranteed', 'settled', 'completed now', 'moved', 'reallocated', 'immediately'] as const) {
       expect(recLower.includes(bad), `unexpected "${bad}" in reconciliation copy`).toBe(false);
+    }
+
+    const unresolvedBlock = screen.getByTestId('withdraw-status-unresolved-path-clarification');
+    const unresolvedText = unresolvedBlock.textContent ?? '';
+    expect(unresolvedText).toMatch(/unresolved/i);
+    expect(unresolvedText).toMatch(/not been forgotten|has not been forgotten/i);
+    expect(unresolvedText).toMatch(/does not automatically mean something is wrong/i);
+    const unLower = unresolvedText.toLowerCase();
+    for (const bad of ['guaranteed', 'escalated', 'resolved soon', 'moved', 'reallocated', 'immediately'] as const) {
+      expect(unLower.includes(bad), `unexpected "${bad}" in unresolved-path copy`).toBe(false);
     }
   });
 });
