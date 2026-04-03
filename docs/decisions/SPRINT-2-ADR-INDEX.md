@@ -6,6 +6,10 @@ This index lists the architecture decisions that govern Sprint 2 of Hedgr's Stab
 
 Sprint 2 is read-only, posture-first, and non-executing. These ADRs exist to ensure implementation remains aligned with Hedgr's Stability-Engine-led roadmap, trust-first UX doctrine, and ledger-first architecture.
 
+**Interpretation (index scope).** This index organizes Sprint 2 doctrinal context for readers and sequencing reference within that sprint. It does not, by itself, authorize Sprint 3 continuation, Sprint 3 ticket ordering, or any implementation work.
+
+**Traceability — post-foundation boundary readiness (MC-S3-001).** The canonical transition-readiness taxonomy, classification-not-authorization rule, and inherited Phase 4/5 inventory framing live in `docs/ops/HEDGR_STATUS.md` **§6b**. That section does not authorize work; **`HEDGR_STATUS.md` §7** names approved implementation tickets.
+
 ---
 
 ## Sprint 2 Doctrine Summary
@@ -25,14 +29,14 @@ Sprint 2 is read-only, posture-first, and non-executing. These ADRs exist to ens
 **Meta:** Proposed · UX/Trust · Short-term (MVP / immediate sprint) · Internal
 
 **Why it matters**  
-Defines the **Warmth Layer** as an allowed parallel track to refine retail presentation (layout, typography, microcopy, discoverability) while the Stability Engine remains read-only—without reframing product truth.
+Frames the **Warmth Layer** as a *doctrinal reference* for how retail presentation (layout, typography, microcopy, discoverability) may be refined while the Stability Engine remains read-only—without reframing product truth. **Proposed status:** this entry summarizes intent for review; it is not standing permission to ship or to run work outside current ops authority.
 
 **Notes**  
-Permits UI warmth refinement in parallel; does not widen truth boundaries or execution authority.
+Where explicitly adopted alongside current `docs/ops/HEDGR_STATUS.md` posture, constrained UI warmth work may proceed in parallel with the read-only engine phase only to the extent ops and accepted ADRs allow; it does not widen truth boundaries or execution authority.
 
 **Constrains**
-- presentation and trust-legibility work running alongside the read-only engine phase
-- doctrine review for constrained surfaces called out in the ADR (e.g. Action Strip, Activity, onboarding warmth, context/review)
+- intended scope of presentation and trust-legibility work that might run alongside the read-only engine phase when ops posture and accepted ADRs align
+- doctrine review for constrained surfaces called out in the ADR (e.g. Action Strip, Activity, onboarding warmth, context/review), if and when that ADR is accepted or reflected in ops authority
 
 **Prevents**
 - execution semantics and hidden fund movement
@@ -212,13 +216,16 @@ The following shipped under **`MC-S4-*`** ids; see **`docs/ops/HEDGR_STATUS.md`*
 
 ## Usage Rule
 
-Before implementing any Sprint 2 ticket:
+Even where this index is only indirectly relevant, engine-facing work remains subject to `AGENTS.md` and current authority in `docs/ops/HEDGR_STATUS.md`.
+
+Before implementing any Sprint 2 ticket, or Warmth-layer / adjacent presentation work that cites this index:
 
 1. Check the relevant ADRs in this index.
 2. Confirm the ticket does not violate read-only boundaries.
 3. Confirm the ticket does not introduce accounting or execution semantics.
 4. Confirm the output supports calm, trust-first, posture-based UX.
-5. For Warmth Layer or adjacent retail presentation refinement on ADR 0016 constrained surfaces, confirm alignment with ADR 0016 (presentation only; no truth or execution widening).
+5. **Defer to current authority in `docs/ops/HEDGR_STATUS.md`** for what is in scope, merged, and allowed in the repo right now; this index and any **Proposed** ADR are not sufficient on their own to authorize implementation.
+6. For Warmth Layer or adjacent retail presentation refinement on ADR 0016 constrained surfaces, treat ADR 0016 as *one* alignment input only: also confirm `docs/ops/HEDGR_STATUS.md` (and any accepted ADRs) permit the work; stay presentation-only with no truth or execution widening.
 
 If a ticket conflicts with one of these ADRs, stop and escalate before implementing.
 

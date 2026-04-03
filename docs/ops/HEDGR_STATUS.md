@@ -39,6 +39,8 @@ The repo is currently governed by the read-only Stability Engine foundation and 
 
 **Foundation release (repo):** For **Stability Engine™️ - Foundation** as bounded by merged work through `MC-S2-022` and closeout ticket `MC-S2-023`, the canonical assessment in **§6a** records **Ready to mark Shipped** (criteria, evidence table, verdict). That does **not** relax the read-only or non-execution constraints below; it closes governance on the Foundation-scoped body of work only.
 
+**Next release / track (repo canon):** **Stability Engine™️ - Transition Readiness.** Foundation is **closed** as the shipped repo baseline (**§6a**). This track is **not** a continuation of Foundation implementation scope; it exists to define **post-foundation boundary readiness** before any execution, automation, or deeper operational authority expansion is approved. Until future doctrine and approved sequencing explicitly widen the boundary, the **read-only / non-executing** constraints below remain in force.
+
 Current posture:
 
 - read-only
@@ -60,7 +62,7 @@ Important active constraints:
 - local simulation may exist only as a dev-safe validation aid, not as runtime authority
 - **Warmth Layer (ADR 0016, Proposed):** parallel, doctrine-constrained **presentation** refinement only; does not alter read-only Stability Engine posture and must not introduce execution semantics, accounting truth, hidden reallocation, ledger duplication, yield-first emphasis, or gamified stability language (see `docs/decisions/0016-warmth-layer-doctrine-constrained-retail-refinement-track.md`)
 
-This phase is still about establishing and hardening the Stability Engine boundary, not extending into execution architecture.
+**Sprint 3** is framed here as **Transition Readiness** (named track above), not as Foundation continuation: governance defines the explicit standard for any later boundary widening; execution architecture remains out of scope until explicitly approved.
 
 ---
 
@@ -76,6 +78,8 @@ Before implementing or reviewing continuation work, read in this order:
 6. `docs/decisions/0013-allocation-bands-informational-not-accounting.md`
 
 These are binding references for current implementation posture.
+
+For **post-foundation boundary readiness** (taxonomy, classification rules, sequencing discipline), see **§6b** and **§32** (`MC-S3-001`). **§7** authorizes the next implementation ticket.
 
 **Proposed companion ADR:** `docs/decisions/0016-warmth-layer-doctrine-constrained-retail-refinement-track.md` — Warmth Layer parallel refinement track (presentation only, read-only engine posture unchanged). Read when implementing or reviewing work on surfaces scoped in that ADR.
 
@@ -546,7 +550,7 @@ This refinement is merged UX-legibility work only. It does not change posture lo
 | M2 | Mandatory | **Read-only / non-execution boundary:** Shipped Stability Engine and related Sprint 2 surfaces align with ADR **0014** (read-only, informational, non-executing); no shipped path treats engine output as execution, accounting truth, or fund movement authority. |
 | M3 | Mandatory | **Informational allocation:** ADR **0013** posture respected for allocation bands and related disclosures (informational targets, not ledger or settled-allocation truth) per §6 and trust-surface tests. |
 | M4 | Mandatory | **Governance surfaces reconciled in repo:** `docs/ops/HEDGR_STATUS.md` (§2–§3, §6) and `docs/decisions/SPRINT-2-ADR-INDEX.md` are materially consistent on Sprint 2 boundaries; any intentional nuance (e.g. ticket id mapping notes in the index) is documented, not hidden contradiction. |
-| M5 | Mandatory | **Release vs next-track boundary explicit:** Remaining or adjacent work is classifiable as **next release/track** (e.g. Warmth Layer ADR **0016** *Proposed*, Phase 3 planning lens in §9) rather than unnamed vague backlog blocking closure. |
+| M5 | Mandatory | **Release vs next-track boundary explicit:** Remaining or adjacent work is classifiable as **next release/track** (e.g. Warmth Layer ADR **0016** *Proposed*, Transition Readiness planning lens in §9) rather than unnamed vague backlog blocking closure. |
 | S1 | Supporting | **CI / engineering posture:** `AGENTS.md` hermetic CI and deny-by-default env posture remains the stated contract; no closeout finding depends on undocumented live-dependency assumptions. |
 | S2 | Supporting | **Notion / executive copy:** Alignment of external dashboards with repo wording is manual follow-up (`docs/ops/NOTION_GOVERNANCE_STAGING.md`); drift there is not treated as evidence against Foundation closeout. |
 | S3 | Supporting | **Proposed ADRs:** ADR **0016** (*Proposed*) and similar do **not** block Foundation closeout unless a governing doc explicitly claimed this release would satisfy them before ship (none do). |
@@ -559,7 +563,7 @@ This refinement is merged UX-legibility work only. It does not change posture lo
 | M2 | Pass | §2 **Important active constraints**; §6 **Implementation posture preserved** clauses across tickets; ADR **0014** (`docs/decisions/0014-stability-engine-read-only-in-sprint-2.md`); §9 **Current phase must not include** | None. |
 | M3 | Pass | §6 doctrine lines for `MC-S2-004`, `MC-S2-007`, allocation UX baseline; ADR **0013** (`docs/decisions/0013-allocation-bands-informational-not-accounting.md`) | None. |
 | M4 | Pass | §3 governing references order; `docs/decisions/SPRINT-2-ADR-INDEX.md` **Ticket Mapping** / **Merged implementation ids** cross-referencing §6; index planning note on `MC-S4-*` vs early `MC-S2-*` labels is explicit | None. |
-| M5 | Pass | §2 Warmth Layer bullet (parallel track); §9 Phase 3 lens; ADR **0016** in index as *Proposed* — scoped as presentation-only, not Foundation completion dependency | Next-track work remains explicitly labeled *Proposed* or planning-only until governance sequences new tickets in §7. |
+| M5 | Pass | §2 Warmth Layer bullet (parallel track); §9 Transition Readiness planning lens; ADR **0016** in index as *Proposed* — scoped as presentation-only, not Foundation completion dependency | Next-track work remains explicitly labeled *Proposed* or planning-only until governance sequences new tickets in §7. |
 | S1 | Pass | `AGENTS.md` §§3–5 (non-negotiables, required checks, env defaults) | Full workflow verification is routine engineering, not a Foundation closeout gate beyond stated contract. |
 | S2 | Pass | §1 Notion governance note; `docs/ops/NOTION_GOVERNANCE_STAGING.md` | Optional manual reconciliation; not blocking. |
 | S3 | Pass | `docs/decisions/SPRINT-2-ADR-INDEX.md` ADR **0016** section; §2 | **Non-blocking rule:** Proposed/future-track ADRs do not keep Foundation open unless the release explicitly promised them; none did. |
@@ -569,6 +573,72 @@ This refinement is merged UX-legibility work only. It does not change posture lo
 **Ready to mark Shipped** — for **Stability Engine™️ - Foundation**, as bounded by merged §6 work through `MC-S2-022` and governing Sprint 2 ADRs **0013–0015** (plus boundary ADR **0017** for the dev-only tx review seam). All **mandatory** criteria **M1–M5** are **Pass** in the evidence table above; the table is complete before this verdict.
 
 **Human / external gate:** Flipping release rows in Notion, marketing, or other non-repo systems remains with whoever owns release governance; this file supplies the **criteria, evidence, and repo-native recommendation** only.
+
+---
+
+## 6b. Post-foundation boundary readiness (MC-S3-001)
+
+**Status:** Canonical **Transition Readiness** standard for what may exist *as a document taxonomy* after **Stability Engine™️ - Foundation** (§6a). **This section does not authorize implementation, sequencing, or boundary widening.**
+
+**Authority:** Repo truth governs. Notion or other surfaces remain reference-only for external labels in the inventory table below.
+
+### Classification is not authorization
+
+- Rows in the **Inherited Phase 4 / Phase 5 inventory** table describe evidence and *abstract* boundary posture. They **do not** approve work, prioritize backlog, or substitute for ticket review.
+- **`could-be-admitted-later`** means only: not ruled out by evidence *as a type*; it **does not** mean **approved next** or queued.
+- **Only §7** in this file (as updated by governance) **authorizes** the next implementation ticket. MC-S3-001 output is input to human judgment, not a substitute for §7.
+
+### Boundary categories (document taxonomy only)
+
+**Boundary class** labels describe the **nature** of a class of work under current doctrine. They are **not** blanket approval to start work. Categories **6–8** remain **blocked** at the framework level until explicit doctrine and §7 sequencing widen the boundary.
+
+| # | Category | Boundary class | Notes |
+|---|----------|----------------|-------|
+| 1 | Governance and repo truth | admissible (as **documentation / process** only) | e.g. §7 discipline, cross-links, PR hygiene—still subject to normal review. |
+| 2 | Documentation and ADR hygiene | admissible (as **doc / process** only) | *Proposed* → *Accepted* ADRs follow normal ADR governance **outside** this section; MC-S3-001 does not accept ADRs. |
+| 3 | Read-only trust expression and constrained retail presentation refinement | prerequisite-gated | Must preserve ADR **0013** / **0014**. Scoped tickets, doctrine review, tests if touching shipped trust surfaces. |
+| 4 | Dev-only / review tooling | prerequisite-gated | Narrow seams with written boundaries (pattern: ADR **0017**); per-seam ADR or status-doc boundary note. |
+| 5 | Regression resistance | admissible | Tests/selectors for **already-shipped** trust surfaces only—**must not** introduce **new states**, **new product behavior**, or semantics that smuggle execution/accounting/policy meaning. |
+| 6 | Backend / live engine / treasury execution / ledger mutation from engine | blocked | Definition work here does **not** unblock; requires future explicit ADRs and §7. |
+| 7 | Policy-engine convergence; runtime policy inside posture objects | blocked | Aligns with §9 “must not include” and §10. |
+| 8 | Copilot runtime binding; directive Copilot; customer-facing automation; agentic finance | blocked | Aligns with §7a, §9, ADR **0015** containment. |
+
+### ADR 0016 (Warmth Layer) — classification only
+
+- **ADR 0016** remains **Proposed** unless and until accepted through normal ADR governance. **§6b does not ratify** the Warmth Layer or any Warmth scope.
+- **Narrow, low-risk presentation refinement** (e.g. geometry, spacing, typography, terminology swaps, calm microcopy **where meaning is unchanged**) is the only Warmth-related work that may be discussed as *hypothetically* compatible with a **future**, separately governed, prerequisite-gated ticket—still **not** “approved next.”
+- **Broader** trust-surface, information-architecture, Action Strip, Activity, onboarding, or v2/v3-style explorations in ADR **0016** remain **prerequisite-gated** with a **higher** bar; they must **not** be treated as default or automatic follow-on work.
+
+### Readiness checklist (for governance when evaluating a *future* ticket)
+
+Use as **scrutiny**, not auto-approval:
+
+1. **§7** — Is this ticket **explicitly named** as approved next (or otherwise authorized) in §7?
+2. **Doctrine / ADRs** — Does it respect **0013**, **0014**, **0015**, and **0017** where applicable? If touching Warmth-scoped surfaces, is **0016** status and scope explicit?
+3. **Red lines** — Does it avoid execution semantics, accounting semantics, backend/live engine coupling, policy merge in posture, directive Copilot, customer automation, and simulation-as-runtime-authority (§9)?
+4. **Foundation** — Does it avoid reopening Foundation scope or treating §6b inventory rows as commitments?
+
+### Illustrative ticket *shapes* (not admissibility guarantees)
+
+Examples of **forms** a future §7-approved ticket *might* take during Transition Readiness: governance doc edits, ADR index traceability, narrowly scoped read-only copy/layout refinement, dev-seam documentation, regression tests **without** new states or new product behavior. **§7 must name any real ticket**; these shapes are **not** guarantees of approval.
+
+### Inherited Phase 4 / Phase 5 inventory (reference labels)
+
+Populate or extend rows using **Notion / external planning reference only**; repo remains canonical for evidence. Empty rows are acceptable until an inventory pass is completed.
+
+| External label | Repo grounding | Evidence state | Boundary class | Current disposition | Unblock requirement |
+|----------------|----------------|----------------|----------------|---------------------|---------------------|
+| *Example: Phase 4 “governance hardening” (generic)* | §4, §8; `AGENTS.md` | external-only | prerequisite-gated | deferred | §7-named ticket; scope must stay doc/process or read-only trust refinement per category 3—no category 6–8. |
+| *Example: Phase 5 “Copilot binding” / runtime Copilot authority* | §9 “must not”; ADR **0015** | contradicted-or-superseded (for execution-style binding) | blocked | deferred | New ADR(s), explicit doctrine widening, §7 sequencing—out of Transition Readiness definition scope. |
+| *Example: Warmth Layer (ADR 0016)* | `docs/decisions/0016-warmth-layer-doctrine-constrained-retail-refinement-track.md` | repo-grounded (*Proposed* ADR) | prerequisite-gated | could-be-admitted-later (narrow v1-style presentation only) | ADR **Accepted** + §7-named scoped ticket + doctrine review; **0016** does not ratify from this table. |
+
+**Evidence state** values: `repo-shipped` · `repo-grounded` · `external-only` · `contradicted-or-superseded`  
+**Boundary class** values: `admissible` · `prerequisite-gated` · `blocked`  
+**Current disposition** values: `not-needed` · `could-be-admitted-later` · `deferred`
+
+### Ready for documentation-only implementation
+
+Subsequent work that **only** edits governance/docs to refine this § (e.g. more inventory rows, clearer examples) remains **documentation-only** and must **not** introduce runtime, backend, or execution authority. **§7** still governs any **implementation** ticket beyond doc edits.
 
 ---
 
@@ -602,25 +672,34 @@ Completed and merged:
 - `MC-S2-021` - Transaction mock-state observability seam
 - `MC-S2-022` - Local stub transaction-path continuity
 - `MC-S2-023` - Foundation release closeout readiness
+- `MC-S3-001` - Post-foundation boundary readiness criteria
 
 Current active ticket status:
 
-- **No approved next ticket.** Governance has not named a successor after `MC-S2-023`. Do not treat backlog, roadmap, or *Proposed* ADRs as sequenced continuation work until this section names the next ticket explicitly.
-- Cursor must not assume continuation beyond **§6** merged truth, **§6a** release-closeout assessment, **§7a** (when an active ticket exists), and current governance.
+- **Approved next ticket:** *None named.* Governance must update this section to authorize the next implementation ticket. Do not treat **§6b** inventory rows, boundary classes, or dispositions as sequencing or approval.
+- Do not treat backlog, roadmap, or *Proposed* ADRs as sequenced work unless **§7** is updated explicitly.
+- Cursor must not assume continuation beyond **§6** merged truth, **§6a** release-closeout assessment, **§6b** transition standard, **§7a** (when an active ticket exists), and current governance.
 - Cursor must not continue automatically into work beyond what is explicitly defined in this file for an active ticket.
 - Cursor must not drift beyond explicitly defined scope.
 
-**Last completed ticket (summary):** `MC-S2-023` — Foundation release closeout readiness — canonical assessment in **§6a** (criteria, evidence table, verdict); completed ticket record in **§29**.
+**Last completed ticket (summary):** `MC-S3-001` — Post-foundation boundary readiness — canonical standard in **§6b**; completed ticket record in **§32**.
 
 ---
 
 ## 7a. Active execution ticket
 
-**No active execution ticket.** Governance has not named the next sequenced ticket after `MC-S2-023`.
+**No active execution ticket.** Governance has not named the next approved implementation ticket in **§7**. When the next ticket is approved, restore a full **§7a** brief here.
 
-- **Foundation closeout (completed):** `MC-S2-023` — see **§6a** (criteria, evidence table, verdict) and **§29** (completed ticket record).
+**Archived brief (MC-S3-001):** Post-foundation boundary readiness — documentation-only; deliverables in **§6b** (boundary taxonomy, classification-not-authorization rule, inventory table template, readiness checklist). **Classification is not authorization**; only **§7** sequences work. Completed record: **§32**.
+
+---
+
+**Continuity**
+
+- **Foundation closeout (completed):** `MC-S2-023` — **§6a** (criteria, evidence table, verdict); **§29** (completed ticket record).
+- **Transition readiness standard (completed):** `MC-S3-001` — **§6b**; **§32** (completed ticket record).
 - **Merged implementation truth:** **§6** remains canonical for shipped code boundaries.
-- When a new ticket is approved, restore a full §7a brief here and update **§7** explicitly. Until then, do not infer continuation work from *Proposed* ADRs or roadmap narrative alone.
+- When governance names a successor, update **§7** and restore a full **§7a** brief.
 
 **Archived brief (MC-S2-023):** Governance-first, documentation-only closeout assessment; no product/runtime changes; objective was explicit criteria, evidence-based evaluation, and repo-native Shipped vs In Progress recommendation — delivered in **§6a**.
 
@@ -713,11 +792,13 @@ Reject or challenge any implementation that introduces:
 - hidden risk
 - simulation as runtime authority
 
-### Phase 3 planning lens - operational trust plus stickiness
+### Transition Readiness planning lens — operational trust and read-only stickiness
 
-Phase 3 continuation planning may include **read-only stickiness surfaces** only where they strengthen operational trust without widening the engine boundary.
+**Naming note:** This subsection is the **Transition Readiness** (§2) planning lens for **read-only** stickiness and operational-trust surfaces. It is **not** a commitment to a numbered “Phase 3” build phase and **not** authorization to widen the engine boundary or sequence execution work.
 
-Allowed planning direction inside Phase 3:
+The following planning direction may include **read-only stickiness surfaces** only where they strengthen operational trust without widening the engine boundary.
+
+Allowed planning direction inside this lens:
 
 - make the dashboard a clearer recurring stability review surface
 - strengthen habit loops through calm, informational status and review cues
@@ -725,14 +806,14 @@ Allowed planning direction inside Phase 3:
 - reinforce Hedgr as a financial control system through visibility, not automation authority
 - improve daily or weekly user return incentives without implying execution, rebalancing, or ledger mutation
 
-Examples that may fit Phase 3 if scoped narrowly and kept read-only:
+Examples that may fit this lens if scoped narrowly and kept read-only:
 
 - a compact stability snapshot summary on the dashboard
 - informational progress framing such as stable / improving / drifting
 - a read-only review prompt or status cadence surface
 - explanatory activity or review history that describes what the system is signaling, not what funds have executed
 
-Phase 3 stickiness work must not introduce:
+Read-only stickiness work under this lens must not introduce:
 
 - autonomous rebalancing semantics
 - executed movement language
@@ -1216,6 +1297,7 @@ No product or runtime files changed under this ticket.
 Use this file as the continuity primer before asking Cursor to review or implement the next explicitly approved ticket touching engine posture, simulation, allocation, policy, trust, Copilot behavior, or operational withdrawal clarity.
 
 - for **Foundation release closeout** verdict and criteria, see **§6a** and **§29** (`MC-S2-023`)
+- for **post-foundation boundary readiness** (Transition Readiness standard), see **§6b** and **§32** (`MC-S3-001`)
 - for the **active** next ticket, see **§7** and **§7a** (when populated)
 - for transaction mock-state review seam (dev-only), see **§6** (`MC-S2-021`) and **§27**; ADR **0017**
 - for shipped review snapshot, cadence, change signal, and recent stability memory, see §17 (`MC-S2-011`), §18 (`MC-S2-012`), §19 (`MC-S2-013`), and §20 (`MC-S2-014`); for withdraw exception-path clarification, see **§6** (`MC-S2-015`) and **§21**; for withdraw reconciliation / completion-adjacent clarification, see **§6** (`MC-S2-016`) and **§22**; for withdraw unresolved-path guidance, see **§6** (`MC-S2-017`) and **§23**; for withdraw next-step continuity guidance, see **§6** (`MC-S2-018`) and **§24**; for withdraw constrained-path / fallback-path clarity, see **§6** (`MC-S2-019`) and **§25**; for market-data failure continuity (deposit/withdraw degraded state), see **§6** (`MC-S2-020`) and **§26**
@@ -1239,3 +1321,28 @@ The intended hand-off file name is `HEDGR_STATUS.md`.
 Continue using:
 
 `docs/ops/HEDGR_STATUS.md`
+
+---
+
+## 32. Completed execution ticket - MC-S3-001 (Post-foundation boundary readiness criteria)
+
+**Ticket:** `MC-S3-001` — Post-foundation boundary readiness criteria  
+**Suggested branch:** `feat/mc-s3-001-post-foundation-boundary-readiness`
+
+### Outcome (governance)
+
+Documentation-only transition standard for **Stability Engine™️ - Transition Readiness**. Canonical deliverables live in **§6b**:
+
+- boundary category taxonomy (document-only; categories **6–8** blocked)
+- **classification is not authorization** rule; **`could-be-admitted-later`** ≠ approved next; **only §7** authorizes tickets
+- ADR **0016** / Warmth: **classification only**; no ratification; narrow presentation-only vs broader surfaces distinguished
+- readiness checklist for future governance review (scrutiny, not auto-approval)
+- inherited Phase 4 / Phase 5 inventory table (template + example rows; extend from Notion reference-only)
+
+No product or runtime files changed under this ticket.
+
+### Sequencing note
+
+§7 / §7a updates apply after delivery of **§6b**, per governance closeout discipline.
+
+**Follow-ups:** When governance approves the next ticket, record it in **§7** and restore a full **§7a** brief.
