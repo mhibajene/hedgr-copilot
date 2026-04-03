@@ -109,6 +109,24 @@ Protects against using engine posture and allocation bands as accounting truth.
 
 ---
 
+### ADR 0017 — Transaction review simulator dev seam (MC-S2-021 boundary note)
+**Why it matters**  
+Documents boundaries for the dev-only deposit/withdraw URL review seam so it is not mistaken for product semantics, fallback pricing, or an open-ended simulation control plane.
+
+**Constrains**
+- `apps/frontend/lib/tx/tx-review-simulator.ts`
+- `apps/frontend/lib/dev/local-simulation-guard.ts`
+- deposit/withdraw pages when review params are present
+
+**Prevents**
+- treating review bypass as precedent for prod execution or pricing
+- undocumented expansion of tx simulation query flags
+
+**File**  
+`docs/decisions/0017-transaction-review-simulator-dev-seam-mc-s2-021.md`
+
+---
+
 ## Ticket Mapping
 
 ### MC-S2-001 — Canonical EngineState contract
@@ -158,6 +176,15 @@ Product-facing trust copy for posture context, notices, and allocation panel; re
 Read-only, frontend-centered withdrawal trust-surface refinement; clarifies constrained / slower non-final withdrawal path meaning; no new public transaction states; no backend fallback logic; no support workflow integration; no execution or accounting semantics.
 
 **Index posture:** Merged / shipped. Canonical merged truth: `docs/ops/HEDGR_STATUS.md` §6 (`MC-S2-019`); shipped summary: §25.
+
+### MC-S2-021 — Transaction mock-state observability seam
+**Governed by**
+- ADR 0014 (read-only / non-executing posture, by analogy)
+- ADR 0017 (seam boundaries)
+
+Dev-only, review-only URL seam for deposit/withdraw mock flows; not customer-facing; no new `PublicTxStatus`; no backend changes.
+
+**Index posture:** Merged / shipped. Canonical merged truth: `docs/ops/HEDGR_STATUS.md` §6 (`MC-S2-021`); shipped summary: §27.
 
 ### Merged implementation ids (canonical merged truth)
 

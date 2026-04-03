@@ -39,13 +39,22 @@ vi.mock('../lib/state/balance.mode', () => ({
 
 vi.mock('../lib/payments/withdraw.mock', () => ({
   withdrawMock: {
-    createWithdraw: vi.fn(async (amountUSD: number) => ({
-      txn_ref: 'tx-withdraw-1',
-      amountUSD,
-      createdAt: Date.now(),
-    })),
+    createWithdraw: vi.fn(
+      async (amountUSD: number, opts?: { skipAutoConfirm?: boolean }) => {
+        void opts;
+        return {
+          txn_ref: 'tx-withdraw-1',
+          amountUSD,
+          createdAt: Date.now(),
+        };
+      },
+    ),
     status: vi.fn(async () => 'PENDING'),
   },
+}));
+
+vi.mock('next/navigation', () => ({
+  useSearchParams: vi.fn(() => new URLSearchParams()),
 }));
 
 vi.mock('../components', async (importOriginal) => {
@@ -89,11 +98,27 @@ vi.mock('@hedgr/ui', () => ({
 import WithdrawPage from '../app/(app)/withdraw/page';
 import { useBalance } from '../lib/hooks/useBalance';
 import { useLatestFx } from '../lib/hooks/useLatestFx';
+import { useSearchParams } from 'next/navigation';
+import { withdrawMock } from '../lib/payments/withdraw.mock';
+import { TX_REVIEW_BYPASS_FX_PARAM, TX_REVIEW_HOLD_PENDING_PARAM } from '../lib/tx';
+
+const ORIGINAL_CI = process.env.CI;
+const ORIGINAL_NODE_ENV = process.env.NODE_ENV;
+const ORIGINAL_APP_ENV = process.env.NEXT_PUBLIC_APP_ENV;
 
 afterEach(() => {
   cleanup();
   vi.restoreAllMocks();
   vi.useRealTimers();
+  vi.mocked(useSearchParams).mockReturnValue(new URLSearchParams() as ReturnType<typeof useSearchParams>);
+  vi.unstubAllEnvs();
+  if (ORIGINAL_CI === undefined) {
+    delete process.env.CI;
+  } else {
+    process.env.CI = ORIGINAL_CI;
+  }
+  process.env.NODE_ENV = ORIGINAL_NODE_ENV;
+  process.env.NEXT_PUBLIC_APP_ENV = ORIGINAL_APP_ENV;
 });
 
 describe('WithdrawPage status surface', () => {
@@ -279,5 +304,112 @@ describe('WithdrawPage status surface', () => {
 
     fireEvent.click(screen.getByRole('button', { name: 'Retry rate' }));
     expect(retry).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('WithdrawPage tx review seam (MC-S2-021)', () => {
+  function stubApprovedLocalDev() {
+    vi.unstubAllEnvs();
+    delete process.env.CI;
+    process.env.NODE_ENV = 'development';
+    process.env.NEXT_PUBLIC_APP_ENV = 'dev';
+  }
+
+  test('FX error without review params: confirm disabled, no banner (no activation)', async () => {
+    stubApprovedLocalDev();
+    vi.useFakeTimers();
+    vi.mocked(useBalance).mockReturnValue({
+      total: 25,
+      available: 25,
+      pending: 0,
+      currency: 'USD',
+      asOf: 1,
+      isLoading: false,
+      error: null,
+      refresh: vi.fn(),
+    });
+    vi.mocked(useLatestFx).mockReturnValue({
+      status: 'error',
+      retry: vi.fn(),
+    });
+    vi.mocked(useSearchParams).mockReturnValue(new URLSearchParams() as ReturnType<typeof useSearchParams>);
+
+    render(<WithdrawPage />);
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(350);
+    });
+
+    expect(screen.queryByTestId('withdraw-tx-review-simulator-banner')).toBeNull();
+    const confirm = screen.getByRole('button', { name: 'Confirm' }) as HTMLButtonElement;
+    expect(confirm.disabled).toBe(true);
+  });
+
+  test('FX error + txReviewBypassFx=1 in approved dev: confirm enabled, banner visible, no fake FX block', async () => {
+    stubApprovedLocalDev();
+    vi.useFakeTimers();
+    vi.mocked(useBalance).mockReturnValue({
+      total: 25,
+      available: 25,
+      pending: 0,
+      currency: 'USD',
+      asOf: 1,
+      isLoading: false,
+      error: null,
+      refresh: vi.fn(),
+    });
+    vi.mocked(useLatestFx).mockReturnValue({
+      status: 'error',
+      retry: vi.fn(),
+    });
+    vi.mocked(useSearchParams).mockReturnValue(
+      new URLSearchParams(`${TX_REVIEW_BYPASS_FX_PARAM}=1`) as ReturnType<typeof useSearchParams>,
+    );
+
+    render(<WithdrawPage />);
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(350);
+    });
+
+    expect(screen.getByTestId('withdraw-tx-review-simulator-banner')).toBeTruthy();
+    expect(screen.queryByTestId('withdraw-fx-block')).toBeNull();
+    const confirm = screen.getByRole('button', { name: 'Confirm' }) as HTMLButtonElement;
+    expect(confirm.disabled).toBe(false);
+  });
+
+  test('hold pending passes skipAutoConfirm to mock when param set', async () => {
+    stubApprovedLocalDev();
+    vi.useFakeTimers();
+    vi.mocked(useBalance).mockReturnValue({
+      total: 25,
+      available: 25,
+      pending: 0,
+      currency: 'USD',
+      asOf: 1,
+      isLoading: false,
+      error: null,
+      refresh: vi.fn(),
+    });
+    vi.mocked(useLatestFx).mockReturnValue({
+      status: 'success',
+      data: { pair: 'USDZMW', rate: 20, ts: 1 },
+      retry: vi.fn(),
+    });
+    vi.mocked(useSearchParams).mockReturnValue(
+      new URLSearchParams(`${TX_REVIEW_HOLD_PENDING_PARAM}=1`) as ReturnType<typeof useSearchParams>,
+    );
+
+    render(<WithdrawPage />);
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(350);
+    });
+
+    await act(async () => {
+      fireEvent.click(screen.getByRole('button', { name: 'Confirm' }));
+      await Promise.resolve();
+    });
+
+    expect(vi.mocked(withdrawMock.createWithdraw)).toHaveBeenCalledWith(1, {
+      skipAutoConfirm: true,
+    });
   });
 });

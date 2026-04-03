@@ -1,4 +1,5 @@
 import type { EnginePosture } from './types';
+import { isLocalDevSimulationSeamEnabled } from '../dev/local-simulation-guard';
 
 export const ENGINE_POSTURE_QUERY_PARAM = 'enginePosture';
 
@@ -14,21 +15,8 @@ function isEnginePosture(value: string | null): value is EnginePosture {
   return typeof value === 'string' && ENGINE_POSTURES.includes(value as EnginePosture);
 }
 
-function getAppEnv(): string {
-  // Match the repo-native frontend fallback in config/env.ts.
-  return process.env.NEXT_PUBLIC_APP_ENV ?? 'dev';
-}
-
 export function isLocalEngineSimulatorEnabled(): boolean {
-  if (process.env.CI === 'true') {
-    return false;
-  }
-
-  if (process.env.NODE_ENV === 'test' || process.env.NODE_ENV === 'production') {
-    return false;
-  }
-
-  return getAppEnv() === 'dev';
+  return isLocalDevSimulationSeamEnabled();
 }
 
 export function resolveEngineSimulatorPosture(

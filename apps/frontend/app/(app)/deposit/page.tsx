@@ -1,6 +1,7 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { Suspense, useState, useEffect, useRef, useMemo } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { postDeposit } from '../../../lib/deposits/client';
 import { useBalance } from '../../../lib/hooks/useBalance';
 import { useLedgerStore } from '../../../lib/state/ledger';
@@ -9,8 +10,12 @@ import { getBalanceMode } from '../../../lib/state/balance.mode';
 import { useLatestFx } from '../../../lib/hooks/useLatestFx';
 import { resolveMarket, resolveLocalCurrencyCode } from '../../../config/market';
 import { EmptyState, ErrorState } from '@hedgr/ui';
-import { FxRateBlock, MarketDataContinuityPanel } from '../../../components';
+import { FxRateBlock, MarketDataContinuityPanel, TxReviewSimulatorBanner } from '../../../components';
 import { CONVERSION_PREVIEW_UNAVAILABLE_PLACEHOLDER } from '../../../lib/fx/market-data-continuity-copy';
+import {
+  resolveTxReviewSimulatorFlags,
+  isTxReviewSeamActive,
+} from '../../../lib/tx';
 
 interface PaymentMethod {
   id: string;
@@ -20,7 +25,16 @@ interface PaymentMethod {
 
 const STUB_CONFIRM_DELAY_MS = Number(process.env.NEXT_PUBLIC_MOMO_CONFIRM_DELAY_MS ?? '1500');
 
-export default function DepositPage() {
+function DepositPageContent() {
+  const searchParams = useSearchParams();
+  const search = useMemo(() => {
+    const s = searchParams?.toString() ?? '';
+    return s ? `?${s}` : undefined;
+  }, [searchParams]);
+
+  const txReviewFlags = useMemo(() => resolveTxReviewSimulatorFlags(search), [search]);
+  const reviewSeamActive = isTxReviewSeamActive(txReviewFlags);
+
   const { refresh } = useBalance();
   const appendTx = useLedgerStore((s) => s.append);
   const confirmTx = useLedgerStore((s) => s.confirm);
@@ -47,6 +61,9 @@ export default function DepositPage() {
 
   const stubConfirmTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  const canConfirmWithoutRate = txReviewFlags.bypassFxForConfirm;
+  const rateAllowsConfirm = rate !== null || canConfirmWithoutRate;
+
   useEffect(() => {
     const fetchPaymentMethods = async () => {
       setMethodsLoading(true);
@@ -65,7 +82,6 @@ export default function DepositPage() {
     fetchPaymentMethods();
   }, []);
 
-  // Stub: after POST success we simulate settlement so E2E/CI see CONFIRMED
   useEffect(() => {
     if (!txnRef || status !== 'PENDING') return;
     stubConfirmTimerRef.current = setTimeout(() => {
@@ -96,10 +112,11 @@ export default function DepositPage() {
 
   const confirm = async () => {
     if (amountLocalNum === null || amountLocalNum <= 0) return;
-    if (rate === null) return;
+    if (!rateAllowsConfirm) return;
 
+    const usdForStub = rate !== null ? usdPreview : 0;
     setStatus('PENDING');
-    setUsdToCredit(usdPreview);
+    setUsdToCredit(usdForStub);
 
     const txn_ref = crypto.randomUUID();
     try {
@@ -112,13 +129,17 @@ export default function DepositPage() {
     const mode = getBalanceMode();
     if (mode === 'ledger') {
       const now = Date.now();
+      // When rate is missing, zeros are technical simulation placeholders only (MC-S2-021);
+      // UI must keep conversion preview unavailable — not economic truth.
+      const amountUsdLedger = rate !== null ? usdPreview : 0;
+      const fxRateLedger = rate !== null ? rate : 0;
       appendTx({
         txn_ref,
         type: 'deposit',
         status: 'pending',
         amount_zmw: amountLocalNum,
-        amount_usd: usdPreview,
-        fx_rate: rate,
+        amount_usd: amountUsdLedger,
+        fx_rate: fxRateLedger,
         created_at: now,
         updated_at: now,
       });
@@ -140,7 +161,10 @@ export default function DepositPage() {
 
   const availableMethods = paymentMethods.filter((m) => m.available);
   const isConfirmDisabled =
-    status === 'PENDING' || amountLocalNum === null || amountLocalNum <= 0 || rate === null;
+    status === 'PENDING' ||
+    amountLocalNum === null ||
+    amountLocalNum <= 0 ||
+    !rateAllowsConfirm;
 
   if (methodsError) {
     return (
@@ -200,6 +224,9 @@ export default function DepositPage() {
   return (
     <main className="p-6 space-y-4 max-w-xl">
       <h1 className="text-2xl font-semibold">Deposit</h1>
+      {reviewSeamActive ? (
+        <TxReviewSimulatorBanner data-testid="deposit-tx-review-simulator-banner" />
+      ) : null}
 
       {fx.status === 'error' ? (
         <MarketDataContinuityPanel
@@ -267,5 +294,24 @@ export default function DepositPage() {
         />
       )}
     </main>
+  );
+}
+
+function DepositPageFallback() {
+  return (
+    <main className="p-6 space-y-4 max-w-xl">
+      <h1 className="text-2xl font-semibold">Deposit</h1>
+      <div className="flex items-center justify-center py-12">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600" />
+      </div>
+    </main>
+  );
+}
+
+export default function DepositPage() {
+  return (
+    <Suspense fallback={<DepositPageFallback />}>
+      <DepositPageContent />
+    </Suspense>
   );
 }

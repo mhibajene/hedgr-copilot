@@ -12,8 +12,19 @@ const clamp = (n: number, min: number, max: number) => Math.max(min, Math.min(ma
 const DEFAULT_DELAY = Number(process.env.NEXT_PUBLIC_WITHDRAW_CONFIRM_DELAY_MS ?? '1500');
 const DELAY_MS = clamp(DEFAULT_DELAY, 200, 5000);
 
+export type CreateWithdrawOptions = {
+  /**
+   * When true, mock stays PENDING (no auto-confirm timer). MC-S2-021 review seam only;
+   * caller must only set this when local dev simulation guard allows tx review flags.
+   */
+  skipAutoConfirm?: boolean;
+};
+
 export const withdrawMock = {
-  async createWithdraw(amountUSD: number): Promise<WithdrawTx> {
+  async createWithdraw(
+    amountUSD: number,
+    options?: CreateWithdrawOptions,
+  ): Promise<WithdrawTx> {
     const txn_ref = crypto.randomUUID();
     const now = Date.now();
 
@@ -30,10 +41,12 @@ export const withdrawMock = {
       updated_at: now,
     });
 
-    setTimeout(() => {
-      reg.set(txn_ref, { status: 'CONFIRMED' });
-      useLedgerStore.getState().confirm(txn_ref);
-    }, DELAY_MS);
+    if (!options?.skipAutoConfirm) {
+      setTimeout(() => {
+        reg.set(txn_ref, { status: 'CONFIRMED' });
+        useLedgerStore.getState().confirm(txn_ref);
+      }, DELAY_MS);
+    }
 
     return { txn_ref, amountUSD, createdAt: now };
   },

@@ -483,6 +483,22 @@ Implementation posture preserved:
 
 - read-only, informational, frontend-only; no fallback or synthetic pricing, no new public transaction states, no backend recovery guarantees, no Copilot changes
 
+### MC-S2-021 - Transaction mock-state observability seam
+
+Implementation truth:
+
+- **shared dev guard:** `apps/frontend/lib/dev/local-simulation-guard.ts` (`isLocalDevSimulationSeamEnabled`) — same enablement rules as the engine posture simulator; `apps/frontend/lib/engine/simulator.ts` delegates to it
+- **ticket-scoped resolver:** `apps/frontend/lib/tx/tx-review-simulator.ts` — query params `txReviewBypassFx=1` (review-only confirm guard bypass when rate missing) and `txReviewHoldPending=1` (withdraw mock skips auto-confirm timer); ignored outside approved local dev; no generic option bag
+- **required disclosure:** `apps/frontend/components/TxReviewSimulatorBanner.tsx` — `deposit-tx-review-simulator-banner` / `withdraw-tx-review-simulator-banner` when seam active
+- **deposit:** `apps/frontend/app/(app)/deposit/page.tsx` — `useSearchParams` + `Suspense`; with bypass + FX error, confirm can proceed; conversion preview stays **unavailable** (never fake FX Preview $); ledger stub uses `amount_usd: 0` / `fx_rate: 0` only as technical placeholders, not UI economic truth
+- **withdraw:** `apps/frontend/app/(app)/withdraw/page.tsx` — same routing pattern; bypass allows confirm without rate without fabricating rate UI; `withdraw.mock` `createWithdraw(..., { skipAutoConfirm })` when hold param set
+- **RTL:** `apps/frontend/__tests__/tx-review-simulator.test.ts`; `deposit.page.test.tsx` / `withdraw.page.test.tsx` extended for seam activation, blocked envs, no fake preview
+- **ADR:** `docs/decisions/0017-transaction-review-simulator-dev-seam-mc-s2-021.md` (boundary documentation only)
+
+Implementation posture preserved:
+
+- dev-only, review-only, simulation-only; not a production control plane; no new `PublicTxStatus`; no backend or policy runtime changes; ADR 0017 records non-precedent framing for bypass and placeholders
+
 ### Allocation band label UX legibility (merged baseline)
 
 The following allocation trust-surface UX refinement is merged and part of the current dashboard baseline:
@@ -527,16 +543,16 @@ Completed and merged:
 - `MC-S2-018` - Withdrawal next-step guidance baseline
 - `MC-S2-019` - Withdrawal fallback-path clarity (constrained-path)
 - `MC-S2-020` - Market-data failure continuity baseline
+- `MC-S2-021` - Transaction mock-state observability seam
 
 Current active ticket status:
 
-- **No approved next ticket is recorded here until explicitly added.**
-- Do not treat any other item as sequenced continuation work unless it appears here explicitly.
+- **No approved next ticket** is recorded in this file until one is explicitly added below. Do not treat any item as sequenced continuation work unless it appears here.
 - Cursor must not assume continuation beyond **§6** merged truth and current governance.
 - Cursor must not continue automatically into work beyond what is explicitly defined in this file for an active ticket.
 - Cursor must not drift beyond explicitly defined scope.
 
-**Last completed ticket (summary):** `MC-S2-020` — Market-data failure continuity — merged implementation truth in **§6** (`MC-S2-020`); shipped summary in **§26**.
+**Last completed ticket (summary):** `MC-S2-021` — Transaction mock-state observability seam — merged implementation truth in **§6** (`MC-S2-021`); shipped summary in **§27**.
 
 ---
 
@@ -1062,14 +1078,37 @@ Add a read-only degraded-state trust layer on deposit and withdraw so routes sta
 5. **`apps/frontend/__tests__/market-data-continuity-copy.test.ts`**, **`apps/frontend/__tests__/deposit.page.test.tsx`**, **`apps/frontend/__tests__/withdraw.page.test.tsx`** — copy contract, degraded composure, lean denylist.
 6. **`apps/frontend/tests-e2e/helpers/fx-ready.ts`** and updated deposit/withdraw flows in **`balance-ssot`**, **`critical`**, **`empty-error-states`**, **`tx-lifecycle`** specs — wait for Confirm enabled once `/v1/fx/latest` succeeds.
 
-**Follow-ups:** None required for this ticket. Record the next approved ticket explicitly in **§7** when chosen.
+**Follow-ups:** Shipped successor **`MC-S2-021`** (§27); see **§6** merged truth.
 
 ---
 
-## 27. Immediate next-use guidance
+## 27. Completed execution ticket - MC-S2-021 (Transaction mock-state observability seam)
+
+**Ticket:** `MC-S2-021` — Transaction mock-state observability seam  
+**Suggested branch:** `feat/mc-s2-021-transaction-mock-state-observability`
+
+### Shipped summary
+
+1. **`apps/frontend/lib/dev/local-simulation-guard.ts`** — shared `isLocalDevSimulationSeamEnabled()` (aligned with former engine-only guard).
+2. **`apps/frontend/lib/engine/simulator.ts`** — `isLocalEngineSimulatorEnabled()` delegates to the shared guard.
+3. **`apps/frontend/lib/tx/tx-review-simulator.ts`** — `resolveTxReviewSimulatorFlags`, `isTxReviewSeamActive`; params `txReviewBypassFx=1`, `txReviewHoldPending=1` (value `1` only); ticket-scoped, no option bag.
+4. **`apps/frontend/components/TxReviewSimulatorBanner.tsx`** — required banner when seam active; test ids `deposit-tx-review-simulator-banner`, `withdraw-tx-review-simulator-banner`.
+5. **`apps/frontend/app/(app)/deposit/page.tsx`**, **`withdraw/page.tsx`** — `Suspense` + `useSearchParams`; review bypass for confirm without rate; no fake conversion preview; deposit ledger placeholders `0` when rate missing (non-UI truth).
+6. **`apps/frontend/lib/payments/withdraw.mock.ts`** — optional `skipAutoConfirm` on `createWithdraw`.
+7. **`apps/frontend/__tests__/tx-review-simulator.test.ts`** — env matrix, param parsing, non-activation defaults.
+8. **`apps/frontend/__tests__/deposit.page.test.tsx`**, **`withdraw.page.test.tsx`** — MC-S2-021 seam coverage.
+9. **`docs/decisions/0017-transaction-review-simulator-dev-seam-mc-s2-021.md`** — boundary ADR (not doctrine expansion).
+
+**Follow-ups:** Next approved ticket TBD in **§7**.
+
+---
+
+## 28. Immediate next-use guidance
 
 Use this file as the continuity primer before asking Cursor to review or implement the next explicitly approved ticket touching engine posture, simulation, allocation, policy, trust, Copilot behavior, or operational withdrawal clarity.
 
+- for the **active** next ticket, see **§7** (none recorded until explicitly added)
+- for transaction mock-state review seam (dev-only), see **§6** (`MC-S2-021`) and **§27**; ADR **0017**
 - for shipped review snapshot, cadence, change signal, and recent stability memory, see §17 (`MC-S2-011`), §18 (`MC-S2-012`), §19 (`MC-S2-013`), and §20 (`MC-S2-014`); for withdraw exception-path clarification, see **§6** (`MC-S2-015`) and **§21**; for withdraw reconciliation / completion-adjacent clarification, see **§6** (`MC-S2-016`) and **§22**; for withdraw unresolved-path guidance, see **§6** (`MC-S2-017`) and **§23**; for withdraw next-step continuity guidance, see **§6** (`MC-S2-018`) and **§24**; for withdraw constrained-path / fallback-path clarity, see **§6** (`MC-S2-019`) and **§25**; for market-data failure continuity (deposit/withdraw degraded state), see **§6** (`MC-S2-020`) and **§26**
 - assess whether a requested change needs an ADR
 - understand current repo governance and architecture posture
@@ -1085,7 +1124,7 @@ For deeper context, open next:
 
 ---
 
-## 28. Naming note
+## 29. Naming note
 The intended hand-off file name is `HEDGR_STATUS.md`.
 
 Continue using:

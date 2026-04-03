@@ -34,3 +34,12 @@ export { getUnresolvedPathClarificationLines } from './public-status-unresolved-
 export { getNextStepGuidanceLines } from './public-status-next-step-guidance';
 
 export { getFallbackPathClarificationLines } from './public-status-fallback-path-clarification';
+
+export {
+  TX_REVIEW_BYPASS_FX_PARAM,
+  TX_REVIEW_HOLD_PENDING_PARAM,
+  type TxReviewSimulatorFlags,
+  resolveTxReviewSimulatorFlags,
+  isTxReviewSeamActive,
+} from './tx-review-simulator';
+
