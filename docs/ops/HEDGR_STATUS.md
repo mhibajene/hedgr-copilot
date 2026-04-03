@@ -1,6 +1,6 @@
 Status: Canonical hand-off file
 Purpose: Strategic continuity, merged implementation truth, and next-ticket authority for Cursor execution
-Last updated: 2026-04-02
+Last updated: 2026-04-03
 
 ---
 
@@ -454,6 +454,20 @@ Implementation posture preserved:
 
 - read-only, informational, frontend-only; no new public status enum values, no procedural-sequence promises beyond existing UI truth, no backend or escalation semantics
 
+### MC-S2-019 - Withdrawal fallback-path clarity (constrained-path)
+
+Implementation truth:
+
+- canonical **constrained-path** clarification lines live in `apps/frontend/lib/tx/public-status-fallback-path-clarification.ts` (`getFallbackPathClarificationLines`); **`PublicTxStatus.IN_PROGRESS` only** for v1; terminal statuses and `PENDING_INIT` return null; at most **two** short lines; plain retail wording (not “fallback path” jargon in user strings)
+- trust meaning is distinct from MC-S2-017 (unresolved persistence) and MC-S2-018 (continuity / not gone quiet): **more time or checks than the simplest withdrawal** can still be **normal forward motion** — not abandonment, guarantees, or ops theater
+- exported from `apps/frontend/lib/tx/index.ts`
+- the withdraw page mounts a **fifth subordinate block** inside the existing status card (`data-testid="withdraw-status-fallback-path-clarity"`) **below** next-step guidance — **quieter** than MC-S2-017/018 (`text-gray-400`, tighter `pt` / lighter border) so it stays the lightest strip in the stack
+- RTL: `apps/frontend/__tests__/public-status-fallback-path-clarification.test.ts`; `apps/frontend/__tests__/withdraw.page.test.tsx` extended for semantic-distinctness and high-risk denylist guardrails
+
+Implementation posture preserved:
+
+- read-only, informational, frontend-only; no new public status enum values, no backend fallback logic, no execution or accounting semantics
+
 ### Allocation band label UX legibility (merged baseline)
 
 The following allocation trust-surface UX refinement is merged and part of the current dashboard baseline:
@@ -496,15 +510,17 @@ Completed and merged:
 - `MC-S2-016` - Reconciliation visibility baseline
 - `MC-S2-017` - Withdrawal unresolved-path guidance
 - `MC-S2-018` - Withdrawal next-step guidance baseline
+- `MC-S2-019` - Withdrawal fallback-path clarity (constrained-path)
 
 Current active ticket status:
 
-- **No approved next ticket** is sequenced in this file until this section is updated. Do not treat any item as sequenced continuation work unless it appears here explicitly.
+- **No approved next ticket** at this time. Record the next explicitly approved ticket here when chosen.
+- Do not treat any other item as sequenced continuation work unless it appears here explicitly.
 - Cursor must not assume continuation beyond **§6** merged truth and current governance.
 - Cursor must not continue automatically into work beyond what is explicitly defined in this file for an active ticket.
 - Cursor must not drift beyond explicitly defined scope.
 
-**Last completed ticket (summary):** `MC-S2-018` — Withdrawal next-step guidance baseline — merged implementation truth in **§6** (`MC-S2-018`); shipped summary in **§24**.
+**Last completed ticket (summary):** `MC-S2-019` — Withdrawal fallback-path clarity — merged implementation truth in **§6** (`MC-S2-019`); shipped summary in **§25**.
 
 ---
 
@@ -988,15 +1004,35 @@ Add a compact, read-only trust layer on the withdraw surface that gives calm **c
 3. **`apps/frontend/app/(app)/withdraw/page.tsx`** — fourth subordinate block (`withdraw-status-next-step-guidance`) below MC-S2-017 unresolved-path strip; quiet `text-xs` / muted presentation.
 4. **`apps/frontend/__tests__/public-status-next-step-guidance.test.ts`**, **`apps/frontend/__tests__/withdraw.page.test.tsx`** — trust-contract and withdraw integration coverage.
 
-**Follow-ups:** None sequenced in **§7** until updated.
+**Follow-ups:** Shipped successor **`MC-S2-019`** (§25); see **§6** merged truth.
 
 ---
 
-## 25. Immediate next-use guidance
+## 25. Completed execution ticket - MC-S2-019 (Withdrawal fallback-path clarity)
+
+**Ticket:** `MC-S2-019` — Withdrawal fallback-path clarity  
+**Suggested branch:** `feat/mc-s2-019-withdrawal-fallback-path-clarity`
+
+### Objective (as scoped)
+
+Add a compact, read-only trust layer on the withdraw surface so users understand when the **smooth path** may need **more time or checks** than the simplest case, while processing can still move forward legitimately — **without** restating MC-S2-017 (unresolved persistence) or MC-S2-018 (continuity / not gone quiet), and without guarantees, execution semantics, or new public transaction states. v1: **`PublicTxStatus.IN_PROGRESS` only**.
+
+### Shipped summary
+
+1. **`apps/frontend/lib/tx/public-status-fallback-path-clarification.ts`** — `getFallbackPathClarificationLines`; **`IN_PROGRESS` only** for v1; at most two short lines; plain retail copy.
+2. **`apps/frontend/lib/tx/index.ts`** — re-exports the helper.
+3. **`apps/frontend/app/(app)/withdraw/page.tsx`** — fifth subordinate block (`withdraw-status-fallback-path-clarity`) below MC-S2-018; lightest visual tier in the stack (`text-gray-400`, tighter spacing).
+4. **`apps/frontend/__tests__/public-status-fallback-path-clarification.test.ts`**, **`apps/frontend/__tests__/withdraw.page.test.tsx`** — semantic-distinctness themes, adjacent-strip non-echo checks, and high-risk denylist guardrails.
+
+**Follow-ups:** Record the next approved ticket in **§7** when chosen.
+
+---
+
+## 26. Immediate next-use guidance
 
 Use this file as the continuity primer before asking Cursor to review or implement the next explicitly approved ticket touching engine posture, simulation, allocation, policy, trust, Copilot behavior, or operational withdrawal clarity.
 
-- for shipped review snapshot, cadence, change signal, and recent stability memory, see §17 (`MC-S2-011`), §18 (`MC-S2-012`), §19 (`MC-S2-013`), and §20 (`MC-S2-014`); for withdraw exception-path clarification, see **§6** (`MC-S2-015`) and **§21**; for withdraw reconciliation / completion-adjacent clarification, see **§6** (`MC-S2-016`) and **§22**; for withdraw unresolved-path guidance, see **§6** (`MC-S2-017`) and **§23**; for withdraw next-step continuity guidance, see **§6** (`MC-S2-018`) and **§24**; for the current active ticket (if any), see **§7**
+- for shipped review snapshot, cadence, change signal, and recent stability memory, see §17 (`MC-S2-011`), §18 (`MC-S2-012`), §19 (`MC-S2-013`), and §20 (`MC-S2-014`); for withdraw exception-path clarification, see **§6** (`MC-S2-015`) and **§21**; for withdraw reconciliation / completion-adjacent clarification, see **§6** (`MC-S2-016`) and **§22**; for withdraw unresolved-path guidance, see **§6** (`MC-S2-017`) and **§23**; for withdraw next-step continuity guidance, see **§6** (`MC-S2-018`) and **§24**; for withdraw constrained-path / fallback-path clarity, see **§6** (`MC-S2-019`) and **§25**
 - assess whether a requested change needs an ADR
 - understand current repo governance and architecture posture
 - confirm whether a proposed task fits the current read-only boundary
@@ -1011,7 +1047,7 @@ For deeper context, open next:
 
 ---
 
-## 26. Naming note
+## 27. Naming note
 The intended hand-off file name is `HEDGR_STATUS.md`.
 
 Continue using:
