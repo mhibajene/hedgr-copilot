@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { waitForDepositFxReady } from './helpers/fx-ready';
 
 // Block analytics and external calls for test hermeticity
 const ANALYTICS_HOSTS = [/posthog\./i, /sentry\./i];
@@ -58,11 +59,11 @@ test.describe('Balance SSoT - Ledger as Single Source of Truth', () => {
     await amountInput.fill('');
     await amountInput.fill('100');
 
-    // Check FX preview is shown
-    const fxPreview = page.locator('text=FX Preview');
-    await expect(fxPreview).toBeVisible();
+    await waitForDepositFxReady(page);
+    const preview = page.getByTestId('deposit-conversion-preview');
+    await expect(preview).toBeVisible();
+    await expect(preview).toContainText(/FX Preview/);
 
-    // Click confirm to initiate deposit
     await page.getByRole('button', { name: 'Confirm' }).click();
 
     // Wait for confirmation (mock should confirm quickly)
@@ -96,6 +97,7 @@ test.describe('Balance SSoT - Ledger as Single Source of Truth', () => {
     await amountInput.fill('');
     await amountInput.fill('200');
 
+    await waitForDepositFxReady(page);
     await page.getByRole('button', { name: 'Confirm' }).click();
 
     // Wait for confirmation
@@ -154,7 +156,8 @@ test.describe('Balance SSoT - Ledger as Single Source of Truth', () => {
     const amountInput = page.getByTestId('deposit-amount');
     await amountInput.fill('');
     await amountInput.fill('100');
-    
+
+    await waitForDepositFxReady(page);
     await page.getByRole('button', { name: 'Confirm' }).click();
     await expect(page.getByTestId('deposit-confirmed')).toBeVisible({ timeout: 10000 });
 

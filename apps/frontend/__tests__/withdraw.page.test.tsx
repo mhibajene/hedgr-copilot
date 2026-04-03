@@ -48,15 +48,19 @@ vi.mock('../lib/payments/withdraw.mock', () => ({
   },
 }));
 
-vi.mock('../components', () => ({
-  BalanceWithLocalEstimate: ({ usdAmount, inline, ...props }: { usdAmount: number; inline?: boolean }) => {
-    void inline;
-    return <div {...props}>{usdAmount}</div>;
-  },
-  FxRateBlock: ({ 'data-testid': dataTestId }: { 'data-testid'?: string }) => (
-    <div data-testid={dataTestId}>FX</div>
-  ),
-}));
+vi.mock('../components', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('../components')>();
+  return {
+    ...actual,
+    BalanceWithLocalEstimate: ({ usdAmount, inline, ...props }: { usdAmount: number; inline?: boolean }) => {
+      void inline;
+      return <div {...props}>{usdAmount}</div>;
+    },
+    FxRateBlock: ({ 'data-testid': dataTestId }: { 'data-testid'?: string }) => (
+      <div data-testid={dataTestId}>FX</div>
+    ),
+  };
+});
 
 vi.mock('@hedgr/ui', () => ({
   EmptyState: ({ title, ...props }: { title: string }) => <div {...props}>{title}</div>,
@@ -107,7 +111,7 @@ describe('WithdrawPage status surface', () => {
     });
     vi.mocked(useLatestFx).mockReturnValue({
       status: 'success',
-      data: undefined,
+      data: { pair: 'USDZMW', rate: 20, ts: 1 },
       retry: vi.fn(),
     });
     render(<WithdrawPage />);
@@ -135,7 +139,7 @@ describe('WithdrawPage status surface', () => {
 
     vi.mocked(useLatestFx).mockReturnValue({
       status: 'success',
-      data: undefined,
+      data: { pair: 'USDZMW', rate: 20, ts: 1 },
       retry: vi.fn(),
     });
 
@@ -236,5 +240,44 @@ describe('WithdrawPage status surface', () => {
     ] as const) {
       expect(fbLower.includes(bad), `unexpected "${bad}" in fallback-path copy`).toBe(false);
     }
+  });
+
+  test('FX failure: continuity panel prominent, route context visible, confirm disabled, not retry-only wall', async () => {
+    vi.useFakeTimers();
+    const retry = vi.fn();
+    vi.mocked(useBalance).mockReturnValue({
+      total: 25,
+      available: 25,
+      pending: 0,
+      currency: 'USD',
+      asOf: 1,
+      isLoading: false,
+      error: null,
+      refresh: vi.fn(),
+    });
+    vi.mocked(useLatestFx).mockReturnValue({
+      status: 'error',
+      retry,
+    });
+
+    render(<WithdrawPage />);
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(350);
+    });
+
+    const continuity = screen.getByTestId('withdraw-market-data-continuity');
+    const heading = screen.getByRole('heading', { level: 1, name: 'Withdraw' });
+    expect(heading.nextElementSibling).toBe(continuity);
+
+    expect(screen.getByText(/Exchange rate data is temporarily unavailable/i)).toBeTruthy();
+    expect(screen.getByLabelText('Amount (USD)')).toBeTruthy();
+    expect(screen.queryByTestId('withdraw-fx-block')).toBeNull();
+    expect(screen.queryByRole('button', { name: 'Go to Dashboard' })).toBeNull();
+
+    const confirm = screen.getByRole('button', { name: 'Confirm' }) as HTMLButtonElement;
+    expect(confirm.disabled).toBe(true);
+
+    fireEvent.click(screen.getByRole('button', { name: 'Retry rate' }));
+    expect(retry).toHaveBeenCalledTimes(1);
   });
 });

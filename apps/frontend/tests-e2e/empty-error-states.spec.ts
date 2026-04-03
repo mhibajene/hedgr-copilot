@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { waitForDepositFxReady } from './helpers/fx-ready';
 
 // Block analytics and external calls for test hermeticity
 const ANALYTICS_HOSTS = [/posthog\./i, /sentry\./i];
@@ -191,6 +192,7 @@ test.describe('State Transitions', () => {
     await page.goto('/deposit');
     await waitForPageLoaded(page);
     await page.getByTestId('deposit-amount').fill('200');
+    await waitForDepositFxReady(page);
     await page.getByRole('button', { name: 'Confirm' }).click();
     await expect(page.getByText('Deposit CONFIRMED')).toBeVisible({ timeout: 10000 });
 
@@ -216,6 +218,7 @@ test.describe('State Transitions', () => {
     await page.goto('/deposit');
     await waitForPageLoaded(page);
     await page.getByTestId('deposit-amount').fill('100');
+    await waitForDepositFxReady(page);
     await page.getByRole('button', { name: 'Confirm' }).click();
     await expect(page.getByText('Deposit CONFIRMED')).toBeVisible({ timeout: 10000 });
 

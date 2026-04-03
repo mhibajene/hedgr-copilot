@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { waitForDepositFxReady } from './helpers/fx-ready';
 
 // Block analytics and external calls for test hermeticity
 const ANALYTICS_HOSTS = [/posthog\./i, /sentry\./i];
@@ -36,6 +37,7 @@ test.describe('Transaction Lifecycle - Activity Display', () => {
     await amountInput.fill('');
     await amountInput.fill('100');
 
+    await waitForDepositFxReady(page);
     await page.getByRole('button', { name: 'Confirm' }).click();
 
     // Wait for confirmation
@@ -301,6 +303,7 @@ test.describe('Transaction Lifecycle - Activity Display', () => {
     await amountInput.fill('');
     await amountInput.fill('50');
 
+    await waitForDepositFxReady(page);
     await page.getByRole('button', { name: 'Confirm' }).click();
     await expect(page.getByTestId('deposit-confirmed')).toBeVisible({ timeout: 10000 });
 

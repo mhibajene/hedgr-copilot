@@ -9,7 +9,8 @@ import { getBalanceMode } from '../../../lib/state/balance.mode';
 import { useLatestFx } from '../../../lib/hooks/useLatestFx';
 import { resolveMarket, resolveLocalCurrencyCode } from '../../../config/market';
 import { EmptyState, ErrorState } from '@hedgr/ui';
-import { FxRateBlock } from '../../../components';
+import { FxRateBlock, MarketDataContinuityPanel } from '../../../components';
+import { CONVERSION_PREVIEW_UNAVAILABLE_PLACEHOLDER } from '../../../lib/fx/market-data-continuity-copy';
 
 interface PaymentMethod {
   id: string;
@@ -167,15 +168,6 @@ export default function DepositPage() {
     );
   }
 
-  if (fx.status === 'error') {
-    return (
-      <main className="p-6 space-y-4 max-w-xl">
-        <h1 className="text-2xl font-semibold">Deposit</h1>
-        <FxRateBlock fx={fx} quoteLabel={quote} data-testid="deposit-fx-error" />
-      </main>
-    );
-  }
-
   if (availableMethods.length === 0) {
     return (
       <main className="p-6 space-y-4 max-w-xl">
@@ -209,7 +201,15 @@ export default function DepositPage() {
     <main className="p-6 space-y-4 max-w-xl">
       <h1 className="text-2xl font-semibold">Deposit</h1>
 
-      <FxRateBlock fx={fx} quoteLabel={quote} data-testid="deposit-fx-block" />
+      {fx.status === 'error' ? (
+        <MarketDataContinuityPanel
+          route="deposit"
+          onRetryFx={fx.retry}
+          data-testid="deposit-market-data-continuity"
+        />
+      ) : (
+        <FxRateBlock fx={fx} quoteLabel={quote} data-testid="deposit-fx-block" />
+      )}
 
       <div className="block space-y-2">
         <label htmlFor="deposit-amount">Amount ({quote})</label>
@@ -233,8 +233,17 @@ export default function DepositPage() {
           className="border rounded-xl p-3 w-full"
         />
       </div>
-      <div className="rounded-xl p-3 bg-gray-50">
-        FX Preview: <strong>${usdPreview.toFixed(2)}</strong>
+      <div
+        className="rounded-xl p-3 bg-gray-50 text-sm"
+        data-testid="deposit-conversion-preview"
+      >
+        {rate !== null && amountLocalNum !== null ? (
+          <>
+            FX Preview: <strong>${usdPreview.toFixed(2)}</strong>
+          </>
+        ) : (
+          <span className="text-gray-600">{CONVERSION_PREVIEW_UNAVAILABLE_PLACEHOLDER}</span>
+        )}
       </div>
       <button
         onClick={confirm}

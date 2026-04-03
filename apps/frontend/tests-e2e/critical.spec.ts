@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { waitForDepositFxReady, waitForWithdrawFxReady } from './helpers/fx-ready';
 
 // Block analytics and external calls for test hermeticity
 const ANALYTICS_HOSTS = [/posthog\./i, /sentry\./i];
@@ -67,7 +68,8 @@ test('deposit stub increases balance', async ({ page }) => {
   await expect(depositInput).toHaveValue('');
   await depositInput.fill('100');
   await expect(depositInput).toHaveValue('100');
-  
+
+  await waitForDepositFxReady(page);
   await page.getByRole('button', { name: 'Confirm' }).click();
   await expect(page.getByText('Deposit CONFIRMED')).toBeVisible({ timeout: 6000 });
   await page.goto('/dashboard');
@@ -92,12 +94,14 @@ test('withdraw stub decreases balance', async ({ page }) => {
   
   await page.goto('/deposit');
   await page.getByTestId('deposit-amount').fill('100');
+  await waitForDepositFxReady(page);
   await page.getByRole('button', { name: 'Confirm' }).click();
   await expect(page.getByText('Deposit CONFIRMED')).toBeVisible({ timeout: 6000 });
 
   // withdraw 1 USD
   await page.goto('/withdraw');
   await page.getByLabel('Amount (USD)').fill('1');
+  await waitForWithdrawFxReady(page);
   await page.getByRole('button', { name: 'Confirm' }).click();
   const withdrawStatus = page.getByTestId('withdraw-status-region');
   await expect(withdrawStatus).toHaveAttribute('data-status', 'SUCCESS', { timeout: 6000 });
@@ -120,12 +124,14 @@ test('activity page shows confirmed transactions', async ({ page }) => {
   // Deposit 100 ZMW
   await page.goto('/deposit');
   await page.getByTestId('deposit-amount').fill('100');
+  await waitForDepositFxReady(page);
   await page.getByRole('button', { name: 'Confirm' }).click();
   await expect(page.getByText('Deposit CONFIRMED')).toBeVisible({ timeout: 6000 });
 
   // Withdraw $1
   await page.goto('/withdraw');
   await page.getByLabel('Amount (USD)').fill('1');
+  await waitForWithdrawFxReady(page);
   await page.getByRole('button', { name: 'Confirm' }).click();
   const withdrawStatus = page.getByTestId('withdraw-status-region');
   await expect(withdrawStatus).toHaveAttribute('data-status', 'SUCCESS', { timeout: 6000 });

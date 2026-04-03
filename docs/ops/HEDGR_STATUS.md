@@ -468,6 +468,21 @@ Implementation posture preserved:
 
 - read-only, informational, frontend-only; no new public status enum values, no backend fallback logic, no execution or accounting semantics
 
+### MC-S2-020 - Market-data failure continuity baseline
+
+Implementation truth:
+
+- canonical four-part trust copy (unavailable → affects → still knowable → action limited) lives in `apps/frontend/lib/fx/market-data-continuity-copy.ts` (`getMarketDataContinuityCopy`, `CONVERSION_PREVIEW_UNAVAILABLE_PLACEHOLDER`); deposit and withdraw route variants
+- presentational continuity panel only: `apps/frontend/components/MarketDataContinuityPanel.tsx` (copy + FX retry; no route, pricing, or confirm gating); exported from `apps/frontend/components/index.ts`
+- **deposit:** `apps/frontend/app/(app)/deposit/page.tsx` — no full-page FX error wall; `data-testid="deposit-market-data-continuity"` immediately under the page title when `useLatestFx` is in error; main route body (amount, preview row, confirm) remains visible; preview row `data-testid="deposit-conversion-preview"` shows explicit placeholder text when rate is missing (never `$0.00` as a real conversion); confirm remains gated on successful rate
+- **withdraw:** `apps/frontend/app/(app)/withdraw/page.tsx` — same degraded pattern (`data-testid="withdraw-market-data-continuity"`); **market-data panel is separate in meaning and visual tier** from `withdraw-status-region` and MC-S2-015–019 strips (dependency/orientation vs public transaction status); confirm gated on successful FX/rate in page code; `FxRateBlock` unchanged for success/loading paths
+- RTL: `apps/frontend/__tests__/market-data-continuity-copy.test.ts`, `apps/frontend/__tests__/deposit.page.test.tsx`, `apps/frontend/__tests__/withdraw.page.test.tsx` (degraded composure + lean denylist)
+- E2E: `apps/frontend/tests-e2e/helpers/fx-ready.ts` — `waitForDepositFxReady` / `waitForWithdrawFxReady` so Playwright waits for FX-backed Confirm enablement after MC-S2-020 gating
+
+Implementation posture preserved:
+
+- read-only, informational, frontend-only; no fallback or synthetic pricing, no new public transaction states, no backend recovery guarantees, no Copilot changes
+
 ### Allocation band label UX legibility (merged baseline)
 
 The following allocation trust-surface UX refinement is merged and part of the current dashboard baseline:
@@ -511,16 +526,17 @@ Completed and merged:
 - `MC-S2-017` - Withdrawal unresolved-path guidance
 - `MC-S2-018` - Withdrawal next-step guidance baseline
 - `MC-S2-019` - Withdrawal fallback-path clarity (constrained-path)
+- `MC-S2-020` - Market-data failure continuity baseline
 
 Current active ticket status:
 
-- **No approved next ticket** at this time. Record the next explicitly approved ticket here when chosen.
+- **No approved next ticket is recorded here until explicitly added.**
 - Do not treat any other item as sequenced continuation work unless it appears here explicitly.
 - Cursor must not assume continuation beyond **§6** merged truth and current governance.
 - Cursor must not continue automatically into work beyond what is explicitly defined in this file for an active ticket.
 - Cursor must not drift beyond explicitly defined scope.
 
-**Last completed ticket (summary):** `MC-S2-019` — Withdrawal fallback-path clarity — merged implementation truth in **§6** (`MC-S2-019`); shipped summary in **§25**.
+**Last completed ticket (summary):** `MC-S2-020` — Market-data failure continuity — merged implementation truth in **§6** (`MC-S2-020`); shipped summary in **§26**.
 
 ---
 
@@ -1024,15 +1040,37 @@ Add a compact, read-only trust layer on the withdraw surface so users understand
 3. **`apps/frontend/app/(app)/withdraw/page.tsx`** — fifth subordinate block (`withdraw-status-fallback-path-clarity`) below MC-S2-018; lightest visual tier in the stack (`text-gray-400`, tighter spacing).
 4. **`apps/frontend/__tests__/public-status-fallback-path-clarification.test.ts`**, **`apps/frontend/__tests__/withdraw.page.test.tsx`** — semantic-distinctness themes, adjacent-strip non-echo checks, and high-risk denylist guardrails.
 
-**Follow-ups:** Record the next approved ticket in **§7** when chosen.
+**Follow-ups:** Shipped successor **`MC-S2-020`** (§26); see **§6** merged truth.
 
 ---
 
-## 26. Immediate next-use guidance
+## 26. Completed execution ticket - MC-S2-020 (Market-data failure continuity baseline)
+
+**Ticket:** `MC-S2-020` — Market-data failure continuity baseline  
+**Suggested branch:** `feat/mc-s2-020-market-data-failure-continuity`
+
+### Objective (as scoped)
+
+Add a read-only degraded-state trust layer on deposit and withdraw so routes stay understandable when exchange-rate fetching fails—without implying live pricing, safe proceed, or backend authority; preserve route context without a full-page infrastructure wall or casually actionable happy-path chrome.
+
+### Shipped summary
+
+1. **`apps/frontend/lib/fx/market-data-continuity-copy.ts`** — four-part trust copy (`getMarketDataContinuityCopy`); deposit/withdraw variants; `CONVERSION_PREVIEW_UNAVAILABLE_PLACEHOLDER` for non-assertive deposit preview when rate is missing.
+2. **`apps/frontend/components/MarketDataContinuityPanel.tsx`** — presentational panel (copy + FX retry only); `data-testid` `deposit-market-data-continuity` / `withdraw-market-data-continuity`; exported from `apps/frontend/components/index.ts`.
+3. **`apps/frontend/app/(app)/deposit/page.tsx`** — removes FX-only full-page return; continuity panel under title on FX error; preview row `deposit-conversion-preview` never shows `$0.00` as real conversion; confirm gated on rate.
+4. **`apps/frontend/app/(app)/withdraw/page.tsx`** — same degraded pattern; market-data panel visually and semantically separate from `withdraw-status-region` / MC-S2-015–019 strips; confirm gated on successful FX/rate; `FxRateBlock` unchanged for non-error paths.
+5. **`apps/frontend/__tests__/market-data-continuity-copy.test.ts`**, **`apps/frontend/__tests__/deposit.page.test.tsx`**, **`apps/frontend/__tests__/withdraw.page.test.tsx`** — copy contract, degraded composure, lean denylist.
+6. **`apps/frontend/tests-e2e/helpers/fx-ready.ts`** and updated deposit/withdraw flows in **`balance-ssot`**, **`critical`**, **`empty-error-states`**, **`tx-lifecycle`** specs — wait for Confirm enabled once `/v1/fx/latest` succeeds.
+
+**Follow-ups:** None required for this ticket. Record the next approved ticket explicitly in **§7** when chosen.
+
+---
+
+## 27. Immediate next-use guidance
 
 Use this file as the continuity primer before asking Cursor to review or implement the next explicitly approved ticket touching engine posture, simulation, allocation, policy, trust, Copilot behavior, or operational withdrawal clarity.
 
-- for shipped review snapshot, cadence, change signal, and recent stability memory, see §17 (`MC-S2-011`), §18 (`MC-S2-012`), §19 (`MC-S2-013`), and §20 (`MC-S2-014`); for withdraw exception-path clarification, see **§6** (`MC-S2-015`) and **§21**; for withdraw reconciliation / completion-adjacent clarification, see **§6** (`MC-S2-016`) and **§22**; for withdraw unresolved-path guidance, see **§6** (`MC-S2-017`) and **§23**; for withdraw next-step continuity guidance, see **§6** (`MC-S2-018`) and **§24**; for withdraw constrained-path / fallback-path clarity, see **§6** (`MC-S2-019`) and **§25**
+- for shipped review snapshot, cadence, change signal, and recent stability memory, see §17 (`MC-S2-011`), §18 (`MC-S2-012`), §19 (`MC-S2-013`), and §20 (`MC-S2-014`); for withdraw exception-path clarification, see **§6** (`MC-S2-015`) and **§21**; for withdraw reconciliation / completion-adjacent clarification, see **§6** (`MC-S2-016`) and **§22**; for withdraw unresolved-path guidance, see **§6** (`MC-S2-017`) and **§23**; for withdraw next-step continuity guidance, see **§6** (`MC-S2-018`) and **§24**; for withdraw constrained-path / fallback-path clarity, see **§6** (`MC-S2-019`) and **§25**; for market-data failure continuity (deposit/withdraw degraded state), see **§6** (`MC-S2-020`) and **§26**
 - assess whether a requested change needs an ADR
 - understand current repo governance and architecture posture
 - confirm whether a proposed task fits the current read-only boundary
@@ -1047,7 +1085,7 @@ For deeper context, open next:
 
 ---
 
-## 27. Naming note
+## 28. Naming note
 The intended hand-off file name is `HEDGR_STATUS.md`.
 
 Continue using:
