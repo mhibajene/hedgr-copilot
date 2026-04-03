@@ -10,6 +10,8 @@ Sprint 2 is read-only, posture-first, and non-executing. These ADRs exist to ens
 
 **Traceability — post-foundation boundary readiness (MC-S3-001).** The canonical transition-readiness taxonomy, classification-not-authorization rule, and inherited Phase 4/5 inventory framing live in `docs/ops/HEDGR_STATUS.md` **§6b**. That section does not authorize work; **`HEDGR_STATUS.md` §7** names approved implementation tickets.
 
+**Traceability — governance continuity (MC-S3-002).** Sprint and transition **ticket sequencing** and the **approved next** implementation ticket are authoritative only in **`HEDGR_STATUS.md` §7** (brief in **§7a** when active). **§6b** remains classification and scrutiny input, not authorization—do not treat inventory rows or disposition labels as approval.
+
 ---
 
 ## Sprint 2 Doctrine Summary
@@ -224,7 +226,7 @@ Before implementing any Sprint 2 ticket, or Warmth-layer / adjacent presentation
 2. Confirm the ticket does not violate read-only boundaries.
 3. Confirm the ticket does not introduce accounting or execution semantics.
 4. Confirm the output supports calm, trust-first, posture-based UX.
-5. **Defer to current authority in `docs/ops/HEDGR_STATUS.md`** for what is in scope, merged, and allowed in the repo right now; this index and any **Proposed** ADR are not sufficient on their own to authorize implementation.
+5. **Defer to current authority in `docs/ops/HEDGR_STATUS.md`** for what is in scope, merged, and allowed in the repo right now—especially **§7** / **§7a** for the approved next ticket; **§6b** is taxonomy only. This index and any **Proposed** ADR are not sufficient on their own to authorize implementation.
 6. For Warmth Layer or adjacent retail presentation refinement on ADR 0016 constrained surfaces, treat ADR 0016 as *one* alignment input only: also confirm `docs/ops/HEDGR_STATUS.md` (and any accepted ADRs) permit the work; stay presentation-only with no truth or execution widening.
 
 If a ticket conflicts with one of these ADRs, stop and escalate before implementing.

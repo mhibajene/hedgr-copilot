@@ -65,7 +65,7 @@ When implementing:
 
 When changing **`apps/frontend/lib/engine/**`** or shipped Stability Engine trust surfaces (posture, notices, allocation bands, or simulator boundaries per `docs/ops/HEDGR_STATUS.md`), read **in order**:
 
-1. `docs/ops/HEDGR_STATUS.md`
+1. `docs/ops/HEDGR_STATUS.md` — **§7** / **§7a** for the approved next ticket (when named); **§6b** is Transition Readiness taxonomy only, not sequencing authority
 2. `docs/decisions/SPRINT-2-ADR-INDEX.md`
 3. `docs/decisions/0015-stability-engine-is-the-system-center.md`
 4. `docs/decisions/0014-stability-engine-read-only-in-sprint-2.md`
@@ -150,7 +150,7 @@ When implementing:
 
 When changing **`apps/frontend/lib/engine/**`** or shipped Stability Engine trust surfaces (posture, notices, allocation bands, or simulator boundaries per `docs/ops/HEDGR_STATUS.md`), read **in order**:
 
-1. `docs/ops/HEDGR_STATUS.md`
+1. `docs/ops/HEDGR_STATUS.md` — **§7** / **§7a** for the approved next ticket (when named); **§6b** is Transition Readiness taxonomy only, not sequencing authority
 2. `docs/decisions/SPRINT-2-ADR-INDEX.md`
 3. `docs/decisions/0015-stability-engine-is-the-system-center.md`
 4. `docs/decisions/0014-stability-engine-read-only-in-sprint-2.md`

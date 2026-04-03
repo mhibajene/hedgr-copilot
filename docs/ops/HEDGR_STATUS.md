@@ -64,6 +64,8 @@ Important active constraints:
 
 **Sprint 3** is framed here as **Transition Readiness** (named track above), not as Foundation continuation: governance defines the explicit standard for any later boundary widening; execution architecture remains out of scope until explicitly approved.
 
+**Sequencing authority:** Only **§7** / **§7a** name the approved next implementation ticket; **§6b** is Transition Readiness taxonomy and scrutiny input only—not backlog approval or sequencing.
+
 ---
 
 ## 3. Governing references that must be read first
@@ -79,7 +81,7 @@ Before implementing or reviewing continuation work, read in this order:
 
 These are binding references for current implementation posture.
 
-For **post-foundation boundary readiness** (taxonomy, classification rules, sequencing discipline), see **§6b** and **§32** (`MC-S3-001`). **§7** authorizes the next implementation ticket.
+For **post-foundation boundary readiness** (taxonomy, classification rules, sequencing discipline), see **§6b** and **§32** (`MC-S3-001`). For **§6b / §7 handoff** continuity (`MC-S3-002`), see **§33**. **§7** authorizes the next implementation ticket.
 
 **Proposed companion ADR:** `docs/decisions/0016-warmth-layer-doctrine-constrained-retail-refinement-track.md` — Warmth Layer parallel refinement track (presentation only, read-only engine posture unchanged). Read when implementing or reviewing work on surfaces scoped in that ADR.
 
@@ -580,6 +582,8 @@ This refinement is merged UX-legibility work only. It does not change posture lo
 
 **Status:** Canonical **Transition Readiness** standard for what may exist *as a document taxonomy* after **Stability Engine™️ - Foundation** (§6a). **This section does not authorize implementation, sequencing, or boundary widening.**
 
+For the **approved next ticket** and active execution brief, see **§7** and **§7a** only.
+
 **Authority:** Repo truth governs. Notion or other surfaces remain reference-only for external labels in the inventory table below.
 
 ### Classification is not authorization
@@ -673,22 +677,26 @@ Completed and merged:
 - `MC-S2-022` - Local stub transaction-path continuity
 - `MC-S2-023` - Foundation release closeout readiness
 - `MC-S3-001` - Post-foundation boundary readiness criteria
+- `MC-S3-002` - Post–MC-S3-001 governance continuity (§6b / §7 handoff traceability and anti-drift cross-links)
 
 Current active ticket status:
 
-- **Approved next ticket:** *None named.* Governance must update this section to authorize the next implementation ticket. Do not treat **§6b** inventory rows, boundary classes, or dispositions as sequencing or approval.
+- **Approved next ticket:** None — governance has not named a successor in **§7**; update **§7** / **§7a** when the next ticket is approved.
+- **Active scope and red lines:** When a ticket is active, the full brief lives in **§7a**.
 - Do not treat backlog, roadmap, or *Proposed* ADRs as sequenced work unless **§7** is updated explicitly.
 - Cursor must not assume continuation beyond **§6** merged truth, **§6a** release-closeout assessment, **§6b** transition standard, **§7a** (when an active ticket exists), and current governance.
 - Cursor must not continue automatically into work beyond what is explicitly defined in this file for an active ticket.
 - Cursor must not drift beyond explicitly defined scope.
 
-**Last completed ticket (summary):** `MC-S3-001` — Post-foundation boundary readiness — canonical standard in **§6b**; completed ticket record in **§32**.
+**Last completed ticket (summary):** `MC-S3-002` — Governance continuity — cross-links and ADR index traceability; completed record in **§33**.
 
 ---
 
 ## 7a. Active execution ticket
 
-**No active execution ticket.** Governance has not named the next approved implementation ticket in **§7**. When the next ticket is approved, restore a full **§7a** brief here.
+**No active ticket.** Governance has not named a successor in **§7** since **`MC-S3-002`** completed. See **§7** for sequence status and **§33** for the completed `MC-S3-002` record.
+
+**Archived brief (MC-S3-002):** Post–MC-S3-001 governance continuity — documentation and process only; reinforced **§6b** as classification/scrutiny input only and **§7** as sole authority for approved next ticket; anti-duplication cross-links in **`docs/ops/HEDGR_STATUS.md`** and traceability in **`docs/decisions/SPRINT-2-ADR-INDEX.md`**; optional **`AGENTS.md`** engine-facing line only where read-order ambiguity required resolution. Completed record: **§33**.
 
 **Archived brief (MC-S3-001):** Post-foundation boundary readiness — documentation-only; deliverables in **§6b** (boundary taxonomy, classification-not-authorization rule, inventory table template, readiness checklist). **Classification is not authorization**; only **§7** sequences work. Completed record: **§32**.
 
@@ -698,9 +706,10 @@ Current active ticket status:
 
 - **Foundation closeout (completed):** `MC-S2-023` — **§6a** (criteria, evidence table, verdict); **§29** (completed ticket record).
 - **Transition readiness standard (completed):** `MC-S3-001` — **§6b**; **§32** (completed ticket record).
+- **Governance continuity (completed):** `MC-S3-002` — **§33** (completed ticket record).
 - **Merged implementation truth:** **§6** remains canonical for shipped code boundaries.
-- When governance names a successor, update **§7** and restore a full **§7a** brief.
-- Until **§7** names a successor, do not infer continuation work from *Proposed* ADRs or roadmap narrative alone.
+- When a successor ticket is approved, record it in **§7** and restore the execution brief in **§7a** per governance discipline.
+- Do not infer continuation work from *Proposed* ADRs or roadmap narrative unless **§7** names a ticket.
 
 **Archived brief (MC-S2-023):** Governance-first, documentation-only closeout assessment; no product/runtime changes; objective was explicit criteria, evidence-based evaluation, and repo-native Shipped vs In Progress recommendation — delivered in **§6a**.
 
@@ -1289,7 +1298,7 @@ No product or runtime files changed under this ticket.
 
 §7 / §7a updates were applied **after** the §6a assessment was written, per MC-S2-023 sequencing discipline.
 
-**Follow-ups:** When governance approves the next ticket, record it in **§7** and restore a full **§7a** brief.
+**Follow-ups:** **`MC-S3-001`** completed — **§32**; **`MC-S3-002`** completed — **§33**. For subsequent sequencing, see **§7** and **§7a**.
 
 ---
 
@@ -1298,8 +1307,9 @@ No product or runtime files changed under this ticket.
 Use this file as the continuity primer before asking Cursor to review or implement the next explicitly approved ticket touching engine posture, simulation, allocation, policy, trust, Copilot behavior, or operational withdrawal clarity.
 
 - for **Foundation release closeout** verdict and criteria, see **§6a** and **§29** (`MC-S2-023`)
-- for **post-foundation boundary readiness** (Transition Readiness standard), see **§6b** and **§32** (`MC-S3-001`)
-- for the **active** next ticket, see **§7** and **§7a** (when populated)
+- for **post-foundation boundary readiness** (Transition Readiness standard), see **§6b** and **§32** (`MC-S3-001`); **§6b** is taxonomy and scrutiny input only—not authorization to start work
+- for **governance continuity** (§6b / §7 handoff), see **§33** (`MC-S3-002`)
+- for the **approved next ticket** (if any), see **§7** and **§7a**; only **§7** names what is approved next
 - for transaction mock-state review seam (dev-only), see **§6** (`MC-S2-021`) and **§27**; ADR **0017**
 - for shipped review snapshot, cadence, change signal, and recent stability memory, see §17 (`MC-S2-011`), §18 (`MC-S2-012`), §19 (`MC-S2-013`), and §20 (`MC-S2-014`); for withdraw exception-path clarification, see **§6** (`MC-S2-015`) and **§21**; for withdraw reconciliation / completion-adjacent clarification, see **§6** (`MC-S2-016`) and **§22**; for withdraw unresolved-path guidance, see **§6** (`MC-S2-017`) and **§23**; for withdraw next-step continuity guidance, see **§6** (`MC-S2-018`) and **§24**; for withdraw constrained-path / fallback-path clarity, see **§6** (`MC-S2-019`) and **§25**; for market-data failure continuity (deposit/withdraw degraded state), see **§6** (`MC-S2-020`) and **§26**
 - assess whether a requested change needs an ADR
@@ -1346,4 +1356,27 @@ No product or runtime files changed under this ticket.
 
 §7 / §7a updates apply after delivery of **§6b**, per governance closeout discipline.
 
-**Follow-ups:** When governance approves the next ticket, record it in **§7** and restore a full **§7a** brief.
+**Follow-ups:** Successor **`MC-S3-002`** completed — **§33**; next approved ticket is named only in **§7** when governance updates it.
+
+---
+
+## 33. Completed execution ticket - MC-S3-002 (Post–MC-S3-001 governance continuity)
+
+**Ticket:** `MC-S3-002` — Post–MC-S3-001 governance continuity: §6b / §7 handoff traceability and anti-drift cross-links  
+**Suggested branch:** `feat/mc-s3-002-governance-continuity-post-mc-s3-001`
+
+### Outcome (governance)
+
+Documentation-only reinforcement that **§6b** is **classification and scrutiny input only** and **§7** is the **sole** authority naming an approved next implementation ticket. Deliverables:
+
+- **`docs/ops/HEDGR_STATUS.md`** — **§2** sequencing authority line; **§6b** pointer to **§7** / **§7a** for approved ticket; **§7** / **§7a** closeout and **no active ticket** stub; **§30** next-use bullets; **§32** follow-up; this **§33** record.
+- **`docs/decisions/SPRINT-2-ADR-INDEX.md`** — MC-S3-002 traceability paragraph; **Usage Rule** item 5 defers to **§7** / **§7a** for approved next ticket.
+- **`AGENTS.md`** — engine-facing read-order note on **§7** / **§7a** vs **§6b** (smallest ambiguity resolution).
+
+No product or runtime files changed under this ticket.
+
+### Sequencing note
+
+§7 / §7a updates record completion and leave **no** named successor until governance adds one to **§7**.
+
+**Follow-ups:** Next approved ticket appears only in **§7** (brief in **§7a** when active).
