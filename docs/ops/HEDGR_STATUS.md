@@ -37,6 +37,8 @@ Core operating principle:
 
 The repo is currently governed by the read-only Stability Engine foundation and governance-hardening posture established across Sprint 2 through Sprint 4.
 
+**Foundation release (repo):** For **Stability Engine™️ - Foundation** as bounded by merged work through `MC-S2-022` and closeout ticket `MC-S2-023`, the canonical assessment in **§6a** records **Ready to mark Shipped** (criteria, evidence table, verdict). That does **not** relax the read-only or non-execution constraints below; it closes governance on the Foundation-scoped body of work only.
+
 Current posture:
 
 - read-only
@@ -528,6 +530,48 @@ This refinement is merged UX-legibility work only. It does not change posture lo
 
 ---
 
+## 6a. Stability Engine Foundation — release closeout assessment (MC-S2-023)
+
+**Status:** Canonical repo-grounded closeout record for **Stability Engine™️ - Foundation** (ticket `MC-S2-023`).  
+**Authority:** Repo truth governs this assessment. Notion or other downstream surfaces are reconciliation-only; they do not override or substitute for this section.
+
+### Closeout criteria (mandatory vs supporting)
+
+**Mandatory** — all must be **Pass** for a **Ready to mark Shipped** recommendation (see evidence table).  
+**Supporting** — inform posture and follow-ups; they do not by themselves veto closeout.
+
+| ID | Tier | Criterion |
+| -- | ---- | --------- |
+| M1 | Mandatory | **Merged implementation truth:** §6 documents completed Foundation-scope tickets through `MC-S2-022` (and related `MC-S4-*` items plus merged allocation-band label baseline); shipped trust surfaces remain describable without known material drift from implementation. |
+| M2 | Mandatory | **Read-only / non-execution boundary:** Shipped Stability Engine and related Sprint 2 surfaces align with ADR **0014** (read-only, informational, non-executing); no shipped path treats engine output as execution, accounting truth, or fund movement authority. |
+| M3 | Mandatory | **Informational allocation:** ADR **0013** posture respected for allocation bands and related disclosures (informational targets, not ledger or settled-allocation truth) per §6 and trust-surface tests. |
+| M4 | Mandatory | **Governance surfaces reconciled in repo:** `docs/ops/HEDGR_STATUS.md` (§2–§3, §6) and `docs/decisions/SPRINT-2-ADR-INDEX.md` are materially consistent on Sprint 2 boundaries; any intentional nuance (e.g. ticket id mapping notes in the index) is documented, not hidden contradiction. |
+| M5 | Mandatory | **Release vs next-track boundary explicit:** Remaining or adjacent work is classifiable as **next release/track** (e.g. Warmth Layer ADR **0016** *Proposed*, Phase 3 planning lens in §9) rather than unnamed vague backlog blocking closure. |
+| S1 | Supporting | **CI / engineering posture:** `AGENTS.md` hermetic CI and deny-by-default env posture remains the stated contract; no closeout finding depends on undocumented live-dependency assumptions. |
+| S2 | Supporting | **Notion / executive copy:** Alignment of external dashboards with repo wording is manual follow-up (`docs/ops/NOTION_GOVERNANCE_STAGING.md`); drift there is not treated as evidence against Foundation closeout. |
+| S3 | Supporting | **Proposed ADRs:** ADR **0016** (*Proposed*) and similar do **not** block Foundation closeout unless a governing doc explicitly claimed this release would satisfy them before ship (none do). |
+
+### Evidence table (MC-S2-023)
+
+| Criterion | Pass / Partial / Fail | Evidence pointer | Blocker or note |
+| --------- | ---------------------- | ---------------- | --------------- |
+| M1 | Pass | §6 subsections `MC-S2-001` through `MC-S2-022`, `MC-S4-001`–`MC-S4-003`, **Allocation band label UX legibility**; representative implementation paths under `apps/frontend/lib/engine/` (e.g. `types.ts`, `mock.ts`, `useEngineState.ts`, posture/copy modules) | None; spot-check confirms files exist and match §6 claims. |
+| M2 | Pass | §2 **Important active constraints**; §6 **Implementation posture preserved** clauses across tickets; ADR **0014** (`docs/decisions/0014-stability-engine-read-only-in-sprint-2.md`); §9 **Current phase must not include** | None. |
+| M3 | Pass | §6 doctrine lines for `MC-S2-004`, `MC-S2-007`, allocation UX baseline; ADR **0013** (`docs/decisions/0013-allocation-bands-informational-not-accounting.md`) | None. |
+| M4 | Pass | §3 governing references order; `docs/decisions/SPRINT-2-ADR-INDEX.md` **Ticket Mapping** / **Merged implementation ids** cross-referencing §6; index planning note on `MC-S4-*` vs early `MC-S2-*` labels is explicit | None. |
+| M5 | Pass | §2 Warmth Layer bullet (parallel track); §9 Phase 3 lens; ADR **0016** in index as *Proposed* — scoped as presentation-only, not Foundation completion dependency | Next-track work remains explicitly labeled *Proposed* or planning-only until governance sequences new tickets in §7. |
+| S1 | Pass | `AGENTS.md` §§3–5 (non-negotiables, required checks, env defaults) | Full workflow verification is routine engineering, not a Foundation closeout gate beyond stated contract. |
+| S2 | Pass | §1 Notion governance note; `docs/ops/NOTION_GOVERNANCE_STAGING.md` | Optional manual reconciliation; not blocking. |
+| S3 | Pass | `docs/decisions/SPRINT-2-ADR-INDEX.md` ADR **0016** section; §2 | **Non-blocking rule:** Proposed/future-track ADRs do not keep Foundation open unless the release explicitly promised them; none did. |
+
+### Verdict (repo recommendation)
+
+**Ready to mark Shipped** — for **Stability Engine™️ - Foundation**, as bounded by merged §6 work through `MC-S2-022` and governing Sprint 2 ADRs **0013–0015** (plus boundary ADR **0017** for the dev-only tx review seam). All **mandatory** criteria **M1–M5** are **Pass** in the evidence table above; the table is complete before this verdict.
+
+**Human / external gate:** Flipping release rows in Notion, marketing, or other non-repo systems remains with whoever owns release governance; this file supplies the **criteria, evidence, and repo-native recommendation** only.
+
+---
+
 ## 7. Current sequence and active status
 
 Completed and merged:
@@ -557,21 +601,28 @@ Completed and merged:
 - `MC-S2-020` - Market-data failure continuity baseline
 - `MC-S2-021` - Transaction mock-state observability seam
 - `MC-S2-022` - Local stub transaction-path continuity
+- `MC-S2-023` - Foundation release closeout readiness
 
 Current active ticket status:
 
-- **Approved next ticket:** none recorded in this file. When governance approves the next sequenced ticket, add it here explicitly. Do not treat any other item as sequenced continuation work until it appears here.
-- Cursor must not assume continuation beyond **§6** merged truth, **§7a** active brief (when populated), and current governance.
+- **No approved next ticket.** Governance has not named a successor after `MC-S2-023`. Do not treat backlog, roadmap, or *Proposed* ADRs as sequenced continuation work until this section names the next ticket explicitly.
+- Cursor must not assume continuation beyond **§6** merged truth, **§6a** release-closeout assessment, **§7a** (when an active ticket exists), and current governance.
 - Cursor must not continue automatically into work beyond what is explicitly defined in this file for an active ticket.
 - Cursor must not drift beyond explicitly defined scope.
 
-**Last completed ticket (summary):** `MC-S2-022` — Local stub transaction-path continuity — merged implementation truth in **§6** (`MC-S2-022`); shipped summary in **§28**.
+**Last completed ticket (summary):** `MC-S2-023` — Foundation release closeout readiness — canonical assessment in **§6a** (criteria, evidence table, verdict); completed ticket record in **§29**.
 
 ---
 
 ## 7a. Active execution ticket
 
-**No active execution ticket** is recorded here. When the next ticket is approved, replace this section with the full execution brief (historical example: **§28** `MC-S2-022`).
+**No active execution ticket.** Governance has not named the next sequenced ticket after `MC-S2-023`.
+
+- **Foundation closeout (completed):** `MC-S2-023` — see **§6a** (criteria, evidence table, verdict) and **§29** (completed ticket record).
+- **Merged implementation truth:** **§6** remains canonical for shipped code boundaries.
+- When a new ticket is approved, restore a full §7a brief here and update **§7** explicitly. Until then, do not infer continuation work from *Proposed* ADRs or roadmap narrative alone.
+
+**Archived brief (MC-S2-023):** Governance-first, documentation-only closeout assessment; no product/runtime changes; objective was explicit criteria, evidence-based evaluation, and repo-native Shipped vs In Progress recommendation — delivered in **§6a**.
 
 ---
 
@@ -1133,14 +1184,38 @@ Add a read-only degraded-state trust layer on deposit and withdraw so routes sta
 2. **`apps/frontend/app/(app)/deposit/page.tsx`** — after `postDeposit` failure, existing `ErrorState` unchanged; when `isLocalDevSimulationSeamEnabled()`, dev-only aside `deposit-local-stub-failure-hints` below it (MC-S2-022).
 3. **`apps/frontend/__tests__/deposit.page.test.tsx`** — hints under local dev guard only; hidden for `NODE_ENV=test` and `CI=true`; no raw error leakage.
 
-**Follow-ups:** Record the next approved ticket in **§7** and **§7a** when governance adds it.
+**Follow-ups:** Completed successor **`MC-S2-023`** — Foundation release closeout; see **§6a** and **§29**. Record the next approved ticket in **§7** and **§7a** when governance adds it.
 
 ---
 
-## 29. Immediate next-use guidance
+## 29. Completed execution ticket - MC-S2-023 (Foundation release closeout readiness)
+
+**Ticket:** `MC-S2-023` — Foundation release closeout readiness  
+**Suggested branch:** `feat/mc-s2-023-foundation-release-closeout-readiness`
+
+### Outcome (governance)
+
+Documentation-only closeout for **Stability Engine™️ - Foundation**. Canonical deliverables live in **§6a**:
+
+- mandatory vs supporting closeout criteria
+- criterion-by-criterion evidence table
+- repo-native verdict: **Ready to mark Shipped** (all mandatory criteria Pass; external release-row flip remains human-owned)
+
+No product or runtime files changed under this ticket.
+
+### Sequencing note
+
+§7 / §7a updates were applied **after** the §6a assessment was written, per MC-S2-023 sequencing discipline.
+
+**Follow-ups:** When governance approves the next ticket, record it in **§7** and restore a full **§7a** brief.
+
+---
+
+## 30. Immediate next-use guidance
 
 Use this file as the continuity primer before asking Cursor to review or implement the next explicitly approved ticket touching engine posture, simulation, allocation, policy, trust, Copilot behavior, or operational withdrawal clarity.
 
+- for **Foundation release closeout** verdict and criteria, see **§6a** and **§29** (`MC-S2-023`)
 - for the **active** next ticket, see **§7** and **§7a** (when populated)
 - for transaction mock-state review seam (dev-only), see **§6** (`MC-S2-021`) and **§27**; ADR **0017**
 - for shipped review snapshot, cadence, change signal, and recent stability memory, see §17 (`MC-S2-011`), §18 (`MC-S2-012`), §19 (`MC-S2-013`), and §20 (`MC-S2-014`); for withdraw exception-path clarification, see **§6** (`MC-S2-015`) and **§21**; for withdraw reconciliation / completion-adjacent clarification, see **§6** (`MC-S2-016`) and **§22**; for withdraw unresolved-path guidance, see **§6** (`MC-S2-017`) and **§23**; for withdraw next-step continuity guidance, see **§6** (`MC-S2-018`) and **§24**; for withdraw constrained-path / fallback-path clarity, see **§6** (`MC-S2-019`) and **§25**; for market-data failure continuity (deposit/withdraw degraded state), see **§6** (`MC-S2-020`) and **§26**
@@ -1158,7 +1233,7 @@ For deeper context, open next:
 
 ---
 
-## 30. Naming note
+## 31. Naming note
 The intended hand-off file name is `HEDGR_STATUS.md`.
 
 Continue using:

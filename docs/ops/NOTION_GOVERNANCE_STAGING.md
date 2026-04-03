@@ -4,7 +4,7 @@
 **Purpose:** Canonical snippets for manual reconciliation of Hedgr Notion surfaces (Decision Log, Strategy & Insights, or equivalent executive views).  
 **Authority:** The repository is source of truth. Wording here must match `docs/decisions/0016-warmth-layer-doctrine-constrained-retail-refinement-track.md`, `docs/decisions/SPRINT-2-ADR-INDEX.md`, and `docs/ops/HEDGR_STATUS.md`. Do not broaden scope, imply acceptance beyond **Proposed**, or soften read-only / non-execution boundaries in Notion.
 
-**Last reconciled:** 2026-04-02 (ADR 0016)
+**Last reconciled:** 2026-04-03 (MC-S2-023 Foundation closeout pointer; ADR 0016 unchanged)
 
 ---
 
@@ -60,3 +60,14 @@ Decision Log field names follow `docs/doctrine/hedgrops-decision-governance-and-
 
 - There is **no** automated Notion sync in this repository; reconciliation is **manual** from this file and the cited paths above.
 - **Visibility: Internal** — per governance standard, Internal decisions are not auto-exported as public ADRs; repo ADR 0016 exists for institutional traceability and remains the detailed record.
+
+---
+
+## 5. Stability Engine Foundation release row (manual alignment only)
+
+**Not canonical.** Do not restate or redefine the closeout verdict here. Operators updating Notion release or portfolio rows should **read and mirror** repo language from:
+
+- `docs/ops/HEDGR_STATUS.md` **§6a** — criteria, evidence table, and repo-native recommendation
+- `docs/ops/HEDGR_STATUS.md` **§29** — completed ticket record for `MC-S2-023`
+
+This section exists only to remind that **downstream copy is secondary**; repo `HEDGR_STATUS.md` is the sole authoritative source for Foundation release-closeout logic.
