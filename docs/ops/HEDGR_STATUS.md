@@ -700,6 +700,7 @@ Current active ticket status:
 - **Transition readiness standard (completed):** `MC-S3-001` — **§6b**; **§32** (completed ticket record).
 - **Merged implementation truth:** **§6** remains canonical for shipped code boundaries.
 - When governance names a successor, update **§7** and restore a full **§7a** brief.
+- Until **§7** names a successor, do not infer continuation work from *Proposed* ADRs or roadmap narrative alone.
 
 **Archived brief (MC-S2-023):** Governance-first, documentation-only closeout assessment; no product/runtime changes; objective was explicit criteria, evidence-based evaluation, and repo-native Shipped vs In Progress recommendation — delivered in **§6a**.
 
