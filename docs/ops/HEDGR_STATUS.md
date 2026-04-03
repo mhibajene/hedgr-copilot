@@ -1,6 +1,6 @@
 Status: Canonical hand-off file
 Purpose: Strategic continuity, merged implementation truth, and next-ticket authority for Cursor execution
-Last updated: 2026-04-03
+Last updated: 2026-04-04
 
 ---
 
@@ -60,7 +60,7 @@ Important active constraints:
 - no live backend engine coupling should be introduced in the current phase
 - runtime policy and trust constraints remain first-class control layers
 - local simulation may exist only as a dev-safe validation aid, not as runtime authority
-- **Warmth Layer (ADR 0016, Proposed):** parallel, doctrine-constrained **presentation** refinement only; does not alter read-only Stability Engine posture and must not introduce execution semantics, accounting truth, hidden reallocation, ledger duplication, yield-first emphasis, or gamified stability language (see `docs/decisions/0016-warmth-layer-doctrine-constrained-retail-refinement-track.md`)
+- **Warmth Layer (ADR 0016, Accepted):** parallel, doctrine-constrained **presentation** refinement only; does not alter read-only Stability Engine posture and must not introduce execution semantics, accounting truth, hidden reallocation, ledger duplication, yield-first emphasis, or gamified stability language (see `docs/decisions/0016-warmth-layer-doctrine-constrained-retail-refinement-track.md`). **Acceptance** is a boundary reference; **§7** / **§7a** still govern any implementation ticket.
 
 **Sprint 3** is framed here as **Transition Readiness** (named track above), not as Foundation continuation: governance defines the explicit standard for any later boundary widening; execution architecture remains out of scope until explicitly approved.
 
@@ -83,7 +83,7 @@ These are binding references for current implementation posture.
 
 For **post-foundation boundary readiness** (taxonomy, classification rules, sequencing discipline), see **§6b** and **§32** (`MC-S3-001`). For **§6b / §7 handoff** continuity (`MC-S3-002`), see **§33**. **§7** authorizes the next implementation ticket.
 
-**Proposed companion ADR:** `docs/decisions/0016-warmth-layer-doctrine-constrained-retail-refinement-track.md` — Warmth Layer parallel refinement track (presentation only, read-only engine posture unchanged). Read when implementing or reviewing work on surfaces scoped in that ADR.
+**Accepted companion ADR:** `docs/decisions/0016-warmth-layer-doctrine-constrained-retail-refinement-track.md` — Warmth Layer parallel refinement track (presentation only, read-only engine posture unchanged). Read when implementing or reviewing work on surfaces scoped in that ADR; **§7** / **§7a** authorize implementation, not ADR acceptance alone.
 
 Do not silently reconcile conflicts. Surface them explicitly.
 
@@ -552,10 +552,10 @@ This refinement is merged UX-legibility work only. It does not change posture lo
 | M2 | Mandatory | **Read-only / non-execution boundary:** Shipped Stability Engine and related Sprint 2 surfaces align with ADR **0014** (read-only, informational, non-executing); no shipped path treats engine output as execution, accounting truth, or fund movement authority. |
 | M3 | Mandatory | **Informational allocation:** ADR **0013** posture respected for allocation bands and related disclosures (informational targets, not ledger or settled-allocation truth) per §6 and trust-surface tests. |
 | M4 | Mandatory | **Governance surfaces reconciled in repo:** `docs/ops/HEDGR_STATUS.md` (§2–§3, §6) and `docs/decisions/SPRINT-2-ADR-INDEX.md` are materially consistent on Sprint 2 boundaries; any intentional nuance (e.g. ticket id mapping notes in the index) is documented, not hidden contradiction. |
-| M5 | Mandatory | **Release vs next-track boundary explicit:** Remaining or adjacent work is classifiable as **next release/track** (e.g. Warmth Layer ADR **0016** *Proposed*, Transition Readiness planning lens in §9) rather than unnamed vague backlog blocking closure. |
+| M5 | Mandatory | **Release vs next-track boundary explicit:** Remaining or adjacent work is classifiable as **next release/track** (e.g. Warmth Layer ADR **0016** as presentation-only next-track boundary, Transition Readiness planning lens in §9) rather than unnamed vague backlog blocking closure. |
 | S1 | Supporting | **CI / engineering posture:** `AGENTS.md` hermetic CI and deny-by-default env posture remains the stated contract; no closeout finding depends on undocumented live-dependency assumptions. |
 | S2 | Supporting | **Notion / executive copy:** Alignment of external dashboards with repo wording is manual follow-up (`docs/ops/NOTION_GOVERNANCE_STAGING.md`); drift there is not treated as evidence against Foundation closeout. |
-| S3 | Supporting | **Proposed ADRs:** ADR **0016** (*Proposed*) and similar do **not** block Foundation closeout unless a governing doc explicitly claimed this release would satisfy them before ship (none do). |
+| S3 | Supporting | ***Proposed* ADRs (at assessment time):** *Proposed*-status ADRs do **not** block Foundation closeout unless a governing doc explicitly claimed this release would satisfy them before ship (none do). (ADR **0016** was *Proposed* during this assessment; later **Accepted** via **`MC-S3-003`** — **§34**.) |
 
 ### Evidence table (MC-S2-023)
 
@@ -565,10 +565,10 @@ This refinement is merged UX-legibility work only. It does not change posture lo
 | M2 | Pass | §2 **Important active constraints**; §6 **Implementation posture preserved** clauses across tickets; ADR **0014** (`docs/decisions/0014-stability-engine-read-only-in-sprint-2.md`); §9 **Current phase must not include** | None. |
 | M3 | Pass | §6 doctrine lines for `MC-S2-004`, `MC-S2-007`, allocation UX baseline; ADR **0013** (`docs/decisions/0013-allocation-bands-informational-not-accounting.md`) | None. |
 | M4 | Pass | §3 governing references order; `docs/decisions/SPRINT-2-ADR-INDEX.md` **Ticket Mapping** / **Merged implementation ids** cross-referencing §6; index planning note on `MC-S4-*` vs early `MC-S2-*` labels is explicit | None. |
-| M5 | Pass | §2 Warmth Layer bullet (parallel track); §9 Transition Readiness planning lens; ADR **0016** in index as *Proposed* — scoped as presentation-only, not Foundation completion dependency | Next-track work remains explicitly labeled *Proposed* or planning-only until governance sequences new tickets in §7. |
+| M5 | Pass | §2 Warmth Layer bullet (parallel track); §9 Transition Readiness planning lens; ADR **0016** in index — scoped as presentation-only, not Foundation completion dependency | At assessment time, next-track work was *Proposed* or planning-only until governance sequenced tickets in §7. ADR **0016** is **Accepted** after **`MC-S3-003`** (**§34**). |
 | S1 | Pass | `AGENTS.md` §§3–5 (non-negotiables, required checks, env defaults) | Full workflow verification is routine engineering, not a Foundation closeout gate beyond stated contract. |
 | S2 | Pass | §1 Notion governance note; `docs/ops/NOTION_GOVERNANCE_STAGING.md` | Optional manual reconciliation; not blocking. |
-| S3 | Pass | `docs/decisions/SPRINT-2-ADR-INDEX.md` ADR **0016** section; §2 | **Non-blocking rule:** Proposed/future-track ADRs do not keep Foundation open unless the release explicitly promised them; none did. |
+| S3 | Pass | `docs/decisions/SPRINT-2-ADR-INDEX.md` ADR **0016** section; §2 | **Non-blocking rule:** *Proposed* / future-track ADRs did not keep Foundation open unless the release explicitly promised them; none did. ADR **0016** status post-**`MC-S3-003`**: **Accepted**. |
 
 ### Verdict (repo recommendation)
 
@@ -609,7 +609,7 @@ For the **approved next ticket** and active execution brief, see **§7** and **�
 
 ### ADR 0016 (Warmth Layer) — classification only
 
-- **ADR 0016** remains **Proposed** unless and until accepted through normal ADR governance. **§6b does not ratify** the Warmth Layer or any Warmth scope.
+- **ADR 0016** is **Accepted** as the Warmth Layer *boundary* document. **§6b does not ratify** any specific implementation scope or ticket; **classification is not authorization** remains in force; only **§7** authorizes implementation work.
 - **Narrow, low-risk presentation refinement** (e.g. geometry, spacing, typography, terminology swaps, calm microcopy **where meaning is unchanged**) is the only Warmth-related work that may be discussed as *hypothetically* compatible with a **future**, separately governed, prerequisite-gated ticket—still **not** “approved next.”
 - **Broader** trust-surface, information-architecture, Action Strip, Activity, onboarding, or v2/v3-style explorations in ADR **0016** remain **prerequisite-gated** with a **higher** bar; they must **not** be treated as default or automatic follow-on work.
 
@@ -634,7 +634,7 @@ Populate or extend rows using **Notion / external planning reference only**; rep
 |----------------|----------------|----------------|----------------|---------------------|---------------------|
 | *Example: Phase 4 “governance hardening” (generic)* | §4, §8; `AGENTS.md` | external-only | prerequisite-gated | deferred | §7-named ticket; scope must stay doc/process or read-only trust refinement per category 3—no category 6–8. |
 | *Example: Phase 5 “Copilot binding” / runtime Copilot authority* | §9 “must not”; ADR **0015** | contradicted-or-superseded (for execution-style binding) | blocked | deferred | New ADR(s), explicit doctrine widening, §7 sequencing—out of Transition Readiness definition scope. |
-| *Example: Warmth Layer (ADR 0016)* | `docs/decisions/0016-warmth-layer-doctrine-constrained-retail-refinement-track.md` | repo-grounded (*Proposed* ADR) | prerequisite-gated | could-be-admitted-later (narrow v1-style presentation only) | ADR **Accepted** + §7-named scoped ticket + doctrine review; **0016** does not ratify from this table. |
+| *Example: Warmth Layer (ADR 0016)* | `docs/decisions/0016-warmth-layer-doctrine-constrained-retail-refinement-track.md` | repo-grounded (ADR 0016 **Accepted**) | prerequisite-gated | could-be-admitted-later (narrow v1-style presentation only) | §7-named scoped ticket + doctrine review; **0016** does not ratify from this table. **Anti-misread:** ADR 0016 **Acceptance removes only** the prerequisite that the ADR be **Accepted**; it **does not** remove the requirement for a **§7**-named scoped implementation ticket (or other **§7** / **§7a** gates). |
 
 **Evidence state** values: `repo-shipped` · `repo-grounded` · `external-only` · `contradicted-or-superseded`  
 **Boundary class** values: `admissible` · `prerequisite-gated` · `blocked`  
@@ -678,6 +678,7 @@ Completed and merged:
 - `MC-S2-023` - Foundation release closeout readiness
 - `MC-S3-001` - Post-foundation boundary readiness criteria
 - `MC-S3-002` - Post–MC-S3-001 governance continuity (§6b / §7 handoff traceability and anti-drift cross-links)
+- `MC-S3-003` - ADR 0016 acceptance and Sprint 2 index / ops reconciliation (documentation and ADR status only)
 
 Current active ticket status:
 
@@ -688,13 +689,15 @@ Current active ticket status:
 - Cursor must not continue automatically into work beyond what is explicitly defined in this file for an active ticket.
 - Cursor must not drift beyond explicitly defined scope.
 
-**Last completed ticket (summary):** `MC-S3-002` — Governance continuity — cross-links and ADR index traceability; completed record in **§33**.
+**Last completed ticket (summary):** `MC-S3-003` — ADR 0016 **Accepted**; Sprint 2 index and **§2** / **§3** / **§6b** ops reconciliation; completed record in **§34**.
 
 ---
 
 ## 7a. Active execution ticket
 
-**No active ticket.** Governance has not named a successor in **§7** since **`MC-S3-002`** completed. See **§7** for sequence status and **§33** for the completed `MC-S3-002` record.
+**No active ticket.** Governance has not named a successor in **§7** since **`MC-S3-003`** completed. See **§7** for sequence status and **§34** for the completed `MC-S3-003` record.
+
+**Archived brief (MC-S3-003):** ADR **0016** acceptance and Sprint 2 index / ops reconciliation — documentation and ADR status only; **Acceptance note** in ADR **0016** (phase origin, continuing boundary reference, subordination to **HEDGR_STATUS**); **`SPRINT-2-ADR-INDEX`** ADR **0016** section and **Usage Rule** item 6; **`HEDGR_STATUS`** default path **§2** / **§3** / **§6b** plus **§6a** contradiction repair for stale *Proposed* citations; **§6b** inventory **anti-misread** on **§7**; **`NOTION_GOVERNANCE_STAGING`** repo-first mirror line and **Accepted** row. Completed record: **§34**.
 
 **Archived brief (MC-S3-002):** Post–MC-S3-001 governance continuity — documentation and process only; reinforced **§6b** as classification/scrutiny input only and **§7** as sole authority for approved next ticket; anti-duplication cross-links in **`docs/ops/HEDGR_STATUS.md`** and traceability in **`docs/decisions/SPRINT-2-ADR-INDEX.md`**; optional **`AGENTS.md`** engine-facing line only where read-order ambiguity required resolution. Completed record: **§33**.
 
@@ -707,6 +710,7 @@ Current active ticket status:
 - **Foundation closeout (completed):** `MC-S2-023` — **§6a** (criteria, evidence table, verdict); **§29** (completed ticket record).
 - **Transition readiness standard (completed):** `MC-S3-001` — **§6b**; **§32** (completed ticket record).
 - **Governance continuity (completed):** `MC-S3-002` — **§33** (completed ticket record).
+- **ADR 0016 acceptance (completed):** `MC-S3-003` — **§34** (completed ticket record).
 - **Merged implementation truth:** **§6** remains canonical for shipped code boundaries.
 - When a successor ticket is approved, record it in **§7** and restore the execution brief in **§7a** per governance discipline.
 - Do not infer continuation work from *Proposed* ADRs or roadmap narrative unless **§7** names a ticket.
@@ -1298,7 +1302,7 @@ No product or runtime files changed under this ticket.
 
 §7 / §7a updates were applied **after** the §6a assessment was written, per MC-S2-023 sequencing discipline.
 
-**Follow-ups:** **`MC-S3-001`** completed — **§32**; **`MC-S3-002`** completed — **§33**. For subsequent sequencing, see **§7** and **§7a**.
+**Follow-ups:** **`MC-S3-001`** completed — **§32**; **`MC-S3-002`** completed — **§33**; **`MC-S3-003`** completed — **§34**. For subsequent sequencing, see **§7** and **§7a**.
 
 ---
 
@@ -1309,6 +1313,7 @@ Use this file as the continuity primer before asking Cursor to review or impleme
 - for **Foundation release closeout** verdict and criteria, see **§6a** and **§29** (`MC-S2-023`)
 - for **post-foundation boundary readiness** (Transition Readiness standard), see **§6b** and **§32** (`MC-S3-001`); **§6b** is taxonomy and scrutiny input only—not authorization to start work
 - for **governance continuity** (§6b / §7 handoff), see **§33** (`MC-S3-002`)
+- for **ADR 0016** (*Accepted*) boundary and **`MC-S3-003`** closeout, see **§34** and `docs/decisions/0016-warmth-layer-doctrine-constrained-retail-refinement-track.md`
 - for the **approved next ticket** (if any), see **§7** and **§7a**; only **§7** names what is approved next
 - for **sprint planning procedure** (governance vs execution vs closeout, candidate slate, §7 / §7a gate, post-merge order), see `docs/ops/HEDGR_SPRINT_PLANNING_PROTOCOL.md`
 - for transaction mock-state review seam (dev-only), see **§6** (`MC-S2-021`) and **§27**; ADR **0017**
@@ -1347,7 +1352,7 @@ Documentation-only transition standard for **Stability Engine™️ - Transition
 
 - boundary category taxonomy (document-only; categories **6–8** blocked)
 - **classification is not authorization** rule; **`could-be-admitted-later`** ≠ approved next; **only §7** authorizes tickets
-- ADR **0016** / Warmth: **classification only**; no ratification; narrow presentation-only vs broader surfaces distinguished
+- ADR **0016** / Warmth: **classification only**; no ratification from this section; narrow presentation-only vs broader surfaces distinguished (*post–MC-S3-001:* ADR **0016** **Accepted** as boundary document under **`MC-S3-003`** — **§34**; **§6b** does not ratify implementation scope from the inventory table.)
 - readiness checklist for future governance review (scrutiny, not auto-approval)
 - inherited Phase 4 / Phase 5 inventory table (template + example rows; extend from Notion reference-only)
 
@@ -1357,7 +1362,7 @@ No product or runtime files changed under this ticket.
 
 §7 / §7a updates apply after delivery of **§6b**, per governance closeout discipline.
 
-**Follow-ups:** Successor **`MC-S3-002`** completed — **§33**; next approved ticket is named only in **§7** when governance updates it.
+**Follow-ups:** Successor **`MC-S3-002`** completed — **§33**; successor **`MC-S3-003`** completed — **§34**; next approved ticket is named only in **§7** when governance updates it.
 
 ---
 
@@ -1375,6 +1380,23 @@ Documentation-only reinforcement that **§6b** is **classification and scrutiny 
 - **`AGENTS.md`** — engine-facing read-order note on **§7** / **§7a** vs **§6b** (smallest ambiguity resolution).
 
 No product or runtime files changed under this ticket.
+
+### Sequencing note
+
+§7 / §7a updates record completion and leave **no** named successor until governance adds one to **§7**.
+
+**Follow-ups:** Successor **`MC-S3-003`** completed — **§34**; next approved ticket appears only in **§7** (brief in **§7a** when active).
+
+---
+
+## 34. Completed execution ticket - MC-S3-003 (ADR 0016 acceptance and ops reconciliation)
+
+**Ticket:** `MC-S3-003` — ADR 0016 acceptance and Sprint 2 index / ops reconciliation (documentation and ADR status only)  
+**Suggested branch:** `feat/mc-s3-003-adr-0016-acceptance`
+
+### Outcome (governance)
+
+Documentation-only: ADR **0016** recorded as **Accepted** with **Acceptance note** (read-only phase origin, continuing boundary reference for future scoped presentation refinement, subordination to **`HEDGR_STATUS.md`**; **§7** / **§7a** still required for implementation). **`SPRINT-2-ADR-INDEX`** ADR **0016** section and **Usage Rule** item 6 aligned. **`HEDGR_STATUS.md`** reconciled on default path **§2** / **§3** / **§6b** (Warmth bullets, companion ADR, **§6b** classification + inventory **anti-misread**); **§6a** evidence/criteria updated only where stale *Proposed* citations contradicted repo truth. **`NOTION_GOVERNANCE_STAGING`** — **Accepted** status, repo-first mirror line, authority paragraph. No product or runtime files changed under this ticket.
 
 ### Sequencing note
 

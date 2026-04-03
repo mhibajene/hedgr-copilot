@@ -1,10 +1,22 @@
 # ADR 0016 — Warmth Layer as a doctrine-constrained retail refinement track during the read-only Stability Engine phase
 
-- **Status:** Proposed
+- **Status:** Accepted
 - **Date:** 2026-04-02
+- **Accepted:** 2026-04-04
 - **Decision Type:** UX/Trust
 - **Strategic Horizon:** Short-term (MVP / immediate sprint)
 - **Visibility:** Internal
+- **Owners:** Hedgr Core
+
+---
+
+## Acceptance note
+
+This ADR is **Accepted** as the institutional boundary for a **Warmth Layer** presentation-refinement track during the read-only Stability Engine phase.
+
+This ADR originated during the **read-only Stability Engine** phase; its acceptance now records a **continuing boundary reference** for **future, scoped** presentation refinement—not a phase change. It remains **subordinate** to current repo authority in **`docs/ops/HEDGR_STATUS.md`** (including **§7** / **§7a** sequencing and any superseding ops updates).
+
+**Acceptance does not authorize implementation** of Warmth-scope UI changes by itself. Shipping presentation work remains subject to **`docs/ops/HEDGR_STATUS.md` §7** / **§7a** and must remain consistent with **ADR 0013** (informational allocation), **ADR 0014** (read-only Sprint 2 engine), **ADR 0015** (engine as system center; Copilot containment), and **ADR 0017** where the transaction review dev seam applies.
 
 ---
 
