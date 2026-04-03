@@ -3,6 +3,8 @@
 import { Suspense, useState, useEffect, useRef, useMemo } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { postDeposit } from '../../../lib/deposits/client';
+import { LOCAL_STUB_DEPOSIT_FAILURE_REVIEW_HINTS } from '../../../lib/deposits/local-stub-deposit-review-hints';
+import { isLocalDevSimulationSeamEnabled } from '../../../lib/dev/local-simulation-guard';
 import { useBalance } from '../../../lib/hooks/useBalance';
 import { useLedgerStore } from '../../../lib/state/ledger';
 import { useWalletStore } from '../../../lib/state/wallet';
@@ -285,13 +287,29 @@ function DepositPageContent() {
         </div>
       )}
       {status === 'FAILED' && (
-        <ErrorState
-          title="Deposit failed"
-          description="Your deposit could not be processed. Please try again."
-          primaryAction={{ label: 'Try again', onClick: () => setStatus('IDLE') }}
-          className="py-6"
-          data-testid="deposit-failed-state"
-        />
+        <div className="space-y-3">
+          <ErrorState
+            title="Deposit failed"
+            description="Your deposit could not be processed. Please try again."
+            primaryAction={{ label: 'Try again', onClick: () => setStatus('IDLE') }}
+            className="py-6"
+            data-testid="deposit-failed-state"
+          />
+          {isLocalDevSimulationSeamEnabled() ? (
+            <aside
+              className="rounded-lg border border-amber-200/90 bg-amber-50/90 p-3 text-xs text-gray-800"
+              data-testid="deposit-local-stub-failure-hints"
+              aria-label="Local review troubleshooting hints"
+            >
+              <p className="mb-2 font-medium text-gray-700">Local review only</p>
+              <ul className="list-disc space-y-1 pl-4">
+                {LOCAL_STUB_DEPOSIT_FAILURE_REVIEW_HINTS.map((line, i) => (
+                  <li key={i}>{line}</li>
+                ))}
+              </ul>
+            </aside>
+          ) : null}
+        </div>
       )}
     </main>
   );

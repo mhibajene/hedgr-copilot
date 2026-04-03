@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { afterEach, describe, expect, test, vi } from 'vitest';
-import { act, cleanup, render, screen } from '@testing-library/react';
+import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 
 (globalThis as typeof globalThis & { React: typeof React }).React = React;
 
@@ -63,6 +63,7 @@ vi.mock('@hedgr/ui', () => ({
 }));
 
 import DepositPage from '../app/(app)/deposit/page';
+import { postDeposit } from '../lib/deposits/client';
 import { useLatestFx } from '../lib/hooks/useLatestFx';
 import { CONVERSION_PREVIEW_UNAVAILABLE_PLACEHOLDER } from '../lib/fx/market-data-continuity-copy';
 import { useSearchParams } from 'next/navigation';
@@ -187,5 +188,106 @@ describe('DepositPage tx review seam (MC-S2-021)', () => {
 
     const confirm = screen.getByRole('button', { name: 'Confirm' }) as HTMLButtonElement;
     expect(confirm.disabled).toBe(false);
+  });
+});
+
+describe('DepositPage local stub deposit review hints (MC-S2-022)', () => {
+  function stubLocalSimulationSeamEnabled() {
+    vi.unstubAllEnvs();
+    delete process.env.CI;
+    process.env.NODE_ENV = 'development';
+    process.env.NEXT_PUBLIC_APP_ENV = 'dev';
+  }
+
+  test('postDeposit failure shows dev-only hint block when local simulation seam enabled', async () => {
+    stubLocalSimulationSeamEnabled();
+    vi.useRealTimers();
+    vi.mocked(useLatestFx).mockReturnValue({
+      status: 'success',
+      data: { pair: 'USDZMW', rate: 20, ts: 1 },
+      retry: vi.fn(),
+    });
+    vi.mocked(postDeposit).mockRejectedValue(new Error('intentional_test_failure'));
+
+    render(<DepositPage />);
+    await act(async () => {
+      await new Promise((r) => setTimeout(r, 400));
+    });
+
+    await act(async () => {
+      fireEvent.click(screen.getByRole('button', { name: 'Confirm' }));
+    });
+
+    await waitFor(() => {
+      expect(screen.getByTestId('deposit-failed-state')).toBeTruthy();
+    });
+
+    expect(screen.getByTestId('deposit-local-stub-failure-hints')).toBeTruthy();
+    expect(screen.getByText(/Local review only/i)).toBeTruthy();
+    expect(screen.getByText(/Stub deposit routes need stub mode/i)).toBeTruthy();
+    expect(screen.queryByText(/intentional_test_failure/)).toBeNull();
+    expect(screen.getByText(/Deposit failed/i)).toBeTruthy();
+    expect(screen.getByTestId('deposit-failed-state').getAttribute('description')).toBe(
+      'Your deposit could not be processed. Please try again.',
+    );
+  });
+
+  test('postDeposit failure hides hint block when NODE_ENV=test (CI-style)', async () => {
+    vi.unstubAllEnvs();
+    delete process.env.CI;
+    process.env.NODE_ENV = 'test';
+    process.env.NEXT_PUBLIC_APP_ENV = 'dev';
+
+    vi.useRealTimers();
+    vi.mocked(useLatestFx).mockReturnValue({
+      status: 'success',
+      data: { pair: 'USDZMW', rate: 20, ts: 1 },
+      retry: vi.fn(),
+    });
+    vi.mocked(postDeposit).mockRejectedValue(new Error('intentional_test_failure'));
+
+    render(<DepositPage />);
+    await act(async () => {
+      await new Promise((r) => setTimeout(r, 400));
+    });
+
+    await act(async () => {
+      fireEvent.click(screen.getByRole('button', { name: 'Confirm' }));
+    });
+
+    await waitFor(() => {
+      expect(screen.getByTestId('deposit-failed-state')).toBeTruthy();
+    });
+
+    expect(screen.queryByTestId('deposit-local-stub-failure-hints')).toBeNull();
+    expect(screen.queryByText(/intentional_test_failure/)).toBeNull();
+  });
+
+  test('postDeposit failure hides hints when CI=true', async () => {
+    stubLocalSimulationSeamEnabled();
+    process.env.CI = 'true';
+
+    vi.useRealTimers();
+    vi.mocked(useLatestFx).mockReturnValue({
+      status: 'success',
+      data: { pair: 'USDZMW', rate: 20, ts: 1 },
+      retry: vi.fn(),
+    });
+    vi.mocked(postDeposit).mockRejectedValue(new Error('intentional_test_failure'));
+
+    render(<DepositPage />);
+    await act(async () => {
+      await new Promise((r) => setTimeout(r, 400));
+    });
+
+    await act(async () => {
+      fireEvent.click(screen.getByRole('button', { name: 'Confirm' }));
+    });
+
+    await waitFor(() => {
+      expect(screen.getByTestId('deposit-failed-state')).toBeTruthy();
+    });
+
+    expect(screen.queryByTestId('deposit-local-stub-failure-hints')).toBeNull();
   });
 });
