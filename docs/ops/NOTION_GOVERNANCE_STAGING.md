@@ -2,9 +2,11 @@
 
 **Status:** Operational  
 **Purpose:** Canonical snippets for manual reconciliation of Hedgr Notion surfaces (Decision Log, Strategy & Insights, or equivalent executive views).  
-**Authority:** The repository is source of truth. Wording here must match `docs/decisions/0016-warmth-layer-doctrine-constrained-retail-refinement-track.md`, `docs/decisions/SPRINT-2-ADR-INDEX.md`, and `docs/ops/HEDGR_STATUS.md`. Do not broaden scope, imply acceptance beyond **Proposed**, or soften read-only / non-execution boundaries in Notion.
+**Repo-first:** This staging document **mirrors** repo wording after reconciliation; it **must not** interpret ADR **0016** **Acceptance** more broadly than the repo files do (ADR **0016**, `SPRINT-2-ADR-INDEX.md`, `HEDGR_STATUS.md` **§2** / **§3** / **§6b**).
 
-**Last reconciled:** 2026-04-03 (MC-S2-023 Foundation closeout pointer; ADR 0016 unchanged)
+**Authority:** The repository is source of truth. Wording here must match `docs/decisions/0016-warmth-layer-doctrine-constrained-retail-refinement-track.md`, `docs/decisions/SPRINT-2-ADR-INDEX.md`, and `docs/ops/HEDGR_STATUS.md`. Wording must match **Accepted** ADR **0016** in repo; do not broaden scope or soften read-only / non-execution boundaries in Notion.
+
+**Last reconciled:** 2026-04-04 (`MC-S3-003`; ADR 0016 **Accepted**)
 
 ---
 
@@ -16,7 +18,7 @@ Use one row per field below (or map to your Notion schema equivalents).
 | ----- | ----- |
 | **Decision ID / ADR** | ADR 0016 |
 | **Title** | Warmth Layer as a doctrine-constrained retail refinement track during the read-only Stability Engine phase |
-| **Status** | Proposed |
+| **Status** | Accepted |
 | **Decision Type** | UX/Trust |
 | **Strategic Horizon** | Short-term (MVP / immediate sprint) |
 | **Visibility** | Internal |
@@ -40,7 +42,7 @@ Use as a governed workstream line, **not** as a shipped-feature claim. Placement
 
 **Short line**
 
-- **Warmth Layer (ADR 0016, Proposed):** Parallel, doctrine-constrained **presentation** refinement only; does not change read-only Stability Engine posture. Must not introduce execution semantics, accounting truth, hidden reallocation, ledger duplication, yield-first framing, or gamified stability language. See ADR 0016 and `docs/ops/HEDGR_STATUS.md` §2.
+- **Warmth Layer (ADR 0016, Accepted):** Parallel, doctrine-constrained **presentation** refinement only; does not change read-only Stability Engine posture. Must not introduce execution semantics, accounting truth, hidden reallocation, ledger duplication, yield-first framing, or gamified stability language. **§7** / **§7a** govern implementation tickets, not ADR acceptance alone. See ADR 0016 and `docs/ops/HEDGR_STATUS.md` §2.
 
 **Supporting repo pointers (do not paraphrase into strategy)**
 
