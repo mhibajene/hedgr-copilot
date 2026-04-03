@@ -116,6 +116,7 @@ describe('WithdrawPage status surface', () => {
     });
     expect(screen.queryByTestId('withdraw-status-unresolved-path-clarification')).toBeNull();
     expect(screen.queryByTestId('withdraw-status-next-step-guidance')).toBeNull();
+    expect(screen.queryByTestId('withdraw-status-fallback-path-clarity')).toBeNull();
   });
 
   test('shows a clear processing status region after submit', async () => {
@@ -214,6 +215,26 @@ describe('WithdrawPage status surface', () => {
       'completed now',
     ] as const) {
       expect(nsLower.includes(bad), `unexpected "${bad}" in next-step guidance copy`).toBe(false);
+    }
+
+    const fallbackBlock = screen.getByTestId('withdraw-status-fallback-path-clarity');
+    const fallbackText = fallbackBlock.textContent ?? '';
+    expect(fallbackText).toMatch(/more time|checks than|simplest withdrawal/i);
+    expect(fallbackText).toMatch(/normal way|move forward/i);
+    const fbLower = fallbackText.toLowerCase();
+    for (const echo of ['unresolved', 'gone quiet', 'forgotten'] as const) {
+      expect(fbLower.includes(echo), `fallback strip should not echo "${echo}"`).toBe(false);
+    }
+    for (const bad of [
+      'guaranteed',
+      'escalated',
+      'support will',
+      'manually handled',
+      'completed now',
+      'moved',
+      'reallocated',
+    ] as const) {
+      expect(fbLower.includes(bad), `unexpected "${bad}" in fallback-path copy`).toBe(false);
     }
   });
 });

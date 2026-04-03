@@ -13,6 +13,7 @@ import { resolveMarket, resolveLocalCurrencyCode } from '../../../config/market'
 import {
   PublicTxStatus,
   getExceptionPathClarificationLines,
+  getFallbackPathClarificationLines,
   getNextStepGuidanceLines,
   getPresentationForPublicStatus,
   getReconciliationClarificationLines,
@@ -167,6 +168,9 @@ export default function WithdrawPage() {
     : null;
   const nextStepGuidanceLines = activeStatus
     ? getNextStepGuidanceLines(activeStatus.publicStatus)
+    : null;
+  const fallbackPathClarificationLines = activeStatus
+    ? getFallbackPathClarificationLines(activeStatus.publicStatus)
     : null;
 
   // Error state for loading balance
@@ -379,6 +383,18 @@ export default function WithdrawPage() {
             >
               {nextStepGuidanceLines.map((line, i) => (
                 <p key={i} className="text-xs text-gray-500 leading-relaxed">
+                  {line}
+                </p>
+              ))}
+            </div>
+          )}
+          {fallbackPathClarificationLines && fallbackPathClarificationLines.length > 0 && (
+            <div
+              className="mt-2 border-t border-gray-100/80 pt-1.5 space-y-1"
+              data-testid="withdraw-status-fallback-path-clarity"
+            >
+              {fallbackPathClarificationLines.map((line, i) => (
+                <p key={i} className="text-xs text-gray-400 leading-relaxed">
                   {line}
                 </p>
               ))}

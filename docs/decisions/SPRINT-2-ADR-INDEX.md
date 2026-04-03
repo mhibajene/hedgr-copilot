@@ -157,7 +157,7 @@ Product-facing trust copy for posture context, notices, and allocation panel; re
 
 Read-only, frontend-centered withdrawal trust-surface refinement; clarifies constrained / slower non-final withdrawal path meaning; no new public transaction states; no backend fallback logic; no support workflow integration; no execution or accounting semantics.
 
-**Index posture:** Approved next ticket (not merged / not shipped). Canonical sequencing and brief: `docs/ops/HEDGR_STATUS.md` §7 and §25.
+**Index posture:** Merged / shipped. Canonical merged truth: `docs/ops/HEDGR_STATUS.md` §6 (`MC-S2-019`); shipped summary: §25.
 
 ### Merged implementation ids (canonical merged truth)
 
