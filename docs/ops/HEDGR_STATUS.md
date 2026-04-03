@@ -1310,6 +1310,7 @@ Use this file as the continuity primer before asking Cursor to review or impleme
 - for **post-foundation boundary readiness** (Transition Readiness standard), see **§6b** and **§32** (`MC-S3-001`); **§6b** is taxonomy and scrutiny input only—not authorization to start work
 - for **governance continuity** (§6b / §7 handoff), see **§33** (`MC-S3-002`)
 - for the **approved next ticket** (if any), see **§7** and **§7a**; only **§7** names what is approved next
+- for **sprint planning procedure** (governance vs execution vs closeout, candidate slate, §7 / §7a gate, post-merge order), see `docs/ops/HEDGR_SPRINT_PLANNING_PROTOCOL.md`
 - for transaction mock-state review seam (dev-only), see **§6** (`MC-S2-021`) and **§27**; ADR **0017**
 - for shipped review snapshot, cadence, change signal, and recent stability memory, see §17 (`MC-S2-011`), §18 (`MC-S2-012`), §19 (`MC-S2-013`), and §20 (`MC-S2-014`); for withdraw exception-path clarification, see **§6** (`MC-S2-015`) and **§21**; for withdraw reconciliation / completion-adjacent clarification, see **§6** (`MC-S2-016`) and **§22**; for withdraw unresolved-path guidance, see **§6** (`MC-S2-017`) and **§23**; for withdraw next-step continuity guidance, see **§6** (`MC-S2-018`) and **§24**; for withdraw constrained-path / fallback-path clarity, see **§6** (`MC-S2-019`) and **§25**; for market-data failure continuity (deposit/withdraw degraded state), see **§6** (`MC-S2-020`) and **§26**
 - assess whether a requested change needs an ADR
