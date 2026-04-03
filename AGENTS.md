@@ -168,3 +168,56 @@ Examples:
 - compliance posture
 - sequencing decisions
 - policy or engine control changes
+
+## Cursor Cloud specific instructions
+
+### Services overview
+
+| Service | Command | Port | Notes |
+|---|---|---|---|
+| Frontend (Next.js) | `pnpm --filter @hedgr/frontend dev` | 3000 | Requires env vars below |
+| Backend (Flask) | `source apps/backend/.venv/bin/activate && STUB_MODE=true PORT=5050 python -m src.app` | 5050 | Always use `STUB_MODE=true` in dev/CI |
+
+### Required environment variables for frontend dev server
+
+```
+NEXT_PUBLIC_AUTH_MODE=mock
+NEXT_PUBLIC_FX_MODE=stub
+NEXT_PUBLIC_MARKET_MODE=manual
+NEXT_PUBLIC_MARKET_SELECTED=UNKNOWN
+NEXT_PUBLIC_API_BASE_URL=http://localhost:5050
+NEXT_PUBLIC_APP_ENV=dev
+NEXT_PUBLIC_FEATURE_COPILOT_ENABLED=true
+```
+
+Set these as env vars when launching the frontend dev server.
+
+### Node version
+
+The repo requires Node 20 (pinned in `.nvmrc`). Use `nvm use 20` before running any Node/pnpm commands. The VM default may be Node 22; always switch first.
+
+### pnpm setup
+
+Activated via Corepack: `corepack enable && corepack install`. The pinned version is pnpm 9.12.0 (see `package.json` `packageManager` field).
+
+### Build order
+
+`@hedgr/ui` must be built before the frontend can start: `pnpm run build:ui`.
+
+### Validation commands
+
+See `README.md` — quick reference:
+- `pnpm -w lint` — ESLint
+- `pnpm -w test` — Vitest (632 unit tests)
+- `pnpm -w typecheck` — TypeScript check
+- `pnpm run validate` — all of the above plus trust checks
+
+### E2E tests (Playwright)
+
+- `pnpm --filter @hedgr/frontend run e2e` — run against a running dev server (reuses existing server)
+- `pnpm --filter @hedgr/frontend run e2e:ci` — production build + Playwright (used in CI)
+- Copilot-related E2E tests (`chat-safety.spec.ts`) require `NEXT_PUBLIC_FEATURE_COPILOT_ENABLED=true` at **build time** — they will fail against the dev server because Next.js inlines `NEXT_PUBLIC_*` vars at build, not runtime. This is expected; CI uses `e2e:ci` which builds first. Run `e2e:ci` for full E2E parity with CI.
+
+### Backend (Flask)
+
+Python venv lives at `apps/backend/.venv`. Activate it before running backend commands. Backend tests: `cd apps/backend && source .venv/bin/activate && pytest`.
