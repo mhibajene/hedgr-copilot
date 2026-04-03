@@ -149,6 +149,16 @@ Documentation and review-path alignment only (e.g. `AGENTS.md`, PR template, han
 
 Product-facing trust copy for posture context, notices, and allocation panel; read-only informational framing only. See `docs/ops/HEDGR_STATUS.md` §6 (MC-S2-006).
 
+### MC-S2-019 — Withdrawal fallback-path clarity
+**Governed by**
+- ADR 0013
+- ADR 0014
+- ADR 0015
+
+Read-only, frontend-centered withdrawal trust-surface refinement; clarifies constrained / slower non-final withdrawal path meaning; no new public transaction states; no backend fallback logic; no support workflow integration; no execution or accounting semantics.
+
+**Index posture:** Approved next ticket (not merged / not shipped). Canonical sequencing and brief: `docs/ops/HEDGR_STATUS.md` §7 and §25.
+
 ### Merged implementation ids (canonical merged truth)
 
 The following shipped under **`MC-S4-*`** ids; see **`docs/ops/HEDGR_STATUS.md`** for merged file lists and posture.

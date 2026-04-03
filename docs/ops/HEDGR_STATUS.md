@@ -1,6 +1,6 @@
 Status: Canonical hand-off file
 Purpose: Strategic continuity, merged implementation truth, and next-ticket authority for Cursor execution
-Last updated: 2026-04-02
+Last updated: 2026-04-03
 
 ---
 
@@ -499,10 +499,13 @@ Completed and merged:
 
 Current active ticket status:
 
-- **No approved next ticket** is sequenced in this file until this section is updated. Do not treat any item as sequenced continuation work unless it appears here explicitly.
+- **Approved next ticket:** `MC-S2-019` — Withdrawal fallback-path clarity. This is the **only** approved next ticket for Cursor to plan against until this section is updated again.
+- Do not treat any other item as sequenced continuation work unless it appears here explicitly.
 - Cursor must not assume continuation beyond **§6** merged truth and current governance.
 - Cursor must not continue automatically into work beyond what is explicitly defined in this file for an active ticket.
 - Cursor must not drift beyond explicitly defined scope.
+
+**Active ticket brief:** Full hand-off for **`MC-S2-019`** is in **§25**.
 
 **Last completed ticket (summary):** `MC-S2-018` — Withdrawal next-step guidance baseline — merged implementation truth in **§6** (`MC-S2-018`); shipped summary in **§24**.
 
@@ -988,15 +991,152 @@ Add a compact, read-only trust layer on the withdraw surface that gives calm **c
 3. **`apps/frontend/app/(app)/withdraw/page.tsx`** — fourth subordinate block (`withdraw-status-next-step-guidance`) below MC-S2-017 unresolved-path strip; quiet `text-xs` / muted presentation.
 4. **`apps/frontend/__tests__/public-status-next-step-guidance.test.ts`**, **`apps/frontend/__tests__/withdraw.page.test.tsx`** — trust-contract and withdraw integration coverage.
 
-**Follow-ups:** None sequenced in **§7** until updated.
+**Follow-ups:** Approved successor **`MC-S2-019`** — see **§7** (approved next ticket) and **§25** (active brief).
 
 ---
 
-## 25. Immediate next-use guidance
+## 25. Active execution ticket - MC-S2-019 (Withdrawal fallback-path clarity)
+
+**Ticket:** `MC-S2-019` — Withdrawal fallback-path clarity  
+**Suggested branch:** `feat/mc-s2-019-withdrawal-fallback-path-clarity`
+
+### Objective
+
+Add a compact, read-only trust layer on the withdraw surface that helps users understand when the normal withdrawal path may not be completing cleanly and Hedgr is still preserving a constrained, trust-safe path forward.
+
+This surface should help users understand:
+
+- that a non-final withdrawal can remain on a constrained path without being abandoned
+- that fallback-path language describes continuity of handling, not hidden execution or support escalation
+- what users should and should not infer when the normal path is not yet resolving
+- that Hedgr is preserving withdrawal integrity even when the smooth path is not complete
+
+without implying:
+
+- guaranteed fallback execution
+- guaranteed timing or completion
+- hidden support workflows
+- manual intervention unless already surfaced in current UI truth
+- treasury execution visibility
+- settlement authority beyond current public status truth
+
+### Why this ticket exists now
+
+The withdraw trust surface now explains:
+
+- lifecycle integrity
+- exception-state meaning
+- reconciliation / completion-adjacent non-finality
+- unresolved-path meaning
+- next-step continuity
+
+The next remaining trust gap is fallback-path clarity.
+
+Users may now understand that a withdrawal is still pending and that Hedgr has not gone silent, but they still need a calm explanation for the case where the smooth path is not resolving cleanly and the system remains on a constrained, non-final path.
+
+This ticket closes that gap by making fallback-path meaning legible without inventing new public states, support promises, or backend authority.
+
+### In scope
+
+- compact fallback-path clarification on the withdraw surface
+- plain-language messaging for already-existing public non-final states
+- calm framing that explains:
+  - the current path may be slower or more constrained than the ideal flow
+  - that does not automatically mean loss or failure
+  - what not to infer from continued non-finality
+- reuse of current withdrawal/public-status vocabulary wherever possible
+- repo-native tests covering:
+  - rendering
+  - copy presence
+  - intended non-final-state behavior
+  - anti-drift guardrails against guarantees, support-console semantics, or hidden-action implications
+
+### Out of scope
+
+- backend fallback logic
+- support workflow integration
+- new transaction states
+- notifications
+- messaging or email triggers
+- manual remediation tooling
+- settlement guarantees
+- policy runtime changes
+- ledger mutation
+- Copilot involvement
+
+### Must not do
+
+- imply funds have moved
+- imply fallback-path language is a promise of completion
+- imply escalation or support handling unless already visible in current UI truth
+- invent user actions not already represented in the product
+- turn the withdraw surface into a case-management or operations console
+- overstate manual review unless already canonically represented
+- introduce hidden-path or hidden-operations rhetoric
+
+### User outcome
+
+After this ticket, a user should feel:
+
+- Hedgr remains understandable when the smooth withdrawal path is not completing cleanly
+- continued non-finality can still be part of a constrained, legitimate path
+- the product is not abandoning the user during friction
+- trust continues even when the ideal path is not immediately resolving
+
+### Likely implementation surface
+
+Inspect first:
+
+- `apps/frontend/app/(app)/withdraw/`
+- `apps/frontend/lib/tx/`
+- `apps/frontend/__tests__/`
+- any current public withdrawal status helpers already used by the withdraw page
+
+### Most likely edit
+
+- the existing withdraw trust/status surface
+- tx-layer public-status copy utilities if a small canonical fallback-path seam is needed
+- related RTL tests
+
+### Possible create
+
+- one small withdraw trust component for fallback-path clarity if needed
+- one ticket-local copy module only if tx-layer extension is clearly insufficient
+- no new state contract unless current public-status truth clearly requires one
+
+### Acceptance shape
+
+A strong implementation will:
+
+1. add a compact fallback-path clarification surface to the shipped withdraw experience
+2. make constrained or slower non-final withdrawal states easier to understand without increasing alarm
+3. remain clearly read-only and informational
+4. avoid guarantees, escalation promises, support-console semantics, or backend authority expansion
+5. preserve current withdrawal/public-status vocabulary where still valid
+6. include regression-resistant test coverage for the new fallback-path trust layer
+
+### Implementation posture
+
+- read-only
+- frontend-centered
+- informational only
+- calm and trust-first
+- fallback-path confidence focused
+- reversible
+- minimal surface area
+- doctrine-constrained
+
+This ticket should behave as a trust clarification layer, not an operational fallback workflow or support surface.
+
+**Status:** Approved — not yet merged. When shipped, record merged truth in **§6** and the next approved ticket in **§7**; move this brief to a completed-ticket section consistent with **§21–§24**.
+
+---
+
+## 26. Immediate next-use guidance
 
 Use this file as the continuity primer before asking Cursor to review or implement the next explicitly approved ticket touching engine posture, simulation, allocation, policy, trust, Copilot behavior, or operational withdrawal clarity.
 
-- for shipped review snapshot, cadence, change signal, and recent stability memory, see §17 (`MC-S2-011`), §18 (`MC-S2-012`), §19 (`MC-S2-013`), and §20 (`MC-S2-014`); for withdraw exception-path clarification, see **§6** (`MC-S2-015`) and **§21**; for withdraw reconciliation / completion-adjacent clarification, see **§6** (`MC-S2-016`) and **§22**; for withdraw unresolved-path guidance, see **§6** (`MC-S2-017`) and **§23**; for withdraw next-step continuity guidance, see **§6** (`MC-S2-018`) and **§24**; for the current active ticket (if any), see **§7**
+- for shipped review snapshot, cadence, change signal, and recent stability memory, see §17 (`MC-S2-011`), §18 (`MC-S2-012`), §19 (`MC-S2-013`), and §20 (`MC-S2-014`); for withdraw exception-path clarification, see **§6** (`MC-S2-015`) and **§21**; for withdraw reconciliation / completion-adjacent clarification, see **§6** (`MC-S2-016`) and **§22**; for withdraw unresolved-path guidance, see **§6** (`MC-S2-017`) and **§23**; for withdraw next-step continuity guidance, see **§6** (`MC-S2-018`) and **§24**; for the approved active ticket (**`MC-S2-019`**), see **§7** and **§25**
 - assess whether a requested change needs an ADR
 - understand current repo governance and architecture posture
 - confirm whether a proposed task fits the current read-only boundary
@@ -1011,7 +1151,7 @@ For deeper context, open next:
 
 ---
 
-## 26. Naming note
+## 27. Naming note
 The intended hand-off file name is `HEDGR_STATUS.md`.
 
 Continue using:
