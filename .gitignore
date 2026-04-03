@@ -29,6 +29,7 @@ coverage/
 # Environment & Logs
 # ─────────────────────────────────────────────────────────────────────────────
 .env
+.env.local
 .env.*.local
 
 logs/
