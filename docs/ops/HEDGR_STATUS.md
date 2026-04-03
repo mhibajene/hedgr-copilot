@@ -499,6 +499,18 @@ Implementation posture preserved:
 
 - dev-only, review-only, simulation-only; not a production control plane; no new `PublicTxStatus`; no backend or policy runtime changes; ADR 0017 records non-precedent framing for bypass and placeholders
 
+### MC-S2-022 - Local stub transaction-path continuity
+
+Implementation truth:
+
+- **static review hints:** `apps/frontend/lib/deposits/local-stub-deposit-review-hints.ts` — bounded bullets (3) for local stub deposit API failure; no dynamic payloads or endpoint dumps
+- **deposit:** `apps/frontend/app/(app)/deposit/page.tsx` — on `FAILED` after `postDeposit` rejection, existing user-facing `ErrorState` unchanged; when `isLocalDevSimulationSeamEnabled()` from `apps/frontend/lib/dev/local-simulation-guard.ts`, renders dev-only aside `data-testid="deposit-local-stub-failure-hints"` (no stack traces, raw HTTP, or response bodies)
+- **RTL:** `apps/frontend/__tests__/deposit.page.test.tsx` — hints visible only under approved local dev guard; absent when `NODE_ENV=test` or `CI=true`; sanitized failure copy preserved; no thrown error text in DOM
+
+Implementation posture preserved:
+
+- local review-harness hardening only; not frontend-only fake deposit completion; no new transaction semantics, fallback pricing, production behavior changes, or backend contract changes; no new ADR
+
 ### Allocation band label UX legibility (merged baseline)
 
 The following allocation trust-surface UX refinement is merged and part of the current dashboard baseline:
@@ -544,15 +556,22 @@ Completed and merged:
 - `MC-S2-019` - Withdrawal fallback-path clarity (constrained-path)
 - `MC-S2-020` - Market-data failure continuity baseline
 - `MC-S2-021` - Transaction mock-state observability seam
+- `MC-S2-022` - Local stub transaction-path continuity
 
 Current active ticket status:
 
-- **No approved next ticket** is recorded in this file until one is explicitly added below. Do not treat any item as sequenced continuation work unless it appears here.
-- Cursor must not assume continuation beyond **§6** merged truth and current governance.
+- **Approved next ticket:** none recorded in this file. When governance approves the next sequenced ticket, add it here explicitly. Do not treat any other item as sequenced continuation work until it appears here.
+- Cursor must not assume continuation beyond **§6** merged truth, **§7a** active brief (when populated), and current governance.
 - Cursor must not continue automatically into work beyond what is explicitly defined in this file for an active ticket.
 - Cursor must not drift beyond explicitly defined scope.
 
-**Last completed ticket (summary):** `MC-S2-021` — Transaction mock-state observability seam — merged implementation truth in **§6** (`MC-S2-021`); shipped summary in **§27**.
+**Last completed ticket (summary):** `MC-S2-022` — Local stub transaction-path continuity — merged implementation truth in **§6** (`MC-S2-022`); shipped summary in **§28**.
+
+---
+
+## 7a. Active execution ticket
+
+**No active execution ticket** is recorded here. When the next ticket is approved, replace this section with the full execution brief (historical example: **§28** `MC-S2-022`).
 
 ---
 
@@ -1099,15 +1118,30 @@ Add a read-only degraded-state trust layer on deposit and withdraw so routes sta
 8. **`apps/frontend/__tests__/deposit.page.test.tsx`**, **`withdraw.page.test.tsx`** — MC-S2-021 seam coverage.
 9. **`docs/decisions/0017-transaction-review-simulator-dev-seam-mc-s2-021.md`** — boundary ADR (not doctrine expansion).
 
-**Follow-ups:** Next approved ticket TBD in **§7**.
+**Follow-ups:** Shipped successor **`MC-S2-022`** (§28); see **§6** merged truth.
 
 ---
 
-## 28. Immediate next-use guidance
+## 28. Completed execution ticket - MC-S2-022 (Local stub transaction-path continuity)
+
+**Ticket:** `MC-S2-022` — Local stub transaction-path continuity  
+**Suggested branch:** `feat/mc-s2-022-local-stub-transaction-path-continuity`
+
+### Shipped summary
+
+1. **`apps/frontend/lib/deposits/local-stub-deposit-review-hints.ts`** — three static bullets for local stub deposit API failure orientation (no dynamic dumps).
+2. **`apps/frontend/app/(app)/deposit/page.tsx`** — after `postDeposit` failure, existing `ErrorState` unchanged; when `isLocalDevSimulationSeamEnabled()`, dev-only aside `deposit-local-stub-failure-hints` below it (MC-S2-022).
+3. **`apps/frontend/__tests__/deposit.page.test.tsx`** — hints under local dev guard only; hidden for `NODE_ENV=test` and `CI=true`; no raw error leakage.
+
+**Follow-ups:** Record the next approved ticket in **§7** and **§7a** when governance adds it.
+
+---
+
+## 29. Immediate next-use guidance
 
 Use this file as the continuity primer before asking Cursor to review or implement the next explicitly approved ticket touching engine posture, simulation, allocation, policy, trust, Copilot behavior, or operational withdrawal clarity.
 
-- for the **active** next ticket, see **§7** (none recorded until explicitly added)
+- for the **active** next ticket, see **§7** and **§7a** (when populated)
 - for transaction mock-state review seam (dev-only), see **§6** (`MC-S2-021`) and **§27**; ADR **0017**
 - for shipped review snapshot, cadence, change signal, and recent stability memory, see §17 (`MC-S2-011`), §18 (`MC-S2-012`), §19 (`MC-S2-013`), and §20 (`MC-S2-014`); for withdraw exception-path clarification, see **§6** (`MC-S2-015`) and **§21**; for withdraw reconciliation / completion-adjacent clarification, see **§6** (`MC-S2-016`) and **§22**; for withdraw unresolved-path guidance, see **§6** (`MC-S2-017`) and **§23**; for withdraw next-step continuity guidance, see **§6** (`MC-S2-018`) and **§24**; for withdraw constrained-path / fallback-path clarity, see **§6** (`MC-S2-019`) and **§25**; for market-data failure continuity (deposit/withdraw degraded state), see **§6** (`MC-S2-020`) and **§26**
 - assess whether a requested change needs an ADR
@@ -1124,7 +1158,7 @@ For deeper context, open next:
 
 ---
 
-## 29. Naming note
+## 30. Naming note
 The intended hand-off file name is `HEDGR_STATUS.md`.
 
 Continue using:
