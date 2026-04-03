@@ -71,6 +71,8 @@ When changing **`apps/frontend/lib/engine/**`** or shipped Stability Engine trus
 4. `docs/decisions/0014-stability-engine-read-only-in-sprint-2.md`
 5. `docs/decisions/0013-allocation-bands-informational-not-accounting.md`
 
+Sprint planning procedure (subordinate to §7 / §7a): `docs/ops/HEDGR_SPRINT_PLANNING_PROTOCOL.md`
+
 If anything conflicts, stop and surface it explicitly (do not silently reconcile).
 
 ## 8) Decision Logging (ADR)
@@ -155,6 +157,8 @@ When changing **`apps/frontend/lib/engine/**`** or shipped Stability Engine trus
 3. `docs/decisions/0015-stability-engine-is-the-system-center.md`
 4. `docs/decisions/0014-stability-engine-read-only-in-sprint-2.md`
 5. `docs/decisions/0013-allocation-bands-informational-not-accounting.md`
+
+Sprint planning procedure (subordinate to §7 / §7a): `docs/ops/HEDGR_SPRINT_PLANNING_PROTOCOL.md`
 
 If anything conflicts, stop and surface it explicitly (do not silently reconcile).
 
