@@ -14,5 +14,9 @@ export {
   MarketDataContinuityPanel,
   type MarketDataContinuityPanelProps,
 } from './MarketDataContinuityPanel';
+export {
+  TxReviewSimulatorBanner,
+  type TxReviewSimulatorBannerProps,
+} from './TxReviewSimulatorBanner';
 export { PolicyDisclosure, type PolicyDisclosureProps, type DisclosureKey, DISCLOSURE_COPY } from './PolicyDisclosure';
 

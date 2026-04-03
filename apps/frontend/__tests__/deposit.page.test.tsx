@@ -43,6 +43,10 @@ vi.mock('../lib/deposits/client', () => ({
   postDeposit: vi.fn(),
 }));
 
+vi.mock('next/navigation', () => ({
+  useSearchParams: vi.fn(() => new URLSearchParams()),
+}));
+
 vi.mock('../components', async (importOriginal) => {
   const actual = await importOriginal<typeof import('../components')>();
   return {
@@ -61,11 +65,26 @@ vi.mock('@hedgr/ui', () => ({
 import DepositPage from '../app/(app)/deposit/page';
 import { useLatestFx } from '../lib/hooks/useLatestFx';
 import { CONVERSION_PREVIEW_UNAVAILABLE_PLACEHOLDER } from '../lib/fx/market-data-continuity-copy';
+import { useSearchParams } from 'next/navigation';
+import { TX_REVIEW_BYPASS_FX_PARAM } from '../lib/tx';
+
+const ORIGINAL_CI = process.env.CI;
+const ORIGINAL_NODE_ENV = process.env.NODE_ENV;
+const ORIGINAL_APP_ENV = process.env.NEXT_PUBLIC_APP_ENV;
 
 afterEach(() => {
   cleanup();
   vi.restoreAllMocks();
   vi.useRealTimers();
+  vi.mocked(useSearchParams).mockReturnValue(new URLSearchParams() as ReturnType<typeof useSearchParams>);
+  vi.unstubAllEnvs();
+  if (ORIGINAL_CI === undefined) {
+    delete process.env.CI;
+  } else {
+    process.env.CI = ORIGINAL_CI;
+  }
+  process.env.NODE_ENV = ORIGINAL_NODE_ENV;
+  process.env.NEXT_PUBLIC_APP_ENV = ORIGINAL_APP_ENV;
 });
 
 describe('DepositPage market-data degraded state (MC-S2-020)', () => {
@@ -115,5 +134,58 @@ describe('DepositPage market-data degraded state (MC-S2-020)', () => {
     expect(screen.getByTestId('deposit-fx-block')).toBeTruthy();
     expect(screen.queryByTestId('deposit-market-data-continuity')).toBeNull();
     expect(screen.getByTestId('deposit-conversion-preview').textContent).toMatch(/\$5\.00/);
+  });
+});
+
+describe('DepositPage tx review seam (MC-S2-021)', () => {
+  function stubApprovedLocalDev() {
+    vi.unstubAllEnvs();
+    delete process.env.CI;
+    process.env.NODE_ENV = 'development';
+    process.env.NEXT_PUBLIC_APP_ENV = 'dev';
+  }
+
+  test('FX error without review params: confirm disabled, no banner', async () => {
+    stubApprovedLocalDev();
+    vi.useFakeTimers();
+    vi.mocked(useLatestFx).mockReturnValue({
+      status: 'error',
+      retry: vi.fn(),
+    });
+    vi.mocked(useSearchParams).mockReturnValue(new URLSearchParams() as ReturnType<typeof useSearchParams>);
+
+    render(<DepositPage />);
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(350);
+    });
+
+    expect(screen.queryByTestId('deposit-tx-review-simulator-banner')).toBeNull();
+    const confirm = screen.getByRole('button', { name: 'Confirm' }) as HTMLButtonElement;
+    expect(confirm.disabled).toBe(true);
+  });
+
+  test('FX error + txReviewBypassFx=1: confirm enabled, banner visible, preview stays unavailable (no fake $)', async () => {
+    stubApprovedLocalDev();
+    vi.useFakeTimers();
+    vi.mocked(useLatestFx).mockReturnValue({
+      status: 'error',
+      retry: vi.fn(),
+    });
+    vi.mocked(useSearchParams).mockReturnValue(
+      new URLSearchParams(`${TX_REVIEW_BYPASS_FX_PARAM}=1`) as ReturnType<typeof useSearchParams>,
+    );
+
+    render(<DepositPage />);
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(350);
+    });
+
+    expect(screen.getByTestId('deposit-tx-review-simulator-banner')).toBeTruthy();
+    const preview = screen.getByTestId('deposit-conversion-preview');
+    expect(preview.textContent).toContain(CONVERSION_PREVIEW_UNAVAILABLE_PLACEHOLDER);
+    expect(preview.textContent).not.toMatch(/FX Preview:\s*\$/);
+
+    const confirm = screen.getByRole('button', { name: 'Confirm' }) as HTMLButtonElement;
+    expect(confirm.disabled).toBe(false);
   });
 });

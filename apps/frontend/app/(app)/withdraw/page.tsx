@@ -1,13 +1,19 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { Suspense, useState, useEffect, useMemo } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { withdrawMock } from '../../../lib/payments/withdraw.mock';
 import { useBalance } from '../../../lib/hooks/useBalance';
 import { useLedgerStore } from '../../../lib/state/ledger';
 import { useWalletStore } from '../../../lib/state/wallet';
 import { getBalanceMode } from '../../../lib/state/balance.mode';
 import { EmptyState, ErrorState } from '@hedgr/ui';
-import { BalanceWithLocalEstimate, FxRateBlock, MarketDataContinuityPanel } from '../../../components';
+import {
+  BalanceWithLocalEstimate,
+  FxRateBlock,
+  MarketDataContinuityPanel,
+  TxReviewSimulatorBanner,
+} from '../../../components';
 import { useLatestFx } from '../../../lib/hooks/useLatestFx';
 import { resolveMarket, resolveLocalCurrencyCode } from '../../../config/market';
 import {
@@ -18,6 +24,8 @@ import {
   getPresentationForPublicStatus,
   getReconciliationClarificationLines,
   getUnresolvedPathClarificationLines,
+  resolveTxReviewSimulatorFlags,
+  isTxReviewSeamActive,
 } from '../../../lib/tx';
 
 interface WithdrawMethod {
@@ -50,34 +58,41 @@ const WITHDRAW_STATUS_CONTENT: Record<
   },
 };
 
-export default function WithdrawPage() {
+function WithdrawPageContent() {
+  const searchParams = useSearchParams();
+  const search = useMemo(() => {
+    const s = searchParams?.toString() ?? '';
+    return s ? `?${s}` : undefined;
+  }, [searchParams]);
+
+  const txReviewFlags = useMemo(() => resolveTxReviewSimulatorFlags(search), [search]);
+  const reviewSeamActive = isTxReviewSeamActive(txReviewFlags);
+
   const { available, refresh, isLoading: balanceLoading, error: balanceError } = useBalance();
   const fx = useLatestFx('USDZMW');
   const quote = resolveLocalCurrencyCode(resolveMarket());
   const rate = fx.status === 'success' && fx.data ? fx.data.rate : null;
   const confirmTx = useLedgerStore((s) => s.confirm);
   const failTx = useLedgerStore((s) => s.fail);
-  
-  // Legacy wallet store for backward compatibility
+
   const debitWallet = useWalletStore((s) => s.debitUSD);
-  
+
   const [usd, setUsd] = useState(1);
   const [txnRef, setTxnRef] = useState<string | null>(null);
   const [status, setStatus] = useState<WithdrawPageStatus>('IDLE');
-  
-  // Withdraw methods state
+
   const [withdrawMethods, setWithdrawMethods] = useState<WithdrawMethod[]>([]);
   const [methodsLoading, setMethodsLoading] = useState(true);
   const [methodsError, setMethodsError] = useState<string | null>(null);
 
-  // Fetch withdrawal methods
+  const canConfirmWithoutRate = txReviewFlags.bypassFxForConfirm;
+  const rateAllowsConfirm = rate !== null || canConfirmWithoutRate;
+
   useEffect(() => {
     const fetchWithdrawMethods = async () => {
       setMethodsLoading(true);
       setMethodsError(null);
       try {
-        // Simulate fetching withdrawal methods
-        // In a real app, this would be an API call
         await new Promise((resolve) => setTimeout(resolve, 300));
         setWithdrawMethods([
           { id: 'bank', name: 'Bank Transfer', available: true },
@@ -132,17 +147,18 @@ export default function WithdrawPage() {
   }, [txnRef, debitWallet, usd, confirmTx, failTx, refresh]);
 
   const confirm = async () => {
-    if (usd <= 0 || usd > available || rate === null) return;
+    if (usd <= 0 || usd > available || !rateAllowsConfirm) return;
 
     setStatus('PENDING');
-    const tx = await withdrawMock.createWithdraw(usd);
+    const tx = await withdrawMock.createWithdraw(usd, {
+      skipAutoConfirm: txReviewFlags.holdWithdrawPending,
+    });
     setTxnRef(tx.txn_ref);
   };
 
   const retryLoadMethods = () => {
     setMethodsLoading(true);
     setMethodsError(null);
-    // Simulate re-fetching
     setTimeout(() => {
       setWithdrawMethods([
         { id: 'bank', name: 'Bank Transfer', available: true },
@@ -174,7 +190,6 @@ export default function WithdrawPage() {
     ? getFallbackPathClarificationLines(activeStatus.publicStatus)
     : null;
 
-  // Error state for loading balance
   if (balanceError) {
     return (
       <main className="p-6 space-y-4 max-w-xl">
@@ -190,7 +205,6 @@ export default function WithdrawPage() {
     );
   }
 
-  // Error state for loading withdrawal methods
   if (methodsError) {
     return (
       <main className="p-6 space-y-4 max-w-xl">
@@ -206,7 +220,6 @@ export default function WithdrawPage() {
     );
   }
 
-  // Loading state
   if (methodsLoading || balanceLoading) {
     return (
       <main className="p-6 space-y-4 max-w-xl">
@@ -218,7 +231,6 @@ export default function WithdrawPage() {
     );
   }
 
-  // Empty state for no available withdrawal methods
   if (availableMethods.length === 0) {
     return (
       <main className="p-6 space-y-4 max-w-xl">
@@ -248,7 +260,6 @@ export default function WithdrawPage() {
     );
   }
 
-  // Empty state for zero balance
   if (available === 0) {
     return (
       <main className="p-6 space-y-4 max-w-xl">
@@ -281,6 +292,9 @@ export default function WithdrawPage() {
   return (
     <main className="p-6 space-y-4 max-w-xl">
       <h1 className="text-2xl font-semibold">Withdraw</h1>
+      {reviewSeamActive ? (
+        <TxReviewSimulatorBanner data-testid="withdraw-tx-review-simulator-banner" />
+      ) : null}
       {fx.status === 'error' ? (
         <MarketDataContinuityPanel
           route="withdraw"
@@ -305,11 +319,9 @@ export default function WithdrawPage() {
       {usd > available && (
         <p className="text-sm text-red-500">Amount exceeds available balance</p>
       )}
-      <button 
-        onClick={confirm} 
-        disabled={
-          status === 'PENDING' || usd <= 0 || usd > available || rate === null
-        } 
+      <button
+        onClick={confirm}
+        disabled={status === 'PENDING' || usd <= 0 || usd > available || !rateAllowsConfirm}
         className="rounded-xl p-3 shadow w-full bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
       >
         {status === 'PENDING' ? 'Processing…' : 'Confirm'}
@@ -413,5 +425,24 @@ export default function WithdrawPage() {
         />
       )}
     </main>
+  );
+}
+
+function WithdrawPageFallback() {
+  return (
+    <main className="p-6 space-y-4 max-w-xl">
+      <h1 className="text-2xl font-semibold">Withdraw</h1>
+      <div className="flex items-center justify-center py-12">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600" />
+      </div>
+    </main>
+  );
+}
+
+export default function WithdrawPage() {
+  return (
+    <Suspense fallback={<WithdrawPageFallback />}>
+      <WithdrawPageContent />
+    </Suspense>
   );
 }
