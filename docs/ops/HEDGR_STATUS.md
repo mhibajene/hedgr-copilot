@@ -702,7 +702,7 @@ Completed and merged:
 - `MC-S3-002` - Post–MC-S3-001 governance continuity (§6b / §7 handoff traceability and anti-drift cross-links)
 - `MC-S3-003` - ADR 0016 acceptance and Sprint 2 index / ops reconciliation (documentation and ADR status only)
 - `MC-S3-004` - Regression resistance for already-shipped Stability Engine trust surfaces (test-only; merged PR **#111**)
-- `MC-S3-005` - Warmth Layer v1: constrained presentation refinement for shipped Stability Engine trust surfaces (presentation-only; closeout **ADR 0022**; completed record **§36**)
+- `MC-S3-005` - Warmth Layer v1: constrained presentation refinement for shipped Stability Engine trust surfaces (presentation-only; merged PR **#112**; closeout **ADR 0022**; completed record **§36**)
 
 Current active ticket status:
 
@@ -714,7 +714,7 @@ Current active ticket status:
 - Cursor must not continue automatically into work beyond what is explicitly defined in this file for an active ticket.
 - Cursor must not drift beyond explicitly defined scope.
 
-**Last completed ticket (summary):** `MC-S3-005` — Warmth Layer v1 presentation-only refinement on shipped Stability Engine trust surfaces (dashboard engine cluster TSX + `lib/engine` copy modules); **`MC-S3-004`** regression contract preserved; completed record in **§36**; closeout **ADR 0022**.
+**Last completed ticket (summary):** `MC-S3-005` — Warmth Layer v1 presentation-only refinement on shipped Stability Engine trust surfaces (dashboard engine cluster TSX + `lib/engine` copy modules); **`MC-S3-004`** regression contract preserved; completed record in **§36**; merged PR **#112**; closeout **ADR 0022**.
 
 ---
 
@@ -730,7 +730,7 @@ Until **§7** names a successor:
 
 ---
 
-**Archived brief (MC-S3-005):** Warmth Layer v1 — constrained **presentation-only** refinement for shipped Stability Engine trust surfaces (posture header, allocation bands container, protective guidance, stability explainer, review snapshot cluster) in **`apps/frontend`** plus ticket-local copy in **`apps/frontend/lib/engine/`**; **no** new trust states, **no** IA or execution widening, **`MC-S3-004`** Vitest notice/mock contract preserved. No new governing ADR under ticket intent beyond closeout record **ADR 0022**. Completed record: **§36**.
+**Archived brief (MC-S3-005):** Warmth Layer v1 — constrained **presentation-only** refinement for shipped Stability Engine trust surfaces (posture header, allocation bands container, protective guidance, stability explainer, review snapshot cluster) in **`apps/frontend`** plus ticket-local copy in **`apps/frontend/lib/engine/`**; **no** new trust states, **no** IA or execution widening, **`MC-S3-004`** Vitest notice/mock contract preserved. No new governing ADR under ticket intent beyond closeout record **ADR 0022**. Merged PR **#112**. Completed record: **§36**.
 
 **Archived brief (MC-S3-004):** Regression resistance for already-shipped Stability Engine trust surfaces — **test-only**; Vitest contract for **`ENGINE_NOTICE_COPY`** (informational / non-ledger framing on non-`normal` postures) and **`getMockEngineState`** notice wiring — **`apps/frontend/__tests__/engine-notices-and-mock-contract.test.ts`**. No ADR or doctrine change under ticket intent; no product semantics change. Merged PR **#111**. Completed record: **§35**.
 
@@ -749,7 +749,7 @@ Until **§7** names a successor:
 - **Governance continuity (completed):** `MC-S3-002` — **§33** (completed ticket record).
 - **ADR 0016 acceptance (completed):** `MC-S3-003` — **§34** (completed ticket record).
 - **Regression resistance (test-only, completed):** `MC-S3-004` — **§35** (completed ticket record).
-- **Warmth Layer v1 (presentation-only, completed):** `MC-S3-005` — **§36** (completed ticket record); closeout **ADR 0022**.
+- **Warmth Layer v1 (presentation-only, completed):** `MC-S3-005` — **§36** (completed ticket record); merged PR **#112**; closeout **ADR 0022**.
 - **Merged implementation truth:** **§6** remains canonical for shipped code boundaries.
 - When a successor ticket is approved, record it in **§7** and restore the execution brief in **§7a** per governance discipline.
 - Do not infer continuation work from *Proposed* ADRs or roadmap narrative unless **§7** names a ticket.
@@ -1480,6 +1480,8 @@ Refined spacing, typography, and humane microcopy on the shipped dashboard Stabi
 
 - **`MC-S3-004`** Vitest regression contract for **`ENGINE_NOTICE_COPY`** and **`getMockEngineState`** notice wiring remains valid; non-`normal` notice bodies retain informational / non-ledger framing.
 - **No** new governing product ADR under ticket intent; closeout traceability in **ADR 0022** (documentation record only).
+
+Merged PR **#112**.
 
 ### Sequencing note
 
