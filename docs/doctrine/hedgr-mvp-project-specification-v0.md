@@ -1,4 +1,10 @@
-# Hedgr MVP Project Specification
+# Hedgr MVP Project Specification (Archived)
+
+> **Archive status — not authoritative**  
+> This file is a **historical draft only**. Do **not** use it for product, design, or engineering authority. The **canonical** MVP specification is [`hedgr-mvp-project-specification.md`](./hedgr-mvp-project-specification.md) (current version).  
+> This document is retained for audit trail and operational archaeology. Stack choices, UX patterns, and sequencing here may contradict current doctrine (e.g. Stability Engine authority, read-only phases, UX guardrails).
+
+---
 
 ## Elevator Pitch
 
