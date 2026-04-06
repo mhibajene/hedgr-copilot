@@ -3,11 +3,11 @@ import type { EnginePosture } from './types';
 /** One short sentence per posture: definition only—no banner disclaimers duplicated here. */
 export const ENGINE_POSTURE_CONTEXT: Record<EnginePosture, string> = {
   normal:
-    'Steady conditions; balanced liquidity, core stability, and yield capacity targets.',
+    'Conditions look steady. Targets balance liquidity, core stability, and growth capacity.',
   tightening:
     'Shifting toward stronger protection and higher liquidity priority.',
   tightened:
-    'Elevated protection with higher liquidity priority than typical.',
+    'More protective than usual, with liquidity prioritized.',
   recovery:
-    'Moving toward steadier targets while keeping liquidity discipline.',
+    'Easing toward steadier targets while keeping liquidity discipline.',
 };

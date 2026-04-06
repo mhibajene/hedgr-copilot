@@ -33,20 +33,22 @@ export function EnginePostureHeader({ engineState }: EnginePostureHeaderProps) {
   }
 
   return (
-    <header className="space-y-3">
+    <header className="space-y-4">
       <div className="flex items-center justify-between gap-3">
-        <h1 className="text-2xl font-semibold">Dashboard</h1>
+        <h1 className="text-2xl font-semibold tracking-tight text-slate-900">
+          Dashboard
+        </h1>
         <span
           data-testid="engine-posture-badge"
           data-posture={posture}
-          className={`inline-flex items-center rounded-full border px-3 py-1 text-xs font-semibold tracking-wide ${BADGE_TONES[posture]}`}
+          className={`inline-flex items-center rounded-full border px-3.5 py-1.5 text-xs font-semibold tracking-wide ${BADGE_TONES[posture]}`}
         >
           {BADGE_LABELS[posture]}
         </span>
       </div>
 
       <p
-        className="max-w-2xl text-sm text-slate-600"
+        className="max-w-2xl text-sm leading-relaxed text-slate-600"
         data-testid="engine-posture-context"
       >
         {ENGINE_POSTURE_CONTEXT[posture]}
@@ -56,10 +58,10 @@ export function EnginePostureHeader({ engineState }: EnginePostureHeaderProps) {
         <div
           data-testid="engine-posture-banner"
           role="status"
-          className="rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900"
+          className="rounded-2xl border border-amber-200/90 bg-amber-50/95 px-5 py-3.5 text-sm leading-snug text-amber-950 shadow-sm shadow-amber-900/5"
         >
-          <p className="font-semibold">{notice?.title}</p>
-          <p className="mt-1 text-amber-800">{notice?.body}</p>
+          <p className="font-semibold text-amber-950">{notice?.title}</p>
+          <p className="mt-2 text-amber-900/90">{notice?.body}</p>
         </div>
       ) : null}
     </header>

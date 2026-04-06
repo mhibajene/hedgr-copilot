@@ -45,25 +45,25 @@ export function EngineAllocationBands({
   return (
     <section
       aria-labelledby="engine-allocation-bands-title"
-      className="space-y-4 rounded-2xl border border-slate-200 bg-slate-50/80 p-5"
+      className="space-y-6 rounded-2xl border border-slate-200/90 bg-slate-50/90 p-6 shadow-sm shadow-slate-900/5"
       data-testid="engine-allocation-bands"
     >
-      <div className="space-y-3">
+      <div className="space-y-4">
         <h2
           id="engine-allocation-bands-title"
-          className="text-base font-semibold text-slate-900"
+          className="text-base font-semibold tracking-tight text-slate-900"
         >
           Target posture
         </h2>
         <p
-          className="max-w-2xl text-sm text-slate-600"
+          className="max-w-2xl text-sm leading-relaxed text-slate-600"
           data-testid="engine-allocation-bands-caption"
         >
-          How the system balances availability, stability, and room for returns
-          for this posture.
+          A clear read on how availability, stability, and room for returns
+          balance for this posture.
         </p>
         <ul
-          className="max-w-2xl list-none space-y-2 p-0 text-sm text-slate-600"
+          className="max-w-2xl list-none space-y-3 p-0 text-sm leading-relaxed text-slate-600"
           data-testid="engine-allocation-trust-legend"
         >
           <li>
@@ -92,7 +92,7 @@ export function EngineAllocationBands({
         </ul>
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-5">
         {BANDS.map(({ key, label }) => {
           const value = engineState[key];
           const descId = `engine-allocation-band-${key}-desc`;
@@ -101,30 +101,30 @@ export function EngineAllocationBands({
           return (
             <div
               key={key}
-              className="space-y-2"
+              className="space-y-2.5"
               data-testid={`engine-allocation-band-${key}`}
               aria-describedby={descId}
             >
               <div className="flex items-baseline justify-between gap-4">
-                <span className="text-sm font-medium text-slate-700">
+                <span className="text-sm font-medium text-slate-800">
                   {label}
                 </span>
-                <span className="text-sm font-semibold text-slate-900">
+                <span className="text-sm font-semibold tabular-nums text-slate-900">
                   {formatPct(value)}
                 </span>
               </div>
               <p
                 id={descId}
-                className="max-w-2xl text-xs leading-snug text-slate-600"
+                className="max-w-2xl text-xs leading-relaxed text-slate-600"
               >
                 {description}
               </p>
               <div
                 aria-hidden="true"
-                className="h-2 overflow-hidden rounded-full bg-slate-200"
+                className="h-2 overflow-hidden rounded-full bg-slate-200/90"
               >
                 <div
-                  className="h-full rounded-full bg-slate-500"
+                  className="h-full rounded-full bg-slate-500/90"
                   style={{ width: `${Math.max(0, Math.min(100, value))}%` }}
                 />
               </div>

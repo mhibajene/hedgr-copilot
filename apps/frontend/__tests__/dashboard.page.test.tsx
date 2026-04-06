@@ -3,6 +3,7 @@
 import React from 'react';
 import { afterEach, describe, expect, test, vi } from 'vitest';
 import { cleanup, render, screen } from '@testing-library/react';
+import { ENGINE_NOTICE_COPY } from '../lib/engine/notices';
 import type { EngineState } from '../lib/engine/types';
 
 (globalThis as typeof globalThis & { React: typeof React }).React = React;
@@ -105,7 +106,9 @@ describe('DashboardPage engine trust surface', () => {
     expect(screen.getByTestId('engine-allocation-bands')).toBeDefined();
     expect(screen.getByTestId('engine-protective-guidance')).toBeDefined();
     expect(screen.getByTestId('engine-stability-explainer')).toBeDefined();
-    expect(screen.getByText('Protection posture tightening')).toBeDefined();
+    expect(
+      screen.getByText(ENGINE_NOTICE_COPY.tightening.title),
+    ).toBeDefined();
   });
 
   test('mounts the engine posture header in the balance error path', () => {

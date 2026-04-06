@@ -3,11 +3,11 @@
  * Principle-level posture only—does not duplicate ENGINE_POSTURE_CONTEXT or ENGINE_NOTICE_COPY.
  */
 
-export const ENGINE_STABILITY_EXPLAINER_SUMMARY = 'How these targets work';
+export const ENGINE_STABILITY_EXPLAINER_SUMMARY = 'How to read these targets';
 
 /** One short intro line (informational framing). */
 export const ENGINE_STABILITY_EXPLAINER_INTRO =
-  'Short definitions for the labels above—informational posture, not ledger truth.';
+  'Plain-language definitions for the labels above—informational posture, not ledger truth.';
 
 export const ENGINE_STABILITY_EXPLAINER_TERMS: ReadonlyArray<{
   term: string;
@@ -30,8 +30,8 @@ export const ENGINE_STABILITY_EXPLAINER_TERMS: ReadonlyArray<{
 
 export const ENGINE_STABILITY_EXPLAINER_PRINCIPLES: readonly string[] = [
   'The split keeps availability, stability, and growth capacity visible together as system intent—not as a map of where funds sit.',
-  'When the system is more cautious, protection and liquidity can outweigh growth capacity. Posture reflects that caution level; it does not describe completed movement.',
+  'When the system is more cautious, protection and liquidity can outweigh growth capacity. Posture reflects that caution; it does not describe completed movement.',
 ];
 
 export const ENGINE_STABILITY_EXPLAINER_FOOTER =
-  'Targets are not accounting truth. Check your ledger for balances; bands do not imply funds have moved.';
+  'Targets are not accounting truth. Your ledger shows balances; these bands do not mean funds have moved.';
