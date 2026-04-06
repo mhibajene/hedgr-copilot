@@ -28,6 +28,7 @@ import {
 } from '../lib/engine/stability-review-snapshot-copy';
 import { getMockEngineState } from '../lib/engine/mock';
 import type { EngineState } from '../lib/engine/types';
+import { ENGINE_TRUST_INFORMATIONAL_DENYLIST } from './engine-trust-framing-denylist';
 
 function makeEngineState(overrides: Partial<EngineState> = {}): EngineState {
   return {
@@ -80,6 +81,24 @@ describe('EngineAllocationBands', () => {
     expect(legend).toMatch(/target share/i);
     expect(legend).toMatch(/spendable balance/i);
     expect(legend).toMatch(/targets do not mean funds have already moved/i);
+  });
+
+  test('keeps caption and trust legend free of execution, accounting-as-truth, and hype drift', () => {
+    render(<EngineAllocationBands engineState={makeEngineState()} />);
+
+    const caption =
+      screen.getByTestId('engine-allocation-bands-caption').textContent ?? '';
+    const legend =
+      screen.getByTestId('engine-allocation-trust-legend').textContent ?? '';
+    const combined = `${caption}\n${legend}`.toLowerCase();
+
+    for (const forbidden of ENGINE_TRUST_INFORMATIONAL_DENYLIST) {
+      expect(combined).not.toContain(forbidden);
+    }
+    expect(combined).not.toMatch(/\bexecuted\b/);
+    expect(combined).not.toMatch(/\ballocated to your\b/);
+    expect(combined).toMatch(/informational/i);
+    expect(combined).toMatch(/target/i);
   });
 
   test('renders band microcopy at phrase level', () => {
