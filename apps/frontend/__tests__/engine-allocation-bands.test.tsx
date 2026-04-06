@@ -65,10 +65,11 @@ describe('EngineAllocationBands', () => {
 
     const caption = screen.getByTestId('engine-allocation-bands-caption')
       .textContent;
-    expect(caption).toMatch(/balances.*availability/i);
+    expect(caption).toMatch(/availability/i);
     expect(caption).toMatch(/stability/i);
     expect(caption).toMatch(/room for returns/i);
     expect(caption).toMatch(/posture/i);
+    expect(caption).toMatch(/balance/i);
 
     const legend = screen.getByTestId('engine-allocation-trust-legend')
       .textContent;

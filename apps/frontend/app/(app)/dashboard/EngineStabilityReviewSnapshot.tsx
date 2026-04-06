@@ -92,24 +92,34 @@ export function EngineStabilityReviewSnapshot({
 
   return (
     <div
-      className="max-w-2xl space-y-2 border-t border-slate-200 pt-4 text-sm text-slate-700"
+      className="max-w-2xl space-y-3 border-t border-slate-200/90 pt-5 text-sm text-slate-700"
       data-testid="engine-stability-review-snapshot"
     >
-      <h3 className="text-sm font-semibold text-slate-900">
+      <h3 className="text-base font-semibold tracking-tight text-slate-900">
         {ENGINE_STABILITY_REVIEW_SNAPSHOT_TITLE}
       </h3>
-      <p data-testid="engine-stability-review-snapshot-stance">
+      <p
+        className="leading-relaxed text-slate-700"
+        data-testid="engine-stability-review-snapshot-stance"
+      >
         {getEngineStabilityReviewSnapshotStance(engineState.posture)}
       </p>
-      <p>{ENGINE_STABILITY_REVIEW_AVAILABLE_CONTINUITY}</p>
-      <p>{ENGINE_STABILITY_REVIEW_WITHDRAWAL_CONTINUITY}</p>
-      <p data-testid="engine-stability-review-snapshot-cadence">
+      <p className="leading-relaxed text-slate-600">
+        {ENGINE_STABILITY_REVIEW_AVAILABLE_CONTINUITY}
+      </p>
+      <p className="leading-relaxed text-slate-600">
+        {ENGINE_STABILITY_REVIEW_WITHDRAWAL_CONTINUITY}
+      </p>
+      <p
+        className="leading-relaxed text-slate-600"
+        data-testid="engine-stability-review-snapshot-cadence"
+      >
         {ENGINE_STABILITY_REVIEW_CADENCE_CUE}
       </p>
       {changeSignal !== null && (
         <>
           <p
-            className="text-sm text-slate-700"
+            className="text-sm leading-relaxed text-slate-700"
             data-testid="engine-stability-review-snapshot-change-signal"
           >
             {changeSignal === 'unchanged'
@@ -126,16 +136,16 @@ export function EngineStabilityReviewSnapshot({
       )}
       {memoryEntries.length > 0 && (
         <div
-          className="space-y-2 border-t border-slate-100 pt-3"
+          className="space-y-3 border-t border-slate-100 pt-4"
           data-testid="engine-stability-review-memory"
         >
           <h4 className="text-xs font-medium text-slate-800">
             {ENGINE_STABILITY_REVIEW_MEMORY_TITLE}
           </h4>
-          <p className="text-xs leading-snug text-slate-500">
+          <p className="text-xs leading-relaxed text-slate-500">
             {ENGINE_STABILITY_REVIEW_MEMORY_DISCLAIMER}
           </p>
-          <div className="space-y-3">
+          <div className="space-y-4">
             {memoryEntries.map((entry, index) => (
               <div
                 key={`${entry.viewedAt}-${index}`}

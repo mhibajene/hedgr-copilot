@@ -14,6 +14,12 @@ Sprint 2 is read-only, posture-first, and non-executing. These ADRs exist to ens
 
 **Traceability — ADR 0016 acceptance (MC-S3-003).** ADR **0016** is **Accepted** as a boundary reference for constrained retail presentation during the read-only engine phase; **`HEDGR_STATUS.md` §7** / **§7a** still govern any **implementation** ticket. Acceptance is **not** a substitute for **§7**-named scoped work.
 
+**Traceability — shipped-trust regression contract (MC-S3-004).** The Vitest lock for **`ENGINE_NOTICE_COPY`** and **`getMockEngineState`** notice wiring is recorded in **`HEDGR_STATUS.md` §35** and **ADR 0021**; it is **test-only** and does **not** add engine states or widen execution posture. Sequencing remains **§7** / **§7a** only.
+
+**Traceability — Warmth Layer v1 presentation refinement (MC-S3-005).** First **§7**-authorized **presentation-only** Warmth pass on shipped Stability Engine trust surfaces is recorded in **`HEDGR_STATUS.md` §36** and **ADR 0022**; it does **not** change read-only engine authority, allocation-as-informational posture, or ADR **0017** seam boundaries. Sequencing remains **§7** / **§7a** only.
+
+**Transition Readiness closeout records (ADR 0018–0022).** Repo-native **closeout notes** for **`MC-S3-001`**–**`MC-S3-005`** mirror completed governance, test, or presentation scoped work; they **do not** name the next ticket or supersede **`HEDGR_STATUS.md` §7**. See **`0018-mc-s3-001-post-foundation-boundary-readiness-documented.md`**, **`0019-mc-s3-002-governance-continuity-and-handoff-traceability-documented.md`**, **`0020-mc-s3-003-adr-0016-accepted-and-authority-surfaces-reconciled.md`**, **`0021-mc-s3-004-regression-resistance-for-shipped-trust-surfaces.md`**, **`0022-mc-s3-005-warmth-layer-v1-constrained-presentation-refinement-closeout.md`**.
+
 ---
 
 ## Sprint 2 Doctrine Summary
@@ -174,6 +180,15 @@ Documentation and review-path alignment only (e.g. `AGENTS.md`, PR template, han
 - ADR 0015
 
 Product-facing trust copy for posture context, notices, and allocation panel; read-only informational framing only. See `docs/ops/HEDGR_STATUS.md` §6 (MC-S2-006).
+
+### MC-S3-005 — Warmth Layer v1 (constrained presentation refinement)
+**Governed by**
+- ADR 0016 (presentation boundary and red lines)
+- ADR 0013
+- ADR 0014
+- ADR 0015
+
+Presentation-only refinement on shipped dashboard Stability Engine trust surfaces; **no** new trust states or execution semantics. Canonical merged truth: `docs/ops/HEDGR_STATUS.md` §6 (`MC-S3-005`); closeout: **§36**, **ADR 0022**.
 
 ### MC-S2-019 — Withdrawal fallback-path clarity
 **Governed by**

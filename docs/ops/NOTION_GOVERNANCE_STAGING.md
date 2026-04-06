@@ -6,7 +6,7 @@
 
 **Authority:** The repository is source of truth. Wording here must match `docs/decisions/0016-warmth-layer-doctrine-constrained-retail-refinement-track.md`, `docs/decisions/SPRINT-2-ADR-INDEX.md`, and `docs/ops/HEDGR_STATUS.md`. Wording must match **Accepted** ADR **0016** in repo; do not broaden scope or soften read-only / non-execution boundaries in Notion.
 
-**Last reconciled:** 2026-04-04 (`MC-S3-003`; ADR 0016 **Accepted**)
+**Last reconciled:** 2026-04-06 (`MC-S3-005` closeout; presentation-only Warmth v1 — **ADR 0022** closeout record)
 
 ---
 
@@ -73,3 +73,47 @@ Decision Log field names follow `docs/doctrine/hedgrops-decision-governance-and-
 - `docs/ops/HEDGR_STATUS.md` **§29** — completed ticket record for `MC-S2-023`
 
 This section exists only to remind that **downstream copy is secondary**; repo `HEDGR_STATUS.md` is the sole authoritative source for Foundation release-closeout logic.
+
+---
+
+## 6. Decision Log — MC-S3-004 execution closeout (copy row)
+
+Use when mirroring a completed **implementation** ticket (not a new ADR). Wording mirrors `docs/ops/HEDGR_STATUS.md` **§35** and **§6** (`MC-S3-004`).
+
+| Field | Value |
+| ----- | ----- |
+| **Decision ID / ticket** | MC-S3-004 |
+| **Title** | Regression resistance for already-shipped Stability Engine trust surfaces (test-only) |
+| **Status** | Completed (merged) |
+| **Decision Type** | Engineering / quality (regression contract) |
+| **Strategic Horizon** | Short-term (MVP / immediate sprint) |
+| **Visibility** | Internal |
+| **Date** | 2026-04-06 |
+| **Repo pointers** | `docs/ops/HEDGR_STATUS.md` §6 (`MC-S3-004`), §7, §7a, §35; `apps/frontend/__tests__/engine-notices-and-mock-contract.test.ts`; merged PR **#111** |
+
+**Summary / notes (concise)**
+
+- Vitest locks **`ENGINE_NOTICE_COPY`** (informational / non-ledger framing) and **`getMockEngineState`** notice wiring for non-`normal` postures.
+- No ADR or doctrine change; no product semantics change under ticket intent; hermetic CI posture unchanged (`AGENTS.md`).
+
+---
+
+## 7. Decision Log — MC-S3-005 execution closeout (copy row)
+
+Use when mirroring the completed **Warmth Layer v1** presentation ticket (not a new product doctrine ADR). Wording mirrors `docs/ops/HEDGR_STATUS.md` **§36** and **§6** (`MC-S3-005`).
+
+| Field | Value |
+| ----- | ----- |
+| **Decision ID / ticket** | MC-S3-005 |
+| **Title** | Warmth Layer v1: constrained presentation refinement for shipped Stability Engine trust surfaces |
+| **Status** | Completed |
+| **Decision Type** | UX / presentation (read-only engine posture unchanged) |
+| **Strategic Horizon** | Short-term (MVP / immediate sprint) |
+| **Visibility** | Internal |
+| **Date** | 2026-04-06 |
+| **Repo pointers** | `docs/ops/HEDGR_STATUS.md` §6 (`MC-S3-005`), §7, §7a, §36; `docs/decisions/0022-mc-s3-005-warmth-layer-v1-constrained-presentation-refinement-closeout.md`; `apps/frontend/app/(app)/dashboard/Engine*.tsx`; `apps/frontend/lib/engine/notices.ts`, `posture-context.ts`, `*-copy.ts` modules cited in §6 |
+
+**Summary / notes (concise)**
+
+- Presentation-only spacing, typography, and microcopy on shipped engine trust surfaces; **`MC-S3-004`** regression contract preserved.
+- **ADR 0022** is a **closeout record** only; **ADR 0016** remains the binding Warmth boundary reference; **§7** still gates any successor ticket.
