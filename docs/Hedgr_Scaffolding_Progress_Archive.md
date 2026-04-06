@@ -1,3 +1,11 @@
+**Archive Status**
+
+- This document is a **historical implementation / build progress archive**. It is **not** the canonical source of truth for current execution, sprint sequencing, or governance authority.
+- **Current authority** lives in `docs/ops/HEDGR_STATUS.md`, relevant ADRs in `docs/decisions/`, `docs/ops/HEDGR_EXECUTION_SYSTEM.md`, and `docs/ops/HEDGR_SPRINT_PLANNING_PROTOCOL.md`.
+- The file spans **multiple eras**: early bootstrap / scaffolding work and later contract-driven sprint closeouts.
+- **Preservation and use:** this record is retained for historical context and onboarding; future active state, planning, and governance updates should be recorded in the canonical repo governance surfaces cited above.
+
+**Era guide (historical reference only):** Steps **0.1–0.4** — bootstrap / scaffolding era. Steps **0.5–1.1** — contract-driven sprint archive before the current governance model fully stabilized.
 
 # Step 0.1 — Turbo Workspace Bootstrap (Summary)
 
