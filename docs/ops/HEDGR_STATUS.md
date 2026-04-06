@@ -1,6 +1,6 @@
 Status: Canonical hand-off file
 Purpose: Strategic continuity, merged implementation truth, and next-ticket authority for Cursor execution
-Last updated: 2026-04-04
+Last updated: 2026-04-06
 
 ---
 
@@ -682,7 +682,8 @@ Completed and merged:
 
 Current active ticket status:
 
-- **Approved next ticket:** None — governance has not named a successor in **§7**; update **§7** / **§7a** when the next ticket is approved.
+- **Approved next ticket:** `MC-S3-004` — Regression resistance for already-shipped Stability Engine trust surfaces; **test-only** scope (no product/runtime change as part of ticket intent). Full active brief: **§7a**.
+- **§6b** is not sequencing authority — Transition Readiness taxonomy and scrutiny input only; only **§7** / **§7a** name approved implementation work for the active ticket.
 - **Active scope and red lines:** When a ticket is active, the full brief lives in **§7a**.
 - Do not treat backlog, roadmap, or *Proposed* ADRs as sequenced work unless **§7** is updated explicitly.
 - Cursor must not assume continuation beyond **§6** merged truth, **§6a** release-closeout assessment, **§6b** transition standard, **§7a** (when an active ticket exists), and current governance.
@@ -695,7 +696,52 @@ Current active ticket status:
 
 ## 7a. Active execution ticket
 
-**No active ticket.** Governance has not named a successor in **§7** since **`MC-S3-003`** completed. See **§7** for sequence status and **§34** for the completed `MC-S3-003` record.
+**Ticket:** `MC-S3-004` — Regression resistance for already-shipped Stability Engine trust surfaces  
+**Suggested branch:** `feat/mc-s3-004-regression-resistance-trust-surfaces`
+
+**Objective**
+
+Strengthen regression coverage for **already-shipped** Stability Engine trust surfaces so read-only, informational posture and trust meaning stay locked without introducing new product semantics.
+
+**In scope**
+
+- Additional or tightened **automated tests** (e.g. Vitest unit/integration, Playwright smoke where already part of repo contract) that assert current behavior of shipped engine-facing UI and engine domain helpers.
+- Stable selectors or test hooks **only** where needed to make existing behavior testable, without changing user-visible semantics.
+
+**Must not do**
+
+- No **new product states** or **new product behavior**.
+- No runtime, backend, live engine, or policy-in-posture widening.
+- No Copilot authority or binding expansion.
+- No Warmth Layer **implementation** (ADR **0016** remains a boundary reference; this ticket is not a Warmth delivery vehicle).
+- No transaction review / mock-state **seam expansion** beyond what ADR **0017** and merged **`MC-S2-021`** already define—do not treat this ticket as authority to broaden dev simulation surfaces.
+
+**Governing read order**
+
+1. `AGENTS.md`  
+2. `docs/ops/HEDGR_STATUS.md` (especially **§2**, **§6b** classification context, **§7** / **§7a**)  
+3. `docs/ops/HEDGR_SPRINT_PLANNING_PROTOCOL.md`  
+4. `docs/decisions/SPRINT-2-ADR-INDEX.md`  
+5. `docs/decisions/0015-stability-engine-is-the-system-center.md`  
+6. `docs/decisions/0014-stability-engine-read-only-in-sprint-2.md`  
+7. `docs/decisions/0013-allocation-bands-informational-not-accounting.md`  
+8. `docs/decisions/0017-transaction-review-simulator-dev-seam-mc-s2-021.md`  
+
+**Implementation surfaces**
+
+- Primary: `apps/frontend/lib/engine/**` and shipped Stability Engine trust UI wired to that domain (follow existing app structure and test layout under `apps/frontend`).
+- Tests must remain **hermetic** per `AGENTS.md` (no live external calls in CI/E2E).
+
+**Acceptance shape**
+
+- Merged tests (and minimal selector/test-id wiring if required) that fail on regressions against **current** read-only, informational allocation and trust disclosures.
+- No ADR or doctrine change required for this ticket unless review discovers a boundary contradiction (then **stop** and escalate governance rather than widening scope in-code).
+
+**Implementation posture**
+
+- **Test-only:** implementation work is tests and supporting test affordances only; **§7a** is the execution brief until closeout updates **§7** / **§7a** per `HEDGR_SPRINT_PLANNING_PROTOCOL.md`.
+
+---
 
 **Archived brief (MC-S3-003):** ADR **0016** acceptance and Sprint 2 index / ops reconciliation — documentation and ADR status only; **Acceptance note** in ADR **0016** (phase origin, continuing boundary reference, subordination to **HEDGR_STATUS**); **`SPRINT-2-ADR-INDEX`** ADR **0016** section and **Usage Rule** item 6; **`HEDGR_STATUS`** default path **§2** / **§3** / **§6b** plus **§6a** contradiction repair for stale *Proposed* citations; **§6b** inventory **anti-misread** on **§7**; **`NOTION_GOVERNANCE_STAGING`** repo-first mirror line and **Accepted** row. Completed record: **§34**.
 
