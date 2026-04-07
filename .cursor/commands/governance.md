@@ -15,6 +15,12 @@ Default stance:
 - `.cursor/plans` are working execution artifacts, not authority
 - Notion mirrors repo after merge
 
+## `/governance` vs `/propose-next-ticket`
+
+- Use **`/governance`** for open-ended governance analysis, doctrine checks, candidate shaping, and recommendation discussion.
+- Use **`/propose-next-ticket`** when you need a single structured pre-§7 sequencing recommendation package with **mandatory** draft **`§7`** and **`§7a`** text.
+- **`/governance`** stays broader and does **not** always need to draft activation text (`§7` / `§7a` only when asked).
+
 Read first:
 1. `AGENTS.md`
 2. `docs/ops/HEDGR_STATUS.md`
