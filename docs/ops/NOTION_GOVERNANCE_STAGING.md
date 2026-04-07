@@ -6,7 +6,7 @@
 
 **Authority:** The repository is source of truth. Wording here must match `docs/decisions/0016-warmth-layer-doctrine-constrained-retail-refinement-track.md`, `docs/decisions/SPRINT-2-ADR-INDEX.md`, and `docs/ops/HEDGR_STATUS.md`. Wording must match **Accepted** ADR **0016** in repo; do not broaden scope or soften read-only / non-execution boundaries in Notion.
 
-**Last reconciled:** 2026-04-06 (`MC-S3-005` closeout; presentation-only Warmth v1 — **ADR 0022** closeout record)
+**Last reconciled:** 2026-04-07 (`MC-S3-006` closeout; test-only regression extension — **D-023** Notion mirror; **no** repo ADR under ticket intent)
 
 ---
 
@@ -44,11 +44,13 @@ Use as a governed workstream line, **not** as a shipped-feature claim. Placement
 
 - **Warmth Layer (ADR 0016, Accepted):** Parallel, doctrine-constrained **presentation** refinement only; does not change read-only Stability Engine posture. Must not introduce execution semantics, accounting truth, hidden reallocation, ledger duplication, yield-first framing, or gamified stability language. **§7** / **§7a** govern implementation tickets, not ADR acceptance alone. See ADR 0016 and `docs/ops/HEDGR_STATUS.md` §2.
 
+- **`MC-S3-006` (merged, test-only):** Further Vitest regression resistance on **already-shipped** Stability Engine trust surfaces — **no** new states, **no** new behavior, **no** new surfaces; **not** Warmth v2 and **not** a presentation-queue successor to **`MC-S3-005`**. **`HEDGR_STATUS.md` §7** names **no** approved next ticket unless it is updated explicitly; merged truth **§37**.
+
 **Supporting repo pointers (do not paraphrase into strategy)**
 
 - `docs/decisions/0016-warmth-layer-doctrine-constrained-retail-refinement-track.md`
 - `docs/decisions/SPRINT-2-ADR-INDEX.md` (ADR 0016 section)
-- `docs/ops/HEDGR_STATUS.md` §2, §3
+- `docs/ops/HEDGR_STATUS.md` §2, §3, §7, §37 (§37 — **`MC-S3-006`** merged record)
 
 ---
 
@@ -99,7 +101,7 @@ Use when mirroring a completed **implementation** ticket (not a new ADR). Wordin
 - Vitest locks **`ENGINE_NOTICE_COPY`** (informational / non-ledger framing) and **`getMockEngineState`** notice wiring for non-`normal` postures.
 - No ADR or doctrine change; no product semantics change under ticket intent; hermetic CI posture unchanged (`AGENTS.md`).
 
-**Optional light chain-of-record touch (post–MC-S3-005):** If the D-021 row body lacks it, add one line: *Superseded in sequence only by completion of **`MC-S3-005`** (D-022); the **`MC-S3-004`** regression contract remains in force per repo §6 / §35 / ADR 0021.* — Do not otherwise rewrite D-021.
+**Optional light chain-of-record touch (post–`MC-S3-005` / `MC-S3-006`):** If the D-021 row body lacks it, add: *Superseded in sequence only by completion of **`MC-S3-005`** (D-022) and later **`MC-S3-006`** (D-023); the **`MC-S3-004`** regression contract **remains in force** per repo §6 / §35 / §37 / ADR 0021.* — Do not otherwise rewrite D-021.
 
 ---
 
@@ -148,10 +150,11 @@ Use when mirroring the completed **Warmth Layer v1** presentation ticket. This i
 
 - Repo-native closeout recorded in **§36** and **ADR 0022**; operators can mirror to Notion from this file.
 - **No approved next ticket** until **`HEDGR_STATUS.md` §7** is explicitly updated; **§7a** has no active execution brief.
+- Subsequent **`MC-S3-006`** (**test-only**, **§37**) merged afterward: **D-023** is a **Notion** execution-closeout mirror (**no** ticket-intent ADR in repo). **§7** still names **no** successor unless updated explicitly; **MC-S3-006** is **not** Warmth v2.
 
 **Risk / trade-offs**
 
-- **Misread risk:** Warmth or Transition Readiness could be interpreted as an open-ended workstream. **Mitigation:** Executive and Notion copy must state **one closed §7-scoped ticket**, **presentation-only**, **no successor unless §7 names one**.
+- **Misread risk:** Warmth or Transition Readiness could be interpreted as an open-ended workstream. **Mitigation:** Executive and Notion copy must state **one closed §7-scoped** Warmth ticket (**MC-S3-005**), **presentation-only**, and that **`MC-S3-006`** is **test-only** regression hardening — **no** presentation successor unless **§7** names one.
 - **Regression risk:** Low; **`MC-S3-004`** contract unchanged in intent.
 
 **Revisit / kill criteria**
@@ -171,26 +174,57 @@ Use when mirroring the completed **Warmth Layer v1** presentation ticket. This i
 
 ---
 
-## 8. Releases — Stability Engine™️ - Transition Readiness (copy row)
+## 8. Decision Log — D-023 / MC-S3-006 (Notion mirror only)
 
-**Not canonical.** Mirror **`docs/ops/HEDGR_STATUS.md`** (**§6b**, **§7**, **§32–§36**) for any conflict. This block is executive-readable **copy source** only.
+**Notion Decision Log ID:** **D-023**. There is **no** repo ADR exported for **`MC-S3-006`** under ticket intent — this row is for **Notion / executive reconciliation** only. Canonical detail: **`docs/ops/HEDGR_STATUS.md` §37** and **§6** (`MC-S3-006`).
+
+Use when mirroring the completed **test-only** regression extension. **Not** new doctrine; **not** sequencing authority; **not** Warmth v2 or a presentation successor.
+
+### Core fields (table)
+
+| Field | Value |
+| ----- | ----- |
+| **Decision ID** | D-023 |
+| **Title** | MC-S3-006 complete — regression resistance extension for shipped Stability Engine trust surfaces |
+| **Status** | Completed (merged) |
+| **Decision Type** | Engineering / quality (regression contract extension; test-only) |
+| **Strategic Horizon** | Short-term (MVP / immediate sprint) |
+| **Visibility** | Internal |
+| **Date** | 2026-04-07 |
+| **Related Release** | Stability Engine™️ - Transition Readiness *(optional relation)* |
+| **Related Tickets** | MC-S3-006 |
+| **Repo file (ADR)** | *(none under ticket intent — mirror `HEDGR_STATUS.md` only)* |
+| **Repo pointers** | `docs/ops/HEDGR_STATUS.md` §6 (`MC-S3-006`), §7, §7a, §37; merged PR **#114** |
+
+### Summary / notes (concise)
+
+- **Test-only** Vitest hardening for **already-shipped** trust surfaces (dashboard review snapshot semantics, posture context contract, allocation-band trust-framing denylist, shared trust-copy denylist — per **§37**).
+- **`MC-S3-004`** / `engine-notices-and-mock-contract.test.ts` **unchanged in intent**.
+- **No** new `EnginePosture` / trust states; **no** new product behavior; **no** new surfaces; **no** execution / accounting / ledger-truth widening; **no** Copilot / backend / ADR **0017** seam widening.
+- **`HEDGR_STATUS.md`** remains **canonical**; **no approved next ticket** unless **§7** names one explicitly (**§7a** empty).
+
+---
+
+## 9. Releases — Stability Engine™️ - Transition Readiness (copy row)
+
+**Not canonical.** Mirror **`docs/ops/HEDGR_STATUS.md`** (**§6b**, **§7**, **§32–§37**) for any conflict. This block is executive-readable **copy source** only.
 
 | Field | Value |
 | ----- | ----- |
 | **Release name** | Stability Engine™️ - Transition Readiness |
-| **Status** | Shipped (documentation + governed implementation milestones complete through **`MC-S3-005`**) |
-| **Ship date (last merged milestone)** | 2026-04-06 *(**MC-S3-005**, PR **#112**)* |
-| **Objective** | Establish and exercise **post–Foundation** boundary readiness (**§6b** taxonomy and scrutiny), governance handoff traceability, ADR **0016** acceptance as **boundary** (not queue authority), regression resistance for shipped trust surfaces (**MC-S3-004**), and **one** constrained **Warmth Layer v1** presentation pass (**MC-S3-005**) — all **subordinate** to read-only / informational Stability Engine posture. |
-| **Non-goals** | Execution semantics; accounting or ledger-truth drift; backend/live engine coupling; Copilot runtime binding; treating **§6b** inventory or **ADR 0016** as **approved next** work; implying a **queued successor** ticket; widening ADR **0017** seam. **No approved next ticket** unless **`HEDGR_STATUS.md` §7** explicitly names one. |
-| **Doctrine traceability** | ADR **0013**, **0014**, **0015**, **0016** (boundary), **0017** (where relevant); closeout records **ADR 0018–0022**; canonical ops **`HEDGR_STATUS.md`**. |
-| **Success criteria (repo-grounded)** | **`MC-S3-001`** — §6b standard documented (**§32**); **`MC-S3-002`** — §6b/§7 handoff (**§33**); **`MC-S3-003`** — ADR **0016** Accepted + index/ops reconciliation (**§34**); **`MC-S3-004`** — Vitest regression contract merged (**§35**, PR **#111**); **`MC-S3-005`** — presentation-only Warmth v1 merged (**§36**, PR **#112**). **Foundation** remains prior closed baseline (**§6a**, **MC-S2-023**). |
-| **Work items (completed)** | `MC-S3-001`, `MC-S3-002`, `MC-S3-003`, `MC-S3-004`, `MC-S3-005` — all merged per **§7** history and **§32–§36**. |
+| **Status** | Shipped (documentation + governed implementation milestones complete through **`MC-S3-006`**) |
+| **Ship date (last merged milestone)** | 2026-04-07 *(**MC-S3-006**, PR **#114**)* |
+| **Objective** | Establish and exercise **post–Foundation** boundary readiness (**§6b** taxonomy and scrutiny), governance handoff traceability, ADR **0016** acceptance as **boundary** (not queue authority), regression resistance for shipped trust surfaces (**MC-S3-004**), **one** constrained **Warmth Layer v1** presentation pass (**MC-S3-005**), and **one** **test-only** regression extension (**MC-S3-006**) — all **subordinate** to read-only / informational Stability Engine posture. |
+| **Non-goals** | Execution semantics; accounting or ledger-truth drift; backend/live engine coupling; Copilot runtime binding; treating **§6b** inventory or **ADR 0016** as **approved next** work; implying **Warmth v2** or any **queued** presentation successor; treating **MC-S3-006** as a presentation track; widening ADR **0017** seam. **No approved next ticket** unless **`HEDGR_STATUS.md` §7** explicitly names one. |
+| **Doctrine traceability** | ADR **0013**, **0014**, **0015**, **0016** (boundary), **0017** (where relevant); closeout records **ADR 0018–0022**; Decision Log **D-023** (MC-S3-006 — **Notion mirror**, no ticket-intent repo ADR); canonical ops **`HEDGR_STATUS.md`**. |
+| **Success criteria (repo-grounded)** | **`MC-S3-001`** — §6b standard documented (**§32**); **`MC-S3-002`** — §6b/§7 handoff (**§33**); **`MC-S3-003`** — ADR **0016** Accepted + index/ops reconciliation (**§34**); **`MC-S3-004`** — Vitest regression contract merged (**§35**, PR **#111**); **`MC-S3-005`** — presentation-only Warmth v1 merged (**§36**, PR **#112**); **`MC-S3-006`** — test-only regression extension merged (**§37**, PR **#114**). **Foundation** remains prior closed baseline (**§6a**, **MC-S2-023**). |
+| **Work items (completed)** | `MC-S3-001`, `MC-S3-002`, `MC-S3-003`, `MC-S3-004`, `MC-S3-005`, `MC-S3-006` — all merged per **§7** history and **§32–§37**. |
 | **Progress %** | 100% *for this named Transition Readiness milestone set* — does **not** imply backlog completion or automatic follow-on. |
-| **Notes / page body** | **§6b** remains **taxonomy and scrutiny input only**, not sequencing authority. **§7** / **§7a** gate all future execution. **Warmth** is **not** an open-ended stream: **MC-S3-005** was a **single** §7-scoped **presentation-only** ticket. **Cursor plans** and Notion are **not** authority (see `AGENTS.md`, `HEDGR_SPRINT_PLANNING_PROTOCOL.md`). |
+| **Notes / page body** | **§6b** remains **taxonomy and scrutiny input only**, not sequencing authority. **§7** / **§7a** gate all future execution. **Warmth** is **not** an open-ended stream: **MC-S3-005** was a **single** §7-scoped **presentation-only** ticket. **MC-S3-006** is **test-only** — **not** Warmth v2. **Cursor plans** and Notion are **not** authority (see `AGENTS.md`, `HEDGR_SPRINT_PLANNING_PROTOCOL.md`). |
 
 ---
 
-## 9. Micro-Contracts / Work — MC-S3-005 (copy row)
+## 10. Micro-Contracts / Work — MC-S3-005 (copy row)
 
 | Field | Value |
 | ----- | ----- |
@@ -207,24 +241,46 @@ Use when mirroring the completed **Warmth Layer v1** presentation ticket. This i
 | **Related ADR / Decision Log** | Closeout: **ADR 0022** / **D-022**. Boundary reference: **ADR 0016** / **D-016** (not a substitute for **§7**). |
 | **System role** | *(optional)* Stability Engine — consumer dashboard trust surfaces (read-only / informational). |
 
+---
+
+## 11. Micro-Contracts / Work — MC-S3-006 (copy row)
+
+| Field | Value |
+| ----- | ----- |
+| **Ticket ID** | MC-S3-006 |
+| **Name / title** | Regression resistance extension for shipped Stability Engine trust surfaces (test-only) |
+| **Status** | Complete (merged) |
+| **Done** | Yes |
+| **Release** | Stability Engine™️ - Transition Readiness |
+| **Work type** | Micro-Contract / quality (test-only; trust surfaces) |
+| **Reversible?** | Yes (revert PR **#114**; no ledger or execution state) |
+| **Date (merged)** | 2026-04-07 |
+| **Acceptance criteria (repo summary)** | Extended Vitest only — **§37**; **`MC-S3-004`** contract unchanged in intent; **no** new states, behavior, or surfaces; **no** backend / Copilot / ADR **0017** widening — per **`HEDGR_STATUS.md` §6** (`MC-S3-006`) and **§37**. |
+| **PR link** | *(insert GitHub PR **#114** URL)* |
+| **Related ADR / Decision Log** | Decision Log **D-023** only (**no** ticket-intent repo ADR). Preserve chain: **D-021** / ADR **0021** (**MC-S3-004**). |
+| **System role** | *(optional)* Stability Engine — consumer dashboard trust surfaces (read-only / informational). |
+
 **Do not** create a placeholder “no active ticket” work row; that state lives in **`HEDGR_STATUS.md` §7** / **§7a** only.
 
 ---
 
-## 10. Drift review checklist (post–MC-S3-005)
+## 12. Drift review checklist (post–MC-S3-006)
 
 Apply **only** if the live Notion row contradicts repo truth. **Repo wins.** Do not rewrite historical decision bodies unless a line now reads as **false** or **mis-sequencing**.
 
 | Notion row / topic | Repo alignment note |
 | ------------------ | ------------------- |
-| **Release: Transition Readiness** | Should list **`MC-S3-001`–`MC-S3-005`** as **shipped** milestones, **Foundation** as **prior** closed baseline, **no §7 successor**, **§6b** not authority — use **§8** above. |
-| **D-021** (MC-S3-004) | Optional one-line: **`MC-S3-005`** completion does **not** retire the regression contract — see **§6** optional touch. |
-| **D-020** (MC-S3-003) | No change required unless Notion implies **ADR 0016** alone authorizes ongoing UI work; if so, add: *Implementation still requires **§7** / **§7a**; **MC-S3-005** closed under D-022.* |
-| **D-019** (MC-S3-002) | No change required. |
-| **D-018** (MC-S3-001) | No change required. |
-| **D-016** (ADR 0016) | No change required; remains **Accepted** boundary. Optional relation: **related decision** D-022 (execution closeout of first §7 Warmth ticket). |
-| **Phase 2 - Trust Expression** | Ensure wording does **not** read as **approved next queue**; repo sequencing is **§7** only. |
+| **Release: Transition Readiness** | Should list **`MC-S3-001`–`MC-S3-006`** as **shipped** milestones, **Foundation** as **prior** closed baseline, **no §7 successor**, **§6b** not authority, **no Warmth v2** implication — use **§9** above. |
+| **D-023** (MC-S3-006) | **Notion mirror** only; **no** repo ADR under ticket intent — see **§8**. |
+| **D-022** (MC-S3-005) | Optional: note **`MC-S3-006`** afterward is **test-only**, **not** Warmth v2 — see **§7** consequences. |
+| **D-021** (MC-S3-004) | **`MC-S3-005`** / **`MC-S3-006`** completion does **not** retire the regression contract — see **§6** optional touch. |
+| **D-020** (MC-S3-003) | No change required unless Notion implies **ADR 0016** alone authorizes ongoing UI work; if so, add: *Implementation still requires **§7** / **§7a**; **MC-S3-005** closed under D-022; **MC-S3-006** is test-only, not a Warmth queue.* |
+| **D-019** (MC-S3-002) | No change required unless successor chain omits **MC-S3-006** / **D-023**. |
+| **D-018** (MC-S3-001) | No change required unless successor chain omits **§37** / **D-023**. |
+| **D-016** (ADR 0016) | No change required; remains **Accepted** boundary. Optional relation: **related decision** D-022 (Warmth v1 closeout). |
+| **Phase 2 - Trust Expression** | Ensure wording does **not** read as **approved next queue**; repo sequencing is **§7** only; **MC-S3-006** is **test-only**, not Warmth v2. |
 | **Phase 3 - Operational Trust** | Same; **Foundation** and **Transition Readiness** milestones are **historical + taxonomy**, not automatic continuation. |
 | **Phase 4 - Governance hardening** | **§6b** example row: **deferred** / **prerequisite-gated** — not **in progress** unless **§7** names it. |
 | **Phase 5 - Copilot binding** | **Blocked** for execution-style binding per **§6b** inventory example; must **not** read as queued. |
 | **Work: MC-S3-004** | Set **Release** to **Transition Readiness** if missing; **Status** complete/merged; optional link to **D-021**. No successor implied. |
+| **Work: MC-S3-006** | **§11**; link **D-023**; **no** placeholder successor row. |

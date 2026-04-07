@@ -112,3 +112,4 @@ After the PR is merged:
 - `docs/decisions/SPRINT-2-ADR-INDEX.md` — Sprint 2 ADR map and usage rule  
 - `docs/ops/NOTION_GOVERNANCE_STAGING.md` — Notion copy source  
 - `AGENTS.md` — execution and engine-facing read order  
+- `.cursor/commands/propose-next-ticket.md` — optional Cursor helper for **governance mode**: recommendation-only candidate slate plus **draft** §7 / §7a text; **not** authorization and **not** a substitute for updating **`HEDGR_STATUS.md`** (same class of artifact as working drafts—see anti-pattern **Plan-file-as-authority**; treat like a structured scratchpad until §7 / §7a are edited in-repo)  
