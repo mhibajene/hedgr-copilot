@@ -1,6 +1,6 @@
 Status: Canonical hand-off file
 Purpose: Strategic continuity, merged implementation truth, and next-ticket authority for Cursor execution
-Last updated: 2026-04-06
+Last updated: 2026-04-09
 
 ---
 
@@ -718,9 +718,9 @@ Completed and merged:
 
 Current active ticket status:
 
-- **Approved next ticket:** *None named.* **§7** lists completed work through **`MC-S3-006`**; the next implementation ticket appears here only when governance updates **§7** explicitly.
+- **Approved next ticket:** **`MC-S3-007`** — Regression resistance tranche 3 for shipped Stability Engine trust surfaces; scope is **test-only** (full execution brief **§7a**). Completed work through **`MC-S3-006`** remains listed below.
 - **§6b** is not sequencing authority — Transition Readiness taxonomy and scrutiny input only; only **§7** / **§7a** name approved implementation work when a ticket is active.
-- When **§7** names a ticket, the full execution brief lives in **§7a** until closeout.
+- The full execution brief for **`MC-S3-007`** lives in **§7a** until closeout.
 - Do not treat backlog, roadmap, or *Proposed* ADRs as sequenced work unless **§7** is updated explicitly.
 - Cursor must not assume continuation beyond **§6** merged truth, **§6a** release-closeout assessment, **§6b** transition standard, **§7** / **§7a** (when a ticket is active), and current governance.
 - Cursor must not continue automatically into work beyond what is explicitly defined in this file for an active ticket.
@@ -732,13 +732,54 @@ Current active ticket status:
 
 ## 7a. Active execution ticket
 
-**Status:** *No ticket is currently named in **§7** as the approved next implementation.*
+**Ticket:** `MC-S3-007` — Regression resistance tranche 3 for shipped Stability Engine trust surfaces  
+**Suggested branch:** `feat/mc-s3-007-regression-resistance-tranche-3`
 
-Until **§7** names a successor:
+### Objective
 
-- **§6b** remains taxonomy and scrutiny input only—not authorization to start work.
-- Do not treat backlog, roadmap, or *Proposed* ADRs as sequenced work.
-- When governance approves the next ticket, restore a full execution brief in this section per discipline used for prior **`MC-S3-*`** tickets.
+Deliver **test-only** hardening that protects **already-shipped** Stability Engine trust meaning and presentation contracts against regression. **Warmth Layer v1** as shipped under **`MC-S3-005`** (baseline per closeout **ADR 0022**) is in scope **only** as something to **protect**, not to extend.
+
+### In scope
+
+- Additional or strengthened **Vitest** (and repo-native frontend test) coverage that **asserts existing shipped behavior** for Stability Engine trust surfaces (posture, notices, allocation-band communication, dashboard Stability Engine cluster, and related contracts already established in **§6**—including **`MC-S3-004`** and **`MC-S3-006`** precedents).
+- Narrow, ticket-local test helpers **only** where they mirror existing denial patterns and remain strictly subordinate to preserving current shipped semantics.
+
+### Must not do
+
+- No new product states; no new behavior; no new trust semantics.
+- No new interaction patterns, explanation layers, or surface types.
+- No widening of runtime, backend, ledger, policy, or Copilot authority.
+- No transaction-seam expansion (respect **ADR 0017** / **`MC-S2-021`** boundaries).
+- No doctrine creation or trust-meaning expansion under this ticket’s intent.
+- Tests must **assert existing shipped behavior only**—not encode aspirational or future-state contracts.
+
+### Governing read order
+
+1. `AGENTS.md`
+2. `docs/ops/HEDGR_STATUS.md`
+3. `docs/ops/HEDGR_SPRINT_PLANNING_PROTOCOL.md`
+4. `docs/decisions/SPRINT-2-ADR-INDEX.md`
+5. `docs/decisions/0015-stability-engine-is-the-system-center.md`
+6. `docs/decisions/0014-stability-engine-read-only-in-sprint-2.md`
+7. `docs/decisions/0013-allocation-bands-informational-not-accounting.md`
+8. `docs/decisions/0016-warmth-layer-doctrine-constrained-retail-refinement-track.md`
+9. `docs/decisions/0017-transaction-review-simulator-dev-seam-mc-s2-021.md`
+10. `docs/decisions/0022-mc-s3-005-warmth-layer-v1-constrained-presentation-refinement-closeout.md`
+
+### Implementation surfaces
+
+- **`apps/frontend/__tests__/**` (and adjacent repo-native frontend test paths already used for Stability Engine trust-surface regression). Extend **only** with assertions on **current** shipped UI, copy, and engine-local presentation contracts—no new product modules or runtime seams.
+
+### Acceptance shape
+
+- CI / **`AGENTS.md`** validation posture preserved (hermetic tests; no live external calls).
+- Diff is **tests (and minimal test-only scaffolding) only**; no user-observable product behavior change beyond what tests already encoded as shipped truth.
+- Failures imply drift against **§6** merged truth or a test that over-asserts—fix toward **preserving** shipped behavior, not toward introducing new semantics under test cover.
+
+### Implementation posture
+
+- **Test-only**; reversible; conservative; read-only Stability Engine and informational allocation bands posture unchanged (**ADR 0013**–**0015**).
+- **§6b** remains taxonomy and scrutiny input only—not authorization beyond what **§7** / **§7a** define for this ticket.
 
 ---
 
