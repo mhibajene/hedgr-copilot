@@ -742,9 +742,9 @@ Completed and merged:
 
 Current active ticket status:
 
-- **Approved next ticket:** **None named.** There is **no** approved next implementation ticket until **§7** is updated explicitly to name one.
+- **Approved next ticket:** **`MC-S3-009`** — Regression resistance tranche 5 for shipped Stability Engine trust surfaces (**test-only**). **Rationale (repo-grounded):** **`apps/frontend/__tests__/engine-allocation-bands.test.tsx`** already applies **`ENGINE_TRUST_INFORMATIONAL_DENYLIST`** and related word guards to the allocation bands **caption** and **trust legend**, but **per-band description** text produced by **`bandDescription()`** in **`apps/frontend/app/(app)/dashboard/EngineAllocationBands.tsx`** is covered by phrase-level assertions only — a **regression-test asymmetry** on the same trust surface. This ticket closes that gap with **Vitest-only** changes under **`apps/frontend/__tests__/`**. This rationale is **not** “the next tranche because tranche 4 shipped”; sequencing authority remains **§7** / **§7a** only.
 - **§6b** is not sequencing authority — Transition Readiness taxonomy and scrutiny input only; only **§7** / **§7a** name approved implementation work when a ticket is active.
-- When a ticket is active, the full execution brief lives in **§7a** until closeout; when **§7** names no ticket, **§7a** holds the no-active-ticket stub below.
+- When a ticket is active, the full execution brief lives in **§7a** until closeout.
 - Do not treat backlog, roadmap, or *Proposed* ADRs as sequenced work unless **§7** is updated explicitly.
 - Cursor must not assume continuation beyond **§6** merged truth, **§6a** release-closeout assessment, **§6b** transition standard, **§7** / **§7a** (when a ticket is active), and current governance.
 - Cursor must not continue automatically into work beyond what is explicitly defined in this file for an active ticket.
@@ -756,9 +756,33 @@ Current active ticket status:
 
 ## 7a. Active execution ticket
 
-**Status:** **No active execution ticket.** **§7** does not currently name an approved next implementation ticket.
+**Ticket:** **`MC-S3-009`** — Regression resistance tranche 5 for shipped Stability Engine trust surfaces (**test-only**)
 
-When governance approves the next ticket, **§7** will name it and this section will hold the full execution brief until closeout.
+### Objective
+
+Close a **verified regression-test asymmetry** on the allocation bands trust surface: **`engine-allocation-bands.test.tsx`** already applies **`ENGINE_TRUST_INFORMATIONAL_DENYLIST`** and related word guards to the **caption** and **trust legend**, while **per-band description** copy from **`bandDescription()`** in **`EngineAllocationBands.tsx`** currently has **phrase-level** assertions only. Align **`bandDescription()`** output with the same informational / non-execution framing guards, using a fixed sample **`EngineState`** so all three description branches (including yield-cap interpolation) are exercised. **This objective is not justified by momentum from `MC-S3-008`** — it addresses the **caption/legend vs `bandDescription()`** coverage gap only.
+
+### In scope
+
+- Changes **only** under **`apps/frontend/__tests__/`** (e.g. extend **`engine-allocation-bands.test.tsx`** and/or add focused tests).
+- Assertions target **only** the shipped **per-band description** text produced by **`bandDescription()`** (the description paragraphs under each band row).
+
+### Approved target surface (read-only reference)
+
+- **`apps/frontend/app/(app)/dashboard/EngineAllocationBands.tsx`** — **`bandDescription()`** return values only.
+
+### Out of scope / must not
+
+- **Caption**, **trust legend**, band **labels** — not targets of new assertions for this ticket beyond what existing tests already cover; do not expand this ticket to redesign or widen them.
+- Child components **`EngineProtectiveGuidance`**, **`EngineStabilityReviewSnapshot`**, **`EngineStabilityExplainer`** — not in scope.
+- **Warmth** or presentation redesign; **backend**; **runtime policy** inside posture objects; **Copilot**; **automation**; **ledger** or **execution** semantics.
+- Any change to **`apps/frontend/__tests__/engine-notices-and-mock-contract.test.ts`** that alters **`MC-S3-004`** notice/mock contract **intent** (must remain **unchanged in intent**).
+
+### Acceptance shape
+
+- **`pnpm -w test`** and required repo validation checks pass; **no** intentional user-visible behavior change.
+- **`MC-S3-004`** `engine-notices-and-mock-contract.test.ts` **unchanged in intent**.
+- At closeout: update **§6** merged truth, **§7** completed list, **§7a** archive — per **`HEDGR_SPRINT_PLANNING_PROTOCOL.md`** post-merge order.
 
 **Governance reminders**
 
@@ -796,6 +820,7 @@ When governance approves the next ticket, **§7** will name it and this section 
 - **Regression resistance extension (test-only, completed):** `MC-S3-006` — **§37** (completed ticket record); merged PR **#114**.
 - **Regression resistance tranche 3 (test-only, completed):** `MC-S3-007` — **§38** (completed ticket record); merged PR **#117**.
 - **Regression resistance tranche 4 (test-only, completed):** `MC-S3-008` — **§39** (completed ticket record); merged PR **#119**.
+- **Regression resistance tranche 5 (test-only, active):** `MC-S3-009` — see **§7** / **§7a** (approved next ticket and execution brief).
 - **Merged implementation truth:** **§6** remains canonical for shipped code boundaries.
 - When a successor ticket is approved, record it in **§7** and restore the execution brief in **§7a** per governance discipline.
 - Do not infer continuation work from *Proposed* ADRs or roadmap narrative unless **§7** names a ticket.

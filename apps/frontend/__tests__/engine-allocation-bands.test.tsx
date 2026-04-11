@@ -126,6 +126,41 @@ describe('EngineAllocationBands', () => {
     expect(growthBand.textContent).toMatch(/conditions allow/i);
   });
 
+  test('keeps per-band bandDescription() copy free of execution, accounting-as-truth, and hype drift', () => {
+    render(
+      <EngineAllocationBands
+        engineState={makeEngineState({
+          liquidityTargetPct: 42,
+          coreTargetPct: 44,
+          yieldCapPct: 14,
+        })}
+      />,
+    );
+
+    const descIds = [
+      'engine-allocation-band-liquidityTargetPct-desc',
+      'engine-allocation-band-coreTargetPct-desc',
+      'engine-allocation-band-yieldCapPct-desc',
+    ] as const;
+
+    const parts: string[] = [];
+    for (const id of descIds) {
+      const el = document.getElementById(id);
+      expect(el, `missing description node #${id}`).not.toBeNull();
+      const text = el!.textContent?.trim() ?? '';
+      expect(text.length).toBeGreaterThan(0);
+      parts.push(text);
+    }
+
+    const combined = parts.join('\n').toLowerCase();
+
+    for (const forbidden of ENGINE_TRUST_INFORMATIONAL_DENYLIST) {
+      expect(combined).not.toContain(forbidden);
+    }
+    expect(combined).not.toMatch(/\bexecuted\b/);
+    expect(combined).not.toMatch(/\ballocated to your\b/);
+  });
+
   test('renders percentages from the supplied engine state', () => {
     render(
       <EngineAllocationBands
