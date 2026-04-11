@@ -78,8 +78,10 @@ Before implementing or reviewing continuation work, read in this order:
 4. `docs/decisions/0015-stability-engine-is-the-system-center.md`
 5. `docs/decisions/0014-stability-engine-read-only-in-sprint-2.md`
 6. `docs/decisions/0013-allocation-bands-informational-not-accounting.md`
+7. `docs/ops/HEDGR_STABILITY_ENGINE_UI_EXPLORATION_NOTE.md` — retail UI critique / conformance frame for this lane only; subordinate to doctrine, accepted ADRs, and `HEDGR_STATUS.md`; does **not** sequence or approve implementation
+8. `docs/ops/HEDGR_STABILITY_ENGINE_UI_VARIANT_DISPOSITION.md` — verdict on the current retail UI variant artifact and Replace / Retire discipline for this lane only; subordinate to doctrine, accepted ADRs, the exploration note, and `HEDGR_STATUS.md`; does **not** sequence or approve implementation
 
-These are binding references for current implementation posture.
+Items **1–6** are the core binding references for current implementation posture. Items **7–8** are lane-specific governance references for retail UI critique and variant disposition only; they are discoverability inputs, not sequencing authority. **`HEDGR_STATUS.md` §7** / **§7a** remain the sole surfaces that authorize implementation work.
 
 For **post-foundation boundary readiness** (taxonomy, classification rules, sequencing discipline), see **§6b** and **§32** (`MC-S3-001`). For **§6b / §7 handoff** continuity (`MC-S3-002`), see **§33**. **§7** authorizes the next implementation ticket.
 
@@ -754,9 +756,10 @@ Completed and merged:
 
 Current active ticket status:
 
-- **Approved next ticket:** **None named.** There is **no** approved next implementation ticket until **§7** is updated explicitly to name one.
+- **Approved next ticket:** **`MC-S3-010`** — Stability Engine retail UI **governance read-path alignment** (**documentation only**; **non-runtime**; **non-product**). Authorizes **only** the governance and documentation edits described in **§7a**; **no** `apps/`, **no** `packages/`, **no** tests or CI changes, **no** product copy, **no** behavior changes.
 - **§6b** is not sequencing authority — Transition Readiness taxonomy and scrutiny input only; only **§7** / **§7a** name approved implementation work when a ticket is active.
-- When a ticket is active, the full execution brief lives in **§7a** until closeout; when **§7** names no ticket, **§7a** holds the no-active-ticket stub below.
+- The full execution brief for **`MC-S3-010`** lives in **§7a** until closeout.
+- **Future work:** A future retail UI conformance candidate, if any, must be separately named in **§7**.
 - Do not treat backlog, roadmap, or *Proposed* ADRs as sequenced work unless **§7** is updated explicitly.
 - Cursor must not assume continuation beyond **§6** merged truth, **§6a** release-closeout assessment, **§6b** transition standard, **§7** / **§7a** (when a ticket is active), and current governance.
 - Cursor must not continue automatically into work beyond what is explicitly defined in this file for an active ticket.
@@ -768,9 +771,32 @@ Current active ticket status:
 
 ## 7a. Active execution ticket
 
-**Status:** **No active execution ticket.** **§7** does not currently name an approved next implementation ticket.
+**Status:** **Active.**
 
-When governance approves the next ticket, **§7** will name it and this section will hold the full execution brief until closeout.
+**Ticket:** **`MC-S3-010`** — Stability Engine retail UI **governance read-path alignment** (**documentation only**). **Non-runtime**, **non-product**: embed the retail UI exploration note and variant disposition note into the repo **binding read/discoverability path** for this lane **as scoped below**. **§7** and **§7a** remain the **sole** surfaces that **authorize** and **sequence** implementation work; the exploration and disposition notes **do not** sequence tickets, **do not** authorize code changes by themselves, and **do not** substitute for **§7** / **§7a**.
+
+**Objective**
+
+Align repo operating references so `docs/ops/HEDGR_STABILITY_ENGINE_UI_EXPLORATION_NOTE.md` and `docs/ops/HEDGR_STABILITY_ENGINE_UI_VARIANT_DISPOSITION.md` are institutionally discoverable via the binding read path.
+
+**In scope**
+
+- **`docs/ops/HEDGR_STATUS.md` §3** — extend the ordered “read first” list to include both note paths, with brief role lines (exploration note: retail UI critique/conformance frame; disposition note: verdict on the current variant artifact and Replace/Retire discipline — **without** elevating either document to sequencing authority).
+- **Optional:** concise traceability in **`docs/decisions/SPRINT-2-ADR-INDEX.md`** for these ops notes as retail UI lane references (not ADRs).
+- **Optional:** **one line** in **`AGENTS.md`** engine-facing guidance **only** if read-order ambiguity remains after §3 / index updates.
+
+**Must not**
+
+- Any change under **`apps/`**, **`packages/`**, tests, CI, or runtime.
+- **No** product copy changes and **no** behavior changes.
+- **No** wording that implies the exploration or disposition notes **authorize** or **sequence** implementation (**§7** / **§7a** only).
+- **No** widening into general documentation cleanup beyond this read-path alignment for **these two** notes.
+
+**Acceptance shape**
+
+- Read path **explicitly cites both** notes in appropriate order relative to the existing doctrine/ADR read stack.
+- Cross-links remain consistent with **`HEDGR_STATUS`** hierarchy; **§7** / **§7a** remain sole sequencing authority.
+- A future retail UI conformance candidate, if any, must be separately named in **§7**.
 
 **Governance reminders**
 
