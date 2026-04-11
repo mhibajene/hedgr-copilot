@@ -329,6 +329,17 @@ Implementation posture preserved:
 
 - test-only merge; no new product states, runtime widening, backend coupling, or transaction-review / mock-state seam expansion beyond existing ADR **0017** and merged **`MC-S2-021`** boundaries
 
+### MC-S3-009 - Regression resistance tranche 5 for Stability Engine trust surfaces (test-only)
+
+Implementation truth:
+
+- Vitest extension: `apps/frontend/__tests__/engine-allocation-bands.test.tsx` — per-`bandDescription()` output asserted via stable `#engine-allocation-band-liquidityTargetPct-desc`, `#engine-allocation-band-coreTargetPct-desc`, and `#engine-allocation-band-yieldCapPct-desc` nodes; **`ENGINE_TRUST_INFORMATIONAL_DENYLIST`** plus `executed` / `allocated to your` word guards (parity with caption/trust legend); fixed sample **`EngineState`** (42/44/14) exercising all three description branches
+- **`MC-S3-004`** Vitest contract in `engine-notices-and-mock-contract.test.ts` preserved in intent; prior regression precedents unchanged in intent
+
+Implementation posture preserved:
+
+- test-only merge; no new product states, runtime widening, backend coupling, or transaction-review / mock-state seam expansion beyond existing ADR **0017** and merged **`MC-S2-021`** boundaries
+
 ### MC-S2-004 - Allocation bands UI
 
 Implementation truth:
@@ -739,50 +750,27 @@ Completed and merged:
 - `MC-S3-006` - Regression resistance extension for shipped Stability Engine trust surfaces (test-only; merged PR **#114**; completed record **§37**)
 - `MC-S3-007` - Regression resistance tranche 3 for shipped Stability Engine trust surfaces (test-only; merged PR **#117**; completed record **§38**)
 - `MC-S3-008` - Regression resistance tranche 4 for shipped Stability Engine trust surfaces (test-only; merged PR **#119**; completed record **§39**)
+- `MC-S3-009` - Regression resistance tranche 5 for shipped Stability Engine trust surfaces (test-only; merged PR **#121**; completed record **§40**)
 
 Current active ticket status:
 
-- **Approved next ticket:** **`MC-S3-009`** — Regression resistance tranche 5 for shipped Stability Engine trust surfaces (**test-only**). **Rationale (repo-grounded):** **`apps/frontend/__tests__/engine-allocation-bands.test.tsx`** already applies **`ENGINE_TRUST_INFORMATIONAL_DENYLIST`** and related word guards to the allocation bands **caption** and **trust legend**, but **per-band description** text produced by **`bandDescription()`** in **`apps/frontend/app/(app)/dashboard/EngineAllocationBands.tsx`** is covered by phrase-level assertions only — a **regression-test asymmetry** on the same trust surface. This ticket closes that gap with **Vitest-only** changes under **`apps/frontend/__tests__/`**. This rationale is **not** “the next tranche because tranche 4 shipped”; sequencing authority remains **§7** / **§7a** only.
+- **Approved next ticket:** **None named.** There is **no** approved next implementation ticket until **§7** is updated explicitly to name one.
 - **§6b** is not sequencing authority — Transition Readiness taxonomy and scrutiny input only; only **§7** / **§7a** name approved implementation work when a ticket is active.
-- When a ticket is active, the full execution brief lives in **§7a** until closeout.
+- When a ticket is active, the full execution brief lives in **§7a** until closeout; when **§7** names no ticket, **§7a** holds the no-active-ticket stub below.
 - Do not treat backlog, roadmap, or *Proposed* ADRs as sequenced work unless **§7** is updated explicitly.
 - Cursor must not assume continuation beyond **§6** merged truth, **§6a** release-closeout assessment, **§6b** transition standard, **§7** / **§7a** (when a ticket is active), and current governance.
 - Cursor must not continue automatically into work beyond what is explicitly defined in this file for an active ticket.
 - Cursor must not drift beyond explicitly defined scope.
 
-**Last completed ticket (summary):** `MC-S3-008` — Regression resistance tranche 4 (test-only Vitest copy contract for stability review snapshot copy module; non-empty shipped segments; shared informational denylist and word guards against execution / accounting / hype drift); **`MC-S3-004`** notice/mock contract and prior regression precedents preserved in intent; completed record in **§39**; merged PR **#119**.
+**Last completed ticket (summary):** `MC-S3-009` — Regression resistance tranche 5 (test-only; Vitest per-`bandDescription()` trust framing via stable `#engine-allocation-band-*-desc` nodes; **`ENGINE_TRUST_INFORMATIONAL_DENYLIST`** and word guards aligned with caption/trust legend; fixed sample state 42/44/14); **`MC-S3-004`** notice/mock contract and prior regression precedents preserved in intent; completed record in **§40**; merged PR **#121**.
 
 ---
 
 ## 7a. Active execution ticket
 
-**Ticket:** **`MC-S3-009`** — Regression resistance tranche 5 for shipped Stability Engine trust surfaces (**test-only**)
+**Status:** **No active execution ticket.** **§7** does not currently name an approved next implementation ticket.
 
-### Objective
-
-Close a **verified regression-test asymmetry** on the allocation bands trust surface: **`engine-allocation-bands.test.tsx`** already applies **`ENGINE_TRUST_INFORMATIONAL_DENYLIST`** and related word guards to the **caption** and **trust legend**, while **per-band description** copy from **`bandDescription()`** in **`EngineAllocationBands.tsx`** currently has **phrase-level** assertions only. Align **`bandDescription()`** output with the same informational / non-execution framing guards, using a fixed sample **`EngineState`** so all three description branches (including yield-cap interpolation) are exercised. **This objective is not justified by momentum from `MC-S3-008`** — it addresses the **caption/legend vs `bandDescription()`** coverage gap only.
-
-### In scope
-
-- Changes **only** under **`apps/frontend/__tests__/`** (e.g. extend **`engine-allocation-bands.test.tsx`** and/or add focused tests).
-- Assertions target **only** the shipped **per-band description** text produced by **`bandDescription()`** (the description paragraphs under each band row).
-
-### Approved target surface (read-only reference)
-
-- **`apps/frontend/app/(app)/dashboard/EngineAllocationBands.tsx`** — **`bandDescription()`** return values only.
-
-### Out of scope / must not
-
-- **Caption**, **trust legend**, band **labels** — not targets of new assertions for this ticket beyond what existing tests already cover; do not expand this ticket to redesign or widen them.
-- Child components **`EngineProtectiveGuidance`**, **`EngineStabilityReviewSnapshot`**, **`EngineStabilityExplainer`** — not in scope.
-- **Warmth** or presentation redesign; **backend**; **runtime policy** inside posture objects; **Copilot**; **automation**; **ledger** or **execution** semantics.
-- Any change to **`apps/frontend/__tests__/engine-notices-and-mock-contract.test.ts`** that alters **`MC-S3-004`** notice/mock contract **intent** (must remain **unchanged in intent**).
-
-### Acceptance shape
-
-- **`pnpm -w test`** and required repo validation checks pass; **no** intentional user-visible behavior change.
-- **`MC-S3-004`** `engine-notices-and-mock-contract.test.ts` **unchanged in intent**.
-- At closeout: update **§6** merged truth, **§7** completed list, **§7a** archive — per **`HEDGR_SPRINT_PLANNING_PROTOCOL.md`** post-merge order.
+When governance approves the next ticket, **§7** will name it and this section will hold the full execution brief until closeout.
 
 **Governance reminders**
 
@@ -790,6 +778,8 @@ Close a **verified regression-test asymmetry** on the allocation bands trust sur
 - Do not treat backlog, roadmap, or *Proposed* ADRs as sequenced work beyond **§7** / **§7a**.
 
 ---
+
+**Archived brief (MC-S3-009):** Regression resistance tranche 5 for shipped Stability Engine trust surfaces — **test-only**; extended **`apps/frontend/__tests__/engine-allocation-bands.test.tsx`** — per-`bandDescription()` coverage via **`#engine-allocation-band-liquidityTargetPct-desc`**, **`#engine-allocation-band-coreTargetPct-desc`**, **`#engine-allocation-band-yieldCapPct-desc`**; **`ENGINE_TRUST_INFORMATIONAL_DENYLIST`** and `executed` / `allocated to your` word guards; fixed sample **`EngineState`** (42/44/14); **`MC-S3-004`** `engine-notices-and-mock-contract.test.ts` unchanged in intent; prior regression precedents unchanged in intent. No ADR under ticket intent. Merged PR **#121**. Completed record: **§40**.
 
 **Archived brief (MC-S3-008):** Regression resistance tranche 4 for shipped Stability Engine trust surfaces — **test-only**; Vitest copy contract **`apps/frontend/__tests__/engine-stability-review-snapshot-copy-contract.test.ts`** for **`stability-review-snapshot-copy.ts`** (non-empty shipped segments; **`ENGINE_TRUST_INFORMATIONAL_DENYLIST`**; `executed` / `guaranteed` guards; stance lines per `EnginePosture`; fixed-sample timestamp line only); **`MC-S3-004`** `engine-notices-and-mock-contract.test.ts` unchanged in intent; prior regression precedents unchanged in intent. No ADR under ticket intent. Merged PR **#119**. Completed record: **§39**.
 
@@ -820,7 +810,7 @@ Close a **verified regression-test asymmetry** on the allocation bands trust sur
 - **Regression resistance extension (test-only, completed):** `MC-S3-006` — **§37** (completed ticket record); merged PR **#114**.
 - **Regression resistance tranche 3 (test-only, completed):** `MC-S3-007` — **§38** (completed ticket record); merged PR **#117**.
 - **Regression resistance tranche 4 (test-only, completed):** `MC-S3-008` — **§39** (completed ticket record); merged PR **#119**.
-- **Regression resistance tranche 5 (test-only, active):** `MC-S3-009` — see **§7** / **§7a** (approved next ticket and execution brief).
+- **Regression resistance tranche 5 (test-only, completed):** `MC-S3-009` — **§40** (completed ticket record); merged PR **#121**.
 - **Merged implementation truth:** **§6** remains canonical for shipped code boundaries.
 - When a successor ticket is approved, record it in **§7** and restore the execution brief in **§7a** per governance discipline.
 - Do not infer continuation work from *Proposed* ADRs or roadmap narrative unless **§7** names a ticket.
@@ -1412,7 +1402,7 @@ No product or runtime files changed under this ticket.
 
 §7 / §7a updates were applied **after** the §6a assessment was written, per MC-S2-023 sequencing discipline.
 
-**Follow-ups:** **`MC-S3-001`** completed — **§32**; **`MC-S3-002`** completed — **§33**; **`MC-S3-003`** completed — **§34**; **`MC-S3-004`** completed — **§35**; **`MC-S3-005`** completed — **§36**; **`MC-S3-006`** completed — **§37**; **`MC-S3-007`** completed — **§38**; **`MC-S3-008`** completed — **§39**. For subsequent sequencing, see **§7** and **§7a** when governance names the next approved ticket.
+**Follow-ups:** **`MC-S3-001`** completed — **§32**; **`MC-S3-002`** completed — **§33**; **`MC-S3-003`** completed — **§34**; **`MC-S3-004`** completed — **§35**; **`MC-S3-005`** completed — **§36**; **`MC-S3-006`** completed — **§37**; **`MC-S3-007`** completed — **§38**; **`MC-S3-008`** completed — **§39**; **`MC-S3-009`** completed — **§40**. For subsequent sequencing, see **§7** and **§7a** when governance names the next approved ticket.
 
 ---
 
@@ -1429,6 +1419,7 @@ Use this file as the continuity primer before asking Cursor to review or impleme
 - for **`MC-S3-006`** (test-only regression extension for shipped trust surfaces), see **§37** and **§6** (`MC-S3-006`)
 - for **`MC-S3-007`** (test-only regression tranche 3 for shipped trust surfaces), see **§38** and **§6** (`MC-S3-007`)
 - for **`MC-S3-008`** (test-only regression tranche 4 for shipped trust surfaces), see **§39** and **§6** (`MC-S3-008`)
+- for **`MC-S3-009`** (test-only regression tranche 5 for shipped trust surfaces), see **§40** and **§6** (`MC-S3-009`)
 - for the **approved next ticket** (if any), see **§7** and **§7a**; only **§7** names what is approved next
 - for **sprint planning procedure** (governance vs execution vs closeout, candidate slate, §7 / §7a gate, post-merge order), see `docs/ops/HEDGR_SPRINT_PLANNING_PROTOCOL.md`
 - for transaction mock-state review seam (dev-only), see **§6** (`MC-S2-021`) and **§27**; ADR **0017**
@@ -1477,7 +1468,7 @@ No product or runtime files changed under this ticket.
 
 §7 / §7a updates apply after delivery of **§6b**, per governance closeout discipline.
 
-**Follow-ups:** Successor **`MC-S3-002`** completed — **§33**; successor **`MC-S3-003`** completed — **§34**; successor **`MC-S3-004`** completed — **§35**; successor **`MC-S3-005`** completed — **§36**; successor **`MC-S3-006`** completed — **§37**; successor **`MC-S3-007`** completed — **§38**; successor **`MC-S3-008`** completed — **§39**; any further successor appears only when **§7** is updated explicitly.
+**Follow-ups:** Successor **`MC-S3-002`** completed — **§33**; successor **`MC-S3-003`** completed — **§34**; successor **`MC-S3-004`** completed — **§35**; successor **`MC-S3-005`** completed — **§36**; successor **`MC-S3-006`** completed — **§37**; successor **`MC-S3-007`** completed — **§38**; successor **`MC-S3-008`** completed — **§39**; successor **`MC-S3-009`** completed — **§40**; any further successor appears only when **§7** is updated explicitly.
 
 ---
 
@@ -1500,7 +1491,7 @@ No product or runtime files changed under this ticket.
 
 **§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
 
-**Follow-ups:** Successor **`MC-S3-003`** completed — **§34**; successor **`MC-S3-004`** completed — **§35**; successor **`MC-S3-005`** completed — **§36**; successor **`MC-S3-006`** completed — **§37**; successor **`MC-S3-007`** completed — **§38**; successor **`MC-S3-008`** completed — **§39**.
+**Follow-ups:** Successor **`MC-S3-003`** completed — **§34**; successor **`MC-S3-004`** completed — **§35**; successor **`MC-S3-005`** completed — **§36**; successor **`MC-S3-006`** completed — **§37**; successor **`MC-S3-007`** completed — **§38**; successor **`MC-S3-008`** completed — **§39**; successor **`MC-S3-009`** completed — **§40**.
 
 ---
 
@@ -1517,7 +1508,7 @@ Documentation-only: ADR **0016** recorded as **Accepted** with **Acceptance note
 
 **§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
 
-**Follow-ups:** Successor **`MC-S3-004`** completed — **§35**; successor **`MC-S3-005`** completed — **§36**; successor **`MC-S3-006`** completed — **§37**; successor **`MC-S3-007`** completed — **§38**; successor **`MC-S3-008`** completed — **§39**.
+**Follow-ups:** Successor **`MC-S3-004`** completed — **§35**; successor **`MC-S3-005`** completed — **§36**; successor **`MC-S3-006`** completed — **§37**; successor **`MC-S3-007`** completed — **§38**; successor **`MC-S3-008`** completed — **§39**; successor **`MC-S3-009`** completed — **§40**.
 
 ---
 
@@ -1539,7 +1530,7 @@ No ADR or doctrine change under ticket intent. Merged PR **#111**.
 
 **§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
 
-**Follow-ups:** Successor **`MC-S3-005`** completed — **§36**; successor **`MC-S3-006`** completed — **§37**; successor **`MC-S3-007`** completed — **§38**; successor **`MC-S3-008`** completed — **§39**.
+**Follow-ups:** Successor **`MC-S3-005`** completed — **§36**; successor **`MC-S3-006`** completed — **§37**; successor **`MC-S3-007`** completed — **§38**; successor **`MC-S3-008`** completed — **§39**; successor **`MC-S3-009`** completed — **§40**.
 
 ---
 
@@ -1559,9 +1550,9 @@ Merged PR **#112**.
 
 ### Sequencing note
 
-At **`MC-S3-005`** closeout, **§7** had not yet named a successor; governance later approved and completed **`MC-S3-006`** (regression resistance extension, **test-only**) — **§37**; merged PR **#114**; then **`MC-S3-007`** (regression resistance tranche 3, **test-only**) — **§38**; merged PR **#117**; then **`MC-S3-008`** (regression resistance tranche 4, **test-only**) — **§39**; merged PR **#119**. **§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
+At **`MC-S3-005`** closeout, **§7** had not yet named a successor; governance later approved and completed **`MC-S3-006`** (regression resistance extension, **test-only**) — **§37**; merged PR **#114**; then **`MC-S3-007`** (regression resistance tranche 3, **test-only**) — **§38**; merged PR **#117**; then **`MC-S3-008`** (regression resistance tranche 4, **test-only**) — **§39**; merged PR **#119**; then **`MC-S3-009`** (regression resistance tranche 5, **test-only**) — **§40**; merged PR **#121**. **§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
 
-**Follow-ups:** Successor **`MC-S3-006`** completed — **§37**; successor **`MC-S3-007`** completed — **§38**; successor **`MC-S3-008`** completed — **§39**; any successor after that appears only when **§7** is updated explicitly.
+**Follow-ups:** Successor **`MC-S3-006`** completed — **§37**; successor **`MC-S3-007`** completed — **§38**; successor **`MC-S3-008`** completed — **§39**; successor **`MC-S3-009`** completed — **§40**; any successor after that appears only when **§7** is updated explicitly.
 
 ---
 
@@ -1587,7 +1578,7 @@ No ADR or doctrine change under ticket intent. Merged PR **#114**.
 
 **§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
 
-**Follow-ups:** Successor **`MC-S3-007`** completed — **§38**; successor **`MC-S3-008`** completed — **§39**; any successor after that appears only when **§7** is updated explicitly.
+**Follow-ups:** Successor **`MC-S3-007`** completed — **§38**; successor **`MC-S3-008`** completed — **§39**; successor **`MC-S3-009`** completed — **§40**; any successor after that appears only when **§7** is updated explicitly.
 
 ---
 
@@ -1611,7 +1602,7 @@ No ADR or doctrine change under ticket intent. Merged PR **#117**.
 
 **§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
 
-**Follow-ups:** Successor **`MC-S3-008`** completed — **§39**; any successor after that appears only when **§7** is updated explicitly.
+**Follow-ups:** Successor **`MC-S3-008`** completed — **§39**; successor **`MC-S3-009`** completed — **§40**; any successor after that appears only when **§7** is updated explicitly.
 
 ---
 
@@ -1629,6 +1620,29 @@ Vitest copy contract for **already-shipped** **`stability-review-snapshot-copy`*
 **`MC-S3-004`** Vitest contract in **`apps/frontend/__tests__/engine-notices-and-mock-contract.test.ts`** unchanged in intent. Prior regression precedents unchanged in intent.
 
 No ADR or doctrine change under ticket intent. Merged PR **#119**.
+
+### Sequencing note
+
+**§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
+
+**Follow-ups:** Successor **`MC-S3-009`** completed — **§40**; any successor after that appears only when **§7** is updated explicitly.
+
+---
+
+## 40. Completed execution ticket - MC-S3-009 (Regression resistance tranche 5 for Stability Engine trust surfaces)
+
+**Ticket:** `MC-S3-009` — Regression resistance tranche 5 for shipped Stability Engine trust surfaces  
+**Suggested branch:** `feat/mc-s3-009-regression-resistance-tranche-5`
+
+### Outcome (implementation — test-only)
+
+Extended Vitest regression resistance for **already-shipped** allocation bands **`bandDescription()`** output (mirror of current copy; no new product behavior):
+
+- **`apps/frontend/__tests__/engine-allocation-bands.test.tsx`** — new test **`keeps per-band bandDescription() copy free of execution, accounting-as-truth, and hype drift`**: asserts non-empty text at **`#engine-allocation-band-liquidityTargetPct-desc`**, **`#engine-allocation-band-coreTargetPct-desc`**, **`#engine-allocation-band-yieldCapPct-desc`**; combined copy checked against **`ENGINE_TRUST_INFORMATIONAL_DENYLIST`** and `executed` / `allocated to your` word guards; fixed sample **`EngineState`** (`liquidityTargetPct` 42, `coreTargetPct` 44, `yieldCapPct` 14) exercises all three description branches
+
+**`MC-S3-004`** Vitest contract in **`apps/frontend/__tests__/engine-notices-and-mock-contract.test.ts`** unchanged in intent. Prior regression precedents unchanged in intent.
+
+No ADR or doctrine change under ticket intent. Merged PR **#121**.
 
 ### Sequencing note
 
