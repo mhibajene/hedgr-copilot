@@ -111,5 +111,6 @@ After the PR is merged:
 - `docs/ops/HEDGR_STATUS.md` — canonical status and sequencing  
 - `docs/decisions/SPRINT-2-ADR-INDEX.md` — Sprint 2 ADR map and usage rule  
 - `docs/ops/NOTION_GOVERNANCE_STAGING.md` — Notion copy source  
+- `docs/ops/HEDGR_ATLAS_PRODUCT_CONCEPT_NOTE.md` — example of exploration-stage product framing (may inform future sequencing discussion); **not** queue authority and **not** a substitute for §7 / §7a  
 - `AGENTS.md` — execution and engine-facing read order  
 - `.cursor/commands/propose-next-ticket.md` — optional Cursor helper for **governance mode**: recommendation-only candidate slate plus **draft** §7 / §7a text; **not** authorization and **not** a substitute for updating **`HEDGR_STATUS.md`** (same class of artifact as working drafts—see anti-pattern **Plan-file-as-authority**; treat like a structured scratchpad until §7 / §7a are edited in-repo)  

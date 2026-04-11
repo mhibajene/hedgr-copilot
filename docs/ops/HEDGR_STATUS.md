@@ -1,6 +1,6 @@
 Status: Canonical hand-off file
 Purpose: Strategic continuity, merged implementation truth, and next-ticket authority for Cursor execution
-Last updated: 2026-04-09
+Last updated: 2026-04-11
 
 ---
 
@@ -730,9 +730,9 @@ Completed and merged:
 
 Current active ticket status:
 
-- **Approved next ticket:** *None named.* **§7** lists completed work through **`MC-S3-007`**; the next implementation ticket appears here only when governance updates **§7** explicitly.
+- **Approved next ticket:** **`MC-S3-008`** — Regression resistance tranche 4 for shipped Stability Engine trust surfaces (test-only). Full execution brief in **§7a**.
 - **§6b** is not sequencing authority — Transition Readiness taxonomy and scrutiny input only; only **§7** / **§7a** name approved implementation work when a ticket is active.
-- When **§7** names a ticket, the full execution brief lives in **§7a** until closeout.
+- The full execution brief for the approved ticket lives in **§7a** until closeout.
 - Do not treat backlog, roadmap, or *Proposed* ADRs as sequenced work unless **§7** is updated explicitly.
 - Cursor must not assume continuation beyond **§6** merged truth, **§6a** release-closeout assessment, **§6b** transition standard, **§7** / **§7a** (when a ticket is active), and current governance.
 - Cursor must not continue automatically into work beyond what is explicitly defined in this file for an active ticket.
@@ -744,13 +744,40 @@ Current active ticket status:
 
 ## 7a. Active execution ticket
 
-**Status:** *No ticket is currently named in **§7** as the approved next implementation.*
+**Status:** **`MC-S3-008`** is named in **§7** as the approved next implementation ticket.
 
-Until **§7** names a successor:
+**Ticket:** `MC-S3-008` — Regression resistance tranche 4 for shipped Stability Engine trust surfaces (test-only)
 
-- **§6b** remains taxonomy and scrutiny input only—not authorization to start work.
-- Do not treat backlog, roadmap, or *Proposed* ADRs as sequenced work.
-- When governance approves the next ticket, restore a full execution brief in this section per discipline used for prior **`MC-S3-*`** tickets.
+**Objective:** Add a Vitest copy contract for `apps/frontend/lib/engine/stability-review-snapshot-copy.ts`.
+
+**In scope**
+
+- One new test file only, following repo naming patterns.
+- Assert non-empty shipped segments.
+- Reuse `ENGINE_TRUST_INFORMATIONAL_DENYLIST` from `apps/frontend/__tests__/engine-trust-framing-denylist.ts`.
+- Include `executed` / `guaranteed` guards (Vitest regex pattern aligned with existing engine copy contracts).
+- Cover: exported static copy constants; stance lines via `getEngineStabilityReviewSnapshotStance` for each `EnginePosture`; static framing of `getEngineStabilityReviewTimestampLine` only (e.g. fixed sample `formattedUpdatedAt` input—no runtime clock or locale-dependent assertions).
+
+**Must not do**
+
+- No second target module or file under test.
+- No notice-title parity expansion.
+- No new denylist policy logic (reuse shared denylist as-is).
+- No Warmth follow-on or presentation track widening.
+- No runtime, backend, ledger, policy, or Copilot widening.
+- No new product states, behavior, trust semantics, interaction patterns, or surface types.
+- Tests assert existing shipped copy behavior only (semantics-preserving regression resistance).
+
+**Implementation surfaces**
+
+- `apps/frontend/lib/engine/stability-review-snapshot-copy.ts`
+- New test file under `apps/frontend/__tests__/` (single file).
+- Reuse `apps/frontend/__tests__/engine-trust-framing-denylist.ts`.
+
+**Governance reminders**
+
+- **§6b** is taxonomy and scrutiny input only—not backlog approval or substitute for **§7**.
+- Do not treat backlog, roadmap, or *Proposed* ADRs as sequenced work beyond **§7** / **§7a**.
 
 ---
 
