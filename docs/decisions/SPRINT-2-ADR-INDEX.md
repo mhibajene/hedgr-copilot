@@ -20,6 +20,8 @@ Sprint 2 is read-only, posture-first, and non-executing. These ADRs exist to ens
 
 **Traceability — regression resistance tranche 3 (MC-S3-007).** Test-only Vitest copy contracts for protective guidance and stability explainer presentation modules are recorded in **`HEDGR_STATUS.md` §38** and **§6** (`MC-S3-007`); **no** ticket-intent repo ADR; **not** Warmth v2 or presentation-track expansion. Sequencing remains **§7** / **§7a** only.
 
+**Traceability — regression resistance tranche 4 (MC-S3-008).** Test-only Vitest copy contract for **`stability-review-snapshot-copy`** is recorded in **`HEDGR_STATUS.md` §39** and **§6** (`MC-S3-008`); **no** ticket-intent repo ADR; **not** Warmth v2 or presentation-track expansion. Sequencing remains **§7** / **§7a** only.
+
 **Transition Readiness closeout records (ADR 0018–0022).** Repo-native **closeout notes** for **`MC-S3-001`**–**`MC-S3-005`** mirror completed governance, test, or presentation scoped work; they **do not** name the next ticket or supersede **`HEDGR_STATUS.md` §7**. See **`0018-mc-s3-001-post-foundation-boundary-readiness-documented.md`**, **`0019-mc-s3-002-governance-continuity-and-handoff-traceability-documented.md`**, **`0020-mc-s3-003-adr-0016-accepted-and-authority-surfaces-reconciled.md`**, **`0021-mc-s3-004-regression-resistance-for-shipped-trust-surfaces.md`**, **`0022-mc-s3-005-warmth-layer-v1-constrained-presentation-refinement-closeout.md`**.
 
 ---
