@@ -1,6 +1,6 @@
 Status: Canonical hand-off file
 Purpose: Strategic continuity, merged implementation truth, and next-ticket authority for Cursor execution
-Last updated: 2026-04-11
+Last updated: 2026-04-14
 
 ---
 
@@ -757,14 +757,12 @@ Completed and merged:
 
 Current active ticket status:
 
-- **Approved next ticket:** **None named.** There is **no** approved next implementation ticket until **§7** is updated explicitly to name one.
-- **§6b** is not sequencing authority — Transition Readiness taxonomy and scrutiny input only; only **§7** / **§7a** name approved implementation work when a ticket is active.
-- When a ticket is active, the full execution brief lives in **§7a** until closeout; when **§7** names no ticket, **§7a** holds the no-active-ticket stub below.
-- **Future work:** A future retail UI conformance candidate, if any, must be separately named in **§7**.
-- Do not treat backlog, roadmap, or *Proposed* ADRs as sequenced work unless **§7** is updated explicitly.
-- Cursor must not assume continuation beyond **§6** merged truth, **§6a** release-closeout assessment, **§6b** transition standard, **§7** / **§7a** (when a ticket is active), and current governance.
-- Cursor must not continue automatically into work beyond what is explicitly defined in this file for an active ticket.
-- Cursor must not drift beyond explicitly defined scope.
+- **Approved next ticket:** **`MC-S3-011`** — Stability Engine trust-surface coverage matrix (**documentation-only**).
+- **Rationale:** Publish a repo-native **evidence matrix** that maps **shipped** Stability Engine trust surfaces (canonical merged truth in **`HEDGR_STATUS.md` §6**) to **existing** automated test linkage and classifies observability as **covered**, **partially covered**, or **uncovered**, each with explicit rationale—so later sequencing can be grounded in evidence, not momentum.
+- **Boundary reminder:** Sprint 2 **read-only / informational** posture remains in force: **no** execution semantics, **no** accounting or ledger truth, **no** engine-authority widening; this ticket is **`docs/ops/`** documentation and process **only**.
+- **§6b** is **not** sequencing authority — Transition Readiness taxonomy and scrutiny input **only**.
+- **Full execution brief:** **`§7a`** (this ticket).
+- **Successor work:** Do **not** infer a follow-on implementation ticket from matrix findings; any successor requires an explicit later **`§7`** update (and matching **`§7a`** when active).
 
 **Last completed ticket (summary):** `MC-S3-010` — Stability Engine retail UI governance read-path alignment (documentation only; **`docs/ops/HEDGR_STATUS.md` §3** cites exploration and variant disposition ops notes; new ops note files in **`docs/ops/`**; **§7** / **§7a** remain sole implementation authority in read-path wording); completed record in **§41**; merged PR **#123**.
 
@@ -772,9 +770,48 @@ Current active ticket status:
 
 ## 7a. Active execution ticket
 
-**Status:** **No active execution ticket.** **§7** does not currently name an approved next implementation ticket.
+**Active ticket:** **`MC-S3-011`** — Stability Engine trust-surface coverage matrix (**documentation-only**)
 
-When governance approves the next ticket, **§7** will name it and this section will hold the full execution brief until closeout.
+**Objective**
+
+- Add a single repo-facing governance artifact under **`docs/ops/`** that records, **row-by-row**, how well **shipped** Stability Engine trust surfaces (per **`HEDGR_STATUS.md` §6**) are reflected in **existing** automated tests (Vitest / Playwright as already present in-repo), using only **covered**, **partially covered**, and **uncovered** plus **explicit rationale** per row.
+
+**In scope**
+
+- **`docs/ops/`:** one matrix document (name chosen at implementation time) that is **surface- and evidence-first**: each row is one shipped trust surface/module **grounded in `HEDGR_STATUS.md` §6`** (ticket id and/or §6 subsection anchor).
+- Per row, include:
+  - **§6 grounding** (mandatory): pointer to the relevant **`§6`** merged-truth entry (or explicit ticket id that **`§6`** documents as shipped for that surface).
+  - **Coverage class** (mandatory): **`covered`** · **`partially covered`** · **`uncovered`** — defined only relative to **existing** test artifacts (file paths), not desired future coverage.
+  - **Rationale** (mandatory): short, factual explanation of why that class was chosen (what is exercised vs what is not), citing concrete paths.
+  - **Evidence notes** (optional): factual tagging only (e.g. which concern is weakly asserted)—**not** recommendations, priorities, or successor scope.
+- Optional: a **single** cross-link from **`docs/ops/HEDGR_STATUS.md`** to the matrix **only if** needed for discoverability (no other **`HEDGR_STATUS`** edits required for ticket success).
+
+**Hard exclusions (sources and rows)**
+
+- Do **not** include **exploratory-only** mockups, **Paper** variants, **retired** concepts, or other **non-shipped** references as matrix rows or coverage scope.
+- Do **not** treat design exploration docs, Notion, or external artifacts as evidence of shipped surfaces unless **`§6`** already ties them to merged implementation (default: **exclude**).
+
+**Must not**
+
+- **No** edits under **`apps/`** or **`packages/`**; **no** test file edits; **no** CI workflow edits; **no** runtime, build, or environment behavior changes.
+- **No** product-copy changes (including “clarifying” copy in code).
+- **No** new tests, **no** new test obligations, **no** “should add tests” language framed as requirements.
+- **No** **`docs/ops/NOTION_GOVERNANCE_STAGING.md`** edits; **no** Notion mirror or executive-copy work.
+- **No** roadmap, backlog, “candidate next ticket,” or sequencing language derived from findings.
+- **No** doctrine reinterpretation or ADR widening by implication.
+
+**§6 traceability rule**
+
+- **Every** matrix row **must** map to **repo-shipped** Stability Engine trust-surface truth documented in **`HEDGR_STATUS.md` §6`**.
+- If a surface cannot be grounded in **`§6`**, it **must not** appear as a row **unless** the matrix doc includes a **brief, explicit exception note** explaining why that row is still within shipped-truth scope (use **sparingly**; default is **omit**).
+
+**Acceptance shape**
+
+- Matrix doc exists in **`docs/ops/`**, readable standalone, with a clear disclaimer: **governance evidence artifact only**; **not** authorization to start successor work; **not** a backlog.
+- **Every** row has **§6** grounding, **coverage class**, and **rationale**; evidence citations use **existing** test file paths where **`covered`** or **`partially covered`** apply, and state absence plainly where **`uncovered`**.
+- **No** `apps/` / `packages/` / test / CI diffs; **no** behavior change.
+
+**Closeout note (for humans):** On merge completion, follow normal **`HEDGR_STATUS`** closeout: move ticket to **`§6`** / history as appropriate, restore **`§7`** / **`§7a`** to **no active ticket** or the next explicitly approved ticket—**not** inferred from this matrix.
 
 ---
 
