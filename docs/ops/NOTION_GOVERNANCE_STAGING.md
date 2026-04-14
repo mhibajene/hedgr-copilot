@@ -6,7 +6,7 @@
 
 **Authority:** The repository is source of truth. Wording here must match `docs/decisions/0016-warmth-layer-doctrine-constrained-retail-refinement-track.md`, `docs/decisions/SPRINT-2-ADR-INDEX.md`, and `docs/ops/HEDGR_STATUS.md`. Wording must match **Accepted** ADR **0016** in repo; do not broaden scope or soften read-only / non-execution boundaries in Notion.
 
-**Last reconciled:** 2026-04-11 (`MC-S3-010` closeout; documentation-only retail UI governance read-path alignment — merged PR **#123**; completed record **`HEDGR_STATUS.md` §41**; **no** repo ADR under ticket intent)
+**Last reconciled:** 2026-04-14 (`MC-S3-011` closeout; documentation-only Stability Engine trust-surface coverage matrix — merged PR **#125**; completed record **`HEDGR_STATUS.md` §42**; **`HEDGR_STATUS.md` §7** / **§7a** restored to **no active ticket**; **no** repo ADR under ticket intent)
 
 ---
 
@@ -50,13 +50,15 @@ Use as a governed workstream line, **not** as a shipped-feature claim. Placement
 
 - **`MC-S3-008` (merged, test-only):** Copy-contract Vitest regression tranche 4 (**`stability-review-snapshot-copy`**) — **no** new states, **no** new behavior, **no** new surfaces; **not** Warmth v2. **`HEDGR_STATUS.md` §7** names **no** approved next ticket unless it is updated explicitly; merged truth **§39**.
 
-- **`MC-S3-010` (merged, documentation-only):** Retail UI governance **read-path alignment** — exploration and variant disposition ops notes on the binding read stack in **`HEDGR_STATUS.md` §3**; **no** `apps/` / `packages/` / tests / CI; **`HEDGR_STATUS.md` §7** names **no** approved next ticket unless it is updated explicitly; merged truth **§41**; merged PR **#123**.
+- **`MC-S3-010` (merged, documentation-only):** Retail UI governance **read-path alignment** — exploration and variant disposition ops notes on the binding read stack in **`HEDGR_STATUS.md` §3**; **no** `apps/` / `packages/` / tests / CI; merged truth **§41**; merged PR **#123**.
+
+- **`MC-S3-011` (merged, documentation-only):** Stability Engine **trust-surface coverage matrix** — **`docs/ops/HEDGR_STABILITY_ENGINE_TRUST_SURFACE_TEST_COVERAGE_MATRIX.md`** maps **§6**-grounded shipped surfaces to existing Vitest evidence; governance evidence only; **no** `apps/` / `packages/` / tests / CI; **`HEDGR_STATUS.md` §7** names **no** approved next ticket after closeout (**§42**); merged PR **#125**.
 
 **Supporting repo pointers (do not paraphrase into strategy)**
 
 - `docs/decisions/0016-warmth-layer-doctrine-constrained-retail-refinement-track.md`
 - `docs/decisions/SPRINT-2-ADR-INDEX.md` (ADR 0016 section)
-- `docs/ops/HEDGR_STATUS.md` §2, §3, §7, §37, §38, §39, §41 (§37 — **`MC-S3-006`**; §38 — **`MC-S3-007`**; §39 — **`MC-S3-008`**; §41 — **`MC-S3-010`** merged records)
+- `docs/ops/HEDGR_STATUS.md` §2, §3, §6 (`MC-S3-011`), §7, §7a, §37, §38, §39, §41, §42 (§37 — **`MC-S3-006`**; §38 — **`MC-S3-007`**; §39 — **`MC-S3-008`**; §41 — **`MC-S3-010`**; §42 — **`MC-S3-011`** merged records)
 
 ---
 

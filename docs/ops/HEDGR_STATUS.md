@@ -342,6 +342,23 @@ Implementation posture preserved:
 
 - test-only merge; no new product states, runtime widening, backend coupling, or transaction-review / mock-state seam expansion beyond existing ADR **0017** and merged **`MC-S2-021`** boundaries
 
+### MC-S3-011 - Stability Engine trust-surface coverage matrix (documentation-only)
+
+Merged files:
+
+- `docs/ops/HEDGR_STABILITY_ENGINE_TRUST_SURFACE_TEST_COVERAGE_MATRIX.md`
+
+Implementation truth:
+
+- governance evidence matrix maps **§6**-grounded shipped Stability Engine trust surfaces to **existing** Vitest test linkage, with **covered** / **partially covered** / **uncovered** classification and factual rationale per row
+- matrix scope omits withdraw / tx / market-continuity **§6** rows by default (documented in-matrix); no exploratory-only mockups, Paper variants, or retired concepts as rows
+- no sequencing, backlog, or successor-implication language in the artifact; disclaimer states governance evidence only
+
+Implementation posture preserved:
+
+- **documentation-only** merge; **no** `apps/`, **no** `packages/`, **no** test file edits, **no** CI workflow edits, **no** runtime or product-copy changes
+- no ADR under ticket intent; merged PR **#125**
+
 ### MC-S2-004 - Allocation bands UI
 
 Implementation truth:
@@ -754,66 +771,32 @@ Completed and merged:
 - `MC-S3-008` - Regression resistance tranche 4 for shipped Stability Engine trust surfaces (test-only; merged PR **#119**; completed record **§39**)
 - `MC-S3-009` - Regression resistance tranche 5 for shipped Stability Engine trust surfaces (test-only; merged PR **#121**; completed record **§40**)
 - `MC-S3-010` - Stability Engine retail UI governance read-path alignment (documentation only; merged PR **#123**; completed record **§41**)
+- `MC-S3-011` - Stability Engine trust-surface coverage matrix (documentation only; merged PR **#125**; completed record **§42**)
 
 Current active ticket status:
 
-- **Approved next ticket:** **`MC-S3-011`** — Stability Engine trust-surface coverage matrix (**documentation-only**).
-- **Rationale:** Publish a repo-native **evidence matrix** that maps **shipped** Stability Engine trust surfaces (canonical merged truth in **`HEDGR_STATUS.md` §6**) to **existing** automated test linkage and classifies observability as **covered**, **partially covered**, or **uncovered**, each with explicit rationale—so later sequencing can be grounded in evidence, not momentum.
-- **Boundary reminder:** Sprint 2 **read-only / informational** posture remains in force: **no** execution semantics, **no** accounting or ledger truth, **no** engine-authority widening; this ticket is **`docs/ops/`** documentation and process **only**.
-- **§6b** is **not** sequencing authority — Transition Readiness taxonomy and scrutiny input **only**.
-- **Full execution brief:** **`§7a`** (this ticket).
-- **Successor work:** Do **not** infer a follow-on implementation ticket from matrix findings; any successor requires an explicit later **`§7`** update (and matching **`§7a`** when active).
+- **Approved next ticket:** **None named.** There is **no** approved next implementation ticket until **§7** is updated explicitly to name one.
+- **§6b** is not sequencing authority — Transition Readiness taxonomy and scrutiny input only; only **§7** / **§7a** name approved implementation work when a ticket is active.
+- When a ticket is active, the full execution brief lives in **§7a** until closeout; when **§7** names no ticket, **§7a** holds the no-active-ticket stub below.
+- **Future work:** A future retail UI conformance candidate, if any, must be separately named in **§7**.
+- Do not treat backlog, roadmap, or *Proposed* ADRs as sequenced work unless **§7** is updated explicitly.
+- Cursor must not assume continuation beyond **§6** merged truth, **§6a** release-closeout assessment, **§6b** transition standard, **§7** / **§7a** (when a ticket is active), and current governance.
+- Cursor must not continue automatically into work beyond what is explicitly defined in this file for an active ticket.
+- Cursor must not drift beyond explicitly defined scope.
 
-**Last completed ticket (summary):** `MC-S3-010` — Stability Engine retail UI governance read-path alignment (documentation only; **`docs/ops/HEDGR_STATUS.md` §3** cites exploration and variant disposition ops notes; new ops note files in **`docs/ops/`**; **§7** / **§7a** remain sole implementation authority in read-path wording); completed record in **§41**; merged PR **#123**.
+**Last completed ticket (summary):** `MC-S3-011` — Stability Engine trust-surface coverage matrix (documentation only; artifact **`docs/ops/HEDGR_STABILITY_ENGINE_TRUST_SURFACE_TEST_COVERAGE_MATRIX.md`**; **§6** merged truth **MC-S3-011**; **§7** / **§7a** restored to no active ticket after closeout); completed record in **§42**; merged PR **#125**.
 
 ---
 
 ## 7a. Active execution ticket
 
-**Active ticket:** **`MC-S3-011`** — Stability Engine trust-surface coverage matrix (**documentation-only**)
+**Status:** **No active execution ticket.** **§7** does not currently name an approved next implementation ticket.
 
-**Objective**
-
-- Add a single repo-facing governance artifact under **`docs/ops/`** that records, **row-by-row**, how well **shipped** Stability Engine trust surfaces (per **`HEDGR_STATUS.md` §6**) are reflected in **existing** automated tests (Vitest / Playwright as already present in-repo), using only **covered**, **partially covered**, and **uncovered** plus **explicit rationale** per row.
-
-**In scope**
-
-- **`docs/ops/`:** one matrix document (name chosen at implementation time) that is **surface- and evidence-first**: each row is one shipped trust surface/module **grounded in `HEDGR_STATUS.md` §6`** (ticket id and/or §6 subsection anchor).
-- Per row, include:
-  - **§6 grounding** (mandatory): pointer to the relevant **`§6`** merged-truth entry (or explicit ticket id that **`§6`** documents as shipped for that surface).
-  - **Coverage class** (mandatory): **`covered`** · **`partially covered`** · **`uncovered`** — defined only relative to **existing** test artifacts (file paths), not desired future coverage.
-  - **Rationale** (mandatory): short, factual explanation of why that class was chosen (what is exercised vs what is not), citing concrete paths.
-  - **Evidence notes** (optional): factual tagging only (e.g. which concern is weakly asserted)—**not** recommendations, priorities, or successor scope.
-- Optional: a **single** cross-link from **`docs/ops/HEDGR_STATUS.md`** to the matrix **only if** needed for discoverability (no other **`HEDGR_STATUS`** edits required for ticket success).
-
-**Hard exclusions (sources and rows)**
-
-- Do **not** include **exploratory-only** mockups, **Paper** variants, **retired** concepts, or other **non-shipped** references as matrix rows or coverage scope.
-- Do **not** treat design exploration docs, Notion, or external artifacts as evidence of shipped surfaces unless **`§6`** already ties them to merged implementation (default: **exclude**).
-
-**Must not**
-
-- **No** edits under **`apps/`** or **`packages/`**; **no** test file edits; **no** CI workflow edits; **no** runtime, build, or environment behavior changes.
-- **No** product-copy changes (including “clarifying” copy in code).
-- **No** new tests, **no** new test obligations, **no** “should add tests” language framed as requirements.
-- **No** **`docs/ops/NOTION_GOVERNANCE_STAGING.md`** edits; **no** Notion mirror or executive-copy work.
-- **No** roadmap, backlog, “candidate next ticket,” or sequencing language derived from findings.
-- **No** doctrine reinterpretation or ADR widening by implication.
-
-**§6 traceability rule**
-
-- **Every** matrix row **must** map to **repo-shipped** Stability Engine trust-surface truth documented in **`HEDGR_STATUS.md` §6`**.
-- If a surface cannot be grounded in **`§6`**, it **must not** appear as a row **unless** the matrix doc includes a **brief, explicit exception note** explaining why that row is still within shipped-truth scope (use **sparingly**; default is **omit**).
-
-**Acceptance shape**
-
-- Matrix doc exists in **`docs/ops/`**, readable standalone, with a clear disclaimer: **governance evidence artifact only**; **not** authorization to start successor work; **not** a backlog.
-- **Every** row has **§6** grounding, **coverage class**, and **rationale**; evidence citations use **existing** test file paths where **`covered`** or **`partially covered`** apply, and state absence plainly where **`uncovered`**.
-- **No** `apps/` / `packages/` / test / CI diffs; **no** behavior change.
-
-**Closeout note (for humans):** On merge completion, follow normal **`HEDGR_STATUS`** closeout: move ticket to **`§6`** / history as appropriate, restore **`§7`** / **`§7a`** to **no active ticket** or the next explicitly approved ticket—**not** inferred from this matrix.
+When governance approves the next ticket, **§7** will name it and this section will hold the full execution brief until closeout.
 
 ---
+
+**Archived brief (MC-S3-011):** Stability Engine trust-surface **coverage matrix** — **documentation only**; artifact **`docs/ops/HEDGR_STABILITY_ENGINE_TRUST_SURFACE_TEST_COVERAGE_MATRIX.md`** maps **§6**-grounded shipped Stability Engine surfaces to **existing** Vitest evidence (covered / partially covered / uncovered); governance-evidence disclaimer; withdraw/tx/market **§6** rows omitted from matrix scope by default per artifact; **no** `apps/`, **no** `packages/`, **no** tests or CI; no ADR under ticket intent. Merged PR **#125**. Completed record: **§42**.
 
 **Archived brief (MC-S3-010):** Stability Engine retail UI **governance read-path alignment** — **documentation only**; extended **`docs/ops/HEDGR_STATUS.md` §3** ordered read stack with **`docs/ops/HEDGR_STABILITY_ENGINE_UI_EXPLORATION_NOTE.md`** (exploration/critique frame) and **`docs/ops/HEDGR_STABILITY_ENGINE_UI_VARIANT_DISPOSITION.md`** (verdict on current variant artifact; Replace/Retire discipline), both explicitly subordinate to doctrine, accepted ADRs, and **`HEDGR_STATUS.md`**; **§7** / **§7a** remain sole implementation authority. **No** `apps/`, **no** `packages/`, **no** tests or CI. No ADR under ticket intent. Merged PR **#123**. Completed record: **§41**.
 
@@ -850,6 +833,7 @@ Current active ticket status:
 - **Regression resistance tranche 4 (test-only, completed):** `MC-S3-008` — **§39** (completed ticket record); merged PR **#119**.
 - **Regression resistance tranche 5 (test-only, completed):** `MC-S3-009` — **§40** (completed ticket record); merged PR **#121**.
 - **Retail UI governance read-path alignment (documentation-only, completed):** `MC-S3-010` — **§41** (completed ticket record); merged PR **#123**.
+- **Trust-surface coverage matrix (documentation-only, completed):** `MC-S3-011` — **§42** (completed ticket record); merged PR **#125**.
 - **Merged implementation truth:** **§6** remains canonical for shipped code boundaries.
 - When a successor ticket is approved, record it in **§7** and restore the execution brief in **§7a** per governance discipline.
 - Do not infer continuation work from *Proposed* ADRs or roadmap narrative unless **§7** names a ticket.
@@ -1441,7 +1425,7 @@ No product or runtime files changed under this ticket.
 
 §7 / §7a updates were applied **after** the §6a assessment was written, per MC-S2-023 sequencing discipline.
 
-**Follow-ups:** **`MC-S3-001`** completed — **§32**; **`MC-S3-002`** completed — **§33**; **`MC-S3-003`** completed — **§34**; **`MC-S3-004`** completed — **§35**; **`MC-S3-005`** completed — **§36**; **`MC-S3-006`** completed — **§37**; **`MC-S3-007`** completed — **§38**; **`MC-S3-008`** completed — **§39**; **`MC-S3-009`** completed — **§40**; **`MC-S3-010`** completed — **§41**. For subsequent sequencing, see **§7** and **§7a** when governance names the next approved ticket.
+**Follow-ups:** **`MC-S3-001`** completed — **§32**; **`MC-S3-002`** completed — **§33**; **`MC-S3-003`** completed — **§34**; **`MC-S3-004`** completed — **§35**; **`MC-S3-005`** completed — **§36**; **`MC-S3-006`** completed — **§37**; **`MC-S3-007`** completed — **§38**; **`MC-S3-008`** completed — **§39**; **`MC-S3-009`** completed — **§40**; **`MC-S3-010`** completed — **§41**; **`MC-S3-011`** completed — **§42**. For subsequent sequencing, see **§7** and **§7a** when governance names the next approved ticket.
 
 ---
 
@@ -1460,6 +1444,7 @@ Use this file as the continuity primer before asking Cursor to review or impleme
 - for **`MC-S3-008`** (test-only regression tranche 4 for shipped trust surfaces), see **§39** and **§6** (`MC-S3-008`)
 - for **`MC-S3-009`** (test-only regression tranche 5 for shipped trust surfaces), see **§40** and **§6** (`MC-S3-009`)
 - for **`MC-S3-010`** (documentation-only retail UI governance read-path alignment; ops exploration and variant disposition notes), see **§41**; merged PR **#123**
+- for **`MC-S3-011`** (documentation-only Stability Engine trust-surface coverage matrix), see **§42**; merged PR **#125**
 - for the **approved next ticket** (if any), see **§7** and **§7a**; only **§7** names what is approved next
 - for **sprint planning procedure** (governance vs execution vs closeout, candidate slate, §7 / §7a gate, post-merge order), see `docs/ops/HEDGR_SPRINT_PLANNING_PROTOCOL.md`
 - for transaction mock-state review seam (dev-only), see **§6** (`MC-S2-021`) and **§27**; ADR **0017**
@@ -1508,7 +1493,7 @@ No product or runtime files changed under this ticket.
 
 §7 / §7a updates apply after delivery of **§6b**, per governance closeout discipline.
 
-**Follow-ups:** Successor **`MC-S3-002`** completed — **§33**; successor **`MC-S3-003`** completed — **§34**; successor **`MC-S3-004`** completed — **§35**; successor **`MC-S3-005`** completed — **§36**; successor **`MC-S3-006`** completed — **§37**; successor **`MC-S3-007`** completed — **§38**; successor **`MC-S3-008`** completed — **§39**; successor **`MC-S3-009`** completed — **§40**; successor **`MC-S3-010`** completed — **§41**; any further successor appears only when **§7** is updated explicitly.
+**Follow-ups:** Successor **`MC-S3-002`** completed — **§33**; successor **`MC-S3-003`** completed — **§34**; successor **`MC-S3-004`** completed — **§35**; successor **`MC-S3-005`** completed — **§36**; successor **`MC-S3-006`** completed — **§37**; successor **`MC-S3-007`** completed — **§38**; successor **`MC-S3-008`** completed — **§39**; successor **`MC-S3-009`** completed — **§40**; successor **`MC-S3-010`** completed — **§41**; successor **`MC-S3-011`** completed — **§42**; any further successor appears only when **§7** is updated explicitly.
 
 ---
 
@@ -1531,7 +1516,7 @@ No product or runtime files changed under this ticket.
 
 **§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
 
-**Follow-ups:** Successor **`MC-S3-003`** completed — **§34**; successor **`MC-S3-004`** completed — **§35**; successor **`MC-S3-005`** completed — **§36**; successor **`MC-S3-006`** completed — **§37**; successor **`MC-S3-007`** completed — **§38**; successor **`MC-S3-008`** completed — **§39**; successor **`MC-S3-009`** completed — **§40**; successor **`MC-S3-010`** completed — **§41**.
+**Follow-ups:** Successor **`MC-S3-003`** completed — **§34**; successor **`MC-S3-004`** completed — **§35**; successor **`MC-S3-005`** completed — **§36**; successor **`MC-S3-006`** completed — **§37**; successor **`MC-S3-007`** completed — **§38**; successor **`MC-S3-008`** completed — **§39**; successor **`MC-S3-009`** completed — **§40**; successor **`MC-S3-010`** completed — **§41**; successor **`MC-S3-011`** completed — **§42**.
 
 ---
 
@@ -1548,7 +1533,7 @@ Documentation-only: ADR **0016** recorded as **Accepted** with **Acceptance note
 
 **§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
 
-**Follow-ups:** Successor **`MC-S3-004`** completed — **§35**; successor **`MC-S3-005`** completed — **§36**; successor **`MC-S3-006`** completed — **§37**; successor **`MC-S3-007`** completed — **§38**; successor **`MC-S3-008`** completed — **§39**; successor **`MC-S3-009`** completed — **§40**; successor **`MC-S3-010`** completed — **§41**.
+**Follow-ups:** Successor **`MC-S3-004`** completed — **§35**; successor **`MC-S3-005`** completed — **§36**; successor **`MC-S3-006`** completed — **§37**; successor **`MC-S3-007`** completed — **§38**; successor **`MC-S3-008`** completed — **§39**; successor **`MC-S3-009`** completed — **§40**; successor **`MC-S3-010`** completed — **§41**; successor **`MC-S3-011`** completed — **§42**.
 
 ---
 
@@ -1570,7 +1555,7 @@ No ADR or doctrine change under ticket intent. Merged PR **#111**.
 
 **§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
 
-**Follow-ups:** Successor **`MC-S3-005`** completed — **§36**; successor **`MC-S3-006`** completed — **§37**; successor **`MC-S3-007`** completed — **§38**; successor **`MC-S3-008`** completed — **§39**; successor **`MC-S3-009`** completed — **§40**; successor **`MC-S3-010`** completed — **§41**.
+**Follow-ups:** Successor **`MC-S3-005`** completed — **§36**; successor **`MC-S3-006`** completed — **§37**; successor **`MC-S3-007`** completed — **§38**; successor **`MC-S3-008`** completed — **§39**; successor **`MC-S3-009`** completed — **§40**; successor **`MC-S3-010`** completed — **§41**; successor **`MC-S3-011`** completed — **§42**.
 
 ---
 
@@ -1590,9 +1575,9 @@ Merged PR **#112**.
 
 ### Sequencing note
 
-At **`MC-S3-005`** closeout, **§7** had not yet named a successor; governance later approved and completed **`MC-S3-006`** (regression resistance extension, **test-only**) — **§37**; merged PR **#114**; then **`MC-S3-007`** (regression resistance tranche 3, **test-only**) — **§38**; merged PR **#117**; then **`MC-S3-008`** (regression resistance tranche 4, **test-only**) — **§39**; merged PR **#119**; then **`MC-S3-009`** (regression resistance tranche 5, **test-only**) — **§40**; merged PR **#121**; then **`MC-S3-010`** (retail UI governance read-path alignment, **documentation only**) — **§41**; merged PR **#123**. **§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
+At **`MC-S3-005`** closeout, **§7** had not yet named a successor; governance later approved and completed **`MC-S3-006`** (regression resistance extension, **test-only**) — **§37**; merged PR **#114**; then **`MC-S3-007`** (regression resistance tranche 3, **test-only**) — **§38**; merged PR **#117**; then **`MC-S3-008`** (regression resistance tranche 4, **test-only**) — **§39**; merged PR **#119**; then **`MC-S3-009`** (regression resistance tranche 5, **test-only**) — **§40**; merged PR **#121**; then **`MC-S3-010`** (retail UI governance read-path alignment, **documentation only**) — **§41**; merged PR **#123**; then **`MC-S3-011`** (Stability Engine trust-surface coverage matrix, **documentation only**) — **§42**; merged PR **#125**. **§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
 
-**Follow-ups:** Successor **`MC-S3-006`** completed — **§37**; successor **`MC-S3-007`** completed — **§38**; successor **`MC-S3-008`** completed — **§39**; successor **`MC-S3-009`** completed — **§40**; successor **`MC-S3-010`** completed — **§41**; any successor after that appears only when **§7** is updated explicitly.
+**Follow-ups:** Successor **`MC-S3-006`** completed — **§37**; successor **`MC-S3-007`** completed — **§38**; successor **`MC-S3-008`** completed — **§39**; successor **`MC-S3-009`** completed — **§40**; successor **`MC-S3-010`** completed — **§41**; successor **`MC-S3-011`** completed — **§42**; any successor after that appears only when **§7** is updated explicitly.
 
 ---
 
@@ -1618,7 +1603,7 @@ No ADR or doctrine change under ticket intent. Merged PR **#114**.
 
 **§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
 
-**Follow-ups:** Successor **`MC-S3-007`** completed — **§38**; successor **`MC-S3-008`** completed — **§39**; successor **`MC-S3-009`** completed — **§40**; successor **`MC-S3-010`** completed — **§41**; any successor after that appears only when **§7** is updated explicitly.
+**Follow-ups:** Successor **`MC-S3-007`** completed — **§38**; successor **`MC-S3-008`** completed — **§39**; successor **`MC-S3-009`** completed — **§40**; successor **`MC-S3-010`** completed — **§41**; successor **`MC-S3-011`** completed — **§42**; any successor after that appears only when **§7** is updated explicitly.
 
 ---
 
@@ -1642,7 +1627,7 @@ No ADR or doctrine change under ticket intent. Merged PR **#117**.
 
 **§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
 
-**Follow-ups:** Successor **`MC-S3-008`** completed — **§39**; successor **`MC-S3-009`** completed — **§40**; successor **`MC-S3-010`** completed — **§41**; any successor after that appears only when **§7** is updated explicitly.
+**Follow-ups:** Successor **`MC-S3-008`** completed — **§39**; successor **`MC-S3-009`** completed — **§40**; successor **`MC-S3-010`** completed — **§41**; successor **`MC-S3-011`** completed — **§42**; any successor after that appears only when **§7** is updated explicitly.
 
 ---
 
@@ -1665,7 +1650,7 @@ No ADR or doctrine change under ticket intent. Merged PR **#119**.
 
 **§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
 
-**Follow-ups:** Successor **`MC-S3-009`** completed — **§40**; successor **`MC-S3-010`** completed — **§41**; any successor after that appears only when **§7** is updated explicitly.
+**Follow-ups:** Successor **`MC-S3-009`** completed — **§40**; successor **`MC-S3-010`** completed — **§41**; successor **`MC-S3-011`** completed — **§42**; any successor after that appears only when **§7** is updated explicitly.
 
 ---
 
@@ -1688,7 +1673,7 @@ No ADR or doctrine change under ticket intent. Merged PR **#121**.
 
 **§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
 
-**Follow-ups:** Successor **`MC-S3-010`** completed — **§41**; any successor after that appears only when **§7** is updated explicitly.
+**Follow-ups:** Successor **`MC-S3-010`** completed — **§41**; successor **`MC-S3-011`** completed — **§42**; any successor after that appears only when **§7** is updated explicitly.
 
 ---
 
@@ -1704,6 +1689,26 @@ No ADR or doctrine change under ticket intent. Merged PR **#121**.
 - **`docs/ops/HEDGR_STABILITY_ENGINE_UI_VARIANT_DISPOSITION.md`** — new (verdict on current variant artifact; Replace / Retire discipline)
 
 **No** `apps/`, **no** `packages/`, **no** tests or CI. No ADR under ticket intent. Merged PR **#123**.
+
+### Sequencing note
+
+**§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
+
+**Follow-ups:** Successor **`MC-S3-011`** completed — **§42** (trust-surface coverage matrix, documentation-only; merged PR **#125**); any successor after that appears only when **§7** is updated explicitly.
+
+---
+
+## 42. Completed execution ticket - MC-S3-011 (Stability Engine trust-surface coverage matrix)
+
+**Ticket:** `MC-S3-011` — Stability Engine trust-surface coverage matrix (documentation only)  
+**Suggested branch:** `docs/mc-s3-011-trust-surface-coverage-matrix`
+
+### Outcome (documentation only)
+
+- **`docs/ops/HEDGR_STABILITY_ENGINE_TRUST_SURFACE_TEST_COVERAGE_MATRIX.md`** — governance evidence matrix mapping **§6**-grounded shipped Stability Engine trust surfaces to existing Vitest linkage (covered / partially covered / uncovered); disclaimer and scope exclusions per ticket brief; no exploratory-only, Paper, or retired concept rows
+- **`docs/ops/HEDGR_STATUS.md`** — **§7** / **§7a** activation for **`MC-S3-011`** shipped in merge **PR #125**; this **§42** closeout restores **§7** / **§7a** to **no active ticket** and adds **§6** merged-truth subsection **`MC-S3-011`**
+
+**No** `apps/`, **no** `packages/`, **no** tests or CI. No ADR under ticket intent. Merged PR **#125**.
 
 ### Sequencing note
 
