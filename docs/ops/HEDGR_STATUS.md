@@ -772,19 +772,20 @@ Completed and merged:
 - `MC-S3-009` - Regression resistance tranche 5 for shipped Stability Engine trust surfaces (test-only; merged PR **#121**; completed record **§40**)
 - `MC-S3-010` - Stability Engine retail UI governance read-path alignment (documentation only; merged PR **#123**; completed record **§41**)
 - `MC-S3-011` - Stability Engine trust-surface coverage matrix (documentation only; merged PR **#125**; completed record **§42**)
+- `MC-S3-012` - Retail UI money-first shell prototype-only bounded spike (presentation-only, prototype-route scope; merged PR **pending**; completed record **§43**; readout artifact **`docs/ops/HEDGR_RETAIL_UI_IMPLEMENTATION_SPIKE_READOUT.md`**)
 
 Current active ticket status:
 
 - **Approved next ticket:** **None named.** There is **no** approved next implementation ticket until **§7** is updated explicitly to name one.
 - **§6b** is not sequencing authority — Transition Readiness taxonomy and scrutiny input only; only **§7** / **§7a** name approved implementation work when a ticket is active.
 - When a ticket is active, the full execution brief lives in **§7a** until closeout; when **§7** names no ticket, **§7a** holds the no-active-ticket stub below.
-- **Future work:** A future retail UI conformance candidate, if any, must be separately named in **§7**.
+- **Future work:** Any proposal to extend the `MC-S3-012` money-first shell direction into the shipped `(app)/dashboard` route must be separately named in **§7** with its own scope clause, rollback posture, and regression-contract plan; prototype-route success does not carry forward as shipped-route authorization.
 - Do not treat backlog, roadmap, or *Proposed* ADRs as sequenced work unless **§7** is updated explicitly.
 - Cursor must not assume continuation beyond **§6** merged truth, **§6a** release-closeout assessment, **§6b** transition standard, **§7** / **§7a** (when a ticket is active), and current governance.
 - Cursor must not continue automatically into work beyond what is explicitly defined in this file for an active ticket.
 - Cursor must not drift beyond explicitly defined scope.
 
-**Last completed ticket (summary):** `MC-S3-011` — Stability Engine trust-surface coverage matrix (documentation only; artifact **`docs/ops/HEDGR_STABILITY_ENGINE_TRUST_SURFACE_TEST_COVERAGE_MATRIX.md`**; **§6** merged truth **MC-S3-011**; **§7** / **§7a** restored to no active ticket after closeout); completed record in **§42**; merged PR **#125**.
+**Last completed ticket (summary):** `MC-S3-012` — Retail UI money-first shell prototype-only bounded spike (presentation-only; scope held to `apps/frontend/app/prototype/retail-dashboard/**`; governed readout in **`docs/ops/HEDGR_RETAIL_UI_IMPLEMENTATION_SPIKE_READOUT.md`**; shipped `(app)/dashboard/**`, `apps/frontend/lib/engine/**`, `apps/backend/**`, `packages/ui/**`, and all `MC-S3-004` / `-006` / `-007` / `-008` / `-009` regression contracts untouched in intent; **§7** / **§7a** restored to no active ticket after closeout); completed record in **§43**; merged PR **pending** (number to be populated on merge).
 
 ---
 
@@ -795,6 +796,8 @@ Current active ticket status:
 When governance approves the next ticket, **§7** will name it and this section will hold the full execution brief until closeout.
 
 ---
+
+**Archived brief (MC-S3-012):** Retail UI money-first shell **prototype-only** bounded spike — **presentation-only**; scope held to `apps/frontend/app/prototype/retail-dashboard/**` (RetailDashboardPrototype.tsx added `Variant MS — Money-first shell` stack: `BalanceLedHero`, `SubordinateAllocation`, `MoneyFirstShellStack`; mock-data.ts added additive `stability.supportLine`); governance edits to **§7** / **§7a** of this file. **No** shipped `(app)/dashboard/**`, **no** `apps/frontend/lib/engine/**`, **no** `apps/backend/**`, **no** `packages/ui/**`, **no** copy-module or Vitest regression-contract edits from the `MC-S3-004` / `-006` / `-007` / `-008` / `-009` tranche. Reversibility preserved. Governed readout artifact **`docs/ops/HEDGR_RETAIL_UI_IMPLEMENTATION_SPIKE_READOUT.md`** records the spike's pass verdict and unresolved tensions. No ADR under ticket intent. Merged PR **pending** (number to be populated on merge). Completed record: **§43**.
 
 **Archived brief (MC-S3-011):** Stability Engine trust-surface **coverage matrix** — **documentation only**; artifact **`docs/ops/HEDGR_STABILITY_ENGINE_TRUST_SURFACE_TEST_COVERAGE_MATRIX.md`** maps **§6**-grounded shipped Stability Engine surfaces to **existing** Vitest evidence (covered / partially covered / uncovered); governance-evidence disclaimer; withdraw/tx/market **§6** rows omitted from matrix scope by default per artifact; **no** `apps/`, **no** `packages/`, **no** tests or CI; no ADR under ticket intent. Merged PR **#125**. Completed record: **§42**.
 
@@ -834,6 +837,7 @@ When governance approves the next ticket, **§7** will name it and this section 
 - **Regression resistance tranche 5 (test-only, completed):** `MC-S3-009` — **§40** (completed ticket record); merged PR **#121**.
 - **Retail UI governance read-path alignment (documentation-only, completed):** `MC-S3-010` — **§41** (completed ticket record); merged PR **#123**.
 - **Trust-surface coverage matrix (documentation-only, completed):** `MC-S3-011` — **§42** (completed ticket record); merged PR **#125**.
+- **Retail UI money-first shell prototype spike (presentation-only, prototype-route, completed):** `MC-S3-012` — **§43** (completed ticket record); governed readout **`docs/ops/HEDGR_RETAIL_UI_IMPLEMENTATION_SPIKE_READOUT.md`**; merged PR **pending** (to be populated on merge).
 - **Merged implementation truth:** **§6** remains canonical for shipped code boundaries.
 - When a successor ticket is approved, record it in **§7** and restore the execution brief in **§7a** per governance discipline.
 - Do not infer continuation work from *Proposed* ADRs or roadmap narrative unless **§7** names a ticket.
@@ -1714,5 +1718,33 @@ No ADR or doctrine change under ticket intent. Merged PR **#121**.
 
 **§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
 
-**Follow-ups:** Any successor appears only when **§7** is updated explicitly.
+**Follow-ups:** Successor **`MC-S3-012`** completed — **§43** (retail UI money-first shell prototype-only bounded spike; presentation-only; governed readout **`docs/ops/HEDGR_RETAIL_UI_IMPLEMENTATION_SPIKE_READOUT.md`**; merged PR **pending**); any successor after that appears only when **§7** is updated explicitly.
+
+---
+
+## 43. Completed execution ticket - MC-S3-012 (Retail UI money-first shell prototype-only bounded spike)
+
+**Ticket:** `MC-S3-012` — Retail UI money-first shell prototype-only bounded spike (presentation-only)  
+**Suggested branch:** `feat/mc-s3-012-retail-ui-money-first-shell-prototype-spike`
+
+### Outcome (presentation-only; prototype route only)
+
+- **`apps/frontend/app/prototype/retail-dashboard/RetailDashboardPrototype.tsx`** — added **`Variant MS — Money-first shell`** stack as the governed direction and new default tab; new components `BalanceLedHero` (calmer neutral card; balance as the first dominant money read; `Stability status · Balanced · Protected · Accessible` trust context line), `SubordinateAllocation` (row-first Family C layer with a C2-range inline cue; `aria-hidden` cue with numeric as source of truth; informational footnote preserved verbatim), and `MoneyFirstShellStack` (governed order: balance hero → primary actions → recent activity → subordinate allocation → single calm disclosure). Existing `Control` / `Variant A` / `Variant B` stacks and their shared components unchanged; prior critique evidence preserved; `REVIEW_META` extended with an `ms` entry naming the governed direction, the tested behaviors, and the drift-risk vectors
+- **`apps/frontend/app/prototype/retail-dashboard/mock-data.ts`** — additive-only `stability.supportLine = 'Protected · Accessible'` descriptive trust companion; no existing mock fields changed; no banned framing introduced; no accounting-truth or live-operational implication
+- **`docs/ops/HEDGR_STATUS.md`** — **§7** / **§7a** activation for **`MC-S3-012`** shipped in the same PR as the implementation; this **§43** closeout restores **§7** / **§7a** to **no active ticket**
+- **`docs/ops/HEDGR_RETAIL_UI_IMPLEMENTATION_SPIKE_READOUT.md`** — new governed readout; records the spike's pass verdict, unresolved tensions (hero-ordering divergence vs. shipped dashboard, `Protected · Accessible` admissibility, Family C cue calibration, CTA treatment, disclosure chroma), and the non-authorization of any shipped-route edit
+
+**Scope discipline held.** **No** shipped `(app)/dashboard/**`, **no** `apps/frontend/lib/engine/**`, **no** `apps/backend/**`, **no** `packages/ui/**`, **no** copy-module edits; **no** `MC-S3-004` / `-006` / `-007` / `-008` / `-009` regression-contract test changes in intent; **no** new `EnginePosture` values, trust states, or IA restructuring; **no** APY, earn, chart-adjacent, or instrument-like treatment; **no** ADR under ticket intent.
+
+**Validation.** `pnpm --filter @hedgr/frontend typecheck` clean; `pnpm --filter @hedgr/frontend lint` clean; 58 Vitest files / 713 tests pass. Merged PR **pending** (number to be populated on merge).
+
+### Pre-merge closeout posture
+
+This **§43** record is written in the same working-tree change-set as the implementation and readout. Consistent with governance precedent, the PR number field above is recorded as **pending** and must be patched in on merge. Until the PR merges, **§6** is **not** extended with a `MC-S3-012` subsection; **§6** is the merged-implementation-truth surface and must not carry pre-merge claims. On merge, a follow-up edit should (a) populate every `merged PR **pending**` reference in **§7**, **§7a**, this **§43**, and the continuity block with the actual PR number, and (b) optionally add a **§6** subsection for **`MC-S3-012`** describing the prototype-route code change in merged-truth language.
+
+### Sequencing note
+
+**§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
+
+**Follow-ups:** Any successor appears only when **§7** is updated explicitly. A shipped-route proposal derived from `MC-S3-012` prototype evidence must be a separately named **§7** ticket with its own scope clause, rollback posture, and regression-contract plan; prototype-route success does not carry forward as shipped-route authorization.
 

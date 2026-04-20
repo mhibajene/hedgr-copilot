@@ -3,9 +3,10 @@
 import { useState } from 'react';
 import { mockRetailDashboard } from './mock-data';
 
-type VariantId = 'control' | 'a' | 'b';
+type VariantId = 'ms' | 'control' | 'a' | 'b';
 
 const VARIANT_TABS: { id: VariantId; label: string; short: string }[] = [
+  { id: 'ms', label: 'Variant MS — Money-first shell', short: 'MS' },
   { id: 'control', label: 'Control', short: 'Control' },
   { id: 'a', label: 'Variant A — C3-R2', short: 'A' },
   { id: 'b', label: 'Variant B — C3-R2 + C4', short: 'B' },
@@ -20,6 +21,13 @@ const REVIEW_META: Record<
     disclosureNote: string;
   }
 > = {
+  ms: {
+    name: 'Variant MS — Money-first shell (governed spike, MC-S3-012)',
+    testing:
+      'Balance-led primary anchor as the first dominant money read; stability / protection / access legible as trust context; subordinate Family C trust layer with C2-range inline cue (row-first); no APY, earn, or chart-like treatment.',
+    risk: 'Calmer hero may read as under-expressive; Family C inline cue must not drift toward C3 upper-bound precision or chart-adjacent feel; trust companion line must stay descriptive, not promissory.',
+    disclosureNote: 'Learn more (calm, singular)',
+  },
   control: {
     name: 'Control',
     testing: 'Centerline C3 stack as a comparison anchor (money → stability → actions → activity → trust → disclosure).',
@@ -217,6 +225,79 @@ function ControlStack() {
   );
 }
 
+function BalanceLedHero() {
+  const d = mockRetailDashboard;
+  return (
+    <section
+      className="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-5 ring-1 ring-white/5"
+      aria-label="Money shell"
+    >
+      <div className="text-[11px] font-medium uppercase tracking-wider text-zinc-500">
+        {d.portfolioLabel}
+      </div>
+      <p className="mt-1 font-semibold tabular-nums tracking-tight text-white text-4xl sm:text-5xl">
+        {d.portfolioValue}
+      </p>
+      <div className="mt-4 border-t border-white/5 pt-3">
+        <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+          <span className="text-[11px] uppercase tracking-wider text-zinc-500">
+            {d.stability.title}
+          </span>
+          <span className="text-sm font-medium text-zinc-200">{d.stability.status}</span>
+          <span className="text-xs text-zinc-500">· {d.stability.supportLine}</span>
+        </div>
+        <p className="mt-1 text-[11px] text-zinc-600">{d.stability.note}</p>
+      </div>
+    </section>
+  );
+}
+
+function SubordinateAllocation() {
+  const { allocation } = mockRetailDashboard;
+  return (
+    <section
+      className="rounded-xl border border-zinc-800/80 bg-zinc-900/30 p-4"
+      aria-label="Allocation — informational trust layer"
+    >
+      <h2 className="text-[11px] font-medium uppercase tracking-wider text-zinc-500">
+        {allocation.title}
+      </h2>
+      <ul className="mt-3 space-y-2.5">
+        {allocation.rows.map((row) => (
+          <li key={row.name} className="flex items-center justify-between gap-3 text-sm">
+            <span className="text-zinc-300">{row.name}</span>
+            <div className="flex items-center gap-3">
+              <div
+                className="h-0.5 w-14 overflow-hidden rounded-full bg-zinc-800"
+                aria-hidden
+              >
+                <div
+                  className="h-full bg-zinc-500/60"
+                  style={{ width: `${Math.max(0, Math.min(100, row.pct))}%` }}
+                />
+              </div>
+              <span className="tabular-nums text-zinc-500">{row.pct}%</span>
+            </div>
+          </li>
+        ))}
+      </ul>
+      <p className="mt-3 text-[11px] leading-relaxed text-zinc-600">{allocation.footnote}</p>
+    </section>
+  );
+}
+
+function MoneyFirstShellStack() {
+  return (
+    <div className="space-y-5">
+      <BalanceLedHero />
+      <PrimaryActions grouped={false} />
+      <ActivityList inset={false} />
+      <SubordinateAllocation />
+      <DisclosureEntry variant="ms" />
+    </div>
+  );
+}
+
 function VariantAStack() {
   return (
     <div className="space-y-5">
@@ -256,7 +337,7 @@ function VariantBStack() {
 }
 
 export function RetailDashboardPrototype() {
-  const [variant, setVariant] = useState<VariantId>('control');
+  const [variant, setVariant] = useState<VariantId>('ms');
 
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-100">
@@ -264,8 +345,15 @@ export function RetailDashboardPrototype() {
         <PrototypeBanner />
 
         <header className="mt-5">
-          <p className="text-[11px] font-medium uppercase tracking-wider text-zinc-500">Prototype / retail dashboard</p>
-          <h1 className="mt-1 text-lg font-semibold text-zinc-100">C3 exploration — three variants</h1>
+          <p className="text-[11px] font-medium uppercase tracking-wider text-zinc-500">
+            Prototype / retail dashboard
+          </p>
+          <h1 className="mt-1 text-lg font-semibold text-zinc-100">
+            Money-first shell — governed spike (MC-S3-012)
+          </h1>
+          <p className="mt-1 text-xs text-zinc-500">
+            Variant MS is the governed direction. Control / A / B retained for comparison only.
+          </p>
         </header>
 
         <div
@@ -291,6 +379,7 @@ export function RetailDashboardPrototype() {
         </div>
 
         <div className="mt-6" role="tabpanel">
+          {variant === 'ms' && <MoneyFirstShellStack />}
           {variant === 'control' && <ControlStack />}
           {variant === 'a' && <VariantAStack />}
           {variant === 'b' && <VariantBStack />}

@@ -21,6 +21,7 @@ export const mockRetailDashboard = {
     title: 'Stability status',
     status: 'Balanced',
     note: 'Read-only posture — illustrative for layout review.',
+    supportLine: 'Protected · Accessible',
   },
   actions: [
     { id: 'top-up', label: 'Top up' },
