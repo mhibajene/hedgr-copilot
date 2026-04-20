@@ -337,6 +337,8 @@ The next refinement cycle should focus on:
 4. testing asymmetry in action emphasis
 5. defining a first-pass retail-facing status vocabulary
 
+Follow-on refinement framing is captured in `docs/ops/HEDGR_RETAIL_UI_MEANING_REFINEMENT_BRIEF.md`.
+
 These should remain critique/refinement exercises unless later sequenced explicitly.
 
 ---
