@@ -1,9 +1,11 @@
 # HEDGR RETAIL UI HEADER DIRECTION CONSOLIDATION NOTE
 
+## Status / Authority / Scope / Last updated
+
 Status: Consolidation artifact only  
-Authority: Non-shipping, non-implementation-authorizing  
+Authority: Non-shipping, non-implementation-authorizing; repo-native authority remains binding  
 Scope: Consolidated statement of the current governed header direction after Phase 3 refinement and bounded prototype-only validation  
-Last updated: 2026-04-20
+Last updated: 2026-04-21
 
 ---
 
@@ -201,17 +203,17 @@ It exists only to preserve direction clarity across the artifact chain.
 
 ## 10. Related artifacts
 
-Primary related artifacts:
+Primary chain artifacts:
 
-- `docs/ops/HEDGR_RETAIL_UI_HEADER_REFINEMENT_BRIEF.md`
-- `docs/ops/HEDGR_RETAIL_UI_HEADER_COPY_COMPARISON.md`
-- `docs/ops/HEDGR_RETAIL_UI_HEADER_LAYOUT_MICRO_TEST.md`
-- `docs/ops/HEDGR_RETAIL_UI_HEADER_LAYOUT_MICRO_TEST_READOUT.md`
-- `docs/ops/HEDGR_RETAIL_UI_HEADER_REFINEMENT_PHASE_3_READOUT.md`
 - `docs/ops/HEDGR_RETAIL_UI_HEADER_REFINEMENT_PHASE_3_DECISION_NOTE.md`
 - `docs/ops/HEDGR_RETAIL_UI_PHASE_3_TO_PROTOTYPE_GATE_NOTE.md`
 - `docs/ops/HEDGR_RETAIL_UI_HEADER_PROTOTYPE_PASS_BRIEF.md`
 - `docs/ops/HEDGR_RETAIL_UI_HEADER_PROTOTYPE_PASS_READOUT.md`
+
+Authority context consistency:
+
+- `docs/ops/HEDGR_STATUS.md`
+- `AGENTS.md`
 
 ---
 
