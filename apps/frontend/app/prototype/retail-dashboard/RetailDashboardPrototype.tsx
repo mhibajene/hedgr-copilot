@@ -233,7 +233,7 @@ function BalanceLedHero() {
       aria-label="Money shell"
     >
       <div className="text-[11px] font-medium uppercase tracking-wider text-zinc-500">
-        {d.portfolioLabel}
+        Total balance
       </div>
       <p className="mt-1 font-semibold tabular-nums tracking-tight text-white text-4xl sm:text-5xl">
         {d.portfolioValue}
@@ -256,7 +256,7 @@ function SubordinateAllocation() {
   const { allocation } = mockRetailDashboard;
   return (
     <section
-      className="rounded-xl border border-zinc-800/80 bg-zinc-900/30 p-4"
+      className="rounded-xl border border-zinc-800/60 bg-zinc-900/20 p-4"
       aria-label="Allocation — informational trust layer"
     >
       <h2 className="text-[11px] font-medium uppercase tracking-wider text-zinc-500">
@@ -288,12 +288,20 @@ function SubordinateAllocation() {
 
 function MoneyFirstShellStack() {
   return (
-    <div className="space-y-5">
+    <div>
       <BalanceLedHero />
-      <PrimaryActions grouped={false} />
-      <ActivityList inset={false} />
-      <SubordinateAllocation />
-      <DisclosureEntry variant="ms" />
+      <div className="mt-4">
+        <PrimaryActions grouped={false} />
+      </div>
+      <div className="mt-7">
+        <ActivityList inset={false} />
+      </div>
+      <div className="mt-5">
+        <SubordinateAllocation />
+      </div>
+      <div className="mt-6">
+        <DisclosureEntry variant="ms" />
+      </div>
     </div>
   );
 }
