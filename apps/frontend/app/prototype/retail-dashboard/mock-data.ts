@@ -27,7 +27,7 @@ export const mockRetailDashboard = {
     { id: 'top-up', label: 'Top up' },
     { id: 'send', label: 'Send' },
   ] as const,
-  activitySectionTitle: 'Recent money state',
+  activitySectionTitle: 'Recent activity',
   activity: [
     {
       title: 'Neighborhood Market',

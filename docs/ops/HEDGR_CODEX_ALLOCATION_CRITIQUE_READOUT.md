@@ -3,7 +3,7 @@
 Status: Governance guidance only  
 Authority: Non-sequencing, non-implementation  
 Scope: Readout of the first governed Codex pilot in the allocation legibility lane  
-Last updated: 2026-04-18
+Last updated: 2026-04-21
 
 ---
 
@@ -25,7 +25,7 @@ This readout **does not** alter the authority order in `docs/ops/HEDGR_CODEX_USA
 - **Repo-native authority** (`docs/ops/HEDGR_STATUS.md`, accepted ADRs, `AGENTS.md`, doctrine) remains the institutional operating system.  
 - **Project Ops / `docs/ops`** remains the governance and traceability layer.  
 - **Cursor** remains the primary repo execution surface.  
-- **Codex** remained **non-authoritative** throughout the pilot: findings and critique only.
+- **Codex** remained **non-authoritative** throughout the pilot: findings, critique, and bounded reconstruction only.
 
 No outcome here overrides `HEDGR_STATUS.md` or implies an approved pattern, ticket, or ship decision.
 
@@ -44,6 +44,8 @@ The pilot used:
 
 **Explorer** was **not** the primary mode.
 
+**Execution mode:** `READ_ONLY`
+
 ### 3.2 Pilot inputs
 
 Codex worked from explicit repo artifacts (minimum set), with governance anchors used only for verifier drift checks:
@@ -56,6 +58,8 @@ Codex worked from explicit repo artifacts (minimum set), with governance anchors
 
 Verifier context also referenced `docs/ops/HEDGR_STATUS.md` and `AGENTS.md` for authority alignment (exploration subordinate to status and engine-facing read order).
 
+Chat history, memory, Chronicle, and inferred continuity were not treated as substitutes for the listed artifacts. Under the pilot protocol, those sources were subordinate to repo authority and bounded lane inputs.
+
 ### 3.3 Pilot question shape
 
 Codex was prompted with **bounded critique questions**—not design-generation mandates—centered on:
@@ -63,8 +67,19 @@ Codex was prompted with **bounded critique questions**—not design-generation m
 - **hidden risks** in A / B / C  
 - **precision / accounting-truth implication** vs informational posture  
 - **performative** or **chart-like** drift  
-- **challenge to the assumed Pattern C centerline** under the stated rubric  
+- **challenge to the working Pattern C centerline candidate** under the stated rubric  
 - **contradiction**, **duplicated authority**, or **silent scope creep** across the lane vs repo authority  
+
+### 3.4 Provenance and conflict discipline
+
+Per the trial brief, outputs were expected to remain artifact-grounded and non-authoritative.
+
+For the purposes of this pilot:
+
+- repo authority and bounded lane artifacts were the governing inputs
+- external tools / connected systems were not part of the pilot evidence base
+- memory / Chronicle / inferred continuity were not treated as governing inputs
+- any source conflict was to be surfaced as a finding, not reconciled by inference
 
 ---
 
@@ -82,7 +97,7 @@ Codex was prompted with **bounded critique questions**—not design-generation m
 
 **Added or sharpened signal (incremental, not a rewrite of the lane):**
 
-- **Hypothesis lock-in on Pattern C:** the lane repeats that C is the **likely strongest centerline candidate** in multiple places. That is defensible as a working hypothesis, but it can **front-run** critique before **same-frame fixtures** exist—reviewers may anchor on C and under-weight **Pattern A** as a deliberate **precision-humility** posture (slower grasp traded for lower implied exactitude).  
+- **Hypothesis lock-in on Pattern C:** the lane repeats that C is the **working centerline candidate** in multiple places. That is defensible as a working hypothesis, but it can **front-run** critique before **same-frame fixtures** exist—reviewers may anchor on C and under-weight **Pattern A** as a deliberate **precision-humility** posture (slower grasp traded for lower implied exactitude).  
 - **Stronger doctrine-safe counterargument for A:** under scorecard lenses such as **doctrine fit**, **allocation visibility** (without precision overstatement), and **calmness**, a passive list can score **better on implied exactitude risk** than a hybrid that adds a second visual channel—even when hybrid improves immediate grasp. The docs gesture at this via A’s role as control; Codex elevates it as an explicit **trade-off story**, not only a baseline.  
 - **Dual-encoding risk for C:** list + proportional cue can increase **cognitive load** or invite **two stories** (labels vs shape) if the cue is not tightly redundant with the rows. The lane names “busy”; the sharper risk is **misread or mismatch** between channels, not only visual noise.  
 - **Scorecard alignment gap (process, not doc error):** the scorecard is built for **concept-level** reviews; applying it to **pattern-only** same-frame variants requires discipline so scores are not treated as **automatic decisions**—the scorecard itself warns against totals as automatic verdicts. Codex flagged **process risk**: numeric scoring without fixture discipline could reintroduce **false rigor**.
@@ -117,6 +132,9 @@ Evaluated against `docs/ops/HEDGR_CODEX_TRIAL_RUN_BRIEF.md` success criteria:
 - **Workflow disciplined:** **Yes** — explicit inputs, allocation-only scope, handoff posture preserved.  
 - **Judgment vs noise:** **Net positive** — specific to A / B / C and informational posture; limited generic noise.  
 - **Authority confusion:** **None observed** — Codex framed as verifier/tester; repo authority and Cursor primacy unchanged.  
+- **Provenance discipline:** **Yes** — the read remained anchored to repo authority and bounded lane artifacts; no external tool dependence was part of the pilot frame.  
+- **Memory / continuity discipline:** **Yes** — memory, Chronicle, and inferred continuity were not treated as artifact truth or approval to proceed.  
+- **Conflict handling:** **Yes** — no material source conflict required reconciliation; the pilot frame correctly kept contradiction detection in finding space rather than synthesis.
 
 **Overall read: passed** — with the candid note that **confirmatory weight was high** because the lane was already well governed; the pilot’s value was **validation plus incremental sharpening**, not a dramatic new risk map.
 
@@ -131,8 +149,11 @@ The pilot preserved:
 - **Project Ops traceability** — inputs and outputs documentable in `docs/ops`.  
 - **Founder judgment** — readout is input to review, not a decision.  
 - **Artifact-based input discipline** — minimum doc set enforced.  
+- **Execution mode discipline** — pilot posture remained read-only.  
+- **Provenance discipline** — governing inputs remained visible and bounded.  
+- **Conflict discipline** — no silent reconciliation of source tension.
 
-The **Codex usage convention** held up under this use: secondary operator, bounded modes, non-authoritative outputs.
+The **Codex usage convention** held up under this use: secondary operator, bounded modes, read-only execution posture, visible input discipline, and non-authoritative outputs.
 
 ---
 
@@ -140,6 +161,7 @@ The **Codex usage convention** held up under this use: secondary operator, bound
 
 - Codex is **useful** in **bounded Verifier / Tester** mode on an already-framed lane.  
 - Its strongest contribution here was **independent challenge and consistency check**, not net-new invention.  
+- The pilot confirms that Codex adds the most value when review is artifact-rich, narrow, and critique-oriented.  
 - It should remain **secondary** and **non-authoritative**; this pilot does **not** justify treating Codex as a default builder or product arbiter.  
 - **Expansion**—if pursued—should be **another bounded pilot** with its own brief, not an informal widening of role.  
 
@@ -150,6 +172,8 @@ The **Codex usage convention** held up under this use: secondary operator, bound
 **Approve a second bounded pilot lane** only under a **new trial brief** (same governance envelope): e.g. **status language / guardrails** or **balanced status line** critique docs—lanes that are already **non-implementing** and **artifact-anchored**.
 
 **Do not** expand Codex use **without** a brief: no ad-hoc “Codex on the whole retail UI.”
+
+Any future pilot should explicitly declare execution mode, provenance expectations, and no-reconciliation handling for source conflict.
 
 If the next pilot fails discipline tests, **pause expansion** and tighten `docs/ops/HEDGR_CODEX_USAGE_CONVENTION.md` or trial protocol—not proceed on momentum.
 
@@ -168,4 +192,4 @@ If the next pilot fails discipline tests, **pause expansion** and tighten `docs/
 
 The first Codex pilot should be judged by whether it **improved governed review quality**, not by how much text it produced.
 
-**Codex earns a wider role only by improving judgment without weakening authority discipline.**
+**Codex earns a wider role only by improving judgment without weakening authority discipline, provenance clarity, or context control.**
