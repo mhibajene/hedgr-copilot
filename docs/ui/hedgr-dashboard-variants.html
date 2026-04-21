@@ -36,6 +36,329 @@
     font-family: 'Inter', sans-serif;
     -webkit-font-smoothing: antialiased;
   }
+
+  /* Paper review mirror — governed retail row (non-authorizing; prototype-aligned) */
+  .paper-board {
+    flex: 1 1 100%;
+    width: 100%;
+    max-width: 1600px;
+    margin: 0 auto 8px;
+    padding: 0 0 32px;
+    border-bottom: 1px solid #2E2E33;
+  }
+  .paper-sot {
+    max-width: 920px;
+    margin: 0 auto 28px;
+    padding: 14px 20px;
+    border: 1px solid #3A3530;
+    border-radius: 4px;
+    background: rgba(200, 169, 110, 0.06);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: #A89B88;
+    line-height: 1.5;
+    text-align: center;
+  }
+  .paper-sot strong {
+    font-weight: 600;
+    color: #C8C2B6;
+  }
+  .paper-review-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    align-items: flex-start;
+    justify-content: center;
+  }
+  .paper-checklist {
+    width: 300px;
+    min-height: 520px;
+    flex-shrink: 0;
+    background: #16161A;
+    border: 1px solid #2E2E33;
+    border-radius: 4px;
+    padding: 20px 22px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .paper-checklist h3 {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #6B6B70;
+    margin: 0;
+  }
+  .paper-checklist ul {
+    margin: 0;
+    padding-left: 16px;
+    font-size: 11px;
+    font-weight: 400;
+    color: #8A8A8F;
+    line-height: 1.55;
+  }
+  .paper-checklist li { margin-bottom: 6px; }
+  .paper-matrix-note {
+    flex: 1 1 100%;
+    width: 100%;
+    text-align: center;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #5A5A5F;
+    padding: 8px 0 0;
+  }
+
+  .phone-ms {
+    width: 390px;
+    min-height: 844px;
+    background: #0C0C0E;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    flex-shrink: 0;
+    position: relative;
+    border: 1px solid #252528;
+    border-radius: 2px;
+  }
+  .ms-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 52px 22px 12px;
+    flex-shrink: 0;
+  }
+  .ms-hero {
+    margin: 0 20px;
+    padding: 20px 18px 18px;
+    border-radius: 16px;
+    border: 1px solid #2E2E33;
+    background: rgba(26, 26, 30, 0.85);
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.03);
+    flex-shrink: 0;
+  }
+  .ms-hero-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #6B6B70;
+  }
+  .ms-hero-value {
+    font-family: var(--font-mono);
+    font-size: 48px;
+    font-weight: 600;
+    color: #F2F2F3;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    margin-top: 6px;
+  }
+  .ms-hero-trust {
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+  }
+  .ms-hero-trust-top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 6px 10px;
+    font-size: 12px;
+    color: #8A8A8F;
+  }
+  .ms-hero-trust-top .k {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #6B6B70;
+  }
+  .ms-hero-trust-top .st {
+    font-weight: 500;
+    color: #D4D4D8;
+  }
+  .ms-hero-trust-top .sup {
+    font-size: 11px;
+    color: #7A7A80;
+  }
+  .ms-hero-note {
+    margin-top: 6px;
+    font-size: 11px;
+    line-height: 1.45;
+    color: #5A5A5F;
+  }
+
+  .ms-actions {
+    display: flex;
+    justify-content: center;
+    gap: 36px;
+    padding: 22px 24px 8px;
+    flex-shrink: 0;
+  }
+  .ms-action {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: default;
+  }
+  .ms-action-icon {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    border: 1px solid #3F3F44;
+    background: rgba(39, 39, 42, 0.65);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #B4B4BA;
+  }
+  .ms-action-label {
+    font-size: 11px;
+    font-weight: 400;
+    color: #7A7A80;
+    letter-spacing: 0.02em;
+  }
+
+  .ms-activity {
+    margin: 10px 20px 0;
+    padding: 14px 16px;
+    border-radius: 12px;
+    border: 1px solid #2A2A2E;
+    background: rgba(22, 22, 26, 0.9);
+    flex-shrink: 0;
+  }
+  .ms-activity h4 {
+    margin: 0;
+    font-size: 12px;
+    font-weight: 500;
+    color: #8A8A8F;
+  }
+  .ms-activity ul {
+    list-style: none;
+    margin: 12px 0 0;
+    padding: 0;
+  }
+  .ms-activity li {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid #252528;
+    font-size: 13px;
+  }
+  .ms-activity li:last-child { border-bottom: none; padding-bottom: 0; }
+  .ms-act-title { color: #D8D8DC; font-weight: 400; }
+  .ms-act-sub { display: block; font-size: 11px; color: #5A5A5F; margin-top: 2px; }
+  .ms-act-amt {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: #A3A3AA;
+    white-space: nowrap;
+  }
+
+  .ms-alloc {
+    margin: 16px 20px 0;
+    padding: 16px 16px 14px;
+    border-radius: 12px;
+    border: 1px solid #2E2E33;
+    background: rgba(26, 26, 30, 0.45);
+    flex-shrink: 0;
+  }
+  .ms-alloc h4 {
+    margin: 0;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #6B6B70;
+  }
+  .ms-alloc ul {
+    list-style: none;
+    margin: 12px 0 0;
+    padding: 0;
+  }
+  .ms-alloc li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 8px 0;
+    font-size: 14px;
+    color: #C4C4C8;
+  }
+  .ms-cue-track {
+    width: 56px;
+    height: 3px;
+    border-radius: 999px;
+    background: #2A2A2E;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .ms-cue-fill {
+    display: block;
+    height: 100%;
+    border-radius: 999px;
+    background: rgba(180, 180, 186, 0.45);
+  }
+  .ms-alloc-pct {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: #7A7A80;
+    min-width: 36px;
+    text-align: right;
+  }
+  .ms-alloc-foot {
+    margin-top: 12px;
+    font-size: 11px;
+    line-height: 1.45;
+    color: #5A5A5F;
+  }
+
+  .ms-disclosure {
+    text-align: center;
+    padding: 18px 20px 12px;
+    flex-shrink: 0;
+  }
+  .ms-disclosure a {
+    font-size: 13px;
+    color: #8B8499;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(139, 132, 153, 0.35);
+  }
+
+  .phone-ms .bottom-nav {
+    margin-top: auto;
+    border-top-color: #252528;
+  }
+  .phone-ms .nav-item[data-active="true"] .nav-label {
+    color: #8A8A8F;
+  }
+  .phone-ms .nav-item[data-active="true"] svg rect {
+    stroke: #6B6B70;
+  }
+
+  /* Wire treatment — same hierarchy, lower fidelity chrome */
+  .phone-ms.is-wire .ms-hero,
+  .phone-ms.is-wire .ms-activity,
+  .phone-ms.is-wire .ms-alloc {
+    background: transparent;
+    border-style: dashed;
+    border-color: #35353A;
+  }
+  .phone-ms.is-wire .ms-hero-value { color: #9A9AA0; }
+  .phone-ms.is-wire .ms-action-icon {
+    border-style: dashed;
+    background: transparent;
+    color: #6B6B70;
+  }
   .phone {
     width: 390px;
     min-height: 844px;
@@ -575,6 +898,333 @@
 </style>
 </head>
 <body>
+
+<!-- ========== PAPER MIRROR — Current review row (governed direction, MC-S3-012 aligned) ========== -->
+<div class="paper-board">
+  <div class="paper-sot">
+    <strong>Source of truth</strong> — Live critique chain: <code style="font-size:10px;color:#8A8A8F">apps/frontend/app/prototype/retail-dashboard</code> and <code style="font-size:10px;color:#8A8A8F">docs/ops</code> readouts. This HTML row is a <strong>static mirror for Paper</strong>; not implementation authority. Legacy matrix follows below.
+  </div>
+  <div class="paper-review-row">
+    <div>
+      <div class="label">Review — Money-first shell</div>
+      <div class="phone phone-ms">
+        <div class="ms-header">
+          <div class="header-left">
+            <div class="logo-box">H</div>
+            <span class="logo-text">HEDGR</span>
+          </div>
+          <div class="status-badge" data-tone="safe">
+            <div class="status-dot"></div>
+            <span class="status-text">CONNECTED</span>
+          </div>
+        </div>
+        <div class="ms-hero">
+          <div class="ms-hero-label">Portfolio value</div>
+          <div class="ms-hero-value">$12,847.30</div>
+          <div class="ms-hero-trust">
+            <div class="ms-hero-trust-top">
+              <span class="k">Stability status</span>
+              <span class="st">Balanced</span>
+              <span class="sup">· Protected · Accessible</span>
+            </div>
+            <p class="ms-hero-note">Read-only posture — illustrative for layout review.</p>
+          </div>
+        </div>
+        <div class="ms-actions">
+          <div class="ms-action">
+            <div class="ms-action-icon"><span style="font-size:22px;font-weight:300;line-height:1">+</span></div>
+            <span class="ms-action-label">Top up</span>
+          </div>
+          <div class="ms-action">
+            <div class="ms-action-icon">
+              <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.4"><path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
+            </div>
+            <span class="ms-action-label">Send</span>
+          </div>
+        </div>
+        <div class="ms-activity">
+          <h4>Recent money state</h4>
+          <ul>
+            <li>
+              <div><span class="ms-act-title">Neighborhood Market</span><span class="ms-act-sub">12 Apr · Payment</span></div>
+              <span class="ms-act-amt">-$24.18</span>
+            </li>
+            <li>
+              <div><span class="ms-act-title">Payroll deposit</span><span class="ms-act-sub">10 Apr · Transfer in</span></div>
+              <span class="ms-act-amt">+$2,400.00</span>
+            </li>
+          </ul>
+        </div>
+        <div class="ms-alloc">
+          <h4>Allocation &amp; trust (informational)</h4>
+          <ul>
+            <li>
+              <span>Stable cash</span>
+              <span style="display:flex;align-items:center;gap:10px">
+                <span class="ms-cue-track"><span class="ms-cue-fill" style="width:62%"></span></span>
+                <span class="ms-alloc-pct">62%</span>
+              </span>
+            </li>
+            <li>
+              <span>Protected yield</span>
+              <span style="display:flex;align-items:center;gap:10px">
+                <span class="ms-cue-track"><span class="ms-cue-fill" style="width:28%"></span></span>
+                <span class="ms-alloc-pct">28%</span>
+              </span>
+            </li>
+            <li>
+              <span>Reserve</span>
+              <span style="display:flex;align-items:center;gap:10px">
+                <span class="ms-cue-track"><span class="ms-cue-fill" style="width:10%"></span></span>
+                <span class="ms-alloc-pct">10%</span>
+              </span>
+            </li>
+          </ul>
+          <p class="ms-alloc-foot">Bands are illustrative — not accounting or a promise of outcomes.</p>
+        </div>
+        <div class="ms-disclosure"><a href="#">Learn more</a></div>
+        <div class="bottom-nav">
+          <div class="nav-item" data-active="true">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="2" width="7" height="7" rx="1" stroke="#6B6B70" stroke-width="1.5"/><rect x="11" y="2" width="7" height="7" rx="1" stroke="#6B6B70" stroke-width="1.5"/><rect x="2" y="11" width="7" height="7" rx="1" stroke="#6B6B70" stroke-width="1.5"/><rect x="11" y="11" width="7" height="7" rx="1" stroke="#6B6B70" stroke-width="1.5"/></svg>
+            <span class="nav-label">OVERVIEW</span>
+          </div>
+          <div class="nav-item" data-active="false">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2L18 7V18H2V7L10 2Z" stroke="#8A8A8F" stroke-width="1.5"/></svg>
+            <span class="nav-label">TREASURY</span>
+          </div>
+          <div class="nav-item" data-active="false">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8" stroke="#8A8A8F" stroke-width="1.5"/><path d="M10 6V10L13 13" stroke="#8A8A8F" stroke-width="1.5"/></svg>
+            <span class="nav-label">HISTORY</span>
+          </div>
+          <div class="nav-item" data-active="false">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="6" r="4" stroke="#8A8A8F" stroke-width="1.5"/><path d="M3 18C3 14.134 6.134 11 10 11C13.866 11 17 14.134 17 18" stroke="#8A8A8F" stroke-width="1.5"/></svg>
+            <span class="nav-label">ACCOUNT</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="label">Review — Family C current direction</div>
+      <div class="phone phone-ms">
+        <div class="ms-header">
+          <div class="header-left">
+            <div class="logo-box">H</div>
+            <span class="logo-text">HEDGR</span>
+          </div>
+          <div class="status-badge" data-tone="caution">
+            <div class="status-dot"></div>
+            <span class="status-text">ADJUSTING</span>
+          </div>
+        </div>
+        <div class="ms-hero">
+          <div class="ms-hero-label">Portfolio value</div>
+          <div class="ms-hero-value">$12,847.30</div>
+          <div class="ms-hero-trust">
+            <div class="ms-hero-trust-top">
+              <span class="k">Stability status</span>
+              <span class="st">Monitoring</span>
+              <span class="sup">· Protected · Accessible</span>
+            </div>
+            <p class="ms-hero-note">Read-only posture — illustrative for layout review.</p>
+          </div>
+        </div>
+        <div class="ms-actions">
+          <div class="ms-action">
+            <div class="ms-action-icon"><span style="font-size:22px;font-weight:300;line-height:1">+</span></div>
+            <span class="ms-action-label">Top up</span>
+          </div>
+          <div class="ms-action">
+            <div class="ms-action-icon">
+              <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.4"><path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
+            </div>
+            <span class="ms-action-label">Send</span>
+          </div>
+        </div>
+        <div class="ms-activity">
+          <h4>Recent money state</h4>
+          <ul>
+            <li>
+              <div><span class="ms-act-title">Neighborhood Market</span><span class="ms-act-sub">12 Apr · Payment</span></div>
+              <span class="ms-act-amt">-$24.18</span>
+            </li>
+            <li>
+              <div><span class="ms-act-title">Payroll deposit</span><span class="ms-act-sub">10 Apr · Transfer in</span></div>
+              <span class="ms-act-amt">+$2,400.00</span>
+            </li>
+          </ul>
+        </div>
+        <div class="ms-alloc">
+          <h4>Allocation &amp; trust (informational)</h4>
+          <ul>
+            <li>
+              <span>Stable cash</span>
+              <span style="display:flex;align-items:center;gap:10px">
+                <span class="ms-cue-track"><span class="ms-cue-fill" style="width:55%"></span></span>
+                <span class="ms-alloc-pct">55%</span>
+              </span>
+            </li>
+            <li>
+              <span>Protected yield</span>
+              <span style="display:flex;align-items:center;gap:10px">
+                <span class="ms-cue-track"><span class="ms-cue-fill" style="width:35%"></span></span>
+                <span class="ms-alloc-pct">35%</span>
+              </span>
+            </li>
+            <li>
+              <span>Reserve</span>
+              <span style="display:flex;align-items:center;gap:10px">
+                <span class="ms-cue-track"><span class="ms-cue-fill" style="width:10%"></span></span>
+                <span class="ms-alloc-pct">10%</span>
+              </span>
+            </li>
+          </ul>
+          <p class="ms-alloc-foot">Bands are illustrative — not accounting or a promise of outcomes.</p>
+        </div>
+        <div class="ms-disclosure"><a href="#">Learn more</a></div>
+        <div class="bottom-nav">
+          <div class="nav-item" data-active="true">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="2" width="7" height="7" rx="1" stroke="#6B6B70" stroke-width="1.5"/><rect x="11" y="2" width="7" height="7" rx="1" stroke="#6B6B70" stroke-width="1.5"/><rect x="2" y="11" width="7" height="7" rx="1" stroke="#6B6B70" stroke-width="1.5"/><rect x="11" y="11" width="7" height="7" rx="1" stroke="#6B6B70" stroke-width="1.5"/></svg>
+            <span class="nav-label">OVERVIEW</span>
+          </div>
+          <div class="nav-item" data-active="false">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2L18 7V18H2V7L10 2Z" stroke="#8A8A8F" stroke-width="1.5"/></svg>
+            <span class="nav-label">TREASURY</span>
+          </div>
+          <div class="nav-item" data-active="false">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8" stroke="#8A8A8F" stroke-width="1.5"/><path d="M10 6V10L13 13" stroke="#8A8A8F" stroke-width="1.5"/></svg>
+            <span class="nav-label">HISTORY</span>
+          </div>
+          <div class="nav-item" data-active="false">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="6" r="4" stroke="#8A8A8F" stroke-width="1.5"/><path d="M3 18C3 14.134 6.134 11 10 11C13.866 11 17 14.134 17 18" stroke="#8A8A8F" stroke-width="1.5"/></svg>
+            <span class="nav-label">ACCOUNT</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="label">Wire — Money-first shell</div>
+      <div class="phone phone-ms is-wire">
+        <div class="ms-header">
+          <div class="header-left">
+            <div class="logo-box">H</div>
+            <span class="logo-text">HEDGR</span>
+          </div>
+          <div class="status-badge" data-tone="safe">
+            <div class="status-dot"></div>
+            <span class="status-text">CONNECTED</span>
+          </div>
+        </div>
+        <div class="ms-hero">
+          <div class="ms-hero-label">Portfolio value</div>
+          <div class="ms-hero-value">$12,847.30</div>
+          <div class="ms-hero-trust">
+            <div class="ms-hero-trust-top">
+              <span class="k">Stability status</span>
+              <span class="st">Balanced</span>
+              <span class="sup">· Protected · Accessible</span>
+            </div>
+            <p class="ms-hero-note">Read-only posture — illustrative for layout review.</p>
+          </div>
+        </div>
+        <div class="ms-actions">
+          <div class="ms-action">
+            <div class="ms-action-icon"><span style="font-size:22px;font-weight:300;line-height:1">+</span></div>
+            <span class="ms-action-label">Top up</span>
+          </div>
+          <div class="ms-action">
+            <div class="ms-action-icon">
+              <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.4"><path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
+            </div>
+            <span class="ms-action-label">Send</span>
+          </div>
+        </div>
+        <div class="ms-activity">
+          <h4>Recent money state</h4>
+          <ul>
+            <li>
+              <div><span class="ms-act-title">Neighborhood Market</span><span class="ms-act-sub">12 Apr · Payment</span></div>
+              <span class="ms-act-amt">-$24.18</span>
+            </li>
+            <li>
+              <div><span class="ms-act-title">Payroll deposit</span><span class="ms-act-sub">10 Apr · Transfer in</span></div>
+              <span class="ms-act-amt">+$2,400.00</span>
+            </li>
+            <li>
+              <div><span class="ms-act-title">Card auth hold</span><span class="ms-act-sub">9 Apr · Pending</span></div>
+              <span class="ms-act-amt">-$120.00</span>
+            </li>
+          </ul>
+        </div>
+        <div class="ms-alloc">
+          <h4>Allocation &amp; trust (informational)</h4>
+          <ul>
+            <li>
+              <span>Stable cash</span>
+              <span style="display:flex;align-items:center;gap:10px">
+                <span class="ms-cue-track"><span class="ms-cue-fill" style="width:62%"></span></span>
+                <span class="ms-alloc-pct">62%</span>
+              </span>
+            </li>
+            <li>
+              <span>Protected yield</span>
+              <span style="display:flex;align-items:center;gap:10px">
+                <span class="ms-cue-track"><span class="ms-cue-fill" style="width:28%"></span></span>
+                <span class="ms-alloc-pct">28%</span>
+              </span>
+            </li>
+            <li>
+              <span>Reserve</span>
+              <span style="display:flex;align-items:center;gap:10px">
+                <span class="ms-cue-track"><span class="ms-cue-fill" style="width:10%"></span></span>
+                <span class="ms-alloc-pct">10%</span>
+              </span>
+            </li>
+          </ul>
+          <p class="ms-alloc-foot">Bands are illustrative — not accounting or a promise of outcomes.</p>
+        </div>
+        <div class="ms-disclosure"><a href="#">Learn more</a></div>
+        <div class="bottom-nav">
+          <div class="nav-item" data-active="true">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="2" width="7" height="7" rx="1" stroke="#6B6B70" stroke-width="1.5"/><rect x="11" y="2" width="7" height="7" rx="1" stroke="#6B6B70" stroke-width="1.5"/><rect x="2" y="11" width="7" height="7" rx="1" stroke="#6B6B70" stroke-width="1.5"/><rect x="11" y="11" width="7" height="7" rx="1" stroke="#6B6B70" stroke-width="1.5"/></svg>
+            <span class="nav-label">OVERVIEW</span>
+          </div>
+          <div class="nav-item" data-active="false">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2L18 7V18H2V7L10 2Z" stroke="#8A8A8F" stroke-width="1.5"/></svg>
+            <span class="nav-label">TREASURY</span>
+          </div>
+          <div class="nav-item" data-active="false">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8" stroke="#8A8A8F" stroke-width="1.5"/><path d="M10 6V10L13 13" stroke="#8A8A8F" stroke-width="1.5"/></svg>
+            <span class="nav-label">HISTORY</span>
+          </div>
+          <div class="nav-item" data-active="false">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="6" r="4" stroke="#8A8A8F" stroke-width="1.5"/><path d="M3 18C3 14.134 6.134 11 10 11C13.866 11 17 14.134 17 18" stroke="#8A8A8F" stroke-width="1.5"/></svg>
+            <span class="nav-label">ACCOUNT</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <aside class="paper-checklist" aria-label="Review checklist">
+      <h3>Checklist — refinement close</h3>
+      <ul>
+        <li>Balance is the first dominant read; no APY or earn-forward cues.</li>
+        <li>Trust context visible but secondary to portfolio value.</li>
+        <li>Family C: row-first; thin cue only; no chart or meter hero.</li>
+        <li>Activity bounded; supports shell without competing.</li>
+        <li>Actions legible, neutral weight — not emotional center.</li>
+        <li>Premium neutral / low noise; no trader or neobank energy.</li>
+      </ul>
+      <h3 style="margin-top:8px">Record outcomes</h3>
+      <ul>
+        <li>Durable notes: <code style="font-size:10px">docs/ops</code> readouts; sequencing in <code style="font-size:10px">HEDGR_STATUS.md</code>.</li>
+      </ul>
+    </aside>
+  </div>
+</div>
+
+<p class="paper-matrix-note">Exploration matrix — Stability Engine constitution variants (retained)</p>
 
 <!-- ========== VARIANT 1: STABLE ========== -->
 <div>
