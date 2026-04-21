@@ -777,6 +777,7 @@ Completed and merged:
 Current active ticket status:
 
 - **Approved next ticket:** **None named.** There is **no** approved next implementation ticket until **§7** is updated explicitly to name one.
+- **Closeout note:** **`UI-USH-001`** (retail upper-shell continuation refinement beneath settled header) completed within bounded scope; governed execution readout **`docs/ops/HEDGR_RETAIL_UI_UPPER_SHELL_CONTINUATION_EXECUTION_READOUT.md`**.
 - **§6b** is not sequencing authority — Transition Readiness taxonomy and scrutiny input only; only **§7** / **§7a** name approved implementation work when a ticket is active.
 - When a ticket is active, the full execution brief lives in **§7a** until closeout; when **§7** names no ticket, **§7a** holds the no-active-ticket stub below.
 - **Future work:** Any proposal to extend the `MC-S3-012` money-first shell direction into the shipped `(app)/dashboard` route must be separately named in **§7** with its own scope clause, rollback posture, and regression-contract plan; prototype-route success does not carry forward as shipped-route authorization.
