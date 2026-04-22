@@ -33,15 +33,19 @@ export function EnginePostureHeader({ engineState }: EnginePostureHeaderProps) {
   }
 
   return (
-    <header className="space-y-4">
-      <div className="flex items-center justify-between gap-3">
-        <h1 className="text-2xl font-semibold tracking-tight text-slate-900">
-          Dashboard
-        </h1>
+    <header className="space-y-3">
+      <h1 className="sr-only">Dashboard</h1>
+      <div className="flex items-start justify-between gap-3">
+        <p
+          className="text-xs font-medium uppercase tracking-wide text-slate-500"
+          aria-hidden="true"
+        >
+          Overview
+        </p>
         <span
           data-testid="engine-posture-badge"
           data-posture={posture}
-          className={`inline-flex items-center rounded-full border px-3.5 py-1.5 text-xs font-semibold tracking-wide ${BADGE_TONES[posture]}`}
+          className={`shrink-0 inline-flex items-center rounded-full border px-3 py-1 text-[11px] font-semibold tracking-wide ${BADGE_TONES[posture]}`}
         >
           {BADGE_LABELS[posture]}
         </span>
