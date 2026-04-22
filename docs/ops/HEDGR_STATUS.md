@@ -1,6 +1,6 @@
 Status: Canonical hand-off file
 Purpose: Strategic continuity, merged implementation truth, and next-ticket authority for Cursor execution
-Last updated: 2026-04-14
+Last updated: 2026-04-22
 
 ---
 
@@ -776,11 +776,17 @@ Completed and merged:
 
 Current active ticket status:
 
-- **Approved next ticket:** **None named.** There is **no** approved next implementation ticket until **§7** is updated explicitly to name one.
+- **Approved next ticket:** **`UI-SRA-001`** — Shipped retail dashboard adaptation to settled money-first reference surface (bounded frontend/UI pass only).
+  - **Covers:** `apps/frontend/app/(app)/dashboard/**` presentation alignment to the settled money-first reference surface—`Total balance` label, balance-first hierarchy, calm attached trust read, `Recent activity` as first body destination, subordinate Family C quieting, bounded continuity/composure tuning only.
+  - **Excludes:** shell reselection, new dashboard sections, CTA redesign, Family C redesign, new trust constructs, wider dashboard restructuring, `apps/frontend/lib/engine/**` semantic or authority changes unless a future ticket explicitly scopes engine-presentational touch with full `AGENTS.md` read-stack compliance.
+  - **Excludes:** backend changes, accounting-truth or execution semantics, copy-strategy reopening outside settled centerlines.
+  - **Requires:** rollback posture and regression-contract review per `docs/ops/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_EXECUTION_REQUEST.md` §8–§9 and `AGENTS.md` (Vitest / E2E / engine-trust surfaces as applicable).
+  - **Guardrails:** implementation subordinate to `docs/ops/HEDGR_RETAIL_UI_MOCKUP_REFERENCE_SURFACE_NOTE.md`; only bounded shipped-route adaptation under this ticket; reopen triggers surfaced in repo-native evidence, not silently absorbed; `AGENTS.md` compliance required (pause if violated); scope widening requires status revisit before continued work.
 - **Closeout note:** **`UI-USH-001`** (retail upper-shell continuation refinement beneath settled header) completed within bounded scope; governed execution readout **`docs/ops/HEDGR_RETAIL_UI_UPPER_SHELL_CONTINUATION_EXECUTION_READOUT.md`**.
 - **§6b** is not sequencing authority — Transition Readiness taxonomy and scrutiny input only; only **§7** / **§7a** name approved implementation work when a ticket is active.
-- When a ticket is active, the full execution brief lives in **§7a** until closeout; when **§7** names no ticket, **§7a** holds the no-active-ticket stub below.
-- **Future work:** Any proposal to extend the `MC-S3-012` money-first shell direction into the shipped `(app)/dashboard` route must be separately named in **§7** with its own scope clause, rollback posture, and regression-contract plan; prototype-route success does not carry forward as shipped-route authorization.
+- When **§7** names an approved ticket, the execution brief lives in **§7a** until closeout. When **§7** names none, **§7a** holds the no-active-ticket stub.
+- **Shipped-route adaptation (named):** **`UI-SRA-001`** is the separately named bounded ticket for adapting shipped `app/(app)/dashboard/**` to the settled money-first reference surface; scope, rollback, and regression-contract expectations are in **`docs/ops/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_EXECUTION_REQUEST.md`** and **`docs/ops/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_STATUS_PATCH_PROPOSAL.md`**.
+- **Future work:** Further extension beyond **`UI-SRA-001`** scope still requires a new **§7** ticket; prototype-route outcomes do not widen an active ticket by implication.
 - Do not treat backlog, roadmap, or *Proposed* ADRs as sequenced work unless **§7** is updated explicitly.
 - Cursor must not assume continuation beyond **§6** merged truth, **§6a** release-closeout assessment, **§6b** transition standard, **§7** / **§7a** (when a ticket is active), and current governance.
 - Cursor must not continue automatically into work beyond what is explicitly defined in this file for an active ticket.
@@ -792,9 +798,15 @@ Current active ticket status:
 
 ## 7a. Active execution ticket
 
-**Status:** **No active execution ticket.** **§7** does not currently name an approved next implementation ticket.
+**Active execution ticket:** **`UI-SRA-001`** — Shipped retail dashboard adaptation to settled money-first reference surface.
 
-When governance approves the next ticket, **§7** will name it and this section will hold the full execution brief until closeout.
+- **Minimum-file-set posture:** touch only shipped dashboard files (and tests/selectors) strictly required for the **§7** slice; inventory files in brief or PR before edit.
+- **Reversible / reviewable:** incremental diffs, easy targeted revert, no hidden widening or opportunistic refactors.
+- **No redesign:** no header/shell/CTA/Family C structural reinvention; no broader dashboard restructuring.
+- **No backend / engine / accounting-truth widening:** presentation-only adaptation unless governance separately authorizes scoped `apps/frontend/lib/engine/**` presentational edits with `AGENTS.md` engine-facing read order.
+- **Regression-contract awareness:** review and preserve `MC-S3-004`–`MC-S3-009` lineage intent on touched trust surfaces; document any required test updates with rollback-safe rationale.
+
+**Execution request:** `docs/ops/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_EXECUTION_REQUEST.md`.
 
 ---
 
