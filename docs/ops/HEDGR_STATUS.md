@@ -1,6 +1,6 @@
 Status: Canonical hand-off file
 Purpose: Strategic continuity, merged implementation truth, and next-ticket authority for Cursor execution
-Last updated: 2026-04-14
+Last updated: 2026-04-22
 
 ---
 
@@ -773,20 +773,22 @@ Completed and merged:
 - `MC-S3-010` - Stability Engine retail UI governance read-path alignment (documentation only; merged PR **#123**; completed record **§41**)
 - `MC-S3-011` - Stability Engine trust-surface coverage matrix (documentation only; merged PR **#125**; completed record **§42**)
 - `MC-S3-012` - Retail UI money-first shell prototype-only bounded spike (presentation-only, prototype-route scope; merged PR **pending**; completed record **§43**; readout artifact **`docs/ops/HEDGR_RETAIL_UI_IMPLEMENTATION_SPIKE_READOUT.md`**)
+- `UI-SRA-001` - Shipped retail dashboard adaptation to settled money-first reference surface (bounded `app/(app)/dashboard/**` presentation-only; merged PR **#132**; completed record **§44**; readout **`docs/ops/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_EXECUTION_READOUT.md`**)
 
 Current active ticket status:
 
 - **Approved next ticket:** **None named.** There is **no** approved next implementation ticket until **§7** is updated explicitly to name one.
+- **Governance reconciliation note:** **`UI-SRA-001`** activation artifacts (`docs/ops/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_EXECUTION_REQUEST.md`, **`docs/ops/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_STATUS_PATCH_PROPOSAL.md`**, and **§7** / **§7a** activation language) first landed in commit **`1bd65d1`**; shipped dashboard implementation landed in **`da96e1e`**. Branch history was reconciled so activation, support docs, implementation, and this closeout (**§44**) cohabit the same lineage without implying a false single-commit ordering. See **`docs/ops/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_EXECUTION_READOUT.md` §2**.
 - **Closeout note:** **`UI-USH-001`** (retail upper-shell continuation refinement beneath settled header) completed within bounded scope; governed execution readout **`docs/ops/HEDGR_RETAIL_UI_UPPER_SHELL_CONTINUATION_EXECUTION_READOUT.md`**.
 - **§6b** is not sequencing authority — Transition Readiness taxonomy and scrutiny input only; only **§7** / **§7a** name approved implementation work when a ticket is active.
-- When a ticket is active, the full execution brief lives in **§7a** until closeout; when **§7** names no ticket, **§7a** holds the no-active-ticket stub below.
-- **Future work:** Any proposal to extend the `MC-S3-012` money-first shell direction into the shipped `(app)/dashboard` route must be separately named in **§7** with its own scope clause, rollback posture, and regression-contract plan; prototype-route success does not carry forward as shipped-route authorization.
+- When **§7** names an approved ticket, the execution brief lives in **§7a** until closeout. When **§7** names none, **§7a** holds the no-active-ticket stub.
+- **Future work:** Further extension beyond any closed **§7** ticket still requires a new **§7** ticket; prototype-route outcomes do not widen scope by implication.
 - Do not treat backlog, roadmap, or *Proposed* ADRs as sequenced work unless **§7** is updated explicitly.
 - Cursor must not assume continuation beyond **§6** merged truth, **§6a** release-closeout assessment, **§6b** transition standard, **§7** / **§7a** (when a ticket is active), and current governance.
 - Cursor must not continue automatically into work beyond what is explicitly defined in this file for an active ticket.
 - Cursor must not drift beyond explicitly defined scope.
 
-**Last completed ticket (summary):** `MC-S3-012` — Retail UI money-first shell prototype-only bounded spike (presentation-only; scope held to `apps/frontend/app/prototype/retail-dashboard/**`; governed readout in **`docs/ops/HEDGR_RETAIL_UI_IMPLEMENTATION_SPIKE_READOUT.md`**; shipped `(app)/dashboard/**`, `apps/frontend/lib/engine/**`, `apps/backend/**`, `packages/ui/**`, and all `MC-S3-004` / `-006` / `-007` / `-008` / `-009` regression contracts untouched in intent; **§7** / **§7a** restored to no active ticket after closeout); completed record in **§43**; merged PR **pending** (number to be populated on merge).
+**Last completed ticket (summary):** `UI-SRA-001` — Shipped retail dashboard adaptation to settled money-first reference surface (bounded `apps/frontend/app/(app)/dashboard/**` + `smoke-pack` selector alignment; **no** `lib/engine/**` copy rewrites; governed readout **`docs/ops/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_EXECUTION_READOUT.md`**; merged PR **#132**; **§7** / **§7a** restored to no active ticket after closeout); completed record in **§44**.
 
 ---
 
@@ -797,6 +799,8 @@ Current active ticket status:
 When governance approves the next ticket, **§7** will name it and this section will hold the full execution brief until closeout.
 
 ---
+
+**Archived brief (UI-SRA-001):** Shipped retail dashboard **structural alignment** to settled money-first reference — **presentation-only**; touched **`apps/frontend/app/(app)/dashboard/page.tsx`**, **`EnginePostureHeader.tsx`**, **`EngineAllocationBands.tsx`**, **`apps/frontend/tests-e2e/smoke-pack.spec.ts`**; **no** `apps/frontend/lib/engine/**`, **no** `layout.client.tsx`, **no** backend. Execution readout **`docs/ops/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_EXECUTION_READOUT.md`**. Support artifacts **`docs/ops/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_EXECUTION_REQUEST.md`**, **`docs/ops/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_STATUS_PATCH_PROPOSAL.md`**. Merged PR **#132**. Completed record: **§44**. Governance lineage note in readout **§2** and **§7** reconciliation bullet above.
 
 **Archived brief (MC-S3-012):** Retail UI money-first shell **prototype-only** bounded spike — **presentation-only**; scope held to `apps/frontend/app/prototype/retail-dashboard/**` (RetailDashboardPrototype.tsx added `Variant MS — Money-first shell` stack: `BalanceLedHero`, `SubordinateAllocation`, `MoneyFirstShellStack`; mock-data.ts added additive `stability.supportLine`); governance edits to **§7** / **§7a** of this file. **No** shipped `(app)/dashboard/**`, **no** `apps/frontend/lib/engine/**`, **no** `apps/backend/**`, **no** `packages/ui/**`, **no** copy-module or Vitest regression-contract edits from the `MC-S3-004` / `-006` / `-007` / `-008` / `-009` tranche. Reversibility preserved. Governed readout artifact **`docs/ops/HEDGR_RETAIL_UI_IMPLEMENTATION_SPIKE_READOUT.md`** records the spike's pass verdict and unresolved tensions. No ADR under ticket intent. Merged PR **pending** (number to be populated on merge). Completed record: **§43**.
 
@@ -1748,4 +1752,32 @@ This **§43** record is written in the same working-tree change-set as the imple
 **§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
 
 **Follow-ups:** Any successor appears only when **§7** is updated explicitly. A shipped-route proposal derived from `MC-S3-012` prototype evidence must be a separately named **§7** ticket with its own scope clause, rollback posture, and regression-contract plan; prototype-route success does not carry forward as shipped-route authorization.
+
+---
+
+## 44. Completed execution ticket - UI-SRA-001 (Shipped retail dashboard adaptation to settled money-first reference surface)
+
+**Ticket:** `UI-SRA-001` — Shipped retail dashboard adaptation to settled money-first reference surface (bounded frontend/UI pass)  
+**Branch / PR:** `cursor/ui-sra-001-shipped-dashboard-adaptation-3098` / **PR #132**
+
+### Outcome (presentation-only; shipped `app/(app)/dashboard/**` only)
+
+- **`apps/frontend/app/(app)/dashboard/page.tsx`** — money-first column: **Total balance** hero using ledger **`total`** (with optional available/pending subline); **`EnginePostureHeader`** and **Recent activity** strip before **`EngineAllocationBands`**; demoted policy-gated APY tile; bounded width rhythm
+- **`apps/frontend/app/(app)/dashboard/EnginePostureHeader.tsx`** — calmer hierarchy (`sr-only` **Dashboard** title; **Overview** row; smaller badge); **no** `ENGINE_POSTURE_CONTEXT` edits
+- **`apps/frontend/app/(app)/dashboard/EngineAllocationBands.tsx`** — quieter outer chrome (tokens only)
+- **`apps/frontend/tests-e2e/smoke-pack.spec.ts`** — smoke gate aligns to **Total balance** anchor
+- **`docs/ops/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_EXECUTION_READOUT.md`** — this closeout readout; **§2** records activation (`1bd65d1`) vs implementation (`da96e1e`) lineage for audit honesty
+- **`docs/ops/HEDGR_STATUS.md`** — **§7** / **§7a** restored to **no active ticket** on this closeout; **§7** completed list extended with **`UI-SRA-001`**
+
+**Scope discipline held.** **No** `apps/frontend/lib/engine/**`, **no** `apps/frontend/app/(app)/layout.client.tsx`, **no** backend, **no** engine semantics or accounting-truth widening.
+
+### Governance reconciliation
+
+**§7** activation for **`UI-SRA-001`** was introduced in **`1bd65d1`**; implementation was **`da96e1e`**. Reconciliation merged support docs + status language onto the implementation branch so **authority artifacts and code** share visible lineage; the readout **does not** claim a single original timestamp for both.
+
+### Sequencing note
+
+**§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
+
+**Follow-ups:** Any successor appears only when **§7** is updated explicitly.
 
