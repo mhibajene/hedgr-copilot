@@ -161,6 +161,27 @@
     padding-top: 14px;
     border-top: 1px solid rgba(255, 255, 255, 0.06);
   }
+  .ms-hero-trust-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .ms-trust-primary {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: #D4D4D8;
+    line-height: 1.25;
+  }
+  .ms-trust-secondary {
+    margin: 0;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    color: #8A8A8F;
+    line-height: 1.4;
+  }
   .ms-hero-trust-top {
     display: flex;
     flex-wrap: wrap;
@@ -206,7 +227,7 @@
     background: none;
     border: none;
     padding: 0;
-    cursor: default;
+    cursor: pointer;
   }
   .ms-action-icon {
     width: 54px;
@@ -218,6 +239,13 @@
     align-items: center;
     justify-content: center;
     color: #B4B4BA;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.03), 0 1px 2px rgba(0, 0, 0, 0.35);
+    transition: border-color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+  }
+  .ms-action:hover .ms-action-icon {
+    border-color: #5A5A61;
+    background: rgba(47, 47, 52, 0.78);
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.04), 0 2px 4px rgba(0, 0, 0, 0.4);
   }
   .ms-action-label {
     font-size: 11px;
@@ -343,6 +371,228 @@
   }
   .phone-ms .nav-item[data-active="true"] svg rect {
     stroke: #6B6B70;
+  }
+
+  /* Primary paper mockup — dark mode (reference surface; non-authorizing) */
+  .phone-ms-dark {
+    background: #0C0C0E;
+    border-color: #252528;
+  }
+  .phone-ms-dark .ms-hero {
+    background: rgba(24, 24, 28, 0.88);
+    border: 1px solid #313137;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.02);
+  }
+  .phone-ms-dark .ms-hero-label {
+    color: #74747C;
+  }
+  .phone-ms-dark .ms-hero-value {
+    color: #F1F1F3;
+  }
+  .phone-ms-dark .ms-trust-primary {
+    color: #D6D6DB;
+  }
+  .phone-ms-dark .ms-trust-secondary {
+    color: #95959D;
+  }
+  .phone-ms-dark .ms-actions {
+    padding-top: 20px;
+  }
+  .phone-ms-dark .ms-action-icon {
+    border-color: #4A4A51;
+    background: rgba(41, 41, 46, 0.78);
+    color: #C1C1C8;
+  }
+  .phone-ms-dark .ms-action:hover .ms-action-icon {
+    border-color: #62626A;
+    background: rgba(52, 52, 58, 0.88);
+  }
+  .phone-ms-dark .ms-action-label {
+    color: #8C8C94;
+  }
+  .phone-ms-dark .ms-activity {
+    border-color: #2F2F35;
+    background: rgba(21, 21, 25, 0.92);
+  }
+  .phone-ms-dark .ms-activity h4 {
+    color: #9A9AA1;
+  }
+  .phone-ms-dark .ms-act-title {
+    color: #DDDEE2;
+  }
+  .phone-ms-dark .ms-act-sub {
+    color: #72727A;
+  }
+  .phone-ms-dark .ms-act-amt {
+    color: #AFAFB7;
+  }
+  .phone-ms-dark .ms-alloc {
+    border-color: #3A3A42;
+    background: rgba(35, 35, 40, 0.36);
+  }
+  .phone-ms-dark .ms-alloc h4 {
+    color: #888890;
+    letter-spacing: 0.09em;
+  }
+  .phone-ms-dark .ms-alloc li {
+    color: #B7B7BE;
+  }
+  .phone-ms-dark .ms-cue-track {
+    background: #32323A;
+  }
+  .phone-ms-dark .ms-cue-fill {
+    background: rgba(190, 190, 198, 0.5);
+  }
+  .phone-ms-dark .ms-alloc-pct {
+    color: #8B8B94;
+  }
+  .phone-ms-dark .ms-alloc-foot {
+    color: #6A6A72;
+  }
+  .phone-ms-dark .ms-disclosure a {
+    color: #8C859B;
+    border-bottom-color: rgba(140, 133, 155, 0.34);
+  }
+
+  /* Primary paper mockup — light mode (reference surface; non-authorizing) */
+  .phone-ms-light {
+    background: #F7F6F4;
+    border-color: #E0DFDA;
+  }
+  .phone-ms-light .ms-header {
+    background: transparent;
+  }
+  .phone-ms-light .logo-text {
+    color: #18181B;
+  }
+  .phone-ms-light .status-text {
+    color: #52525B;
+  }
+  .phone-ms-light .ms-hero {
+    background: #FFFFFF;
+    border: 1px solid #E4E4E7;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
+  }
+  .phone-ms-light .ms-hero-label {
+    color: #52525B;
+    font-weight: 600;
+    letter-spacing: 0.11em;
+  }
+  .phone-ms-light .ms-hero-value {
+    color: #09090B;
+    font-weight: 600;
+  }
+  .phone-ms-light .ms-hero-trust {
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+  }
+  .phone-ms-light .ms-hero-trust-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .phone-ms-light .ms-trust-primary {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: #3F3F46;
+    line-height: 1.25;
+  }
+  .phone-ms-light .ms-trust-secondary {
+    margin: 0;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    color: #71717A;
+    line-height: 1.4;
+  }
+  .phone-ms-light .ms-actions {
+    padding-top: 20px;
+  }
+  .phone-ms-light .ms-action {
+    cursor: pointer;
+  }
+  .phone-ms-light .ms-action-icon {
+    border: 1px solid #D4D4D8;
+    background: #FFFFFF;
+    color: #52525B;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.03), 0 1px 2px rgba(0, 0, 0, 0.05);
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+  .phone-ms-light .ms-action:hover .ms-action-icon {
+    border-color: #A1A1AA;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05), 0 2px 4px rgba(0, 0, 0, 0.06);
+  }
+  .phone-ms-light .ms-action-label {
+    color: #52525B;
+    font-weight: 500;
+  }
+  .phone-ms-light .ms-activity {
+    border: 1px solid #E4E4E7;
+    background: #FFFFFF;
+  }
+  .phone-ms-light .ms-activity h4 {
+    color: #52525B;
+    font-weight: 500;
+  }
+  .phone-ms-light .ms-activity li {
+    border-bottom-color: #F4F4F5;
+  }
+  .phone-ms-light .ms-act-title {
+    color: #18181B;
+  }
+  .phone-ms-light .ms-act-sub {
+    color: #71717A;
+  }
+  .phone-ms-light .ms-act-amt {
+    color: #3F3F46;
+  }
+  .phone-ms-light .ms-alloc {
+    border: 1px solid #E8E7E4;
+    background: rgba(250, 250, 249, 0.85);
+  }
+  .phone-ms-light .ms-alloc h4 {
+    color: #71717A;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+  }
+  .phone-ms-light .ms-alloc li {
+    color: #3F3F46;
+    font-size: 13px;
+  }
+  .phone-ms-light .ms-cue-track {
+    background: #E4E4E7;
+  }
+  .phone-ms-light .ms-cue-fill {
+    background: rgba(82, 82, 91, 0.35);
+  }
+  .phone-ms-light .ms-alloc-pct {
+    color: #71717A;
+  }
+  .phone-ms-light .ms-alloc-foot {
+    color: #A1A1AA;
+  }
+  .phone-ms-light .ms-disclosure a {
+    color: #57534E;
+    border-bottom-color: rgba(87, 83, 78, 0.35);
+  }
+  .phone-ms-light .bottom-nav {
+    border-top-color: #E4E4E7;
+    background: #F7F6F4;
+  }
+  .phone-ms-light .nav-item svg {
+    color: #A1A1AA;
+  }
+  .phone-ms-light .nav-item[data-active="true"] svg {
+    color: #71717A;
+  }
+  .phone-ms-light .nav-label {
+    color: #A1A1AA;
+  }
+  .phone-ms-light .nav-item[data-active="true"] .nav-label {
+    color: #57534E;
   }
 
   /* Wire treatment — same hierarchy, lower fidelity chrome */
@@ -899,15 +1149,13 @@
 </head>
 <body>
 
-<!-- ========== PAPER MIRROR — Current review row (governed direction, MC-S3-012 aligned) ========== -->
+<!-- ========== PAPER MIRROR — Primary dark-mode reference (settled surface; non-authorizing) ========== -->
+<!-- Governance: docs/ops/HEDGR_RETAIL_UI_MOCKUP_REFERENCE_SURFACE_NOTE.md — HTML is a static mirror only. -->
 <div class="paper-board">
-  <div class="paper-sot">
-    <strong>Source of truth</strong> — Live critique chain: <code style="font-size:10px;color:#8A8A8F">apps/frontend/app/prototype/retail-dashboard</code> and <code style="font-size:10px;color:#8A8A8F">docs/ops</code> readouts. This HTML row is a <strong>static mirror for Paper</strong>; not implementation authority. Legacy matrix follows below.
-  </div>
   <div class="paper-review-row">
     <div>
-      <div class="label">Review — Money-first shell</div>
-      <div class="phone phone-ms">
+      <div class="label">Paper — Money-first shell (dark)</div>
+      <div class="phone phone-ms phone-ms-dark">
         <div class="ms-header">
           <div class="header-left">
             <div class="logo-box">H</div>
@@ -919,15 +1167,13 @@
           </div>
         </div>
         <div class="ms-hero">
-          <div class="ms-hero-label">Portfolio value</div>
+          <div class="ms-hero-label">Total balance</div>
           <div class="ms-hero-value">$12,847.30</div>
           <div class="ms-hero-trust">
-            <div class="ms-hero-trust-top">
-              <span class="k">Stability status</span>
-              <span class="st">Balanced</span>
-              <span class="sup">· Protected · Accessible</span>
+            <div class="ms-hero-trust-stack">
+              <p class="ms-trust-primary">Balanced</p>
+              <p class="ms-trust-secondary">Protected · Accessible</p>
             </div>
-            <p class="ms-hero-note">Read-only posture — illustrative for layout review.</p>
           </div>
         </div>
         <div class="ms-actions">
@@ -943,7 +1189,7 @@
           </div>
         </div>
         <div class="ms-activity">
-          <h4>Recent money state</h4>
+          <h4>Recent activity</h4>
           <ul>
             <li>
               <div><span class="ms-act-title">Neighborhood Market</span><span class="ms-act-sub">12 Apr · Payment</span></div>
@@ -985,221 +1231,19 @@
         <div class="ms-disclosure"><a href="#">Learn more</a></div>
         <div class="bottom-nav">
           <div class="nav-item" data-active="true">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="2" width="7" height="7" rx="1" stroke="#6B6B70" stroke-width="1.5"/><rect x="11" y="2" width="7" height="7" rx="1" stroke="#6B6B70" stroke-width="1.5"/><rect x="2" y="11" width="7" height="7" rx="1" stroke="#6B6B70" stroke-width="1.5"/><rect x="11" y="11" width="7" height="7" rx="1" stroke="#6B6B70" stroke-width="1.5"/></svg>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="2" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="11" y="2" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="2" y="11" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="11" y="11" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.5"/></svg>
             <span class="nav-label">OVERVIEW</span>
           </div>
           <div class="nav-item" data-active="false">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2L18 7V18H2V7L10 2Z" stroke="#8A8A8F" stroke-width="1.5"/></svg>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2L18 7V18H2V7L10 2Z" stroke="currentColor" stroke-width="1.5"/></svg>
             <span class="nav-label">TREASURY</span>
           </div>
           <div class="nav-item" data-active="false">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8" stroke="#8A8A8F" stroke-width="1.5"/><path d="M10 6V10L13 13" stroke="#8A8A8F" stroke-width="1.5"/></svg>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.5"/><path d="M10 6V10L13 13" stroke="currentColor" stroke-width="1.5"/></svg>
             <span class="nav-label">HISTORY</span>
           </div>
           <div class="nav-item" data-active="false">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="6" r="4" stroke="#8A8A8F" stroke-width="1.5"/><path d="M3 18C3 14.134 6.134 11 10 11C13.866 11 17 14.134 17 18" stroke="#8A8A8F" stroke-width="1.5"/></svg>
-            <span class="nav-label">ACCOUNT</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div>
-      <div class="label">Review — Family C current direction</div>
-      <div class="phone phone-ms">
-        <div class="ms-header">
-          <div class="header-left">
-            <div class="logo-box">H</div>
-            <span class="logo-text">HEDGR</span>
-          </div>
-          <div class="status-badge" data-tone="caution">
-            <div class="status-dot"></div>
-            <span class="status-text">ADJUSTING</span>
-          </div>
-        </div>
-        <div class="ms-hero">
-          <div class="ms-hero-label">Portfolio value</div>
-          <div class="ms-hero-value">$12,847.30</div>
-          <div class="ms-hero-trust">
-            <div class="ms-hero-trust-top">
-              <span class="k">Stability status</span>
-              <span class="st">Monitoring</span>
-              <span class="sup">· Protected · Accessible</span>
-            </div>
-            <p class="ms-hero-note">Read-only posture — illustrative for layout review.</p>
-          </div>
-        </div>
-        <div class="ms-actions">
-          <div class="ms-action">
-            <div class="ms-action-icon"><span style="font-size:22px;font-weight:300;line-height:1">+</span></div>
-            <span class="ms-action-label">Top up</span>
-          </div>
-          <div class="ms-action">
-            <div class="ms-action-icon">
-              <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.4"><path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
-            </div>
-            <span class="ms-action-label">Send</span>
-          </div>
-        </div>
-        <div class="ms-activity">
-          <h4>Recent money state</h4>
-          <ul>
-            <li>
-              <div><span class="ms-act-title">Neighborhood Market</span><span class="ms-act-sub">12 Apr · Payment</span></div>
-              <span class="ms-act-amt">-$24.18</span>
-            </li>
-            <li>
-              <div><span class="ms-act-title">Payroll deposit</span><span class="ms-act-sub">10 Apr · Transfer in</span></div>
-              <span class="ms-act-amt">+$2,400.00</span>
-            </li>
-          </ul>
-        </div>
-        <div class="ms-alloc">
-          <h4>Allocation &amp; trust (informational)</h4>
-          <ul>
-            <li>
-              <span>Stable cash</span>
-              <span style="display:flex;align-items:center;gap:10px">
-                <span class="ms-cue-track"><span class="ms-cue-fill" style="width:55%"></span></span>
-                <span class="ms-alloc-pct">55%</span>
-              </span>
-            </li>
-            <li>
-              <span>Protected yield</span>
-              <span style="display:flex;align-items:center;gap:10px">
-                <span class="ms-cue-track"><span class="ms-cue-fill" style="width:35%"></span></span>
-                <span class="ms-alloc-pct">35%</span>
-              </span>
-            </li>
-            <li>
-              <span>Reserve</span>
-              <span style="display:flex;align-items:center;gap:10px">
-                <span class="ms-cue-track"><span class="ms-cue-fill" style="width:10%"></span></span>
-                <span class="ms-alloc-pct">10%</span>
-              </span>
-            </li>
-          </ul>
-          <p class="ms-alloc-foot">Bands are illustrative — not accounting or a promise of outcomes.</p>
-        </div>
-        <div class="ms-disclosure"><a href="#">Learn more</a></div>
-        <div class="bottom-nav">
-          <div class="nav-item" data-active="true">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="2" width="7" height="7" rx="1" stroke="#6B6B70" stroke-width="1.5"/><rect x="11" y="2" width="7" height="7" rx="1" stroke="#6B6B70" stroke-width="1.5"/><rect x="2" y="11" width="7" height="7" rx="1" stroke="#6B6B70" stroke-width="1.5"/><rect x="11" y="11" width="7" height="7" rx="1" stroke="#6B6B70" stroke-width="1.5"/></svg>
-            <span class="nav-label">OVERVIEW</span>
-          </div>
-          <div class="nav-item" data-active="false">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2L18 7V18H2V7L10 2Z" stroke="#8A8A8F" stroke-width="1.5"/></svg>
-            <span class="nav-label">TREASURY</span>
-          </div>
-          <div class="nav-item" data-active="false">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8" stroke="#8A8A8F" stroke-width="1.5"/><path d="M10 6V10L13 13" stroke="#8A8A8F" stroke-width="1.5"/></svg>
-            <span class="nav-label">HISTORY</span>
-          </div>
-          <div class="nav-item" data-active="false">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="6" r="4" stroke="#8A8A8F" stroke-width="1.5"/><path d="M3 18C3 14.134 6.134 11 10 11C13.866 11 17 14.134 17 18" stroke="#8A8A8F" stroke-width="1.5"/></svg>
-            <span class="nav-label">ACCOUNT</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div>
-      <div class="label">Wire — Money-first shell</div>
-      <div class="phone phone-ms is-wire">
-        <div class="ms-header">
-          <div class="header-left">
-            <div class="logo-box">H</div>
-            <span class="logo-text">HEDGR</span>
-          </div>
-          <div class="status-badge" data-tone="safe">
-            <div class="status-dot"></div>
-            <span class="status-text">CONNECTED</span>
-          </div>
-        </div>
-        <div class="ms-hero">
-          <div class="ms-hero-label">Portfolio value</div>
-          <div class="ms-hero-value">$12,847.30</div>
-          <div class="ms-hero-trust">
-            <div class="ms-hero-trust-top">
-              <span class="k">Stability status</span>
-              <span class="st">Balanced</span>
-              <span class="sup">· Protected · Accessible</span>
-            </div>
-            <p class="ms-hero-note">Read-only posture — illustrative for layout review.</p>
-          </div>
-        </div>
-        <div class="ms-actions">
-          <div class="ms-action">
-            <div class="ms-action-icon"><span style="font-size:22px;font-weight:300;line-height:1">+</span></div>
-            <span class="ms-action-label">Top up</span>
-          </div>
-          <div class="ms-action">
-            <div class="ms-action-icon">
-              <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.4"><path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
-            </div>
-            <span class="ms-action-label">Send</span>
-          </div>
-        </div>
-        <div class="ms-activity">
-          <h4>Recent money state</h4>
-          <ul>
-            <li>
-              <div><span class="ms-act-title">Neighborhood Market</span><span class="ms-act-sub">12 Apr · Payment</span></div>
-              <span class="ms-act-amt">-$24.18</span>
-            </li>
-            <li>
-              <div><span class="ms-act-title">Payroll deposit</span><span class="ms-act-sub">10 Apr · Transfer in</span></div>
-              <span class="ms-act-amt">+$2,400.00</span>
-            </li>
-            <li>
-              <div><span class="ms-act-title">Card auth hold</span><span class="ms-act-sub">9 Apr · Pending</span></div>
-              <span class="ms-act-amt">-$120.00</span>
-            </li>
-          </ul>
-        </div>
-        <div class="ms-alloc">
-          <h4>Allocation &amp; trust (informational)</h4>
-          <ul>
-            <li>
-              <span>Stable cash</span>
-              <span style="display:flex;align-items:center;gap:10px">
-                <span class="ms-cue-track"><span class="ms-cue-fill" style="width:62%"></span></span>
-                <span class="ms-alloc-pct">62%</span>
-              </span>
-            </li>
-            <li>
-              <span>Protected yield</span>
-              <span style="display:flex;align-items:center;gap:10px">
-                <span class="ms-cue-track"><span class="ms-cue-fill" style="width:28%"></span></span>
-                <span class="ms-alloc-pct">28%</span>
-              </span>
-            </li>
-            <li>
-              <span>Reserve</span>
-              <span style="display:flex;align-items:center;gap:10px">
-                <span class="ms-cue-track"><span class="ms-cue-fill" style="width:10%"></span></span>
-                <span class="ms-alloc-pct">10%</span>
-              </span>
-            </li>
-          </ul>
-          <p class="ms-alloc-foot">Bands are illustrative — not accounting or a promise of outcomes.</p>
-        </div>
-        <div class="ms-disclosure"><a href="#">Learn more</a></div>
-        <div class="bottom-nav">
-          <div class="nav-item" data-active="true">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="2" width="7" height="7" rx="1" stroke="#6B6B70" stroke-width="1.5"/><rect x="11" y="2" width="7" height="7" rx="1" stroke="#6B6B70" stroke-width="1.5"/><rect x="2" y="11" width="7" height="7" rx="1" stroke="#6B6B70" stroke-width="1.5"/><rect x="11" y="11" width="7" height="7" rx="1" stroke="#6B6B70" stroke-width="1.5"/></svg>
-            <span class="nav-label">OVERVIEW</span>
-          </div>
-          <div class="nav-item" data-active="false">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2L18 7V18H2V7L10 2Z" stroke="#8A8A8F" stroke-width="1.5"/></svg>
-            <span class="nav-label">TREASURY</span>
-          </div>
-          <div class="nav-item" data-active="false">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8" stroke="#8A8A8F" stroke-width="1.5"/><path d="M10 6V10L13 13" stroke="#8A8A8F" stroke-width="1.5"/></svg>
-            <span class="nav-label">HISTORY</span>
-          </div>
-          <div class="nav-item" data-active="false">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="6" r="4" stroke="#8A8A8F" stroke-width="1.5"/><path d="M3 18C3 14.134 6.134 11 10 11C13.866 11 17 14.134 17 18" stroke="#8A8A8F" stroke-width="1.5"/></svg>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="6" r="4" stroke="currentColor" stroke-width="1.5"/><path d="M3 18C3 14.134 6.134 11 10 11C13.866 11 17 14.134 17 18" stroke="currentColor" stroke-width="1.5"/></svg>
             <span class="nav-label">ACCOUNT</span>
           </div>
         </div>
@@ -1207,14 +1251,14 @@
     </div>
 
     <aside class="paper-checklist" aria-label="Review checklist">
-      <h3>Checklist — refinement close</h3>
+      <h3>Checklist — dark-mode tightening</h3>
       <ul>
         <li>Balance is the first dominant read; no APY or earn-forward cues.</li>
-        <li>Trust context visible but secondary to portfolio value.</li>
-        <li>Family C: row-first; thin cue only; no chart or meter hero.</li>
-        <li>Activity bounded; supports shell without competing.</li>
-        <li>Actions legible, neutral weight — not emotional center.</li>
-        <li>Premium neutral / low noise; no trader or neobank energy.</li>
+        <li>No visible <code style="font-size:10px">Stability status</code> label; trust stays reassurance-first.</li>
+        <li><code style="font-size:10px">Total balance</code> labels the anchor; actions stay near but secondary.</li>
+        <li>Family C: row-first; thin cue only; legible in dark but still clearly subordinate.</li>
+        <li><code style="font-size:10px">Recent activity</code> is the first body destination after actions.</li>
+        <li>Premium low-glare calm; no neon, metallic, console, or dashboard energy.</li>
       </ul>
       <h3 style="margin-top:8px">Record outcomes</h3>
       <ul>
