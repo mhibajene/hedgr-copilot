@@ -3,7 +3,7 @@
 Status: Governance guidance only  
 Authority: Non-sequencing, non-implementation  
 Scope: Second governed Codex pilot for bounded critique and validation inside the Balanced status-line / status-language lane  
-Last updated: 2026-04-18
+Last updated: 2026-04-21
 
 ---
 
@@ -27,7 +27,7 @@ This trial does **not** alter the authority order established in `docs/ops/HEDGR
 - **Repo-native authority** (`docs/ops/HEDGR_STATUS.md`, accepted ADRs, `AGENTS.md`, and doctrine) remains the institutional operating system.
 - **Project Ops / `docs/ops`** remains the governance and traceability layer.
 - **Cursor** remains the primary repo execution surface.
-- **Codex** is limited to bounded exploration, verification, and testing.
+- **Codex** is limited to bounded exploration, verification, testing, and reconstruction.
 
 Codex must not mutate repo truth directly, act as a primary builder, decide what ships, select final wording, or define the accepted status model.
 
@@ -72,6 +72,8 @@ The lane is especially suitable because it contains a live trust-surface tension
 
 The second Codex pilot should use exactly these modes:
 
+**Execution mode:** `READ_ONLY`
+
 ### 5.1 Verifier
 
 Purpose:
@@ -114,7 +116,7 @@ Recommended governance anchors:
 - `HEDGR_STATUS.md`
 - `AGENTS.md`
 
-Codex should not rely on loose conversation, memory, or unstated product assumptions as substitutes for these files.
+Codex must not treat loose conversation, memory, Chronicle, inferred continuity, or unstated product assumptions as substitutes for these files. If any of those sources conflict with the listed artifacts or repo authority, they lose automatically for the purposes of this pilot.
 
 ---
 
@@ -123,7 +125,7 @@ Codex should not rely on loose conversation, memory, or unstated product assumpt
 Ask Codex critique questions, not design-generation prompts:
 
 1. What hidden overclaim, precision, or hidden-engine risks remain under the current `Balanced` line and status-language stack?
-2. Does the current likely centerline still overstate governed certainty through phrases like `protection range`, or has the stack already bounded that risk adequately?
+2. Does the current working centerline candidate still overstate governed certainty through phrases like `protection range`, or has the stack already bounded that risk adequately?
 3. Are the current guardrails and vocabulary draft internally consistent, or do they quietly permit ambiguous status semantics?
 4. Does any artifact in the lane implicitly front-run a wording outcome before governance should allow it?
 5. What is the strongest doctrine-safe counterargument to the current status-language centerline?
@@ -141,6 +143,8 @@ The pilot should ask Codex for:
 - one bounded critique readout;
 - one risk-focused challenger pass;
 - one consistency / drift check across the status-language docs.
+
+Each output should also include a short provenance note indicating whether it relied on: repo authority, bounded lane artifacts, external tools / connected systems, or memory / inferred continuity.
 
 Expected outputs are:
 
@@ -169,7 +173,8 @@ Required handling:
 - useful findings must be captured in repo-native docs before they influence execution or governance;
 - Codex output must not directly rewrite the lane without review;
 - no status wording should become final because Codex preferred it;
-- no Codex readout should become a second execution source of truth.
+- no Codex readout should become a second execution source of truth;
+- If Codex detects conflict between repo authority, lane artifacts, external sources, or memory / inferred continuity, it must surface the conflict explicitly and must not reconcile it by inference.
 
 This follows the handoff rule in `docs/ops/HEDGR_CODEX_USAGE_CONVENTION.md`:
 
@@ -205,7 +210,10 @@ Treat the pilot as needing tightening before broader use if:
 - the workflow bypasses Project Ops or founder judgment;
 - Codex introduces contradiction with repo-native authority or the status guardrails;
 - Codex treats critique-only wording as approved copy;
-- Codex recommends implementation, sequencing, or final status-model acceptance.
+- Codex recommends implementation, sequencing, or final status-model acceptance;
+- memory, Chronicle, or inferred continuity is treated as current artifact truth
+- output provenance is unclear or omitted
+- Codex smooths over source conflict instead of surfacing it explicitly
 
 Failure here means the operating pattern needs tightening before broader Codex use. It does not justify continuing on momentum.
 

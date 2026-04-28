@@ -3,7 +3,7 @@
 Status: Governance guidance only  
 Authority: Non-sequencing, non-implementation  
 Scope: First governed Codex pilot for bounded critique and validation inside the allocation legibility lane  
-Last updated: 2026-04-18
+Last updated: 2026-04-21
 
 ---
 
@@ -67,6 +67,8 @@ This lane is appropriate because it is:
 
 The first Codex pilot should use **exactly** these modes:
 
+**Execution mode:** `READ_ONLY`
+
 ### 5.1 Verifier
 
 **Purpose:** independently review the allocation **pattern comparison** and **micro-test** setup for drift, overclaim, hidden precision implication, or doctrine tension (including consistency with informational allocation posture and ADR **0013** alignment as referenced in the lane docs).
@@ -97,7 +99,7 @@ Codex must work from **explicit artifacts** and **fixed scope** only—not loose
 - `HEDGR_STATUS.md` — sole implementation and sequencing authority; exploration remains subordinate  
 - `AGENTS.md` — repo execution standard  
 
-Codex must not treat chat history as a substitute for these files.
+Codex must not treat chat history, memory, Chronicle, or inferred continuity as substitutes for these files. If any of those sources conflict with the listed artifacts or repo authority, they lose automatically for the purposes of this pilot.
 
 ---
 
@@ -107,7 +109,7 @@ Ask Codex **critique and validation** questions—not open-ended design generati
 
 1. What **hidden risks** exist in Patterns **A / B / C** that the current docs may be underweighting?  
 2. Does any pattern imply **more precision, accounting truth, or visual authority** than the current read-only, informational posture can honestly support?  
-3. Is the current **likely centerline (Pattern C)** actually the strongest under the **stated rubric and scorecard criteria**, or is there a **stronger counterargument** for A or B on doctrine-safe grounds?  
+3. Is the current **working centerline candidate (Pattern C)** actually the strongest under the **stated rubric and scorecard criteria**, or is there a **stronger counterargument** for A or B on doctrine-safe grounds?  
 4. Where does the allocation lane risk drifting into **performative**, **chart-like**, or **performance-theater** behavior despite guardrails?  
 5. Do the allocation docs contain **internal contradiction**, **duplicated authority claims**, or **silent scope creep** relative to `HEDGR_STATUS.md` and the lane’s own authority boundaries?  
 
@@ -122,6 +124,8 @@ The pilot should request:
 - **one** bounded **critique readout** (structured findings against A / B / C)  
 - **one** **risk-focused challenger pass** (adversarial to overclaim and hidden-mechanics drift)  
 - **one** **consistency / drift check** across the allocation docs and the convention’s handoff rules  
+
+Each output should also include a short provenance note indicating whether it relied on: repo authority, bounded lane artifacts, external tools / connected systems, or memory / inferred continuity.
 
 Expected character of outputs:
 
@@ -142,6 +146,7 @@ Required handling:
 - **Review** outputs through founder / Project Ops / **Cursor** workflow before treating them as inputs to execution.  
 - **Capture** any material, durable findings in **repo-native** `docs/ops` (or ADR flow if scope escalates—unlikely for this pilot).  
 - **Do not** let Codex **directly rewrite** allocation lane docs or prototype truth without human review and explicit absorption into the governed chain.  
+- If Codex detects conflict between repo authority, lane artifacts, external sources, or memory / inferred continuity, it must surface the conflict explicitly and must not reconcile it by inference.
 
 Handoff chain:
 
@@ -172,6 +177,9 @@ Treat the pilot as needing **tightening before broader use** if:
 - the review devolves into **generic** or **unmoored** commentary  
 - the workflow **bypasses** Project Ops traceability or **founder** judgment  
 - outputs **contradict** repo-native authority without flagging tension as a finding (silent override)  
+- memory, Chronicle, or inferred continuity is treated as current artifact truth  
+- output provenance is unclear or omitted  
+- Codex smooths over source conflict instead of surfacing it explicitly  
 
 ---
 
