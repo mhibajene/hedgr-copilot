@@ -359,6 +359,24 @@ Implementation posture preserved:
 - **documentation-only** merge; **no** `apps/`, **no** `packages/`, **no** test file edits, **no** CI workflow edits, **no** runtime or product-copy changes
 - no ADR under ticket intent; merged PR **#125**
 
+### MC-S3-013 - Canonical engine type export contract (test-only)
+
+Merged files:
+
+- `apps/frontend/__tests__/engine-types-contract.test.ts`
+- `docs/ops/HEDGR_STABILITY_ENGINE_TRUST_SURFACE_TEST_COVERAGE_MATRIX.md`
+
+Implementation truth:
+
+- dedicated Vitest contract locks the canonical `EnginePosture` union, required `EngineState` keys, optional `notice`, and `EngineNotice` title/body shape for the type surface in `apps/frontend/lib/engine/types.ts`
+- coverage matrix row for `MC-S2-001` is updated from **Partially covered** to **Covered** because a standalone `types.ts` contract test now exists
+- `MC-S3-004` notice/mock contract intent is unchanged
+
+Implementation posture preserved:
+
+- **test-only** runtime posture; **no** `EngineState` semantic change, **no** new `EnginePosture` values, **no** new trust states, **no** execution or accounting wording, **no** backend engine binding, and **no** live network behavior
+- no ADR under ticket intent; merged PR **pending**
+
 ### MC-S2-004 - Allocation bands UI
 
 Implementation truth:
@@ -774,6 +792,7 @@ Completed and merged:
 - `MC-S3-011` - Stability Engine trust-surface coverage matrix (documentation only; merged PR **#125**; completed record **§42**)
 - `MC-S3-012` - Retail UI money-first shell prototype-only bounded spike (presentation-only, prototype-route scope; merged PR **pending**; completed record **§43**; readout artifact **`docs/ops/HEDGR_RETAIL_UI_IMPLEMENTATION_SPIKE_READOUT.md`**)
 - `UI-SRA-001` - Shipped retail dashboard adaptation to settled money-first reference surface (bounded `app/(app)/dashboard/**` presentation-only; merged PR **#132**; completed record **§44**; readout **`docs/ops/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_EXECUTION_READOUT.md`**)
+- `MC-S3-013` - Canonical engine type export contract (test-only; merged PR **pending**; completed record **§45**)
 
 Current active ticket status:
 
@@ -788,7 +807,7 @@ Current active ticket status:
 - Cursor must not continue automatically into work beyond what is explicitly defined in this file for an active ticket.
 - Cursor must not drift beyond explicitly defined scope.
 
-**Last completed ticket (summary):** `UI-SRA-001` — Shipped retail dashboard adaptation to settled money-first reference surface (bounded `apps/frontend/app/(app)/dashboard/**` + `smoke-pack` selector alignment; **no** `lib/engine/**` copy rewrites; governed readout **`docs/ops/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_EXECUTION_READOUT.md`**; merged PR **#132**; **§7** / **§7a** restored to no active ticket after closeout); completed record in **§44**.
+**Last completed ticket (summary):** `MC-S3-013` — Canonical engine type export contract (test-only; dedicated `apps/frontend/__tests__/engine-types-contract.test.ts`; `MC-S2-001` matrix row moved to **Covered**; no `EngineState` semantics, posture states, execution wording, accounting wording, backend binding, or live-network behavior); merged PR **pending**; completed record in **§45**.
 
 ---
 
@@ -799,6 +818,8 @@ Current active ticket status:
 When governance approves the next ticket, **§7** will name it and this section will hold the full execution brief until closeout.
 
 ---
+
+**Archived brief (MC-S3-013):** Canonical engine type export contract — **test-only**; added **`apps/frontend/__tests__/engine-types-contract.test.ts`** to lock canonical `EnginePosture` union, required `EngineState` keys, optional `notice`, and `EngineNotice` title/body shape; updated **`docs/ops/HEDGR_STABILITY_ENGINE_TRUST_SURFACE_TEST_COVERAGE_MATRIX.md`** `MC-S2-001` row from **Partially covered** to **Covered**. **No** `apps/frontend/lib/engine/types.ts` semantics change, **no** new posture values or trust states, **no** execution/accounting wording, **no** `mock.ts`, **no** `useEngineState`, **no** dashboard components, **no** withdraw/tx/market seams, **no** backend, **no** live network. `MC-S3-004` notice/mock contract behavior preserved in intent. No ADR under ticket intent. Merged PR **pending**. Completed record: **§45**.
 
 **Archived brief (UI-SRA-001):** Shipped retail dashboard **structural alignment** to settled money-first reference — **presentation-only**; touched **`apps/frontend/app/(app)/dashboard/page.tsx`**, **`EnginePostureHeader.tsx`**, **`EngineAllocationBands.tsx`**, **`apps/frontend/tests-e2e/smoke-pack.spec.ts`**; **no** `apps/frontend/lib/engine/**`, **no** `layout.client.tsx`, **no** backend. Execution readout **`docs/ops/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_EXECUTION_READOUT.md`**. Support artifacts **`docs/ops/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_EXECUTION_REQUEST.md`**, **`docs/ops/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_STATUS_PATCH_PROPOSAL.md`**. Merged PR **#132**. Completed record: **§44**. Governance lineage note in readout **§2** and **§7** reconciliation bullet above.
 
@@ -1781,3 +1802,25 @@ This **§43** record is written in the same working-tree change-set as the imple
 
 **Follow-ups:** Any successor appears only when **§7** is updated explicitly.
 
+---
+
+## 45. Completed execution ticket - MC-S3-013 (Canonical engine type export contract)
+
+**Ticket:** `MC-S3-013` — Canonical engine type export contract (test-only)  
+**Branch / PR:** pending / **PR pending**
+
+### Outcome (test-only)
+
+- **`apps/frontend/__tests__/engine-types-contract.test.ts`** — new dedicated Vitest contract for `apps/frontend/lib/engine/types.ts`; locks the canonical four-value `EnginePosture` union, required `EngineState` keys, optional `notice`, and `EngineNotice` title/body shape with typed fixtures and runtime key assertions
+- **`docs/ops/HEDGR_STABILITY_ENGINE_TRUST_SURFACE_TEST_COVERAGE_MATRIX.md`** — `MC-S2-001` row updated from **Partially covered** to **Covered** because the canonical type surface now has a standalone contract test
+- **`docs/ops/HEDGR_STATUS.md`** — **§6** merged-truth subsection `MC-S3-013`; **§7** completed list extended with `MC-S3-013`; **§7a** restored to no active ticket with the archived brief above
+
+**Scope discipline held.** **No** `EngineState` semantics changed, **no** new `EnginePosture` values or trust states, **no** execution/accounting wording, **no** `apps/frontend/lib/engine/mock.ts`, **no** `useEngineState`, **no** dashboard components, **no** withdraw/tx/market seams, **no** backend, **no** live network behavior. **`MC-S3-004`** notice/mock contract behavior preserved in intent.
+
+**Validation.** `pnpm -w test` and `pnpm run validate` completed cleanly in the implementation workspace. Merged PR **pending**.
+
+### Sequencing note
+
+**§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
+
+**Follow-ups:** Any successor appears only when **§7** is updated explicitly.
