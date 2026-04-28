@@ -45,13 +45,13 @@ export function EngineAllocationBands({
   return (
     <section
       aria-labelledby="engine-allocation-bands-title"
-      className="space-y-6 rounded-2xl border border-slate-200/90 bg-slate-50/90 p-6 shadow-sm shadow-slate-900/5"
+      className="space-y-5 rounded-2xl border border-slate-200/50 bg-slate-50/50 p-5 shadow-sm shadow-slate-900/[0.02]"
       data-testid="engine-allocation-bands"
     >
-      <div className="space-y-4">
+      <div className="space-y-3">
         <h2
           id="engine-allocation-bands-title"
-          className="text-base font-semibold tracking-tight text-slate-900"
+          className="text-sm font-semibold tracking-tight text-slate-800"
         >
           Target posture
         </h2>

@@ -5,7 +5,7 @@
 Status: Reference-surface artifact only (lane parking / closeout record)  
 Authority: Non-shipping, non-implementation-authorizing; repo-native authority remains binding  
 Scope: Compact preservation of the settled retail prototype mockup surface after governed refinement closeout  
-Last updated: 2026-04-21
+Last updated: 2026-04-23
 
 ---
 
@@ -129,6 +129,8 @@ UI work in this slice has reached diminishing strategic return relative to deepe
 
 Primary related artifacts:
 
+- `docs/ui/hedgr-dashboard-variants.html` — primary **light-mode** static paper mirror (top paper board; non-authorizing)
+- `docs/ops/HEDGR_RETAIL_UI_LIGHT_MODE_PAPER_MOCKUP_REFINEMENT_NOTE.md` — light-mode paper mirror refinement record (2026-04-23)
 - `docs/ops/HEDGR_RETAIL_UI_HEADER_DIRECTION_CONSOLIDATION_NOTE.md` (header direction consolidation note)
 - `docs/ops/HEDGR_RETAIL_UI_UPPER_SHELL_NEXT_SCOPE_NOTE.md` (upper-shell next scope note)
 - `docs/ops/HEDGR_RETAIL_UI_UPPER_SHELL_CONTINUATION_BRIEF.md` (upper-shell continuation brief)
