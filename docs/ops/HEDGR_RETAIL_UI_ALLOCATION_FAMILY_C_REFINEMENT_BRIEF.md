@@ -51,7 +51,12 @@ Read this brief alongside the exploration stack. **Immediate anchors:**
 10. **`docs/ops/HEDGR_RETAIL_UI_PAPER_REVIEW_READOUT.md`** — static comparison precedent.
 11. **`docs/ops/HEDGR_RETAIL_UI_CRITIQUE_SCORECARD.md`** — shared critique criteria (e.g. hierarchy clarity, calmness, trust legibility).
 12. **`docs/ops/HEDGR_STATUS.md`** — sole implementation and sequencing authority.
+
 13. **`AGENTS.md`** — repo execution standard.
+
+**Comparative reference lens (external product study; non-authoritative):**
+
+14. **Plasma / Plasma One reference study** — use only as a comparative lens for **calm money framing**, **single-money mental model**, **outcome-first phrasing**, and **collapsed workflow simplicity**. It is **not** a product authority source for Hedgr, does **not** override repo canon, and must **not** be used to smuggle in yield-first, payment-neobank, or richer engine semantics through visual refinement.
 
 This brief is **specifically downstream** of the **family note** and **guardrails**: it assumes family narrowing is already settled and turns the open question into **internal Family C discipline**, not a fresh three-way pattern bake-off.
 
@@ -67,7 +72,10 @@ The unresolved work is now **internal to Family C**:
 - how to **preserve row clarity** while adding a **bounded** structural read
 - how to **avoid drifting** toward **B-like precision** (proportional cues read as measured or live) or **back toward A-like passivity** (trust language without enough structure at a glance)
 
+
 **Family A** remains the **calm control** and anti-drift baseline. **Family B** remains the **bounded challenger**—useful for pressure-testing grasp, but carrying the **highest precision and chart-adjacent risk** if misapplied. This brief does not equate those roles; it **does not** reopen family comparison as the primary task.
+
+The comparative value in studying products such as **Plasma / Plasma One** is narrowly about **surface discipline**: reducing cognitive noise, preserving a **money-first** read, and keeping structure emotionally calm. That reference is useful only where it strengthens Hedgr’s retail trust posture **without** diluting Hedgr’s distinct requirement for **visible stability meaning**. Family C should therefore borrow **calmness, compression, and outcome-first legibility** where appropriate, but must not drift toward generic wallet minimalism or a passive “money sits here” reading.
 
 ---
 
@@ -81,6 +89,7 @@ This pass is about:
 - **row/cue balance** (dual encoding without mid-layer overload)
 - **subordinate hierarchy** relative to **Portfolio Value** and **Stability Status**
 - **calm structural readability**—interpretive structure, not instrument-like reading
+- preserving a **money-first** interpretation of the block so the user reads **where money is positioned** before inferring any deeper system or protocol meaning
 
 This pass is **not** about:
 
@@ -97,9 +106,13 @@ This pass is **not** about:
 
 Family C must keep **row clarity primary**: labels and plain-language values anchor the block. The structural cue **reinforces**; it must not **overtake** scan of label/value pairs or push readers into decorative geometry before meaning lands.
 
+### 6.1A Money-first reading
+
+Family C should read first as a **money posture surface**, not as an abstract composition exercise. The user should be able to understand, at a glance, that the block is about **how money is positioned for stability and access**, with labels and values doing the primary meaning work. Any structural cue should support that money-first interpretation rather than pulling the eye into pattern appreciation or generic “clean fintech” aesthetics.
+
 ### 6.2 Cue restraint
 
-Family C’s cue must stay **secondary**, **modest**, and **clearly interpretive**—suggesting distribution posture, not exact measurement. Any proportional or weighting signal remains **bounded** and **non-heroic**, consistent with guardrails on interpretive vs. exact reads.
+Family C’s cue must stay **secondary**, **modest**, and **clearly interpretive**—suggesting distribution posture, not exact measurement, and reinforcing a **money-first** reading rather than a generic product-aesthetic read. Any proportional or weighting signal remains **bounded** and **non-heroic**, consistent with guardrails on interpretive vs. exact reads.
 
 ### 6.3 Subordinate hierarchy
 
@@ -131,6 +144,10 @@ Deeper explanatory copy or stacked explanation may matter **later** (e.g. disclo
 
 Stronger risk signifiers may become relevant under **clearer doctrine** (thresholds, communications rules, legal/trust alignment). They should **not** enter this Family C refinement pass as ad hoc UI without that doctrine—consistent with deferred risk visualization in the broader stack.
 
+### 7.4 Comparative product borrowing
+
+Comparative reference products may inform **tone**, **calmness**, and **compression**, but their visible habits must be translated before use. In particular, borrowing from stablecoin wallet or neobank surfaces must not flatten Hedgr into a generic “clean wallet” pattern language, weaken allocation’s role as a **stability trust surface**, or import **yield-first** or **spend-first** emotional framing into Family C.
+
 ---
 
 ## 8. Explicitly deferred
@@ -142,6 +159,7 @@ The following remain **deferred** for this bounded Family C refinement pass:
 - **APY / yield-forward treatment inside Family C** — Deferred: contradicts liquidity-before-yield and non-yield-first doctrine; allocation stays posture/trust, not returns marketing.
 - **Protocol-level or engine-level explanation inside the allocation surface** — Deferred: shifts the layer toward engine narration; contradicts read-only informational retail presentation.
 - **Broader family reopening beyond A/B/C narrowing** — Deferred: the current task is **internal Family C refinement**; reopening full A/B/C comparison at equal weight would undo the discipline of the family note and guardrails.
+- **Direct stylistic borrowing from external wallet / neobank references** — Deferred: external references may inform critique language, but direct visual borrowing risks collapsing Hedgr’s distinct stability posture into generic fintech minimalism.
 
 ---
 
@@ -153,6 +171,7 @@ Critique-oriented outputs only—not implementation tickets or sequencing:
 2. A **short note on acceptable Family C cue ranges**—what “light structural weighting” may include or exclude at pattern level before crossing into B-like precision or chart-adjacent territory.
 3. A **readout** on which Family C refinement **best preserves calmness and grasp** together—hypothesis for discussion, not approval.
 4. A **short list of Family C drift traits to avoid** (e.g. dual-encoding overload, hierarchy creep toward Actions/Activity, faux exactness)—for screening Paper or prototype fixtures.
+5. A **brief translation note** capturing which external calm-money cues are admissible in Family C refinement (e.g. compression, scan ease, money-first phrasing) and which remain inadmissible (e.g. wallet genericity, yield-first emotional hooks, spend-first emphasis).
 
 Allocation family narrowing is captured in `docs/ops/HEDGR_RETAIL_UI_ALLOCATION_PATTERN_FAMILY_NOTE.md`.
 
@@ -162,4 +181,7 @@ Allocation family narrowing is captured in `docs/ops/HEDGR_RETAIL_UI_ALLOCATION_
 
 Family C is the **right active refinement family** only if it stays **restrained**: a **conditional** centerline, not a default “winner,” and never an approved final pattern on the strength of this brief alone.
 
+
 **Family C should be refined as a calm structural aid, not as a more sophisticated-looking allocation instrument.**
+
+It should also remain clear that **calm** here does not mean **generic**. The target is not a cleaner wallet surface in the abstract; it is a more legible, more restrained **stability trust surface** that helps money read as intelligently positioned without implying exactness, liveness, or operational authority.
