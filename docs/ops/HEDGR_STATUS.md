@@ -399,6 +399,25 @@ Implementation posture preserved:
 - **test-only** runtime posture; **no** `EngineState` semantic change, **no** new `EnginePosture` values, **no** new trust states, **no** execution or accounting wording, **no** backend engine binding, and **no** live network behavior
 - no ADR under ticket intent; merged PR **#134**
 
+### MC-S3-015 - Allocation bands panel copy contract (test-only)
+
+Merged files:
+
+- `apps/frontend/__tests__/engine-allocation-bands-panel-copy-contract.test.tsx`
+- `docs/ops/HEDGR_STABILITY_ENGINE_TRUST_SURFACE_TEST_COVERAGE_MATRIX.md`
+- `docs/ops/HEDGR_STATUS.md`
+
+Implementation truth:
+
+- dedicated Vitest panel-level copy contract locks non-empty shipped allocation-band panel segments: title, caption, trust legend, and per-band descriptor nodes
+- contract mounts `EngineAllocationBands` with a fixed `normal` posture fixture (`42 / 44 / 14`) and applies existing informational trust-framing guards, including `ENGINE_TRUST_INFORMATIONAL_DENYLIST`, `executed`, and `allocated to your`
+- coverage matrix allocation-band row (`MC-S2-004` / `MC-S3-005` / `MC-S3-009`) is updated from **Partially covered** to **Covered**, citing the new contract plus existing behavioral/integration tests
+
+Implementation posture preserved:
+
+- **test-only** regression resistance; **no** production component changes, **no** `EngineAllocationBands.tsx` copy edits, **no** `apps/frontend/lib/engine/**`, **no** new `EnginePosture` values, **no** simulator behavior changes, **no** backend, **no** Playwright expansion, **no** CI workflow change, and **no** ADR **0017** seam widening
+- no ADR under ticket intent; merged PR **#138**
+
 ### MC-S2-004 - Allocation bands UI
 
 Implementation truth:
@@ -816,10 +835,11 @@ Completed and merged:
 - `UI-SRA-001` - Shipped retail dashboard adaptation to settled money-first reference surface (bounded `app/(app)/dashboard/**` presentation-only; merged PR **#132**; completed record **§44**; readout **`docs/ops/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_EXECUTION_READOUT.md`**)
 - `MC-S3-013` - Canonical engine type export contract (test-only; merged PR **#134**; completed record **§45**)
 - `MC-S3-014` - MC-S3-012 merged-truth reconciliation (`HEDGR_STATUS.md` documentation/governance only; completed record **§46**)
+- `MC-S3-015` - Regression resistance tranche 6: allocation bands panel copy contract (test-only; merged PR **#138**; completed record **§47**)
 
 Current active ticket status:
 
-- **Approved next ticket:** **`MC-S3-015`** — Regression resistance tranche 6: allocation bands panel copy contract (**test-only**). The active execution brief is in **§7a**. No other implementation ticket is approved next.
+- **Approved next ticket:** **None named.** There is **no** approved next implementation ticket until **§7** is updated explicitly to name one.
 - **Governance reconciliation note:** **`UI-SRA-001`** activation artifacts (`docs/ops/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_EXECUTION_REQUEST.md`, **`docs/ops/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_STATUS_PATCH_PROPOSAL.md`**, and **§7** / **§7a** activation language) first landed in commit **`1bd65d1`**; shipped dashboard implementation landed in **`da96e1e`**. Branch history was reconciled so activation, support docs, implementation, and this closeout (**§44**) cohabit the same lineage without implying a false single-commit ordering. See **`docs/ops/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_EXECUTION_READOUT.md` §2**.
 - **Closeout note:** **`UI-USH-001`** (retail upper-shell continuation refinement beneath settled header) completed within bounded scope; governed execution readout **`docs/ops/HEDGR_RETAIL_UI_UPPER_SHELL_CONTINUATION_EXECUTION_READOUT.md`**.
 - **§6b** is not sequencing authority — Transition Readiness taxonomy and scrutiny input only; only **§7** / **§7a** name approved implementation work when a ticket is active.
@@ -830,78 +850,19 @@ Current active ticket status:
 - Cursor must not continue automatically into work beyond what is explicitly defined in this file for an active ticket.
 - Cursor must not drift beyond explicitly defined scope.
 
-**Last completed ticket (summary):** `MC-S3-014` — MC-S3-012 merged-truth reconciliation (`HEDGR_STATUS.md` documentation/governance only; added **§6** merged-truth subsection for `MC-S3-012`, replaced stale PR placeholder language with PR **#129**, converted the **§43** pre-merge note into historical post-merge reconciliation language, and restored **§7** / **§7a** to no-active-ticket state); completed record in **§46**.
+**Last completed ticket (summary):** `MC-S3-015` — Regression resistance tranche 6: allocation bands panel copy contract (test-only; added dedicated allocation-band panel copy contract, updated coverage matrix row to **Covered**, and restored **§7** / **§7a** to no-active-ticket state); completed record in **§47**.
 
 ---
 
 ## 7a. Active execution ticket
 
-**Status:** **Active.** **§7** names **`MC-S3-015`** as the single approved next ticket.
+**Status:** **No active execution ticket.** **§7** does not currently name an approved next implementation ticket.
 
-### MC-S3-015 — Regression resistance tranche 6: allocation bands panel copy contract
-
-**Type:** Test-only / regression resistance  
-**Boundary class:** **§6b category 5** — regression resistance for already-shipped trust surfaces only  
-**Suggested branch:** `test/mc-s3-015-allocation-bands-panel-copy-contract`
-
-**Governing ADRs:** ADR **0013** (allocation bands informational, not accounting), ADR **0014** (Stability Engine read-only in Sprint 2), ADR **0015** (Stability Engine is the system center). ADR **0017** is **not applicable** unless scope drifts into transaction-review or mock-state seams, which this ticket must not do.
-
-**Objective:** Add a dedicated Vitest copy-contract for the shipped **`EngineAllocationBands`** panel-level presentation contract: section title, caption, trust legend, and per-band descriptor nodes.
-
-This ticket consolidates already-existing allocation-band evidence into a named contract artifact so the **`MC-S2-004` / `MC-S3-005` / `MC-S3-009`** coverage-matrix row can move from **Partially covered** to **Covered** with clear rationale. It does **not** introduce new runtime behavior, production copy, engine states, or trust semantics.
-
-**Problem statement:** **`docs/ops/HEDGR_STABILITY_ENGINE_TRUST_SURFACE_TEST_COVERAGE_MATRIX.md`** currently marks the allocation bands row as **Partially covered** because coverage is strong but split across **`apps/frontend/__tests__/engine-allocation-bands.test.tsx`**, **`apps/frontend/__tests__/dashboard.page.test.tsx`**, and related tests.
-
-The gap is **not** absence of test coverage. The gap is lack of a single dedicated panel-copy contract file whose purpose is to lock the shipped allocation-band panel strings and informational framing in one place.
-
-**In scope:**
-
-1. Add **`apps/frontend/__tests__/engine-allocation-bands-panel-copy-contract.test.tsx`**.
-2. Mount **`EngineAllocationBands`** from **`apps/frontend/app/(app)/dashboard/EngineAllocationBands.tsx`** under Vitest/jsdom.
-3. Use a fixed **`EngineState`** fixture, for example **42 / 44 / 14** with **`normal`** posture.
-4. Assert non-empty shipped segments for:
-   - section heading: **Target posture**
-   - caption: **`data-testid="engine-allocation-bands-caption"`**
-   - trust legend: **`data-testid="engine-allocation-trust-legend"`**
-   - per-band descriptor nodes:
-     - **`engine-allocation-band-liquidityTargetPct-desc`**
-     - **`engine-allocation-band-coreTargetPct-desc`**
-     - **`engine-allocation-band-yieldCapPct-desc`**
-5. Apply existing informational trust-framing guards, including **`ENGINE_TRUST_INFORMATIONAL_DENYLIST`**, **`executed`**, and **`allocated to your`**.
-6. Update **`docs/ops/HEDGR_STABILITY_ENGINE_TRUST_SURFACE_TEST_COVERAGE_MATRIX.md`** allocation-band row from **Partially covered** to **Covered**, citing the new contract file plus existing behavioral/integration coverage.
-
-**Out of scope:**
-
-- No production component changes.
-- No copy edits to **`EngineAllocationBands.tsx`**.
-- No edits to **`apps/frontend/lib/engine/**`**.
-- No new **`EnginePosture`** values.
-- No simulator behavior changes.
-- No backend changes.
-- No Playwright expansion unless separately authorized.
-- No CI workflow changes.
-- No transaction-review, withdraw, market-data, or ADR **0017** seam widening.
-- No weakening or restructuring of existing **`engine-allocation-bands.test.tsx`** coverage except trivial helper reuse with zero behavior change.
-
-**Acceptance criteria:**
-
-- New dedicated Vitest contract file exists.
-- Contract asserts panel heading, caption, trust legend, and all three per-band descriptor nodes are non-empty.
-- Contract applies informational denylist and word guards.
-- Existing allocation-band behavior tests remain unchanged in intent.
-- Coverage matrix allocation-band row is updated to **Covered** with accurate rationale.
-- No runtime behavior, production copy, engine semantics, backend, CI, or ADR scope changes are introduced.
-
-**Validation:**
-
-- `pnpm --filter @hedgr/frontend test`
-- `pnpm --filter @hedgr/frontend lint`
-- `pnpm --filter @hedgr/frontend typecheck`
-- `pnpm run validate` if required for merge readiness.
-
-**Closeout-only updates:** After implementation and merge readiness, repo stewardship may update **`docs/ops/HEDGR_STATUS.md`** §6 implementation truth, §7 completed list, §7a archived brief, and the next completed execution record section. Those closeout updates are not part of the implementation surface and must not be treated as authority to widen scope.
+When governance approves the next ticket, **§7** will name it and this section will hold the full execution brief until closeout.
 
 ---
+
+**Archived brief (MC-S3-015):** Regression resistance tranche 6: allocation bands panel copy contract — **test-only**; added **`apps/frontend/__tests__/engine-allocation-bands-panel-copy-contract.test.tsx`** to lock non-empty shipped panel title, caption, trust legend, and per-band descriptor nodes with informational trust-framing guards; updated **`docs/ops/HEDGR_STABILITY_ENGINE_TRUST_SURFACE_TEST_COVERAGE_MATRIX.md`** allocation-band row from **Partially covered** to **Covered**. **No** production component changes, **no** `EngineAllocationBands.tsx` copy edits, **no** `apps/frontend/lib/engine/**`, **no** new `EnginePosture` values, **no** simulator, backend, Playwright, CI, transaction-review, withdraw, market-data, or ADR **0017** seam widening. Merged PR **#138**. Completed record: **§47**.
 
 **Archived brief (MC-S3-014):** MC-S3-012 merged-truth reconciliation — **documentation/governance only**; scope held to `docs/ops/HEDGR_STATUS.md`; added **§6** merged-truth subsection for `MC-S3-012` with prototype-route-only and presentation-only boundaries; replaced stale `MC-S3-012` PR placeholder language with merged PR **#129** across **§7**, **§7a**, continuity, **§41** follow-up, and **§43**; converted **§43** pre-merge closeout posture into historical post-merge reconciliation language; preserved explicit rule that `MC-S3-012` prototype success does **not** authorize shipped-route work. **No** `apps/`, **no** `packages/`, **no** `scripts/`, **no** `.github/`, **no** CI, **no** tests, **no** backend, **no** `apps/frontend/lib/engine/**`, **no** shipped `(app)/dashboard/**`, **no** ADR. Completed record: **§46**.
 
@@ -951,6 +912,7 @@ The gap is **not** absence of test coverage. The gap is lack of a single dedicat
 - **Trust-surface coverage matrix (documentation-only, completed):** `MC-S3-011` — **§42** (completed ticket record); merged PR **#125**.
 - **Retail UI money-first shell prototype spike (presentation-only, prototype-route, completed):** `MC-S3-012` — **§43** (completed ticket record); governed readout **`docs/ops/HEDGR_RETAIL_UI_IMPLEMENTATION_SPIKE_READOUT.md`**; merged PR **#129**.
 - **MC-S3-012 merged-truth reconciliation (documentation/governance-only, completed):** `MC-S3-014` — **§46** (completed ticket record).
+- **Regression resistance tranche 6 (test-only, completed):** `MC-S3-015` — **§47** (completed ticket record); merged PR **#138**.
 - **Merged implementation truth:** **§6** remains canonical for shipped code boundaries.
 - When a successor ticket is approved, record it in **§7** and restore the execution brief in **§7a** per governance discipline.
 - Do not infer continuation work from *Proposed* ADRs or roadmap narrative unless **§7** names a ticket.
@@ -1930,6 +1892,31 @@ This **§43** record was originally written in the same working-tree change-set 
 **Scope discipline held.** **No** `apps/`, **no** `packages/`, **no** `scripts/`, **no** `.github/`, **no** CI, **no** tests, **no** backend, **no** `apps/frontend/lib/engine/**`, **no** shipped `(app)/dashboard/**`, **no** ADR. `MC-S3-012` prototype evidence still does **not** authorize shipped-route work.
 
 **Validation.** Documentation consistency search clean for stale `MC-S3-012` pending-PR living guidance; `git diff --check -- docs/ops/HEDGR_STATUS.md` clean.
+
+### Sequencing note
+
+**§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
+
+**Follow-ups:** Any successor appears only when **§7** is updated explicitly.
+
+---
+
+## 47. Completed execution ticket - MC-S3-015 (Allocation bands panel copy contract)
+
+**Ticket:** `MC-S3-015` — Regression resistance tranche 6: allocation bands panel copy contract (test-only)
+
+**Branch / PR:** `test/mc-s3-015-allocation-bands-panel-copy-contract` / **PR #138**
+
+### Outcome (test-only)
+
+- **`apps/frontend/__tests__/engine-allocation-bands-panel-copy-contract.test.tsx`** — new dedicated Vitest panel-copy contract for `EngineAllocationBands`; locks non-empty shipped panel title, caption, trust legend, and the three per-band descriptor nodes using a fixed `normal` posture fixture (`42 / 44 / 14`)
+- **`apps/frontend/__tests__/engine-allocation-bands-panel-copy-contract.test.tsx`** — applies existing informational trust-framing denylist plus `executed` and `allocated to your` guards to the shipped panel copy slice
+- **`docs/ops/HEDGR_STABILITY_ENGINE_TRUST_SURFACE_TEST_COVERAGE_MATRIX.md`** — allocation-band row (`MC-S2-004` / `MC-S3-005` / `MC-S3-009`) updated from **Partially covered** to **Covered**, citing the new dedicated contract plus existing behavioral/integration coverage
+- **`docs/ops/HEDGR_STATUS.md`** — **§6** merged-truth subsection `MC-S3-015`; **§7** completed list extended with `MC-S3-015`; **§7a** restored to no active ticket with the archived brief above
+
+**Scope discipline held.** **No** production component changes, **no** `EngineAllocationBands.tsx` copy edits, **no** `apps/frontend/lib/engine/**`, **no** new `EnginePosture` values, **no** simulator behavior changes, **no** backend, **no** Playwright expansion, **no** CI workflow change, **no** transaction-review, withdraw, market-data, or ADR **0017** seam widening. No ADR under ticket intent.
+
+**Validation.** `pnpm --filter @hedgr/frontend test -- engine-allocation-bands-panel-copy-contract.test.tsx`, `pnpm --filter @hedgr/frontend lint`, `pnpm --filter @hedgr/frontend typecheck`, `pnpm run validate`, and local `e2e:ci` completed cleanly before merge. Merged PR **#138**.
 
 ### Sequencing note
 
