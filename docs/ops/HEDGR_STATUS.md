@@ -359,6 +359,28 @@ Implementation posture preserved:
 - **documentation-only** merge; **no** `apps/`, **no** `packages/`, **no** test file edits, **no** CI workflow edits, **no** runtime or product-copy changes
 - no ADR under ticket intent; merged PR **#125**
 
+### MC-S3-012 - Retail UI money-first shell prototype-only bounded spike
+
+Merged files:
+
+- `apps/frontend/app/prototype/retail-dashboard/RetailDashboardPrototype.tsx`
+- `apps/frontend/app/prototype/retail-dashboard/mock-data.ts`
+- `docs/ops/HEDGR_RETAIL_UI_IMPLEMENTATION_SPIKE_READOUT.md`
+- `docs/ops/HEDGR_STATUS.md`
+
+Implementation truth:
+
+- prototype-route-only presentation spike added `Variant MS - Money-first shell` as the governed direction and default prototype tab under `apps/frontend/app/prototype/retail-dashboard/**`
+- `RetailDashboardPrototype.tsx` added `BalanceLedHero`, `SubordinateAllocation`, and `MoneyFirstShellStack`, preserving existing Control / Variant A / Variant B stacks and prior critique evidence
+- `mock-data.ts` added only `stability.supportLine = 'Protected · Accessible'`; no existing mock fields changed
+- governed readout records the spike pass verdict, unresolved tensions, and explicit non-authorization of any shipped-route edit
+
+Implementation posture preserved:
+
+- **presentation-only**, **prototype-route-only** merge; **no** shipped `(app)/dashboard/**`, **no** `apps/frontend/lib/engine/**`, **no** backend, **no** `packages/ui/**`, **no** copy-module edits, and **no** regression-contract test changes
+- no new `EnginePosture` values, trust states, IA restructuring, APY / earn emphasis, accounting-truth implication, live-operational implication, or shipped-route authorization
+- no ADR under ticket intent; merged PR **#129**
+
 ### MC-S3-013 - Canonical engine type export contract (test-only)
 
 Merged files:
@@ -790,9 +812,10 @@ Completed and merged:
 - `MC-S3-009` - Regression resistance tranche 5 for shipped Stability Engine trust surfaces (test-only; merged PR **#121**; completed record **§40**)
 - `MC-S3-010` - Stability Engine retail UI governance read-path alignment (documentation only; merged PR **#123**; completed record **§41**)
 - `MC-S3-011` - Stability Engine trust-surface coverage matrix (documentation only; merged PR **#125**; completed record **§42**)
-- `MC-S3-012` - Retail UI money-first shell prototype-only bounded spike (presentation-only, prototype-route scope; merged PR **pending**; completed record **§43**; readout artifact **`docs/ops/HEDGR_RETAIL_UI_IMPLEMENTATION_SPIKE_READOUT.md`**)
+- `MC-S3-012` - Retail UI money-first shell prototype-only bounded spike (presentation-only, prototype-route scope; merged PR **#129**; completed record **§43**; readout artifact **`docs/ops/HEDGR_RETAIL_UI_IMPLEMENTATION_SPIKE_READOUT.md`**)
 - `UI-SRA-001` - Shipped retail dashboard adaptation to settled money-first reference surface (bounded `app/(app)/dashboard/**` presentation-only; merged PR **#132**; completed record **§44**; readout **`docs/ops/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_EXECUTION_READOUT.md`**)
 - `MC-S3-013` - Canonical engine type export contract (test-only; merged PR **#134**; completed record **§45**)
+- `MC-S3-014` - MC-S3-012 merged-truth reconciliation (`HEDGR_STATUS.md` documentation/governance only; completed record **§46**)
 
 Current active ticket status:
 
@@ -807,7 +830,7 @@ Current active ticket status:
 - Cursor must not continue automatically into work beyond what is explicitly defined in this file for an active ticket.
 - Cursor must not drift beyond explicitly defined scope.
 
-**Last completed ticket (summary):** `MC-S3-013` — Canonical engine type export contract (test-only; dedicated `apps/frontend/__tests__/engine-types-contract.test.ts`; `MC-S2-001` matrix row moved to **Covered**; no `EngineState` semantics, posture states, execution wording, accounting wording, backend binding, or live-network behavior); merged PR **#134**; completed record in **§45**.
+**Last completed ticket (summary):** `MC-S3-014` — MC-S3-012 merged-truth reconciliation (`HEDGR_STATUS.md` documentation/governance only; added **§6** merged-truth subsection for `MC-S3-012`, replaced stale PR placeholder language with PR **#129**, converted the **§43** pre-merge note into historical post-merge reconciliation language, and restored **§7** / **§7a** to no-active-ticket state); completed record in **§46**.
 
 ---
 
@@ -819,11 +842,13 @@ When governance approves the next ticket, **§7** will name it and this section 
 
 ---
 
+**Archived brief (MC-S3-014):** MC-S3-012 merged-truth reconciliation — **documentation/governance only**; scope held to `docs/ops/HEDGR_STATUS.md`; added **§6** merged-truth subsection for `MC-S3-012` with prototype-route-only and presentation-only boundaries; replaced stale `MC-S3-012` PR placeholder language with merged PR **#129** across **§7**, **§7a**, continuity, **§41** follow-up, and **§43**; converted **§43** pre-merge closeout posture into historical post-merge reconciliation language; preserved explicit rule that `MC-S3-012` prototype success does **not** authorize shipped-route work. **No** `apps/`, **no** `packages/`, **no** `scripts/`, **no** `.github/`, **no** CI, **no** tests, **no** backend, **no** `apps/frontend/lib/engine/**`, **no** shipped `(app)/dashboard/**`, **no** ADR. Completed record: **§46**.
+
 **Archived brief (MC-S3-013):** Canonical engine type export contract — **test-only**; added **`apps/frontend/__tests__/engine-types-contract.test.ts`** to lock canonical `EnginePosture` union, required `EngineState` keys, optional `notice`, and `EngineNotice` title/body shape; updated **`docs/ops/HEDGR_STABILITY_ENGINE_TRUST_SURFACE_TEST_COVERAGE_MATRIX.md`** `MC-S2-001` row from **Partially covered** to **Covered**. **No** `apps/frontend/lib/engine/types.ts` semantics change, **no** new posture values or trust states, **no** execution/accounting wording, **no** `mock.ts`, **no** `useEngineState`, **no** dashboard components, **no** withdraw/tx/market seams, **no** backend, **no** live network. `MC-S3-004` notice/mock contract behavior preserved in intent. No ADR under ticket intent. Merged PR **#134**. Completed record: **§45**.
 
 **Archived brief (UI-SRA-001):** Shipped retail dashboard **structural alignment** to settled money-first reference — **presentation-only**; touched **`apps/frontend/app/(app)/dashboard/page.tsx`**, **`EnginePostureHeader.tsx`**, **`EngineAllocationBands.tsx`**, **`apps/frontend/tests-e2e/smoke-pack.spec.ts`**; **no** `apps/frontend/lib/engine/**`, **no** `layout.client.tsx`, **no** backend. Execution readout **`docs/ops/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_EXECUTION_READOUT.md`**. Support artifacts **`docs/ops/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_EXECUTION_REQUEST.md`**, **`docs/ops/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_STATUS_PATCH_PROPOSAL.md`**. Merged PR **#132**. Completed record: **§44**. Governance lineage note in readout **§2** and **§7** reconciliation bullet above.
 
-**Archived brief (MC-S3-012):** Retail UI money-first shell **prototype-only** bounded spike — **presentation-only**; scope held to `apps/frontend/app/prototype/retail-dashboard/**` (RetailDashboardPrototype.tsx added `Variant MS — Money-first shell` stack: `BalanceLedHero`, `SubordinateAllocation`, `MoneyFirstShellStack`; mock-data.ts added additive `stability.supportLine`); governance edits to **§7** / **§7a** of this file. **No** shipped `(app)/dashboard/**`, **no** `apps/frontend/lib/engine/**`, **no** `apps/backend/**`, **no** `packages/ui/**`, **no** copy-module or Vitest regression-contract edits from the `MC-S3-004` / `-006` / `-007` / `-008` / `-009` tranche. Reversibility preserved. Governed readout artifact **`docs/ops/HEDGR_RETAIL_UI_IMPLEMENTATION_SPIKE_READOUT.md`** records the spike's pass verdict and unresolved tensions. No ADR under ticket intent. Merged PR **pending** (number to be populated on merge). Completed record: **§43**.
+**Archived brief (MC-S3-012):** Retail UI money-first shell **prototype-only** bounded spike — **presentation-only**; scope held to `apps/frontend/app/prototype/retail-dashboard/**` (RetailDashboardPrototype.tsx added `Variant MS — Money-first shell` stack: `BalanceLedHero`, `SubordinateAllocation`, `MoneyFirstShellStack`; mock-data.ts added additive `stability.supportLine`); governance edits to **§7** / **§7a** of this file. **No** shipped `(app)/dashboard/**`, **no** `apps/frontend/lib/engine/**`, **no** `apps/backend/**`, **no** `packages/ui/**`, **no** copy-module or Vitest regression-contract edits from the `MC-S3-004` / `-006` / `-007` / `-008` / `-009` tranche. Reversibility preserved. Governed readout artifact **`docs/ops/HEDGR_RETAIL_UI_IMPLEMENTATION_SPIKE_READOUT.md`** records the spike's pass verdict and unresolved tensions. No ADR under ticket intent. Merged PR **#129**. Completed record: **§43**.
 
 **Archived brief (MC-S3-011):** Stability Engine trust-surface **coverage matrix** — **documentation only**; artifact **`docs/ops/HEDGR_STABILITY_ENGINE_TRUST_SURFACE_TEST_COVERAGE_MATRIX.md`** maps **§6**-grounded shipped Stability Engine surfaces to **existing** Vitest evidence (covered / partially covered / uncovered); governance-evidence disclaimer; withdraw/tx/market **§6** rows omitted from matrix scope by default per artifact; **no** `apps/`, **no** `packages/`, **no** tests or CI; no ADR under ticket intent. Merged PR **#125**. Completed record: **§42**.
 
@@ -863,7 +888,8 @@ When governance approves the next ticket, **§7** will name it and this section 
 - **Regression resistance tranche 5 (test-only, completed):** `MC-S3-009` — **§40** (completed ticket record); merged PR **#121**.
 - **Retail UI governance read-path alignment (documentation-only, completed):** `MC-S3-010` — **§41** (completed ticket record); merged PR **#123**.
 - **Trust-surface coverage matrix (documentation-only, completed):** `MC-S3-011` — **§42** (completed ticket record); merged PR **#125**.
-- **Retail UI money-first shell prototype spike (presentation-only, prototype-route, completed):** `MC-S3-012` — **§43** (completed ticket record); governed readout **`docs/ops/HEDGR_RETAIL_UI_IMPLEMENTATION_SPIKE_READOUT.md`**; merged PR **pending** (to be populated on merge).
+- **Retail UI money-first shell prototype spike (presentation-only, prototype-route, completed):** `MC-S3-012` — **§43** (completed ticket record); governed readout **`docs/ops/HEDGR_RETAIL_UI_IMPLEMENTATION_SPIKE_READOUT.md`**; merged PR **#129**.
+- **MC-S3-012 merged-truth reconciliation (documentation/governance-only, completed):** `MC-S3-014` — **§46** (completed ticket record).
 - **Merged implementation truth:** **§6** remains canonical for shipped code boundaries.
 - When a successor ticket is approved, record it in **§7** and restore the execution brief in **§7a** per governance discipline.
 - Do not infer continuation work from *Proposed* ADRs or roadmap narrative unless **§7** names a ticket.
@@ -1744,7 +1770,7 @@ No ADR or doctrine change under ticket intent. Merged PR **#121**.
 
 **§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
 
-**Follow-ups:** Successor **`MC-S3-012`** completed — **§43** (retail UI money-first shell prototype-only bounded spike; presentation-only; governed readout **`docs/ops/HEDGR_RETAIL_UI_IMPLEMENTATION_SPIKE_READOUT.md`**; merged PR **pending**); any successor after that appears only when **§7** is updated explicitly.
+**Follow-ups:** Successor **`MC-S3-012`** completed — **§43** (retail UI money-first shell prototype-only bounded spike; presentation-only; governed readout **`docs/ops/HEDGR_RETAIL_UI_IMPLEMENTATION_SPIKE_READOUT.md`**; merged PR **#129**); successor **`MC-S3-014`** completed — **§46** (MC-S3-012 merged-truth reconciliation, documentation/governance only). Any successor after that appears only when **§7** is updated explicitly.
 
 ---
 
@@ -1762,11 +1788,11 @@ No ADR or doctrine change under ticket intent. Merged PR **#121**.
 
 **Scope discipline held.** **No** shipped `(app)/dashboard/**`, **no** `apps/frontend/lib/engine/**`, **no** `apps/backend/**`, **no** `packages/ui/**`, **no** copy-module edits; **no** `MC-S3-004` / `-006` / `-007` / `-008` / `-009` regression-contract test changes in intent; **no** new `EnginePosture` values, trust states, or IA restructuring; **no** APY, earn, chart-adjacent, or instrument-like treatment; **no** ADR under ticket intent.
 
-**Validation.** `pnpm --filter @hedgr/frontend typecheck` clean; `pnpm --filter @hedgr/frontend lint` clean; 58 Vitest files / 713 tests pass. Merged PR **pending** (number to be populated on merge).
+**Validation.** `pnpm --filter @hedgr/frontend typecheck` clean; `pnpm --filter @hedgr/frontend lint` clean; 58 Vitest files / 713 tests pass. Merged PR **#129**.
 
-### Pre-merge closeout posture
+### Post-merge reconciliation
 
-This **§43** record is written in the same working-tree change-set as the implementation and readout. Consistent with governance precedent, the PR number field above is recorded as **pending** and must be patched in on merge. Until the PR merges, **§6** is **not** extended with a `MC-S3-012` subsection; **§6** is the merged-implementation-truth surface and must not carry pre-merge claims. On merge, a follow-up edit should (a) populate every `merged PR **pending**` reference in **§7**, **§7a**, this **§43**, and the continuity block with the actual PR number, and (b) optionally add a **§6** subsection for **`MC-S3-012`** describing the prototype-route code change in merged-truth language.
+This **§43** record was originally written in the same working-tree change-set as the implementation and readout, before PR **#129** was merged. `MC-S3-014` reconciled that historical pre-merge posture after merge by recording PR **#129** in the completed-ticket surfaces and adding the **§6** `MC-S3-012` merged-truth subsection. The pre-merge instruction to omit `MC-S3-012` from **§6** is superseded.
 
 ### Sequencing note
 
@@ -1818,6 +1844,31 @@ This **§43** record is written in the same working-tree change-set as the imple
 **Scope discipline held.** **No** `EngineState` semantics changed, **no** new `EnginePosture` values or trust states, **no** execution/accounting wording, **no** `apps/frontend/lib/engine/mock.ts`, **no** `useEngineState`, **no** dashboard components, **no** withdraw/tx/market seams, **no** backend, **no** live network behavior. **`MC-S3-004`** notice/mock contract behavior preserved in intent.
 
 **Validation.** `pnpm -w test` and `pnpm run validate` completed cleanly in the implementation workspace. Merged PR **#134**.
+
+### Sequencing note
+
+**§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
+
+**Follow-ups:** Any successor appears only when **§7** is updated explicitly.
+
+---
+
+## 46. Completed execution ticket - MC-S3-014 (MC-S3-012 merged-truth reconciliation)
+
+**Ticket:** `MC-S3-014` — MC-S3-012 merged-truth reconciliation (`HEDGR_STATUS.md`)
+
+**Suggested branch:** `docs/mc-s3-014-mc-s3-012-pr129-status-reconciliation`
+
+### Outcome (documentation/governance only)
+
+- **`docs/ops/HEDGR_STATUS.md` §6** — added a bounded `MC-S3-012` merged-truth subsection for the retail UI money-first shell prototype spike; scope remains prototype-route only and presentation-only
+- **`docs/ops/HEDGR_STATUS.md` §7 / §7a / continuity / §41 / §43** — replaced stale `MC-S3-012` PR placeholder language with merged PR **#129**
+- **`docs/ops/HEDGR_STATUS.md` §43** — converted obsolete pre-merge closeout posture into historical post-merge reconciliation language and recorded that the prior instruction to omit `MC-S3-012` from **§6** is superseded
+- **`docs/ops/HEDGR_STATUS.md`** — restored **§7** / **§7a** to no-active-ticket state and archived this brief
+
+**Scope discipline held.** **No** `apps/`, **no** `packages/`, **no** `scripts/`, **no** `.github/`, **no** CI, **no** tests, **no** backend, **no** `apps/frontend/lib/engine/**`, **no** shipped `(app)/dashboard/**`, **no** ADR. `MC-S3-012` prototype evidence still does **not** authorize shipped-route work.
+
+**Validation.** Documentation consistency search clean for stale `MC-S3-012` pending-PR living guidance; `git diff --check -- docs/ops/HEDGR_STATUS.md` clean.
 
 ### Sequencing note
 
