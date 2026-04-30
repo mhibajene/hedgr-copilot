@@ -63,6 +63,63 @@ You MUST NOT:
 If conflict is detected:
 → surface it explicitly
 
+
+---
+
+## Hedgr Usage Pattern: Propose New Ticket
+
+Use this pattern when the Founder wants Codex to perform a **proposal pass only** after or alongside Cursor exploration.
+
+### Purpose
+
+Generate a bounded candidate slate for the Founder to review. This pattern does **not** approve, activate, or execute work.
+
+### Required Inputs
+
+- **Artifact Set**:
+  - `docs/ops/HEDGR_STATUS.md`
+  - `AGENTS.md`
+  - relevant ADRs or active sprint docs
+  - optional Cursor exploration output or `/propose-new-ticket` result
+- **Objective**: produce 1–3 plausible next-ticket candidates
+- **Scope**: current active lane only, unless the Founder explicitly widens the review
+- **Governing Inputs**: repo-native authority only
+
+### Operating Constraints
+
+You MUST:
+- remain READ_ONLY
+- produce candidates only
+- distinguish explicit repo truth from interpretation
+- flag doctrine, authority, UX, or execution-class risks
+- mark any recommended candidate as **non-binding**
+
+You MUST NOT:
+- choose the active ticket
+- update `HEDGR_STATUS.md`
+- activate a ticket
+- implement code
+- create new policy, doctrine, or execution authority
+- infer approval from prior conversation or memory
+
+### Output Addendum
+
+Include this section in the normal Synthesizer output:
+
+```md
+Candidate Tickets:
+1. <ticket id/title>
+   - Why plausible:
+   - Scope:
+   - Acceptance sketch:
+   - Risks / doctrine considerations:
+
+Recommended Safest Candidate (Non-Binding):
+- <candidate>
+- Rationale:
+```
+
+
 ---
 
 ## Synthesis Lenses
