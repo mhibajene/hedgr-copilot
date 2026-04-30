@@ -819,7 +819,7 @@ Completed and merged:
 
 Current active ticket status:
 
-- **Approved next ticket:** **None named.** There is **no** approved next implementation ticket until **§7** is updated explicitly to name one.
+- **Approved next ticket:** **`MC-S3-015`** — Regression resistance tranche 6: allocation bands panel copy contract (**test-only**). The active execution brief is in **§7a**. No other implementation ticket is approved next.
 - **Governance reconciliation note:** **`UI-SRA-001`** activation artifacts (`docs/ops/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_EXECUTION_REQUEST.md`, **`docs/ops/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_STATUS_PATCH_PROPOSAL.md`**, and **§7** / **§7a** activation language) first landed in commit **`1bd65d1`**; shipped dashboard implementation landed in **`da96e1e`**. Branch history was reconciled so activation, support docs, implementation, and this closeout (**§44**) cohabit the same lineage without implying a false single-commit ordering. See **`docs/ops/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_EXECUTION_READOUT.md` §2**.
 - **Closeout note:** **`UI-USH-001`** (retail upper-shell continuation refinement beneath settled header) completed within bounded scope; governed execution readout **`docs/ops/HEDGR_RETAIL_UI_UPPER_SHELL_CONTINUATION_EXECUTION_READOUT.md`**.
 - **§6b** is not sequencing authority — Transition Readiness taxonomy and scrutiny input only; only **§7** / **§7a** name approved implementation work when a ticket is active.
@@ -836,9 +836,70 @@ Current active ticket status:
 
 ## 7a. Active execution ticket
 
-**Status:** **No active execution ticket.** **§7** does not currently name an approved next implementation ticket.
+**Status:** **Active.** **§7** names **`MC-S3-015`** as the single approved next ticket.
 
-When governance approves the next ticket, **§7** will name it and this section will hold the full execution brief until closeout.
+### MC-S3-015 — Regression resistance tranche 6: allocation bands panel copy contract
+
+**Type:** Test-only / regression resistance  
+**Boundary class:** **§6b category 5** — regression resistance for already-shipped trust surfaces only  
+**Suggested branch:** `test/mc-s3-015-allocation-bands-panel-copy-contract`
+
+**Governing ADRs:** ADR **0013** (allocation bands informational, not accounting), ADR **0014** (Stability Engine read-only in Sprint 2), ADR **0015** (Stability Engine is the system center). ADR **0017** is **not applicable** unless scope drifts into transaction-review or mock-state seams, which this ticket must not do.
+
+**Objective:** Add a dedicated Vitest copy-contract for the shipped **`EngineAllocationBands`** panel-level presentation contract: section title, caption, trust legend, and per-band descriptor nodes.
+
+This ticket consolidates already-existing allocation-band evidence into a named contract artifact so the **`MC-S2-004` / `MC-S3-005` / `MC-S3-009`** coverage-matrix row can move from **Partially covered** to **Covered** with clear rationale. It does **not** introduce new runtime behavior, production copy, engine states, or trust semantics.
+
+**Problem statement:** **`docs/ops/HEDGR_STABILITY_ENGINE_TRUST_SURFACE_TEST_COVERAGE_MATRIX.md`** currently marks the allocation bands row as **Partially covered** because coverage is strong but split across **`apps/frontend/__tests__/engine-allocation-bands.test.tsx`**, **`apps/frontend/__tests__/dashboard.page.test.tsx`**, and related tests.
+
+The gap is **not** absence of test coverage. The gap is lack of a single dedicated panel-copy contract file whose purpose is to lock the shipped allocation-band panel strings and informational framing in one place.
+
+**In scope:**
+
+1. Add **`apps/frontend/__tests__/engine-allocation-bands-panel-copy-contract.test.tsx`**.
+2. Mount **`EngineAllocationBands`** from **`apps/frontend/app/(app)/dashboard/EngineAllocationBands.tsx`** under Vitest/jsdom.
+3. Use a fixed **`EngineState`** fixture, for example **42 / 44 / 14** with **`normal`** posture.
+4. Assert non-empty shipped segments for:
+   - section heading: **Target posture**
+   - caption: **`data-testid="engine-allocation-bands-caption"`**
+   - trust legend: **`data-testid="engine-allocation-trust-legend"`**
+   - per-band descriptor nodes:
+     - **`engine-allocation-band-liquidityTargetPct-desc`**
+     - **`engine-allocation-band-coreTargetPct-desc`**
+     - **`engine-allocation-band-yieldCapPct-desc`**
+5. Apply existing informational trust-framing guards, including **`ENGINE_TRUST_INFORMATIONAL_DENYLIST`**, **`executed`**, and **`allocated to your`**.
+6. Update **`docs/ops/HEDGR_STABILITY_ENGINE_TRUST_SURFACE_TEST_COVERAGE_MATRIX.md`** allocation-band row from **Partially covered** to **Covered**, citing the new contract file plus existing behavioral/integration coverage.
+
+**Out of scope:**
+
+- No production component changes.
+- No copy edits to **`EngineAllocationBands.tsx`**.
+- No edits to **`apps/frontend/lib/engine/**`**.
+- No new **`EnginePosture`** values.
+- No simulator behavior changes.
+- No backend changes.
+- No Playwright expansion unless separately authorized.
+- No CI workflow changes.
+- No transaction-review, withdraw, market-data, or ADR **0017** seam widening.
+- No weakening or restructuring of existing **`engine-allocation-bands.test.tsx`** coverage except trivial helper reuse with zero behavior change.
+
+**Acceptance criteria:**
+
+- New dedicated Vitest contract file exists.
+- Contract asserts panel heading, caption, trust legend, and all three per-band descriptor nodes are non-empty.
+- Contract applies informational denylist and word guards.
+- Existing allocation-band behavior tests remain unchanged in intent.
+- Coverage matrix allocation-band row is updated to **Covered** with accurate rationale.
+- No runtime behavior, production copy, engine semantics, backend, CI, or ADR scope changes are introduced.
+
+**Validation:**
+
+- `pnpm --filter @hedgr/frontend test`
+- `pnpm --filter @hedgr/frontend lint`
+- `pnpm --filter @hedgr/frontend typecheck`
+- `pnpm run validate` if required for merge readiness.
+
+**Closeout-only updates:** After implementation and merge readiness, repo stewardship may update **`docs/ops/HEDGR_STATUS.md`** §6 implementation truth, §7 completed list, §7a archived brief, and the next completed execution record section. Those closeout updates are not part of the implementation surface and must not be treated as authority to widen scope.
 
 ---
 
