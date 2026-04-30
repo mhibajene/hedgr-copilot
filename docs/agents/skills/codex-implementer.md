@@ -63,6 +63,62 @@ You MUST NOT:
 If conflict is detected:
 → STOP and surface explicitly
 
+
+---
+
+## Hedgr Usage Pattern: Execute Active Ticket
+
+Use this pattern only after `docs/ops/HEDGR_STATUS.md` §7 / §7a names a single active ticket.
+
+### Purpose
+
+Implement the active ticket exactly as defined in repo-native execution truth.
+
+### Required Inputs
+
+- **Task Description**: active ticket from `docs/ops/HEDGR_STATUS.md` §7 / §7a
+- **Scope**: exact files or directories named or implied by the ticket brief
+- **Acceptance Criteria**: criteria from §7a or the ticket brief
+- **Governing Inputs**:
+  - `AGENTS.md`
+  - `.cursorrules`
+  - accepted ADRs
+  - active ticket brief
+- **Constraints**: all “must not” rules in the ticket brief
+
+### Execution Constraints
+
+You MUST:
+- implement only the active ticket
+- keep changes minimal, localized, reversible, and reviewable
+- follow existing codebase patterns
+- run or identify relevant lint/test/typecheck validation
+- stop if the ticket requires architecture, policy, or execution-authority judgment
+
+You MUST NOT:
+- expand scope beyond the active ticket
+- perform adjacent refactors unless required for tests to pass
+- introduce new dependencies without explicit instruction
+- persist derived or computed financial state unless explicitly authorized
+- imply execution where none exists
+- create new system authority, policy, doctrine, or governance behavior
+- treat informational financial representations as accounting truth
+
+### Output Addendum
+
+Include this section in the normal Implementer output:
+
+```md
+Active Ticket Execution:
+- Source of active ticket:
+- Scope followed:
+- Files changed:
+- Scope expansions: none / <list>
+- Doctrine-sensitive surfaces touched:
+- Validation performed:
+```
+
+
 ---
 
 ## Execution Process

@@ -65,6 +65,126 @@ You MUST NOT:
 If conflict is detected:
 → STOP and surface explicitly
 
+
+---
+
+## Hedgr Usage Pattern: Activate Active Ticket
+
+Use this pattern only after the Founder has selected **one** candidate ticket.
+
+### Purpose
+
+Move a Founder-approved candidate into repo-native execution truth without implementing product behavior.
+
+### Required Inputs
+
+- **Selected Ticket**: exact ticket text approved by the Founder
+- **Scope**:
+  - `docs/ops/HEDGR_STATUS.md`
+  - any directly referenced sprint, ADR, or ops docs
+- **Objective**: activate the selected ticket as the single approved next ticket
+- **Governing Inputs**:
+  - `AGENTS.md`
+  - `.cursorrules`
+  - accepted ADRs
+  - existing `docs/ops/HEDGR_STATUS.md` conventions
+
+### Actions
+
+- Update `docs/ops/HEDGR_STATUS.md` §7 to name the approved active ticket
+- Populate §7a with the execution brief
+- Remove any “no active ticket” contradiction
+- Preserve all prior completed ticket history
+- Preserve existing section structure and formatting conventions
+
+### Constraints
+
+You MUST:
+- keep the update minimal and auditable
+- treat this as documentation/state activation only
+- surface ambiguity before mutation if the selected ticket is underspecified
+
+You MUST NOT:
+- implement code
+- modify product behavior
+- widen ticket scope
+- introduce new policy, doctrine, or execution authority
+- select the ticket yourself
+- activate more than one ticket
+
+### Output Addendum
+
+Include this section in the normal Repo Steward output:
+
+```md
+Activation Readout:
+- Active ticket:
+- Sections changed:
+- Scope preserved: <yes/no>
+- Implementation performed: no
+- Ambiguities surfaced:
+```
+
+---
+
+## Hedgr Usage Pattern: Closeout Active Ticket
+
+Use this pattern after implementation has been reviewed and the Founder wants to restore clean repo state.
+
+### Purpose
+
+Close the active ticket, reconcile status documentation, and preserve repo truth without introducing the next ticket.
+
+### Required Inputs
+
+- **Scope**:
+  - merged implementation diff or commit(s)
+  - `docs/ops/HEDGR_STATUS.md`
+  - relevant ADRs or ticket brief
+- **Objective**: close out the active ticket and restore no-active-ticket state
+- **Governing Inputs**:
+  - `AGENTS.md`
+  - `.cursorrules`
+  - accepted ADRs
+  - existing closeout patterns in `docs/ops/HEDGR_STATUS.md`
+
+### Actions
+
+- Move the active ticket to the completed list in §7
+- Add or update merged-truth entry in §6, following existing conventions
+- Archive or preserve §7a execution brief according to prior pattern
+- Restore explicit “no active ticket” state
+- Do NOT introduce a new next ticket
+
+### Constraints
+
+You MUST:
+- preserve traceability between ticket, implementation, and status doc
+- keep updates documentation-only unless explicitly instructed otherwise
+- surface discrepancies between implementation and ticket scope
+
+You MUST NOT:
+- implement product changes
+- approve the implementation
+- select the next ticket
+- rewrite history
+- introduce new doctrine, policy, or interpretation
+
+### Output Addendum
+
+Include this section in the normal Repo Steward output:
+
+```md
+Closeout Readout:
+- Closed ticket:
+- Completed-history updated: <yes/no>
+- Merged-truth updated: <yes/no>
+- Active-ticket state restored: <yes/no>
+- New ticket introduced: no
+- Discrepancies surfaced:
+```
+
+
 ---
 
 ## Stewardship Lenses

@@ -66,6 +66,64 @@ You MUST NOT:
 If conflict is detected:
 → STOP and surface explicitly
 
+
+---
+
+## Hedgr Usage Pattern: Verify Active Ticket Implementation
+
+Use this pattern after Codex, Cursor, or a human has produced an implementation for the active ticket.
+
+### Purpose
+
+Perform a bounded read-only verification pass against the active ticket, acceptance criteria, doctrine, ADRs, and repo authority.
+
+### Required Inputs
+
+- **Artifact Under Review**:
+  - implementation diff, branch, PR, or changed files
+- **Review Question**: whether the implementation satisfies the active ticket without drift
+- **Scope**:
+  - active ticket from `docs/ops/HEDGR_STATUS.md` §7 / §7a
+  - changed files only, unless explicitly widened
+- **Governing Inputs**:
+  - `AGENTS.md`
+  - `.cursorrules`
+  - accepted ADRs
+  - relevant doctrine docs
+  - active ticket brief
+- **Constraints**: any ticket-specific “must not” rules
+
+### Verification Constraints
+
+You MUST:
+- remain READ_ONLY
+- assess acceptance alignment and scope discipline
+- identify doctrine-sensitive risks, especially trust-surface overclaim or implied execution
+- distinguish blocking issues from non-blocking notes
+- surface conflicts explicitly
+
+You MUST NOT:
+- modify files
+- approve the implementation as final authority
+- fix issues during verification
+- widen review beyond the declared diff unless explicitly instructed
+- infer acceptance from passing tests alone
+
+### Output Addendum
+
+Include this section in the normal Verifier output:
+
+```md
+Ticket Verification:
+- Active ticket reviewed:
+- Acceptance criteria status:
+- Scope discipline:
+- Doctrine / trust-surface risks:
+- Blocking issues:
+- Non-blocking notes:
+```
+
+
 ---
 
 ## Verification Lenses
