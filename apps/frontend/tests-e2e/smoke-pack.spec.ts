@@ -69,7 +69,18 @@ test('3 · dashboard shows balance after login', async ({ page }) => {
   expect(text).toMatch(/^\$\d+\.\d{2}$/);
 });
 
-test('4 · settings page displays trust section', async ({ page }) => {
+test('4 · dashboard shows Stability Engine posture context after login', async ({ page }) => {
+  await page.goto('/');
+  await clearStorage(page);
+  await loginMock(page);
+
+  const postureContext = page.getByTestId('engine-posture-context');
+  await expect(postureContext).toBeVisible({ timeout: 10_000 });
+  const text = await postureContext.textContent();
+  expect(text?.trim().length).toBeGreaterThan(0);
+});
+
+test('5 · settings page displays trust section', async ({ page }) => {
   await page.goto('/');
   await clearStorage(page);
   await loginMock(page);
@@ -80,7 +91,7 @@ test('4 · settings page displays trust section', async ({ page }) => {
   await expect(page.getByText('Environment Configuration')).toBeVisible();
 });
 
-test('5 · deposit page is functional', async ({ page }) => {
+test('6 · deposit page is functional', async ({ page }) => {
   await page.goto('/');
   await clearStorage(page);
   await loginMock(page);
@@ -91,7 +102,7 @@ test('5 · deposit page is functional', async ({ page }) => {
   await expect(page.getByRole('button', { name: 'Confirm' })).toBeVisible();
 });
 
-test('6 · nav links allow traversal of critical routes', async ({ page }) => {
+test('7 · nav links allow traversal of critical routes', async ({ page }) => {
   await page.goto('/');
   await clearStorage(page);
   await loginMock(page);

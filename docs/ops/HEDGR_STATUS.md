@@ -839,7 +839,7 @@ Completed and merged:
 
 Current active ticket status:
 
-- **Approved next ticket:** **None named.** There is **no** approved next implementation ticket until **§7** is updated explicitly to name one.
+- **Approved next ticket:** **`MC-S3-016` — Playwright smoke coverage for shipped dashboard Stability Engine posture context.** Execution authority is limited to the active brief in **§7a**.
 - **Governance reconciliation note:** **`UI-SRA-001`** activation artifacts (`docs/ops/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_EXECUTION_REQUEST.md`, **`docs/ops/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_STATUS_PATCH_PROPOSAL.md`**, and **§7** / **§7a** activation language) first landed in commit **`1bd65d1`**; shipped dashboard implementation landed in **`da96e1e`**. Branch history was reconciled so activation, support docs, implementation, and this closeout (**§44**) cohabit the same lineage without implying a false single-commit ordering. See **`docs/ops/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_EXECUTION_READOUT.md` §2**.
 - **Closeout note:** **`UI-USH-001`** (retail upper-shell continuation refinement beneath settled header) completed within bounded scope; governed execution readout **`docs/ops/HEDGR_RETAIL_UI_UPPER_SHELL_CONTINUATION_EXECUTION_READOUT.md`**.
 - **§6b** is not sequencing authority — Transition Readiness taxonomy and scrutiny input only; only **§7** / **§7a** name approved implementation work when a ticket is active.
@@ -856,9 +856,51 @@ Current active ticket status:
 
 ## 7a. Active execution ticket
 
-**Status:** **No active execution ticket.** **§7** does not currently name an approved next implementation ticket.
+**Status:** **Active execution ticket: `MC-S3-016`.**
 
-When governance approves the next ticket, **§7** will name it and this section will hold the full execution brief until closeout.
+**Ticket:** `MC-S3-016` — Playwright smoke coverage for shipped dashboard Stability Engine posture context
+
+**Type:** Test-only regression resistance; shipped dashboard E2E smoke coverage.
+
+**Objective:** After mock login, the Playwright smoke pack must assert that the shipped dashboard exposes the Stability Engine posture context line (`engine-posture-context`) as visible and non-empty, preserving hermetic CI/E2E behavior and without changing engine semantics or production UI.
+
+**Governing references:**
+
+- `AGENTS.md` — E2E/CI expectations, hermetic no-live-network posture, and engine-facing read order.
+- `docs/ops/HEDGR_STATUS.md` — **§7** / **§7a** are the active ticket authority; **§6b** remains classification and scrutiny input only.
+- `docs/ops/HEDGR_SPRINT_PLANNING_PROTOCOL.md` — single-ticket sequencing, execution-mode gate, and post-merge closeout order.
+- `docs/decisions/SPRINT-2-ADR-INDEX.md` — ADR map and sequencing-neutral interpretation rule.
+- `docs/decisions/0015-stability-engine-is-the-system-center.md` — engine-centered trust expression.
+- `docs/decisions/0014-stability-engine-read-only-in-sprint-2.md` — read-only, non-executing engine boundary.
+- `docs/decisions/0013-allocation-bands-informational-not-accounting.md` — informational-only allocation and posture framing.
+
+**In scope:**
+
+- Add one focused Playwright smoke assertion in `apps/frontend/tests-e2e/smoke-pack.spec.ts`.
+- Use the existing smoke helpers and route-blocking pattern: clear storage, `loginMock(page)`, then assert `page.getByTestId('engine-posture-context')` is visible and has trimmed text length greater than zero.
+- Preserve the existing localhost-only hermetic route block; no external network allowance.
+
+**Out of scope:**
+
+- No production code changes.
+- No `apps/frontend/lib/engine/**` changes.
+- No backend, packages, scripts, CI workflow, environment flag, or live-service changes.
+- No new `EnginePosture` values, engine semantics, simulator behavior, transaction-review seam, withdraw, market-data, Copilot, accounting, ledger, policy, or execution behavior.
+- No assertions for `engine-posture-badge` or `engine-allocation-bands` in this ticket; those surfaces remain covered by existing unit/page tests and are intentionally outside this Playwright smoke slice.
+- No new `data-testid` or component markup unless implementation discovers that the active shipped dashboard path lacks the required selector; if that happens, stop and escalate rather than silently widening scope.
+
+**Expected implementation surface:** Ideally only `apps/frontend/tests-e2e/smoke-pack.spec.ts`.
+
+**Acceptance criteria:**
+
+- Playwright smoke coverage asserts `engine-posture-context` after mock login on the shipped dashboard path.
+- The assertion requires the element to be visible and its trimmed text content to be non-empty.
+- Existing smoke-pack hermeticity remains unchanged: localhost / same-origin traffic only; no live calls to CoinGecko, MTN, Aave, OpenAI, Magic, Sentry, PostHog, or other external services.
+- No production UI, engine, backend, API, type, schema, copy, or CI behavior changes are introduced.
+
+**Validation command:** `pnpm --filter @hedgr/frontend run e2e:ci`
+
+**Closeout note:** Post-merge status reconciliation belongs to steward closeout after the implementation PR merges. The implementation PR itself should not update `HEDGR_STATUS.md` unless explicitly included in the reviewed closeout step.
 
 ---
 
