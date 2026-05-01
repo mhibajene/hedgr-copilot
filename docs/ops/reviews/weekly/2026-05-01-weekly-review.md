@@ -4,7 +4,8 @@
 
 Status: Non-authoritative weekly review artifact; descriptive evidence only, not direction  
 Authority: Subordinate to `docs/ops/HEDGR_STATUS.md`, `AGENTS.md`, accepted ADRs, and `docs/doctrine/*`  
-Scope: Only tickets explicitly marked completed in `docs/ops/HEDGR_STATUS.md` for this weekly slice: `MC-S3-013`, `MC-S3-014`, and `MC-S3-015`  
+Scope: Only tickets explicitly marked completed in `docs/ops/HEDGR_STATUS.md` for this weekly slice: `MC-S3-013`, `MC-S3-014`, `MC-S3-015`, and `MC-S3-016`
+
 Last updated: 2026-05-01
 
 This report does not name a next ticket, activate work, approve implementation, or alter `HEDGR_STATUS.md` section 7 / 7a authority.
@@ -31,6 +32,7 @@ Its purpose is to summarise what changed during the week, what that work means f
   - `2026-04-30 7b88131 docs(ops): reconcile MC-S3-012 status truth (#137)`
   - `2026-04-30 a315853 test: add allocation bands panel copy contract (#138)`
   - `2026-04-30 ce57e14 docs: reconcile mc-s3-015 closeout status (#139)`
+  - `2026-05-01 test: add shipped dashboard posture-context smoke coverage (#141)`
 
 Repo-authoritative boundary facts used in this review:
 
@@ -84,6 +86,20 @@ Meaning:
 - Process impact: test-only regression resistance for a shipped trust surface.
 - System impact: tightened protection around allocation language without changing production component behavior or widening execution meaning.
 
+### MC-S3-016 - Playwright smoke posture context coverage
+
+What changed:
+
+- Added one focused Playwright smoke assertion in `apps/frontend/tests-e2e/smoke-pack.spec.ts`.
+- After mock login, the smoke pack now asserts that `engine-posture-context` is visible and has non-empty trimmed text on the shipped dashboard path.
+- Preserved the existing hermetic route-blocking pattern: localhost / same-origin traffic only.
+- Added non-authoritative review artifacts under `docs/ops/reviews/**`.
+
+Meaning:
+
+- Process impact: test-only E2E smoke coverage for a shipped Stability Engine trust marker.
+- System impact: improved regression signal for dashboard posture context without changing production UI, engine semantics, backend coupling, CI workflow, or execution posture.
+
 ---
 
 ## 5. Weekly assessment against MVP North Star
@@ -100,6 +116,7 @@ What was confirmatory:
 - The week mostly confirmed and locked existing meaning.
 - Engine contract meaning became harder to drift.
 - Allocation-band copy meaning became harder to drift.
+- Shipped dashboard posture-context visibility became harder to regress silently.
 - Prototype and shipped-route authority boundaries became clearer.
 
 What did not advance:
@@ -117,6 +134,7 @@ Classification for this weekly slice:
 - `MC-S3-013`: **Class A (informational)**
 - `MC-S3-014`: **Class A (informational)**
 - `MC-S3-015`: **Class A (informational)**
+- `MC-S3-016`: **Class A (informational)**
 
 Reasoning within repo-authorized posture:
 
@@ -136,7 +154,7 @@ Movement toward execution layers:
 Capabilities advanced:
 
 - No new end-user or system execution capability was added.
-- Existing trust comprehension was reinforced indirectly through stronger type-contract and allocation-copy protection.
+- Existing trust comprehension was reinforced indirectly through stronger type-contract, allocation-copy, and shipped dashboard posture-context smoke protection.
 
 Missing capabilities:
 
@@ -157,6 +175,7 @@ Surfaces reinforced:
 
 - Canonical Stability Engine type contract.
 - Allocation bands panel copy framing.
+- Shipped dashboard posture-context smoke marker.
 - Trust-surface coverage matrix evidence.
 - `HEDGR_STATUS.md` merged-truth continuity around completed work.
 
