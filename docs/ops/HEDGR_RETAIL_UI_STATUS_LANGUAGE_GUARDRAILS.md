@@ -5,6 +5,8 @@ Authority: Non-sequencing, non-implementation
 Scope: Language guardrails for Stability Status on the current C3 retail dashboard baseline  
 Last updated: 2026-04-14
 
+Supersession note: This artifact predates the `Total balance` anchor decision. Read references to `Portfolio Value` / `portfolio value` as referring to the same primary money-anchor role now governed as `Total balance`. The historical critique remains non-sequencing and non-implementation-authorizing.
+
 ---
 
 ## 1. Purpose

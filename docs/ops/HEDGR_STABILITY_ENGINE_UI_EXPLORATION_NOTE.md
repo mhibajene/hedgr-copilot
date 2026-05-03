@@ -50,14 +50,15 @@ Explicit rules:
 
 | Position | Detail |
 |----------|--------|
-| **Preferred** | **`Portfolio Value`** as the retail primary dashboard anchor—user-grounded, low abstraction, aligned with binding retail UX hierarchy (Portfolio Value → Stability Status → allocation framing). |
+| **Preferred** | **`Total balance`** as the retail primary dashboard anchor—user-owned, everyday-money framing that avoids investment/performance language, reads as savings rather than trading, and aligns with binding retail UX hierarchy (Total balance → Stability Status → allocation framing). |
+| **Superseded** | **`Portfolio Value`** is no longer the preferred retail primary anchor; it is superseded by `Total balance` for this lane because it can read as portfolio/performance framing. |
 | **Exploration-only, not preferred** | **`Total Treasury`** may appear in exploration for tone or layout comparison; it is **not** the preferred primary anchor (higher abstraction, more system-aggregate feel). |
 
 ### Terminology direction
 
 **Terms to keep (directional):**
 
-- `Portfolio Value`
+- `Total balance`
 - `Within Expected Range`
 - `Monitoring Volatility`
 - `Protective Mode Active`

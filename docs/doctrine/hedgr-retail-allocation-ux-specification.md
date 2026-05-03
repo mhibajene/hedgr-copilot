@@ -35,7 +35,7 @@ Clarity. Stability. Transparency. Authority.
 
 The retail dashboard must follow this visual sequence:
 
-1. Portfolio Value (Primary Anchor)
+1. Total balance (Primary Anchor)
 2. Stability Status Indicator (Contextual Signal)
 3. Allocation Split (Buffer vs Yield)
 4. Yield Detail (Secondary)
@@ -45,9 +45,11 @@ This hierarchy must not be inverted.
 
 ---
 
-# III. Portfolio Value Rules
+# III. Total Balance Rules
 
-Portfolio Value is the primary emotional stabilizer.
+Total Balance is the primary emotional stabilizer.
+
+It is the preferred retail money anchor because it feels owned by the user, avoids investment or performance framing, reads as savings rather than trading, and supports Hedgr's money-preservation posture.
 
 Requirements:
 
@@ -60,13 +62,13 @@ Requirements:
 Optional contextual line:
 “Managed under the Hedgr Stability Model™.”
 
-Portfolio Value communicates reassurance, not excitement.
+Total Balance communicates reassurance, not excitement.
 
 ---
 
 # IV. Stability Status Indicator
 
-A Stability Indicator must appear beneath Portfolio Value.
+A Stability Indicator must appear beneath Total Balance.
 
 Permitted formats:
 
