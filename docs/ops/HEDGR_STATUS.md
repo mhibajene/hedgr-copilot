@@ -440,6 +440,25 @@ Implementation posture preserved:
 - no Playwright assertions for `engine-posture-badge` or `engine-allocation-bands`; those surfaces remain covered by existing unit/page tests and were intentionally outside this smoke slice
 - no ADR under ticket intent; merged PR **#141**
 
+### MC-S3-017 - Transition Readiness §6b inventory and readability refinement (documentation-only)
+
+Merged files:
+
+- `docs/ops/HEDGR_STATUS.md`
+
+Implementation truth:
+
+- **§6b** now states more explicitly that external labels, roadmap prose, Cursor plans, and Notion references do not create queue order, approval, or repo truth
+- **§6b** clarifies that `could-be-admitted-later` does not mean approved next, queued, sequenced, or ready to implement
+- the readiness checklist now includes the **§7a** brief as a required gate before work starts
+- the inventory table and interpretation rules distinguish `admissible`, `prerequisite-gated`, `blocked`, and `deferred` from approval or activation
+
+Implementation posture preserved:
+
+- **documentation-only** governance hardening; **no** `apps/`, **no** `packages/`, **no** `scripts/`, **no** `.github/`, **no** tests, **no** backend, **no** `apps/frontend/lib/engine/**`, **no** CI workflow change, **no** runtime behavior, **no** product commitment, **no** execution authority, and **no** ADR status change
+- no successor ticket is named or implied; **§7** / **§7a** are restored to no-active-ticket state on closeout
+- no ADR under ticket intent; merged PR **#144**
+
 ### MC-S2-004 - Allocation bands UI
 
 Implementation truth:
@@ -867,13 +886,14 @@ Completed and merged:
 - `MC-S3-014` - MC-S3-012 merged-truth reconciliation (`HEDGR_STATUS.md` documentation/governance only; completed record **§46**)
 - `MC-S3-015` - Regression resistance tranche 6: allocation bands panel copy contract (test-only; merged PR **#138**; completed record **§47**)
 - `MC-S3-016` - Playwright smoke coverage for shipped dashboard Stability Engine posture context (test-only; merged PR **#141**; completed record **§48**)
+- `MC-S3-017` - Transition Readiness §6b inventory and readability refinement (documentation-only governance hardening; merged PR **#144**; completed record **§49**)
 
 Current active ticket status:
 
-- **Approved next ticket:** `MC-S3-017` — Transition Readiness §6b inventory and readability refinement (documentation-only governance hardening).
+- **Approved next ticket:** **None named.** There is **no** approved next implementation ticket until **§7** is updated explicitly to name one.
 - **Governance reconciliation note:** **`UI-SRA-001`** activation artifacts (`docs/ops/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_EXECUTION_REQUEST.md`, **`docs/ops/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_STATUS_PATCH_PROPOSAL.md`**, and **§7** / **§7a** activation language) first landed in commit **`1bd65d1`**; shipped dashboard implementation landed in **`da96e1e`**. Branch history was reconciled so activation, support docs, implementation, and this closeout (**§44**) cohabit the same lineage without implying a false single-commit ordering. See **`docs/ops/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_EXECUTION_READOUT.md` §2**.
 - **Closeout note:** **`UI-USH-001`** (retail upper-shell continuation refinement beneath settled header) completed within bounded scope; governed execution readout **`docs/ops/HEDGR_RETAIL_UI_UPPER_SHELL_CONTINUATION_EXECUTION_READOUT.md`**.
-- **§6b** is not sequencing authority — Transition Readiness taxonomy and scrutiny input only; only **§7** / **§7a** name approved implementation work when a ticket is active. `MC-S3-017` may clarify §6b language; it must not treat §6b table rows, examples, or disposition labels as backlog approval.
+- **§6b** is not sequencing authority — Transition Readiness taxonomy and scrutiny input only; only **§7** / **§7a** name approved implementation work when a ticket is active. `MC-S3-017` clarified this rule; it did not convert §6b table rows, examples, or disposition labels into backlog approval.
 - When **§7** names an approved ticket, the execution brief lives in **§7a** until closeout. When **§7** names none, **§7a** holds the no-active-ticket stub.
 - **Future work:** Further extension beyond any closed **§7** ticket still requires a new **§7** ticket; prototype-route outcomes do not widen scope by implication.
 - Do not treat backlog, roadmap, or *Proposed* ADRs as sequenced work unless **§7** is updated explicitly.
@@ -881,57 +901,19 @@ Current active ticket status:
 - Cursor must not continue automatically into work beyond what is explicitly defined in this file for an active ticket.
 - Cursor must not drift beyond explicitly defined scope.
 
-**Last completed ticket (summary):** `MC-S3-016` — Playwright smoke coverage for shipped dashboard Stability Engine posture context (test-only; added one smoke assertion for visible, non-empty `engine-posture-context` after mock login; added non-authoritative review artifacts under `docs/ops/reviews/**`; restored **§7** / **§7a** to no-active-ticket state); completed record in **§48**.
+**Last completed ticket (summary):** `MC-S3-017` — Transition Readiness §6b inventory and readability refinement (documentation-only governance hardening; clarified external labels, queue-order disclaimers, §7a readiness gate, and interpretation rules for inventory dispositions; restored **§7** / **§7a** to no-active-ticket state); completed record in **§49**.
 
 ---
 
 ## 7a. Active execution ticket
 
-**Status:** **Active execution ticket:** `MC-S3-017` — Transition Readiness §6b inventory and readability refinement (documentation-only governance hardening).
+**Status:** **No active execution ticket.** **§7** does not currently name an approved next implementation ticket.
 
-**Objective:** Harden **`docs/ops/HEDGR_STATUS.md` §6b** as Transition Readiness taxonomy and scrutiny input only by improving inventory readability, example clarity, and classification-not-authorization wording without introducing any runtime, product, sequencing, or implementation authority.
-
-**Type:** docs-process / governance hardening.
-
-**In scope**
-
-- Edits confined by default to **`docs/ops/HEDGR_STATUS.md`**, primarily **§6b** and only adjoining in-file pointers needed to keep §6b / §7 handoff wording consistent.
-- Clarify existing placeholder rows, inventory examples, readiness checklist language, and illustrative ticket-shape wording without adding new approvals, sequencing claims, or capability commitments.
-- Tighten language that could be misread as converting **§6b** taxonomy, disposition labels, or examples into backlog approval.
-- Preserve the current rule that **§7** names the approved ticket and **§7a** carries the authoritative active brief.
-
-**Out of default scope unless §7a is explicitly amended to name it**
-
-- **`docs/ops/NOTION_GOVERNANCE_STAGING.md`**, index pointer updates, external mirror copy, or any staging-copy alignment beyond current **`HEDGR_STATUS.md`** edits.
-- New ADRs, ADR status changes, sprint-planning protocol changes, or new governance doctrine.
-
-**Must not**
-
-- Touch files outside **`docs/ops/**`** unless **§7a** is explicitly amended before execution to name the additional path.
-- Touch **`apps/`**, **`packages/`**, **`scripts/`**, **`.github/`**, tests, backend, **`apps/frontend/lib/engine/**`**, CI workflows, or any executable surface.
-- Name or imply any successor ticket beyond `MC-S3-017`; no automatic continuation from §6b rows, disposition labels, regression history, roadmap prose, Cursor plans, Notion, or proposed ADRs.
-- Relax read-only / non-executing Stability Engine posture, create execution semantics, accounting truth, Warmth widening, Copilot runtime authority, live-service coupling, or customer-facing automation.
-
-**Surfaces touched (expected)**
-
-- **Required:** **`docs/ops/HEDGR_STATUS.md`** — **§6b** and, only if needed for consistency, adjoining in-file governance pointers.
-- **Excluded by default:** **`docs/ops/NOTION_GOVERNANCE_STAGING.md`**, ADR index files, review artifacts, and any non-status docs unless this brief is amended before work begins.
-
-**Acceptance shape**
-
-- **§6b** clearly states it is taxonomy and scrutiny input, not backlog approval or sequencing authority; **§7** remains the sole naming surface for executable tickets.
-- Existing inventory rows, readiness checklist, and illustrative ticket-shape language are more readable and less ambiguous without adding approvals, product commitments, or capability commitments.
-- No files outside **`docs/ops/**`** are changed unless **§7a** is explicitly amended to name them before execution.
-- No production code, tests, CI, backend, engine library, runtime behavior, or executable files change.
-- Diff review confirms the PR remains a single bounded documentation-only governance hardening change.
-
-**Validation**
-
-- Markdown/readability review of the edited **§6b** language.
-- Repo diff check confirming no **`apps/`**, **`packages/`**, **`scripts/`**, **`.github/`**, tests, backend, engine, CI, or executable files changed.
-- Full `pnpm` validation is not required by ticket scope unless the diff unexpectedly touches executable or CI surfaces.
+When governance approves the next ticket, **§7** will name it and this section will hold the full execution brief until closeout.
 
 ---
+
+**Archived brief (MC-S3-017):** Transition Readiness §6b inventory and readability refinement — **documentation-only governance hardening**; scope held to **`docs/ops/HEDGR_STATUS.md`**. Hardened **§6b** by clarifying that external labels, Notion, roadmap prose, and Cursor plans do not create queue order or approval; `could-be-admitted-later` is not approved next, queued, sequenced, or ready to implement; **§7a** is a required readiness gate; inventory disposition values are interpretation aids, not activation. **No** `apps/`, **no** `packages/`, **no** `scripts/`, **no** `.github/`, **no** tests, **no** backend, **no** `apps/frontend/lib/engine/**`, **no** CI, **no** runtime behavior, **no** product commitment, **no** execution authority, **no** ADR status change, and **no** successor ticket. Merged PR **#144**. Completed record: **§49**.
 
 **Archived brief (MC-S3-016):** Playwright smoke coverage for shipped dashboard Stability Engine posture context — **test-only**; added one focused smoke assertion in **`apps/frontend/tests-e2e/smoke-pack.spec.ts`** after mock login for visible, non-empty **`engine-posture-context`**; preserved existing localhost-only smoke-pack route blocking; added non-authoritative review artifacts under **`docs/ops/reviews/`**. **No** production UI changes, **no** `apps/frontend/lib/engine/**`, **no** backend, **no** CI workflow change, **no** new `EnginePosture` values, **no** simulator behavior, **no** transaction-review, withdraw, market-data, Copilot, policy, ledger, accounting, or live-service behavior; **no** Playwright assertions for `engine-posture-badge` or `engine-allocation-bands`. Merged PR **#141**. Completed record: **§48**.
 
@@ -2013,6 +1995,32 @@ This **§43** record was originally written in the same working-tree change-set 
 **Scope discipline held.** **No** production UI changes, **no** `apps/frontend/lib/engine/**`, **no** backend, **no** CI workflow change, **no** new `EnginePosture` values, **no** simulator behavior changes, **no** transaction-review, withdraw, market-data, Copilot, policy, ledger, accounting, or live-service behavior. No Playwright assertions for `engine-posture-badge` or `engine-allocation-bands`; those surfaces remain covered by existing unit/page tests. No ADR under ticket intent.
 
 **Validation.** `pnpm -w typecheck`, `pnpm -w lint`, `pnpm -w test -- -- --run`, and local `e2e:ci` completed cleanly before merge. Merged PR **#141**.
+
+### Sequencing note
+
+**§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
+
+**Follow-ups:** Any successor appears only when **§7** is updated explicitly.
+
+---
+
+## 49. Completed execution ticket - MC-S3-017 (Transition Readiness §6b documentation hardening)
+
+**Ticket:** `MC-S3-017` — Transition Readiness §6b inventory and readability refinement (documentation-only governance hardening)
+
+**Branch / PR:** `codex/mc-s3-017-transition-readiness-doc-hardening` / **PR #144**
+
+### Outcome (documentation-only)
+
+- **`docs/ops/HEDGR_STATUS.md` §6b** — clarified that Notion, roadmap prose, Cursor plans, and other external surfaces may explain source labels but do not create queue order, approval, or repo truth
+- **`docs/ops/HEDGR_STATUS.md` §6b** — tightened classification-not-authorization language so inventory rows, `could-be-admitted-later`, and illustrative ticket shapes cannot be read as approved next, queued, sequenced, or ready to implement
+- **`docs/ops/HEDGR_STATUS.md` §6b** — added **§7a** to the readiness checklist as the required active-brief gate before work starts
+- **`docs/ops/HEDGR_STATUS.md` §6b** — added interpretation rules for `admissible`, `prerequisite-gated`, `blocked`, and `deferred`
+- **`docs/ops/HEDGR_STATUS.md`** — **§6** merged-truth subsection `MC-S3-017`; **§7** completed list extended with `MC-S3-017`; **§7a** restored to no active ticket with the archived brief above
+
+**Scope discipline held.** **No** `apps/`, **no** `packages/`, **no** `scripts/`, **no** `.github/`, **no** tests, **no** backend, **no** `apps/frontend/lib/engine/**`, **no** CI workflow change, **no** runtime behavior, **no** product commitment, **no** execution authority, **no** ADR status change, and **no** successor ticket. No ADR under ticket intent.
+
+**Validation.** Documentation/readability review, `git diff --check`, and file-scope diff review completed before merge; PR **#144** merged as documentation-only.
 
 ### Sequencing note
 
