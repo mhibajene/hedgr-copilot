@@ -162,7 +162,7 @@ Policy interpretation is a first-class control layer in the Hedgr system.
 ## IX. UX and Language Guardrails
 
 Frontend hierarchy:
-**Portfolio Value -> Stability Status -> Allocation Split**
+**Total balance -> Stability Status -> Allocation Split**
 
 Language rules:
 - prefer **Allocate** over **Earn**

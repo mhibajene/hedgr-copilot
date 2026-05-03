@@ -44,7 +44,7 @@ Use it to avoid repeating the same critique cycles and to prevent doctrine-risky
 | **Stable**, **Monitoring**, **Protective** | **Partially aligned references** — usable as exploration inputs **only after** applying the **Replace** list; not shippable direction by themselves. |
 | **Advanced Details Drawer** (current form) | **Doctrine-risky reference only** — **do not evolve forward**; the drawer content model should be **retired** and rebuilt under the exploration note if disclosure is still needed. |
 
-**Benchmark anchor (unchanged):** **`Portfolio Value`** remains the preferred retail primary anchor. **`Total Treasury`** is **not** preferred retail truth; it may exist only as non-authoritative exploration comparison unless doctrine or governance explicitly changes.
+**Benchmark anchor (updated):** **`Total balance`** is the preferred retail primary anchor. It supersedes **`Portfolio Value`** for this lane because it feels owned by the user, avoids investment/performance framing, reads as savings rather than trading, and supports Hedgr's money-preservation posture. **`Total Treasury`** is **not** preferred retail truth; it may exist only as non-authoritative exploration comparison unless doctrine or governance explicitly changes.
 
 ---
 
@@ -56,7 +56,7 @@ Use it to avoid repeating the same critique cycles and to prevent doctrine-risky
 |--|--|
 | **Disposition** | **Partially aligned reference** |
 | **Carry forward** | `Within Expected Range` posture headline; overall sequence (anchor → stability → bands → disclosure link); `Conservative Yield` band naming; **no score on primary chrome**; `Advanced details` as a **subordinate** progressive-disclosure **control** (pattern only). |
-| **Replace** | Hero `Total Treasury` → benchmark **`Portfolio Value`**; `Capital Shield` row and `PROTECTED` microcopy; `SAFE` / `CAUTION` / `CAPPED` bar labels if they read as operational or game-like chrome; always-on **Withdrawal Availability** prominence unless governed by state-contingency rules (see exploration note). |
+| **Replace** | Hero `Total Treasury` → benchmark **`Total balance`**; `Capital Shield` row and `PROTECTED` microcopy; `SAFE` / `CAUTION` / `CAPPED` bar labels if they read as operational or game-like chrome; always-on **Withdrawal Availability** prominence unless governed by state-contingency rules (see exploration note). |
 | **Retire** | Nothing variant-specific beyond globally **Retired** items if they appear (this variant has **no** drawer score). |
 
 ### Monitoring
@@ -65,7 +65,7 @@ Use it to avoid repeating the same critique cycles and to prevent doctrine-risky
 |--|--|
 | **Disposition** | **Partially aligned reference** |
 | **Carry forward** | `Monitoring Volatility`; change-notice pattern; reduced `Conservative Yield` state; **no score on primary chrome**; `Advanced details` link-only pattern. |
-| **Replace** | Hero `Total Treasury` → **`Portfolio Value`**; `Capital Shield` / `TIGHTENING`; header `ADJUSTING` if it reads as system operation; notice copy referencing **maintaining capital shield** (shield term + implied system action); withdrawal block default prominence. |
+| **Replace** | Hero `Total Treasury` → **`Total balance`**; `Capital Shield` / `TIGHTENING`; header `ADJUSTING` if it reads as system operation; notice copy referencing **maintaining capital shield** (shield term + implied system action); withdrawal block default prominence. |
 | **Retire** | No drawer score on the Monitoring **base** frame. |
 
 ### Protective
@@ -74,7 +74,7 @@ Use it to avoid repeating the same critique cycles and to prevent doctrine-risky
 |--|--|
 | **Disposition** | **Partially aligned reference** (higher **notice-semantics** risk than Stable/Monitoring) |
 | **Carry forward** | `Protective Mode Active`; suspended-yield band treatment; presence of a **notice** in protective context; **no score on primary chrome**. |
-| **Replace** | Hero `Total Treasury` → **`Portfolio Value`**; `Capital Shield` / `TIGHTENED`; notice language implying **executed** movement (**reallocated**, **defensive posture**, **capital shield tightened**) — must be reframed to **informational posture** consistent with ADR `0013` / `0014`. |
+| **Replace** | Hero `Total Treasury` → **`Total balance`**; `Capital Shield` / `TIGHTENED`; notice language implying **executed** movement (**reallocated**, **defensive posture**, **capital shield tightened**) — must be reframed to **informational posture** consistent with ADR `0013` / `0014`. |
 | **Retire** | Same as Stable/Monitoring for primary chrome; unfixable execution-narrative copy should be **retired** from this lane, not lightly reworded. |
 
 ### Advanced Details Drawer
@@ -93,7 +93,7 @@ Use it to avoid repeating the same critique cycles and to prevent doctrine-risky
 Only patterns **consistent** with `HEDGR_STABILITY_ENGINE_UI_EXPLORATION_NOTE.md`:
 
 - Calm **posture headlines**: e.g. `Within Expected Range`, `Monitoring Volatility`, `Protective Mode Active`
-- **`Portfolio Value`** as benchmark primary anchor label (not `Total Treasury` as default)
+- **`Total balance`** as benchmark primary anchor label (not `Total Treasury` as default)
 - **`Conservative Yield`** (retail-legible yield band language)
 - **Explanatory notice** blocks that describe **posture and targets**, not executed fund movement
 - **Progressive disclosure** (`Advanced details`) when **subordinate** and not a second authority
@@ -106,7 +106,7 @@ Only patterns **consistent** with `HEDGR_STABILITY_ENGINE_UI_EXPLORATION_NOTE.md
 
 | Element | Why it conflicts | Replacement direction |
 |---------|------------------|------------------------|
-| **`Total Treasury`** (hero label) | Exploration note: **`Portfolio Value` preferred**; `Total Treasury` exploration-only, not preferred retail truth | Default hero to **`Portfolio Value`** for retail benchmark; retain `Total Treasury` only for explicit non-retail or side-by-side exploration, if ever justified |
+| **`Total Treasury`** (hero label) | Exploration note: **`Total balance` preferred**; `Total Treasury` exploration-only, not preferred retail truth | Default hero to **`Total balance`** for retail benchmark; retain `Total Treasury` only for explicit non-retail or side-by-side exploration, if ever justified |
 | **`Capital Shield`** + shield status words | **Rejected** in exploration note: promissory / theatrical protection | Posture-first language without shield metaphor; preserve seriousness without guarantee |
 | **Notice phrases** implying executed action (`reallocated`, `maintain capital shield`, `tightened to defensive posture`, etc.) | ADR `0013` / `0014`: shadow accounting and execution-implication risk | Plain-language **informational** framing: what the system is **signaling**, target posture, **no** “money moved” semantics unless future product truth and governance allow |
 | **Always-on Withdrawal Availability** block | Exploration note: **`Review withdrawal availability`** only **state-contingent** | Demote, gate, or reframe so withdrawal review is not a permanent primary-surface operational panel without a continuity hook |

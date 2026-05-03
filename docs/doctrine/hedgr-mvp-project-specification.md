@@ -43,7 +43,7 @@ Hedgr helps users in volatile economies preserve purchasing power, maintain visi
 
 Default hierarchy for consumer surfaces:
 
-**Portfolio value → Stability status → Allocation split**
+**Total balance → Stability status → Allocation split**
 
 Prefer **allocate** over **earn**; treat yield as **enhancement, not entitlement**. Institutional, calm tone per `docs/doctrine/hedgr-ux-constitution.md` and `.cursorrules`.
 
