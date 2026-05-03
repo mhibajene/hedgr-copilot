@@ -750,25 +750,25 @@ This refinement is merged UX-legibility work only. It does not change posture lo
 
 For the **approved next ticket** and active execution brief, see **§7** and **§7a** only.
 
-**Authority:** Repo truth governs. Notion or other surfaces remain reference-only for external labels in the inventory table below.
+**Authority:** Repo truth governs. Notion, roadmap prose, Cursor plans, or other external surfaces may explain where a label came from, but they do not create queue order, approval, or repo truth.
 
 ### Classification is not authorization
 
-- Rows in the **Inherited Phase 4 / Phase 5 inventory** table describe evidence and *abstract* boundary posture. They **do not** approve work, prioritize backlog, or substitute for ticket review.
-- **`could-be-admitted-later`** means only: not ruled out by evidence *as a type*; it **does not** mean **approved next** or queued.
-- **Only §7** in this file (as updated by governance) **authorizes** the next implementation ticket. MC-S3-001 output is input to human judgment, not a substitute for §7.
+- Rows in the **Inherited Phase 4 / Phase 5 inventory** table describe evidence and *abstract* boundary posture. They **do not** approve work, prioritize backlog, reserve capacity, or substitute for ticket review.
+- **`could-be-admitted-later`** means only: not ruled out by evidence *as a type*; it **does not** mean **approved next**, queued, sequenced, or ready to implement.
+- **Only §7** in this file (as updated by governance) names the next approved ticket. The §6b taxonomy is input to human judgment, not a substitute for §7 or the active brief in §7a.
 
 ### Boundary categories (document taxonomy only)
 
-**Boundary class** labels describe the **nature** of a class of work under current doctrine. They are **not** blanket approval to start work. Categories **6–8** remain **blocked** at the framework level until explicit doctrine and §7 sequencing widen the boundary.
+**Boundary class** labels describe the **nature** of a class of work under current doctrine. They are **not** blanket approval to start work. Even an `admissible` class still needs a named §7 ticket and a bounded §7a brief before execution. Categories **6–8** remain **blocked** at the framework level until explicit doctrine and §7 sequencing widen the boundary.
 
 | # | Category | Boundary class | Notes |
 |---|----------|----------------|-------|
-| 1 | Governance and repo truth | admissible (as **documentation / process** only) | e.g. §7 discipline, cross-links, PR hygiene—still subject to normal review. |
-| 2 | Documentation and ADR hygiene | admissible (as **doc / process** only) | *Proposed* → *Accepted* ADRs follow normal ADR governance **outside** this section; MC-S3-001 does not accept ADRs. |
-| 3 | Read-only trust expression and constrained retail presentation refinement | prerequisite-gated | Must preserve ADR **0013** / **0014**. Scoped tickets, doctrine review, tests if touching shipped trust surfaces. |
-| 4 | Dev-only / review tooling | prerequisite-gated | Narrow seams with written boundaries (pattern: ADR **0017**); per-seam ADR or status-doc boundary note. |
-| 5 | Regression resistance | admissible | Tests/selectors for **already-shipped** trust surfaces only—**must not** introduce **new states**, **new product behavior**, or semantics that smuggle execution/accounting/policy meaning. |
+| 1 | Governance and repo truth | admissible (as **documentation / process** only) | e.g. §7 discipline, cross-links, PR hygiene. `Admissible` means the class is not blocked; it is still subject to normal review and §7 / §7a activation. |
+| 2 | Documentation and ADR hygiene | admissible (as **doc / process** only) | *Proposed* → *Accepted* ADRs follow normal ADR governance **outside** this section; MC-S3-001 does not accept ADRs or change ADR status. |
+| 3 | Read-only trust expression and constrained retail presentation refinement | prerequisite-gated | Must preserve ADR **0013** / **0014**. Requires a scoped ticket, doctrine review, and tests if touching shipped trust surfaces. |
+| 4 | Dev-only / review tooling | prerequisite-gated | Narrow seams with written boundaries (pattern: ADR **0017**); requires a per-seam ADR or status-doc boundary note before implementation. |
+| 5 | Regression resistance | admissible | Tests/selectors for **already-shipped** trust surfaces only. Must not introduce **new states**, **new product behavior**, or semantics that smuggle execution/accounting/policy meaning. |
 | 6 | Backend / live engine / treasury execution / ledger mutation from engine | blocked | Definition work here does **not** unblock; requires future explicit ADRs and §7. |
 | 7 | Policy-engine convergence; runtime policy inside posture objects | blocked | Aligns with §9 “must not include” and §10. |
 | 8 | Copilot runtime binding; directive Copilot; customer-facing automation; agentic finance | blocked | Aligns with §7a, §9, ADR **0015** containment. |
@@ -781,34 +781,42 @@ For the **approved next ticket** and active execution brief, see **§7** and **�
 
 ### Readiness checklist (for governance when evaluating a *future* ticket)
 
-Use as **scrutiny**, not auto-approval:
+Use as **scrutiny**, not auto-approval. A "yes" answer on this checklist means the ticket can be reviewed further; it does not itself admit the work:
 
 1. **§7** — Is this ticket **explicitly named** as approved next (or otherwise authorized) in §7?
-2. **Doctrine / ADRs** — Does it respect **0013**, **0014**, **0015**, and **0017** where applicable? If touching Warmth-scoped surfaces, is **0016** status and scope explicit?
-3. **Red lines** — Does it avoid execution semantics, accounting semantics, backend/live engine coupling, policy merge in posture, directive Copilot, customer automation, and simulation-as-runtime-authority (§9)?
-4. **Foundation** — Does it avoid reopening Foundation scope or treating §6b inventory rows as commitments?
+2. **§7a** — Does the active brief define objective, in-scope surfaces, exclusions, acceptance shape, and validation before any work starts?
+3. **Doctrine / ADRs** — Does it respect **0013**, **0014**, **0015**, and **0017** where applicable? If touching Warmth-scoped surfaces, is **0016** status and scope explicit?
+4. **Red lines** — Does it avoid execution semantics, accounting semantics, backend/live engine coupling, policy merge in posture, directive Copilot, customer automation, and simulation-as-runtime-authority (§9)?
+5. **Foundation** — Does it avoid reopening Foundation scope or treating §6b inventory rows as commitments?
 
 ### Illustrative ticket *shapes* (not admissibility guarantees)
 
-Examples of **forms** a future §7-approved ticket *might* take during Transition Readiness: governance doc edits, ADR index traceability, narrowly scoped read-only copy/layout refinement, dev-seam documentation, regression tests **without** new states or new product behavior. **§7 must name any real ticket**; these shapes are **not** guarantees of approval.
+Examples of **forms** a future §7-approved ticket *might* take during Transition Readiness: governance doc edits, ADR index traceability, narrowly scoped read-only copy/layout refinement, dev-seam documentation, regression tests **without** new states or new product behavior. **§7 must name any real ticket** and **§7a must bound it**; these shapes are examples for classification only, not guarantees of approval or pending queue items.
 
 ### Inherited Phase 4 / Phase 5 inventory (reference labels)
 
-Populate or extend rows using **Notion / external planning reference only**; repo remains canonical for evidence. Empty rows are acceptable until an inventory pass is completed.
+Rows may cite **Notion / external planning reference labels** only to identify source vocabulary; repo remains canonical for evidence and boundaries. Empty rows are acceptable until a separately scoped inventory pass is approved. Do not add a row unless it is clearly marked as evidence/reference, not a work request.
 
 | External label | Repo grounding | Evidence state | Boundary class | Current disposition | Unblock requirement |
 |----------------|----------------|----------------|----------------|---------------------|---------------------|
-| *Example: Phase 4 “governance hardening” (generic)* | §4, §8; `AGENTS.md` | external-only | prerequisite-gated | deferred | §7-named ticket; scope must stay doc/process or read-only trust refinement per category 3—no category 6–8. |
-| *Example: Phase 5 “Copilot binding” / runtime Copilot authority* | §9 “must not”; ADR **0015** | contradicted-or-superseded (for execution-style binding) | blocked | deferred | New ADR(s), explicit doctrine widening, §7 sequencing—out of Transition Readiness definition scope. |
+| *Example: Phase 4 “governance hardening” (generic)* | §4, §8; `AGENTS.md` | external-only | prerequisite-gated | deferred | §7-named ticket and §7a brief; scope must stay doc/process or read-only trust refinement per category 3—no category 6–8. |
+| *Example: Phase 5 “Copilot binding” / runtime Copilot authority* | §9 “must not”; ADR **0015** | contradicted-or-superseded (for execution-style binding) | blocked | deferred | New ADR(s), explicit doctrine widening, §7 sequencing, and §7a brief—out of Transition Readiness definition scope. |
 | *Example: Warmth Layer (ADR 0016)* | `docs/decisions/0016-warmth-layer-doctrine-constrained-retail-refinement-track.md` | repo-grounded (ADR 0016 **Accepted**) | prerequisite-gated | could-be-admitted-later (narrow v1-style presentation only) | §7-named scoped ticket + doctrine review; **0016** does not ratify from this table. **Anti-misread:** ADR 0016 **Acceptance removes only** the prerequisite that the ADR be **Accepted**; it **does not** remove the requirement for a **§7**-named scoped implementation ticket (or other **§7** / **§7a** gates). |
 
 **Evidence state** values: `repo-shipped` · `repo-grounded` · `external-only` · `contradicted-or-superseded`  
 **Boundary class** values: `admissible` · `prerequisite-gated` · `blocked`  
 **Current disposition** values: `not-needed` · `could-be-admitted-later` · `deferred`
 
+Interpretation rules:
+
+- `admissible` means the class can be considered under normal governance; it does not approve a ticket.
+- `prerequisite-gated` means required doctrine, ADR, scope, review, or validation conditions must be satisfied before §7 can safely name work.
+- `blocked` means current doctrine or repo posture rejects the class unless future governance explicitly changes the boundary.
+- `deferred` means no current action is approved.
+
 ### Ready for documentation-only implementation
 
-Subsequent work that **only** edits governance/docs to refine this § (e.g. more inventory rows, clearer examples) remains **documentation-only** and must **not** introduce runtime, backend, or execution authority. **§7** still governs any **implementation** ticket beyond doc edits.
+Subsequent work that **only** edits governance/docs to refine this § (e.g. clearer examples, less ambiguous inventory wording, or stricter classification notes) remains **documentation-only** and must **not** introduce runtime, backend, product, or execution authority. **§7** still governs any named ticket, and **§7a** must carry the active brief before work starts.
 
 ---
 
@@ -862,10 +870,10 @@ Completed and merged:
 
 Current active ticket status:
 
-- **Approved next ticket:** **None named.** There is **no** approved next implementation ticket until **§7** is updated explicitly to name one.
+- **Approved next ticket:** `MC-S3-017` — Transition Readiness §6b inventory and readability refinement (documentation-only governance hardening).
 - **Governance reconciliation note:** **`UI-SRA-001`** activation artifacts (`docs/ops/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_EXECUTION_REQUEST.md`, **`docs/ops/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_STATUS_PATCH_PROPOSAL.md`**, and **§7** / **§7a** activation language) first landed in commit **`1bd65d1`**; shipped dashboard implementation landed in **`da96e1e`**. Branch history was reconciled so activation, support docs, implementation, and this closeout (**§44**) cohabit the same lineage without implying a false single-commit ordering. See **`docs/ops/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_EXECUTION_READOUT.md` §2**.
 - **Closeout note:** **`UI-USH-001`** (retail upper-shell continuation refinement beneath settled header) completed within bounded scope; governed execution readout **`docs/ops/HEDGR_RETAIL_UI_UPPER_SHELL_CONTINUATION_EXECUTION_READOUT.md`**.
-- **§6b** is not sequencing authority — Transition Readiness taxonomy and scrutiny input only; only **§7** / **§7a** name approved implementation work when a ticket is active.
+- **§6b** is not sequencing authority — Transition Readiness taxonomy and scrutiny input only; only **§7** / **§7a** name approved implementation work when a ticket is active. `MC-S3-017` may clarify §6b language; it must not treat §6b table rows, examples, or disposition labels as backlog approval.
 - When **§7** names an approved ticket, the execution brief lives in **§7a** until closeout. When **§7** names none, **§7a** holds the no-active-ticket stub.
 - **Future work:** Further extension beyond any closed **§7** ticket still requires a new **§7** ticket; prototype-route outcomes do not widen scope by implication.
 - Do not treat backlog, roadmap, or *Proposed* ADRs as sequenced work unless **§7** is updated explicitly.
@@ -879,9 +887,49 @@ Current active ticket status:
 
 ## 7a. Active execution ticket
 
-**Status:** **No active execution ticket.** **§7** does not currently name an approved next implementation ticket.
+**Status:** **Active execution ticket:** `MC-S3-017` — Transition Readiness §6b inventory and readability refinement (documentation-only governance hardening).
 
-When governance approves the next ticket, **§7** will name it and this section will hold the full execution brief until closeout.
+**Objective:** Harden **`docs/ops/HEDGR_STATUS.md` §6b** as Transition Readiness taxonomy and scrutiny input only by improving inventory readability, example clarity, and classification-not-authorization wording without introducing any runtime, product, sequencing, or implementation authority.
+
+**Type:** docs-process / governance hardening.
+
+**In scope**
+
+- Edits confined by default to **`docs/ops/HEDGR_STATUS.md`**, primarily **§6b** and only adjoining in-file pointers needed to keep §6b / §7 handoff wording consistent.
+- Clarify existing placeholder rows, inventory examples, readiness checklist language, and illustrative ticket-shape wording without adding new approvals, sequencing claims, or capability commitments.
+- Tighten language that could be misread as converting **§6b** taxonomy, disposition labels, or examples into backlog approval.
+- Preserve the current rule that **§7** names the approved ticket and **§7a** carries the authoritative active brief.
+
+**Out of default scope unless §7a is explicitly amended to name it**
+
+- **`docs/ops/NOTION_GOVERNANCE_STAGING.md`**, index pointer updates, external mirror copy, or any staging-copy alignment beyond current **`HEDGR_STATUS.md`** edits.
+- New ADRs, ADR status changes, sprint-planning protocol changes, or new governance doctrine.
+
+**Must not**
+
+- Touch files outside **`docs/ops/**`** unless **§7a** is explicitly amended before execution to name the additional path.
+- Touch **`apps/`**, **`packages/`**, **`scripts/`**, **`.github/`**, tests, backend, **`apps/frontend/lib/engine/**`**, CI workflows, or any executable surface.
+- Name or imply any successor ticket beyond `MC-S3-017`; no automatic continuation from §6b rows, disposition labels, regression history, roadmap prose, Cursor plans, Notion, or proposed ADRs.
+- Relax read-only / non-executing Stability Engine posture, create execution semantics, accounting truth, Warmth widening, Copilot runtime authority, live-service coupling, or customer-facing automation.
+
+**Surfaces touched (expected)**
+
+- **Required:** **`docs/ops/HEDGR_STATUS.md`** — **§6b** and, only if needed for consistency, adjoining in-file governance pointers.
+- **Excluded by default:** **`docs/ops/NOTION_GOVERNANCE_STAGING.md`**, ADR index files, review artifacts, and any non-status docs unless this brief is amended before work begins.
+
+**Acceptance shape**
+
+- **§6b** clearly states it is taxonomy and scrutiny input, not backlog approval or sequencing authority; **§7** remains the sole naming surface for executable tickets.
+- Existing inventory rows, readiness checklist, and illustrative ticket-shape language are more readable and less ambiguous without adding approvals, product commitments, or capability commitments.
+- No files outside **`docs/ops/**`** are changed unless **§7a** is explicitly amended to name them before execution.
+- No production code, tests, CI, backend, engine library, runtime behavior, or executable files change.
+- Diff review confirms the PR remains a single bounded documentation-only governance hardening change.
+
+**Validation**
+
+- Markdown/readability review of the edited **§6b** language.
+- Repo diff check confirming no **`apps/`**, **`packages/`**, **`scripts/`**, **`.github/`**, tests, backend, engine, CI, or executable files changed.
+- Full `pnpm` validation is not required by ticket scope unless the diff unexpectedly touches executable or CI surfaces.
 
 ---
 
