@@ -76,8 +76,18 @@ test('4 · dashboard shows Stability Engine posture context after login', async 
 
   const postureContext = page.getByTestId('engine-posture-context');
   await expect(postureContext).toBeVisible({ timeout: 10_000 });
-  const text = await postureContext.textContent();
-  expect(text?.trim().length).toBeGreaterThan(0);
+  const postureContextText = await postureContext.textContent();
+  expect(postureContextText?.trim().length).toBeGreaterThan(0);
+
+  const postureBadge = page.getByTestId('engine-posture-badge');
+  await expect(postureBadge).toBeVisible({ timeout: 10_000 });
+  const postureBadgeText = await postureBadge.textContent();
+  expect(postureBadgeText?.trim().length).toBeGreaterThan(0);
+
+  const allocationBands = page.getByTestId('engine-allocation-bands');
+  await expect(allocationBands).toBeVisible({ timeout: 10_000 });
+  const allocationBandsText = await allocationBands.textContent();
+  expect(allocationBandsText?.trim().length).toBeGreaterThan(0);
 });
 
 test('5 · settings page displays trust section', async ({ page }) => {
