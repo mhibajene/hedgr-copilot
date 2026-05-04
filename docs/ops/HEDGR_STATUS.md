@@ -459,6 +459,25 @@ Implementation posture preserved:
 - no successor ticket is named or implied; **§7** / **§7a** are restored to no-active-ticket state on closeout
 - no ADR under ticket intent; merged PR **#144**
 
+### MC-S3-018 - Stability Engine Transition Readiness closeout assessment (documentation-only)
+
+Merged files:
+
+- `docs/ops/HEDGR_STATUS.md`
+
+Implementation truth:
+
+- **§6c** now records a repo-grounded closeout assessment for **Stability Engine™️ - Transition Readiness**
+- **§6c** distinguishes governance readiness, implementation authority, and future boundary widening
+- **§6c** defines mandatory and supporting closeout criteria with evidence grounded in **AGENTS.md**, **§6b**, **§7** / **§7a**, the Sprint 2 ADR index, ADRs **0013** through **0017**, completed records **§32** through **§49**, and tracked Notion governance staging
+- the closeout verdict supports marking Transition Readiness shipped in downstream governance surfaces as **governance readiness only**
+
+Implementation posture preserved:
+
+- **documentation-only** governance closeout; **no** `apps/`, **no** `packages/`, **no** `scripts/`, **no** `.github/`, **no** tests, **no** backend, **no** frontend implementation, **no** CI workflow change, **no** runtime behavior, **no** ADR status change, and **no** successor ticket
+- **§6c** does **not** authorize Circle integration, vendor integration, custody work, stablecoin work, execution integration, ledger mutation, accounting truth, policy-runtime binding, Copilot-runtime binding, live-service behavior, or Class B / Class C fund movement
+- **§7** / **§7a** are restored to no-active-ticket state on closeout
+
 ### MC-S2-004 - Allocation bands UI
 
 Implementation truth:
@@ -839,6 +858,62 @@ Subsequent work that **only** edits governance/docs to refine this § (e.g. clea
 
 ---
 
+## 6c. Stability Engine Transition Readiness — release closeout assessment (MC-S3-018)
+
+**Status:** Canonical repo-grounded closeout record for **Stability Engine™️ - Transition Readiness** (ticket `MC-S3-018`).
+
+**Authority:** Repo truth governs this assessment. Notion or other downstream surfaces are reconciliation-only; they do not override or substitute for this section.
+
+This closeout assesses whether **Transition Readiness** can be marked shipped in repo-governed terms as a **governance-readiness phase**. It does **not** mark implementation authority shipped, does **not** approve boundary widening, and does **not** create a successor ticket.
+
+### Scope distinction
+
+- **Governance readiness:** the repo has a documented taxonomy, classification-not-authorization rule, sequencing discipline, boundary inventory interpretation, and completed evidence trail for the Transition Readiness phase.
+- **Implementation authority:** remains exclusively controlled by **§7** / **§7a** when governance names an active ticket. This closeout does not name one.
+- **Future boundary widening:** remains blocked or prerequisite-gated unless future doctrine, ADRs, and **§7** / **§7a** explicitly widen scope. **§6b taxonomy does not sequence future work.**
+
+### Closeout criteria (mandatory vs supporting)
+
+**Mandatory** — all must be **Pass** for a **Ready to mark Shipped** recommendation for Transition Readiness governance readiness.
+
+**Supporting** — inform posture and downstream reconciliation; they do not by themselves authorize implementation or veto closeout.
+
+| ID | Tier | Criterion |
+| -- | ---- | --------- |
+| M1 | Mandatory | **Repo-grounded transition standard:** **§6b** exists as the canonical Transition Readiness taxonomy and states classification is not authorization. |
+| M2 | Mandatory | **Sequencing discipline preserved:** **§7** / **§7a** remain the only active-ticket authority, and closeout restores them to no-active-ticket state. |
+| M3 | Mandatory | **ADR boundary alignment:** ADRs **0013**, **0014**, **0015**, **0016**, and **0017** remain respected; no ADR status changes are introduced by this closeout. |
+| M4 | Mandatory | **Completed evidence trail:** Completed records for `MC-S3-001` through `MC-S3-017` establish the governance, documentation, test, and presentation-only evidence used to close Transition Readiness without inferring unrecorded work. |
+| M5 | Mandatory | **No authority widening:** The closeout does not authorize Circle, vendor, custody, stablecoin, execution integration, backend work, ledger mutation, accounting truth, policy-runtime binding, Copilot-runtime binding, live engine behavior, treasury execution, or Class B / Class C fund movement. |
+| M6 | Mandatory | **Governance-only ship meaning:** The verdict is limited to marking Transition Readiness shipped as governance readiness in Notion or equivalent downstream surfaces; it is not implementation approval. |
+| S1 | Supporting | **Repo execution contract:** `AGENTS.md` continues to require hermetic CI, deny-by-default posture, small reversible work, exact file-path discipline, and governance conflict escalation. |
+| S2 | Supporting | **Notion staging:** `docs/ops/NOTION_GOVERNANCE_STAGING.md` is the repo-tracked manual copy source for downstream governance surfaces; any downstream update remains reconciliation-only. |
+
+### Evidence table (MC-S3-018)
+
+| Criterion | Pass / Partial / Fail | Evidence pointer | Blocker or note |
+| --------- | ---------------------- | ---------------- | --------------- |
+| M1 | Pass | **§6b** `Post-foundation boundary readiness (MC-S3-001)`; completed record **§32** | None. §6b defines taxonomy, classification-not-authorization, readiness checklist, inventory interpretation, and documentation-only refinement boundary. |
+| M2 | Pass | **§7** current active ticket status; **§7a** no-active-ticket stub; **§33** governance continuity; **§49** `MC-S3-017` hardening | None. §6b remains scrutiny input only; **§7** / **§7a** remain the only active-ticket surfaces. |
+| M3 | Pass | `docs/decisions/SPRINT-2-ADR-INDEX.md`; ADR **0013** informational allocation; ADR **0014** read-only engine; ADR **0015** engine center and Copilot containment; ADR **0016** presentation-only Warmth boundary; ADR **0017** dev-seam boundary | None. This closeout changes no ADR status and introduces no new ADR. |
+| M4 | Pass | **§32** through **§49** (`MC-S3-001` through `MC-S3-017`); **§6** merged-truth subsections for `MC-S3-001` through `MC-S3-017` where applicable | None. Evidence is limited to repo-recorded completed work; untracked roadmap or external labels do not count as completed work. |
+| M5 | Pass | **§6b** blocked categories 6-8; **§9** current-phase exclusions; ADRs **0013** through **0017**; this **§6c** scope distinction and posture clauses | None. Closeout is explicitly non-authorizing for execution, accounting, ledger, backend, vendor, custody, stablecoin, policy-runtime, Copilot-runtime, live engine, and Class B / Class C movement. |
+| M6 | Pass | This **§6c** `Scope distinction` and `Verdict`; **§1** Notion governance note; `docs/ops/NOTION_GOVERNANCE_STAGING.md` | None. Downstream marking may reflect repo governance-readiness closure only. |
+| S1 | Pass | `AGENTS.md` non-negotiables, testing standards, execution rules, agent authority model, and output discipline | No validation command is required for this documentation-only closeout. |
+| S2 | Pass | **§1** Notion governance note; `docs/ops/NOTION_GOVERNANCE_STAGING.md` | Manual downstream copy reconciliation remains outside repo authority and outside this ticket. |
+
+### Verdict (repo recommendation)
+
+**Ready to mark Shipped** — for **Stability Engine™️ - Transition Readiness** as a **governance-readiness phase only**. All mandatory criteria **M1-M6** are **Pass** in the evidence table above.
+
+This verdict means the repo has enough documented governance criteria, boundary taxonomy, ADR alignment, completed-ticket evidence, and sequencing discipline to close Transition Readiness in downstream governance surfaces. It does **not** mean implementation is approved, does **not** mean work is ready to start, and does **not** widen any future boundary.
+
+**No authority transfer:** This closeout does **not** authorize Circle integration, vendor work, custody work, stablecoin work, backend work, execution integration, automated behavior, ledger mutation, accounting truth, policy-runtime binding, Copilot-runtime binding, live engine behavior, treasury execution, or Class B / Class C fund movement.
+
+**Human / external gate:** Updating Notion or other non-repo systems remains a manual governance reconciliation step. This file supplies the repo-native criteria, evidence, and recommendation only.
+
+---
+
 ## 7. Current sequence and active status
 
 Completed and merged:
@@ -882,17 +957,18 @@ Completed and merged:
 - `MC-S3-011` - Stability Engine trust-surface coverage matrix (documentation only; merged PR **#125**; completed record **§42**)
 - `MC-S3-012` - Retail UI money-first shell prototype-only bounded spike (presentation-only, prototype-route scope; merged PR **#129**; completed record **§43**; readout artifact **`docs/ops/HEDGR_RETAIL_UI_IMPLEMENTATION_SPIKE_READOUT.md`**)
 - `UI-SRA-001` - Shipped retail dashboard adaptation to settled money-first reference surface (bounded `app/(app)/dashboard/**` presentation-only; merged PR **#132**; completed record **§44**; readout **`docs/ops/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_EXECUTION_READOUT.md`**)
+- `UI-USH-001` - Retail upper-shell continuation refinement beneath settled header (previously merged bounded presentation-only work; governed execution readout **`docs/ops/HEDGR_RETAIL_UI_UPPER_SHELL_CONTINUATION_EXECUTION_READOUT.md`**)
 - `MC-S3-013` - Canonical engine type export contract (test-only; merged PR **#134**; completed record **§45**)
 - `MC-S3-014` - MC-S3-012 merged-truth reconciliation (`HEDGR_STATUS.md` documentation/governance only; completed record **§46**)
 - `MC-S3-015` - Regression resistance tranche 6: allocation bands panel copy contract (test-only; merged PR **#138**; completed record **§47**)
 - `MC-S3-016` - Playwright smoke coverage for shipped dashboard Stability Engine posture context (test-only; merged PR **#141**; completed record **§48**)
 - `MC-S3-017` - Transition Readiness §6b inventory and readability refinement (documentation-only governance hardening; merged PR **#144**; completed record **§49**)
+- `MC-S3-018` - Stability Engine Transition Readiness closeout assessment (documentation-only governance closeout; completed record **§50**)
 
 Current active ticket status:
 
 - **Approved next ticket:** **None named.** There is **no** approved next implementation ticket until **§7** is updated explicitly to name one.
 - **Governance reconciliation note:** **`UI-SRA-001`** activation artifacts (`docs/ops/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_EXECUTION_REQUEST.md`, **`docs/ops/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_STATUS_PATCH_PROPOSAL.md`**, and **§7** / **§7a** activation language) first landed in commit **`1bd65d1`**; shipped dashboard implementation landed in **`da96e1e`**. Branch history was reconciled so activation, support docs, implementation, and this closeout (**§44**) cohabit the same lineage without implying a false single-commit ordering. See **`docs/ops/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_EXECUTION_READOUT.md` §2**.
-- **Closeout note:** **`UI-USH-001`** (retail upper-shell continuation refinement beneath settled header) completed within bounded scope; governed execution readout **`docs/ops/HEDGR_RETAIL_UI_UPPER_SHELL_CONTINUATION_EXECUTION_READOUT.md`**.
 - **§6b** is not sequencing authority — Transition Readiness taxonomy and scrutiny input only; only **§7** / **§7a** name approved implementation work when a ticket is active. `MC-S3-017` clarified this rule; it did not convert §6b table rows, examples, or disposition labels into backlog approval.
 - When **§7** names an approved ticket, the execution brief lives in **§7a** until closeout. When **§7** names none, **§7a** holds the no-active-ticket stub.
 - **Future work:** Further extension beyond any closed **§7** ticket still requires a new **§7** ticket; prototype-route outcomes do not widen scope by implication.
@@ -901,7 +977,7 @@ Current active ticket status:
 - Cursor must not continue automatically into work beyond what is explicitly defined in this file for an active ticket.
 - Cursor must not drift beyond explicitly defined scope.
 
-**Last completed ticket (summary):** `MC-S3-017` — Transition Readiness §6b inventory and readability refinement (documentation-only governance hardening; clarified external labels, queue-order disclaimers, §7a readiness gate, and interpretation rules for inventory dispositions; restored **§7** / **§7a** to no-active-ticket state); completed record in **§49**.
+**Last completed ticket (summary):** `MC-S3-018` — Stability Engine Transition Readiness closeout assessment (documentation-only governance closeout; added **§6c** criteria, evidence table, and repo recommendation that Transition Readiness is ready to mark shipped as governance readiness only; restored **§7** / **§7a** to no-active-ticket state); completed record in **§50**.
 
 ---
 
@@ -912,6 +988,8 @@ Current active ticket status:
 When governance approves the next ticket, **§7** will name it and this section will hold the full execution brief until closeout.
 
 ---
+
+**Archived brief (MC-S3-018):** Stability Engine Transition Readiness closeout assessment — **documentation-only governance closeout**; scope held to **`docs/ops/HEDGR_STATUS.md`**. Added **§6c** with mandatory/supporting closeout criteria, evidence table, and repo recommendation that **Stability Engine™️ - Transition Readiness** is ready to mark shipped in downstream governance surfaces as **governance readiness only**. Reconciled the verdict against **§6b** classification-not-authorization, **§7** / **§7a** sequencing authority, `AGENTS.md`, `docs/decisions/SPRINT-2-ADR-INDEX.md`, ADRs **0013** through **0017**, completed records **§32** through **§49**, and tracked Notion governance staging. **No** `apps/`, **no** `packages/`, **no** `scripts/`, **no** `.github/`, **no** tests, **no** backend, **no** frontend implementation, **no** CI, **no** runtime behavior, **no** ADR status change, **no** successor ticket, **no** Circle/vendor/custody/stablecoin/execution integration, **no** accounting/ledger/policy-runtime/Copilot-runtime/live-engine authority, and **no** Class B / Class C fund movement authority. Completed record: **§50**.
 
 **Archived brief (MC-S3-017):** Transition Readiness §6b inventory and readability refinement — **documentation-only governance hardening**; scope held to **`docs/ops/HEDGR_STATUS.md`**. Hardened **§6b** by clarifying that external labels, Notion, roadmap prose, and Cursor plans do not create queue order or approval; `could-be-admitted-later` is not approved next, queued, sequenced, or ready to implement; **§7a** is a required readiness gate; inventory disposition values are interpretation aids, not activation. **No** `apps/`, **no** `packages/`, **no** `scripts/`, **no** `.github/`, **no** tests, **no** backend, **no** `apps/frontend/lib/engine/**`, **no** CI, **no** runtime behavior, **no** product commitment, **no** execution authority, **no** ADR status change, and **no** successor ticket. Merged PR **#144**. Completed record: **§49**.
 
@@ -2021,6 +2099,32 @@ This **§43** record was originally written in the same working-tree change-set 
 **Scope discipline held.** **No** `apps/`, **no** `packages/`, **no** `scripts/`, **no** `.github/`, **no** tests, **no** backend, **no** `apps/frontend/lib/engine/**`, **no** CI workflow change, **no** runtime behavior, **no** product commitment, **no** execution authority, **no** ADR status change, and **no** successor ticket. No ADR under ticket intent.
 
 **Validation.** Documentation/readability review, `git diff --check`, and file-scope diff review completed before merge; PR **#144** merged as documentation-only.
+
+### Sequencing note
+
+**§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
+
+**Follow-ups:** Any successor appears only when **§7** is updated explicitly.
+
+---
+
+## 50. Completed execution ticket - MC-S3-018 (Transition Readiness closeout assessment)
+
+**Ticket:** `MC-S3-018` — Stability Engine Transition Readiness closeout assessment (documentation-only governance closeout)
+
+**Branch / PR:** Local status update / pending PR
+
+### Outcome (documentation-only)
+
+- **`docs/ops/HEDGR_STATUS.md` §6c** — added canonical closeout assessment for **Stability Engine™️ - Transition Readiness**
+- **`docs/ops/HEDGR_STATUS.md` §6c** — defined mandatory and supporting closeout criteria distinguishing governance readiness, implementation authority, and future boundary widening
+- **`docs/ops/HEDGR_STATUS.md` §6c** — added evidence table grounded in **AGENTS.md**, **§6b**, **§7** / **§7a**, `docs/decisions/SPRINT-2-ADR-INDEX.md`, ADRs **0013** through **0017**, completed records **§32** through **§49**, and `docs/ops/NOTION_GOVERNANCE_STAGING.md`
+- **`docs/ops/HEDGR_STATUS.md` §6c** — recorded repo recommendation that Transition Readiness is ready to mark shipped in downstream governance surfaces as **governance readiness only**
+- **`docs/ops/HEDGR_STATUS.md`** — **§6** merged-truth subsection `MC-S3-018`; **§7** completed list extended with `MC-S3-018`; **§7a** restored to no active ticket with the archived brief above
+
+**Scope discipline held.** **No** `apps/`, **no** `packages/`, **no** `scripts/`, **no** `.github/`, **no** tests, **no** backend, **no** frontend implementation, **no** CI workflow change, **no** runtime behavior, **no** ADR status change, and **no** successor ticket. The closeout does **not** authorize Circle integration, vendor integration, custody work, stablecoin work, execution integration, automated behavior, accounting truth, ledger mutation, policy-runtime binding, Copilot-runtime binding, live engine behavior, treasury execution, or Class B / Class C fund movement.
+
+**Validation.** Documentation-only diff review, `git diff --check -- docs/ops/HEDGR_STATUS.md`, and authorization-language search completed locally. No tests were run because the ticket scope explicitly excludes tests.
 
 ### Sequencing note
 
