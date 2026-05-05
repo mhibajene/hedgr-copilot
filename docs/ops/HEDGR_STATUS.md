@@ -984,7 +984,7 @@ Completed and merged:
 - `MC-S3-016` - Playwright smoke coverage for shipped dashboard Stability Engine posture context (test-only; merged PR **#141**; completed record **§48**)
 - `MC-S3-017` - Transition Readiness §6b inventory and readability refinement (documentation-only governance hardening; merged PR **#144**; completed record **§49**)
 - `MC-S3-018` - Stability Engine Transition Readiness closeout assessment (documentation-only governance closeout; completed record **§50**)
-- `MC-S3-019` - Playwright smoke coverage extension for shipped Stability Engine trust surfaces (test-only; local closeout pending PR; completed record **§51**)
+- `MC-S3-019` - Playwright smoke coverage extension for shipped Stability Engine trust surfaces (test-only; merged PR **#148**; completed record **§51**)
 
 Current active ticket status:
 
@@ -1010,7 +1010,7 @@ When governance approves the next ticket, **§7** will name it and this section 
 
 ---
 
-**Archived brief (MC-S3-019):** Playwright smoke coverage extension for shipped Stability Engine trust surfaces — **test-only**; scope held to **`apps/frontend/tests-e2e/smoke-pack.spec.ts`** and **`docs/ops/HEDGR_STATUS.md`**. Added narrow Playwright smoke assertions after mock login and shipped dashboard load for visible, non-empty **`engine-posture-badge`** and **`engine-allocation-bands`**; preserved existing localhost-only smoke-pack route blocking and existing login/dashboard navigation flow. **No** production UI changes, **no** copy changes, **no** `apps/frontend/lib/engine/**`, **no** backend, **no** packages, **no** CI workflow change, **no** new `EnginePosture` values, **no** simulator changes, **no** transaction, withdraw, market-data, Copilot, policy, ledger, accounting, vendor, custody, Circle, stablecoin, or live-service behavior; allocation-band assertions remain presence oriented and do **not** imply ledger truth, settled balances, executable allocation, or accounting authority. Completed record: **§51**.
+**Archived brief (MC-S3-019):** Playwright smoke coverage extension for shipped Stability Engine trust surfaces — **test-only**; scope held to **`apps/frontend/tests-e2e/smoke-pack.spec.ts`** and **`docs/ops/HEDGR_STATUS.md`**. Added narrow Playwright smoke assertions after mock login and shipped dashboard load for visible, non-empty **`engine-posture-badge`** and **`engine-allocation-bands`**; preserved existing localhost-only smoke-pack route blocking and existing login/dashboard navigation flow. **No** production UI changes, **no** copy changes, **no** `apps/frontend/lib/engine/**`, **no** backend, **no** packages, **no** CI workflow change, **no** new `EnginePosture` values, **no** simulator changes, **no** transaction, withdraw, market-data, Copilot, policy, ledger, accounting, vendor, custody, Circle, stablecoin, or live-service behavior; allocation-band assertions remain presence oriented and do **not** imply ledger truth, settled balances, executable allocation, or accounting authority. Merged PR **#148**. Completed record: **§51**.
 
 **Archived brief (MC-S3-018):** Stability Engine Transition Readiness closeout assessment — **documentation-only governance closeout**; scope held to **`docs/ops/HEDGR_STATUS.md`**. Added **§6c** with mandatory/supporting closeout criteria, evidence table, and repo recommendation that **Stability Engine™️ - Transition Readiness** is ready to mark shipped in downstream governance surfaces as **governance readiness only**. Reconciled the verdict against **§6b** classification-not-authorization, **§7** / **§7a** sequencing authority, `AGENTS.md`, `docs/decisions/SPRINT-2-ADR-INDEX.md`, ADRs **0013** through **0017**, completed records **§32** through **§49**, and tracked Notion governance staging. **No** `apps/`, **no** `packages/`, **no** `scripts/`, **no** `.github/`, **no** tests, **no** backend, **no** frontend implementation, **no** CI, **no** runtime behavior, **no** ADR status change, **no** successor ticket, **no** Circle/vendor/custody/stablecoin/execution integration, **no** accounting/ledger/policy-runtime/Copilot-runtime/live-engine authority, and **no** Class B / Class C fund movement authority. Completed record: **§50**.
 
@@ -2135,7 +2135,7 @@ This **§43** record was originally written in the same working-tree change-set 
 
 **Ticket:** `MC-S3-018` — Stability Engine Transition Readiness closeout assessment (documentation-only governance closeout)
 
-**Branch / PR:** Local status update / pending PR
+**Branch / PR:** Merged PR **#146**
 
 ### Outcome (documentation-only)
 
@@ -2161,7 +2161,7 @@ This **§43** record was originally written in the same working-tree change-set 
 
 **Ticket:** `MC-S3-019` — Playwright smoke coverage extension for shipped Stability Engine trust surfaces (test-only)
 
-**Branch / PR:** Local status update / pending PR
+**Branch / PR:** `codex/mc-s3-019-smoke-trust-surfaces` / **PR #148**
 
 ### Outcome (test-only)
 
