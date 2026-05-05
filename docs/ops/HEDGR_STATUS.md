@@ -1,6 +1,6 @@
 Status: Canonical hand-off file
 Purpose: Strategic continuity, merged implementation truth, and next-ticket authority for Cursor execution
-Last updated: 2026-05-01
+Last updated: 2026-05-05
 
 ---
 
@@ -498,6 +498,26 @@ Implementation posture preserved:
 - allocation-band smoke assertions are visibility / presence oriented only and do not imply ledger truth, settled balances, executable allocation, or accounting authority
 - no ADR under ticket intent
 
+### COP-GOV-001 - Copilot MVP advisory lane definition (documentation-only)
+
+Merged files:
+
+- `docs/ops/COPILOT_MVP_ADVISORY_LANE_DEFINITION_DRAFT.md`
+- `docs/ops/HEDGR_STATUS.md`
+
+Implementation truth:
+
+- documentation-only governance artifact defines the current repo-safe meaning of **“Copilot MVP (advisory lane)”** as advisory, explanatory, non-directive, non-executing, non-binding, non-accounting, non-policy-authoritative, hermetic in CI, and subordinate to Stability Engine / product truth surfaces
+- the draft records permitted advisory jobs, explicitly blocked Copilot capabilities, data access boundaries, UX / copy guardrails, ADR / governance gates for future widening, and candidate future tickets as **not authorized**
+- `docs/copilot/**` remains reference input only unless a future **§7a** explicitly extends edit scope
+- **“Copilot MVP”** remains an internal governance label, not approved customer-facing naming or launch framing
+
+Implementation posture preserved:
+
+- **documentation-only** governance definition; **no** `apps/`, **no** `packages/`, **no** `.github/`, **no** tests, **no** Copilot UI, **no** backend services, **no** model API calls, **no** vendor integrations, **no** ADR status changes, and **no** successor ticket
+- no Copilot runtime binding, directive Copilot, customer-facing automation, finance-style autonomy, policy / engine binding, account truth, ledger authority, accounting semantics, custody, Circle, stablecoin, vendor rails, execution, or value-movement authority was introduced
+- no ADR under ticket intent
+
 ### MC-S2-004 - Allocation bands UI
 
 Implementation truth:
@@ -985,10 +1005,12 @@ Completed and merged:
 - `MC-S3-017` - Transition Readiness §6b inventory and readability refinement (documentation-only governance hardening; merged PR **#144**; completed record **§49**)
 - `MC-S3-018` - Stability Engine Transition Readiness closeout assessment (documentation-only governance closeout; completed record **§50**)
 - `MC-S3-019` - Playwright smoke coverage extension for shipped Stability Engine trust surfaces (test-only; merged PR **#148**; completed record **§51**)
+- `COP-GOV-001` - Copilot MVP advisory lane definition (documentation-only governance artifact; completed record **§52**)
 
 Current active ticket status:
 
 - **Approved next ticket:** **None named.** There is **no** approved next implementation ticket until **§7** is updated explicitly to name one.
+- **Post–`COP-GOV-001` sequencing (governance-accepted):** `COP-GOV-001` completed the intended **advisory-boundary definition** lane as a documentation-only governance artifact. It did **not** widen product, engine, backend, policy, Copilot **runtime**, execution, accounting, ledger, vendor, custody, stablecoin, Circle, live-service, or customer-facing automation authority. Copilot MVP posture remains **advisory, non-directive, non-executing, hermetic, non-accounting, non-policy-authoritative**, and **outside `§6b` category 8** unless future doctrine and ADRs widen the boundary. Any later Copilot **implementation** requires a separate **§7** name and **§7a** brief. Do not infer Copilot implementation, runtime binding, engine binding, policy binding, backend work, execution authority, or finance-style autonomy from `COP-GOV-001`.
 - **Governance reconciliation note:** **`UI-SRA-001`** activation artifacts (`docs/ops/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_EXECUTION_REQUEST.md`, **`docs/ops/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_STATUS_PATCH_PROPOSAL.md`**, and **§7** / **§7a** activation language) first landed in commit **`1bd65d1`**; shipped dashboard implementation landed in **`da96e1e`**. Branch history was reconciled so activation, support docs, implementation, and this closeout (**§44**) cohabit the same lineage without implying a false single-commit ordering. See **`docs/ops/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_EXECUTION_READOUT.md` §2**.
 - **§6b** is not sequencing authority — Transition Readiness taxonomy and scrutiny input only; only **§7** / **§7a** name approved implementation work when a ticket is active. `MC-S3-017` clarified this rule; it did not convert §6b table rows, examples, or disposition labels into backlog approval.
 - When **§7** names an approved ticket, the execution brief lives in **§7a** until closeout. When **§7** names none, **§7a** holds the no-active-ticket stub.
@@ -998,7 +1020,7 @@ Current active ticket status:
 - Cursor must not continue automatically into work beyond what is explicitly defined in this file for an active ticket.
 - Cursor must not drift beyond explicitly defined scope.
 
-**Last completed ticket (summary):** `MC-S3-019` — Playwright smoke coverage extension for shipped Stability Engine trust surfaces (test-only; added visibility and non-empty text assertions for `engine-posture-badge` and `engine-allocation-bands` in `apps/frontend/tests-e2e/smoke-pack.spec.ts`; preserved hermetic localhost-only route blocking and existing mock login/dashboard flow; restored **§7** / **§7a** to no-active-ticket state); completed record in **§51**.
+**Last completed ticket (summary):** `COP-GOV-001` — Copilot MVP advisory lane definition (documentation-only governance artifact; defined advisory/non-directive/non-executing boundaries, blocked capabilities, data classes, copy guardrails, source-of-truth hierarchy, future ADR/governance gates, and not-authorized candidate tickets; preserved `docs/copilot/**` as reference-only unless future **§7a** extends scope; restored **§7** / **§7a** to no-active-ticket state); completed record in **§52**.
 
 ---
 
@@ -1009,6 +1031,8 @@ Current active ticket status:
 When governance approves the next ticket, **§7** will name it and this section will hold the full execution brief until closeout.
 
 ---
+
+**Archived brief (COP-GOV-001):** Copilot MVP advisory lane definition — **documentation-only governance artifact**; scope held to **`docs/ops/COPILOT_MVP_ADVISORY_LANE_DEFINITION_DRAFT.md`** and **`docs/ops/HEDGR_STATUS.md`**. Defined “Copilot MVP (advisory lane)” as internal governance language only, not customer-facing launch naming; documented advisory, explanatory, non-directive, non-executing, non-binding, non-accounting, non-policy-authoritative, hermetic, subordinate Copilot posture; captured permitted advisory jobs, blocked capabilities, data access boundaries, UX / copy guardrails, source-of-truth hierarchy, future ADR / governance gates, and candidate future tickets A-D as **not authorized**. `docs/copilot/**` remains reference input only unless future **§7a** explicitly extends edit scope. **No** `apps/`, **no** `packages/`, **no** `.github/`, **no** tests, **no** Copilot UI, **no** backend services, **no** model API calls, **no** vendor integrations, **no** ADR status changes, **no** successor ticket, and **no** implication of execution, ledger, policy-runtime, engine, Circle, custody, stablecoin, account, vendor, or live-service authority. Completed record: **§52**.
 
 **Archived brief (MC-S3-019):** Playwright smoke coverage extension for shipped Stability Engine trust surfaces — **test-only**; scope held to **`apps/frontend/tests-e2e/smoke-pack.spec.ts`** and **`docs/ops/HEDGR_STATUS.md`**. Added narrow Playwright smoke assertions after mock login and shipped dashboard load for visible, non-empty **`engine-posture-badge`** and **`engine-allocation-bands`**; preserved existing localhost-only smoke-pack route blocking and existing login/dashboard navigation flow. **No** production UI changes, **no** copy changes, **no** `apps/frontend/lib/engine/**`, **no** backend, **no** packages, **no** CI workflow change, **no** new `EnginePosture` values, **no** simulator changes, **no** transaction, withdraw, market-data, Copilot, policy, ledger, accounting, vendor, custody, Circle, stablecoin, or live-service behavior; allocation-band assertions remain presence oriented and do **not** imply ledger truth, settled balances, executable allocation, or accounting authority. Merged PR **#148**. Completed record: **§51**.
 
@@ -2000,6 +2024,31 @@ This **§43** record was originally written in the same working-tree change-set 
 ### Governance reconciliation
 
 **§7** activation for **`UI-SRA-001`** was introduced in **`1bd65d1`**; implementation was **`da96e1e`**. Reconciliation merged support docs + status language onto the implementation branch so **authority artifacts and code** share visible lineage; the readout **does not** claim a single original timestamp for both.
+
+### Sequencing note
+
+**§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
+
+**Follow-ups:** Any successor appears only when **§7** is updated explicitly.
+
+---
+
+## 52. Completed execution ticket - COP-GOV-001 (Copilot MVP advisory lane definition)
+
+**Ticket:** `COP-GOV-001` — Copilot MVP advisory lane definition (documentation-only governance artifact)
+
+**Branch / PR:** `docs/cop-gov-001-advisory-lane-definition` / **PR #150**
+
+### Outcome (documentation-only)
+
+- **`docs/ops/COPILOT_MVP_ADVISORY_LANE_DEFINITION_DRAFT.md`** — added the active governance artifact defining the advisory-lane meaning of “Copilot MVP” as internal governance language only, not approved customer-facing naming or launch framing
+- **`docs/ops/COPILOT_MVP_ADVISORY_LANE_DEFINITION_DRAFT.md`** — documented permitted advisory jobs, explicitly blocked Copilot capabilities, allowed / prerequisite-gated / blocked data classes, UX and copy guardrails, licensed-advisor boundary, source-of-truth hierarchy, and future ADR / governance gates
+- **`docs/ops/COPILOT_MVP_ADVISORY_LANE_DEFINITION_DRAFT.md`** — marked candidate future tickets A-D as not authorized; kept `docs/copilot/**` as reference input only unless future **§7a** explicitly extends scope
+- **`docs/ops/HEDGR_STATUS.md`** — added §6 merged-truth subsection `COP-GOV-001`; §7 completed list extended with `COP-GOV-001`; §7a restored to no active ticket with the archived brief above
+
+**Scope discipline held.** **No** `apps/`, **no** `packages/`, **no** `.github/`, **no** tests, **no** Copilot UI, **no** backend services, **no** model API calls, **no** vendor integrations, **no** ADR status changes, and **no** successor ticket. The closeout does **not** authorize Copilot runtime binding, directive Copilot, customer-facing automation, finance-style autonomy, policy / engine binding, account truth, ledger authority, accounting semantics, custody, Circle, stablecoin, vendor rails, execution, or value-movement authority.
+
+**Validation.** Human governance review accepted the advisory-lane definition as governance-safe. Documentation-only scope review, stale-activation language scan, accidental implementation-language scan, and file-scope review completed locally. No tests were run because the ticket scope explicitly excludes tests and product/runtime files.
 
 ### Sequencing note
 
