@@ -539,6 +539,34 @@ Implementation posture preserved:
 - **documentation-only** governance orientation; **no** `apps/`, **no** `packages/`, **no** `scripts/`, **no** `.github/`, **no** tests, **no** backend, **no** frontend product or copy edits, **no** CI workflow changes, **no** ADR status or index changes, **no** successor ticket named by the readout
 - no ADR under ticket intent
 
+### GOV-B-001 - Class B Pilot Eligibility Standard (documentation-only)
+
+Merged files:
+
+- `docs/ops/HEDGR_CLASS_B_PILOT_ELIGIBILITY_STANDARD.md`
+- `docs/ops/HEDGR_STATUS.md`
+
+Implementation truth:
+
+- governance-only standard added at `docs/ops/HEDGR_CLASS_B_PILOT_ELIGIBILITY_STANDARD.md`
+- defines mandatory and supporting criteria for future Class B pilot eligibility assessment
+- clarifies that eligibility means eligible for future `§7` / `§7a` consideration only
+- does not authorize implementation, execution, custody, rails, deposits, withdrawals, ledger mutation, stablecoin movement, treasury operations, Copilot execution, or customer fund movement
+
+Implementation posture preserved:
+
+- documentation-only governance artifact
+- no `apps/`
+- no `packages/`
+- no `scripts/`
+- no `.github/`
+- no backend
+- no frontend implementation
+- no tests
+- no CI workflow changes
+- no ADR status changes
+- no successor implementation ticket
+
 ### MC-S2-004 - Allocation bands UI
 
 Implementation truth:
@@ -1028,6 +1056,7 @@ Completed and merged:
 - `MC-S3-019` - Playwright smoke coverage extension for shipped Stability Engine trust surfaces (test-only; merged PR **#148**; completed record **§51**)
 - `COP-GOV-001` - Copilot MVP advisory lane definition (documentation-only governance artifact; completed record **§52**)
 - `MC-S3-020` - MVP phased alignment (documentation-only governance readout; merged PR **#152**; completed record **§53**)
+- `GOV-B-001` - Class B Pilot Eligibility Standard (documentation-only governance standard; completed record **§54**)
 
 Current active ticket status:
 
@@ -1042,7 +1071,7 @@ Current active ticket status:
 - Cursor must not continue automatically into work beyond what is explicitly defined in this file for an active ticket.
 - Cursor must not drift beyond explicitly defined scope.
 
-**Last completed ticket (summary):** `MC-S3-020` — MVP phased alignment (documentation-only governance readout mapping MVP spec **§5** / **§9** / **§12** and whitepaper North Star to **§2** / **§6a–§6c** repo posture; subordinate readout at **`docs/ops/HEDGR_MVP_PHASE_ALIGNMENT.md`**; merged **PR #152**; **§7** / **§7a** restored to no-active-ticket state); completed record in **§53**.
+**Last completed ticket (summary):** `GOV-B-001` — Class B Pilot Eligibility Standard (documentation-only governance standard defining minimum authority, ADR, legal/compliance, custody, rails, liquidity, UX/trust, ops/reconciliation, simulation/staging, and exclusion gates for future Class B pilot eligibility assessment; subordinate artifact at **`docs/ops/HEDGR_CLASS_B_PILOT_ELIGIBILITY_STANDARD.md`**; **§7** / **§7a** restored to no-active-ticket state; no approved Class B implementation ticket created); completed record in **§54**.
 
 ---
 
@@ -1053,6 +1082,8 @@ Current active ticket status:
 When governance approves the next ticket, **§7** will name it and this section will hold the full execution brief until closeout.
 
 ---
+
+**Archived brief (GOV-B-001):** Class B Pilot Eligibility Standard — **documentation-only governance standard**; scope held to **`docs/ops/HEDGR_CLASS_B_PILOT_ELIGIBILITY_STANDARD.md`** and **`docs/ops/HEDGR_STATUS.md`**. Created the repo-native standard for assessing future Class B pilot eligibility before any manual / limited execution ticket involving deposits, withdrawals, custody, rails, reconciliation, or treasury operations may be proposed for **§7**. The standard defines mandatory criteria **B-M1** through **B-M10**, supporting criteria, a future evidence-table template, explicit non-authorization clauses, and future-ticket requirements. Eligibility means eligible for future **§7** / **§7a** consideration only. **No** `apps/`, **no** `packages/`, **no** `scripts/`, **no** `.github/`, **no** tests, **no** backend, **no** frontend implementation or copy changes, **no** CI workflow changes, **no** ADR status changes, **no** successor ticket, **no** Class B implementation approval, and **no** deposits, withdrawals, custody, rails, ledger mutation, stablecoin movement, treasury operations, Copilot execution, or customer fund movement authority. Completed record: **§54**.
 
 **Archived brief (MC-S3-020):** MVP phased alignment — **documentation-only**; scope held to **`docs/ops/HEDGR_MVP_PHASE_ALIGNMENT.md`** and **`docs/ops/HEDGR_STATUS.md`**. Published readout mapping **`docs/doctrine/hedgr-mvp-project-specification.md`** **§5** (execution classes **A** / **B** / **C**), **§9** (governance-gated phases), and **§12** (success criteria), plus **`docs/doctrine/hedgr-whitepaper.md`** North Star framing, to **§2** / **§6a–§6c** repo posture so “MVP completion” is read as **phase-gated**, not as Class **B**/**C** execution readiness. Readout subordinates to **`HEDGR_STATUS.md` §7** / **§7a** and does **not** sequence work; **§3** item **9** is discoverability only. **No** `apps/`, **no** `packages/`, **no** `scripts/`, **no** `.github/`, **no** tests, **no** backend, **no** frontend implementation or copy changes, **no** CI workflow changes, **no** ADR status or index changes, **no** successor ticket. Merged PR **#152**. Completed record: **§53**.
 
@@ -2269,6 +2300,29 @@ This **§43** record was originally written in the same working-tree change-set 
 **Scope discipline held.** **No** `apps/`, **no** `packages/`, **no** `scripts/`, **no** `.github/`, **no** tests, **no** backend, **no** frontend implementation or product copy edits, **no** CI workflow changes, **no** ADR status or index changes, **no** successor ticket, and **no** widening of execution, ledger, policy-runtime, custody, vendor, Circle, stablecoin, or live-service authority.
 
 **Validation.** Readout acceptance shape verified against **§7a** brief (subordination language; **§9** vs repo posture; **§12** vs read-only / informational constraints); `git diff --check -- docs/ops/HEDGR_STATUS.md` clean. No tests were run because the ticket scope explicitly excludes tests and product/runtime files.
+
+### Sequencing note
+
+**§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
+
+**Follow-ups:** Any successor appears only when **§7** is updated explicitly.
+
+---
+
+## 54. Completed execution ticket - GOV-B-001 (Class B Pilot Eligibility Standard)
+
+**Ticket:** `GOV-B-001` — Class B Pilot Eligibility Standard (documentation-only governance standard)
+
+### Outcome (documentation-only)
+
+- **`docs/ops/HEDGR_CLASS_B_PILOT_ELIGIBILITY_STANDARD.md`** — added the repo-native governance standard defining minimum criteria before any future manual / limited Class B pilot execution ticket may be proposed for **§7**
+- **`docs/ops/HEDGR_CLASS_B_PILOT_ELIGIBILITY_STANDARD.md`** — defined mandatory criteria **B-M1** through **B-M10** covering authority, ADR, legal/compliance, custody, rails, liquidity and withdrawal integrity, UX/trust, ops/reconciliation, simulation/staging, and exclusions
+- **`docs/ops/HEDGR_CLASS_B_PILOT_ELIGIBILITY_STANDARD.md`** — added supporting criteria, a future evidence-table template, explicit non-authorization clauses, relationship-to-future-ticket rules, and closeout meaning
+- **`docs/ops/HEDGR_STATUS.md`** — added §6 merged-truth subsection `GOV-B-001`; §7 completed list extended with `GOV-B-001`; §7 / §7a restored to no active ticket; §7a archived brief for `GOV-B-001`; §54 (this record)
+
+**Scope discipline held.** **No** `apps/`, **no** `packages/`, **no** `scripts/`, **no** `.github/`, **no** tests, **no** backend, **no** frontend implementation or product copy edits, **no** CI workflow changes, **no** ADR status changes, **no** successor implementation ticket, and **no** Class B approval. This closeout does **not** authorize deposits, withdrawals, custody activation, rails integration, ledger mutation, stablecoin movement, treasury operations, Copilot execution, backend workers, production rail integration, Class C automation, or customer fund movement.
+
+**Validation.** Documentation-only diff review, `git diff --check -- docs/ops/HEDGR_CLASS_B_PILOT_ELIGIBILITY_STANDARD.md docs/ops/HEDGR_STATUS.md`, scoped artifact review, and `git status --short` completed locally. No tests were run because the ticket scope explicitly excludes tests and product/runtime files.
 
 ### Sequencing note
 
