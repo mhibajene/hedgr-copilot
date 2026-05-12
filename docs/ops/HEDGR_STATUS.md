@@ -2490,3 +2490,26 @@ This **§43** record was originally written in the same working-tree change-set 
 **§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
 
 **Follow-ups:** Any successor appears only when **§7** is updated explicitly.
+
+---
+
+## 57. Completed execution ticket - GOV-B-004 (Class B Legal / Compliance Requirements Memo)
+
+**Ticket:** `GOV-B-004` — Class B Legal / Compliance Requirements Memo (documentation-only governance / requirements memo)
+
+### Outcome (documentation-only)
+
+- **`docs/ops/HEDGR_CLASS_B_LEGAL_COMPLIANCE_REQUIREMENTS_MEMO.md`** — added the repo-native legal / compliance requirements memo as the first prerequisite artifact identified by the Class B Artifact Dependency Map
+- **`docs/ops/HEDGR_CLASS_B_LEGAL_COMPLIANCE_REQUIREMENTS_MEMO.md`** — framed unresolved legal, compliance, jurisdictional, eligibility, KYC / AML, rail-permission, custody, disclosure, data, support, and marketing-claims questions relevant to future Class B consideration
+- **`docs/ops/HEDGR_CLASS_B_LEGAL_COMPLIANCE_REQUIREMENTS_MEMO.md`** — identified requirement domains, current evidence posture, required future evidence, prohibited assumptions, qualified counsel / compliance review questions, and downstream artifacts constrained by legal / compliance review
+- **`docs/ops/HEDGR_STATUS.md`** — added §6 merged-truth subsection `GOV-B-004`; updated the §7 completed list and last-completed summary; preserved §7 / §7a no-active-ticket posture; added §7a archived brief for `GOV-B-004`; §57 (this record)
+
+**Scope discipline held.** **No** `apps/`, **no** `packages/`, **no** `scripts/`, **no** `.github/`, **no** tests, **no** backend, **no** frontend implementation or product copy edits, **no** CI workflow changes, **no** ADR status changes, **no** successor implementation ticket, and **no** Class B approval. This closeout does **not** provide legal advice, does **not** claim regulatory approval, and does **not** authorize custody, rails, deposits, withdrawals, stablecoin conversion, ledger mutation, treasury operations, Copilot execution, Class C automation, or customer fund movement.
+
+**Validation.** Documentation-only diff review, `git diff --check -- docs/ops/HEDGR_CLASS_B_LEGAL_COMPLIANCE_REQUIREMENTS_MEMO.md docs/ops/HEDGR_STATUS.md`, scoped artifact review, and `git status --short` completed locally. No tests were run because the ticket scope explicitly excludes tests and product/runtime files.
+
+### Sequencing note
+
+**§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
+
+**Follow-ups:** Any successor appears only when **§7** is updated explicitly.
