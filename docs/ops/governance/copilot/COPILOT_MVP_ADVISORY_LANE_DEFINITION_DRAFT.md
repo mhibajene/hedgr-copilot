@@ -4,7 +4,7 @@
 **Last updated:** 2026-05-05
 **Working label:** `COP-GOV-001 — Copilot MVP advisory lane definition`
 
-This `_DRAFT` file is the completed `COP-GOV-001` documentation artifact. `docs/ops/HEDGR_STATUS.md` remains the authority for current **§7** / **§7a** state and now restores the repo to no active execution ticket after this docs-only closeout. The filename remains `_DRAFT` unless governance explicitly accepts this filename as canonical or promotes the content into a successor such as `docs/ops/COPILOT_MVP_ADVISORY_LANE_DEFINITION.md`. **Do not rename** this file in this pass unless explicitly instructed.
+This `_DRAFT` file is the completed `COP-GOV-001` documentation artifact. `docs/ops/HEDGR_STATUS.md` remains the authority for current **§7** / **§7a** state and now restores the repo to no active execution ticket after this docs-only closeout. The filename remains `_DRAFT` unless governance explicitly accepts this filename as canonical or promotes the content into a **non-`_DRAFT` successor** in **`docs/ops/governance/copilot/`** (exact filename chosen by governance). **Do not rename** this file in this pass unless explicitly instructed.
 
 ---
 

@@ -87,16 +87,16 @@ Codex must work from **explicit artifacts** and **fixed scope** only—not loose
 
 **Minimum required inputs (paths under `docs/ops/`):**
 
-1. `HEDGR_RETAIL_UI_ALLOCATION_LEGIBILITY_BRIEF.md`  
-2. `HEDGR_RETAIL_UI_ALLOCATION_VISUAL_PATTERN_COMPARISON.md`  
-3. `HEDGR_RETAIL_UI_ALLOCATION_PATTERN_MICRO_TEST.md`  
-4. `HEDGR_RETAIL_UI_CRITIQUE_SCORECARD.md`  
-5. `HEDGR_CODEX_USAGE_CONVENTION.md`  
+1. `docs/ops/retail-ui/allocation/HEDGR_RETAIL_UI_ALLOCATION_LEGIBILITY_BRIEF.md`  
+2. `docs/ops/retail-ui/allocation/HEDGR_RETAIL_UI_ALLOCATION_VISUAL_PATTERN_COMPARISON.md`  
+3. `docs/ops/retail-ui/allocation/HEDGR_RETAIL_UI_ALLOCATION_PATTERN_MICRO_TEST.md`  
+4. `docs/ops/retail-ui/prototype/HEDGR_RETAIL_UI_CRITIQUE_SCORECARD.md`  
+5. `docs/ops/governance/copilot/HEDGR_CODEX_USAGE_CONVENTION.md`  
 
 **Recommended verifier context (governance anchors, read-only for drift checks):**
 
-- `HEDGR_RETAIL_UI_PASS_RESOLUTION_NOTE.md` — pass resolution; allocation legibility expectations within calm-money discipline  
-- `HEDGR_STATUS.md` — sole implementation and sequencing authority; exploration remains subordinate  
+- `docs/ops/retail-ui/status-language/HEDGR_RETAIL_UI_PASS_RESOLUTION_NOTE.md` — pass resolution; allocation legibility expectations within calm-money discipline  
+- `docs/ops/HEDGR_STATUS.md` — sole implementation and sequencing authority; exploration remains subordinate  
 - `AGENTS.md` — repo execution standard  
 
 Codex must not treat chat history, memory, Chronicle, or inferred continuity as substitutes for these files. If any of those sources conflict with the listed artifacts or repo authority, they lose automatically for the purposes of this pilot.
