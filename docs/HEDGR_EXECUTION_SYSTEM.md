@@ -1,6 +1,6 @@
 HEDGR EXECUTION SYSTEM (v2.1 — CANONICAL)
 
-(Location: docs/ops/HEDGR_EXECUTION_SYSTEM.md)
+(Location: docs/HEDGR_EXECUTION_SYSTEM.md)
 
 ⸻
 

@@ -66,7 +66,7 @@ Important active constraints:
 
 **Sequencing authority:** Only **§7** / **§7a** name the approved next implementation ticket; **§6b** is Transition Readiness taxonomy and scrutiny input only—not backlog approval or sequencing.
 
-**MVP phased alignment (interpretation aid):** See **`docs/ops/HEDGR_MVP_PHASE_ALIGNMENT.md`** for how **`docs/doctrine/hedgr-mvp-project-specification.md`** governance-gated phases and success criteria map to the posture stated in this section and in **§6a–§6c**. That readout is **subordinate** to this file and to **§7** / **§7a**; it does **not** widen execution authority or substitute for **§7** naming.
+**MVP phased alignment (interpretation aid):** See **`docs/ops/governance/mvp/HEDGR_MVP_PHASE_ALIGNMENT.md`** for how **`docs/doctrine/hedgr-mvp-project-specification.md`** governance-gated phases and success criteria map to the posture stated in this section and in **§6a–§6c**. That readout is **subordinate** to this file and to **§7** / **§7a**; it does **not** widen execution authority or substitute for **§7** naming.
 
 ---
 
@@ -80,9 +80,9 @@ Before implementing or reviewing continuation work, read in this order:
 4. `docs/decisions/0015-stability-engine-is-the-system-center.md`
 5. `docs/decisions/0014-stability-engine-read-only-in-sprint-2.md`
 6. `docs/decisions/0013-allocation-bands-informational-not-accounting.md`
-7. `docs/ops/HEDGR_STABILITY_ENGINE_UI_EXPLORATION_NOTE.md` — retail UI critique / conformance frame for this lane only; subordinate to doctrine, accepted ADRs, and `HEDGR_STATUS.md`; does **not** sequence or approve implementation
-8. `docs/ops/HEDGR_STABILITY_ENGINE_UI_VARIANT_DISPOSITION.md` — verdict on the current retail UI variant artifact and Replace / Retire discipline for this lane only; subordinate to doctrine, accepted ADRs, the exploration note, and `HEDGR_STATUS.md`; does **not** sequence or approve implementation
-9. `docs/ops/HEDGR_MVP_PHASE_ALIGNMENT.md` — MVP phased alignment readout (maps MVP spec phased roadmap and success criteria to current repo posture in this file); subordinate to doctrine, accepted ADRs, and **`HEDGR_STATUS.md` §7** / **§7a**; does **not** widen execution authority, sequence work beyond **§7**, or substitute for **§7** naming
+7. `docs/ops/stability-engine/HEDGR_STABILITY_ENGINE_UI_EXPLORATION_NOTE.md` — retail UI critique / conformance frame for this lane only; subordinate to doctrine, accepted ADRs, and `HEDGR_STATUS.md`; does **not** sequence or approve implementation
+8. `docs/ops/stability-engine/HEDGR_STABILITY_ENGINE_UI_VARIANT_DISPOSITION.md` — verdict on the current retail UI variant artifact and Replace / Retire discipline for this lane only; subordinate to doctrine, accepted ADRs, the exploration note, and `HEDGR_STATUS.md`; does **not** sequence or approve implementation
+9. `docs/ops/governance/mvp/HEDGR_MVP_PHASE_ALIGNMENT.md` — MVP phased alignment readout (maps MVP spec phased roadmap and success criteria to current repo posture in this file); subordinate to doctrine, accepted ADRs, and **`HEDGR_STATUS.md` §7** / **§7a**; does **not** widen execution authority, sequence work beyond **§7**, or substitute for **§7** naming
 
 Items **1–6** are the core binding references for current implementation posture. Items **7–8** are lane-specific governance references for retail UI critique and variant disposition only; they are discoverability inputs, not sequencing authority. Item **9** is a phase-alignment readout only; it does **not** sequence or approve implementation. **`HEDGR_STATUS.md` §7** / **§7a** remain the sole surfaces that authorize implementation work.
 
@@ -349,7 +349,7 @@ Implementation posture preserved:
 
 Merged files:
 
-- `docs/ops/HEDGR_STABILITY_ENGINE_TRUST_SURFACE_TEST_COVERAGE_MATRIX.md`
+- `docs/ops/stability-engine/HEDGR_STABILITY_ENGINE_TRUST_SURFACE_TEST_COVERAGE_MATRIX.md`
 
 Implementation truth:
 
@@ -368,7 +368,7 @@ Merged files:
 
 - `apps/frontend/app/prototype/retail-dashboard/RetailDashboardPrototype.tsx`
 - `apps/frontend/app/prototype/retail-dashboard/mock-data.ts`
-- `docs/ops/HEDGR_RETAIL_UI_IMPLEMENTATION_SPIKE_READOUT.md`
+- `docs/ops/retail-ui/prototype/HEDGR_RETAIL_UI_IMPLEMENTATION_SPIKE_READOUT.md`
 - `docs/ops/HEDGR_STATUS.md`
 
 Implementation truth:
@@ -389,7 +389,7 @@ Implementation posture preserved:
 Merged files:
 
 - `apps/frontend/__tests__/engine-types-contract.test.ts`
-- `docs/ops/HEDGR_STABILITY_ENGINE_TRUST_SURFACE_TEST_COVERAGE_MATRIX.md`
+- `docs/ops/stability-engine/HEDGR_STABILITY_ENGINE_TRUST_SURFACE_TEST_COVERAGE_MATRIX.md`
 
 Implementation truth:
 
@@ -407,7 +407,7 @@ Implementation posture preserved:
 Merged files:
 
 - `apps/frontend/__tests__/engine-allocation-bands-panel-copy-contract.test.tsx`
-- `docs/ops/HEDGR_STABILITY_ENGINE_TRUST_SURFACE_TEST_COVERAGE_MATRIX.md`
+- `docs/ops/stability-engine/HEDGR_STABILITY_ENGINE_TRUST_SURFACE_TEST_COVERAGE_MATRIX.md`
 - `docs/ops/HEDGR_STATUS.md`
 
 Implementation truth:
@@ -505,7 +505,7 @@ Implementation posture preserved:
 
 Merged files:
 
-- `docs/ops/COPILOT_MVP_ADVISORY_LANE_DEFINITION_DRAFT.md`
+- `docs/ops/governance/copilot/COPILOT_MVP_ADVISORY_LANE_DEFINITION_DRAFT.md`
 - `docs/ops/HEDGR_STATUS.md`
 
 Implementation truth:
@@ -525,7 +525,7 @@ Implementation posture preserved:
 
 Merged files:
 
-- `docs/ops/HEDGR_MVP_PHASE_ALIGNMENT.md`
+- `docs/ops/governance/mvp/HEDGR_MVP_PHASE_ALIGNMENT.md`
 - `docs/ops/HEDGR_STATUS.md`
 
 Implementation truth:
@@ -543,12 +543,12 @@ Implementation posture preserved:
 
 Merged files:
 
-- `docs/ops/HEDGR_CLASS_B_PILOT_ELIGIBILITY_STANDARD.md`
+- `docs/ops/governance/class-b/HEDGR_CLASS_B_PILOT_ELIGIBILITY_STANDARD.md`
 - `docs/ops/HEDGR_STATUS.md`
 
 Implementation truth:
 
-- governance-only standard added at `docs/ops/HEDGR_CLASS_B_PILOT_ELIGIBILITY_STANDARD.md`
+- governance-only standard added at `docs/ops/governance/class-b/HEDGR_CLASS_B_PILOT_ELIGIBILITY_STANDARD.md`
 - defines mandatory and supporting criteria for future Class B pilot eligibility assessment
 - clarifies that eligibility means eligible for future `§7` / `§7a` consideration only
 - does not authorize implementation, execution, custody, rails, deposits, withdrawals, ledger mutation, stablecoin movement, treasury operations, Copilot execution, or customer fund movement
@@ -571,12 +571,12 @@ Implementation posture preserved:
 
 Merged files:
 
-- `docs/ops/HEDGR_CLASS_B_ELIGIBILITY_GAP_REGISTER.md`
+- `docs/ops/governance/class-b/HEDGR_CLASS_B_ELIGIBILITY_GAP_REGISTER.md`
 - `docs/ops/HEDGR_STATUS.md`
 
 Implementation truth:
 
-- governance-only gap register added at `docs/ops/HEDGR_CLASS_B_ELIGIBILITY_GAP_REGISTER.md`
+- governance-only gap register added at `docs/ops/governance/class-b/HEDGR_CLASS_B_ELIGIBILITY_GAP_REGISTER.md`
 - preserves repo-native memory of current evidence posture against `B-M1` through `B-M10`
 - records current posture as Pass: 3, Partial: 7, Fail: 0, Not assessed: 0
 - identifies future artifact types likely required before any Class B implementation proposal
@@ -599,12 +599,12 @@ Implementation posture preserved:
 
 Merged files:
 
-- `docs/ops/HEDGR_CLASS_B_ARTIFACT_DEPENDENCY_MAP.md`
+- `docs/ops/governance/class-b/HEDGR_CLASS_B_ARTIFACT_DEPENDENCY_MAP.md`
 - `docs/ops/HEDGR_STATUS.md`
 
 Implementation truth:
 
-- governance-only dependency map added at `docs/ops/HEDGR_CLASS_B_ARTIFACT_DEPENDENCY_MAP.md`
+- governance-only dependency map added at `docs/ops/governance/class-b/HEDGR_CLASS_B_ARTIFACT_DEPENDENCY_MAP.md`
 - maps dependency relationships between future Class B prerequisite artifacts identified in the Class B Eligibility Gap Register
 - consolidates the Class B governance spine without proposing or activating implementation
 - clarifies that dependency order is not backlog order, queue order, activation order, or implementation sequencing
@@ -626,12 +626,12 @@ Implementation posture preserved:
 
 Merged files:
 
-- `docs/ops/HEDGR_CLASS_B_LEGAL_COMPLIANCE_REQUIREMENTS_MEMO.md`
+- `docs/ops/governance/class-b/HEDGR_CLASS_B_LEGAL_COMPLIANCE_REQUIREMENTS_MEMO.md`
 - `docs/ops/HEDGR_STATUS.md`
 
 Implementation truth:
 
-- governance-only legal / compliance requirements memo added at `docs/ops/HEDGR_CLASS_B_LEGAL_COMPLIANCE_REQUIREMENTS_MEMO.md`
+- governance-only legal / compliance requirements memo added at `docs/ops/governance/class-b/HEDGR_CLASS_B_LEGAL_COMPLIANCE_REQUIREMENTS_MEMO.md`
 - frames unresolved legal, compliance, jurisdictional, eligibility, KYC / AML, rail-permission, custody, disclosure, data, support, and marketing-claims questions relevant to future Class B consideration
 - identifies downstream artifacts constrained by legal / compliance review
 - does not provide legal advice, claim regulatory approval, or create Class B eligibility approval
@@ -1126,9 +1126,9 @@ Completed and merged:
 - `MC-S3-009` - Regression resistance tranche 5 for shipped Stability Engine trust surfaces (test-only; merged PR **#121**; completed record **§40**)
 - `MC-S3-010` - Stability Engine retail UI governance read-path alignment (documentation only; merged PR **#123**; completed record **§41**)
 - `MC-S3-011` - Stability Engine trust-surface coverage matrix (documentation only; merged PR **#125**; completed record **§42**)
-- `MC-S3-012` - Retail UI money-first shell prototype-only bounded spike (presentation-only, prototype-route scope; merged PR **#129**; completed record **§43**; readout artifact **`docs/ops/HEDGR_RETAIL_UI_IMPLEMENTATION_SPIKE_READOUT.md`**)
-- `UI-SRA-001` - Shipped retail dashboard adaptation to settled money-first reference surface (bounded `app/(app)/dashboard/**` presentation-only; merged PR **#132**; completed record **§44**; readout **`docs/ops/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_EXECUTION_READOUT.md`**)
-- `UI-USH-001` - Retail upper-shell continuation refinement beneath settled header (previously merged bounded presentation-only work; governed execution readout **`docs/ops/HEDGR_RETAIL_UI_UPPER_SHELL_CONTINUATION_EXECUTION_READOUT.md`**)
+- `MC-S3-012` - Retail UI money-first shell prototype-only bounded spike (presentation-only, prototype-route scope; merged PR **#129**; completed record **§43**; readout artifact **`docs/ops/retail-ui/prototype/HEDGR_RETAIL_UI_IMPLEMENTATION_SPIKE_READOUT.md`**)
+- `UI-SRA-001` - Shipped retail dashboard adaptation to settled money-first reference surface (bounded `app/(app)/dashboard/**` presentation-only; merged PR **#132**; completed record **§44**; readout **`docs/ops/retail-ui/implementation-readouts/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_EXECUTION_READOUT.md`**)
+- `UI-USH-001` - Retail upper-shell continuation refinement beneath settled header (previously merged bounded presentation-only work; governed execution readout **`docs/ops/retail-ui/implementation-readouts/HEDGR_RETAIL_UI_UPPER_SHELL_CONTINUATION_EXECUTION_READOUT.md`**)
 - `MC-S3-013` - Canonical engine type export contract (test-only; merged PR **#134**; completed record **§45**)
 - `MC-S3-014` - MC-S3-012 merged-truth reconciliation (`HEDGR_STATUS.md` documentation/governance only; completed record **§46**)
 - `MC-S3-015` - Regression resistance tranche 6: allocation bands panel copy contract (test-only; merged PR **#138**; completed record **§47**)
@@ -1147,7 +1147,7 @@ Current active ticket status:
 
 - **Approved next ticket:** **None named.** There is **no** approved next implementation ticket until **§7** is updated explicitly to name one.
 - **Post–`COP-GOV-001` sequencing (governance-accepted):** `COP-GOV-001` completed the intended **advisory-boundary definition** lane as a documentation-only governance artifact. It did **not** widen product, engine, backend, policy, Copilot **runtime**, execution, accounting, ledger, vendor, custody, stablecoin, Circle, live-service, or customer-facing automation authority. Copilot MVP posture remains **advisory, non-directive, non-executing, hermetic, non-accounting, non-policy-authoritative**, and **outside `§6b` category 8** unless future doctrine and ADRs widen the boundary. Any later Copilot **implementation** requires a separate **§7** name and **§7a** brief. Do not infer Copilot implementation, runtime binding, engine binding, policy binding, backend work, execution authority, or finance-style autonomy from `COP-GOV-001`.
-- **Governance reconciliation note:** **`UI-SRA-001`** activation artifacts (`docs/ops/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_EXECUTION_REQUEST.md`, **`docs/ops/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_STATUS_PATCH_PROPOSAL.md`**, and **§7** / **§7a** activation language) first landed in commit **`1bd65d1`**; shipped dashboard implementation landed in **`da96e1e`**. Branch history was reconciled so activation, support docs, implementation, and this closeout (**§44**) cohabit the same lineage without implying a false single-commit ordering. See **`docs/ops/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_EXECUTION_READOUT.md` §2**.
+- **Governance reconciliation note:** **`UI-SRA-001`** activation artifacts (`docs/ops/retail-ui/implementation-readouts/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_EXECUTION_REQUEST.md`, **`docs/ops/retail-ui/implementation-readouts/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_STATUS_PATCH_PROPOSAL.md`**, and **§7** / **§7a** activation language) first landed in commit **`1bd65d1`**; shipped dashboard implementation landed in **`da96e1e`**. Branch history was reconciled so activation, support docs, implementation, and this closeout (**§44**) cohabit the same lineage without implying a false single-commit ordering. See **`docs/ops/retail-ui/implementation-readouts/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_EXECUTION_READOUT.md` §2**.
 - **§6b** is not sequencing authority — Transition Readiness taxonomy and scrutiny input only; only **§7** / **§7a** name approved implementation work when a ticket is active. `MC-S3-017` clarified this rule; it did not convert §6b table rows, examples, or disposition labels into backlog approval.
 - When **§7** names an approved ticket, the execution brief lives in **§7a** until closeout. When **§7** names none, **§7a** holds the no-active-ticket stub.
 - **Future work:** Further extension beyond any closed **§7** ticket still requires a new **§7** ticket; prototype-route outcomes do not widen scope by implication.
@@ -1156,7 +1156,7 @@ Current active ticket status:
 - Cursor must not continue automatically into work beyond what is explicitly defined in this file for an active ticket.
 - Cursor must not drift beyond explicitly defined scope.
 
-**Last completed ticket (summary):** `GOV-B-004` — Class B Legal / Compliance Requirements Memo (documentation-only governance / requirements memo framing unresolved legal, compliance, jurisdictional, eligibility, KYC / AML, rail-permission, custody, disclosure, data, support, and marketing-claims questions for future Class B consideration; subordinate artifact at **`docs/ops/HEDGR_CLASS_B_LEGAL_COMPLIANCE_REQUIREMENTS_MEMO.md`**; does not provide legal advice, claim regulatory approval, or create Class B eligibility approval; **§7** / **§7a** remain in no-active-ticket state; no approved Class B implementation ticket created); completed record in **§57**.
+**Last completed ticket (summary):** `GOV-B-004` — Class B Legal / Compliance Requirements Memo (documentation-only governance / requirements memo framing unresolved legal, compliance, jurisdictional, eligibility, KYC / AML, rail-permission, custody, disclosure, data, support, and marketing-claims questions for future Class B consideration; subordinate artifact at **`docs/ops/governance/class-b/HEDGR_CLASS_B_LEGAL_COMPLIANCE_REQUIREMENTS_MEMO.md`**; does not provide legal advice, claim regulatory approval, or create Class B eligibility approval; **§7** / **§7a** remain in no-active-ticket state; no approved Class B implementation ticket created); completed record in **§57**.
 
 ---
 
@@ -1168,17 +1168,17 @@ When governance approves the next ticket, **§7** will name it and this section 
 
 ---
 
-**Archived brief (GOV-B-004):** Class B Legal / Compliance Requirements Memo — **documentation-only governance / requirements memo**; scope held to **`docs/ops/HEDGR_CLASS_B_LEGAL_COMPLIANCE_REQUIREMENTS_MEMO.md`** and **`docs/ops/HEDGR_STATUS.md`**. Created the first prerequisite artifact identified by the Class B Artifact Dependency Map, framing unresolved legal, compliance, jurisdictional, eligibility, KYC / AML, rail-permission, custody, disclosure, data, support, and marketing-claims questions relevant to future Class B consideration. Identified requirement domains, current evidence posture, required future evidence, prohibited assumptions, qualified counsel / compliance review questions, and downstream artifacts constrained by legal / compliance review. This memo does **not** provide legal advice, does **not** claim regulatory approval, and does **not** activate, sequence, approve, or implement Class B execution. **No** `apps/`, **no** `packages/`, **no** tests, **no** backend, **no** frontend implementation, **no** CI workflow changes, **no** ADR status changes, **no** successor implementation ticket, **no** custody, rails, deposits, withdrawals, stablecoin conversion, ledger mutation, treasury operations, Copilot execution, Class C automation, or customer fund movement authority. Completed record: **§57**.
+**Archived brief (GOV-B-004):** Class B Legal / Compliance Requirements Memo — **documentation-only governance / requirements memo**; scope held to **`docs/ops/governance/class-b/HEDGR_CLASS_B_LEGAL_COMPLIANCE_REQUIREMENTS_MEMO.md`** and **`docs/ops/HEDGR_STATUS.md`**. Created the first prerequisite artifact identified by the Class B Artifact Dependency Map, framing unresolved legal, compliance, jurisdictional, eligibility, KYC / AML, rail-permission, custody, disclosure, data, support, and marketing-claims questions relevant to future Class B consideration. Identified requirement domains, current evidence posture, required future evidence, prohibited assumptions, qualified counsel / compliance review questions, and downstream artifacts constrained by legal / compliance review. This memo does **not** provide legal advice, does **not** claim regulatory approval, and does **not** activate, sequence, approve, or implement Class B execution. **No** `apps/`, **no** `packages/`, **no** tests, **no** backend, **no** frontend implementation, **no** CI workflow changes, **no** ADR status changes, **no** successor implementation ticket, **no** custody, rails, deposits, withdrawals, stablecoin conversion, ledger mutation, treasury operations, Copilot execution, Class C automation, or customer fund movement authority. Completed record: **§57**.
 
-**Archived brief (GOV-B-003):** Class B Artifact Dependency Map — **documentation-only governance / dependency map**; scope held to **`docs/ops/HEDGR_CLASS_B_ARTIFACT_DEPENDENCY_MAP.md`** and **`docs/ops/HEDGR_STATUS.md`**. Converted the Class B Eligibility Gap Register future artifact inventory into a dependency structure covering foundation, decision-prep, operational, UX / trust, and activation artifact classes. Mapped which future Class B prerequisite artifacts should precede, inform, or constrain others before any future Class B implementation proposal may be considered. This map does **not** answer which implementation ticket should be opened next and does **not** create a backlog, queue order, default next ticket, implementation authority, ADR acceptance, vendor approval, legal approval, custody approval, rail approval, or pilot approval. Dependency order is not backlog order, queue order, activation order, or implementation sequencing. **No** `apps/`, **no** `packages/`, **no** tests, **no** backend, **no** frontend implementation, **no** CI workflow changes, **no** ADR status changes, **no** successor implementation ticket, **no** custody, rails, deposits, withdrawals, stablecoin conversion, ledger mutation, treasury operations, Copilot execution, Class C automation, or customer fund movement authority. Completed record: **§56**.
+**Archived brief (GOV-B-003):** Class B Artifact Dependency Map — **documentation-only governance / dependency map**; scope held to **`docs/ops/governance/class-b/HEDGR_CLASS_B_ARTIFACT_DEPENDENCY_MAP.md`** and **`docs/ops/HEDGR_STATUS.md`**. Converted the Class B Eligibility Gap Register future artifact inventory into a dependency structure covering foundation, decision-prep, operational, UX / trust, and activation artifact classes. Mapped which future Class B prerequisite artifacts should precede, inform, or constrain others before any future Class B implementation proposal may be considered. This map does **not** answer which implementation ticket should be opened next and does **not** create a backlog, queue order, default next ticket, implementation authority, ADR acceptance, vendor approval, legal approval, custody approval, rail approval, or pilot approval. Dependency order is not backlog order, queue order, activation order, or implementation sequencing. **No** `apps/`, **no** `packages/`, **no** tests, **no** backend, **no** frontend implementation, **no** CI workflow changes, **no** ADR status changes, **no** successor implementation ticket, **no** custody, rails, deposits, withdrawals, stablecoin conversion, ledger mutation, treasury operations, Copilot execution, Class C automation, or customer fund movement authority. Completed record: **§56**.
 
-**Archived brief (GOV-B-002):** Class B Eligibility Gap Register — **documentation-only governance / evidence register**; scope held to **`docs/ops/HEDGR_CLASS_B_ELIGIBILITY_GAP_REGISTER.md`** and **`docs/ops/HEDGR_STATUS.md`**. Preserved repo-native memory of the current evidence posture against **B-M1** through **B-M10** from the Class B Pilot Eligibility Standard, recording **Pass: 3**, **Partial: 7**, **Fail: 0**, **Not assessed: 0**. Identified existing evidence posture, gaps / blockers, likely future artifact types, authority notes, gap categories, future artifact map, and drift risks. This register does **not** conclude that Hedgr is Class B ready and does **not** activate, sequence, approve, or implement Class B execution. **No** `apps/`, **no** `packages/`, **no** tests, **no** backend, **no** frontend implementation, **no** CI workflow changes, **no** ADR status changes, **no** successor implementation ticket, **no** custody, rails, deposits, withdrawals, ledger mutation, treasury operations, Copilot execution, Class C automation, or customer fund movement authority. Completed record: **§55**.
+**Archived brief (GOV-B-002):** Class B Eligibility Gap Register — **documentation-only governance / evidence register**; scope held to **`docs/ops/governance/class-b/HEDGR_CLASS_B_ELIGIBILITY_GAP_REGISTER.md`** and **`docs/ops/HEDGR_STATUS.md`**. Preserved repo-native memory of the current evidence posture against **B-M1** through **B-M10** from the Class B Pilot Eligibility Standard, recording **Pass: 3**, **Partial: 7**, **Fail: 0**, **Not assessed: 0**. Identified existing evidence posture, gaps / blockers, likely future artifact types, authority notes, gap categories, future artifact map, and drift risks. This register does **not** conclude that Hedgr is Class B ready and does **not** activate, sequence, approve, or implement Class B execution. **No** `apps/`, **no** `packages/`, **no** tests, **no** backend, **no** frontend implementation, **no** CI workflow changes, **no** ADR status changes, **no** successor implementation ticket, **no** custody, rails, deposits, withdrawals, ledger mutation, treasury operations, Copilot execution, Class C automation, or customer fund movement authority. Completed record: **§55**.
 
-**Archived brief (GOV-B-001):** Class B Pilot Eligibility Standard — **documentation-only governance standard**; scope held to **`docs/ops/HEDGR_CLASS_B_PILOT_ELIGIBILITY_STANDARD.md`** and **`docs/ops/HEDGR_STATUS.md`**. Created the repo-native standard for assessing future Class B pilot eligibility before any manual / limited execution ticket involving deposits, withdrawals, custody, rails, reconciliation, or treasury operations may be proposed for **§7**. The standard defines mandatory criteria **B-M1** through **B-M10**, supporting criteria, a future evidence-table template, explicit non-authorization clauses, and future-ticket requirements. Eligibility means eligible for future **§7** / **§7a** consideration only. **No** `apps/`, **no** `packages/`, **no** `scripts/`, **no** `.github/`, **no** tests, **no** backend, **no** frontend implementation or copy changes, **no** CI workflow changes, **no** ADR status changes, **no** successor ticket, **no** Class B implementation approval, and **no** deposits, withdrawals, custody, rails, ledger mutation, stablecoin movement, treasury operations, Copilot execution, or customer fund movement authority. Completed record: **§54**.
+**Archived brief (GOV-B-001):** Class B Pilot Eligibility Standard — **documentation-only governance standard**; scope held to **`docs/ops/governance/class-b/HEDGR_CLASS_B_PILOT_ELIGIBILITY_STANDARD.md`** and **`docs/ops/HEDGR_STATUS.md`**. Created the repo-native standard for assessing future Class B pilot eligibility before any manual / limited execution ticket involving deposits, withdrawals, custody, rails, reconciliation, or treasury operations may be proposed for **§7**. The standard defines mandatory criteria **B-M1** through **B-M10**, supporting criteria, a future evidence-table template, explicit non-authorization clauses, and future-ticket requirements. Eligibility means eligible for future **§7** / **§7a** consideration only. **No** `apps/`, **no** `packages/`, **no** `scripts/`, **no** `.github/`, **no** tests, **no** backend, **no** frontend implementation or copy changes, **no** CI workflow changes, **no** ADR status changes, **no** successor ticket, **no** Class B implementation approval, and **no** deposits, withdrawals, custody, rails, ledger mutation, stablecoin movement, treasury operations, Copilot execution, or customer fund movement authority. Completed record: **§54**.
 
-**Archived brief (MC-S3-020):** MVP phased alignment — **documentation-only**; scope held to **`docs/ops/HEDGR_MVP_PHASE_ALIGNMENT.md`** and **`docs/ops/HEDGR_STATUS.md`**. Published readout mapping **`docs/doctrine/hedgr-mvp-project-specification.md`** **§5** (execution classes **A** / **B** / **C**), **§9** (governance-gated phases), and **§12** (success criteria), plus **`docs/doctrine/hedgr-whitepaper.md`** North Star framing, to **§2** / **§6a–§6c** repo posture so “MVP completion” is read as **phase-gated**, not as Class **B**/**C** execution readiness. Readout subordinates to **`HEDGR_STATUS.md` §7** / **§7a** and does **not** sequence work; **§3** item **9** is discoverability only. **No** `apps/`, **no** `packages/`, **no** `scripts/`, **no** `.github/`, **no** tests, **no** backend, **no** frontend implementation or copy changes, **no** CI workflow changes, **no** ADR status or index changes, **no** successor ticket. Merged PR **#152**. Completed record: **§53**.
+**Archived brief (MC-S3-020):** MVP phased alignment — **documentation-only**; scope held to **`docs/ops/governance/mvp/HEDGR_MVP_PHASE_ALIGNMENT.md`** and **`docs/ops/HEDGR_STATUS.md`**. Published readout mapping **`docs/doctrine/hedgr-mvp-project-specification.md`** **§5** (execution classes **A** / **B** / **C**), **§9** (governance-gated phases), and **§12** (success criteria), plus **`docs/doctrine/hedgr-whitepaper.md`** North Star framing, to **§2** / **§6a–§6c** repo posture so “MVP completion” is read as **phase-gated**, not as Class **B**/**C** execution readiness. Readout subordinates to **`HEDGR_STATUS.md` §7** / **§7a** and does **not** sequence work; **§3** item **9** is discoverability only. **No** `apps/`, **no** `packages/`, **no** `scripts/`, **no** `.github/`, **no** tests, **no** backend, **no** frontend implementation or copy changes, **no** CI workflow changes, **no** ADR status or index changes, **no** successor ticket. Merged PR **#152**. Completed record: **§53**.
 
-**Archived brief (COP-GOV-001):** Copilot MVP advisory lane definition — **documentation-only governance artifact**; scope held to **`docs/ops/COPILOT_MVP_ADVISORY_LANE_DEFINITION_DRAFT.md`** and **`docs/ops/HEDGR_STATUS.md`**. Defined “Copilot MVP (advisory lane)” as internal governance language only, not customer-facing launch naming; documented advisory, explanatory, non-directive, non-executing, non-binding, non-accounting, non-policy-authoritative, hermetic, subordinate Copilot posture; captured permitted advisory jobs, blocked capabilities, data access boundaries, UX / copy guardrails, source-of-truth hierarchy, future ADR / governance gates, and candidate future tickets A-D as **not authorized**. `docs/copilot/**` remains reference input only unless future **§7a** explicitly extends edit scope. **No** `apps/`, **no** `packages/`, **no** `.github/`, **no** tests, **no** Copilot UI, **no** backend services, **no** model API calls, **no** vendor integrations, **no** ADR status changes, **no** successor ticket, and **no** implication of execution, ledger, policy-runtime, engine, Circle, custody, stablecoin, account, vendor, or live-service authority. Completed record: **§52**.
+**Archived brief (COP-GOV-001):** Copilot MVP advisory lane definition — **documentation-only governance artifact**; scope held to **`docs/ops/governance/copilot/COPILOT_MVP_ADVISORY_LANE_DEFINITION_DRAFT.md`** and **`docs/ops/HEDGR_STATUS.md`**. Defined “Copilot MVP (advisory lane)” as internal governance language only, not customer-facing launch naming; documented advisory, explanatory, non-directive, non-executing, non-binding, non-accounting, non-policy-authoritative, hermetic, subordinate Copilot posture; captured permitted advisory jobs, blocked capabilities, data access boundaries, UX / copy guardrails, source-of-truth hierarchy, future ADR / governance gates, and candidate future tickets A-D as **not authorized**. `docs/copilot/**` remains reference input only unless future **§7a** explicitly extends edit scope. **No** `apps/`, **no** `packages/`, **no** `.github/`, **no** tests, **no** Copilot UI, **no** backend services, **no** model API calls, **no** vendor integrations, **no** ADR status changes, **no** successor ticket, and **no** implication of execution, ledger, policy-runtime, engine, Circle, custody, stablecoin, account, vendor, or live-service authority. Completed record: **§52**.
 
 **Archived brief (MC-S3-019):** Playwright smoke coverage extension for shipped Stability Engine trust surfaces — **test-only**; scope held to **`apps/frontend/tests-e2e/smoke-pack.spec.ts`** and **`docs/ops/HEDGR_STATUS.md`**. Added narrow Playwright smoke assertions after mock login and shipped dashboard load for visible, non-empty **`engine-posture-badge`** and **`engine-allocation-bands`**; preserved existing localhost-only smoke-pack route blocking and existing login/dashboard navigation flow. **No** production UI changes, **no** copy changes, **no** `apps/frontend/lib/engine/**`, **no** backend, **no** packages, **no** CI workflow change, **no** new `EnginePosture` values, **no** simulator changes, **no** transaction, withdraw, market-data, Copilot, policy, ledger, accounting, vendor, custody, Circle, stablecoin, or live-service behavior; allocation-band assertions remain presence oriented and do **not** imply ledger truth, settled balances, executable allocation, or accounting authority. Merged PR **#148**. Completed record: **§51**.
 
@@ -1188,19 +1188,19 @@ When governance approves the next ticket, **§7** will name it and this section 
 
 **Archived brief (MC-S3-016):** Playwright smoke coverage for shipped dashboard Stability Engine posture context — **test-only**; added one focused smoke assertion in **`apps/frontend/tests-e2e/smoke-pack.spec.ts`** after mock login for visible, non-empty **`engine-posture-context`**; preserved existing localhost-only smoke-pack route blocking; added non-authoritative review artifacts under **`docs/ops/reviews/`**. **No** production UI changes, **no** `apps/frontend/lib/engine/**`, **no** backend, **no** CI workflow change, **no** new `EnginePosture` values, **no** simulator behavior, **no** transaction-review, withdraw, market-data, Copilot, policy, ledger, accounting, or live-service behavior; **no** Playwright assertions for `engine-posture-badge` or `engine-allocation-bands`. Merged PR **#141**. Completed record: **§48**.
 
-**Archived brief (MC-S3-015):** Regression resistance tranche 6: allocation bands panel copy contract — **test-only**; added **`apps/frontend/__tests__/engine-allocation-bands-panel-copy-contract.test.tsx`** to lock non-empty shipped panel title, caption, trust legend, and per-band descriptor nodes with informational trust-framing guards; updated **`docs/ops/HEDGR_STABILITY_ENGINE_TRUST_SURFACE_TEST_COVERAGE_MATRIX.md`** allocation-band row from **Partially covered** to **Covered**. **No** production component changes, **no** `EngineAllocationBands.tsx` copy edits, **no** `apps/frontend/lib/engine/**`, **no** new `EnginePosture` values, **no** simulator, backend, Playwright, CI, transaction-review, withdraw, market-data, or ADR **0017** seam widening. Merged PR **#138**. Completed record: **§47**.
+**Archived brief (MC-S3-015):** Regression resistance tranche 6: allocation bands panel copy contract — **test-only**; added **`apps/frontend/__tests__/engine-allocation-bands-panel-copy-contract.test.tsx`** to lock non-empty shipped panel title, caption, trust legend, and per-band descriptor nodes with informational trust-framing guards; updated **`docs/ops/stability-engine/HEDGR_STABILITY_ENGINE_TRUST_SURFACE_TEST_COVERAGE_MATRIX.md`** allocation-band row from **Partially covered** to **Covered**. **No** production component changes, **no** `EngineAllocationBands.tsx` copy edits, **no** `apps/frontend/lib/engine/**`, **no** new `EnginePosture` values, **no** simulator, backend, Playwright, CI, transaction-review, withdraw, market-data, or ADR **0017** seam widening. Merged PR **#138**. Completed record: **§47**.
 
 **Archived brief (MC-S3-014):** MC-S3-012 merged-truth reconciliation — **documentation/governance only**; scope held to `docs/ops/HEDGR_STATUS.md`; added **§6** merged-truth subsection for `MC-S3-012` with prototype-route-only and presentation-only boundaries; replaced stale `MC-S3-012` PR placeholder language with merged PR **#129** across **§7**, **§7a**, continuity, **§41** follow-up, and **§43**; converted **§43** pre-merge closeout posture into historical post-merge reconciliation language; preserved explicit rule that `MC-S3-012` prototype success does **not** authorize shipped-route work. **No** `apps/`, **no** `packages/`, **no** `scripts/`, **no** `.github/`, **no** CI, **no** tests, **no** backend, **no** `apps/frontend/lib/engine/**`, **no** shipped `(app)/dashboard/**`, **no** ADR. Completed record: **§46**.
 
-**Archived brief (MC-S3-013):** Canonical engine type export contract — **test-only**; added **`apps/frontend/__tests__/engine-types-contract.test.ts`** to lock canonical `EnginePosture` union, required `EngineState` keys, optional `notice`, and `EngineNotice` title/body shape; updated **`docs/ops/HEDGR_STABILITY_ENGINE_TRUST_SURFACE_TEST_COVERAGE_MATRIX.md`** `MC-S2-001` row from **Partially covered** to **Covered**. **No** `apps/frontend/lib/engine/types.ts` semantics change, **no** new posture values or trust states, **no** execution/accounting wording, **no** `mock.ts`, **no** `useEngineState`, **no** dashboard components, **no** withdraw/tx/market seams, **no** backend, **no** live network. `MC-S3-004` notice/mock contract behavior preserved in intent. No ADR under ticket intent. Merged PR **#134**. Completed record: **§45**.
+**Archived brief (MC-S3-013):** Canonical engine type export contract — **test-only**; added **`apps/frontend/__tests__/engine-types-contract.test.ts`** to lock canonical `EnginePosture` union, required `EngineState` keys, optional `notice`, and `EngineNotice` title/body shape; updated **`docs/ops/stability-engine/HEDGR_STABILITY_ENGINE_TRUST_SURFACE_TEST_COVERAGE_MATRIX.md`** `MC-S2-001` row from **Partially covered** to **Covered**. **No** `apps/frontend/lib/engine/types.ts` semantics change, **no** new posture values or trust states, **no** execution/accounting wording, **no** `mock.ts`, **no** `useEngineState`, **no** dashboard components, **no** withdraw/tx/market seams, **no** backend, **no** live network. `MC-S3-004` notice/mock contract behavior preserved in intent. No ADR under ticket intent. Merged PR **#134**. Completed record: **§45**.
 
-**Archived brief (UI-SRA-001):** Shipped retail dashboard **structural alignment** to settled money-first reference — **presentation-only**; touched **`apps/frontend/app/(app)/dashboard/page.tsx`**, **`EnginePostureHeader.tsx`**, **`EngineAllocationBands.tsx`**, **`apps/frontend/tests-e2e/smoke-pack.spec.ts`**; **no** `apps/frontend/lib/engine/**`, **no** `layout.client.tsx`, **no** backend. Execution readout **`docs/ops/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_EXECUTION_READOUT.md`**. Support artifacts **`docs/ops/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_EXECUTION_REQUEST.md`**, **`docs/ops/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_STATUS_PATCH_PROPOSAL.md`**. Merged PR **#132**. Completed record: **§44**. Governance lineage note in readout **§2** and **§7** reconciliation bullet above.
+**Archived brief (UI-SRA-001):** Shipped retail dashboard **structural alignment** to settled money-first reference — **presentation-only**; touched **`apps/frontend/app/(app)/dashboard/page.tsx`**, **`EnginePostureHeader.tsx`**, **`EngineAllocationBands.tsx`**, **`apps/frontend/tests-e2e/smoke-pack.spec.ts`**; **no** `apps/frontend/lib/engine/**`, **no** `layout.client.tsx`, **no** backend. Execution readout **`docs/ops/retail-ui/implementation-readouts/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_EXECUTION_READOUT.md`**. Support artifacts **`docs/ops/retail-ui/implementation-readouts/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_EXECUTION_REQUEST.md`**, **`docs/ops/retail-ui/implementation-readouts/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_STATUS_PATCH_PROPOSAL.md`**. Merged PR **#132**. Completed record: **§44**. Governance lineage note in readout **§2** and **§7** reconciliation bullet above.
 
-**Archived brief (MC-S3-012):** Retail UI money-first shell **prototype-only** bounded spike — **presentation-only**; scope held to `apps/frontend/app/prototype/retail-dashboard/**` (RetailDashboardPrototype.tsx added `Variant MS — Money-first shell` stack: `BalanceLedHero`, `SubordinateAllocation`, `MoneyFirstShellStack`; mock-data.ts added additive `stability.supportLine`); governance edits to **§7** / **§7a** of this file. **No** shipped `(app)/dashboard/**`, **no** `apps/frontend/lib/engine/**`, **no** `apps/backend/**`, **no** `packages/ui/**`, **no** copy-module or Vitest regression-contract edits from the `MC-S3-004` / `-006` / `-007` / `-008` / `-009` tranche. Reversibility preserved. Governed readout artifact **`docs/ops/HEDGR_RETAIL_UI_IMPLEMENTATION_SPIKE_READOUT.md`** records the spike's pass verdict and unresolved tensions. No ADR under ticket intent. Merged PR **#129**. Completed record: **§43**.
+**Archived brief (MC-S3-012):** Retail UI money-first shell **prototype-only** bounded spike — **presentation-only**; scope held to `apps/frontend/app/prototype/retail-dashboard/**` (RetailDashboardPrototype.tsx added `Variant MS — Money-first shell` stack: `BalanceLedHero`, `SubordinateAllocation`, `MoneyFirstShellStack`; mock-data.ts added additive `stability.supportLine`); governance edits to **§7** / **§7a** of this file. **No** shipped `(app)/dashboard/**`, **no** `apps/frontend/lib/engine/**`, **no** `apps/backend/**`, **no** `packages/ui/**`, **no** copy-module or Vitest regression-contract edits from the `MC-S3-004` / `-006` / `-007` / `-008` / `-009` tranche. Reversibility preserved. Governed readout artifact **`docs/ops/retail-ui/prototype/HEDGR_RETAIL_UI_IMPLEMENTATION_SPIKE_READOUT.md`** records the spike's pass verdict and unresolved tensions. No ADR under ticket intent. Merged PR **#129**. Completed record: **§43**.
 
-**Archived brief (MC-S3-011):** Stability Engine trust-surface **coverage matrix** — **documentation only**; artifact **`docs/ops/HEDGR_STABILITY_ENGINE_TRUST_SURFACE_TEST_COVERAGE_MATRIX.md`** maps **§6**-grounded shipped Stability Engine surfaces to **existing** Vitest evidence (covered / partially covered / uncovered); governance-evidence disclaimer; withdraw/tx/market **§6** rows omitted from matrix scope by default per artifact; **no** `apps/`, **no** `packages/`, **no** tests or CI; no ADR under ticket intent. Merged PR **#125**. Completed record: **§42**.
+**Archived brief (MC-S3-011):** Stability Engine trust-surface **coverage matrix** — **documentation only**; artifact **`docs/ops/stability-engine/HEDGR_STABILITY_ENGINE_TRUST_SURFACE_TEST_COVERAGE_MATRIX.md`** maps **§6**-grounded shipped Stability Engine surfaces to **existing** Vitest evidence (covered / partially covered / uncovered); governance-evidence disclaimer; withdraw/tx/market **§6** rows omitted from matrix scope by default per artifact; **no** `apps/`, **no** `packages/`, **no** tests or CI; no ADR under ticket intent. Merged PR **#125**. Completed record: **§42**.
 
-**Archived brief (MC-S3-010):** Stability Engine retail UI **governance read-path alignment** — **documentation only**; extended **`docs/ops/HEDGR_STATUS.md` §3** ordered read stack with **`docs/ops/HEDGR_STABILITY_ENGINE_UI_EXPLORATION_NOTE.md`** (exploration/critique frame) and **`docs/ops/HEDGR_STABILITY_ENGINE_UI_VARIANT_DISPOSITION.md`** (verdict on current variant artifact; Replace/Retire discipline), both explicitly subordinate to doctrine, accepted ADRs, and **`HEDGR_STATUS.md`**; **§7** / **§7a** remain sole implementation authority. **No** `apps/`, **no** `packages/`, **no** tests or CI. No ADR under ticket intent. Merged PR **#123**. Completed record: **§41**.
+**Archived brief (MC-S3-010):** Stability Engine retail UI **governance read-path alignment** — **documentation only**; extended **`docs/ops/HEDGR_STATUS.md` §3** ordered read stack with **`docs/ops/stability-engine/HEDGR_STABILITY_ENGINE_UI_EXPLORATION_NOTE.md`** (exploration/critique frame) and **`docs/ops/stability-engine/HEDGR_STABILITY_ENGINE_UI_VARIANT_DISPOSITION.md`** (verdict on current variant artifact; Replace/Retire discipline), both explicitly subordinate to doctrine, accepted ADRs, and **`HEDGR_STATUS.md`**; **§7** / **§7a** remain sole implementation authority. **No** `apps/`, **no** `packages/`, **no** tests or CI. No ADR under ticket intent. Merged PR **#123**. Completed record: **§41**.
 
 **Archived brief (MC-S3-009):** Regression resistance tranche 5 for shipped Stability Engine trust surfaces — **test-only**; extended **`apps/frontend/__tests__/engine-allocation-bands.test.tsx`** — per-`bandDescription()` coverage via **`#engine-allocation-band-liquidityTargetPct-desc`**, **`#engine-allocation-band-coreTargetPct-desc`**, **`#engine-allocation-band-yieldCapPct-desc`**; **`ENGINE_TRUST_INFORMATIONAL_DENYLIST`** and `executed` / `allocated to your` word guards; fixed sample **`EngineState`** (42/44/14); **`MC-S3-004`** `engine-notices-and-mock-contract.test.ts` unchanged in intent; prior regression precedents unchanged in intent. No ADR under ticket intent. Merged PR **#121**. Completed record: **§40**.
 
@@ -1236,7 +1236,7 @@ When governance approves the next ticket, **§7** will name it and this section 
 - **Regression resistance tranche 5 (test-only, completed):** `MC-S3-009` — **§40** (completed ticket record); merged PR **#121**.
 - **Retail UI governance read-path alignment (documentation-only, completed):** `MC-S3-010` — **§41** (completed ticket record); merged PR **#123**.
 - **Trust-surface coverage matrix (documentation-only, completed):** `MC-S3-011` — **§42** (completed ticket record); merged PR **#125**.
-- **Retail UI money-first shell prototype spike (presentation-only, prototype-route, completed):** `MC-S3-012` — **§43** (completed ticket record); governed readout **`docs/ops/HEDGR_RETAIL_UI_IMPLEMENTATION_SPIKE_READOUT.md`**; merged PR **#129**.
+- **Retail UI money-first shell prototype spike (presentation-only, prototype-route, completed):** `MC-S3-012` — **§43** (completed ticket record); governed readout **`docs/ops/retail-ui/prototype/HEDGR_RETAIL_UI_IMPLEMENTATION_SPIKE_READOUT.md`**; merged PR **#129**.
 - **MC-S3-012 merged-truth reconciliation (documentation/governance-only, completed):** `MC-S3-014` — **§46** (completed ticket record).
 - **Regression resistance tranche 6 (test-only, completed):** `MC-S3-015` — **§47** (completed ticket record); merged PR **#138**.
 - **Merged implementation truth:** **§6** remains canonical for shipped code boundaries.
@@ -2089,9 +2089,9 @@ No ADR or doctrine change under ticket intent. Merged PR **#121**.
 
 ### Outcome (documentation only)
 
-- **`docs/ops/HEDGR_STATUS.md` §3** — ordered read stack extended with items **7–8** for **`docs/ops/HEDGR_STABILITY_ENGINE_UI_EXPLORATION_NOTE.md`** and **`docs/ops/HEDGR_STABILITY_ENGINE_UI_VARIANT_DISPOSITION.md`**, with explicit subordination to doctrine, accepted ADRs, and **`HEDGR_STATUS.md`**; **`HEDGR_STATUS.md` §7** / **§7a** remain sole implementation authority in read-path wording
-- **`docs/ops/HEDGR_STABILITY_ENGINE_UI_EXPLORATION_NOTE.md`** — new (retail UI critique / conformance frame)
-- **`docs/ops/HEDGR_STABILITY_ENGINE_UI_VARIANT_DISPOSITION.md`** — new (verdict on current variant artifact; Replace / Retire discipline)
+- **`docs/ops/HEDGR_STATUS.md` §3** — ordered read stack extended with items **7–8** for **`docs/ops/stability-engine/HEDGR_STABILITY_ENGINE_UI_EXPLORATION_NOTE.md`** and **`docs/ops/stability-engine/HEDGR_STABILITY_ENGINE_UI_VARIANT_DISPOSITION.md`**, with explicit subordination to doctrine, accepted ADRs, and **`HEDGR_STATUS.md`**; **`HEDGR_STATUS.md` §7** / **§7a** remain sole implementation authority in read-path wording
+- **`docs/ops/stability-engine/HEDGR_STABILITY_ENGINE_UI_EXPLORATION_NOTE.md`** — new (retail UI critique / conformance frame)
+- **`docs/ops/stability-engine/HEDGR_STABILITY_ENGINE_UI_VARIANT_DISPOSITION.md`** — new (verdict on current variant artifact; Replace / Retire discipline)
 
 **No** `apps/`, **no** `packages/`, **no** tests or CI. No ADR under ticket intent. Merged PR **#123**.
 
@@ -2110,7 +2110,7 @@ No ADR or doctrine change under ticket intent. Merged PR **#121**.
 
 ### Outcome (documentation only)
 
-- **`docs/ops/HEDGR_STABILITY_ENGINE_TRUST_SURFACE_TEST_COVERAGE_MATRIX.md`** — governance evidence matrix mapping **§6**-grounded shipped Stability Engine trust surfaces to existing Vitest linkage (covered / partially covered / uncovered); disclaimer and scope exclusions per ticket brief; no exploratory-only, Paper, or retired concept rows
+- **`docs/ops/stability-engine/HEDGR_STABILITY_ENGINE_TRUST_SURFACE_TEST_COVERAGE_MATRIX.md`** — governance evidence matrix mapping **§6**-grounded shipped Stability Engine trust surfaces to existing Vitest linkage (covered / partially covered / uncovered); disclaimer and scope exclusions per ticket brief; no exploratory-only, Paper, or retired concept rows
 - **`docs/ops/HEDGR_STATUS.md`** — **§7** / **§7a** activation for **`MC-S3-011`** shipped in merge **PR #125**; this **§42** closeout restores **§7** / **§7a** to **no active ticket** and adds **§6** merged-truth subsection **`MC-S3-011`**
 
 **No** `apps/`, **no** `packages/`, **no** tests or CI. No ADR under ticket intent. Merged PR **#125**.
@@ -2119,7 +2119,7 @@ No ADR or doctrine change under ticket intent. Merged PR **#121**.
 
 **§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
 
-**Follow-ups:** Successor **`MC-S3-012`** completed — **§43** (retail UI money-first shell prototype-only bounded spike; presentation-only; governed readout **`docs/ops/HEDGR_RETAIL_UI_IMPLEMENTATION_SPIKE_READOUT.md`**; merged PR **#129**); successor **`MC-S3-014`** completed — **§46** (MC-S3-012 merged-truth reconciliation, documentation/governance only). Any successor after that appears only when **§7** is updated explicitly.
+**Follow-ups:** Successor **`MC-S3-012`** completed — **§43** (retail UI money-first shell prototype-only bounded spike; presentation-only; governed readout **`docs/ops/retail-ui/prototype/HEDGR_RETAIL_UI_IMPLEMENTATION_SPIKE_READOUT.md`**; merged PR **#129**); successor **`MC-S3-014`** completed — **§46** (MC-S3-012 merged-truth reconciliation, documentation/governance only). Any successor after that appears only when **§7** is updated explicitly.
 
 ---
 
@@ -2133,7 +2133,7 @@ No ADR or doctrine change under ticket intent. Merged PR **#121**.
 - **`apps/frontend/app/prototype/retail-dashboard/RetailDashboardPrototype.tsx`** — added **`Variant MS — Money-first shell`** stack as the governed direction and new default tab; new components `BalanceLedHero` (calmer neutral card; balance as the first dominant money read; `Stability status · Balanced · Protected · Accessible` trust context line), `SubordinateAllocation` (row-first Family C layer with a C2-range inline cue; `aria-hidden` cue with numeric as source of truth; informational footnote preserved verbatim), and `MoneyFirstShellStack` (governed order: balance hero → primary actions → recent activity → subordinate allocation → single calm disclosure). Existing `Control` / `Variant A` / `Variant B` stacks and their shared components unchanged; prior critique evidence preserved; `REVIEW_META` extended with an `ms` entry naming the governed direction, the tested behaviors, and the drift-risk vectors
 - **`apps/frontend/app/prototype/retail-dashboard/mock-data.ts`** — additive-only `stability.supportLine = 'Protected · Accessible'` descriptive trust companion; no existing mock fields changed; no banned framing introduced; no accounting-truth or live-operational implication
 - **`docs/ops/HEDGR_STATUS.md`** — **§7** / **§7a** activation for **`MC-S3-012`** shipped in the same PR as the implementation; this **§43** closeout restores **§7** / **§7a** to **no active ticket**
-- **`docs/ops/HEDGR_RETAIL_UI_IMPLEMENTATION_SPIKE_READOUT.md`** — new governed readout; records the spike's pass verdict, unresolved tensions (hero-ordering divergence vs. shipped dashboard, `Protected · Accessible` admissibility, Family C cue calibration, CTA treatment, disclosure chroma), and the non-authorization of any shipped-route edit
+- **`docs/ops/retail-ui/prototype/HEDGR_RETAIL_UI_IMPLEMENTATION_SPIKE_READOUT.md`** — new governed readout; records the spike's pass verdict, unresolved tensions (hero-ordering divergence vs. shipped dashboard, `Protected · Accessible` admissibility, Family C cue calibration, CTA treatment, disclosure chroma), and the non-authorization of any shipped-route edit
 
 **Scope discipline held.** **No** shipped `(app)/dashboard/**`, **no** `apps/frontend/lib/engine/**`, **no** `apps/backend/**`, **no** `packages/ui/**`, **no** copy-module edits; **no** `MC-S3-004` / `-006` / `-007` / `-008` / `-009` regression-contract test changes in intent; **no** new `EnginePosture` values, trust states, or IA restructuring; **no** APY, earn, chart-adjacent, or instrument-like treatment; **no** ADR under ticket intent.
 
@@ -2162,7 +2162,7 @@ This **§43** record was originally written in the same working-tree change-set 
 - **`apps/frontend/app/(app)/dashboard/EnginePostureHeader.tsx`** — calmer hierarchy (`sr-only` **Dashboard** title; **Overview** row; smaller badge); **no** `ENGINE_POSTURE_CONTEXT` edits
 - **`apps/frontend/app/(app)/dashboard/EngineAllocationBands.tsx`** — quieter outer chrome (tokens only)
 - **`apps/frontend/tests-e2e/smoke-pack.spec.ts`** — smoke gate aligns to **Total balance** anchor
-- **`docs/ops/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_EXECUTION_READOUT.md`** — this closeout readout; **§2** records activation (`1bd65d1`) vs implementation (`da96e1e`) lineage for audit honesty
+- **`docs/ops/retail-ui/implementation-readouts/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_EXECUTION_READOUT.md`** — this closeout readout; **§2** records activation (`1bd65d1`) vs implementation (`da96e1e`) lineage for audit honesty
 - **`docs/ops/HEDGR_STATUS.md`** — **§7** / **§7a** restored to **no active ticket** on this closeout; **§7** completed list extended with **`UI-SRA-001`**
 
 **Scope discipline held.** **No** `apps/frontend/lib/engine/**`, **no** `apps/frontend/app/(app)/layout.client.tsx`, **no** backend, **no** engine semantics or accounting-truth widening.
@@ -2187,9 +2187,9 @@ This **§43** record was originally written in the same working-tree change-set 
 
 ### Outcome (documentation-only)
 
-- **`docs/ops/COPILOT_MVP_ADVISORY_LANE_DEFINITION_DRAFT.md`** — added the active governance artifact defining the advisory-lane meaning of “Copilot MVP” as internal governance language only, not approved customer-facing naming or launch framing
-- **`docs/ops/COPILOT_MVP_ADVISORY_LANE_DEFINITION_DRAFT.md`** — documented permitted advisory jobs, explicitly blocked Copilot capabilities, allowed / prerequisite-gated / blocked data classes, UX and copy guardrails, licensed-advisor boundary, source-of-truth hierarchy, and future ADR / governance gates
-- **`docs/ops/COPILOT_MVP_ADVISORY_LANE_DEFINITION_DRAFT.md`** — marked candidate future tickets A-D as not authorized; kept `docs/copilot/**` as reference input only unless future **§7a** explicitly extends scope
+- **`docs/ops/governance/copilot/COPILOT_MVP_ADVISORY_LANE_DEFINITION_DRAFT.md`** — added the active governance artifact defining the advisory-lane meaning of “Copilot MVP” as internal governance language only, not approved customer-facing naming or launch framing
+- **`docs/ops/governance/copilot/COPILOT_MVP_ADVISORY_LANE_DEFINITION_DRAFT.md`** — documented permitted advisory jobs, explicitly blocked Copilot capabilities, allowed / prerequisite-gated / blocked data classes, UX and copy guardrails, licensed-advisor boundary, source-of-truth hierarchy, and future ADR / governance gates
+- **`docs/ops/governance/copilot/COPILOT_MVP_ADVISORY_LANE_DEFINITION_DRAFT.md`** — marked candidate future tickets A-D as not authorized; kept `docs/copilot/**` as reference input only unless future **§7a** explicitly extends scope
 - **`docs/ops/HEDGR_STATUS.md`** — added §6 merged-truth subsection `COP-GOV-001`; §7 completed list extended with `COP-GOV-001`; §7a restored to no active ticket with the archived brief above
 
 **Scope discipline held.** **No** `apps/`, **no** `packages/`, **no** `.github/`, **no** tests, **no** Copilot UI, **no** backend services, **no** model API calls, **no** vendor integrations, **no** ADR status changes, and **no** successor ticket. The closeout does **not** authorize Copilot runtime binding, directive Copilot, customer-facing automation, finance-style autonomy, policy / engine binding, account truth, ledger authority, accounting semantics, custody, Circle, stablecoin, vendor rails, execution, or value-movement authority.
@@ -2210,7 +2210,7 @@ This **§43** record was originally written in the same working-tree change-set 
 ### Outcome (test-only)
 
 - **`apps/frontend/__tests__/engine-types-contract.test.ts`** — new dedicated Vitest contract for `apps/frontend/lib/engine/types.ts`; locks the canonical four-value `EnginePosture` union, required `EngineState` keys, optional `notice`, and `EngineNotice` title/body shape with typed fixtures and runtime key assertions
-- **`docs/ops/HEDGR_STABILITY_ENGINE_TRUST_SURFACE_TEST_COVERAGE_MATRIX.md`** — `MC-S2-001` row updated from **Partially covered** to **Covered** because the canonical type surface now has a standalone contract test
+- **`docs/ops/stability-engine/HEDGR_STABILITY_ENGINE_TRUST_SURFACE_TEST_COVERAGE_MATRIX.md`** — `MC-S2-001` row updated from **Partially covered** to **Covered** because the canonical type surface now has a standalone contract test
 - **`docs/ops/HEDGR_STATUS.md`** — **§6** merged-truth subsection `MC-S3-013`; **§7** completed list extended with `MC-S3-013`; **§7a** restored to no active ticket with the archived brief above
 
 **Scope discipline held.** **No** `EngineState` semantics changed, **no** new `EnginePosture` values or trust states, **no** execution/accounting wording, **no** `apps/frontend/lib/engine/mock.ts`, **no** `useEngineState`, **no** dashboard components, **no** withdraw/tx/market seams, **no** backend, **no** live network behavior. **`MC-S3-004`** notice/mock contract behavior preserved in intent.
@@ -2260,7 +2260,7 @@ This **§43** record was originally written in the same working-tree change-set 
 
 - **`apps/frontend/__tests__/engine-allocation-bands-panel-copy-contract.test.tsx`** — new dedicated Vitest panel-copy contract for `EngineAllocationBands`; locks non-empty shipped panel title, caption, trust legend, and the three per-band descriptor nodes using a fixed `normal` posture fixture (`42 / 44 / 14`)
 - **`apps/frontend/__tests__/engine-allocation-bands-panel-copy-contract.test.tsx`** — applies existing informational trust-framing denylist plus `executed` and `allocated to your` guards to the shipped panel copy slice
-- **`docs/ops/HEDGR_STABILITY_ENGINE_TRUST_SURFACE_TEST_COVERAGE_MATRIX.md`** — allocation-band row (`MC-S2-004` / `MC-S3-005` / `MC-S3-009`) updated from **Partially covered** to **Covered**, citing the new dedicated contract plus existing behavioral/integration coverage
+- **`docs/ops/stability-engine/HEDGR_STABILITY_ENGINE_TRUST_SURFACE_TEST_COVERAGE_MATRIX.md`** — allocation-band row (`MC-S2-004` / `MC-S3-005` / `MC-S3-009`) updated from **Partially covered** to **Covered**, citing the new dedicated contract plus existing behavioral/integration coverage
 - **`docs/ops/HEDGR_STATUS.md`** — **§6** merged-truth subsection `MC-S3-015`; **§7** completed list extended with `MC-S3-015`; **§7a** restored to no active ticket with the archived brief above
 
 **Scope discipline held.** **No** production component changes, **no** `EngineAllocationBands.tsx` copy edits, **no** `apps/frontend/lib/engine/**`, **no** new `EnginePosture` values, **no** simulator behavior changes, **no** backend, **no** Playwright expansion, **no** CI workflow change, **no** transaction-review, withdraw, market-data, or ADR **0017** seam widening. No ADR under ticket intent.
@@ -2385,7 +2385,7 @@ This **§43** record was originally written in the same working-tree change-set 
 
 ### Outcome (documentation-only)
 
-- **`docs/ops/HEDGR_MVP_PHASE_ALIGNMENT.md`** — landed as the canonical readout mapping **`docs/doctrine/hedgr-mvp-project-specification.md`** **§5** / **§9** / **§12** and **`docs/doctrine/hedgr-whitepaper.md`** North Star framing to **`docs/ops/HEDGR_STATUS.md` §2** / **§6a–§6c** posture; subordinate to **`HEDGR_STATUS.md` §7** / **§7a**; does **not** sequence work
+- **`docs/ops/governance/mvp/HEDGR_MVP_PHASE_ALIGNMENT.md`** — landed as the canonical readout mapping **`docs/doctrine/hedgr-mvp-project-specification.md`** **§5** / **§9** / **§12** and **`docs/doctrine/hedgr-whitepaper.md`** North Star framing to **`docs/ops/HEDGR_STATUS.md` §2** / **§6a–§6c** posture; subordinate to **`HEDGR_STATUS.md` §7** / **§7a**; does **not** sequence work
 - **`docs/ops/HEDGR_STATUS.md`** — **§6** merged-truth subsection **`MC-S3-020`**; **§7** completed list extended with **`MC-S3-020`**; **§7** / **§7a** restored to **no active ticket**; **§7a** archived brief for **`MC-S3-020`**; **§53** (this record)
 
 **Scope discipline held.** **No** `apps/`, **no** `packages/`, **no** `scripts/`, **no** `.github/`, **no** tests, **no** backend, **no** frontend implementation or product copy edits, **no** CI workflow changes, **no** ADR status or index changes, **no** successor ticket, and **no** widening of execution, ledger, policy-runtime, custody, vendor, Circle, stablecoin, or live-service authority.
@@ -2406,14 +2406,14 @@ This **§43** record was originally written in the same working-tree change-set 
 
 ### Outcome (documentation-only)
 
-- **`docs/ops/HEDGR_CLASS_B_PILOT_ELIGIBILITY_STANDARD.md`** — added the repo-native governance standard defining minimum criteria before any future manual / limited Class B pilot execution ticket may be proposed for **§7**
-- **`docs/ops/HEDGR_CLASS_B_PILOT_ELIGIBILITY_STANDARD.md`** — defined mandatory criteria **B-M1** through **B-M10** covering authority, ADR, legal/compliance, custody, rails, liquidity and withdrawal integrity, UX/trust, ops/reconciliation, simulation/staging, and exclusions
-- **`docs/ops/HEDGR_CLASS_B_PILOT_ELIGIBILITY_STANDARD.md`** — added supporting criteria, a future evidence-table template, explicit non-authorization clauses, relationship-to-future-ticket rules, and closeout meaning
+- **`docs/ops/governance/class-b/HEDGR_CLASS_B_PILOT_ELIGIBILITY_STANDARD.md`** — added the repo-native governance standard defining minimum criteria before any future manual / limited Class B pilot execution ticket may be proposed for **§7**
+- **`docs/ops/governance/class-b/HEDGR_CLASS_B_PILOT_ELIGIBILITY_STANDARD.md`** — defined mandatory criteria **B-M1** through **B-M10** covering authority, ADR, legal/compliance, custody, rails, liquidity and withdrawal integrity, UX/trust, ops/reconciliation, simulation/staging, and exclusions
+- **`docs/ops/governance/class-b/HEDGR_CLASS_B_PILOT_ELIGIBILITY_STANDARD.md`** — added supporting criteria, a future evidence-table template, explicit non-authorization clauses, relationship-to-future-ticket rules, and closeout meaning
 - **`docs/ops/HEDGR_STATUS.md`** — added §6 merged-truth subsection `GOV-B-001`; §7 completed list extended with `GOV-B-001`; §7 / §7a restored to no active ticket; §7a archived brief for `GOV-B-001`; §54 (this record)
 
 **Scope discipline held.** **No** `apps/`, **no** `packages/`, **no** `scripts/`, **no** `.github/`, **no** tests, **no** backend, **no** frontend implementation or product copy edits, **no** CI workflow changes, **no** ADR status changes, **no** successor implementation ticket, and **no** Class B approval. This closeout does **not** authorize deposits, withdrawals, custody activation, rails integration, ledger mutation, stablecoin movement, treasury operations, Copilot execution, backend workers, production rail integration, Class C automation, or customer fund movement.
 
-**Validation.** Documentation-only diff review, `git diff --check -- docs/ops/HEDGR_CLASS_B_PILOT_ELIGIBILITY_STANDARD.md docs/ops/HEDGR_STATUS.md`, scoped artifact review, and `git status --short` completed locally. No tests were run because the ticket scope explicitly excludes tests and product/runtime files.
+**Validation.** Documentation-only diff review, `git diff --check -- docs/ops/governance/class-b/HEDGR_CLASS_B_PILOT_ELIGIBILITY_STANDARD.md docs/ops/HEDGR_STATUS.md`, scoped artifact review, and `git status --short` completed locally. No tests were run because the ticket scope explicitly excludes tests and product/runtime files.
 
 ### Sequencing note
 
@@ -2429,14 +2429,14 @@ This **§43** record was originally written in the same working-tree change-set 
 
 ### Outcome (documentation-only)
 
-- **`docs/ops/HEDGR_CLASS_B_ELIGIBILITY_GAP_REGISTER.md`** — added the repo-native gap register preserving current evidence posture against **B-M1** through **B-M10** from the Class B Pilot Eligibility Standard
-- **`docs/ops/HEDGR_CLASS_B_ELIGIBILITY_GAP_REGISTER.md`** — recorded current posture as **Pass: 3**, **Partial: 7**, **Fail: 0**, **Not assessed: 0**
-- **`docs/ops/HEDGR_CLASS_B_ELIGIBILITY_GAP_REGISTER.md`** — captured existing evidence posture, gaps / blockers, likely future artifact types, authority notes, grouped gap categories, future artifact map, drift risks, and required non-authorization statement
+- **`docs/ops/governance/class-b/HEDGR_CLASS_B_ELIGIBILITY_GAP_REGISTER.md`** — added the repo-native gap register preserving current evidence posture against **B-M1** through **B-M10** from the Class B Pilot Eligibility Standard
+- **`docs/ops/governance/class-b/HEDGR_CLASS_B_ELIGIBILITY_GAP_REGISTER.md`** — recorded current posture as **Pass: 3**, **Partial: 7**, **Fail: 0**, **Not assessed: 0**
+- **`docs/ops/governance/class-b/HEDGR_CLASS_B_ELIGIBILITY_GAP_REGISTER.md`** — captured existing evidence posture, gaps / blockers, likely future artifact types, authority notes, grouped gap categories, future artifact map, drift risks, and required non-authorization statement
 - **`docs/ops/HEDGR_STATUS.md`** — added §6 merged-truth subsection `GOV-B-002`; updated last-completed summary; preserved §7 / §7a no-active-ticket posture; added §7a archived brief for `GOV-B-002`; §55 (this record)
 
 **Scope discipline held.** **No** `apps/`, **no** `packages/`, **no** `scripts/`, **no** `.github/`, **no** tests, **no** backend, **no** frontend implementation or product copy edits, **no** CI workflow changes, **no** ADR status changes, **no** successor implementation ticket, and **no** Class B approval. This closeout does **not** authorize custody, rails, deposits, withdrawals, stablecoin conversion, ledger mutation, treasury operations, Copilot execution, Class C automation, or customer fund movement.
 
-**Validation.** Documentation-only diff review, `git diff --check -- docs/ops/HEDGR_CLASS_B_ELIGIBILITY_GAP_REGISTER.md docs/ops/HEDGR_STATUS.md`, scoped artifact review, and `git status --short` completed locally. No tests were run because the ticket scope explicitly excludes tests and product/runtime files.
+**Validation.** Documentation-only diff review, `git diff --check -- docs/ops/governance/class-b/HEDGR_CLASS_B_ELIGIBILITY_GAP_REGISTER.md docs/ops/HEDGR_STATUS.md`, scoped artifact review, and `git status --short` completed locally. No tests were run because the ticket scope explicitly excludes tests and product/runtime files.
 
 ### Sequencing note
 
@@ -2452,15 +2452,38 @@ This **§43** record was originally written in the same working-tree change-set 
 
 ### Outcome (documentation-only)
 
-- **`docs/ops/HEDGR_CLASS_B_ARTIFACT_DEPENDENCY_MAP.md`** — added the repo-native dependency map converting the Class B Eligibility Gap Register future artifact inventory into a dependency structure
-- **`docs/ops/HEDGR_CLASS_B_ARTIFACT_DEPENDENCY_MAP.md`** — defined foundation, decision-prep, operational, UX / trust, and activation artifact classes
-- **`docs/ops/HEDGR_CLASS_B_ARTIFACT_DEPENDENCY_MAP.md`** — mapped dependencies across legal / compliance, custody, rails, liquidity / withdrawal controls, ADR scoping, trust UX, pilot operations, reconciliation, support, audit evidence, staging/live separation, and future implementation-specific §7a brief artifacts
-- **`docs/ops/HEDGR_CLASS_B_ARTIFACT_DEPENDENCY_MAP.md`** — added a non-authorizing dependency order and principles clarifying that dependency logic is not backlog order, queue order, activation order, or implementation sequencing
+- **`docs/ops/governance/class-b/HEDGR_CLASS_B_ARTIFACT_DEPENDENCY_MAP.md`** — added the repo-native dependency map converting the Class B Eligibility Gap Register future artifact inventory into a dependency structure
+- **`docs/ops/governance/class-b/HEDGR_CLASS_B_ARTIFACT_DEPENDENCY_MAP.md`** — defined foundation, decision-prep, operational, UX / trust, and activation artifact classes
+- **`docs/ops/governance/class-b/HEDGR_CLASS_B_ARTIFACT_DEPENDENCY_MAP.md`** — mapped dependencies across legal / compliance, custody, rails, liquidity / withdrawal controls, ADR scoping, trust UX, pilot operations, reconciliation, support, audit evidence, staging/live separation, and future implementation-specific §7a brief artifacts
+- **`docs/ops/governance/class-b/HEDGR_CLASS_B_ARTIFACT_DEPENDENCY_MAP.md`** — added a non-authorizing dependency order and principles clarifying that dependency logic is not backlog order, queue order, activation order, or implementation sequencing
 - **`docs/ops/HEDGR_STATUS.md`** — added §6 merged-truth subsection `GOV-B-003`; updated the §7 completed list and last-completed summary; preserved §7 / §7a no-active-ticket posture; added §7a archived brief for `GOV-B-003`; §56 (this record)
 
 **Scope discipline held.** **No** `apps/`, **no** `packages/`, **no** `scripts/`, **no** `.github/`, **no** tests, **no** backend, **no** frontend implementation or product copy edits, **no** CI workflow changes, **no** ADR status changes, **no** successor implementation ticket, and **no** Class B approval. This closeout does **not** authorize custody, rails, deposits, withdrawals, stablecoin conversion, ledger mutation, treasury operations, Copilot execution, Class C automation, or customer fund movement.
 
-**Validation.** Documentation-only diff review, `git diff --check -- docs/ops/HEDGR_CLASS_B_ARTIFACT_DEPENDENCY_MAP.md docs/ops/HEDGR_STATUS.md`, scoped artifact review, and `git status --short` completed locally. No tests were run because the ticket scope explicitly excludes tests and product/runtime files.
+**Validation.** Documentation-only diff review, `git diff --check -- docs/ops/governance/class-b/HEDGR_CLASS_B_ARTIFACT_DEPENDENCY_MAP.md docs/ops/HEDGR_STATUS.md`, scoped artifact review, and `git status --short` completed locally. No tests were run because the ticket scope explicitly excludes tests and product/runtime files.
+
+### Sequencing note
+
+**§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
+
+**Follow-ups:** Any successor appears only when **§7** is updated explicitly.
+
+---
+
+## 57. Completed execution ticket - GOV-B-004 (Class B Legal / Compliance Requirements Memo)
+
+**Ticket:** `GOV-B-004` — Class B Legal / Compliance Requirements Memo (documentation-only governance / requirements memo)
+
+### Outcome (documentation-only)
+
+- **`docs/ops/governance/class-b/HEDGR_CLASS_B_LEGAL_COMPLIANCE_REQUIREMENTS_MEMO.md`** — added the repo-native legal / compliance requirements memo as the first prerequisite artifact identified by the Class B Artifact Dependency Map
+- **`docs/ops/governance/class-b/HEDGR_CLASS_B_LEGAL_COMPLIANCE_REQUIREMENTS_MEMO.md`** — framed unresolved legal, compliance, jurisdictional, eligibility, KYC / AML, rail-permission, custody, disclosure, data, support, and marketing-claims questions relevant to future Class B consideration
+- **`docs/ops/governance/class-b/HEDGR_CLASS_B_LEGAL_COMPLIANCE_REQUIREMENTS_MEMO.md`** — identified requirement domains, current evidence posture, required future evidence, prohibited assumptions, qualified counsel / compliance review questions, and downstream artifacts constrained by legal / compliance review
+- **`docs/ops/HEDGR_STATUS.md`** — added §6 merged-truth subsection `GOV-B-004`; updated the §7 completed list and last-completed summary; preserved §7 / §7a no-active-ticket posture; added §7a archived brief for `GOV-B-004`; §57 (this record)
+
+**Scope discipline held.** **No** `apps/`, **no** `packages/`, **no** `scripts/`, **no** `.github/`, **no** tests, **no** backend, **no** frontend implementation or product copy edits, **no** CI workflow changes, **no** ADR status changes, **no** successor implementation ticket, and **no** Class B approval. This closeout does **not** provide legal advice, does **not** claim regulatory approval, and does **not** authorize custody, rails, deposits, withdrawals, stablecoin conversion, ledger mutation, treasury operations, Copilot execution, Class C automation, or customer fund movement.
+
+**Validation.** Documentation-only diff review, `git diff --check -- docs/ops/governance/class-b/HEDGR_CLASS_B_LEGAL_COMPLIANCE_REQUIREMENTS_MEMO.md docs/ops/HEDGR_STATUS.md`, scoped artifact review, and `git status --short` completed locally. No tests were run because the ticket scope explicitly excludes tests and product/runtime files.
 
 ### Sequencing note
 

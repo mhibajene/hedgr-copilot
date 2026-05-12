@@ -1,7 +1,7 @@
 **Archive Status**
 
 - This document is a **historical implementation / build progress archive**. It is **not** the canonical source of truth for current execution, sprint sequencing, or governance authority.
-- **Current authority** lives in `docs/ops/HEDGR_STATUS.md`, relevant ADRs in `docs/decisions/`, `docs/ops/HEDGR_EXECUTION_SYSTEM.md`, and `docs/ops/HEDGR_SPRINT_PLANNING_PROTOCOL.md`.
+- **Current authority** lives in `docs/ops/HEDGR_STATUS.md`, relevant ADRs in `docs/decisions/`, `docs/HEDGR_EXECUTION_SYSTEM.md`, and `docs/ops/HEDGR_SPRINT_PLANNING_PROTOCOL.md`.
 - The file spans **multiple eras**: early bootstrap / scaffolding work and later contract-driven sprint closeouts.
 - **Preservation and use:** this record is retained for historical context and onboarding; future active state, planning, and governance updates should be recorded in the canonical repo governance surfaces cited above.
 
@@ -1720,4 +1720,3 @@ Frontend: FX via GET /v1/fx/latest; deposit via POST /v1/deposits + txn_ref; led
 
 DoD:
 Sprint 1.1 delivers the S11 backend stub, hermetic E2E with backend wiring, frontend contract alignment (FX, txn_ref, ledger schema v2, STATUS_MAP), Trust & Risk disclosure page and env mode, agent PR evidence discipline, and Playwright smoke pack—without introducing live providers or weakening selector discipline in CI.
-
