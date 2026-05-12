@@ -567,6 +567,61 @@ Implementation posture preserved:
 - no ADR status changes
 - no successor implementation ticket
 
+### GOV-B-002 - Class B Eligibility Gap Register (documentation-only)
+
+Merged files:
+
+- `docs/ops/HEDGR_CLASS_B_ELIGIBILITY_GAP_REGISTER.md`
+- `docs/ops/HEDGR_STATUS.md`
+
+Implementation truth:
+
+- governance-only gap register added at `docs/ops/HEDGR_CLASS_B_ELIGIBILITY_GAP_REGISTER.md`
+- preserves repo-native memory of current evidence posture against `B-M1` through `B-M10`
+- records current posture as Pass: 3, Partial: 7, Fail: 0, Not assessed: 0
+- identifies future artifact types likely required before any Class B implementation proposal
+- does not propose or activate implementation
+
+Implementation posture preserved:
+
+- documentation-only governance artifact
+- no `apps/`
+- no `packages/`
+- no backend
+- no frontend implementation
+- no tests
+- no CI workflow changes
+- no ADR status changes
+- no successor implementation ticket
+- no custody, rails, deposits, withdrawals, ledger mutation, treasury operations, Copilot execution, Class C automation, or customer fund movement authority
+
+### GOV-B-003 - Class B Artifact Dependency Map (documentation-only)
+
+Merged files:
+
+- `docs/ops/HEDGR_CLASS_B_ARTIFACT_DEPENDENCY_MAP.md`
+- `docs/ops/HEDGR_STATUS.md`
+
+Implementation truth:
+
+- governance-only dependency map added at `docs/ops/HEDGR_CLASS_B_ARTIFACT_DEPENDENCY_MAP.md`
+- maps dependency relationships between future Class B prerequisite artifacts identified in the Class B Eligibility Gap Register
+- consolidates the Class B governance spine without proposing or activating implementation
+- clarifies that dependency order is not backlog order, queue order, activation order, or implementation sequencing
+
+Implementation posture preserved:
+
+- documentation-only governance artifact
+- no `apps/`
+- no `packages/`
+- no backend
+- no frontend implementation
+- no tests
+- no CI workflow changes
+- no ADR status changes
+- no successor implementation ticket
+- no custody, rails, deposits, withdrawals, ledger mutation, treasury operations, Copilot execution, Class C automation, or customer fund movement authority
+
 ### MC-S2-004 - Allocation bands UI
 
 Implementation truth:
@@ -1057,6 +1112,8 @@ Completed and merged:
 - `COP-GOV-001` - Copilot MVP advisory lane definition (documentation-only governance artifact; completed record **§52**)
 - `MC-S3-020` - MVP phased alignment (documentation-only governance readout; merged PR **#152**; completed record **§53**)
 - `GOV-B-001` - Class B Pilot Eligibility Standard (documentation-only governance standard; completed record **§54**)
+- `GOV-B-002` - Class B Eligibility Gap Register (documentation-only governance / evidence register; completed record **§55**)
+- `GOV-B-003` - Class B Artifact Dependency Map (documentation-only governance / dependency map; completed record **§56**)
 
 Current active ticket status:
 
@@ -1071,7 +1128,7 @@ Current active ticket status:
 - Cursor must not continue automatically into work beyond what is explicitly defined in this file for an active ticket.
 - Cursor must not drift beyond explicitly defined scope.
 
-**Last completed ticket (summary):** `GOV-B-001` — Class B Pilot Eligibility Standard (documentation-only governance standard defining minimum authority, ADR, legal/compliance, custody, rails, liquidity, UX/trust, ops/reconciliation, simulation/staging, and exclusion gates for future Class B pilot eligibility assessment; subordinate artifact at **`docs/ops/HEDGR_CLASS_B_PILOT_ELIGIBILITY_STANDARD.md`**; **§7** / **§7a** restored to no-active-ticket state; no approved Class B implementation ticket created); completed record in **§54**.
+**Last completed ticket (summary):** `GOV-B-003` — Class B Artifact Dependency Map (documentation-only governance / dependency map converting the Class B Eligibility Gap Register into a dependency structure for future prerequisite artifacts; subordinate artifact at **`docs/ops/HEDGR_CLASS_B_ARTIFACT_DEPENDENCY_MAP.md`**; dependency order is not backlog order, queue order, activation order, or implementation sequencing; **§7** / **§7a** remain in no-active-ticket state; no approved Class B implementation ticket created); completed record in **§56**.
 
 ---
 
@@ -1082,6 +1139,10 @@ Current active ticket status:
 When governance approves the next ticket, **§7** will name it and this section will hold the full execution brief until closeout.
 
 ---
+
+**Archived brief (GOV-B-003):** Class B Artifact Dependency Map — **documentation-only governance / dependency map**; scope held to **`docs/ops/HEDGR_CLASS_B_ARTIFACT_DEPENDENCY_MAP.md`** and **`docs/ops/HEDGR_STATUS.md`**. Converted the Class B Eligibility Gap Register future artifact inventory into a dependency structure covering foundation, decision-prep, operational, UX / trust, and activation artifact classes. Mapped which future Class B prerequisite artifacts should precede, inform, or constrain others before any future Class B implementation proposal may be considered. This map does **not** answer which implementation ticket should be opened next and does **not** create a backlog, queue order, default next ticket, implementation authority, ADR acceptance, vendor approval, legal approval, custody approval, rail approval, or pilot approval. Dependency order is not backlog order, queue order, activation order, or implementation sequencing. **No** `apps/`, **no** `packages/`, **no** tests, **no** backend, **no** frontend implementation, **no** CI workflow changes, **no** ADR status changes, **no** successor implementation ticket, **no** custody, rails, deposits, withdrawals, stablecoin conversion, ledger mutation, treasury operations, Copilot execution, Class C automation, or customer fund movement authority. Completed record: **§56**.
+
+**Archived brief (GOV-B-002):** Class B Eligibility Gap Register — **documentation-only governance / evidence register**; scope held to **`docs/ops/HEDGR_CLASS_B_ELIGIBILITY_GAP_REGISTER.md`** and **`docs/ops/HEDGR_STATUS.md`**. Preserved repo-native memory of the current evidence posture against **B-M1** through **B-M10** from the Class B Pilot Eligibility Standard, recording **Pass: 3**, **Partial: 7**, **Fail: 0**, **Not assessed: 0**. Identified existing evidence posture, gaps / blockers, likely future artifact types, authority notes, gap categories, future artifact map, and drift risks. This register does **not** conclude that Hedgr is Class B ready and does **not** activate, sequence, approve, or implement Class B execution. **No** `apps/`, **no** `packages/`, **no** tests, **no** backend, **no** frontend implementation, **no** CI workflow changes, **no** ADR status changes, **no** successor implementation ticket, **no** custody, rails, deposits, withdrawals, ledger mutation, treasury operations, Copilot execution, Class C automation, or customer fund movement authority. Completed record: **§55**.
 
 **Archived brief (GOV-B-001):** Class B Pilot Eligibility Standard — **documentation-only governance standard**; scope held to **`docs/ops/HEDGR_CLASS_B_PILOT_ELIGIBILITY_STANDARD.md`** and **`docs/ops/HEDGR_STATUS.md`**. Created the repo-native standard for assessing future Class B pilot eligibility before any manual / limited execution ticket involving deposits, withdrawals, custody, rails, reconciliation, or treasury operations may be proposed for **§7**. The standard defines mandatory criteria **B-M1** through **B-M10**, supporting criteria, a future evidence-table template, explicit non-authorization clauses, and future-ticket requirements. Eligibility means eligible for future **§7** / **§7a** consideration only. **No** `apps/`, **no** `packages/`, **no** `scripts/`, **no** `.github/`, **no** tests, **no** backend, **no** frontend implementation or copy changes, **no** CI workflow changes, **no** ADR status changes, **no** successor ticket, **no** Class B implementation approval, and **no** deposits, withdrawals, custody, rails, ledger mutation, stablecoin movement, treasury operations, Copilot execution, or customer fund movement authority. Completed record: **§54**.
 
@@ -2323,6 +2384,53 @@ This **§43** record was originally written in the same working-tree change-set 
 **Scope discipline held.** **No** `apps/`, **no** `packages/`, **no** `scripts/`, **no** `.github/`, **no** tests, **no** backend, **no** frontend implementation or product copy edits, **no** CI workflow changes, **no** ADR status changes, **no** successor implementation ticket, and **no** Class B approval. This closeout does **not** authorize deposits, withdrawals, custody activation, rails integration, ledger mutation, stablecoin movement, treasury operations, Copilot execution, backend workers, production rail integration, Class C automation, or customer fund movement.
 
 **Validation.** Documentation-only diff review, `git diff --check -- docs/ops/HEDGR_CLASS_B_PILOT_ELIGIBILITY_STANDARD.md docs/ops/HEDGR_STATUS.md`, scoped artifact review, and `git status --short` completed locally. No tests were run because the ticket scope explicitly excludes tests and product/runtime files.
+
+### Sequencing note
+
+**§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
+
+**Follow-ups:** Any successor appears only when **§7** is updated explicitly.
+
+---
+
+## 55. Completed execution ticket - GOV-B-002 (Class B Eligibility Gap Register)
+
+**Ticket:** `GOV-B-002` — Class B Eligibility Gap Register (documentation-only governance / evidence register)
+
+### Outcome (documentation-only)
+
+- **`docs/ops/HEDGR_CLASS_B_ELIGIBILITY_GAP_REGISTER.md`** — added the repo-native gap register preserving current evidence posture against **B-M1** through **B-M10** from the Class B Pilot Eligibility Standard
+- **`docs/ops/HEDGR_CLASS_B_ELIGIBILITY_GAP_REGISTER.md`** — recorded current posture as **Pass: 3**, **Partial: 7**, **Fail: 0**, **Not assessed: 0**
+- **`docs/ops/HEDGR_CLASS_B_ELIGIBILITY_GAP_REGISTER.md`** — captured existing evidence posture, gaps / blockers, likely future artifact types, authority notes, grouped gap categories, future artifact map, drift risks, and required non-authorization statement
+- **`docs/ops/HEDGR_STATUS.md`** — added §6 merged-truth subsection `GOV-B-002`; updated last-completed summary; preserved §7 / §7a no-active-ticket posture; added §7a archived brief for `GOV-B-002`; §55 (this record)
+
+**Scope discipline held.** **No** `apps/`, **no** `packages/`, **no** `scripts/`, **no** `.github/`, **no** tests, **no** backend, **no** frontend implementation or product copy edits, **no** CI workflow changes, **no** ADR status changes, **no** successor implementation ticket, and **no** Class B approval. This closeout does **not** authorize custody, rails, deposits, withdrawals, stablecoin conversion, ledger mutation, treasury operations, Copilot execution, Class C automation, or customer fund movement.
+
+**Validation.** Documentation-only diff review, `git diff --check -- docs/ops/HEDGR_CLASS_B_ELIGIBILITY_GAP_REGISTER.md docs/ops/HEDGR_STATUS.md`, scoped artifact review, and `git status --short` completed locally. No tests were run because the ticket scope explicitly excludes tests and product/runtime files.
+
+### Sequencing note
+
+**§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
+
+**Follow-ups:** Any successor appears only when **§7** is updated explicitly.
+
+---
+
+## 56. Completed execution ticket - GOV-B-003 (Class B Artifact Dependency Map)
+
+**Ticket:** `GOV-B-003` — Class B Artifact Dependency Map (documentation-only governance / dependency mapping)
+
+### Outcome (documentation-only)
+
+- **`docs/ops/HEDGR_CLASS_B_ARTIFACT_DEPENDENCY_MAP.md`** — added the repo-native dependency map converting the Class B Eligibility Gap Register future artifact inventory into a dependency structure
+- **`docs/ops/HEDGR_CLASS_B_ARTIFACT_DEPENDENCY_MAP.md`** — defined foundation, decision-prep, operational, UX / trust, and activation artifact classes
+- **`docs/ops/HEDGR_CLASS_B_ARTIFACT_DEPENDENCY_MAP.md`** — mapped dependencies across legal / compliance, custody, rails, liquidity / withdrawal controls, ADR scoping, trust UX, pilot operations, reconciliation, support, audit evidence, staging/live separation, and future implementation-specific §7a brief artifacts
+- **`docs/ops/HEDGR_CLASS_B_ARTIFACT_DEPENDENCY_MAP.md`** — added a non-authorizing dependency order and principles clarifying that dependency logic is not backlog order, queue order, activation order, or implementation sequencing
+- **`docs/ops/HEDGR_STATUS.md`** — added §6 merged-truth subsection `GOV-B-003`; updated the §7 completed list and last-completed summary; preserved §7 / §7a no-active-ticket posture; added §7a archived brief for `GOV-B-003`; §56 (this record)
+
+**Scope discipline held.** **No** `apps/`, **no** `packages/`, **no** `scripts/`, **no** `.github/`, **no** tests, **no** backend, **no** frontend implementation or product copy edits, **no** CI workflow changes, **no** ADR status changes, **no** successor implementation ticket, and **no** Class B approval. This closeout does **not** authorize custody, rails, deposits, withdrawals, stablecoin conversion, ledger mutation, treasury operations, Copilot execution, Class C automation, or customer fund movement.
+
+**Validation.** Documentation-only diff review, `git diff --check -- docs/ops/HEDGR_CLASS_B_ARTIFACT_DEPENDENCY_MAP.md docs/ops/HEDGR_STATUS.md`, scoped artifact review, and `git status --short` completed locally. No tests were run because the ticket scope explicitly excludes tests and product/runtime files.
 
 ### Sequencing note
 
