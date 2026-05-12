@@ -52,13 +52,13 @@ Use as a governed workstream line, **not** as a shipped-feature claim. Placement
 
 - **`MC-S3-010` (merged, documentation-only):** Retail UI governance **read-path alignment** — exploration and variant disposition ops notes on the binding read stack in **`HEDGR_STATUS.md` §3**; **no** `apps/` / `packages/` / tests / CI; merged truth **§41**; merged PR **#123**.
 
-- **`MC-S3-011` (merged, documentation-only):** Stability Engine **trust-surface coverage matrix** — **`docs/ops/HEDGR_STABILITY_ENGINE_TRUST_SURFACE_TEST_COVERAGE_MATRIX.md`** maps **§6**-grounded shipped surfaces to existing Vitest evidence; governance evidence only; **no** `apps/` / `packages/` / tests / CI; completed record **§42**; merged PR **#125**.
+- **`MC-S3-011` (merged, documentation-only):** Stability Engine **trust-surface coverage matrix** — **`docs/ops/stability-engine/HEDGR_STABILITY_ENGINE_TRUST_SURFACE_TEST_COVERAGE_MATRIX.md`** maps **§6**-grounded shipped surfaces to existing Vitest evidence; governance evidence only; **no** `apps/` / `packages/` / tests / CI; completed record **§42**; merged PR **#125**.
 
 - **`MC-S3-012` (merged, prototype-route presentation-only):** Retail UI money-first shell prototype-only bounded spike — governed prototype evidence and readout only; **no** shipped-route authorization; completed record **§43**; merged PR **#129**.
 
 - **`UI-SRA-001` (merged, shipped-route presentation-only):** Shipped retail dashboard adaptation to settled money-first reference surface — bounded `app/(app)/dashboard/**` presentation pass; **no** engine semantics or accounting-truth widening; completed record **§44**; merged PR **#132**.
 
-- **`UI-USH-001` (previously merged, shipped-route presentation-only):** Retail upper-shell continuation refinement beneath settled header — bounded presentation-only work now represented in **`HEDGR_STATUS.md` §7** completed-and-merged list; governed execution readout **`docs/ops/HEDGR_RETAIL_UI_UPPER_SHELL_CONTINUATION_EXECUTION_READOUT.md`**; **not** newly authorized by `MC-S3-018`.
+- **`UI-USH-001` (previously merged, shipped-route presentation-only):** Retail upper-shell continuation refinement beneath settled header — bounded presentation-only work now represented in **`HEDGR_STATUS.md` §7** completed-and-merged list; governed execution readout **`docs/ops/retail-ui/implementation-readouts/HEDGR_RETAIL_UI_UPPER_SHELL_CONTINUATION_EXECUTION_READOUT.md`**; **not** newly authorized by `MC-S3-018`.
 
 - **`MC-S3-013` (merged, test-only):** Canonical engine type export contract — dedicated Vitest contract for `apps/frontend/lib/engine/types.ts`; completed record **§45**; merged PR **#134**.
 
@@ -493,7 +493,7 @@ This snapshot reconciles Notion staging to the current completed list in **`HEDG
 | `MC-S3-011` | Add / mark complete if missing: documentation-only trust-surface coverage matrix; completed record **§42**; merged PR **#125**. |
 | `MC-S3-012` | Add / mark complete if missing: prototype-route-only money-first shell spike; completed record **§43**; merged PR **#129**; no shipped-route authorization. |
 | `UI-SRA-001` | Add / mark complete if missing: bounded shipped dashboard presentation adaptation; completed record **§44**; merged PR **#132**; no engine semantics or accounting-truth widening. |
-| `UI-USH-001` | Add / mark complete if missing: previously merged bounded upper-shell presentation continuation; governed readout `docs/ops/HEDGR_RETAIL_UI_UPPER_SHELL_CONTINUATION_EXECUTION_READOUT.md`; represented in **§7** completed list; not newly authorized by **`MC-S3-018`**. |
+| `UI-USH-001` | Add / mark complete if missing: previously merged bounded upper-shell presentation continuation; governed readout `docs/ops/retail-ui/implementation-readouts/HEDGR_RETAIL_UI_UPPER_SHELL_CONTINUATION_EXECUTION_READOUT.md`; represented in **§7** completed list; not newly authorized by **`MC-S3-018`**. |
 | `MC-S3-013` | Add / mark complete if missing: test-only canonical engine type export contract; completed record **§45**; merged PR **#134**. |
 | `MC-S3-014` | Add / mark complete if missing: documentation/governance-only `MC-S3-012` merged-truth reconciliation; completed record **§46**. |
 | `MC-S3-015` | Add / mark complete if missing: test-only allocation bands panel copy contract; completed record **§47**; merged PR **#138**. |

@@ -153,7 +153,7 @@ Meaning (non-authoritative interpretation):
 
 What changed (repo evidence):
 
-- Added a documentation-only governance artifact defining “Copilot MVP (advisory lane)” boundaries (`docs/ops/COPILOT_MVP_ADVISORY_LANE_DEFINITION_DRAFT.md`).
+- Added a documentation-only governance artifact defining “Copilot MVP (advisory lane)” boundaries (`docs/ops/governance/copilot/COPILOT_MVP_ADVISORY_LANE_DEFINITION_DRAFT.md`).
 - Updated `docs/ops/HEDGR_STATUS.md` to record the merged truth for `COP-GOV-001`.
 
 Meaning (non-authoritative interpretation):

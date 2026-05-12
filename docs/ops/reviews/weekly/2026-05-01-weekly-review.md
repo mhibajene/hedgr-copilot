@@ -52,7 +52,7 @@ What changed:
 
 - Added `apps/frontend/__tests__/engine-types-contract.test.ts`.
 - Locked the canonical `EnginePosture` union, required `EngineState` keys, optional `notice`, and `EngineNotice` title/body shape.
-- Updated `docs/ops/HEDGR_STABILITY_ENGINE_TRUST_SURFACE_TEST_COVERAGE_MATRIX.md` so the `MC-S2-001` type surface moved from **Partially covered** to **Covered**.
+- Updated `docs/ops/stability-engine/HEDGR_STABILITY_ENGINE_TRUST_SURFACE_TEST_COVERAGE_MATRIX.md` so the `MC-S2-001` type surface moved from **Partially covered** to **Covered**.
 
 Meaning:
 
@@ -79,7 +79,7 @@ What changed:
 - Added `apps/frontend/__tests__/engine-allocation-bands-panel-copy-contract.test.tsx`.
 - Locked the shipped allocation-band panel title, caption, trust legend, and per-band descriptor nodes.
 - Applied informational trust-framing guards, including checks against execution-leaning wording.
-- Updated `docs/ops/HEDGR_STABILITY_ENGINE_TRUST_SURFACE_TEST_COVERAGE_MATRIX.md` so the allocation-band row moved from **Partially covered** to **Covered**.
+- Updated `docs/ops/stability-engine/HEDGR_STABILITY_ENGINE_TRUST_SURFACE_TEST_COVERAGE_MATRIX.md` so the allocation-band row moved from **Partially covered** to **Covered**.
 
 Meaning:
 

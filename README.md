@@ -211,8 +211,8 @@ pnpm run validate      # test + typecheck + lint for the whole workspace
 
 Additional references:
 
-- `docs/ops/local-dev.md`
-- `docs/ops/observability.md`
+- `docs/ops/runbooks/local-dev.md`
+- `docs/ops/runbooks/observability.md`
 - `docs/ops/runbook.md`
 
 ---
@@ -270,8 +270,8 @@ Observability is dev-safe and should remain trust-aware.
 
 References:
 
-- `docs/ops/observability.md`
-- `docs/ops/secrets.md`
+- `docs/ops/runbooks/observability.md`
+- `docs/ops/runbooks/secrets.md`
 
 ---
 

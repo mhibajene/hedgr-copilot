@@ -55,7 +55,7 @@ What changed:
 
 - Added `apps/frontend/__tests__/engine-types-contract.test.ts`.
 - Locked the canonical `EnginePosture` union, required `EngineState` keys, optional `notice`, and `EngineNotice` title/body shape.
-- Updated `docs/ops/HEDGR_STABILITY_ENGINE_TRUST_SURFACE_TEST_COVERAGE_MATRIX.md` so the `MC-S2-001` type surface moved from **Partially covered** to **Covered**.
+- Updated `docs/ops/stability-engine/HEDGR_STABILITY_ENGINE_TRUST_SURFACE_TEST_COVERAGE_MATRIX.md` so the `MC-S2-001` type surface moved from **Partially covered** to **Covered**.
 
 Process meaning:
 
@@ -97,7 +97,7 @@ What changed:
 - Locked non-empty shipped allocation-band panel title, caption, trust legend, and per-band descriptor nodes.
 - Mounted `EngineAllocationBands` with a fixed `normal` posture fixture (`42 / 44 / 14`).
 - Applied existing informational trust-framing guards, including denylist checks for `executed` and `allocated to your`.
-- Updated the allocation-band row in `docs/ops/HEDGR_STABILITY_ENGINE_TRUST_SURFACE_TEST_COVERAGE_MATRIX.md` from **Partially covered** to **Covered**.
+- Updated the allocation-band row in `docs/ops/stability-engine/HEDGR_STABILITY_ENGINE_TRUST_SURFACE_TEST_COVERAGE_MATRIX.md` from **Partially covered** to **Covered**.
 
 Process meaning:
 
@@ -193,7 +193,7 @@ Reinforced surfaces:
 
 - Canonical engine type contract: `apps/frontend/lib/engine/types.ts`, via `apps/frontend/__tests__/engine-types-contract.test.ts`.
 - Allocation bands panel copy: `EngineAllocationBands`, via `apps/frontend/__tests__/engine-allocation-bands-panel-copy-contract.test.tsx`.
-- Trust-surface coverage matrix evidence: `docs/ops/HEDGR_STABILITY_ENGINE_TRUST_SURFACE_TEST_COVERAGE_MATRIX.md`.
+- Trust-surface coverage matrix evidence: `docs/ops/stability-engine/HEDGR_STABILITY_ENGINE_TRUST_SURFACE_TEST_COVERAGE_MATRIX.md`.
 - Sequencing and merged-truth status surface: `docs/ops/HEDGR_STATUS.md`.
 
 Surfaces still exposed or not advanced by this slice:
