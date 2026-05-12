@@ -521,6 +521,24 @@ Implementation posture preserved:
 - no Copilot runtime binding, directive Copilot, customer-facing automation, finance-style autonomy, policy / engine binding, account truth, ledger authority, accounting semantics, custody, Circle, stablecoin, vendor rails, execution, or value-movement authority was introduced
 - no ADR under ticket intent
 
+### MC-S3-020 - MVP phased alignment (documentation-only)
+
+Merged files:
+
+- `docs/ops/HEDGR_MVP_PHASE_ALIGNMENT.md`
+- `docs/ops/HEDGR_STATUS.md`
+
+Implementation truth:
+
+- canonical repo-native readout maps `hedgr-mvp-project-specification.md` **§5** (execution classes **A** / **B** / **C**), **§9** (governance-gated phases), and **§12** (success criteria), plus `hedgr-whitepaper.md` North Star framing, to current phase posture in this file (**§2**, **§6a–§6c**)
+- readout explicitly subordinates to **`HEDGR_STATUS.md` §7** / **§7a** and states it does **not** sequence work
+- **§3** governance stack lists the readout as item **9** (discoverability only; not sequencing authority)
+
+Implementation posture preserved:
+
+- **documentation-only** governance orientation; **no** `apps/`, **no** `packages/`, **no** `scripts/`, **no** `.github/`, **no** tests, **no** backend, **no** frontend product or copy edits, **no** CI workflow changes, **no** ADR status or index changes, **no** successor ticket named by the readout
+- no ADR under ticket intent
+
 ### MC-S2-004 - Allocation bands UI
 
 Implementation truth:
@@ -1009,56 +1027,34 @@ Completed and merged:
 - `MC-S3-018` - Stability Engine Transition Readiness closeout assessment (documentation-only governance closeout; completed record **§50**)
 - `MC-S3-019` - Playwright smoke coverage extension for shipped Stability Engine trust surfaces (test-only; merged PR **#148**; completed record **§51**)
 - `COP-GOV-001` - Copilot MVP advisory lane definition (documentation-only governance artifact; completed record **§52**)
+- `MC-S3-020` - MVP phased alignment (documentation-only governance readout; merged PR **#152**; completed record **§53**)
 
 Current active ticket status:
 
-- **Approved next ticket:** **`MC-S3-020`** — MVP phased alignment (documentation-only): produce **`docs/ops/HEDGR_MVP_PHASE_ALIGNMENT.md`** as the canonical readout mapping **`docs/doctrine/hedgr-mvp-project-specification.md`** (especially **§5** execution classes, **§9** governance-gated phases, **§12** success criteria) and **`docs/doctrine/hedgr-whitepaper.md`** (Stability Wallet / Stability Engine North Star framing) to **current repo phase posture** in this file (**§2**, **§6a–§6c**) so “MVP completion” is read as **phase-gated**, not as silent widening of execution, backend, ledger, policy-runtime, custody, vendor, or live-service authority.
-- **Active execution brief:** **`MC-S3-020`** — full scope, exclusions, and acceptance shape are defined only in **§7a** until closeout.
+- **Approved next ticket:** **None named.** There is **no** approved next implementation ticket until **§7** is updated explicitly to name one.
 - **Post–`COP-GOV-001` sequencing (governance-accepted):** `COP-GOV-001` completed the intended **advisory-boundary definition** lane as a documentation-only governance artifact. It did **not** widen product, engine, backend, policy, Copilot **runtime**, execution, accounting, ledger, vendor, custody, stablecoin, Circle, live-service, or customer-facing automation authority. Copilot MVP posture remains **advisory, non-directive, non-executing, hermetic, non-accounting, non-policy-authoritative**, and **outside `§6b` category 8** unless future doctrine and ADRs widen the boundary. Any later Copilot **implementation** requires a separate **§7** name and **§7a** brief. Do not infer Copilot implementation, runtime binding, engine binding, policy binding, backend work, execution authority, or finance-style autonomy from `COP-GOV-001`.
 - **Governance reconciliation note:** **`UI-SRA-001`** activation artifacts (`docs/ops/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_EXECUTION_REQUEST.md`, **`docs/ops/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_STATUS_PATCH_PROPOSAL.md`**, and **§7** / **§7a** activation language) first landed in commit **`1bd65d1`**; shipped dashboard implementation landed in **`da96e1e`**. Branch history was reconciled so activation, support docs, implementation, and this closeout (**§44**) cohabit the same lineage without implying a false single-commit ordering. See **`docs/ops/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_EXECUTION_READOUT.md` §2**.
 - **§6b** is not sequencing authority — Transition Readiness taxonomy and scrutiny input only; only **§7** / **§7a** name approved implementation work when a ticket is active. `MC-S3-017` clarified this rule; it did not convert §6b table rows, examples, or disposition labels into backlog approval.
-- When **`MC-S3-020`** closes, **§7** will name the next approved ticket or **none**; **§7a** will hold the new brief or return to the no-active-ticket stub pattern.
+- When **§7** names an approved ticket, the execution brief lives in **§7a** until closeout. When **§7** names none, **§7a** holds the no-active-ticket stub.
 - **Future work:** Further extension beyond any closed **§7** ticket still requires a new **§7** ticket; prototype-route outcomes do not widen scope by implication.
 - Do not treat backlog, roadmap, or *Proposed* ADRs as sequenced work unless **§7** is updated explicitly.
 - Cursor must not assume continuation beyond **§6** merged truth, **§6a** release-closeout assessment, **§6b** transition standard, **§7** / **§7a** (when a ticket is active), and current governance.
 - Cursor must not continue automatically into work beyond what is explicitly defined in this file for an active ticket.
 - Cursor must not drift beyond explicitly defined scope.
 
-**Last completed ticket (summary):** `COP-GOV-001` — Copilot MVP advisory lane definition (documentation-only governance artifact; defined advisory/non-directive/non-executing boundaries, blocked capabilities, data classes, copy guardrails, source-of-truth hierarchy, future ADR/governance gates, and not-authorized candidate tickets; preserved `docs/copilot/**` as reference-only unless future **§7a** extends scope; restored **§7** / **§7a** to no-active-ticket state); completed record in **§52**.
+**Last completed ticket (summary):** `MC-S3-020` — MVP phased alignment (documentation-only governance readout mapping MVP spec **§5** / **§9** / **§12** and whitepaper North Star to **§2** / **§6a–§6c** repo posture; subordinate readout at **`docs/ops/HEDGR_MVP_PHASE_ALIGNMENT.md`**; merged **PR #152**; **§7** / **§7a** restored to no-active-ticket state); completed record in **§53**.
 
 ---
 
 ## 7a. Active execution ticket
 
-**Status:** **Active.** **§7** names **`MC-S3-020`**.
+**Status:** **No active execution ticket.** **§7** does not currently name an approved next implementation ticket.
 
-### `MC-S3-020` — MVP phased alignment (documentation-only)
-
-**Objective:** Publish a single repo-native readout that maps canonical MVP doctrine (governance-gated phases and success criteria in `docs/doctrine/hedgr-mvp-project-specification.md`; North Star framing in `docs/doctrine/hedgr-whitepaper.md`) to the **current** phase posture recorded in **`docs/ops/HEDGR_STATUS.md`** (**§2**, **§6a–§6c**), so stakeholders interpret MVP progress as **phase-appropriate** and do not mistake informational-era shipped work for Class **B**/**C** execution readiness.
-
-**In scope**
-
-- Create and land **`docs/ops/HEDGR_MVP_PHASE_ALIGNMENT.md`** as the alignment readout (tables or short sections are acceptable; must cite doctrine sections by heading/section number, not paraphrase authority away from source docs).
-- Optionally add **at most one** cross-link sentence elsewhere in **`docs/ops/HEDGR_STATUS.md`** (e.g. **§2** pointer to the readout) if it reduces duplicate prose; prefer keeping truth centralized in the new file.
-- **§3** already lists the readout as item **9** (discoverability only).
-
-**Must not**
-
-- **No** `apps/`, **no** `packages/`, **no** `scripts/`, **no** `.github/`, **no** tests, **no** backend, **no** frontend implementation or copy changes, **no** CI workflow changes, **no** ADR status or index changes, **no** `apps/frontend/lib/engine/**` semantics, **no** live network, **no** vendor, custody, Circle, stablecoin, ledger, accounting, policy-runtime, Copilot runtime, or execution integration.
-- Do **not** use the readout to imply **§6b** rows, Notion, or roadmap narrative as approval; do **not** name a successor ticket or widen **§7** implicitly.
-
-**Surfaces**
-
-- Primary: **`docs/ops/HEDGR_MVP_PHASE_ALIGNMENT.md`**
-- Supporting edits only: **`docs/ops/HEDGR_STATUS.md`** (this **§7** / **§7a** activation and closeout when done; optional **§2** one-liner as above).
-
-**Acceptance shape**
-
-- The readout exists at the path above and explicitly states it is **subordinate** to **`HEDGR_STATUS.md` §7** / **§7a** and does **not** sequence work.
-- The readout contains an alignment view of MVP spec **§9** phases vs **§2** / **§6a–§6c** repo posture, and addresses MVP spec **§12** success criteria vs current **read-only / informational** engine constraints (ADR **0013**, **0014** posture).
-- Closeout (separate governance step after merge): restore **§7** to name the next approved ticket or **none**; restore **§7a** to stub or next brief; add **`MC-S3-020`** to the merged completed list in **§7** with a completed-record pointer if your numbering discipline requires it.
+When governance approves the next ticket, **§7** will name it and this section will hold the full execution brief until closeout.
 
 ---
+
+**Archived brief (MC-S3-020):** MVP phased alignment — **documentation-only**; scope held to **`docs/ops/HEDGR_MVP_PHASE_ALIGNMENT.md`** and **`docs/ops/HEDGR_STATUS.md`**. Published readout mapping **`docs/doctrine/hedgr-mvp-project-specification.md`** **§5** (execution classes **A** / **B** / **C**), **§9** (governance-gated phases), and **§12** (success criteria), plus **`docs/doctrine/hedgr-whitepaper.md`** North Star framing, to **§2** / **§6a–§6c** repo posture so “MVP completion” is read as **phase-gated**, not as Class **B**/**C** execution readiness. Readout subordinates to **`HEDGR_STATUS.md` §7** / **§7a** and does **not** sequence work; **§3** item **9** is discoverability only. **No** `apps/`, **no** `packages/`, **no** `scripts/`, **no** `.github/`, **no** tests, **no** backend, **no** frontend implementation or copy changes, **no** CI workflow changes, **no** ADR status or index changes, **no** successor ticket. Merged PR **#152**. Completed record: **§53**.
 
 **Archived brief (COP-GOV-001):** Copilot MVP advisory lane definition — **documentation-only governance artifact**; scope held to **`docs/ops/COPILOT_MVP_ADVISORY_LANE_DEFINITION_DRAFT.md`** and **`docs/ops/HEDGR_STATUS.md`**. Defined “Copilot MVP (advisory lane)” as internal governance language only, not customer-facing launch naming; documented advisory, explanatory, non-directive, non-executing, non-binding, non-accounting, non-policy-authoritative, hermetic, subordinate Copilot posture; captured permitted advisory jobs, blocked capabilities, data access boundaries, UX / copy guardrails, source-of-truth hierarchy, future ADR / governance gates, and candidate future tickets A-D as **not authorized**. `docs/copilot/**` remains reference input only unless future **§7a** explicitly extends edit scope. **No** `apps/`, **no** `packages/`, **no** `.github/`, **no** tests, **no** Copilot UI, **no** backend services, **no** model API calls, **no** vendor integrations, **no** ADR status changes, **no** successor ticket, and **no** implication of execution, ledger, policy-runtime, engine, Circle, custody, stablecoin, account, vendor, or live-service authority. Completed record: **§52**.
 
@@ -2250,6 +2246,29 @@ This **§43** record was originally written in the same working-tree change-set 
 **Scope discipline held.** **No** production UI changes, **no** copy changes, **no** `apps/frontend/lib/engine/**`, **no** backend, **no** package changes, **no** CI workflow change, **no** new `EnginePosture` values, **no** simulator behavior changes, **no** transaction, withdraw, market-data, Copilot, policy, ledger, accounting, vendor, custody, Circle, stablecoin, or live-service behavior. Assertions are visibility / presence oriented and do not introduce semantic claims beyond shipped UI truth; no allocation-band assertion implies ledger truth, settled balance, executable allocation, or accounting authority. No ADR under ticket intent.
 
 **Validation.** `pnpm -w typecheck`, `pnpm -w lint`, `pnpm -w test -- -- --run`, and `pnpm --filter @hedgr/frontend run e2e:ci` completed cleanly locally. The E2E run used the runbook parity path with the backend stub listening on `http://localhost:5050`; Playwright reported **53 passed**. `git diff --check -- apps/frontend/tests-e2e/smoke-pack.spec.ts docs/ops/HEDGR_STATUS.md` completed cleanly.
+
+### Sequencing note
+
+**§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
+
+**Follow-ups:** Any successor appears only when **§7** is updated explicitly.
+
+---
+
+## 53. Completed execution ticket - MC-S3-020 (MVP phased alignment)
+
+**Ticket:** `MC-S3-020` — MVP phased alignment (documentation-only governance readout)
+
+**Branch / PR:** `cursor/mc-s3-020-hedgr-status-closeout-e24e` / **PR #153** (readout and **§7** / **§7a** activation in **PR #152**)
+
+### Outcome (documentation-only)
+
+- **`docs/ops/HEDGR_MVP_PHASE_ALIGNMENT.md`** — landed as the canonical readout mapping **`docs/doctrine/hedgr-mvp-project-specification.md`** **§5** / **§9** / **§12** and **`docs/doctrine/hedgr-whitepaper.md`** North Star framing to **`docs/ops/HEDGR_STATUS.md` §2** / **§6a–§6c** posture; subordinate to **`HEDGR_STATUS.md` §7** / **§7a**; does **not** sequence work
+- **`docs/ops/HEDGR_STATUS.md`** — **§6** merged-truth subsection **`MC-S3-020`**; **§7** completed list extended with **`MC-S3-020`**; **§7** / **§7a** restored to **no active ticket**; **§7a** archived brief for **`MC-S3-020`**; **§53** (this record)
+
+**Scope discipline held.** **No** `apps/`, **no** `packages/`, **no** `scripts/`, **no** `.github/`, **no** tests, **no** backend, **no** frontend implementation or product copy edits, **no** CI workflow changes, **no** ADR status or index changes, **no** successor ticket, and **no** widening of execution, ledger, policy-runtime, custody, vendor, Circle, stablecoin, or live-service authority.
+
+**Validation.** Readout acceptance shape verified against **§7a** brief (subordination language; **§9** vs repo posture; **§12** vs read-only / informational constraints); `git diff --check -- docs/ops/HEDGR_STATUS.md` clean. No tests were run because the ticket scope explicitly excludes tests and product/runtime files.
 
 ### Sequencing note
 
