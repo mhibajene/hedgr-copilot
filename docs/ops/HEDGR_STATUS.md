@@ -676,6 +676,34 @@ Implementation posture preserved:
 - no successor implementation ticket
 - no custody activation, rails, deposits, withdrawals, ledger mutation, stablecoin conversion, treasury operations, Copilot execution, Class C automation, or customer fund movement authority
 
+### GOV-B-006 - Class B Rail Classification Register (documentation-only)
+
+Merged files:
+
+- `docs/ops/governance/class-b/HEDGR_CLASS_B_RAIL_CLASSIFICATION_REGISTER.md`
+- `docs/ops/HEDGR_STATUS.md`
+
+Implementation truth:
+
+- governance-only rail classification register added at `docs/ops/governance/class-b/HEDGR_CLASS_B_RAIL_CLASSIFICATION_REGISTER.md`
+- defines rail classification states for future Class B consideration, including not approved, research only, sandbox, internal test, manual pilot candidate, and limited live pilot candidate
+- frames unresolved rail role, directionality, customer-money exposure, settlement / finality, reconciliation, fee / FX / limit, vendor / partner responsibility, and failure / dispute questions
+- identifies downstream artifacts constrained by rail classification review
+- does not approve, activate, integrate, or operationalize any rail
+
+Implementation posture preserved:
+
+- documentation-only governance artifact
+- no `apps/`
+- no `packages/`
+- no backend
+- no frontend implementation
+- no tests
+- no CI workflow changes
+- no ADR status changes
+- no successor implementation ticket
+- no rail activation, vendor integration, custody activation, deposits, withdrawals, ledger mutation, stablecoin conversion, treasury operations, Copilot execution, Class C automation, or customer fund movement authority
+
 ### MC-S2-004 - Allocation bands UI
 
 Implementation truth:
@@ -1170,6 +1198,7 @@ Completed and merged:
 - `GOV-B-003` - Class B Artifact Dependency Map (documentation-only governance / dependency map; completed record **§56**)
 - `GOV-B-004` - Class B Legal / Compliance Requirements Memo (documentation-only governance / requirements memo; completed record **§57**)
 - `GOV-B-005` - Class B Custody Boundary Memo (documentation-only governance / custody-boundary memo; completed record **§58**)
+- `GOV-B-006` - Class B Rail Classification Register (documentation-only governance / rail-classification register; completed record **§59**)
 
 Current active ticket status:
 
@@ -1184,7 +1213,7 @@ Current active ticket status:
 - Cursor must not continue automatically into work beyond what is explicitly defined in this file for an active ticket.
 - Cursor must not drift beyond explicitly defined scope.
 
-**Last completed ticket (summary):** `GOV-B-005` — Class B Custody Boundary Memo (documentation-only governance / custody-boundary memo framing unresolved custody model, asset-control, provider-role, wallet recovery, deposit / withdrawal custody-transition, stablecoin custody, ledger-truth, failure-responsibility, and user-facing custody-claim questions for future Class B consideration; subordinate artifact at **`docs/ops/governance/class-b/HEDGR_CLASS_B_CUSTODY_BOUNDARY_MEMO.md`**; does not select, approve, or activate a custody model; **§7** / **§7a** remain in no-active-ticket state; no approved Class B implementation ticket created); completed record in **§58**.
+**Last completed ticket (summary):** `GOV-B-006` — Class B Rail Classification Register (documentation-only governance / rail-classification register defining rail classification states and framing unresolved rail role, directionality, customer-money exposure, settlement / finality, reconciliation, fee / FX / limit, vendor / partner responsibility, and failure / dispute questions for future Class B consideration; subordinate artifact at **`docs/ops/governance/class-b/HEDGR_CLASS_B_RAIL_CLASSIFICATION_REGISTER.md`**; does not approve, activate, integrate, or operationalize any rail; **§7** / **§7a** remain in no-active-ticket state; no approved Class B implementation ticket created); completed record in **§59**.
 
 ---
 
@@ -1193,6 +1222,10 @@ Current active ticket status:
 **Status:** **No active execution ticket.** **§7** does not currently name an approved next implementation ticket.
 
 When governance approves the next ticket, **§7** will name it and this section will hold the full execution brief until closeout.
+
+---
+
+**Archived brief (GOV-B-006):** Class B Rail Classification Register — **documentation-only governance / rail-classification register**; scope held to **`docs/ops/governance/class-b/HEDGR_CLASS_B_RAIL_CLASSIFICATION_REGISTER.md`** and **`docs/ops/HEDGR_STATUS.md`**. Created the next prerequisite artifact identified after the legal / compliance requirements memo and custody boundary memo, defining rail classification states for future Class B consideration including not approved, research only, sandbox, internal test, manual pilot candidate, and limited live pilot candidate. Identified a future-use rail / pathway classification template, rail boundary domains, rail claim guardrails, downstream dependency effects, and open rail questions for future governed review. This register does **not** approve, activate, integrate, or operationalize any rail and does **not** activate, sequence, approve, or implement Class B execution. **No** `apps/`, **no** `packages/`, **no** tests, **no** backend, **no** frontend implementation, **no** CI workflow changes, **no** ADR status changes, **no** successor implementation ticket, **no** rail activation, vendor integration, custody activation, deposits, withdrawals, stablecoin conversion, ledger mutation, treasury operations, Copilot execution, Class C automation, or customer fund movement authority. Completed record: **§59**.
 
 ---
 
@@ -2539,6 +2572,29 @@ This **§43** record was originally written in the same working-tree change-set 
 **Scope discipline held.** **No** `apps/`, **no** `packages/`, **no** `scripts/`, **no** `.github/`, **no** tests, **no** backend, **no** frontend implementation or product copy edits, **no** CI workflow changes, **no** ADR status changes, **no** successor implementation ticket, and **no** Class B approval. This closeout does **not** select, approve, or activate a custody model and does **not** authorize custody activation, rails, deposits, withdrawals, stablecoin conversion, ledger mutation, treasury operations, Copilot execution, Class C automation, or customer fund movement.
 
 **Validation.** Documentation-only diff review, `git diff --check -- docs/ops/governance/class-b/HEDGR_CLASS_B_CUSTODY_BOUNDARY_MEMO.md docs/ops/HEDGR_STATUS.md`, scoped artifact review, and `git status --short` completed locally. No tests were run because the ticket scope explicitly excludes tests and product/runtime files.
+
+### Sequencing note
+
+**§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
+
+**Follow-ups:** Any successor appears only when **§7** is updated explicitly.
+
+---
+
+## 59. Completed execution ticket - GOV-B-006 (Class B Rail Classification Register)
+
+**Ticket:** `GOV-B-006` — Class B Rail Classification Register (documentation-only governance / rail-classification register)
+
+### Outcome (documentation-only)
+
+- **`docs/ops/governance/class-b/HEDGR_CLASS_B_RAIL_CLASSIFICATION_REGISTER.md`** — added the repo-native rail classification register as the next prerequisite artifact identified after the Class B Legal / Compliance Requirements Memo and Class B Custody Boundary Memo
+- **`docs/ops/governance/class-b/HEDGR_CLASS_B_RAIL_CLASSIFICATION_REGISTER.md`** — defined rail classification states for future Class B consideration, including not approved, research only, sandbox, internal test, manual pilot candidate, and limited live pilot candidate
+- **`docs/ops/governance/class-b/HEDGR_CLASS_B_RAIL_CLASSIFICATION_REGISTER.md`** — added a future-use rail / pathway classification template, rail boundary domains, rail claim guardrails, downstream dependency effects, and open rail questions for future governed review
+- **`docs/ops/HEDGR_STATUS.md`** — added §6 merged-truth subsection `GOV-B-006`; updated the §7 completed list and last-completed summary; preserved §7 / §7a no-active-ticket posture; added §7a archived brief for `GOV-B-006`; §59 (this record)
+
+**Scope discipline held.** **No** `apps/`, **no** `packages/`, **no** `scripts/`, **no** `.github/`, **no** tests, **no** backend, **no** frontend implementation or product copy edits, **no** CI workflow changes, **no** ADR status changes, **no** successor implementation ticket, and **no** Class B approval. This closeout does **not** approve, activate, integrate, or operationalize any rail and does **not** authorize rail activation, vendor integration, custody activation, deposits, withdrawals, stablecoin conversion, ledger mutation, treasury operations, Copilot execution, Class C automation, or customer fund movement.
+
+**Validation.** Documentation-only diff review, `git diff --check -- docs/ops/governance/class-b/HEDGR_CLASS_B_RAIL_CLASSIFICATION_REGISTER.md docs/ops/HEDGR_STATUS.md`, scoped artifact review, and `git status --short` completed locally. No tests were run because the ticket scope explicitly excludes tests and product/runtime files.
 
 ### Sequencing note
 
