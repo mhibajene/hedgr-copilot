@@ -1,6 +1,6 @@
 Status: Canonical hand-off file
 Purpose: Strategic continuity, merged implementation truth, and next-ticket authority for Cursor execution
-Last updated: 2026-05-12
+Last updated: 2026-05-13
 
 ---
 
@@ -649,6 +649,33 @@ Implementation posture preserved:
 - no successor implementation ticket
 - no custody, rails, deposits, withdrawals, ledger mutation, stablecoin conversion, treasury operations, Copilot execution, Class C automation, or customer fund movement authority
 
+### GOV-B-005 - Class B Custody Boundary Memo (documentation-only)
+
+Merged files:
+
+- `docs/ops/governance/class-b/HEDGR_CLASS_B_CUSTODY_BOUNDARY_MEMO.md`
+- `docs/ops/HEDGR_STATUS.md`
+
+Implementation truth:
+
+- governance-only custody boundary memo added at `docs/ops/governance/class-b/HEDGR_CLASS_B_CUSTODY_BOUNDARY_MEMO.md`
+- frames unresolved custody model, asset-control, provider-role, wallet recovery, deposit / withdrawal custody-transition, stablecoin custody, ledger-truth, failure-responsibility, and user-facing custody-claim questions relevant to future Class B consideration
+- identifies downstream artifacts constrained by custody boundary review
+- does not select, approve, or activate a custody model
+
+Implementation posture preserved:
+
+- documentation-only governance artifact
+- no `apps/`
+- no `packages/`
+- no backend
+- no frontend implementation
+- no tests
+- no CI workflow changes
+- no ADR status changes
+- no successor implementation ticket
+- no custody activation, rails, deposits, withdrawals, ledger mutation, stablecoin conversion, treasury operations, Copilot execution, Class C automation, or customer fund movement authority
+
 ### MC-S2-004 - Allocation bands UI
 
 Implementation truth:
@@ -1142,6 +1169,7 @@ Completed and merged:
 - `GOV-B-002` - Class B Eligibility Gap Register (documentation-only governance / evidence register; completed record **§55**)
 - `GOV-B-003` - Class B Artifact Dependency Map (documentation-only governance / dependency map; completed record **§56**)
 - `GOV-B-004` - Class B Legal / Compliance Requirements Memo (documentation-only governance / requirements memo; completed record **§57**)
+- `GOV-B-005` - Class B Custody Boundary Memo (documentation-only governance / custody-boundary memo; completed record **§58**)
 
 Current active ticket status:
 
@@ -1156,7 +1184,7 @@ Current active ticket status:
 - Cursor must not continue automatically into work beyond what is explicitly defined in this file for an active ticket.
 - Cursor must not drift beyond explicitly defined scope.
 
-**Last completed ticket (summary):** `GOV-B-004` — Class B Legal / Compliance Requirements Memo (documentation-only governance / requirements memo framing unresolved legal, compliance, jurisdictional, eligibility, KYC / AML, rail-permission, custody, disclosure, data, support, and marketing-claims questions for future Class B consideration; subordinate artifact at **`docs/ops/governance/class-b/HEDGR_CLASS_B_LEGAL_COMPLIANCE_REQUIREMENTS_MEMO.md`**; does not provide legal advice, claim regulatory approval, or create Class B eligibility approval; **§7** / **§7a** remain in no-active-ticket state; no approved Class B implementation ticket created); completed record in **§57**.
+**Last completed ticket (summary):** `GOV-B-005` — Class B Custody Boundary Memo (documentation-only governance / custody-boundary memo framing unresolved custody model, asset-control, provider-role, wallet recovery, deposit / withdrawal custody-transition, stablecoin custody, ledger-truth, failure-responsibility, and user-facing custody-claim questions for future Class B consideration; subordinate artifact at **`docs/ops/governance/class-b/HEDGR_CLASS_B_CUSTODY_BOUNDARY_MEMO.md`**; does not select, approve, or activate a custody model; **§7** / **§7a** remain in no-active-ticket state; no approved Class B implementation ticket created); completed record in **§58**.
 
 ---
 
@@ -1165,6 +1193,10 @@ Current active ticket status:
 **Status:** **No active execution ticket.** **§7** does not currently name an approved next implementation ticket.
 
 When governance approves the next ticket, **§7** will name it and this section will hold the full execution brief until closeout.
+
+---
+
+**Archived brief (GOV-B-005):** Class B Custody Boundary Memo — **documentation-only governance / custody-boundary memo**; scope held to **`docs/ops/governance/class-b/HEDGR_CLASS_B_CUSTODY_BOUNDARY_MEMO.md`** and **`docs/ops/HEDGR_STATUS.md`**. Created the next prerequisite artifact identified by the Class B Artifact Dependency Map, framing unresolved custody model, asset-control, provider-role, wallet recovery, deposit / withdrawal custody-transition, stablecoin custody, ledger-truth, failure-responsibility, and user-facing custody-claim questions relevant to future Class B consideration. Identified custody boundary domains, a blank future-use custody responsibility matrix template, custody claim guardrails, downstream dependency effects, and open custody questions for future governed review. This memo does **not** select, approve, or activate a custody model and does **not** activate, sequence, approve, or implement Class B execution. **No** `apps/`, **no** `packages/`, **no** tests, **no** backend, **no** frontend implementation, **no** CI workflow changes, **no** ADR status changes, **no** successor implementation ticket, **no** custody activation, rails, deposits, withdrawals, stablecoin conversion, ledger mutation, treasury operations, Copilot execution, Class C automation, or customer fund movement authority. Completed record: **§58**.
 
 ---
 
@@ -2507,6 +2539,29 @@ This **§43** record was originally written in the same working-tree change-set 
 **Scope discipline held.** **No** `apps/`, **no** `packages/`, **no** `scripts/`, **no** `.github/`, **no** tests, **no** backend, **no** frontend implementation or product copy edits, **no** CI workflow changes, **no** ADR status changes, **no** successor implementation ticket, and **no** Class B approval. This closeout does **not** provide legal advice, does **not** claim regulatory approval, and does **not** authorize custody, rails, deposits, withdrawals, stablecoin conversion, ledger mutation, treasury operations, Copilot execution, Class C automation, or customer fund movement.
 
 **Validation.** Documentation-only diff review, `git diff --check -- docs/ops/HEDGR_CLASS_B_LEGAL_COMPLIANCE_REQUIREMENTS_MEMO.md docs/ops/HEDGR_STATUS.md`, scoped artifact review, and `git status --short` completed locally. No tests were run because the ticket scope explicitly excludes tests and product/runtime files.
+
+### Sequencing note
+
+**§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
+
+**Follow-ups:** Any successor appears only when **§7** is updated explicitly.
+
+---
+
+## 58. Completed execution ticket - GOV-B-005 (Class B Custody Boundary Memo)
+
+**Ticket:** `GOV-B-005` — Class B Custody Boundary Memo (documentation-only governance / custody-boundary memo)
+
+### Outcome (documentation-only)
+
+- **`docs/ops/governance/class-b/HEDGR_CLASS_B_CUSTODY_BOUNDARY_MEMO.md`** — added the repo-native custody boundary memo as the next prerequisite artifact identified by the Class B Artifact Dependency Map
+- **`docs/ops/governance/class-b/HEDGR_CLASS_B_CUSTODY_BOUNDARY_MEMO.md`** — framed unresolved custody model, asset-control, provider-role, wallet recovery, deposit / withdrawal custody-transition, stablecoin custody, ledger-truth, failure-responsibility, and user-facing custody-claim questions relevant to future Class B consideration
+- **`docs/ops/governance/class-b/HEDGR_CLASS_B_CUSTODY_BOUNDARY_MEMO.md`** — added custody boundary domains, a blank future-use custody responsibility matrix template, custody claim guardrails, downstream dependency effects, and open custody questions for future governed review
+- **`docs/ops/HEDGR_STATUS.md`** — added §6 merged-truth subsection `GOV-B-005`; updated the §7 completed list and last-completed summary; preserved §7 / §7a no-active-ticket posture; added §7a archived brief for `GOV-B-005`; §58 (this record)
+
+**Scope discipline held.** **No** `apps/`, **no** `packages/`, **no** `scripts/`, **no** `.github/`, **no** tests, **no** backend, **no** frontend implementation or product copy edits, **no** CI workflow changes, **no** ADR status changes, **no** successor implementation ticket, and **no** Class B approval. This closeout does **not** select, approve, or activate a custody model and does **not** authorize custody activation, rails, deposits, withdrawals, stablecoin conversion, ledger mutation, treasury operations, Copilot execution, Class C automation, or customer fund movement.
+
+**Validation.** Documentation-only diff review, `git diff --check -- docs/ops/governance/class-b/HEDGR_CLASS_B_CUSTODY_BOUNDARY_MEMO.md docs/ops/HEDGR_STATUS.md`, scoped artifact review, and `git status --short` completed locally. No tests were run because the ticket scope explicitly excludes tests and product/runtime files.
 
 ### Sequencing note
 
