@@ -704,6 +704,33 @@ Implementation posture preserved:
 - no successor implementation ticket
 - no rail activation, vendor integration, custody activation, deposits, withdrawals, ledger mutation, stablecoin conversion, treasury operations, Copilot execution, Class C automation, or customer fund movement authority
 
+### GOV-B-007 - Notion Release Reconciliation for Class B Governance Spine (documentation-only)
+
+Merged files:
+
+- `docs/ops/NOTION_GOVERNANCE_STAGING.md`
+- `docs/ops/HEDGR_STATUS.md`
+
+Implementation truth:
+
+- Notion governance staging now represents `Class B Pilot Governance Spine` as a separate governance-only release container for `GOV-B-001` through `GOV-B-006`
+- `Stability Engine™️ - Transition Readiness` remains closed / shipped as governance readiness only and is not the active home for GOV-B Class B prerequisite spine work
+- staging clarifies that GOV-B work is non-authorizing and subordinate to repo authority
+- historical Phase 4 / Phase 5 Notion labels remain planning references only and do not authorize blocked runtime, Copilot, execution, or Class B / Class C work
+
+Implementation posture preserved:
+
+- documentation-only governance reconciliation
+- no `apps/`
+- no `packages/`
+- no backend
+- no frontend implementation
+- no tests
+- no CI workflow changes
+- no ADR status changes
+- no successor implementation ticket
+- no Class B implementation, custody activation, rail activation, deposits, withdrawals, ledger mutation, stablecoin conversion, treasury operations, Copilot execution, Class C automation, or customer fund movement authority
+
 ### MC-S2-004 - Allocation bands UI
 
 Implementation truth:
@@ -1199,6 +1226,7 @@ Completed and merged:
 - `GOV-B-004` - Class B Legal / Compliance Requirements Memo (documentation-only governance / requirements memo; completed record **§57**)
 - `GOV-B-005` - Class B Custody Boundary Memo (documentation-only governance / custody-boundary memo; completed record **§58**)
 - `GOV-B-006` - Class B Rail Classification Register (documentation-only governance / rail-classification register; completed record **§59**)
+- `GOV-B-007` - Notion Release Reconciliation for Class B Governance Spine (documentation-only Notion governance reconciliation; completed record **§60**)
 
 Current active ticket status:
 
@@ -1213,7 +1241,7 @@ Current active ticket status:
 - Cursor must not continue automatically into work beyond what is explicitly defined in this file for an active ticket.
 - Cursor must not drift beyond explicitly defined scope.
 
-**Last completed ticket (summary):** `GOV-B-006` — Class B Rail Classification Register (documentation-only governance / rail-classification register defining rail classification states and framing unresolved rail role, directionality, customer-money exposure, settlement / finality, reconciliation, fee / FX / limit, vendor / partner responsibility, and failure / dispute questions for future Class B consideration; subordinate artifact at **`docs/ops/governance/class-b/HEDGR_CLASS_B_RAIL_CLASSIFICATION_REGISTER.md`**; does not approve, activate, integrate, or operationalize any rail; **§7** / **§7a** remain in no-active-ticket state; no approved Class B implementation ticket created); completed record in **§59**.
+**Last completed ticket (summary):** `GOV-B-007` — Notion Release Reconciliation for Class B Governance Spine (documentation-only Notion governance reconciliation representing **Class B Pilot Governance Spine** as a separate governance-only release container for **`GOV-B-001`** through **`GOV-B-006`**; preserves **Stability Engine™️ - Transition Readiness** as closed / shipped governance readiness only; keeps all GOV-B work non-authorizing and subordinate to **§7** / **§7a**; historical Phase 4 / Phase 5 Notion labels remain planning references only; **§7** / **§7a** remain in no-active-ticket state; no approved Class B implementation ticket created); completed record in **§60**.
 
 ---
 
@@ -2595,6 +2623,30 @@ This **§43** record was originally written in the same working-tree change-set 
 **Scope discipline held.** **No** `apps/`, **no** `packages/`, **no** `scripts/`, **no** `.github/`, **no** tests, **no** backend, **no** frontend implementation or product copy edits, **no** CI workflow changes, **no** ADR status changes, **no** successor implementation ticket, and **no** Class B approval. This closeout does **not** approve, activate, integrate, or operationalize any rail and does **not** authorize rail activation, vendor integration, custody activation, deposits, withdrawals, stablecoin conversion, ledger mutation, treasury operations, Copilot execution, Class C automation, or customer fund movement.
 
 **Validation.** Documentation-only diff review, `git diff --check -- docs/ops/governance/class-b/HEDGR_CLASS_B_RAIL_CLASSIFICATION_REGISTER.md docs/ops/HEDGR_STATUS.md`, scoped artifact review, and `git status --short` completed locally. No tests were run because the ticket scope explicitly excludes tests and product/runtime files.
+
+### Sequencing note
+
+**§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
+
+**Follow-ups:** Any successor appears only when **§7** is updated explicitly.
+
+---
+
+## 60. Completed execution ticket - GOV-B-007 (Notion Release Reconciliation for Class B Governance Spine)
+
+**Ticket:** `GOV-B-007` — Notion Release Reconciliation for Class B Governance Spine (documentation-only Notion governance reconciliation)
+
+### Outcome (documentation-only)
+
+- **`docs/ops/NOTION_GOVERNANCE_STAGING.md`** — added **Class B Pilot Governance Spine** as a distinct governance-only release staging block for **`GOV-B-001`** through **`GOV-B-006`**
+- **`docs/ops/NOTION_GOVERNANCE_STAGING.md`** — staged each **`GOV-B-001`** through **`GOV-B-006`** work item as **Done**, **Documentation-only / Governance**, and **Non-authorizing**, with one-line non-authorization summaries
+- **`docs/ops/NOTION_GOVERNANCE_STAGING.md`** — clarified that **Stability Engine™️ - Transition Readiness** remains closed / shipped as governance readiness only and is not the active home for GOV-B Class B prerequisite spine work
+- **`docs/ops/NOTION_GOVERNANCE_STAGING.md`** — added the historical Phase 4 / Phase 5 caution that those labels are planning references only and do not authorize runtime, Copilot, execution, Class B / Class C movement, or implementation sequencing
+- **`docs/ops/HEDGR_STATUS.md`** — added §6 merged-truth subsection `GOV-B-007`; updated the §7 completed list and last-completed summary; preserved §7 / §7a no-active-ticket posture; §60 (this record)
+
+**Scope discipline held.** **No** `apps/`, **no** `packages/`, **no** `scripts/`, **no** `.github/`, **no** tests, **no** backend, **no** frontend implementation or product copy edits, **no** CI workflow changes, **no** ADR status changes, **no** successor implementation ticket, and **no** Class B approval. This closeout does **not** authorize Class B implementation, custody activation, rail activation, deposits, withdrawals, stablecoin conversion, ledger mutation, treasury operations, Copilot execution, Class C automation, or customer fund movement.
+
+**Validation.** Documentation-only diff review, `git diff -- docs/ops/NOTION_GOVERNANCE_STAGING.md docs/ops/HEDGR_STATUS.md`, `git diff --check -- docs/ops/NOTION_GOVERNANCE_STAGING.md docs/ops/HEDGR_STATUS.md`, and `git status --short` completed locally. No tests were run because the ticket scope explicitly excludes tests and product/runtime files.
 
 ### Sequencing note
 
