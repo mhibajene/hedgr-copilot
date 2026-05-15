@@ -1,6 +1,6 @@
 Status: Canonical hand-off file
 Purpose: Strategic continuity, merged implementation truth, and next-ticket authority for Cursor execution
-Last updated: 2026-05-14
+Last updated: 2026-05-15
 
 ---
 
@@ -759,6 +759,35 @@ Implementation posture preserved:
 - no successor implementation ticket
 - no withdrawal approval, liquidity approval, treasury authority, rail activation, custody activation, deposits, ledger mutation, stablecoin conversion, Copilot execution, Class C automation, or customer fund movement authority
 
+### GOV-B-009 - Class B ADR Scoping Memo (documentation-only)
+
+Merged files:
+
+- `docs/ops/governance/class-b/HEDGR_CLASS_B_ADR_SCOPING_MEMO.md`
+- `docs/ops/HEDGR_STATUS.md`
+- `docs/ops/NOTION_GOVERNANCE_STAGING.md`
+
+Implementation truth:
+
+- governance-only ADR scoping memo added at `docs/ops/governance/class-b/HEDGR_CLASS_B_ADR_SCOPING_MEMO.md`
+- identifies future Class B decision-record subjects, decision boundaries, evidence prerequisites, and non-decision areas after legal / compliance, custody, rail, and liquidity / withdrawal boundaries
+- frames potential ADR subjects for Class B execution boundary, custody model, rail activation, liquidity / withdrawal authority, ledger truth, stablecoin / conversion, manual operations, trust UX / claims, and staging / live-state separation
+- adds an ADR scoping matrix template, ADR drafting guardrails, downstream dependency effects, and open ADR scoping questions for future governed review
+- does not draft, accept, amend, supersede, or activate any ADR
+
+Implementation posture preserved:
+
+- documentation-only governance artifact
+- no `apps/`
+- no `packages/`
+- no backend
+- no frontend implementation
+- no tests
+- no CI workflow changes
+- no ADR status changes
+- no successor implementation ticket
+- no ADR acceptance, Class B readiness, implementation approval, custody approval, rail approval, withdrawal approval, liquidity approval, treasury authority, stablecoin conversion, ledger mutation, Copilot execution, Class C automation, or customer fund movement authority
+
 ### MC-S2-004 - Allocation bands UI
 
 Implementation truth:
@@ -1256,6 +1285,7 @@ Completed and merged:
 - `GOV-B-006` - Class B Rail Classification Register (documentation-only governance / rail-classification register; completed record **§59**)
 - `GOV-B-007` - Notion Release Reconciliation for Class B Governance Spine (documentation-only Notion governance reconciliation; completed record **§60**)
 - `GOV-B-008` - Class B Liquidity / Withdrawal Control Memo (documentation-only governance / liquidity-withdrawal control memo; completed record **§61**)
+- `GOV-B-009` - Class B ADR Scoping Memo (documentation-only governance / ADR scoping memo; completed record **§62**)
 
 Current active ticket status:
 
@@ -1270,7 +1300,7 @@ Current active ticket status:
 - Cursor must not continue automatically into work beyond what is explicitly defined in this file for an active ticket.
 - Cursor must not drift beyond explicitly defined scope.
 
-**Last completed ticket (summary):** `GOV-B-008` — Class B Liquidity / Withdrawal Control Memo (documentation-only governance / liquidity-withdrawal control memo framing unresolved withdrawal-path, liquidity-buffer, manual-control, pending / delayed / failed / unresolved-state, settlement / finality, stress / pause, kill-criteria, support / dispute, and audit / reconciliation questions; adds the memo to **Class B Pilot Governance Spine** staging; preserves all GOV-B work as non-authorizing and subordinate to **§7** / **§7a**; does not approve withdrawals, liquidity buffers, treasury operations, rails, custody, deposits, stablecoin conversion, ledger mutation, Copilot execution, Class C automation, or customer fund movement; **§7** / **§7a** remain in no-active-ticket state; no approved Class B implementation ticket created); completed record in **§61**.
+**Last completed ticket (summary):** `GOV-B-009` — Class B ADR Scoping Memo (documentation-only governance / ADR scoping memo identifying future Class B decision-record subjects, decision boundaries, evidence prerequisites, non-decision areas, ADR drafting guardrails, and open ADR scoping questions; adds the memo to **Class B Pilot Governance Spine** staging; preserves all GOV-B work as non-authorizing and subordinate to **§7** / **§7a**; does not draft, accept, amend, supersede, or activate any ADR and does not approve Class B readiness, implementation, custody, rails, withdrawals, liquidity, stablecoin conversion, ledger mutation, Copilot execution, Class C automation, or customer fund movement; **§7** / **§7a** remain in no-active-ticket state; no approved Class B implementation ticket created); completed record in **§62**.
 
 ---
 
@@ -1279,6 +1309,10 @@ Current active ticket status:
 **Status:** **No active execution ticket.** **§7** does not currently name an approved next implementation ticket.
 
 When governance approves the next ticket, **§7** will name it and this section will hold the full execution brief until closeout.
+
+---
+
+**Archived brief (GOV-B-009):** Class B ADR Scoping Memo — **documentation-only governance / ADR scoping memo**; scope held to **`docs/ops/governance/class-b/HEDGR_CLASS_B_ADR_SCOPING_MEMO.md`**, **`docs/ops/HEDGR_STATUS.md`**, and **`docs/ops/NOTION_GOVERNANCE_STAGING.md`**. Created the next prerequisite artifact after legal / compliance requirements, custody boundary, rail classification, liquidity / withdrawal control framing, and Notion release reconciliation, identifying future Class B decision-record subjects, decision boundaries, evidence prerequisites, and non-decision areas relevant to future Class B consideration. Identified potential ADR domains, an ADR scoping matrix template, ADR drafting guardrails, downstream dependency effects, and open ADR scoping questions for future governed review. This memo does **not** draft, accept, amend, supersede, or activate any ADR and does **not** approve Class B readiness, implementation, custody, rails, deposits, withdrawals, liquidity buffers, treasury operations, stablecoin conversion, ledger mutation, Copilot execution, Class C automation, or customer fund movement. **No** `apps/`, **no** `packages/`, **no** tests, **no** backend, **no** frontend implementation, **no** CI workflow changes, **no** ADR status changes, **no** successor implementation ticket, **no** ADR acceptance, Class B readiness, implementation approval, custody approval, rail approval, withdrawal approval, liquidity approval, treasury authority, stablecoin conversion, ledger mutation, Copilot execution, Class C automation, or customer fund movement authority. Completed record: **§62**.
 
 ---
 
@@ -2328,6 +2362,8 @@ This **§43** record was originally written in the same working-tree change-set 
 
 **Follow-ups:** Any successor appears only when **§7** is updated explicitly.
 
+---
+
 ## 45. Completed execution ticket - MC-S3-013 (Canonical engine type export contract)
 
 **Ticket:** `MC-S3-013` — Canonical engine type export contract (test-only)  
@@ -2704,6 +2740,30 @@ This **§43** record was originally written in the same working-tree change-set 
 **Scope discipline held.** **No** `apps/`, **no** `packages/`, **no** `scripts/`, **no** `.github/`, **no** tests, **no** backend, **no** frontend implementation or product copy edits, **no** CI workflow changes, **no** ADR status changes, **no** successor implementation ticket, and **no** Class B approval. This closeout does **not** approve, activate, or operationalize withdrawals, liquidity buffers, treasury operations, rails, custody, deposits, stablecoin conversion, ledger mutation, Copilot execution, Class C automation, or customer fund movement.
 
 **Validation.** Documentation-only diff review, `git diff -- docs/ops/governance/class-b/HEDGR_CLASS_B_LIQUIDITY_WITHDRAWAL_CONTROL_MEMO.md docs/ops/HEDGR_STATUS.md docs/ops/NOTION_GOVERNANCE_STAGING.md`, `git diff --check -- docs/ops/governance/class-b/HEDGR_CLASS_B_LIQUIDITY_WITHDRAWAL_CONTROL_MEMO.md docs/ops/HEDGR_STATUS.md docs/ops/NOTION_GOVERNANCE_STAGING.md`, and `git status --short` completed locally. No tests were run because the ticket scope explicitly excludes tests and product/runtime files.
+
+### Sequencing note
+
+**§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
+
+**Follow-ups:** Any successor appears only when **§7** is updated explicitly.
+
+---
+
+## 62. Completed execution ticket - GOV-B-009 (Class B ADR Scoping Memo)
+
+**Ticket:** `GOV-B-009` — Class B ADR Scoping Memo (documentation-only governance / ADR scoping memo)
+
+### Outcome (documentation-only)
+
+- **`docs/ops/governance/class-b/HEDGR_CLASS_B_ADR_SCOPING_MEMO.md`** — added the repo-native ADR scoping memo as the next prerequisite artifact after legal / compliance requirements, custody boundary, rail classification, liquidity / withdrawal control framing, and Notion release reconciliation
+- **`docs/ops/governance/class-b/HEDGR_CLASS_B_ADR_SCOPING_MEMO.md`** — identified future Class B decision-record subjects, decision boundaries, evidence prerequisites, non-decision areas, and open ADR scoping questions relevant to future Class B consideration
+- **`docs/ops/governance/class-b/HEDGR_CLASS_B_ADR_SCOPING_MEMO.md`** — added potential ADR domains, an ADR scoping matrix template, ADR drafting guardrails, and downstream dependency effects for future governed review
+- **`docs/ops/NOTION_GOVERNANCE_STAGING.md`** — added `GOV-B-009` under **Class B Pilot Governance Spine** and reconciled staging pointers through **§62**
+- **`docs/ops/HEDGR_STATUS.md`** — added §6 merged-truth subsection `GOV-B-009`; updated the §7 completed list and last-completed summary; preserved §7 / §7a no-active-ticket posture; added §7a archived brief for `GOV-B-009`; §62 (this record)
+
+**Scope discipline held.** **No** `apps/`, **no** `packages/`, **no** `scripts/`, **no** `.github/`, **no** tests, **no** backend, **no** frontend implementation or product copy edits, **no** CI workflow changes, **no** ADR status changes, **no** successor implementation ticket, and **no** Class B approval. This closeout does **not** draft, accept, amend, supersede, or activate any ADR and does **not** authorize implementation, custody, rails, deposits, withdrawals, liquidity buffers, treasury operations, stablecoin conversion, ledger mutation, Copilot execution, Class C automation, or customer fund movement.
+
+**Validation.** Documentation-only diff review, `git diff -- docs/ops/governance/class-b/HEDGR_CLASS_B_ADR_SCOPING_MEMO.md docs/ops/HEDGR_STATUS.md docs/ops/NOTION_GOVERNANCE_STAGING.md`, `git diff --check -- docs/ops/governance/class-b/HEDGR_CLASS_B_ADR_SCOPING_MEMO.md docs/ops/HEDGR_STATUS.md docs/ops/NOTION_GOVERNANCE_STAGING.md`, and `git status --short` completed locally. No tests were run because the ticket scope explicitly excludes tests and product/runtime files.
 
 ### Sequencing note
 
