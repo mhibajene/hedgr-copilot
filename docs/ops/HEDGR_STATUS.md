@@ -820,6 +820,38 @@ Implementation posture preserved:
 - no successor implementation ticket
 - no UI approval, deposit approval, withdrawal approval, custody approval, rail approval, stablecoin conversion approval, ledger mutation, treasury authority, Copilot execution, Class B execution, Class C automation, or customer fund movement authority
 
+### GOV-B-011 - Class B Pilot Ops Runbook (documentation-only)
+
+Merged files:
+
+- `docs/ops/governance/class-b/HEDGR_CLASS_B_PILOT_OPS_RUNBOOK.md`
+- `docs/ops/HEDGR_STATUS.md`
+- `docs/ops/NOTION_GOVERNANCE_STAGING.md`
+
+Implementation truth:
+
+- governance-only Pilot Ops Runbook added at `docs/ops/governance/class-b/HEDGR_CLASS_B_PILOT_OPS_RUNBOOK.md`
+- defines operational-control requirements, manual-review assumptions, role / responsibility templates, pause / escalation posture, support handoff constraints, evidence expectations, and open pilot-ops questions for future Class B consideration
+- frames operational requirements across pilot ownership, participant control, manual review, deposits, withdrawals, custody, rails, liquidity / treasury controls, reconciliation, support / disputes, incident response, pause controls, and audit evidence
+- adds role / responsibility, manual-review, pause / escalation / kill-control, evidence-checklist, support-handoff, prohibited-assumption, downstream-dependency, and open-question sections
+- does not approve, activate, or operationalize pilot operations
+
+Implementation posture preserved:
+
+- documentation-only governance artifact
+- no `apps/`
+- no `packages/`
+- no backend
+- no frontend implementation
+- no product copy edits
+- no shipped route edits
+- no prototype route edits
+- no tests
+- no CI workflow changes
+- no ADR status changes
+- no successor implementation ticket
+- no pilot operations approval, deposit approval, withdrawal approval, custody approval, rail approval, stablecoin conversion approval, liquidity approval, reconciliation approval, support-operation approval, ledger mutation, treasury authority, Copilot execution, Class B execution, Class C automation, or customer fund movement authority
+
 ### MC-S2-004 - Allocation bands UI
 
 Implementation truth:
@@ -1319,6 +1351,7 @@ Completed and merged:
 - `GOV-B-008` - Class B Liquidity / Withdrawal Control Memo (documentation-only governance / liquidity-withdrawal control memo; completed record **§61**)
 - `GOV-B-009` - Class B ADR Scoping Memo (documentation-only governance / ADR scoping memo; completed record **§62**)
 - `GOV-B-010` - Class B Trust UX Pack (documentation-only governance / trust UX constraint pack; completed record **§63**)
+- `GOV-B-011` - Class B Pilot Ops Runbook (documentation-only governance / pilot operations runbook; completed record **§64**)
 
 Current active ticket status:
 
@@ -1333,7 +1366,7 @@ Current active ticket status:
 - Cursor must not continue automatically into work beyond what is explicitly defined in this file for an active ticket.
 - Cursor must not drift beyond explicitly defined scope.
 
-**Last completed ticket (summary):** `GOV-B-010` — Class B Trust UX Pack (documentation-only governance / trust UX constraint pack defining customer-facing trust, disclosure, copy, state-label, failure-state, support-message, prohibited-claim, marketing-claim, and Copilot-proximity constraints for future Class B consideration; adds the pack to **Class B Pilot Governance Spine** staging; preserves all GOV-B work as non-authorizing and subordinate to **§7** / **§7a**; does not approve, activate, or implement any UI surface, product copy, deposit flow, withdrawal flow, custody model, rail, stablecoin conversion, treasury operation, ledger mutation, Copilot execution, Class B execution, Class C automation, or customer fund movement; **§7** / **§7a** return to no-active-ticket state; no successor implementation ticket created); completed record in **§63**.
+**Last completed ticket (summary):** `GOV-B-011` — Class B Pilot Ops Runbook (documentation-only governance / pilot operations runbook defining operational-control requirements, manual-review assumptions, role / responsibility templates, pause / escalation posture, support handoff constraints, evidence expectations, and open pilot-ops questions for future Class B consideration; adds the runbook to **Class B Pilot Governance Spine** staging; preserves all GOV-B work as non-authorizing and subordinate to **§7** / **§7a**; does not approve, activate, or operationalize pilot operations, deposits, withdrawals, custody, rails, stablecoin conversion, treasury operations, liquidity buffers, reconciliation operations, support operations, ledger mutation, Copilot execution, Class B execution, Class C automation, or customer fund movement; **§7** / **§7a** return to no-active-ticket state; no successor implementation ticket created); completed record in **§64**.
 
 ---
 
@@ -1342,6 +1375,10 @@ Current active ticket status:
 **Status:** **No active execution ticket.** **§7** does not currently name an approved next implementation ticket.
 
 When governance approves the next ticket, **§7** will name it and this section will hold the full execution brief until closeout.
+
+---
+
+**Archived brief (GOV-B-011):** Class B Pilot Ops Runbook — **documentation-only governance / pilot operations runbook**; scope held to **`docs/ops/governance/class-b/HEDGR_CLASS_B_PILOT_OPS_RUNBOOK.md`**, **`docs/ops/HEDGR_STATUS.md`**, and **`docs/ops/NOTION_GOVERNANCE_STAGING.md`**. Created the next prerequisite artifact after legal / compliance requirements, custody boundary, rail classification, liquidity / withdrawal control framing, ADR scoping, Notion release reconciliation, and Trust UX constraints, defining operational-control requirements, manual-review assumptions, role / responsibility templates, pause / escalation posture, support handoff constraints, evidence expectations, and open pilot-ops questions for future Class B consideration. Added pilot ops principles, operational domains, role / responsibility matrix template, manual review flow template, pause / escalation / kill-control template, evidence checklist template, support handoff constraints, operational prohibited assumptions, downstream dependency effects, and open Pilot Ops questions for future governed review. This runbook does **not** approve, activate, or operationalize pilot operations, deposits, withdrawals, custody, rails, stablecoin conversion, treasury operations, liquidity buffers, reconciliation operations, support operations, ledger mutation, Copilot execution, Class B execution, Class C automation, or customer fund movement. **No** `apps/`, **no** `packages/`, **no** tests, **no** backend, **no** frontend implementation, **no** product copy edits, **no** shipped route edits, **no** prototype route edits, **no** CI workflow changes, **no** ADR status changes, **no** successor implementation ticket, **no** pilot operations approval, deposit approval, withdrawal approval, custody approval, rail approval, stablecoin conversion approval, liquidity approval, reconciliation approval, support-operation approval, ledger mutation, treasury authority, Copilot execution, Class B execution, Class C automation, or customer fund movement authority. Completed record: **§64**.
 
 ---
 
@@ -2826,6 +2863,31 @@ This **§43** record was originally written in the same working-tree change-set 
 **Scope discipline held.** **No** `apps/`, **no** `packages/`, **no** `scripts/`, **no** `.github/`, **no** tests, **no** backend, **no** frontend implementation, **no** product copy edits, **no** shipped route edits, **no** prototype route edits, **no** CI workflow changes, **no** ADR status changes, **no** successor implementation ticket, and **no** Class B approval. This closeout does **not** approve, activate, or implement any UI surface, product copy, deposit flow, withdrawal flow, custody model, rail, stablecoin conversion, treasury operation, ledger mutation, Copilot execution, Class B execution, Class C automation, or customer fund movement.
 
 **Validation.** Documentation-only diff review, `git diff -- docs/ops/governance/class-b/HEDGR_CLASS_B_TRUST_UX_PACK.md docs/ops/HEDGR_STATUS.md docs/ops/NOTION_GOVERNANCE_STAGING.md`, `git diff --check -- docs/ops/governance/class-b/HEDGR_CLASS_B_TRUST_UX_PACK.md docs/ops/HEDGR_STATUS.md docs/ops/NOTION_GOVERNANCE_STAGING.md`, and `git status --short` completed locally. No tests were run because the ticket scope explicitly excludes tests and product/runtime files.
+
+### Sequencing note
+
+**§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
+
+**Follow-ups:** Any successor appears only when **§7** is updated explicitly.
+
+---
+
+## 64. Completed execution ticket - GOV-B-011 (Class B Pilot Ops Runbook)
+
+**Ticket:** `GOV-B-011` — Class B Pilot Ops Runbook (documentation-only governance / pilot operations runbook)
+
+### Outcome (documentation-only)
+
+- **`docs/ops/governance/class-b/HEDGR_CLASS_B_PILOT_OPS_RUNBOOK.md`** — added the repo-native Pilot Ops Runbook as the next prerequisite artifact after legal / compliance requirements, custody boundary, rail classification, liquidity / withdrawal control framing, ADR scoping, Notion release reconciliation, and Trust UX constraints
+- **`docs/ops/governance/class-b/HEDGR_CLASS_B_PILOT_OPS_RUNBOOK.md`** — defined operational-control requirements, manual-review assumptions, role / responsibility templates, pause / escalation posture, support handoff constraints, evidence expectations, and open pilot-ops questions for future Class B consideration
+- **`docs/ops/governance/class-b/HEDGR_CLASS_B_PILOT_OPS_RUNBOOK.md`** — framed operational requirements across pilot ownership, participant control, manual review, deposits, withdrawals, custody, rails, liquidity / treasury controls, reconciliation, support / disputes, incident response, pause controls, and audit evidence
+- **`docs/ops/governance/class-b/HEDGR_CLASS_B_PILOT_OPS_RUNBOOK.md`** — added role / responsibility, manual-review, pause / escalation / kill-control, evidence-checklist, support-handoff, prohibited-assumption, downstream-dependency, and open-question sections
+- **`docs/ops/NOTION_GOVERNANCE_STAGING.md`** — added `GOV-B-011` under **Class B Pilot Governance Spine** and reconciled staging pointers through **§64**
+- **`docs/ops/HEDGR_STATUS.md`** — added §6 merged-truth subsection `GOV-B-011`; updated the §7 completed list and last-completed summary; returned §7 / §7a to no-active-ticket posture; added §7a archived brief for `GOV-B-011`; §64 (this record)
+
+**Scope discipline held.** **No** `apps/`, **no** `packages/`, **no** `scripts/`, **no** `.github/`, **no** tests, **no** backend, **no** frontend implementation, **no** product copy edits, **no** shipped route edits, **no** prototype route edits, **no** CI workflow changes, **no** ADR status changes, **no** successor implementation ticket, and **no** Class B approval. This closeout does **not** approve, activate, or operationalize pilot operations, deposits, withdrawals, custody, rails, stablecoin conversion, treasury operations, liquidity buffers, reconciliation operations, support operations, ledger mutation, Copilot execution, Class B execution, Class C automation, or customer fund movement.
+
+**Validation.** Documentation-only diff review, `git diff -- docs/ops/governance/class-b/HEDGR_CLASS_B_PILOT_OPS_RUNBOOK.md docs/ops/HEDGR_STATUS.md docs/ops/NOTION_GOVERNANCE_STAGING.md`, `git diff --check -- docs/ops/governance/class-b/HEDGR_CLASS_B_PILOT_OPS_RUNBOOK.md docs/ops/HEDGR_STATUS.md docs/ops/NOTION_GOVERNANCE_STAGING.md`, and `git status --short` completed locally. No tests were run because the ticket scope explicitly excludes tests and product/runtime files.
 
 ### Sequencing note
 
