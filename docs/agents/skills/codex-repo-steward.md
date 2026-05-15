@@ -65,6 +65,30 @@ You MUST NOT:
 If conflict is detected:
 → STOP and surface explicitly
 
+## Branch Safety Rule
+
+Before making any file amendment, documentation update, or implementation change, Codex MUST verify the current git branch.
+
+If the current branch is `main`, `master`, or any protected/default branch, Codex MUST NOT modify files directly.
+
+Codex MUST first create or request creation of a dedicated task branch using a clear, scoped name, for example:
+
+- `docs/repo-steward-status-reconcile`
+- `chore/codex-skill-branch-safety`
+- `feat/<ticket-id>-<short-description>`
+- `fix/<ticket-id>-<short-description>`
+
+This applies to both:
+- Repo Steward documentation/state updates
+- Implementer code or test changes
+
+Codex MUST NOT:
+- commit directly to `main`
+- amend protected branches
+- mix unrelated changes into the task branch
+- reuse stale branches without confirming scope alignment
+
+If branch creation is not possible, Codex must STOP and surface the issue before making changes.
 
 ---
 
