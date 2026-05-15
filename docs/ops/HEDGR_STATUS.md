@@ -788,6 +788,38 @@ Implementation posture preserved:
 - no successor implementation ticket
 - no ADR acceptance, Class B readiness, implementation approval, custody approval, rail approval, withdrawal approval, liquidity approval, treasury authority, stablecoin conversion, ledger mutation, Copilot execution, Class C automation, or customer fund movement authority
 
+### GOV-B-010 - Class B Trust UX Pack (documentation-only)
+
+Merged files:
+
+- `docs/ops/governance/class-b/HEDGR_CLASS_B_TRUST_UX_PACK.md`
+- `docs/ops/HEDGR_STATUS.md`
+- `docs/ops/NOTION_GOVERNANCE_STAGING.md`
+
+Implementation truth:
+
+- governance-only Trust UX Pack added at `docs/ops/governance/class-b/HEDGR_CLASS_B_TRUST_UX_PACK.md`
+- defines customer-facing trust, disclosure, copy, state-label, failure-state, support-message, prohibited-claim, marketing-claim, and Copilot-proximity constraints for future Class B consideration
+- frames trust UX requirements across deposits, withdrawals, custody, rails, settlement, stablecoin / conversion, fees, FX, liquidity, support, disputes, Copilot, and public claims
+- adds claim classification, prohibited-claim, state-label, disclosure, support-message, Copilot-proximity, marketing-claim, downstream dependency, and open-question sections
+- does not approve, activate, or implement any UI surface or product copy
+
+Implementation posture preserved:
+
+- documentation-only governance artifact
+- no `apps/`
+- no `packages/`
+- no backend
+- no frontend implementation
+- no product copy edits
+- no shipped route edits
+- no prototype route edits
+- no tests
+- no CI workflow changes
+- no ADR status changes
+- no successor implementation ticket
+- no UI approval, deposit approval, withdrawal approval, custody approval, rail approval, stablecoin conversion approval, ledger mutation, treasury authority, Copilot execution, Class B execution, Class C automation, or customer fund movement authority
+
 ### MC-S2-004 - Allocation bands UI
 
 Implementation truth:
@@ -1286,6 +1318,7 @@ Completed and merged:
 - `GOV-B-007` - Notion Release Reconciliation for Class B Governance Spine (documentation-only Notion governance reconciliation; completed record **§60**)
 - `GOV-B-008` - Class B Liquidity / Withdrawal Control Memo (documentation-only governance / liquidity-withdrawal control memo; completed record **§61**)
 - `GOV-B-009` - Class B ADR Scoping Memo (documentation-only governance / ADR scoping memo; completed record **§62**)
+- `GOV-B-010` - Class B Trust UX Pack (documentation-only governance / trust UX constraint pack; completed record **§63**)
 
 Current active ticket status:
 
@@ -1300,7 +1333,7 @@ Current active ticket status:
 - Cursor must not continue automatically into work beyond what is explicitly defined in this file for an active ticket.
 - Cursor must not drift beyond explicitly defined scope.
 
-**Last completed ticket (summary):** `GOV-B-009` — Class B ADR Scoping Memo (documentation-only governance / ADR scoping memo identifying future Class B decision-record subjects, decision boundaries, evidence prerequisites, non-decision areas, ADR drafting guardrails, and open ADR scoping questions; adds the memo to **Class B Pilot Governance Spine** staging; preserves all GOV-B work as non-authorizing and subordinate to **§7** / **§7a**; does not draft, accept, amend, supersede, or activate any ADR and does not approve Class B readiness, implementation, custody, rails, withdrawals, liquidity, stablecoin conversion, ledger mutation, Copilot execution, Class C automation, or customer fund movement; **§7** / **§7a** remain in no-active-ticket state; no approved Class B implementation ticket created); completed record in **§62**.
+**Last completed ticket (summary):** `GOV-B-010` — Class B Trust UX Pack (documentation-only governance / trust UX constraint pack defining customer-facing trust, disclosure, copy, state-label, failure-state, support-message, prohibited-claim, marketing-claim, and Copilot-proximity constraints for future Class B consideration; adds the pack to **Class B Pilot Governance Spine** staging; preserves all GOV-B work as non-authorizing and subordinate to **§7** / **§7a**; does not approve, activate, or implement any UI surface, product copy, deposit flow, withdrawal flow, custody model, rail, stablecoin conversion, treasury operation, ledger mutation, Copilot execution, Class B execution, Class C automation, or customer fund movement; **§7** / **§7a** return to no-active-ticket state; no successor implementation ticket created); completed record in **§63**.
 
 ---
 
@@ -1309,6 +1342,10 @@ Current active ticket status:
 **Status:** **No active execution ticket.** **§7** does not currently name an approved next implementation ticket.
 
 When governance approves the next ticket, **§7** will name it and this section will hold the full execution brief until closeout.
+
+---
+
+**Archived brief (GOV-B-010):** Class B Trust UX Pack — **documentation-only governance / trust UX constraint pack**; scope held to **`docs/ops/governance/class-b/HEDGR_CLASS_B_TRUST_UX_PACK.md`**, **`docs/ops/HEDGR_STATUS.md`**, and **`docs/ops/NOTION_GOVERNANCE_STAGING.md`**. Created the next prerequisite artifact after legal / compliance requirements, custody boundary, rail classification, liquidity / withdrawal control framing, ADR scoping, and Notion release reconciliation, defining customer-facing trust, disclosure, copy, state-label, failure-state, support-message, prohibited-claim, marketing-claim, and Copilot-proximity constraints for future Class B consideration. Added trust UX principles, domains, claim classification, prohibited-claim register, state-label constraints, disclosure template, support-message constraints, Copilot Class B proximity guardrails, marketing / public-claim guardrails, downstream dependency effects, and open Trust UX questions for future governed review. This pack does **not** approve, activate, or implement any UI surface, product copy, deposit flow, withdrawal flow, custody model, rail, stablecoin conversion, treasury operation, ledger mutation, Copilot execution, Class B execution, Class C automation, or customer fund movement. **No** `apps/`, **no** `packages/`, **no** tests, **no** backend, **no** frontend implementation, **no** product copy edits, **no** shipped route edits, **no** prototype route edits, **no** CI workflow changes, **no** ADR status changes, **no** successor implementation ticket, **no** UI approval, deposit approval, withdrawal approval, custody approval, rail approval, stablecoin conversion approval, ledger mutation, treasury authority, Copilot execution, Class B execution, Class C automation, or customer fund movement authority. Completed record: **§63**.
 
 ---
 
@@ -2764,6 +2801,31 @@ This **§43** record was originally written in the same working-tree change-set 
 **Scope discipline held.** **No** `apps/`, **no** `packages/`, **no** `scripts/`, **no** `.github/`, **no** tests, **no** backend, **no** frontend implementation or product copy edits, **no** CI workflow changes, **no** ADR status changes, **no** successor implementation ticket, and **no** Class B approval. This closeout does **not** draft, accept, amend, supersede, or activate any ADR and does **not** authorize implementation, custody, rails, deposits, withdrawals, liquidity buffers, treasury operations, stablecoin conversion, ledger mutation, Copilot execution, Class C automation, or customer fund movement.
 
 **Validation.** Documentation-only diff review, `git diff -- docs/ops/governance/class-b/HEDGR_CLASS_B_ADR_SCOPING_MEMO.md docs/ops/HEDGR_STATUS.md docs/ops/NOTION_GOVERNANCE_STAGING.md`, `git diff --check -- docs/ops/governance/class-b/HEDGR_CLASS_B_ADR_SCOPING_MEMO.md docs/ops/HEDGR_STATUS.md docs/ops/NOTION_GOVERNANCE_STAGING.md`, and `git status --short` completed locally. No tests were run because the ticket scope explicitly excludes tests and product/runtime files.
+
+### Sequencing note
+
+**§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
+
+**Follow-ups:** Any successor appears only when **§7** is updated explicitly.
+
+---
+
+## 63. Completed execution ticket - GOV-B-010 (Class B Trust UX Pack)
+
+**Ticket:** `GOV-B-010` — Class B Trust UX Pack (documentation-only governance / trust UX constraint pack)
+
+### Outcome (documentation-only)
+
+- **`docs/ops/governance/class-b/HEDGR_CLASS_B_TRUST_UX_PACK.md`** — added the repo-native Trust UX Pack as the next prerequisite artifact after legal / compliance requirements, custody boundary, rail classification, liquidity / withdrawal control framing, ADR scoping, and Notion release reconciliation
+- **`docs/ops/governance/class-b/HEDGR_CLASS_B_TRUST_UX_PACK.md`** — defined customer-facing trust, disclosure, copy, state-label, failure-state, support-message, prohibited-claim, marketing-claim, and Copilot-proximity constraints for future Class B consideration
+- **`docs/ops/governance/class-b/HEDGR_CLASS_B_TRUST_UX_PACK.md`** — framed trust UX requirements across deposits, withdrawals, custody, rails, settlement, stablecoin / conversion, fees, FX, liquidity, support, disputes, Copilot, and public claims
+- **`docs/ops/governance/class-b/HEDGR_CLASS_B_TRUST_UX_PACK.md`** — added trust UX principles, domains, claim classification, prohibited-claim register, state-label constraints, disclosure template, support-message constraints, Copilot Class B proximity guardrails, marketing / public-claim guardrails, downstream dependency effects, and open Trust UX questions for future governed review
+- **`docs/ops/NOTION_GOVERNANCE_STAGING.md`** — added `GOV-B-010` under **Class B Pilot Governance Spine** and reconciled staging pointers through **§63**
+- **`docs/ops/HEDGR_STATUS.md`** — added §6 merged-truth subsection `GOV-B-010`; updated the §7 completed list and last-completed summary; returned §7 / §7a to no-active-ticket posture; added §7a archived brief for `GOV-B-010`; §63 (this record)
+
+**Scope discipline held.** **No** `apps/`, **no** `packages/`, **no** `scripts/`, **no** `.github/`, **no** tests, **no** backend, **no** frontend implementation, **no** product copy edits, **no** shipped route edits, **no** prototype route edits, **no** CI workflow changes, **no** ADR status changes, **no** successor implementation ticket, and **no** Class B approval. This closeout does **not** approve, activate, or implement any UI surface, product copy, deposit flow, withdrawal flow, custody model, rail, stablecoin conversion, treasury operation, ledger mutation, Copilot execution, Class B execution, Class C automation, or customer fund movement.
+
+**Validation.** Documentation-only diff review, `git diff -- docs/ops/governance/class-b/HEDGR_CLASS_B_TRUST_UX_PACK.md docs/ops/HEDGR_STATUS.md docs/ops/NOTION_GOVERNANCE_STAGING.md`, `git diff --check -- docs/ops/governance/class-b/HEDGR_CLASS_B_TRUST_UX_PACK.md docs/ops/HEDGR_STATUS.md docs/ops/NOTION_GOVERNANCE_STAGING.md`, and `git status --short` completed locally. No tests were run because the ticket scope explicitly excludes tests and product/runtime files.
 
 ### Sequencing note
 
