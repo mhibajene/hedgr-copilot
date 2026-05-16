@@ -55,6 +55,21 @@ Unchecked or inaccurate items may block merge.
 
 ---
 
+## Brand System Governance (if brand-facing)
+Use for changes touching brand-facing UI, assets, visual tokens, typography, AI-generated UI, or brand-governed documentation. Subordinate to `AGENTS.md`, `docs/ops/HEDGR_STATUS.md`, `DESIGN.md`, `assets/brand/README.md`, and `docs/brand/**`.
+
+- [ ] `DESIGN.md` referenced for machine-readable brand authority
+- [ ] Approved tokens only; no unauthorized token expansion or silent divergence
+- [ ] Approved typography only; no speculative decorative typography
+- [ ] Approved assets only; no regenerated logos, unofficial variants, or AI-reinterpreted marks
+- [ ] Light / dark asset usage follows governed guidance
+- [ ] WCAG AA contrast considered for brand-facing surfaces
+- [ ] Calm institutional UX posture preserved
+- [ ] No unapproved gradients, glows, shadows, speculative crypto styling, or dopamine-oriented visuals
+- [ ] AI-generated UI remains subordinate to governed brand authority
+
+---
+
 ## PR Checklist (prevent CI footguns)
 
 ### Routing & Architecture

@@ -93,6 +93,23 @@ Only if this PR touches **`apps/frontend/lib/engine/**`** or Stability Engine tr
 - [ ] Allocation bands / engine targets informational, not accounting (ADR 0013)
 - [ ] No execution semantics, accounting authority, or live backend engine coupling introduced
 
+### Brand-facing PRs (conditional)
+
+Only if this PR touches brand-facing UI, assets, visual tokens, typography, AI-generated UI, or brand-governed documentation.
+
+**Review chain:** `AGENTS.md` -> `docs/ops/HEDGR_STATUS.md` -> `DESIGN.md` -> `assets/brand/README.md` -> `docs/brand/**` -> Brand Guidelines PDF when present in governed repo assets or attached review materials.
+
+**Attestation (author / reviewer):**
+- [ ] `DESIGN.md` was referenced as machine-readable brand authority
+- [ ] Approved tokens only; no silent token expansion or divergence from `DESIGN.md`
+- [ ] Approved typography only; no speculative decorative typography
+- [ ] Approved assets only; no regenerated logos, unofficial variants, or AI-reinterpreted marks
+- [ ] Light / dark asset usage matches governed guidance
+- [ ] WCAG AA contrast considered for brand-facing surfaces
+- [ ] Calm institutional UX posture preserved
+- [ ] No unapproved gradients, glows, shadows, speculative crypto styling, or dopamine-oriented visuals
+- [ ] AI-generated UI remains subordinate to governed brand authority
+
 ---
 
 ## 7) Copilot-specific checks (only if Copilot touched)
@@ -277,6 +294,26 @@ Only if this PR touches **`apps/frontend/lib/engine/**`** or engine trust surfac
 - [ ] Sprint 2 read-only engine boundary respected (ADR 0014)
 - [ ] Allocation bands / engine targets treated as informational, not accounting (ADR 0013)
 - [ ] No execution semantics, accounting authority, or live backend engine coupling introduced
+
+---
+
+## 7b) Brand-facing PRs (conditional)
+
+Only if this PR touches brand-facing UI, assets, visual tokens, typography, AI-generated UI, or brand-governed documentation.
+
+**Review chain:** `AGENTS.md` -> `docs/ops/HEDGR_STATUS.md` -> `DESIGN.md` -> `assets/brand/README.md` -> `docs/brand/**` -> Brand Guidelines PDF when present in governed repo assets or attached review materials.
+
+**Attestation (author / reviewer):**
+
+- [ ] `DESIGN.md` was referenced as machine-readable brand authority
+- [ ] Approved tokens only; no silent token expansion or divergence from `DESIGN.md`
+- [ ] Approved typography only; no speculative decorative typography
+- [ ] Approved assets only; no regenerated logos, unofficial variants, or AI-reinterpreted marks
+- [ ] Light / dark asset usage matches governed guidance
+- [ ] WCAG AA contrast considered for brand-facing surfaces
+- [ ] Calm institutional UX posture preserved
+- [ ] No unapproved gradients, glows, shadows, speculative crypto styling, or dopamine-oriented visuals
+- [ ] AI-generated UI remains subordinate to governed brand authority
 
 ---
 
