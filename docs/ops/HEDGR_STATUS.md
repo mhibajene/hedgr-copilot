@@ -1,6 +1,6 @@
 Status: Canonical hand-off file
 Purpose: Strategic continuity, merged implementation truth, and next-ticket authority for Cursor execution
-Last updated: 2026-05-15
+Last updated: 2026-05-16
 
 ---
 
@@ -852,6 +852,38 @@ Implementation posture preserved:
 - no successor implementation ticket
 - no pilot operations approval, deposit approval, withdrawal approval, custody approval, rail approval, stablecoin conversion approval, liquidity approval, reconciliation approval, support-operation approval, ledger mutation, treasury authority, Copilot execution, Class B execution, Class C automation, or customer fund movement authority
 
+### GOV-B-012 - Class B Reconciliation SOP (documentation-only)
+
+Merged files:
+
+- `docs/ops/governance/class-b/HEDGR_CLASS_B_RECONCILIATION_SOP.md`
+- `docs/ops/HEDGR_STATUS.md`
+- `docs/ops/NOTION_GOVERNANCE_STAGING.md`
+
+Implementation truth:
+
+- governance-only Reconciliation SOP added at `docs/ops/governance/class-b/HEDGR_CLASS_B_RECONCILIATION_SOP.md`
+- defines reconciliation requirements, source-of-truth boundary questions, evidence expectations, mismatch handling, duplicate / delayed / failed / ambiguous / unresolved-state treatment, audit trail expectations, and open reconciliation questions for future Class B consideration
+- frames reconciliation requirements across ownership, source-of-truth boundaries, deposits, withdrawals, rail events, custody state, stablecoin / conversion events, fee / FX / spread evidence, duplicate / mismatch handling, exception handling, cadence, and audit retention
+- adds source-of-truth, reconciliation-event, exception-taxonomy, cadence, prohibited-assumption, downstream-dependency, and open-question sections
+- does not approve, activate, or operationalize reconciliation operations or ledger truth
+
+Implementation posture preserved:
+
+- documentation-only governance artifact
+- no `apps/`
+- no `packages/`
+- no backend
+- no frontend implementation
+- no product copy edits
+- no shipped route edits
+- no prototype route edits
+- no tests
+- no CI workflow changes
+- no ADR status changes
+- no successor implementation ticket
+- no reconciliation approval, ledger-truth approval, transaction-processing approval, deposit approval, withdrawal approval, custody approval, rail approval, stablecoin conversion approval, liquidity approval, support-operation approval, ledger mutation, treasury authority, Copilot execution, Class B execution, Class C automation, or customer fund movement authority
+
 ### MC-S2-004 - Allocation bands UI
 
 Implementation truth:
@@ -1352,6 +1384,7 @@ Completed and merged:
 - `GOV-B-009` - Class B ADR Scoping Memo (documentation-only governance / ADR scoping memo; completed record **§62**)
 - `GOV-B-010` - Class B Trust UX Pack (documentation-only governance / trust UX constraint pack; completed record **§63**)
 - `GOV-B-011` - Class B Pilot Ops Runbook (documentation-only governance / pilot operations runbook; completed record **§64**)
+- `GOV-B-012` - Class B Reconciliation SOP (documentation-only governance / reconciliation SOP; completed record **§65**)
 
 Current active ticket status:
 
@@ -1366,7 +1399,7 @@ Current active ticket status:
 - Cursor must not continue automatically into work beyond what is explicitly defined in this file for an active ticket.
 - Cursor must not drift beyond explicitly defined scope.
 
-**Last completed ticket (summary):** `GOV-B-011` — Class B Pilot Ops Runbook (documentation-only governance / pilot operations runbook defining operational-control requirements, manual-review assumptions, role / responsibility templates, pause / escalation posture, support handoff constraints, evidence expectations, and open pilot-ops questions for future Class B consideration; adds the runbook to **Class B Pilot Governance Spine** staging; preserves all GOV-B work as non-authorizing and subordinate to **§7** / **§7a**; does not approve, activate, or operationalize pilot operations, deposits, withdrawals, custody, rails, stablecoin conversion, treasury operations, liquidity buffers, reconciliation operations, support operations, ledger mutation, Copilot execution, Class B execution, Class C automation, or customer fund movement; **§7** / **§7a** return to no-active-ticket state; no successor implementation ticket created); completed record in **§64**.
+**Last completed ticket (summary):** `GOV-B-012` — Class B Reconciliation SOP (documentation-only governance / reconciliation SOP defining reconciliation requirements, source-of-truth boundary questions, evidence expectations, mismatch handling, duplicate / delayed / failed / ambiguous / unresolved-state treatment, audit trail expectations, and open reconciliation questions for future Class B consideration; adds the SOP to **Class B Pilot Governance Spine** staging; preserves all GOV-B work as non-authorizing and subordinate to **§7** / **§7a**; does not approve, activate, or operationalize reconciliation operations, ledger truth, transaction processing, deposits, withdrawals, custody, rails, stablecoin conversion, treasury operations, liquidity buffers, support operations, ledger mutation, Copilot execution, Class B execution, Class C automation, or customer fund movement; **§7** / **§7a** return to no-active-ticket state; no successor implementation ticket created); completed record in **§65**.
 
 ---
 
@@ -1375,6 +1408,10 @@ Current active ticket status:
 **Status:** **No active execution ticket.** **§7** does not currently name an approved next implementation ticket.
 
 When governance approves the next ticket, **§7** will name it and this section will hold the full execution brief until closeout.
+
+---
+
+**Archived brief (GOV-B-012):** Class B Reconciliation SOP — **documentation-only governance / reconciliation SOP**; scope held to **`docs/ops/governance/class-b/HEDGR_CLASS_B_RECONCILIATION_SOP.md`**, **`docs/ops/HEDGR_STATUS.md`**, and **`docs/ops/NOTION_GOVERNANCE_STAGING.md`**. Created the next prerequisite artifact after legal / compliance requirements, custody boundary, rail classification, liquidity / withdrawal control framing, ADR scoping, Notion release reconciliation, Trust UX constraints, and Pilot Ops review, defining reconciliation requirements, source-of-truth boundary questions, evidence expectations, mismatch handling, duplicate / delayed / failed / ambiguous / unresolved-state treatment, audit trail expectations, and open reconciliation questions for future Class B consideration. Added reconciliation principles, reconciliation domains, source-of-truth boundary template, reconciliation event matrix template, exception taxonomy template, reconciliation cadence template, prohibited assumptions, downstream dependency effects, and open Reconciliation questions for future governed review. This SOP does **not** approve, activate, or operationalize reconciliation operations, ledger truth, transaction processing, deposits, withdrawals, custody, rails, stablecoin conversion, treasury operations, liquidity buffers, support operations, ledger mutation, Copilot execution, Class B execution, Class C automation, or customer fund movement. **No** `apps/`, **no** `packages/`, **no** tests, **no** backend, **no** frontend implementation, **no** product copy edits, **no** shipped route edits, **no** prototype route edits, **no** CI workflow changes, **no** ADR status changes, **no** successor implementation ticket, **no** reconciliation approval, ledger-truth approval, transaction-processing approval, deposit approval, withdrawal approval, custody approval, rail approval, stablecoin conversion approval, liquidity approval, support-operation approval, ledger mutation, treasury authority, Copilot execution, Class B execution, Class C automation, or customer fund movement authority. Completed record: **§65**.
 
 ---
 
@@ -2888,6 +2925,31 @@ This **§43** record was originally written in the same working-tree change-set 
 **Scope discipline held.** **No** `apps/`, **no** `packages/`, **no** `scripts/`, **no** `.github/`, **no** tests, **no** backend, **no** frontend implementation, **no** product copy edits, **no** shipped route edits, **no** prototype route edits, **no** CI workflow changes, **no** ADR status changes, **no** successor implementation ticket, and **no** Class B approval. This closeout does **not** approve, activate, or operationalize pilot operations, deposits, withdrawals, custody, rails, stablecoin conversion, treasury operations, liquidity buffers, reconciliation operations, support operations, ledger mutation, Copilot execution, Class B execution, Class C automation, or customer fund movement.
 
 **Validation.** Documentation-only diff review, `git diff -- docs/ops/governance/class-b/HEDGR_CLASS_B_PILOT_OPS_RUNBOOK.md docs/ops/HEDGR_STATUS.md docs/ops/NOTION_GOVERNANCE_STAGING.md`, `git diff --check -- docs/ops/governance/class-b/HEDGR_CLASS_B_PILOT_OPS_RUNBOOK.md docs/ops/HEDGR_STATUS.md docs/ops/NOTION_GOVERNANCE_STAGING.md`, and `git status --short` completed locally. No tests were run because the ticket scope explicitly excludes tests and product/runtime files.
+
+### Sequencing note
+
+**§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
+
+**Follow-ups:** Any successor appears only when **§7** is updated explicitly.
+
+---
+
+## 65. Completed execution ticket - GOV-B-012 (Class B Reconciliation SOP)
+
+**Ticket:** `GOV-B-012` — Class B Reconciliation SOP (documentation-only governance / reconciliation SOP)
+
+### Outcome (documentation-only)
+
+- **`docs/ops/governance/class-b/HEDGR_CLASS_B_RECONCILIATION_SOP.md`** — added the repo-native Reconciliation SOP as the next prerequisite artifact after legal / compliance requirements, custody boundary, rail classification, liquidity / withdrawal control framing, ADR scoping, Notion release reconciliation, Trust UX constraints, and Pilot Ops review
+- **`docs/ops/governance/class-b/HEDGR_CLASS_B_RECONCILIATION_SOP.md`** — defined reconciliation requirements, source-of-truth boundary questions, evidence expectations, mismatch handling, duplicate / delayed / failed / ambiguous / unresolved-state treatment, audit trail expectations, and open reconciliation questions for future Class B consideration
+- **`docs/ops/governance/class-b/HEDGR_CLASS_B_RECONCILIATION_SOP.md`** — framed reconciliation requirements across ownership, source-of-truth boundaries, deposits, withdrawals, rail events, custody state, stablecoin / conversion events, fee / FX / spread evidence, duplicate / mismatch handling, exception handling, cadence, and audit retention
+- **`docs/ops/governance/class-b/HEDGR_CLASS_B_RECONCILIATION_SOP.md`** — added source-of-truth, reconciliation-event, exception-taxonomy, cadence, prohibited-assumption, downstream-dependency, and open-question sections
+- **`docs/ops/NOTION_GOVERNANCE_STAGING.md`** — added `GOV-B-012` under **Class B Pilot Governance Spine** and reconciled staging pointers through **§65**
+- **`docs/ops/HEDGR_STATUS.md`** — added §6 merged-truth subsection `GOV-B-012`; updated the §7 completed list and last-completed summary; returned §7 / §7a to no-active-ticket posture; added §7a archived brief for `GOV-B-012`; §65 (this record)
+
+**Scope discipline held.** **No** `apps/`, **no** `packages/`, **no** `scripts/`, **no** `.github/`, **no** tests, **no** backend, **no** frontend implementation, **no** product copy edits, **no** shipped route edits, **no** prototype route edits, **no** CI workflow changes, **no** ADR status changes, **no** successor implementation ticket, and **no** Class B approval. This closeout does **not** approve, activate, or operationalize reconciliation operations, ledger truth, transaction processing, deposits, withdrawals, custody, rails, stablecoin conversion, treasury operations, liquidity buffers, support operations, ledger mutation, Copilot execution, Class B execution, Class C automation, or customer fund movement.
+
+**Validation.** Documentation-only diff review, `git diff -- docs/ops/governance/class-b/HEDGR_CLASS_B_RECONCILIATION_SOP.md docs/ops/HEDGR_STATUS.md docs/ops/NOTION_GOVERNANCE_STAGING.md`, `git diff --check -- docs/ops/governance/class-b/HEDGR_CLASS_B_RECONCILIATION_SOP.md docs/ops/HEDGR_STATUS.md docs/ops/NOTION_GOVERNANCE_STAGING.md`, and `git status --short` completed locally. No tests were run because the ticket scope explicitly excludes tests and product/runtime files.
 
 ### Sequencing note
 
