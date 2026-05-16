@@ -336,6 +336,26 @@ Sprint planning procedure (subordinate to `§7` / `§7a`): `docs/ops/HEDGR_SPRIN
 
 If anything conflicts, stop and surface it explicitly. Do not silently reconcile.
 
+### Brand-facing implementation governance
+
+When changing brand-facing UI, assets, visual tokens, typography, AI-generated UI, or brand-governed documentation, read in order:
+
+1. `docs/ops/HEDGR_STATUS.md` — `§7` / `§7a` for the approved ticket when named; `§6d` records the Brand System Governance spine
+2. `DESIGN.md` — machine-readable brand authority
+3. `assets/brand/README.md` — governed asset inventory and usage reference
+4. `docs/brand/HEDGR_BRAND_SYSTEM.md`
+5. `docs/brand/HEDGR_BRAND_ASSET_RULES.md`
+6. `docs/brand/HEDGR_DESIGN_TOKENS.md`
+7. `docs/brand/HEDGR_UI_APPLICATION_RULES.md`
+8. `docs/brand/HEDGR_BRAND_QA_CHECKLIST.md`
+9. Brand Guidelines PDF when present in governed repo assets or attached review materials
+
+AI-assisted implementation must use approved `DESIGN.md` tokens only; preserve token meaning; use only the approved typography stack (Plus Jakarta Sans, Inter, Geist, and Helvetica-style sans fallback); use approved governed assets only; and preserve Hedgr's calm, institutional, trust-first UX posture.
+
+AI-assisted implementation must not reinterpret governed brand behavior, regenerate logos, invent missing assets, create unofficial variants, recolor assets, add shadows / strokes / gradients to brand assets, hallucinate token systems, generate alternate palette variants, introduce speculative fintech aesthetics, crypto-hype visuals, glow systems, animated gradients, dopamine-oriented styling, or gamified reward presentation.
+
+Missing governed assets must be logged and surfaced as missing inputs. They must not be regenerated, substituted, or AI-reinterpreted.
+
 ## 9) Approved agent roles
 Agents must declare the role they are operating under for meaningful tasks.
 

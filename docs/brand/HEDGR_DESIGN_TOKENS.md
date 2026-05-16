@@ -39,9 +39,14 @@ These references define color relationships only. They do not approve padding, r
 
 ## Typography Authority
 
-Typography may only be expanded or changed when a governed brand authority explicitly defines the approved stack. Until then, implementation must use existing repo typography conventions and must not invent a new brand typography system.
+The approved typography stack for brand-facing implementation is:
 
-AI-generated UI must not introduce unapproved typefaces, display styles, or expressive typography treatments.
+- Plus Jakarta Sans
+- Inter
+- Geist
+- Helvetica-style sans fallback
+
+Implementation must not invent a new brand typography system. AI-generated UI must not introduce unapproved typefaces, display styles, or expressive typography treatments.
 
 ## Accessibility
 
