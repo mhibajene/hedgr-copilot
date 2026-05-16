@@ -884,6 +884,50 @@ Implementation posture preserved:
 - no successor implementation ticket
 - no reconciliation approval, ledger-truth approval, transaction-processing approval, deposit approval, withdrawal approval, custody approval, rail approval, stablecoin conversion approval, liquidity approval, support-operation approval, ledger mutation, treasury authority, Copilot execution, Class B execution, Class C automation, or customer fund movement authority
 
+### BRAND-001 - Govern and normalize existing brand asset authority (governance / asset-infrastructure normalization)
+
+Merged files:
+
+- `DESIGN.md`
+- `assets/brand/README.md`
+- `assets/brand/logos/.gitkeep`
+- `assets/brand/icons/.gitkeep`
+- `assets/brand/social/.gitkeep`
+- `assets/brand/social/social-covers/.gitkeep`
+- `assets/brand/social/social-covers/dark/.gitkeep`
+- `assets/brand/favicon/.gitkeep`
+- `assets/brand/archive/.gitkeep`
+- `docs/ops/HEDGR_STATUS.md`
+
+Implementation truth:
+
+- Brand System Governance is recorded as a governance-only infrastructure spine in **§6d**
+- `DESIGN.md` is recorded as the machine-readable brand authority
+- Brand Guidelines PDF is recorded as the human-readable brand authority when present in governed repo assets or attached review materials
+- governed asset directory structure now exists under `assets/brand/`
+- `assets/brand/README.md` documents approved asset inventory, intended usage, light / dark guidance, favicon / social usage, prohibited modifications, machine-readable authority rules, and AI implementation constraints
+- `DESIGN.md` referenced brand asset filenames were reviewed and mapped to deterministic governed locations
+- referenced approved asset files were not present in the repo at validation time and are listed as missing rather than regenerated
+
+Implementation posture preserved:
+
+- governance / asset-infrastructure normalization only
+- no `apps/`
+- no `packages/`
+- no backend
+- no frontend implementation
+- no runtime UI changes
+- no token modification
+- no palette expansion
+- no typography expansion
+- no logo redesign
+- no generated variants
+- no theme wiring
+- no gradients, shadows, glows, or speculative visual styling
+- no CI workflow changes
+- no ADR status changes
+- no successor implementation ticket
+
 ### MC-S2-004 - Allocation bands UI
 
 Implementation truth:
@@ -1320,6 +1364,49 @@ This verdict means the repo has enough documented governance criteria, boundary 
 
 ---
 
+## 6d. Brand System Governance Spine
+
+**Status:** Approved as a governance-only infrastructure spine. This section records the approved Brand System Governance ticket set and the boundaries for sequencing it through **§7** / **§7a**.
+
+**Governance domain:** Brand System Governance.
+
+**Classification:** Cross-functional infrastructure governance.
+
+**Authority model:**
+
+- **`DESIGN.md`** is the machine-readable brand authority.
+- **Brand Guidelines PDF** is the human-readable brand authority when present in governed repo assets or attached review materials.
+- No implementation may reinterpret approved brand behavior without governance approval.
+- This spine is subordinate to **AGENTS.md**, this file, accepted ADRs, repo-native doctrine, and **§7** / **§7a** sequencing authority.
+
+**Non-authorization boundary:** This governance spine does **not** authorize broad UI redesign, marketing repositioning, speculative visual systems, Stability Engine posture changes, non-governed AI-generated UI behavior, runtime UI changes, frontend theme changes outside a future scoped ticket, token changes, palette expansion, generated variants, gradients, shadows, glows, or implementation reinterpretation of approved brand assets.
+
+### Approved ticket set
+
+| Ticket | Name | Classification | Sequencing posture |
+| ------ | ---- | -------------- | ------------------ |
+| `BRAND-001` | Govern and normalize existing brand asset authority | governance / asset-infrastructure normalization | completed record **§66** |
+| `BRAND-002` | Create brand governance documentation spine | documentation-only governance | future **§7** ticket required |
+| `BRAND-003` | Wire governed design tokens into frontend theme architecture | bounded implementation / theme architecture | future **§7** ticket and **§7a** brief required |
+| `BRAND-004` | Add logo and icon usage validation rules | governance / lightweight validation | future **§7** ticket required |
+| `BRAND-005` | Add brand governance QA checklist to PR process | review-process governance | future **§7** ticket required |
+| `BRAND-006` | Audit and reconcile existing UI against governed brand system | audit / reconciliation | future **§7** ticket required |
+| `BRAND-007` | Add Codex/Cursor implementation constraints | operator-guidance governance | future **§7** ticket required |
+
+### Recommended sequence
+
+`BRAND-001` -> `BRAND-002` -> `BRAND-005` -> `BRAND-007` -> `BRAND-003` -> `BRAND-004` -> `BRAND-006`.
+
+This sequence is a governance spine ordering aid. `BRAND-001` is complete. Only the ticket explicitly named in **§7** is approved for execution at any given time, and the active scope must live in **§7a**.
+
+### BRAND-001 boundaries
+
+`BRAND-001` may validate existing **`DESIGN.md`**, verify token structure, verify asset references, create **`assets/brand/`** and its governed subdirectories, normalize approved assets into that structure if present, and add **`assets/brand/README.md`** documenting approved inventory, intended usage, light / dark guidance, favicon / social usage, prohibited modifications, machine-readable authority rules, and AI implementation constraints.
+
+`BRAND-001` must not modify frontend styling, modify tokens, redesign logos, generate variants, wire themes, alter runtime UI, introduce gradients / shadows / glows, expand brand scope beyond governance normalization, or treat missing assets as permission to recreate them.
+
+---
+
 ## 7. Current sequence and active status
 
 Completed and merged:
@@ -1385,10 +1472,12 @@ Completed and merged:
 - `GOV-B-010` - Class B Trust UX Pack (documentation-only governance / trust UX constraint pack; completed record **§63**)
 - `GOV-B-011` - Class B Pilot Ops Runbook (documentation-only governance / pilot operations runbook; completed record **§64**)
 - `GOV-B-012` - Class B Reconciliation SOP (documentation-only governance / reconciliation SOP; completed record **§65**)
+- `BRAND-001` - Govern and normalize existing brand asset authority (governance / asset-infrastructure normalization; completed record **§66**)
 
 Current active ticket status:
 
 - **Approved next ticket:** **None named.** There is **no** approved next implementation ticket until **§7** is updated explicitly to name one.
+- **Brand System Governance sequencing:** **§6d** records the approved Brand System Governance ticket set and recommended order. `BRAND-001` is complete. `BRAND-002` through `BRAND-007` require future **§7** naming and **§7a** briefs before execution.
 - **Post–`COP-GOV-001` sequencing (governance-accepted):** `COP-GOV-001` completed the intended **advisory-boundary definition** lane as a documentation-only governance artifact. It did **not** widen product, engine, backend, policy, Copilot **runtime**, execution, accounting, ledger, vendor, custody, stablecoin, Circle, live-service, or customer-facing automation authority. Copilot MVP posture remains **advisory, non-directive, non-executing, hermetic, non-accounting, non-policy-authoritative**, and **outside `§6b` category 8** unless future doctrine and ADRs widen the boundary. Any later Copilot **implementation** requires a separate **§7** name and **§7a** brief. Do not infer Copilot implementation, runtime binding, engine binding, policy binding, backend work, execution authority, or finance-style autonomy from `COP-GOV-001`.
 - **Governance reconciliation note:** **`UI-SRA-001`** activation artifacts (`docs/ops/retail-ui/implementation-readouts/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_EXECUTION_REQUEST.md`, **`docs/ops/retail-ui/implementation-readouts/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_STATUS_PATCH_PROPOSAL.md`**, and **§7** / **§7a** activation language) first landed in commit **`1bd65d1`**; shipped dashboard implementation landed in **`da96e1e`**. Branch history was reconciled so activation, support docs, implementation, and this closeout (**§44**) cohabit the same lineage without implying a false single-commit ordering. See **`docs/ops/retail-ui/implementation-readouts/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_EXECUTION_READOUT.md` §2**.
 - **§6b** is not sequencing authority — Transition Readiness taxonomy and scrutiny input only; only **§7** / **§7a** name approved implementation work when a ticket is active. `MC-S3-017` clarified this rule; it did not convert §6b table rows, examples, or disposition labels into backlog approval.
@@ -1399,7 +1488,7 @@ Current active ticket status:
 - Cursor must not continue automatically into work beyond what is explicitly defined in this file for an active ticket.
 - Cursor must not drift beyond explicitly defined scope.
 
-**Last completed ticket (summary):** `GOV-B-012` — Class B Reconciliation SOP (documentation-only governance / reconciliation SOP defining reconciliation requirements, source-of-truth boundary questions, evidence expectations, mismatch handling, duplicate / delayed / failed / ambiguous / unresolved-state treatment, audit trail expectations, and open reconciliation questions for future Class B consideration; adds the SOP to **Class B Pilot Governance Spine** staging; preserves all GOV-B work as non-authorizing and subordinate to **§7** / **§7a**; does not approve, activate, or operationalize reconciliation operations, ledger truth, transaction processing, deposits, withdrawals, custody, rails, stablecoin conversion, treasury operations, liquidity buffers, support operations, ledger mutation, Copilot execution, Class B execution, Class C automation, or customer fund movement; **§7** / **§7a** return to no-active-ticket state; no successor implementation ticket created); completed record in **§65**.
+**Last completed ticket (summary):** `BRAND-001` — Govern and normalize existing brand asset authority (governance / asset-infrastructure normalization; records Brand System Governance as a governance-only infrastructure spine in **§6d**; establishes `DESIGN.md` as machine-readable brand authority and Brand Guidelines PDF as human-readable authority when present in governed repo assets or attached review materials; creates the governed `assets/brand/` structure and `assets/brand/README.md`; documents approved asset inventory, usage guidance, light / dark guidance, favicon / social usage, prohibited modifications, machine-readable authority rules, and AI implementation constraints; verifies that `DESIGN.md` referenced approved asset filenames are currently missing from the repo and treats that as a governance input rather than permission to regenerate assets; does not modify frontend styling, runtime UI, tokens, palette, typography, themes, logos, generated variants, gradients, shadows, glows, CI workflows, ADR status, or successor ticket sequencing; **§7** / **§7a** return to no-active-ticket state); completed record in **§66**.
 
 ---
 
@@ -1408,6 +1497,10 @@ Current active ticket status:
 **Status:** **No active execution ticket.** **§7** does not currently name an approved next implementation ticket.
 
 When governance approves the next ticket, **§7** will name it and this section will hold the full execution brief until closeout.
+
+---
+
+**Archived brief (BRAND-001):** Govern and normalize existing brand asset authority — **governance / asset-infrastructure normalization**; scope held to **`DESIGN.md`**, **`assets/brand/README.md`**, tracked `assets/brand/` directory placeholders, and **`docs/ops/HEDGR_STATUS.md`**. Recorded Brand System Governance as a governance-only infrastructure spine in **§6d**, established `DESIGN.md` as the machine-readable brand authority, and established Brand Guidelines PDF as the human-readable authority when present in governed repo assets or attached review materials. Created the governed `assets/brand/` structure with `logos/`, `icons/`, `social/`, `social/social-covers/`, `social/social-covers/dark/`, `favicon/`, and `archive/`. Added the asset README documenting approved inventory, intended usage, light / dark guidance, favicon / social usage, prohibited modifications, machine-readable authority rules, and AI implementation constraints. Reviewed the `DESIGN.md` token structure without modifying tokens. Reviewed referenced approved asset filenames and recorded them as missing from the repo rather than regenerating variants. **No** frontend UI changes, **no** runtime UI changes, **no** token modification, **no** palette expansion, **no** typography expansion, **no** logo redesign, **no** generated variants, **no** theme wiring, **no** gradients, **no** shadows, **no** glows, **no** speculative visual styling, **no** `apps/`, **no** `packages/`, **no** backend, **no** CI workflow changes, **no** ADR status changes, and **no** successor implementation ticket. Completed record: **§66**.
 
 ---
 
@@ -2956,3 +3049,27 @@ This **§43** record was originally written in the same working-tree change-set 
 **§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
 
 **Follow-ups:** Any successor appears only when **§7** is updated explicitly.
+
+---
+
+## 66. Completed execution ticket - BRAND-001 (Govern and normalize existing brand asset authority)
+
+**Ticket:** `BRAND-001` — Govern and normalize existing brand asset authority (governance / asset-infrastructure normalization)
+
+### Outcome (governance / asset-infrastructure normalization)
+
+- **`docs/ops/HEDGR_STATUS.md`** — added **§6d** Brand System Governance Spine, approved the Brand System Governance ticket set, recorded the recommended ticket order, completed `BRAND-001`, returned **§7** / **§7a** to no-active-ticket posture, and archived the `BRAND-001` brief
+- **`DESIGN.md`** — reviewed as machine-readable brand authority; token values and component token references were not modified
+- **`assets/brand/README.md`** — added governed brand asset README documenting authority model, directory structure, approved asset inventory, intended usage, light / dark guidance, favicon / social usage, prohibited modifications, machine-readable authority rules, and AI implementation constraints
+- **`assets/brand/`** — created tracked governed structure for `logos/`, `icons/`, `social/`, `social/social-covers/`, `social/social-covers/dark/`, `favicon/`, and `archive/`
+- **Asset-reference validation** — verified that `DESIGN.md` references approved brand asset filenames that are currently missing from the repo; missing approved assets are recorded as governance inputs and were not recreated, regenerated, recolored, or substituted
+
+**Scope discipline held.** **No** `apps/`, **no** `packages/`, **no** backend, **no** frontend implementation, **no** runtime UI changes, **no** token modification, **no** palette expansion, **no** typography expansion, **no** logo redesign, **no** generated variants, **no** theme wiring, **no** gradients, **no** shadows, **no** glows, **no** speculative visual styling, **no** CI workflow changes, **no** ADR status changes, and **no** successor implementation ticket. This closeout does **not** authorize broad UI redesign, marketing repositioning, speculative visual systems, Stability Engine posture changes, non-governed AI-generated UI behavior, or implementation reinterpretation of approved brand behavior.
+
+**Validation.** Documentation / asset-structure diff review, `git diff --check -- DESIGN.md assets/brand/README.md assets/brand/logos/.gitkeep assets/brand/icons/.gitkeep assets/brand/social/.gitkeep assets/brand/social/social-covers/.gitkeep assets/brand/social/social-covers/dark/.gitkeep assets/brand/favicon/.gitkeep assets/brand/archive/.gitkeep docs/ops/HEDGR_STATUS.md`, and `git status --short` completed locally. No tests were run because the ticket scope explicitly excludes runtime, frontend, backend, package, and CI workflow changes.
+
+### Sequencing note
+
+**§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
+
+**Follow-ups:** `BRAND-002` through `BRAND-007` appear in **§6d** only as future Brand System Governance spine tickets. Any successor appears only when **§7** is updated explicitly.
