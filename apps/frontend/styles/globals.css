@@ -3,6 +3,25 @@
 /* Tailwind v4 import */
 @import "tailwindcss";
 
+@theme {
+  --color-hedgr-primary: #1F2747;
+  --color-hedgr-dark: #1F2937;
+  --color-hedgr-white: #FFFFFF;
+  --color-hedgr-800: #171D35;
+  --color-hedgr-700: #1F2747;
+  --color-hedgr-600: #36447C;
+  --color-hedgr-500: #4658A0;
+  --color-hedgr-400: #5F71B9;
+  --color-hedgr-300: #8391C9;
+  --color-hedgr-200: #A6B0D8;
+  --color-hedgr-100: #CAD0E8;
+  --font-sans: "Plus Jakarta Sans", Inter, Geist, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+body {
+  font-family: var(--font-sans);
+}
+
 main {
   @apply bg-white text-gray-900;
 }
