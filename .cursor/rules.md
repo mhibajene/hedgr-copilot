@@ -44,6 +44,14 @@
 - Do not introduce hidden execution, accounting authority, or fund-moving behavior where the sprint doctrine keeps the engine read-only or informational.
 - Treat allocation bands as informational unless explicitly instructed otherwise by higher-order doctrine.
 
+## Brand System Constraints
+- Brand-facing implementation and AI-generated UI must read `DESIGN.md`, `assets/brand/README.md`, and applicable `docs/brand/**` guidance before patching.
+- Use approved `DESIGN.md` tokens only; do not invent token systems, expand palettes, or silently change token meaning.
+- Use only the approved typography stack: Plus Jakarta Sans, Inter, Geist, and Helvetica-style sans fallback. Do not introduce speculative decorative typography.
+- Use approved governed assets only. Do not regenerate logos, create unofficial variants, recolor assets, add shadows / strokes / gradients, or switch layouts unless an approved asset already does so.
+- Preserve Hedgr's calm, institutional, trust-first UX posture. Do not add speculative fintech aesthetics, crypto-hype visuals, glow systems, animated gradients, dopamine-oriented styling, or gamified reward presentation.
+- Missing governed assets are missing inputs: log or surface the gap and stop. Do not regenerate, substitute, or AI-reinterpret missing brand assets.
+
 ## Stop Conditions
 - If the request is ambiguous, produce the **minimal reasonable diff** for the listed files only.
 - If the work would span many files, propose a split into smaller patches.
