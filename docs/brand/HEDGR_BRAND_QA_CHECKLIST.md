@@ -23,17 +23,20 @@ Use this checklist for brand-facing documentation, UI, asset, and AI-assisted im
 ## Assets
 
 - [ ] Approved assets are sourced from `assets/brand/`.
+- [ ] Logo, icon, favicon, avatar, or social asset filenames match `DESIGN.md`.
+- [ ] Approved variants only are used; no unofficial lockups, replacements, or alternates were created.
 - [ ] Missing assets are recorded as missing governance inputs.
 - [ ] Missing assets were not regenerated, substituted, recolored, cropped, remixed, or AI-reinterpreted.
-- [ ] Logo and icon proportions, colors, clear space, and variants are preserved.
+- [ ] Logo and icon proportions, colors, clear space, orientation, and layout are preserved.
 - [ ] Light / dark asset selection matches the background context.
+- [ ] No rotation, stretching, distortion, gradients, shadows, strokes, glows, masks, blur, or decorative motion were applied to governed assets.
 
 ## UI Posture
 
 - [ ] Brand-facing UI preserves calm, institutional, trust-first posture.
 - [ ] Visual treatment does not imply execution, custody, ledger truth, Stability Engine posture changes, or product authority changes.
 - [ ] WCAG AA contrast was considered for brand-facing surfaces.
-- [ ] No decorative crypto styling, hype visuals, urgency mechanics, or dopamine-driven visuals were introduced.
+- [ ] No decorative crypto styling, glow treatment, hype visuals, aggressive emphasis, urgency mechanics, reward-style presentation, or dopamine-driven visuals were introduced.
 
 ## Scope
 

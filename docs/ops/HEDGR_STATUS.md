@@ -1061,6 +1061,40 @@ Implementation posture preserved:
 - no ADR status changes
 - no successor implementation ticket
 
+### BRAND-004 - Logo/icon governance validation rules (brand asset governance hardening only)
+
+Merged files:
+
+- `docs/brand/HEDGR_BRAND_ASSET_RULES.md`
+- `assets/brand/README.md`
+- `docs/brand/HEDGR_BRAND_QA_CHECKLIST.md`
+- `docs/ops/HEDGR_STATUS.md`
+
+Implementation truth:
+
+- governed logo and icon usage rules are now operationalized
+- approved governed assets and variants are now explicitly enforced
+- prohibited transformations and AI reinterpretation constraints are documented
+- missing governed assets must be logged rather than regenerated or substituted
+- calm institutional UX posture requirements are preserved across asset usage guidance
+- speculative crypto styling and hype-oriented visual treatment are explicitly prohibited
+
+Implementation posture preserved:
+
+- brand asset governance hardening only
+- no `apps/`
+- no `packages/`
+- no backend
+- no frontend runtime UI changes
+- no `DESIGN.md` token changes
+- no image-processing systems
+- no heavy validation tooling
+- no CI automation
+- no lint tooling
+- no asset generation
+- no ADR status changes
+- no successor implementation ticket
+
 ### MC-S2-004 - Allocation bands UI
 
 Implementation truth:
@@ -1521,7 +1555,7 @@ This verdict means the repo has enough documented governance criteria, boundary 
 | `BRAND-001` | Govern and normalize existing brand asset authority | governance / asset-infrastructure normalization | completed record **§66** |
 | `BRAND-002` | Create brand governance documentation spine | documentation-only governance | completed record **§67** |
 | `BRAND-003` | Wire governed design tokens into frontend theme architecture | frontend theme-governance integration | completed record **§70** |
-| `BRAND-004` | Add logo and icon usage validation rules | governance / lightweight validation | future **§7** ticket required |
+| `BRAND-004` | Add logo and icon usage validation rules | brand asset governance hardening | completed record **§71** |
 | `BRAND-005` | Add brand governance QA checklist to PR process | governance-workflow hardening | completed record **§68** |
 | `BRAND-006` | Audit and reconcile existing UI against governed brand system | audit / reconciliation | future **§7** ticket required |
 | `BRAND-007` | Add Codex/Cursor implementation constraints | operator-governance hardening | completed record **§69** |
@@ -1530,7 +1564,7 @@ This verdict means the repo has enough documented governance criteria, boundary 
 
 `BRAND-001` -> `BRAND-002` -> `BRAND-005` -> `BRAND-007` -> `BRAND-003` -> `BRAND-004` -> `BRAND-006`.
 
-This sequence is a governance spine ordering aid. `BRAND-001`, `BRAND-002`, `BRAND-003`, `BRAND-005`, and `BRAND-007` are complete. Only the ticket explicitly named in **§7** is approved for execution at any given time, and the active scope must live in **§7a**.
+This sequence is a governance spine ordering aid. `BRAND-001`, `BRAND-002`, `BRAND-003`, `BRAND-004`, `BRAND-005`, and `BRAND-007` are complete. Only the ticket explicitly named in **§7** is approved for execution at any given time, and the active scope must live in **§7a**.
 
 ### BRAND-001 boundaries
 
@@ -1561,6 +1595,12 @@ This sequence is a governance spine ordering aid. `BRAND-001`, `BRAND-002`, `BRA
 `BRAND-003` wired governed `DESIGN.md` color tokens and approved typography stack into frontend theme architecture through the root Tailwind configuration and frontend global theme tokens. The integration creates deterministic `hedgr-*` token names without redesigning shipped screens or restructuring layouts.
 
 `BRAND-003` must remain frontend theme-governance integration only. It must not introduce broad UI redesign, layout restructuring, runtime semantic changes, backend coupling, execution-layer changes, CI tooling, runtime theme switching, `DESIGN.md` token modifications, asset generation, ADR status changes, or successor ticket sequencing.
+
+### BRAND-004 boundaries
+
+`BRAND-004` operationalized governed logo and icon usage validation rules across brand asset governance references. The rules require approved governed assets, approved filenames, approved variants, correct light / dark usage, contrast-safe placement, legibility, missing-asset logging, and calm institutional presentation.
+
+`BRAND-004` must remain brand asset governance hardening only. It must not modify `apps/`, `packages/`, backend code, frontend runtime UI, `DESIGN.md` token values, assets, image-processing systems, heavy validation tooling, CI automation, lint tooling, ADR status, or successor ticket sequencing.
 
 ---
 
@@ -1632,13 +1672,14 @@ Completed and merged:
 - `BRAND-001` - Govern and normalize existing brand asset authority (governance / asset-infrastructure normalization; completed record **§66**)
 - `BRAND-002` - Brand governance documentation spine (documentation-only governance; completed record **§67**)
 - `BRAND-003` - Frontend governed token integration (frontend theme-governance integration only; completed record **§70**)
+- `BRAND-004` - Logo/icon governance validation rules (brand asset governance hardening only; completed record **§71**)
 - `BRAND-005` - Brand governance QA checklist integration (governance-workflow hardening only; completed record **§68**)
 - `BRAND-007` - Codex/Cursor brand implementation constraints (operator-governance hardening only; completed record **§69**)
 
 Current active ticket status:
 
 - **Approved next ticket:** **None named.** There is **no** approved next implementation ticket until **§7** is updated explicitly to name one.
-- **Brand System Governance sequencing:** **§6d** records the approved Brand System Governance ticket set and recommended order. `BRAND-001`, `BRAND-002`, `BRAND-003`, `BRAND-005`, and `BRAND-007` are complete. `BRAND-004` and `BRAND-006` require future **§7** naming and **§7a** briefs before execution.
+- **Brand System Governance sequencing:** **§6d** records the approved Brand System Governance ticket set and recommended order. `BRAND-001`, `BRAND-002`, `BRAND-003`, `BRAND-004`, `BRAND-005`, and `BRAND-007` are complete. `BRAND-006` requires future **§7** naming and **§7a** brief before execution.
 - **Post–`COP-GOV-001` sequencing (governance-accepted):** `COP-GOV-001` completed the intended **advisory-boundary definition** lane as a documentation-only governance artifact. It did **not** widen product, engine, backend, policy, Copilot **runtime**, execution, accounting, ledger, vendor, custody, stablecoin, Circle, live-service, or customer-facing automation authority. Copilot MVP posture remains **advisory, non-directive, non-executing, hermetic, non-accounting, non-policy-authoritative**, and **outside `§6b` category 8** unless future doctrine and ADRs widen the boundary. Any later Copilot **implementation** requires a separate **§7** name and **§7a** brief. Do not infer Copilot implementation, runtime binding, engine binding, policy binding, backend work, execution authority, or finance-style autonomy from `COP-GOV-001`.
 - **Governance reconciliation note:** **`UI-SRA-001`** activation artifacts (`docs/ops/retail-ui/implementation-readouts/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_EXECUTION_REQUEST.md`, **`docs/ops/retail-ui/implementation-readouts/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_STATUS_PATCH_PROPOSAL.md`**, and **§7** / **§7a** activation language) first landed in commit **`1bd65d1`**; shipped dashboard implementation landed in **`da96e1e`**. Branch history was reconciled so activation, support docs, implementation, and this closeout (**§44**) cohabit the same lineage without implying a false single-commit ordering. See **`docs/ops/retail-ui/implementation-readouts/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_EXECUTION_READOUT.md` §2**.
 - **§6b** is not sequencing authority — Transition Readiness taxonomy and scrutiny input only; only **§7** / **§7a** name approved implementation work when a ticket is active. `MC-S3-017` clarified this rule; it did not convert §6b table rows, examples, or disposition labels into backlog approval.
@@ -1649,7 +1690,7 @@ Current active ticket status:
 - Cursor must not continue automatically into work beyond what is explicitly defined in this file for an active ticket.
 - Cursor must not drift beyond explicitly defined scope.
 
-**Last completed ticket (summary):** `BRAND-003` — Frontend governed token integration (frontend theme-governance integration only; wires governed `DESIGN.md` color tokens into the frontend theme architecture through root Tailwind configuration and frontend global theme tokens; represents the approved typography stack in frontend theme configuration; creates deterministic `hedgr-*` token names without redesigning shipped screens, restructuring layouts, or introducing new visual systems; preserves calm institutional UX posture; does not introduce speculative styling, gradients, glows, ungoverned palette expansion, runtime semantic changes, backend coupling, execution-layer changes, CI tooling, runtime theme switching, `DESIGN.md` token modifications, asset generation, ADR status changes, or successor ticket sequencing; **§7** / **§7a** remain in no-active-ticket state); completed record in **§70**.
+**Last completed ticket (summary):** `BRAND-004` — Logo/icon governance validation rules (brand asset governance hardening only; operationalizes governed logo and icon usage rules; explicitly requires approved governed assets, approved filenames, approved variants, correct light / dark selection, contrast-safe placement, legibility, missing-asset logging, and calm institutional presentation; documents prohibited transformations including rotation, stretching, distortion, recoloring, gradients, shadows, strokes, arbitrary layout switching, unofficial variants, regenerated replacements, and AI reinterpretation; prohibits speculative crypto styling, glow treatments, decorative motion, aggressive visual emphasis, and hype-oriented rendering; does not modify `apps/`, `packages/`, backend, frontend runtime UI, `DESIGN.md` token values, assets, image-processing systems, heavy validation tooling, CI automation, lint tooling, ADR status, or successor ticket sequencing; **§7** / **§7a** remain in no-active-ticket state); completed record in **§71**.
 
 ---
 
@@ -1658,6 +1699,10 @@ Current active ticket status:
 **Status:** **No active execution ticket.** **§7** does not currently name an approved next implementation ticket.
 
 When governance approves the next ticket, **§7** will name it and this section will hold the full execution brief until closeout.
+
+---
+
+**Archived brief (BRAND-004):** Logo/icon governance validation rules — **brand asset governance hardening only**; scope held to **`docs/brand/HEDGR_BRAND_ASSET_RULES.md`**, **`assets/brand/README.md`**, **`docs/brand/HEDGR_BRAND_QA_CHECKLIST.md`**, and **`docs/ops/HEDGR_STATUS.md`**. Operationalized governed logo and icon usage rules by documenting approved governed asset sources, deterministic filename / variant requirements, light / dark selection rules, contrast-safe placement, legibility expectations, missing-asset handling, prohibited transformations, and AI reinterpretation prohibitions. Missing governed assets must be logged and surfaced as missing inputs, not regenerated, approximated, substituted, or synthesized. Asset usage must preserve restrained presentation, institutional clarity, and trust-first posture. Speculative crypto styling, glow treatments, decorative motion, aggressive visual emphasis, and hype-oriented rendering are explicitly prohibited. **No** `apps/`, **no** `packages/`, **no** backend, **no** frontend runtime UI changes, **no** `DESIGN.md` token changes, **no** image-processing systems, **no** heavy validation tooling, **no** CI automation, **no** lint tooling, **no** asset generation, **no** ADR status changes, **no** competing governance layer, and **no** successor implementation ticket. Completed record: **§71**.
 
 ---
 
@@ -3350,3 +3395,28 @@ This **§43** record was originally written in the same working-tree change-set 
 **§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
 
 **Follow-ups:** `BRAND-004` and `BRAND-006` appear in **§6d** only as future Brand System Governance spine tickets. Any successor appears only when **§7** is updated explicitly.
+
+---
+
+## 71. Completed execution ticket - BRAND-004 (Logo/icon governance validation rules)
+
+**Ticket:** `BRAND-004` — Logo/icon governance validation rules (brand asset governance hardening only)
+
+### Outcome (brand asset governance hardening only)
+
+- **`docs/brand/HEDGR_BRAND_ASSET_RULES.md`** — expanded deterministic logo and icon source, usage, variant-selection, prohibited-transformation, missing-asset, and validation expectations
+- **`assets/brand/README.md`** — added logo / icon validation checks and sharpened prohibited modification, variant, missing-asset, and anti-hype rules for governed assets
+- **`docs/brand/HEDGR_BRAND_QA_CHECKLIST.md`** — added review checks for approved filenames, approved variants, light / dark selection, prohibited asset transformations, and calm institutional presentation
+- **`docs/ops/HEDGR_STATUS.md`** — updated **§6d**, the completed-ticket list, last-completed summary, **§7a** archived brief, and this completed record
+
+**Implementation truth.** Governed logo and icon usage rules are now operationalized. Approved governed assets and variants are now explicitly enforced. Prohibited transformations and AI reinterpretation constraints are documented. Missing governed assets must be logged rather than regenerated or substituted. Calm institutional UX posture requirements are preserved across asset usage guidance. Speculative crypto styling and hype-oriented visual treatment are explicitly prohibited.
+
+**Scope discipline held.** **No** `apps/`, **no** `packages/`, **no** backend, **no** frontend runtime UI changes, **no** `DESIGN.md` token changes, **no** image-processing systems, **no** heavy validation tooling, **no** CI automation, **no** lint tooling, **no** asset generation, **no** ADR status changes, **no** competing governance layer, and **no** successor implementation ticket.
+
+**Validation.** Brand asset governance diff review, `git diff --check -- docs/brand/HEDGR_BRAND_ASSET_RULES.md assets/brand/README.md docs/brand/HEDGR_BRAND_QA_CHECKLIST.md docs/ops/HEDGR_STATUS.md`, and `git status --short` completed locally. No tests were run because the ticket scope explicitly excludes runtime, frontend, backend, package, image-processing, heavy validation tooling, CI automation, lint tooling, asset-generation, and theme-wiring changes.
+
+### Sequencing note
+
+**§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
+
+**Follow-ups:** `BRAND-006` appears in **§6d** only as a future Brand System Governance spine ticket. Any successor appears only when **§7** is updated explicitly.

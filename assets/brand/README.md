@@ -47,6 +47,7 @@ Do not treat a missing asset as permission to recreate it. Missing approved asse
 - Use icon-only assets only for square slots, app tiles, avatars, favicons, or compact brand-mark contexts.
 - Use favicon assets only for browser and platform favicon slots.
 - Use social assets only for profile, avatar, or social-cover placements.
+- Use approved filenames and approved variants only. Do not infer or create alternates.
 
 ## Light and Dark Backgrounds
 
@@ -54,6 +55,7 @@ Do not treat a missing asset as permission to recreate it. Missing approved asse
 - Dark backgrounds should use white logo or white icon assets.
 - Do not place any asset on visually cluttered, low-contrast, or unreviewed backgrounds.
 - Contrast must be reviewed against WCAG AA expectations before shipped use.
+- If variant choice is unclear, record the ambiguity for governance review instead of modifying or substituting the asset.
 
 ## Prohibited Modifications
 
@@ -63,9 +65,12 @@ Do not:
 - stretch, squash, crop, or distort proportions
 - recolor outside approved `DESIGN.md` tokens
 - add gradients, shadows, glows, strokes, outlines, texture, or decorative effects
+- add animation, motion trails, masks, blur, or aggressive visual emphasis
 - regenerate logos, icons, avatars, favicons, or social covers
 - use AI-generated reinterpretations as substitutes for approved assets
 - switch logo layout or remove logo components unless an approved asset already encodes that variant
+- create unofficial variants, monochrome substitutes, alternate lockups, or approximations from screenshots / prompt outputs
+- combine brand assets with speculative crypto styling, glow treatments, decorative motion, reward-style presentation, or hype-oriented rendering
 
 ## Machine-Readable Authority Rules
 
@@ -86,3 +91,14 @@ AI-assisted UI work must:
 - avoid speculative fintech styling, decorative crypto aesthetics, gradients, glows, and non-token palettes
 
 AI-assisted UI work must not regenerate or reinterpret missing brand assets.
+
+## Logo and Icon Validation
+
+Before a brand-facing PR uses a logo, icon, favicon, avatar, or social asset, verify:
+
+- the asset filename is named by `DESIGN.md`
+- the file is sourced from the intended governed `assets/brand/` directory
+- the selected variant matches the background and contrast context
+- proportions, layout, color, clear space, and orientation are preserved
+- no prohibited transformation or AI reinterpretation is present
+- missing governed assets are logged as missing inputs, not regenerated or substituted
