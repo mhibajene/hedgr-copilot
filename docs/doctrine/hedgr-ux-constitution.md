@@ -1,6 +1,32 @@
 # Hedgr UX Constitution
 
+# Hedgr UX Constitution
+
+**Status:** Canonical Doctrine (UX / Trust / Interaction Posture)
+**Authority:** Subordinate to repo-native governance and active brand-system authority surfaces
+**Related Governance Surfaces:** docs/brand/, DESIGN.md, HEDGR_UI_APPLICATION_RULES.md, HEDGR_BRAND_QA_CHECKLIST.md
+
 **“Designing for Trust in Volatile Economies”**
+
+---
+
+## Doctrine Boundary
+
+This document defines Hedgr’s UX and interaction doctrine.
+
+It establishes trust, behavioral, and interaction principles for the Hedgr product system.
+
+It does not function as a standalone visual-design authority.
+
+Governed visual systems, design tokens, brand application constraints, and UI implementation standards remain subordinate to repo-native brand governance surfaces including:
+
+- docs/brand/
+- DESIGN.md
+- governed UI application rules
+- approved design-system artefacts
+- repo-native QA and reconciliation governance
+
+Where visual or implementation ambiguity exists, governed repo-native brand artefacts override interpretive UX extrapolation.
 
 ---
 
@@ -160,12 +186,19 @@ Financial products should lower stress, not amplify it.
 - Muted, disciplined color usage
 - One primary action per screen
 - Typography over decoration
+- Brand-token usage follows governed design-system constraints
+- UI emphasis is restrained, sparse, and intentional
+- Visual hierarchy must reinforce institutional trust posture
 
 **Explicit bans**
 
 - Flashing indicators
 - Confetti, celebration for yield
 - Red/green emotional manipulation
+- Speculative or casino-style visual metaphors
+- Aggressive conversion-oriented CTA styling
+- Decorative gradients or hype-oriented motion systems
+- Visual treatments inconsistent with governed brand posture
 
 > Hedgr should feel closer to a vault than a trading floor.
 > 
@@ -268,6 +301,35 @@ Consistency reduces cognitive load and error.
 - Shared components over bespoke screens
 - Reused patterns over novelty
 - Change only with clear reason
+- Governed design tokens are preferred over ad hoc styling
+- Shared UI primitives must align with approved brand-system artifacts
+- Brand consistency is treated as a trust and governance concern
+
+## **9A. Brand Governance Alignment**
+
+UX doctrine and visual governance are related but distinct.
+
+This document governs interaction philosophy and trust posture.
+
+Repo-native brand governance governs:
+
+- design tokens
+- visual implementation
+- component styling
+- logo usage
+- typography systems
+- color governance
+- UI application constraints
+
+This separation exists to prevent:
+
+- aesthetic drift
+- duplicate visual authority
+- conflicting UI interpretation
+- hype-oriented implementation behavior
+- shadow design-system governance
+
+If conflict emerges between UX interpretation and governed brand systems, repo-native brand governance wins.
 
 ---
 
@@ -300,10 +362,15 @@ This manifesto applies to:
 
 - UI
 - UX
+- Governed visual systems
 - Copy
 - Copilot behavior
 - Feature prioritization
 
 Anything that violates it does not ship.
+
+Visual calm, restraint, and institutional consistency are not aesthetic preferences inside Hedgr.
+
+They are governance and trust requirements.
 
 ---
