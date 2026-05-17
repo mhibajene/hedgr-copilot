@@ -4,9 +4,9 @@ Status: Governed interpretive documentation
 
 ## Purpose
 
-`docs/thesis/` preserves the evolving Hedgr Governance System / AI-Native Operating Model thesis as repo-native institutional memory.
+`docs/thesis/` preserves evolving Hedgr thesis artifacts as repo-native institutional memory, including the Hedgr Governance System / AI-Native Operating Model thesis and support-layer interpretive doctrines such as Financial Fidelity.
 
-The thesis exists to record how Hedgr's governance architecture is understood over time. It is not an execution surface, implementation brief, roadmap, ADR substitute, or product approval mechanism.
+The thesis directory exists to record how Hedgr's governance architecture and institutional product philosophy are understood over time. It is not an execution surface, implementation brief, roadmap, ADR substitute, accounting authority, treasury policy, or product approval mechanism.
 
 ## Authority Boundary
 
@@ -40,7 +40,9 @@ Documents in this directory do not:
 
 ## Versioning Model
 
-The living thesis is maintained in `HEDGR_GOVERNANCE_SYSTEM.md`.
+The living governance-system thesis is maintained in `HEDGR_GOVERNANCE_SYSTEM.md`.
+
+Support-layer interpretive theses may live as separate documents when the interpretation is durable enough to preserve independently. `FINANCIAL_FIDELITY.md` records Hedgr's Financial Fidelity interpretation and remains subordinate to the same authority boundary.
 
 Major institutional shifts should be recorded in `CHANGELOG.md` when they change how the governance system is understood at the thesis level. The changelog is not git history, release notes, sprint tracking, or implementation status.
 
@@ -53,6 +55,10 @@ Create a snapshot when:
 - the governance thesis materially changes
 - a major authority-boundary model is formalized
 - repo-native governance posture materially evolves
+- Financial Fidelity interpretation materially changes
+- Financial Fidelity semantics become operationalized through governed repo authority
+- Stability Engine posture widens in a way that changes Financial Fidelity interpretation
+- execution authority evolves in a way that changes how thesis-level fidelity language should be read
 - public-facing publication is being considered
 - the living thesis is reorganized in a way that would obscure prior framing
 
