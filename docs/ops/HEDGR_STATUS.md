@@ -916,6 +916,38 @@ Implementation posture preserved:
 - no successor implementation ticket
 - no support-operation approval, dispute-operation approval, incident-operation approval, transaction outcome approval, custody outcome approval, rail outcome approval, reconciliation outcome approval, deposit approval, withdrawal approval, custody approval, rail approval, stablecoin conversion approval, liquidity approval, ledger mutation, treasury authority, Copilot execution, Class B execution, Class C automation, or customer fund movement authority
 
+### GOV-B-014 - Class B Audit Evidence Checklist (documentation-only)
+
+Merged files:
+
+- `docs/ops/governance/class-b/HEDGR_CLASS_B_AUDIT_EVIDENCE_CHECKLIST.md`
+- `docs/ops/HEDGR_STATUS.md`
+- `docs/ops/NOTION_GOVERNANCE_STAGING.md`
+
+Implementation truth:
+
+- governance-only Audit Evidence Checklist added at `docs/ops/governance/class-b/HEDGR_CLASS_B_AUDIT_EVIDENCE_CHECKLIST.md`
+- defines audit evidence requirements, event-level receipts, ownership expectations, retention assumptions, escalation records, post-pilot review inputs, and open audit evidence questions for future Class B consideration
+- frames audit evidence requirements across participant eligibility, user requests, manual review, deposits, withdrawals, custody, rails, stablecoin / conversion, fees / FX / spread, liquidity, reconciliation, support / disputes, incidents, governance overrides, and post-pilot review
+- adds evidence-checklist, event-receipt, retention / access-control, audit-exception, post-pilot-review, prohibited-assumption, downstream-dependency, and open-question sections
+- does not approve, activate, or operationalize audit operations, retention policy, ledger truth, reconciliation operations, support operations, transaction processing, or customer fund movement
+
+Implementation posture preserved:
+
+- documentation-only governance artifact
+- no `apps/`
+- no `packages/`
+- no backend
+- no frontend implementation
+- no product copy edits
+- no shipped route edits
+- no prototype route edits
+- no tests
+- no CI workflow changes
+- no ADR status changes
+- no successor implementation ticket
+- no audit-operation approval, retention-policy approval, ledger-truth approval, reconciliation approval, support-operation approval, transaction-processing approval, deposit approval, withdrawal approval, custody approval, rail approval, stablecoin conversion approval, liquidity approval, ledger mutation, treasury authority, Copilot execution, Class B execution, Class C automation, or customer fund movement authority
+
 ### BRAND-001 - Govern and normalize existing brand asset authority (governance / asset-infrastructure normalization)
 
 Merged files:
@@ -1738,6 +1770,7 @@ Completed and merged:
 - `GOV-B-011` - Class B Pilot Ops Runbook (documentation-only governance / pilot operations runbook; completed record **§64**)
 - `GOV-B-012` - Class B Reconciliation SOP (documentation-only governance / reconciliation SOP; completed record **§65**)
 - `GOV-B-013` - Class B Support Escalation Matrix (documentation-only governance / support escalation matrix; completed record **§65a**)
+- `GOV-B-014` - Class B Audit Evidence Checklist (documentation-only governance / audit evidence checklist; completed record **§65b**)
 - `BRAND-001` - Govern and normalize existing brand asset authority (governance / asset-infrastructure normalization; completed record **§66**)
 - `BRAND-002` - Brand governance documentation spine (documentation-only governance; completed record **§67**)
 - `BRAND-003` - Frontend governed token integration (frontend theme-governance integration only; completed record **§70**)
@@ -1760,7 +1793,7 @@ Current active ticket status:
 - Cursor must not continue automatically into work beyond what is explicitly defined in this file for an active ticket.
 - Cursor must not drift beyond explicitly defined scope.
 
-**Last completed ticket (summary):** `GOV-B-013` — Class B Support Escalation Matrix (documentation-only governance / support escalation matrix only; creates `docs/ops/governance/class-b/HEDGR_CLASS_B_SUPPORT_ESCALATION_MATRIX.md` as the repo-native support escalation prerequisite artifact; defines support ownership, escalation paths, user-state handoff requirements, prohibited promises, incident routing, dispute handling, evidence dependencies, support status constraints, and open support escalation questions for future Class B consideration; frames support requirements across deposits, withdrawals, custody, rails, stablecoin / conversion, fee / FX / spread disputes, reconciliation exceptions, compliance / risk escalation, incidents, complaints, disputes, and Copilot-to-support handoff; does not approve, activate, or operationalize support operations, dispute operations, incident handling, transaction outcomes, custody outcomes, rail outcomes, reconciliation outcomes, deposits, withdrawals, or customer fund movement; **§7** / **§7a** remain in no-active-ticket state); completed record in **§65a**.
+**Last completed ticket (summary):** `GOV-B-014` — Class B Audit Evidence Checklist (documentation-only governance / audit evidence checklist only; creates `docs/ops/governance/class-b/HEDGR_CLASS_B_AUDIT_EVIDENCE_CHECKLIST.md` as the repo-native audit evidence prerequisite artifact; defines audit evidence requirements, event-level receipts, ownership expectations, retention assumptions, escalation records, post-pilot review inputs, and open audit evidence questions for future Class B consideration; frames audit evidence requirements across participant eligibility, user requests, manual review, deposits, withdrawals, custody, rails, stablecoin / conversion, fees / FX / spread, liquidity, reconciliation, support / disputes, incidents, governance overrides, and post-pilot review; does not approve, activate, or operationalize audit operations, retention policy, ledger truth, reconciliation operations, support operations, transaction processing, deposits, withdrawals, custody, rails, stablecoin conversion, or customer fund movement; **§7** / **§7a** remain in no-active-ticket state); completed record in **§65b**.
 
 ---
 
@@ -1769,6 +1802,10 @@ Current active ticket status:
 **Status:** **No active execution ticket.** **§7** does not currently name an approved next implementation ticket.
 
 When governance approves the next ticket, **§7** will name it and this section will hold the full execution brief until closeout.
+
+---
+
+**Archived brief (GOV-B-014):** Class B Audit Evidence Checklist — **documentation-only governance / audit evidence checklist**; scope held to **`docs/ops/governance/class-b/HEDGR_CLASS_B_AUDIT_EVIDENCE_CHECKLIST.md`**, **`docs/ops/HEDGR_STATUS.md`**, and **`docs/ops/NOTION_GOVERNANCE_STAGING.md`**. Created the next prerequisite artifact after legal / compliance requirements, custody boundary, rail classification, liquidity / withdrawal control framing, ADR scoping, Notion release reconciliation, Trust UX constraints, Pilot Ops review, Reconciliation SOP review, and Support Escalation review, defining audit evidence requirements, event-level receipts, ownership expectations, retention assumptions, escalation records, post-pilot review inputs, and open audit evidence questions for future Class B consideration. Added audit evidence principles, audit evidence domains, evidence-checklist template, event-receipt template, retention / access-control question template, audit-exception template, post-pilot-review input template, prohibited assumptions, downstream dependency effects, and open Audit Evidence questions for future governed review. This checklist does **not** approve, activate, or operationalize audit operations, retention policy, ledger truth, reconciliation operations, support operations, transaction processing, deposits, withdrawals, custody, rails, stablecoin conversion, treasury operations, liquidity buffers, ledger mutation, Copilot execution, Class B execution, Class C automation, or customer fund movement. **No** `apps/`, **no** `packages/`, **no** tests, **no** backend, **no** frontend implementation, **no** product copy edits, **no** shipped route edits, **no** prototype route edits, **no** CI workflow changes, **no** ADR status changes, **no** successor implementation ticket, **no** audit-operation approval, retention-policy approval, ledger-truth approval, reconciliation approval, support-operation approval, transaction-processing approval, deposit approval, withdrawal approval, custody approval, rail approval, stablecoin conversion approval, liquidity approval, ledger mutation, treasury authority, Copilot execution, Class B execution, Class C automation, or customer fund movement authority. Completed record: **§65b**.
 
 ---
 
@@ -3368,6 +3405,31 @@ This **§43** record was originally written in the same working-tree change-set 
 **Scope discipline held.** **No** `apps/`, **no** `packages/`, **no** `scripts/`, **no** `.github/`, **no** tests, **no** backend, **no** frontend implementation, **no** product copy edits, **no** shipped route edits, **no** prototype route edits, **no** CI workflow changes, **no** ADR status changes, **no** successor implementation ticket, and **no** Class B approval. This closeout does **not** approve, activate, or operationalize support operations, dispute operations, incident handling, transaction outcomes, custody outcomes, rail outcomes, reconciliation outcomes, deposits, withdrawals, custody, rails, stablecoin conversion, treasury operations, liquidity buffers, ledger mutation, Copilot execution, Class B execution, Class C automation, or customer fund movement.
 
 **Validation.** Documentation-only diff review, `git diff -- docs/ops/governance/class-b/HEDGR_CLASS_B_SUPPORT_ESCALATION_MATRIX.md docs/ops/HEDGR_STATUS.md docs/ops/NOTION_GOVERNANCE_STAGING.md`, `git diff --check -- docs/ops/governance/class-b/HEDGR_CLASS_B_SUPPORT_ESCALATION_MATRIX.md docs/ops/HEDGR_STATUS.md docs/ops/NOTION_GOVERNANCE_STAGING.md`, and `git status --short` completed locally. No tests were run because the ticket scope explicitly excludes tests and product/runtime files.
+
+### Sequencing note
+
+**§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
+
+**Follow-ups:** Any successor appears only when **§7** is updated explicitly.
+
+---
+
+## 65b. Completed execution ticket - GOV-B-014 (Class B Audit Evidence Checklist)
+
+**Ticket:** `GOV-B-014` — Class B Audit Evidence Checklist (documentation-only governance / audit evidence checklist)
+
+### Outcome (documentation-only)
+
+- **`docs/ops/governance/class-b/HEDGR_CLASS_B_AUDIT_EVIDENCE_CHECKLIST.md`** — added the repo-native Audit Evidence Checklist as the next prerequisite artifact after legal / compliance requirements, custody boundary, rail classification, liquidity / withdrawal control framing, ADR scoping, Notion release reconciliation, Trust UX constraints, Pilot Ops review, Reconciliation SOP review, and Support Escalation review
+- **`docs/ops/governance/class-b/HEDGR_CLASS_B_AUDIT_EVIDENCE_CHECKLIST.md`** — defined audit evidence requirements, event-level receipts, ownership expectations, retention assumptions, escalation records, post-pilot review inputs, and open audit evidence questions for future Class B consideration
+- **`docs/ops/governance/class-b/HEDGR_CLASS_B_AUDIT_EVIDENCE_CHECKLIST.md`** — framed audit evidence requirements across participant eligibility, user requests, manual review, deposits, withdrawals, custody, rails, stablecoin / conversion, fees / FX / spread, liquidity, reconciliation, support / disputes, incidents, governance overrides, and post-pilot review
+- **`docs/ops/governance/class-b/HEDGR_CLASS_B_AUDIT_EVIDENCE_CHECKLIST.md`** — added evidence-checklist, event-receipt, retention / access-control, audit-exception, post-pilot-review, prohibited-assumption, downstream-dependency, and open-question sections
+- **`docs/ops/NOTION_GOVERNANCE_STAGING.md`** — added `GOV-B-014` under **Class B Pilot Governance Spine** and reconciled staging pointers through **§65b**
+- **`docs/ops/HEDGR_STATUS.md`** — added §6 merged-truth subsection `GOV-B-014`; updated the §7 completed list and last-completed summary; returned §7 / §7a to no-active-ticket posture; added §7a archived brief for `GOV-B-014`; §65b (this record)
+
+**Scope discipline held.** **No** `apps/`, **no** `packages/`, **no** `scripts/`, **no** `.github/`, **no** tests, **no** backend, **no** frontend implementation, **no** product copy edits, **no** shipped route edits, **no** prototype route edits, **no** CI workflow changes, **no** ADR status changes, **no** successor implementation ticket, and **no** Class B approval. This closeout does **not** approve, activate, or operationalize audit operations, retention policy, ledger truth, reconciliation operations, support operations, transaction processing, deposits, withdrawals, custody, rails, stablecoin conversion, treasury operations, liquidity buffers, ledger mutation, Copilot execution, Class B execution, Class C automation, or customer fund movement.
+
+**Validation.** Documentation-only diff review, `git diff -- docs/ops/governance/class-b/HEDGR_CLASS_B_AUDIT_EVIDENCE_CHECKLIST.md docs/ops/HEDGR_STATUS.md docs/ops/NOTION_GOVERNANCE_STAGING.md`, `git diff --check -- docs/ops/governance/class-b/HEDGR_CLASS_B_AUDIT_EVIDENCE_CHECKLIST.md docs/ops/HEDGR_STATUS.md docs/ops/NOTION_GOVERNANCE_STAGING.md`, and `git status --short` completed locally. No tests were run because the ticket scope explicitly excludes tests and product/runtime files.
 
 ### Sequencing note
 
