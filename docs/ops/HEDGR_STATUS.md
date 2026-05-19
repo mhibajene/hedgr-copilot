@@ -981,6 +981,39 @@ Implementation posture preserved:
 - no successor implementation ticket
 - no staging approval, live approval, production approval, sandbox approval, internal-test approval, manual-pilot approval, limited-live-pilot approval, deposit approval, withdrawal approval, custody approval, rail approval, stablecoin conversion approval, liquidity approval, ledger mutation, treasury authority, Copilot execution, Class B execution, Class C automation, or customer fund movement authority
 
+### GOV-B-016 - Class B Governance Spine Closeout Assessment (documentation-only)
+
+Merged files:
+
+- `docs/ops/governance/class-b/HEDGR_CLASS_B_GOVERNANCE_SPINE_CLOSEOUT_ASSESSMENT.md`
+- `docs/ops/HEDGR_STATUS.md`
+- `docs/ops/NOTION_GOVERNANCE_STAGING.md`
+
+Implementation truth:
+
+- governance-only Class B Governance Spine Closeout Assessment added at `docs/ops/governance/class-b/HEDGR_CLASS_B_GOVERNANCE_SPINE_CLOSEOUT_ASSESSMENT.md`
+- assesses `GOV-B-001` through `GOV-B-015` as a completed documentation-only prerequisite spine for future Class B consideration
+- inventories the spine artifacts, assesses each spine layer, records what the spine proves and does not authorize, identifies remaining blockers, records a documentation-only closeout verdict, and preserves future activation requirements
+- verdict is closed as documentation-only Class B governance prerequisite spine
+- does not conclude that Hedgr is Class B ready and does not create a successor implementation ticket
+
+Implementation posture preserved:
+
+- documentation-only governance closeout
+- no `apps/`
+- no `packages/`
+- no backend
+- no frontend implementation
+- no product copy edits
+- no shipped route edits
+- no prototype route edits
+- no environment configuration
+- no tests
+- no CI workflow changes
+- no ADR status changes
+- no successor implementation ticket
+- no Class B execution, staging approval, sandbox approval, internal-test approval, live approval, production approval, deposit approval, withdrawal approval, custody approval, rail approval, stablecoin conversion approval, liquidity approval, reconciliation approval, support approval, audit approval, ledger truth, treasury authority, Copilot execution, Class C automation, or customer fund movement authority
+
 ### BRAND-001 - Govern and normalize existing brand asset authority (governance / asset-infrastructure normalization)
 
 Merged files:
@@ -1805,6 +1838,7 @@ Completed and merged:
 - `GOV-B-013` - Class B Support Escalation Matrix (documentation-only governance / support escalation matrix; completed record **§65a**)
 - `GOV-B-014` - Class B Audit Evidence Checklist (documentation-only governance / audit evidence checklist; completed record **§65b**)
 - `GOV-B-015` - Class B Staging / Live-State Separation Memo (documentation-only governance / staging-live separation memo; completed record **§65c**)
+- `GOV-B-016` - Class B Governance Spine Closeout Assessment (documentation-only governance / spine closeout assessment; completed record **§65d**)
 - `BRAND-001` - Govern and normalize existing brand asset authority (governance / asset-infrastructure normalization; completed record **§66**)
 - `BRAND-002` - Brand governance documentation spine (documentation-only governance; completed record **§67**)
 - `BRAND-003` - Frontend governed token integration (frontend theme-governance integration only; completed record **§70**)
@@ -1827,7 +1861,7 @@ Current active ticket status:
 - Cursor must not continue automatically into work beyond what is explicitly defined in this file for an active ticket.
 - Cursor must not drift beyond explicitly defined scope.
 
-**Last completed ticket (summary):** `GOV-B-015` — Class B Staging / Live-State Separation Memo (documentation-only governance / staging-live separation memo only; creates `docs/ops/governance/class-b/HEDGR_CLASS_B_STAGING_LIVE_STATE_SEPARATION_MEMO.md` as the repo-native staging / live-state separation prerequisite artifact; defines separation requirements for mock / local simulation, prototype / design-only, sandbox, internal test, manual pilot candidate, limited live pilot candidate, and production / live states for future Class B consideration; frames separation requirements across visual labeling, data separation, evidence separation, operational separation, rails, custody, reconciliation, support, Copilot, and governance staging; does not approve, activate, or operationalize staging environments, live environments, production operations, customer-money movement, implementation work, or Class B readiness; **§7** / **§7a** remain in no-active-ticket state); completed record in **§65c**.
+**Last completed ticket (summary):** `GOV-B-016` — Class B Governance Spine Closeout Assessment (documentation-only governance / spine closeout assessment only; creates `docs/ops/governance/class-b/HEDGR_CLASS_B_GOVERNANCE_SPINE_CLOSEOUT_ASSESSMENT.md` as the repo-native closeout assessment for `GOV-B-001` through `GOV-B-015`; inventories spine artifacts, assesses each spine layer, records what the spine proves and does not authorize, identifies remaining blockers, records a documentation-only closeout verdict, and preserves future activation requirements; verdict is closed as documentation-only Class B governance prerequisite spine; does not conclude that Hedgr is Class B ready and does not create a successor implementation ticket; **§7** / **§7a** remain in no-active-ticket state); completed record in **§65d**.
 
 ---
 
@@ -3493,6 +3527,29 @@ This **§43** record was originally written in the same working-tree change-set 
 **Scope discipline held.** **No** `apps/`, **no** `packages/`, **no** `scripts/`, **no** `.github/`, **no** tests, **no** backend, **no** frontend implementation, **no** product copy edits, **no** shipped route edits, **no** prototype route edits, **no** environment configuration, **no** CI workflow changes, **no** ADR status changes, **no** successor implementation ticket, and **no** Class B approval. This closeout does **not** approve, activate, or operationalize staging environments, live environments, production operations, customer-money movement, deposits, withdrawals, custody, rails, stablecoin conversion, treasury operations, liquidity buffers, reconciliation operations, support operations, audit operations, ledger mutation, Copilot execution, Class B execution, Class C automation, or customer fund movement.
 
 **Validation.** Documentation-only diff review, `git diff -- docs/ops/governance/class-b/HEDGR_CLASS_B_STAGING_LIVE_STATE_SEPARATION_MEMO.md docs/ops/HEDGR_STATUS.md docs/ops/NOTION_GOVERNANCE_STAGING.md`, `git diff --check -- docs/ops/governance/class-b/HEDGR_CLASS_B_STAGING_LIVE_STATE_SEPARATION_MEMO.md docs/ops/HEDGR_STATUS.md docs/ops/NOTION_GOVERNANCE_STAGING.md`, and `git status --short` completed locally. No tests were run because the ticket scope explicitly excludes tests and product/runtime files.
+
+### Sequencing note
+
+**§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
+
+**Follow-ups:** Any successor appears only when **§7** is updated explicitly.
+
+---
+
+## 65d. Completed execution ticket - GOV-B-016 (Class B Governance Spine Closeout Assessment)
+
+**Ticket:** `GOV-B-016` — Class B Governance Spine Closeout Assessment (documentation-only governance / spine closeout assessment)
+
+### Outcome (documentation-only)
+
+- **`docs/ops/governance/class-b/HEDGR_CLASS_B_GOVERNANCE_SPINE_CLOSEOUT_ASSESSMENT.md`** — added the repo-native Class B Governance Spine Closeout Assessment assessing `GOV-B-001` through `GOV-B-015` as a completed documentation-only prerequisite spine for future Class B consideration
+- **`docs/ops/governance/class-b/HEDGR_CLASS_B_GOVERNANCE_SPINE_CLOSEOUT_ASSESSMENT.md`** — inventoried spine artifacts, assessed each spine layer, recorded what the spine proves and does not authorize, identified remaining blockers, recorded a documentation-only closeout verdict, and preserved future activation requirements
+- **`docs/ops/NOTION_GOVERNANCE_STAGING.md`** — added `GOV-B-016` under **Class B Pilot Governance Spine**, updated release-level closeout note, and reconciled staging pointers through **§65d**
+- **`docs/ops/HEDGR_STATUS.md`** — added §6 merged-truth subsection `GOV-B-016`; updated the §7 completed list and last-completed summary; returned §7 / §7a to no-active-ticket posture; §65d (this record)
+
+**Scope discipline held.** **No** `apps/`, **no** `packages/`, **no** `scripts/`, **no** `.github/`, **no** tests, **no** backend, **no** frontend implementation, **no** product copy edits, **no** shipped route edits, **no** prototype route edits, **no** environment configuration, **no** CI workflow changes, **no** ADR status changes, **no** successor implementation ticket, and **no** Class B approval. This closeout does **not** approve, activate, sequence, or implement Class B execution, staging, sandbox use, internal testing, live operations, deposits, withdrawals, custody, rails, stablecoin conversion, treasury operations, liquidity buffers, reconciliation operations, support operations, audit operations, ledger mutation, Copilot execution, Class B execution, Class C automation, or customer fund movement. It does **not** conclude that Hedgr is Class B ready.
+
+**Validation.** Documentation-only diff review, `git diff -- docs/ops/governance/class-b/HEDGR_CLASS_B_GOVERNANCE_SPINE_CLOSEOUT_ASSESSMENT.md docs/ops/HEDGR_STATUS.md docs/ops/NOTION_GOVERNANCE_STAGING.md`, `git diff --check -- docs/ops/governance/class-b/HEDGR_CLASS_B_GOVERNANCE_SPINE_CLOSEOUT_ASSESSMENT.md docs/ops/HEDGR_STATUS.md docs/ops/NOTION_GOVERNANCE_STAGING.md`, and `git status --short` completed locally. No tests were run because the ticket scope explicitly excludes tests and product/runtime files.
 
 ### Sequencing note
 
