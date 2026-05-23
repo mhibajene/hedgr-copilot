@@ -6,7 +6,7 @@
 
 **Authority:** The repository is source of truth. Wording here must match `docs/decisions/0016-warmth-layer-doctrine-constrained-retail-refinement-track.md`, `docs/decisions/SPRINT-2-ADR-INDEX.md`, and `docs/ops/HEDGR_STATUS.md`. Wording must match **Accepted** ADR **0016** in repo; do not broaden scope or soften read-only / non-execution boundaries in Notion.
 
-**Last reconciled:** 2026-05-19 (`HEDGR_STATUS.md` **§7** completed through **`GOV-B-017`**; post–**`MC-S3-019`** documentation-only governance: **`COP-GOV-001`** PR **#150** / **§52**; **`MC-S3-020`** PR **#153** (readout / **§7** activation **#152**) / **§53**; **`GOV-B-001`**-**`GOV-B-017`** **§54**-**§65d** / **§73**; **§7** / **§7a** remain **no active ticket**)
+**Last reconciled:** 2026-05-23 (`HEDGR_STATUS.md` **§7** completed through **`EVID-B-001`**; post–**`MC-S3-019`** documentation-only governance: **`COP-GOV-001`** PR **#150** / **§52**; **`MC-S3-020`** PR **#153** (readout / **§7** activation **#152**) / **§53**; **`GOV-B-001`**-**`GOV-B-017`** **§54**-**§65d** / **§73**; **`EVID-B-001`** **§74**; **§7** / **§7a** remain **no active ticket**)
 
 ---
 
@@ -476,6 +476,29 @@ Use when mirroring the completed **test-only** regression tranche 4. **Not** new
 **Closeout meaning:** The Class B Pilot Governance Spine may be treated as complete only as a documentation-only prerequisite spine. Future work should move into evidence gathering, governed review, external legal / compliance review, vendor / provider evidence, ADR drafting readiness assessment, or implementation-proposal preflight assessment only if separately named through repo governance.
 
 **Non-meaning:** This closeout does not make Hedgr Class B ready, pilot ready, execution ready, implementation ready, or approved for customer-money movement.
+
+## 9b. Releases — Class B Evidence Gathering (copy row)
+
+**Not canonical.** Mirror **`docs/ops/HEDGR_STATUS.md`** (**§7**, **§7a**, **§74**) for any conflict. This block is executive-readable **copy source** only.
+
+| Field | Value |
+| ----- | ----- |
+| **Release name** | Class B Evidence Gathering |
+| **Status** | Now / Active |
+| **Type** | Governance-only / Evidence gathering |
+| **Authority** | Non-authorizing |
+| **Relationship** | Follows closed Class B Pilot Governance Spine |
+| **Description** | Governance-only evidence-gathering track following the closed Class B Pilot Governance Spine. Defines and stages evidence packages, source expectations, review gates, blocker tracking, and freshness requirements needed before future ADR drafting readiness or implementation-proposal preflight can be considered. Does not authorize Class B execution, implementation, staging, sandbox use, internal testing, live operations, deposits, withdrawals, custody, rails, stablecoin conversion, treasury operations, reconciliation operations, support operations, audit operations, ledger truth, ADR acceptance, Copilot execution, Class C automation, or customer fund movement. |
+
+### Class B Evidence Gathering work items
+
+| Ticket | Title | Status | Type | Authority | Summary |
+| ------ | ----- | ------ | ---- | --------- | ------- |
+| `EVID-B-001` | Class B Evidence Gathering Plan (documentation-only) | Done | Documentation-only / Evidence Planning | Non-authorizing | Defines evidence packages, source expectations, evidence states, review gates, freshness expectations, blocker tracking, and sequencing logic for post-spine Class B evidence gathering without approving Class B execution, ADR acceptance, implementation, staging, live operations, or customer fund movement. |
+
+**Release note:** This release follows the closed / complete **Class B Pilot Governance Spine** and is distinct from that closed release. It is a governance-only evidence-gathering track for collecting, classifying, reviewing, and preserving evidence before any future ADR drafting readiness or implementation-proposal preflight can be considered.
+
+**Non-meaning:** This release does not create Class B readiness, implementation sequencing, §7 activation, §7a execution brief, ADR acceptance, legal approval, custody approval, rail approval, vendor approval, customer eligibility approval, pilot approval, staging approval, live approval, operational approval, external engagement approval, or customer-money authority.
 
 ## 10. Micro-Contracts / Work — MC-S3-005 (copy row)
 

@@ -1,6 +1,6 @@
 Status: Canonical hand-off file
 Purpose: Strategic continuity, merged implementation truth, and next-ticket authority for Cursor execution
-Last updated: 2026-05-18
+Last updated: 2026-05-23
 
 ---
 
@@ -1046,6 +1046,39 @@ Implementation posture preserved:
 - no successor implementation ticket
 - no Class B execution, staging approval, sandbox approval, internal-test approval, live approval, production approval, deposit approval, withdrawal approval, custody approval, rail approval, stablecoin conversion approval, liquidity approval, reconciliation approval, support approval, audit approval, ledger truth, treasury authority, Copilot execution, Class C automation, or customer fund movement authority
 
+### EVID-B-001 - Class B Evidence Gathering Plan (documentation-only)
+
+Merged files:
+
+- `docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_EVIDENCE_GATHERING_PLAN.md`
+- `docs/ops/HEDGR_STATUS.md`
+- `docs/ops/NOTION_GOVERNANCE_STAGING.md`
+
+Implementation truth:
+
+- governance-only Class B Evidence Gathering Plan added at `docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_EVIDENCE_GATHERING_PLAN.md`
+- defines evidence packages, source classification, evidence acceptance states, evidence sequencing logic, evidence registry template, freshness expectations, blocker register, and review gates for post-spine Class B evidence gathering
+- creates / updates `Class B Evidence Gathering` as the next governance-only release track following the closed `Class B Pilot Governance Spine`
+- clarifies that evidence gathering is not Class B readiness, ADR acceptance, implementation approval, staging approval, live approval, or customer-money authority
+- no successor implementation ticket is created by this plan
+
+Implementation posture preserved:
+
+- documentation-only governance planning
+- no `apps/`
+- no `packages/`
+- no backend
+- no frontend implementation
+- no product copy edits
+- no shipped route edits
+- no prototype route edits
+- no environment configuration
+- no tests
+- no CI workflow changes
+- no ADR status changes
+- no successor implementation ticket
+- no Class B execution, staging approval, sandbox approval, internal-test approval, live approval, production approval, deposit approval, withdrawal approval, custody approval, rail approval, stablecoin conversion approval, liquidity approval, reconciliation approval, support approval, audit approval, ledger truth, treasury authority, Copilot execution, Class C automation, external engagement, or customer fund movement authority
+
 ### BRAND-001 - Govern and normalize existing brand asset authority (governance / asset-infrastructure normalization)
 
 Merged files:
@@ -1872,6 +1905,7 @@ Completed and merged:
 - `GOV-B-015` - Class B Staging / Live-State Separation Memo (documentation-only governance / staging-live separation memo; completed record **§65c**)
 - `GOV-B-016` - Class B Governance Spine Closeout Assessment (documentation-only governance / spine closeout assessment; completed record **§65d**)
 - `GOV-B-017` - Class B Governance Spine Release Reconciliation (documentation-only governance / release reconciliation; completed record **§73**)
+- `EVID-B-001` - Class B Evidence Gathering Plan (documentation-only governance / evidence planning; completed record **§74**)
 - `BRAND-001` - Govern and normalize existing brand asset authority (governance / asset-infrastructure normalization; completed record **§66**)
 - `BRAND-002` - Brand governance documentation spine (documentation-only governance; completed record **§67**)
 - `BRAND-003` - Frontend governed token integration (frontend theme-governance integration only; completed record **§70**)
@@ -1894,7 +1928,7 @@ Current active ticket status:
 - Cursor must not continue automatically into work beyond what is explicitly defined in this file for an active ticket.
 - Cursor must not drift beyond explicitly defined scope.
 
-**Last completed ticket (summary):** `GOV-B-017` — Class B Governance Spine Release Reconciliation (documentation-only governance / release reconciliation only; reconciles `docs/ops/NOTION_GOVERNANCE_STAGING.md` so `Class B Pilot Governance Spine` is closed / complete as a documentation-only Class B governance prerequisite spine covering `GOV-B-001` through `GOV-B-017`; keeps `GOV-B-001` through `GOV-B-016` staged as done, documentation-only, and non-authorizing; adds `GOV-B-017` as documentation-only governance reconciliation; clarifies that closeout does not mean Class B readiness, pilot readiness, execution readiness, implementation readiness, staging approval, live approval, or customer-money authority; preserves Transition Readiness as closed / shipped as governance readiness only; creates no successor implementation ticket; **§7** / **§7a** remain in no-active-ticket state); completed record in **§73**.
+**Last completed ticket (summary):** `EVID-B-001` — Class B Evidence Gathering Plan (documentation-only governance / evidence planning only; creates `docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_EVIDENCE_GATHERING_PLAN.md`; defines evidence packages, source expectations, evidence states, review gates, freshness expectations, blocker tracking, and sequencing logic for post-spine Class B evidence gathering; creates / updates `Class B Evidence Gathering` as a distinct governance-only release track following the closed `Class B Pilot Governance Spine`; clarifies that evidence gathering is not Class B readiness, ADR acceptance, implementation approval, staging approval, live approval, execution authorization, external engagement approval, or customer-money authority; creates no successor implementation ticket; **§7** / **§7a** remain in no-active-ticket state); completed record in **§74**.
 
 ---
 
@@ -3785,3 +3819,27 @@ This **§43** record was originally written in the same working-tree change-set 
 **§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
 
 **Follow-ups:** No successor implementation ticket is created by this reconciliation. Any successor appears only when **§7** is updated explicitly.
+
+---
+
+## 74. Completed execution ticket - EVID-B-001 (Class B Evidence Gathering Plan)
+
+**Ticket:** `EVID-B-001` — Class B Evidence Gathering Plan (documentation-only governance / evidence planning)
+
+### Outcome (documentation-only)
+
+- **`docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_EVIDENCE_GATHERING_PLAN.md`** — added the Class B Evidence Gathering Plan following the closed Class B Pilot Governance Spine
+- **`docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_EVIDENCE_GATHERING_PLAN.md`** — defined evidence packages, source classification, evidence acceptance states, package detail, evidence sequencing logic, evidence registry template, freshness expectations, blocker register, evidence review gates, future-work boundaries, and Notion release posture
+- **`docs/ops/NOTION_GOVERNANCE_STAGING.md`** — created / updated **Class B Evidence Gathering** as a distinct governance-only evidence-gathering release track following the closed **Class B Pilot Governance Spine**
+- **`docs/ops/NOTION_GOVERNANCE_STAGING.md`** — staged `EVID-B-001` under **Class B Evidence Gathering**, not under the closed **Class B Pilot Governance Spine**
+- **`docs/ops/HEDGR_STATUS.md`** — added §6 merged-truth subsection `EVID-B-001`; updated the §7 completed list and last-completed summary; kept §7 / §7a in no-active-ticket posture; §74 (this record)
+
+**Scope discipline held.** **No** `apps/`, **no** `packages/`, **no** `scripts/`, **no** `.github/`, **no** tests, **no** backend, **no** frontend implementation, **no** product copy edits, **no** shipped route edits, **no** prototype route edits, **no** environment configuration, **no** CI workflow changes, **no** ADR status changes, **no** successor implementation ticket, and **no** Class B approval. This plan does **not** approve, activate, sequence, or implement Class B execution, staging, sandbox use, internal testing, live operations, deposits, withdrawals, custody, rails, stablecoin conversion, treasury operations, liquidity buffers, reconciliation operations, support operations, audit operations, ledger mutation, Copilot execution, Class C automation, external engagement, or customer fund movement. It does **not** conclude that Hedgr is Class B ready, pilot ready, execution ready, or implementation ready.
+
+**Validation.** Documentation-only diff review, `git diff -- docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_EVIDENCE_GATHERING_PLAN.md docs/ops/HEDGR_STATUS.md docs/ops/NOTION_GOVERNANCE_STAGING.md`, `git diff --check -- docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_EVIDENCE_GATHERING_PLAN.md docs/ops/HEDGR_STATUS.md docs/ops/NOTION_GOVERNANCE_STAGING.md`, and `git status --short --branch` completed locally. No tests were run because the ticket scope explicitly excludes tests and product/runtime files.
+
+### Sequencing note
+
+**§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
+
+**Follow-ups:** No successor implementation ticket is created by this plan. Any evidence-gathering, ADR drafting readiness, implementation-proposal preflight, or implementation successor appears only when repo governance names it explicitly.
