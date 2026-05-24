@@ -6,7 +6,7 @@
 
 **Authority:** The repository is source of truth. Wording here must match `docs/decisions/0016-warmth-layer-doctrine-constrained-retail-refinement-track.md`, `docs/decisions/SPRINT-2-ADR-INDEX.md`, and `docs/ops/HEDGR_STATUS.md`. Wording must match **Accepted** ADR **0016** in repo; do not broaden scope or soften read-only / non-execution boundaries in Notion.
 
-**Last reconciled:** 2026-05-23 (`HEDGR_STATUS.md` **§7** completed through **`EVID-B-001`**; post–**`MC-S3-019`** documentation-only governance: **`COP-GOV-001`** PR **#150** / **§52**; **`MC-S3-020`** PR **#153** (readout / **§7** activation **#152**) / **§53**; **`GOV-B-001`**-**`GOV-B-017`** **§54**-**§65d** / **§73**; **`EVID-B-001`** **§74**; **§7** / **§7a** remain **no active ticket**)
+**Last reconciled:** 2026-05-24 (`HEDGR_STATUS.md` **§7** completed through **`EVID-B-002`**; post–**`MC-S3-019`** documentation-only governance: **`COP-GOV-001`** PR **#150** / **§52**; **`MC-S3-020`** PR **#153** (readout / **§7** activation **#152**) / **§53**; **`GOV-B-001`**-**`GOV-B-017`** **§54**-**§65d** / **§73**; **`EVID-B-001`** **§74**; **`EVID-B-002`** **§75**; **§7** / **§7a** remain **no active ticket**)
 
 ---
 
@@ -495,6 +495,7 @@ Use when mirroring the completed **test-only** regression tranche 4. **Not** new
 | Ticket | Title | Status | Type | Authority | Summary |
 | ------ | ----- | ------ | ---- | --------- | ------- |
 | `EVID-B-001` | Class B Evidence Gathering Plan (documentation-only) | Done | Documentation-only / Evidence Planning | Non-authorizing | Defines evidence packages, source expectations, evidence states, review gates, freshness expectations, blocker tracking, and sequencing logic for post-spine Class B evidence gathering without approving Class B execution, ADR acceptance, implementation, staging, live operations, or customer fund movement. |
+| `EVID-B-002` | Class B Evidence Registry Initialization (documentation-only) | Done | Documentation-only / Evidence Registry | Non-authorizing | Initializes the working Class B evidence registry with required evidence packages, current evidence states, expected source classes, owner placeholders, freshness expectations, related blockers, downstream uses, package-to-spine mapping, blocker mapping, intake template, and review log template without accepting evidence, approving Class B readiness, ADR drafting readiness, implementation, staging, live operations, or customer fund movement. |
 
 **Release note:** This release follows the closed / complete **Class B Pilot Governance Spine** and is distinct from that closed release. It is a governance-only evidence-gathering track for collecting, classifying, reviewing, and preserving evidence before any future ADR drafting readiness or implementation-proposal preflight can be considered.
 
