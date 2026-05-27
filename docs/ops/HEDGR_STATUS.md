@@ -1147,6 +1147,40 @@ Implementation posture preserved:
 - no successor implementation ticket
 - no legal conclusions, jurisdiction approval, KYC / AML approval, customer eligibility approval, regulatory perimeter approval, disclosure approval, external engagement approval, Class B execution, staging approval, sandbox approval, internal-test approval, live approval, production approval, deposit approval, withdrawal approval, custody approval, rail approval, stablecoin conversion approval, liquidity approval, reconciliation approval, support approval, audit approval, ledger truth, treasury authority, Copilot execution, Class C automation, evidence acceptance, or customer fund movement authority
 
+
+### EVID-B-004 - Class B Jurisdiction Selection Evidence Package Skeleton (documentation-only)
+
+Merged files:
+- `docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_JURISDICTION_SELECTION_EVIDENCE_PACKAGE.md`
+- `docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_EVIDENCE_REGISTRY.md`
+- `docs/ops/HEDGR_STATUS.md`
+- `docs/ops/NOTION_GOVERNANCE_STAGING.md`
+
+Implementation truth:
+- governance-only Jurisdiction Selection Evidence Package skeleton added at `docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_JURISDICTION_SELECTION_EVIDENCE_PACKAGE.md`
+- instantiates the jurisdiction selection evidence package from `EVID-B-001`, `EVID-B-002`, and `EVID-B-003`
+- defines required jurisdiction-selection evidence items, source expectations, open jurisdiction questions, candidate jurisdiction comparison template, blocker mapping, freshness expectations, downstream dependency effects, evidence intake placeholders, and registry update instructions
+- updates the Class B Evidence Registry to reference the jurisdiction selection package shell while preserving evidence state as question-framed / missing
+- clarifies that the package skeleton does not select, approve, recommend, rank, or reject any jurisdiction and is not legal advice, legal approval, evidence acceptance, Class B readiness, ADR drafting readiness, implementation approval, external engagement approval, or customer-money authority
+
+Implementation posture preserved:
+- documentation-only governance evidence package skeleton
+- no `apps/`
+- no `packages/`
+- no backend
+- no frontend implementation
+- no product copy edits
+- no shipped route edits
+- no prototype route edits
+- no environment configuration
+- no tests
+- no CI workflow changes
+- no ADR status changes
+- no successor implementation ticket
+- no jurisdiction selection, jurisdiction approval, market approval, legal conclusions, KYC / AML approval, customer eligibility approval, regulatory perimeter approval, disclosure approval, external engagement approval, Class B execution, staging approval, sandbox approval, internal-test approval, live approval, production approval, deposit approval, withdrawal approval, custody approval, rail approval, stablecoin conversion approval, liquidity approval, reconciliation approval, support approval, audit approval, ledger truth, treasury authority, Copilot execution, Class C automation, evidence acceptance, or customer fund movement authority
+
+After closeout, §7 / §7a should remain or return to no active implementation ticket, unless repo governance explicitly says otherwise.
+
 ### BRAND-001 - Govern and normalize existing brand asset authority (governance / asset-infrastructure normalization)
 
 Merged files:
@@ -1976,6 +2010,7 @@ Completed and merged:
 - `EVID-B-001` - Class B Evidence Gathering Plan (documentation-only governance / evidence planning; completed record **§74**)
 - `EVID-B-002` - Class B Evidence Registry Initialization (documentation-only governance / evidence registry; completed record **§75**)
 - `EVID-B-003` - Class B Legal / Compliance Evidence Package Skeleton (documentation-only governance / evidence package skeleton; completed record **§76**)
+- `EVID-B-004` - Class B Jurisdiction Selection Evidence Package Skeleton (documentation-only governance / evidence package skeleton; completed record **§77**)
 - `BRAND-001` - Govern and normalize existing brand asset authority (governance / asset-infrastructure normalization; completed record **§66**)
 - `BRAND-002` - Brand governance documentation spine (documentation-only governance; completed record **§67**)
 - `BRAND-003` - Frontend governed token integration (frontend theme-governance integration only; completed record **§70**)
@@ -1998,7 +2033,7 @@ Current active ticket status:
 - Cursor must not continue automatically into work beyond what is explicitly defined in this file for an active ticket.
 - Cursor must not drift beyond explicitly defined scope.
 
-**Last completed ticket (summary):** `EVID-B-003` — Class B Legal / Compliance Evidence Package Skeleton (documentation-only governance / evidence package skeleton only; creates `docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_LEGAL_COMPLIANCE_EVIDENCE_PACKAGE.md`; instantiates the legal / compliance evidence package from `EVID-B-001` and `EVID-B-002`; defines required legal / compliance evidence items, source expectations, open legal / compliance questions, blocker mapping, freshness expectations, downstream dependency effects, evidence intake placeholders, and registry update instructions; updates the Class B Evidence Registry to reference the package shell while preserving evidence state as question-framed / missing; stages `EVID-B-003` under `Class B Evidence Gathering`, not under the closed `Class B Pilot Governance Spine`; clarifies that the package skeleton is not legal advice, legal approval, evidence acceptance, Class B readiness, ADR drafting readiness, implementation approval, external engagement approval, or customer-money authority; creates no successor implementation ticket; **§7** / **§7a** remain in no-active-ticket state); completed record in **§76**.
+**Last completed ticket (summary):** `EVID-B-004` — Class B Jurisdiction Selection Evidence Package Skeleton (documentation-only governance / evidence package skeleton only; creates `docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_JURISDICTION_SELECTION_EVIDENCE_PACKAGE.md`; instantiates the jurisdiction selection evidence package from `EVID-B-001`, `EVID-B-002`, and `EVID-B-003`; defines required jurisdiction-selection evidence items, source expectations, open jurisdiction questions, candidate jurisdiction comparison template, blocker mapping, freshness expectations, downstream dependency effects, evidence intake placeholders, and registry update instructions; updates the Class B Evidence Registry to reference the package shell while preserving evidence state as question-framed / missing; stages `EVID-B-004` under `Class B Evidence Gathering`, not under the closed `Class B Pilot Governance Spine`; clarifies that the package skeleton does not select, approve, recommend, rank, or reject any jurisdiction and is not legal advice, legal approval, evidence acceptance, Class B readiness, ADR drafting readiness, implementation approval, external engagement approval, or customer-money authority; creates no successor implementation ticket; **§7** / **§7a** remain in no-active-ticket state); completed record in **§77**.
 
 ---
 
@@ -3960,3 +3995,22 @@ This **§43** record was originally written in the same working-tree change-set 
 **§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
 
 **Follow-ups:** No successor implementation ticket is created by this package skeleton. Any future legal / compliance evidence acceptance, ADR drafting readiness, implementation-proposal preflight, or implementation successor appears only when repo governance names it explicitly.
+
+
+## 77. Completed execution ticket - EVID-B-004 (Class B Jurisdiction Selection Evidence Package Skeleton)
+
+**Ticket:** `EVID-B-004` — Class B Jurisdiction Selection Evidence Package Skeleton (documentation-only governance / evidence package skeleton)
+
+### Outcome (documentation-only)
+
+- **`docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_JURISDICTION_SELECTION_EVIDENCE_PACKAGE.md`** — added the Jurisdiction Selection Evidence Package skeleton following `EVID-B-001`, `EVID-B-002`, and `EVID-B-003`
+- **`docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_JURISDICTION_SELECTION_EVIDENCE_PACKAGE.md`** — defined required jurisdiction-selection evidence items, source expectations, open jurisdiction questions, candidate jurisdiction comparison template, blocker mapping, freshness expectations, downstream dependency effects, evidence intake placeholders, and registry update instructions
+- **`docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_EVIDENCE_REGISTRY.md`** — references the jurisdiction selection package shell while preserving the package evidence state as question-framed / missing
+- **`docs/ops/NOTION_GOVERNANCE_STAGING.md`** — staged `EVID-B-004` under **Class B Evidence Gathering**, not under the closed **Class B Pilot Governance Spine**
+- **`docs/ops/HEDGR_STATUS.md`** — added §6 merged-truth subsection `EVID-B-004`; updated the §7 completed list and last-completed summary; kept §7 / §7a in no-active-ticket posture; §77 (this record)
+
+### Sequencing note
+
+**§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
+
+**Follow-ups:** No successor implementation ticket is created by this package skeleton. Any future jurisdiction evidence acceptance, legal / compliance evidence acceptance, ADR drafting readiness, implementation-proposal preflight, or implementation successor appears only when repo governance names it explicitly.
