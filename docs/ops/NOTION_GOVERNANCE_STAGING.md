@@ -6,7 +6,7 @@
 
 **Authority:** The repository is source of truth. Wording here must match `docs/decisions/0016-warmth-layer-doctrine-constrained-retail-refinement-track.md`, `docs/decisions/SPRINT-2-ADR-INDEX.md`, and `docs/ops/HEDGR_STATUS.md`. Wording must match **Accepted** ADR **0016** in repo; do not broaden scope or soften read-only / non-execution boundaries in Notion.
 
-**Last reconciled:** 2026-05-27 (`HEDGR_STATUS.md` **§7** completed through **`EVID-B-005`**; post–**`MC-S3-019`** documentation-only governance: **`COP-GOV-001`** PR **#150** / **§52**; **`MC-S3-020`** PR **#153** (readout / **§7** activation **#152**) / **§53**; **`GOV-B-001`**-**`GOV-B-017`** **§54**-**§65d** / **§73**; **`EVID-B-001`** **§74**; **`EVID-B-002`** **§75**; **`EVID-B-003`** **§76**; **`EVID-B-004`** **§77**; **`EVID-B-005`** **§78**; **§7** / **§7a** remain **no active ticket**)
+**Last reconciled:** 2026-05-27 (`HEDGR_STATUS.md` **§7** completed through **`EVID-B-006`**; post–**`MC-S3-019`** documentation-only governance: **`COP-GOV-001`** PR **#150** / **§52**; **`MC-S3-020`** PR **#153** (readout / **§7** activation **#152**) / **§53**; **`GOV-B-001`**-**`GOV-B-017`** **§54**-**§65d** / **§73**; **`EVID-B-001`** **§74**; **`EVID-B-002`** **§75**; **`EVID-B-003`** **§76**; **`EVID-B-004`** **§77**; **`EVID-B-005`** **§78**; **`EVID-B-006`** **§79**; **§7** / **§7a** remain **no active ticket**)
 
 ---
 
@@ -479,7 +479,7 @@ Use when mirroring the completed **test-only** regression tranche 4. **Not** new
 
 ## 9b. Releases — Class B Evidence Gathering (copy row)
 
-**Not canonical.** Mirror **`docs/ops/HEDGR_STATUS.md`** (**§7**, **§7a**, **§74**-**§78**) for any conflict. This block is executive-readable **copy source** only.
+**Not canonical.** Mirror **`docs/ops/HEDGR_STATUS.md`** (**§7**, **§7a**, **§74**-**§79**) for any conflict. This block is executive-readable **copy source** only.
 
 | Field | Value |
 | ----- | ----- |
@@ -499,6 +499,7 @@ Use when mirroring the completed **test-only** regression tranche 4. **Not** new
 | `EVID-B-003` | Class B Legal / Compliance Evidence Package Skeleton (documentation-only) | Done | Documentation-only / Evidence Package Skeleton | Non-authorizing | Creates the legal / compliance evidence package shell, defining required evidence items, source expectations, open legal / compliance questions, blocker mapping, freshness expectations, downstream dependencies, and registry linkage without providing legal advice, accepting evidence, approving jurisdiction, KYC / AML, customer eligibility, regulatory posture, external engagement, implementation, or customer fund movement. |
 | `EVID-B-004` | Class B Jurisdiction Selection Evidence Package Skeleton (documentation-only) | Done | Documentation-only / Evidence Package Skeleton | Non-authorizing | Creates the jurisdiction selection evidence package shell, defining required evidence items, source expectations, open jurisdiction questions, candidate comparison template, blocker mapping, freshness expectations, downstream dependencies, and registry linkage without selecting, approving, recommending, ranking, or rejecting any jurisdiction and without providing legal advice, accepting evidence, approving implementation, external engagement, or customer fund movement. |
 | `EVID-B-005` | Class B Customer Eligibility Evidence Package Skeleton (documentation-only) | Done | Documentation-only / Evidence Package Skeleton | Non-authorizing | Creates the customer eligibility evidence package shell, defining required evidence items, source expectations, open eligibility questions, candidate participant class template, eligibility criteria template, blocker mapping, freshness expectations, downstream dependencies, and registry linkage without approving any customer class, participant type, eligibility policy, onboarding flow, KYC / AML process, customer outreach, implementation, external engagement, or customer fund movement. |
+| `EVID-B-006` | Class B KYC / AML Responsibility Evidence Package Skeleton (documentation-only) | Done | Documentation-only / Evidence Package Skeleton | Non-authorizing | Creates the KYC / AML responsibility evidence package shell, defining required evidence items, source expectations, open KYC / AML questions, responsibility boundary template, lifecycle template, blocker mapping, freshness expectations, downstream dependencies, and registry linkage without approving any KYC provider, AML process, sanctions / PEP process, onboarding flow, customer eligibility, manual review process, compliance hold process, transaction monitoring process, external engagement, implementation, or customer fund movement. |
 
 **Release note:** This release follows the closed / complete **Class B Pilot Governance Spine** and is distinct from that closed release. It is a governance-only evidence-gathering track for collecting, classifying, reviewing, and preserving evidence before any future ADR drafting readiness or implementation-proposal preflight can be considered.
 
