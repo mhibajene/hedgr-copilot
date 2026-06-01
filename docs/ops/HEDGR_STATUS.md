@@ -1257,6 +1257,45 @@ Implementation posture preserved:
 
 After closeout, §7 / §7a should remain or return to no active implementation ticket, unless repo governance explicitly says otherwise.
 
+### EVID-B-007 - Class B Custody Provider / Model Evidence Package Skeleton (documentation-only)
+
+Merged files:
+- `docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_CUSTODY_PROVIDER_MODEL_EVIDENCE_PACKAGE.md`
+- `docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_EVIDENCE_REGISTRY.md`
+- `docs/ops/HEDGR_STATUS.md`
+- `docs/ops/NOTION_GOVERNANCE_STAGING.md`
+
+Implementation truth:
+- governance-only Custody Provider / Model Evidence Package skeleton added at `docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_CUSTODY_PROVIDER_MODEL_EVIDENCE_PACKAGE.md`
+- instantiates the custody provider / model evidence package from `EVID-B-001`, `EVID-B-002`, `EVID-B-003`, `EVID-B-004`, `EVID-B-005`, and `EVID-B-006`
+- defines required custody provider / model evidence items, source expectations, open custody questions, custody model comparison template, custody responsibility boundary template, asset-control lifecycle template, blocker mapping, freshness expectations, downstream dependency effects, evidence intake placeholders, and registry update instructions
+- updates the Class B Evidence Registry to reference the custody provider / model package shell while preserving evidence state as question-framed / missing
+- clarifies that the package skeleton does not approve any custody provider, wallet provider, embedded wallet provider, custody model, asset-control model, key-management process, wallet recovery process, custody operation, custody claim, provider responsibility model, evidence acceptance, Class B readiness, ADR drafting readiness, implementation approval, external engagement approval, or customer-money authority
+
+Implementation posture preserved:
+- documentation-only governance evidence package skeleton
+- no `apps/`
+- no `packages/`
+- no backend
+- no frontend implementation
+- no product copy edits
+- no shipped route edits
+- no prototype route edits
+- no wallet flow
+- no custody flow
+- no key-management logic
+- no wallet recovery logic
+- no transaction semantics
+- no customer records
+- no environment configuration
+- no tests
+- no CI workflow changes
+- no ADR status changes
+- no successor implementation ticket
+- no custody approval, wallet provider approval, embedded wallet provider approval, provider approval, asset-control approval, recovery approval, custody claim approval, legal conclusions, regulatory perimeter approval, disclosure approval, external engagement approval, vendor approval, Class B execution, staging approval, sandbox approval, internal-test approval, live approval, production approval, deposit approval, withdrawal approval, rail approval, stablecoin conversion approval, liquidity approval, reconciliation approval, support approval, audit approval, ledger truth, treasury authority, Copilot execution, Class C automation, evidence acceptance, or customer fund movement authority
+
+After closeout, §7 / §7a should remain or return to no active implementation ticket, unless repo governance explicitly says otherwise.
+
 ### BRAND-001 - Govern and normalize existing brand asset authority (governance / asset-infrastructure normalization)
 
 Merged files:
@@ -2089,6 +2128,7 @@ Completed and merged:
 - `EVID-B-004` - Class B Jurisdiction Selection Evidence Package Skeleton (documentation-only governance / evidence package skeleton; completed record **§77**)
 - `EVID-B-005` - Class B Customer Eligibility Evidence Package Skeleton (documentation-only governance / evidence package skeleton; completed record **§78**)
 - `EVID-B-006` - Class B KYC / AML Responsibility Evidence Package Skeleton (documentation-only governance / evidence package skeleton; completed record **§79**)
+- `EVID-B-007` - Class B Custody Provider / Model Evidence Package Skeleton (documentation-only governance / evidence package skeleton; completed record **§80**)
 - `BRAND-001` - Govern and normalize existing brand asset authority (governance / asset-infrastructure normalization; completed record **§66**)
 - `BRAND-002` - Brand governance documentation spine (documentation-only governance; completed record **§67**)
 - `BRAND-003` - Frontend governed token integration (frontend theme-governance integration only; completed record **§70**)
@@ -2111,7 +2151,7 @@ Current active ticket status:
 - Cursor must not continue automatically into work beyond what is explicitly defined in this file for an active ticket.
 - Cursor must not drift beyond explicitly defined scope.
 
-**Last completed ticket (summary):** `EVID-B-006` — Class B KYC / AML Responsibility Evidence Package Skeleton (documentation-only governance / evidence package skeleton only; creates `docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_KYC_AML_RESPONSIBILITY_EVIDENCE_PACKAGE.md`; instantiates the KYC / AML responsibility evidence package from `EVID-B-001`, `EVID-B-002`, `EVID-B-003`, `EVID-B-004`, and `EVID-B-005`; defines required KYC / AML responsibility evidence items, source expectations, open KYC / AML questions, responsibility boundary template, lifecycle template, blocker mapping, freshness expectations, downstream dependency effects, evidence intake placeholders, and registry update instructions; updates the Class B Evidence Registry to reference the package shell while preserving evidence state as question-framed / missing; stages `EVID-B-006` under `Class B Evidence Gathering`, not under the closed `Class B Pilot Governance Spine`; clarifies that the package skeleton does not approve any KYC provider, AML process, sanctions / PEP process, onboarding flow, customer eligibility, manual review process, compliance hold process, transaction monitoring process, evidence acceptance, Class B readiness, ADR drafting readiness, implementation approval, external engagement approval, or customer-money authority; creates no successor implementation ticket; **§7** / **§7a** remain in no-active-ticket state); completed record in **§79**.
+**Last completed ticket (summary):** `EVID-B-007` — Class B Custody Provider / Model Evidence Package Skeleton (documentation-only governance / evidence package skeleton only; creates `docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_CUSTODY_PROVIDER_MODEL_EVIDENCE_PACKAGE.md`; instantiates the custody provider / model evidence package from `EVID-B-001`, `EVID-B-002`, `EVID-B-003`, `EVID-B-004`, `EVID-B-005`, and `EVID-B-006`; defines required custody provider / model evidence items, source expectations, open custody questions, custody model comparison template, custody responsibility boundary template, asset-control lifecycle template, blocker mapping, freshness expectations, downstream dependency effects, evidence intake placeholders, and registry update instructions; updates the Class B Evidence Registry to reference the package shell while preserving evidence state as question-framed / missing; stages `EVID-B-007` under `Class B Evidence Gathering`, not under the closed `Class B Pilot Governance Spine`; clarifies that the package skeleton does not approve any custody provider, wallet provider, embedded wallet provider, custody model, asset-control model, key-management process, wallet recovery process, custody operation, custody claim, provider responsibility model, evidence acceptance, Class B readiness, ADR drafting readiness, implementation approval, external engagement approval, or customer-money authority; creates no successor implementation ticket; **§7** / **§7a** remain in no-active-ticket state); completed record in **§80**.
 
 ---
 
@@ -4132,3 +4172,25 @@ This **§43** record was originally written in the same working-tree change-set 
 **§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
 
 **Follow-ups:** No successor implementation ticket is created by this package skeleton. Any future KYC / AML evidence acceptance, legal / compliance evidence acceptance, ADR drafting readiness, implementation-proposal preflight, or implementation successor appears only when repo governance names it explicitly.
+
+## 80. Completed execution ticket - EVID-B-007 (Class B Custody Provider / Model Evidence Package Skeleton)
+
+**Ticket:** `EVID-B-007` — Class B Custody Provider / Model Evidence Package Skeleton (documentation-only governance / evidence package skeleton)
+
+### Outcome (documentation-only)
+
+- **`docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_CUSTODY_PROVIDER_MODEL_EVIDENCE_PACKAGE.md`** — added the Custody Provider / Model Evidence Package skeleton following `EVID-B-001`, `EVID-B-002`, `EVID-B-003`, `EVID-B-004`, `EVID-B-005`, and `EVID-B-006`
+- **`docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_CUSTODY_PROVIDER_MODEL_EVIDENCE_PACKAGE.md`** — defined required custody provider / model evidence items, source expectations, open custody questions, custody model comparison template, custody responsibility boundary template, asset-control lifecycle template, blocker mapping, freshness expectations, downstream dependency effects, evidence intake placeholders, and registry update instructions
+- **`docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_EVIDENCE_REGISTRY.md`** — references the custody provider / model package shell while preserving the package evidence state as question-framed / missing
+- **`docs/ops/NOTION_GOVERNANCE_STAGING.md`** — staged `EVID-B-007` under **Class B Evidence Gathering**, not under the closed **Class B Pilot Governance Spine**
+- **`docs/ops/HEDGR_STATUS.md`** — added §6 merged-truth subsection `EVID-B-007`; updated the §7 completed list and last-completed summary; kept §7 / §7a in no-active-ticket posture; §80 (this record)
+
+**Scope discipline held.** **No** `apps/`, **no** `packages/`, **no** `scripts/`, **no** `.github/`, **no** tests, **no** backend, **no** frontend implementation, **no** product copy edits, **no** shipped route edits, **no** prototype route edits, **no** wallet flow, **no** custody flow, **no** key-management logic, **no** wallet recovery logic, **no** transaction semantics, **no** customer records, **no** environment configuration, **no** CI workflow changes, **no** ADR status changes, **no** successor implementation ticket, and **no** Class B approval. This package does **not** approve any custody provider, wallet provider, embedded wallet provider, custody model, asset-control model, key-management process, wallet recovery process, custody operation, custody claim, provider responsibility model, external engagement, Class B execution, staging, sandbox use, internal testing, live operations, deposits, withdrawals, rails, stablecoin conversion, treasury operations, liquidity buffers, reconciliation operations, support operations, audit operations, ledger mutation, Copilot execution, Class C automation, or customer fund movement. It does **not** mark evidence accepted, approved, sufficient, custody-ready, provider-ready, wallet-ready, Class B ready, ADR ready, implementation ready, staging ready, live ready, or customer-money ready.
+
+**Validation.** Documentation-only diff review, `git diff -- docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_CUSTODY_PROVIDER_MODEL_EVIDENCE_PACKAGE.md docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_EVIDENCE_REGISTRY.md docs/ops/HEDGR_STATUS.md docs/ops/NOTION_GOVERNANCE_STAGING.md`, `git diff --check -- docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_CUSTODY_PROVIDER_MODEL_EVIDENCE_PACKAGE.md docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_EVIDENCE_REGISTRY.md docs/ops/HEDGR_STATUS.md docs/ops/NOTION_GOVERNANCE_STAGING.md`, and `git status --short --branch` completed locally. No tests were run because the ticket scope explicitly excludes tests and product/runtime files.
+
+### Sequencing note
+
+**§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
+
+**Follow-ups:** No successor implementation ticket is created by this package skeleton. Any future custody evidence acceptance, legal / compliance evidence acceptance, ADR drafting readiness, implementation-proposal preflight, or implementation successor appears only when repo governance names it explicitly.
