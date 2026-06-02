@@ -1441,6 +1441,61 @@ Implementation posture preserved:
 
 After closeout, §7 / §7a should remain or return to no active implementation ticket, unless repo governance explicitly says otherwise.
 
+### EVID-B-011 - Class B Fee / FX / Spread Evidence Package Skeleton (documentation-only)
+
+Merged files:
+- `docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_FEE_FX_SPREAD_EVIDENCE_PACKAGE.md`
+- `docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_EVIDENCE_REGISTRY.md`
+- `docs/ops/HEDGR_STATUS.md`
+- `docs/ops/NOTION_GOVERNANCE_STAGING.md`
+
+Implementation truth:
+- governance-only Fee / FX / Spread Evidence Package skeleton added at `docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_FEE_FX_SPREAD_EVIDENCE_PACKAGE.md`
+- instantiates the fee / FX / spread evidence package from `EVID-B-001` through `EVID-B-010`
+- defines required fee / FX / spread evidence items, source expectations, open pricing / quote / disclosure questions, fee / FX / spread lifecycle template, estimate-versus-final-value template, stale quote / slippage / dispute template, pricing evidence dependency template, blocker mapping, freshness expectations, downstream dependency effects, evidence intake placeholders, and registry update instructions
+- updates the Class B Evidence Registry to reference the fee / FX / spread package shell while preserving evidence state as question-framed / missing
+- clarifies that the package skeleton does not approve FX execution, exchange-rate sourcing, fee model, spread model, quote model, stale-quote handling, slippage model, pricing engine, treasury operation, liquidity operation, settlement value, customer-facing pricing claim, user-facing amount claim, ledger truth, accounting truth, evidence acceptance, Class B readiness, ADR drafting readiness, implementation approval, external engagement approval, or customer-money authority
+
+Implementation posture preserved:
+- documentation-only governance evidence package skeleton
+- no `apps/`
+- no `packages/`
+- no backend
+- no frontend implementation
+- no product copy edits
+- no shipped route edits
+- no prototype route edits
+- no FX logic
+- no fee logic
+- no spread logic
+- no quote logic
+- no pricing engine
+- no treasury logic
+- no stablecoin flow
+- no conversion flow
+- no redemption flow
+- no custody flow
+- no rail integration
+- no vendor integration
+- no payment flow
+- no deposit flow
+- no withdrawal flow
+- no settlement logic
+- no reconciliation logic
+- no support workflow
+- no ledger logic
+- no accounting logic
+- no transaction semantics
+- no customer records
+- no environment configuration
+- no tests
+- no CI workflow changes
+- no ADR status changes
+- no successor implementation ticket
+- no FX execution approval, exchange-rate approval, fee approval, spread approval, quote approval, slippage approval, pricing approval, treasury approval, liquidity approval, settlement-value approval, customer-facing pricing claim approval, user-facing amount approval, ledger-truth approval, accounting-truth approval, reconciliation approval, support-closure approval, legal conclusions, regulatory perimeter approval, disclosure approval, external engagement approval, Class B execution, staging approval, sandbox approval, internal-test approval, live approval, production approval, audit approval, Copilot execution, Class C automation, evidence acceptance, or customer fund movement authority
+
+After closeout, §7 / §7a should remain or return to no active implementation ticket, unless repo governance explicitly says otherwise.
+
 ### BRAND-001 - Govern and normalize existing brand asset authority (governance / asset-infrastructure normalization)
 
 Merged files:
@@ -2277,6 +2332,7 @@ Completed and merged:
 - `EVID-B-008` - Class B Rail / Vendor Permission Evidence Package Skeleton (documentation-only governance / evidence package skeleton; completed record **§81**)
 - `EVID-B-009` - Class B Rail Settlement / Finality Evidence Package Skeleton (documentation-only governance / evidence package skeleton; completed record **§82**)
 - `EVID-B-010` - Class B Stablecoin / Conversion Evidence Package Skeleton (documentation-only governance / evidence package skeleton; completed record **§83**)
+- `EVID-B-011` - Class B Fee / FX / Spread Evidence Package Skeleton (documentation-only governance / evidence package skeleton; completed record **§84**)
 - `BRAND-001` - Govern and normalize existing brand asset authority (governance / asset-infrastructure normalization; completed record **§66**)
 - `BRAND-002` - Brand governance documentation spine (documentation-only governance; completed record **§67**)
 - `BRAND-003` - Frontend governed token integration (frontend theme-governance integration only; completed record **§70**)
@@ -2299,7 +2355,7 @@ Current active ticket status:
 - Cursor must not continue automatically into work beyond what is explicitly defined in this file for an active ticket.
 - Cursor must not drift beyond explicitly defined scope.
 
-**Last completed ticket (summary):** `EVID-B-010` — Class B Stablecoin / Conversion Evidence Package Skeleton (documentation-only governance / evidence package skeleton only; creates `docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_STABLECOIN_CONVERSION_EVIDENCE_PACKAGE.md`; instantiates the stablecoin / conversion evidence package from `EVID-B-001` through `EVID-B-009`; defines required stablecoin / conversion evidence items, source expectations, open stablecoin / conversion questions, stablecoin exposure template, conversion / redemption lifecycle template, custody / rail / settlement dependency template, blocker mapping, freshness expectations, downstream dependency effects, evidence intake placeholders, and registry update instructions; updates the Class B Evidence Registry to reference the package shell while preserving evidence state as question-framed / missing; stages `EVID-B-010` under `Class B Evidence Gathering`, not under the closed `Class B Pilot Governance Spine`; clarifies that the package skeleton does not approve stablecoin acquisition, stablecoin holding, stablecoin transfer, conversion, redemption, FX execution, fee / spread model, quote model, slippage model, custody model, rail pathway, treasury operation, liquidity operation, settlement finality, ledger truth, accounting truth, evidence acceptance, Class B readiness, ADR drafting readiness, implementation approval, external engagement approval, or customer-money authority; creates no successor implementation ticket; **§7** / **§7a** remain in no-active-ticket state); completed record in **§83**.
+**Last completed ticket (summary):** `EVID-B-011` — Class B Fee / FX / Spread Evidence Package Skeleton (documentation-only governance / evidence package skeleton only; creates `docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_FEE_FX_SPREAD_EVIDENCE_PACKAGE.md`; instantiates the fee / FX / spread evidence package from `EVID-B-001` through `EVID-B-010`; defines required fee / FX / spread evidence items, source expectations, open pricing / quote / disclosure questions, fee / FX / spread lifecycle template, estimate-versus-final-value template, stale quote / slippage / dispute template, pricing evidence dependency template, blocker mapping, freshness expectations, downstream dependency effects, evidence intake placeholders, and registry update instructions; updates the Class B Evidence Registry to reference the package shell while preserving evidence state as question-framed / missing; stages `EVID-B-011` under `Class B Evidence Gathering`, not under the closed `Class B Pilot Governance Spine`; clarifies that the package skeleton does not approve FX execution, exchange-rate sourcing, fee model, spread model, quote model, stale-quote handling, slippage model, pricing engine, treasury operation, liquidity operation, settlement value, customer-facing pricing claim, user-facing amount claim, ledger truth, accounting truth, evidence acceptance, Class B readiness, ADR drafting readiness, implementation approval, external engagement approval, or customer-money authority; creates no successor implementation ticket; **§7** / **§7a** remain in no-active-ticket state); completed record in **§84**.
 
 ---
 
@@ -4408,3 +4464,25 @@ This **§43** record was originally written in the same working-tree change-set 
 **§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
 
 **Follow-ups:** No successor implementation ticket is created by this package skeleton. Any future stablecoin / conversion evidence acceptance, legal / compliance evidence acceptance, ADR drafting readiness, implementation-proposal preflight, or implementation successor appears only when repo governance names it explicitly.
+
+## 84. Completed execution ticket - EVID-B-011 (Class B Fee / FX / Spread Evidence Package Skeleton)
+
+**Ticket:** `EVID-B-011` — Class B Fee / FX / Spread Evidence Package Skeleton (documentation-only governance / evidence package skeleton)
+
+### Outcome (documentation-only)
+
+- **`docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_FEE_FX_SPREAD_EVIDENCE_PACKAGE.md`** — added the Fee / FX / Spread Evidence Package skeleton following `EVID-B-001` through `EVID-B-010`
+- **`docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_FEE_FX_SPREAD_EVIDENCE_PACKAGE.md`** — defined required fee / FX / spread evidence items, source expectations, open pricing / quote / disclosure questions, fee / FX / spread lifecycle template, estimate-versus-final-value template, stale quote / slippage / dispute template, pricing evidence dependency template, blocker mapping, freshness expectations, downstream dependency effects, evidence intake placeholders, and registry update instructions
+- **`docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_EVIDENCE_REGISTRY.md`** — references the fee / FX / spread package shell while preserving the package evidence state as question-framed / missing
+- **`docs/ops/NOTION_GOVERNANCE_STAGING.md`** — staged `EVID-B-011` under **Class B Evidence Gathering**, not under the closed **Class B Pilot Governance Spine**
+- **`docs/ops/HEDGR_STATUS.md`** — added §6 merged-truth subsection `EVID-B-011`; updated the §7 completed list and last-completed summary; kept §7 / §7a in no-active-ticket posture; §84 (this record)
+
+**Scope discipline held.** **No** `apps/`, **no** `packages/`, **no** `scripts/`, **no** `.github/`, **no** tests, **no** backend, **no** frontend implementation, **no** product copy edits, **no** shipped route edits, **no** prototype route edits, **no** FX logic, **no** fee logic, **no** spread logic, **no** quote logic, **no** pricing engine, **no** treasury logic, **no** stablecoin flow, **no** conversion flow, **no** redemption flow, **no** custody flow, **no** rail integration, **no** vendor integration, **no** payment flow, **no** deposit flow, **no** withdrawal flow, **no** settlement logic, **no** reconciliation logic, **no** support workflow, **no** ledger logic, **no** accounting logic, **no** transaction semantics, **no** customer records, **no** environment configuration, **no** CI workflow changes, **no** ADR status changes, **no** successor implementation ticket, and **no** Class B approval. This package does **not** approve FX execution, exchange-rate sourcing, fee model, spread model, quote model, stale-quote handling, slippage model, pricing engine, treasury operation, liquidity operation, settlement value, customer-facing pricing claim, user-facing amount claim, ledger truth, accounting truth, external engagement, Class B execution, staging, sandbox use, internal testing, live operations, deposits, withdrawals, custody, rails, stablecoin conversion, treasury operations, liquidity buffers, reconciliation operations, support operations, audit operations, ledger mutation, Copilot execution, Class C automation, or customer fund movement. It does **not** mark evidence accepted, approved, sufficient, FX-ready, fee-ready, spread-ready, quote-ready, pricing-ready, treasury-ready, Class B ready, ADR ready, implementation ready, staging ready, or customer-money ready.
+
+**Validation.** Documentation-only diff review, `git diff -- docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_FEE_FX_SPREAD_EVIDENCE_PACKAGE.md docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_EVIDENCE_REGISTRY.md docs/ops/HEDGR_STATUS.md docs/ops/NOTION_GOVERNANCE_STAGING.md`, `git diff --check -- docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_FEE_FX_SPREAD_EVIDENCE_PACKAGE.md docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_EVIDENCE_REGISTRY.md docs/ops/HEDGR_STATUS.md docs/ops/NOTION_GOVERNANCE_STAGING.md`, and `git status --short --branch` completed locally. No tests were run because the ticket scope explicitly excludes tests and product/runtime files.
+
+### Sequencing note
+
+**§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
+
+**Follow-ups:** No successor implementation ticket is created by this package skeleton. Any future fee / FX / spread evidence acceptance, legal / compliance evidence acceptance, ADR drafting readiness, implementation-proposal preflight, or implementation successor appears only when repo governance names it explicitly.
