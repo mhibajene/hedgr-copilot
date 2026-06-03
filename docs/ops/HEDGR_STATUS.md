@@ -1549,6 +1549,48 @@ Implementation posture preserved:
 
 After closeout, §7 / §7a should remain or return to no active implementation ticket, unless repo governance explicitly says otherwise.
 
+### EVID-B-013 - Class B Trust UX / Disclosure Evidence Package Skeleton (documentation-only)
+
+Merged files:
+- `docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_TRUST_UX_DISCLOSURE_EVIDENCE_PACKAGE.md`
+- `docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_EVIDENCE_REGISTRY.md`
+- `docs/ops/HEDGR_STATUS.md`
+- `docs/ops/NOTION_GOVERNANCE_STAGING.md`
+
+Implementation truth:
+- governance-only Trust UX / Disclosure Evidence Package skeleton added at `docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_TRUST_UX_DISCLOSURE_EVIDENCE_PACKAGE.md`
+- instantiates the Trust UX / disclosure evidence package from `EVID-B-001` through `EVID-B-012`
+- defines required Trust UX / disclosure evidence items, source expectations, open disclosure / claim / state-label questions, claim classification template, disclosure dependency template, state-label evidence template, prohibited claim template, Copilot proximity template, blocker mapping, freshness expectations, downstream dependency effects, evidence intake placeholders, and registry update instructions
+- updates the Class B Evidence Registry to reference the Trust UX / disclosure package shell while preserving evidence state as question-framed / missing
+- clarifies that the package skeleton does not approve product copy, UI copy, disclosure wording, support scripts, marketing claims, Copilot responses, customer-facing state labels, trust badges, protection claims, guarantee claims, yield claims, liquidity claims, available-to-withdraw claims, settlement claims, finality claims, custody claims, stablecoin claims, fee / FX / spread claims, evidence acceptance, Class B readiness, ADR drafting readiness, implementation approval, external engagement approval, or customer-money authority
+
+Implementation posture preserved:
+- documentation-only governance evidence package skeleton
+- no `apps/`
+- no `packages/`
+- no backend
+- no frontend implementation
+- no product copy edits
+- no shipped route edits
+- no prototype route edits
+- no UI copy
+- no support script
+- no marketing copy
+- no Copilot prompt
+- no disclosure text
+- no product state label
+- no onboarding flow
+- no customer records
+- no transaction semantics
+- no environment configuration
+- no tests
+- no CI workflow changes
+- no ADR status changes
+- no successor implementation ticket
+- no product-copy approval, UI-copy approval, disclosure approval, support-script approval, marketing approval, Copilot-response approval, state-label approval, customer-facing state-label approval, customer-facing claim approval, trust-badge approval, guarantee-claim approval, protection-claim approval, yield-claim approval, liquidity-claim approval, available-to-withdraw approval, settlement-claim approval, finality-claim approval, custody-claim approval, stablecoin-claim approval, fee / FX / spread-claim approval, legal conclusions, regulatory perimeter approval, external engagement approval, Class B execution, staging approval, sandbox approval, internal-test approval, live approval, production approval, audit approval, audit-operation authority, Copilot execution, Class C automation, evidence acceptance, or customer fund movement authority
+
+After closeout, §7 / §7a should remain or return to no active implementation ticket, unless repo governance explicitly says otherwise.
+
 ### BRAND-001 - Govern and normalize existing brand asset authority (governance / asset-infrastructure normalization)
 
 Merged files:
@@ -2387,6 +2429,7 @@ Completed and merged:
 - `EVID-B-010` - Class B Stablecoin / Conversion Evidence Package Skeleton (documentation-only governance / evidence package skeleton; completed record **§83**)
 - `EVID-B-011` - Class B Fee / FX / Spread Evidence Package Skeleton (documentation-only governance / evidence package skeleton; completed record **§84**)
 - `EVID-B-012` - Class B Liquidity / Withdrawal Control Evidence Package Skeleton (documentation-only governance / evidence package skeleton; completed record **§85**)
+- `EVID-B-013` - Class B Trust UX / Disclosure Evidence Package Skeleton (documentation-only governance / evidence package skeleton; completed record **§86**)
 - `BRAND-001` - Govern and normalize existing brand asset authority (governance / asset-infrastructure normalization; completed record **§66**)
 - `BRAND-002` - Brand governance documentation spine (documentation-only governance; completed record **§67**)
 - `BRAND-003` - Frontend governed token integration (frontend theme-governance integration only; completed record **§70**)
@@ -2409,7 +2452,7 @@ Current active ticket status:
 - Cursor must not continue automatically into work beyond what is explicitly defined in this file for an active ticket.
 - Cursor must not drift beyond explicitly defined scope.
 
-**Last completed ticket (summary):** `EVID-B-012` — Class B Liquidity / Withdrawal Control Evidence Package Skeleton (documentation-only governance / evidence package skeleton only; creates `docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_LIQUIDITY_WITHDRAWAL_CONTROL_EVIDENCE_PACKAGE.md`; instantiates the liquidity / withdrawal control evidence package from `EVID-B-001` through `EVID-B-011`; defines required liquidity / withdrawal control evidence items, source expectations, open liquidity / withdrawal questions, withdrawal readiness template, liquidity buffer / reserve assumption template, withdrawal state / exception template, pause / stress / kill criteria template, blocker mapping, freshness expectations, downstream dependency effects, evidence intake placeholders, and registry update instructions; updates the Class B Evidence Registry to reference the package shell while preserving evidence state as question-framed / missing; stages `EVID-B-012` under `Class B Evidence Gathering`, not under the closed `Class B Pilot Governance Spine`; clarifies that the package skeleton does not approve withdrawals, withdrawal readiness, available-to-withdraw claims, liquidity buffers, reserve policy, solvency claims, withdrawal priority rules, pause controls, kill criteria, treasury operations, redemption operations, custody operations, rail operations, settlement finality, ledger truth, accounting truth, support closure, evidence acceptance, Class B readiness, ADR drafting readiness, implementation approval, external engagement approval, or customer-money authority; creates no successor implementation ticket; **§7** / **§7a** remain in no-active-ticket state); completed record in **§85**.
+**Last completed ticket (summary):** `EVID-B-013` — Class B Trust UX / Disclosure Evidence Package Skeleton (documentation-only governance / evidence package skeleton only; creates `docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_TRUST_UX_DISCLOSURE_EVIDENCE_PACKAGE.md`; instantiates the Trust UX / disclosure evidence package from `EVID-B-001` through `EVID-B-012`; defines required Trust UX / disclosure evidence items, source expectations, open disclosure / claim / state-label questions, claim classification template, disclosure dependency template, state-label evidence template, prohibited claim template, Copilot proximity template, blocker mapping, freshness expectations, downstream dependency effects, evidence intake placeholders, and registry update instructions; updates the Class B Evidence Registry to reference the package shell while preserving evidence state as question-framed / missing; stages `EVID-B-013` under `Class B Evidence Gathering`, not under the closed `Class B Pilot Governance Spine`; clarifies that the package skeleton does not approve product copy, UI copy, disclosure wording, support scripts, marketing claims, Copilot responses, customer-facing state labels, trust badges, protection claims, guarantee claims, yield claims, liquidity claims, available-to-withdraw claims, settlement claims, finality claims, custody claims, stablecoin claims, fee / FX / spread claims, evidence acceptance, Class B readiness, ADR drafting readiness, implementation approval, external engagement approval, or customer-money authority; creates no successor implementation ticket; **§7** / **§7a** remain in no-active-ticket state); completed record in **§86**.
 
 ---
 
@@ -4562,3 +4605,25 @@ This **§43** record was originally written in the same working-tree change-set 
 **§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
 
 **Follow-ups:** No successor implementation ticket is created by this package skeleton. Any future liquidity / withdrawal evidence acceptance, legal / compliance evidence acceptance, ADR drafting readiness, implementation-proposal preflight, or implementation successor appears only when repo governance names it explicitly.
+
+## 86. Completed execution ticket - EVID-B-013 (Class B Trust UX / Disclosure Evidence Package Skeleton)
+
+**Ticket:** `EVID-B-013` — Class B Trust UX / Disclosure Evidence Package Skeleton (documentation-only governance / evidence package skeleton)
+
+### Outcome (documentation-only)
+
+- **`docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_TRUST_UX_DISCLOSURE_EVIDENCE_PACKAGE.md`** — added the Trust UX / Disclosure Evidence Package skeleton following `EVID-B-001` through `EVID-B-012`
+- **`docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_TRUST_UX_DISCLOSURE_EVIDENCE_PACKAGE.md`** — defined required Trust UX / disclosure evidence items, source expectations, open disclosure / claim / state-label questions, claim classification template, disclosure dependency template, state-label evidence template, prohibited claim template, Copilot proximity template, blocker mapping, freshness expectations, downstream dependency effects, evidence intake placeholders, and registry update instructions
+- **`docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_EVIDENCE_REGISTRY.md`** — references the Trust UX / disclosure package shell while preserving the package evidence state as question-framed / missing
+- **`docs/ops/NOTION_GOVERNANCE_STAGING.md`** — staged `EVID-B-013` under **Class B Evidence Gathering**, not under the closed **Class B Pilot Governance Spine**
+- **`docs/ops/HEDGR_STATUS.md`** — added §6 merged-truth subsection `EVID-B-013`; updated the §7 completed list and last-completed summary; kept §7 / §7a in no-active-ticket posture; §86 (this record)
+
+**Scope discipline held.** **No** `apps/`, **no** `packages/`, **no** `scripts/`, **no** `.github/`, **no** tests, **no** backend, **no** frontend implementation, **no** product copy edits, **no** shipped route edits, **no** prototype route edits, **no** UI copy, **no** support script, **no** marketing copy, **no** Copilot prompt, **no** disclosure text, **no** product state label, **no** onboarding flow, **no** customer records, **no** transaction semantics, **no** environment configuration, **no** CI workflow changes, **no** ADR status changes, **no** successor implementation ticket, and **no** Class B approval. This package does **not** approve product copy, UI copy, disclosure wording, support scripts, marketing claims, Copilot responses, customer-facing state labels, trust badges, protection claims, guarantee claims, yield claims, liquidity claims, available-to-withdraw claims, settlement claims, finality claims, custody claims, stablecoin claims, fee / FX / spread claims, legal advice, regulatory approval, external engagement, Class B execution, staging, sandbox use, internal testing, live operations, deposits, withdrawals, custody, rails, stablecoin conversion, treasury operations, liquidity buffers, reconciliation operations, support operations, audit operations, ledger mutation, Copilot execution, Class C automation, evidence acceptance, or customer fund movement authority. It does **not** mark evidence accepted, approved, sufficient, disclosure-ready, product-copy-ready, support-ready, Copilot-ready, marketing-ready, Class B ready, ADR ready, implementation ready, staging ready, live ready, or customer-money ready.
+
+**Validation.** Documentation-only diff review, `git diff -- docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_TRUST_UX_DISCLOSURE_EVIDENCE_PACKAGE.md docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_EVIDENCE_REGISTRY.md docs/ops/HEDGR_STATUS.md docs/ops/NOTION_GOVERNANCE_STAGING.md`, `git diff --check -- docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_TRUST_UX_DISCLOSURE_EVIDENCE_PACKAGE.md docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_EVIDENCE_REGISTRY.md docs/ops/HEDGR_STATUS.md docs/ops/NOTION_GOVERNANCE_STAGING.md`, and `git status --short --branch` completed locally. No tests were run because the ticket scope explicitly excludes tests and product/runtime files.
+
+### Sequencing note
+
+**§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
+
+**Follow-ups:** No successor implementation ticket is created by this package skeleton. Any future Trust UX / disclosure evidence acceptance, legal / compliance evidence acceptance, ADR drafting readiness, implementation-proposal preflight, or implementation successor appears only when repo governance names it explicitly.
