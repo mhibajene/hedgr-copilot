@@ -1915,6 +1915,70 @@ Implementation posture preserved:
 
 After closeout, §7 / §7a should remain or return to no active implementation ticket, unless repo governance explicitly says otherwise.
 
+### EVID-B-020 - Class B Governance Override / Exception Authority Evidence Package Skeleton (documentation-only)
+
+Merged files:
+- `docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_GOVERNANCE_OVERRIDE_EXCEPTION_AUTHORITY_EVIDENCE_PACKAGE.md`
+- `docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_EVIDENCE_REGISTRY.md`
+- `docs/ops/HEDGR_STATUS.md`
+- `docs/ops/NOTION_GOVERNANCE_STAGING.md`
+
+Implementation truth:
+- governance-only Governance Override / Exception Authority Evidence Package skeleton added at `docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_GOVERNANCE_OVERRIDE_EXCEPTION_AUTHORITY_EVIDENCE_PACKAGE.md`
+- instantiates the Governance Override / Exception Authority evidence package from `EVID-B-001` through `EVID-B-019`
+- defines required governance override, exception authority, escalation authority, decision logging, accountability, auditability, and governance review evidence categories, source expectations, open questions, governance authority evidence template, blocker mapping, freshness expectations, downstream dependency effects, evidence intake placeholders, and registry update instructions
+- updates the Class B Evidence Registry to reference the Governance Override / Exception Authority package shell while preserving evidence state as question-framed / missing
+- updates Notion governance staging to list `EVID-B-020` as completed under Class B Evidence Gathering after merge, while preserving that evidence gathering is not readiness, approval, or implementation authority
+- clarifies that the package skeleton does not create governance authority, override authority, exception authority, escalation authority, decision authority, approval-chain activation, readiness approval, implementation approval, evidence acceptance, Class B readiness, external engagement approval, or customer-money authority
+
+Implementation posture preserved:
+- documentation-only governance evidence package skeleton
+- governance-only
+- non-authorizing
+- no `apps/`
+- no `packages/`
+- no `scripts/`
+- no `.github/`
+- no backend
+- no frontend implementation
+- no product copy edits
+- no shipped route edits
+- no prototype route edits
+- no governance authority
+- no override authority
+- no exception authority
+- no escalation authority
+- no decision authority
+- no approval-chain activation
+- no readiness approval
+- no implementation approval
+- no governance review cadence approval
+- no accountability model approval
+- no audit operation
+- no support workflow
+- no reconciliation logic
+- no incident operation
+- no environment approval
+- no staging approval
+- no sandbox approval
+- no live approval
+- no production approval
+- no custody operation
+- no rail operation
+- no ledger logic
+- no accounting logic
+- no deposit flow
+- no withdrawal flow
+- no stablecoin flow
+- no conversion flow
+- no tests
+- no CI workflow changes
+- no ADR status changes
+- no successor implementation ticket
+- no governance authority approval, override approval, exception approval, escalation approval, decision approval, approval-chain activation, readiness approval, implementation approval, evidence acceptance, legal conclusions, regulatory approval, external engagement approval, Class B execution, staging approval, sandbox approval, internal-test approval, live approval, production approval, ledger truth, accounting truth, Copilot execution, Class C automation, or customer fund movement authority
+
+After closeout, §7 / §7a should remain or return to no active implementation ticket, unless repo governance explicitly says otherwise.
+
 ### BRAND-001 - Govern and normalize existing brand asset authority (governance / asset-infrastructure normalization)
 
 Merged files:
@@ -2760,6 +2824,7 @@ Completed and merged:
 - `EVID-B-017` - Class B Incident Response & Operational Failure Evidence Package Skeleton (documentation-only governance / evidence package skeleton; completed record **§90**)
 - `EVID-B-018` - Class B Audit / Retention Evidence Package Skeleton (documentation-only governance / evidence package skeleton; completed record **§91**)
 - `EVID-B-019` - Class B Staging / Live-State Separation Evidence Package Skeleton (documentation-only governance / evidence package skeleton; completed record **§92**)
+- `EVID-B-020` - Class B Governance Override / Exception Authority Evidence Package Skeleton (documentation-only governance / evidence package skeleton; completed record **§93**)
 - `BRAND-001` - Govern and normalize existing brand asset authority (governance / asset-infrastructure normalization; completed record **§66**)
 - `BRAND-002` - Brand governance documentation spine (documentation-only governance; completed record **§67**)
 - `BRAND-003` - Frontend governed token integration (frontend theme-governance integration only; completed record **§70**)
@@ -2782,7 +2847,7 @@ Current active ticket status:
 - Cursor must not continue automatically into work beyond what is explicitly defined in this file for an active ticket.
 - Cursor must not drift beyond explicitly defined scope.
 
-**Last completed ticket (summary):** `EVID-B-019` — Class B Staging / Live-State Separation Evidence Package Skeleton (documentation-only governance / evidence package skeleton only; creates `docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_STAGING_LIVE_STATE_SEPARATION_EVIDENCE_PACKAGE.md`; instantiates the Staging / Live-State Separation evidence package from `EVID-B-001` through `EVID-B-018` and `GOV-B-015`; defines required environment taxonomy, mock / local simulation, prototype / design-only, sandbox, internal test, manual pilot candidate, limited live pilot candidate, production / live-state exclusion, data separation, customer-money separation, rail / custody environment, support / reconciliation / audit environment, and Copilot environment-boundary evidence categories, source expectations, open environment-boundary questions, environment-boundary evidence template, blocker mapping, freshness expectations, downstream dependency effects, evidence intake placeholders, and registry update instructions; updates the Class B Evidence Registry to reference the package shell while preserving evidence state as question-framed / missing; stages `EVID-B-019` under `Class B Evidence Gathering`, not under the closed `Class B Pilot Governance Spine`; clarifies that the package skeleton does not approve environments, environment transitions, testing, staging, sandbox use, internal testing, manual pilot candidates, limited live candidates, production operations, data boundaries, customer-money exposure, evidence acceptance, Class B readiness, ADR drafting readiness, implementation approval, external engagement approval, or customer-money authority; creates no successor implementation ticket; **§7** / **§7a** remain in no-active-ticket state); completed record in **§92**.
+**Last completed ticket (summary):** `EVID-B-020` — Class B Governance Override / Exception Authority Evidence Package Skeleton (documentation-only governance / evidence package skeleton only; creates `docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_GOVERNANCE_OVERRIDE_EXCEPTION_AUTHORITY_EVIDENCE_PACKAGE.md`; instantiates the Governance Override / Exception Authority evidence package from `EVID-B-001` through `EVID-B-019`; defines required governance override, exception authority, escalation authority, decision logging, accountability, auditability, and governance review evidence categories, source expectations, open questions, governance authority evidence template, blocker mapping, freshness expectations, downstream dependency effects, evidence intake placeholders, and registry update instructions; updates the Class B Evidence Registry to reference the package shell while preserving evidence state as question-framed / missing; stages `EVID-B-020` under `Class B Evidence Gathering`, not under the closed `Class B Pilot Governance Spine`; clarifies that the package skeleton does not create governance authority, override authority, exception authority, escalation authority, decision authority, approval-chain activation, readiness approval, implementation approval, evidence acceptance, Class B readiness, external engagement approval, or customer-money authority; creates no successor implementation ticket; **§7** / **§7a** remain in no-active-ticket state); completed record in **§93**.
 
 ---
 
@@ -5089,3 +5154,25 @@ This **§43** record was originally written in the same working-tree change-set 
 **§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
 
 **Follow-ups:** No successor implementation ticket is created by this package skeleton. Any future Staging / Live-State Separation evidence acceptance, legal / compliance evidence acceptance, ADR drafting readiness, implementation-proposal preflight, or implementation successor appears only when repo governance names it explicitly.
+
+## 93. Completed execution ticket - EVID-B-020 (Class B Governance Override / Exception Authority Evidence Package Skeleton)
+
+**Ticket:** `EVID-B-020` — Class B Governance Override / Exception Authority Evidence Package Skeleton (documentation-only governance / evidence package skeleton)
+
+### Outcome (documentation-only)
+
+- **`docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_GOVERNANCE_OVERRIDE_EXCEPTION_AUTHORITY_EVIDENCE_PACKAGE.md`** — added the Governance Override / Exception Authority Evidence Package skeleton following `EVID-B-001` through `EVID-B-019`
+- **`docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_GOVERNANCE_OVERRIDE_EXCEPTION_AUTHORITY_EVIDENCE_PACKAGE.md`** — defined required governance override, exception authority, escalation authority, decision logging, accountability, auditability, and governance review evidence categories, source expectations, open questions, governance authority evidence template, blocker mapping, freshness expectations, downstream dependency effects, evidence intake placeholders, and registry update instructions
+- **`docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_EVIDENCE_REGISTRY.md`** — references the Governance Override / Exception Authority package shell while preserving the package evidence state as question-framed / missing
+- **`docs/ops/NOTION_GOVERNANCE_STAGING.md`** — staged `EVID-B-020` under **Class B Evidence Gathering**, not under the closed **Class B Pilot Governance Spine**
+- **`docs/ops/HEDGR_STATUS.md`** — added §6 merged-truth subsection `EVID-B-020`; updated the §7 completed list and last-completed summary; kept §7 / §7a in no-active-ticket posture; §93 (this record)
+
+**Scope discipline held.** **No** `apps/`, **no** `packages/`, **no** `scripts/`, **no** `.github/`, **no** tests, **no** backend, **no** frontend implementation, **no** product copy edits, **no** shipped route edits, **no** prototype route edits, **no** governance authority, **no** override authority, **no** exception authority, **no** escalation authority, **no** decision authority, **no** approval-chain activation, **no** readiness approval, **no** implementation approval, **no** governance review cadence approval, **no** accountability model approval, **no** audit operation, **no** support workflow, **no** reconciliation logic, **no** incident operation, **no** environment approval, **no** staging approval, **no** sandbox approval, **no** live approval, **no** production approval, **no** custody operation, **no** rail operation, **no** ledger logic, **no** accounting logic, **no** deposit flow, **no** withdrawal flow, **no** stablecoin flow, **no** conversion flow, **no** CI workflow changes, **no** ADR status changes, **no** successor implementation ticket, and **no** Class B approval. This package does **not** create governance authority, override authority, exception authority, escalation authority, decision authority, approval-chain activation, readiness approval, implementation approval, evidence acceptance, legal conclusions, regulatory approval, external engagement approval, Class B execution, staging approval, sandbox approval, internal-test approval, live approval, production approval, ledger truth, accounting truth, Copilot execution, Class C automation, or customer fund movement authority. It does **not** mark evidence accepted, approved, sufficient, override-ready, exception-ready, escalation-ready, accountable, auditable, Class B ready, ADR ready, implementation ready, live ready, or customer-money ready.
+
+**Validation.** Documentation-only diff review, `git diff -- docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_GOVERNANCE_OVERRIDE_EXCEPTION_AUTHORITY_EVIDENCE_PACKAGE.md docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_EVIDENCE_REGISTRY.md docs/ops/HEDGR_STATUS.md docs/ops/NOTION_GOVERNANCE_STAGING.md`, `git diff --check -- docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_GOVERNANCE_OVERRIDE_EXCEPTION_AUTHORITY_EVIDENCE_PACKAGE.md docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_EVIDENCE_REGISTRY.md docs/ops/HEDGR_STATUS.md docs/ops/NOTION_GOVERNANCE_STAGING.md`, and `git status --short --branch` completed locally. No tests were added because the ticket scope explicitly excludes tests and product/runtime files.
+
+### Sequencing note
+
+**§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
+
+**Follow-ups:** No successor implementation ticket is created by this package skeleton. Any future Governance Override / Exception Authority evidence acceptance, legal / compliance evidence acceptance, ADR drafting readiness, implementation-proposal preflight, or implementation successor appears only when repo governance names it explicitly.
