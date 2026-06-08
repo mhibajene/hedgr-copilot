@@ -1798,6 +1798,62 @@ Implementation posture preserved:
 
 After closeout, §7 / §7a should remain or return to no active implementation ticket, unless repo governance explicitly says otherwise.
 
+### EVID-B-018 - Class B Audit / Retention Evidence Package Skeleton (documentation-only)
+
+Merged files:
+- `docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_AUDIT_RETENTION_EVIDENCE_PACKAGE.md`
+- `docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_EVIDENCE_REGISTRY.md`
+- `docs/ops/HEDGR_STATUS.md`
+- `docs/ops/NOTION_GOVERNANCE_STAGING.md`
+
+Implementation truth:
+- governance-only Audit / Retention Evidence Package skeleton added at `docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_AUDIT_RETENTION_EVIDENCE_PACKAGE.md`
+- instantiates the Audit / Retention / Access-Control evidence package from `EVID-B-001` through `EVID-B-017`
+- defines required audit trail, retention, access-control, support / dispute record, reconciliation record, incident record, vendor / provider record, and governance record evidence items, source expectations, open audit / retention / access-control questions, record evidence template, blocker mapping, freshness expectations, downstream dependency effects, evidence intake placeholders, and registry update instructions
+- updates the Class B Evidence Registry to reference the Audit / Retention / Access-Control package shell while preserving evidence state as question-framed / missing
+- clarifies that the package skeleton does not approve audit practices, retention practices, retention periods, deletion or archival practices, access-control practices, evidence preservation, record management, evidence acceptance, Class B readiness, ADR drafting readiness, implementation approval, external engagement approval, or customer-money authority
+
+Implementation posture preserved:
+- documentation-only governance evidence package skeleton
+- no `apps/`
+- no `packages/`
+- no backend
+- no frontend implementation
+- no product copy edits
+- no shipped route edits
+- no prototype route edits
+- no audit practice
+- no retention practice
+- no retention period
+- no deletion practice
+- no archival practice
+- no access-control practice
+- no evidence-preservation operation
+- no record-management operation
+- no support workflow
+- no reconciliation logic
+- no incident procedure
+- no vendor / provider operation
+- no governance override
+- no ledger logic
+- no accounting logic
+- no customer records
+- no deposit flow
+- no withdrawal flow
+- no custody flow
+- no rail integration
+- no stablecoin flow
+- no conversion flow
+- no settlement logic
+- no environment configuration
+- no tests
+- no CI workflow changes
+- no ADR status changes
+- no successor implementation ticket
+- no audit approval, retention approval, evidence-preservation approval, access-control approval, record-management approval, support-record approval, dispute-record approval, reconciliation-record approval, incident-record approval, vendor-record approval, provider-record approval, governance-decision approval, override approval, approval-chain activation, legal conclusions, regulatory perimeter approval, external engagement approval, Class B execution, staging approval, sandbox approval, internal-test approval, live approval, production approval, ledger truth, accounting truth, Copilot execution, Class C automation, evidence acceptance, or customer fund movement authority
+
+After closeout, §7 / §7a should remain or return to no active implementation ticket, unless repo governance explicitly says otherwise.
+
 ### BRAND-001 - Govern and normalize existing brand asset authority (governance / asset-infrastructure normalization)
 
 Merged files:
@@ -2641,6 +2697,7 @@ Completed and merged:
 - `EVID-B-015` - Class B Reconciliation Evidence Package Skeleton (documentation-only governance / evidence package skeleton; completed record **§88**)
 - `EVID-B-016` - Class B Support / Dispute Evidence Package Skeleton (documentation-only governance / evidence package skeleton; completed record **§89**)
 - `EVID-B-017` - Class B Incident Response & Operational Failure Evidence Package Skeleton (documentation-only governance / evidence package skeleton; completed record **§90**)
+- `EVID-B-018` - Class B Audit / Retention Evidence Package Skeleton (documentation-only governance / evidence package skeleton; completed record **§91**)
 - `BRAND-001` - Govern and normalize existing brand asset authority (governance / asset-infrastructure normalization; completed record **§66**)
 - `BRAND-002` - Brand governance documentation spine (documentation-only governance; completed record **§67**)
 - `BRAND-003` - Frontend governed token integration (frontend theme-governance integration only; completed record **§70**)
@@ -2663,7 +2720,7 @@ Current active ticket status:
 - Cursor must not continue automatically into work beyond what is explicitly defined in this file for an active ticket.
 - Cursor must not drift beyond explicitly defined scope.
 
-**Last completed ticket (summary):** `EVID-B-017` — Class B Incident Response & Operational Failure Evidence Package Skeleton (documentation-only governance / evidence package skeleton only; creates `docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_INCIDENT_RESPONSE_EVIDENCE_PACKAGE.md`; instantiates the Incident Response / Operational Failure evidence package from `EVID-B-001` through `EVID-B-016`; defines required incident-response and operational-failure evidence items, source expectations, open incident-response / operational-failure questions, incident evidence template, blocker mapping, freshness expectations, downstream dependency effects, evidence intake placeholders, and registry update instructions; updates the Class B Evidence Registry to reference the package shell while preserving evidence state as question-framed / missing; stages `EVID-B-017` under `Class B Evidence Gathering`, not under the closed `Class B Pilot Governance Spine`; clarifies that the package skeleton does not approve incident procedures, severity models, response expectations, SLAs, escalation procedures, containment actions, recovery actions, post-incident reviews, governance overrides, customer communication templates, evidence acceptance, Class B readiness, ADR drafting readiness, implementation approval, external engagement approval, or customer-money authority; creates no successor implementation ticket; **§7** / **§7a** remain in no-active-ticket state); completed record in **§90**.
+**Last completed ticket (summary):** `EVID-B-018` — Class B Audit / Retention Evidence Package Skeleton (documentation-only governance / evidence package skeleton only; creates `docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_AUDIT_RETENTION_EVIDENCE_PACKAGE.md`; instantiates the Audit / Retention / Access-Control evidence package from `EVID-B-001` through `EVID-B-017`; defines required audit trail, retention, access-control, support / dispute record, reconciliation record, incident record, vendor / provider record, and governance record evidence items, source expectations, open audit / retention / access-control questions, record evidence template, blocker mapping, freshness expectations, downstream dependency effects, evidence intake placeholders, and registry update instructions; updates the Class B Evidence Registry to reference the package shell while preserving evidence state as question-framed / missing; stages `EVID-B-018` under `Class B Evidence Gathering`, not under the closed `Class B Pilot Governance Spine`; clarifies that the package skeleton does not approve audit practices, retention practices, retention periods, deletion or archival practices, access-control practices, evidence preservation, record management, evidence acceptance, Class B readiness, ADR drafting readiness, implementation approval, external engagement approval, or customer-money authority; creates no successor implementation ticket; **§7** / **§7a** remain in no-active-ticket state); completed record in **§91**.
 
 ---
 
@@ -4926,3 +4983,25 @@ This **§43** record was originally written in the same working-tree change-set 
 **§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
 
 **Follow-ups:** No successor implementation ticket is created by this package skeleton. Any future Incident Response / Operational Failure evidence acceptance, legal / compliance evidence acceptance, ADR drafting readiness, implementation-proposal preflight, or implementation successor appears only when repo governance names it explicitly.
+
+## 91. Completed execution ticket - EVID-B-018 (Class B Audit / Retention Evidence Package Skeleton)
+
+**Ticket:** `EVID-B-018` — Class B Audit / Retention Evidence Package Skeleton (documentation-only governance / evidence package skeleton)
+
+### Outcome (documentation-only)
+
+- **`docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_AUDIT_RETENTION_EVIDENCE_PACKAGE.md`** — added the Audit / Retention Evidence Package skeleton following `EVID-B-001` through `EVID-B-017`
+- **`docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_AUDIT_RETENTION_EVIDENCE_PACKAGE.md`** — defined required audit trail, retention, access-control, support / dispute record, reconciliation record, incident record, vendor / provider record, and governance record evidence items, source expectations, open audit / retention / access-control questions, record evidence template, blocker mapping, freshness expectations, downstream dependency effects, evidence intake placeholders, and registry update instructions
+- **`docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_EVIDENCE_REGISTRY.md`** — references the Audit / Retention / Access-Control package shell while preserving the package evidence state as question-framed / missing
+- **`docs/ops/NOTION_GOVERNANCE_STAGING.md`** — staged `EVID-B-018` under **Class B Evidence Gathering**, not under the closed **Class B Pilot Governance Spine**
+- **`docs/ops/HEDGR_STATUS.md`** — added §6 merged-truth subsection `EVID-B-018`; updated the §7 completed list and last-completed summary; kept §7 / §7a in no-active-ticket posture; §91 (this record)
+
+**Scope discipline held.** **No** `apps/`, **no** `packages/`, **no** `scripts/`, **no** `.github/`, **no** tests, **no** backend, **no** frontend implementation, **no** product copy edits, **no** shipped route edits, **no** prototype route edits, **no** audit practice, **no** retention practice, **no** retention period, **no** deletion practice, **no** archival practice, **no** access-control practice, **no** evidence-preservation operation, **no** record-management operation, **no** support workflow, **no** reconciliation logic, **no** incident procedure, **no** vendor / provider operation, **no** governance override, **no** ledger logic, **no** accounting logic, **no** customer records, **no** deposit flow, **no** withdrawal flow, **no** custody flow, **no** rail integration, **no** stablecoin flow, **no** conversion flow, **no** settlement logic, **no** environment configuration, **no** CI workflow changes, **no** ADR status changes, **no** successor implementation ticket, and **no** Class B approval. This package does **not** approve audit practices, retention practices, retention periods, deletion or archival practices, access-control practices, evidence preservation, support records, dispute records, reconciliation records, incident records, vendor / provider records, governance records, legal advice, regulatory approval, external engagement, Class B execution, staging, sandbox use, internal testing, live operations, production operations, deposits, withdrawals, custody, rails, ledger mutation, Copilot execution, Class C automation, evidence acceptance, or customer fund movement authority. It does **not** mark evidence accepted, approved, sufficient, audit-ready, retention-ready, access-control-ready, record-management-ready, Class B ready, ADR ready, implementation ready, staging ready, live ready, or customer-money ready.
+
+**Validation.** Documentation-only diff review, `git diff -- docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_AUDIT_RETENTION_EVIDENCE_PACKAGE.md docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_EVIDENCE_REGISTRY.md docs/ops/HEDGR_STATUS.md docs/ops/NOTION_GOVERNANCE_STAGING.md`, `git diff --check -- docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_AUDIT_RETENTION_EVIDENCE_PACKAGE.md docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_EVIDENCE_REGISTRY.md docs/ops/HEDGR_STATUS.md docs/ops/NOTION_GOVERNANCE_STAGING.md`, and `git status --short --branch` completed locally. No tests were added because the ticket scope explicitly excludes tests and product/runtime files.
+
+### Sequencing note
+
+**§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
+
+**Follow-ups:** No successor implementation ticket is created by this package skeleton. Any future Audit / Retention / Access-Control evidence acceptance, legal / compliance evidence acceptance, ADR drafting readiness, implementation-proposal preflight, or implementation successor appears only when repo governance names it explicitly.
