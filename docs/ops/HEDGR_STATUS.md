@@ -1691,6 +1691,58 @@ Implementation posture preserved:
 
 After closeout, §7 / §7a should remain or return to no active implementation ticket, unless repo governance explicitly says otherwise.
 
+### EVID-B-016 - Class B Support / Dispute Evidence Package Skeleton (documentation-only)
+
+Merged files:
+- `docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_SUPPORT_DISPUTE_EVIDENCE_PACKAGE.md`
+- `docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_EVIDENCE_REGISTRY.md`
+- `docs/ops/HEDGR_STATUS.md`
+- `docs/ops/NOTION_GOVERNANCE_STAGING.md`
+
+Implementation truth:
+- governance-only Support / Dispute Evidence Package skeleton added at `docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_SUPPORT_DISPUTE_EVIDENCE_PACKAGE.md`
+- instantiates the Support / Dispute evidence package from `EVID-B-001` through `EVID-B-015`
+- defines required Support / Dispute evidence items, source expectations, open support / dispute questions, support ownership template, support case lifecycle template, dispute / complaint classification template, support-to-reconciliation dependency template, incident escalation template, prohibited promise / closure template, blocker mapping, freshness expectations, downstream dependency effects, evidence intake placeholders, and registry update instructions
+- updates the Class B Evidence Registry to reference the Support / Dispute package shell while preserving evidence state as question-framed / missing
+- clarifies that the package skeleton does not approve support operations, dispute operations, complaint handling, incident handling, support scripts, support closure, transaction outcomes, deposit outcomes, withdrawal outcomes, custody outcomes, rail outcomes, settlement outcomes, reconciliation closure, customer-facing promises, Copilot support authority, evidence acceptance, Class B readiness, ADR drafting readiness, implementation approval, external engagement approval, or customer-money authority
+
+Implementation posture preserved:
+- documentation-only governance evidence package skeleton
+- no `apps/`
+- no `packages/`
+- no backend
+- no frontend implementation
+- no product copy edits
+- no shipped route edits
+- no prototype route edits
+- no support workflow
+- no dispute workflow
+- no complaint workflow
+- no incident workflow
+- no support script
+- no customer communication template
+- no transaction processing flow
+- no reconciliation logic
+- no audit logging
+- no ledger logic
+- no accounting logic
+- no customer records
+- no deposit flow
+- no withdrawal flow
+- no custody flow
+- no rail integration
+- no stablecoin flow
+- no conversion flow
+- no settlement logic
+- no environment configuration
+- no tests
+- no CI workflow changes
+- no ADR status changes
+- no successor implementation ticket
+- no support approval, dispute approval, complaint approval, incident approval, support-script approval, support-closure approval, transaction-outcome approval, deposit-outcome approval, withdrawal-outcome approval, custody-outcome approval, rail-outcome approval, settlement-outcome approval, reconciliation-closure approval, customer-facing promise approval, Copilot-support-authority approval, legal conclusions, regulatory perimeter approval, disclosure approval, external engagement approval, Class B execution, staging approval, sandbox approval, internal-test approval, live approval, production approval, ledger truth, accounting truth, Copilot execution, Class C automation, evidence acceptance, or customer fund movement authority
+
+After closeout, §7 / §7a should remain or return to no active implementation ticket, unless repo governance explicitly says otherwise.
+
 ### BRAND-001 - Govern and normalize existing brand asset authority (governance / asset-infrastructure normalization)
 
 Merged files:
@@ -2532,6 +2584,7 @@ Completed and merged:
 - `EVID-B-013` - Class B Trust UX / Disclosure Evidence Package Skeleton (documentation-only governance / evidence package skeleton; completed record **§86**)
 - `EVID-B-014` - Class B Pilot Ops Evidence Package Skeleton (documentation-only governance / evidence package skeleton; completed record **§87**)
 - `EVID-B-015` - Class B Reconciliation Evidence Package Skeleton (documentation-only governance / evidence package skeleton; completed record **§88**)
+- `EVID-B-016` - Class B Support / Dispute Evidence Package Skeleton (documentation-only governance / evidence package skeleton; completed record **§89**)
 - `BRAND-001` - Govern and normalize existing brand asset authority (governance / asset-infrastructure normalization; completed record **§66**)
 - `BRAND-002` - Brand governance documentation spine (documentation-only governance; completed record **§67**)
 - `BRAND-003` - Frontend governed token integration (frontend theme-governance integration only; completed record **§70**)
@@ -2554,7 +2607,7 @@ Current active ticket status:
 - Cursor must not continue automatically into work beyond what is explicitly defined in this file for an active ticket.
 - Cursor must not drift beyond explicitly defined scope.
 
-**Last completed ticket (summary):** `EVID-B-015` — Class B Reconciliation Evidence Package Skeleton (documentation-only governance / evidence package skeleton only; creates `docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_RECONCILIATION_EVIDENCE_PACKAGE.md`; instantiates the Reconciliation evidence package from `EVID-B-001` through `EVID-B-014`; defines required Reconciliation evidence items, source expectations, open reconciliation questions, source-of-truth boundary evidence template, reconciliation matching evidence template, exception / mismatch / unresolved-state template, reconciliation ownership / cadence template, support-closure dependency template, blocker mapping, freshness expectations, downstream dependency effects, evidence intake placeholders, and registry update instructions; updates the Class B Evidence Registry to reference the package shell while preserving evidence state as question-framed / missing; stages `EVID-B-015` under `Class B Evidence Gathering`, not under the closed `Class B Pilot Governance Spine`; clarifies that the package skeleton does not approve reconciliation operations, reconciliation closure, source-of-truth selection, ledger truth, accounting truth, transaction processing, deposit processing, withdrawal processing, custody operations, rail operations, stablecoin conversion, fee / FX / spread finality, liquidity operations, support closure, dispute closure, audit operations, evidence acceptance, Class B readiness, ADR drafting readiness, implementation approval, external engagement approval, or customer-money authority; creates no successor implementation ticket; **§7** / **§7a** remain in no-active-ticket state); completed record in **§88**.
+**Last completed ticket (summary):** `EVID-B-016` — Class B Support / Dispute Evidence Package Skeleton (documentation-only governance / evidence package skeleton only; creates `docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_SUPPORT_DISPUTE_EVIDENCE_PACKAGE.md`; instantiates the Support / Dispute evidence package from `EVID-B-001` through `EVID-B-015`; defines required Support / Dispute evidence items, source expectations, open support / dispute questions, support ownership template, support case lifecycle template, dispute / complaint classification template, support-to-reconciliation dependency template, incident escalation template, prohibited promise / closure template, blocker mapping, freshness expectations, downstream dependency effects, evidence intake placeholders, and registry update instructions; updates the Class B Evidence Registry to reference the package shell while preserving evidence state as question-framed / missing; stages `EVID-B-016` under `Class B Evidence Gathering`, not under the closed `Class B Pilot Governance Spine`; clarifies that the package skeleton does not approve support operations, dispute operations, complaint handling, incident handling, support scripts, support closure, transaction outcomes, deposit outcomes, withdrawal outcomes, custody outcomes, rail outcomes, settlement outcomes, reconciliation closure, customer-facing promises, Copilot support authority, evidence acceptance, Class B readiness, ADR drafting readiness, implementation approval, external engagement approval, or customer-money authority; creates no successor implementation ticket; **§7** / **§7a** remain in no-active-ticket state); completed record in **§89**.
 
 ---
 
@@ -4773,3 +4826,25 @@ This **§43** record was originally written in the same working-tree change-set 
 **§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
 
 **Follow-ups:** No successor implementation ticket is created by this package skeleton. Any future Reconciliation evidence acceptance, legal / compliance evidence acceptance, ADR drafting readiness, implementation-proposal preflight, or implementation successor appears only when repo governance names it explicitly.
+
+## 89. Completed execution ticket - EVID-B-016 (Class B Support / Dispute Evidence Package Skeleton)
+
+**Ticket:** `EVID-B-016` — Class B Support / Dispute Evidence Package Skeleton (documentation-only governance / evidence package skeleton)
+
+### Outcome (documentation-only)
+
+- **`docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_SUPPORT_DISPUTE_EVIDENCE_PACKAGE.md`** — added the Support / Dispute Evidence Package skeleton following `EVID-B-001` through `EVID-B-015`
+- **`docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_SUPPORT_DISPUTE_EVIDENCE_PACKAGE.md`** — defined required Support / Dispute evidence items, source expectations, open support / dispute questions, support ownership template, support case lifecycle template, dispute / complaint classification template, support-to-reconciliation dependency template, incident escalation template, prohibited promise / closure template, blocker mapping, freshness expectations, downstream dependency effects, evidence intake placeholders, and registry update instructions
+- **`docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_EVIDENCE_REGISTRY.md`** — references the Support / Dispute package shell while preserving the package evidence state as question-framed / missing
+- **`docs/ops/NOTION_GOVERNANCE_STAGING.md`** — staged `EVID-B-016` under **Class B Evidence Gathering**, not under the closed **Class B Pilot Governance Spine**
+- **`docs/ops/HEDGR_STATUS.md`** — added §6 merged-truth subsection `EVID-B-016`; updated the §7 completed list and last-completed summary; kept §7 / §7a in no-active-ticket posture; §89 (this record)
+
+**Scope discipline held.** **No** `apps/`, **no** `packages/`, **no** `scripts/`, **no** `.github/`, **no** tests, **no** backend, **no** frontend implementation, **no** product copy edits, **no** shipped route edits, **no** prototype route edits, **no** support workflow, **no** dispute workflow, **no** complaint workflow, **no** incident workflow, **no** support script, **no** customer communication template, **no** transaction processing flow, **no** reconciliation logic, **no** audit logging, **no** ledger logic, **no** accounting logic, **no** customer records, **no** deposit flow, **no** withdrawal flow, **no** custody flow, **no** rail integration, **no** stablecoin flow, **no** conversion flow, **no** settlement logic, **no** environment configuration, **no** CI workflow changes, **no** ADR status changes, **no** successor implementation ticket, and **no** Class B approval. This package does **not** approve support operations, dispute operations, complaint handling, incident handling, support scripts, support closure, transaction outcomes, deposit outcomes, withdrawal outcomes, custody outcomes, rail outcomes, settlement outcomes, reconciliation closure, customer-facing promises, Copilot support authority, legal advice, regulatory approval, external engagement, Class B execution, staging, sandbox use, internal testing, live operations, deposits, withdrawals, custody, rails, ledger mutation, Copilot execution, Class C automation, evidence acceptance, or customer fund movement authority. It does **not** mark evidence accepted, approved, sufficient, support-ready, dispute-ready, complaint-ready, incident-ready, closure-ready, Class B ready, ADR ready, implementation ready, staging ready, live ready, or customer-money ready.
+
+**Validation.** Documentation-only diff review, `git diff -- docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_SUPPORT_DISPUTE_EVIDENCE_PACKAGE.md docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_EVIDENCE_REGISTRY.md docs/ops/HEDGR_STATUS.md docs/ops/NOTION_GOVERNANCE_STAGING.md`, `git diff --check -- docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_SUPPORT_DISPUTE_EVIDENCE_PACKAGE.md docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_EVIDENCE_REGISTRY.md docs/ops/HEDGR_STATUS.md docs/ops/NOTION_GOVERNANCE_STAGING.md`, and `git status --short --branch` completed locally. No tests were added because the ticket scope explicitly excludes tests and product/runtime files.
+
+### Sequencing note
+
+**§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
+
+**Follow-ups:** No successor implementation ticket is created by this package skeleton. Any future Support / Dispute evidence acceptance, legal / compliance evidence acceptance, ADR drafting readiness, implementation-proposal preflight, or implementation successor appears only when repo governance names it explicitly.
