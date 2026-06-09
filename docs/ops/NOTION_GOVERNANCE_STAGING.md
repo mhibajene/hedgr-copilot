@@ -6,7 +6,7 @@
 
 **Authority:** The repository is source of truth. Wording here must match `docs/decisions/0016-warmth-layer-doctrine-constrained-retail-refinement-track.md`, `docs/decisions/SPRINT-2-ADR-INDEX.md`, and `docs/ops/HEDGR_STATUS.md`. Wording must match **Accepted** ADR **0016** in repo; do not broaden scope or soften read-only / non-execution boundaries in Notion.
 
-**Last reconciled:** 2026-06-09 (`HEDGR_STATUS.md` **§7** completed through **`EVID-B-022`**; post–**`MC-S3-019`** documentation-only governance: **`COP-GOV-001`** PR **#150** / **§52**; **`MC-S3-020`** PR **#153** (readout / **§7** activation **#152**) / **§53**; **`GOV-B-001`**-**`GOV-B-017`** **§54**-**§65d** / **§73**; **`EVID-B-001`** **§74**; **`EVID-B-002`** **§75**; **`EVID-B-003`** **§76**; **`EVID-B-004`** **§77**; **`EVID-B-005`** **§78**; **`EVID-B-006`** **§79**; **`EVID-B-007`** **§80**; **`EVID-B-008`** **§81**; **`EVID-B-009`** **§82**; **`EVID-B-010`** **§83**; **`EVID-B-011`** **§84**; **`EVID-B-012`** **§85**; **`EVID-B-013`** **§86**; **`EVID-B-014`** **§87**; **`EVID-B-015`** **§88**; **`EVID-B-016`** **§89**; **`EVID-B-017`** **§90**; **`EVID-B-018`** **§91**; **`EVID-B-019`** **§92**; **`EVID-B-020`** **§93**; **`EVID-B-021`** **§94**; **`EVID-B-022`** **§95**; **`GOV-REVIEW-B-001`** **§96**; **§7** / **§7a** remain **no active ticket**)
+**Last reconciled:** 2026-06-09 (`HEDGR_STATUS.md` **§7** completed through **`EVID-INTAKE-B-001`**; post–**`MC-S3-019`** documentation-only governance: **`COP-GOV-001`** PR **#150** / **§52**; **`MC-S3-020`** PR **#153** (readout / **§7** activation **#152**) / **§53**; **`GOV-B-001`**-**`GOV-B-017`** **§54**-**§65d** / **§73**; **`EVID-B-001`** **§74**; **`EVID-B-002`** **§75**; **`EVID-B-003`** **§76**; **`EVID-B-004`** **§77**; **`EVID-B-005`** **§78**; **`EVID-B-006`** **§79**; **`EVID-B-007`** **§80**; **`EVID-B-008`** **§81**; **`EVID-B-009`** **§82**; **`EVID-B-010`** **§83**; **`EVID-B-011`** **§84**; **`EVID-B-012`** **§85**; **`EVID-B-013`** **§86**; **`EVID-B-014`** **§87**; **`EVID-B-015`** **§88**; **`EVID-B-016`** **§89**; **`EVID-B-017`** **§90**; **`EVID-B-018`** **§91**; **`EVID-B-019`** **§92**; **`EVID-B-020`** **§93**; **`EVID-B-021`** **§94**; **`EVID-B-022`** **§95**; **`GOV-REVIEW-B-001`** **§96**; **`EVID-INTAKE-B-001`** **§97**; **§7** / **§7a** remain **no active ticket**)
 
 ---
 
@@ -543,6 +543,29 @@ Use when mirroring the completed **test-only** regression tranche 4. **Not** new
 **Release note:** This review track is distinct from the closed **Class B Pilot Governance Spine** and the **Class B Evidence Gathering** track. It provides informational, consolidated governance review of those bodies of work only.
 
 **Non-meaning:** Review completion is **not** evidence acceptance, **not** evidence rejection, **not** evidence scoring, **not** readiness, **not** ADR drafting readiness, **not** implementation approval, **not** Class B readiness, and **not** customer-money authority. It creates no Class B readiness, implementation sequencing, §7 activation, §7a execution brief, ADR acceptance, legal approval, custody approval, rail approval, vendor approval, customer eligibility approval, pilot approval, staging approval, live approval, operational approval, external engagement approval, or customer fund movement authority.
+
+## 9d. Releases — Class B Evidence Intake Planning (copy row)
+
+**Not canonical.** Mirror **`docs/ops/HEDGR_STATUS.md`** (**§7**, **§7a**, **§97**) for any conflict. This block is executive-readable **copy source** only.
+
+| Field | Value |
+| ----- | ----- |
+| **Release name** | Class B Evidence Intake Planning |
+| **Status** | Done |
+| **Type** | Governance-only / Evidence-intake planning |
+| **Authority** | Non-authorizing |
+| **Relationship** | Follows the completed Class B Evidence Gathering program and `GOV-REVIEW-B-001` consolidated review |
+| **Description** | Governance-only planning track for documenting future evidence-intake considerations after the completed Class B Evidence Gathering program and consolidated review. Identifies potential source classes, ownership questions, intake risk questions, traceability questions, handling considerations, open questions, and future governance observations. Does not gather evidence, collect evidence, accept evidence, reject evidence, evaluate evidence, change registry state, change evidence state, close blockers, close gaps, establish readiness, or authorize ADR drafting, implementation, staging, sandbox use, internal testing, live operations, custody, rails, stablecoin conversion, treasury operations, reconciliation, support operations, audit operations, ledger truth, Copilot execution, Class C automation, external engagement, or customer fund movement. |
+
+### Class B Evidence Intake Planning work items
+
+| Ticket | Title | Status | Type | Authority | Summary |
+| ------ | ----- | ------ | ---- | --------- | ------- |
+| `EVID-INTAKE-B-001` | Class B Evidence Intake Readiness Planning Memo (documentation-only) | Done | Documentation-only / Evidence-Intake Planning Memo | Non-authorizing | Documents future evidence-intake planning considerations after the completed Class B Governance Spine, completed Class B Evidence Gathering program, and `GOV-REVIEW-B-001` consolidated review. Identifies source classes, ownership questions, intake risk questions, traceability questions, handling considerations, open questions, and future governance observations while preserving the current evidence posture as `Question framed / Missing`. Planning is not evidence intake, evidence collection, evidence acceptance, evidence rejection, evidence evaluation, readiness, ADR readiness, implementation approval, or customer-money authority. Completed record **§97**. |
+
+**Release note:** This planning block is distinct from the closed **Class B Pilot Governance Spine**, the completed **Class B Evidence Gathering** track, and the **Class B Evidence Program Review** track. It records planning considerations only.
+
+**Non-meaning:** Evidence-intake planning is **not** evidence intake, **not** evidence collection, **not** evidence acceptance, **not** evidence rejection, **not** evidence scoring, **not** evidence evaluation, **not** registry-state change, **not** readiness, **not** ADR drafting readiness, **not** implementation approval, **not** Class B readiness, and **not** customer-money authority. It creates no Class B readiness, implementation sequencing, §7 activation, §7a execution brief, ADR acceptance, legal approval, custody approval, rail approval, vendor approval, customer eligibility approval, pilot approval, staging approval, live approval, operational approval, external engagement approval, or customer fund movement authority.
 
 ## 10. Micro-Contracts / Work — MC-S3-005 (copy row)
 
