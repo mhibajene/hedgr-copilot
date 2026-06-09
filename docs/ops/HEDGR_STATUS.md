@@ -2027,6 +2027,53 @@ Implementation posture preserved:
 - no successor implementation ticket
 - no evidence acceptance, evidence rejection, evidence approval, governance authority approval, review authority approval, readiness approval, implementation approval, legal conclusions, regulatory approval, external engagement approval, Class B execution, staging approval, sandbox approval, internal-test approval, live approval, production approval, ledger truth, accounting truth, Copilot execution, Class C automation, or customer fund movement authority
 
+### EVID-B-022 - Class B Evidence Sufficiency & Gap Closure Framework Skeleton (documentation-only)
+
+Merged files:
+- `docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_EVIDENCE_SUFFICIENCY_GAP_CLOSURE_FRAMEWORK.md`
+- `docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_EVIDENCE_REGISTRY.md`
+- `docs/ops/HEDGR_STATUS.md`
+- `docs/ops/NOTION_GOVERNANCE_STAGING.md`
+
+Implementation truth:
+- governance-only Evidence Sufficiency & Gap Closure framework skeleton added at `docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_EVIDENCE_SUFFICIENCY_GAP_CLOSURE_FRAMEWORK.md`
+- instantiates the Evidence Sufficiency & Gap Closure framework from `EVID-B-001` through `EVID-B-021`
+- defines question-framed evidence sufficiency, gap classification, blocker closure, dependency closure, evidence maturity, evidence risk, governance review prompts, framework template, non-readiness boundary, and registry update instructions
+- updates the Class B Evidence Registry to reference the Evidence Sufficiency & Gap Closure framework shell while preserving framework state as question-framed / missing
+- updates Notion governance staging to list `EVID-B-022` as completed under Class B Evidence Gathering after merge, while preserving that evidence gathering is not readiness, evidence acceptance, gap closure, or implementation authority
+- clarifies that the framework skeleton does not accept evidence, reject evidence, score evidence, evaluate evidence, close blockers, close gaps, define readiness thresholds, approve implementation, create Class B readiness, or create customer-money authority
+
+Implementation posture preserved:
+- documentation-only governance evidence framework skeleton
+- governance-only
+- non-authorizing
+- question-framed
+- no `apps/`
+- no `packages/`
+- no `scripts/`
+- no `.github/`
+- no backend
+- no frontend implementation
+- no product copy edits
+- no shipped route edits
+- no prototype route edits
+- no evidence acceptance
+- no evidence rejection
+- no evidence scoring
+- no evidence evaluation
+- no blocker closure
+- no gap closure
+- no readiness threshold definition
+- no implementation approval
+- no ADR readiness approval
+- no pilot readiness approval
+- no operational readiness approval
+- no tests
+- no CI workflow changes
+- no ADR status changes
+- no successor implementation ticket
+- no evidence acceptance, evidence rejection, evidence scoring, evidence evaluation, blocker closure, gap closure, readiness-threshold approval, implementation approval, ADR readiness approval, legal conclusions, regulatory approval, external engagement approval, Class B execution, staging approval, sandbox approval, internal-test approval, live approval, production approval, ledger truth, accounting truth, Copilot execution, Class C automation, or customer fund movement authority
+
 ### BRAND-001 - Govern and normalize existing brand asset authority (governance / asset-infrastructure normalization)
 
 Merged files:
@@ -2874,6 +2921,7 @@ Completed and merged:
 - `EVID-B-019` - Class B Staging / Live-State Separation Evidence Package Skeleton (documentation-only governance / evidence package skeleton; completed record **§92**)
 - `EVID-B-020` - Class B Governance Override / Exception Authority Evidence Package Skeleton (documentation-only governance / evidence package skeleton; completed record **§93**)
 - `EVID-B-021` - Class B Evidence Acceptance & Review Governance Package Skeleton (documentation-only governance / evidence package skeleton; completed record **§94**)
+- `EVID-B-022` - Class B Evidence Sufficiency & Gap Closure Framework Skeleton (documentation-only governance / evidence framework skeleton; completed record **§95**)
 - `BRAND-001` - Govern and normalize existing brand asset authority (governance / asset-infrastructure normalization; completed record **§66**)
 - `BRAND-002` - Brand governance documentation spine (documentation-only governance; completed record **§67**)
 - `BRAND-003` - Frontend governed token integration (frontend theme-governance integration only; completed record **§70**)
@@ -2896,7 +2944,7 @@ Current active ticket status:
 - Cursor must not continue automatically into work beyond what is explicitly defined in this file for an active ticket.
 - Cursor must not drift beyond explicitly defined scope.
 
-**Last completed ticket (summary):** `EVID-B-021` — Class B Evidence Acceptance & Review Governance Package Skeleton (documentation-only governance / evidence package skeleton only; creates `docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_EVIDENCE_ACCEPTANCE_REVIEW_GOVERNANCE_PACKAGE.md`; instantiates the Evidence Acceptance / Review Governance package from `EVID-B-001` through `EVID-B-020`; defines required evidence review, freshness, conflict, supersession, acceptance, retirement, governance review, and registry governance evidence categories, source expectations, open questions, evidence-governance template, blocker mapping, freshness expectations, downstream dependency effects, evidence intake placeholders, and registry update instructions; updates the Class B Evidence Registry to reference the package shell while preserving evidence state as question-framed / missing; stages `EVID-B-021` under `Class B Evidence Gathering`, not under the closed `Class B Pilot Governance Spine`; clarifies that the package skeleton does not accept evidence, reject evidence, approve evidence, create governance authority, create review authority, create readiness authority, approve implementation, create Class B readiness, approve external engagement, or create customer-money authority; creates no successor implementation ticket; **§7** / **§7a** remain in no-active-ticket state); completed record in **§94**.
+**Last completed ticket (summary):** `EVID-B-022` — Class B Evidence Sufficiency & Gap Closure Framework Skeleton (documentation-only governance / evidence framework skeleton only; creates `docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_EVIDENCE_SUFFICIENCY_GAP_CLOSURE_FRAMEWORK.md`; instantiates the Evidence Sufficiency & Gap Closure framework from `EVID-B-001` through `EVID-B-021`; defines evidence sufficiency, gap classification, blocker closure, dependency closure, evidence maturity, evidence risk, governance review questions, framework template, non-readiness boundary, and registry update instructions; updates the Class B Evidence Registry to reference the framework shell while preserving framework state as question-framed / missing; stages `EVID-B-022` under `Class B Evidence Gathering`, not under the closed `Class B Pilot Governance Spine`; clarifies that the framework skeleton does not accept evidence, reject evidence, score evidence, evaluate evidence, close blockers, close gaps, define readiness thresholds, approve implementation, create Class B readiness, or create customer-money authority; creates no successor implementation ticket; **§7** / **§7a** remain in no-active-ticket state); completed record in **§95**.
 
 ---
 
@@ -5247,3 +5295,25 @@ This **§43** record was originally written in the same working-tree change-set 
 **§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
 
 **Follow-ups:** No successor implementation ticket is created by this package skeleton. Any future Evidence Acceptance / Review Governance evidence acceptance, legal / compliance evidence acceptance, ADR drafting readiness, implementation-proposal preflight, or implementation successor appears only when repo governance names it explicitly.
+
+## 95. Completed execution ticket - EVID-B-022 (Class B Evidence Sufficiency & Gap Closure Framework Skeleton)
+
+**Ticket:** `EVID-B-022` — Class B Evidence Sufficiency & Gap Closure Framework Skeleton (documentation-only governance / evidence framework skeleton)
+
+### Outcome (documentation-only)
+
+- **`docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_EVIDENCE_SUFFICIENCY_GAP_CLOSURE_FRAMEWORK.md`** — added the Evidence Sufficiency & Gap Closure framework skeleton following `EVID-B-001` through `EVID-B-021`
+- **`docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_EVIDENCE_SUFFICIENCY_GAP_CLOSURE_FRAMEWORK.md`** — defined question-framed evidence sufficiency, gap classification, blocker closure, dependency closure, evidence maturity, evidence risk, and governance review prompts, plus the framework template, non-readiness boundary, and registry update instructions
+- **`docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_EVIDENCE_REGISTRY.md`** — references the Evidence Sufficiency & Gap Closure framework shell while preserving the framework state as question-framed / missing
+- **`docs/ops/NOTION_GOVERNANCE_STAGING.md`** — staged `EVID-B-022` under **Class B Evidence Gathering**, not under the closed **Class B Pilot Governance Spine**
+- **`docs/ops/HEDGR_STATUS.md`** — added §6 merged-truth subsection `EVID-B-022`; updated the §7 completed list and last-completed summary; kept §7 / §7a in no-active-ticket posture; §95 (this record)
+
+**Scope discipline held.** **No** `apps/`, **no** `packages/`, **no** `scripts/`, **no** `.github/`, **no** tests, **no** backend, **no** frontend implementation, **no** product copy edits, **no** shipped route edits, **no** prototype route edits, **no** evidence acceptance, **no** evidence rejection, **no** evidence scoring, **no** evidence evaluation, **no** gap closure, **no** blocker closure, **no** readiness threshold definition, **no** implementation approval, **no** ADR readiness approval, **no** pilot readiness approval, **no** operational readiness approval, **no** Class B approval, and **no** customer-money authority. This framework does **not** mark evidence accepted, rejected, approved, sufficient, blocker-closed, gap-closed, mature, low-risk, review-ready, ADR-ready, implementation-ready, Class B ready, live ready, or customer-money ready.
+
+**Validation.** Documentation-only diff review, `git diff -- docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_EVIDENCE_SUFFICIENCY_GAP_CLOSURE_FRAMEWORK.md docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_EVIDENCE_REGISTRY.md docs/ops/HEDGR_STATUS.md docs/ops/NOTION_GOVERNANCE_STAGING.md`, `git diff --check -- docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_EVIDENCE_SUFFICIENCY_GAP_CLOSURE_FRAMEWORK.md docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_EVIDENCE_REGISTRY.md docs/ops/HEDGR_STATUS.md docs/ops/NOTION_GOVERNANCE_STAGING.md`, and `git status --short --branch` completed locally. No tests were added because the ticket scope explicitly excludes tests and product/runtime files.
+
+### Sequencing note
+
+**§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
+
+**Follow-ups:** No successor implementation ticket is created by this framework skeleton. Any future Evidence Sufficiency & Gap Closure evidence acceptance, legal / compliance evidence acceptance, ADR drafting readiness, implementation-proposal preflight, or implementation successor appears only when repo governance names it explicitly.
