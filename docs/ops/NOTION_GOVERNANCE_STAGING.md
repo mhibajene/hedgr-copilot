@@ -6,7 +6,7 @@
 
 **Authority:** The repository is source of truth. Wording here must match `docs/decisions/0016-warmth-layer-doctrine-constrained-retail-refinement-track.md`, `docs/decisions/SPRINT-2-ADR-INDEX.md`, and `docs/ops/HEDGR_STATUS.md`. Wording must match **Accepted** ADR **0016** in repo; do not broaden scope or soften read-only / non-execution boundaries in Notion.
 
-**Last reconciled:** 2026-06-09 (`HEDGR_STATUS.md` **§7** completed through **`EVID-B-022`**; post–**`MC-S3-019`** documentation-only governance: **`COP-GOV-001`** PR **#150** / **§52**; **`MC-S3-020`** PR **#153** (readout / **§7** activation **#152**) / **§53**; **`GOV-B-001`**-**`GOV-B-017`** **§54**-**§65d** / **§73**; **`EVID-B-001`** **§74**; **`EVID-B-002`** **§75**; **`EVID-B-003`** **§76**; **`EVID-B-004`** **§77**; **`EVID-B-005`** **§78**; **`EVID-B-006`** **§79**; **`EVID-B-007`** **§80**; **`EVID-B-008`** **§81**; **`EVID-B-009`** **§82**; **`EVID-B-010`** **§83**; **`EVID-B-011`** **§84**; **`EVID-B-012`** **§85**; **`EVID-B-013`** **§86**; **`EVID-B-014`** **§87**; **`EVID-B-015`** **§88**; **`EVID-B-016`** **§89**; **`EVID-B-017`** **§90**; **`EVID-B-018`** **§91**; **`EVID-B-019`** **§92**; **`EVID-B-020`** **§93**; **`EVID-B-021`** **§94**; **`EVID-B-022`** **§95**; **§7** / **§7a** remain **no active ticket**)
+**Last reconciled:** 2026-06-09 (`HEDGR_STATUS.md` **§7** completed through **`EVID-B-022`**; post–**`MC-S3-019`** documentation-only governance: **`COP-GOV-001`** PR **#150** / **§52**; **`MC-S3-020`** PR **#153** (readout / **§7** activation **#152**) / **§53**; **`GOV-B-001`**-**`GOV-B-017`** **§54**-**§65d** / **§73**; **`EVID-B-001`** **§74**; **`EVID-B-002`** **§75**; **`EVID-B-003`** **§76**; **`EVID-B-004`** **§77**; **`EVID-B-005`** **§78**; **`EVID-B-006`** **§79**; **`EVID-B-007`** **§80**; **`EVID-B-008`** **§81**; **`EVID-B-009`** **§82**; **`EVID-B-010`** **§83**; **`EVID-B-011`** **§84**; **`EVID-B-012`** **§85**; **`EVID-B-013`** **§86**; **`EVID-B-014`** **§87**; **`EVID-B-015`** **§88**; **`EVID-B-016`** **§89**; **`EVID-B-017`** **§90**; **`EVID-B-018`** **§91**; **`EVID-B-019`** **§92**; **`EVID-B-020`** **§93**; **`EVID-B-021`** **§94**; **`EVID-B-022`** **§95**; **`GOV-REVIEW-B-001`** **§96**; **§7** / **§7a** remain **no active ticket**)
 
 ---
 
@@ -520,6 +520,29 @@ Use when mirroring the completed **test-only** regression tranche 4. **Not** new
 **Release note:** This release follows the closed / complete **Class B Pilot Governance Spine** and is distinct from that closed release. It is a governance-only evidence-gathering track for collecting, classifying, reviewing, and preserving evidence before any future ADR drafting readiness or implementation-proposal preflight can be considered.
 
 **Non-meaning:** This release does not create Class B readiness, implementation sequencing, §7 activation, §7a execution brief, ADR acceptance, legal approval, custody approval, rail approval, vendor approval, customer eligibility approval, pilot approval, staging approval, live approval, operational approval, external engagement approval, or customer-money authority.
+
+## 9c. Releases — Class B Evidence Program Review (copy row)
+
+**Not canonical.** Mirror **`docs/ops/HEDGR_STATUS.md`** (**§7**, **§7a**, **§96**) for any conflict. This block is executive-readable **copy source** only.
+
+| Field | Value |
+| ----- | ----- |
+| **Release name** | Class B Evidence Program Review |
+| **Status** | Now / Active |
+| **Type** | Governance-only / Consolidated review |
+| **Authority** | Non-authorizing |
+| **Relationship** | Reviews the closed Class B Pilot Governance Spine and the Class B Evidence Gathering track |
+| **Description** | Governance-only review track for consolidated, informational review of the completed Class B Governance Spine and Class B Evidence Gathering program. Reviews governance and evidence inventories, dependency relationships, duplication risk, governance drift risk, and gaps, and records non-authorizing future-work observations. Does not accept evidence, reject evidence, score evidence, evaluate evidence for readiness, close blockers, close gaps, change registry state, establish readiness, or authorize ADR drafting, implementation, staging, sandbox use, internal testing, live operations, custody, rails, stablecoin conversion, treasury operations, reconciliation, support operations, audit operations, ledger truth, Copilot execution, Class C automation, external engagement, or customer fund movement. |
+
+### Class B Evidence Program Review work items
+
+| Ticket | Title | Status | Type | Authority | Summary |
+| ------ | ----- | ------ | ---- | --------- | ------- |
+| `GOV-REVIEW-B-001` | Class B Evidence Program Consolidated Review (documentation-only) | Done | Documentation-only / Consolidated Review | Non-authorizing | Produces a consolidated governance review across the closed Class B Governance Spine (`GOV-B-001` through `GOV-B-017`) and the completed Class B Evidence Gathering program (`EVID-B-001` through `EVID-B-022`); inventories the governance and evidence corpus; records dependency, duplication, governance-drift, and gap assessments plus a non-authorizing future-work assessment concluding no additional evidence scaffolding is currently justified on the basis of missing domains; reviews registry state as-is (all packages question-framed / missing; no blocker closed) without changing any registry, evidence, or readiness state. Review completion is not evidence acceptance, evidence rejection, evidence scoring, readiness, ADR readiness, implementation approval, or customer-money authority. Completed record **§96**. |
+
+**Release note:** This review track is distinct from the closed **Class B Pilot Governance Spine** and the **Class B Evidence Gathering** track. It provides informational, consolidated governance review of those bodies of work only.
+
+**Non-meaning:** Review completion is **not** evidence acceptance, **not** evidence rejection, **not** evidence scoring, **not** readiness, **not** ADR drafting readiness, **not** implementation approval, **not** Class B readiness, and **not** customer-money authority. It creates no Class B readiness, implementation sequencing, §7 activation, §7a execution brief, ADR acceptance, legal approval, custody approval, rail approval, vendor approval, customer eligibility approval, pilot approval, staging approval, live approval, operational approval, external engagement approval, or customer fund movement authority.
 
 ## 10. Micro-Contracts / Work — MC-S3-005 (copy row)
 
