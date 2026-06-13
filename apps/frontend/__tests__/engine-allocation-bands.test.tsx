@@ -48,34 +48,52 @@ describe('EngineAllocationBands', () => {
     expect(screen.getByText('Target posture')).toBeDefined();
     expect(
       within(
-        screen.getByTestId('engine-allocation-band-liquidityTargetPct'),
-      ).getByText('Available'),
-    ).toBeDefined();
-    expect(
-      within(screen.getByTestId('engine-allocation-band-coreTargetPct')).getByText(
-        'Core',
-      ),
+        screen.getByTestId('engine-allocation-band-coreTargetPct'),
+      ).getByText('Stable balance'),
     ).toBeDefined();
     expect(
       within(screen.getByTestId('engine-allocation-band-yieldCapPct')).getByText(
-        'Growth capacity',
+        'Conservative yield',
       ),
     ).toBeDefined();
+    expect(
+      within(
+        screen.getByTestId('engine-allocation-band-liquidityTargetPct'),
+      ).getByText('Reserve'),
+    ).toBeDefined();
+
+    // Stable balance is the dominant primary lane; the other two are supporting.
+    expect(
+      screen
+        .getByTestId('engine-allocation-band-coreTargetPct')
+        .getAttribute('data-allocation-lane'),
+    ).toBe('primary');
+    expect(
+      screen
+        .getByTestId('engine-allocation-band-yieldCapPct')
+        .getAttribute('data-allocation-lane'),
+    ).toBe('supporting');
+    expect(
+      screen
+        .getByTestId('engine-allocation-band-liquidityTargetPct')
+        .getAttribute('data-allocation-lane'),
+    ).toBe('supporting');
 
     expect(screen.getByTestId('engine-allocation-trust-legend')).toBeDefined();
 
     const caption = screen.getByTestId('engine-allocation-bands-caption')
       .textContent;
-    expect(caption).toMatch(/availability/i);
+    expect(caption).toMatch(/held steady/i);
     expect(caption).toMatch(/stability/i);
-    expect(caption).toMatch(/room for returns/i);
+    expect(caption).toMatch(/reserve/i);
     expect(caption).toMatch(/posture/i);
     expect(caption).toMatch(/balance/i);
+    expect(caption).toMatch(/nothing here you need to manage/i);
 
     const legend = screen.getByTestId('engine-allocation-trust-legend')
       .textContent;
     expect(legend).toMatch(/informational.*system targets/is);
-    expect(legend).toMatch(/growth capacity/i);
+    expect(legend).toMatch(/conservative yield/i);
     expect(legend).toMatch(/yield opportunity/i);
     expect(legend).toMatch(/ledger/i);
     expect(legend).toMatch(/target share/i);
@@ -112,18 +130,20 @@ describe('EngineAllocationBands', () => {
       />,
     );
 
-    const liquidityBand = screen.getByTestId(
+    const reserveBand = screen.getByTestId(
       'engine-allocation-band-liquidityTargetPct',
     );
-    expect(liquidityBand.textContent).toMatch(/ready to use/i);
+    expect(reserveBand.textContent).toMatch(/quiet buffer/i);
+    expect(reserveBand.textContent).toMatch(/kept ready/i);
 
-    const coreBand = screen.getByTestId('engine-allocation-band-coreTargetPct');
-    expect(coreBand.textContent).toMatch(/kept stable/i);
-    expect(coreBand.textContent).toMatch(/preserve value/i);
+    const stableBand = screen.getByTestId('engine-allocation-band-coreTargetPct');
+    expect(stableBand.textContent).toMatch(/held steady/i);
+    expect(stableBand.textContent).toMatch(/preserve value/i);
+    expect(stableBand.textContent).toMatch(/primary holding lane/i);
 
-    const growthBand = screen.getByTestId('engine-allocation-band-yieldCapPct');
-    expect(growthBand.textContent).toMatch(/up to 14%/i);
-    expect(growthBand.textContent).toMatch(/conditions allow/i);
+    const yieldBand = screen.getByTestId('engine-allocation-band-yieldCapPct');
+    expect(yieldBand.textContent).toMatch(/up to 14%/i);
+    expect(yieldBand.textContent).toMatch(/conditions allow/i);
   });
 
   test('keeps per-band bandDescription() copy free of execution, accounting-as-truth, and hype drift', () => {
@@ -215,8 +235,8 @@ describe('EngineAllocationBands', () => {
     }
 
     expect(guidance.textContent).toMatch(/protection.*liquidity|liquidity.*protection/i);
-    expect(guidance.textContent).toMatch(/growth capacity/i);
-    expect(guidance.textContent).toMatch(/Available/i);
+    expect(guidance.textContent).toMatch(/conservative yield/i);
+    expect(guidance.textContent).toMatch(/Reserve/i);
     expect(guidance.textContent).toMatch(/readiness/i);
     expect(guidance.textContent).toMatch(
       /does not by itself stop a withdrawal|withdrawal/i,
@@ -257,9 +277,9 @@ describe('EngineAllocationBands', () => {
     const body = screen.getByTestId('engine-stability-explainer-body');
     expect(body.textContent).toContain(ENGINE_STABILITY_EXPLAINER_INTRO);
     expect(body.textContent).toContain(ENGINE_STABILITY_EXPLAINER_FOOTER);
-    expect(body.textContent).toMatch(/Available/);
-    expect(body.textContent).toMatch(/Core/);
-    expect(body.textContent).toMatch(/Growth capacity/);
+    expect(body.textContent).toMatch(/Stable balance/);
+    expect(body.textContent).toMatch(/Conservative yield/);
+    expect(body.textContent).toMatch(/Reserve/);
     expect(body.textContent).toMatch(/informational/i);
     expect(body.textContent).toMatch(/ledger/i);
 
