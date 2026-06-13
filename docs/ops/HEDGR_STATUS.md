@@ -2215,6 +2215,55 @@ Implementation posture preserved:
 - no successor implementation ticket
 - no evidence intake, evidence acceptance, evidence rejection, evidence evaluation, blocker closure, gap closure, readiness conclusions, ADR readiness, implementation approval, legal conclusions, regulatory approval, external engagement approval, Class B execution, staging approval, sandbox approval, internal-test approval, live approval, production approval, ledger truth, accounting truth, Copilot execution, Class C automation, or customer fund movement authority
 
+### GOV-INTAKE-B-002 - Class B Evidence Intake Governance Model (documentation-only)
+
+Merged files:
+- `docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_EVIDENCE_INTAKE_GOVERNANCE_MODEL.md`
+- `docs/ops/HEDGR_STATUS.md`
+- `docs/ops/NOTION_GOVERNANCE_STAGING.md`
+
+Implementation truth:
+- governance-only Class B Evidence Intake Governance Model added at `docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_EVIDENCE_INTAKE_GOVERNANCE_MODEL.md`
+- defines intake authority boundaries, evidence ownership and custodianship boundaries, source-pointer and provenance requirements, registry state-change controls, conflict / supersession / freshness / retirement rules, governance review boundaries, open questions, and a non-authorization statement
+- follows `GOV-CHECKPOINT-B-001`, `EVID-INTAKE-B-001`, `GOV-REVIEW-B-001`, and the completed Class B Evidence Gathering program without initiating intake or changing evidence state
+- preserves the current evidence posture as `Question framed / Missing`; the Evidence Registry is out of scope and is not modified
+- updates Notion governance staging to list `GOV-INTAKE-B-002` under a distinct Class B Evidence Intake Governance block, separate from the closed Class B Pilot Governance Spine, completed Class B Evidence Gathering track, Class B Evidence Program Review track, Class B Evidence Intake Planning track, and Class B Governance & Evidence Program Closure track
+
+Implementation posture preserved:
+- documentation-only governance model
+- governance-only
+- non-authorizing
+- non-readiness
+- no `apps/`
+- no `packages/`
+- no `scripts/`
+- no `.github/`
+- no `docs/decisions/` changes
+- no ADRs
+- no tests
+- no CI workflow changes
+- no backend
+- no frontend implementation
+- no product copy edits
+- no shipped route edits
+- no prototype route edits
+- no evidence gathered
+- no evidence collected
+- no evidence requested
+- no evidence accepted
+- no evidence rejected
+- no evidence scored
+- no evidence evaluated
+- no registry-state changes
+- no evidence-state changes
+- no blocker closure
+- no gap closure
+- no readiness thresholds
+- no evidence intake authority
+- no implementation authority
+- no successor implementation ticket
+- no legal conclusions, regulatory approval, external engagement approval, Class B execution, staging approval, sandbox approval, internal-test approval, live approval, production approval, deposits, withdrawals, custody activation, rail activation, vendor integration, stablecoin conversion, treasury operations, ledger truth, accounting truth, reconciliation operations, support operations, audit operations, Copilot execution, Class C automation, or customer fund movement authority
+
 ### BRAND-001 - Govern and normalize existing brand asset authority (governance / asset-infrastructure normalization)
 
 Merged files:
@@ -3066,6 +3115,7 @@ Completed and merged:
 - `GOV-REVIEW-B-001` - Class B Evidence Program Consolidated Review (documentation-only governance / consolidated review; completed record **§96**)
 - `EVID-INTAKE-B-001` - Class B Evidence Intake Readiness Planning Memo (documentation-only governance / evidence-intake planning memo; completed record **§97**)
 - `GOV-CHECKPOINT-B-001` - Class B Governance & Evidence Program Closure Assessment (documentation-only governance / closure assessment; completed record **§98**)
+- `GOV-INTAKE-B-002` - Class B Evidence Intake Governance Model (documentation-only governance / evidence-intake governance model; completed record **§99**)
 - `BRAND-001` - Govern and normalize existing brand asset authority (governance / asset-infrastructure normalization; completed record **§66**)
 - `BRAND-002` - Brand governance documentation spine (documentation-only governance; completed record **§67**)
 - `BRAND-003` - Frontend governed token integration (frontend theme-governance integration only; completed record **§70**)
@@ -3078,6 +3128,7 @@ Current active ticket status:
 
 - **Approved next ticket:** **None named.** There is **no** approved next implementation ticket until **§7** is updated explicitly to name one.
 - **Brand System Governance sequencing:** **§6d** records the approved Brand System Governance ticket set and recommended order. `BRAND-001`, `BRAND-002`, `BRAND-003`, `BRAND-004`, `BRAND-005`, `BRAND-006`, and `BRAND-007` are complete. No successor Brand System Governance implementation ticket is approved unless **§7** is updated explicitly to name one with a bounded **§7a** brief.
+- **Post–`GOV-INTAKE-B-002` sequencing (governance-accepted):** `GOV-INTAKE-B-002` completed the Class B Evidence Intake Governance Model as a documentation-only governance artifact. It did **not** authorize evidence intake, evidence collection, evidence requests, evidence acceptance, evidence rejection, evidence scoring, evidence evaluation, registry-state changes, evidence-state changes, blocker closure, gap closure, readiness, ADR drafting readiness, implementation-proposal preflight, implementation, staging, sandbox use, internal testing, live operations, custody, rails, stablecoin conversion, treasury operations, reconciliation, support operations, audit operations, ledger truth, accounting truth, Copilot execution, Class C automation, or customer fund movement authority.
 - **Post–`COP-GOV-001` sequencing (governance-accepted):** `COP-GOV-001` completed the intended **advisory-boundary definition** lane as a documentation-only governance artifact. It did **not** widen product, engine, backend, policy, Copilot **runtime**, execution, accounting, ledger, vendor, custody, stablecoin, Circle, live-service, or customer-facing automation authority. Copilot MVP posture remains **advisory, non-directive, non-executing, hermetic, non-accounting, non-policy-authoritative**, and **outside `§6b` category 8** unless future doctrine and ADRs widen the boundary. Any later Copilot **implementation** requires a separate **§7** name and **§7a** brief. Do not infer Copilot implementation, runtime binding, engine binding, policy binding, backend work, execution authority, or finance-style autonomy from `COP-GOV-001`.
 - **Governance reconciliation note:** **`UI-SRA-001`** activation artifacts (`docs/ops/retail-ui/implementation-readouts/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_EXECUTION_REQUEST.md`, **`docs/ops/retail-ui/implementation-readouts/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_STATUS_PATCH_PROPOSAL.md`**, and **§7** / **§7a** activation language) first landed in commit **`1bd65d1`**; shipped dashboard implementation landed in **`da96e1e`**. Branch history was reconciled so activation, support docs, implementation, and this closeout (**§44**) cohabit the same lineage without implying a false single-commit ordering. See **`docs/ops/retail-ui/implementation-readouts/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_EXECUTION_READOUT.md` §2**.
 - **§6b** is not sequencing authority — Transition Readiness taxonomy and scrutiny input only; only **§7** / **§7a** name approved implementation work when a ticket is active. `MC-S3-017` clarified this rule; it did not convert §6b table rows, examples, or disposition labels into backlog approval.
@@ -3088,7 +3139,7 @@ Current active ticket status:
 - Cursor must not continue automatically into work beyond what is explicitly defined in this file for an active ticket.
 - Cursor must not drift beyond explicitly defined scope.
 
-**Last completed ticket (summary):** `GOV-CHECKPOINT-B-001` — Class B Governance & Evidence Program Closure Assessment (documentation-only governance / closure assessment only; creates `docs/ops/governance/class-b/reviews/HEDGR_CLASS_B_GOVERNANCE_EVIDENCE_PROGRAM_CLOSURE_ASSESSMENT.md`; documents, on a governance-only basis, the completion of the Class B Governance Spine (`GOV-B-001` through `GOV-B-017`), the Class B Evidence Gathering program (`EVID-B-001` through `EVID-B-022`), the Class B Evidence Program Consolidated Review (`GOV-REVIEW-B-001`), and the Class B Evidence Intake Readiness Planning Memo (`EVID-INTAKE-B-001`); records current state (Governance Spine, Evidence Scaffolding, Evidence Review Scaffolding, and Evidence Intake Planning Complete; Evidence Intake Authorization, Evidence Acceptance Authority, Readiness Authority, and Implementation Authority Not Granted), unresolved items, authority not granted, and future governance decisions; preserves current evidence posture as `Question framed / Missing`; leaves the Evidence Registry out of scope and unmodified; does not gather evidence, accept evidence, reject evidence, evaluate evidence, change registry state, change evidence state, close blockers, close gaps, establish readiness, establish implementation authority, or establish customer-money authority; updates Notion governance staging to list `GOV-CHECKPOINT-B-001` as completed while preserving that closure assessment completion is not evidence intake, evidence acceptance, readiness, or implementation authority; creates no successor implementation ticket; **§7** / **§7a** remain in no-active-ticket state); completed record in **§98**.
+**Last completed ticket (summary):** `GOV-INTAKE-B-002` — Class B Evidence Intake Governance Model (documentation-only governance / evidence-intake governance model only; creates `docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_EVIDENCE_INTAKE_GOVERNANCE_MODEL.md`; defines intake authority boundaries, evidence ownership and custodianship boundaries, source-pointer and provenance requirements, registry state-change controls, conflict / supersession / freshness / retirement rules, governance review boundaries, open questions, and a non-authorization statement; preserves current evidence posture as `Question framed / Missing`; leaves the Evidence Registry out of scope and unmodified; does not gather evidence, collect evidence, request evidence, accept evidence, reject evidence, score evidence, evaluate evidence, change registry state, change evidence state, close blockers, close gaps, establish readiness, establish implementation authority, or establish customer-money authority; updates Notion governance staging to list `GOV-INTAKE-B-002` under a distinct Class B Evidence Intake Governance block; creates no successor implementation ticket; **§7** / **§7a** remain in no-active-ticket state); completed record in **§99**.
 
 ---
 
@@ -5530,3 +5581,26 @@ This **§43** record was originally written in the same working-tree change-set 
 **§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
 
 **Follow-ups:** No successor implementation ticket is created by this closure assessment. Any future evidence intake, evidence acceptance, evidence review, gap closure, blocker closure, ADR drafting readiness, implementation-proposal preflight, or implementation successor appears only when repo governance names it explicitly.
+
+---
+
+## 99. Completed execution ticket - GOV-INTAKE-B-002 (Class B Evidence Intake Governance Model)
+
+**Ticket:** `GOV-INTAKE-B-002` — Class B Evidence Intake Governance Model (documentation-only governance / evidence-intake governance model)
+
+### Outcome (documentation-only)
+
+- **`docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_EVIDENCE_INTAKE_GOVERNANCE_MODEL.md`** — added the repo-native Class B Evidence Intake Governance Model following `GOV-CHECKPOINT-B-001`, `EVID-INTAKE-B-001`, `GOV-REVIEW-B-001`, and the completed Class B Evidence Gathering program
+- **`docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_EVIDENCE_INTAKE_GOVERNANCE_MODEL.md`** — documented intake authority boundaries, evidence ownership and custodianship boundaries, source-pointer and provenance requirements, registry state-change controls, conflict / supersession / freshness / retirement rules, governance review boundaries, open questions, and a non-authorization statement
+- **`docs/ops/NOTION_GOVERNANCE_STAGING.md`** — added `GOV-INTAKE-B-002` under a **Class B Evidence Intake Governance** block, distinct from the closed **Class B Pilot Governance Spine**, the completed **Class B Evidence Gathering** track, the **Class B Evidence Program Review** track, the **Class B Evidence Intake Planning** track, and the **Class B Governance & Evidence Program Closure** track
+- **`docs/ops/HEDGR_STATUS.md`** — added §6 merged-truth subsection `GOV-INTAKE-B-002`; updated the §7 completed list and last-completed summary; restored §7 / §7a to no-active-ticket posture; §99 (this record)
+
+**Scope discipline held.** **No** `apps/`, **no** `packages/`, **no** `scripts/`, **no** `.github/`, **no** `docs/decisions/` changes, **no** ADRs, **no** tests, **no** CI workflow changes, **no** backend, **no** frontend implementation, **no** product copy edits, **no** shipped route edits, **no** prototype route edits, **no** Evidence Registry modification, **no** registry-row modification, **no** registry-state changes, **no** evidence-state changes, **no** evidence gathered, **no** evidence collected, **no** evidence requested, **no** evidence accepted, **no** evidence rejected, **no** evidence scored, **no** evidence evaluated, **no** blocker closure, **no** gap closure, **no** readiness thresholds, **no** evidence intake authority, **no** implementation approval, **no** Class B approval, and **no** customer-money authority. This model does **not** gather, collect, request, accept, reject, score, or evaluate evidence; change evidence or registry state; close gaps or blockers; establish readiness; establish implementation authority; or establish customer-money authority.
+
+**Validation.** Documentation-only diff review, `git diff -- docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_EVIDENCE_INTAKE_GOVERNANCE_MODEL.md docs/ops/HEDGR_STATUS.md docs/ops/NOTION_GOVERNANCE_STAGING.md`, `git diff --check -- docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_EVIDENCE_INTAKE_GOVERNANCE_MODEL.md docs/ops/HEDGR_STATUS.md docs/ops/NOTION_GOVERNANCE_STAGING.md`, and `git status --short --branch` completed locally. No tests were added because the ticket scope explicitly excludes tests and product/runtime files.
+
+### Sequencing note
+
+**§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
+
+**Follow-ups:** No successor implementation ticket is created by this governance model. Any future evidence intake, evidence collection, evidence acceptance, evidence review, gap closure, blocker closure, ADR drafting readiness, implementation-proposal preflight, or implementation successor appears only when repo governance names it explicitly.
