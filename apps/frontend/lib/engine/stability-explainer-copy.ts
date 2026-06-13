@@ -3,7 +3,8 @@
  * Principle-level posture only—does not duplicate ENGINE_POSTURE_CONTEXT or ENGINE_NOTICE_COPY.
  */
 
-export const ENGINE_STABILITY_EXPLAINER_SUMMARY = 'How to read these targets';
+export const ENGINE_STABILITY_EXPLAINER_SUMMARY =
+  'Why your balance is structured this way';
 
 /** One short intro line (informational framing). */
 export const ENGINE_STABILITY_EXPLAINER_INTRO =
@@ -14,23 +15,23 @@ export const ENGINE_STABILITY_EXPLAINER_TERMS: ReadonlyArray<{
   definition: string;
 }> = [
   {
-    term: 'Available',
-    definition: 'Ready to use.',
+    term: 'Stable balance',
+    definition: 'The primary holding lane—held steady to preserve value.',
   },
   {
-    term: 'Core',
-    definition: 'Kept stable to preserve value.',
-  },
-  {
-    term: 'Growth capacity',
+    term: 'Conservative yield',
     definition:
-      'Up to this target can support returns when conditions allow.',
+      'A supporting lane—up to this target can support returns when conditions allow.',
+  },
+  {
+    term: 'Reserve',
+    definition: 'A quiet buffer—kept ready in principle if you need it.',
   },
 ];
 
 export const ENGINE_STABILITY_EXPLAINER_PRINCIPLES: readonly string[] = [
-  'The split keeps availability, stability, and growth capacity visible together as system intent—not as a map of where funds sit.',
-  'When the system is more cautious, protection and liquidity can outweigh growth capacity. Posture reflects that caution; it does not describe completed movement.',
+  'Most of the structure is held steady, with conservative yield and a reserve shown as quieter supporting lanes—system intent, not a map of where funds sit.',
+  'When the system is more cautious, protection and the reserve can outweigh conservative yield. Posture reflects that caution; it does not describe completed movement.',
 ];
 
 export const ENGINE_STABILITY_EXPLAINER_FOOTER =
