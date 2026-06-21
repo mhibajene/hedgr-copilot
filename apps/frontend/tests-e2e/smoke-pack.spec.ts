@@ -74,15 +74,39 @@ test('4 · dashboard shows Stability Engine posture context after login', async 
   await clearStorage(page);
   await loginMock(page);
 
+  const heldOrRejectedPrimaryTerms = [
+    /\bbalanced\b/i,
+    /\bmonitoring\b/i,
+    /\bmonitoring volatility\b/i,
+    /\bprotected\b/i,
+    /\bprotective mode active\b/i,
+  ];
+
   const postureContext = page.getByTestId('engine-posture-context');
   await expect(postureContext).toBeVisible({ timeout: 10_000 });
   const postureContextText = await postureContext.textContent();
   expect(postureContextText?.trim().length).toBeGreaterThan(0);
+  expect(postureContextText).toContain('Within expected range');
+  expect(postureContextText).toContain('conservative yield');
+  for (const forbidden of heldOrRejectedPrimaryTerms) {
+    expect(postureContextText).not.toMatch(forbidden);
+  }
 
   const postureBadge = page.getByTestId('engine-posture-badge');
   await expect(postureBadge).toBeVisible({ timeout: 10_000 });
   const postureBadgeText = await postureBadge.textContent();
   expect(postureBadgeText?.trim().length).toBeGreaterThan(0);
+  expect(postureBadgeText).toBe('NORMAL');
+
+  const snapshotStance = page.getByTestId(
+    'engine-stability-review-snapshot-stance',
+  );
+  await expect(snapshotStance).toBeVisible({ timeout: 10_000 });
+  const snapshotStanceText = await snapshotStance.textContent();
+  expect(snapshotStanceText).toBe('Where things stand: within expected range');
+  for (const forbidden of heldOrRejectedPrimaryTerms) {
+    expect(snapshotStanceText).not.toMatch(forbidden);
+  }
 
   const allocationBands = page.getByTestId('engine-allocation-bands');
   await expect(allocationBands).toBeVisible({ timeout: 10_000 });
