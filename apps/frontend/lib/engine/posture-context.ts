@@ -3,11 +3,11 @@ import type { EnginePosture } from './types';
 /** One short sentence per posture: definition only—no banner disclaimers duplicated here. */
 export const ENGINE_POSTURE_CONTEXT: Record<EnginePosture, string> = {
   normal:
-    'Conditions look steady. Most stays in your stable balance, with conservative yield and a reserve held ready.',
+    'Within expected range. Stable balance remains the primary lane, with conservative yield and reserve capacity kept visible.',
   tightening:
-    'Shifting toward stronger protection, with more weight on the reserve.',
+    'Protective posture is increasing. Reserve targets are more prominent while conditions are reviewed.',
   tightened:
-    'More protective than usual, with the reserve prioritized.',
+    'Protective posture is elevated. Reserve targets stay prioritized until conditions ease.',
   recovery:
-    'Easing toward steadier targets while keeping reserve discipline.',
+    'Within expected range. Targets are easing toward steadier posture while reserve discipline remains visible.',
 };

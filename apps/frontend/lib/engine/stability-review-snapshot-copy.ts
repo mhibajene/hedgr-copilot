@@ -9,10 +9,10 @@ import type { EnginePosture } from './types';
 export const ENGINE_STABILITY_REVIEW_SNAPSHOT_TITLE = 'Review snapshot';
 
 const STANCE_BY_POSTURE: Record<EnginePosture, string> = {
-  normal: 'Where things stand: within the expected range',
-  tightening: 'Where things stand: more cautious than usual',
-  tightened: 'Where things stand: more cautious than usual',
-  recovery: 'Where things stand: within the expected range',
+  normal: 'Where things stand: within expected range',
+  tightening: 'Where things stand: protective posture increasing',
+  tightened: 'Where things stand: protective posture elevated',
+  recovery: 'Where things stand: within expected range, easing steadily',
 };
 
 export function getEngineStabilityReviewSnapshotStance(

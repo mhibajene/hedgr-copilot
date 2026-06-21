@@ -3055,6 +3055,31 @@ Validation-readout boundary:
 - Reference language remains non-authoritative unless a future ticket is explicitly named in §7 with a bounded §7a brief.
 - Any future posture-header or terminology implementation must map to existing shipped posture semantics unless a separate, future governed architecture change widens the contract.
 
+### SE-POSTURE-001 - Narrow posture secondary-copy refinement pass
+
+Changed files:
+
+- `apps/frontend/lib/engine/posture-context.ts`
+- `apps/frontend/lib/engine/stability-review-snapshot-copy.ts`
+- `apps/frontend/__tests__/engine-posture-context-contract.test.ts`
+- `apps/frontend/__tests__/engine-stability-review-snapshot-copy-contract.test.ts`
+- `docs/ops/HEDGR_STATUS.md`
+- `docs/ops/NOTION_GOVERNANCE_STAGING.md`
+
+Implementation truth:
+
+- shipped posture-header secondary copy now uses repo-grounded `Within expected range`, `Conservative yield`, and protective-posture language patterns from `SE-VAL-001` outcomes.
+- stability-review stance copy now uses `Within expected range` for `normal` / `recovery` and protective-posture language for `tightening` / `tightened`.
+- Vitest copy contracts now lock promoted / already-grounded posture-language patterns and guard against exact held or rejected primary terms (`Balanced`, `Monitoring`, `Monitoring Volatility`, `Protected`, `Protective Mode Active`) on the scoped shipped copy paths.
+- posture badges remain technical uppercase labels (`NORMAL`, `TIGHTENING`, `TIGHTENED`, `RECOVERY`).
+
+Implementation posture preserved:
+
+- presentation / copy only.
+- no `apps/frontend/lib/engine/types.ts`, no `notices.ts`, no `mock.ts`, no `simulator.ts`, no `useEngineState.ts`.
+- no new `EnginePosture` values, no runtime state machine changes, no mock values, no simulator behavior changes, no backend, no policy, no engine logic, no execution semantics, no accounting truth, no Class B authority, no Copilot runtime, no CI / workflow changes, and no ADR status changes.
+- `MC-S3-0xx` remains a candidate successor only until separately named in §7 with a bounded §7a brief.
+
 ---
 
 ## 7. Current sequence and active status
@@ -3163,10 +3188,12 @@ Completed and merged:
 - `UI-ALG-001` - Stability Engine Allocation Comprehension Pass (presentation-only Stability Engine trust-surface refinement; merged PR **#213**; completed record **§100**)
 - `DOC-SE-REF-001` - Stability Condition Interface Reference Preservation Closeout (documentation-only governance closeout for the already-merged non-authoritative reference artifact; completed record **§101**)
 - `SE-VAL-001` - Condition / Posture Language Validation Readout (documentation-only governance / scrutiny input; completed record **§102**)
+- `SE-POSTURE-001` - Narrow posture secondary-copy refinement pass (presentation-only Stability Engine trust-surface copy refinement; completed record **§103**)
 
 Current active ticket status:
 
-- **Approved next ticket:** **None named.** `SE-VAL-001` (Condition / Posture Language Validation Readout) is complete and recorded in **§102**; **§7** / **§7a** are restored to no-active-ticket posture. There is **no** approved next implementation ticket until **§7** is updated explicitly to name one.
+- **Approved next ticket:** **None named.** `SE-POSTURE-001` (Narrow posture secondary-copy refinement pass) is complete and recorded in **§103**; **§7** / **§7a** are restored to no-active-ticket posture. There is **no** approved next implementation ticket until **§7** is updated explicitly to name one.
+- **Governance-highlighted successor (not authorized in this closeout):** **`MC-S3-0xx`** — Regression resistance tranche 7 (test-only) for shipped Stability Engine trust surfaces; candidate successor for governance consideration after `SE-POSTURE-001` closeout only. Highlights the next likely regression-resistance shape per `MC-S3-004`–`MC-S3-015` precedent and §6b category **5** (admissible). Does **not** authorize start, queue, parallel work, or momentum sequencing until explicitly named in **§7** with a bounded **§7a** brief. Expected objective shape: Vitest/Playwright copy contracts locking `SE-POSTURE-001` secondary-copy outputs and informational / non-ledger denylist guards — **no** new states, **no** new product behavior.
 - **Brand System Governance sequencing:** **§6d** records the approved Brand System Governance ticket set and recommended order. `BRAND-001`, `BRAND-002`, `BRAND-003`, `BRAND-004`, `BRAND-005`, `BRAND-006`, and `BRAND-007` are complete. No successor Brand System Governance implementation ticket is approved unless **§7** is updated explicitly to name one with a bounded **§7a** brief.
 - **Post–`GOV-INTAKE-B-002` sequencing (governance-accepted):** `GOV-INTAKE-B-002` completed the Class B Evidence Intake Governance Model as a documentation-only governance artifact. It did **not** authorize evidence intake, evidence collection, evidence requests, evidence acceptance, evidence rejection, evidence scoring, evidence evaluation, registry-state changes, evidence-state changes, blocker closure, gap closure, readiness, ADR drafting readiness, implementation-proposal preflight, implementation, staging, sandbox use, internal testing, live operations, custody, rails, stablecoin conversion, treasury operations, reconciliation, support operations, audit operations, ledger truth, accounting truth, Copilot execution, Class C automation, or customer fund movement authority.
 - **Post–`COP-GOV-001` sequencing (governance-accepted):** `COP-GOV-001` completed the intended **advisory-boundary definition** lane as a documentation-only governance artifact. It did **not** widen product, engine, backend, policy, Copilot **runtime**, execution, accounting, ledger, vendor, custody, stablecoin, Circle, live-service, or customer-facing automation authority. Copilot MVP posture remains **advisory, non-directive, non-executing, hermetic, non-accounting, non-policy-authoritative**, and **outside `§6b` category 8** unless future doctrine and ADRs widen the boundary. Any later Copilot **implementation** requires a separate **§7** name and **§7a** brief. Do not infer Copilot implementation, runtime binding, engine binding, policy binding, backend work, execution authority, or finance-style autonomy from `COP-GOV-001`.
@@ -3179,13 +3206,13 @@ Current active ticket status:
 - Cursor must not continue automatically into work beyond what is explicitly defined in this file for an active ticket.
 - Cursor must not drift beyond explicitly defined scope.
 
-**Last completed ticket (summary):** `SE-VAL-001` — Condition / Posture Language Validation Readout (documentation-only governance / scrutiny input that maps Stability Condition Interface exploration labels and posture terms against shipped `EnginePosture`, badge, `ENGINE_POSTURE_CONTEXT`, notice, and related trust-surface copy; records `Within Expected Range` and `Conservative Yield` as `promote` for future governance discussion only, `Balanced`, `Monitoring`, and `Monitoring Volatility` as `hold`, and `Protected` / `Protective Mode Active` as `reject` for exact shipped state / badge / primary condition language under current authority; no app, package, script, CI, UI, engine, ADR, test, product-copy, posture-state, mock-value, simulator, runtime-state, accounting, execution, custody, rails, deposits, withdrawals, ledger, treasury, Copilot execution, Class B execution, Class C automation, or customer fund movement authority; **§7** / **§7a** restored to no-active-ticket posture); completed record in **§102**.
+**Last completed ticket (summary):** `SE-POSTURE-001` — Narrow posture secondary-copy refinement pass (presentation-only Stability Engine trust-surface copy refinement; applied `SE-VAL-001` promoted / already-grounded posture-language patterns to `ENGINE_POSTURE_CONTEXT` and stability-review stance copy; added Vitest copy-contract guards against exact held / rejected primary terms; no `EnginePosture` change, badge-label change, notice change, mock / simulator change, backend, policy, engine logic, execution semantics, accounting truth, Class B authority, Copilot runtime, CI / workflow change, or ADR status change; **§7** / **§7a** restored to no-active-ticket posture); completed record in **§103**.
 
 ---
 
 ## 7a. Active execution ticket
 
-**Status:** **No active execution ticket.** **§7** does not currently name an approved next implementation ticket. The most recently completed ticket, `SE-VAL-001` (Condition / Posture Language Validation Readout), is recorded in **§102**.
+**Status:** **No active execution ticket.** **§7** does not currently name an approved next implementation ticket. The most recently completed ticket, `SE-POSTURE-001` (Narrow posture secondary-copy refinement pass), is recorded in **§103**.
 
 When governance approves the next ticket, **§7** will name it and this section will hold the full execution brief until closeout.
 
@@ -3330,9 +3357,13 @@ When governance approves the next ticket, **§7** will name it and this section 
 - **Retail UI money-first shell prototype spike (presentation-only, prototype-route, completed):** `MC-S3-012` — **§43** (completed ticket record); governed readout **`docs/ops/retail-ui/prototype/HEDGR_RETAIL_UI_IMPLEMENTATION_SPIKE_READOUT.md`**; merged PR **#129**.
 - **MC-S3-012 merged-truth reconciliation (documentation/governance-only, completed):** `MC-S3-014` — **§46** (completed ticket record).
 - **Regression resistance tranche 6 (test-only, completed):** `MC-S3-015` — **§47** (completed ticket record); merged PR **#138**.
+- **Narrow posture secondary-copy refinement pass (presentation-only, completed):** `SE-POSTURE-001` — **§103** (completed ticket record).
+- **Governance-highlighted successor (not authorized in this closeout):** **`MC-S3-0xx`** — Regression resistance tranche 7 (test-only); candidate for **§7** consideration after `SE-POSTURE-001` closeout only — see **§7** successor bullet.
 - **Merged implementation truth:** **§6** remains canonical for shipped code boundaries.
 - When a successor ticket is approved, record it in **§7** and restore the execution brief in **§7a** per governance discipline.
 - Do not infer continuation work from *Proposed* ADRs or roadmap narrative unless **§7** names a ticket.
+
+**Archived brief (SE-POSTURE-001):** Narrow posture secondary-copy refinement pass — **presentation-only** Stability Engine trust-surface refinement; scope held to `apps/frontend/lib/engine/posture-context.ts`, `apps/frontend/lib/engine/stability-review-snapshot-copy.ts`, ticket-local Vitest copy-contract tests, `docs/ops/HEDGR_STATUS.md`, and `docs/ops/NOTION_GOVERNANCE_STAGING.md`. Applied `SE-VAL-001` promoted / already-grounded posture-language patterns to shipped secondary posture copy and stability-review stance copy. Badge labels remained technical uppercase (`NORMAL`, `TIGHTENING`, `TIGHTENED`, `RECOVERY`). **No** `EnginePosture` change, **no** notice-copy change, **no** mock / simulator change, **no** backend, **no** policy, **no** engine logic, **no** execution semantics, **no** accounting truth, **no** Class B authority, **no** Copilot runtime, **no** CI / workflow change, and **no** ADR status change. Completed record: **§103**.
 
 **Archived brief (MC-S2-023):** Governance-first, documentation-only closeout assessment; no product/runtime changes; objective was explicit criteria, evidence-based evaluation, and repo-native Shipped vs In Progress recommendation — delivered in **§6a**.
 
@@ -5730,3 +5761,34 @@ This **§43** record was originally written in the same working-tree change-set 
 **§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
 
 **Follow-ups:** No successor implementation ticket is created by this validation readout. Any future posture-header, terminology, UI, engine, ADR, runtime, status, sequencing, or reference-expansion work appears only when repo governance names it explicitly.
+
+---
+
+## 103. Completed execution ticket - SE-POSTURE-001 (Narrow posture secondary-copy refinement pass)
+
+**Ticket:** `SE-POSTURE-001` — Narrow posture secondary-copy refinement pass (presentation-only Stability Engine trust-surface copy refinement; read-only / informational / non-executing)
+
+**Objective.** Improve calm legibility of shipped posture-header secondary language and stability-review secondary stance copy through repo-grounded, non-runtime phrasing — without renaming `EnginePosture`, changing technical badges, altering notice contracts, or promoting Stability Condition Interface exploration labels to runtime truth.
+
+### Outcome (presentation / copy only)
+
+- **`apps/frontend/lib/engine/posture-context.ts`** — updated the posture-header secondary context lines to use `Within expected range`, `Conservative yield`, and protective-posture language patterns grounded in `SE-VAL-001` outcomes.
+- **`apps/frontend/lib/engine/stability-review-snapshot-copy.ts`** — updated stability-review stance copy to use `Within expected range` for `normal` / `recovery` and protective-posture language for `tightening` / `tightened`.
+- **`apps/frontend/__tests__/engine-posture-context-contract.test.ts`** — extended copy contracts to lock promoted / already-grounded posture-language patterns and guard against exact held or rejected primary terms.
+- **`apps/frontend/__tests__/engine-stability-review-snapshot-copy-contract.test.ts`** — extended stance-copy contracts with the same promoted / held / rejected term boundaries.
+- **`docs/ops/HEDGR_STATUS.md`** — §7 activation, §7a brief during execution, §6 merged-truth entry, completed-list update, last-completed summary update, no-active-ticket restoration, and this completed-ticket record.
+- **`docs/ops/NOTION_GOVERNANCE_STAGING.md`** — downstream mirror reconciled to reflect `SE-POSTURE-001` completion without creating Notion-led authority.
+
+**Governance guarantees held.** The runtime `EnginePosture` contract remains `normal`, `tightening`, `tightened`, and `recovery`. Dashboard posture badges remain `NORMAL`, `TIGHTENING`, `TIGHTENED`, and `RECOVERY`. `Balanced`, `Monitoring`, and `Monitoring Volatility` remain held reference-only candidates; `Protected` and `Protective Mode Active` remain rejected as exact shipped state / badge / primary condition language. `Within expected range`, `Conservative yield`, and protective-posture language are used only as secondary, non-runtime, non-guarantee copy patterns.
+
+**Scope discipline held.** **No** `apps/frontend/lib/engine/types.ts`, **no** `notices.ts`, **no** `mock.ts`, **no** `simulator.ts`, **no** `useEngineState.ts`, **no** `apps/frontend/app/(app)/dashboard/EnginePostureHeader.tsx` behavior change, **no** badge-label change, **no** `EnginePosture` change, **no** runtime state machine change, **no** mock values, **no** backend, **no** policy, **no** engine logic, **no** allocation calculation, **no** execution semantics, **no** accounting truth, **no** Class B authority, **no** Copilot runtime, **no** CI / workflow change, **no** ADR status change, and **no** successor ticket created by closeout.
+
+**Brand / UI posture.** Brand-facing UI posture remains calm, institutional, and trust-first. No brand tokens, typography, governed assets, layout, visual styling, gradients, shadows, glows, speculative crypto styling, or dopamine-oriented presentation changed.
+
+**Validation.** Targeted Vitest copy/header contracts: `pnpm --filter @hedgr/frontend exec vitest run __tests__/engine-posture-context-contract.test.ts __tests__/engine-stability-review-snapshot-copy-contract.test.ts __tests__/engine-posture-header.test.tsx`. Full local runbook validation: `pnpm run validate`; backend-stub local `e2e:ci`; CI required checks `validate` and `E2E smoke (@hedgr/frontend)`.
+
+### Sequencing note
+
+**§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
+
+**Follow-ups:** No successor implementation ticket is created by this closeout. `MC-S3-0xx` remains a governance-highlighted candidate only until **§7** explicitly names it with a bounded **§7a** brief.

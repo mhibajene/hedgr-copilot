@@ -35,6 +35,14 @@ const ENGINE_STABILITY_REVIEW_SNAPSHOT_COPY_SEGMENTS: readonly string[] = [
   getEngineStabilityReviewTimestampLine('2026-04-11T12:00:00Z'),
 ];
 
+const HELD_OR_REJECTED_PRIMARY_TERMS = [
+  /\bbalanced\b/i,
+  /\bmonitoring\b/i,
+  /\bmonitoring volatility\b/i,
+  /\bprotected\b/i,
+  /\bprotective mode active\b/i,
+];
+
 describe('ENGINE_STABILITY_REVIEW_SNAPSHOT copy contract', () => {
   test.each(
     ENGINE_STABILITY_REVIEW_SNAPSHOT_COPY_SEGMENTS.map((text, idx) => [`segment-${idx}`, text] as const),
@@ -51,5 +59,32 @@ describe('ENGINE_STABILITY_REVIEW_SNAPSHOT copy contract', () => {
     }
     expect(lower).not.toMatch(/\bexecuted\b/);
     expect(lower).not.toMatch(/\bguaranteed\b/);
+  });
+
+  test('stance copy stays inside promoted or already-grounded protective posture language', () => {
+    expect(getEngineStabilityReviewSnapshotStance('normal')).toMatch(
+      /within expected range/i,
+    );
+    expect(getEngineStabilityReviewSnapshotStance('recovery')).toMatch(
+      /within expected range/i,
+    );
+    expect(getEngineStabilityReviewSnapshotStance('tightening')).toMatch(
+      /protective posture/i,
+    );
+    expect(getEngineStabilityReviewSnapshotStance('tightened')).toMatch(
+      /protective posture/i,
+    );
+
+    for (const posture of [
+      'normal',
+      'tightening',
+      'tightened',
+      'recovery',
+    ] as const satisfies readonly EnginePosture[]) {
+      const stance = getEngineStabilityReviewSnapshotStance(posture);
+      for (const forbidden of HELD_OR_REJECTED_PRIMARY_TERMS) {
+        expect(stance).not.toMatch(forbidden);
+      }
+    }
   });
 });
