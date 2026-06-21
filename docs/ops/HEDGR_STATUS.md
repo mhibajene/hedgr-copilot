@@ -3078,7 +3078,30 @@ Implementation posture preserved:
 - presentation / copy only.
 - no `apps/frontend/lib/engine/types.ts`, no `notices.ts`, no `mock.ts`, no `simulator.ts`, no `useEngineState.ts`.
 - no new `EnginePosture` values, no runtime state machine changes, no mock values, no simulator behavior changes, no backend, no policy, no engine logic, no execution semantics, no accounting truth, no Class B authority, no Copilot runtime, no CI / workflow changes, and no ADR status changes.
-- `MC-S3-0xx` remains a candidate successor only until separately named in §7 with a bounded §7a brief.
+- The successor candidate referenced at `SE-POSTURE-001` closeout was later completed as `MC-S3-021`; live sequencing remains governed only by §7 / §7a.
+
+### MC-S3-021 - Regression resistance tranche 7 for Stability Engine posture copy (test-only)
+
+Changed files:
+
+- `apps/frontend/tests-e2e/smoke-pack.spec.ts`
+- `docs/ops/stability-engine/HEDGR_STABILITY_ENGINE_TRUST_SURFACE_TEST_COVERAGE_MATRIX.md`
+- `docs/ops/HEDGR_STATUS.md`
+- `docs/ops/NOTION_GOVERNANCE_STAGING.md`
+
+Implementation truth:
+
+- Playwright smoke coverage now asserts that the shipped dashboard default posture context renders the `SE-POSTURE-001` promoted / already-grounded secondary-copy patterns after mock login.
+- Playwright smoke coverage now asserts that the shipped dashboard default stability-review stance renders `Where things stand: within expected range`.
+- Playwright smoke coverage now asserts that the scoped rendered posture context and stance do not expose exact held or rejected primary condition terms (`Balanced`, `Monitoring`, `Monitoring Volatility`, `Protected`, `Protective Mode Active`).
+- the trust-surface coverage matrix records the new rendered-route smoke coverage as additional regression resistance for `SE-POSTURE-001` outputs.
+
+Implementation posture preserved:
+
+- test-only regression resistance.
+- no production UI or copy changes.
+- no `apps/frontend/lib/engine/**` changes.
+- no new `EnginePosture` values, no badge-label changes, no notice changes, no mock values, no simulator behavior changes, no backend, no policy, no engine logic, no execution semantics, no accounting truth, no Class B authority, no Copilot runtime, no CI / workflow changes, and no ADR status changes.
 
 ---
 
@@ -3189,11 +3212,11 @@ Completed and merged:
 - `DOC-SE-REF-001` - Stability Condition Interface Reference Preservation Closeout (documentation-only governance closeout for the already-merged non-authoritative reference artifact; completed record **§101**)
 - `SE-VAL-001` - Condition / Posture Language Validation Readout (documentation-only governance / scrutiny input; completed record **§102**)
 - `SE-POSTURE-001` - Narrow posture secondary-copy refinement pass (presentation-only Stability Engine trust-surface copy refinement; completed record **§103**)
+- `MC-S3-021` - Regression resistance tranche 7 for Stability Engine posture copy (test-only; completed record **§104**)
 
 Current active ticket status:
 
-- **Approved next ticket:** **None named.** `SE-POSTURE-001` (Narrow posture secondary-copy refinement pass) is complete and recorded in **§103**; **§7** / **§7a** are restored to no-active-ticket posture. There is **no** approved next implementation ticket until **§7** is updated explicitly to name one.
-- **Governance-highlighted successor (not authorized in this closeout):** **`MC-S3-0xx`** — Regression resistance tranche 7 (test-only) for shipped Stability Engine trust surfaces; candidate successor for governance consideration after `SE-POSTURE-001` closeout only. Highlights the next likely regression-resistance shape per `MC-S3-004`–`MC-S3-015` precedent and §6b category **5** (admissible). Does **not** authorize start, queue, parallel work, or momentum sequencing until explicitly named in **§7** with a bounded **§7a** brief. Expected objective shape: Vitest/Playwright copy contracts locking `SE-POSTURE-001` secondary-copy outputs and informational / non-ledger denylist guards — **no** new states, **no** new product behavior.
+- **Approved next ticket:** **None named.** `MC-S3-021` (Regression resistance tranche 7 for Stability Engine posture copy) is complete and recorded in **§104**; **§7** / **§7a** are restored to no-active-ticket posture. There is **no** approved next implementation ticket until **§7** is updated explicitly to name one.
 - **Brand System Governance sequencing:** **§6d** records the approved Brand System Governance ticket set and recommended order. `BRAND-001`, `BRAND-002`, `BRAND-003`, `BRAND-004`, `BRAND-005`, `BRAND-006`, and `BRAND-007` are complete. No successor Brand System Governance implementation ticket is approved unless **§7** is updated explicitly to name one with a bounded **§7a** brief.
 - **Post–`GOV-INTAKE-B-002` sequencing (governance-accepted):** `GOV-INTAKE-B-002` completed the Class B Evidence Intake Governance Model as a documentation-only governance artifact. It did **not** authorize evidence intake, evidence collection, evidence requests, evidence acceptance, evidence rejection, evidence scoring, evidence evaluation, registry-state changes, evidence-state changes, blocker closure, gap closure, readiness, ADR drafting readiness, implementation-proposal preflight, implementation, staging, sandbox use, internal testing, live operations, custody, rails, stablecoin conversion, treasury operations, reconciliation, support operations, audit operations, ledger truth, accounting truth, Copilot execution, Class C automation, or customer fund movement authority.
 - **Post–`COP-GOV-001` sequencing (governance-accepted):** `COP-GOV-001` completed the intended **advisory-boundary definition** lane as a documentation-only governance artifact. It did **not** widen product, engine, backend, policy, Copilot **runtime**, execution, accounting, ledger, vendor, custody, stablecoin, Circle, live-service, or customer-facing automation authority. Copilot MVP posture remains **advisory, non-directive, non-executing, hermetic, non-accounting, non-policy-authoritative**, and **outside `§6b` category 8** unless future doctrine and ADRs widen the boundary. Any later Copilot **implementation** requires a separate **§7** name and **§7a** brief. Do not infer Copilot implementation, runtime binding, engine binding, policy binding, backend work, execution authority, or finance-style autonomy from `COP-GOV-001`.
@@ -3206,13 +3229,13 @@ Current active ticket status:
 - Cursor must not continue automatically into work beyond what is explicitly defined in this file for an active ticket.
 - Cursor must not drift beyond explicitly defined scope.
 
-**Last completed ticket (summary):** `SE-POSTURE-001` — Narrow posture secondary-copy refinement pass (presentation-only Stability Engine trust-surface copy refinement; applied `SE-VAL-001` promoted / already-grounded posture-language patterns to `ENGINE_POSTURE_CONTEXT` and stability-review stance copy; added Vitest copy-contract guards against exact held / rejected primary terms; no `EnginePosture` change, badge-label change, notice change, mock / simulator change, backend, policy, engine logic, execution semantics, accounting truth, Class B authority, Copilot runtime, CI / workflow change, or ADR status change; **§7** / **§7a** restored to no-active-ticket posture); completed record in **§103**.
+**Last completed ticket (summary):** `MC-S3-021` — Regression resistance tranche 7 for Stability Engine posture copy (test-only Playwright smoke hardening that locks the shipped dashboard default `SE-POSTURE-001` posture context and stability-review stance outputs after mock login; guards against exact held / rejected primary condition terms; no production UI or copy changes, no `apps/frontend/lib/engine/**`, no `EnginePosture` change, no badge-label change, no notice change, no mock / simulator change, no backend, no policy, no engine logic, no execution semantics, no accounting truth, no Class B authority, no Copilot runtime, no CI / workflow change, or ADR status change; **§7** / **§7a** restored to no-active-ticket posture); completed record in **§104**.
 
 ---
 
 ## 7a. Active execution ticket
 
-**Status:** **No active execution ticket.** **§7** does not currently name an approved next implementation ticket. The most recently completed ticket, `SE-POSTURE-001` (Narrow posture secondary-copy refinement pass), is recorded in **§103**.
+**Status:** **No active execution ticket.** **§7** does not currently name an approved next implementation ticket. The most recently completed ticket, `MC-S3-021` (Regression resistance tranche 7 for Stability Engine posture copy), is recorded in **§104**.
 
 When governance approves the next ticket, **§7** will name it and this section will hold the full execution brief until closeout.
 
@@ -3358,12 +3381,14 @@ When governance approves the next ticket, **§7** will name it and this section 
 - **MC-S3-012 merged-truth reconciliation (documentation/governance-only, completed):** `MC-S3-014` — **§46** (completed ticket record).
 - **Regression resistance tranche 6 (test-only, completed):** `MC-S3-015` — **§47** (completed ticket record); merged PR **#138**.
 - **Narrow posture secondary-copy refinement pass (presentation-only, completed):** `SE-POSTURE-001` — **§103** (completed ticket record).
-- **Governance-highlighted successor (not authorized in this closeout):** **`MC-S3-0xx`** — Regression resistance tranche 7 (test-only); candidate for **§7** consideration after `SE-POSTURE-001` closeout only — see **§7** successor bullet.
+- **Regression resistance tranche 7 for Stability Engine posture copy (test-only, completed):** `MC-S3-021` — **§104** (completed ticket record).
 - **Merged implementation truth:** **§6** remains canonical for shipped code boundaries.
 - When a successor ticket is approved, record it in **§7** and restore the execution brief in **§7a** per governance discipline.
 - Do not infer continuation work from *Proposed* ADRs or roadmap narrative unless **§7** names a ticket.
 
 **Archived brief (SE-POSTURE-001):** Narrow posture secondary-copy refinement pass — **presentation-only** Stability Engine trust-surface refinement; scope held to `apps/frontend/lib/engine/posture-context.ts`, `apps/frontend/lib/engine/stability-review-snapshot-copy.ts`, ticket-local Vitest copy-contract tests, `docs/ops/HEDGR_STATUS.md`, and `docs/ops/NOTION_GOVERNANCE_STAGING.md`. Applied `SE-VAL-001` promoted / already-grounded posture-language patterns to shipped secondary posture copy and stability-review stance copy. Badge labels remained technical uppercase (`NORMAL`, `TIGHTENING`, `TIGHTENED`, `RECOVERY`). **No** `EnginePosture` change, **no** notice-copy change, **no** mock / simulator change, **no** backend, **no** policy, **no** engine logic, **no** execution semantics, **no** accounting truth, **no** Class B authority, **no** Copilot runtime, **no** CI / workflow change, and **no** ADR status change. Completed record: **§103**.
+
+**Archived brief (MC-S3-021):** Regression resistance tranche 7 for Stability Engine posture copy — **test-only** Playwright smoke hardening for shipped `SE-POSTURE-001` dashboard copy outputs. Scope held to `apps/frontend/tests-e2e/smoke-pack.spec.ts`, `docs/ops/stability-engine/HEDGR_STABILITY_ENGINE_TRUST_SURFACE_TEST_COVERAGE_MATRIX.md`, `docs/ops/HEDGR_STATUS.md`, and `docs/ops/NOTION_GOVERNANCE_STAGING.md`. Locked default rendered posture context and stability-review stance after mock login; guarded exact held / rejected primary condition terms. **No** production UI or copy change, **no** `apps/frontend/lib/engine/**`, **no** `EnginePosture` change, **no** badge-label change, **no** notice-copy change, **no** mock / simulator change, **no** backend, **no** policy, **no** execution semantics, **no** accounting truth, **no** CI / workflow change, and **no** ADR status change. Completed record: **§104**.
 
 **Archived brief (MC-S2-023):** Governance-first, documentation-only closeout assessment; no product/runtime changes; objective was explicit criteria, evidence-based evaluation, and repo-native Shipped vs In Progress recommendation — delivered in **§6a**.
 
@@ -5791,4 +5816,34 @@ This **§43** record was originally written in the same working-tree change-set 
 
 **§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
 
-**Follow-ups:** No successor implementation ticket is created by this closeout. `MC-S3-0xx` remains a governance-highlighted candidate only until **§7** explicitly names it with a bounded **§7a** brief.
+**Follow-ups:** The successor candidate referenced by this closeout was later completed as `MC-S3-021`. No additional successor implementation ticket is created by this completed record; live sequencing remains governed only by **§7** / **§7a**.
+
+---
+
+## 104. Completed execution ticket - MC-S3-021 (Regression resistance tranche 7 for Stability Engine posture copy)
+
+**Ticket:** `MC-S3-021` — Regression resistance tranche 7 for Stability Engine posture copy (test-only)
+
+**Objective.** Add rendered-route regression resistance for `SE-POSTURE-001` posture secondary-copy outputs so the shipped dashboard smoke path locks the default posture context and stability-review stance copy after mock login — without changing production UI, engine copy modules, runtime state, badge labels, notices, mock values, simulator behavior, backend behavior, policy, execution, accounting, or ADR status.
+
+### Outcome (test-only)
+
+- **`apps/frontend/tests-e2e/smoke-pack.spec.ts`** — extended the existing dashboard Stability Engine smoke test to assert that default rendered posture context includes `Within expected range` and `conservative yield`.
+- **`apps/frontend/tests-e2e/smoke-pack.spec.ts`** — asserted the default rendered posture badge remains `NORMAL`.
+- **`apps/frontend/tests-e2e/smoke-pack.spec.ts`** — asserted the default rendered stability-review stance remains `Where things stand: within expected range`.
+- **`apps/frontend/tests-e2e/smoke-pack.spec.ts`** — added route-level guards ensuring the scoped rendered posture context and stance do not expose exact held or rejected primary condition terms (`Balanced`, `Monitoring`, `Monitoring Volatility`, `Protected`, `Protective Mode Active`).
+- **`docs/ops/stability-engine/HEDGR_STABILITY_ENGINE_TRUST_SURFACE_TEST_COVERAGE_MATRIX.md`** — recorded the rendered-route Playwright smoke coverage as regression resistance for `SE-POSTURE-001` shipped copy outputs.
+- **`docs/ops/HEDGR_STATUS.md`** — §7 activation, §7a brief during execution, §6 merged-truth entry, completed-list update, last-completed summary update, no-active-ticket restoration, and this completed-ticket record.
+- **`docs/ops/NOTION_GOVERNANCE_STAGING.md`** — downstream mirror reconciled to reflect `MC-S3-021` completion without creating Notion-led authority.
+
+**Governance guarantees held.** The runtime `EnginePosture` contract remains `normal`, `tightening`, `tightened`, and `recovery`. Dashboard posture badges remain technical uppercase labels. `Balanced`, `Monitoring`, and `Monitoring Volatility` remain held reference-only candidates; `Protected` and `Protective Mode Active` remain rejected as exact shipped state / badge / primary condition language. This ticket adds rendered-route regression resistance only.
+
+**Scope discipline held.** **No** production UI or copy changes, **no** `apps/frontend/lib/engine/**`, **no** `EnginePosture` change, **no** runtime state machine change, **no** badge-label change, **no** notice-copy change, **no** mock values, **no** simulator behavior change, **no** backend, **no** policy, **no** engine logic, **no** allocation calculation, **no** execution semantics, **no** accounting truth, **no** Class B authority, **no** Copilot runtime, **no** CI / workflow change, **no** ADR status change, and **no** successor ticket created by closeout.
+
+**Validation.** Targeted Playwright smoke test: `NEXT_PUBLIC_AUTH_MODE=mock NEXT_PUBLIC_DEFI_MODE=mock NEXT_PUBLIC_FX_MODE=stub NEXT_PUBLIC_MARKET_MODE=manual NEXT_PUBLIC_MARKET_SELECTED=UNKNOWN NEXT_PUBLIC_APP_ENV=dev NEXT_PUBLIC_API_BASE_URL=http://localhost:5050 NEXT_PUBLIC_FEATURE_COPILOT_ENABLED=true pnpm --filter @hedgr/frontend exec playwright test tests-e2e/smoke-pack.spec.ts --grep \"dashboard shows Stability Engine posture context\" --reporter=dot`. Full local runbook validation: `pnpm run validate`; backend-stub local `e2e:ci`; CI required checks `validate` and `E2E smoke (@hedgr/frontend)`.
+
+### Sequencing note
+
+**§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
+
+**Follow-ups:** No successor implementation ticket is created by this regression-resistance tranche. Any future Stability Engine trust-surface, test, copy, UI, engine, ADR, runtime, status, sequencing, or reference-expansion work appears only when repo governance names it explicitly.
