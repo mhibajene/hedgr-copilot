@@ -26,6 +26,44 @@ components:
   button-secondary-hover:
     backgroundColor: "{colors.white}"
     textColor: "{colors.color-600}"
+semanticStatus:
+  info:
+    surface: "{colors.color-100}"
+    border: "{colors.color-200}"
+    text: "{colors.color-800}"
+    emphasis: "{colors.color-600}"
+  success:
+    surface: "{colors.white}"
+    border: "{colors.color-200}"
+    text: "{colors.color-800}"
+    emphasis: "{colors.primary}"
+  warning:
+    surface: "{colors.white}"
+    border: "{colors.color-300}"
+    text: "{colors.dark}"
+    emphasis: "{colors.color-700}"
+  error:
+    surface: "{colors.white}"
+    border: "{colors.color-800}"
+    text: "{colors.color-800}"
+    emphasis: "{colors.dark}"
+  neutral:
+    surface: "{colors.white}"
+    border: "{colors.color-200}"
+    text: "{colors.dark}"
+    emphasis: "{colors.color-500}"
+  focus:
+    ring: "{colors.color-500}"
+    offset: "{colors.white}"
+  disabled:
+    surface: "{colors.color-100}"
+    border: "{colors.color-200}"
+    text: "{colors.color-700}"
+  trust-disclosure:
+    surface: "{colors.color-100}"
+    border: "{colors.color-300}"
+    text: "{colors.color-800}"
+    emphasis: "{colors.primary}"
 ---
 
 ## Overview
@@ -92,6 +130,10 @@ Any pairing of two colors from {primary, `color-100`–`color-700`, `#1F2937`, `
 - Dark pill: background `#1F2937` or `color-800`, text `#FFFFFF` or a light palette tint.
 - Tinted pill: background `color-100` / `color-200`, text `color-700` / `color-800`.
 - Brand pill: background `primary` (`#1F2747`), text `#FFFFFF`. Only if the pair passes 6:1.
+
+### Semantic status aliases
+
+The `semanticStatus` aliases in the frontmatter define governed status-role relationships using existing color tokens only. They do not add new token values, approve broad UI migration, or permit raw red / yellow / green palette utilities on brand-facing surfaces. Use `docs/brand/HEDGR_SEMANTIC_STATUS_TOKENS.md` for role meaning, mapping discipline, and trust-disclosure rules.
 
 ### Contrast note
 

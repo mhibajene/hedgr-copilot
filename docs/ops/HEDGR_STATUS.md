@@ -1,6 +1,6 @@
 Status: Canonical hand-off file
 Purpose: Strategic continuity, merged implementation truth, and next-ticket authority for Cursor execution
-Last updated: 2026-06-21
+Last updated: 2026-06-22
 
 ---
 
@@ -2970,12 +2970,13 @@ This verdict means the repo has enough documented governance criteria, boundary 
 | `BRAND-005` | Add brand governance QA checklist to PR process | governance-workflow hardening | completed record **§68** |
 | `BRAND-006` | Audit and reconcile existing UI against governed brand system | audit-first governance reconciliation | completed record **§72** |
 | `BRAND-007` | Add Codex/Cursor implementation constraints | operator-governance hardening | completed record **§69** |
+| `BRAND-008` | Governed semantic status token definition (`BRAND-006` remediation #1 / `BRAND-006-FU-001`) | documentation-only brand authority prerequisite | completed record **§105** |
 
 ### Recommended sequence
 
-`BRAND-001` -> `BRAND-002` -> `BRAND-005` -> `BRAND-007` -> `BRAND-003` -> `BRAND-004` -> `BRAND-006`.
+`BRAND-001` -> `BRAND-002` -> `BRAND-005` -> `BRAND-007` -> `BRAND-003` -> `BRAND-004` -> `BRAND-006` -> `BRAND-008` (remediation lane).
 
-This sequence is a governance spine ordering aid. `BRAND-001`, `BRAND-002`, `BRAND-003`, `BRAND-004`, `BRAND-005`, `BRAND-006`, and `BRAND-007` are complete. Only the ticket explicitly named in **§7** is approved for execution at any given time, and the active scope must live in **§7a**.
+This sequence is a governance spine ordering aid. `BRAND-001`, `BRAND-002`, `BRAND-003`, `BRAND-004`, `BRAND-005`, `BRAND-006`, `BRAND-007`, and `BRAND-008` are complete. Any further brand remediation successor appears only when **§7** / **§7a** name it. Only the ticket explicitly named in **§7** is approved for execution at any given time, and the active scope must live in **§7a**.
 
 ### BRAND-001 boundaries
 
@@ -3018,6 +3019,39 @@ This sequence is a governance spine ordering aid. `BRAND-001`, `BRAND-002`, `BRA
 `BRAND-006` created the canonical governed UI reconciliation audit at **`docs/brand/HEDGR_BRAND_UI_RECONCILIATION_AUDIT.md`**. The audit inventories existing frontend token usage, typography posture, asset-governance posture, gradients / shadows / motion, accessibility concerns, spacing / radius patterns, and calm institutional UX doctrine alignment against governed Brand System authority.
 
 `BRAND-006` must remain audit-first governance reconciliation only. It must not redesign shipped screens, restructure layouts, widen runtime semantics, modify backend code, introduce CI or lint tooling, modify `DESIGN.md` token values, generate assets, create competing authority layers, or convert recommended remediation into approved implementation without a future **§7** / **§7a** ticket.
+
+### BRAND-008 boundaries
+
+`BRAND-008` implements **`BRAND-006`** audit remediation recommendation #1 (`BRAND-006-FU-001`): governed semantic status-token definition subordinate to `DESIGN.md`. It may add or extend `docs/brand/**` semantic-token documentation and, if governance approves within **§7a**, additive `DESIGN.md` governance extensions for semantic status meanings (info, success, warning, error, neutral, focus, disabled, trust-disclosure).
+
+`BRAND-008` must remain documentation-only brand authority prerequisite work. It must not modify `apps/`, `packages/`, backend code, shipped or prototype routes, tests, CI tooling, broad UI redesign, token mass-conversion, palette expansion, Stability Engine trust surfaces, Class B authority, Copilot runtime, or successor remediation tickets `BRAND-006-FU-002` through `BRAND-006-FU-006` unless a future **§7** ticket names them explicitly.
+
+Implementation truth:
+
+- `DESIGN.md` now contains additive `semanticStatus` aliases for info, success, warning, error, neutral, focus, disabled, and trust-disclosure roles, all mapped to existing governed color tokens only.
+- `docs/brand/HEDGR_SEMANTIC_STATUS_TOKENS.md` is the canonical semantic status-token governance artifact defining role meaning, mapping discipline, raw palette utility prohibitions, trust-disclosure boundaries, and non-authorization.
+- `docs/brand/HEDGR_DESIGN_TOKENS.md` cross-references the semantic aliases and preserves `DESIGN.md` as machine-readable authority.
+- `BRAND-006-FU-001` is satisfied as documentation-only prerequisite work; `BRAND-006-FU-002` through `BRAND-006-FU-006` remain unimplemented recommendations until separately named.
+
+Implementation posture preserved:
+
+- documentation-only brand authority prerequisite
+- no `apps/`
+- no `packages/`
+- no backend
+- no frontend runtime UI changes
+- no shipped or prototype route edits
+- no tests
+- no CI tooling
+- no token mass-conversion
+- no `DESIGN.md` color-value changes
+- no palette expansion
+- no asset generation
+- no broad UI redesign
+- no Stability Engine trust-surface changes
+- no Class B authority
+- no Copilot runtime
+- no ADR status changes
 
 ### DOC-SE-REF-001 - Stability Condition Interface Reference Preservation Closeout
 
@@ -3213,11 +3247,12 @@ Completed and merged:
 - `SE-VAL-001` - Condition / Posture Language Validation Readout (documentation-only governance / scrutiny input; completed record **§102**)
 - `SE-POSTURE-001` - Narrow posture secondary-copy refinement pass (presentation-only Stability Engine trust-surface copy refinement; completed record **§103**)
 - `MC-S3-021` - Regression resistance tranche 7 for Stability Engine posture copy (test-only; completed record **§104**)
+- `BRAND-008` - Governed semantic status token definition (`BRAND-006` remediation #1 / `BRAND-006-FU-001`; documentation-only brand authority prerequisite; completed record **§105**)
 
 Current active ticket status:
 
-- **Approved next ticket:** **None named.** `MC-S3-021` (Regression resistance tranche 7 for Stability Engine posture copy) is complete and recorded in **§104**; **§7** / **§7a** are restored to no-active-ticket posture. There is **no** approved next implementation ticket until **§7** is updated explicitly to name one.
-- **Brand System Governance sequencing:** **§6d** records the approved Brand System Governance ticket set and recommended order. `BRAND-001`, `BRAND-002`, `BRAND-003`, `BRAND-004`, `BRAND-005`, `BRAND-006`, and `BRAND-007` are complete. No successor Brand System Governance implementation ticket is approved unless **§7** is updated explicitly to name one with a bounded **§7a** brief.
+- **Approved next ticket:** **`MC-S3-022`** — Regression resistance tranche 8: Playwright smoke extension for shipped dashboard allocation-band informational framing (`UI-ALG-001`). Active execution brief in **§7a**. This ticket activates only the test-only regression-resistance scope described in **§7a**; it does **not** authorize production UI changes, copy changes, engine logic changes, simulator seam widening, or brand remediation work.
+- **Brand System Governance sequencing:** **§6d** records the approved Brand System Governance ticket set and recommended order. `BRAND-001` through `BRAND-008` are complete. Further `BRAND-006` remediation recommendations remain non-authorizing until a future **§7** ticket names them with a bounded **§7a** brief.
 - **Post–`GOV-INTAKE-B-002` sequencing (governance-accepted):** `GOV-INTAKE-B-002` completed the Class B Evidence Intake Governance Model as a documentation-only governance artifact. It did **not** authorize evidence intake, evidence collection, evidence requests, evidence acceptance, evidence rejection, evidence scoring, evidence evaluation, registry-state changes, evidence-state changes, blocker closure, gap closure, readiness, ADR drafting readiness, implementation-proposal preflight, implementation, staging, sandbox use, internal testing, live operations, custody, rails, stablecoin conversion, treasury operations, reconciliation, support operations, audit operations, ledger truth, accounting truth, Copilot execution, Class C automation, or customer fund movement authority.
 - **Post–`COP-GOV-001` sequencing (governance-accepted):** `COP-GOV-001` completed the intended **advisory-boundary definition** lane as a documentation-only governance artifact. It did **not** widen product, engine, backend, policy, Copilot **runtime**, execution, accounting, ledger, vendor, custody, stablecoin, Circle, live-service, or customer-facing automation authority. Copilot MVP posture remains **advisory, non-directive, non-executing, hermetic, non-accounting, non-policy-authoritative**, and **outside `§6b` category 8** unless future doctrine and ADRs widen the boundary. Any later Copilot **implementation** requires a separate **§7** name and **§7a** brief. Do not infer Copilot implementation, runtime binding, engine binding, policy binding, backend work, execution authority, or finance-style autonomy from `COP-GOV-001`.
 - **Governance reconciliation note:** **`UI-SRA-001`** activation artifacts (`docs/ops/retail-ui/implementation-readouts/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_EXECUTION_REQUEST.md`, **`docs/ops/retail-ui/implementation-readouts/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_STATUS_PATCH_PROPOSAL.md`**, and **§7** / **§7a** activation language) first landed in commit **`1bd65d1`**; shipped dashboard implementation landed in **`da96e1e`**. Branch history was reconciled so activation, support docs, implementation, and this closeout (**§44**) cohabit the same lineage without implying a false single-commit ordering. See **`docs/ops/retail-ui/implementation-readouts/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_EXECUTION_READOUT.md` §2**.
@@ -3229,15 +3264,57 @@ Current active ticket status:
 - Cursor must not continue automatically into work beyond what is explicitly defined in this file for an active ticket.
 - Cursor must not drift beyond explicitly defined scope.
 
-**Last completed ticket (summary):** `MC-S3-021` — Regression resistance tranche 7 for Stability Engine posture copy (test-only Playwright smoke hardening that locks the shipped dashboard default `SE-POSTURE-001` posture context and stability-review stance outputs after mock login; guards against exact held / rejected primary condition terms; no production UI or copy changes, no `apps/frontend/lib/engine/**`, no `EnginePosture` change, no badge-label change, no notice change, no mock / simulator change, no backend, no policy, no engine logic, no execution semantics, no accounting truth, no Class B authority, no Copilot runtime, no CI / workflow change, or ADR status change; **§7** / **§7a** restored to no-active-ticket posture); completed record in **§104**.
+**Last completed ticket (summary):** `BRAND-008` — Governed semantic status token definition (`BRAND-006` remediation #1 / `BRAND-006-FU-001`; documentation-only brand authority prerequisite defining `semanticStatus` aliases in `DESIGN.md`, canonical semantic status-token governance under `docs/brand/`, role mapping discipline, raw palette utility prohibitions, trust-disclosure boundaries, and non-authorization; no `apps/`, no `packages/`, no backend, no shipped UI, no tests, no CI tooling, no token mass-conversion, no palette expansion, no asset generation, no Stability Engine trust-surface changes, no Class B authority, no Copilot runtime, and no ADR status change); completed record in **§105**.
 
 ---
 
 ## 7a. Active execution ticket
 
-**Status:** **No active execution ticket.** **§7** does not currently name an approved next implementation ticket. The most recently completed ticket, `MC-S3-021` (Regression resistance tranche 7 for Stability Engine posture copy), is recorded in **§104**.
+**Ticket:** `MC-S3-022` — Regression resistance tranche 8 for shipped dashboard allocation-band informational framing
 
-When governance approves the next ticket, **§7** will name it and this section will hold the full execution brief until closeout.
+**Type:** Test-only
+
+**Objective:** Extend Playwright smoke coverage for the shipped dashboard allocation-band informational framing introduced and refined through `UI-ALG-001`, so the rendered route locks the visible non-accounting / non-execution framing for allocation targets after mock login without changing production UI, copy, engine behavior, simulator behavior, backend behavior, policy, accounting, or ADR status.
+
+**In scope:**
+
+- `apps/frontend/tests-e2e/smoke-pack.spec.ts` — extend the existing shipped dashboard smoke path for `engine-allocation-bands` copy / framing assertions
+- `docs/ops/stability-engine/HEDGR_STABILITY_ENGINE_TRUST_SURFACE_TEST_COVERAGE_MATRIX.md` — record the rendered-route Playwright coverage for allocation-band informational framing if coverage notes need updating
+- `docs/ops/HEDGR_STATUS.md` — ticket activation, closeout, completed-record entry, and restoration to no-active-ticket posture unless governance explicitly names a successor
+- `docs/ops/NOTION_GOVERNANCE_STAGING.md` — downstream mirror reconciliation after completion
+
+**Surfaces:**
+
+- Shipped dashboard Stability Engine trust cluster
+- `EngineAllocationBands` rendered output as exercised by Playwright through the dashboard route
+- `UI-ALG-001` allocation comprehension pass output and ADR `0013` informational allocation boundary
+- Existing smoke-pack mock-login and dashboard navigation path
+
+**Must not:**
+
+- production UI changes
+- production copy changes
+- `apps/frontend/lib/engine/**`
+- `EnginePosture` values, posture badge labels, notice copy, mock values, or simulator behavior
+- allocation calculations, accounting semantics, ledger truth, settled balances, or executable allocation framing
+- backend, policy, Copilot runtime, vendor, custody, treasury, rail, stablecoin, Circle, live-service, deposit, withdrawal, reconciliation, support, or customer-money behavior
+- CI / workflow changes
+- docs-only brand remediation, Class B authority, or semantic-token work
+- ADR status changes or new ADRs
+- broad Playwright suite restructuring or new route coverage outside the existing shipped dashboard smoke path
+
+**Acceptance shape:**
+
+- The shipped dashboard smoke test asserts that `engine-allocation-bands` renders visible, non-empty allocation-band framing after mock login.
+- The smoke test locks key rendered allocation-band informational semantics from `UI-ALG-001`, including targets / balances / movement distinctions and non-accounting / non-execution framing.
+- The smoke test guards against rendered phrases that would imply executed allocation, settled ledger movement, or customer-balance partitioning.
+- Coverage matrix and status docs record the added rendered-route regression resistance without changing production UI or source copy.
+- `HEDGR_STATUS.md` restores **§7** / **§7a** to no-active-ticket posture on closeout unless governance explicitly names a successor.
+- `NOTION_GOVERNANCE_STAGING.md` is reconciled after completion.
+
+---
+
+**Archived brief (BRAND-008):** Governed semantic status token definition (`BRAND-006` remediation #1 / `BRAND-006-FU-001`) — **documentation-only brand authority prerequisite**; scope held to **`DESIGN.md`**, **`docs/brand/HEDGR_SEMANTIC_STATUS_TOKENS.md`**, **`docs/brand/HEDGR_DESIGN_TOKENS.md`**, **`docs/ops/HEDGR_STATUS.md`**, and **`docs/ops/NOTION_GOVERNANCE_STAGING.md`**. Defined governed `semanticStatus` aliases for info, success, warning, error, neutral, focus, disabled, and trust-disclosure roles using existing `DESIGN.md` tokens only. Added canonical role meaning, mapping discipline, raw palette utility prohibitions, trust-disclosure rules, and non-authorization language so future brand remediation can avoid ad hoc palette drift. This prerequisite does **not** authorize shipped UI migration, shared UI changes, token mass-conversion, palette expansion, runtime semantics, Stability Engine changes, Class B authority, Copilot runtime, or remediation steps `BRAND-006-FU-002` through `BRAND-006-FU-006`. Completed record: **§105**.
 
 ---
 
@@ -3382,6 +3459,8 @@ When governance approves the next ticket, **§7** will name it and this section 
 - **Regression resistance tranche 6 (test-only, completed):** `MC-S3-015` — **§47** (completed ticket record); merged PR **#138**.
 - **Narrow posture secondary-copy refinement pass (presentation-only, completed):** `SE-POSTURE-001` — **§103** (completed ticket record).
 - **Regression resistance tranche 7 for Stability Engine posture copy (test-only, completed):** `MC-S3-021` — **§104** (completed ticket record).
+- **Governed semantic status token definition (documentation-only, completed):** `BRAND-008` — **§105** (completed ticket record).
+- **Active ticket:** **`MC-S3-022`** — Regression resistance tranche 8 for shipped dashboard allocation-band informational framing smoke coverage (test-only); brief in **§7a**.
 - **Merged implementation truth:** **§6** remains canonical for shipped code boundaries.
 - When a successor ticket is approved, record it in **§7** and restore the execution brief in **§7a** per governance discipline.
 - Do not infer continuation work from *Proposed* ADRs or roadmap narrative unless **§7** names a ticket.
@@ -5847,3 +5926,31 @@ This **§43** record was originally written in the same working-tree change-set 
 **§7** / **§7a** record completion per governance; the **live** approved next ticket is whatever **§7** names (brief in **§7a**) — do not treat this completed-record footer as current sequencing authority.
 
 **Follow-ups:** No successor implementation ticket is created by this regression-resistance tranche. Any future Stability Engine trust-surface, test, copy, UI, engine, ADR, runtime, status, sequencing, or reference-expansion work appears only when repo governance names it explicitly.
+
+---
+
+## 105. Completed execution ticket - BRAND-008 (Governed semantic status token definition)
+
+**Ticket:** `BRAND-008` — Governed semantic status token definition (`BRAND-006` remediation #1 / `BRAND-006-FU-001`; documentation-only brand authority prerequisite)
+
+**Objective.** Define governed semantic status tokens for info, success, warning, error, neutral, focus, disabled, and trust-disclosure states, subordinate to `DESIGN.md`, so future brand remediation can normalize shipped and shared UI styling without ad hoc palette drift — without authorizing shipped UI migration, shared UI changes, token mass-conversion, palette expansion, runtime semantics, Stability Engine changes, or successor remediation steps.
+
+### Outcome (documentation-only)
+
+- **`DESIGN.md`** — added additive `semanticStatus` aliases for info, success, warning, error, neutral, focus, disabled, and trust-disclosure roles, all mapped to existing governed Hedgr color tokens only.
+- **`docs/brand/HEDGR_SEMANTIC_STATUS_TOKENS.md`** — added the canonical semantic status-token governance artifact covering role meaning, mapping discipline, raw palette utility prohibitions, trust-disclosure rules, and non-authorization.
+- **`docs/brand/HEDGR_DESIGN_TOKENS.md`** — added semantic status-token references and cross-linked the canonical semantic-token artifact.
+- **`docs/ops/HEDGR_STATUS.md`** — recorded `BRAND-008` in §6d, updated §7 completed / last-completed state, archived the `BRAND-008` brief, activated `MC-S3-022` with a bounded §7a brief, and added this completed-ticket record.
+- **`docs/ops/NOTION_GOVERNANCE_STAGING.md`** — downstream mirror reconciled to reflect `BRAND-008` completion without creating Notion-led authority.
+
+**Governance guarantees held.** `DESIGN.md` remains the machine-readable brand authority. Semantic aliases use existing governed tokens only and do not add red, green, yellow, amber, orange, purple, glow, gradient, or speculative accent palettes. Trust-disclosure is defined separately from generic status color so Hedgr can distinguish advisory, informational, mock, non-ledger, non-accounting, non-custody, and non-execution meaning from generic status messaging.
+
+**Scope discipline held.** **No** `apps/`, **no** `packages/`, **no** backend, **no** frontend runtime UI changes, **no** shipped route edits, **no** prototype route edits, **no** tests, **no** CI tooling, **no** token mass-conversion, **no** `DESIGN.md` color-value changes, **no** palette expansion, **no** asset generation, **no** broad UI redesign, **no** Stability Engine posture / notice / allocation / mock / simulator changes, **no** Class B authority, **no** Copilot runtime, **no** execution semantics, **no** accounting truth, **no** ledger mutation, **no** customer fund movement authority, and **no** ADR status change.
+
+**Validation.** Documentation / governance diff review; `git diff -- DESIGN.md docs/brand/HEDGR_SEMANTIC_STATUS_TOKENS.md docs/brand/HEDGR_DESIGN_TOKENS.md docs/ops/HEDGR_STATUS.md docs/ops/NOTION_GOVERNANCE_STAGING.md`; `git diff --check -- DESIGN.md docs/brand/HEDGR_SEMANTIC_STATUS_TOKENS.md docs/brand/HEDGR_DESIGN_TOKENS.md docs/ops/HEDGR_STATUS.md docs/ops/NOTION_GOVERNANCE_STAGING.md`; `pnpm run validate`; backend-stub local `e2e:ci` (`53 passed`); CI required checks `validate` and `E2E smoke (@hedgr/frontend)`.
+
+### Sequencing note
+
+**§7** / **§7a** record completion per governance; the **live** approved next ticket is `MC-S3-022` with the active brief in **§7a**.
+
+**Follow-ups:** `BRAND-006-FU-002` through `BRAND-006-FU-006` remain unimplemented recommendations only. No further brand remediation ticket is created by this closeout. The only active successor is `MC-S3-022`, as named in **§7** / **§7a**.
