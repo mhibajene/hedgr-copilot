@@ -3137,6 +3137,29 @@ Implementation posture preserved:
 - no `apps/frontend/lib/engine/**` changes.
 - no new `EnginePosture` values, no badge-label changes, no notice changes, no mock values, no simulator behavior changes, no backend, no policy, no engine logic, no execution semantics, no accounting truth, no Class B authority, no Copilot runtime, no CI / workflow changes, and no ADR status changes.
 
+### MC-S3-022 - Regression resistance tranche 8 for shipped dashboard allocation-band informational framing (test-only)
+
+Changed files:
+
+- `apps/frontend/tests-e2e/smoke-pack.spec.ts`
+- `docs/ops/stability-engine/HEDGR_STABILITY_ENGINE_TRUST_SURFACE_TEST_COVERAGE_MATRIX.md`
+- `docs/ops/HEDGR_STATUS.md`
+- `docs/ops/NOTION_GOVERNANCE_STAGING.md`
+
+Implementation truth:
+
+- Playwright smoke coverage now asserts that the shipped dashboard allocation-band panel renders `Target posture`, the Stable balance / Conservative yield / Reserve lane labels, and the Targets / Balances / Movement framing after mock login.
+- Playwright smoke coverage now locks the rendered allocation-band informational semantics from `UI-ALG-001`, including `Informational system targets only`, ledger-vs-target distinction, spendable-balance distinction, and the statement that targets do not mean funds have already moved.
+- Playwright smoke coverage now guards against rendered phrases that would imply executed allocation, settled allocation / position, or customer-specific allocation partitioning.
+- the trust-surface coverage matrix records the new rendered-route smoke coverage as additional regression resistance for shipped allocation-band informational framing.
+
+Implementation posture preserved:
+
+- test-only regression resistance.
+- no production UI or source-copy changes.
+- no `apps/frontend/lib/engine/**` changes.
+- no `EnginePosture` values, posture badge labels, notice copy, mock values, simulator behavior, allocation calculations, backend, policy, engine logic, accounting semantics, ledger truth, settled balances, executable allocation framing, Class B authority, Copilot runtime, CI / workflow changes, or ADR status changes.
+
 ---
 
 ## 7. Current sequence and active status
@@ -3248,10 +3271,11 @@ Completed and merged:
 - `SE-POSTURE-001` - Narrow posture secondary-copy refinement pass (presentation-only Stability Engine trust-surface copy refinement; completed record **§103**)
 - `MC-S3-021` - Regression resistance tranche 7 for Stability Engine posture copy (test-only; completed record **§104**)
 - `BRAND-008` - Governed semantic status token definition (`BRAND-006` remediation #1 / `BRAND-006-FU-001`; documentation-only brand authority prerequisite; completed record **§105**)
+- `MC-S3-022` - Regression resistance tranche 8 for shipped dashboard allocation-band informational framing (test-only; completed record **§106**)
 
 Current active ticket status:
 
-- **Approved next ticket:** **`MC-S3-022`** — Regression resistance tranche 8: Playwright smoke extension for shipped dashboard allocation-band informational framing (`UI-ALG-001`). Active execution brief in **§7a**. This ticket activates only the test-only regression-resistance scope described in **§7a**; it does **not** authorize production UI changes, copy changes, engine logic changes, simulator seam widening, or brand remediation work.
+- **Approved next ticket:** **None named.** `MC-S3-022` (Regression resistance tranche 8 for shipped dashboard allocation-band informational framing) is complete and recorded in **§106**; **§7** / **§7a** are restored to no-active-ticket posture. There is **no** approved next implementation ticket until **§7** is updated explicitly to name one.
 - **Brand System Governance sequencing:** **§6d** records the approved Brand System Governance ticket set and recommended order. `BRAND-001` through `BRAND-008` are complete. Further `BRAND-006` remediation recommendations remain non-authorizing until a future **§7** ticket names them with a bounded **§7a** brief.
 - **Post–`GOV-INTAKE-B-002` sequencing (governance-accepted):** `GOV-INTAKE-B-002` completed the Class B Evidence Intake Governance Model as a documentation-only governance artifact. It did **not** authorize evidence intake, evidence collection, evidence requests, evidence acceptance, evidence rejection, evidence scoring, evidence evaluation, registry-state changes, evidence-state changes, blocker closure, gap closure, readiness, ADR drafting readiness, implementation-proposal preflight, implementation, staging, sandbox use, internal testing, live operations, custody, rails, stablecoin conversion, treasury operations, reconciliation, support operations, audit operations, ledger truth, accounting truth, Copilot execution, Class C automation, or customer fund movement authority.
 - **Post–`COP-GOV-001` sequencing (governance-accepted):** `COP-GOV-001` completed the intended **advisory-boundary definition** lane as a documentation-only governance artifact. It did **not** widen product, engine, backend, policy, Copilot **runtime**, execution, accounting, ledger, vendor, custody, stablecoin, Circle, live-service, or customer-facing automation authority. Copilot MVP posture remains **advisory, non-directive, non-executing, hermetic, non-accounting, non-policy-authoritative**, and **outside `§6b` category 8** unless future doctrine and ADRs widen the boundary. Any later Copilot **implementation** requires a separate **§7** name and **§7a** brief. Do not infer Copilot implementation, runtime binding, engine binding, policy binding, backend work, execution authority, or finance-style autonomy from `COP-GOV-001`.
@@ -3264,53 +3288,19 @@ Current active ticket status:
 - Cursor must not continue automatically into work beyond what is explicitly defined in this file for an active ticket.
 - Cursor must not drift beyond explicitly defined scope.
 
-**Last completed ticket (summary):** `BRAND-008` — Governed semantic status token definition (`BRAND-006` remediation #1 / `BRAND-006-FU-001`; documentation-only brand authority prerequisite defining `semanticStatus` aliases in `DESIGN.md`, canonical semantic status-token governance under `docs/brand/`, role mapping discipline, raw palette utility prohibitions, trust-disclosure boundaries, and non-authorization; no `apps/`, no `packages/`, no backend, no shipped UI, no tests, no CI tooling, no token mass-conversion, no palette expansion, no asset generation, no Stability Engine trust-surface changes, no Class B authority, no Copilot runtime, and no ADR status change); completed record in **§105**.
+**Last completed ticket (summary):** `MC-S3-022` — Regression resistance tranche 8 for shipped dashboard allocation-band informational framing (test-only Playwright smoke hardening that locks rendered target / balance / movement distinctions and guards against executed / settled / customer-allocation phrasing after mock login; no production UI or source-copy changes, no `apps/frontend/lib/engine/**`, no `EnginePosture` change, no badge-label change, no notice change, no mock / simulator change, no backend, no policy, no engine logic, no allocation calculation, no execution semantics, no accounting truth, no Class B authority, no Copilot runtime, no CI / workflow change, or ADR status change; **§7** / **§7a** restored to no-active-ticket posture); completed record in **§106**.
 
 ---
 
 ## 7a. Active execution ticket
 
-**Ticket:** `MC-S3-022` — Regression resistance tranche 8 for shipped dashboard allocation-band informational framing
+**Status:** **No active execution ticket.** **§7** does not currently name an approved next implementation ticket. The most recently completed ticket, `MC-S3-022` (Regression resistance tranche 8 for shipped dashboard allocation-band informational framing), is recorded in **§106**.
 
-**Type:** Test-only
+When governance approves the next ticket, **§7** will name it and this section will hold the full execution brief until closeout.
 
-**Objective:** Extend Playwright smoke coverage for the shipped dashboard allocation-band informational framing introduced and refined through `UI-ALG-001`, so the rendered route locks the visible non-accounting / non-execution framing for allocation targets after mock login without changing production UI, copy, engine behavior, simulator behavior, backend behavior, policy, accounting, or ADR status.
+---
 
-**In scope:**
-
-- `apps/frontend/tests-e2e/smoke-pack.spec.ts` — extend the existing shipped dashboard smoke path for `engine-allocation-bands` copy / framing assertions
-- `docs/ops/stability-engine/HEDGR_STABILITY_ENGINE_TRUST_SURFACE_TEST_COVERAGE_MATRIX.md` — record the rendered-route Playwright coverage for allocation-band informational framing if coverage notes need updating
-- `docs/ops/HEDGR_STATUS.md` — ticket activation, closeout, completed-record entry, and restoration to no-active-ticket posture unless governance explicitly names a successor
-- `docs/ops/NOTION_GOVERNANCE_STAGING.md` — downstream mirror reconciliation after completion
-
-**Surfaces:**
-
-- Shipped dashboard Stability Engine trust cluster
-- `EngineAllocationBands` rendered output as exercised by Playwright through the dashboard route
-- `UI-ALG-001` allocation comprehension pass output and ADR `0013` informational allocation boundary
-- Existing smoke-pack mock-login and dashboard navigation path
-
-**Must not:**
-
-- production UI changes
-- production copy changes
-- `apps/frontend/lib/engine/**`
-- `EnginePosture` values, posture badge labels, notice copy, mock values, or simulator behavior
-- allocation calculations, accounting semantics, ledger truth, settled balances, or executable allocation framing
-- backend, policy, Copilot runtime, vendor, custody, treasury, rail, stablecoin, Circle, live-service, deposit, withdrawal, reconciliation, support, or customer-money behavior
-- CI / workflow changes
-- docs-only brand remediation, Class B authority, or semantic-token work
-- ADR status changes or new ADRs
-- broad Playwright suite restructuring or new route coverage outside the existing shipped dashboard smoke path
-
-**Acceptance shape:**
-
-- The shipped dashboard smoke test asserts that `engine-allocation-bands` renders visible, non-empty allocation-band framing after mock login.
-- The smoke test locks key rendered allocation-band informational semantics from `UI-ALG-001`, including targets / balances / movement distinctions and non-accounting / non-execution framing.
-- The smoke test guards against rendered phrases that would imply executed allocation, settled ledger movement, or customer-balance partitioning.
-- Coverage matrix and status docs record the added rendered-route regression resistance without changing production UI or source copy.
-- `HEDGR_STATUS.md` restores **§7** / **§7a** to no-active-ticket posture on closeout unless governance explicitly names a successor.
-- `NOTION_GOVERNANCE_STAGING.md` is reconciled after completion.
+**Archived brief (MC-S3-022):** Regression resistance tranche 8 for shipped dashboard allocation-band informational framing — **test-only**; scope held to **`apps/frontend/tests-e2e/smoke-pack.spec.ts`**, **`docs/ops/stability-engine/HEDGR_STABILITY_ENGINE_TRUST_SURFACE_TEST_COVERAGE_MATRIX.md`**, **`docs/ops/HEDGR_STATUS.md`**, and **`docs/ops/NOTION_GOVERNANCE_STAGING.md`**. Extended the existing shipped dashboard smoke path for `engine-allocation-bands` after mock login, locking visible `Target posture`, lane labels, Targets / Balances / Movement distinctions, ledger-vs-target distinction, spendable-balance distinction, and the statement that targets do not mean funds have already moved. Added guards against executed allocation, settled allocation / position, and customer-specific allocation partitioning phrases. **No** production UI changes, **no** production copy changes, **no** `apps/frontend/lib/engine/**`, **no** `EnginePosture` values, **no** posture badge labels, **no** notice copy, **no** mock values, **no** simulator behavior, **no** allocation calculations, **no** backend, **no** policy, **no** accounting semantics, **no** ledger truth, **no** settled balances, **no** executable allocation framing, **no** Class B authority, **no** Copilot runtime, **no** CI / workflow changes, and **no** ADR status changes. Completed record: **§106**.
 
 ---
 
@@ -3460,7 +3450,8 @@ Current active ticket status:
 - **Narrow posture secondary-copy refinement pass (presentation-only, completed):** `SE-POSTURE-001` — **§103** (completed ticket record).
 - **Regression resistance tranche 7 for Stability Engine posture copy (test-only, completed):** `MC-S3-021` — **§104** (completed ticket record).
 - **Governed semantic status token definition (documentation-only, completed):** `BRAND-008` — **§105** (completed ticket record).
-- **Active ticket:** **`MC-S3-022`** — Regression resistance tranche 8 for shipped dashboard allocation-band informational framing smoke coverage (test-only); brief in **§7a**.
+- **Regression resistance tranche 8 for shipped dashboard allocation-band informational framing (test-only, completed):** `MC-S3-022` — **§106** (completed ticket record).
+- **Active ticket:** None. **§7** / **§7a** are restored to no-active-ticket posture.
 - **Merged implementation truth:** **§6** remains canonical for shipped code boundaries.
 - When a successor ticket is approved, record it in **§7** and restore the execution brief in **§7a** per governance discipline.
 - Do not infer continuation work from *Proposed* ADRs or roadmap narrative unless **§7** names a ticket.
@@ -5951,6 +5942,35 @@ This **§43** record was originally written in the same working-tree change-set 
 
 ### Sequencing note
 
-**§7** / **§7a** record completion per governance; the **live** approved next ticket is `MC-S3-022` with the active brief in **§7a**.
+**§7** / **§7a** record completion per governance. At `BRAND-008` closeout, the approved next ticket became `MC-S3-022` with the active brief in **§7a**; `MC-S3-022` was later completed in **§106**.
 
-**Follow-ups:** `BRAND-006-FU-002` through `BRAND-006-FU-006` remain unimplemented recommendations only. No further brand remediation ticket is created by this closeout. The only active successor is `MC-S3-022`, as named in **§7** / **§7a**.
+**Follow-ups:** `BRAND-006-FU-002` through `BRAND-006-FU-006` remain unimplemented recommendations only. No further brand remediation ticket is created by this closeout. `MC-S3-022` was the only successor activated by this closeout and is recorded as complete in **§106**.
+
+---
+
+## 106. Completed execution ticket - MC-S3-022 (Regression resistance tranche 8 for shipped dashboard allocation-band informational framing)
+
+**Ticket:** `MC-S3-022` — Regression resistance tranche 8 for shipped dashboard allocation-band informational framing (test-only)
+
+**Objective.** Extend rendered-route Playwright smoke coverage for the shipped dashboard allocation-band informational framing introduced and refined through `UI-ALG-001`, locking target / balance / movement distinctions after mock login without changing production UI, source copy, engine behavior, simulator behavior, backend behavior, policy, accounting, or ADR status.
+
+### Outcome (test-only)
+
+- **`apps/frontend/tests-e2e/smoke-pack.spec.ts`** — extended the existing dashboard Stability Engine smoke test to assert that `engine-allocation-bands` renders `Target posture`, Stable balance / Conservative yield / Reserve lane labels, and Targets / Balances / Movement framing after mock login.
+- **`apps/frontend/tests-e2e/smoke-pack.spec.ts`** — asserted shipped allocation-band informational framing, including `Informational system targets only`, ledger-vs-target distinction, spendable-balance distinction, and the statement that targets do not mean funds have already moved.
+- **`apps/frontend/tests-e2e/smoke-pack.spec.ts`** — added route-level guards against phrases implying executed allocation, settled allocation / position, or customer-specific allocation partitioning.
+- **`docs/ops/stability-engine/HEDGR_STABILITY_ENGINE_TRUST_SURFACE_TEST_COVERAGE_MATRIX.md`** — recorded the rendered-route Playwright smoke coverage as regression resistance for shipped allocation-band informational framing.
+- **`docs/ops/HEDGR_STATUS.md`** — §7 activation, §7a brief during execution, §6 merged-truth entry, completed-list update, last-completed summary update, no-active-ticket restoration, and this completed-ticket record.
+- **`docs/ops/NOTION_GOVERNANCE_STAGING.md`** — downstream mirror reconciled to reflect `MC-S3-022` completion without creating Notion-led authority.
+
+**Governance guarantees held.** Allocation bands remain informational projections only under ADR **0013**. The Stability Engine remains read-only / non-executing under ADR **0014**, system-centered under ADR **0015**, and within the current Transition Readiness test-only boundary. This ticket adds rendered-route regression resistance only.
+
+**Scope discipline held.** **No** production UI or source-copy changes, **no** `apps/frontend/lib/engine/**`, **no** `EnginePosture` change, **no** posture badge-label change, **no** notice-copy change, **no** mock values, **no** simulator behavior change, **no** backend, **no** policy, **no** engine logic, **no** allocation calculation, **no** accounting semantics, **no** ledger truth, **no** settled balances, **no** executable allocation framing, **no** Class B authority, **no** Copilot runtime, **no** CI / workflow change, **no** ADR status change, and **no** successor ticket created by closeout.
+
+**Validation.** Targeted Playwright smoke test passed: `NEXT_PUBLIC_AUTH_MODE=mock NEXT_PUBLIC_DEFI_MODE=mock NEXT_PUBLIC_FX_MODE=stub NEXT_PUBLIC_MARKET_MODE=manual NEXT_PUBLIC_MARKET_SELECTED=UNKNOWN NEXT_PUBLIC_APP_ENV=dev NEXT_PUBLIC_API_BASE_URL=http://localhost:5050 NEXT_PUBLIC_FEATURE_COPILOT_ENABLED=true pnpm --filter @hedgr/frontend exec playwright test tests-e2e/smoke-pack.spec.ts --grep "dashboard shows Stability Engine posture context" --reporter=dot` (`1 passed`). Full local runbook validation passed: `pnpm run validate` (including Vitest `60 passed`, `720 passed` tests); backend-stub local `e2e:ci` (`53 passed`). CI required checks `validate` and `E2E smoke (@hedgr/frontend)` are expected on PR.
+
+### Sequencing note
+
+**§7** / **§7a** record completion per governance and are restored to no-active-ticket posture.
+
+**Follow-ups:** No successor implementation ticket is created by this regression-resistance tranche. Any future Stability Engine trust-surface, test, copy, UI, engine, ADR, runtime, status, sequencing, brand-remediation, or reference-expansion work appears only when repo governance names it explicitly.
