@@ -110,8 +110,35 @@ test('4 · dashboard shows Stability Engine posture context after login', async 
 
   const allocationBands = page.getByTestId('engine-allocation-bands');
   await expect(allocationBands).toBeVisible({ timeout: 10_000 });
+  await expect(
+    allocationBands.getByRole('heading', { name: 'Target posture' }),
+  ).toBeVisible();
   const allocationBandsText = await allocationBands.textContent();
   expect(allocationBandsText?.trim().length).toBeGreaterThan(0);
+  expect(allocationBandsText).toContain('Stable balance');
+  expect(allocationBandsText).toContain('Conservative yield');
+  expect(allocationBandsText).toContain('Reserve');
+  expect(allocationBandsText).toContain('Targets');
+  expect(allocationBandsText).toContain('Informational system targets only');
+  expect(allocationBandsText).toContain('Balances');
+  expect(allocationBandsText).toContain('Your ledger shows what you hold');
+  expect(allocationBandsText).toContain('not your spendable balance');
+  expect(allocationBandsText).toContain('Movement');
+  expect(allocationBandsText).toContain(
+    'Targets do not mean funds have already moved',
+  );
+
+  const allocationExecutionDriftTerms = [
+    /\bexecuted allocation\b/i,
+    /\bsettled allocation\b/i,
+    /\bsettled position\b/i,
+    /\ballocated to your\b/i,
+    /\byour allocation\b/i,
+    /\byour portfolio allocation\b/i,
+  ];
+  for (const forbidden of allocationExecutionDriftTerms) {
+    expect(allocationBandsText).not.toMatch(forbidden);
+  }
 });
 
 test('5 · settings page displays trust section', async ({ page }) => {
