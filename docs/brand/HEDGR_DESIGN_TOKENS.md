@@ -37,6 +37,23 @@ Do not modify token values in downstream docs, UI code, prompts, generated UI, o
 
 These references define color relationships only. They do not approve padding, radius, typography, motion, or layout changes.
 
+## Semantic Status Token References
+
+`DESIGN.md` defines additive semantic status aliases for:
+
+- `info`
+- `success`
+- `warning`
+- `error`
+- `neutral`
+- `focus`
+- `disabled`
+- `trust-disclosure`
+
+These aliases reference existing approved color tokens only. They define status-role mapping discipline for future governed remediation and do not authorize shipped UI migration, shared UI changes, raw palette utility use, new color values, or visual severity systems outside the approved Hedgr palette.
+
+Use `docs/brand/HEDGR_SEMANTIC_STATUS_TOKENS.md` for role meaning, trust-disclosure boundaries, and prohibited substitutions.
+
 ## Typography Authority
 
 The approved typography stack for brand-facing implementation is:
