@@ -1,8 +1,8 @@
 # HEDGR - Class B Evidence Intake Authorization Brief Review Draft
 
-**Document status:** Review draft only
+**Document status:** Final Governance Review Candidate
 **Prepared date:** 2026-06-24
-**Ticket:** `GOV-A-REV-001` - Tighten Class B Evidence Intake Authorization Brief for Final Governance Review
+**Ticket:** `GOV-A-REV-002` - Apply Final Governance Tightening Edits to Class B Evidence Intake Authorization Brief
 **Working future ticket label:** `EVID-INTAKE-B-002` - placeholder only unless and until `docs/ops/HEDGR_STATUS.md` `§7` names an approved ticket with bounded `§7a` scope
 **Authority level:** Non-authorizing review artifact
 **Implementation authority:** None
@@ -51,7 +51,7 @@ The purpose of this review draft is to separate three governance layers that wer
 | Layer | Purpose | Boundary |
 |---|---|---|
 | Layer A - Authorization Brief | Define what a future evidence-intake ticket may authorize. | Does not itself authorize intake. |
-| Layer B - Evidence Governance Standard | Define intake mechanics that a future ticket may adopt. | Does not collect, review, or accept evidence. |
+| Layer B - Candidate Evidence Intake Mechanics | Define intake mechanics that a future ticket may adopt. | Does not collect, review, or accept evidence. |
 | Layer C - Evidence Question Map | Preserve future evidence questions by domain. | Does not establish operational, legal, ADR, or implementation readiness. |
 
 The current Class B issue is not lack of scaffolding. The current issue is that evidence intake authority has not been granted, no evidence has been gathered, no evidence has been reviewed, no evidence has been accepted, no blockers are closed, and no downstream readiness or implementation authority exists.
@@ -110,7 +110,7 @@ This review draft does not authorize or perform:
 
 If repo governance later decides to advance Class B, the next bounded move should be an evidence-intake authorization ticket only.
 
-That future ticket may authorize collection, preservation, classification, and registry recording of evidence. It must not authorize evidence quality judgment, sufficiency determination, readiness, ADR drafting readiness, implementation-preflight, implementation, or customer-money activity.
+That future ticket may authorize bounded evidence preservation, receipt, classification, and registry recording. It must not authorize evidence quality judgment, sufficiency determination, readiness, ADR drafting readiness, implementation-preflight, implementation, or customer-money activity.
 
 The working label `EVID-INTAKE-B-002` is a placeholder for review. It is not repo authority, is not sequenced work, and is not an active ticket unless `HEDGR_STATUS.md` `§7` explicitly names it.
 
@@ -222,7 +222,7 @@ Review queues must not:
 
 ---
 
-## 5. Layer B - Evidence Governance Standard
+## 5. Layer B - Candidate Evidence Intake Mechanics
 
 This layer defines candidate mechanics for a future intake ticket. It does not authorize evidence intake and does not change registry state.
 
@@ -332,7 +332,7 @@ Handling rules:
 
 ### 5.6 Freshness Rules
 
-Freshness expectations are candidate defaults for future review. They do not establish source reliability or downstream reliance.
+Freshness expectations are non-authoritative intake metadata prompts for future review. They do not establish source reliability or downstream reliance.
 
 | Evidence type | Candidate freshness expectation |
 |---|---|
