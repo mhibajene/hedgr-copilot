@@ -1,0 +1,184 @@
+openapi: 3.1.0
+info:
+  title: HedgrOps Read-Only Review Evidence Bridge
+  version: 0.1.0
+  description: Read-only, non-authoritative evidence retrieval only for approved Hedgr review snapshots.
+servers:
+  - url: https://example-worker.workers.dev
+security:
+  - HedgrOpsApiKey: []
+paths:
+  /health:
+    get:
+      operationId: getBridgeHealth
+      summary: Bridge health
+      description: Read-only. Non-authoritative. Evidence retrieval only. Returns runtime-only bridge status and does not call GitHub.
+      security: []
+      responses:
+        "200":
+          description: Runtime-only health response.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                required:
+                  - status
+                  - mode
+                properties:
+                  status:
+                    type: string
+                    const: ok
+                  mode:
+                    type: string
+                    const: READ_ONLY
+  /hedgr/status/authority-summary:
+    get:
+      operationId: getHedgrAuthoritySummary
+      summary: Retrieve the authority-summary snapshot
+      description: Read-only. Non-authoritative. Evidence retrieval only. Retrieves an allowlisted snapshot without generating, summarizing, or interpreting governance state.
+      responses:
+        "200":
+          description: Read-only bridge envelope containing the authority-summary snapshot.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BridgeEnvelope"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "405":
+          $ref: "#/components/responses/MethodNotAllowed"
+  /hedgr/reviews/latest-weekly:
+    get:
+      operationId: getLatestWeeklyReviewEvidence
+      summary: Retrieve the latest weekly review evidence snapshot
+      description: Read-only. Non-authoritative. Evidence retrieval only. Retrieves an allowlisted weekly review evidence snapshot without ranking, sequencing, or activation language.
+      responses:
+        "200":
+          description: Read-only bridge envelope containing the weekly review evidence snapshot.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BridgeEnvelope"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "405":
+          $ref: "#/components/responses/MethodNotAllowed"
+  /hedgr/reviews/latest-mvp-process:
+    get:
+      operationId: getLatestMvpProcessReviewEvidence
+      summary: Retrieve the latest MVP process review evidence snapshot
+      description: Read-only. Non-authoritative. Evidence retrieval only. Retrieves an allowlisted MVP process review evidence snapshot without implementation recommendations, authority inference, or blocker closure inference.
+      responses:
+        "200":
+          description: Read-only bridge envelope containing the MVP process review evidence snapshot.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BridgeEnvelope"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "405":
+          $ref: "#/components/responses/MethodNotAllowed"
+  /hedgr/reviews/index:
+    get:
+      operationId: getReviewEvidenceIndex
+      summary: Retrieve the review evidence index snapshot
+      description: Read-only. Non-authoritative. Evidence retrieval only. Retrieves an allowlisted evidence-discovery index without review ranking, prioritization, or interpretation.
+      responses:
+        "200":
+          description: Read-only bridge envelope containing the review evidence index snapshot.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BridgeEnvelope"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "405":
+          $ref: "#/components/responses/MethodNotAllowed"
+components:
+  securitySchemes:
+    HedgrOpsApiKey:
+      type: apiKey
+      in: header
+      name: x-hedgrops-api-key
+  responses:
+    Unauthorized:
+      description: Missing or invalid bridge API key.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    NotFound:
+      description: Route is not in the bridge endpoint allowlist.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    MethodNotAllowed:
+      description: Only GET is allowed.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+  schemas:
+    Error:
+      type: object
+      additionalProperties: false
+      required:
+        - error
+      properties:
+        error:
+          type: string
+    BridgeEnvelope:
+      type: object
+      additionalProperties: false
+      required:
+        - bridge
+        - data
+      properties:
+        bridge:
+          type: object
+          additionalProperties: false
+          required:
+            - name
+            - mode
+            - execution_authority
+            - mutation_allowed
+            - ticket_activation_allowed
+            - retrieved_at
+            - source_path
+            - non_authorization_statement
+          properties:
+            name:
+              type: string
+              const: HedgrOps Read-Only Review Evidence Bridge
+            mode:
+              type: string
+              const: READ_ONLY
+            execution_authority:
+              type: boolean
+              const: false
+            mutation_allowed:
+              type: boolean
+              const: false
+            ticket_activation_allowed:
+              type: boolean
+              const: false
+            retrieved_at:
+              type: string
+              format: date-time
+            source_path:
+              type: string
+            non_authorization_statement:
+              type: string
+        data:
+          type: object

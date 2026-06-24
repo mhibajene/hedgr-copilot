@@ -1,0 +1,8 @@
+name = "hedgrops-read-only-review-evidence-bridge"
+main = "src/index.js"
+compatibility_date = "2026-06-24"
+
+[vars]
+GITHUB_OWNER = "mhibajene"
+GITHUB_REPO = "hedgr-copilot"
+GITHUB_BRANCH = "main"
