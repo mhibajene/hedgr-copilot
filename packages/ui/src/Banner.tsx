@@ -9,9 +9,9 @@ type BannerProps = {
 export function Banner({ children, className = '' }: BannerProps) {
   return (
     <div
-      className={`w-full py-8 px-4 bg-gradient-to-r from-hedgr-start via-hedgr-middle to-hedgr-end text-center ${className}`}
+      className={`w-full border-y border-hedgr-200 bg-hedgr-100 px-4 py-8 text-center text-hedgr-800 ${className}`}
     >
-      {children ?? <span className="text-sm">Hedgr UI ready</span>}
+      {children ?? <span className="text-sm font-medium">Hedgr UI ready</span>}
     </div>
   )
 }

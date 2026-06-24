@@ -52,7 +52,7 @@ export function ErrorState({
 }: ErrorStateProps) {
   const defaultIcon = (
     <svg
-      className="h-12 w-12 text-red-400"
+      className="h-12 w-12 text-hedgr-dark"
       fill="none"
       viewBox="0 0 24 24"
       stroke="currentColor"
@@ -68,8 +68,8 @@ export function ErrorState({
 
   const renderAction = (action: ErrorStateAction, isPrimary: boolean) => {
     const baseClasses = isPrimary
-      ? 'inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded-xl shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 bg-red-600 text-white hover:bg-red-700'
-      : 'inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded-xl transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 text-gray-600 hover:text-gray-800 hover:bg-gray-100'
+      ? 'inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded-xl shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-hedgr-500 bg-hedgr-dark text-hedgr-white hover:bg-hedgr-800'
+      : 'inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded-xl transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-hedgr-500 text-hedgr-700 hover:text-hedgr-800 hover:bg-hedgr-100'
 
     if (action.href) {
       return (
@@ -92,11 +92,11 @@ export function ErrorState({
       role="alert"
       className={`text-center py-12 px-4 ${className}`}
     >
-      <div className="mx-auto h-16 w-16 rounded-full bg-red-50 flex items-center justify-center mb-4">
+      <div className="mx-auto h-16 w-16 rounded-full border border-hedgr-800 bg-hedgr-white flex items-center justify-center mb-4">
         {icon ?? defaultIcon}
       </div>
-      <h3 className="text-lg font-medium text-gray-900 mb-2">{title}</h3>
-      <p className="text-sm text-gray-500 max-w-sm mx-auto mb-6">
+      <h3 className="text-lg font-medium text-hedgr-800 mb-2">{title}</h3>
+      <p className="text-sm text-hedgr-700 max-w-sm mx-auto mb-6">
         {description}
       </p>
       {(primaryAction || secondaryAction) && (
@@ -110,4 +110,3 @@ export function ErrorState({
 }
 
 export default ErrorState
-
