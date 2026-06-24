@@ -45,3 +45,199 @@ The Worker must not:
 - name next work
 - mutate repo state
 - create ADRs or governance authority
+
+## Closeout Assessment: HOPS-BRIDGE-001
+
+Title: Closeout Assessment - HedgrOps Read-Only Review Evidence Bridge
+
+### Classification
+
+- Class: A - Informational Support Infrastructure
+- Status: Completed
+- Governance Mode: READ_ONLY
+- Authority Impact: None
+- Execution Authority Created: No
+- Sequencing Authority Created: No
+- Repo Mutation Capability: No
+- Customer-Money Impact: None
+
+This closeout records implementation and verification outcomes for
+`HOPS-BRIDGE-001 - HedgrOps Read-Only Review Evidence Bridge`.
+
+It does not:
+
+- activate work
+- authorize new work
+- create sequencing authority
+- create governance authority
+- modify repo-native execution truth
+
+### Completion Summary
+
+Implemented:
+
+- read-only Cloudflare Worker bridge
+- allowlisted endpoint model
+- API key authentication
+- bridge JSON snapshot retrieval
+- OpenAPI schema for GPT Actions
+- governance response envelope
+- read-only verification controls
+
+Implemented posture:
+
+```text
+READ_ONLY
+execution_authority: false
+mutation_allowed: false
+ticket_activation_allowed: false
+```
+
+The bridge retrieves bounded review evidence and authority snapshots without
+creating implementation authority.
+
+### Verification Results
+
+Authority verification:
+
+- Class: A
+- Mode: READ_ONLY
+- Execution Authority: false
+- Mutation Allowed: false
+- Ticket Activation Allowed: false
+
+Authority source remains:
+
+- `docs/ops/HEDGR_STATUS.md`
+- `AGENTS.md`
+- accepted ADRs
+- `docs/doctrine/*`
+
+Retrieval verification covers:
+
+- `GET /health`
+- `GET /hedgr/status/authority-summary`
+- `GET /hedgr/reviews/latest-weekly`
+- `GET /hedgr/reviews/latest-mvp-process`
+- `GET /hedgr/reviews/index`
+
+All successful snapshot responses return the governance envelope. No arbitrary
+file retrieval or dynamic path retrieval is authorized.
+
+Access-control verification covers:
+
+- valid API key succeeds
+- missing API key returns `401`
+- invalid API key returns `401`
+
+Method-restriction verification covers:
+
+- `POST` returns `405 Method Not Allowed`
+- `PUT` returns `405 Method Not Allowed`
+- `PATCH` returns `405 Method Not Allowed`
+- `DELETE` returns `405 Method Not Allowed`
+
+Governance verification confirms:
+
+- `next_ticket_proposals: false`
+- `sequencing_recommendations: false`
+- `activation_language: false`
+
+Review artifacts remain evidence, not direction or authority.
+
+### Governance Assessment
+
+Authority model alignment: Pass.
+
+The bridge reinforces the governed chain:
+
+```text
+Review Evidence
+to HedgrOps Analysis
+to Founder Decision
+to Repo Authorization
+to Execution
+```
+
+The bridge does not bypass this chain.
+
+Constitutional alignment: Pass.
+
+The bridge supports governance before scale, risk visibility, and institutional
+discipline without introducing execution capability.
+
+MVP doctrine alignment: Pass.
+
+The bridge remains Class A, informational, and read-only. No execution expansion
+or Copilot authority expansion is recorded.
+
+### Evidence Gaps Observed
+
+Active ticket state:
+
+- Status: Unresolved
+- Assessment: the bridge correctly surfaces ambiguity rather than inferring state
+
+Trust-surface completeness:
+
+- Status: Partially evidenced
+- Assessment: current snapshots confirm governance posture but do not prove
+  completeness of withdrawal disclosures, custody disclosures, fee disclosures,
+  allocation-band disclaimers, Copilot boundaries, or liquidity communication
+
+ADR coverage:
+
+- Status: Referenced, not enumerated
+- Assessment: the bridge confirms ADR authority exists but does not expose
+  ADR-level verification
+
+### Residual Risks
+
+Risk 1 - Shadow authority drift:
+
+- Future users may attempt to treat review evidence as execution guidance.
+- Mitigation: maintain evidence-only posture.
+
+Risk 2 - Scope expansion:
+
+- Future requests may seek repo browsing, ticket discovery, sequencing logic, or
+  implementation planning.
+- Mitigation: require separate governance review and authorization.
+
+Risk 3 - False completeness:
+
+- The bridge confirms governance posture but does not certify implementation
+  completeness.
+- Mitigation: continue using repo-native reviews and evidence packages.
+
+### Institutional Conclusion
+
+`HOPS-BRIDGE-001` improves review continuity, evidence accessibility,
+governance visibility, and institutional memory without creating execution
+authority, sequencing authority, implementation authority, or governance
+authority.
+
+The bridge behaves as a bounded support layer and remains subordinate to
+repo-native authority.
+
+### Closeout Decision
+
+```text
+Ticket: HOPS-BRIDGE-001
+Status: Completed
+Outcome: Accepted
+Governance Assessment: Pass
+Authority Impact: None
+Execution Impact: None
+Residual Risk: Low
+Follow-Up Required: None
+```
+
+### Post-Closeout Operating Rule
+
+The bridge continues to be treated as an evidence retrieval layer, not as a
+governance engine, execution planner, sequencing authority, or implementation
+authority.
+
+Any future expansion beyond evidence retrieval requires separate governance
+review and authorization.
