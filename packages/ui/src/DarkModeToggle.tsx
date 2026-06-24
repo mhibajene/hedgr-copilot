@@ -43,7 +43,7 @@ export function DarkModeToggle() {
     <button
       onClick={toggle}
       aria-label="Toggle Dark Mode"
-      className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:opacity-80 transition"
+      className="p-2 rounded-full bg-hedgr-100 text-hedgr-800 dark:bg-hedgr-800 dark:text-hedgr-white hover:opacity-80 transition"
     >
       {mode === 'dark' ? '🌙' : '☀️'}
     </button>

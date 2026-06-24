@@ -1,6 +1,6 @@
 Status: Canonical hand-off file
 Purpose: Strategic continuity, merged implementation truth, and next-ticket authority for Cursor execution
-Last updated: 2026-06-22
+Last updated: 2026-06-24
 
 ---
 
@@ -2971,12 +2971,13 @@ This verdict means the repo has enough documented governance criteria, boundary 
 | `BRAND-006` | Audit and reconcile existing UI against governed brand system | audit-first governance reconciliation | completed record **§72** |
 | `BRAND-007` | Add Codex/Cursor implementation constraints | operator-governance hardening | completed record **§69** |
 | `BRAND-008` | Governed semantic status token definition (`BRAND-006` remediation #1 / `BRAND-006-FU-001`) | documentation-only brand authority prerequisite | completed record **§105** |
+| `BRAND-009` | Shared UI semantic token normalization (`BRAND-006` remediation #2 / `BRAND-006-FU-002`) | brand remediation / shared-UI presentation normalization | completed record **§107** |
 
 ### Recommended sequence
 
-`BRAND-001` -> `BRAND-002` -> `BRAND-005` -> `BRAND-007` -> `BRAND-003` -> `BRAND-004` -> `BRAND-006` -> `BRAND-008` (remediation lane).
+`BRAND-001` -> `BRAND-002` -> `BRAND-005` -> `BRAND-007` -> `BRAND-003` -> `BRAND-004` -> `BRAND-006` -> `BRAND-008` -> `BRAND-009` (remediation lane).
 
-This sequence is a governance spine ordering aid. `BRAND-001`, `BRAND-002`, `BRAND-003`, `BRAND-004`, `BRAND-005`, `BRAND-006`, `BRAND-007`, and `BRAND-008` are complete. Any further brand remediation successor appears only when **§7** / **§7a** name it. Only the ticket explicitly named in **§7** is approved for execution at any given time, and the active scope must live in **§7a**.
+This sequence is a governance spine ordering aid. `BRAND-001`, `BRAND-002`, `BRAND-003`, `BRAND-004`, `BRAND-005`, `BRAND-006`, `BRAND-007`, `BRAND-008`, and `BRAND-009` are complete. Any further brand remediation successor beyond `BRAND-009` appears only when **§7** / **§7a** name it. Only the ticket explicitly named in **§7** is approved for execution at any given time, and the active scope must live in **§7a**.
 
 ### BRAND-001 boundaries
 
@@ -3031,7 +3032,9 @@ Implementation truth:
 - `DESIGN.md` now contains additive `semanticStatus` aliases for info, success, warning, error, neutral, focus, disabled, and trust-disclosure roles, all mapped to existing governed color tokens only.
 - `docs/brand/HEDGR_SEMANTIC_STATUS_TOKENS.md` is the canonical semantic status-token governance artifact defining role meaning, mapping discipline, raw palette utility prohibitions, trust-disclosure boundaries, and non-authorization.
 - `docs/brand/HEDGR_DESIGN_TOKENS.md` cross-references the semantic aliases and preserves `DESIGN.md` as machine-readable authority.
-- `BRAND-006-FU-001` is satisfied as documentation-only prerequisite work; `BRAND-006-FU-002` through `BRAND-006-FU-006` remain unimplemented recommendations until separately named.
+- `BRAND-006-FU-001` is satisfied as documentation-only prerequisite work via `BRAND-008`.
+- `BRAND-006-FU-002` is satisfied as shared-UI presentation normalization work via `BRAND-009`.
+- `BRAND-006-FU-003` through `BRAND-006-FU-006` remain unimplemented recommendations until separately named.
 
 Implementation posture preserved:
 
@@ -3051,6 +3054,39 @@ Implementation posture preserved:
 - no Stability Engine trust-surface changes
 - no Class B authority
 - no Copilot runtime
+- no ADR status changes
+
+### BRAND-009 boundaries
+
+`BRAND-009` implements **`BRAND-006`** audit remediation recommendation #2 (`BRAND-006-FU-002`): shared-UI semantic token normalization subordinate to `DESIGN.md` and `docs/brand/HEDGR_SEMANTIC_STATUS_TOKENS.md`. It may normalize governed `hedgr-*` and `semanticStatus` token references in scoped `@hedgr/ui` shared components.
+
+`BRAND-009` must remain brand remediation / shared-UI presentation normalization only. It must not modify `apps/frontend/**` shipped or prototype routes, `apps/frontend/lib/engine/**`, backend code, `DESIGN.md` color values, palette expansion, broad UI redesign, layout restructuring, runtime or product semantic changes, Stability Engine trust surfaces, Class B authority, Copilot runtime, CI workflow changes, ADR status, or successor remediation tickets `BRAND-006-FU-003` through `BRAND-006-FU-006` unless a future **§7** ticket names them explicitly.
+
+Implementation truth:
+
+- `packages/ui/src/Banner.tsx` now uses governed `hedgr-100` / `hedgr-200` / `hedgr-800` token classes for the shared banner surface and retires the stale `from-hedgr-start` / `via-hedgr-middle` / `to-hedgr-end` gradient pattern.
+- `packages/ui/src/EmptyState.tsx` now maps empty-state icon, copy, focus, primary action, and secondary action styling to governed `hedgr-*` token classes instead of raw gray / blue Tailwind palettes.
+- `packages/ui/src/ErrorState.tsx` now maps error-state icon, callout, copy, focus, primary action, and secondary action styling to governed `hedgr-*` token classes instead of raw red / gray Tailwind palettes.
+- `packages/ui/src/DarkModeToggle.tsx` now maps light / dark toggle surfaces and copy to governed `hedgr-*` token classes instead of raw gray Tailwind palettes.
+- The changed text / background pairings use governed `DESIGN.md` token relationships aligned with `semanticStatus.info`, `semanticStatus.neutral`, `semanticStatus.focus`, and `semanticStatus.error` role intent. WCAG AA contrast was considered for changed text/background pairings in the PR.
+- `BRAND-006-FU-002` is satisfied as shared-UI presentation normalization; `BRAND-006-FU-003` through `BRAND-006-FU-006` remain unimplemented recommendations only.
+
+Implementation posture preserved:
+
+- shared-UI presentation normalization only
+- no `apps/frontend/**`
+- no `apps/frontend/lib/engine/**`
+- no backend
+- no CI workflow changes
+- no `DESIGN.md` color-value changes
+- no palette expansion
+- no broad UI redesign
+- no layout restructuring
+- no runtime or product semantic changes
+- no Stability Engine trust-surface changes
+- no Class B authority
+- no Copilot runtime
+- no successor remediation ticket implementation
 - no ADR status changes
 
 ### DOC-SE-REF-001 - Stability Condition Interface Reference Preservation Closeout
@@ -3272,11 +3308,12 @@ Completed and merged:
 - `MC-S3-021` - Regression resistance tranche 7 for Stability Engine posture copy (test-only; completed record **§104**)
 - `BRAND-008` - Governed semantic status token definition (`BRAND-006` remediation #1 / `BRAND-006-FU-001`; documentation-only brand authority prerequisite; completed record **§105**)
 - `MC-S3-022` - Regression resistance tranche 8 for shipped dashboard allocation-band informational framing (test-only; completed record **§106**)
+- `BRAND-009` - Shared UI semantic token normalization (`BRAND-006` remediation #2 / `BRAND-006-FU-002`; brand remediation / shared-UI presentation normalization; completed record **§107**)
 
 Current active ticket status:
 
-- **Approved next ticket:** **None named.** `MC-S3-022` (Regression resistance tranche 8 for shipped dashboard allocation-band informational framing) is complete and recorded in **§106**; **§7** / **§7a** are restored to no-active-ticket posture. There is **no** approved next implementation ticket until **§7** is updated explicitly to name one.
-- **Brand System Governance sequencing:** **§6d** records the approved Brand System Governance ticket set and recommended order. `BRAND-001` through `BRAND-008` are complete. Further `BRAND-006` remediation recommendations remain non-authorizing until a future **§7** ticket names them with a bounded **§7a** brief.
+- **Approved next ticket:** **None named.** `BRAND-009` (Shared UI semantic token normalization / `BRAND-006-FU-002`) is complete and recorded in **§107**; **§7** / **§7a** are restored to no-active-ticket posture. There is **no** approved next implementation ticket until **§7** is updated explicitly to name one.
+- **Brand System Governance sequencing:** **§6d** records the approved Brand System Governance ticket set and recommended order. `BRAND-001` through `BRAND-009` are complete. `BRAND-006-FU-003` through `BRAND-006-FU-006` remain non-authorizing until a future **§7** ticket names them with a bounded **§7a** brief.
 - **Post–`GOV-INTAKE-B-002` sequencing (governance-accepted):** `GOV-INTAKE-B-002` completed the Class B Evidence Intake Governance Model as a documentation-only governance artifact. It did **not** authorize evidence intake, evidence collection, evidence requests, evidence acceptance, evidence rejection, evidence scoring, evidence evaluation, registry-state changes, evidence-state changes, blocker closure, gap closure, readiness, ADR drafting readiness, implementation-proposal preflight, implementation, staging, sandbox use, internal testing, live operations, custody, rails, stablecoin conversion, treasury operations, reconciliation, support operations, audit operations, ledger truth, accounting truth, Copilot execution, Class C automation, or customer fund movement authority.
 - **Post–`COP-GOV-001` sequencing (governance-accepted):** `COP-GOV-001` completed the intended **advisory-boundary definition** lane as a documentation-only governance artifact. It did **not** widen product, engine, backend, policy, Copilot **runtime**, execution, accounting, ledger, vendor, custody, stablecoin, Circle, live-service, or customer-facing automation authority. Copilot MVP posture remains **advisory, non-directive, non-executing, hermetic, non-accounting, non-policy-authoritative**, and **outside `§6b` category 8** unless future doctrine and ADRs widen the boundary. Any later Copilot **implementation** requires a separate **§7** name and **§7a** brief. Do not infer Copilot implementation, runtime binding, engine binding, policy binding, backend work, execution authority, or finance-style autonomy from `COP-GOV-001`.
 - **Governance reconciliation note:** **`UI-SRA-001`** activation artifacts (`docs/ops/retail-ui/implementation-readouts/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_EXECUTION_REQUEST.md`, **`docs/ops/retail-ui/implementation-readouts/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_STATUS_PATCH_PROPOSAL.md`**, and **§7** / **§7a** activation language) first landed in commit **`1bd65d1`**; shipped dashboard implementation landed in **`da96e1e`**. Branch history was reconciled so activation, support docs, implementation, and this closeout (**§44**) cohabit the same lineage without implying a false single-commit ordering. See **`docs/ops/retail-ui/implementation-readouts/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_EXECUTION_READOUT.md` §2**.
@@ -3288,17 +3325,19 @@ Current active ticket status:
 - Cursor must not continue automatically into work beyond what is explicitly defined in this file for an active ticket.
 - Cursor must not drift beyond explicitly defined scope.
 
-**Last completed ticket (summary):** `MC-S3-022` — Regression resistance tranche 8 for shipped dashboard allocation-band informational framing (test-only Playwright smoke hardening that locks rendered target / balance / movement distinctions and guards against executed / settled / customer-allocation phrasing after mock login; no production UI or source-copy changes, no `apps/frontend/lib/engine/**`, no `EnginePosture` change, no badge-label change, no notice change, no mock / simulator change, no backend, no policy, no engine logic, no allocation calculation, no execution semantics, no accounting truth, no Class B authority, no Copilot runtime, no CI / workflow change, or ADR status change; **§7** / **§7a** restored to no-active-ticket posture); completed record in **§106**.
+**Last completed ticket (summary):** `BRAND-009` — Shared UI semantic token normalization (`BRAND-006` remediation #2 / `BRAND-006-FU-002`; brand remediation / shared-UI presentation normalization that normalizes `packages/ui/src/Banner.tsx`, `packages/ui/src/EmptyState.tsx`, `packages/ui/src/ErrorState.tsx`, and `packages/ui/src/DarkModeToggle.tsx` to governed `hedgr-*` token classes, retires the stale shared banner gradient pattern, and preserves the no-runtime / no-product-semantics / no-engine / no-Class-B / no-Copilot / no-ADR-expansion boundaries; **§7** / **§7a** restored to no-active-ticket posture); completed record in **§107**.
 
 ---
 
 ## 7a. Active execution ticket
 
-**Status:** **No active execution ticket.** **§7** does not currently name an approved next implementation ticket. The most recently completed ticket, `MC-S3-022` (Regression resistance tranche 8 for shipped dashboard allocation-band informational framing), is recorded in **§106**.
+**Status:** **No active execution ticket.** **§7** does not currently name an approved next implementation ticket. The most recently completed ticket, `BRAND-009` (Shared UI semantic token normalization / `BRAND-006-FU-002`), is recorded in **§107**.
 
 When governance approves the next ticket, **§7** will name it and this section will hold the full execution brief until closeout.
 
 ---
+
+**Archived brief (BRAND-009):** Shared UI semantic token normalization (`BRAND-006` remediation #2 / `BRAND-006-FU-002`) — **brand remediation / shared-UI presentation normalization**; scope held to `packages/ui/src/Banner.tsx`, `packages/ui/src/EmptyState.tsx`, `packages/ui/src/ErrorState.tsx`, `packages/ui/src/DarkModeToggle.tsx`, `docs/ops/HEDGR_STATUS.md`, and `docs/ops/NOTION_GOVERNANCE_STAGING.md`. Normalized the scoped shared UI components from raw gray / blue / red Tailwind palettes to governed `hedgr-*` token classes, retired the stale shared banner `from-hedgr-start` / `via-hedgr-middle` / `to-hedgr-end` gradient pattern, preserved existing component APIs and layout structure, and recorded WCAG AA consideration through the brand QA / PR review path. **No** `apps/frontend/**`, **no** `apps/frontend/lib/engine/**`, **no** backend, **no** CI workflows, **no** `DESIGN.md` color-value changes, **no** palette expansion, **no** broad UI redesign, **no** runtime or product semantic changes, **no** Stability Engine trust surfaces, **no** Class B authority, **no** Copilot runtime, **no** successor remediation tickets `BRAND-006-FU-003` through `BRAND-006-FU-006`, and **no** ADR status changes. Completed record: **§107**.
 
 **Archived brief (MC-S3-022):** Regression resistance tranche 8 for shipped dashboard allocation-band informational framing — **test-only**; scope held to **`apps/frontend/tests-e2e/smoke-pack.spec.ts`**, **`docs/ops/stability-engine/HEDGR_STABILITY_ENGINE_TRUST_SURFACE_TEST_COVERAGE_MATRIX.md`**, **`docs/ops/HEDGR_STATUS.md`**, and **`docs/ops/NOTION_GOVERNANCE_STAGING.md`**. Extended the existing shipped dashboard smoke path for `engine-allocation-bands` after mock login, locking visible `Target posture`, lane labels, Targets / Balances / Movement distinctions, ledger-vs-target distinction, spendable-balance distinction, and the statement that targets do not mean funds have already moved. Added guards against executed allocation, settled allocation / position, and customer-specific allocation partitioning phrases. **No** production UI changes, **no** production copy changes, **no** `apps/frontend/lib/engine/**`, **no** `EnginePosture` values, **no** posture badge labels, **no** notice copy, **no** mock values, **no** simulator behavior, **no** allocation calculations, **no** backend, **no** policy, **no** accounting semantics, **no** ledger truth, **no** settled balances, **no** executable allocation framing, **no** Class B authority, **no** Copilot runtime, **no** CI / workflow changes, and **no** ADR status changes. Completed record: **§106**.
 
@@ -5944,7 +5983,7 @@ This **§43** record was originally written in the same working-tree change-set 
 
 **§7** / **§7a** record completion per governance. At `BRAND-008` closeout, the approved next ticket became `MC-S3-022` with the active brief in **§7a**; `MC-S3-022` was later completed in **§106**.
 
-**Follow-ups:** `BRAND-006-FU-002` through `BRAND-006-FU-006` remain unimplemented recommendations only. No further brand remediation ticket is created by this closeout. `MC-S3-022` was the only successor activated by this closeout and is recorded as complete in **§106**.
+**Follow-ups:** At `BRAND-008` closeout, `BRAND-006-FU-002` through `BRAND-006-FU-006` remained unimplemented recommendations only. `BRAND-006-FU-002` was later completed as `BRAND-009` in **§107**; `BRAND-006-FU-003` through `BRAND-006-FU-006` remain unimplemented recommendations only. `MC-S3-022` was the only successor activated by the `BRAND-008` closeout and is recorded as complete in **§106**.
 
 ---
 
@@ -5974,3 +6013,32 @@ This **§43** record was originally written in the same working-tree change-set 
 **§7** / **§7a** record completion per governance and are restored to no-active-ticket posture.
 
 **Follow-ups:** No successor implementation ticket is created by this regression-resistance tranche. Any future Stability Engine trust-surface, test, copy, UI, engine, ADR, runtime, status, sequencing, brand-remediation, or reference-expansion work appears only when repo governance names it explicitly.
+
+---
+
+## 107. Completed execution ticket - BRAND-009 (Shared UI semantic token normalization)
+
+**Ticket:** `BRAND-009` — Shared UI semantic token normalization (`BRAND-006` remediation #2 / `BRAND-006-FU-002`; brand remediation / shared-UI presentation normalization)
+
+**Objective.** Normalize scoped `@hedgr/ui` shared components to governed `hedgr-*` color token classes aligned with `DESIGN.md` and `docs/brand/HEDGR_SEMANTIC_STATUS_TOKENS.md`, retiring stale token names and ungoverned raw-palette / gradient patterns without changing shipped app routes, engine surfaces, backend behavior, token values, runtime semantics, product meaning, Class B authority, Copilot runtime, or ADR status.
+
+### Outcome (shared-UI presentation normalization)
+
+- **`packages/ui/src/Banner.tsx`** — replaced the stale `bg-gradient-to-r from-hedgr-start via-hedgr-middle to-hedgr-end` banner treatment with a calm governed `hedgr-100` / `hedgr-200` / `hedgr-800` surface.
+- **`packages/ui/src/EmptyState.tsx`** — normalized default icon, copy, focus, primary action, and secondary action styling from raw gray / blue Tailwind palettes to governed `hedgr-*` token classes.
+- **`packages/ui/src/ErrorState.tsx`** — normalized default icon, callout, copy, focus, primary action, and secondary action styling from raw red / gray Tailwind palettes to governed `hedgr-*` token classes.
+- **`packages/ui/src/DarkModeToggle.tsx`** — normalized light / dark toggle surfaces and copy from raw gray Tailwind palettes to governed `hedgr-*` token classes.
+- **`docs/ops/HEDGR_STATUS.md`** — recorded `BRAND-009` in §6d, updated §7 completed / last-completed state, archived the `BRAND-009` brief, restored §7 / §7a to no-active-ticket posture, and added this completed-ticket record.
+- **`docs/ops/NOTION_GOVERNANCE_STAGING.md`** — downstream mirror reconciled to reflect `BRAND-009` completion without creating Notion-led authority.
+
+**Governance guarantees held.** `DESIGN.md` remains the machine-readable brand authority. The implementation uses existing governed `hedgr-*` token classes only; no `DESIGN.md` color values changed, no palette values were added, and no raw red / yellow / green / blue status palette was introduced. The changed pairings align with `semanticStatus.info`, `semanticStatus.neutral`, `semanticStatus.focus`, and `semanticStatus.error` role intent. The Brand QA checklist was reviewed for the changed surfaces, including WCAG AA contrast consideration, calm institutional posture, and no gradient / glow / speculative accent systems.
+
+**Scope discipline held.** **No** `apps/frontend/**`, **no** `apps/frontend/lib/engine/**`, **no** backend, **no** CI workflows, **no** `DESIGN.md` color-value changes, **no** palette expansion, **no** broad UI redesign, **no** layout restructuring beyond token-class normalization, **no** runtime or product semantic changes, **no** Stability Engine posture / notice / allocation / mock / simulator changes, **no** Class B authority, **no** Copilot runtime, **no** execution semantics, **no** accounting truth, **no** ledger mutation, **no** customer fund movement authority, **no** implementation of `BRAND-006-FU-003` through `BRAND-006-FU-006`, and **no** ADR status change.
+
+**Validation.** Shared UI build passed: `pnpm run build:ui`. Full local runbook validation passed: `pnpm run validate` (trust checks, Vitest `60 passed` / `720 passed`, typecheck, and lint). Backend-stub local `e2e:ci` passed (`53 passed`). CI required checks `validate` and `E2E smoke (@hedgr/frontend)` are expected on PR.
+
+### Sequencing note
+
+**§7** / **§7a** record completion per governance and are restored to no-active-ticket posture.
+
+**Follow-ups:** No successor implementation ticket is created by this shared-UI normalization pass. `BRAND-006-FU-003` through `BRAND-006-FU-006` remain unimplemented recommendations only. Any future brand remediation, shipped app token normalization, gradient / motion review, typography cleanup, prototype containment, engine, ADR, runtime, status, sequencing, Class B, or Copilot work appears only when repo governance names it explicitly.
