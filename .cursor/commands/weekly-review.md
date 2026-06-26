@@ -72,6 +72,37 @@ Include, at minimum:
 10. North Star verdict
 11. Risks / notes
 12. Optional non-authoritative evaluation criteria
+13. Authority treatment note
+14. Status-language watchlist
+15. What changed vs what did not change
+16. Decision pressure
+
+## Required weekly governance additions
+
+Include the weekly governance additions defined in `docs/ops/reviews/README.md`:
+
+- authority treatment note
+- status-language watchlist
+- what changed vs what did not change table
+- decision pressure field
+
+The authority treatment note must classify support, review, bridge, command, or governance-tooling work as recorded in `docs/ops/HEDGR_STATUS.md`, mirrored or reconciled there, closed through local verification or closeout evidence, included as merged support evidence only, or excluded as draft / in-progress / non-authorizing material.
+
+Do not flatten authority roles. A verification file, bridge snapshot, review artifact, command file, or support document may be evidence, but it is not sequencing authority unless repo-native authority explicitly says so.
+
+The status-language watchlist is a review aid only, not standalone UX doctrine. Flag review-sensitive terms only when they could imply execution truth, user-money state, approval, readiness, settlement, or operational capability beyond repo authority. Assess terms in context; do not automatically ban them.
+
+The changed / unchanged table must explicitly state whether authority widened. Use `No` unless repo-native authority explicitly supports a different answer, and cite the exact authority surface and section for any `Yes`.
+
+Use one decision-pressure label:
+
+- `None`
+- `Clarification useful`
+- `Founder decision required`
+- `Repo authority reconciliation required`
+- `Blocked by unresolved ambiguity`
+
+Decision pressure must be phrased as bounded governance framing, not sequencing, implementation recommendation, or next-ticket language.
 
 ## Required statements
 
@@ -145,6 +176,10 @@ After completion, summarize:
 - completed-ticket evidence included
 - merged-work evidence included
 - excluded evidence and why
+- authority treatment summary
+- status-language watchlist result
+- changed / unchanged boundary summary
+- decision pressure label
 - bridge snapshot files refreshed
 - validation commands run
 - validation result
