@@ -55,6 +55,24 @@ test("health is public and does not fetch snapshots", async () => {
   assert.equal(calls.length, 0);
 });
 
+test("root route is public and lists available routes without fetching snapshots", async () => {
+  const calls = mockGitHubFetch();
+  const response = await worker.fetch(request("/"), {});
+  const body = await json(response);
+
+  assert.equal(response.status, 200);
+  assert.equal(body.bridge, "HedgrOps Read-Only Review Evidence Bridge");
+  assert.equal(body.status, "ok");
+  assert.equal(body.mode, "READ_ONLY");
+  assert.equal(body.execution_authority, false);
+  assert.equal(body.mutation_allowed, false);
+  assert.equal(body.ticket_activation_allowed, false);
+  assert.ok(body.routes.includes("/health"));
+  assert.ok(body.routes.includes("/authority-summary"));
+  assert.ok(body.routes.includes("/hedgr/status/authority-summary"));
+  assert.equal(calls.length, 0);
+});
+
 test("snapshot routes require the bridge API key", async () => {
   const calls = mockGitHubFetch();
 
@@ -68,9 +86,11 @@ test("snapshot routes require the bridge API key", async () => {
     }),
     env
   );
+  const aliasMissing = await worker.fetch(request("/authority-summary"), env);
 
   assert.equal(missing.status, 401);
   assert.equal(invalid.status, 401);
+  assert.equal(aliasMissing.status, 401);
   assert.equal(calls.length, 0);
 });
 
@@ -136,6 +156,36 @@ test("snapshot retrieval uses the hard allowlist mapping", async () => {
     calls[0].url,
     /docs\/ops\/bridge\/latest-mvp-process-review\.json\?ref=main$/
   );
+});
+
+test("alias routes use the same protected snapshot allowlist", async () => {
+  const calls = mockGitHubFetch();
+  const authority = await worker.fetch(
+    request("/authority-summary", {
+      headers: { "x-hedgrops-api-key": "test-key" }
+    }),
+    env
+  );
+  const weekly = await worker.fetch(
+    request("/weekly-review", {
+      headers: { "x-hedgrops-api-key": "test-key" }
+    }),
+    env
+  );
+
+  assert.equal(authority.status, 200);
+  assert.equal(weekly.status, 200);
+  assert.match(
+    calls[0].url,
+    /docs\/ops\/bridge\/current-status\.json\?ref=main$/
+  );
+  assert.match(
+    calls[1].url,
+    /docs\/ops\/bridge\/latest-weekly-review\.json\?ref=main$/
+  );
+  assert.equal(ALLOWED_FILES["/authority"], "docs/ops/bridge/current-status.json");
+  assert.equal(ALLOWED_FILES["/current-status"], "docs/ops/bridge/current-status.json");
+  assert.equal(ALLOWED_FILES["/weekly-review"], "docs/ops/bridge/latest-weekly-review.json");
 });
 
 test("missing GitHub configuration fails closed", async () => {

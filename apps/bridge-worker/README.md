@@ -12,17 +12,24 @@ It only retrieves static JSON snapshots from `docs/ops/bridge/*.json`. It does n
 
 ## Endpoints
 
+- `GET /`
 - `GET /health`
+- `GET /authority`
+- `GET /authority-summary`
+- `GET /current-status`
+- `GET /weekly-review`
 - `GET /hedgr/status/authority-summary`
 - `GET /hedgr/reviews/latest-weekly`
 - `GET /hedgr/reviews/latest-mvp-process`
 - `GET /hedgr/reviews/index`
 
-All endpoints except `/health` require:
+`/` and `/health` are public diagnostic routes. All snapshot routes require:
 
 ```text
 x-hedgrops-api-key: <HEDGROPS_BRIDGE_API_KEY>
 ```
+
+The short snapshot aliases map to the same allowlisted static files as the canonical `/hedgr/...` routes. They do not enable dynamic path lookup or arbitrary repository browsing.
 
 ## Required Environment Variables
 

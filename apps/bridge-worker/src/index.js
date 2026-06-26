@@ -6,11 +6,28 @@ const NON_AUTHORIZATION_STATEMENT =
 const MODE = "READ_ONLY";
 
 const ALLOWED_FILES = Object.freeze({
+  "/authority": "docs/ops/bridge/current-status.json",
+  "/authority-summary": "docs/ops/bridge/current-status.json",
+  "/current-status": "docs/ops/bridge/current-status.json",
+  "/weekly-review": "docs/ops/bridge/latest-weekly-review.json",
   "/hedgr/status/authority-summary": "docs/ops/bridge/current-status.json",
   "/hedgr/reviews/latest-weekly": "docs/ops/bridge/latest-weekly-review.json",
   "/hedgr/reviews/latest-mvp-process": "docs/ops/bridge/latest-mvp-process-review.json",
   "/hedgr/reviews/index": "docs/ops/bridge/review-index.json"
 });
+
+const ROUTES = Object.freeze([
+  "/",
+  "/health",
+  "/authority",
+  "/authority-summary",
+  "/current-status",
+  "/weekly-review",
+  "/hedgr/status/authority-summary",
+  "/hedgr/reviews/latest-weekly",
+  "/hedgr/reviews/latest-mvp-process",
+  "/hedgr/reviews/index"
+]);
 
 function jsonResponse(status, body) {
   return new Response(JSON.stringify(body), {
@@ -36,6 +53,20 @@ function notFound() {
 
 function missingSnapshotSource() {
   return jsonResponse(502, { error: "Snapshot source unavailable" });
+}
+
+function routeIndex() {
+  return jsonResponse(200, {
+    bridge: BRIDGE_NAME,
+    status: "ok",
+    mode: MODE,
+    routes: ROUTES,
+    execution_authority: false,
+    mutation_allowed: false,
+    ticket_activation_allowed: false,
+    retrieved_at: new Date().toISOString(),
+    non_authorization_statement: NON_AUTHORIZATION_STATEMENT
+  });
 }
 
 function hasValidApiKey(request, env) {
@@ -133,6 +164,10 @@ async function handleRequest(request, env) {
   }
 
   const { pathname } = new URL(request.url);
+
+  if (pathname === "/") {
+    return routeIndex();
+  }
 
   if (pathname === "/health") {
     return jsonResponse(200, { status: "ok", mode: MODE });
