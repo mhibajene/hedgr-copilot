@@ -85,6 +85,122 @@ Example:
 2026-05-01-weekly-review.md
 ```
 
+**Required governance additions:**
+
+Future weekly reviews must include the following review-governance fields. These fields improve authority legibility; they do not create doctrine, execution authority, sequencing authority, or ticket activation authority.
+
+#### Authority treatment note
+
+Weekly reviews must identify how included support, review, bridge, command, or governance-tooling work was treated for authority purposes.
+
+At minimum, state whether each relevant item is:
+
+- recorded as a completed ticket in `docs/ops/HEDGR_STATUS.md`
+- mirrored or reconciled in `docs/ops/HEDGR_STATUS.md`
+- closed through a local verification or closeout artifact
+- included as merged support evidence only
+- excluded as draft, review-draft, in-progress, or non-authorizing material
+
+This note must not flatten authority roles.
+
+A local verification file, bridge snapshot, review artifact, command file, or support document may be evidence of completed support work, but it does not become sequencing authority unless repo-native authority explicitly says so.
+
+Weekly reviews must surface unresolved authority-treatment ambiguity instead of resolving it by inference.
+
+#### Status-language watchlist
+
+Weekly reviews should include a lightweight status-language watch when merged work touches product copy, review language, status badges, UI state, bridge snapshots, support tools, off-ramp framing, custody, rails, deposits, withdrawals, provider coverage, or market readiness.
+
+The watchlist is a review aid, not standalone UX doctrine.
+
+Flag terms only when their usage could imply execution truth, user-money state, approval, readiness, settlement, or operational capability beyond repo authority.
+
+Review-sensitive terms include, but are not limited to:
+
+- available
+- protected
+- allocated
+- processing
+- withdrawable
+- completed
+- verified
+- ready
+- live
+- approved
+- selected
+- guaranteed
+- instant
+- cash out
+- payout
+- settled
+- converted
+- deposited
+- withdrawn
+- yield
+- safe
+- secured
+
+For each flagged term, use:
+
+| Term | Location / artifact | Why it may be risky | Repo-authorized meaning | Action required? |
+| --- | --- | --- | --- | --- |
+
+The review must not automatically ban terms. It must assess whether the term creates misleading trust, execution, accounting, provider, market, or authority implications.
+
+This is review hygiene only. Hedgr's UX doctrine already requires risk to be named explicitly, status before action, and verifiable states over promises; this watchlist supports that posture without replacing doctrine.
+
+#### What changed vs what did not change
+
+Weekly reviews should include a compact table distinguishing actual repo changes from unchanged authority, product, execution, or trust boundaries.
+
+Use this format:
+
+| Area / workstream | What changed | What did not change | Authority widened? | Trust surface affected? | Evidence basis |
+| --- | --- | --- | --- | --- | --- |
+| Stability Engine |  |  | No / Yes with authority citation |  |  |
+| Brand / UI semantics |  |  | No / Yes with authority citation |  |  |
+| Bridge / review support |  |  | No / Yes with authority citation |  |  |
+| Off-ramp / rails |  |  | No / Yes with authority citation |  |  |
+| Custody / customer-money movement |  |  | No / Yes with authority citation |  |  |
+
+The table must explicitly state `No` under authority widening unless repo-native authority explicitly supports a different answer.
+
+If authority widening is claimed, the review must cite the exact repo-native authority surface and section.
+
+This table reduces drift by distinguishing more legible support infrastructure from expanded product authority.
+
+#### Decision pressure
+
+Weekly reviews should identify whether the week created founder decision pressure.
+
+Use one of the following labels:
+
+- `None`
+- `Clarification useful`
+- `Founder decision required`
+- `Repo authority reconciliation required`
+- `Blocked by unresolved ambiguity`
+
+Decision pressure must not become sequencing language.
+
+If a founder decision is required, phrase it as a bounded governance question, not as an implementation recommendation.
+
+Allowed:
+
+> Founder decision required: whether to standardize support-infrastructure closeout treatment in weekly reviews.
+
+Allowed:
+
+> Repo authority reconciliation required: support-infrastructure evidence exists outside `HEDGR_STATUS`; review should preserve ambiguity until repo authority is reconciled.
+
+Not allowed:
+
+> Next ticket should implement provider selection.
+
+Not allowed:
+
+> Bridge support is complete, so proceed to next bridge ticket.
+
 ---
 
 ## Core Guardrails (Non-Negotiable)
@@ -188,6 +304,13 @@ Each review should include:
 10. North Star verdict
 11. Risks / notes
 12. Non-authoritative evaluation criteria (optional)
+
+Weekly reviews should also include the weekly governance additions above:
+
+- authority treatment note
+- status-language watchlist
+- what changed vs what did not change
+- decision pressure
 
 ---
 

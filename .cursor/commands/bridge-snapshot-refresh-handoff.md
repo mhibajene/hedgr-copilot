@@ -40,6 +40,10 @@ They must not become:
 - a substitute for accepted ADRs
 - a substitute for doctrine
 
+Snapshot refresh does not resolve weekly-review authority treatment.
+
+If a weekly review includes bridge snapshots, bridge runtime work, command files, or other support infrastructure, the review must still classify that material through the authority treatment note required by `docs/ops/reviews/README.md`. A refreshed snapshot can point to evidence; it cannot make support work a completed ticket, sequencing input, or implementation authority without repo-native authority such as `docs/ops/HEDGR_STATUS.md`.
+
 ## Commands
 
 After creating or updating a weekly review or MVP process review, run:

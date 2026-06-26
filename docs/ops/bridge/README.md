@@ -45,3 +45,17 @@ The bridge and these files remain subordinate to:
 - `docs/ops/reviews/README.md`
 
 Reviews remain evidence, not direction. These snapshots must not be used as implementation authority.
+
+## Review Use Boundary
+
+When weekly reviews cite bridge snapshots, bridge runtime work, command files, or other support infrastructure, reviewers must preserve the authority distinction required by `docs/ops/reviews/README.md`.
+
+Classify the material as one of:
+
+- recorded as a completed ticket in `docs/ops/HEDGR_STATUS.md`
+- mirrored or reconciled in `docs/ops/HEDGR_STATUS.md`
+- closed through local verification or closeout evidence
+- included as merged support evidence only
+- excluded as draft, review-draft, in-progress, or non-authorizing material
+
+A snapshot refresh, bridge response, command prompt, or local verification file is evidence only. It does not activate tickets, sequence implementation, or widen authority unless repo-native authority explicitly says so.
