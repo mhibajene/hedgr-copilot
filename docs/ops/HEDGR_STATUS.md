@@ -3217,6 +3217,27 @@ Implementation posture preserved:
 - no evidence intake, evidence acceptance, provider selection, market selection, provider outreach, ADR acceptance, implementation-preflight, implementation, staging, sandbox use, internal testing, live operations, custody, rails, stablecoin conversion, treasury operations, reconciliation operations, support operations, audit operations, ledger truth, accounting truth, Copilot execution, Class C automation, or customer fund movement authority.
 - no `apps/`, `packages/`, `scripts/`, `.github/`, tests, backend, frontend implementation, `apps/frontend/lib/engine/**`, CI workflows, Copilot runtime, or ADR status changes.
 
+### OFFRAMP-GOV-001 - Research promotion and closeout (documentation-only governance / supporting references)
+
+Changed files:
+
+- `docs/research/HEDGR_OFFRAMP_STRATEGY_AGENCY_AND_PAYOUT_INFRASTRUCTURE_RESEARCH.md`
+- `docs/research/HEDGR_MVP_WALLET_RAILS_MARKET_STRATEGY_PAPER.md`
+- `docs/ops/HEDGR_STATUS.md`
+- `docs/ops/NOTION_GOVERNANCE_STAGING.md`
+
+Implementation truth:
+
+- promoted the two review-draft research artifacts to canonical research paths only after the Off-Ramp Governance Framework was merged.
+- marked both research artifacts as canonical decision-support research / supporting references under the framework, not governance authority.
+- added explicit cross-links between the off-ramp framework, off-ramp companion research artifact, wallet/rails market strategy paper, and Class B evidence architecture.
+- closed `OFFRAMP-GOV-001` as documentation-only governance after framework establishment plus research promotion.
+
+Implementation posture preserved:
+
+- documentation-only research promotion and governance closeout.
+- no provider selection, no market selection, no evidence intake, no evidence acceptance, no evidence-state or registry-state change, no provider outreach, no ADR acceptance, no implementation-preflight, no implementation, no staging, no sandbox use, no internal testing, no live operations, no custody, no rails, no stablecoin conversion, no deposits, no withdrawals, no remittance, no treasury operations, no reconciliation operations, no support operations, no audit operations, no ledger truth, no accounting truth, no Copilot execution, no Class C automation, and no customer fund movement authority.
+
 ---
 
 ## 7. Current sequence and active status
@@ -3330,11 +3351,12 @@ Completed and merged:
 - `BRAND-008` - Governed semantic status token definition (`BRAND-006` remediation #1 / `BRAND-006-FU-001`; documentation-only brand authority prerequisite; completed record **§105**)
 - `MC-S3-022` - Regression resistance tranche 8 for shipped dashboard allocation-band informational framing (test-only; completed record **§106**)
 - `BRAND-009` - Shared UI semantic token normalization (`BRAND-006` remediation #2 / `BRAND-006-FU-002`; brand remediation / shared-UI presentation normalization; completed record **§107**)
+- `OFFRAMP-GOV-001` - Establish Hedgr Off-Ramp Governance Framework (documentation-only governance / cross-cutting institutional framework plus supporting research promotion; completed record **§108**)
 
 Current active ticket status:
 
-- **Approved next ticket:** **`OFFRAMP-GOV-001`** — Establish Hedgr Off-Ramp Governance Framework (documentation-only governance / cross-cutting institutional framing). Active execution brief in **§7a**. `BRAND-009` remains complete and recorded in **§107**.
-- **Off-Ramp Governance Framework sequencing (governance-accepted):** `OFFRAMP-GOV-001` establishes off-ramp as a **doctrine-informed cross-cutting governance framework** implemented through Class B evidence and subordinate to the Constitutional Charter, MVP doctrine, Stability Engine read-only boundaries, and the closed Class B governance / evidence program. It does **not** create an independent governance institution parallel to Class B or the Stability Engine. It does **not** authorize evidence intake, evidence acceptance, provider selection, market selection, provider outreach, ADR acceptance, implementation, staging, sandbox use, internal testing, live operations, custody, rails, stablecoin conversion, treasury operations, reconciliation operations, support operations, audit operations, ledger truth, accounting truth, Copilot execution, Class C automation, or customer fund movement authority.
+- **Approved next ticket:** **None named.** `OFFRAMP-GOV-001` is complete and recorded in **§108**; **§7** / **§7a** are restored to no-active-ticket posture. There is **no** approved next implementation ticket until **§7** is updated explicitly to name one.
+- **Post-`OFFRAMP-GOV-001` sequencing (governance-accepted):** Off-ramp is now recorded as a **doctrine-informed cross-cutting governance framework** implemented through Class B evidence and subordinate to the Constitutional Charter, MVP doctrine, Stability Engine read-only boundaries, and the closed Class B governance / evidence program. The promoted research artifacts are supporting references only. This closeout does **not** create an independent governance institution parallel to Class B or the Stability Engine. It does **not** authorize evidence intake, evidence acceptance, provider selection, market selection, provider outreach, ADR acceptance, implementation, staging, sandbox use, internal testing, live operations, custody, rails, stablecoin conversion, treasury operations, reconciliation operations, support operations, audit operations, ledger truth, accounting truth, Copilot execution, Class C automation, or customer fund movement authority.
 - **Brand System Governance sequencing:** **§6d** records the approved Brand System Governance ticket set and recommended order. `BRAND-001` through `BRAND-009` are complete. `BRAND-006-FU-003` through `BRAND-006-FU-006` remain non-authorizing until a future **§7** ticket names them with a bounded **§7a** brief.
 - **Post–`GOV-INTAKE-B-002` sequencing (governance-accepted):** `GOV-INTAKE-B-002` completed the Class B Evidence Intake Governance Model as a documentation-only governance artifact. It did **not** authorize evidence intake, evidence collection, evidence requests, evidence acceptance, evidence rejection, evidence scoring, evidence evaluation, registry-state changes, evidence-state changes, blocker closure, gap closure, readiness, ADR drafting readiness, implementation-proposal preflight, implementation, staging, sandbox use, internal testing, live operations, custody, rails, stablecoin conversion, treasury operations, reconciliation, support operations, audit operations, ledger truth, accounting truth, Copilot execution, Class C automation, or customer fund movement authority.
 - **Post–`COP-GOV-001` sequencing (governance-accepted):** `COP-GOV-001` completed the intended **advisory-boundary definition** lane as a documentation-only governance artifact. It did **not** widen product, engine, backend, policy, Copilot **runtime**, execution, accounting, ledger, vendor, custody, stablecoin, Circle, live-service, or customer-facing automation authority. Copilot MVP posture remains **advisory, non-directive, non-executing, hermetic, non-accounting, non-policy-authoritative**, and **outside `§6b` category 8** unless future doctrine and ADRs widen the boundary. Any later Copilot **implementation** requires a separate **§7** name and **§7a** brief. Do not infer Copilot implementation, runtime binding, engine binding, policy binding, backend work, execution authority, or finance-style autonomy from `COP-GOV-001`.
@@ -3347,77 +3369,17 @@ Current active ticket status:
 - Cursor must not continue automatically into work beyond what is explicitly defined in this file for an active ticket.
 - Cursor must not drift beyond explicitly defined scope.
 
-**Last completed ticket (summary):** `BRAND-009` — Shared UI semantic token normalization (`BRAND-006` remediation #2 / `BRAND-006-FU-002`; brand remediation / shared-UI presentation normalization that normalizes `packages/ui/src/Banner.tsx`, `packages/ui/src/EmptyState.tsx`, `packages/ui/src/ErrorState.tsx`, and `packages/ui/src/DarkModeToggle.tsx` to governed `hedgr-*` token classes, retires the stale shared banner gradient pattern, and preserves the no-runtime / no-product-semantics / no-engine / no-Class-B / no-Copilot / no-ADR-expansion boundaries); completed record in **§107**.
+**Last completed ticket (summary):** `OFFRAMP-GOV-001` — Establish Hedgr Off-Ramp Governance Framework (documentation-only governance / cross-cutting institutional framework plus supporting research promotion; created `docs/ops/governance/offramp/HEDGR_OFFRAMP_GOVERNANCE_FRAMEWORK.md`, promoted the two supporting research artifacts to canonical paths, and preserved no-provider / no-market / no-evidence-intake / no-implementation / no-customer-money authority); completed record in **§108**.
 
 ---
 
 ## 7a. Active execution ticket
 
-**Status:** **Active.** **`OFFRAMP-GOV-001`** — Establish Hedgr Off-Ramp Governance Framework (documentation-only governance / cross-cutting institutional framing).
+**Status:** **No active execution ticket.** **§7** does not currently name an approved next implementation ticket. The most recently completed ticket, `OFFRAMP-GOV-001` (Off-Ramp Governance Framework), is recorded in **§108**.
 
-**Objective:** Establish off-ramp as a governed cross-cutting framework — not an independent governance institution and not merely another Class B evidence package — whose implementation artifacts reside within the existing Class B evidence architecture and whose interpretation remains subordinate to Hedgr's Constitutional Charter, MVP doctrine, Stability Engine read-only boundaries, and repo-native authority.
+When governance approves the next ticket, **§7** will name it and this section will hold the full execution brief until closeout.
 
-**Institutional model (binding for this ticket):**
-
-```text
-Constitution
-     │
-     ▼
-MVP Doctrine
-     │
-     ▼
-Class B Governance
-     │
-     ├────────────────┐
-     │                │
-     ▼                ▼
-Market Strategy   Off-Ramp Framework
-     │                │
-     └────────┬───────┘
-              ▼
-    Class B Evidence Records
-```
-
-**Close order (mandatory):**
-
-1. Author and merge the Off-Ramp Governance Framework as repo-native governance truth.
-2. Promote the off-ramp and wallet/rails research artifacts as **supporting references** under that framework (research must not precede or implicitly define governance).
-
-**In scope:**
-
-- `docs/ops/governance/offramp/HEDGR_OFFRAMP_GOVERNANCE_FRAMEWORK.md` — primary framework artifact
-- `docs/ops/HEDGR_STATUS.md` — activation, merged-truth subsection, and closeout record
-- `docs/ops/NOTION_GOVERNANCE_STAGING.md` — Notion mirror after merge
-- After framework merge: promote `docs/research/HEDGR_OFFRAMP_STRATEGY_AGENCY_AND_PAYOUT_INFRASTRUCTURE_RESEARCH_REVIEW_DRAFT.md` → `docs/research/HEDGR_OFFRAMP_STRATEGY_AGENCY_AND_PAYOUT_INFRASTRUCTURE_RESEARCH.md`
-- After framework merge: promote `docs/research/HEDGR_MVP_WALLET_RAILS_MARKET_STRATEGY_PAPER_REVIEW_DRAFT.md` → `docs/research/HEDGR_MVP_WALLET_RAILS_MARKET_STRATEGY_PAPER.md` with cross-reference to the off-ramp framework and companion research artifact
-- Framework outputs: institutional scope; constitutional alignment (clarification only, not charter amendment); relationship to liquidity integrity / Article II ("Liquidity Is Sacred"); responsibility model; doctrine boundaries; relationship to Stability Engine (informational only); relationship to Market Strategy; relationship to Trust UX; Class B evidence architecture (including illustrative sub-path under `docs/ops/governance/class-b/evidence/offramp/`); implementation gate model; dependency mapping to existing `GOV-B-*` / `EVID-B-*` artifacts; canonical terminology; proposed ADR *candidates* (non-accepting)
-
-**Must not:**
-
-- Select or approve a provider, market, jurisdiction, custody model, rail, or endpoint
-- Authorize or perform evidence intake, evidence collection, evidence requests, evidence acceptance, evidence rejection, evidence scoring, evidence evaluation, registry-state changes, evidence-state changes, blocker closure, or gap closure
-- Authorize provider outreach, commercial engagement, sandbox use, internal testing, live operations, or customer-money activity
-- Accept ADRs, widen Stability Engine authority beyond read-only / informational posture, or introduce execution, accounting, ledger, treasury, or fund-movement semantics
-- Duplicate or supersede the closed Class B Governance Spine (`GOV-B-001`–`GOV-B-017`) or Class B Evidence Gathering program (`EVID-B-001`–`EVID-B-022`)
-- Modify `apps/`, `packages/`, `scripts/`, `.github/`, tests, backend, `apps/frontend/lib/engine/**`, CI workflows, Copilot runtime, or ADR status (except non-accepting ADR *candidate* references inside framework docs)
-
-**Governing references (read order for implementers):**
-
-1. `docs/doctrine/hedgr-constitutional-charter.md`
-2. `docs/doctrine/hedgr-mvp-project-specification.md`
-3. `docs/ops/HEDGR_STATUS.md` — **§7** / **§7a**
-4. `docs/ops/governance/class-b/reviews/HEDGR_CLASS_B_GOVERNANCE_EVIDENCE_PROGRAM_CLOSURE_ASSESSMENT.md`
-5. `docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_EVIDENCE_INTAKE_GOVERNANCE_MODEL.md`
-6. `docs/research/HEDGR_OFFRAMP_STRATEGY_AGENCY_AND_PAYOUT_INFRASTRUCTURE_RESEARCH_REVIEW_DRAFT.md` (decision-support input only until promoted)
-7. `docs/research/HEDGR_MVP_WALLET_RAILS_MARKET_STRATEGY_PAPER_REVIEW_DRAFT.md` (decision-support input only until promoted)
-
-**Acceptance shape:**
-
-- Framework artifact merged and recorded in **§6**
-- Research artifacts promoted to canonical paths only after framework merge, with explicit non-authorization boundaries preserved
-- Cross-links between framework, Class B evidence architecture, Market Strategy framing, and research companions are explicit
-- **§7** / **§7a** restored to no-active-ticket posture on closeout with completed record added
-- Ticket closes when governance has documented: institutional role of off-ramp; authority hierarchy; evidence sub-architecture; implementation gating criteria; and dependency map — without authorizing implementation
+**Archived brief (OFFRAMP-GOV-001):** Establish Hedgr Off-Ramp Governance Framework — **documentation-only governance / cross-cutting institutional framework plus supporting research promotion**; scope held to `docs/ops/governance/offramp/HEDGR_OFFRAMP_GOVERNANCE_FRAMEWORK.md`, `docs/research/HEDGR_OFFRAMP_STRATEGY_AGENCY_AND_PAYOUT_INFRASTRUCTURE_RESEARCH.md`, `docs/research/HEDGR_MVP_WALLET_RAILS_MARKET_STRATEGY_PAPER.md`, `docs/ops/HEDGR_STATUS.md`, and `docs/ops/NOTION_GOVERNANCE_STAGING.md`. Established off-ramp as a governed cross-cutting framework subordinate to the Constitutional Charter, MVP doctrine, Stability Engine read-only boundaries, Class B governance, and Class B evidence architecture; then promoted the two review-draft research artifacts to canonical supporting-reference paths only after framework merge. **No** independent off-ramp governance institution, **no** evidence intake, **no** evidence acceptance, **no** evidence-state or registry-state change, **no** provider selection, **no** market selection, **no** provider outreach, **no** ADR acceptance, **no** implementation-preflight, **no** implementation, **no** staging, **no** sandbox use, **no** internal testing, **no** live operations, **no** custody, **no** rails, **no** stablecoin conversion, **no** deposits, **no** withdrawals, **no** remittance, **no** treasury operations, **no** reconciliation operations, **no** support operations, **no** audit operations, **no** ledger truth, **no** accounting truth, **no** Copilot execution, **no** Class C automation, **no** app / package / backend / CI / test changes, and **no** customer fund movement authority. Completed record: **§108**.
 
 ---
 
@@ -6126,3 +6088,31 @@ This **§43** record was originally written in the same working-tree change-set 
 **§7** / **§7a** record completion per governance and are restored to no-active-ticket posture.
 
 **Follow-ups:** No successor implementation ticket is created by this shared-UI normalization pass. `BRAND-006-FU-003` through `BRAND-006-FU-006` remain unimplemented recommendations only. Any future brand remediation, shipped app token normalization, gradient / motion review, typography cleanup, prototype containment, engine, ADR, runtime, status, sequencing, Class B, or Copilot work appears only when repo governance names it explicitly.
+
+---
+
+## 108. Completed execution ticket - OFFRAMP-GOV-001 (Off-Ramp Governance Framework)
+
+**Ticket:** `OFFRAMP-GOV-001` — Establish Hedgr Off-Ramp Governance Framework (documentation-only governance / cross-cutting institutional framework plus supporting research promotion)
+
+**Objective.** Establish off-ramp as a governed cross-cutting framework — not an independent governance institution and not merely another Class B evidence package — whose implementation artifacts reside within the existing Class B evidence architecture and whose interpretation remains subordinate to Hedgr's Constitutional Charter, MVP doctrine, Stability Engine read-only boundaries, and repo-native authority.
+
+### Outcome (framework and supporting research promotion)
+
+- **`docs/ops/governance/offramp/HEDGR_OFFRAMP_GOVERNANCE_FRAMEWORK.md`** — created the primary framework artifact, documenting institutional scope, constitutional alignment, responsibility model, Stability Engine relationship, Market Strategy relationship, Trust UX relationship, Class B evidence architecture, implementation gates, dependency map, canonical terminology, proposed ADR candidate domains, and non-authorization boundaries.
+- **`docs/research/HEDGR_OFFRAMP_STRATEGY_AGENCY_AND_PAYOUT_INFRASTRUCTURE_RESEARCH.md`** — promoted the off-ramp / agency / payout infrastructure research artifact from review draft to canonical decision-support research only after framework merge, with explicit framework and companion-paper cross-links.
+- **`docs/research/HEDGR_MVP_WALLET_RAILS_MARKET_STRATEGY_PAPER.md`** — promoted the wallet / rails / candidate-market research artifact from review draft to canonical decision-support research only after framework merge, with explicit framework and off-ramp companion-artifact cross-links.
+- **`docs/ops/HEDGR_STATUS.md`** — recorded the framework checkpoint in §6, recorded the research-promotion closeout in §6, added `OFFRAMP-GOV-001` to the completed list, archived the active brief, restored §7 / §7a to no-active-ticket posture, and added this completed-ticket record.
+- **`docs/ops/NOTION_GOVERNANCE_STAGING.md`** — downstream mirror reconciled to reflect `OFFRAMP-GOV-001` completion without creating Notion-led authority.
+
+**Governance guarantees held.** Off-ramp is recorded as a doctrine-informed cross-cutting governance framework under Class B governance and Class B evidence architecture. The promoted research artifacts are supporting references only; they do not precede, define, or supersede repo governance. The Stability Engine remains read-only / informational, and no Class B evidence package or evidence registry state changes.
+
+**Scope discipline held.** **No** independent off-ramp governance institution, **no** evidence intake, **no** evidence acceptance, **no** evidence-state or registry-state change, **no** provider selection, **no** market selection, **no** provider outreach, **no** ADR acceptance, **no** implementation-preflight, **no** implementation, **no** staging, **no** sandbox use, **no** internal testing, **no** live operations, **no** custody, **no** rails, **no** stablecoin conversion, **no** deposits, **no** withdrawals, **no** remittance, **no** treasury operations, **no** reconciliation operations, **no** support operations, **no** audit operations, **no** ledger truth, **no** accounting truth, **no** Copilot execution, **no** Class C automation, **no** app / package / backend / CI / test changes, and **no** customer fund movement authority.
+
+**Validation.** Documentation-only diff review, `git diff --check`, `pnpm run validate` (trust checks, Vitest `60 passed` / `720 passed`, typecheck, and lint), and backend-stub local `e2e:ci` (`53 passed`) completed locally. CI required checks `validate` and `E2E smoke (@hedgr/frontend)` are expected on PR.
+
+### Sequencing note
+
+**§7** / **§7a** record completion per governance and are restored to no-active-ticket posture.
+
+**Follow-ups:** No successor implementation ticket is created by this framework and research-promotion closeout. Any future off-ramp evidence intake, provider review, market review, ADR drafting readiness, implementation-preflight, implementation, staging, sandbox use, internal testing, live operations, custody, rails, stablecoin conversion, deposits, withdrawals, treasury operations, reconciliation operations, support operations, audit operations, ledger truth, Copilot execution, Class C automation, or customer-money activity appears only when repo governance names it explicitly.

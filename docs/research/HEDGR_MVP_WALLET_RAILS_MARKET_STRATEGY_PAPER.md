@@ -1,9 +1,12 @@
 # Hedgr MVP Wallet/Auth, Rails & Candidate Market Decision-Support Research Artifact
 
-**Status:** Review draft / decision-support research artifact / non-authorizing
+**Status:** Canonical decision-support research artifact / non-authorizing
 **Audience:** Hedgr Founder; HedgrOps — co-architect and governance custodian
 **Prepared:** 2026-06-24
-**Intended repo path:** `docs/research/HEDGR_MVP_WALLET_RAILS_MARKET_STRATEGY_PAPER.md`
+**Repo path:** `docs/research/HEDGR_MVP_WALLET_RAILS_MARKET_STRATEGY_PAPER.md`
+**Governance framework:** `docs/ops/governance/offramp/HEDGR_OFFRAMP_GOVERNANCE_FRAMEWORK.md`
+**Off-ramp companion artifact:** `docs/research/HEDGR_OFFRAMP_STRATEGY_AGENCY_AND_PAYOUT_INFRASTRUCTURE_RESEARCH.md`
+**Promotion boundary:** Promoted only after the Off-Ramp Governance Framework was merged; supporting reference only, not governance authority.
 **Source class:** Internal analysis, market scan, provider scan, and repo-governance synthesis
 **Authority boundary:** This paper does not select a launch market, approve a wallet provider, approve a rail provider, authorize evidence intake, accept evidence, close blockers, authorize ADR drafting readiness, authorize implementation-preflight, activate Class B, authorize custody, activate rails, authorize stablecoin conversion, authorize deposits, authorize withdrawals, or authorize customer-money movement.
 
@@ -356,7 +359,7 @@ For each candidate market, Hedgr must identify:
 
 ## 6. Cash-out flow analysis
 
-Cash-out is treated in this artifact as a first-class research hypothesis and evidence domain.
+Cash-out is treated in this artifact as a first-class research hypothesis and evidence domain. Detailed off-ramp treatment is maintained in `docs/research/HEDGR_OFFRAMP_STRATEGY_AGENCY_AND_PAYOUT_INFRASTRUCTURE_RESEARCH.md` under the framework boundary established by `docs/ops/governance/offramp/HEDGR_OFFRAMP_GOVERNANCE_FRAMEWORK.md`.
 
 For Hedgr, cash-out is where the Stability Wallet promise becomes real. Depositing into stable assets proves interest; exiting into local value proves utility. A beautiful dashboard with weak withdrawal truth is not a stability wallet. It is theatre with charts.
 
@@ -1195,7 +1198,7 @@ docs/research/HEDGR_MVP_WALLET_RAILS_MARKET_STRATEGY_PAPER.md
 Status header:
 
 ```text
-Status: Review draft / decision-support research artifact / non-authorizing
+Status: Decision-support research artifact / non-authorizing
 Authority: Internal analysis only; subordinate to HEDGR_STATUS.md, AGENTS.md, accepted ADRs, doctrine, and Class B evidence governance.
 Mode: Decision-support only. Does not authorize evidence intake, evidence acceptance, ADR drafting readiness, implementation-preflight, implementation, custody, rails, stablecoin conversion, deposits, withdrawals, or customer-money movement.
 ```
