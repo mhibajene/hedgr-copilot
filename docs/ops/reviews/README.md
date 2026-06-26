@@ -203,6 +203,23 @@ Agents must NOT:
 - modify repo state
 - infer authority from memory or prior runs
 
+## Repo-native review commands
+
+Codex/Cursor operator prompts for generating review artifacts live under:
+
+- `.cursor/commands/weekly-review.md`
+- `.cursor/commands/mvp-process-review.md`
+- `.cursor/commands/bridge-snapshot-refresh-handoff.md`
+
+These commands are operator instructions only. They do not create authority, activate tickets, or override `docs/ops/HEDGR_STATUS.md`, `AGENTS.md`, accepted ADRs, or doctrine.
+
+After generating weekly or MVP process reviews, operators should refresh and check static bridge snapshots using:
+
+```bash
+pnpm bridge:snapshots:refresh
+pnpm bridge:snapshots:check
+```
+
 ---
 
 ## Final Principle

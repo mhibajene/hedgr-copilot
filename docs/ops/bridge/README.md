@@ -17,6 +17,23 @@ The snapshots are retrieval artifacts only. They do not create authority, activa
 - `latest-mvp-process-review.json` - latest MVP process review evidence pointer
 - `review-index.json` - evidence-discovery index
 
+## Repo-native review command handoff
+
+Review-generation operator commands live under:
+
+- `.cursor/commands/weekly-review.md`
+- `.cursor/commands/mvp-process-review.md`
+- `.cursor/commands/bridge-snapshot-refresh-handoff.md`
+
+After generating weekly or MVP process reviews, operators should refresh and check static bridge snapshots using:
+
+```bash
+pnpm bridge:snapshots:refresh
+pnpm bridge:snapshots:check
+```
+
+These commands and snapshots remain operator-support evidence only. They do not create authority, activate tickets, sequence implementation, or alter bridge runtime behavior.
+
 ## Governance Boundary
 
 The bridge and these files remain subordinate to:
