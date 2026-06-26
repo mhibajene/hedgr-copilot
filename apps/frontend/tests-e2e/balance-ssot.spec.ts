@@ -51,7 +51,10 @@ test.describe('Balance SSoT - Ledger as Single Source of Truth', () => {
     await expect(balanceEl).toHaveText('$0.00');
 
     // Navigate to deposit page using nav link (explicit selector to avoid CTA ambiguity)
-    await page.getByRole('link', { name: 'Deposit', exact: true }).click();
+    await page
+      .getByTestId('nav-links')
+      .getByRole('link', { name: 'Deposit', exact: true })
+      .click();
     await expect(page).toHaveURL(/\/deposit/);
 
     // Enter deposit amount (100 ZMW)
@@ -72,7 +75,10 @@ test.describe('Balance SSoT - Ledger as Single Source of Truth', () => {
     await expect(confirmationMsg).toHaveText('Deposit CONFIRMED');
 
     // Navigate to dashboard using nav link
-    await page.getByRole('link', { name: 'Dashboard' }).click();
+    await page
+      .getByTestId('nav-links')
+      .getByRole('link', { name: 'Dashboard', exact: true })
+      .click();
     await expect(page).toHaveURL(/\/dashboard/);
 
     // Balance should now be updated (100 ZMW at default rate of 20 = $5.00)
@@ -105,7 +111,10 @@ test.describe('Balance SSoT - Ledger as Single Source of Truth', () => {
     await expect(confirmationMsg).toBeVisible({ timeout: 10000 });
 
     // Navigate to activity page using nav link
-    await page.getByRole('link', { name: 'Activity' }).click();
+    await page
+      .getByTestId('nav-links')
+      .getByRole('link', { name: 'Activity', exact: true })
+      .click();
     await expect(page).toHaveURL(/\/activity/);
 
     // Should see the deposit entry using unambiguous test IDs
@@ -162,7 +171,10 @@ test.describe('Balance SSoT - Ledger as Single Source of Truth', () => {
     await expect(page.getByTestId('deposit-confirmed')).toBeVisible({ timeout: 10000 });
 
     // Navigate to withdraw page using nav link
-    await page.getByRole('link', { name: 'Withdraw' }).click();
+    await page
+      .getByTestId('nav-links')
+      .getByRole('link', { name: 'Withdraw', exact: true })
+      .click();
     await expect(page).toHaveURL(/\/withdraw/);
 
     // Should show current balance
