@@ -17,6 +17,7 @@
   "execution_authority": false,
   "may_activate_ticket": false,
   "mutation_allowed": false,
+  "ticket_activation_allowed": false,
   "status": {
     "source_of_truth_references_only": true,
     "inferred_execution_state": false,

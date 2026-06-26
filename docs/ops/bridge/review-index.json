@@ -1,6 +1,6 @@
 {
   "artifact_type": "hedgrops_bridge_review_index_snapshot",
-  "generated_at": "2026-06-24T00:00:00.000Z",
+  "generated_at": "2026-06-26T00:00:00.000Z",
   "source_path": "docs/ops/reviews/README.md",
   "authority_posture": {
     "class": "A",
@@ -12,6 +12,7 @@
   "execution_authority": false,
   "may_activate_ticket": false,
   "mutation_allowed": false,
+  "ticket_activation_allowed": false,
   "index": {
     "evidence_discovery_only": true,
     "review_ranking": false,
@@ -20,7 +21,7 @@
     "entries": [
       {
         "review_type": "weekly",
-        "source_path": "docs/ops/reviews/weekly/2026-06-20-weekly-review.md"
+        "source_path": "docs/ops/reviews/weekly/2026-06-26-weekly-review.md"
       },
       {
         "review_type": "mvp_process",
