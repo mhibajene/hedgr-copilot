@@ -1,10 +1,12 @@
 # Hedgr Off-Ramp Strategy, Agency Networks & Payout Infrastructure Research Artifact
 
-**Status:** Review draft / decision-support research artifact / non-authorizing
+**Status:** Canonical decision-support research artifact / non-authorizing
 **Audience:** Hedgr Founder; HedgrOps — co-architect and governance custodian
 **Prepared:** 2026-06-26
-**Intended repo path:** `docs/research/HEDGR_OFFRAMP_STRATEGY_AGENCY_AND_PAYOUT_INFRASTRUCTURE_RESEARCH.md`
+**Repo path:** `docs/research/HEDGR_OFFRAMP_STRATEGY_AGENCY_AND_PAYOUT_INFRASTRUCTURE_RESEARCH.md`
+**Governance framework:** `docs/ops/governance/offramp/HEDGR_OFFRAMP_GOVERNANCE_FRAMEWORK.md`
 **Relationship to parent artifact:** Companion analysis to `docs/research/HEDGR_MVP_WALLET_RAILS_MARKET_STRATEGY_PAPER.md`
+**Promotion boundary:** Promoted only after the Off-Ramp Governance Framework was merged; supporting reference only, not governance authority.
 **Source class:** Internal analysis, founder operating experience, market scan, provider scan, public regulatory/payment-system sources, and repo-governance synthesis
 **Authority boundary:** This paper does not select a market, approve a provider, authorize evidence intake, accept evidence, close blockers, authorize ADR drafting, authorize implementation-preflight, activate Class B, authorize custody, activate rails, authorize stablecoin conversion, authorize deposits, authorize withdrawals, authorize remittance activity, or authorize customer-money movement.
 
@@ -1400,6 +1402,7 @@ All external sources accessed 2026-06-26 unless otherwise noted.
 - `docs/doctrine/hedgr-whitepaper.md`
 - `docs/ops/HEDGR_STATUS.md`
 - `AGENTS.md`
+- `docs/ops/governance/offramp/HEDGR_OFFRAMP_GOVERNANCE_FRAMEWORK.md`
 - `docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_EVIDENCE_REGISTRY.md`
 - `docs/ops/governance/class-b/HEDGR_CLASS_B_GOVERNANCE_EVIDENCE_PROGRAM_CLOSURE_ASSESSMENT.md`
 - `docs/research/HEDGR_MVP_WALLET_RAILS_MARKET_STRATEGY_PAPER.md`
