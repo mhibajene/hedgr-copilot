@@ -1,0 +1,52 @@
+name: Bridge snapshot freshness
+
+on:
+  pull_request:
+    paths:
+      - "docs/ops/reviews/weekly/**"
+      - "docs/ops/reviews/MVP/**"
+      - "docs/ops/bridge/**"
+      - "scripts/bridge/**"
+      - "apps/bridge-worker/**"
+      - "package.json"
+      - "pnpm-lock.yaml"
+      - ".github/workflows/bridge-snapshots.yml"
+
+jobs:
+  bridge-snapshots:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node from .nvmrc
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: ".nvmrc"
+
+      - name: Enable Corepack & install pinned pnpm
+        run: |
+          corepack enable
+          corepack install
+          node -v
+          pnpm -v
+
+      - name: Compute pnpm store path
+        id: pnpm_store
+        run: echo "path=$(pnpm store path --silent)" >> "$GITHUB_OUTPUT"
+
+      - name: Cache pnpm store
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.pnpm_store.outputs.path }}
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
+
+      - name: Install dependencies (frozen)
+        run: pnpm -r install --frozen-lockfile
+
+      - name: Check bridge snapshot freshness and guardrails
+        run: pnpm bridge:snapshots:check

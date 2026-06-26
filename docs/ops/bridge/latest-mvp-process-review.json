@@ -1,6 +1,6 @@
 {
   "artifact_type": "hedgrops_bridge_latest_mvp_process_review_snapshot",
-  "generated_at": "2026-06-24T00:00:00.000Z",
+  "generated_at": "2026-06-20T00:00:00.000Z",
   "source_path": "docs/ops/reviews/MVP/HEDGR_MVP_PROCESS_REVIEW_EVID_B_015_TO_019.md",
   "authority_posture": {
     "class": "A",
@@ -12,6 +12,7 @@
   "execution_authority": false,
   "may_activate_ticket": false,
   "mutation_allowed": false,
+  "ticket_activation_allowed": false,
   "review": {
     "review_type": "mvp_process",
     "evidence_only": true,
