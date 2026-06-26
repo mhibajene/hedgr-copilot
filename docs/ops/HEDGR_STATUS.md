@@ -3196,6 +3196,38 @@ Implementation posture preserved:
 - no `apps/frontend/lib/engine/**` changes.
 - no `EnginePosture` values, posture badge labels, notice copy, mock values, simulator behavior, allocation calculations, backend, policy, engine logic, accounting semantics, ledger truth, settled balances, executable allocation framing, Class B authority, Copilot runtime, CI / workflow changes, or ADR status changes.
 
+### HOPS-BRIDGE-001 - HedgrOps Read-Only Review Evidence Bridge (Class A informational support infrastructure)
+
+Changed files:
+
+- `apps/bridge-worker/README.md`
+- `apps/bridge-worker/VERIFICATION.md`
+- `apps/bridge-worker/openapi.yaml`
+- `apps/bridge-worker/package.json`
+- `apps/bridge-worker/src/index.js`
+- `apps/bridge-worker/tests/worker.test.mjs`
+- `apps/bridge-worker/wrangler.toml`
+- `docs/ops/bridge/README.md`
+- `docs/ops/bridge/current-status.json`
+- `docs/ops/bridge/latest-mvp-process-review.json`
+- `docs/ops/bridge/latest-weekly-review.json`
+- `docs/ops/bridge/review-index.json`
+
+Implementation truth:
+
+- implemented a read-only Cloudflare Worker bridge for bounded review-evidence and authority-snapshot retrieval.
+- implemented an allowlisted route-to-file endpoint model with API key authentication and a governance response envelope (`mode: READ_ONLY`, `execution_authority: false`, `mutation_allowed: false`, `ticket_activation_allowed: false`).
+- implemented snapshot retrieval for `GET /health`, `GET /hedgr/status/authority-summary`, `GET /hedgr/reviews/latest-weekly`, `GET /hedgr/reviews/latest-mvp-process`, and `GET /hedgr/reviews/index`.
+- added OpenAPI schema for GPT Actions and static JSON snapshot contracts under `docs/ops/bridge/`.
+- recorded closeout assessment, verification controls, and post-closeout operating rules in `apps/bridge-worker/VERIFICATION.md`.
+- completed ticket record reconciled in **§109**; operational verification evidence remains in `apps/bridge-worker/VERIFICATION.md` and does not create sequencing authority.
+
+Implementation posture preserved:
+
+- Class A informational support infrastructure only.
+- read-only evidence retrieval; no POST, PUT, PATCH, or DELETE behavior; no dynamic file paths; no arbitrary repository browsing; no markdown parsing; no review summarization; no active-ticket inference; no next-work naming; no repo mutation; no ADR or governance authority creation.
+- no `apps/frontend/**`, no `apps/frontend/lib/engine/**`, no backend runtime expansion, no customer-money movement, no evidence intake, no evidence acceptance, no provider selection, no market selection, no implementation authority, no sequencing authority, no Class B authority, no Copilot runtime authority, and no ADR status changes.
+
 ### OFFRAMP-GOV-001 - Off-Ramp Governance Framework (documentation-only governance / framework checkpoint)
 
 Changed files:
@@ -3351,11 +3383,13 @@ Completed and merged:
 - `BRAND-008` - Governed semantic status token definition (`BRAND-006` remediation #1 / `BRAND-006-FU-001`; documentation-only brand authority prerequisite; completed record **§105**)
 - `MC-S3-022` - Regression resistance tranche 8 for shipped dashboard allocation-band informational framing (test-only; completed record **§106**)
 - `BRAND-009` - Shared UI semantic token normalization (`BRAND-006` remediation #2 / `BRAND-006-FU-002`; brand remediation / shared-UI presentation normalization; completed record **§107**)
+- `HOPS-BRIDGE-001` - HedgrOps Read-Only Review Evidence Bridge (Class A informational support infrastructure; completed record **§109**; operational verification evidence in `apps/bridge-worker/VERIFICATION.md`)
 - `OFFRAMP-GOV-001` - Establish Hedgr Off-Ramp Governance Framework (documentation-only governance / cross-cutting institutional framework plus supporting research promotion; completed record **§108**)
 
 Current active ticket status:
 
-- **Approved next ticket:** **None named.** `OFFRAMP-GOV-001` is complete and recorded in **§108**; **§7** / **§7a** are restored to no-active-ticket posture. There is **no** approved next implementation ticket until **§7** is updated explicitly to name one.
+- **Approved next ticket:** **None named.** `OFFRAMP-GOV-001` is complete and recorded in **§108**; `HOPS-BRIDGE-001` is complete and recorded in **§109**; **§7** / **§7a** are restored to no-active-ticket posture. There is **no** approved next implementation ticket until **§7** is updated explicitly to name one.
+- **HOPS-BRIDGE-001 closeout note:** `HOPS-BRIDGE-001` closeout is recorded in **§109**. Operational verification, governance-envelope checks, and post-closeout operating rules remain in `apps/bridge-worker/VERIFICATION.md` as verification evidence only; that file does **not** create sequencing authority and must not be read as a substitute for **§7** / **§7a**.
 - **Post-`OFFRAMP-GOV-001` sequencing (governance-accepted):** Off-ramp is now recorded as a **doctrine-informed cross-cutting governance framework** implemented through Class B evidence and subordinate to the Constitutional Charter, MVP doctrine, Stability Engine read-only boundaries, and the closed Class B governance / evidence program. The promoted research artifacts are supporting references only. This closeout does **not** create an independent governance institution parallel to Class B or the Stability Engine. It does **not** authorize evidence intake, evidence acceptance, provider selection, market selection, provider outreach, ADR acceptance, implementation, staging, sandbox use, internal testing, live operations, custody, rails, stablecoin conversion, treasury operations, reconciliation operations, support operations, audit operations, ledger truth, accounting truth, Copilot execution, Class C automation, or customer fund movement authority.
 - **Brand System Governance sequencing:** **§6d** records the approved Brand System Governance ticket set and recommended order. `BRAND-001` through `BRAND-009` are complete. `BRAND-006-FU-003` through `BRAND-006-FU-006` remain non-authorizing until a future **§7** ticket names them with a bounded **§7a** brief.
 - **Post–`GOV-INTAKE-B-002` sequencing (governance-accepted):** `GOV-INTAKE-B-002` completed the Class B Evidence Intake Governance Model as a documentation-only governance artifact. It did **not** authorize evidence intake, evidence collection, evidence requests, evidence acceptance, evidence rejection, evidence scoring, evidence evaluation, registry-state changes, evidence-state changes, blocker closure, gap closure, readiness, ADR drafting readiness, implementation-proposal preflight, implementation, staging, sandbox use, internal testing, live operations, custody, rails, stablecoin conversion, treasury operations, reconciliation, support operations, audit operations, ledger truth, accounting truth, Copilot execution, Class C automation, or customer fund movement authority.
@@ -3375,7 +3409,7 @@ Current active ticket status:
 
 ## 7a. Active execution ticket
 
-**Status:** **No active execution ticket.** **§7** does not currently name an approved next implementation ticket. The most recently completed ticket, `OFFRAMP-GOV-001` (Off-Ramp Governance Framework), is recorded in **§108**.
+**Status:** **No active execution ticket.** **§7** does not currently name an approved next implementation ticket. The most recently completed ticket, `OFFRAMP-GOV-001` (Off-Ramp Governance Framework), is recorded in **§108**. `HOPS-BRIDGE-001` (HedgrOps Read-Only Review Evidence Bridge) is recorded in **§109**; operational verification evidence remains in `apps/bridge-worker/VERIFICATION.md`.
 
 When governance approves the next ticket, **§7** will name it and this section will hold the full execution brief until closeout.
 
@@ -3536,6 +3570,7 @@ When governance approves the next ticket, **§7** will name it and this section 
 - **Regression resistance tranche 7 for Stability Engine posture copy (test-only, completed):** `MC-S3-021` — **§104** (completed ticket record).
 - **Governed semantic status token definition (documentation-only, completed):** `BRAND-008` — **§105** (completed ticket record).
 - **Regression resistance tranche 8 for shipped dashboard allocation-band informational framing (test-only, completed):** `MC-S3-022` — **§106** (completed ticket record).
+- **HedgrOps read-only review evidence bridge (Class A informational support infrastructure, completed):** `HOPS-BRIDGE-001` — **§109** (completed ticket record); operational verification evidence in `apps/bridge-worker/VERIFICATION.md`.
 - **Active ticket:** None. **§7** / **§7a** are restored to no-active-ticket posture.
 - **Merged implementation truth:** **§6** remains canonical for shipped code boundaries.
 - When a successor ticket is approved, record it in **§7** and restore the execution brief in **§7a** per governance discipline.
@@ -6116,3 +6151,34 @@ This **§43** record was originally written in the same working-tree change-set 
 **§7** / **§7a** record completion per governance and are restored to no-active-ticket posture.
 
 **Follow-ups:** No successor implementation ticket is created by this framework and research-promotion closeout. Any future off-ramp evidence intake, provider review, market review, ADR drafting readiness, implementation-preflight, implementation, staging, sandbox use, internal testing, live operations, custody, rails, stablecoin conversion, deposits, withdrawals, treasury operations, reconciliation operations, support operations, audit operations, ledger truth, Copilot execution, Class C automation, or customer-money activity appears only when repo governance names it explicitly.
+
+---
+
+## 109. Completed execution ticket - HOPS-BRIDGE-001 (HedgrOps Read-Only Review Evidence Bridge)
+
+**Ticket:** `HOPS-BRIDGE-001` — HedgrOps Read-Only Review Evidence Bridge (Class A informational support infrastructure)
+
+**Objective.** Implement a read-only Cloudflare Worker bridge that retrieves bounded review evidence and authority snapshots through an allowlisted, authenticated interface without creating implementation authority, sequencing authority, governance authority, repo mutation capability, or customer-money impact.
+
+### Outcome (Class A informational support infrastructure)
+
+- **`apps/bridge-worker/src/index.js`** — implemented the read-only Worker with hard route-to-file allowlisting, API key authentication, governance response envelope, and method restriction (`GET` only).
+- **`apps/bridge-worker/openapi.yaml`** — documented the GPT Actions contract for bounded snapshot retrieval.
+- **`apps/bridge-worker/tests/worker.test.mjs`** — added verification for health, authentication, allowlist enforcement, governance envelope fields, method restriction, and fail-closed configuration behavior.
+- **`apps/bridge-worker/VERIFICATION.md`** — recorded closeout assessment, verification results, governance assessment, residual risks, and post-closeout operating rules.
+- **`docs/ops/bridge/README.md`** and **`docs/ops/bridge/*.json`** — established static snapshot contracts for authority summary, weekly review, MVP process review, and review-index evidence pointers.
+- **`docs/ops/HEDGR_STATUS.md`** — recorded `HOPS-BRIDGE-001` in §6 merged truth, added the ticket to the §7 completed list, preserved no-active-ticket posture, and added this completed-ticket record.
+
+**Governance guarantees held.** The bridge remains Class A, `READ_ONLY`, and subordinate to `docs/ops/HEDGR_STATUS.md`, `AGENTS.md`, accepted ADRs, and `docs/doctrine/*`. Successful snapshot responses include `execution_authority: false`, `mutation_allowed: false`, and `ticket_activation_allowed: false`. Review artifacts remain evidence, not direction or authority.
+
+**Scope discipline held.** **No** POST / PUT / PATCH / DELETE behavior, **no** dynamic file paths, **no** arbitrary repository browsing, **no** markdown parsing, **no** review summarization, **no** active-ticket inference, **no** next-work naming, **no** repo mutation, **no** ADR or governance authority creation, **no** `apps/frontend/**`, **no** `apps/frontend/lib/engine/**`, **no** backend runtime expansion, **no** customer-money movement, **no** evidence intake, **no** evidence acceptance, **no** provider selection, **no** market selection, **no** implementation authority, **no** sequencing authority, **no** Class B authority, **no** Copilot runtime authority, and **no** ADR status change.
+
+**Validation.** `pnpm --filter @hedgr/bridge-worker test` passed locally. Governance verification recorded in `apps/bridge-worker/VERIFICATION.md` covers authority envelope, allowlisted retrieval routes, access control, method restriction, and evidence-only posture.
+
+### Sequencing note
+
+**§7** / **§7a** were not used to activate this support-infrastructure ticket and remain in no-active-ticket posture. This reconciliation records the completed ticket in repo authority without retroactively creating an active brief.
+
+**Authority-surface note.** `apps/bridge-worker/VERIFICATION.md` remains the operational verification and closeout-assessment artifact for the bridge Worker. **§109** is the repo-native completed-ticket record. Readers must not flatten those roles: verification evidence is not sequencing authority.
+
+**Follow-ups:** No successor implementation ticket is created by this bridge closeout. Any future bridge expansion beyond evidence retrieval requires separate governance review and authorization per `apps/bridge-worker/VERIFICATION.md` post-closeout operating rules.

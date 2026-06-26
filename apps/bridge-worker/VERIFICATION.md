@@ -64,6 +64,8 @@ Title: Closeout Assessment - HedgrOps Read-Only Review Evidence Bridge
 This closeout records implementation and verification outcomes for
 `HOPS-BRIDGE-001 - HedgrOps Read-Only Review Evidence Bridge`.
 
+Repo-native completed-ticket record: `docs/ops/HEDGR_STATUS.md` **§109**.
+
 It does not:
 
 - activate work
