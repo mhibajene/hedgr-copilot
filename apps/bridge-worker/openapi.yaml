@@ -4,10 +4,23 @@ info:
   version: 0.1.0
   description: Read-only, non-authoritative evidence retrieval only for approved Hedgr review snapshots.
 servers:
-  - url: https://example-worker.workers.dev
+  - url: https://hedgrops-bridge.hedgr.workers.dev
 security:
   - HedgrOpsApiKey: []
 paths:
+  /:
+    get:
+      operationId: getBridgeRouteIndex
+      summary: Bridge route index
+      description: Read-only. Non-authoritative. Evidence retrieval only. Returns bridge status and the allowlisted routes without calling GitHub.
+      security: []
+      responses:
+        "200":
+          description: Public route index and runtime status response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RouteIndex"
   /health:
     get:
       operationId: getBridgeHealth
@@ -32,6 +45,78 @@ paths:
                   mode:
                     type: string
                     const: READ_ONLY
+  /authority:
+    get:
+      operationId: getAuthoritySnapshotAlias
+      summary: Retrieve the authority-summary snapshot
+      description: Alias for the read-only authority-summary snapshot. Non-authoritative. Evidence retrieval only.
+      responses:
+        "200":
+          description: Read-only bridge envelope containing the authority-summary snapshot.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BridgeEnvelope"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "405":
+          $ref: "#/components/responses/MethodNotAllowed"
+  /authority-summary:
+    get:
+      operationId: getAuthoritySummaryAlias
+      summary: Retrieve the authority-summary snapshot
+      description: Alias for the read-only authority-summary snapshot. Non-authoritative. Evidence retrieval only.
+      responses:
+        "200":
+          description: Read-only bridge envelope containing the authority-summary snapshot.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BridgeEnvelope"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "405":
+          $ref: "#/components/responses/MethodNotAllowed"
+  /current-status:
+    get:
+      operationId: getCurrentStatusAlias
+      summary: Retrieve the authority-summary snapshot
+      description: Alias for the read-only current-status snapshot. Non-authoritative. Evidence retrieval only.
+      responses:
+        "200":
+          description: Read-only bridge envelope containing the authority-summary snapshot.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BridgeEnvelope"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "405":
+          $ref: "#/components/responses/MethodNotAllowed"
+  /weekly-review:
+    get:
+      operationId: getWeeklyReviewAlias
+      summary: Retrieve the latest weekly review evidence snapshot
+      description: Alias for the read-only latest weekly review evidence snapshot. Non-authoritative. Evidence retrieval only.
+      responses:
+        "200":
+          description: Read-only bridge envelope containing the weekly review evidence snapshot.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BridgeEnvelope"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "405":
+          $ref: "#/components/responses/MethodNotAllowed"
   /hedgr/status/authority-summary:
     get:
       operationId: getHedgrAuthoritySummary
@@ -137,6 +222,47 @@ components:
         - error
       properties:
         error:
+          type: string
+    RouteIndex:
+      type: object
+      additionalProperties: false
+      required:
+        - bridge
+        - status
+        - mode
+        - routes
+        - execution_authority
+        - mutation_allowed
+        - ticket_activation_allowed
+        - retrieved_at
+        - non_authorization_statement
+      properties:
+        bridge:
+          type: string
+          const: HedgrOps Read-Only Review Evidence Bridge
+        status:
+          type: string
+          const: ok
+        mode:
+          type: string
+          const: READ_ONLY
+        routes:
+          type: array
+          items:
+            type: string
+        execution_authority:
+          type: boolean
+          const: false
+        mutation_allowed:
+          type: boolean
+          const: false
+        ticket_activation_allowed:
+          type: boolean
+          const: false
+        retrieved_at:
+          type: string
+          format: date-time
+        non_authorization_statement:
           type: string
     BridgeEnvelope:
       type: object
