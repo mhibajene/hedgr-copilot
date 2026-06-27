@@ -1,6 +1,6 @@
 Status: Canonical hand-off file
 Purpose: Strategic continuity, merged implementation truth, and next-ticket authority for Cursor execution
-Last updated: 2026-06-26
+Last updated: 2026-06-27
 
 ---
 
@@ -2265,6 +2265,61 @@ Implementation posture preserved:
 - no successor implementation ticket
 - no legal conclusions, regulatory approval, external engagement approval, Class B execution, staging approval, sandbox approval, internal-test approval, live approval, production approval, deposits, withdrawals, custody activation, rail activation, vendor integration, stablecoin conversion, treasury operations, ledger truth, accounting truth, reconciliation operations, support operations, audit operations, Copilot execution, Class C automation, or customer fund movement authority
 
+### GOV-A-REV-002 - Class B Evidence Intake Authorization Brief (documentation-only)
+
+Merged files:
+- `docs/ops/governance/class-b/HEDGR_CLASS_B_EVIDENCE_INTAKE_AUTHORIZATION_BRIEF.md`
+- `docs/ops/governance/class-b/HEDGR_CLASS_B_EVIDENCE_INTAKE_AUTHORIZATION_BRIEF_REVIEW_DRAFT.md`
+- `docs/ops/HEDGR_STATUS.md`
+- `docs/ops/NOTION_GOVERNANCE_STAGING.md`
+
+Implementation truth:
+- governed repo-native Class B Evidence Intake Authorization Brief added at `docs/ops/governance/class-b/HEDGR_CLASS_B_EVIDENCE_INTAKE_AUTHORIZATION_BRIEF.md`
+- promoted the prior review draft to a canonical, non-authorizing governance artifact and marked the review draft as an archived review source
+- formalizes what a future bounded evidence-intake ticket may authorize while preserving that the brief itself does not authorize evidence intake, evidence collection, evidence review, evidence acceptance, registry-state changes, provider outreach, external engagement, or customer-money activity
+- preserves the three-layer separation: authorization brief, candidate intake mechanics, and evidence question map
+- records `EVID-INTAKE-B-002` as a placeholder only until a future **§7** / **§7a** ticket explicitly names bounded intake scope with separate founder approval
+- follows `GOV-INTAKE-B-002`, `EVID-INTAKE-B-001`, `GOV-CHECKPOINT-B-001`, `GOV-REVIEW-B-001`, the completed Class B Evidence Gathering program, and the off-ramp preparation posture without initiating intake or changing evidence state
+- updates Notion governance staging to list `GOV-A-REV-002` as completed after merge while preserving that authorization-brief formalization is not evidence intake authorization, readiness, implementation approval, or customer-money authority
+
+Implementation posture preserved:
+- documentation-only governance artifact
+- governance-only
+- non-authorizing
+- non-readiness
+- no `apps/`
+- no `packages/`
+- no `scripts/`
+- no `.github/`
+- no `docs/decisions/` changes
+- no ADRs
+- no tests
+- no CI workflow changes
+- no backend
+- no frontend implementation
+- no product copy edits
+- no shipped route edits
+- no prototype route edits
+- no Evidence Registry modification
+- no registry-row modification
+- no registry-state changes
+- no evidence-state changes
+- no evidence gathered
+- no evidence collected
+- no evidence requested
+- no evidence reviewed
+- no evidence accepted
+- no evidence rejected
+- no evidence scored
+- no evidence evaluated
+- no blocker closure
+- no gap closure
+- no readiness thresholds
+- no evidence intake authority
+- no implementation authority
+- no successor implementation ticket
+- no legal conclusions, regulatory approval, provider outreach, external engagement approval, Class B execution, staging approval, sandbox approval, internal-test approval, live approval, production approval, deposits, withdrawals, custody activation, rail activation, vendor integration, stablecoin conversion, treasury operations, ledger truth, accounting truth, reconciliation operations, support operations, audit operations, Copilot execution, Class C automation, or customer fund movement authority
+
 ### BRAND-001 - Govern and normalize existing brand asset authority (governance / asset-infrastructure normalization)
 
 Merged files:
@@ -3405,10 +3460,13 @@ Completed and merged:
 - `HOPS-BRIDGE-001` - HedgrOps Read-Only Review Evidence Bridge (Class A informational support infrastructure; completed record **§109**; operational verification evidence in `apps/bridge-worker/VERIFICATION.md`)
 - `OFFRAMP-GOV-001` - Establish Hedgr Off-Ramp Governance Framework (documentation-only governance / cross-cutting institutional framework plus supporting research promotion; completed record **§108**)
 - `OFFRAMP-GOV-002` - Mirror off-ramp evidence matrix preparation posture in `HEDGR_STATUS.md` (documentation-only governance / non-authorizing status mirror; completed record **§110**)
+- `GOV-A-REV-002` - Formalize Class B Evidence Intake Authorization Brief (documentation-only governance / intake-authorization concept formalization; completed record **§111**)
 
 Current active ticket status:
 
-- **Approved next ticket:** **None named.** `OFFRAMP-GOV-002` is complete and recorded in **§110**; `OFFRAMP-GOV-001` is complete and recorded in **§108**; `HOPS-BRIDGE-001` is complete and recorded in **§109**; **§7** / **§7a** are restored to no-active-ticket posture. There is **no** approved next implementation ticket until **§7** is updated explicitly to name one.
+- **Approved next ticket:** **None named.** `GOV-A-REV-002` is complete and recorded in **§111**; `OFFRAMP-GOV-002` is complete and recorded in **§110**; `OFFRAMP-GOV-001` is complete and recorded in **§108**; `HOPS-BRIDGE-001` is complete and recorded in **§109**; **§7** / **§7a** are restored to no-active-ticket posture. There is **no** approved next implementation ticket until **§7** is updated explicitly to name one.
+- **Last completed ticket (summary):** `GOV-A-REV-002` — Formalize Class B Evidence Intake Authorization Brief (documentation-only governance / non-authorizing intake-authorization concept formalization); completed record in **§111**. `OFFRAMP-GOV-002` is complete and recorded in **§110**; `OFFRAMP-GOV-001` is complete and recorded in **§108**; `HOPS-BRIDGE-001` is complete and recorded in **§109**.
+- **Post-`GOV-A-REV-002` sequencing (governance-accepted):** `GOV-A-REV-002` completed the Class B Evidence Intake Authorization Brief as a documentation-only governance artifact. It formalizes what a future bounded evidence-intake ticket may authorize, but it does **not** itself authorize evidence intake, evidence collection, evidence requests, evidence review, evidence acceptance, evidence rejection, evidence scoring, evidence evaluation, registry-state changes, evidence-state changes, blocker closure, gap closure, readiness, ADR drafting readiness, implementation-proposal preflight, implementation, staging, sandbox use, internal testing, live operations, custody, rails, stablecoin conversion, treasury operations, reconciliation, support operations, audit operations, ledger truth, accounting truth, Copilot execution, Class C automation, external engagement, provider outreach, provider selection, market selection, jurisdiction selection, or customer fund movement authority. `EVID-INTAKE-B-002` remains a placeholder only until a future **§7** / **§7a** ticket explicitly names bounded intake scope with separate founder approval.
 - **HOPS-BRIDGE-001 closeout note:** `HOPS-BRIDGE-001` closeout is recorded in **§109**. Operational verification, governance-envelope checks, and post-closeout operating rules remain in `apps/bridge-worker/VERIFICATION.md` as verification evidence only; that file does **not** create sequencing authority and must not be read as a substitute for **§7** / **§7a**.
 - **Post-`OFFRAMP-GOV-001` sequencing (governance-accepted):** Off-ramp is now recorded as a **doctrine-informed cross-cutting governance framework** implemented through Class B evidence and subordinate to the Constitutional Charter, MVP doctrine, Stability Engine read-only boundaries, and the closed Class B governance / evidence program. The promoted research artifacts are supporting references only. This closeout does **not** create an independent governance institution parallel to Class B or the Stability Engine. It does **not** authorize evidence intake, evidence acceptance, provider selection, market selection, provider outreach, ADR acceptance, implementation, staging, sandbox use, internal testing, live operations, custody, rails, stablecoin conversion, treasury operations, reconciliation operations, support operations, audit operations, ledger truth, accounting truth, Copilot execution, Class C automation, or customer fund movement authority.
 - **Off-ramp evidence matrix preparation posture (non-authorizing; mirrored by `OFFRAMP-GOV-002`):** `docs/ops/governance/offramp/HEDGR_OFFRAMP_EVIDENCE_MATRIX_PREP_DRAFT.md` is a **Founder / HedgrOps review draft** and **non-authorizing preparation artifact**. It defines evidence domains for a future, separately authorized Class B off-ramp readiness determination. The conservative candidate hypothesis remains **same-name user withdrawal only**. Third-party remittance, payroll, supplier payout, bulk disbursement, P2P, OTC, agent-network operation, Hedgr-managed MNO prefunding, Hedgr fiat custody, and instant/guaranteed withdrawal claims remain **out of scope**. Market evidence should precede provider preference; off-ramp evidence quality should carry more weight than general crypto adoption in market selection; chain selection remains open until endpoint/provider evidence exists; cash pickup is fallback/inclusion infrastructure, not default; providers lacking failure, refund, and reconciliation evidence should be disqualified from further consideration. The matrix remains **review-draft** until a bounded evidence-intake authority entry exists in **§7** / **§7a**. This posture mirror does **not** authorize evidence intake, provider outreach, legal reliance, market selection, provider selection, sandbox testing, implementation, ADR drafting, Class B readiness, or customer-money movement.
@@ -3424,15 +3482,15 @@ Current active ticket status:
 - Cursor must not continue automatically into work beyond what is explicitly defined in this file for an active ticket.
 - Cursor must not drift beyond explicitly defined scope.
 
-**Last completed ticket (summary):** `OFFRAMP-GOV-002` — Mirror off-ramp evidence matrix preparation posture in `HEDGR_STATUS.md` (documentation-only governance / non-authorizing status mirror; recorded the existence and Founder / HedgrOps approved response posture of `docs/ops/governance/offramp/HEDGR_OFFRAMP_EVIDENCE_MATRIX_PREP_DRAFT.md` without promoting the matrix beyond review-draft status or authorizing evidence intake); completed record in **§110**.
-
 ---
 
 ## 7a. Active execution ticket
 
-**Status:** **No active execution ticket.** **§7** does not currently name an approved next implementation ticket. The most recently completed ticket, `OFFRAMP-GOV-002` (Off-Ramp Evidence Matrix Preparation Posture Mirror), is recorded in **§110**. `OFFRAMP-GOV-001` (Off-Ramp Governance Framework) is recorded in **§108**. `HOPS-BRIDGE-001` (HedgrOps Read-Only Review Evidence Bridge) is recorded in **§109**; operational verification evidence remains in `apps/bridge-worker/VERIFICATION.md`.
+**Status:** **No active execution ticket.** **§7** does not currently name an approved next implementation ticket. The most recently completed ticket, `GOV-A-REV-002` (Class B Evidence Intake Authorization Brief), is recorded in **§111**. `OFFRAMP-GOV-002` (Off-Ramp Evidence Matrix Preparation Posture Mirror) is recorded in **§110**. `OFFRAMP-GOV-001` (Off-Ramp Governance Framework) is recorded in **§108**. `HOPS-BRIDGE-001` (HedgrOps Read-Only Review Evidence Bridge) is recorded in **§109**; operational verification evidence remains in `apps/bridge-worker/VERIFICATION.md`.
 
 When governance approves the next ticket, **§7** will name it and this section will hold the full execution brief until closeout.
+
+**Archived brief (GOV-A-REV-002):** Formalize Class B Evidence Intake Authorization Brief — **documentation-only governance / intake-authorization concept formalization**; scope held to `docs/ops/governance/class-b/HEDGR_CLASS_B_EVIDENCE_INTAKE_AUTHORIZATION_BRIEF.md`, `docs/ops/governance/class-b/HEDGR_CLASS_B_EVIDENCE_INTAKE_AUTHORIZATION_BRIEF_REVIEW_DRAFT.md`, `docs/ops/HEDGR_STATUS.md`, and `docs/ops/NOTION_GOVERNANCE_STAGING.md`. Promoted the review draft to a governed repo-native authorization-brief artifact defining what a *future* bounded evidence-intake ticket may authorize, while preserving explicit non-authorization boundaries and the three-layer separation between authorization brief, candidate intake mechanics, and evidence question map. **No** evidence intake, **no** evidence collection, **no** evidence requests, **no** evidence review, **no** evidence acceptance, **no** evidence rejection, **no** evidence scoring, **no** sufficiency determination, **no** registry-state changes, **no** evidence-state changes, **no** blocker closure, **no** gap closure, **no** provider outreach, **no** commercial engagement, **no** vendor onboarding, **no** sandbox access, **no** legal retainer, **no** legal reliance, **no** market selection, **no** provider selection, **no** jurisdiction selection, **no** custody, **no** rails, **no** stablecoin conversion, **no** ADR drafting readiness, **no** implementation-preflight, **no** implementation, **no** staging, **no** live operations, **no** customer-money movement, **no** `apps/`, **no** `packages/`, **no** `scripts/`, **no** `.github/`, **no** tests, **no** `apps/frontend/lib/engine/**`, **no** CI workflows, **no** Copilot runtime, and **no** ADR status changes. `EVID-INTAKE-B-002` remains a placeholder only until a future **§7** / **§7a** ticket explicitly names bounded intake scope with separate founder approval. Completed record: **§111**.
 
 **Archived brief (OFFRAMP-GOV-001):** Establish Hedgr Off-Ramp Governance Framework — **documentation-only governance / cross-cutting institutional framework plus supporting research promotion**; scope held to `docs/ops/governance/offramp/HEDGR_OFFRAMP_GOVERNANCE_FRAMEWORK.md`, `docs/research/HEDGR_OFFRAMP_STRATEGY_AGENCY_AND_PAYOUT_INFRASTRUCTURE_RESEARCH.md`, `docs/research/HEDGR_MVP_WALLET_RAILS_MARKET_STRATEGY_PAPER.md`, `docs/ops/HEDGR_STATUS.md`, and `docs/ops/NOTION_GOVERNANCE_STAGING.md`. Established off-ramp as a governed cross-cutting framework subordinate to the Constitutional Charter, MVP doctrine, Stability Engine read-only boundaries, Class B governance, and Class B evidence architecture; then promoted the two review-draft research artifacts to canonical supporting-reference paths only after framework merge. **No** independent off-ramp governance institution, **no** evidence intake, **no** evidence acceptance, **no** evidence-state or registry-state change, **no** provider selection, **no** market selection, **no** provider outreach, **no** ADR acceptance, **no** implementation-preflight, **no** implementation, **no** staging, **no** sandbox use, **no** internal testing, **no** live operations, **no** custody, **no** rails, **no** stablecoin conversion, **no** deposits, **no** withdrawals, **no** remittance, **no** treasury operations, **no** reconciliation operations, **no** support operations, **no** audit operations, **no** ledger truth, **no** accounting truth, **no** Copilot execution, **no** Class C automation, **no** app / package / backend / CI / test changes, and **no** customer fund movement authority. Completed record: **§108**.
 
@@ -6227,3 +6285,31 @@ This **§43** record was originally written in the same working-tree change-set 
 **§7** / **§7a** record completion per governance and remain in no-active-ticket posture.
 
 **Follow-ups:** No successor implementation ticket is created by this status mirror. Any future bounded evidence-intake authorization, provider review, market review, ADR drafting readiness, implementation-preflight, implementation, or customer-money activity appears only when repo governance names it explicitly in **§7** / **§7a**.
+
+---
+
+## 111. Completed execution ticket - GOV-A-REV-002 (Class B Evidence Intake Authorization Brief)
+
+**Ticket:** `GOV-A-REV-002` — Formalize Class B Evidence Intake Authorization Brief (documentation-only governance / intake-authorization concept formalization)
+
+**Objective.** Promote the Class B Evidence Intake Authorization Brief review draft into a governed repo-native authorization-brief artifact that defines what a *future* bounded evidence-intake ticket may authorize, without itself authorizing evidence intake, evidence collection, evidence review, evidence acceptance, registry-state changes, provider outreach, external engagement, or customer-money activity.
+
+### Outcome (documentation-only)
+
+- **`docs/ops/governance/class-b/HEDGR_CLASS_B_EVIDENCE_INTAKE_AUTHORIZATION_BRIEF.md`** — added the governed repo-native Class B Evidence Intake Authorization Brief, preserving the three-layer separation between authorization brief, candidate intake mechanics, and evidence question map.
+- **`docs/ops/governance/class-b/HEDGR_CLASS_B_EVIDENCE_INTAKE_AUTHORIZATION_BRIEF.md`** — states that `EVID-INTAKE-B-002` remains a placeholder until a future **§7** / **§7a** ticket explicitly names bounded intake scope with separate founder approval.
+- **`docs/ops/governance/class-b/HEDGR_CLASS_B_EVIDENCE_INTAKE_AUTHORIZATION_BRIEF_REVIEW_DRAFT.md`** — marked as the archived governance review source for the promoted canonical artifact.
+- **`docs/ops/HEDGR_STATUS.md`** — recorded `GOV-A-REV-002` in §6 merged truth, added the ticket to the §7 completed list, archived the active brief, restored §7 / §7a to no-active-ticket posture, and added this completed-ticket record.
+- **`docs/ops/NOTION_GOVERNANCE_STAGING.md`** — downstream mirror reconciled to reflect `GOV-A-REV-002` completion without creating Notion-led authority.
+
+**Governance guarantees held.** The authorization brief is documentation-only and non-authorizing. It does not change the current evidence posture, registry posture, blocker posture, or readiness posture. The current Class B evidence packages remain `Question framed / Missing`. `GOV-INTAKE-B-002`, `EVID-INTAKE-B-001`, `GOV-CHECKPOINT-B-001`, `GOV-REVIEW-B-001`, the completed Class B Evidence Gathering program, and the off-ramp preparation posture remain reference inputs only; none becomes evidence intake authority.
+
+**Scope discipline held.** **No** evidence intake, **no** evidence collection, **no** evidence request, **no** evidence review, **no** evidence acceptance, **no** evidence rejection, **no** evidence scoring, **no** evidence evaluation, **no** sufficiency determination, **no** Evidence Registry modification, **no** registry-row modification, **no** registry-state change, **no** evidence-state change, **no** blocker closure, **no** gap closure, **no** readiness threshold, **no** provider outreach, **no** external engagement, **no** commercial negotiation, **no** vendor onboarding, **no** sandbox access, **no** legal retainer, **no** legal reliance, **no** market selection, **no** provider selection, **no** jurisdiction selection, **no** custody approval, **no** rail approval, **no** stablecoin conversion, **no** ADR drafting readiness, **no** implementation-preflight, **no** implementation, **no** staging, **no** internal testing, **no** live operations, **no** production activation, **no** `apps/`, **no** `packages/`, **no** `scripts/`, **no** `.github/`, **no** tests, **no** CI workflow changes, **no** backend, **no** frontend implementation, **no** product copy edits, **no** shipped route edits, **no** prototype route edits, **no** `apps/frontend/lib/engine/**`, **no** Copilot runtime, **no** ADR status change, **no** ledger truth, **no** accounting truth, **no** Class C automation, and **no** customer fund movement authority.
+
+**Validation.** Documentation-only diff review, `git diff -- docs/ops/governance/class-b/HEDGR_CLASS_B_EVIDENCE_INTAKE_AUTHORIZATION_BRIEF.md docs/ops/governance/class-b/HEDGR_CLASS_B_EVIDENCE_INTAKE_AUTHORIZATION_BRIEF_REVIEW_DRAFT.md docs/ops/HEDGR_STATUS.md docs/ops/NOTION_GOVERNANCE_STAGING.md`, `git diff --check -- docs/ops/governance/class-b/HEDGR_CLASS_B_EVIDENCE_INTAKE_AUTHORIZATION_BRIEF.md docs/ops/governance/class-b/HEDGR_CLASS_B_EVIDENCE_INTAKE_AUTHORIZATION_BRIEF_REVIEW_DRAFT.md docs/ops/HEDGR_STATUS.md docs/ops/NOTION_GOVERNANCE_STAGING.md`, `pnpm run validate` (trust checks, bridge snapshot checks/tests, Vitest `60 passed` / `720 passed`, typecheck, and lint), and backend-stub local `e2e:ci` (`53 passed`) completed locally. No tests were added because this ticket is documentation-only and explicitly excludes runtime, app, package, workflow, and test surfaces.
+
+### Sequencing note
+
+**§7** / **§7a** record completion per governance and are restored to no-active-ticket posture.
+
+**Follow-ups:** No successor implementation ticket is created by this authorization-brief formalization. `EVID-INTAKE-B-002` remains a placeholder only until a future **§7** / **§7a** ticket explicitly names bounded intake scope with separate founder approval. Any future evidence intake, evidence collection, evidence review, evidence acceptance, provider outreach, market review, ADR drafting readiness, implementation-preflight, implementation, or customer-money activity appears only when repo governance names it explicitly in **§7** / **§7a**.

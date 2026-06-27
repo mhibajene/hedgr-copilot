@@ -1,11 +1,12 @@
-# HEDGR - Class B Evidence Intake Authorization Brief Review Draft
+# HEDGR - Class B Evidence Intake Authorization Brief
 
-**Document status:** Archived governance review source
+**Document status:** Governed repo-native authorization brief
 **Prepared date:** 2026-06-24
-**Ticket:** `GOV-A-REV-002` - Apply Final Governance Tightening Edits to Class B Evidence Intake Authorization Brief
+**Promoted date:** 2026-06-27
+**Ticket:** `GOV-A-REV-002` - Formalize Class B Evidence Intake Authorization Brief
 **Working future ticket label:** `EVID-INTAKE-B-002` - placeholder only unless and until `docs/ops/HEDGR_STATUS.md` `§7` names an approved ticket with bounded `§7a` scope
-**Promotion note:** Promoted on 2026-06-27 to governed repo-native artifact `docs/ops/governance/class-b/HEDGR_CLASS_B_EVIDENCE_INTAKE_AUTHORIZATION_BRIEF.md` by `GOV-A-REV-002`.
-**Authority level:** Non-authorizing review artifact
+**Source review artifact:** `docs/ops/governance/class-b/HEDGR_CLASS_B_EVIDENCE_INTAKE_AUTHORIZATION_BRIEF_REVIEW_DRAFT.md`
+**Authority level:** Non-authorizing governance artifact
 **Implementation authority:** None
 **Evidence intake authority:** None
 **Evidence review authority:** None
@@ -16,7 +17,7 @@
 
 ## 1. Status / Authority / Scope
 
-This artifact is a governance review candidate. It refines the proposed evidence-intake authorization concept for final founder / governance review before any repo translation or `§7` activation is considered.
+This artifact is a governed repo-native authorization-brief artifact. It formalizes what a future bounded evidence-intake ticket may authorize, while preserving that this brief itself does not authorize evidence intake, evidence collection, evidence review, evidence acceptance, registry-state changes, provider outreach, or customer-money activity.
 
 It is subordinate to:
 
@@ -41,13 +42,13 @@ Current repo truth remains:
 - Class B evidence packages remain `Question framed / Missing`.
 - No Class B blocker is closed.
 
-This draft does not create a new authority surface. It does not add, activate, sequence, or approve any ticket.
+This brief does not create a new authority surface. It does not add, activate, sequence, or approve any future ticket.
 
 ---
 
 ## 2. Purpose
 
-The purpose of this review draft is to separate three governance layers that were previously blended:
+The purpose of this authorization brief is to separate three governance layers that were previously blended:
 
 | Layer | Purpose | Boundary |
 |---|---|---|
@@ -61,7 +62,7 @@ The current Class B issue is not lack of scaffolding. The current issue is that 
 
 ## 3. Out Of Scope
 
-This review draft does not authorize or perform:
+This authorization brief does not authorize or perform:
 
 - evidence intake activation
 - evidence collection
@@ -474,9 +475,9 @@ Reviewers should answer:
 
 ---
 
-## 8. Translation Guardrails
+## 8. Future-Use Guardrails
 
-If this draft is later translated into a repo-governed artifact, translation must:
+If this brief is later used by a future repo-governed intake ticket, that ticket must:
 
 - preserve the three-layer structure;
 - keep the future ticket ID provisional until `HEDGR_STATUS.md` `§7` names it;
@@ -491,6 +492,6 @@ If this draft is later translated into a repo-governed artifact, translation mus
 
 ## 9. Non-Authorization Statement
 
-This brief is non-authoritative and documentation-only. It is a review draft for governance containment of a possible future evidence-intake authorization concept. It does not authorize evidence intake, evidence collection, evidence requests, evidence review, evidence acceptance, evidence rejection, evidence scoring, blocker closure, gap closure, sufficiency determination, registry-state changes, evidence-state changes, ADR drafting readiness, implementation-proposal preflight, implementation, legal conclusions, jurisdiction selection, customer eligibility approval, KYC / AML approval, sanctions / PEP responsibility approval, custody approval, rail approval, vendor onboarding, provider selection, sandbox access, legal-retainer authority, commercial negotiation, stablecoin conversion, deposits, withdrawals, treasury operations, liquidity buffers, reconciliation operations, support operations, audit operations, ledger mutation, staging, sandbox use, internal testing, live operations, production activation, Copilot execution, Class C automation, external commercial engagement, customer-money activity, or customer fund movement.
+This brief is non-authorizing and documentation-only. It formalizes governance containment for a possible future evidence-intake authorization concept. It does not authorize evidence intake, evidence collection, evidence requests, evidence review, evidence acceptance, evidence rejection, evidence scoring, blocker closure, gap closure, sufficiency determination, registry-state changes, evidence-state changes, ADR drafting readiness, implementation-proposal preflight, implementation, legal conclusions, jurisdiction selection, customer eligibility approval, KYC / AML approval, sanctions / PEP responsibility approval, custody approval, rail approval, vendor onboarding, provider selection, sandbox access, legal-retainer authority, commercial negotiation, stablecoin conversion, deposits, withdrawals, treasury operations, liquidity buffers, reconciliation operations, support operations, audit operations, ledger mutation, staging, sandbox use, internal testing, live operations, production activation, Copilot execution, Class C automation, external commercial engagement, customer-money activity, or customer fund movement.
 
 Any future Class B evidence intake or downstream work still requires separate repo-governed authorization through `docs/ops/HEDGR_STATUS.md` `§7` naming where applicable, bounded `§7a` where applicable, accepted ADRs where required, qualified legal / compliance review where applicable, relevant spine-artifact review, relevant evidence package review, source pointers, freshness review, conflict review, dependency review, and audit / retention evidence where applicable.
