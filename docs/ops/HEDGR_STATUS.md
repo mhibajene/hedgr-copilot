@@ -3270,6 +3270,25 @@ Implementation posture preserved:
 - documentation-only research promotion and governance closeout.
 - no provider selection, no market selection, no evidence intake, no evidence acceptance, no evidence-state or registry-state change, no provider outreach, no ADR acceptance, no implementation-preflight, no implementation, no staging, no sandbox use, no internal testing, no live operations, no custody, no rails, no stablecoin conversion, no deposits, no withdrawals, no remittance, no treasury operations, no reconciliation operations, no support operations, no audit operations, no ledger truth, no accounting truth, no Copilot execution, no Class C automation, and no customer fund movement authority.
 
+### OFFRAMP-GOV-002 - Off-Ramp Evidence Matrix Preparation Posture Mirror (documentation-only governance / status mirror)
+
+Changed files:
+
+- `docs/ops/HEDGR_STATUS.md`
+- `docs/ops/NOTION_GOVERNANCE_STAGING.md`
+
+Implementation truth:
+
+- mirrored the existence and non-authorizing posture of `docs/ops/governance/offramp/HEDGR_OFFRAMP_EVIDENCE_MATRIX_PREP_DRAFT.md` in repo-native authority without promoting the matrix beyond review-draft status.
+- recorded Founder / HedgrOps approved response posture from the preparation draft §6A: same-name withdrawal hypothesis only; third-party remittance, payroll, supplier payout, and bulk disbursement out of scope; Hedgr-managed MNO prefunding rejected for MVP unless separately authorized; market evidence before provider preference; off-ramp evidence quality over general crypto adoption in market selection; chain selection open until endpoint/provider evidence exists; cash pickup as fallback/inclusion infrastructure, not default; providers lacking failure, refund, and reconciliation evidence disqualified from further consideration; matrix remains review-draft until bounded evidence-intake authority exists in **§7** / **§7a**.
+- preserved **no** evidence intake, **no** provider outreach, **no** legal reliance, **no** market selection, **no** provider selection, **no** sandbox testing, **no** implementation, **no** ADR drafting, **no** Class B readiness, and **no** customer-money movement authority.
+
+Implementation posture preserved:
+
+- documentation-only status mirror and governance housekeeping.
+- no evidence intake, evidence acceptance, evidence-state or registry-state change, provider outreach, legal reliance, market selection, provider selection, ADR acceptance, implementation-preflight, implementation, staging, sandbox use, internal testing, live operations, custody, rails, stablecoin conversion, treasury operations, reconciliation operations, support operations, audit operations, ledger truth, accounting truth, Copilot execution, Class C automation, or customer fund movement authority.
+- no `apps/`, `packages/`, `scripts/`, `.github/`, tests, backend, frontend implementation, `apps/frontend/lib/engine/**`, CI workflows, Copilot runtime, or ADR status changes.
+
 ---
 
 ## 7. Current sequence and active status
@@ -3385,12 +3404,14 @@ Completed and merged:
 - `BRAND-009` - Shared UI semantic token normalization (`BRAND-006` remediation #2 / `BRAND-006-FU-002`; brand remediation / shared-UI presentation normalization; completed record **§107**)
 - `HOPS-BRIDGE-001` - HedgrOps Read-Only Review Evidence Bridge (Class A informational support infrastructure; completed record **§109**; operational verification evidence in `apps/bridge-worker/VERIFICATION.md`)
 - `OFFRAMP-GOV-001` - Establish Hedgr Off-Ramp Governance Framework (documentation-only governance / cross-cutting institutional framework plus supporting research promotion; completed record **§108**)
+- `OFFRAMP-GOV-002` - Mirror off-ramp evidence matrix preparation posture in `HEDGR_STATUS.md` (documentation-only governance / non-authorizing status mirror; completed record **§110**)
 
 Current active ticket status:
 
-- **Approved next ticket:** **None named.** `OFFRAMP-GOV-001` is complete and recorded in **§108**; `HOPS-BRIDGE-001` is complete and recorded in **§109**; **§7** / **§7a** are restored to no-active-ticket posture. There is **no** approved next implementation ticket until **§7** is updated explicitly to name one.
+- **Approved next ticket:** **None named.** `OFFRAMP-GOV-002` is complete and recorded in **§110**; `OFFRAMP-GOV-001` is complete and recorded in **§108**; `HOPS-BRIDGE-001` is complete and recorded in **§109**; **§7** / **§7a** are restored to no-active-ticket posture. There is **no** approved next implementation ticket until **§7** is updated explicitly to name one.
 - **HOPS-BRIDGE-001 closeout note:** `HOPS-BRIDGE-001` closeout is recorded in **§109**. Operational verification, governance-envelope checks, and post-closeout operating rules remain in `apps/bridge-worker/VERIFICATION.md` as verification evidence only; that file does **not** create sequencing authority and must not be read as a substitute for **§7** / **§7a**.
 - **Post-`OFFRAMP-GOV-001` sequencing (governance-accepted):** Off-ramp is now recorded as a **doctrine-informed cross-cutting governance framework** implemented through Class B evidence and subordinate to the Constitutional Charter, MVP doctrine, Stability Engine read-only boundaries, and the closed Class B governance / evidence program. The promoted research artifacts are supporting references only. This closeout does **not** create an independent governance institution parallel to Class B or the Stability Engine. It does **not** authorize evidence intake, evidence acceptance, provider selection, market selection, provider outreach, ADR acceptance, implementation, staging, sandbox use, internal testing, live operations, custody, rails, stablecoin conversion, treasury operations, reconciliation operations, support operations, audit operations, ledger truth, accounting truth, Copilot execution, Class C automation, or customer fund movement authority.
+- **Off-ramp evidence matrix preparation posture (non-authorizing; mirrored by `OFFRAMP-GOV-002`):** `docs/ops/governance/offramp/HEDGR_OFFRAMP_EVIDENCE_MATRIX_PREP_DRAFT.md` is a **Founder / HedgrOps review draft** and **non-authorizing preparation artifact**. It defines evidence domains for a future, separately authorized Class B off-ramp readiness determination. The conservative candidate hypothesis remains **same-name user withdrawal only**. Third-party remittance, payroll, supplier payout, bulk disbursement, P2P, OTC, agent-network operation, Hedgr-managed MNO prefunding, Hedgr fiat custody, and instant/guaranteed withdrawal claims remain **out of scope**. Market evidence should precede provider preference; off-ramp evidence quality should carry more weight than general crypto adoption in market selection; chain selection remains open until endpoint/provider evidence exists; cash pickup is fallback/inclusion infrastructure, not default; providers lacking failure, refund, and reconciliation evidence should be disqualified from further consideration. The matrix remains **review-draft** until a bounded evidence-intake authority entry exists in **§7** / **§7a**. This posture mirror does **not** authorize evidence intake, provider outreach, legal reliance, market selection, provider selection, sandbox testing, implementation, ADR drafting, Class B readiness, or customer-money movement.
 - **Brand System Governance sequencing:** **§6d** records the approved Brand System Governance ticket set and recommended order. `BRAND-001` through `BRAND-009` are complete. `BRAND-006-FU-003` through `BRAND-006-FU-006` remain non-authorizing until a future **§7** ticket names them with a bounded **§7a** brief.
 - **Post–`GOV-INTAKE-B-002` sequencing (governance-accepted):** `GOV-INTAKE-B-002` completed the Class B Evidence Intake Governance Model as a documentation-only governance artifact. It did **not** authorize evidence intake, evidence collection, evidence requests, evidence acceptance, evidence rejection, evidence scoring, evidence evaluation, registry-state changes, evidence-state changes, blocker closure, gap closure, readiness, ADR drafting readiness, implementation-proposal preflight, implementation, staging, sandbox use, internal testing, live operations, custody, rails, stablecoin conversion, treasury operations, reconciliation, support operations, audit operations, ledger truth, accounting truth, Copilot execution, Class C automation, or customer fund movement authority.
 - **Post–`COP-GOV-001` sequencing (governance-accepted):** `COP-GOV-001` completed the intended **advisory-boundary definition** lane as a documentation-only governance artifact. It did **not** widen product, engine, backend, policy, Copilot **runtime**, execution, accounting, ledger, vendor, custody, stablecoin, Circle, live-service, or customer-facing automation authority. Copilot MVP posture remains **advisory, non-directive, non-executing, hermetic, non-accounting, non-policy-authoritative**, and **outside `§6b` category 8** unless future doctrine and ADRs widen the boundary. Any later Copilot **implementation** requires a separate **§7** name and **§7a** brief. Do not infer Copilot implementation, runtime binding, engine binding, policy binding, backend work, execution authority, or finance-style autonomy from `COP-GOV-001`.
@@ -3403,13 +3424,13 @@ Current active ticket status:
 - Cursor must not continue automatically into work beyond what is explicitly defined in this file for an active ticket.
 - Cursor must not drift beyond explicitly defined scope.
 
-**Last completed ticket (summary):** `OFFRAMP-GOV-001` — Establish Hedgr Off-Ramp Governance Framework (documentation-only governance / cross-cutting institutional framework plus supporting research promotion; created `docs/ops/governance/offramp/HEDGR_OFFRAMP_GOVERNANCE_FRAMEWORK.md`, promoted the two supporting research artifacts to canonical paths, and preserved no-provider / no-market / no-evidence-intake / no-implementation / no-customer-money authority); completed record in **§108**.
+**Last completed ticket (summary):** `OFFRAMP-GOV-002` — Mirror off-ramp evidence matrix preparation posture in `HEDGR_STATUS.md` (documentation-only governance / non-authorizing status mirror; recorded the existence and Founder / HedgrOps approved response posture of `docs/ops/governance/offramp/HEDGR_OFFRAMP_EVIDENCE_MATRIX_PREP_DRAFT.md` without promoting the matrix beyond review-draft status or authorizing evidence intake); completed record in **§110**.
 
 ---
 
 ## 7a. Active execution ticket
 
-**Status:** **No active execution ticket.** **§7** does not currently name an approved next implementation ticket. The most recently completed ticket, `OFFRAMP-GOV-001` (Off-Ramp Governance Framework), is recorded in **§108**. `HOPS-BRIDGE-001` (HedgrOps Read-Only Review Evidence Bridge) is recorded in **§109**; operational verification evidence remains in `apps/bridge-worker/VERIFICATION.md`.
+**Status:** **No active execution ticket.** **§7** does not currently name an approved next implementation ticket. The most recently completed ticket, `OFFRAMP-GOV-002` (Off-Ramp Evidence Matrix Preparation Posture Mirror), is recorded in **§110**. `OFFRAMP-GOV-001` (Off-Ramp Governance Framework) is recorded in **§108**. `HOPS-BRIDGE-001` (HedgrOps Read-Only Review Evidence Bridge) is recorded in **§109**; operational verification evidence remains in `apps/bridge-worker/VERIFICATION.md`.
 
 When governance approves the next ticket, **§7** will name it and this section will hold the full execution brief until closeout.
 
@@ -6182,3 +6203,27 @@ This **§43** record was originally written in the same working-tree change-set 
 **Authority-surface note.** `apps/bridge-worker/VERIFICATION.md` remains the operational verification and closeout-assessment artifact for the bridge Worker. **§109** is the repo-native completed-ticket record. Readers must not flatten those roles: verification evidence is not sequencing authority.
 
 **Follow-ups:** No successor implementation ticket is created by this bridge closeout. Any future bridge expansion beyond evidence retrieval requires separate governance review and authorization per `apps/bridge-worker/VERIFICATION.md` post-closeout operating rules.
+
+---
+
+## 110. Completed execution ticket - OFFRAMP-GOV-002 (Off-Ramp Evidence Matrix Preparation Posture Mirror)
+
+**Ticket:** `OFFRAMP-GOV-002` — Mirror off-ramp evidence matrix preparation posture in `HEDGR_STATUS.md` (documentation-only governance / non-authorizing status mirror)
+
+**Objective.** Record in repo-native authority the existence and non-authorizing posture of the Class B off-ramp evidence matrix preparation draft and the Founder / HedgrOps approved response posture, without promoting the matrix beyond review-draft status or authorizing evidence intake.
+
+### Outcome (status mirror)
+
+- **`docs/ops/governance/offramp/HEDGR_OFFRAMP_EVIDENCE_MATRIX_PREP_DRAFT.md`** — referenced as a Founder / HedgrOps review draft and non-authorizing preparation artifact defining evidence domains for a future, separately authorized Class B off-ramp readiness determination.
+- **`docs/ops/HEDGR_STATUS.md`** — recorded the preparation artifact, approved response posture, scope exclusions, and review-draft boundary in **§6** and **§7**; added `OFFRAMP-GOV-002` to the completed list; preserved no-active-ticket posture in **§7** / **§7a**; and added this completed-ticket record.
+- **`docs/ops/NOTION_GOVERNANCE_STAGING.md`** — downstream mirror reconciled to reflect `OFFRAMP-GOV-002` completion without creating Notion-led authority.
+
+**Approved response posture mirrored (decision-support only).** Same-name withdrawal hypothesis only; third-party remittance, payroll, supplier payout, and bulk disbursement out of scope; Hedgr-managed MNO prefunding rejected for MVP unless separately authorized; market evidence before provider preference; off-ramp evidence quality over general crypto adoption in market selection; chain selection open until endpoint/provider evidence exists; cash pickup as fallback/inclusion infrastructure, not default; providers lacking failure, refund, and reconciliation evidence disqualified from further consideration; matrix remains review-draft until bounded evidence-intake authority exists in **§7** / **§7a**.
+
+**Scope discipline held.** **No** evidence intake, **no** evidence acceptance, **no** evidence-state or registry-state change, **no** provider outreach, **no** legal reliance, **no** market selection, **no** provider selection, **no** sandbox testing, **no** implementation, **no** ADR drafting or acceptance, **no** Class B readiness, **no** staging, **no** internal testing, **no** live operations, **no** custody, **no** rails, **no** stablecoin conversion, **no** deposits, **no** withdrawals, **no** remittance, **no** treasury operations, **no** reconciliation operations, **no** support operations, **no** audit operations, **no** ledger truth, **no** accounting truth, **no** Copilot execution, **no** Class C automation, **no** app / package / backend / CI / test changes, and **no** customer fund movement authority.
+
+### Sequencing note
+
+**§7** / **§7a** record completion per governance and remain in no-active-ticket posture.
+
+**Follow-ups:** No successor implementation ticket is created by this status mirror. Any future bounded evidence-intake authorization, provider review, market review, ADR drafting readiness, implementation-preflight, implementation, or customer-money activity appears only when repo governance names it explicitly in **§7** / **§7a**.
