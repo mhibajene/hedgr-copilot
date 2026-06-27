@@ -51,6 +51,10 @@ No row may be marked `sufficient_for_decision_support` without:
 - dependency check;
 - explicit note on whether it affects authority.
 
+Evidence status, domain classification, and authority state are separate. A domain may be evidence-sufficient for decision support while authority remains absent. A blocker may be descriptively resolved for future decision support without authorizing evidence intake, provider outreach, market selection, provider selection, implementation planning, sandbox testing, ADR drafting, Class B readiness, or execution. Only repo-native authority can change execution posture.
+
+A `sufficient_for_decision_support` status does not unlock provider outreach, market selection, implementation planning, sandbox testing, ADR drafting, Class B readiness, or execution. It is evidence-state language only. Any row marked `sufficient_for_decision_support` must be re-reviewed if evidence becomes stale, contradicted, superseded, materially incomplete, or if authority posture changes.
+
 ---
 
 ## 3. Candidate Class B off-ramp scope under review
@@ -88,7 +92,7 @@ These exclusions remain governance boundaries unless separately challenged and r
 | 3 | User type | Which user class is in scope? | Consumer/freelancer/SME scope note; identity and business account assumptions. | User class is named and matched to provider eligibility. | Yes | Product doctrine + provider terms | Product + Ops |
 | 4 | Withdrawal type | Is this same-name withdrawal or third-party transfer? | Flow diagram; beneficiary policy; provider confirmation. | Same-name rule documented, with third-party transfers explicitly excluded unless separately authorized. | Yes | Provider + legal | Legal + Ops |
 | 5 | Provider-of-record evidence | Which entity performs conversion and payout? | Provider contract/terms; regulated entity details; responsibility statement. | Provider-of-record evidence identifies legal entity, jurisdiction, and service role without approving the provider. | Yes | Provider direct evidence | Legal + HedgrOps |
-| 6 | Hedgr role boundary | What does Hedgr do versus not do? | Responsibility matrix; user disclosures; technical flow. | Hedgr role limited to orchestration, UX, routing/status/support handoff unless separately authorized. | Yes | Governance + legal | HedgrOps |
+| 6 | Hedgr role boundary | What does Hedgr do versus not do? | Responsibility matrix; user disclosures; technical flow. | Hedgr role limited to non-custodial UX coordination, user-facing status display, provider handoff, and support escalation unless separately authorized. | Yes | Governance + legal | HedgrOps |
 | 7 | Regulatory classification | Does the model create licensing, remittance, payment, CASP/VASP, e-money, or MSB obligations for Hedgr? | Qualified legal memo per market and flow. | Legal review distinguishes Hedgr, provider, payout partner, and user responsibilities. | Yes | Qualified legal review | Legal |
 | 8 | KYC / KYB responsibility | Who verifies user identity and business status? | Provider KYC/KYB policy; Hedgr user verification policy; data-sharing basis. | No assumption that “provider handles compliance” unless documented. | Yes | Provider + legal | Compliance + Product |
 | 9 | AML / sanctions / PEP screening | Who screens what, when, and against which obligations? | Compliance responsibility matrix; escalation path; prohibited-use policy. | Screening ownership and stop conditions documented. | Yes | Provider + legal | Compliance |
@@ -106,7 +110,7 @@ These exclusions remain governance boundaries unless separately challenged and r
 | 21 | Hedgr prefunding / balance-sheet exposure | Is there idle capital, reserve, or credit exposure? | Treasury model; prefund utilisation assumptions; suspension thresholds. | Exposure is quantified and assigned to provider or explicitly blocked. | Yes | Provider + finance review | Finance |
 | 22 | Settlement-state definitions | What would each provider-defined state, including `completed`, mean? | Provider status definitions; local rail finality; reconciliation confirmation. | Distinguish provider receipt, payout initiated, available, credited/paid, failed, refunded. | Yes | Provider technical + legal | Ops + Engineering |
 | 23 | Product status state machine | Can Hedgr represent transaction status truthfully? | Normalized off-ramp state model; provider webhook/status mapping. | No collapse of intermediate states into provider-defined `completed`. | Yes | Technical architecture | Engineering + Product |
-| 24 | External reconciliation source of truth | What external record determines settlement state? | Provider transaction IDs; onchain hash; local rail reference; reconciliation process. | Provider/local rail record is the external settlement source of truth; Hedgr database is not final truth. | Yes | Provider + ops design | Ops + Finance |
+| 24 | External reconciliation source of truth | What external record determines settlement state? | Provider transaction IDs; onchain hash; local rail reference; reconciliation process. | Provider/local rail record is the external settlement source of truth; Hedgr database is not final truth. The hierarchy between onchain record, provider transaction ID, local rail reference, user-facing status, and Hedgr internal audit log must be identified before any future implementation authority. | Yes | Provider + ops design | Ops + Finance |
 | 25 | Failed payout handling | What happens if payout fails? | Failure codes; retry rules; cancellation path; user messaging. | Failure handling is documented before launch. | Yes | Provider API + support terms | Support + Ops |
 | 26 | Refund path | What happens after failed, cancelled, or uncollected payout? | Refund terms; timing; route; asset/currency returned; fee handling. | Refund expectations are user-visible and operationally trackable. | Yes | Provider terms | Support + Finance |
 | 27 | Cash pickup controls | If cash pickup exists, how are ID, voucher, collection, expiry, and agent liquidity handled? | Agent requirements; cash availability; ID rules; expiry/refund terms. | Cash pickup carries separate limits, status states, and risk controls. | Yes if cash in scope | Provider + MTO evidence | Ops + Compliance |
@@ -152,17 +156,19 @@ Initial proposed hard blockers:
 5. provider-of-record evidence;
 6. legal/regulatory classification;
 7. KYC/AML/sanctions allocation;
-8. custody model;
-9. quote/fee disclosure;
-10. local payout endpoint proof;
-11. beneficiary validation;
-12. local liquidity responsibility;
-13. settlement-state definitions;
-14. external reconciliation source of truth;
-15. failed payout/refund path;
-16. support/dispute ownership;
-17. incident stop conditions;
-18. trust UX language.
+8. data sharing / privacy basis;
+9. audit / retention basis;
+10. custody model;
+11. quote/fee disclosure;
+12. local payout endpoint proof;
+13. beneficiary validation;
+14. local liquidity responsibility;
+15. settlement-state definitions;
+16. external reconciliation source of truth;
+17. failed payout/refund path;
+18. support/dispute ownership;
+19. incident stop conditions;
+20. trust UX language.
 
 ---
 
