@@ -2,6 +2,7 @@
 
 **Status:** Founder / HedgrOps review draft
 **Authority posture:** Non-authorizing / preparation artifact only
+**Repo status mirror:** `docs/ops/HEDGR_STATUS.md` **§7** (post-`OFFRAMP-GOV-002`) and completed record **§110**
 **Prepared:** 2026-06-26
 **Related research artifact:** `docs/research/HEDGR_OFFRAMP_STRATEGY_AGENCY_AND_PAYOUT_INFRASTRUCTURE_RESEARCH.md`
 **Related governance framework:** `docs/ops/governance/offramp/HEDGR_OFFRAMP_GOVERNANCE_FRAMEWORK.md`
