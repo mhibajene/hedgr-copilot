@@ -185,6 +185,23 @@ Initial proposed hard blockers:
 9. Should `HEDGR_STATUS.md` mirror all support-infrastructure closeouts that affect governance tooling?
 10. Should this matrix remain in review-draft status until a bounded evidence-intake authority entry exists?
 
+## 6A. Founder / HedgrOps approved response posture
+
+Founder / HedgrOps has approved the following non-authorizing response posture for this preparation draft:
+
+1. The first off-ramp evidence hypothesis remains limited to same-name withdrawal only.
+2. Third-party remittance, payroll, supplier payout, and bulk disbursement remain explicitly out of scope.
+3. Hedgr should reject any MVP path requiring Hedgr-managed MNO prefunding unless separately authorized through repo-native governance.
+4. Market evidence should be reviewed before provider preference is formed.
+5. Off-ramp evidence quality should carry more weight than general crypto adoption in market selection.
+6. Chain selection should remain open until the off-ramp endpoint and provider path are evidenced.
+7. Cash pickup should be treated as fallback / inclusion infrastructure rather than the default endpoint.
+8. A provider should be disqualified from further consideration if it cannot provide failure, refund, and reconciliation evidence.
+9. `HEDGR_STATUS.md` should mirror support-infrastructure closeouts that affect governance tooling, but only through repo-native authority.
+10. This matrix remains in review-draft status until a bounded evidence-intake authority entry exists.
+
+This response posture is decision-support context only. It does not authorize evidence intake, provider outreach, legal reliance, market selection, provider selection, implementation, sandbox testing, ADR drafting, Class B readiness, customer-money movement, custody, deposits, withdrawals, stablecoin conversion, remittance, fiat payout, agent operations, prefunding, treasury operations, reconciliation operations, support operations, or production use.
+
 ---
 
 ## 7. Non-authorization statement
