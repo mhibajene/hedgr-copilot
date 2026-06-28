@@ -80,6 +80,8 @@ The Kenya path revealed nine main friction lessons for Hedgr's Africa / mobile-m
 
 ## 5. Friction severity map
 
+Severity labels in this review are synthesis labels only. They do not close blockers, establish evidence sufficiency, create evidence acceptance, change Evidence Registry state, authorize legal reliance, or authorize downstream Class B activity.
+
 | Friction domain | Severity | Source basis | Synthesis note | Later confirmation needed |
 |---|---|---|---|---|
 | Endpoint support | manageable_with_provider_confirmation | `EVID-INTAKE-B-004` §§5-6, §11 | M-Pesa and provider references expose a plausible question, not endpoint proof. | Exact Kenya / KES / user-class / same-name M-Pesa support by provider. |
@@ -136,6 +138,8 @@ That usefulness does not make Kenya selected, does not open M-Pesa as an endpoin
 
 A Philippines or other readiness-optimized comparison frame may be valuable now as a decision-support question, not as a market-ranking exercise.
 
+A Philippines or other readiness-optimized comparison would require its own separate authority-entry or comparison-frame ticket. Kenya findings must not be reused as market-ranking evidence, market-selection evidence, or proof that another market is preferable.
+
 The value would be comparative:
 
 - Does a bank / e-wallet-heavy market expose less MNO prefunding friction than Kenya?
@@ -161,6 +165,8 @@ This review does not create a Philippines authority-entry artifact, select Phili
 Immediate next move:
 
 > C. Authorize legal-review preflight.
+
+Legal-review preflight should be framed as bounded issue-spotting and regulatory / legal perimeter mapping only unless a separate repo-native ticket explicitly authorizes formal legal opinion, legal reliance, counsel engagement, jurisdictional conclusion-making, provider outreach, implementation-preflight, or Class B readiness assessment.
 
 Rationale: the Kenya stress-test puts legal, regulatory, compliance, privacy, complaint, payment, VASP, stablecoin, and custody boundaries upstream of any responsible provider-specific review or operating hypothesis.
 
