@@ -3366,6 +3366,28 @@ Implementation posture preserved:
 - no evidence review, evidence acceptance, evidence rejection, evidence scoring, evidence evaluation, evidence sufficiency determination, blocker closure, gap closure, Evidence Registry modification, registry-row movement, evidence-state change, provider outreach, external evidence request, legal reliance, market selection, endpoint selection, provider selection, jurisdiction selection, chain selection, ADR drafting readiness, implementation-preflight, implementation, staging, sandbox use, internal testing, live operations, custody, rails, stablecoin conversion, deposits, withdrawals, treasury operations, reconciliation operations, support operations, complaint handling, incident handling, audit operations, ledger truth, accounting truth, Copilot execution, Class C automation, or customer fund movement authority.
 - no `apps/`, `packages/`, `scripts/`, `.github/`, tests, backend, frontend implementation, `apps/frontend/lib/engine/**`, CI workflows, Copilot runtime, product copy, shipped route, prototype route, or ADR status changes.
 
+### EVID-INTAKE-B-003 - Bounded Class B Off-Ramp Single-Hypothesis Evidence Intake Authority Entry (documentation-only governance / intake authority envelope)
+
+Changed files:
+
+- `docs/ops/governance/offramp/HEDGR_CLASS_B_OFFRAMP_KENYA_KES_MPESA_INTAKE_AUTHORITY_ENTRY.md`
+- `docs/ops/HEDGR_STATUS.md`
+- `docs/ops/NOTION_GOVERNANCE_STAGING.md`
+
+Implementation truth:
+
+- created the governed single-hypothesis intake authority-entry artifact for `FRQ-OFFRAMP-001` — Kenya / KES same-name M-Pesa-primary withdrawal hypothesis.
+- recorded a bounded authority envelope for what a subsequent governed intake ticket may preserve, receive, and classify under Layer A of the Class B Evidence Intake Authorization Brief.
+- named exactly one hypothesis with explicit non-authorization boundaries: no market selection, no endpoint selection, no provider selection, no evidence review, no evidence acceptance, no registry-state change, no provider outreach, no legal reliance, no implementation, and no customer-money activity.
+- restored **§7** / **§7a** to no-active-ticket posture on closeout.
+
+Implementation posture preserved:
+
+- documentation-only intake authority envelope.
+- Kenya is an evidence-intake hypothesis frame only, not a launch-market decision; M-Pesa is a primary endpoint hypothesis only, not an approved endpoint.
+- no evidence review, evidence acceptance, evidence rejection, evidence scoring, evidence evaluation, evidence sufficiency determination, blocker closure, gap closure, Evidence Registry modification, registry-row movement, evidence-state change, provider outreach, external evidence request, legal reliance, market selection, endpoint selection, provider selection, jurisdiction selection, chain selection, stablecoin selection, ADR drafting readiness, implementation-preflight, implementation, staging, sandbox use, internal testing, live operations, custody, rails, stablecoin conversion, deposits, withdrawals, treasury operations, reconciliation operations, support operations, audit operations, ledger truth, accounting truth, Copilot execution, Class C automation, or customer fund movement authority.
+- no `apps/`, `packages/`, `scripts/`, `.github/`, tests, backend, frontend implementation, `apps/frontend/lib/engine/**`, CI workflows, Copilot runtime, product copy, shipped route, prototype route, or ADR status changes.
+
 ---
 
 ## 7. Current sequence and active status
@@ -3484,11 +3506,13 @@ Completed and merged:
 - `OFFRAMP-GOV-002` - Mirror off-ramp evidence matrix preparation posture in `HEDGR_STATUS.md` (documentation-only governance / non-authorizing status mirror; completed record **§110**)
 - `GOV-A-REV-002` - Formalize Class B Evidence Intake Authorization Brief (documentation-only governance / intake-authorization concept formalization; completed record **§111**)
 - `EVID-INTAKE-B-002` - Bounded Class B Off-Ramp Market / Endpoint Source-Pointer Brief (documentation-only governance / bounded market-endpoint source-pointer brief and intake-support; completed record **§112**)
+- `EVID-INTAKE-B-003` - Bounded Class B Off-Ramp Single-Hypothesis Evidence Intake Authority Entry (documentation-only governance / intake authority envelope for `FRQ-OFFRAMP-001`; completed record **§113**)
 
 Current active ticket status:
 
-- **Approved next ticket:** **None named.** `EVID-INTAKE-B-002` is complete and recorded in **§112**; `GOV-A-REV-002` is complete and recorded in **§111**; `OFFRAMP-GOV-002` is complete and recorded in **§110**; `OFFRAMP-GOV-001` is complete and recorded in **§108**; `HOPS-BRIDGE-001` is complete and recorded in **§109**; **§7** / **§7a** are restored to no-active-ticket posture. There is **no** approved next implementation ticket until **§7** is updated explicitly to name one.
-- **Last completed ticket (summary):** `EVID-INTAKE-B-002` — Bounded Class B Off-Ramp Market / Endpoint Source-Pointer Brief (documentation-only governance / bounded market-endpoint source-pointer brief and intake-support); completed record in **§112**. `GOV-A-REV-002` is complete and recorded in **§111**; `OFFRAMP-GOV-002` is complete and recorded in **§110**; `OFFRAMP-GOV-001` is complete and recorded in **§108**; `HOPS-BRIDGE-001` is complete and recorded in **§109**.
+- **Approved next ticket:** **None named.** `EVID-INTAKE-B-003` is complete and recorded in **§113**; `EVID-INTAKE-B-002` is complete and recorded in **§112**; `GOV-A-REV-002` is complete and recorded in **§111**; `OFFRAMP-GOV-002` is complete and recorded in **§110**; `OFFRAMP-GOV-001` is complete and recorded in **§108**; `HOPS-BRIDGE-001` is complete and recorded in **§109**; **§7** / **§7a** are restored to no-active-ticket posture. There is **no** approved next implementation ticket until **§7** is updated explicitly to name one.
+- **Last completed ticket (summary):** `EVID-INTAKE-B-003` — Bounded Class B Off-Ramp Single-Hypothesis Evidence Intake Authority Entry (documentation-only governance / intake authority envelope for `FRQ-OFFRAMP-001` — Kenya / KES same-name M-Pesa-primary withdrawal hypothesis); completed record in **§113**. `EVID-INTAKE-B-002` is complete and recorded in **§112**; `GOV-A-REV-002` is complete and recorded in **§111**; `OFFRAMP-GOV-002` is complete and recorded in **§110**; `OFFRAMP-GOV-001` is complete and recorded in **§108**; `HOPS-BRIDGE-001` is complete and recorded in **§109**.
+- **Post-`EVID-INTAKE-B-003` sequencing (governance-accepted):** `EVID-INTAKE-B-003` completed a governed single-hypothesis intake authority-entry artifact at `docs/ops/governance/offramp/HEDGR_CLASS_B_OFFRAMP_KENYA_KES_MPESA_INTAKE_AUTHORITY_ENTRY.md` for `FRQ-OFFRAMP-001` — Kenya / KES same-name M-Pesa-primary withdrawal hypothesis. It records what a subsequent bounded intake ticket may preserve, receive, and classify. It does **not** select Kenya as a launch market, select M-Pesa as an approved endpoint, select a provider, authorize evidence review, evidence acceptance, evidence rejection, evidence scoring, evidence evaluation, Evidence Registry modification, registry-state change, blocker closure, gap closure, provider outreach, market selection, endpoint selection, provider selection, jurisdiction selection, chain selection, stablecoin selection, ADR drafting readiness, implementation-preflight, implementation, staging, sandbox use, internal testing, live operations, custody, rails, stablecoin conversion, deposits, withdrawals, treasury operations, reconciliation operations, support operations, audit operations, Copilot execution, Class C automation, or customer-money activity. The valid next founder / HedgrOps question is whether to authorize a **subsequent** bounded evidence-intake ticket for this hypothesis; no such intake ticket is active unless separately named in **§7** / **§7a**.
 - **Post-`EVID-INTAKE-B-002` sequencing (governance-accepted):** `EVID-INTAKE-B-002` completed a bounded Market / Endpoint Source-Pointer Brief at `docs/ops/governance/offramp/HEDGR_CLASS_B_OFFRAMP_MARKET_ENDPOINT_EVIDENCE_BRIEF.md`. It preserved and classified source pointers only. It does **not** authorize evidence review, evidence acceptance, evidence rejection, evidence scoring, evidence evaluation, Evidence Registry modification, registry-state change, blocker closure, gap closure, provider outreach, market selection, endpoint selection, provider selection, jurisdiction selection, chain selection, ADR drafting readiness, implementation-preflight, implementation, staging, sandbox use, internal testing, live operations, custody, rails, stablecoin conversion, deposits, withdrawals, treasury operations, reconciliation operations, support operations, audit operations, Copilot execution, Class C automation, or customer-money activity.
 - **Post-`GOV-A-REV-002` sequencing (governance-accepted):** `GOV-A-REV-002` completed the Class B Evidence Intake Authorization Brief as a governed, non-authorizing artifact at `docs/ops/governance/class-b/HEDGR_CLASS_B_EVIDENCE_INTAKE_AUTHORIZATION_BRIEF.md`. It formalizes what a future bounded evidence-intake ticket may authorize, but it does **not** itself authorize evidence intake, evidence collection, evidence requests, evidence review, evidence acceptance, registry-state changes, provider outreach, market selection, provider selection, or customer-money activity.
 - **HOPS-BRIDGE-001 closeout note:** `HOPS-BRIDGE-001` closeout is recorded in **§109**. Operational verification, governance-envelope checks, and post-closeout operating rules remain in `apps/bridge-worker/VERIFICATION.md` as verification evidence only; that file does **not** create sequencing authority and must not be read as a substitute for **§7** / **§7a**.
@@ -3510,9 +3534,11 @@ Current active ticket status:
 
 ## 7a. Active execution ticket
 
-**Status:** **No active execution ticket.** **§7** does not currently name an approved next implementation ticket. The most recently completed ticket, `EVID-INTAKE-B-002` (Bounded Class B Off-Ramp Market / Endpoint Source-Pointer Brief), is recorded in **§112**. `GOV-A-REV-002` is recorded in **§111**. `OFFRAMP-GOV-002` is recorded in **§110**. `OFFRAMP-GOV-001` is recorded in **§108**. `HOPS-BRIDGE-001` is recorded in **§109**; operational verification evidence remains in `apps/bridge-worker/VERIFICATION.md`.
+**Status:** **No active execution ticket.** **§7** does not currently name an approved next implementation ticket. The most recently completed ticket, `EVID-INTAKE-B-003` (Bounded Class B Off-Ramp Single-Hypothesis Evidence Intake Authority Entry), is recorded in **§113**. `EVID-INTAKE-B-002` is recorded in **§112**. `GOV-A-REV-002` is recorded in **§111**. `OFFRAMP-GOV-002` is recorded in **§110**. `OFFRAMP-GOV-001` is recorded in **§108**. `HOPS-BRIDGE-001` is recorded in **§109**; operational verification evidence remains in `apps/bridge-worker/VERIFICATION.md`.
 
 When governance approves the next ticket, **§7** will name it and this section will hold the full execution brief until closeout.
+
+**Archived brief (EVID-INTAKE-B-003):** Bounded Class B Off-Ramp Single-Hypothesis Evidence Intake Authority Entry — **documentation-only governance / intake authority envelope**; scope held to `docs/ops/governance/offramp/HEDGR_CLASS_B_OFFRAMP_KENYA_KES_MPESA_INTAKE_AUTHORITY_ENTRY.md`, `docs/ops/HEDGR_STATUS.md`, and `docs/ops/NOTION_GOVERNANCE_STAGING.md`. Created the governed single-hypothesis intake authority-entry artifact for `FRQ-OFFRAMP-001` — Kenya / KES same-name M-Pesa-primary withdrawal hypothesis, recording what a subsequent bounded intake ticket may preserve, receive, and classify under Layer A of the Class B Evidence Intake Authorization Brief. **No** market selection, **no** endpoint selection, **no** provider selection, **no** evidence review, **no** evidence acceptance, **no** evidence rejection, **no** evidence scoring, **no** evidence evaluation, **no** sufficiency determination, **no** Evidence Registry modification, **no** registry-row movement, **no** evidence-state change, **no** blocker closure, **no** gap closure, **no** provider outreach, **no** external evidence request, **no** legal reliance, **no** jurisdiction selection, **no** chain selection, **no** stablecoin selection, **no** ADR drafting readiness, **no** implementation-preflight, **no** implementation, **no** staging, **no** sandbox use, **no** internal testing, **no** live operations, **no** customer-money movement, **no** `apps/`, **no** `packages/`, **no** `scripts/`, **no** `.github/`, **no** tests, **no** `apps/frontend/lib/engine/**`, **no** CI workflows, **no** Copilot runtime, and **no** ADR status changes. Completed record: **§113**.
 
 **Archived brief (EVID-INTAKE-B-002):** Bounded Class B Off-Ramp Market / Endpoint Source-Pointer Brief — **documentation-only governance / bounded market-endpoint source-pointer brief and intake-support**; scope held to `docs/ops/governance/offramp/HEDGR_CLASS_B_OFFRAMP_MARKET_ENDPOINT_EVIDENCE_BRIEF.md`, `docs/ops/HEDGR_STATUS.md`, and `docs/ops/NOTION_GOVERNANCE_STAGING.md`. Created the governed Market / Endpoint Source-Pointer Brief for the Class B off-ramp readiness lane, preserving and classifying source pointers from repo-native governance artifacts, canonical decision-support research, and already-cited public provider / payment-system / regulatory sources. Classified unordered candidate market / endpoint hypotheses by market / corridor, user class, endpoint type, source class, source date, confidentiality tier, and `preserved_source_pointer_only` intake state; classified provider / endpoint source-pointer classes; and recorded future review placeholders for governance visibility only. **No** evidence review, **no** evidence acceptance, **no** evidence rejection, **no** evidence scoring, **no** evidence evaluation, **no** sufficiency determination, **no** Evidence Registry modification, **no** registry-row movement, **no** evidence-state change, **no** blocker closure, **no** gap closure, **no** provider outreach, **no** external evidence request, **no** legal reliance, **no** market selection, **no** endpoint selection, **no** provider selection, **no** jurisdiction selection, **no** chain selection, **no** ADR drafting readiness, **no** implementation-preflight, **no** implementation, **no** staging, **no** sandbox use, **no** internal testing, **no** live operations, **no** customer-money movement, **no** `apps/`, **no** `packages/`, **no** `scripts/`, **no** `.github/`, **no** tests, **no** `apps/frontend/lib/engine/**`, **no** CI workflows, **no** Copilot runtime, and **no** ADR status changes. Completed record: **§112**.
 
@@ -6367,3 +6393,49 @@ This **§43** record was originally written in the same working-tree change-set 
 **§7** / **§7a** record completion per governance and are restored to no-active-ticket posture.
 
 **Follow-ups:** No successor implementation ticket is created by this bounded evidence brief. Any future provider-specific review, market review, endpoint review, evidence review, evidence acceptance, provider outreach, ADR drafting readiness, implementation-preflight, implementation, staging, sandbox use, internal testing, live operations, custody, rails, stablecoin conversion, deposits, withdrawals, treasury operations, reconciliation operations, support operations, audit operations, or customer-money activity appears only when repo governance names it explicitly in **§7** / **§7a**.
+
+---
+
+## 113. Completed execution ticket - EVID-INTAKE-B-003 (Bounded Class B Off-Ramp Single-Hypothesis Evidence Intake Authority Entry)
+
+**Ticket:** `EVID-INTAKE-B-003` — Bounded Class B Off-Ramp Single-Hypothesis Evidence Intake Authority Entry (documentation-only governance / intake authority envelope)
+
+**Status:** Completed  
+**Class posture:** Class B readiness support / non-execution  
+**Named hypothesis:** `FRQ-OFFRAMP-001` — Kenya / KES same-name M-Pesa-primary withdrawal hypothesis  
+**Authority posture:** Future preservation / receipt / classification envelope only  
+**Execution authority widened:** No  
+**Evidence review authorized:** No  
+**Evidence accepted:** No  
+**Evidence Registry state changed:** No  
+**Market selected:** No  
+**Endpoint selected:** No  
+**Provider selected:** No  
+**Provider outreach authorized:** No  
+**Legal reliance created:** No  
+**Implementation authorized:** No  
+**Customer-money activity authorized:** No
+
+**Objective.** Create a governed repo-native bounded evidence-intake authority entry for one off-ramp market / endpoint hypothesis — `FRQ-OFFRAMP-001` — Kenya / KES same-name M-Pesa-primary withdrawal, recording what a subsequent bounded intake ticket may preserve, receive, and classify, without authorizing evidence review, evidence acceptance, provider outreach, market selection, endpoint selection, provider selection, registry-state changes, implementation, or customer-money activity.
+
+### Outcome (documentation-only intake authority envelope)
+
+- **`docs/ops/governance/offramp/HEDGR_CLASS_B_OFFRAMP_KENYA_KES_MPESA_INTAKE_AUTHORITY_ENTRY.md`** — created the governed single-hypothesis intake authority-entry artifact with explicit status / authority / scope, named hypothesis table, future intake envelope, evidence boundaries, required red lines, successor question, and non-authorization statement.
+- **`docs/ops/HEDGR_STATUS.md`** — recorded `EVID-INTAKE-B-003` in §6 merged truth, added the ticket to the §7 completed list, updated the last-completed summary, archived the active brief, restored §7 / §7a to no-active-ticket posture, and added this completed-ticket record.
+- **`docs/ops/NOTION_GOVERNANCE_STAGING.md`** — downstream mirror reconciled to reflect `EVID-INTAKE-B-003` completion without creating Notion-led authority.
+
+**Governance guarantees held.** The artifact is documentation-only and non-authorizing. Kenya is an evidence-intake hypothesis frame only, not a launch-market decision. M-Pesa is a primary endpoint hypothesis only, not an approved endpoint. No provider, chain, stablecoin, jurisdiction, or customer-money activity is selected, approved, or authorized. The Class B Evidence Registry and evidence packages remain unchanged.
+
+**Scope discipline held.** **No** market selection, **no** endpoint selection, **no** provider selection, **no** provider ranking, **no** provider preference formation, **no** evidence review, **no** evidence acceptance, **no** evidence rejection, **no** evidence scoring, **no** evidence evaluation, **no** sufficiency determination, **no** Evidence Registry modification, **no** registry-row movement, **no** registry-state change, **no** evidence-state change, **no** blocker closure, **no** gap closure, **no** provider outreach, **no** external evidence request, **no** legal reliance, **no** commercial engagement, **no** vendor onboarding, **no** sandbox access, **no** jurisdiction selection, **no** chain selection, **no** stablecoin selection, **no** custody approval, **no** rail approval, **no** stablecoin conversion, **no** deposits, **no** withdrawals, **no** ADR drafting readiness, **no** implementation-preflight, **no** implementation, **no** staging, **no** internal testing, **no** live operations, **no** production activation, **no** `apps/`, **no** `packages/`, **no** `scripts/`, **no** `.github/`, **no** tests, **no** CI workflow changes, **no** backend, **no** frontend implementation, **no** product copy edits, **no** shipped route edits, **no** prototype route edits, **no** `apps/frontend/lib/engine/**`, **no** Copilot runtime, **no** ADR status change, **no** ledger truth, **no** accounting truth, **no** Class C automation, and **no** customer fund movement authority.
+
+### Resulting posture
+
+The valid next founder / HedgrOps question is whether to authorize a subsequent bounded evidence-intake ticket to preserve, receive, and classify evidence for the Kenya / KES same-name M-Pesa-primary withdrawal hypothesis.
+
+No such intake ticket is active unless separately named in **§7** and **§7a**.
+
+### Sequencing note
+
+**§7** / **§7a** record completion per governance and are restored to no-active-ticket posture.
+
+**Follow-ups:** No successor implementation ticket is created by this authority-entry artifact. Any future bounded evidence intake, evidence review, evidence acceptance, provider outreach, ADR drafting readiness, implementation-preflight, implementation, staging, sandbox use, internal testing, live operations, custody, rails, stablecoin conversion, deposits, withdrawals, treasury operations, reconciliation operations, support operations, audit operations, or customer-money activity appears only when repo governance names it explicitly in **§7** / **§7a**.
