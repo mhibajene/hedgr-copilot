@@ -77,6 +77,8 @@ This artifact uses only these source classes:
 
 No provider was contacted. No provider material was requested. No external source was newly refreshed by this ticket.
 
+Public source pointers preserved here may have changed since the repo research access date. URL availability, API coverage, jurisdictional availability, commercial terms, regulatory status, endpoint support, and provider positioning require future freshness review before reliance.
+
 ## 4. Source register
 
 | Source ID | Source pointer | Source class | Domain(s) | Date accessed / preserved | Classification | Notes |
@@ -101,6 +103,8 @@ No provider was contacted. No provider material was requested. No external sourc
 | `KSP-018` | Central Bank of Kenya / Kenya Treasury - Draft Virtual Asset Service Providers Regulations, 2026 | `public_source_pointer` | Kenya stablecoin, custody, reserve, disclosure, licensing questions | 2026-06-26 repo research access | `legal_review_required` | Draft-regulation pointer only; requires future legal review before reliance. |
 
 ## 5. Domain classification
+
+A single primary classification is assigned per domain for readability. Some domains may require multiple later controls, including provider confirmation, legal review, and operational evidence, before any future reliance.
 
 | Domain | Classification | Preserved source IDs | Gap / blocker | Confirmation needed | Notes |
 |---|---|---|---|---|---|
