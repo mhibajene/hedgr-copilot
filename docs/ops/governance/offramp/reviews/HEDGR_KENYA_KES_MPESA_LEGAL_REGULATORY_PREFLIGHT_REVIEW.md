@@ -55,6 +55,8 @@ The primary source basis is:
 
 Public legal / regulatory pointers referenced here are already-preserved pointers from `EVID-INTAKE-B-004` only, including `KSP-017` and `KSP-018`. They remain source pointers, not legal advice, evidence acceptance, or reliance material.
 
+Public legal / regulatory pointers may have changed since preservation. Any future counsel review must independently verify current law, regulatory guidance, source availability, and applicability before reliance.
+
 ## 3. Executive preflight synthesis
 
 The Kenya / KES / M-Pesa thesis stress-test raises legal and regulatory perimeter issues before any provider-specific evidence review, market comparison, endpoint approval, or implementation-preflight could be responsibly considered.
@@ -65,7 +67,7 @@ The second issue spotted is provider-of-record reliance. Public source pointers 
 
 The third issue spotted is MVP posture. If the only feasible Kenya / M-Pesa path requires Hedgr-managed MNO, bank, PSP, agent, or local liquidity prefunding, the hypothesis remains a likely no-go / defer signal under current governance.
 
-The most conservative governed next move after this preflight is to either no-go / defer the Kenya hypothesis, or authorize counsel engagement / formal legal opinion under a separate `§7` / `§7a` ticket before any provider-specific evidence review. Counsel engagement or formal legal opinion would require a separate `§7` / `§7a` ticket and would not itself authorize provider outreach, implementation, or customer-money activity.
+The most conservative governed next move after this preflight is to either no-go / defer the Kenya hypothesis, or authorize counsel engagement under a separate `§7` / `§7a` ticket before any provider-specific evidence review, with any formal legal opinion separately scoped. Counsel engagement would require a separate `§7` / `§7a` ticket. Any formal legal opinion, legal reliance, or jurisdictional conclusion-making must be separately scoped and would not itself authorize provider outreach, implementation, or customer-money activity.
 
 ## 4. Legal / regulatory perimeter map
 
@@ -229,7 +231,9 @@ Any future user-facing statement would need legal review, provider confirmation,
 
 ## 14. Counsel-needed questions
 
-Counsel review or formal legal opinion, if separately authorized, should address at least:
+The questions below are founder / HedgrOps issue-spotting prompts only. They are not a counsel instruction set, legal memo request, scope of engagement, or substitute for a separately authorized counsel brief.
+
+If separately authorized, counsel review may address the following issue-spotting prompts:
 
 1. What Kenya VASP / digital-asset, payment, remittance, mobile-money, stablecoin, custody, privacy, complaint, disclosure, and consumer-protection perimeter questions are raised by the same-name Kenya / KES / M-Pesa hypothesis?
 2. Can Hedgr maintain a non-custodial role claim if it presents a provider-of-record withdrawal path, shows status, collects user data, handles support, receives provider status, or participates in failed-payout / refund workflows?
@@ -240,7 +244,7 @@ Counsel review or formal legal opinion, if separately authorized, should address
 7. What statements would be unsafe in user-facing copy without provider confirmation and operational evidence?
 8. Would Hedgr-managed MNO, bank, PSP, agent, or local liquidity prefunding alter custody, payment, treasury, liquidity, or customer-money exposure under current MVP posture?
 
-Counsel engagement or formal legal opinion would require a separate `§7` / `§7a` ticket and would not itself authorize provider outreach, implementation, or customer-money activity.
+Counsel engagement would require a separate `§7` / `§7a` ticket. Any formal legal opinion, legal reliance, or jurisdictional conclusion-making must be separately scoped and would not itself authorize provider outreach, implementation, or customer-money activity.
 
 ## 15. No-go / defer legal signals
 
@@ -265,7 +269,7 @@ This preflight supports only these next-decision options:
 | Option | Decision-support meaning | Boundary |
 |---|---|---|
 | A. No-go / defer Kenya hypothesis. | Preserve the learning and stop advancing Kenya for now. | Does not select an alternative market. |
-| B. Authorize counsel engagement / formal legal opinion under a separate ticket. | Ask qualified counsel to review the mapped perimeter questions. | Requires separate `§7` / `§7a` authority and does not authorize provider outreach, implementation, or customer-money activity. |
+| B. Authorize counsel engagement under a separate ticket, which may include formal legal opinion only if separately scoped. | Ask qualified counsel to review the mapped perimeter questions. | Requires separate `§7` / `§7a` authority and does not authorize provider outreach, implementation, or customer-money activity. |
 | C. Authorize later provider-specific evidence review under a separate ticket. | Open a bounded provider-specific review only after legal perimeter and authority are clear. | Requires separate `§7` / `§7a` authority and still does not authorize outreach unless explicitly named. |
 | D. Authorize comparison against another market hypothesis, such as Philippines. | Compare issue profiles without selecting or ranking a market. | Requires separate authority and must remain non-ranking. |
 | E. Preserve additional public, repo-native, or founder-provided non-confidential source pointers under a new bounded ticket. | Add source pointers without review, acceptance, or reliance. | No external research or provider contact unless separately authorized. |
@@ -275,11 +279,11 @@ This preflight supports only these next-decision options:
 
 Recommended next governed move if founder / HedgrOps wants to continue the Kenya hypothesis:
 
-> B. Authorize counsel engagement / formal legal opinion under a separate `§7` / `§7a` ticket.
+> B. Authorize counsel engagement under a separate `§7` / `§7a` ticket, which may include formal legal opinion only if separately scoped.
 
 Rationale: the preflight identifies legal / regulatory perimeter questions that are upstream of provider-specific evidence review. A provider-specific review would be premature if Hedgr cannot first determine what counsel must evaluate, what facts are required, and which claims are unsafe without legal reliance.
 
-Counsel engagement or formal legal opinion would require a separate `§7` / `§7a` ticket and would not itself authorize provider outreach, implementation, or customer-money activity.
+Counsel engagement would require a separate `§7` / `§7a` ticket. Any formal legal opinion, legal reliance, or jurisdictional conclusion-making must be separately scoped and would not itself authorize provider outreach, implementation, or customer-money activity.
 
 Conservative alternative:
 
