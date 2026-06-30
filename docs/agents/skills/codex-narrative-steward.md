@@ -73,7 +73,7 @@ Use this skill when:
 - preserving concept evolution without flattening contradictions
 - comparing Hedgr Vault context against repo-native authority
 - preparing candidate narrative artifacts for Founder / HedgrOps review
-- detecting narrative drift, weak-evidence synthesis, concept laundering, or Obsidian-note-to-doctrine drift
+- detecting narrative drift, weak-evidence synthesis, concept laundering, or Hedgr Vault-note-to-doctrine drift
 
 Do NOT use this skill for:
 
@@ -152,8 +152,9 @@ Recurring language across the Hedgr Vault and repository may indicate a pattern,
 
 Bridge snapshots, Bridge responses, weekly reviews, MVP process reviews, and Codex review artifacts are Review Evidence only. They do not create execution authority, mutation authority, ticket activation authority, or sequencing authority.
 
-Authority order is Founder -> Repo Authority -> Project Ops -> Cursor -> Codex.
-
+Founder decisions enter execution only through repo-native authorization.
+Repo-native authority governs implementation truth, doctrine precedence, accepted ADRs, and active operating posture.
+Project Ops, Cursor, and Codex are subordinate operating/support surfaces. They must not become independent doctrine, sequencing, approval, or execution-authority layers.
 Repo-native authority always wins in conflicts.
 
 ---
