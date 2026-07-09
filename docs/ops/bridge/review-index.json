@@ -1,6 +1,6 @@
 {
   "artifact_type": "hedgrops_bridge_review_index_snapshot",
-  "generated_at": "2026-06-26T00:00:00.000Z",
+  "generated_at": "2026-07-03T00:00:00.000Z",
   "source_path": "docs/ops/reviews/README.md",
   "authority_posture": {
     "class": "A",
@@ -21,7 +21,7 @@
     "entries": [
       {
         "review_type": "weekly",
-        "source_path": "docs/ops/reviews/weekly/2026-06-26-weekly-review.md"
+        "source_path": "docs/ops/reviews/weekly/2026-07-03-weekly-review.md"
       },
       {
         "review_type": "mvp_process",
