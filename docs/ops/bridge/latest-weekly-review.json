@@ -1,7 +1,7 @@
 {
   "artifact_type": "hedgrops_bridge_latest_weekly_review_snapshot",
-  "generated_at": "2026-06-26T00:00:00.000Z",
-  "source_path": "docs/ops/reviews/weekly/2026-06-26-weekly-review.md",
+  "generated_at": "2026-07-03T00:00:00.000Z",
+  "source_path": "docs/ops/reviews/weekly/2026-07-03-weekly-review.md",
   "authority_posture": {
     "class": "A",
     "mode": "READ_ONLY",
