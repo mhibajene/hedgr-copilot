@@ -218,9 +218,20 @@ The Philippines / PHP comparator should no-go or defer in later governance if th
 This artifact supports only these next-decision options:
 
 A. Hold / keep Philippines as a comparator with no active successor.
-B. Authorize later Philippines legal / regulatory preflight.
+B. Consider a Philippines legal / regulatory preflight only after relevant public-source locators have been preserved and Founder / HedgrOps determine that the Philippines comparator demonstrates sufficient thesis relevance and sequencing value.
+
+Any legal review would require separate repo-native authorization and must not be inferred from this artifact.
+
 C. Authorize bounded provider-universe discovery, if separately authorized.
-D. Authorize a bounded Kenya-versus-Philippines readiness-friction comparison using referenced source IDs, subject to each source's recorded preservation status.
+D. Consider a bounded Kenya-versus-Philippines readiness-friction comparison using exact preserved external-source pointers only.
+
+Unresolved source candidates may identify evidence gaps and future research priorities but must not be used to support substantive friction conclusions.
+
+Any comparison remains non-authoritative and must preserve the distinction:
+
+- Kenya = thesis stress test.
+- Philippines = readiness benchmark.
+
 E. No-go / defer the Philippines comparator and continue the Kenya counsel path separately.
 
 These options are governance-neutral future choices only. They do not activate a successor ticket or imply that any option is preferred.
