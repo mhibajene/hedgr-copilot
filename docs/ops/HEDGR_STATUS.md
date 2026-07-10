@@ -3739,14 +3739,17 @@ Completed and merged:
 - `COUNSEL-B-001` - Kenya / KES M-Pesa counsel engagement packet draft (documentation-only founder-review packet preparation; completed record **§118**)
 - `PH-COMP-B-001` - Philippines / PHP readiness-benchmark comparison frame against Kenya thesis stress-test findings (documentation-only comparison-frame artifact; completed record **§119**)
 - `GOV-PARALLEL-001` - Governed parallelism translation and multi-lane activation (documentation-only governance / sequencing-model update; completed record **§120**; Internal Decision Log **D-026**; **§6e**)
+- `PH-COMP-B-002` - Philippines / PHP readiness-benchmark source-pointer preservation and classification (documentation-only evidence-intake tranche / source-pointer classification; completed record **§121**)
+- `BE-FOUND-001` - Execution-neutral backend domain-error taxonomy and request-correlation primitives (Class A backend foundation; completed record **§122**)
+- `FE-TRUST-001` - Synthetic transaction exception-state presentation contract (Class A informational frontend trust surface; completed record **§123**)
 
 Current active ticket status:
 
-- **Governed parallelism (Accepted; §6e / D-026; Founder-confirmed 2026-07-10):** Controlled parallel lanes are authorized **only** for the explicitly named tickets below. **Default remains one active implementation ticket**; concurrent lanes require Accepted Founder-approved **§6e** / **D-026** with unambiguous lane naming, authority class, exclusions, stop conditions, and rollback. Absence, ambiguity, pause, or deprecation restores the singular-ticket default. Parallel authorization does **not** authorize unrestricted multi-ticket execution. No lane may widen another lane’s authority without a separate Founder decision. No lane widens Class B execution, custody, rails, conversion, settlement, legal reliance, or customer-money authority. Convergence gate in **§6e** remains unsatisfied. Kenya counsel path remains separate and unchanged.
-- **Active Lane A (Class B governance):** **`PH-COMP-B-002`** - Philippines / PHP readiness-benchmark source-pointer preservation and classification (documentation-only evidence-intake tranche / source-pointer classification). Active brief in **§7a**.
-- **Active Lane B (backend foundation):** **`BE-FOUND-001`** - Execution-neutral backend domain-error taxonomy and request-correlation primitives (Class A / foundation; stub-preserving). Active brief in **§7a**.
-- **Active Lane C (frontend trust surfaces):** **`FE-TRUST-001`** - Synthetic transaction exception-state presentation contract (Class A informational / synthetic; visibly non-live). Active brief in **§7a**.
-- **Last completed ticket (summary):** `GOV-PARALLEL-001` - governed parallelism translation (**§120**). Prior: `PH-COMP-B-001` (**§119**); `COUNSEL-B-001` (**§118**); `COUNSEL-SCOPE-B-001` (**§117**); `LEGAL-PREFLIGHT-B-001` (**§116**); `HOPS-REVIEW-B-001` (**§115**); `EVID-INTAKE-B-004` (**§114**); `EVID-INTAKE-B-003` (**§113**); `EVID-INTAKE-B-002` (**§112**); `GOV-A-REV-002` (**§111**); `OFFRAMP-GOV-002` (**§110**); `OFFRAMP-GOV-001` (**§108**); `HOPS-BRIDGE-001` (**§109**).
+- **Governed parallelism (Accepted; §6e / D-026; Founder-confirmed 2026-07-10):** Controlled parallel lanes remain available **only** when §7 / §7a explicitly name active lane tickets under §6e. **Default remains one active implementation ticket** unless the §6e exception is active and unambiguous. Absence, ambiguity, pause, or deprecation restores the singular-ticket default. Parallel authorization does **not** authorize unrestricted multi-ticket execution. No lane may widen another lane’s authority without a separate Founder decision. No lane widens Class B execution, custody, rails, conversion, settlement, legal reliance, or customer-money authority. Convergence gate in **§6e** remains unsatisfied. Kenya counsel path remains separate and unchanged.
+- **Active Lane A (Class B governance):** None. `PH-COMP-B-002` completed as documentation-only source-pointer preservation and classification (**§121**).
+- **Active Lane B (backend foundation):** None. `BE-FOUND-001` completed as execution-neutral backend foundation (**§122**).
+- **Active Lane C (frontend trust surfaces):** None. `FE-TRUST-001` completed as synthetic / non-live frontend trust-surface presentation contract (**§123**).
+- **Last completed ticket (summary):** `FE-TRUST-001` - synthetic transaction exception-state presentation contract (**§123**). Same closeout batch: `BE-FOUND-001` (**§122**) and `PH-COMP-B-002` (**§121**). Prior: `GOV-PARALLEL-001` (**§120**); `PH-COMP-B-001` (**§119**); `COUNSEL-B-001` (**§118**); `COUNSEL-SCOPE-B-001` (**§117**); `LEGAL-PREFLIGHT-B-001` (**§116**); `HOPS-REVIEW-B-001` (**§115**); `EVID-INTAKE-B-004` (**§114**); `EVID-INTAKE-B-003` (**§113**); `EVID-INTAKE-B-002` (**§112**); `GOV-A-REV-002` (**§111**); `OFFRAMP-GOV-002` (**§110**); `OFFRAMP-GOV-001` (**§108**); `HOPS-BRIDGE-001` (**§109**).
 - **Post-`GOV-PARALLEL-001` sequencing (governance-accepted):** `GOV-PARALLEL-001` recorded founder-approved controlled parallelism in **§6e**, updated singular-ticket sequencing to at-most-one-active-ticket-per-authorized-lane, activated `BE-FOUND-001` and `FE-TRUST-001` beside continuing `PH-COMP-B-002`, and defined the Class B execution convergence gate. It does **not** authorize Class B execution, provider selection, market selection, endpoint / rail / chain / stablecoin approval, custody, conversion, settlement, legal reliance, customer-money movement, or connection of engineering lanes to live financial activity.
 - **Post-`PH-COMP-B-001` sequencing (governance-accepted):** `PH-COMP-B-001` completed a bounded comparison-frame artifact at `docs/ops/governance/offramp/comparisons/HEDGR_PHILIPPINES_PHP_OFFRAMP_READINESS_COMPARISON_FRAME.md`, preserving Kenya as thesis stress test and Philippines as readiness benchmark. It defines comparison criteria, future permitted source classes, source-pointer candidates for later review, Philippines friction hypotheses, open factual dependencies, future comparison output shape, founder / HedgrOps decision options, and a recommended successor path without preserving, refreshing, classifying, reviewing, accepting, rejecting, scoring, or assessing any Philippine source evidence during that ticket. It creates no PHSP-* source IDs in the comparison-frame artifact and does **not** authorize legal reliance, legal advice, formal legal opinion, jurisdictional conclusion-making, provider outreach, provider-specific review, commercial engagement, market selection, endpoint approval, endpoint selection, provider selection, chain selection, stablecoin selection, ADR drafting readiness, implementation-preflight, implementation, staging, sandbox use, API keys, testing, live operations, custody, deposits, withdrawals, fiat payout, treasury operations, reconciliation operations, support operations, complaint handling, incident handling, audit operations, Class B execution, or customer-money activity. The Kenya counsel path is not paused, superseded, or replaced. **`PH-COMP-B-002`** is now the separately named **§7** / **§7a** successor for source-pointer preservation and classification only.
 - **Post-`COUNSEL-B-001` sequencing (governance-accepted):** `COUNSEL-B-001` completed a bounded counsel engagement packet draft at `docs/ops/governance/offramp/legal/HEDGR_KENYA_KES_MPESA_COUNSEL_ENGAGEMENT_PACKET_DRAFT.md`, grounded in the completed `COUNSEL-SCOPE-B-001` brief, `LEGAL-PREFLIGHT-B-001` review, and existing repo-native off-ramp artifacts. It organizes the Kenya / KES / M-Pesa thesis stress-test perimeter into founder-reviewable counsel packet form: bounded hypothesis, included materials, issue-spotting assumptions, non-assumptions, open factual dependencies, draft counsel questions, provider fact dependencies, requested output types, reliance / non-reliance boundaries, founder review checklist, possible post-counsel decision options, and non-authorization statement. It does **not** authorize sending materials to counsel, counsel engagement, legal advice, formal legal opinion, legal reliance, jurisdictional conclusion-making, legal sign-off, provider outreach, provider-specific review, commercial engagement, evidence review, evidence acceptance, evidence rejection, evidence scoring, Evidence Registry modification, registry-state change, blocker closure, gap closure, market selection, endpoint approval, endpoint selection, provider selection, provider ranking, provider preference formation, chain selection, stablecoin selection, ADR drafting readiness, implementation-preflight, implementation, staging, sandbox use, API keys, internal testing, live operations, custody, rails, stablecoin conversion, deposits, withdrawals, fiat payout, treasury operations, liquidity buffer operations, reconciliation operations, support operations, complaint handling, incident handling, audit operations, Class B execution, or customer-money activity. No follow-up ticket is active unless separately named in **§7** / **§7a**.
@@ -3781,13 +3784,17 @@ Current active ticket status:
 
 ## 7a. Active execution tickets (governed parallel lanes)
 
-Under **§6e** (Accepted **D-026** only), **§7a** holds one bounded brief per active lane. Lanes may progress independently only inside their briefs. No brief widens Class B execution authority. No lane may widen another lane’s authority. If **§6e** / **D-026** is absent, ambiguous, paused, or deprecated, restore the singular-ticket default and ignore multi-lane briefs.
+No active execution ticket is currently named in any governed lane.
+
+Under **§6e** (Accepted **D-026** only), **§7a** holds one bounded brief per active lane when a lane is named. Lanes may progress independently only inside their briefs. No brief widens Class B execution authority. No lane may widen another lane’s authority. If **§6e** / **D-026** is absent, ambiguous, paused, or deprecated, restore the singular-ticket default and ignore multi-lane briefs.
+
+The `PH-COMP-B-002`, `BE-FOUND-001`, and `FE-TRUST-001` briefs below are retained as archived closeout context only. Completed records live in **§121**, **§122**, and **§123**.
 
 ---
 
-### Lane A — Class B governance — `PH-COMP-B-002`
+### Archived brief — Lane A — Class B governance — `PH-COMP-B-002`
 
-**Active execution ticket:** **`PH-COMP-B-002`** - Philippines / PHP readiness-benchmark source-pointer preservation and classification.
+**Completed execution ticket:** **`PH-COMP-B-002`** - Philippines / PHP readiness-benchmark source-pointer preservation and classification.
 
 **Objective:** Create a bounded documentation-only source-pointer preservation and classification artifact for the Philippines / PHP readiness-benchmark comparator, preserving and classifying already-available public, repo-native, and founder-provided non-confidential source pointers only — parallel in posture to Kenya `EVID-INTAKE-B-004`, without evidence acceptance, market selection, or Class B execution authority.
 
@@ -3834,9 +3841,9 @@ Under **§6e** (Accepted **D-026** only), **§7a** holds one bounded brief per a
 
 ---
 
-### Lane B — Execution-neutral backend foundation — `BE-FOUND-001`
+### Archived brief — Lane B — Execution-neutral backend foundation — `BE-FOUND-001`
 
-**Active execution ticket:** **`BE-FOUND-001`** - Execution-neutral backend domain-error taxonomy and request-correlation primitives.
+**Completed execution ticket:** **`BE-FOUND-001`** - Execution-neutral backend domain-error taxonomy and request-correlation primitives.
 
 **Objective:** Implement the smallest coherent backend foundation slice that improves readiness without creating a financial execution path: a shared domain error taxonomy and request-correlation primitives on the existing Flask stub boundary, preserving deny-by-default and `STUB_MODE` posture.
 
@@ -3895,9 +3902,9 @@ Under **§6e** (Accepted **D-026** only), **§7a** holds one bounded brief per a
 
 ---
 
-### Lane C — Class A frontend / trust surfaces — `FE-TRUST-001`
+### Archived brief — Lane C — Class A frontend / trust surfaces — `FE-TRUST-001`
 
-**Active execution ticket:** **`FE-TRUST-001`** - Synthetic transaction exception-state presentation contract.
+**Completed execution ticket:** **`FE-TRUST-001`** - Synthetic transaction exception-state presentation contract.
 
 **Objective:** Implement the smallest coherent Class A frontend trust-surface slice that improves system truthfulness without exposing live financial execution: a reusable synthetic exception-state presentation contract (pending / blocked / failed / cancelled / unavailable / manual-review) with visibly synthetic fixtures and calm institutional presentation.
 
@@ -7252,3 +7259,96 @@ Completion of Lane B or Lane C does **not** satisfy the convergence gate. Archit
 **§7** / **§7a** now hold three active lane briefs under Accepted **§6e** / **D-026**. Rollback of the operating decision requires a new Decision Log row and restoration of prior singular **§7** posture; do not silently delete **§6e** / **D-026**. Absence, ambiguity, pause, or deprecation restores the singular-ticket default per `AGENTS.md`.
 
 **Follow-ups:** Implement `BE-FOUND-001` and `FE-TRUST-001` only inside their briefs. Continue `PH-COMP-B-002` without widening Class B execution. Kenya counsel path remains separate and unchanged. Any live Class B connection requires separate repo-native authority widening and convergence-gate satisfaction.
+
+---
+
+## 121. Completed execution ticket - PH-COMP-B-002 (Philippines / PHP Source-Pointer Classification)
+
+**Ticket:** `PH-COMP-B-002` - Philippines / PHP readiness-benchmark source-pointer preservation and classification
+
+**Status:** Completed
+**Class posture:** Class B governance lane; documentation-only; non-execution
+**Authority posture:** Source-pointer preservation and classification only
+**Evidence accepted:** No
+**Legal reliance created:** No
+**Provider selected or contacted:** No
+**Market selected:** No
+**Endpoint approved or selected:** No
+**Class B execution authorized:** No
+**Customer-money activity authorized:** No
+**Convergence gate satisfied:** No
+
+**Objective.** Create a bounded documentation-only source-pointer preservation and classification artifact for the Philippines / PHP readiness-benchmark comparator, grounded in the completed `PH-COMP-B-001` comparison frame and preserving Kenya as thesis stress test / Philippines as readiness benchmark.
+
+### Outcome
+
+- **`docs/ops/governance/offramp/HEDGR_CLASS_B_OFFRAMP_PHILIPPINES_PHP_SOURCE_POINTER_CLASSIFICATION.md`** - created the governed source-pointer classification artifact with `PHSP-*` IDs, source-class classification, provider-confirmation / legal-review / operational-evidence-needed maps, Trust UX risk notes, cash-pickup fallback / inclusion notes, no-go / defer signals, founder / HedgrOps next-decision options, and explicit non-authorization language.
+- **`docs/ops/HEDGR_STATUS.md`** - recorded completion in **§7**, restored Lane A to idle, archived the Lane A brief in **§7a**, and added this completed-ticket record.
+- **`docs/ops/NOTION_GOVERNANCE_STAGING.md`** - reconciled manual-copy truth for the completed active-lane set without creating Notion-led authority.
+
+**Governance guarantees held.** Documentation-only and non-executing. No public-source refresh, no evidence review, no evidence acceptance, no Evidence Registry state movement, no blocker closure, no legal reliance, no provider outreach, no provider-specific review, no commercial engagement, no market selection, no endpoint approval, no provider selection, no implementation-preflight, no implementation, no Class B execution, and no customer-money activity. Kenya counsel path remains separate and unchanged.
+
+**Resulting posture.** Lane A is idle. Any Philippines legal / regulatory preflight, provider-specific review, market comparison, provider outreach, implementation-preflight, implementation, staging, sandbox use, testing, live operations, custody, rails, stablecoin conversion, deposits, withdrawals, fiat payout, treasury operations, reconciliation operations, support operations, audit operations, Class B execution, or customer-money activity requires a future **§7** / **§7a** ticket and, where applicable, **§6e** convergence-gate satisfaction.
+
+---
+
+## 122. Completed execution ticket - BE-FOUND-001 (Execution-Neutral Backend Foundation)
+
+**Ticket:** `BE-FOUND-001` - Execution-neutral backend domain-error taxonomy and request-correlation primitives
+
+**Status:** Completed
+**Class posture:** Class A backend foundation; execution-neutral; provider-independent
+**Provider selected or contacted:** No
+**Market selected:** No
+**Endpoint approved or selected:** No
+**Live provider SDKs introduced:** No
+**Deposits / withdrawals enabled beyond existing stub posture:** No
+**Class B execution authorized:** No
+**Customer-money activity authorized:** No
+**Convergence gate satisfied:** No
+
+**Objective.** Implement the smallest coherent backend foundation slice that improves readiness without creating a financial execution path: shared domain errors and request correlation on the existing Flask stub boundary, preserving deny-by-default and `STUB_MODE` posture.
+
+### Outcome
+
+- **`apps/backend/src/lib/errors.py`** - added a provider-independent `DomainErrorCode` taxonomy and structured error envelopes that can include `error.correlation_id`.
+- **`apps/backend/src/lib/correlation.py`** - added request-correlation helpers and Flask hooks for `X-Request-ID` / generated correlation ids.
+- **`apps/backend/src/app.py`**, **`apps/backend/src/lib/validation.py`**, **`apps/backend/src/routes/fx.py`**, and **`apps/backend/src/routes/tx.py`** - wired correlation and shared domain error codes while preserving existing stub-deny behaviour.
+- **`apps/backend/tests/test_domain_errors_and_correlation.py`** - added deterministic offline tests for correlation normalization, domain error envelopes, and route error correlation.
+- **`apps/backend/README.md`** - documented stub-first execution posture and the new primitives.
+- **`docs/ops/HEDGR_STATUS.md`** - recorded completion in **§7**, restored Lane B to idle, archived the Lane B brief in **§7a**, and added this completed-ticket record.
+
+**Governance guarantees held.** No provider SDKs, provider-specific adapters, live webhooks, custody integration, wallet execution, chain transactions, stablecoin conversion, treasury workers, payout orchestration, real-money reconciliation, production financial-provider credentials, automated compliance decisions, live deposits, live withdrawals, production settlement logic, accounting claims, Class B execution, Class C automation, or customer-money movement. Existing deny-by-default live paths remain denied.
+
+**Resulting posture.** Lane B is idle. Completion of this foundation slice does **not** satisfy the **§6e** convergence gate. Architecture readiness is not execution readiness.
+
+---
+
+## 123. Completed execution ticket - FE-TRUST-001 (Synthetic Transaction Exception-State Presentation Contract)
+
+**Ticket:** `FE-TRUST-001` - Synthetic transaction exception-state presentation contract
+
+**Status:** Completed
+**Class posture:** Class A frontend trust surface; informational / synthetic; non-executing
+**Provider selected or branded:** No
+**Market selected:** No
+**Endpoint / rail / chain / stablecoin selected:** No
+**Live deposit or withdrawal action enabled:** No
+**Backend live coupling introduced:** No
+**Class B execution authorized:** No
+**Customer-money activity authorized:** No
+**Convergence gate satisfied:** No
+
+**Objective.** Implement a reusable synthetic exception-state presentation contract for pending, blocked, failed, cancelled, unavailable, and manual-review states with visibly synthetic fixtures and calm institutional presentation.
+
+### Outcome
+
+- **`apps/frontend/lib/tx/synthetic-exception-state.ts`** - added the reusable synthetic exception-state contract, copy, fallback behaviour for unknown states, explicit non-live labelling, and non-executing presentation metadata.
+- **`apps/frontend/components/SyntheticTxExceptionNotice.tsx`** - added a reusable notice component with visible synthetic / non-live labelling and a disabled non-executing primary action.
+- **`apps/frontend/__tests__/synthetic-tx-exception-state.test.tsx`** - added Vitest guardrails for complete state coverage, non-live labelling, no success fallback for unknown states, low-risk copy, and disabled action behaviour.
+- **`apps/frontend/lib/tx/index.ts`** and **`apps/frontend/components/index.ts`** - exported the contract and component through existing local module surfaces.
+- **`docs/ops/HEDGR_STATUS.md`** - recorded completion in **§7**, restored Lane C to idle, archived the Lane C brief in **§7a**, and added this completed-ticket record.
+
+**Governance guarantees held.** No enabled live withdrawal or deposit actions, provider branding, live provider availability, live fees, live FX, live limits, real payout timing, instant / guaranteed payout claims, endpoint / regulatory / chain / stablecoin selection, real-money receipts, executable transaction controls, production route activation, misleading success states, backend live coupling, Copilot directive/runtime binding, Stability Engine posture widening, Class B execution, or customer-money activity.
+
+**Resulting posture.** Lane C is idle. Completion of this trust-surface contract does **not** satisfy the **§6e** convergence gate. UI completeness is not product availability.

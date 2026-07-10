@@ -3,7 +3,7 @@ import uuid
 import time
 from flask import Blueprint, jsonify, request
 
-from ..lib.errors import error_response
+from ..lib.errors import DomainErrorCode, error_response
 from ..lib.validation import require_json_fields
 from ..lib.store import get_by_ref, put
 
@@ -28,7 +28,9 @@ def _idempotent_create(kind: str, txn_ref: str):
 @bp.post("/deposits")
 def deposits():
     if os.environ.get("STUB_MODE", "true").lower() != "true":
-        return error_response("not_implemented", "live deposits not enabled", 501)
+        return error_response(
+            DomainErrorCode.NOT_IMPLEMENTED, "live deposits not enabled", 501
+        )
 
     payload = request.get_json(silent=True) or {}
     err = require_json_fields(payload, ["txn_ref"])
@@ -43,7 +45,9 @@ def deposits():
 @bp.post("/withdrawals")
 def withdrawals():
     if os.environ.get("STUB_MODE", "true").lower() != "true":
-        return error_response("not_implemented", "live withdrawals not enabled", 501)
+        return error_response(
+            DomainErrorCode.NOT_IMPLEMENTED, "live withdrawals not enabled", 501
+        )
 
     payload = request.get_json(silent=True) or {}
     err = require_json_fields(payload, ["txn_ref"])
