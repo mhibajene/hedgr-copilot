@@ -1,7 +1,8 @@
 # HEDGR - Class B Off-Ramp Philippines / PHP Readiness-Benchmark Source-Pointer Classification
 
 **Document status:** Governed repo-native source-pointer classification artifact / documentation-only
-**Ticket:** `PH-COMP-B-002`
+**Original ticket:** `PH-COMP-B-002`
+**Hardening ticket:** `PH-COMP-B-002-H1`
 **Hypothesis:** Philippines / PHP same-name withdrawal readiness-benchmark comparator
 **Authority posture:** Source-pointer preservation and classification only
 **Evidence review authority:** None
@@ -19,62 +20,86 @@
 
 ## 1. Status / Authority / Scope
 
-This artifact preserves and classifies source pointers for the Philippines / PHP readiness-benchmark comparator named by `PH-COMP-B-002`.
+This artifact classifies repo-native authority references, scope provenance, exact preserved source pointers, and unresolved public-source candidates for the Philippines / PHP readiness-benchmark comparator named by `PH-COMP-B-002`.
 
 It is grounded in the completed comparison frame:
 
 - `docs/ops/governance/offramp/comparisons/HEDGR_PHILIPPINES_PHP_OFFRAMP_READINESS_COMPARISON_FRAME.md`
 
-It preserves pointer candidates already named by repo-native governance. It does not refresh public sources, verify currentness, review evidence quality, accept evidence, score evidence, close gaps, move Evidence Registry state, or create source reliance.
+It records candidate descriptions already named by repo-native governance. Recording a candidate description does not preserve the external source itself. This artifact does not refresh public sources, verify currentness, review evidence quality, accept evidence, score evidence, close gaps, move Evidence Registry state, or create source reliance.
 
 Strategic distinction preserved:
 
 Kenya = thesis stress test.
 Philippines = readiness benchmark.
 
+A cleaner market is not automatically a better Hedgr market.
+
 The Philippines comparator is not selected, approved, provider-ready, endpoint-ready, legally available, operationally available, implementation-ready, or Class B-ready.
+
+Standing non-reliance statement: Source-pointer preservation does not imply correctness, completeness, accuracy, sufficiency, operational applicability, legal effect, legal reliance, provider suitability, implementation readiness, or future acceptance.
 
 ## 2. Permitted Source Classes
 
 | Source class | Meaning | Boundary |
 |---|---|---|
 | `repo_governance` | Repo-native doctrine, status, governance, comparison, or off-ramp artifacts. | Authority depends on the cited artifact; this artifact does not widen it. |
-| `public_source_pointer` | Public regulator, payment-system, e-wallet / bank, or provider-documentation pointer already named as a candidate by `PH-COMP-B-001`. | Pointer only; not currentness verification, legal reliance, endpoint approval, provider permission, commercial terms, or operational evidence. |
 | `founder_provided_non_confidential` | Founder / HedgrOps non-confidential ticket framing. | Ticket framing only; not evidence review or approval. |
+| `public_source_candidate` | Public regulator, payment-system, e-wallet / bank, or provider-documentation source class or partial reference already named by `PH-COMP-B-001`, without an exact preserved public locator. | Candidate only; not an external source pointer, evidence, currentness verification, legal reliance, endpoint approval, provider permission, commercial terms, or operational evidence. |
+| `public_source_pointer` | Exact public document and issuing authority with an exact URL / locator or exact publication reference preserved under separately authorized source-pointer work. | Preservation only; not correctness, completeness, currentness, reliance, applicability, or acceptance. |
+
+### Pointer Roles
+
+| Pointer role | Purpose |
+|---|---|
+| `authority_reference` | Repo authority. |
+| `scope_provenance` | Founder / HedgrOps framing. |
+| `external_source_candidate` | Candidate public source without an exact preserved locator. |
+| `external_source_pointer` | Exact preserved public source. |
+
+No external entry in this register currently qualifies as `external_source_pointer` or `source_preserved`. `PHSP-007` records a partial publication reference only; all other external entries record candidate source classes or descriptions only.
+
+### External Source-Type Boundaries
+
+Public provider documentation is not equivalent to provider capability, provider support, provider approval, provider willingness, provider availability, or provider-of-record status.
+
+Public payment-system documentation does not establish applicability to Hedgr, same-name support, endpoint availability, settlement applicability, or operational compatibility.
+
+Regulatory material identifies legal context. It does not establish Hedgr eligibility, provider permission, licensing outcome, operational availability, or implementation authority.
 
 No provider was contacted. No public source was refreshed. No external source was newly researched. No counsel material was sent or prepared for sending.
 
 ## 3. Source Register
 
-| Source ID | Source pointer | Source class | Domain(s) | Date preserved | Classification | Notes |
-|---|---|---|---|---|---|---|
-| `PHSP-001` | `docs/ops/HEDGR_STATUS.md` §6e / §7 / §7a and completed records §119 / §120 | `repo_governance` | authority basis; active-ticket boundary; governed parallelism | 2026-07-10 | `source_preserved` | Records `PH-COMP-B-002` authority and the D-026 parallel-lane boundary. |
-| `PHSP-002` | `docs/ops/governance/offramp/comparisons/HEDGR_PHILIPPINES_PHP_OFFRAMP_READINESS_COMPARISON_FRAME.md` | `repo_governance` | Philippines comparator frame; permitted source classes; source-pointer candidates | 2026-07-10 | `source_preserved` | Governs this artifact's source classes and non-authorization boundary. |
-| `PHSP-003` | `docs/ops/governance/offramp/HEDGR_OFFRAMP_GOVERNANCE_FRAMEWORK.md` | `repo_governance` | off-ramp governance; Class B non-execution posture | 2026-07-10 | `source_preserved` | Keeps this artifact subordinate to Class B governance and evidence controls. |
-| `PHSP-004` | `docs/ops/governance/offramp/HEDGR_OFFRAMP_EVIDENCE_MATRIX_PREP_DRAFT.md` | `repo_governance` | evidence domains; same-name withdrawal; blocker categories; trust UX | 2026-07-10 | `public_framing_only` | Preparation draft only; not evidence acceptance or blocker closure. |
-| `PHSP-005` | Founder / HedgrOps ticket framing for `PH-COMP-B-002` | `founder_provided_non_confidential` | ticket scope; source-pointer preservation/classification boundary | 2026-07-10 | `source_preserved` | Defines allowed output and prohibited actions. |
-| `PHSP-006` | Bangko Sentral ng Pilipinas VASP directory | `public_source_pointer` | VASP / regulated-provider visibility | 2026-07-10 pointer preserved from `PH-COMP-B-001`; not refreshed | `legal_review_required` | Pointer only; no provider is selected, ranked, preferred, or approved. |
-| `PHSP-007` | BSP Circular No. 1108 VASP framework | `public_source_pointer` | digital asset / VASP legal perimeter | 2026-07-10 pointer preserved from `PH-COMP-B-001`; not refreshed | `legal_review_required` | Legal-review pointer only; no legal reliance or jurisdictional conclusion. |
-| `PHSP-008` | BSP National Retail Payment System material | `public_source_pointer` | retail-payment-system visibility; transfer-rail questions | 2026-07-10 pointer preserved from `PH-COMP-B-001`; not refreshed | `legal_review_required` | Payment-system pointer only; not rail approval or operational proof. |
-| `PHSP-009` | BSP PhilPaSSplus / Peso RTGS material | `public_source_pointer` | payment-system context; settlement and finality questions | 2026-07-10 pointer preserved from `PH-COMP-B-001`; not refreshed | `operational_evidence_required` | Pointer only; not settlement truth for a Hedgr payout path. |
-| `PHSP-010` | BSP guidance on BSFI dealings with VASPs / CASPs | `public_source_pointer` | bank / VASP relationship perimeter; legal and compliance questions | 2026-07-10 pointer preserved from `PH-COMP-B-001`; not refreshed | `legal_review_required` | Pointer only; not bank support, legal reliance, or operational availability. |
-| `PHSP-011` | Public materials on InstaPay and PESONet | `public_source_pointer` | PHP transfer-rail visibility; endpoint / finality questions | 2026-07-10 pointer preserved from `PH-COMP-B-001`; not refreshed | `operational_evidence_required` | Pointer only; not same-name payout approval or endpoint support. |
-| `PHSP-012` | Public e-wallet / bank endpoint material | `public_source_pointer` | endpoint-class visibility; personal / business account questions | 2026-07-10 pointer preserved from `PH-COMP-B-001`; not refreshed | `provider_confirmation_required` | Endpoint-class pointer only; no endpoint or provider is approved. |
-| `PHSP-013` | Public provider documentation relevant to PHP same-name payout, if already public | `public_source_pointer` | provider-of-record, quote, status, refund, support, reconciliation | 2026-07-10 pointer preserved from `PH-COMP-B-001`; not refreshed | `provider_confirmation_required` | Candidate class only; exact provider documents require future authorized review. |
+| Source ID | Source pointer / reference | Source class | Pointer role | Domain(s) | Preservation status | Classification | Preservation completeness | Currentness | Contradiction review | Notes |
+|---|---|---|---|---|---|---|---|---|---|---|
+| `PHSP-001` | `docs/ops/HEDGR_STATUS.md` §6e / §7 / §7a and completed record §121 | `repo_governance` | `authority_reference` | authority basis; active-ticket boundary; governed parallelism | Repo locator preserved 2026-07-10 | `source_preserved` | Exact locator preserved | Not assessed | Not performed | Repo authority reference only. Records the bounded `PH-COMP-B-002` authority and completed posture without reopening the ticket or widening D-026. |
+| `PHSP-002` | `docs/ops/governance/offramp/comparisons/HEDGR_PHILIPPINES_PHP_OFFRAMP_READINESS_COMPARISON_FRAME.md` | `repo_governance` | `authority_reference` | Philippines comparator frame; permitted source classes; source-pointer candidates | Repo locator preserved 2026-07-10 | `source_preserved` | Exact locator preserved | Not assessed | Not performed | Repo authority reference only. Governs this artifact's source classes and non-authorization boundary. |
+| `PHSP-003` | `docs/ops/governance/offramp/HEDGR_OFFRAMP_GOVERNANCE_FRAMEWORK.md` | `repo_governance` | `authority_reference` | off-ramp governance; Class B non-execution posture | Repo locator preserved 2026-07-10 | `source_preserved` | Exact locator preserved | Not assessed | Not performed | Repo authority reference only. Keeps this artifact subordinate to Class B governance and evidence controls. |
+| `PHSP-004` | `docs/ops/governance/offramp/HEDGR_OFFRAMP_EVIDENCE_MATRIX_PREP_DRAFT.md` | `repo_governance` | `authority_reference` | evidence domains; same-name withdrawal; blocker categories; trust UX | Repo locator preserved 2026-07-10 | `public_framing_only` | Exact locator preserved | Not assessed | Not performed | Repo reference to a subordinate preparation draft only; not evidence acceptance, blocker closure, or independent authority. |
+| `PHSP-005` | Founder / HedgrOps ticket framing for `PH-COMP-B-002` | `founder_provided_non_confidential` | `scope_provenance` | ticket scope; source-pointer preservation/classification boundary | Scope provenance recorded 2026-07-10 | `scope_provenance_recorded` | Partial reference only | Not assessed | Not performed | Founder / HedgrOps framing only. Defines allowed output and prohibited actions; it is not external evidence or a public-source pointer. |
+| `PHSP-006` | Bangko Sentral ng Pilipinas VASP directory | `public_source_candidate` | `external_source_candidate` | VASP / regulated-provider visibility | Candidate only; exact external locator not preserved | `candidate_pointer_unresolved` | Candidate only | Unknown | Not performed | Candidate only. Exact locator not yet preserved. Currentness unknown. Contradiction review not performed. No reliance. No provider is selected, ranked, preferred, or approved. |
+| `PHSP-007` | BSP Circular No. 1108 VASP framework | `public_source_candidate` | `external_source_candidate` | digital asset / VASP legal perimeter | Candidate only; circular number recorded, but exact external locator not preserved | `candidate_pointer_unresolved` | Partial reference only | Unknown | Not performed | Candidate only. Exact locator not yet preserved. Currentness unknown. Contradiction review not performed. No reliance. The circular number is a partial publication reference only and creates no legal conclusion. |
+| `PHSP-008` | BSP National Retail Payment System material | `public_source_candidate` | `external_source_candidate` | retail-payment-system visibility; transfer-rail questions | Candidate only; exact external locator not preserved | `candidate_pointer_unresolved` | Candidate only | Unknown | Not performed | Candidate only. Exact locator not yet preserved. Currentness unknown. Contradiction review not performed. No reliance. Payment-system material is not rail approval or operational proof. |
+| `PHSP-009` | BSP PhilPaSSplus / Peso RTGS material | `public_source_candidate` | `external_source_candidate` | payment-system context; settlement and finality questions | Candidate only; exact external locator not preserved | `candidate_pointer_unresolved` | Candidate only | Unknown | Not performed | Candidate only. Exact locator not yet preserved. Currentness unknown. Contradiction review not performed. No reliance. It does not establish settlement truth for a Hedgr payout path. |
+| `PHSP-010` | BSP guidance on BSFI dealings with VASPs / CASPs | `public_source_candidate` | `external_source_candidate` | bank / VASP relationship perimeter; legal and compliance questions | Candidate only; exact external locator not preserved | `candidate_pointer_unresolved` | Candidate only | Unknown | Not performed | Candidate only. Exact locator not yet preserved. Currentness unknown. Contradiction review not performed. No reliance. It does not establish bank support, legal effect, or operational availability. |
+| `PHSP-011` | Public materials on InstaPay and PESONet | `public_source_candidate` | `external_source_candidate` | PHP transfer-rail visibility; endpoint / finality questions | Candidate only; exact external locator not preserved | `candidate_pointer_unresolved` | Candidate only | Unknown | Not performed | Candidate only. Exact locator not yet preserved. Currentness unknown. Contradiction review not performed. No reliance. It does not establish same-name payout approval or endpoint support. |
+| `PHSP-012` | Public e-wallet / bank endpoint material | `public_source_candidate` | `external_source_candidate` | endpoint-class visibility; personal / business account questions | Candidate only; exact external locator not preserved | `candidate_pointer_unresolved` | Candidate only | Unknown | Not performed | Candidate only. Exact locator not yet preserved. Currentness unknown. Contradiction review not performed. No reliance. No endpoint or provider is identified or approved. |
+| `PHSP-013` | Public provider documentation relevant to PHP same-name payout, if already public | `public_source_candidate` | `external_source_candidate` | provider-of-record, quote, status, refund, support, reconciliation | Candidate only; exact provider and external locator not preserved | `candidate_pointer_unresolved` | Candidate only | Unknown | Not performed | Candidate only. Exact locator not yet preserved. Currentness unknown. Contradiction review not performed. No reliance. Public provider documentation is not provider capability, support, approval, willingness, availability, or provider-of-record status. |
 
 ## 4. Domain Classification
 
-| Domain | Classification | Preserved source IDs | Gap / blocker | Confirmation needed | Notes |
+| Domain | Classification | Referenced source IDs | Gap / blocker | Confirmation needed | Notes |
 |---|---|---|---|---|---|
-| authority basis | `source_preserved` | `PHSP-001`, `PHSP-005` | Authority exists only for source-pointer preservation/classification. | None for this artifact; future work still needs §7 / §7a. | Does not open evidence review or registry movement. |
+| authority basis | `authority_reference_and_scope_provenance` | `PHSP-001`, `PHSP-005` | `PHSP-001` is the repo authority reference; `PHSP-005` records founder / HedgrOps scope provenance only. | None for this artifact; future work still needs §7 / §7a. | Scope provenance does not substitute for repo authority or open evidence review or registry movement. |
 | same-name withdrawal boundary | `provider_confirmation_required` | `PHSP-002`, `PHSP-004`, `PHSP-012`, `PHSP-013` | Public endpoint classes do not establish exact same-name payout support. | Provider evidence for name match, account ownership, user class, mismatch handling, and blocked third-party transfers. | Same-name withdrawal remains the controlling hypothesis, not an operating permission. |
 | regulated-provider visibility | `legal_review_required` | `PHSP-006`, `PHSP-007`, `PHSP-010`, `PHSP-013` | Public directories and framework pointers do not establish Hedgr-safe provider use. | Legal review and provider responsibility matrix. | No provider is selected, ranked, or preferred. |
 | legal / regulatory perimeter | `legal_review_required` | `PHSP-006`, `PHSP-007`, `PHSP-008`, `PHSP-010` | VASP, payment, e-money, banking, remittance, stablecoin, custody, and data responsibilities are unresolved. | Future legal-review preflight or counsel authority only if separately named. | No legal reliance is created here. |
 | PHP transfer rails | `operational_evidence_required` | `PHSP-008`, `PHSP-009`, `PHSP-011`, `PHSP-012` | Retail-payment and transfer-rail material does not prove applicability to Hedgr's exact same-name payout path. | Provider / local-rail applicability, user class, endpoint, timing, finality, and exception evidence. | Rail visibility is not rail approval. |
 | e-wallet / bank endpoint support | `provider_confirmation_required` | `PHSP-011`, `PHSP-012`, `PHSP-013` | Endpoint-class material does not establish support for freelancer or SME owner withdrawals. | Personal / business endpoint support, same-name validation, limits, failed payout, and support handling. | Endpoint availability cannot be inferred from public endpoint classes. |
-| provider-of-record responsibility | `provider_confirmation_required` | `PHSP-002`, `PHSP-013` | No preserved pointer assigns conversion, payout, compliance, liquidity, refund, support, or complaint ownership. | Provider legal entity, role matrix, local partner model, and support / dispute responsibility. | Core blocker for any later provider-specific review. |
+| provider-of-record responsibility | `provider_confirmation_required` | `PHSP-002`, `PHSP-013` | No exact external source pointer assigns conversion, payout, compliance, liquidity, refund, support, or complaint ownership. | Provider legal entity, role matrix, local partner model, and support / dispute responsibility. | Core admission gap for any separately authorized future provider review. |
 | conversion responsibility | `provider_confirmation_required` | `PHSP-007`, `PHSP-010`, `PHSP-013` | Stablecoin receipt, conversion owner, chain, asset, FX, and settlement model are unresolved. | Provider conversion model and legal review. | Chain and stablecoin remain unselected. |
-| liquidity / prefunding posture | `provider_confirmation_required` | `PHSP-002`, `PHSP-011`, `PHSP-013` | No preserved pointer proves provider-owned PHP liquidity or settlement-account ownership. | Provider liquidity owner, prefunding model, limits, shortfall treatment, and settlement account responsibility. | Hedgr-managed local prefunding remains outside scope. |
+| liquidity / prefunding posture | `provider_confirmation_required` | `PHSP-002`, `PHSP-011`, `PHSP-013` | No exact external source pointer proves provider-owned PHP liquidity or settlement-account ownership. | Provider liquidity owner, prefunding model, limits, shortfall treatment, and settlement account responsibility. | Hedgr-managed local prefunding remains outside scope. |
 | reconciliation and finality | `operational_evidence_required` | `PHSP-009`, `PHSP-011`, `PHSP-013` | Provider status, local rail references, finality, failure, refund, and audit fields are not established. | Transaction IDs, status lifecycle, local references, webhook/status evidence, and audit mapping. | Hedgr database must not become settlement truth by implication. |
 | fees / FX / spread / limits | `operational_evidence_required` | `PHSP-012`, `PHSP-013` | Total landed cost, endpoint fees, provider fees, FX, spread, and limits are unknown. | Provider quote evidence, fee tables, expiry rules, changed-amount handling, and refund fee treatment. | No user copy may promise fee or amount certainty. |
 | support / complaint ownership | `legal_review_required` | `PHSP-008`, `PHSP-010`, `PHSP-012`, `PHSP-013` | Regulated complaint owner and operational support handoff are unresolved. | Legal review and provider support / complaint responsibility matrix. | Support is part of the rail. |
@@ -84,9 +109,21 @@ No provider was contacted. No public source was refreshed. No external source wa
 | implementation boundary | `blocked` | `PHSP-001`, `PHSP-005` | This ticket does not authorize implementation-preflight, code, staging, sandbox, API keys, or testing. | Future repo-native authority only. | No product/code/test/CI/runtime changes are part of Lane A. |
 | Class B execution boundary | `blocked` | `PHSP-001`, `PHSP-003`, `PHSP-005` | Customer-money activity and Class B execution remain outside scope. | Future authority widening and §6e convergence-gate satisfaction. | No deposits, withdrawals, conversion, custody, payout, treasury, support, reconciliation, or audit operations. |
 
-## 5. Provider-Confirmation-Needed Map
+## 5. Future Provider Admission Criteria
 
-Provider confirmation would be required before any later provider-specific evidence review could progress on:
+A provider should enter future detailed review only if a separately authorized bounded provider-universe discovery preserves public material that appears capable of answering:
+
+- provider-of-record;
+- same-name support;
+- supported user class;
+- payout ownership;
+- conversion ownership;
+- liquidity ownership;
+- settlement model;
+- support ownership; and
+- complaint ownership.
+
+Any such material would remain a discovery input, not provider evidence acceptance, capability verification, suitability assessment, approval, or admission by this artifact. If a future ticket separately authorizes detailed review, provider confirmation would still be required for:
 
 - exact Philippines / PHP endpoint support for same-name user withdrawals;
 - permitted user classes, including freelancer and SME-owner suitability;
@@ -102,7 +139,7 @@ Provider confirmation would be required before any later provider-specific evide
 - failed payout, cancellation, timeout, refund, reversal, and ambiguous endpoint handling;
 - support, complaint, dispute, escalation, incident, and audit responsibilities.
 
-This map is not a request for provider outreach and does not authorize provider engagement.
+These criteria do not review, compare, score, rank, prefer, admit, or approve any provider. They are not a request for provider outreach and do not authorize provider engagement.
 
 ## 6. Legal-Review-Needed Map
 
@@ -182,14 +219,35 @@ This artifact supports only these next-decision options:
 
 A. Hold / keep Philippines as a comparator with no active successor.
 B. Authorize later Philippines legal / regulatory preflight.
-C. Authorize later provider-specific evidence review.
-D. Authorize a bounded Kenya-versus-Philippines readiness-friction comparison using preserved source IDs.
+C. Authorize bounded provider-universe discovery, if separately authorized.
+D. Authorize a bounded Kenya-versus-Philippines readiness-friction comparison using referenced source IDs, subject to each source's recorded preservation status.
 E. No-go / defer the Philippines comparator and continue the Kenya counsel path separately.
 
-This artifact does not recommend provider outreach, provider selection, market selection, endpoint approval, ADR drafting readiness, implementation-preflight, sandbox testing, customer-money activity, or Class B execution.
+These options are governance-neutral future choices only. They do not activate a successor ticket or imply that any option is preferred.
+
+This artifact does not recommend provider outreach, provider evaluation, provider selection, market selection, endpoint approval, ADR drafting readiness, implementation-preflight, sandbox testing, customer-money activity, or Class B execution.
 
 ## 12. Non-Authorization Statement
 
-`PH-COMP-B-002` preserves and classifies source pointers only. It does not authorize evidence review, evidence acceptance, evidence rejection, evidence scoring, evidence evaluation, evidence sufficiency determination, Evidence Registry state movement, blocker closure, gap closure, legal reliance, legal advice, formal legal opinion, jurisdictional conclusion-making, counsel contact, counsel send, provider outreach, provider-specific review, commercial engagement, market selection, endpoint approval, endpoint selection, provider selection, provider ranking, provider preference formation, chain selection, stablecoin selection, ADR drafting readiness, implementation-preflight, implementation, staging, sandbox use, API keys, internal testing, live operations, production use, Class B execution, Class C execution, customer-money movement, custody, deposits, withdrawals, stablecoin conversion, fiat payout, treasury operations, liquidity buffer operations, reconciliation operations, support operations, complaint handling, incident handling, or audit operations.
+`PH-COMP-B-002` classifies repo-native references and scope provenance and records unresolved public-source candidate descriptions only. It does not authorize evidence review, evidence acceptance, evidence rejection, evidence scoring, evidence evaluation, evidence sufficiency determination, Evidence Registry state movement, blocker closure, gap closure, legal reliance, legal advice, formal legal opinion, jurisdictional conclusion-making, counsel contact, counsel send, provider outreach, provider-specific review, commercial engagement, market selection, endpoint approval, endpoint selection, provider selection, provider ranking, provider preference formation, chain selection, stablecoin selection, ADR drafting readiness, implementation-preflight, implementation, staging, sandbox use, API keys, internal testing, live operations, production use, Class B execution, Class C execution, customer-money movement, custody, deposits, withdrawals, stablecoin conversion, fiat payout, treasury operations, liquidity buffer operations, reconciliation operations, support operations, complaint handling, incident handling, or audit operations.
 
 The Kenya counsel path remains separate and unchanged. This artifact does not pause, replace, supersede, deprioritize, or close `COUNSEL-B-001` or any future Kenya counsel decision.
+
+## 13. Preservation Limitations
+
+This artifact intentionally does not determine source quality, correctness, trustworthiness, relevance, completeness, legal significance, operational usefulness, or implementation value. Those remain future governance activities and require separate authority.
+
+Source-pointer preservation does not imply:
+
+- correctness;
+- completeness;
+- accuracy;
+- sufficiency;
+- operational applicability;
+- legal effect;
+- legal reliance;
+- provider suitability;
+- implementation readiness; or
+- future acceptance.
+
+Recording an unresolved candidate does not preserve its external source, establish its currentness, perform contradiction review, or create reliance. No external source in this register is currently preserved with an exact public locator.
