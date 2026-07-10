@@ -3666,7 +3666,7 @@ This section does **not** authorize provider-specific implementation, legal reli
 
 ### 6f.2 Controlled Parallelism v2 — active pass (Internal **D-029**)
 
-**Status:** Accepted (Founder-approved 2026-07-10). Visibility remains **Internal** — not auto-exported as a public ADR.
+**Status:** Accepted (Founder-approved 2026-07-10). Lane A `PH-COMP-B-003` is completed (**§126**) and idle; the pass remains active only for already-named Lane C `FE-TRUST-002` until final reconciliation. Visibility remains **Internal** — not auto-exported as a public ADR.
 
 **Authority basis:** **§6e** / D-026 lane model + this separate Founder pass decision + **§7** / **§7a** naming. Procedural support: `docs/ops/governance/HEDGR_GOVERNED_PARALLEL_PASS_CHECKLIST.md` (**§124**).
 
@@ -3674,7 +3674,7 @@ This section does **not** authorize provider-specific implementation, legal reli
 
 | Lane | Ticket | Execution class | Authority |
 | ---- | ------ | --------------- | --------- |
-| A — Class B Evidence Readiness | `PH-COMP-B-003` | Documentation-only Class B evidence-intake / source-pointer preservation | Exact public locator preservation for unresolved `PHSP-*` candidates from `PH-COMP-B-002` only |
+| A — Class B Evidence Readiness | `PH-COMP-B-003` *(completed — §126; lane idle)* | Documentation-only Class B evidence-intake / source-pointer preservation | Exact public locator preservation for unresolved `PHSP-*` candidates from `PH-COMP-B-002` only |
 | B — Backend foundation | *(idle — not named)* | — | No Lane B ticket in this pass |
 | C — UX Trust Testing | `FE-TRUST-002` | Class A informational / synthetic frontend trust-surface | Visibly synthetic withdrawal journey for closed-user testing only |
 
@@ -3711,7 +3711,7 @@ This section does **not** authorize provider-specific implementation, legal reli
 | ----- | ----- |
 | **Decision ID** | D-029 |
 | **Title** | Controlled Parallelism v2 — `PH-COMP-B-003` + `FE-TRUST-002` |
-| **Status** | Accepted (active while **§7** / **§7a** name these tickets) |
+| **Status** | Accepted (Lane A completed **§126**; active pass remains open only for already-named Lane C `FE-TRUST-002` until final reconciliation) |
 | **Visibility** | Internal |
 | **Date** | 2026-07-10 |
 | **Repo authority** | This **§6f.2**; activation in **§7** / **§7a**; `AGENTS.md` governed-parallelism exception |
@@ -3848,24 +3848,25 @@ Completed and merged:
 - `FE-TRUST-001` - Synthetic transaction exception-state presentation contract (Class A informational frontend trust surface; completed record **§123**)
 - `GOV-PARALLEL-002` - Governed parallel pass checklist and closeout template (documentation-only governance / operational control; completed record **§124**)
 - `GOV-PHILOSOPHY-001` - Codify Hedgr Governance Philosophy: Governed Progress Under Uncertainty (documentation-only governance / doctrine; completed record **§125**; ADR **0023**)
+- `PH-COMP-B-003` - Philippines / PHP exact public source-pointer preservation for unresolved `PHSP-*` candidates (documentation-only Class B evidence-intake / locator preservation; completed record **§126**)
 
 Current active ticket status:
 
 - **Kenya counsel path (`COUNSEL-SEND-B-001` / Internal D-028):** **DEFER**. No packet authorized to send. Kenya remains primary thesis stress test; thesis not rejected or closed. No successor Kenya legal ticket active unless separately named. See **§6f.1**.
-- **Governed parallelism (Accepted; §6e / D-026 lane model; active pass §6f.2 / D-029; Founder-confirmed 2026-07-10):** Controlled Parallelism **v2** names only `PH-COMP-B-003` (Lane A) and `FE-TRUST-002` (Lane C). Lane B is idle. **Default remains one active implementation ticket** unless the §6e/§6f exception is active and unambiguous. Parallel authorization does **not** authorize unrestricted multi-ticket execution. No lane may widen another lane’s authority without a separate Founder decision. No lane widens Class B execution, custody, rails, conversion, settlement, legal reliance, or customer-money authority. Convergence gate in **§6e** remains unsatisfied. Kenya counsel path remains **DEFER** and separate. Procedural checklist: `docs/ops/governance/HEDGR_GOVERNED_PARALLEL_PASS_CHECKLIST.md` (**§124**) — non-authorizing by itself.
-- **Active Lane A (Class B Evidence Readiness):** `PH-COMP-B-003` — Philippines / PHP exact public source-pointer preservation for unresolved `PHSP-*` candidates (**§7a** brief active).
+- **Governed parallelism (Accepted; §6e / D-026 lane model; active pass §6f.2 / D-029; Founder-confirmed 2026-07-10):** Controlled Parallelism **v2** originally named `PH-COMP-B-003` (Lane A) and `FE-TRUST-002` (Lane C). Lane A completed independently (**§126**) and is idle; Lane C remains active; Lane B is idle. The pass remains open only for already-named Lane C and final reconciliation. **Default remains one active implementation ticket** unless the §6e/§6f exception is active and unambiguous. Parallel authorization does **not** authorize unrestricted multi-ticket execution. No lane may widen another lane’s authority without a separate Founder decision. No lane widens Class B execution, custody, rails, conversion, settlement, legal reliance, or customer-money authority. Convergence gate in **§6e** remains unsatisfied. Kenya counsel path remains **DEFER** and separate. Procedural checklist: `docs/ops/governance/HEDGR_GOVERNED_PARALLEL_PASS_CHECKLIST.md` (**§124**) — non-authorizing by itself.
+- **Active Lane A (Class B Evidence Readiness):** None. `PH-COMP-B-003` completed independently (**§126**); Lane A is idle. No successor activated.
 - **Active Lane B (backend foundation):** None (not named in Controlled Parallelism v2).
 - **Active Lane C (UX Trust Testing):** `FE-TRUST-002` — Visibly synthetic withdrawal journey for closed-user testing (**§7a** brief active).
-- **Last completed ticket (summary):** `GOV-PHILOSOPHY-001` - Governed Progress Under Uncertainty philosophy + ADR **0023** (**§125**). Prior: `GOV-PARALLEL-002` (**§124**); `FE-TRUST-001` (**§123**); `BE-FOUND-001` (**§122**); `PH-COMP-B-002` (**§121**); `GOV-PARALLEL-001` (**§120**); `PH-COMP-B-001` (**§119**); `COUNSEL-B-001` (**§118**).
+- **Last completed ticket (summary):** `PH-COMP-B-003` - Philippines / PHP exact public source-pointer preservation (**§126**). Prior: `GOV-PHILOSOPHY-001` / ADR **0023** (**§125**); `GOV-PARALLEL-002` (**§124**); `FE-TRUST-001` (**§123**); `BE-FOUND-001` (**§122**); `PH-COMP-B-002` (**§121**); `GOV-PARALLEL-001` (**§120**); `PH-COMP-B-001` (**§119**); `COUNSEL-B-001` (**§118**).
 - **Post-`COUNSEL-SEND-B-001` DEFER (governance-accepted; §6f.1 / D-028):** Founder deferred authorization to send the Kenya counsel packet. Does not reject Kenya, establish a negative legal conclusion, close the thesis, infer unsuitability, authorize internal legal reliance, or authorize Class B execution. Revisit only under conditions in **§6f.1**.
-- **Post-Controlled Parallelism v2 activation (governance-accepted; §6f.2 / D-029):** Founder activated concurrent `PH-COMP-B-003` and `FE-TRUST-002` only. Lane independence and non-convergence hold. Does **not** authorize Class B execution, counsel send, market/provider/endpoint selection, or customer-money activity.
+- **Post-Controlled Parallelism v2 activation (governance-accepted; §6f.2 / D-029):** Founder activated concurrent `PH-COMP-B-003` and `FE-TRUST-002` only. `PH-COMP-B-003` completed independently (**§126**) without changing Lane C assumptions or authority; `FE-TRUST-002` remains active. Lane independence and non-convergence hold. Does **not** authorize Class B execution, counsel send, market/provider/endpoint selection, or customer-money activity.
 - **Post-`GOV-PHILOSOPHY-001` sequencing (governance-accepted):** Philosophy codified; does not widen execution. Successor tickets appear only when separately named (now: **§6f.2** / **§7** / **§7a**).
 - **Post-`GOV-PARALLEL-002` sequencing (governance-accepted):** Checklist remains non-authorizing by itself. Controlled Parallelism v2 is authorized only by **§6f.2** / D-029 + this **§7** / **§7a** naming.
 - **Post-`GOV-PARALLEL-001` sequencing (governance-accepted):** **§6e** / D-026 remains the lane-model authority. v1 named tickets are complete; active naming is under **§6f.2**.
-- **Post-`PH-COMP-B-002` sequencing (governance-accepted):** Source-pointer classification completed (**§121**). **`PH-COMP-B-003`** is the separately named successor for exact public locator preservation only.
+- **Post-`PH-COMP-B-002` sequencing (governance-accepted):** Source-pointer classification completed (**§121**). Separately named `PH-COMP-B-003` exact public locator preservation completed (**§126**); Lane A is idle and no successor is activated.
 - **Post-`COUNSEL-B-001` sequencing (governance-accepted):** Packet draft completed (**§118**). Send authorization is **DEFER** per **§6f.1** / D-028.
 - **§6b** is not sequencing authority. **§6e** / **§6f** authorize controlled multi-lane activation only for explicitly named lanes/tickets; absence/ambiguity/pause/deprecation restores the singular-ticket default.
-- When **§7** names approved lane ticket(s), each active brief lives in **§7a** until that lane's closeout. Lane B is idle in this pass.
+- When **§7** names approved lane ticket(s), each active brief lives in **§7a** until that lane's closeout. Lane A and Lane B are idle; Lane C remains active in this pass.
 - Cursor must not connect Lane C outputs to live Class B execution, provider adapters, or customer-money paths.
 - Cursor must not treat UX feedback as Class B authorization or §7 sequencing authority.
 - No active lane may widen, inherit, approve, or modify another lane’s authority without a separate Founder decision and repo-native governance update.
@@ -3879,7 +3880,7 @@ Current active ticket status:
 
 Active under Controlled Parallelism v2 (**§6f.2** / Internal **D-029**):
 
-- **Lane A:** `PH-COMP-B-003` (brief below)
+- **Lane A:** idle — `PH-COMP-B-003` completed independently (**§126**); no successor named
 - **Lane B:** idle (not named)
 - **Lane C:** `FE-TRUST-002` (brief below)
 
@@ -3891,13 +3892,13 @@ Governance philosophy (non-authorizing operating doctrine): `docs/doctrine/hedgr
 
 Kenya counsel disposition: **DEFER** (`COUNSEL-SEND-B-001` / **§6f.1** / D-028).
 
-Archived briefs for completed tickets remain below for closeout context (`GOV-PHILOSOPHY-001`, `PH-COMP-B-002`, `BE-FOUND-001`, `FE-TRUST-001`, and earlier).
+Archived briefs for completed tickets remain below for closeout context (`PH-COMP-B-003`, `GOV-PHILOSOPHY-001`, `PH-COMP-B-002`, `BE-FOUND-001`, `FE-TRUST-001`, and earlier).
 
 ---
 
-### Active brief — Lane A — Class B Evidence Readiness — `PH-COMP-B-003`
+### Archived brief — Lane A — Class B Evidence Readiness — `PH-COMP-B-003`
 
-**Active execution ticket:** **`PH-COMP-B-003`** - Philippines / PHP exact public source-pointer preservation for unresolved `PHSP-*` candidates.
+**Completed execution ticket:** **`PH-COMP-B-003`** - Philippines / PHP exact public source-pointer preservation for unresolved `PHSP-*` candidates (**§126**).
 
 **Objective:** Preserve exact public locators for the unresolved Philippines / PHP external-source candidates already classified under `PH-COMP-B-002`, without evidence acceptance, legal interpretation, market selection, or Class B execution authority.
 
@@ -7685,3 +7686,39 @@ No active ticket. Singular-ticket default remains intact. Convergence gate remai
 **§7** / **§7a** record `GOV-PHILOSOPHY-001` completion and remain in no-active-ticket / idle-lane posture.
 
 **Follow-ups:** None activated. Future provisional-assumption records, parallel passes, Class B work, or implementation tickets appear only when separately authorized under **§7** / **§7a**.
+
+---
+
+## 126. Completed execution ticket - PH-COMP-B-003 (Philippines / PHP Exact Public Source-Pointer Preservation)
+
+**Ticket:** `PH-COMP-B-003` - Philippines / PHP exact public source-pointer preservation for unresolved `PHSP-*` candidates
+
+**Status:** Completed
+**Class posture:** Lane A Class B evidence readiness; documentation-only; non-execution
+**Authority posture:** Exact public locator and observable metadata preservation only
+**Evidence accepted, rejected, scored, or evaluated:** No
+**Evidence Registry or blocker state moved:** No
+**Legal reliance or conclusion created:** No
+**Provider selected, ranked, preferred, or contacted:** No
+**Market / endpoint / rail / chain / stablecoin selected:** No
+**Class B execution authorized:** No
+**Customer-money activity authorized:** No
+**Convergence gate satisfied:** No
+
+**Objective.** Preserve exact official public locators, issuing authorities, source-declared publication / as-of metadata, and observable reachability for the unresolved Philippines / PHP `PHSP-*` candidates already classified by `PH-COMP-B-002`, without evidence acceptance, legal interpretation, provider work, market selection, comparison conclusions, or Class B execution authority.
+
+### Outcome
+
+- **`docs/ops/governance/offramp/HEDGR_CLASS_B_OFFRAMP_PHILIPPINES_PHP_SOURCE_POINTER_CLASSIFICATION.md`** - preserved exact Bangko Sentral ng Pilipinas locators and observable metadata for `PHSP-006` through `PHSP-012`; retained `PHSP-013` as unresolved because the predecessor candidate did not name a specific provider or publication and selecting one would widen the ticket; added a preservation-method boundary distinguishing reachability from currentness, legal effect, applicability, sufficiency, or acceptance.
+- **`docs/ops/HEDGR_STATUS.md`** - recorded Lane A completion, restored Lane A to idle, retained already-active Lane C `FE-TRUST-002` without changing its authority, and added this completed-ticket record.
+- **`docs/ops/NOTION_GOVERNANCE_STAGING.md`** - mirrored repo-first completion and remaining Lane C posture without Notion-led activation or sequencing.
+
+**Governance guarantees held.** Locator and metadata preservation only. No source content was accepted, rejected, scored, compared, or relied on; no contradiction resolution; no legal interpretation; no Evidence Registry movement; no blocker or gap closure; no provider-specific discovery beyond the already-classified official source descriptions; no provider outreach; no provider / market / endpoint / rail / chain / stablecoin selection; no counsel contact or send; no comparison conclusion; no implementation-preflight; no code, runtime, test, CI, engine, or ADR status change; no Class B execution or customer-money activity. Kenya remains the primary thesis stress test and the counsel-send path remains **DEFER** under **§6f.1** / D-028.
+
+**Cross-lane impact:** `NO CROSS-LANE IMPACT`. Lane C assumptions, scope, tests, and rollback are unchanged. This lane did not widen, inherit, approve, or modify Lane C authority.
+
+### Resulting posture
+
+Lane A is idle with no successor activated. Lane B remains idle. Lane C `FE-TRUST-002` remains independently active under its existing **§7a** brief. D-029 remains open only for the already-named Lane C ticket and final batch reconciliation. Completion does **not** satisfy the **§6e** convergence gate.
+
+**Follow-ups:** None activated. Any evidence review, legal / regulatory preflight, provider-specific review, market comparison, provider outreach, market / endpoint selection, implementation-preflight, implementation, staging, sandbox use, live operations, Class B execution, or customer-money activity requires separate Founder decision and repo-native **§7** / **§7a** authority.
