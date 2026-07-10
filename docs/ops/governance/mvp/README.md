@@ -1,0 +1,26 @@
+# MVP Governance Artifacts
+
+Status: Navigation index  
+Scope: `docs/ops/governance/mvp/`
+
+This folder holds MVP-oriented governance artifacts. Placement here follows repo convention under `docs/ops/governance/` rather than a competing top-level `docs/governance/` hierarchy.
+
+These files do **not** authorize implementation, activate tickets, alter ADRs, or change `docs/ops/HEDGR_STATUS.md` sequencing authority.
+
+## Artifacts
+
+| File | Role |
+|------|------|
+| `HEDGR_MVP_ACCEPTANCE_FRAMEWORK.md` | Institutional Acceptance Standard: thesis, domains D1–D10, gates, completion rule, out-of-scope, non-goals |
+| `HEDGR_MVP_EVIDENCE_REGISTER.md` | Evidence model, categories, recording structure, confidence model, review responsibilities |
+| `HEDGR_MVP_PHASE_ALIGNMENT.md` | Phase-alignment readout mapping MVP spec phases to current repo posture |
+| `HEDGR_ATLAS_PRODUCT_CONCEPT_NOTE.md` | Product concept note (governance orientation) |
+
+## Authority reminder
+
+Implementation authority remains:
+
+- `docs/ops/HEDGR_STATUS.md`
+- accepted ADRs
+- `AGENTS.md`
+- active repo-native governance

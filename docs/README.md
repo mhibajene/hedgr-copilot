@@ -13,6 +13,7 @@ This file explains where repo documentation belongs. It is a navigation aid only
 4. `docs/decisions/` holds accepted ADRs and decision records.
 5. `docs/doctrine/` holds doctrine and product/system source material.
 6. Other `docs/ops/**` artifacts are subordinate operating, governance, evidence, review, or readout material unless explicitly elevated through the governed repo chain.
+7. MVP institutional acceptance criteria (non-executing) live under `docs/ops/governance/mvp/` — see `HEDGR_MVP_ACCEPTANCE_FRAMEWORK.md` and `HEDGR_MVP_EVIDENCE_REGISTER.md`. These define institutional “done” and evidence recording only; they do not alter implementation authority.
 
 ## Where Files Belong
 
