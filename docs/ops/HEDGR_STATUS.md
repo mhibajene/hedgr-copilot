@@ -64,7 +64,7 @@ Important active constraints:
 
 **Sprint 3** is framed here as **Transition Readiness** (named track above), not as Foundation continuation: governance defines the explicit standard for any later boundary widening; execution architecture remains out of scope until explicitly approved.
 
-**Sequencing authority:** Only **§7** / **§7a** name approved active ticket(s). **Default posture:** one active implementation ticket. Concurrent lanes are permitted only where this file records an accepted Founder-approved parallelism decision (**§6e** / Internal **D-026** when Accepted and unambiguous), explicitly names each active lane and ticket, defines authority class and exclusions, and preserves independent stop conditions and rollback. Absence, ambiguity, pause, or deprecation of that decision restores the singular-ticket default. Parallel authorization applies only to the explicitly named lanes and does **not** authorize unrestricted multi-ticket execution. No lane may widen another lane’s authority without a separate Founder decision and repo-native governance update. **§6b** is Transition Readiness taxonomy and scrutiny input only—not backlog approval or sequencing. **§6e** does **not** widen Class B execution, custody, rails, conversion, settlement, or customer-money authority.
+**Sequencing authority:** Only **§7** / **§7a** name approved active ticket(s). **Default posture:** one active implementation ticket. Concurrent lanes are permitted only where this file records an accepted Founder-approved parallelism decision (**§6e** lane model / Internal **D-026**; active pass naming under **§6f** / Internal **D-029** when Accepted and unambiguous), explicitly names each active lane and ticket, defines authority class and exclusions, and preserves independent stop conditions and rollback. Absence, ambiguity, pause, or deprecation of that decision restores the singular-ticket default. Parallel authorization applies only to the explicitly named lanes and does **not** authorize unrestricted multi-ticket execution. No lane may widen another lane’s authority without a separate Founder decision and repo-native governance update. **§6b** is Transition Readiness taxonomy and scrutiny input only—not backlog approval or sequencing. **§6e** / **§6f** do **not** widen Class B execution, custody, rails, conversion, settlement, or customer-money authority.
 
 **MVP phased alignment (interpretation aid):** See **`docs/ops/governance/mvp/HEDGR_MVP_PHASE_ALIGNMENT.md`** for how **`docs/doctrine/hedgr-mvp-project-specification.md`** governance-gated phases and success criteria map to the posture stated in this section and in **§6a–§6c**. That readout is **subordinate** to this file and to **§7** / **§7a**; it does **not** widen execution authority or substitute for **§7** naming.
 
@@ -3479,7 +3479,7 @@ Implementation posture preserved:
 
 **Governance ticket:** `GOV-PARALLEL-001` — documentation-only governance translation and lane activation (completed record **§120**).
 
-**Procedural support (non-authorizing):** `docs/ops/governance/HEDGR_GOVERNED_PARALLEL_PASS_CHECKLIST.md` — reusable opening / execution / closeout checklist for future Founder-approved governed-parallelism passes (`GOV-PARALLEL-002`, completed record **§124**). The checklist is subordinate procedural guidance only. It does **not** authorize a second parallel pass, activate tickets, preserve D-026 as standing concurrency authority, alter the singular-ticket default, or satisfy the convergence gate.
+**Procedural support (non-authorizing):** `docs/ops/governance/HEDGR_GOVERNED_PARALLEL_PASS_CHECKLIST.md` — reusable opening / execution / closeout checklist for Founder-approved governed-parallelism passes (`GOV-PARALLEL-002`, completed record **§124**). The checklist is subordinate procedural guidance only. It does **not** by itself authorize a parallel pass, activate tickets, preserve D-026 as standing concurrency authority, alter the singular-ticket default, or satisfy the convergence gate. **Controlled Parallelism v2** (active ticket naming) is recorded separately in **§6f** / Internal **D-029**.
 
 **Authority model:** This section records the founder-approved operating position and the repo-native sequencing change required to run controlled parallel lanes. It is subordinate to `.cursorrules`, `AGENTS.md`, accepted ADRs **0013–0015** / **0017**, Class B non-execution posture, and **§7** / **§7a**. It does **not** widen Class B execution, custody, rails, conversion, settlement, legal reliance, or customer-money authority. A mutable status entry alone is not a general override of agent execution constraints.
 
@@ -3615,6 +3615,108 @@ This section does **not** authorize provider-specific implementation, legal reli
 | **Repo authority** | This **§6e** section; activation in **§7** / **§7a**; closeout **§120**; `AGENTS.md` Ticket sequencing / governed parallelism exception |
 | **Reversibility** | Reversible; singular-ticket default restores on pause / deprecation / absence / ambiguity |
 
+**v1 pass status:** Completed. Named tickets `PH-COMP-B-002`, `BE-FOUND-001`, and `FE-TRUST-001` are closed (**§121**–**§123**). D-026 remains the lane-model / exception-framework authority; it is **not** standing concurrency for unnamed tickets. Active pass ticket naming lives in **§6f**.
+
+---
+
+## 6f. Founder dispositions (2026-07-10) — Kenya counsel defer + Controlled Parallelism v2
+
+### 6f.1 Kenya counsel engagement — `COUNSEL-SEND-B-001` DEFER (Internal **D-028**)
+
+**Status:** Accepted Founder disposition — **DEFER**  
+**Visibility:** Internal  
+**Date:** 2026-07-10  
+**Decision Type:** Ops / Legal-path sequencing  
+**Related artifacts:** `COUNSEL-B-001` packet draft (**§118**); `COUNSEL-SCOPE-B-001` (**§117**); `LEGAL-PREFLIGHT-B-001` (**§116**)
+
+**Decision:** Defer authorization to send the Kenya counsel packet.
+
+**Rationale (Founder):** Kenya work provided a valuable thesis stress test by exposing material legal, operational, support, liquidity, reconciliation, and trust-surface questions for a Class B same-name withdrawal path. Anticipated counsel-response lag and the absence of a near-term implementation or market-selection decision reduce the current value of initiating engagement. Sending now could create an open external dependency without a defined decision horizon and could incorrectly cause legal-process timing to influence UX research or Class B sequencing.
+
+**Interpretation (binding):**
+
+- does **not** reject Kenya;
+- does **not** establish a negative legal conclusion;
+- does **not** close the Kenya thesis;
+- does **not** infer that Kenya is unsuitable;
+- does **not** authorize reliance on internal legal interpretations;
+- does **not** authorize Class B execution.
+
+**Disposition:** Kenya remains the primary thesis stress test. Completed Kenya artifacts remain valid governance and evidence-preparation work but do **not** create implementation, legal-reliance, or market-selection authority.
+
+**Revisit conditions** (any one may reopen Founder reconsideration):
+
+- a named Kenya market or pilot decision requires legal input;
+- a credible provider or operating model narrows the relevant questions;
+- a partnership or regulatory development materially changes the evidence posture;
+- counsel input can resolve a defined go/no-go decision within a useful sequencing window;
+- the Founder explicitly reauthorizes engagement through repo-native governance.
+
+**Current disposition:** `COUNSEL-SEND-B-001`: **DEFER**. No packet is authorized to be sent. No successor Kenya legal ticket is active unless separately named in **§7** / **§7a**.
+
+| Field | Value |
+| ----- | ----- |
+| **Decision ID** | D-028 |
+| **Title** | Defer Kenya counsel engagement (`COUNSEL-SEND-B-001`) |
+| **Status** | Accepted — DEFER |
+| **Visibility** | Internal |
+| **Date** | 2026-07-10 |
+| **Repo authority** | This **§6f.1**; mirrored in **§7** |
+| **Reversibility** | Reversible under revisit conditions above; does not expire Kenya thesis |
+
+### 6f.2 Controlled Parallelism v2 — active pass (Internal **D-029**)
+
+**Status:** Accepted (Founder-approved 2026-07-10). Visibility remains **Internal** — not auto-exported as a public ADR.
+
+**Authority basis:** **§6e** / D-026 lane model + this separate Founder pass decision + **§7** / **§7a** naming. Procedural support: `docs/ops/governance/HEDGR_GOVERNED_PARALLEL_PASS_CHECKLIST.md` (**§124**).
+
+**Founder-approved concurrent activation (only these named lanes/tickets):**
+
+| Lane | Ticket | Execution class | Authority |
+| ---- | ------ | --------------- | --------- |
+| A — Class B Evidence Readiness | `PH-COMP-B-003` | Documentation-only Class B evidence-intake / source-pointer preservation | Exact public locator preservation for unresolved `PHSP-*` candidates from `PH-COMP-B-002` only |
+| B — Backend foundation | *(idle — not named)* | — | No Lane B ticket in this pass |
+| C — UX Trust Testing | `FE-TRUST-002` | Class A informational / synthetic frontend trust-surface | Visibly synthetic withdrawal journey for closed-user testing only |
+
+**Lane independence (binding):**
+
+- Philippines source preservation does **not** authorize legal review, provider work, or implementation.
+- UX feedback does **not** authorize Class B progression.
+- Neither lane is a prerequisite for the other.
+- Completion of both lanes does **not** satisfy the Class B convergence gate (**§6e**).
+- Any future Kenya-versus-Philippines comparison requires separate naming and must use exact preserved sources only.
+
+**Lane A permitted scope (`PH-COMP-B-003`):**
+
+- Preserve exact public URLs, publication locators, and issuing authorities.
+- Map preserved locators to existing `PHSP-*` entries.
+- Record publication dates and observable source status.
+- Preserve source text or metadata only where authorized by repository conventions.
+- Maintain the distinction between source preservation and evidence acceptance.
+
+**Lane A excluded scope:**
+
+- No evidence acceptance or rejection; no substantive legal interpretation; no contradiction resolution.
+- No provider ranking, selection, or outreach; no market selection; no endpoint approval.
+- No comparison conclusion based on unresolved or newly preserved material.
+- No implementation preflight or Class B execution.
+
+**Lane C objective (`FE-TRUST-002`):** Produce a visibly synthetic withdrawal journey suitable for targeted closed-user testing without implying live product, market, provider, or withdrawal availability.
+
+**Lane C must not:** enabled live withdrawal or deposit actions; provider branding; live provider availability; live fees / FX / limits; real payout timing; instant or guaranteed payout claims; endpoint / regulatory / chain / stablecoin selection; real-money receipts; executable transaction controls; production activation of unavailable flows; misleading success states; customer-money activity; Class B execution.
+
+**Non-authorization statement:** This pass does **not** authorize Class B execution, custody, rails, conversion, settlement, legal reliance, counsel send, market selection, provider selection, endpoint approval, or customer-money activity. Kenya counsel path remains **DEFER** per **§6f.1** / D-028 and is not paused, rejected, or closed by this pass.
+
+| Field | Value |
+| ----- | ----- |
+| **Decision ID** | D-029 |
+| **Title** | Controlled Parallelism v2 — `PH-COMP-B-003` + `FE-TRUST-002` |
+| **Status** | Accepted (active while **§7** / **§7a** name these tickets) |
+| **Visibility** | Internal |
+| **Date** | 2026-07-10 |
+| **Repo authority** | This **§6f.2**; activation in **§7** / **§7a**; `AGENTS.md` governed-parallelism exception |
+| **Reversibility** | Reversible; restore singular-ticket default on pause / deprecation / closeout / ambiguity |
+
 ---
 
 ## 7. Current sequence and active status
@@ -3749,59 +3851,167 @@ Completed and merged:
 
 Current active ticket status:
 
-- **Governed parallelism (Accepted; §6e / D-026; Founder-confirmed 2026-07-10):** Controlled parallel lanes remain available **only** when §7 / §7a explicitly name active lane tickets under §6e. **Default remains one active implementation ticket** unless the §6e exception is active and unambiguous. Absence, ambiguity, pause, or deprecation restores the singular-ticket default. Parallel authorization does **not** authorize unrestricted multi-ticket execution. No lane may widen another lane’s authority without a separate Founder decision. No lane widens Class B execution, custody, rails, conversion, settlement, legal reliance, or customer-money authority. Convergence gate in **§6e** remains unsatisfied. Kenya counsel path remains separate and unchanged. Procedural checklist for future passes: `docs/ops/governance/HEDGR_GOVERNED_PARALLEL_PASS_CHECKLIST.md` (**§124**) — non-authorizing; does not preserve D-026 as standing concurrency or activate a second pass.
-- **Active Lane A (Class B governance):** None. `PH-COMP-B-002` completed as documentation-only source-pointer preservation and classification (**§121**).
-- **Active Lane B (backend foundation):** None. `BE-FOUND-001` completed as execution-neutral backend foundation (**§122**).
-- **Active Lane C (frontend trust surfaces):** None. `FE-TRUST-001` completed as synthetic / non-live frontend trust-surface presentation contract (**§123**).
-- **Last completed ticket (summary):** `GOV-PHILOSOPHY-001` - Governed Progress Under Uncertainty philosophy + ADR **0023** (**§125**). Prior: `GOV-PARALLEL-002` (**§124**); `FE-TRUST-001` (**§123**); `BE-FOUND-001` (**§122**); `PH-COMP-B-002` (**§121**); `GOV-PARALLEL-001` (**§120**); `PH-COMP-B-001` (**§119**); `COUNSEL-B-001` (**§118**); `COUNSEL-SCOPE-B-001` (**§117**); `LEGAL-PREFLIGHT-B-001` (**§116**); `HOPS-REVIEW-B-001` (**§115**); `EVID-INTAKE-B-004` (**§114**); `EVID-INTAKE-B-003` (**§113**); `EVID-INTAKE-B-002` (**§112**); `GOV-A-REV-002` (**§111**); `OFFRAMP-GOV-002` (**§110**); `OFFRAMP-GOV-001` (**§108**); `HOPS-BRIDGE-001` (**§109**).
-- **Post-`GOV-PHILOSOPHY-001` sequencing (governance-accepted):** `GOV-PHILOSOPHY-001` codified Governed Progress Under Uncertainty at `docs/doctrine/hedgr-governance-philosophy.md` and recorded adoption in **ADR 0023**. It standardizes **Provisional — Governed Assumption** records, reversibility-as-mechanism, exploration-as-evidence, parallel-lane non-convergence, external-feedback lag mitigation, and tangibility-without-readiness claims. It does **not** activate Class B work, change execution class, authorize implementation, approve custody / rail / legal / regulatory / financial claims, override **§7** / **§7a**, override `AGENTS.md`, override accepted ADRs, create authority from founder conversation alone, or convert exploratory evidence into implementation direction. No successor ticket is activated.
-- **Post-`GOV-PARALLEL-002` sequencing (governance-accepted):** `GOV-PARALLEL-002` created a reusable procedural checklist for future Founder-approved governed-parallelism passes. It treats Controlled Parallelism v1 as operational precedent only, not standing concurrency authority. It does **not** authorize a second parallel pass, activate any lane ticket, widen Class A / B / C authority, satisfy the convergence gate, or alter the singular-ticket default. Any future parallel pass still requires a separate Founder decision and explicit **§7** / **§7a** naming.
-- **Post-`GOV-PARALLEL-001` sequencing (governance-accepted):** `GOV-PARALLEL-001` recorded founder-approved controlled parallelism in **§6e**, updated singular-ticket sequencing to at-most-one-active-ticket-per-authorized-lane, activated `BE-FOUND-001` and `FE-TRUST-001` beside continuing `PH-COMP-B-002`, and defined the Class B execution convergence gate. It does **not** authorize Class B execution, provider selection, market selection, endpoint / rail / chain / stablecoin approval, custody, conversion, settlement, legal reliance, customer-money movement, or connection of engineering lanes to live financial activity.
-- **Post-`PH-COMP-B-001` sequencing (governance-accepted):** `PH-COMP-B-001` completed a bounded comparison-frame artifact at `docs/ops/governance/offramp/comparisons/HEDGR_PHILIPPINES_PHP_OFFRAMP_READINESS_COMPARISON_FRAME.md`, preserving Kenya as thesis stress test and Philippines as readiness benchmark. It defines comparison criteria, future permitted source classes, source-pointer candidates for later review, Philippines friction hypotheses, open factual dependencies, future comparison output shape, founder / HedgrOps decision options, and a recommended successor path without preserving, refreshing, classifying, reviewing, accepting, rejecting, scoring, or assessing any Philippine source evidence during that ticket. It creates no PHSP-* source IDs in the comparison-frame artifact and does **not** authorize legal reliance, legal advice, formal legal opinion, jurisdictional conclusion-making, provider outreach, provider-specific review, commercial engagement, market selection, endpoint approval, endpoint selection, provider selection, chain selection, stablecoin selection, ADR drafting readiness, implementation-preflight, implementation, staging, sandbox use, API keys, testing, live operations, custody, deposits, withdrawals, fiat payout, treasury operations, reconciliation operations, support operations, complaint handling, incident handling, audit operations, Class B execution, or customer-money activity. The Kenya counsel path is not paused, superseded, or replaced. **`PH-COMP-B-002`** is now the separately named **§7** / **§7a** successor for source-pointer preservation and classification only.
-- **Post-`COUNSEL-B-001` sequencing (governance-accepted):** `COUNSEL-B-001` completed a bounded counsel engagement packet draft at `docs/ops/governance/offramp/legal/HEDGR_KENYA_KES_MPESA_COUNSEL_ENGAGEMENT_PACKET_DRAFT.md`, grounded in the completed `COUNSEL-SCOPE-B-001` brief, `LEGAL-PREFLIGHT-B-001` review, and existing repo-native off-ramp artifacts. It organizes the Kenya / KES / M-Pesa thesis stress-test perimeter into founder-reviewable counsel packet form: bounded hypothesis, included materials, issue-spotting assumptions, non-assumptions, open factual dependencies, draft counsel questions, provider fact dependencies, requested output types, reliance / non-reliance boundaries, founder review checklist, possible post-counsel decision options, and non-authorization statement. It does **not** authorize sending materials to counsel, counsel engagement, legal advice, formal legal opinion, legal reliance, jurisdictional conclusion-making, legal sign-off, provider outreach, provider-specific review, commercial engagement, evidence review, evidence acceptance, evidence rejection, evidence scoring, Evidence Registry modification, registry-state change, blocker closure, gap closure, market selection, endpoint approval, endpoint selection, provider selection, provider ranking, provider preference formation, chain selection, stablecoin selection, ADR drafting readiness, implementation-preflight, implementation, staging, sandbox use, API keys, internal testing, live operations, custody, rails, stablecoin conversion, deposits, withdrawals, fiat payout, treasury operations, liquidity buffer operations, reconciliation operations, support operations, complaint handling, incident handling, audit operations, Class B execution, or customer-money activity. No follow-up ticket is active unless separately named in **§7** / **§7a**.
-- **Post-`COUNSEL-SCOPE-B-001` sequencing (governance-accepted):** `COUNSEL-SCOPE-B-001` completed a bounded counsel-scope preparation brief at `docs/ops/governance/offramp/legal/HEDGR_KENYA_KES_MPESA_COUNSEL_SCOPE_BRIEF.md`, grounded in the completed `LEGAL-PREFLIGHT-B-001` review and existing repo-native off-ramp artifacts. It organizes existing issue-spotting material into counsel-ready assumptions, non-assumptions, factual dependencies, proposed counsel questions, provider fact dependencies, source-packet pointers, requested counsel output types, reliance / non-reliance boundaries, and founder decision options. It does **not** authorize counsel engagement, legal advice, formal legal opinion, legal reliance, jurisdictional conclusion-making, legal sign-off, provider outreach, provider-specific review, evidence review, evidence acceptance, evidence rejection, evidence scoring, Evidence Registry modification, registry-state change, blocker closure, gap closure, market selection, endpoint approval, endpoint selection, provider selection, provider ranking, provider preference formation, chain selection, stablecoin selection, ADR drafting readiness, implementation-preflight, implementation, staging, sandbox use, API keys, internal testing, live operations, custody, rails, stablecoin conversion, deposits, withdrawals, fiat payout, treasury operations, liquidity buffer operations, reconciliation operations, support operations, complaint handling, incident handling, audit operations, Class B execution, or customer-money activity. No follow-up ticket is active unless separately named in **§7** / **§7a**.
-- **Post-`LEGAL-PREFLIGHT-B-001` sequencing (governance-accepted):** `LEGAL-PREFLIGHT-B-001` completed a Founder / HedgrOps legal / regulatory preflight review at `docs/ops/governance/offramp/reviews/HEDGR_KENYA_KES_MPESA_LEGAL_REGULATORY_PREFLIGHT_REVIEW.md`, grounded in the completed `HOPS-REVIEW-B-001` synthesis review and existing repo-native off-ramp artifacts. It maps issue-spotting and legal / regulatory perimeter questions for the Kenya / KES / M-Pesa same-name withdrawal thesis stress-test path, including authority basis, Kenya jurisdictional perimeter, VASP / digital asset perimeter, stablecoin usage, custody, non-custodial role claims, provider-of-record responsibility, conversion, fiat payout, payment / remittance / mobile-money, same-name validation, user class, KYC / AML / sanctions, liquidity, prefunding, fees / FX / spread, settlement finality, failed payout / refunds, complaint / dispute / consumer protection, privacy, audit / retention, Trust UX disclosure, provider outreach boundary, legal reliance boundary, implementation boundary, and Class B execution boundary. It recommends either counsel engagement / formal legal opinion under a separate `§7` / `§7a` ticket if founder / HedgrOps wants to continue the Kenya hypothesis, or no-go / defer Kenya; comparison and additional source-pointer preservation remain optional later decision-support moves only. It does **not** authorize formal legal opinion, legal reliance, counsel engagement, jurisdictional conclusion-making, legal sign-off, evidence review, evidence acceptance, evidence rejection, evidence scoring, evidence evaluation, Evidence Registry modification, registry-state change, blocker closure, gap closure, provider outreach, provider-specific review, provider ranking, provider preference formation, market selection, endpoint approval, endpoint selection, provider selection, jurisdiction selection, chain selection, stablecoin selection, ADR drafting readiness, implementation-preflight, implementation, staging, sandbox use, API keys, internal testing, live operations, custody, rails, stablecoin conversion, deposits, withdrawals, fiat payout, treasury operations, liquidity buffer operations, reconciliation operations, support operations, complaint handling, incident handling, audit operations, Copilot execution, Class C automation, Class B execution, or customer-money activity. No follow-up ticket is active unless separately named in **§7** / **§7a**.
-- **Post-`HOPS-REVIEW-B-001` sequencing (governance-accepted):** `HOPS-REVIEW-B-001` completed a Founder / HedgrOps synthesis review at `docs/ops/governance/offramp/reviews/HEDGR_KENYA_KES_MPESA_THESIS_STRESS_TEST_SYNTHESIS_REVIEW.md`, grounded in the completed `EVID-INTAKE-B-004` source-pointer classification for `FRQ-OFFRAMP-001` - Kenya / KES same-name M-Pesa-primary withdrawal hypothesis. It synthesizes thesis stress-test learning, a friction severity map, Trust UX implications, governance implications, Kenya-as-learning-path posture, a Philippines / readiness-optimized comparison frame, founder / HedgrOps decision options, and a recommended next governed move. Its recommended legal-review preflight move is now completed as `LEGAL-PREFLIGHT-B-001` in **§116**; its market-comparison frame remains an optional later decision-support move only. It does **not** authorize evidence review, evidence acceptance, evidence rejection, evidence scoring, evidence evaluation, Evidence Registry modification, registry-state change, blocker closure, gap closure, provider outreach, provider-specific review, provider ranking, provider preference formation, legal reliance, legal opinion, market selection, endpoint approval, endpoint selection, provider selection, jurisdiction selection, chain selection, stablecoin selection, ADR drafting readiness, implementation-preflight, implementation, staging, sandbox use, API keys, internal testing, live operations, custody, rails, stablecoin conversion, deposits, withdrawals, fiat payout, treasury operations, liquidity buffer operations, reconciliation operations, support operations, complaint handling, incident handling, audit operations, Copilot execution, Class C automation, Class B execution, or customer-money activity. No follow-up ticket is active unless separately named in **§7** / **§7a**.
-- **Post-`EVID-INTAKE-B-004` sequencing (governance-accepted):** `EVID-INTAKE-B-004` completed a governed source-pointer classification artifact at `docs/ops/governance/offramp/HEDGR_CLASS_B_OFFRAMP_KENYA_KES_MPESA_SOURCE_POINTER_CLASSIFICATION.md` for `FRQ-OFFRAMP-001` - Kenya / KES same-name M-Pesa-primary withdrawal hypothesis. It preserves and classifies already-available public, repo-native, and founder-provided non-confidential source pointers only; maps friction, gaps, blockers, provider-confirmation-needed areas, legal-review-needed areas, operational-evidence-needed areas, trust UX risks, cash-pickup fallback / inclusion notes, no-go / defer signals, and founder / HedgrOps next-decision options. It does **not** authorize evidence review, evidence acceptance, evidence rejection, evidence scoring, evidence evaluation, Evidence Registry modification, registry-state change, blocker closure, gap closure, provider outreach, provider-specific review, provider ranking, provider preference formation, legal reliance, market selection, endpoint approval, endpoint selection, provider selection, jurisdiction selection, chain selection, stablecoin selection, ADR drafting readiness, implementation-preflight, implementation, staging, sandbox use, API keys, internal testing, live operations, custody, rails, stablecoin conversion, deposits, withdrawals, fiat payout, treasury operations, liquidity buffer operations, reconciliation operations, support operations, complaint handling, incident handling, audit operations, Copilot execution, Class C automation, Class B execution, or customer-money activity. Valid next founder / HedgrOps options are limited to no-go / defer Kenya, later provider-specific evidence review, legal-review preflight, comparison against another market hypothesis, or preserving additional allowed source pointers under a new bounded ticket; no such ticket is active unless separately named in **§7** / **§7a**.
-- **Post-`EVID-INTAKE-B-003` sequencing (governance-accepted):** `EVID-INTAKE-B-003` completed a governed single-hypothesis intake authority-entry artifact at `docs/ops/governance/offramp/HEDGR_CLASS_B_OFFRAMP_KENYA_KES_MPESA_INTAKE_AUTHORITY_ENTRY.md` for `FRQ-OFFRAMP-001` — Kenya / KES same-name M-Pesa-primary withdrawal hypothesis. It records what a subsequent bounded intake ticket may preserve, receive, and classify. It does **not** select Kenya as a launch market, select M-Pesa as an approved endpoint, select a provider, authorize evidence review, evidence acceptance, evidence rejection, evidence scoring, evidence evaluation, Evidence Registry modification, registry-state change, blocker closure, gap closure, provider outreach, market selection, endpoint selection, provider selection, jurisdiction selection, chain selection, stablecoin selection, ADR drafting readiness, implementation-preflight, implementation, staging, sandbox use, internal testing, live operations, custody, rails, stablecoin conversion, deposits, withdrawals, treasury operations, reconciliation operations, support operations, audit operations, Copilot execution, Class C automation, or customer-money activity. The valid next founder / HedgrOps question is whether to authorize a **subsequent** bounded evidence-intake ticket for this hypothesis; no such intake ticket is active unless separately named in **§7** / **§7a**.
-- **Post-`EVID-INTAKE-B-002` sequencing (governance-accepted):** `EVID-INTAKE-B-002` completed a bounded Market / Endpoint Source-Pointer Brief at `docs/ops/governance/offramp/HEDGR_CLASS_B_OFFRAMP_MARKET_ENDPOINT_EVIDENCE_BRIEF.md`. It preserved and classified source pointers only. It does **not** authorize evidence review, evidence acceptance, evidence rejection, evidence scoring, evidence evaluation, Evidence Registry modification, registry-state change, blocker closure, gap closure, provider outreach, market selection, endpoint selection, provider selection, jurisdiction selection, chain selection, ADR drafting readiness, implementation-preflight, implementation, staging, sandbox use, internal testing, live operations, custody, rails, stablecoin conversion, deposits, withdrawals, treasury operations, reconciliation operations, support operations, audit operations, Copilot execution, Class C automation, or customer-money activity.
-- **Post-`GOV-A-REV-002` sequencing (governance-accepted):** `GOV-A-REV-002` completed the Class B Evidence Intake Authorization Brief as a governed, non-authorizing artifact at `docs/ops/governance/class-b/HEDGR_CLASS_B_EVIDENCE_INTAKE_AUTHORIZATION_BRIEF.md`. It formalizes what a future bounded evidence-intake ticket may authorize, but it does **not** itself authorize evidence intake, evidence collection, evidence requests, evidence review, evidence acceptance, registry-state changes, provider outreach, market selection, provider selection, or customer-money activity.
-- **HOPS-BRIDGE-001 closeout note:** `HOPS-BRIDGE-001` closeout is recorded in **§109**. Operational verification, governance-envelope checks, and post-closeout operating rules remain in `apps/bridge-worker/VERIFICATION.md` as verification evidence only; that file does **not** create sequencing authority and must not be read as a substitute for **§7** / **§7a**.
-- **Post-`OFFRAMP-GOV-001` sequencing (governance-accepted):** Off-ramp is now recorded as a **doctrine-informed cross-cutting governance framework** implemented through Class B evidence and subordinate to the Constitutional Charter, MVP doctrine, Stability Engine read-only boundaries, and the closed Class B governance / evidence program. The promoted research artifacts are supporting references only. This closeout does **not** create an independent governance institution parallel to Class B or the Stability Engine. It does **not** authorize evidence intake, evidence acceptance, provider selection, market selection, provider outreach, ADR acceptance, implementation, staging, sandbox use, internal testing, live operations, custody, rails, stablecoin conversion, treasury operations, reconciliation operations, support operations, audit operations, ledger truth, accounting truth, Copilot execution, Class C automation, or customer fund movement authority.
-- **Off-ramp evidence matrix preparation posture (non-authorizing; mirrored by `OFFRAMP-GOV-002`):** `docs/ops/governance/offramp/HEDGR_OFFRAMP_EVIDENCE_MATRIX_PREP_DRAFT.md` remains a **Founder / HedgrOps review draft** and **non-authorizing preparation artifact**. It defines evidence domains for a future, separately authorized Class B off-ramp readiness determination. The conservative candidate hypothesis remains **same-name user withdrawal only**. Third-party remittance, payroll, supplier payout, bulk disbursement, P2P, OTC, agent-network operation, Hedgr-managed MNO prefunding, Hedgr fiat custody, and instant/guaranteed withdrawal claims remain **out of scope**. Market evidence should precede provider preference; off-ramp evidence quality should carry more weight than general crypto adoption in market selection; chain selection remains open until endpoint/provider evidence exists; cash pickup is fallback/inclusion infrastructure, not default; providers lacking failure, refund, and reconciliation evidence should be disqualified from further consideration. `EVID-INTAKE-B-002` preserved source pointers only and did **not** promote the matrix into evidence review, evidence acceptance, market selection, provider selection, implementation readiness, or Class B readiness. This posture mirror does **not** authorize provider outreach, legal reliance, sandbox testing, implementation, ADR drafting, Class B readiness, or customer-money movement.
-- **Brand System Governance sequencing:** **§6d** records the approved Brand System Governance ticket set and recommended order. `BRAND-001` through `BRAND-009` are complete. `BRAND-006-FU-003` through `BRAND-006-FU-006` remain non-authorizing until a future **§7** ticket names them with a bounded **§7a** brief.
-- **Post–`GOV-INTAKE-B-002` sequencing (governance-accepted):** `GOV-INTAKE-B-002` completed the Class B Evidence Intake Governance Model as a documentation-only governance artifact. It did **not** authorize evidence intake, evidence collection, evidence requests, evidence acceptance, evidence rejection, evidence scoring, evidence evaluation, registry-state changes, evidence-state changes, blocker closure, gap closure, readiness, ADR drafting readiness, implementation-proposal preflight, implementation, staging, sandbox use, internal testing, live operations, custody, rails, stablecoin conversion, treasury operations, reconciliation, support operations, audit operations, ledger truth, accounting truth, Copilot execution, Class C automation, or customer fund movement authority.
-- **Post–`COP-GOV-001` sequencing (governance-accepted):** `COP-GOV-001` completed the intended **advisory-boundary definition** lane as a documentation-only governance artifact. It did **not** widen product, engine, backend, policy, Copilot **runtime**, execution, accounting, ledger, vendor, custody, stablecoin, Circle, live-service, or customer-facing automation authority. Copilot MVP posture remains **advisory, non-directive, non-executing, hermetic, non-accounting, non-policy-authoritative**, and **outside `§6b` category 8** unless future doctrine and ADRs widen the boundary. Any later Copilot **implementation** requires a separate **§7** name and **§7a** brief. Do not infer Copilot implementation, runtime binding, engine binding, policy binding, backend work, execution authority, or finance-style autonomy from `COP-GOV-001`.
-- **Governance reconciliation note:** **`UI-SRA-001`** activation artifacts (`docs/ops/retail-ui/implementation-readouts/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_EXECUTION_REQUEST.md`, **`docs/ops/retail-ui/implementation-readouts/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_STATUS_PATCH_PROPOSAL.md`**, and **§7** / **§7a** activation language) first landed in commit **`1bd65d1`**; shipped dashboard implementation landed in **`da96e1e`**. Branch history was reconciled so activation, support docs, implementation, and this closeout (**§44**) cohabit the same lineage without implying a false single-commit ordering. See **`docs/ops/retail-ui/implementation-readouts/HEDGR_RETAIL_UI_SHIPPED_ROUTE_ADAPTATION_EXECUTION_READOUT.md` §2**.
-- **§6b** is not sequencing authority — Transition Readiness taxonomy and scrutiny input only; only **§7** / **§7a** name approved work when a ticket is active. `MC-S3-017` clarified this rule; it did not convert §6b table rows, examples, or disposition labels into backlog approval.
-- **§6e** authorizes controlled multi-lane activation only for the three explicitly named lanes under Accepted **D-026**; it does **not** convert recommendations, roadmaps, or Class B findings into execution authority; it does **not** authorize unrestricted multi-ticket execution; absence/ambiguity/pause/deprecation restores the singular-ticket default.
-- When **§7** names approved lane ticket(s) under Accepted **§6e**, each active brief lives in **§7a** until that lane's closeout. When a lane has no named ticket, that lane is idle. When **§7** names none across all lanes, or when **§6e** / **D-026** is absent/ambiguous/paused/deprecated, **§7a** holds the singular no-active-ticket stub / singular-ticket default.
-- **Future work:** Further extension beyond any closed **§7** ticket still requires a new **§7** ticket; prototype-route outcomes do not widen scope by implication; backend or frontend lane completion does not satisfy the **§6e** convergence gate.
-- Do not treat backlog, roadmap, or *Proposed* ADRs as sequenced work unless **§7** is updated explicitly.
-- Cursor must not assume continuation beyond **§6** merged truth, **§6a** release-closeout assessment, **§6b** transition standard, **§6e** parallelism boundaries (when Accepted and unambiguous), **§7** / **§7a** (when ticket(s) are active), and current governance.
-- Cursor must not continue automatically into work beyond what is explicitly defined in this file for an active ticket.
-- Cursor must not drift beyond explicitly defined scope.
-- Cursor must not connect Lane B or Lane C outputs to live Class B execution, provider adapters, or customer-money paths.
-- Cursor must not treat a mutable status entry as a general override of `AGENTS.md` deny-by-default sequencing constraints.
+- **Kenya counsel path (`COUNSEL-SEND-B-001` / Internal D-028):** **DEFER**. No packet authorized to send. Kenya remains primary thesis stress test; thesis not rejected or closed. No successor Kenya legal ticket active unless separately named. See **§6f.1**.
+- **Governed parallelism (Accepted; §6e / D-026 lane model; active pass §6f.2 / D-029; Founder-confirmed 2026-07-10):** Controlled Parallelism **v2** names only `PH-COMP-B-003` (Lane A) and `FE-TRUST-002` (Lane C). Lane B is idle. **Default remains one active implementation ticket** unless the §6e/§6f exception is active and unambiguous. Parallel authorization does **not** authorize unrestricted multi-ticket execution. No lane may widen another lane’s authority without a separate Founder decision. No lane widens Class B execution, custody, rails, conversion, settlement, legal reliance, or customer-money authority. Convergence gate in **§6e** remains unsatisfied. Kenya counsel path remains **DEFER** and separate. Procedural checklist: `docs/ops/governance/HEDGR_GOVERNED_PARALLEL_PASS_CHECKLIST.md` (**§124**) — non-authorizing by itself.
+- **Active Lane A (Class B Evidence Readiness):** `PH-COMP-B-003` — Philippines / PHP exact public source-pointer preservation for unresolved `PHSP-*` candidates (**§7a** brief active).
+- **Active Lane B (backend foundation):** None (not named in Controlled Parallelism v2).
+- **Active Lane C (UX Trust Testing):** `FE-TRUST-002` — Visibly synthetic withdrawal journey for closed-user testing (**§7a** brief active).
+- **Last completed ticket (summary):** `GOV-PHILOSOPHY-001` - Governed Progress Under Uncertainty philosophy + ADR **0023** (**§125**). Prior: `GOV-PARALLEL-002` (**§124**); `FE-TRUST-001` (**§123**); `BE-FOUND-001` (**§122**); `PH-COMP-B-002` (**§121**); `GOV-PARALLEL-001` (**§120**); `PH-COMP-B-001` (**§119**); `COUNSEL-B-001` (**§118**).
+- **Post-`COUNSEL-SEND-B-001` DEFER (governance-accepted; §6f.1 / D-028):** Founder deferred authorization to send the Kenya counsel packet. Does not reject Kenya, establish a negative legal conclusion, close the thesis, infer unsuitability, authorize internal legal reliance, or authorize Class B execution. Revisit only under conditions in **§6f.1**.
+- **Post-Controlled Parallelism v2 activation (governance-accepted; §6f.2 / D-029):** Founder activated concurrent `PH-COMP-B-003` and `FE-TRUST-002` only. Lane independence and non-convergence hold. Does **not** authorize Class B execution, counsel send, market/provider/endpoint selection, or customer-money activity.
+- **Post-`GOV-PHILOSOPHY-001` sequencing (governance-accepted):** Philosophy codified; does not widen execution. Successor tickets appear only when separately named (now: **§6f.2** / **§7** / **§7a**).
+- **Post-`GOV-PARALLEL-002` sequencing (governance-accepted):** Checklist remains non-authorizing by itself. Controlled Parallelism v2 is authorized only by **§6f.2** / D-029 + this **§7** / **§7a** naming.
+- **Post-`GOV-PARALLEL-001` sequencing (governance-accepted):** **§6e** / D-026 remains the lane-model authority. v1 named tickets are complete; active naming is under **§6f.2**.
+- **Post-`PH-COMP-B-002` sequencing (governance-accepted):** Source-pointer classification completed (**§121**). **`PH-COMP-B-003`** is the separately named successor for exact public locator preservation only.
+- **Post-`COUNSEL-B-001` sequencing (governance-accepted):** Packet draft completed (**§118**). Send authorization is **DEFER** per **§6f.1** / D-028.
+- **§6b** is not sequencing authority. **§6e** / **§6f** authorize controlled multi-lane activation only for explicitly named lanes/tickets; absence/ambiguity/pause/deprecation restores the singular-ticket default.
+- When **§7** names approved lane ticket(s), each active brief lives in **§7a** until that lane's closeout. Lane B is idle in this pass.
+- Cursor must not connect Lane C outputs to live Class B execution, provider adapters, or customer-money paths.
+- Cursor must not treat UX feedback as Class B authorization or §7 sequencing authority.
 - No active lane may widen, inherit, approve, or modify another lane’s authority without a separate Founder decision and repo-native governance update.
-- Kenya counsel path remains separate and unchanged by governed parallelism or the Philippines comparison lane.
+- Kenya counsel path remains **DEFER** (**§6f.1**); Controlled Parallelism v2 does not send counsel materials or reopen counsel engagement.
+- Do not treat backlog, roadmap, or *Proposed* ADRs as sequenced work unless **§7** is updated explicitly.
+- Convergence gate remains unsatisfied. Completion of both active lanes does not satisfy it.
 
 ---
 
 ## 7a. Active execution tickets (governed parallel lanes)
 
-No active execution ticket is currently named in any governed lane.
+Active under Controlled Parallelism v2 (**§6f.2** / Internal **D-029**):
 
-Under **§6e** (Accepted **D-026** only), **§7a** holds one bounded brief per active lane when a lane is named. Lanes may progress independently only inside their briefs. No brief widens Class B execution authority. No lane may widen another lane’s authority. If **§6e** / **D-026** is absent, ambiguous, paused, or deprecated, restore the singular-ticket default and ignore multi-lane briefs.
+- **Lane A:** `PH-COMP-B-003` (brief below)
+- **Lane B:** idle (not named)
+- **Lane C:** `FE-TRUST-002` (brief below)
 
-Procedural support for future Founder-approved passes (non-authorizing): `docs/ops/governance/HEDGR_GOVERNED_PARALLEL_PASS_CHECKLIST.md` (`GOV-PARALLEL-002`, **§124**). The checklist does not activate tickets or authorize a second parallel pass.
+Under **§6e** (lane model) + **§6f.2** (active pass), **§7a** holds one bounded brief per active lane. Lanes may progress independently only inside their briefs. No brief widens Class B execution authority. No lane may widen another lane’s authority. If **§6f.2** / **D-029** is absent, ambiguous, paused, or deprecated, restore the singular-ticket default.
 
-Governance philosophy (non-authorizing operating doctrine): `docs/doctrine/hedgr-governance-philosophy.md` (`GOV-PHILOSOPHY-001`, **§125**, ADR **0023**). The philosophy does not activate tickets, widen execution authority, or substitute for **§7** / **§7a** naming.
+Procedural support (non-authorizing by itself): `docs/ops/governance/HEDGR_GOVERNED_PARALLEL_PASS_CHECKLIST.md` (`GOV-PARALLEL-002`, **§124**).
 
-The `PH-COMP-B-002`, `BE-FOUND-001`, and `FE-TRUST-001` briefs below are retained as archived closeout context only. Completed records live in **§121**, **§122**, and **§123**.
+Governance philosophy (non-authorizing operating doctrine): `docs/doctrine/hedgr-governance-philosophy.md` (`GOV-PHILOSOPHY-001`, **§125**, ADR **0023**).
+
+Kenya counsel disposition: **DEFER** (`COUNSEL-SEND-B-001` / **§6f.1** / D-028).
+
+Archived briefs for completed tickets remain below for closeout context (`GOV-PHILOSOPHY-001`, `PH-COMP-B-002`, `BE-FOUND-001`, `FE-TRUST-001`, and earlier).
 
 ---
 
+### Active brief — Lane A — Class B Evidence Readiness — `PH-COMP-B-003`
+
+**Active execution ticket:** **`PH-COMP-B-003`** - Philippines / PHP exact public source-pointer preservation for unresolved `PHSP-*` candidates.
+
+**Objective:** Preserve exact public locators for the unresolved Philippines / PHP external-source candidates already classified under `PH-COMP-B-002`, without evidence acceptance, legal interpretation, market selection, or Class B execution authority.
+
+**Execution class:** Documentation-only Class B evidence-intake / source-pointer preservation (Lane A; non-execution).
+
+**Authority basis:** Founder-approved Controlled Parallelism v2 (**§6f.2** / D-029) + this **§7** / **§7a** naming; grounded in completed `PH-COMP-B-002` (**§121**).
+
+**Type:** Documentation-only evidence-intake tranche / exact public locator preservation.
+
+**In scope:**
+- Updates to `docs/ops/governance/offramp/HEDGR_CLASS_B_OFFRAMP_PHILIPPINES_PHP_SOURCE_POINTER_CLASSIFICATION.md` (and closely related offramp docs only if required to map locators to existing `PHSP-*` entries).
+- Preserve exact public URLs, publication locators, and issuing authorities for unresolved external-source candidates already named by `PH-COMP-B-002`.
+- Map preserved locators to existing `PHSP-*` entries; record publication dates and observable source status.
+- Preserve source text or metadata only where authorized by repository conventions.
+- Maintain explicit distinction between source preservation and evidence acceptance.
+- Status / Notion staging activation and closeout updates only in `docs/ops/HEDGR_STATUS.md` and `docs/ops/NOTION_GOVERNANCE_STAGING.md`.
+
+**Must not:**
+- Evidence acceptance, rejection, scoring, evaluation, or sufficiency determination.
+- Evidence Registry row / state movement, blocker closure, or gap closure.
+- Substantive legal interpretation or contradiction resolution.
+- Provider ranking, selection, outreach, or commercial engagement.
+- Market selection; endpoint approval; counsel contact or counsel send.
+- Comparison conclusion based on unresolved or newly preserved material.
+- ADR drafting readiness, implementation-preflight, implementation, staging, sandbox use, API keys, internal testing, live operations, Class B execution, or customer-money activity.
+- Changes to `apps/`, `packages/`, `scripts/`, `.github/`, tests, backend, frontend, `apps/frontend/lib/engine/**`, CI workflows, Copilot runtime, product copy, shipped routes, prototype routes, or ADR status.
+- Pausing, superseding, rejecting, or closing the Kenya thesis; sending the deferred counsel packet.
+- Activating or connecting `FE-TRUST-002` outputs to Class B execution.
+
+**Surfaces:**
+- `docs/ops/governance/offramp/**` (Philippines / PHP source-pointer classification and closely related mapping only)
+- `docs/ops/HEDGR_STATUS.md`
+- `docs/ops/NOTION_GOVERNANCE_STAGING.md`
+
+**Acceptance shape:**
+- Exact public locators preserved and mapped to existing `PHSP-*` candidates where locators are publicly obtainable under ticket scope.
+- Explicit non-authorization language and Kenya-path non-supersession / DEFER language held.
+- Lane A restored to idle (or next named Lane A ticket) on closeout with a completed-ticket record; Lane C remains governed by its own brief.
+- No `apps/` / `packages/` / CI / engine / runtime / ADR status changes.
+
+**Stop conditions:** Work requires evidence acceptance, legal conclusion, provider outreach, market selection, or Class B execution to continue; ticket interpreted as authorizing counsel send or comparison conclusions.
+
+**Rollback path:** Revert the documentation PR; no customer remediation; no counsel or provider offboarding.
+
+**Lane note:** This ticket does **not** authorize `PH-LEGAL-B-001`, counsel send, evidence acceptance, provider outreach, market selection, endpoint approval, provider selection, implementation, Class B execution, or customer-money activity.
+
+**Non-authorization statement:** `PH-COMP-B-003` does not authorize Class B execution, customer-money activity, counsel send, or any convergence-gate item in **§6e**.
+
+---
+
+### Active brief — Lane C — UX Trust Testing — `FE-TRUST-002`
+
+**Active execution ticket:** **`FE-TRUST-002`** - Visibly synthetic withdrawal journey for closed-user testing.
+
+**Objective:** Produce a visibly synthetic withdrawal journey suitable for targeted closed-user testing without implying live product, market, provider, or withdrawal availability.
+
+**Execution class:** Class A informational / synthetic frontend trust-surface (non-executing).
+
+**Authority basis:** Founder-approved Controlled Parallelism v2 (**§6f.2** / D-029) + this **§7** / **§7a** naming; builds on completed `FE-TRUST-001` (**§123**) and shipped read-only dashboard / withdraw trust baselines.
+
+**Type:** Class A frontend / trust-surface presentation + synthetic fixtures (prototype-preferred).
+
+**In scope:**
+- A bounded, visibly synthetic withdrawal journey (prefer `apps/frontend/app/prototype/**` or an equivalently labelled non-default demo mount) composing `FE-TRUST-001` synthetic exception states with calm institutional withdrawal trust presentation.
+- Explicit synthetic / non-live / non-production labelling so closed-user sessions cannot mistake the journey for live availability.
+- Optional closed-user test facilitator notes under `docs/ops/` limited to claim boundaries and session labelling (no product-availability claims).
+- Frontend Vitest coverage for synthetic labelling, disabled/non-executing primary actions where applicable, and trust-framing denylist continuity.
+- Governed design tokens and existing design-system authority only.
+- Status / Notion staging closeout updates only.
+
+**Required UX posture:** Status before action; risk visibility; clear exit/support paths; no urgency; no guaranteed outcomes; no implied regulatory approval, provider availability, or settlement truth; no simulated state presented as live state; calm institutional presentation; tangibility without readiness (ADR **0023** / governance philosophy).
+
+**Must not:**
+- Enabled live withdrawal or deposit actions; provider branding; live provider availability.
+- Live fees, live FX, live limits, real payout timing.
+- “Instant” or “guaranteed” payout claims.
+- Endpoint / regulatory / chain / stablecoin / market selection.
+- Real-money receipts; executable transaction controls; production route activation of unavailable flows.
+- Misleading success states; customer-money activity.
+- Backend live coupling; Class B execution; Copilot directive/runtime binding.
+- Widening Stability Engine posture semantics beyond existing read-only / informational ADRs.
+- Treating user feedback as Class B authorization, market selection, or §7 sequencing authority.
+- Connecting outputs to counsel send, provider outreach, or convergence-gate satisfaction.
+
+**Dependencies:** None on Class B market/provider decisions or `PH-COMP-B-003` completion. Must not require Lane A outputs.
+
+**Assumptions:** Synthetic states remain informational; closed-user feedback is exploration evidence only; work remains useful if no Class B rail is ever approved.
+
+**Risks:** Mock UX drift toward implied product commitments; pressure to activate unavailable flows; over-broad ticket interpretation; legal-process timing incorrectly influencing UX research (mitigated by counsel DEFER).
+
+**Stop conditions:** Surface implies live execution/availability; requires provider-specific behaviour; cannot keep synthetic labelling; validation/trust review fails; work begins driving market/provider selection; feedback treated as Class B authority.
+
+**Expected behaviour:** Target users can inspect a labelled synthetic withdrawal journey and read-only dashboard context without any customer-money action becoming possible.
+
+**Affected files / modules (expected):** `apps/frontend/app/prototype/**` and/or clearly labelled demo mounts; reuse of `apps/frontend/lib/tx/synthetic-exception-state.ts` / `SyntheticTxExceptionNotice`; corresponding `__tests__`; optional `docs/ops/**` facilitator/claim-boundary notes; status closeout only. Prefer avoiding shipped `(app)/withdraw` money-mutation polish unless required and still visibly non-live. Avoid `apps/frontend/lib/engine/**` unless a future separate ticket names it.
+
+**Test / verification path:** Frontend Vitest for presentation contracts and synthetic labelling; no live network; preserve hermetic CI.
+
+**Feature-flag / deny-default posture:** Synthetic/demo mounts must remain non-default or explicitly labelled; unknown execution state denies action; no production enablement of live money controls.
+
+**Rollback path:** Revert the frontend PR; remove synthetic journey mount; no customer remediation; no provider offboarding.
+
+**Acceptance criteria:**
+- Visibly synthetic withdrawal journey merged with tests and explicit non-live labelling.
+- No live deposit/withdraw enablement; no provider/rail/chain/stablecoin/endpoint/market selected.
+- Remains truthful if no Class B rail is approved, provider/endpoint/market changes, Class B execution remains blocked, or prototype never connects to real money.
+- Lane C closeout restores Lane C to idle without implying product availability or convergence-gate satisfaction.
+- User-session feedback, if captured, is recorded as exploration evidence only.
+
+**Non-authorization statement:** Completion of `FE-TRUST-002` does **not** satisfy the **§6e** convergence gate. UI completeness is not product availability. Closed-user testing is not Class B readiness. This ticket does not authorize Class B execution or customer-money activity.
+
+---
+
+### Archived brief — Governance doctrine — `GOV-PHILOSOPHY-001`
 ### Archived brief — Governance doctrine — `GOV-PHILOSOPHY-001`
 
 **Completed execution ticket:** **`GOV-PHILOSOPHY-001`** - Codify Hedgr Governance Philosophy: Governed Progress Under Uncertainty.
