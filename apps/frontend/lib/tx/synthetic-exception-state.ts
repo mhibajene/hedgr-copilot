@@ -12,12 +12,22 @@ export type SyntheticTxExceptionState =
 
 export type SyntheticTxExceptionTone = 'steady' | 'attention' | 'blocked' | 'neutral';
 
+export type SyntheticTxExceptionFixtureId =
+  | 'pending-review-v1'
+  | 'manual-review-v1'
+  | 'blocked-v1'
+  | 'unavailable-v1'
+  | 'failed-v1'
+  | 'cancelled-v1';
+
 export interface SyntheticTxExceptionPresentation {
   state: SyntheticTxExceptionState;
+  fixtureId: SyntheticTxExceptionFixtureId;
   label: string;
   headline: string;
   body: string;
   supportNote: string;
+  comprehensionPrompt: string;
   primaryActionLabel: string;
   tone: SyntheticTxExceptionTone;
   isSynthetic: true;
@@ -30,66 +40,78 @@ export const SYNTHETIC_TX_EXCEPTION_PRESENTATIONS: Record<
 > = {
   [SyntheticTxExceptionState.PENDING]: {
     state: SyntheticTxExceptionState.PENDING,
+    fixtureId: 'pending-review-v1',
     label: 'Pending review',
-    headline: 'The request is waiting in a synthetic review state.',
-    body: 'No funds are being moved. This fixture only checks how a pending exception is explained before any live rail exists.',
-    supportNote: 'Support ownership and timing would require later provider and operations evidence.',
-    primaryActionLabel: 'Review status context',
+    headline: 'A synthetic review process is still open.',
+    body: 'This fixture means a review exists in the research scenario and has not concluded. It is a temporary review state, not a permanent rejection, unsupported market, or provider decision.',
+    supportNote: 'No reviewer, service level, provider, or live request exists outside this fixture.',
+    comprehensionPrompt: 'What do you think “Pending review” means here?',
+    primaryActionLabel: 'Read the synthetic status explanation',
     tone: 'steady',
     isSynthetic: true,
     nonLiveLabel: 'Synthetic / non-live fixture',
   },
   [SyntheticTxExceptionState.BLOCKED]: {
     state: SyntheticTxExceptionState.BLOCKED,
+    fixtureId: 'blocked-v1',
     label: 'Blocked',
-    headline: 'The request is blocked in this synthetic fixture.',
-    body: 'The safest visible state is a stop condition until policy, provider, or operational evidence says otherwise.',
-    supportNote: 'No regulatory, endpoint, or provider approval is implied by this state.',
-    primaryActionLabel: 'Review blocker context',
+    headline: 'A known synthetic rule prevents continuation.',
+    body: 'This fixture is a rule-based stop. It is not a review in progress, an unsupported-market finding, or a provider rejection.',
+    supportNote: 'The rule exists only in this research fixture; no live policy, endpoint, or provider decision is implied.',
+    comprehensionPrompt: 'What do you think “Blocked” means here?',
+    primaryActionLabel: 'Read the synthetic status explanation',
     tone: 'blocked',
     isSynthetic: true,
     nonLiveLabel: 'Synthetic / non-live fixture',
   },
   [SyntheticTxExceptionState.FAILED]: {
     state: SyntheticTxExceptionState.FAILED,
+    fixtureId: 'failed-v1',
     label: 'Failed',
-    headline: 'The synthetic request could not continue.',
-    body: 'This state is a presentation fixture for failure explanation only; it is not a provider receipt or settlement record.',
-    supportNote: 'Retry, refund, and evidence handoff rules require separate operating authority.',
-    primaryActionLabel: 'Review failure context',
+    headline: 'A synthetic attempt did not complete.',
+    body: 'This fixture means a simulated attempt ended without completion. It is not a known-rule block, a provider receipt, or a settlement record.',
+    supportNote: 'No retry, refund, provider handoff, or financial record exists in this prototype.',
+    comprehensionPrompt: 'What do you think “Failed” means here?',
+    primaryActionLabel: 'Read the synthetic status explanation',
     tone: 'attention',
     isSynthetic: true,
     nonLiveLabel: 'Synthetic / non-live fixture',
   },
   [SyntheticTxExceptionState.CANCELLED]: {
     state: SyntheticTxExceptionState.CANCELLED,
+    fixtureId: 'cancelled-v1',
     label: 'Cancelled',
-    headline: 'The synthetic request has been cancelled.',
-    body: 'Cancellation here is a mock presentation state. It does not prove reversal rights, refund timing, or local rail finality.',
-    supportNote: 'Later provider evidence would need to define cancellation and refund paths.',
-    primaryActionLabel: 'Review cancellation context',
+    headline: 'The synthetic process was intentionally stopped.',
+    body: 'This fixture means the user or the simulated system deliberately ended the scenario. It is not a failure, rejection, or proof of reversal.',
+    supportNote: 'No live cancellation, refund, provider instruction, or rail finality exists here.',
+    comprehensionPrompt: 'What do you think “Cancelled” means here?',
+    primaryActionLabel: 'Read the synthetic status explanation',
     tone: 'neutral',
     isSynthetic: true,
     nonLiveLabel: 'Synthetic / non-live fixture',
   },
   [SyntheticTxExceptionState.UNAVAILABLE]: {
     state: SyntheticTxExceptionState.UNAVAILABLE,
+    fixtureId: 'unavailable-v1',
     label: 'Unavailable',
-    headline: 'This path is unavailable in the synthetic contract.',
-    body: 'The interface denies action when state is unknown, unsupported, or not authorized for live use.',
-    supportNote: 'Unavailable does not mean a market, endpoint, provider, rail, chain, or stablecoin has been rejected or approved.',
-    primaryActionLabel: 'Review availability context',
+    headline: 'This path is not enabled and its authority is unknown.',
+    body: 'This fixture denies progression because no path has been enabled or authorized. It is not a failed attempt, permanent rejection, or unsupported-market conclusion.',
+    supportNote: 'Unavailable does not mean a market, endpoint, provider, rail, chain, or stablecoin was rejected or approved.',
+    comprehensionPrompt: 'What do you think “Unavailable” means here?',
+    primaryActionLabel: 'Read the synthetic status explanation',
     tone: 'neutral',
     isSynthetic: true,
     nonLiveLabel: 'Synthetic / non-live fixture',
   },
   [SyntheticTxExceptionState.MANUAL_REVIEW]: {
     state: SyntheticTxExceptionState.MANUAL_REVIEW,
+    fixtureId: 'manual-review-v1',
     label: 'Manual review',
-    headline: 'The synthetic request is marked for manual review.',
-    body: 'This fixture shows a calm review posture only. It does not create support operations or customer-money handling authority.',
-    supportNote: 'Manual review ownership, service levels, and escalation evidence remain future requirements.',
-    primaryActionLabel: 'Review manual context',
+    headline: 'Human review would be required before progression.',
+    body: 'This fixture means the scenario cannot progress unless a person reviews it. It is not a pending review already underway or a permanent block.',
+    supportNote: 'No reviewer, support operation, service level, or customer-money handling authority exists here.',
+    comprehensionPrompt: 'What do you think “Manual review” means here?',
+    primaryActionLabel: 'Read the synthetic status explanation',
     tone: 'steady',
     isSynthetic: true,
     nonLiveLabel: 'Synthetic / non-live fixture',

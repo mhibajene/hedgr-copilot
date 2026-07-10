@@ -1,22 +1,21 @@
 'use client';
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { SyntheticTxExceptionNotice } from '../../../components';
 import {
   SyntheticTxExceptionState,
+  getSyntheticTxExceptionPresentation,
   type SyntheticTxExceptionState as SyntheticTxExceptionStateValue,
 } from '../../../lib/tx';
 
-const EXCEPTION_FIXTURES: Array<{
-  state: SyntheticTxExceptionStateValue;
-  label: string;
-}> = [
-  { state: SyntheticTxExceptionState.PENDING, label: 'Pending review' },
-  { state: SyntheticTxExceptionState.BLOCKED, label: 'Blocked' },
-  { state: SyntheticTxExceptionState.FAILED, label: 'Failed' },
-  { state: SyntheticTxExceptionState.CANCELLED, label: 'Cancelled' },
-  { state: SyntheticTxExceptionState.UNAVAILABLE, label: 'Unavailable' },
-  { state: SyntheticTxExceptionState.MANUAL_REVIEW, label: 'Manual review' },
+const EXCEPTION_FIXTURE_STATES: SyntheticTxExceptionStateValue[] = [
+  SyntheticTxExceptionState.PENDING,
+  SyntheticTxExceptionState.MANUAL_REVIEW,
+  SyntheticTxExceptionState.BLOCKED,
+  SyntheticTxExceptionState.UNAVAILABLE,
+  SyntheticTxExceptionState.FAILED,
+  SyntheticTxExceptionState.CANCELLED,
 ];
 
 const JOURNEY_STEPS = [
@@ -25,8 +24,8 @@ const JOURNEY_STEPS = [
     detail: 'The journey is visibly synthetic and non-live.',
   },
   {
-    label: 'Availability check',
-    detail: 'Action is denied by default because no rail is connected.',
+    label: 'Deny-by-default boundary',
+    detail: 'Progression is unavailable because no rail or authority is connected.',
   },
   {
     label: 'Exception explanation',
@@ -43,12 +42,16 @@ export function SyntheticWithdrawalJourney() {
     useState<SyntheticTxExceptionStateValue>(
       SyntheticTxExceptionState.UNAVAILABLE
     );
+  const selectedPresentation =
+    getSyntheticTxExceptionPresentation(selectedState);
 
   return (
     <div
       role="main"
       data-testid="synthetic-withdrawal-journey"
       data-synthetic="true"
+      data-research-fixture-id={selectedPresentation.fixtureId}
+      data-financial-state="none"
       className="min-h-screen bg-hedgr-100/30 text-hedgr-dark"
     >
       <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:py-12">
@@ -151,16 +154,17 @@ export function SyntheticWithdrawalJourney() {
               role="tablist"
               aria-label="Synthetic exception fixture"
             >
-              {EXCEPTION_FIXTURES.map((fixture) => {
-                const isSelected = selectedState === fixture.state;
+              {EXCEPTION_FIXTURE_STATES.map((state) => {
+                const fixture = getSyntheticTxExceptionPresentation(state);
+                const isSelected = selectedState === state;
                 return (
                   <button
-                    key={fixture.state}
+                    key={state}
                     type="button"
                     role="tab"
                     aria-selected={isSelected}
                     data-research-control="true"
-                    onClick={() => setSelectedState(fixture.state)}
+                    onClick={() => setSelectedState(state)}
                     className={`rounded-lg border px-3 py-2 text-sm font-medium focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-hedgr-500 ${
                       isSelected
                         ? 'border-hedgr-primary bg-hedgr-primary text-hedgr-white'
@@ -173,19 +177,42 @@ export function SyntheticWithdrawalJourney() {
               })}
             </div>
 
+            <div
+              data-testid="synthetic-withdrawal-fixture-trace"
+              data-research-fixture-id={selectedPresentation.fixtureId}
+              data-session-capture="research-fixture"
+              className="mt-5 rounded-lg border border-hedgr-200 bg-hedgr-100 p-3 text-sm text-hedgr-800"
+            >
+              <p>
+                <span className="font-semibold">Fixture:</span>{' '}
+                <code className="text-xs font-semibold tracking-wide">
+                  {selectedPresentation.fixtureId}
+                </code>
+              </p>
+              <p className="mt-1 text-xs leading-5 text-hedgr-700">
+                Stable research identifier for facilitator notes and session capture.
+                It is not a transaction ID or financial record.
+              </p>
+            </div>
+
             <SyntheticTxExceptionNotice state={selectedState} className="mt-5" />
 
             <div className="mt-5 border-t border-hedgr-200 pt-5">
-              <button
-                type="button"
-                disabled
-                aria-disabled="true"
-                data-transaction-control="true"
+              <div
+                role="status"
+                aria-label="Transaction progression unavailable"
+                data-transaction-control="unavailable"
+                data-interactive="false"
                 data-testid="synthetic-withdrawal-primary-action"
-                className="w-full cursor-not-allowed rounded-lg border border-hedgr-200 bg-hedgr-100 px-4 py-3 text-sm font-semibold text-hedgr-700"
+                className="w-full rounded-lg border border-hedgr-200 bg-hedgr-100 px-4 py-3 text-center"
               >
-                No transaction is available in this prototype
-              </button>
+                <p className="text-sm font-semibold text-hedgr-800">
+                  Continue unavailable
+                </p>
+                <p className="mt-1 text-xs leading-5 text-hedgr-700">
+                  No transaction is available in this prototype.
+                </p>
+              </div>
               <p className="mt-3 text-center text-xs leading-5 text-hedgr-600">
                 The fixture remains useful even if no Class B rail is approved.
               </p>
@@ -200,6 +227,21 @@ export function SyntheticWithdrawalJourney() {
           <h2 className="mt-2 text-lg font-semibold text-hedgr-800">
             Closed-user session prompts
           </h2>
+          <div
+            data-testid="synthetic-withdrawal-comprehension-prompt"
+            data-research-fixture-id={selectedPresentation.fixtureId}
+            className="mt-4 rounded-lg border border-hedgr-300 bg-hedgr-white p-4"
+          >
+            <p className="text-sm font-semibold text-hedgr-800">
+              {selectedPresentation.comprehensionPrompt}
+            </p>
+            <p className="mt-2 text-xs leading-5 text-hedgr-700">
+              Listen for whether the participant distinguishes temporary review,
+              permanent rejection, unsupported market, missing provider evidence,
+              and an unavailable rail. Do not treat their answer as a market or
+              provider decision.
+            </p>
+          </div>
           <ul className="mt-4 grid gap-3 text-sm leading-6 text-hedgr-dark md:grid-cols-3">
             <li>What made it clear that this was a research fixture?</li>
             <li>Was the reason for stopping understandable before any action?</li>
@@ -211,6 +253,25 @@ export function SyntheticWithdrawalJourney() {
             activity.
           </p>
         </aside>
+
+        <section className="mt-6 rounded-2xl border border-hedgr-200 bg-hedgr-white p-6 text-center">
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-hedgr-600">
+            Safe research exit
+          </p>
+          <p className="mx-auto mt-2 max-w-2xl text-sm leading-6 text-hedgr-dark">
+            Ending this journey returns to the research prototype index. It writes
+            no transaction, wallet, ledger, provider, rail, or backend state.
+          </p>
+          <Link
+            href="/prototype?researchExit=synthetic-withdrawal"
+            data-testid="end-research-journey"
+            data-research-control="true"
+            data-financial-action="false"
+            className="mt-4 inline-flex rounded-lg border border-hedgr-primary bg-hedgr-white px-4 py-2.5 text-sm font-semibold text-hedgr-primary hover:bg-hedgr-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-hedgr-500"
+          >
+            End research journey
+          </Link>
+        </section>
 
         <p className="mt-6 text-center text-xs text-hedgr-600">
           Prototype route only · not linked from production navigation · no live network

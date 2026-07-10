@@ -46,6 +46,7 @@ export {
 export {
   SyntheticTxExceptionState,
   SYNTHETIC_TX_EXCEPTION_PRESENTATIONS,
+  type SyntheticTxExceptionFixtureId,
   type SyntheticTxExceptionPresentation,
   type SyntheticTxExceptionTone,
   getSyntheticTxExceptionPresentation,
