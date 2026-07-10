@@ -65,7 +65,7 @@ When implementing:
 
 When changing **`apps/frontend/lib/engine/**`** or shipped Stability Engine trust surfaces (posture, notices, allocation bands, or simulator boundaries per `docs/ops/HEDGR_STATUS.md`), read **in order**:
 
-1. `docs/ops/HEDGR_STATUS.md` — **§7** / **§7a** for the approved next ticket (when named); **§6b** is Transition Readiness taxonomy only, not sequencing authority
+1. `docs/ops/HEDGR_STATUS.md` — **§7** / **§7a** for the approved next ticket (when named); **§6b** is Transition Readiness taxonomy only, not sequencing authority. Concurrent lanes are permitted only under the **Ticket sequencing / governed parallelism** exception below (currently **§6e** / **D-026** when Accepted and unambiguous).
 2. `docs/decisions/SPRINT-2-ADR-INDEX.md`
 3. `docs/decisions/0015-stability-engine-is-the-system-center.md`
 4. `docs/decisions/0014-stability-engine-read-only-in-sprint-2.md`
@@ -74,6 +74,16 @@ When changing **`apps/frontend/lib/engine/**`** or shipped Stability Engine trus
 Sprint planning procedure (subordinate to §7 / §7a): `docs/ops/HEDGR_SPRINT_PLANNING_PROTOCOL.md`
 
 If anything conflicts, stop and surface it explicitly (do not silently reconcile).
+
+### Ticket sequencing / governed parallelism (deny-by-default)
+
+The default posture is one active implementation ticket. Concurrent lanes are permitted only where `docs/ops/HEDGR_STATUS.md` records an accepted Founder-approved parallelism decision, explicitly names each active lane and ticket, defines the authority class and exclusions of each lane, and preserves independent stop conditions and rollback. Absence, ambiguity, pause, or deprecation of that decision restores the singular-ticket default.
+
+Parallel authorization applies only to the explicitly named lanes. It does not authorize unrestricted multi-ticket execution.
+
+No active lane may widen, inherit, approve, or modify another lane’s authority without a separate Founder decision and repo-native governance update.
+
+Current Accepted instance (when present and unambiguous): Internal Decision **D-026** / **`HEDGR_STATUS.md` §6e**, naming only `PH-COMP-B-002`, `BE-FOUND-001`, and `FE-TRUST-001`. A mutable status entry alone is not a general override of agent execution constraints.
 
 ## 8) Decision Logging (ADR)
 Material decisions must be logged as ADRs under docs/ using the HedgrOps ADR standard.
@@ -152,7 +162,7 @@ When implementing:
 
 When changing **`apps/frontend/lib/engine/**`** or shipped Stability Engine trust surfaces (posture, notices, allocation bands, or simulator boundaries per `docs/ops/HEDGR_STATUS.md`), read **in order**:
 
-1. `docs/ops/HEDGR_STATUS.md` — **§7** / **§7a** for the approved next ticket (when named); **§6b** is Transition Readiness taxonomy only, not sequencing authority
+1. `docs/ops/HEDGR_STATUS.md` — **§7** / **§7a** for the approved next ticket (when named); **§6b** is Transition Readiness taxonomy only, not sequencing authority. Concurrent lanes are permitted only under the **Ticket sequencing / governed parallelism** exception below (currently **§6e** / **D-026** when Accepted and unambiguous).
 2. `docs/decisions/SPRINT-2-ADR-INDEX.md`
 3. `docs/decisions/0015-stability-engine-is-the-system-center.md`
 4. `docs/decisions/0014-stability-engine-read-only-in-sprint-2.md`
@@ -161,6 +171,16 @@ When changing **`apps/frontend/lib/engine/**`** or shipped Stability Engine trus
 Sprint planning procedure (subordinate to §7 / §7a): `docs/ops/HEDGR_SPRINT_PLANNING_PROTOCOL.md`
 
 If anything conflicts, stop and surface it explicitly (do not silently reconcile).
+
+### Ticket sequencing / governed parallelism (deny-by-default)
+
+The default posture is one active implementation ticket. Concurrent lanes are permitted only where `docs/ops/HEDGR_STATUS.md` records an accepted Founder-approved parallelism decision, explicitly names each active lane and ticket, defines the authority class and exclusions of each lane, and preserves independent stop conditions and rollback. Absence, ambiguity, pause, or deprecation of that decision restores the singular-ticket default.
+
+Parallel authorization applies only to the explicitly named lanes. It does not authorize unrestricted multi-ticket execution.
+
+No active lane may widen, inherit, approve, or modify another lane’s authority without a separate Founder decision and repo-native governance update.
+
+Current Accepted instance (when present and unambiguous): Internal Decision **D-026** / **`HEDGR_STATUS.md` §6e**, naming only `PH-COMP-B-002`, `BE-FOUND-001`, and `FE-TRUST-001`. A mutable status entry alone is not a general override of agent execution constraints.
 
 ## 8) Decision Logging (ADR)
 Material decisions must be logged as ADRs under `docs/decisions/` using:
@@ -326,7 +346,7 @@ When implementing:
 
 When changing `apps/frontend/lib/engine/**` or shipped Stability Engine trust surfaces (posture, notices, allocation bands, or simulator boundaries per `docs/ops/HEDGR_STATUS.md`), read in order:
 
-1. `docs/ops/HEDGR_STATUS.md` — `§7` / `§7a` for the approved next ticket (when named); `§6b` is Transition Readiness taxonomy only, not sequencing authority
+1. `docs/ops/HEDGR_STATUS.md` — `§7` / `§7a` for the approved next ticket (when named); `§6b` is Transition Readiness taxonomy only, not sequencing authority. Concurrent lanes are permitted only under the **Ticket sequencing / governed parallelism** exception below (currently `§6e` / **D-026** when Accepted and unambiguous).
 2. `docs/decisions/SPRINT-2-ADR-INDEX.md`
 3. `docs/decisions/0015-stability-engine-is-the-system-center.md`
 4. `docs/decisions/0014-stability-engine-read-only-in-sprint-2.md`
@@ -336,11 +356,21 @@ Sprint planning procedure (subordinate to `§7` / `§7a`): `docs/ops/HEDGR_SPRIN
 
 If anything conflicts, stop and surface it explicitly. Do not silently reconcile.
 
+### Ticket sequencing / governed parallelism (deny-by-default)
+
+The default posture is one active implementation ticket. Concurrent lanes are permitted only where `docs/ops/HEDGR_STATUS.md` records an accepted Founder-approved parallelism decision, explicitly names each active lane and ticket, defines the authority class and exclusions of each lane, and preserves independent stop conditions and rollback. Absence, ambiguity, pause, or deprecation of that decision restores the singular-ticket default.
+
+Parallel authorization applies only to the explicitly named lanes. It does not authorize unrestricted multi-ticket execution.
+
+No active lane may widen, inherit, approve, or modify another lane’s authority without a separate Founder decision and repo-native governance update.
+
+Current Accepted instance (when present and unambiguous): Internal Decision **D-026** / `HEDGR_STATUS.md` `§6e`, naming only `PH-COMP-B-002`, `BE-FOUND-001`, and `FE-TRUST-001`. A mutable status entry alone is not a general override of agent execution constraints.
+
 ### Brand-facing implementation governance
 
 When changing brand-facing UI, assets, visual tokens, typography, AI-generated UI, or brand-governed documentation, read in order:
 
-1. `docs/ops/HEDGR_STATUS.md` — `§7` / `§7a` for the approved ticket when named; `§6d` records the Brand System Governance spine
+1. `docs/ops/HEDGR_STATUS.md` — `§7` / `§7a` for the approved ticket when named; brand work remains singular unless separately named; concurrent non-brand lanes follow the **Ticket sequencing / governed parallelism** exception above; `§6d` records the Brand System Governance spine
 2. `DESIGN.md` — machine-readable brand authority
 3. `assets/brand/README.md` — governed asset inventory and usage reference
 4. `docs/brand/HEDGR_BRAND_SYSTEM.md`
