@@ -24,7 +24,7 @@
 
 This artifact defines a bounded Philippines / PHP off-ramp comparison frame for founder and HedgrOps governance review.
 
-It exists to compare a readiness-optimized market frame against the Kenya / KES / M-Pesa thesis stress-test path. It does not pivot away from Kenya. It does not pause, supersede, or replace the Kenya counsel path unless founder / repo-native authority separately says so.
+It exists to compare a readiness-optimized market frame against the Kenya / KES / M-Pesa thesis stress-test path. It does not pivot away from Kenya. It does not pause, replace, supersede, or weaken the Kenya counsel path unless Founder and repo-native authority separately decide.
 
 Strategic distinction:
 
@@ -41,9 +41,9 @@ That friction is not treated as failure. It is treated as product and governance
 
 Because Kenya is friction-dense, Hedgr needs a comparator before overfitting the Class B readiness model to one difficult African mobile-money path.
 
-The Philippines is proposed as a readiness-optimized benchmark because public source classes appear to offer a more visible digital asset, regulated-provider, e-wallet, bank, and retail-payment-system frame than Kenya currently offers.
+The Philippines is proposed as a readiness-optimized benchmark because public source classes appear to offer a potentially more observable digital asset, regulated-provider, e-wallet, bank, and retail-payment-system frame than Kenya currently offers.
 
-This artifact does not conclude that the Philippines is easier, selected, viable, legally available, operationally available, provider-ready, or Class B-ready.
+This artifact does not conclude that the Philippines is objectively superior, easier, selected, viable, legally available, operationally available, provider-ready, or Class B-ready.
 
 ## 3. Core comparison question
 
@@ -125,9 +125,9 @@ It may not compare actual preserved Philippine source evidence, because this tic
 
 | Criterion | Comparison use | Boundary |
 |---|---|---|
-| Endpoint clarity | Compare whether later source pointers make the endpoint question more or less visible than Kenya / M-Pesa. | Visibility only; not endpoint approval. |
+| Endpoint clarity | Compare whether later source pointers create different endpoint-question visibility than Kenya / M-Pesa. | Visibility only; not endpoint approval. |
 | Provider-of-record clarity | Compare whether later provider source classes could frame conversion, payout, compliance, liquidity, refunds, and support ownership. | Not provider selection, ranking, or reliance. |
-| Legal / regulatory visibility | Compare whether later public regulator and framework source classes improve issue-spotting before counsel review. | Not legal advice or legal reliance. |
+| Legal / regulatory visibility | Compare whether later public regulator and framework source classes make issue-spotting inputs more readily discoverable before counsel review. | Not legal advice or legal reliance. |
 | Payment-rail visibility | Compare whether later retail-payment-system source classes frame same-name PHP payout questions. | Not payment-rail approval. |
 | Same-name validation visibility | Compare whether later source classes expose name-match, user-class, endpoint, and mismatch-handling questions. | Not operational proof. |
 | Liquidity / prefunding posture | Compare whether the Philippines hypothesis appears less dependent on Hedgr-managed local prefunding than the Kenya baseline. | Not a conclusion; must be separately evidenced. |
@@ -173,13 +173,13 @@ This artifact does not refresh those sources.
 This artifact does not create PHSP-* source IDs.
 This artifact does not treat any source pointer as evidence acceptance, legal reliance, provider selection, endpoint approval, or Class B readiness.
 
-Public Philippine source candidates may change after preservation. Any later source-pointer ticket must record access dates, source class, currentness, contradiction checks, and non-reliance posture before any comparison use.
+Public Philippine source candidates may change following preservation. Any later source-pointer ticket must record access dates, source class, currentness, contradiction checks, and non-reliance posture before any comparison use.
 
 ## 10. Philippines friction hypotheses
 
 ### 10.1 Lower-friction hypothesis
 
-The lower-friction hypothesis is that a Philippines / PHP frame may expose more visible public regulated-provider, e-wallet, bank-account, and retail-payment-system source classes than the Kenya / KES / M-Pesa path, potentially reducing some endpoint-discovery and MNO-prefunding uncertainty.
+The lower-friction hypothesis is that a Philippines / PHP frame may expose potentially more observable public regulated-provider, e-wallet, bank-account, and retail-payment-system source classes than the Kenya / KES / M-Pesa path, potentially reducing some endpoint-discovery and MNO-prefunding uncertainty.
 
 This is not assumed.
 It must be tested only if separately authorized.
@@ -299,13 +299,31 @@ The founder / HedgrOps decision after this artifact is limited to:
 The founder decision is not Kenya or Philippines.
 The founder decision is not which market to launch.
 
-## 15. Recommended successor path
+## 15. Recommendation authority distinction
 
-Recommended successor path:
+### Repo Authority
+
+Repo-native authority remains in `docs/ops/HEDGR_STATUS.md` `§7` and `§7a`.
+
+This artifact does not activate any successor ticket.
+
+This artifact does not sequence, authorize, or approve `PH-COMP-B-002`, `PH-LEGAL-B-001`, or any other successor work.
+
+### HedgrOps Interpretation
+
+HedgrOps interpretation is that a later source-pointer preservation and classification ticket could be useful if Founder and repo-native authority separately want additional comparison evidence before any Philippines legal / regulatory preflight or broader Kenya-versus-Philippines readiness-friction comparison.
+
+This interpretation remains decision-support only. It is not repo authority.
+
+### Non-authoritative Recommendation
+
+Non-authoritative HedgrOps recommendation:
+
+Founder may separately consider opening `PH-COMP-B-002` if additional comparison evidence is desired.
 
 > `PH-COMP-B-002` - Philippines / PHP readiness-benchmark source-pointer preservation and classification
 
-Recommended posture:
+Recommended posture, if separately authorized:
 
 - source-pointer preservation and classification only;
 - no evidence acceptance;
@@ -317,11 +335,23 @@ Recommended posture:
 - no implementation;
 - no customer-money activity.
 
+Source-pointer preservation does not imply correctness, completeness, sufficiency, legal effect, evidentiary weight, operational readiness, or future reliance.
+
 Alternative successor path:
 
 > `PH-LEGAL-B-001` - Philippines legal / regulatory preflight comparison
 
 `PH-LEGAL-B-001` should only happen after source-pointer preservation exists and founder / HedgrOps decides a legal comparison is useful.
+
+### Illustrative governance dependency chain (non-authoritative)
+
+Illustrative only:
+
+`PH-COMP-B-001` -> possible `PH-COMP-B-002` -> possible `PH-LEGAL-B-001` -> possible later comparison or decision-support artifact
+
+Founder and repo-native authority may reorder, pause, replace, or terminate this sequence.
+
+The sequence is illustrative only.
 
 ## 16. Non-authorization statement
 
@@ -329,6 +359,6 @@ This artifact is non-authorizing and documentation-only. It creates a comparison
 
 It does not authorize evidence intake, source preservation, source classification, evidence review, evidence acceptance, evidence rejection, evidence scoring, evidence sufficiency assessment, blocker closure, gap closure, Evidence Registry state movement, PHSP source ID creation, legal reliance, legal advice, formal legal opinion, jurisdictional conclusion-making, provider outreach, provider-specific review, commercial engagement, provider ranking, provider preference formation, market selection, endpoint approval, endpoint selection, provider selection, chain selection, stablecoin selection, ADR drafting readiness, implementation-preflight, implementation, sandbox access, API keys, staging, testing, live operations, production use, customer-money movement, custody, deposits, withdrawals, stablecoin conversion, fiat payout, treasury operations, liquidity buffer operations, reconciliation operations, support operations, complaint handling, incident handling, audit operations, Class B execution, or customer fund movement authority.
 
-This artifact does not pause, supersede, or replace the Kenya counsel path unless founder / repo-native authority separately says so.
+This artifact does not pause, replace, supersede, or weaken the Kenya counsel path unless Founder and repo-native authority separately decide.
 
 Any future Philippines source-pointer preservation, source classification, legal / regulatory preflight, provider-specific review, provider outreach, market comparison, ADR drafting readiness, implementation-preflight, implementation, staging, sandbox use, testing, live operations, custody, rails, stablecoin conversion, deposits, withdrawals, fiat payout, treasury operations, reconciliation operations, support operations, audit operations, Class B execution, or customer-money activity requires separate repo-native authorization through `docs/ops/HEDGR_STATUS.md` `§7` and `§7a`.
