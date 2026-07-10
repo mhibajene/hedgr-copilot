@@ -3745,6 +3745,7 @@ Completed and merged:
 - `BE-FOUND-001` - Execution-neutral backend domain-error taxonomy and request-correlation primitives (Class A backend foundation; completed record **§122**)
 - `FE-TRUST-001` - Synthetic transaction exception-state presentation contract (Class A informational frontend trust surface; completed record **§123**)
 - `GOV-PARALLEL-002` - Governed parallel pass checklist and closeout template (documentation-only governance / operational control; completed record **§124**)
+- `GOV-PHILOSOPHY-001` - Codify Hedgr Governance Philosophy: Governed Progress Under Uncertainty (documentation-only governance / doctrine; completed record **§125**; ADR **0023**)
 
 Current active ticket status:
 
@@ -3752,7 +3753,8 @@ Current active ticket status:
 - **Active Lane A (Class B governance):** None. `PH-COMP-B-002` completed as documentation-only source-pointer preservation and classification (**§121**).
 - **Active Lane B (backend foundation):** None. `BE-FOUND-001` completed as execution-neutral backend foundation (**§122**).
 - **Active Lane C (frontend trust surfaces):** None. `FE-TRUST-001` completed as synthetic / non-live frontend trust-surface presentation contract (**§123**).
-- **Last completed ticket (summary):** `GOV-PARALLEL-002` - governed parallel pass checklist and closeout template (**§124**). Prior: `FE-TRUST-001` (**§123**); `BE-FOUND-001` (**§122**); `PH-COMP-B-002` (**§121**); `GOV-PARALLEL-001` (**§120**); `PH-COMP-B-001` (**§119**); `COUNSEL-B-001` (**§118**); `COUNSEL-SCOPE-B-001` (**§117**); `LEGAL-PREFLIGHT-B-001` (**§116**); `HOPS-REVIEW-B-001` (**§115**); `EVID-INTAKE-B-004` (**§114**); `EVID-INTAKE-B-003` (**§113**); `EVID-INTAKE-B-002` (**§112**); `GOV-A-REV-002` (**§111**); `OFFRAMP-GOV-002` (**§110**); `OFFRAMP-GOV-001` (**§108**); `HOPS-BRIDGE-001` (**§109**).
+- **Last completed ticket (summary):** `GOV-PHILOSOPHY-001` - Governed Progress Under Uncertainty philosophy + ADR **0023** (**§125**). Prior: `GOV-PARALLEL-002` (**§124**); `FE-TRUST-001` (**§123**); `BE-FOUND-001` (**§122**); `PH-COMP-B-002` (**§121**); `GOV-PARALLEL-001` (**§120**); `PH-COMP-B-001` (**§119**); `COUNSEL-B-001` (**§118**); `COUNSEL-SCOPE-B-001` (**§117**); `LEGAL-PREFLIGHT-B-001` (**§116**); `HOPS-REVIEW-B-001` (**§115**); `EVID-INTAKE-B-004` (**§114**); `EVID-INTAKE-B-003` (**§113**); `EVID-INTAKE-B-002` (**§112**); `GOV-A-REV-002` (**§111**); `OFFRAMP-GOV-002` (**§110**); `OFFRAMP-GOV-001` (**§108**); `HOPS-BRIDGE-001` (**§109**).
+- **Post-`GOV-PHILOSOPHY-001` sequencing (governance-accepted):** `GOV-PHILOSOPHY-001` codified Governed Progress Under Uncertainty at `docs/doctrine/hedgr-governance-philosophy.md` and recorded adoption in **ADR 0023**. It standardizes **Provisional — Governed Assumption** records, reversibility-as-mechanism, exploration-as-evidence, parallel-lane non-convergence, external-feedback lag mitigation, and tangibility-without-readiness claims. It does **not** activate Class B work, change execution class, authorize implementation, approve custody / rail / legal / regulatory / financial claims, override **§7** / **§7a**, override `AGENTS.md`, override accepted ADRs, create authority from founder conversation alone, or convert exploratory evidence into implementation direction. No successor ticket is activated.
 - **Post-`GOV-PARALLEL-002` sequencing (governance-accepted):** `GOV-PARALLEL-002` created a reusable procedural checklist for future Founder-approved governed-parallelism passes. It treats Controlled Parallelism v1 as operational precedent only, not standing concurrency authority. It does **not** authorize a second parallel pass, activate any lane ticket, widen Class A / B / C authority, satisfy the convergence gate, or alter the singular-ticket default. Any future parallel pass still requires a separate Founder decision and explicit **§7** / **§7a** naming.
 - **Post-`GOV-PARALLEL-001` sequencing (governance-accepted):** `GOV-PARALLEL-001` recorded founder-approved controlled parallelism in **§6e**, updated singular-ticket sequencing to at-most-one-active-ticket-per-authorized-lane, activated `BE-FOUND-001` and `FE-TRUST-001` beside continuing `PH-COMP-B-002`, and defined the Class B execution convergence gate. It does **not** authorize Class B execution, provider selection, market selection, endpoint / rail / chain / stablecoin approval, custody, conversion, settlement, legal reliance, customer-money movement, or connection of engineering lanes to live financial activity.
 - **Post-`PH-COMP-B-001` sequencing (governance-accepted):** `PH-COMP-B-001` completed a bounded comparison-frame artifact at `docs/ops/governance/offramp/comparisons/HEDGR_PHILIPPINES_PHP_OFFRAMP_READINESS_COMPARISON_FRAME.md`, preserving Kenya as thesis stress test and Philippines as readiness benchmark. It defines comparison criteria, future permitted source classes, source-pointer candidates for later review, Philippines friction hypotheses, open factual dependencies, future comparison output shape, founder / HedgrOps decision options, and a recommended successor path without preserving, refreshing, classifying, reviewing, accepting, rejecting, scoring, or assessing any Philippine source evidence during that ticket. It creates no PHSP-* source IDs in the comparison-frame artifact and does **not** authorize legal reliance, legal advice, formal legal opinion, jurisdictional conclusion-making, provider outreach, provider-specific review, commercial engagement, market selection, endpoint approval, endpoint selection, provider selection, chain selection, stablecoin selection, ADR drafting readiness, implementation-preflight, implementation, staging, sandbox use, API keys, testing, live operations, custody, deposits, withdrawals, fiat payout, treasury operations, reconciliation operations, support operations, complaint handling, incident handling, audit operations, Class B execution, or customer-money activity. The Kenya counsel path is not paused, superseded, or replaced. **`PH-COMP-B-002`** is now the separately named **§7** / **§7a** successor for source-pointer preservation and classification only.
@@ -3794,7 +3796,39 @@ Under **§6e** (Accepted **D-026** only), **§7a** holds one bounded brief per a
 
 Procedural support for future Founder-approved passes (non-authorizing): `docs/ops/governance/HEDGR_GOVERNED_PARALLEL_PASS_CHECKLIST.md` (`GOV-PARALLEL-002`, **§124**). The checklist does not activate tickets or authorize a second parallel pass.
 
+Governance philosophy (non-authorizing operating doctrine): `docs/doctrine/hedgr-governance-philosophy.md` (`GOV-PHILOSOPHY-001`, **§125**, ADR **0023**). The philosophy does not activate tickets, widen execution authority, or substitute for **§7** / **§7a** naming.
+
 The `PH-COMP-B-002`, `BE-FOUND-001`, and `FE-TRUST-001` briefs below are retained as archived closeout context only. Completed records live in **§121**, **§122**, and **§123**.
+
+---
+
+### Archived brief — Governance doctrine — `GOV-PHILOSOPHY-001`
+
+**Completed execution ticket:** **`GOV-PHILOSOPHY-001`** - Codify Hedgr Governance Philosophy: Governed Progress Under Uncertainty.
+
+**Objective:** Codify a repo-native Governance Philosophy defining how Hedgr makes disciplined progress when complete information is unavailable, without widening execution authority.
+
+**Execution class:** Documentation-only governance / doctrine.
+
+**Authority basis:** Founder-approved activation and execution for `GOV-PHILOSOPHY-001` (2026-07-10) + this **§7** / **§7a** naming.
+
+**Type:** Documentation-only governance / doctrine adoption.
+
+**In scope:**
+- Canonical doctrine at `docs/doctrine/hedgr-governance-philosophy.md`
+- Adoption ADR `docs/decisions/0023-governed-progress-under-uncertainty.md`
+- Thin pointers in `.cursorrules` doctrine precedence and `docs/doctrine/hedgrops-decision-governance-and-adr-export-standard.md`
+- Status / Notion staging activation and closeout only
+
+**Must not:**
+- Activate Class B work; change execution class; authorize implementation beyond this documentation ticket
+- Approve custody, rail, legal, regulatory, or financial claims
+- Override `HEDGR_STATUS.md`, `AGENTS.md`, accepted ADRs, or active doctrine
+- Create authority from founder conversation alone
+- Convert exploratory evidence into implementation direction
+- Modify `apps/`, `packages/`, `scripts/`, `.github/`, tests, backend, frontend, CI, engine, or Copilot runtime
+
+**Non-authorization statement:** `GOV-PHILOSOPHY-001` does not authorize Class B execution, customer-money activity, ticket activation for other work, or any convergence-gate item in **§6e**.
 
 ---
 
@@ -7400,3 +7434,44 @@ No active lane tickets. Singular-ticket default remains intact. Convergence gate
 **§7** / **§7a** record `GOV-PARALLEL-002` completion and remain in no-active-ticket / idle-lane posture.
 
 **Follow-ups:** None activated. Any future governed-parallelism pass appears only when a separate Founder decision is accepted and **§7** / **§7a** explicitly name the lanes and tickets. Kenya counsel path remains separate and unchanged.
+
+---
+
+## 125. Completed execution ticket - GOV-PHILOSOPHY-001 (Governed Progress Under Uncertainty)
+
+**Ticket:** `GOV-PHILOSOPHY-001` - Codify Hedgr Governance Philosophy: Governed Progress Under Uncertainty
+
+**Status:** Completed  
+**Class posture:** Governance / doctrine; documentation-only; non-execution  
+**Visibility:** Public governance rationale (external excerpts subject to founder confidentiality review)  
+**Authority posture:** Operating philosophy only; does not widen execution or ticket-activation authority  
+**Class B execution authorized:** No  
+**Execution class changed:** No  
+**Custody / rail / legal / regulatory / financial claim approved:** No  
+**Customer-money activity authorized:** No  
+**Successor ticket activated:** No
+
+**Objective.** Codify a durable repo-native Governance Philosophy so Hedgr can make tangible progress under incomplete information only where assumptions are explicit, risks are bounded, decisions are governed, and reversal remains credible.
+
+### Outcome (documentation-only governance / doctrine)
+
+- **`docs/doctrine/hedgr-governance-philosophy.md`** — canonical Governance Philosophy: Governed Progress Under Uncertainty; governed-assumption rules; reversibility-as-mechanism; parallel-lane non-convergence; exploration-as-evidence; external-feedback lag mitigation; tangibility-without-readiness; provisional-decision record template; anti-misread and rollback rules.
+- **`docs/decisions/0023-governed-progress-under-uncertainty.md`** — Accepted adoption ADR with trade-offs, assumptions, revisit / kill criteria, and explicit non-authorization note.
+- **`.cursorrules`** — doctrine precedence updated to include the philosophy immediately after the Constitutional Charter, with an explicit non-widening note.
+- **`docs/doctrine/hedgrops-decision-governance-and-adr-export-standard.md`** — added philosophy relationship section and **Provisional — Governed Assumption** status vocabulary.
+- **`docs/ops/HEDGR_STATUS.md`** — recorded completion in **§7**; preserved no-active-ticket posture in **§7a**; added this completed-ticket record.
+- **`docs/ops/NOTION_GOVERNANCE_STAGING.md`** — mirrored completion without Notion-led activation or sequencing.
+
+**Governance guarantees held.** Documentation-only. No `apps/`, `packages/`, `scripts/`, `.github/`, tests, backend, frontend, CI, engine, Copilot runtime, Class B execution, Class C execution, custody, rails, conversion, settlement, legal reliance, provider selection, market selection, or customer-money activity. No override of `HEDGR_STATUS.md` sequencing, `AGENTS.md`, or prior accepted ADRs. Exploration remains evidence, not authority. Provisional assumptions cannot silently harden into permanent policy without revisit / expiry / supersession.
+
+**Scope discipline held.** Philosophy remains subordinate to the Constitutional Charter, `HEDGR_STATUS.md` **§7** / **§7a**, `AGENTS.md`, and accepted ADRs. It elaborates Charter Article IV; it does not replace sequencing authority or create a second concurrency model.
+
+### Resulting posture
+
+No active ticket. Singular-ticket default remains intact. Convergence gate remains unsatisfied. No successor ticket is activated. Kenya counsel path remains separate and unchanged.
+
+### Sequencing note
+
+**§7** / **§7a** record `GOV-PHILOSOPHY-001` completion and remain in no-active-ticket / idle-lane posture.
+
+**Follow-ups:** None activated. Future provisional-assumption records, parallel passes, Class B work, or implementation tickets appear only when separately authorized under **§7** / **§7a**.

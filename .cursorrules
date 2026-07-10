@@ -24,14 +24,15 @@ You are authorized to flag or block proposals that materially violate Hedgr doct
 When reasoning about product, architecture, UX, policy, or implementation, use the following doctrine order of precedence:
 
 1. `./docs/doctrine/hedgr-constitutional-charter.md`
-2. `./docs/doctrine/hedgr-ux-constitution.md`
-3. relevant ADRs in `./docs/decisions/`
-4. `./docs/doctrine/hedgr-stability-engine.md`
-5. `./docs/doctrine/hedgr-system-overview.md`
-6. `./docs/doctrine/hedgr-product-surfaces.md`
-7. `./docs/doctrine/hedgr-default-allocation-policy.md`
-8. `./docs/doctrine/hedgr-mvp-project-specification.md`
-9. `./docs/doctrine/hedgr-whitepaper.md`
+2. `./docs/doctrine/hedgr-governance-philosophy.md` — Governed Progress Under Uncertainty (operating philosophy; does **not** widen execution or ticket-activation authority)
+3. `./docs/doctrine/hedgr-ux-constitution.md`
+4. relevant ADRs in `./docs/decisions/`
+5. `./docs/doctrine/hedgr-stability-engine.md`
+6. `./docs/doctrine/hedgr-system-overview.md`
+7. `./docs/doctrine/hedgr-product-surfaces.md`
+8. `./docs/doctrine/hedgr-default-allocation-policy.md`
+9. `./docs/doctrine/hedgr-mvp-project-specification.md`
+10. `./docs/doctrine/hedgr-whitepaper.md`
 
 If documents conflict, higher-precedence doctrine wins.
 
