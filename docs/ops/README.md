@@ -19,7 +19,7 @@ These files remain at the root of `docs/ops/` because they are common workflow a
 - `runbooks/` - local operations, CI, QA, secrets, observability, infra, and repo workflow procedures.
 - `governance/class-b/` - Class B eligibility, gap, dependency, and legal / compliance prerequisite artifacts.
 - `governance/copilot/` - Codex / Copilot governance conventions, briefs, critique readouts, and advisory-lane artifacts.
-- `governance/mvp/` - MVP phase alignment and product concept governance notes.
+- `governance/mvp/` - MVP phase alignment, product concept notes, MVP Acceptance Framework, and MVP Evidence Register (institutional acceptance criteria; non-executing).
 - `stability-engine/` - Stability Engine trust-surface evidence and UI governance disposition artifacts.
 - `retail-ui/allocation/` - allocation presentation, legibility, family, and micro-test artifacts.
 - `retail-ui/header/` - header and upper-shell refinement artifacts.
