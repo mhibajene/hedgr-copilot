@@ -61,6 +61,19 @@ Each sprint must log 3–5 material decisions.
 
 ---
 
+## **3a. Relationship to Governance Philosophy**
+
+Material progress under incomplete information is governed by:
+
+`docs/doctrine/hedgr-governance-philosophy.md`  
+(ADR **0023** — Governed Progress Under Uncertainty)
+
+That philosophy defines **Provisional — Governed Assumption** as a decision state for bounded progress when external confirmation is incomplete. It does **not** replace this Decision Log standard, override `docs/ops/HEDGR_STATUS.md` **§7** / **§7a**, or authorize execution.
+
+When a logged decision depends on unresolved legal, regulatory, vendor, market, or technical confirmation, prefer status **Provisional — Governed Assumption** (or an explicit provisional note under Assumptions / Revisit) until the dependency is resolved and the decision is Accepted, replaced, or removed.
+
+---
+
 ## **4. Canonical Decision Structure**
 
 ```
@@ -70,6 +83,7 @@ Title:
 
 Status:
 - Proposed
+- Provisional — Governed Assumption
 - Accepted
 - Deprecated
 
