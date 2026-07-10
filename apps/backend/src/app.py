@@ -9,6 +9,7 @@ from flask_cors import CORS
 from .routes.health import bp as health_bp
 from .routes.fx import bp as fx_bp
 from .routes.tx import bp as tx_bp
+from .lib.correlation import register_correlation_handlers
 from .lib.errors import register_error_handlers
 
 
@@ -17,6 +18,7 @@ def create_app() -> Flask:
 
     CORS(app, resources={r"/v1/*": {"origins": "*"}})
 
+    register_correlation_handlers(app)
     register_error_handlers(app)
 
     app.register_blueprint(health_bp, url_prefix="/v1")

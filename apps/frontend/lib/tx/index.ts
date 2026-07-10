@@ -43,3 +43,11 @@ export {
   isTxReviewSeamActive,
 } from './tx-review-simulator';
 
+export {
+  SyntheticTxExceptionState,
+  SYNTHETIC_TX_EXCEPTION_PRESENTATIONS,
+  type SyntheticTxExceptionPresentation,
+  type SyntheticTxExceptionTone,
+  getSyntheticTxExceptionPresentation,
+  resolveSyntheticTxExceptionPresentation,
+} from './synthetic-exception-state';
