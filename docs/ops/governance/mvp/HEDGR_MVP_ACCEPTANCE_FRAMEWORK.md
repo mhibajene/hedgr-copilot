@@ -45,6 +45,8 @@
 
 **Companion artifact:** `docs/ops/governance/mvp/HEDGR_MVP_EVIDENCE_REGISTER.md`
 
+**Governing ADR (principle; non-executing):** `docs/decisions/0024-mvp-acceptance-is-evidence-gated-not-feature-gated.md`
+
 **Related orientation (non-substituting):** `docs/ops/governance/mvp/HEDGR_MVP_PHASE_ALIGNMENT.md`
 
 ---
@@ -300,6 +302,7 @@ Use this checklist only as a review aid. It does not authorize work.
 | MVP Project Specification | Supplies product intent and §12 success criteria; this framework institutionalizes acceptance judgment |
 | `HEDGR_STATUS.md` | Sole implementation activation / sequencing authority |
 | Accepted ADRs | Bind architecture and execution boundaries within scope |
+| ADR 0024 | Records the governance principle that MVP acceptance is evidence-gated, not feature-gated; does not duplicate this framework |
 | Class B / off-ramp evidence programs | Domain-specific evidence machinery; not replaced by this framework |
 | This framework + Evidence Register | Institutional Acceptance Standard and evidence recording model |
 

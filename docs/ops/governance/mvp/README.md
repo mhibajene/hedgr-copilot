@@ -16,6 +16,12 @@ These files do **not** authorize implementation, activate tickets, alter ADRs, o
 | `HEDGR_MVP_PHASE_ALIGNMENT.md` | Phase-alignment readout mapping MVP spec phases to current repo posture |
 | `HEDGR_ATLAS_PRODUCT_CONCEPT_NOTE.md` | Product concept note (governance orientation) |
 
+## Governing ADR (principle)
+
+| ADR | Role |
+|-----|------|
+| `docs/decisions/0024-mvp-acceptance-is-evidence-gated-not-feature-gated.md` | Governance rationale: MVP acceptance is evidence-gated, not feature-gated. Does **not** authorize implementation or sequencing. |
+
 ## Authority reminder
 
 Implementation authority remains:
