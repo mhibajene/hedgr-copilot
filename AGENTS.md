@@ -65,7 +65,7 @@ When implementing:
 
 When changing **`apps/frontend/lib/engine/**`** or shipped Stability Engine trust surfaces (posture, notices, allocation bands, or simulator boundaries per `docs/ops/HEDGR_STATUS.md`), read **in order**:
 
-1. `docs/ops/HEDGR_STATUS.md` — **§7** / **§7a** for the approved next ticket (when named); **§6b** is Transition Readiness taxonomy only, not sequencing authority. Concurrent lanes are permitted only under the **Ticket sequencing / governed parallelism** exception below (currently **§6e** / **D-026** lane model + **§6f.2** / **D-029** active pass when Accepted and unambiguous).
+1. `docs/ops/HEDGR_STATUS.md` — **§7** / **§7a** for the approved next ticket (when named); **§6b** is Transition Readiness taxonomy only, not sequencing authority. Concurrent lanes are permitted only under the **Ticket sequencing / governed parallelism** exception below (currently **§6e** / **D-026** lane model; an active **§6f** pass only when Accepted, unambiguous, and currently naming tickets).
 2. `docs/decisions/SPRINT-2-ADR-INDEX.md`
 3. `docs/decisions/0015-stability-engine-is-the-system-center.md`
 4. `docs/decisions/0014-stability-engine-read-only-in-sprint-2.md`
@@ -83,7 +83,7 @@ Parallel authorization applies only to the explicitly named lanes. It does not a
 
 No active lane may widen, inherit, approve, or modify another lane’s authority without a separate Founder decision and repo-native governance update.
 
-Current Accepted instance (when present and unambiguous): Internal Decision **D-029** / **`HEDGR_STATUS.md` §6f.2** (Controlled Parallelism v2), naming only `PH-COMP-B-003` and `FE-TRUST-002`, under the **§6e** / **D-026** lane model. Lane B is idle in this pass. Kenya counsel send remains **DEFER** (**§6f.1** / **D-028**). A mutable status entry alone is not a general override of agent execution constraints.
+Current parallelism posture: Internal Decision **D-029** / **`HEDGR_STATUS.md` §6f.2** (Controlled Parallelism v2) is **completed historical pass authority** and no longer supplies active concurrency. **§6e** / **D-026** remains the lane-model / exception-framework only. Singular-ticket default is restored. Kenya counsel send remains **DEFER** (**§6f.1** / **D-028**). Any future concurrent lanes require a new Founder-approved pass decision plus explicit **§7** / **§7a** naming. A mutable status entry alone is not a general override of agent execution constraints.
 
 ## 8) Decision Logging (ADR)
 Material decisions must be logged as ADRs under docs/ using the HedgrOps ADR standard.
@@ -162,7 +162,7 @@ When implementing:
 
 When changing **`apps/frontend/lib/engine/**`** or shipped Stability Engine trust surfaces (posture, notices, allocation bands, or simulator boundaries per `docs/ops/HEDGR_STATUS.md`), read **in order**:
 
-1. `docs/ops/HEDGR_STATUS.md` — **§7** / **§7a** for the approved next ticket (when named); **§6b** is Transition Readiness taxonomy only, not sequencing authority. Concurrent lanes are permitted only under the **Ticket sequencing / governed parallelism** exception below (currently **§6e** / **D-026** lane model + **§6f.2** / **D-029** active pass when Accepted and unambiguous).
+1. `docs/ops/HEDGR_STATUS.md` — **§7** / **§7a** for the approved next ticket (when named); **§6b** is Transition Readiness taxonomy only, not sequencing authority. Concurrent lanes are permitted only under the **Ticket sequencing / governed parallelism** exception below (currently **§6e** / **D-026** lane model; an active **§6f** pass only when Accepted, unambiguous, and currently naming tickets).
 2. `docs/decisions/SPRINT-2-ADR-INDEX.md`
 3. `docs/decisions/0015-stability-engine-is-the-system-center.md`
 4. `docs/decisions/0014-stability-engine-read-only-in-sprint-2.md`
@@ -180,7 +180,7 @@ Parallel authorization applies only to the explicitly named lanes. It does not a
 
 No active lane may widen, inherit, approve, or modify another lane’s authority without a separate Founder decision and repo-native governance update.
 
-Current Accepted instance (when present and unambiguous): Internal Decision **D-029** / **`HEDGR_STATUS.md` §6f.2** (Controlled Parallelism v2), naming only `PH-COMP-B-003` and `FE-TRUST-002`, under the **§6e** / **D-026** lane model. Lane B is idle in this pass. Kenya counsel send remains **DEFER** (**§6f.1** / **D-028**). A mutable status entry alone is not a general override of agent execution constraints.
+Current parallelism posture: Internal Decision **D-029** / **`HEDGR_STATUS.md` §6f.2** (Controlled Parallelism v2) is **completed historical pass authority** and no longer supplies active concurrency. **§6e** / **D-026** remains the lane-model / exception-framework only. Singular-ticket default is restored. Kenya counsel send remains **DEFER** (**§6f.1** / **D-028**). Any future concurrent lanes require a new Founder-approved pass decision plus explicit **§7** / **§7a** naming. A mutable status entry alone is not a general override of agent execution constraints.
 
 ## 8) Decision Logging (ADR)
 Material decisions must be logged as ADRs under `docs/decisions/` using:
@@ -249,7 +249,7 @@ Python venv lives at `apps/backend/.venv`. Activate it before running backend co
 
 Status: Binding (repo workflow, engineering conventions, CI posture, agent operating rules)  
 Scope: apps/, packages/, scripts/, .github/, docs/  
-Last updated: 2026-04-23
+Last updated: 2026-07-11
 
 ## 1) Purpose
 AGENTS.md defines how work is executed in this repo and how autonomous or semi-autonomous agents must behave when operating inside Hedgr.
@@ -346,7 +346,7 @@ When implementing:
 
 When changing `apps/frontend/lib/engine/**` or shipped Stability Engine trust surfaces (posture, notices, allocation bands, or simulator boundaries per `docs/ops/HEDGR_STATUS.md`), read in order:
 
-1. `docs/ops/HEDGR_STATUS.md` — `§7` / `§7a` for the approved next ticket (when named); `§6b` is Transition Readiness taxonomy only, not sequencing authority. Concurrent lanes are permitted only under the **Ticket sequencing / governed parallelism** exception below (currently `§6e` / **D-026** lane model + `§6f.2` / **D-029** active pass when Accepted and unambiguous).
+1. `docs/ops/HEDGR_STATUS.md` — `§7` / `§7a` for the approved next ticket (when named); `§6b` is Transition Readiness taxonomy only, not sequencing authority. Concurrent lanes are permitted only under the **Ticket sequencing / governed parallelism** exception below (currently `§6e` / **D-026** lane model; an active `§6f` pass only when Accepted, unambiguous, and currently naming tickets).
 2. `docs/decisions/SPRINT-2-ADR-INDEX.md`
 3. `docs/decisions/0015-stability-engine-is-the-system-center.md`
 4. `docs/decisions/0014-stability-engine-read-only-in-sprint-2.md`
@@ -364,7 +364,7 @@ Parallel authorization applies only to the explicitly named lanes. It does not a
 
 No active lane may widen, inherit, approve, or modify another lane’s authority without a separate Founder decision and repo-native governance update.
 
-Current Accepted instance (when present and unambiguous): Internal Decision **D-029** / `HEDGR_STATUS.md` `§6f.2` (Controlled Parallelism v2), naming only `PH-COMP-B-003` and `FE-TRUST-002`, under the `§6e` / **D-026** lane model. Lane B is idle in this pass. Kenya counsel send remains **DEFER** (`§6f.1` / **D-028**). A mutable status entry alone is not a general override of agent execution constraints.
+Current parallelism posture: Internal Decision **D-029** / `HEDGR_STATUS.md` `§6f.2` (Controlled Parallelism v2) is **completed historical pass authority** and no longer supplies active concurrency. `§6e` / **D-026** remains the lane-model / exception-framework only. Singular-ticket default is restored. Kenya counsel send remains **DEFER** (`§6f.1` / **D-028**). Any future concurrent lanes require a new Founder-approved pass decision plus explicit `§7` / `§7a` naming. A mutable status entry alone is not a general override of agent execution constraints.
 
 ### Brand-facing implementation governance
 

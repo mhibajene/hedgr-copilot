@@ -42,7 +42,7 @@
 
 **Companion artifact:** `docs/ops/governance/mvp/HEDGR_MVP_ACCEPTANCE_FRAMEWORK.md`
 
-**Governing ADR (principle; non-executing):** `docs/decisions/0024-mvp-acceptance-is-evidence-gated-not-feature-gated.md`
+**Governing ADR (principle; Accepted; non-executing):** `docs/decisions/0024-mvp-acceptance-is-evidence-gated-not-feature-gated.md`
 
 ---
 

@@ -45,7 +45,7 @@
 
 **Companion artifact:** `docs/ops/governance/mvp/HEDGR_MVP_EVIDENCE_REGISTER.md`
 
-**Governing ADR (principle; non-executing):** `docs/decisions/0024-mvp-acceptance-is-evidence-gated-not-feature-gated.md`
+**Governing ADR (principle; Accepted; non-executing):** `docs/decisions/0024-mvp-acceptance-is-evidence-gated-not-feature-gated.md`
 
 **Related orientation (non-substituting):** `docs/ops/governance/mvp/HEDGR_MVP_PHASE_ALIGNMENT.md`
 

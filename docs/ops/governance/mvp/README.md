@@ -20,7 +20,7 @@ These files do **not** authorize implementation, activate tickets, alter ADRs, o
 
 | ADR | Role |
 |-----|------|
-| `docs/decisions/0024-mvp-acceptance-is-evidence-gated-not-feature-gated.md` | Governance rationale: MVP acceptance is evidence-gated, not feature-gated. Does **not** authorize implementation or sequencing. |
+| `docs/decisions/0024-mvp-acceptance-is-evidence-gated-not-feature-gated.md` | **Accepted** governing principle: MVP acceptance is evidence-gated, not feature-gated. Does **not** authorize implementation or sequencing. |
 
 ## Authority reminder
 
