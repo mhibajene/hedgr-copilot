@@ -1,22 +1,23 @@
 # ADR 0024 — MVP Acceptance Is Evidence-Gated, Not Feature-Gated
 
-**Status:** Proposed  
+**Status:** Accepted  
 **Date:** 2026-07-11  
+**Accepted:** 2026-07-11  
 **Decision Type:** Ops / Governance / Architecture  
 **Strategic Horizon:** Short-term (MVP) with long-term institutional relevance  
 **Visibility:** Public (governance rationale; eligible for repo ADR export)  
 **Owners:** Hedgr Core  
 **Reversibility:** Reversible (documentation removal only; no runtime impact)  
-**Ticket of record:** Implement ADR — MVP Acceptance Is Evidence-Gated, Not Feature-Gated  
-**Founder posture:** Approved for drafting (this ADR remains Proposed until separately Accepted)
+**Ticket of record:** Founder-directed closeout hygiene with `FE-TRUST-002` (**`HEDGR_STATUS.md` §129**)  
+**Notion mirror (non-authoritative):** D-030 (when staged)
 
 ---
 
 ## Acceptance note
 
-This ADR records the governance principle that institutional MVP acceptance is evidence-led.
+This ADR is **Accepted** as the institutional principle that MVP acceptance is evidence-gated, not feature-gated.
 
-**This ADR does not authorize implementation**, ticket activation, Class B / Class C execution, custody or rail selection, customer-money activity, ADR amendment of other decisions, or any change to current execution posture.
+**Acceptance does not authorize implementation**, ticket activation, Class B / Class C execution, custody or rail selection, customer-money activity, ADR amendment of other decisions, Evidence Register dispositions, institutional MVP “done,” or any change to current execution posture.
 
 Sequencing and implementation activation remain exclusively controlled by:
 
@@ -24,6 +25,11 @@ Sequencing and implementation activation remain exclusively controlled by:
 - accepted ADRs under `docs/decisions/`
 - `AGENTS.md`
 - active repo-native governance
+
+Operational detail remains in:
+
+- `docs/ops/governance/mvp/HEDGR_MVP_ACCEPTANCE_FRAMEWORK.md`
+- `docs/ops/governance/mvp/HEDGR_MVP_EVIDENCE_REGISTER.md`
 
 ---
 

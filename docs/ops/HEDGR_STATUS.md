@@ -1,6 +1,6 @@
 Status: Canonical hand-off file
 Purpose: Strategic continuity, merged implementation truth, and next-ticket authority for Cursor execution
-Last updated: 2026-07-10
+Last updated: 2026-07-11
 
 ---
 
@@ -67,6 +67,8 @@ Important active constraints:
 **Sequencing authority:** Only **§7** / **§7a** name approved active ticket(s). **Default posture:** one active implementation ticket. Concurrent lanes are permitted only where this file records an accepted, active, and unambiguous Founder-approved parallelism decision (**§6e** lane model / Internal **D-026** plus separate active-pass naming under **§6f**), explicitly names each active lane and ticket, defines authority class and exclusions, and preserves independent stop conditions and rollback. Internal **D-029** is completed and no longer supplies active concurrency. Absence, ambiguity, pause, completion, or deprecation of a pass decision restores the singular-ticket default. Parallel authorization applies only to the explicitly named lanes and does **not** authorize unrestricted multi-ticket execution. No lane may widen another lane’s authority without a separate Founder decision and repo-native governance update. **§6b** is Transition Readiness taxonomy and scrutiny input only—not backlog approval or sequencing. **§6e** / **§6f** do **not** widen Class B execution, custody, rails, conversion, settlement, or customer-money authority.
 
 **MVP phased alignment (interpretation aid):** See **`docs/ops/governance/mvp/HEDGR_MVP_PHASE_ALIGNMENT.md`** for how **`docs/doctrine/hedgr-mvp-project-specification.md`** governance-gated phases and success criteria map to the posture stated in this section and in **§6a–§6c**. That readout is **subordinate** to this file and to **§7** / **§7a**; it does **not** widen execution authority or substitute for **§7** naming.
+
+**MVP acceptance principle (ADR 0024, Accepted):** Institutional MVP acceptance is evidence-gated, not feature-gated. Canonical criteria and evidence recording live in **`docs/ops/governance/mvp/HEDGR_MVP_ACCEPTANCE_FRAMEWORK.md`** and **`docs/ops/governance/mvp/HEDGR_MVP_EVIDENCE_REGISTER.md`**. **Acceptance** of ADR **0024** is a boundary reference only; it does **not** authorize implementation, ticket activation, Evidence Register dispositions, institutional MVP “done,” Class B / Class C execution, or customer-money activity. **§7** / **§7a** still govern any implementation ticket.
 
 ---
 
@@ -3849,78 +3851,91 @@ Completed and merged:
 - `GOV-PARALLEL-002` - Governed parallel pass checklist and closeout template (documentation-only governance / operational control; completed record **§124**)
 - `GOV-PHILOSOPHY-001` - Codify Hedgr Governance Philosophy: Governed Progress Under Uncertainty (documentation-only governance / doctrine; completed record **§125**; ADR **0023**)
 - `PH-COMP-B-003` - Philippines / PHP exact public source-pointer preservation for unresolved `PHSP-*` candidates (documentation-only Class B evidence-intake / locator preservation; completed record **§126**)
-- `FE-TRUST-002` - Initial visibly synthetic withdrawal journey implementation merged (Class A informational / synthetic frontend trust surface; prior closeout record **§127**; closure superseded by Founder review and active hardening disposition **§128**)
+- `FE-TRUST-002` - Visibly synthetic withdrawal journey + research-contract hardening closed (Class A informational / synthetic frontend trust surface; prior closeout **§127**; hardening activation **§128**; Founder closeout **§129**)
+- `GOV-ADR-0024` - ADR 0024 Accepted + `AGENTS.md` parallelism drift reconciliation (documentation-only governance hygiene; completed with **§129**)
 
 Current active ticket status:
 
 - **Kenya counsel path (`COUNSEL-SEND-B-001` / Internal D-028):** **DEFER**. No packet authorized to send. Kenya remains primary thesis stress test; thesis not rejected or closed. No successor Kenya legal ticket active unless separately named. See **§6f.1**.
-- **Governed parallelism (Accepted; §6e / D-026 lane model; completed pass §6f.2 / D-029; Founder-confirmed 2026-07-10):** Controlled Parallelism **v2** named `PH-COMP-B-003` (Lane A) and `FE-TRUST-002` (Lane C). Lane A completed independently (**§126**); Lane C reached its prior closeout (**§127**); Lane B was idle. All lanes were idle at D-029 closeout and the singular-ticket default was restored. D-029 remains a completed historical pass decision, not standing concurrency authority; the later singular `FE-TRUST-002` hardening activation (**§128**) does not reopen it. Parallel authorization did **not** authorize unrestricted multi-ticket execution, cross-lane authority inheritance, or Class B execution, custody, rails, conversion, settlement, legal reliance, or customer-money activity. The convergence gate in **§6e** remains unsatisfied. Kenya counsel path remains **DEFER** and separate. Procedural checklist: `docs/ops/governance/HEDGR_GOVERNED_PARALLEL_PASS_CHECKLIST.md` (**§124**) — non-authorizing by itself.
+- **Governed parallelism (Accepted; §6e / D-026 lane model; completed pass §6f.2 / D-029; Founder-confirmed 2026-07-10):** Controlled Parallelism **v2** named `PH-COMP-B-003` (Lane A) and `FE-TRUST-002` (Lane C). Both reached independent pass closeouts (**§126** / prior closeout **§127**). D-029 remains a completed historical pass decision, not standing concurrency authority. The later singular `FE-TRUST-002` hardening activation (**§128**) and Founder closeout (**§129**) do not reopen it. Parallel authorization did **not** authorize unrestricted multi-ticket execution, cross-lane authority inheritance, or Class B execution, custody, rails, conversion, settlement, legal reliance, or customer-money activity. The convergence gate in **§6e** remains unsatisfied. Kenya counsel path remains **DEFER** and separate. Procedural checklist: `docs/ops/governance/HEDGR_GOVERNED_PARALLEL_PASS_CHECKLIST.md` (**§124**) — non-authorizing by itself.
 - **Active Lane A (Class B Evidence Readiness):** None. `PH-COMP-B-003` completed independently (**§126**); Lane A is idle. No successor activated.
 - **Active Lane B (backend foundation):** None (not named in Controlled Parallelism v2).
-- **Active Lane C (UX Trust Testing):** `FE-TRUST-002` research-contract hardening and closure verification only (**§7a** / **§128**). The bounded hardening patch merged via PR **#274**; targeted-user interpretation evidence and governed closure review remain outstanding. This is the sole active ticket under the singular-ticket default. It does **not** reopen D-029, restore parallel authority, or activate another lane.
-- **Last completed ticket (summary):** `PH-COMP-B-003` - Philippines / PHP exact public source-pointer preservation (**§126**). The prior `FE-TRUST-002` closeout record (**§127**) is superseded for current status by the Founder review disposition and active hardening record (**§128**). Prior: `GOV-PHILOSOPHY-001` / ADR **0023** (**§125**); `GOV-PARALLEL-002` (**§124**); `FE-TRUST-001` (**§123**); `BE-FOUND-001` (**§122**); `PH-COMP-B-002` (**§121**); `GOV-PARALLEL-001` (**§120**); `PH-COMP-B-001` (**§119**); `COUNSEL-B-001` (**§118**).
+- **Active Lane C (UX Trust Testing):** None. `FE-TRUST-002` research-contract hardening closed under Founder-directed closeout (**§129**). Lane C is idle.
+- **Last completed ticket (summary):** `FE-TRUST-002` / `GOV-ADR-0024` closeout hygiene (**§129**) — synthetic withdrawal research-contract hardening closed; ADR **0024** Accepted; `AGENTS.md` parallelism drift reconciled to singular-ticket default. Prior: `PH-COMP-B-003` (**§126**); `GOV-PHILOSOPHY-001` / ADR **0023** (**§125**); `GOV-PARALLEL-002` (**§124**); `FE-TRUST-001` (**§123**); `BE-FOUND-001` (**§122**); `PH-COMP-B-002` (**§121**); `GOV-PARALLEL-001` (**§120**); `PH-COMP-B-001` (**§119**); `COUNSEL-B-001` (**§118**).
 - **Post-`COUNSEL-SEND-B-001` DEFER (governance-accepted; §6f.1 / D-028):** Founder deferred authorization to send the Kenya counsel packet. Does not reject Kenya, establish a negative legal conclusion, close the thesis, infer unsuitability, authorize internal legal reliance, or authorize Class B execution. Revisit only under conditions in **§6f.1**.
-- **Post-Controlled Parallelism v2 closeout (governance-accepted; §6f.2 / D-029):** Founder activated concurrent `PH-COMP-B-003` and `FE-TRUST-002` only. Both reached their pass closeouts independently (**§126** / prior closeout **§127**) with `NO CROSS-LANE IMPACT`; all lanes were idle when D-029 closed. Lane independence and non-convergence held. The later singular hardening activation (**§128**) is not a successor or parallel pass. Completion does **not** authorize Class B execution, counsel send, market/provider/endpoint selection, or customer-money activity.
-- **Post-review `FE-TRUST-002` hardening activation (Founder-directed; §128):** The initial prototype was assessed as **functionally complete, pending research-contract hardening**. The bounded fixture-semantics, explanatory-control, safe-exit, fixture-traceability, comprehension-prompt, and verification patch merged via PR **#274**; targeted-user interpretation evidence and governed closure remain outstanding. D-029 remains completed historical authority; Lane A and Lane B remain idle; no parallel pass or successor ticket is activated.
-- **Post-`GOV-PHILOSOPHY-001` sequencing (governance-accepted):** Philosophy codified; does not widen execution. D-029 is completed; no successor ticket is active. Future tickets appear only when separately named in **§7** / **§7a**.
-- **Post-`GOV-PARALLEL-002` sequencing (governance-accepted):** Checklist remains non-authorizing by itself. Controlled Parallelism v2 completed under **§6f.2** / D-029 + this **§7** / **§7a** naming; a future pass requires a new Founder decision.
+- **Post-Controlled Parallelism v2 closeout (governance-accepted; §6f.2 / D-029):** Founder activated concurrent `PH-COMP-B-003` and `FE-TRUST-002` only. Both reached independent pass closeouts (**§126** / prior closeout **§127**) with `NO CROSS-LANE IMPACT`; all lanes were idle when D-029 closed. Lane independence and non-convergence held. Later singular hardening (**§128**) and Founder closeout (**§129**) are not successor or parallel passes. Completion does **not** authorize Class B execution, counsel send, market/provider/endpoint selection, or customer-money activity.
+- **Post-`FE-TRUST-002` hardening closeout (Founder-directed; §129):** Bounded hardening merged via PR **#274** remains the implementation truth. Founder closed the ticket with residual note that targeted-user interpretation evidence is **not claimed** and remains a future exploration / MVP-evidence need only. D-029 remains completed historical authority; all lanes idle; singular-ticket default restored; no successor activated.
+- **Post-ADR 0024 acceptance (Founder-directed; §129):** ADR **0024** is **Accepted** as the evidence-gated MVP acceptance principle. Acceptance does **not** authorize implementation, Evidence Register dispositions, institutional MVP “done,” or execution-class widening.
+- **Post-`AGENTS.md` parallelism reconciliation (Founder-directed; §129):** Operator docs now match repo truth that D-029 is completed historical pass authority and the singular-ticket default applies.
+- **Post-`GOV-PHILOSOPHY-001` sequencing (governance-accepted):** Philosophy codified; does not widen execution. Future tickets appear only when separately named in **§7** / **§7a**.
+- **Post-`GOV-PARALLEL-002` sequencing (governance-accepted):** Checklist remains non-authorizing by itself. A future parallel pass requires a new Founder decision.
 - **Post-`GOV-PARALLEL-001` sequencing (governance-accepted):** **§6e** / D-026 remains the lane-model / exception-framework authority only. v1 and v2 named tickets are complete; no active pass naming remains.
 - **Post-`PH-COMP-B-002` sequencing (governance-accepted):** Source-pointer classification completed (**§121**). Separately named `PH-COMP-B-003` exact public locator preservation completed (**§126**); Lane A is idle and no successor is activated.
 - **Post-`COUNSEL-B-001` sequencing (governance-accepted):** Packet draft completed (**§118**). Send authorization is **DEFER** per **§6f.1** / D-028.
-- **§6b** is not sequencing authority. **§6e** / **§6f** authorize controlled multi-lane activation only for explicitly named lanes/tickets; absence/ambiguity/pause/deprecation restores the singular-ticket default.
-- When **§7** names approved lane ticket(s), each active brief lives in **§7a** until that lane's closeout. Controlled Parallelism v2 is closed; the singular-ticket default applies; only `FE-TRUST-002` research-contract hardening is active.
+- **§6b** is not sequencing authority. **§6e** / **§6f** authorize controlled multi-lane activation only for explicitly named lanes/tickets; absence/ambiguity/pause/deprecation/completion restores the singular-ticket default.
+- When **§7** names approved lane ticket(s), each active brief lives in **§7a** until that lane's closeout. Controlled Parallelism v2 is closed; the singular-ticket default applies; **no active ticket**.
 - Cursor must not connect Lane C outputs to live Class B execution, provider adapters, or customer-money paths.
 - Cursor must not treat UX feedback as Class B authorization or §7 sequencing authority.
 - No active lane may widen, inherit, approve, or modify another lane’s authority without a separate Founder decision and repo-native governance update.
 - Kenya counsel path remains **DEFER** (**§6f.1**); Controlled Parallelism v2 does not send counsel materials or reopen counsel engagement.
 - Do not treat backlog, roadmap, or *Proposed* ADRs as sequenced work unless **§7** is updated explicitly.
-- Convergence gate remains unsatisfied. Completion of both D-029 named lanes does not satisfy it.
+- Convergence gate remains unsatisfied. Completion of both D-029 named lanes and later `FE-TRUST-002` hardening closeout does not satisfy it.
 
 ---
 
-## 7a. Active execution ticket — Lane C — `FE-TRUST-002` research-contract hardening
+## 7a. Active execution ticket — none
 
-**Active ticket:** `FE-TRUST-002` - bounded research-contract hardening and closure verification for the visibly synthetic withdrawal journey (**§128**).
-
-**Activation authority:** Founder review disposition dated 2026-07-10, recorded repo-natively in this **§7** / **§7a** brief and **§128**. The ticket operates under the singular-ticket default. Internal D-029 remains completed historical pass authority and is not reopened.
+**Active ticket:** None.
 
 **Current posture:**
 
 - **Lane A:** idle — `PH-COMP-B-003` completed independently (**§126**); no successor named
 - **Lane B:** idle
-- **Lane C:** `FE-TRUST-002` research-contract hardening active; no successor named
+- **Lane C:** idle — `FE-TRUST-002` closed (**§129**); no successor named
 
-**Objective:** Harden the existing synthetic journey for targeted-user research readiness while preserving its prototype-only, informational, non-executing posture.
+**Sequencing posture:** Singular-ticket default restored. No approved next implementation ticket until **§7** / **§7a** explicitly name one.
 
-**In scope:**
-
-- Define six explicit, non-overlapping fixture contracts for `Pending review`, `Manual review`, `Blocked`, `Unavailable`, `Failed`, and `Cancelled`; rendered copy must preserve the distinction between review, human intervention, rule-based stop, unknown / disabled authority, incomplete synthetic attempt, and intentional stop.
-- Replace operationally ambiguous status-check wording with explanatory education language.
-- Present the no-transaction state as disabled or non-interactive, never as an enabled financial action.
-- Add a visible `End research journey` control that returns to a prototype research landing surface and confirms that no money moved and no transaction was created.
-- Display a stable research fixture identifier and expose the same identifier to facilitator notes / session capture without resembling a transaction ID.
-- Add a selected-state comprehension prompt suitable for facilitator dry-runs.
-- Extend hermetic frontend tests for fixture-only copy changes, absent transaction / wallet / ledger / provider / rail / backend mutation, unavailable financial controls, persistent simulation-boundary labelling, no-receipt safe exit, and consistent fixture identifiers.
-
-**Must not:**
-
-- Add live or production dependencies, persistent financial state, backend/provider coupling, provider or market branding, fee / FX / delivery / payout estimates, transaction progression, current withdrawal-availability claims, executable financial actions, receipts, wallet or ledger records, Class B execution, or customer-money activity.
-- Treat facilitator or participant feedback as market selection, provider rejection, Class B readiness, convergence-gate satisfaction, or implementation authority.
-- Reopen D-029, activate parallel lanes, widen another lane, send counsel materials, or change the Kenya `DEFER` posture.
-
-**Verification path:** Frontend Vitest for all fixture contracts and interaction boundaries; typecheck; lint; full repo validation; responsive facilitator dry-run on the isolated prototype route. Actual participant interpretation remains research evidence and cannot be claimed before targeted-user sessions occur.
-
-**Stop conditions:** Stop and return for governance review if the hardening requires or implies live dependencies, persistent financial state, provider / market identity, monetary estimates, apparent transaction progression, current withdrawal availability, or user-feedback-led Class B progression.
-
-**Rollback path:** Revert the bounded frontend and test patch; no customer remediation, financial-state migration, provider offboarding, or Class B unwind.
+**Companion closeout hygiene (completed with §129; not a successor ticket):** ADR **0024** Accepted; `AGENTS.md` parallelism drift reconciled to match this file.
 
 Procedural support (non-authorizing by itself): `docs/ops/governance/HEDGR_GOVERNED_PARALLEL_PASS_CHECKLIST.md` (`GOV-PARALLEL-002`, **§124**).
 
 Governance philosophy (non-authorizing operating doctrine): `docs/doctrine/hedgr-governance-philosophy.md` (`GOV-PHILOSOPHY-001`, **§125**, ADR **0023**).
 
+MVP acceptance principle (non-authorizing): ADR **0024** (**Accepted**; **§129**).
+
 Kenya counsel disposition: **DEFER** (`COUNSEL-SEND-B-001` / **§6f.1** / D-028).
 
-Historical briefs remain below for audit context. The original `FE-TRUST-002` brief and prior closeout record remain evidence of the initial implementation, but their completed posture is superseded for current status by this active hardening brief and **§128**.
+Historical briefs remain below for audit context. The prior active `FE-TRUST-002` hardening brief is archived immediately below; original implementation brief and records **§127** / **§128** remain evidence of the journey and hardening activation.
+
+---
+
+### Archived brief — Lane C — `FE-TRUST-002` research-contract hardening
+
+**Completed execution ticket:** **`FE-TRUST-002`** - bounded research-contract hardening and closure verification for the visibly synthetic withdrawal journey (**§128** activation; **§129** closeout).
+
+**Objective:** Harden the existing synthetic journey for targeted-user research readiness while preserving its prototype-only, informational, non-executing posture.
+
+**Execution class:** Class A informational / synthetic frontend trust-surface (non-executing).
+
+**Authority basis:** Founder review disposition dated 2026-07-10 (**§128**) + **§7** / **§7a** naming under the singular-ticket default; D-029 remained completed historical authority and was not reopened.
+
+**In scope (completed):**
+- Six explicit, non-overlapping fixture contracts for `Pending review`, `Manual review`, `Blocked`, `Unavailable`, `Failed`, and `Cancelled`.
+- Explanatory education language replacing operationally ambiguous status-check wording.
+- Non-interactive no-transaction / continue-unavailable safety state.
+- Visible `End research journey` control with no-money-moved / no-transaction-created confirmation.
+- Stable research fixture identifiers for facilitator notes / session capture.
+- Selected-state comprehension prompts.
+- Hermetic frontend tests for fixture-only copy and interaction boundaries.
+
+**Must not (held):**
+- Live or production dependencies, persistent financial state, backend/provider coupling, provider or market branding, fee / FX / delivery / payout estimates, transaction progression, current withdrawal-availability claims, executable financial actions, receipts, wallet or ledger records, Class B execution, or customer-money activity.
+- Treat facilitator or participant feedback as market selection, provider rejection, Class B readiness, convergence-gate satisfaction, or implementation authority.
+- Reopen D-029, activate parallel lanes, widen another lane, send counsel materials, or change the Kenya `DEFER` posture.
+
+**Residual note at closeout:** Targeted-user interpretation evidence is **not claimed**. Session findings, if later captured, remain exploration evidence only and cannot authorize Class B progression.
+
+**Non-authorization statement:** Completion of `FE-TRUST-002` does **not** satisfy the **§6e** convergence gate. UI completeness is not product availability. Closed-user testing is not Class B readiness. This ticket does not authorize Class B execution or customer-money activity.
 
 ---
 
@@ -7810,11 +7825,11 @@ Lane A is idle. Lane B is idle. Lane C is idle. Controlled Parallelism v2 is com
 
 **Ticket:** `FE-TRUST-002` - visibly synthetic withdrawal journey research-contract hardening
 
-**Status:** Active — bounded hardening merged via PR **#274**; pending governed review and targeted-user interpretation evidence
+**Status:** Activation record — superseded for current status by Founder closeout **§129**. Bounded hardening merged via PR **#274**; ticket closed with residual note that targeted-user interpretation evidence is not claimed.
 
-**Execution posture:** Singular active ticket; Lane C Class A informational / synthetic frontend trust surface; non-executing
+**Execution posture at activation:** Singular active ticket; Lane C Class A informational / synthetic frontend trust surface; non-executing
 
-**Activation authority:** Founder review disposition dated 2026-07-10 + current **§7** / **§7a** naming
+**Activation authority:** Founder review disposition dated 2026-07-10 + then-current **§7** / **§7a** naming
 
 **Parallelism posture:** D-029 remains completed historical authority; Lane A and Lane B remain idle; no active concurrency
 
@@ -7832,12 +7847,51 @@ Lane A is idle. Lane B is idle. Lane C is idle. Controlled Parallelism v2 is com
 
 **Verification completed.** Focused fixture / journey contract tests pass (9 tests); full repo validation passes (62 frontend files / 729 frontend tests plus trust checks, bridge checks, typecheck, and lint); local runbook-parity E2E passes (53 tests against the Flask stub); production build passes; desktop and 390px mobile facilitator dry-runs pass without horizontal overflow; all six fixtures preserve matching visible / DOM identifiers and state-specific prompts; the safe exit returns to `/prototype` and confirms no money moved and no transaction was created; all six PR **#274** hosted checks passed before squash merge.
 
-**Remaining closure evidence.** Actual participant interpretation cannot be inferred from implementation or facilitator dry-runs. Targeted-user sessions must still establish whether participants distinguish temporary review, permanent rejection, unsupported market, missing provider evidence, and unavailable rail without treating a stop state as market selection, provider rejection, or Class B readiness. Session findings remain exploration evidence only and require governed review before closure.
+**Remaining closure evidence at activation.** Actual participant interpretation cannot be inferred from implementation or facilitator dry-runs. Targeted-user sessions must still establish whether participants distinguish temporary review, permanent rejection, unsupported market, missing provider evidence, and unavailable rail without treating a stop state as market selection, provider rejection, or Class B readiness. Session findings remain exploration evidence only and require governed review before closure.
 
-**Scope boundary.** The exact active brief is **§7a**. This activation does not reopen Controlled Parallelism v2, create standing parallel authority, connect the prototype to a provider or backend, create persistent financial state, imply withdrawal availability, authorize Class B progression, alter Kenya counsel `DEFER`, or treat research evidence as execution authority.
+**Scope boundary.** The exact active brief was **§7a** at activation. This activation did not reopen Controlled Parallelism v2, create standing parallel authority, connect the prototype to a provider or backend, create persistent financial state, imply withdrawal availability, authorize Class B progression, alter Kenya counsel `DEFER`, or treat research evidence as execution authority.
 
 **Expected closeout evidence.** Hermetic fixture-contract tests; proof that fixture switching changes research copy only; no reachable financial mutation or live provider dependency; unavailable financial controls; visible simulation boundary; no-receipt safe exit; stable fixture traceability; responsive facilitator dry-run; and an explicit note that participant interpretation cannot be claimed before targeted-user sessions occur.
 
 **Notion staging posture:** Not updated by this activation move. Repo-native **§7** / **§7a** remains the sequencing authority; any later mirror update must follow repo truth and must not independently sequence or close the ticket.
 
 **Stop condition:** Return for governance review if implementation introduces or implies live / production dependency, persistent financial state, provider or market identity, fee / FX / delivery / payout estimate, transaction progression, current withdrawal availability, or feedback-led Class B authority.
+
+**Later closeout:** Founder-directed closeout **§129** (2026-07-11) closed `FE-TRUST-002`, restored no-active-ticket posture, Accepted ADR **0024**, and reconciled `AGENTS.md` parallelism drift. Targeted-user interpretation remains unclaimed residual evidence, not a ticket-open condition.
+
+---
+
+## 129. Completed closeout - FE-TRUST-002 hardening + ADR 0024 Accepted + AGENTS.md parallelism reconciliation
+
+**Tickets / hygiene:** `FE-TRUST-002` (research-contract hardening closeout); `GOV-ADR-0024` (ADR **0024** acceptance + `AGENTS.md` / `HEDGR_STATUS.md` parallelism drift reconciliation)
+
+**Status:** Completed  
+**Date:** 2026-07-11  
+**Class posture:** Class A informational / synthetic frontend trust surface closeout + documentation-only governance hygiene; non-executing  
+**Authority posture:** Founder-directed closeout and ADR acceptance; does not widen execution or ticket-activation authority  
+**Class B execution authorized:** No  
+**Customer-money activity authorized:** No  
+**Convergence gate satisfied:** No  
+**Successor ticket activated:** No
+
+**Objective.** Close the active `FE-TRUST-002` research-contract hardening ticket after merged hardening verification; Accept ADR **0024** as the evidence-gated MVP acceptance principle; and reconcile stale `AGENTS.md` language that still described D-029 as an active concurrent pass.
+
+### Outcome
+
+- **`FE-TRUST-002`:** Hardening implementation truth remains PR **#274** / §128. Ticket closed under Founder direction. **§7** / **§7a** restored to **no active ticket**. Lane C idle. Singular-ticket default restored.
+- **Residual evidence note:** Targeted-user interpretation evidence is **not claimed**. It remains a future exploration / MVP Evidence Register need (e.g. D3 / D8 / E2 / E7 themes) and cannot authorize Class B progression, market / provider selection, or product availability.
+- **`docs/decisions/0024-mvp-acceptance-is-evidence-gated-not-feature-gated.md`:** Status set to **Accepted** with Acceptance note subordinating acceptance to **§7** / **§7a**.
+- **MVP governance mirrors:** Framework, Evidence Register, and MVP / docs README pointers updated to record ADR **0024** as Accepted without implying dispositions or readiness.
+- **`AGENTS.md`:** Parallelism language updated in all three execution-standard copies so D-029 is completed historical pass authority; **§6e** / D-026 remains lane-model only; singular-ticket default restored; Kenya counsel remains **DEFER**.
+- **`docs/ops/HEDGR_STATUS.md`:** This closeout record; **§2** ADR **0024** companion note; **§7** / **§7a** idle posture; **§128** marked superseded for current status.
+- **`docs/ops/NOTION_GOVERNANCE_STAGING.md`:** Repo-first mirror updated for idle posture, ADR **0024** Accepted, and `FE-TRUST-002` completion.
+
+**Governance guarantees held.** No `apps/` runtime change in this closeout. No provider, market, backend, wallet, ledger, rail, transaction, live-network, Class B, Class C, or customer-money authority. ADR **0024** acceptance does not create Evidence Register dispositions, institutional MVP “done,” release gating automation, or sequencing authority. `AGENTS.md` reconciliation does not reopen D-029 or authorize a new parallel pass.
+
+### Resulting posture
+
+No active ticket. All lanes idle. Singular-ticket default intact. D-029 remains completed historical authority. Kenya counsel send remains **DEFER**. Convergence gate remains unsatisfied. No successor ticket is activated.
+
+### Sequencing note
+
+Future implementation, evidence-intake, or parallel-pass work appears only when separately named in **§7** / **§7a**.
