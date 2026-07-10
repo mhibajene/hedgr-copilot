@@ -28,6 +28,7 @@ export function SyntheticTxExceptionNotice({
     <section
       data-testid="synthetic-tx-exception-notice"
       data-state={presentation.state}
+      data-research-fixture-id={presentation.fixtureId}
       data-synthetic="true"
       aria-live="polite"
       className={`rounded-lg border p-4 ${toneClasses[presentation.tone]} ${className}`}
@@ -58,6 +59,7 @@ export function SyntheticTxExceptionNotice({
         type="button"
         disabled
         aria-disabled="true"
+        data-educational-control="true"
         data-testid="synthetic-tx-exception-primary-action"
         className="mt-4 cursor-not-allowed rounded-md border border-hedgr-200 bg-hedgr-100 px-3 py-2 text-sm font-medium text-hedgr-700"
       >
