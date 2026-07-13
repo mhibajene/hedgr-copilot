@@ -14,6 +14,7 @@ These files do **not** authorize implementation, activate tickets, alter ADRs, o
 | `HEDGR_MVP_ACCEPTANCE_FRAMEWORK.md` | Institutional Acceptance Standard: thesis, domains D1–D10, gates, completion rule, out-of-scope, non-goals |
 | `HEDGR_MVP_EVIDENCE_REGISTER.md` | Evidence model, categories, recording structure, confidence model, review responsibilities |
 | `HEDGR_MVP_PHASE_ALIGNMENT.md` | Phase-alignment readout mapping MVP spec phases to current repo posture |
+| `HEDGR_FOUNDER_OUTCOME_GATE_CLASS_A_TO_CLASS_B.md` | Founder Outcome Gate: Class A validation → Class B feasibility (decision-support only; non-authorizing; not self-activating) |
 | `HEDGR_ATLAS_PRODUCT_CONCEPT_NOTE.md` | Product concept note (governance orientation) |
 
 ## Governing ADR (principle)
