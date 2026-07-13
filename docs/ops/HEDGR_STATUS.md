@@ -1,6 +1,6 @@
 Status: Canonical hand-off file
 Purpose: Strategic continuity, merged implementation truth, and next-ticket authority for Cursor execution
-Last updated: 2026-07-11
+Last updated: 2026-07-13
 
 ---
 
@@ -3856,54 +3856,94 @@ Completed and merged:
 
 Current active ticket status:
 
+- **Approved next / active ticket:** `MVP-EVID-001` — MVP Evidence Register domain priming (documentation-only). Active brief in **§7a**. Activation record **§130**.
+- **Sequencing posture:** Singular-ticket default. One active ticket only. D-029 remains completed historical pass authority and supplies **no** active concurrency. No parallel pass is open.
 - **Kenya counsel path (`COUNSEL-SEND-B-001` / Internal D-028):** **DEFER**. No packet authorized to send. Kenya remains primary thesis stress test; thesis not rejected or closed. No successor Kenya legal ticket active unless separately named. See **§6f.1**.
 - **Governed parallelism (Accepted; §6e / D-026 lane model; completed pass §6f.2 / D-029; Founder-confirmed 2026-07-10):** Controlled Parallelism **v2** named `PH-COMP-B-003` (Lane A) and `FE-TRUST-002` (Lane C). Both reached independent pass closeouts (**§126** / prior closeout **§127**). D-029 remains a completed historical pass decision, not standing concurrency authority. The later singular `FE-TRUST-002` hardening activation (**§128**) and Founder closeout (**§129**) do not reopen it. Parallel authorization did **not** authorize unrestricted multi-ticket execution, cross-lane authority inheritance, or Class B execution, custody, rails, conversion, settlement, legal reliance, or customer-money activity. The convergence gate in **§6e** remains unsatisfied. Kenya counsel path remains **DEFER** and separate. Procedural checklist: `docs/ops/governance/HEDGR_GOVERNED_PARALLEL_PASS_CHECKLIST.md` (**§124**) — non-authorizing by itself.
-- **Active Lane A (Class B Evidence Readiness):** None. `PH-COMP-B-003` completed independently (**§126**); Lane A is idle. No successor activated.
+- **Active Lane A (Class B Evidence Readiness):** None. `PH-COMP-B-003` completed independently (**§126**); Lane A is idle. `MVP-EVID-001` is singular docs-governance work, not a Lane A parallel activation.
 - **Active Lane B (backend foundation):** None (not named in Controlled Parallelism v2).
 - **Active Lane C (UX Trust Testing):** None. `FE-TRUST-002` research-contract hardening closed under Founder-directed closeout (**§129**). Lane C is idle.
 - **Last completed ticket (summary):** `FE-TRUST-002` / `GOV-ADR-0024` closeout hygiene (**§129**) — synthetic withdrawal research-contract hardening closed; ADR **0024** Accepted; `AGENTS.md` parallelism drift reconciled to singular-ticket default. Prior: `PH-COMP-B-003` (**§126**); `GOV-PHILOSOPHY-001` / ADR **0023** (**§125**); `GOV-PARALLEL-002` (**§124**); `FE-TRUST-001` (**§123**); `BE-FOUND-001` (**§122**); `PH-COMP-B-002` (**§121**); `GOV-PARALLEL-001` (**§120**); `PH-COMP-B-001` (**§119**); `COUNSEL-B-001` (**§118**).
 - **Post-`COUNSEL-SEND-B-001` DEFER (governance-accepted; §6f.1 / D-028):** Founder deferred authorization to send the Kenya counsel packet. Does not reject Kenya, establish a negative legal conclusion, close the thesis, infer unsuitability, authorize internal legal reliance, or authorize Class B execution. Revisit only under conditions in **§6f.1**.
 - **Post-Controlled Parallelism v2 closeout (governance-accepted; §6f.2 / D-029):** Founder activated concurrent `PH-COMP-B-003` and `FE-TRUST-002` only. Both reached independent pass closeouts (**§126** / prior closeout **§127**) with `NO CROSS-LANE IMPACT`; all lanes were idle when D-029 closed. Lane independence and non-convergence held. Later singular hardening (**§128**) and Founder closeout (**§129**) are not successor or parallel passes. Completion does **not** authorize Class B execution, counsel send, market/provider/endpoint selection, or customer-money activity.
-- **Post-`FE-TRUST-002` hardening closeout (Founder-directed; §129):** Bounded hardening merged via PR **#274** remains the implementation truth. Founder closed the ticket with residual note that targeted-user interpretation evidence is **not claimed** and remains a future exploration / MVP-evidence need only. D-029 remains completed historical authority; all lanes idle; singular-ticket default restored; no successor activated.
-- **Post-ADR 0024 acceptance (Founder-directed; §129):** ADR **0024** is **Accepted** as the evidence-gated MVP acceptance principle. Acceptance does **not** authorize implementation, Evidence Register dispositions, institutional MVP “done,” or execution-class widening.
+- **Post-`FE-TRUST-002` hardening closeout (Founder-directed; §129):** Bounded hardening merged via PR **#274** remains the implementation truth. Founder closed the ticket with residual note that targeted-user interpretation evidence is **not claimed** and remains a future exploration / MVP-evidence need only. D-029 remains completed historical authority.
+- **Post-ADR 0024 acceptance (Founder-directed; §129):** ADR **0024** is **Accepted** as the evidence-gated MVP acceptance principle. Acceptance does **not** authorize Evidence Register dispositions by itself, institutional MVP “done,” or execution-class widening. `MVP-EVID-001` is the first §7-named ticket to operationalize register priming under that principle.
 - **Post-`AGENTS.md` parallelism reconciliation (Founder-directed; §129):** Operator docs now match repo truth that D-029 is completed historical pass authority and the singular-ticket default applies.
+- **Post-`MVP-EVID-001` activation (Founder-approved; §130):** Documentation-only Evidence Register domain priming is the sole active ticket. Does **not** accept institutional MVP; does **not** clear gates G0–G7 by activation alone; does **not** authorize Class B / Class C execution, counsel send, market/provider/endpoint selection, or customer-money activity.
 - **Post-`GOV-PHILOSOPHY-001` sequencing (governance-accepted):** Philosophy codified; does not widen execution. Future tickets appear only when separately named in **§7** / **§7a**.
 - **Post-`GOV-PARALLEL-002` sequencing (governance-accepted):** Checklist remains non-authorizing by itself. A future parallel pass requires a new Founder decision.
 - **Post-`GOV-PARALLEL-001` sequencing (governance-accepted):** **§6e** / D-026 remains the lane-model / exception-framework authority only. v1 and v2 named tickets are complete; no active pass naming remains.
 - **Post-`PH-COMP-B-002` sequencing (governance-accepted):** Source-pointer classification completed (**§121**). Separately named `PH-COMP-B-003` exact public locator preservation completed (**§126**); Lane A is idle and no successor is activated.
 - **Post-`COUNSEL-B-001` sequencing (governance-accepted):** Packet draft completed (**§118**). Send authorization is **DEFER** per **§6f.1** / D-028.
 - **§6b** is not sequencing authority. **§6e** / **§6f** authorize controlled multi-lane activation only for explicitly named lanes/tickets; absence/ambiguity/pause/deprecation/completion restores the singular-ticket default.
-- When **§7** names approved lane ticket(s), each active brief lives in **§7a** until that lane's closeout. Controlled Parallelism v2 is closed; the singular-ticket default applies; **no active ticket**.
+- When **§7** names an approved ticket, the active brief lives in **§7a** until closeout. Controlled Parallelism v2 is closed; the singular-ticket default applies with **`MVP-EVID-001`** active.
 - Cursor must not connect Lane C outputs to live Class B execution, provider adapters, or customer-money paths.
 - Cursor must not treat UX feedback as Class B authorization or §7 sequencing authority.
 - No active lane may widen, inherit, approve, or modify another lane’s authority without a separate Founder decision and repo-native governance update.
 - Kenya counsel path remains **DEFER** (**§6f.1**); Controlled Parallelism v2 does not send counsel materials or reopen counsel engagement.
 - Do not treat backlog, roadmap, or *Proposed* ADRs as sequenced work unless **§7** is updated explicitly.
-- Convergence gate remains unsatisfied. Completion of both D-029 named lanes and later `FE-TRUST-002` hardening closeout does not satisfy it.
+- Convergence gate remains unsatisfied. Completion of both D-029 named lanes and later `FE-TRUST-002` hardening closeout does not satisfy it. `MVP-EVID-001` does not satisfy it.
 
 ---
 
-## 7a. Active execution ticket — none
+## 7a. Active execution ticket — MVP-EVID-001
 
-**Active ticket:** None.
+**Active ticket:** `MVP-EVID-001` — MVP Evidence Register domain priming (documentation-only).
 
-**Current posture:**
+**Objective:** Make ADR **0024** operable by creating the first governed domain records for **D1–D10** in the MVP Evidence Register (or a clearly linked companion review artifact under `docs/ops/governance/mvp/`), using honest `Missing` / `Not started` / `Evidence incomplete` states and explicit source pointers from existing repo evidence — without declaring institutional MVP acceptance.
+
+**Type:** Documentation-only governance / evidence-process.
+
+**Execution class:** Non-executing. No `apps/`, `packages/`, runtime, CI, or product-behavior change required.
+
+**Authority basis:** This **§7** / **§7a** naming (Founder-approved activation **§130**) + ADR **0024** (Accepted principle only) + `docs/ops/governance/mvp/HEDGR_MVP_ACCEPTANCE_FRAMEWORK.md` + `docs/ops/governance/mvp/HEDGR_MVP_EVIDENCE_REGISTER.md`.
+
+**Current posture (lanes):**
 
 - **Lane A:** idle — `PH-COMP-B-003` completed independently (**§126**); no successor named
 - **Lane B:** idle
 - **Lane C:** idle — `FE-TRUST-002` closed (**§129**); no successor named
+- **Singular active ticket:** `MVP-EVID-001` (docs-governance; not a D-026/D-029 lane activation)
 
-**Sequencing posture:** Singular-ticket default restored. No approved next implementation ticket until **§7** / **§7a** explicitly name one.
+**Sequencing posture:** Singular-ticket default. D-029 remains completed historical pass authority. Kenya counsel disposition: **DEFER** (`COUNSEL-SEND-B-001` / **§6f.1** / D-028).
 
-**Companion closeout hygiene (completed with §129; not a successor ticket):** ADR **0024** Accepted; `AGENTS.md` parallelism drift reconciled to match this file.
+**In scope:**
+- Add or update domain records for **D1–D10** using the Evidence Register schema (`HEDGR_MVP_EVIDENCE_REGISTER.md` §5.1).
+- For each domain: `claim_under_review`, `authorized_execution_class` (default **Class A** informational unless a claim explicitly requires a higher class and is marked blocked/incomplete), `evidence_category_ids`, `source_pointers` to existing repo artifacts, `evidence_state`, `confidence` (`Unscored` allowed), `disposition` (`Not started` or `Evidence incomplete` preferred for this ticket; `Under review` only if a real review is started).
+- Prefer pointing at already-merged evidence (e.g. **§6** / **§129** records, Class B scaffolds, `FE-TRUST-002` residual note, `COP-GOV-001`, MVP phase alignment) over inventing new evidence.
+- Update `docs/ops/HEDGR_STATUS.md` / `docs/ops/NOTION_GOVERNANCE_STAGING.md` only as closeout hygiene after merge, consistent with docs-only tickets.
+- Preserve `non_authorization_ack` on every domain record.
+
+**Must not:**
+- Record domain disposition `Accepted` or `Accepted with bounded residual risk` unless Founder / HedgrOps explicitly reviews and the schema residual-risk controls are complete — default for this ticket is **not** to accept domains.
+- Clear gates **G0–G7** or claim institutional MVP “done.”
+- Change evidence states in the Class B Evidence Registry; gather external evidence; send counsel packets; select market / provider / rail / custody.
+- Widen Class B / Class C execution; enable live deposit / withdraw; imply product availability from synthetic surfaces.
+- Modify `apps/`, `packages/`, engine contracts, Copilot runtime, or brand tokens.
+- Open a parallel pass or a second active ticket.
+- Treat row presence, source pointers, or this ticket’s merge as evidence sufficiency or readiness.
+
+**Surfaces (edit scope):**
+- `docs/ops/governance/mvp/HEDGR_MVP_EVIDENCE_REGISTER.md` (and/or a new governed companion under `docs/ops/governance/mvp/` if a separate domain-record artifact is cleaner)
+- `docs/ops/HEDGR_STATUS.md` (closeout record on completion)
+- `docs/ops/NOTION_GOVERNANCE_STAGING.md` (mirror after merge only)
+
+**Acceptance shape:**
+- All ten domains **D1–D10** have a schema-complete record.
+- No domain is silently left blank; `Missing` / `Not started` / `Evidence incomplete` remain visible where appropriate.
+- At least one explicit residual note that interpretation evidence for `FE-TRUST-002` and Class B convergence remain open (may sit under **D2** / **D5** / **D9** as incomplete).
+- Non-authorization language preserved in artifact and status closeout.
+- **§7** / **§7a** restored to no-active-ticket (or a separately named successor) on closeout — this ticket does not name a successor.
+
+**Stop / rollback:**
+- Stop if the work pressure becomes “accept domains to show progress.”
+- Rollback = revert docs PR; no runtime rollback needed.
 
 Procedural support (non-authorizing by itself): `docs/ops/governance/HEDGR_GOVERNED_PARALLEL_PASS_CHECKLIST.md` (`GOV-PARALLEL-002`, **§124**).
 
 Governance philosophy (non-authorizing operating doctrine): `docs/doctrine/hedgr-governance-philosophy.md` (`GOV-PHILOSOPHY-001`, **§125**, ADR **0023**).
 
-MVP acceptance principle (non-authorizing): ADR **0024** (**Accepted**; **§129**).
-
-Kenya counsel disposition: **DEFER** (`COUNSEL-SEND-B-001` / **§6f.1** / D-028).
+MVP acceptance principle (non-authorizing by acceptance alone): ADR **0024** (**Accepted**; **§129**).
 
 Historical briefs remain below for audit context. The prior active `FE-TRUST-002` hardening brief is archived immediately below; original implementation brief and records **§127** / **§128** remain evidence of the journey and hardening activation.
 
@@ -4435,10 +4475,9 @@ Historical briefs remain below for audit context. The prior active `FE-TRUST-002
 - **Governed semantic status token definition (documentation-only, completed):** `BRAND-008` — **§105** (completed ticket record).
 - **Regression resistance tranche 8 for shipped dashboard allocation-band informational framing (test-only, completed):** `MC-S3-022` — **§106** (completed ticket record).
 - **HedgrOps read-only review evidence bridge (Class A informational support infrastructure, completed):** `HOPS-BRIDGE-001` — **§109** (completed ticket record); operational verification evidence in `apps/bridge-worker/VERIFICATION.md`.
-- **Active ticket:** None. **§7** / **§7a** are restored to no-active-ticket posture.
+- **Active ticket:** `MVP-EVID-001` — MVP Evidence Register domain priming (documentation-only). Active brief in **§7a**. Activation record **§130**.
 - **Merged implementation truth:** **§6** remains canonical for shipped code boundaries.
-- When a successor ticket is approved, record it in **§7** and restore the execution brief in **§7a** per governance discipline.
-- Do not infer continuation work from *Proposed* ADRs or roadmap narrative unless **§7** names a ticket.
+- Do not infer additional continuation work from *Proposed* ADRs or roadmap narrative unless **§7** names a ticket.
 
 **Archived brief (SE-POSTURE-001):** Narrow posture secondary-copy refinement pass — **presentation-only** Stability Engine trust-surface refinement; scope held to `apps/frontend/lib/engine/posture-context.ts`, `apps/frontend/lib/engine/stability-review-snapshot-copy.ts`, ticket-local Vitest copy-contract tests, `docs/ops/HEDGR_STATUS.md`, and `docs/ops/NOTION_GOVERNANCE_STAGING.md`. Applied `SE-VAL-001` promoted / already-grounded posture-language patterns to shipped secondary posture copy and stability-review stance copy. Badge labels remained technical uppercase (`NORMAL`, `TIGHTENING`, `TIGHTENED`, `RECOVERY`). **No** `EnginePosture` change, **no** notice-copy change, **no** mock / simulator change, **no** backend, **no** policy, **no** engine logic, **no** execution semantics, **no** accounting truth, **no** Class B authority, **no** Copilot runtime, **no** CI / workflow change, and **no** ADR status change. Completed record: **§103**.
 
@@ -7895,3 +7934,37 @@ No active ticket. All lanes idle. Singular-ticket default intact. D-029 remains 
 ### Sequencing note
 
 Future implementation, evidence-intake, or parallel-pass work appears only when separately named in **§7** / **§7a**.
+
+---
+
+## 130. Founder activation - MVP-EVID-001 (MVP Evidence Register domain priming)
+
+**Ticket:** `MVP-EVID-001` — MVP Evidence Register domain priming (documentation-only)
+
+**Status:** Active — Founder-approved activation 2026-07-13. Exact brief in **§7a**.
+
+**Execution posture at activation:** Singular active ticket; documentation-only governance / evidence-process; non-executing
+
+**Activation authority:** Founder approval of the recommended next ticket + this **§7** / **§7a** naming
+
+**Parallelism posture:** D-029 remains completed historical authority; Lane A / B / C remain idle; no active concurrency; singular-ticket default intact
+
+**Class B execution authorized:** No
+
+**Customer-money activity authorized:** No
+
+**Convergence gate satisfied:** No
+
+**Successor ticket activated:** No (this record *is* the activation of `MVP-EVID-001`; it does not name a further successor)
+
+**Disposition.** Activate `MVP-EVID-001` as the sole approved next ticket so ADR **0024** becomes operable through first governed Evidence Register domain records for **D1–D10**, without claiming institutional MVP acceptance.
+
+**Implementation posture.** Documentation-only. Expected edit surfaces are `docs/ops/governance/mvp/HEDGR_MVP_EVIDENCE_REGISTER.md` and/or a clearly linked companion under `docs/ops/governance/mvp/`, plus status / Notion staging closeout hygiene. Prefer honest `Missing` / `Not started` / `Evidence incomplete` dispositions and source pointers to already-merged repo evidence. Default is **not** to record domain `Accepted` dispositions in this ticket.
+
+**Scope boundary.** The exact active brief is **§7a**. This activation does not reopen Controlled Parallelism v2, create standing parallel authority, clear gates **G0–G7**, authorize Class B / Class C execution, alter Kenya counsel `DEFER`, gather external evidence, send counsel packets, select market / provider / rail / custody, or treat register row presence as evidence sufficiency or readiness.
+
+**Expected closeout evidence.** Schema-complete records for **D1–D10**; visible `Missing` / incomplete states where sources are absent; residual note that `FE-TRUST-002` interpretation evidence and Class B convergence remain open; non-authorization language held; **§7** / **§7a** restored to no-active-ticket (or a separately named successor) on closeout.
+
+**Notion staging posture:** Not updated by this activation move. Repo-native **§7** / **§7a** remains the sequencing authority; any later mirror update must follow repo truth and must not independently sequence or close the ticket.
+
+**Stop condition:** Return for governance review if the work pressure becomes “accept domains to show progress,” if Class B / customer-money authority is implied, if counsel send or market selection is inferred, or if a second active ticket / parallel pass is opened without a separate Founder decision.
