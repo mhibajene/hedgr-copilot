@@ -6,6 +6,8 @@
 **Date:** 2026-07-10  
 **Refinement:** Institutional hardening pass (schema, residual-risk controls, classification clarity, cross-link boundaries)
 
+**Domain priming:** `MVP-EVID-001` (2026-07-13; records only, no domain acceptance or gate clearance)
+
 ---
 
 ## 1. Status / Authority / Scope
@@ -220,22 +222,279 @@ Gate records (G0–G7) should capture:
 - reviewer identities and date
 - explicit non-authorization acknowledgment
 
-### 5.4 Working register skeleton
+### 5.4 Working register summary
 
-The table below is the initial tracking skeleton. All domains begin as **Not started**. Row presence is not evidence.
+The table below summarizes the schema-complete priming records in **§5.5**. Row presence and source-pointer identification are not evidence sufficiency, acceptance, or gate clearance.
 
 | Domain | Claim focus | Primary categories | Evidence state | Confidence | Disposition |
 |--------|-------------|--------------------|----------------|------------|-------------|
-| D1 Stability & capital preservation | Stability-first posture above yield/growth | E1, E2, E10 | Missing | Unscored | Not started |
-| D2 Liquidity & withdrawal integrity | Honest liquidity / withdrawal reliability at authorized class | E4, E5, E8 | Missing | Unscored | Not started |
-| D3 Risk visibility & trust disclosure | Risk and trust claims are legible and non-overclaiming | E2, E1 | Missing | Unscored | Not started |
-| D4 Engine-aligned communication | Informational engine UX is not mistaken for accounting/execution truth | E3, E1 | Missing | Unscored | Not started |
-| D5 Rails & custody integrity | Rails/custody/conversion claims match authorized class | E5, E8, E9 | Missing | Unscored | Not started |
-| D6 Advisory Copilot posture | Advisory-only, calm, non-executing guidance | E6, E2 | Missing | Unscored | Not started |
-| D7 Governance & policy discipline | Material decisions followed repo-native authority and risk discipline | E1, E8, E9 | Missing | Unscored | Not started |
-| D8 UX & narrative integrity | Calm, non-gamified hierarchy and narrative integrity | E2, E10, E1 | Missing | Unscored | Not started |
+| D1 Stability & capital preservation | Stability-first posture above yield/growth | E1, E2, E10 | Evidence identified | Unscored | Evidence incomplete |
+| D2 Liquidity & withdrawal integrity | Honest liquidity / withdrawal reliability at authorized class | E4, E5, E8 | Evidence identified | Unscored | Evidence incomplete |
+| D3 Risk visibility & trust disclosure | Risk and trust claims are legible and non-overclaiming | E2, E1 | Evidence identified | Unscored | Evidence incomplete |
+| D4 Engine-aligned communication | Informational engine UX is not mistaken for accounting/execution truth | E3, E1 | Evidence identified | Unscored | Evidence incomplete |
+| D5 Rails & custody integrity | Rails/custody/conversion claims match authorized class | E5, E8, E9 | Evidence identified | Unscored | Evidence incomplete |
+| D6 Advisory Copilot posture | Advisory-only, calm, non-executing guidance | E6, E2 | Evidence identified | Unscored | Evidence incomplete |
+| D7 Governance & policy discipline | Material decisions followed repo-native authority and risk discipline | E1, E8, E9 | Evidence identified | Unscored | Evidence incomplete |
+| D8 UX & narrative integrity | Calm, non-gamified hierarchy and narrative integrity | E2, E10, E1 | Evidence identified | Unscored | Evidence incomplete |
 | D9 Demand & learning validity | Credible demand learning for stability-first wallet under stated posture | E7 | Missing | Unscored | Not started |
-| D10 Operational sustainability | Repeatable safe operation without exceptional founder intervention and without reliance upon undocumented founder knowledge | E8, E1, E2 | Missing | Unscored | Not started |
+| D10 Operational sustainability | Repeatable safe operation without exceptional founder intervention and without reliance upon undocumented founder knowledge | E8, E1, E2 | Evidence identified | Unscored | Evidence incomplete |
+
+### 5.5 Primed domain records (`MVP-EVID-001`)
+
+These records identify existing repo pointers and visible gaps. They are **not** institutional domain reviews. `reviewers` records the bounded priming operator only; it does not claim Founder, HedgrOps, product, legal, operational, or user-research review. Every pointer retains its originating scope and limitations under **§9**.
+
+#### D1 — Stability & capital preservation
+
+- `domain_id`: `D1`
+- `domain_name`: Stability & capital preservation
+- `claim_under_review`: The Class A MVP posture preserves and communicates stability and capital preservation above yield or growth.
+- `authorized_execution_class`: Class A informational only.
+- `evidence_category_ids`: `E1` — doctrine and repo authority define the stability-first claim; `E2` — UX doctrine defines trust-facing communication constraints; `E10` — repo guardrails reject yield-first, gamified, and speculative framing.
+- `source_pointers`:
+  - `docs/doctrine/hedgr-constitutional-charter.md` — constitutional doctrine source; does not prove user interpretation or shipped compliance by itself.
+  - `docs/doctrine/hedgr-ux-constitution.md` — UX doctrine source; prescribes trust posture but is not observation evidence.
+  - `docs/ops/HEDGR_STATUS.md` **§2**, **§6**, **§129** — repo-authority and merged-truth source; implementation history is not domain acceptance.
+  - `docs/decisions/0024-mvp-acceptance-is-evidence-gated-not-feature-gated.md` — accepted governance principle; expressly does not create a domain disposition.
+- `source_classes`: Constitutional doctrine; UX doctrine; repo authority / merged implementation record; accepted governance ADR.
+- `evidence_period`: Repo governance snapshot through 2026-07-13; freshness and cross-surface conformance have not been institutionally reviewed.
+- `evidence_owner`: HedgrOps (reference maintenance only).
+- `evidence_state`: Evidence identified.
+- `confidence`: Unscored.
+- `conflicts`: None identified during pointer reconstruction; no domain review has tested for implementation drift.
+- `residual_risks`: No consolidated review yet proves stability-first posture across current user-facing surfaces or targeted-user interpretation.
+- `revisit_conditions`: Start a separately authorized D1 review with current surface inventory and interpretation evidence.
+- `disposition`: Evidence incomplete.
+- `reviewers`: Implementer — record priming only; no institutional acceptance review commenced.
+- `review_date`: 2026-07-13.
+- `non_authorization_ack`: This record does not accept D1, clear any gate, authorize implementation, or widen execution class.
+
+#### D2 — Liquidity & withdrawal integrity
+
+- `domain_id`: `D2`
+- `domain_name`: Liquidity & withdrawal integrity
+- `claim_under_review`: Withdrawal and liquidity communication is honest at Class A, while live reliability remains unclaimed until separately authorized Class B evidence exists.
+- `authorized_execution_class`: Mixed boundary — Class A synthetic / informational claim only; Class B reliability claim is blocked and incomplete.
+- `evidence_category_ids`: `E4` — synthetic withdrawal and liquidity communication boundaries; `E5` — Class B rail/custody dependencies remain scaffolds; `E8` — operational controls are defined as future evidence needs only.
+- `source_pointers`:
+  - `apps/frontend/__tests__/synthetic-withdrawal-journey.test.tsx` — hermetic technical contract evidence for a visibly synthetic surface; not user interpretation or live withdrawal evidence.
+  - `docs/ops/HEDGR_STATUS.md` **§129** — Founder closeout records targeted-user interpretation evidence as not claimed.
+  - `docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_LIQUIDITY_WITHDRAWAL_CONTROL_EVIDENCE_PACKAGE.md` — evidence-package skeleton; explicitly not evidence gathering, sufficiency, or withdrawal approval.
+  - `docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_PILOT_OPS_EVIDENCE_PACKAGE.md` — operational evidence scaffold; explicitly not pilot or customer-money authority.
+- `source_classes`: Hermetic technical test; repo governance closeout; Class B evidence-planning scaffolds.
+- `evidence_period`: Synthetic contract merged 2026-07-10 and closeout recorded 2026-07-11; no live or user-research evidence period exists.
+- `evidence_owner`: Product / Operations (reference maintenance only).
+- `evidence_state`: Evidence identified.
+- `confidence`: Unscored.
+- `conflicts`: None identified; synthetic completeness and live reliability are intentionally distinct claims.
+- `residual_risks`: `FE-TRUST-002` targeted-user interpretation remains unclaimed; live liquidity, withdrawal reliability, provider evidence, and the Class B convergence gate remain open.
+- `revisit_conditions`: Obtain separately authorized interpretation evidence and, for any Class B claim, governed operational/provider evidence plus convergence-gate review.
+- `disposition`: Evidence incomplete.
+- `reviewers`: Implementer — record priming only; no institutional acceptance review commenced.
+- `review_date`: 2026-07-13.
+- `non_authorization_ack`: This record does not accept D2, clear G3 or any other gate, authorize withdrawals, or satisfy the Class B convergence gate.
+
+#### D3 — Risk visibility & trust disclosure
+
+- `domain_id`: `D3`
+- `domain_name`: Risk visibility & trust disclosure
+- `claim_under_review`: Class A surfaces make risk and trust boundaries legible without overstating custody, fees, protection, automation, or guarantees.
+- `authorized_execution_class`: Class A informational only.
+- `evidence_category_ids`: `E2` — trust-copy and disclosure contracts are the direct claim; `E1` — doctrine and repo authority bound what those contracts may claim.
+- `source_pointers`:
+  - `docs/doctrine/hedgr-ux-constitution.md` — canonical UX trust requirements; not observation evidence.
+  - `apps/frontend/__tests__/trust.test.tsx` — hermetic technical trust-surface checks; not user interpretation evidence.
+  - `apps/frontend/__tests__/engine-notices-and-mock-contract.test.ts` — technical notice/mock boundary checks; not regulatory certification.
+  - `docs/brand/HEDGR_BRAND_QA_CHECKLIST.md` — governance review checklist; checklist presence does not prove compliance.
+- `source_classes`: UX doctrine; hermetic technical tests; brand-governance review aid.
+- `evidence_period`: Current repo snapshot through 2026-07-13; no consolidated disclosure review or targeted-user evidence period recorded.
+- `evidence_owner`: Product / UX (reference maintenance only).
+- `evidence_state`: Evidence identified.
+- `confidence`: Unscored.
+- `conflicts`: None identified during pointer reconstruction.
+- `residual_risks`: No current cross-surface disclosure inventory, targeted-user comprehension review, custody/fee claim review, or regulatory review is recorded here.
+- `revisit_conditions`: Authorize a bounded trust-disclosure review against current shipped surfaces and applicable qualified-review needs.
+- `disposition`: Evidence incomplete.
+- `reviewers`: Implementer — record priming only; no institutional acceptance review commenced.
+- `review_date`: 2026-07-13.
+- `non_authorization_ack`: This record does not accept D3, clear G4 or any other gate, or certify legal, regulatory, custody, or fee claims.
+
+#### D4 — Engine-aligned communication
+
+- `domain_id`: `D4`
+- `domain_name`: Engine-aligned communication
+- `claim_under_review`: Class A Stability Engine communication remains informational and is not mistaken for accounting, ledger, allocation, or execution truth.
+- `authorized_execution_class`: Class A informational only.
+- `evidence_category_ids`: `E3` — engine copy and contract tests support the informational-communication claim; `E1` — ADRs and phase governance define the non-accounting / non-executing boundary.
+- `source_pointers`:
+  - `docs/decisions/0013-allocation-bands-informational-not-accounting.md` — accepted allocation-band boundary.
+  - `docs/decisions/0014-stability-engine-read-only-in-sprint-2.md` — accepted read-only boundary.
+  - `docs/decisions/0015-stability-engine-is-the-system-center.md` — accepted engine-authority boundary.
+  - `apps/frontend/__tests__/engine-allocation-bands-panel-copy-contract.test.tsx` and `apps/frontend/__tests__/engine-posture-context-contract.test.ts` — hermetic technical copy/contract checks; not user interpretation or accounting evidence.
+  - `docs/ops/governance/mvp/HEDGR_MVP_PHASE_ALIGNMENT.md` — phase orientation only; expressly non-sequencing and non-executing.
+- `source_classes`: Accepted architecture ADRs; hermetic technical tests; governance orientation artifact.
+- `evidence_period`: Current ADR boundaries and repo tests through 2026-07-13; no targeted-user interpretation period recorded.
+- `evidence_owner`: Engineering / Product (reference maintenance only).
+- `evidence_state`: Evidence identified.
+- `confidence`: Unscored.
+- `conflicts`: None identified; later superseding ADR review has not been performed as part of this priming pass.
+- `residual_risks`: No consolidated user-interpretation evidence proves that informational engine outputs are consistently understood as non-accounting and non-executing.
+- `revisit_conditions`: Run a separately authorized current-surface contract and interpretation review against ADRs 0013–0015.
+- `disposition`: Evidence incomplete.
+- `reviewers`: Implementer — record priming only; no institutional acceptance review commenced.
+- `review_date`: 2026-07-13.
+- `non_authorization_ack`: This record does not accept D4, clear G2 or any other gate, create ledger truth, or authorize engine execution.
+
+#### D5 — Rails & custody integrity
+
+- `domain_id`: `D5`
+- `domain_name`: Rails & custody integrity
+- `claim_under_review`: Rails, custody, conversion, settlement, and jurisdiction claims remain bounded to the authorized class and are not represented as ready without qualified evidence.
+- `authorized_execution_class`: Mixed boundary — Class A governance description only; all Class B / Class C operational claims are blocked and incomplete.
+- `evidence_category_ids`: `E5` — rail/custody evidence needs and source pointers; `E8` — operating-control evidence needs; `E9` — qualified legal/compliance evidence remains required.
+- `source_pointers`:
+  - `docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_EVIDENCE_REGISTRY.md` — non-authoritative evidence-state registry; row presence is not readiness.
+  - `docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_RAIL_SETTLEMENT_FINALITY_EVIDENCE_PACKAGE.md` — evidence-package skeleton; not settlement or vendor approval.
+  - `docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_LEGAL_COMPLIANCE_EVIDENCE_PACKAGE.md` — qualified-review requirement scaffold; not legal advice or approval.
+  - `docs/ops/governance/offramp/HEDGR_CLASS_B_OFFRAMP_PHILIPPINES_PHP_SOURCE_POINTER_CLASSIFICATION.md` — bounded source-pointer classification; not evidence acceptance, market selection, or provider approval.
+  - `docs/ops/HEDGR_STATUS.md` **§6f.1** — Kenya counsel send remains `DEFER`; no legal reliance or counsel-send authority.
+- `source_classes`: Class B evidence registry; evidence-planning scaffolds; source-pointer classification; repo governance decision.
+- `evidence_period`: Repo source-pointer and scaffold snapshot through 2026-07-13; no qualified legal, vendor, provider, or live operational evidence period exists.
+- `evidence_owner`: Operations / Legal (reference maintenance only; ownership is not legal review).
+- `evidence_state`: Evidence identified.
+- `confidence`: Unscored.
+- `conflicts`: None identified; no market, provider, endpoint, rail, custody, or legal conclusion has been formed.
+- `residual_risks`: Class B registry evidence remains incomplete; counsel send is deferred; convergence, provider, legal, operational, settlement, and custody evidence remain open.
+- `revisit_conditions`: Separate Founder authorization for qualified review/evidence intake and subsequent governed domain review.
+- `disposition`: Evidence incomplete.
+- `reviewers`: Implementer — record priming only; no legal, operational, or institutional acceptance review commenced.
+- `review_date`: 2026-07-13.
+- `non_authorization_ack`: This record does not accept D5, clear G2/G3/G5 or any gate, send counsel materials, select a market/provider/rail/custodian, or authorize customer-money activity.
+
+#### D6 — Advisory Copilot posture
+
+- `domain_id`: `D6`
+- `domain_name`: Advisory Copilot posture
+- `claim_under_review`: Copilot guidance remains advisory, calm, non-directive, non-executing, and subordinate to engine and policy authority.
+- `authorized_execution_class`: Class A informational only; no runtime authority expansion.
+- `evidence_category_ids`: `E6` — advisory behavior and policy contracts support the Copilot claim; `E2` — calm/non-overclaiming UX boundaries support the trust-facing claim.
+- `source_pointers`:
+  - `docs/ops/governance/copilot/COPILOT_MVP_ADVISORY_LANE_DEFINITION_DRAFT.md` — completed documentation-only lane definition; explicitly not runtime or product-launch authority.
+  - `apps/frontend/__tests__/copilot.policy.integration.test.ts` and `apps/frontend/__tests__/copilotResponses.test.ts` — hermetic technical behavior checks; not user interpretation, model-quality, or live-service evidence.
+  - `docs/decisions/0015-stability-engine-is-the-system-center.md` — accepted subordination boundary; not Copilot acceptance evidence by itself.
+- `source_classes`: Copilot governance artifact; hermetic technical tests; accepted architecture ADR.
+- `evidence_period`: Current repo snapshot through 2026-07-13; no targeted-user interpretation or live-model evidence period recorded or authorized.
+- `evidence_owner`: Product / Engineering (reference maintenance only).
+- `evidence_state`: Evidence identified.
+- `confidence`: Unscored.
+- `conflicts`: None identified during pointer reconstruction.
+- `residual_risks`: No consolidated advisory-behavior review, targeted-user interpretation evidence, or approved runtime-evidence scope is recorded.
+- `revisit_conditions`: Authorize a bounded Class A Copilot evidence review; any runtime expansion requires separate doctrine/ADR/§7 authority.
+- `disposition`: Evidence incomplete.
+- `reviewers`: Implementer — record priming only; no institutional acceptance review commenced.
+- `review_date`: 2026-07-13.
+- `non_authorization_ack`: This record does not accept D6, clear any gate, bind Copilot to live models, or authorize directive, policy, engine, ledger, or execution behavior.
+
+#### D7 — Governance & policy discipline
+
+- `domain_id`: `D7`
+- `domain_name`: Governance & policy discipline
+- `claim_under_review`: Material decisions and execution activation remain traceable, reversible where required, and controlled by repo-native authority.
+- `authorized_execution_class`: Class A governance evaluation only; no execution-class widening.
+- `evidence_category_ids`: `E1` — authority hierarchy, status, and ADR records support traceability; `E8` — operational governance/exception requirements are identified but not proven; `E9` — qualified-review boundaries remain explicit where required.
+- `source_pointers`:
+  - `AGENTS.md`, `.cursorrules`, and `.cursor/rules.md` — operator and doctrine controls; document presence is not proof of every execution decision.
+  - `docs/ops/HEDGR_STATUS.md` **§6e–§7a**, **§129–§130** — canonical sequencing and decision history; mutable status is not automatic acceptance.
+  - `docs/ops/runbook.md` — Solo QA / merge ritual; process guidance is not product readiness.
+  - `docs/decisions/0023-governed-progress-under-uncertainty.md` and `docs/decisions/0024-mvp-acceptance-is-evidence-gated-not-feature-gated.md` — accepted governance principles; non-executing.
+  - `docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_GOVERNANCE_OVERRIDE_EXCEPTION_AUTHORITY_EVIDENCE_PACKAGE.md` — evidence scaffold for future Class B exception authority; creates no override authority.
+- `source_classes`: Repo authority; operator controls; merge-process guidance; accepted governance ADRs; Class B evidence scaffold.
+- `evidence_period`: Governance snapshot through 2026-07-13; no full decision-sampling or policy-conformance audit period recorded.
+- `evidence_owner`: HedgrOps (reference maintenance only).
+- `evidence_state`: Evidence identified.
+- `confidence`: Unscored.
+- `conflicts`: None identified during pointer reconstruction; compliance across the full decision history has not been audited.
+- `residual_risks`: No sampled governance/policy audit proves consistent activation, reversibility, stop-condition use, or exception handling across all material decisions.
+- `revisit_conditions`: Authorize a bounded governance/policy conformance review with a defined decision sample and period.
+- `disposition`: Evidence incomplete.
+- `reviewers`: Implementer — record priming only; no institutional acceptance review commenced.
+- `review_date`: 2026-07-13.
+- `non_authorization_ack`: This record does not accept D7, clear G0/G1/G6 or any gate, amend policy, create override authority, or activate work.
+
+#### D8 — UX & narrative integrity
+
+- `domain_id`: `D8`
+- `domain_name`: UX & narrative integrity
+- `claim_under_review`: The Class A experience remains calm, non-gamified, trust-first, and consistent with Total balance → Stability status → Allocation split.
+- `authorized_execution_class`: Class A informational only.
+- `evidence_category_ids`: `E2` — trust and disclosure surfaces support the narrative claim; `E10` — negative controls reject hype, gamification, and urgency; `E1` — UX doctrine and repo guardrails define the boundary.
+- `source_pointers`:
+  - `docs/doctrine/hedgr-ux-constitution.md` — canonical interaction doctrine; not user observation evidence.
+  - `.cursorrules` **§IX** and `docs/brand/HEDGR_BRAND_QA_CHECKLIST.md` — UX/brand anti-drift controls; checklists do not prove shipped conformance.
+  - `apps/frontend/__tests__/trust.test.tsx` — hermetic technical trust checks; not a full narrative or user-comprehension review.
+  - `apps/frontend/__tests__/engine-trust-framing-denylist.ts` — test support for prohibited framing; not independent evidence or user research.
+- `source_classes`: UX doctrine; repo UX/brand guardrails; hermetic technical tests.
+- `evidence_period`: Current repo snapshot through 2026-07-13; no full current-surface audit or targeted-user interpretation period recorded.
+- `evidence_owner`: Product / UX (reference maintenance only).
+- `evidence_state`: Evidence identified.
+- `confidence`: Unscored.
+- `conflicts`: None identified during pointer reconstruction.
+- `residual_risks`: No consolidated surface inventory or targeted-user review proves hierarchy, calmness, non-gamification, and narrative integrity across the MVP experience.
+- `revisit_conditions`: Authorize a bounded UX/narrative audit against the current surface inventory and doctrine.
+- `disposition`: Evidence incomplete.
+- `reviewers`: Implementer — record priming only; no institutional acceptance review commenced.
+- `review_date`: 2026-07-13.
+- `non_authorization_ack`: This record does not accept D8, clear G4/G7 or any gate, approve brand changes, or authorize product-surface expansion.
+
+#### D9 — Demand & learning validity
+
+- `domain_id`: `D9`
+- `domain_name`: Demand & learning validity
+- `claim_under_review`: Credible user evidence supports demand for a stability-first wallet under the tested trust and policy posture.
+- `authorized_execution_class`: Class A research / learning only.
+- `evidence_category_ids`: `E7` — the MVP specification defines the demand-learning need, while current repo records explicitly show the relevant interpretation evidence is absent.
+- `source_pointers`:
+  - `docs/doctrine/hedgr-mvp-project-specification.md` **§12.1** — product-intent success criterion; not demand evidence.
+  - `docs/ops/governance/mvp/HEDGR_MVP_PHASE_ALIGNMENT.md` **§4** — states that demand is not proven or disproven by repo code alone; orientation only.
+  - `docs/ops/HEDGR_STATUS.md` **§129** — records targeted-user interpretation evidence as not claimed and as a future exploration / MVP-evidence need.
+  - `apps/frontend/__tests__/synthetic-withdrawal-journey.test.tsx` — synthetic technical contract only; explicitly not user-demand or interpretation evidence.
+- `source_classes`: Product doctrine; governance orientation; repo governance residual record; hermetic technical test (negative boundary, not E7 proof).
+- `evidence_period`: No demand or targeted-user learning evidence period is recorded; gap primed 2026-07-13.
+- `evidence_owner`: Product / Research (reference maintenance only).
+- `evidence_state`: Missing.
+- `confidence`: Unscored.
+- `conflicts`: None; absence is explicit and no positive or negative demand conclusion is drawn.
+- `residual_risks`: No governed participant sample, research protocol, interpretation record, demand signal, or learning synthesis supports the claim.
+- `revisit_conditions`: Separately authorize bounded user research with declared cohort, protocol, evidence period, and trust/policy posture.
+- `disposition`: Not started.
+- `reviewers`: Implementer — gap priming only; no user-research or institutional acceptance review commenced.
+- `review_date`: 2026-07-13.
+- `non_authorization_ack`: This record does not accept or reject D9, clear G5 or any gate, infer demand, or authorize research, growth, launch, or feature expansion.
+
+#### D10 — Operational sustainability
+
+- `domain_id`: `D10`
+- `domain_name`: Operational sustainability
+- `claim_under_review`: Hedgr can operate repeatedly and safely through documented procedures, monitoring, support, incident response, reconciliation, and recoverability without undocumented founder rescue.
+- `authorized_execution_class`: Mixed boundary — Class A governance/process evidence may be referenced; Class B operational sustainability is blocked and incomplete.
+- `evidence_category_ids`: `E8` — Class B operational evidence requirements and read-only bridge verification identify bounded controls; `E1` — repo governance records ownership and non-authorizing boundaries; `E2` — support/incident communication requirements remain evidence needs, not proven outcomes.
+- `source_pointers`:
+  - `docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_PILOT_OPS_EVIDENCE_PACKAGE.md` — evidence-package skeleton; not pilot approval or operational evidence sufficiency.
+  - `docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_RECONCILIATION_EVIDENCE_PACKAGE.md` — reconciliation evidence scaffold; not ledger/accounting truth or operational approval.
+  - `docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_SUPPORT_DISPUTE_EVIDENCE_PACKAGE.md` and `docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_INCIDENT_RESPONSE_EVIDENCE_PACKAGE.md` — future support/incident evidence needs; no live-operation authority.
+  - `docs/ops/governance/class-b/evidence/HEDGR_CLASS_B_STAGING_LIVE_STATE_SEPARATION_EVIDENCE_PACKAGE.md` — environment-boundary evidence scaffold; not staging/live approval.
+  - `apps/bridge-worker/VERIFICATION.md` — bounded Class A read-only bridge verification; does not demonstrate MVP customer operations or Class B sustainability.
+- `source_classes`: Class B operational evidence-planning scaffolds; bounded Class A technical/governance verification.
+- `evidence_period`: Read-only bridge verification is current repo evidence through 2026-07-13; no pilot/live operational evidence period exists.
+- `evidence_owner`: Operations (reference maintenance only).
+- `evidence_state`: Evidence identified.
+- `confidence`: Unscored.
+- `conflicts`: None identified; documentation and bridge verification are intentionally not treated as proof of repeatable customer-money operations.
+- `residual_risks`: Pilot operations, monitoring, reconciliation, support, incident response, recoverability, environment separation, and founder-independence evidence remain incomplete; the Class B convergence gate remains unsatisfied.
+- `revisit_conditions`: Separately authorize operational evidence intake/review for the then-authorized execution class and evaluate convergence independently.
+- `disposition`: Evidence incomplete.
+- `reviewers`: Implementer — record priming only; no operational or institutional acceptance review commenced.
+- `review_date`: 2026-07-13.
+- `non_authorization_ack`: This record does not accept D10, clear G5/G6 or any gate, satisfy the Class B convergence gate, approve environments or operations, or authorize customer-money activity.
 
 ---
 
