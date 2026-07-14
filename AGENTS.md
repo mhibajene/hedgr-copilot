@@ -83,7 +83,23 @@ Parallel authorization applies only to the explicitly named lanes. It does not a
 
 No active lane may widen, inherit, approve, or modify another lane’s authority without a separate Founder decision and repo-native governance update.
 
-Current parallelism posture: Internal Decision **D-029** / **`HEDGR_STATUS.md` §6f.2** (Controlled Parallelism v2) is **completed historical pass authority** and no longer supplies active concurrency. **§6e** / **D-026** remains the lane-model / exception-framework only. Singular-ticket default is restored. Kenya counsel send remains **DEFER** (**§6f.1** / **D-028**). Any future concurrent lanes require a new Founder-approved pass decision plus explicit **§7** / **§7a** naming. A mutable status entry alone is not a general override of agent execution constraints.
+Current parallelism posture: Internal Decisions **D-029** / **`HEDGR_STATUS.md` §6f.2** and **D-032** / **§6f.3** (Controlled Parallelism v2 / v3) are **completed historical pass authorities** and no longer supply active concurrency. **§6e** / **D-026** remains the lane-model / exception-framework only. Singular-ticket default is restored with **`CLASS-A-VAL-001`** as the sole active ticket when named in **§7** / **§7a**. Kenya counsel send remains **DEFER** (**§6f.1** / **D-028**). Green Lane classification does **not** activate work and does **not** override **§7** / **§7a** (ADR **0025** / **§6g**). Any future concurrent lanes require a new Founder-approved pass decision plus explicit **§7** / **§7a** naming. A mutable status entry alone is not a general override of agent execution constraints.
+
+### Green Lane operator rules (ADR 0025 / §6g)
+
+When performing or reviewing work labeled Green Lane, Cursor and Codex must verify before acting:
+
+- an active founder-authorized outcome exists and is recorded repo-natively;
+- an active Green Lane delegation envelope exists in **`HEDGR_STATUS.md` §6g** and is not paused or revoked;
+- the ticket is named under **§7** / **§7a** with explicit file scope;
+- the work remains Class A and satisfies all Green Lane conditions in ADR **0025**;
+- no sensitive-data, legal, provider, custody, rail, or financial boundary has entered scope;
+- singular-ticket or separately authorized parallelism rules are preserved;
+- rollback and verification criteria are present.
+
+Stop immediately when: repo authority cannot be verified; scope becomes ambiguous; the task becomes Yellow or Red; a material architecture or trust fork emerges; the task requires a new market, provider, asset, rail, or external commitment; the requested disposition would modify doctrine, accepted ADR meaning, or a canonical trust contract; user research introduces unapproved personal, financial, or regulated data; or implementation would imply live financial capability.
+
+**Binding:** Green Lane classification does not activate work and does not override `HEDGR_STATUS.md` **§7** / **§7a**. HedgrOps briefs are not executable tickets. Class A is not automatically Green.
 
 ## 8) Decision Logging (ADR)
 Material decisions must be logged as ADRs under docs/ using the HedgrOps ADR standard.
@@ -180,7 +196,23 @@ Parallel authorization applies only to the explicitly named lanes. It does not a
 
 No active lane may widen, inherit, approve, or modify another lane’s authority without a separate Founder decision and repo-native governance update.
 
-Current parallelism posture: Internal Decision **D-029** / **`HEDGR_STATUS.md` §6f.2** (Controlled Parallelism v2) is **completed historical pass authority** and no longer supplies active concurrency. **§6e** / **D-026** remains the lane-model / exception-framework only. Singular-ticket default is restored. Kenya counsel send remains **DEFER** (**§6f.1** / **D-028**). Any future concurrent lanes require a new Founder-approved pass decision plus explicit **§7** / **§7a** naming. A mutable status entry alone is not a general override of agent execution constraints.
+Current parallelism posture: Internal Decisions **D-029** / **`HEDGR_STATUS.md` §6f.2** and **D-032** / **§6f.3** (Controlled Parallelism v2 / v3) are **completed historical pass authorities** and no longer supply active concurrency. **§6e** / **D-026** remains the lane-model / exception-framework only. Singular-ticket default is restored with **`CLASS-A-VAL-001`** as the sole active ticket when named in **§7** / **§7a**. Kenya counsel send remains **DEFER** (**§6f.1** / **D-028**). Green Lane classification does **not** activate work and does **not** override **§7** / **§7a** (ADR **0025** / **§6g**). Any future concurrent lanes require a new Founder-approved pass decision plus explicit **§7** / **§7a** naming. A mutable status entry alone is not a general override of agent execution constraints.
+
+### Green Lane operator rules (ADR 0025 / §6g)
+
+When performing or reviewing work labeled Green Lane, Cursor and Codex must verify before acting:
+
+- an active founder-authorized outcome exists and is recorded repo-natively;
+- an active Green Lane delegation envelope exists in **`HEDGR_STATUS.md` §6g** and is not paused or revoked;
+- the ticket is named under **§7** / **§7a** with explicit file scope;
+- the work remains Class A and satisfies all Green Lane conditions in ADR **0025**;
+- no sensitive-data, legal, provider, custody, rail, or financial boundary has entered scope;
+- singular-ticket or separately authorized parallelism rules are preserved;
+- rollback and verification criteria are present.
+
+Stop immediately when: repo authority cannot be verified; scope becomes ambiguous; the task becomes Yellow or Red; a material architecture or trust fork emerges; the task requires a new market, provider, asset, rail, or external commitment; the requested disposition would modify doctrine, accepted ADR meaning, or a canonical trust contract; user research introduces unapproved personal, financial, or regulated data; or implementation would imply live financial capability.
+
+**Binding:** Green Lane classification does not activate work and does not override `HEDGR_STATUS.md` **§7** / **§7a**. HedgrOps briefs are not executable tickets. Class A is not automatically Green.
 
 ## 8) Decision Logging (ADR)
 Material decisions must be logged as ADRs under `docs/decisions/` using:
@@ -364,7 +396,23 @@ Parallel authorization applies only to the explicitly named lanes. It does not a
 
 No active lane may widen, inherit, approve, or modify another lane’s authority without a separate Founder decision and repo-native governance update.
 
-Current parallelism posture: Internal Decision **D-029** / `HEDGR_STATUS.md` `§6f.2` (Controlled Parallelism v2) is **completed historical pass authority** and no longer supplies active concurrency. `§6e` / **D-026** remains the lane-model / exception-framework only. Singular-ticket default is restored. Kenya counsel send remains **DEFER** (`§6f.1` / **D-028**). Any future concurrent lanes require a new Founder-approved pass decision plus explicit `§7` / `§7a` naming. A mutable status entry alone is not a general override of agent execution constraints.
+Current parallelism posture: Internal Decisions **D-029** / `HEDGR_STATUS.md` `§6f.2` and **D-032** / `§6f.3` (Controlled Parallelism v2 / v3) are **completed historical pass authorities** and no longer supply active concurrency. `§6e` / **D-026** remains the lane-model / exception-framework only. Singular-ticket default is restored with `CLASS-A-VAL-001` as the sole active ticket when named in `§7` / `§7a`. Kenya counsel send remains **DEFER** (`§6f.1` / **D-028**). Green Lane classification does **not** activate work and does **not** override `§7` / `§7a` (ADR **0025** / `§6g`). Any future concurrent lanes require a new Founder-approved pass decision plus explicit `§7` / `§7a` naming. A mutable status entry alone is not a general override of agent execution constraints.
+
+### Green Lane operator rules (ADR 0025 / §6g)
+
+When performing or reviewing work labeled Green Lane, Cursor and Codex must verify before acting:
+
+- an active founder-authorized outcome exists and is recorded repo-natively;
+- an active Green Lane delegation envelope exists in `HEDGR_STATUS.md` `§6g` and is not paused or revoked;
+- the ticket is named under `§7` / `§7a` with explicit file scope;
+- the work remains Class A and satisfies all Green Lane conditions in ADR **0025**;
+- no sensitive-data, legal, provider, custody, rail, or financial boundary has entered scope;
+- singular-ticket or separately authorized parallelism rules are preserved;
+- rollback and verification criteria are present.
+
+Stop immediately when: repo authority cannot be verified; scope becomes ambiguous; the task becomes Yellow or Red; a material architecture or trust fork emerges; the task requires a new market, provider, asset, rail, or external commitment; the requested disposition would modify doctrine, accepted ADR meaning, or a canonical trust contract; user research introduces unapproved personal, financial, or regulated data; or implementation would imply live financial capability.
+
+**Binding:** Green Lane classification does not activate work and does not override `HEDGR_STATUS.md` `§7` / `§7a`. HedgrOps briefs are not executable tickets. Class A is not automatically Green.
 
 ### Brand-facing implementation governance
 

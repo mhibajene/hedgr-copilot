@@ -64,11 +64,13 @@ Important active constraints:
 
 **Sprint 3** is framed here as **Transition Readiness** (named track above), not as Foundation continuation: governance defines the explicit standard for any later boundary widening; execution architecture remains out of scope until explicitly approved.
 
-**Sequencing authority:** Only **§7** / **§7a** name approved active ticket(s). **Default posture:** one active implementation ticket. Concurrent lanes are permitted only where this file records an accepted, active, and unambiguous Founder-approved parallelism decision (**§6e** lane model / Internal **D-026** plus separate active-pass naming under **§6f**), explicitly names each active lane and ticket, defines authority class and exclusions, and preserves independent stop conditions and rollback. Internal **D-029** is completed and no longer supplies active concurrency. Absence, ambiguity, pause, completion, or deprecation of a pass decision restores the singular-ticket default. Parallel authorization applies only to the explicitly named lanes and does **not** authorize unrestricted multi-ticket execution. No lane may widen another lane’s authority without a separate Founder decision and repo-native governance update. **§6b** is Transition Readiness taxonomy and scrutiny input only—not backlog approval or sequencing. **§6e** / **§6f** do **not** widen Class B execution, custody, rails, conversion, settlement, or customer-money authority.
+**Sequencing authority:** Only **§7** / **§7a** name approved active ticket(s). **Default posture:** one active implementation ticket. Concurrent lanes are permitted only where this file records an accepted, active, and unambiguous Founder-approved parallelism decision (**§6e** lane model / Internal **D-026** plus separate active-pass naming under **§6f**), explicitly names each active lane and ticket, defines authority class and exclusions, and preserves independent stop conditions and rollback. Internal **D-029** is completed and no longer supplies standing concurrency. Internal **D-032** / **§6f.3** is **completed** historical pass authority (named `CLASS-A-VAL-001` + `GOV-GREEN-001`; Lane G closed **§136**). `CLASS-A-VAL-001` continues under the singular-ticket default. Absence, ambiguity, pause, completion, or deprecation of a pass decision restores the singular-ticket default. Parallel authorization applies only to the explicitly named lanes and does **not** authorize unrestricted multi-ticket execution. No lane may widen another lane’s authority without a separate Founder decision and repo-native governance update. **§6b** is Transition Readiness taxonomy and scrutiny input only—not backlog approval or sequencing. **§6e** / **§6f** / **§6g** do **not** widen Class B execution, custody, rails, conversion, settlement, or customer-money authority. Green Lane classification (**§6g** / ADR **0025**) does not activate work and does not override **§7** / **§7a**.
 
 **MVP phased alignment (interpretation aid):** See **`docs/ops/governance/mvp/HEDGR_MVP_PHASE_ALIGNMENT.md`** for how **`docs/doctrine/hedgr-mvp-project-specification.md`** governance-gated phases and success criteria map to the posture stated in this section and in **§6a–§6c**. That readout is **subordinate** to this file and to **§7** / **§7a**; it does **not** widen execution authority or substitute for **§7** naming.
 
 **MVP acceptance principle (ADR 0024, Accepted):** Institutional MVP acceptance is evidence-gated, not feature-gated. Canonical criteria and evidence recording live in **`docs/ops/governance/mvp/HEDGR_MVP_ACCEPTANCE_FRAMEWORK.md`** and **`docs/ops/governance/mvp/HEDGR_MVP_EVIDENCE_REGISTER.md`**. **Acceptance** of ADR **0024** is a boundary reference only; it does **not** authorize implementation, ticket activation, Evidence Register dispositions, institutional MVP “done,” Class B / Class C execution, or customer-money activity. **§7** / **§7a** still govern any implementation ticket.
+
+**Green Lane delegation pilot (ADR 0025, Accepted):** Time-bounded HedgrOps translation / disposition authority for routine reversible Class A product-learning work inside founder outcome envelopes. Operational envelope in **§6g**. **Acceptance** does **not** activate product experiments, create standing parallelism, authorize HedgrOps independent repo mutation, or override **§7** / **§7a**.
 
 ---
 
@@ -3719,6 +3721,80 @@ This section does **not** authorize provider-specific implementation, legal reli
 | **Repo authority** | This **§6f.2**; activation in **§7** / **§7a**; `AGENTS.md` governed-parallelism exception |
 | **Reversibility** | Reversible; restore singular-ticket default on pause / deprecation / closeout / ambiguity |
 
+### 6f.3 Controlled Parallelism v3 — `CLASS-A-VAL-001` + `GOV-GREEN-001` (Internal **D-032**)
+
+**Status:** Accepted and **completed** (Lane G `GOV-GREEN-001` closed **§136**; Lane V `CLASS-A-VAL-001` continues under restored singular-ticket default). Founder-approved 2026-07-14. Visibility remains **Internal** — not auto-exported as a public ADR. D-032 no longer supplies active concurrency after Lane G closeout.
+
+**Authority basis:** **§6e** / D-026 lane-model / exception-framework + this separate Founder pass decision + **§7** / **§7a** naming. Procedural support: `docs/ops/governance/HEDGR_GOVERNED_PARALLEL_PASS_CHECKLIST.md` (**§124**) — non-authorizing by itself. Green Lane authority model: ADR **0025** / **§6g**.
+
+**Founder-approved concurrent activation (only these named lanes/tickets):**
+
+| Lane | Ticket | Execution class | Authority |
+| ---- | ------ | --------------- | --------- |
+| V — Class A product validation | `CLASS-A-VAL-001` *(continues under singular-ticket after pass closeout)* | Class A informational / synthetic product validation | Retains only authority already granted by **§7a** / **§134**; this pass did not widen it |
+| G — Green Lane governance translation | `GOV-GREEN-001` *(completed — §136; lane idle)* | Class A documentation-only governance | Repo-native Green Lane delegation pilot (ADR **0025** / **§6g**); no product experiment activation |
+
+**Lane independence (binding):**
+
+- `GOV-GREEN-001` does **not** alter `CLASS-A-VAL-001` research scope, thresholds, or decision rule.
+- `CLASS-A-VAL-001` session findings do **not** authorize Green Lane expansion, Class B progression, or ticket activation.
+- Neither lane inherits, widens, or closes the other.
+- Completion of either lane does **not** satisfy the Class B convergence gate (**§6e**).
+- Green Lane classification does **not** create standing parallel authority beyond this named pass.
+
+**Lane V must not:** move or imply real funds; claim live availability; select launch market / provider / rail / custody; authorize Class B / Class C; accept Evidence Register domains for show; reopen D-029; widen beyond **§7a**.
+
+**Lane G must not:** activate product experiments; authorize application / runtime / CI changes; authorize Class B / Class C; create standing multi-ticket execution; make Green Lane synonymous with Class A; authorize HedgrOps independent repo mutation; treat HedgrOps briefs as executable tickets; bypass **§7** / **§7a**.
+
+**Non-authorization statement:** This pass does **not** authorize Class B execution, custody, rails, conversion, settlement, legal reliance, counsel send, market selection, provider selection, customer-money activity, institutional MVP “done,” or unrestricted multi-ticket execution. Kenya counsel path remains **DEFER** per **§6f.1** / D-028. D-029 remains completed historical authority and is not reopened as standing concurrency.
+
+| Field | Value |
+| ----- | ----- |
+| **Decision ID** | D-032 |
+| **Title** | Controlled Parallelism v3 — `CLASS-A-VAL-001` + `GOV-GREEN-001` |
+| **Status** | Accepted and completed (Lane G **§136**; singular-ticket restored for remaining `CLASS-A-VAL-001`; no active concurrency from this pass) |
+| **Visibility** | Internal |
+| **Date** | 2026-07-14 |
+| **Repo authority** | This **§6f.3**; activation **§135**; closeout **§136**; `AGENTS.md` governed-parallelism exception |
+| **Reversibility** | Reversible; singular-ticket default restored on this closeout |
+
+---
+
+## 6g. Green Lane Delegation Pilot envelope (ADR 0025 / `GOV-GREEN-001`)
+
+**Delegation status:** **Active** (time-bounded authority-model pilot). Founder-revocable at any time.
+
+**Governing ADR:** `docs/decisions/0025-repo-native-green-lane-delegation-pilot.md` (**Accepted**).
+
+**Founder-authorized outcome:** Establish a coherent, non-duplicative repo-native authority model so HedgrOps may prepare and govern routine, reversible Class A product-learning translation inside founder outcome envelopes — without independent ticket activation or unrestricted sequencing authority.
+
+**Permitted product surface / file scope (this pilot):** Governance documentation and operator-control translation only — ADR **0025**, `AGENTS.md` Green Lane operator rules, this **§6g** envelope, **§7** / **§7a** activation hygiene for `GOV-GREEN-001`, and Notion staging reconciliation when required. No product experiment is named by this envelope.
+
+**Excluded systems and files:** `apps/**`, `packages/**`, tests unrelated to governance validation, Stability Engine types/semantics, product copy, user-research flows, deployment / environment / CI configuration, financial integrations, custody / rails / deposits / withdrawals / conversion / settlement / treasury behavior, Class B evidence acceptance, institutional MVP acceptance, market / legal / provider / jurisdiction posture, existing accepted ADR meaning (other than recording ADR **0025**), doctrine files unless a direct conflict makes implementation impossible.
+
+| Field | Value |
+| ----- | ----- |
+| **Execution class** | Class A only (documentation-only governance for this ticket) |
+| **Start date** | 2026-07-14 |
+| **Review / expiry date** | ~2026-08-04 (after one product-learning cycle or approximately three weeks); earlier founder revocation allowed |
+| **Concurrency limit** | One active implementation ticket by default; concurrent tickets only under a separately recorded governed-parallelism pass (**§6f.3** / D-032 names `CLASS-A-VAL-001` + `GOV-GREEN-001` only) |
+| **External-spend limit** | None (zero) |
+| **Data posture** | No unapproved personal or regulated data; no customer-money behavior |
+| **Escalation owner** | Founder — @mhibajene |
+| **Contractual commitment** | None |
+| **Production integrations** | None |
+| **Class B / Class C** | None |
+
+**Review criteria:** decision-to-test latency; founder routing burden; authority-boundary preservation; experiments reaching clear disposition; missing/late escalations; conflicting product narratives; operator misinterpretation; governance overhead; retain / narrow / revise / expand / revoke recommendation. Expansion is not automatic.
+
+**Revocation rule:** Founder may pause or revoke at any time via repo-native update to this section. On pause/revoke: mark status paused/revoked; confirm no active ticket relies solely on the revoked delegation; reconcile Notion staging; do not silently rewrite historical records. ADR **0025** remains historical unless separately deprecated/superseded.
+
+**Relationship to §7 / §7a:** This envelope does **not** activate product work. Implementation remains executable only through **§7** / **§7a**. Green Lane classification does not activate work and does not override **§7** / **§7a**.
+
+**Relationship to governed parallelism:** Green Lane delegation does **not** create parallel authority. D-032 / **§6f.3** is a separate Founder pass for the named tickets only and is not standing concurrency.
+
+**Non-authorization:** This section is an authority-model pilot. It does not activate product work, does not authorize parallel execution by itself, does not widen financial execution posture, and leaves repo authority controlling.
+
 ---
 
 ## 7. Current sequence and active status
@@ -3855,44 +3931,49 @@ Completed and merged:
 - `GOV-ADR-0024` - ADR 0024 Accepted + `AGENTS.md` parallelism drift reconciliation (documentation-only governance hygiene; completed with **§129**)
 - `MVP-EVID-001` - MVP Evidence Register domain priming (documentation-only evidence-process; implementation PR **#281**; completed record **§131**)
 - `GOV-FOG-001` - Founder Outcome Gate disposition capture (documentation-only governance / decision-support; disposition **1 — Class A validation**; Internal **D-031**; completed record **§133**)
+- `GOV-GREEN-001` - Repo-Native Green Lane Delegation Pilot (documentation-only governance / operator-control translation; ADR **0025**; Internal **D-032** / **D-033**; completed record **§136**)
 
 Current active ticket status:
 
-- **Approved next / active ticket:** `CLASS-A-VAL-001` — Class A product-validation outcome (synthetic / visibly non-live research cycle through **31 July 2026**). Exact brief in **§7a**. Activation record **§134**. Authority basis: Internal **D-031** (disposition **1**) + this Founder **§7** / **§7a** naming.
-- **Sequencing posture:** Singular-ticket default. One active Class A validation ticket. D-029 remains completed historical pass authority and supplies **no** active concurrency. No parallel pass is open.
+- **Approved next / active ticket:** `CLASS-A-VAL-001` — Class A product-validation outcome (synthetic / visibly non-live research cycle through **31 July 2026**). Exact brief in **§7a**. Activation record **§134**. Authority basis: Internal **D-031** (disposition **1**) + Founder **§7** / **§7a** naming. Continues after `GOV-GREEN-001` closeout (**§136**) under restored singular-ticket default.
+- **Sequencing posture:** Singular-ticket default. One active Class A validation ticket. D-032 / **§6f.3** is completed historical pass authority (Lane G closed; no active concurrency). D-029 remains completed historical pass authority and supplies **no** standing concurrency. No unrestricted multi-ticket execution.
 - **Kenya counsel path (`COUNSEL-SEND-B-001` / Internal D-028):** **DEFER**. No packet authorized to send. Kenya remains primary thesis stress test; thesis not rejected or closed. No successor Kenya legal ticket active unless separately named. See **§6f.1**.
-- **Governed parallelism (Accepted; §6e / D-026 lane model; completed pass §6f.2 / D-029; Founder-confirmed 2026-07-10):** Controlled Parallelism **v2** named `PH-COMP-B-003` (Lane A) and `FE-TRUST-002` (Lane C). Both reached independent pass closeouts (**§126** / prior closeout **§127**). D-029 remains a completed historical pass decision, not standing concurrency authority. The later singular `FE-TRUST-002` hardening activation (**§128**) and Founder closeout (**§129**) do not reopen it. Parallel authorization did **not** authorize unrestricted multi-ticket execution, cross-lane authority inheritance, or Class B execution, custody, rails, conversion, settlement, legal reliance, or customer-money activity. The convergence gate in **§6e** remains unsatisfied. Kenya counsel path remains **DEFER** and separate. Procedural checklist: `docs/ops/governance/HEDGR_GOVERNED_PARALLEL_PASS_CHECKLIST.md` (**§124**) — non-authorizing by itself.
+- **Governed parallelism (Accepted; §6e / D-026 lane model; completed passes §6f.2 / D-029 and §6f.3 / D-032):** Controlled Parallelism **v3** named `CLASS-A-VAL-001` (Lane V) and `GOV-GREEN-001` (Lane G). Lane G closed (**§136**); D-032 is completed historical pass authority and no longer supplies active concurrency. D-029 remains a completed historical pass decision. Parallel authorization did **not** authorize unrestricted multi-ticket execution, cross-lane authority inheritance, or Class B execution, custody, rails, conversion, settlement, legal reliance, or customer-money activity. The convergence gate in **§6e** remains unsatisfied. Kenya counsel path remains **DEFER** and separate. Procedural checklist: `docs/ops/governance/HEDGR_GOVERNED_PARALLEL_PASS_CHECKLIST.md` (**§124**) — non-authorizing by itself.
 - **Active Lane A (Class B Evidence Readiness):** None. `PH-COMP-B-003` completed independently (**§126**); Lane A is idle.
-- **Active Lane B (backend foundation):** None (not named in Controlled Parallelism v2).
-- **Active Lane C (UX Trust Testing):** None. `FE-TRUST-002` research-contract hardening closed under Founder-directed closeout (**§129**). Lane C is idle. `CLASS-A-VAL-001` uses the closed `FE-TRUST-002` synthetic journey as the research surface under singular-ticket authority; it does **not** reopen D-029 or Lane C concurrency.
-- **Last completed ticket (summary):** `GOV-FOG-001` (**§133**) — Founder Outcome Gate absorbed; disposition **1 — Class A validation** recorded (Internal **D-031**). Prior: `MVP-EVID-001` (**§131**); `FE-TRUST-002` / `GOV-ADR-0024` closeout hygiene (**§129**); `PH-COMP-B-003` (**§126**); `GOV-PHILOSOPHY-001` / ADR **0023** (**§125**); `GOV-PARALLEL-002` (**§124**); `FE-TRUST-001` (**§123**); `BE-FOUND-001` (**§122**); `PH-COMP-B-002` (**§121**); `GOV-PARALLEL-001` (**§120**); `PH-COMP-B-001` (**§119**); `COUNSEL-B-001` (**§118**).
+- **Active Lane B (backend foundation):** None (not named in Controlled Parallelism v2 or v3).
+- **Active Lane C (UX Trust Testing):** None. `FE-TRUST-002` research-contract hardening closed under Founder-directed closeout (**§129**). Lane C is idle. `CLASS-A-VAL-001` uses the closed `FE-TRUST-002` synthetic journey as the research surface under Lane V authority; it does **not** reopen D-029 or Lane C concurrency.
+- **Green Lane pilot (§6g / ADR 0025):** Active authority-model pilot envelope (time-bounded; founder-revocable). Ticket of record `GOV-GREEN-001` completed (**§136**). Does **not** activate product experiments. Does **not** by itself authorize parallelism. Does **not** widen financial execution posture.
+- **Last completed ticket (summary):** `GOV-GREEN-001` (**§136**) — Green Lane delegation pilot absorbed (ADR **0025** / **§6g** / `AGENTS.md`). Prior: `GOV-FOG-001` (**§133**); `MVP-EVID-001` (**§131**); `FE-TRUST-002` / `GOV-ADR-0024` closeout hygiene (**§129**); `PH-COMP-B-003` (**§126**); `GOV-PHILOSOPHY-001` / ADR **0023** (**§125**); `GOV-PARALLEL-002` (**§124**); `FE-TRUST-001` (**§123**); `BE-FOUND-001` (**§122**); `PH-COMP-B-002` (**§121**); `GOV-PARALLEL-001` (**§120**); `PH-COMP-B-001` (**§119**); `COUNSEL-B-001` (**§118**).
 - **Post-`COUNSEL-SEND-B-001` DEFER (governance-accepted; §6f.1 / D-028):** Founder deferred authorization to send the Kenya counsel packet. Does not reject Kenya, establish a negative legal conclusion, close the thesis, infer unsuitability, authorize internal legal reliance, or authorize Class B execution. Revisit only under conditions in **§6f.1**.
 - **Post-Controlled Parallelism v2 closeout (governance-accepted; §6f.2 / D-029):** Founder activated concurrent `PH-COMP-B-003` and `FE-TRUST-002` only. Both reached independent pass closeouts (**§126** / prior closeout **§127**) with `NO CROSS-LANE IMPACT`; all lanes were idle when D-029 closed. Lane independence and non-convergence held. Later singular hardening (**§128**) and Founder closeout (**§129**) are not successor or parallel passes. Completion does **not** authorize Class B execution, counsel send, market/provider/endpoint selection, or customer-money activity.
-- **Post-`FE-TRUST-002` hardening closeout (Founder-directed; §129):** Bounded hardening merged via PR **#274** remains the implementation truth. Founder closed the ticket with residual note that targeted-user interpretation evidence is **not claimed** and remains a future exploration / MVP-evidence need only. D-029 remains completed historical authority. `CLASS-A-VAL-001` is the §7-named ticket to collect that interpretation evidence under synthetic conditions.
+- **Post-Controlled Parallelism v3 closeout (governance-accepted; §6f.3 / D-032 / §135 activation / §136 closeout):** Founder activated concurrent `CLASS-A-VAL-001` (Lane V) and `GOV-GREEN-001` (Lane G) only. Lane G completed independently (**§136**) with `NO CROSS-LANE IMPACT`; singular-ticket restored for remaining `CLASS-A-VAL-001`. D-032 is completed historical pass authority. Does **not** reopen D-029 as standing concurrency. Does **not** authorize Class B execution, customer-money activity, counsel send, or product-experiment activation via Green Lane alone.
+- **Post-`FE-TRUST-002` hardening closeout (Founder-directed; §129):** Bounded hardening merged via PR **#274** remains the implementation truth. Founder closed the ticket with residual note that targeted-user interpretation evidence is **not claimed** and remains a future exploration / MVP-evidence need only. D-029 remains completed historical authority. `CLASS-A-VAL-001` is the §7-named Lane V ticket to collect that interpretation evidence under synthetic conditions.
 - **Post-ADR 0024 acceptance (Founder-directed; §129):** ADR **0024** is **Accepted** as the evidence-gated MVP acceptance principle. Acceptance does **not** authorize Evidence Register dispositions by itself, institutional MVP “done,” or execution-class widening.
-- **Post-`AGENTS.md` parallelism reconciliation (Founder-directed; §129):** Operator docs now match repo truth that D-029 is completed historical pass authority and the singular-ticket default applies.
+- **Post-ADR 0025 acceptance (Founder-directed; §135 / §136 / `GOV-GREEN-001`):** ADR **0025** is **Accepted** as the Green Lane delegation pilot principle. Acceptance does **not** activate product work, create standing parallelism, or override **§7** / **§7a**.
+- **Post-`AGENTS.md` parallelism reconciliation (Founder-directed; §129; updated §135 / §136):** Operator docs match repo truth that D-029 and D-032 are completed historical pass authorities; singular-ticket default applies with `CLASS-A-VAL-001` active; Green Lane classification does not activate work.
 - **Post-`MVP-EVID-001` closeout (§131):** Documentation-only Evidence Register domain priming completed via PR **#281**. Domain records identify sources and gaps only; no domain was accepted, no gate was cleared, institutional MVP was not accepted.
 - **Post-`GOV-FOG-001` closeout (§133 / D-031):** Disposition **1 — Class A validation** recorded. Outcome Gate governed at `docs/ops/governance/mvp/HEDGR_FOUNDER_OUTCOME_GATE_CLASS_A_TO_CLASS_B.md`. Decision date **31 July 2026**.
-- **Post-`CLASS-A-VAL-001` activation (§134):** Founder-activated Class A product-validation cycle under the Outcome Gate §4 contract. Synthetic / visibly non-live only. Does **not** authorize Class B execution, customer-money activity, counsel send, market/provider selection as launch market, Evidence Register domain acceptance-for-show, gate clearance, or institutional MVP “done.” Does **not** reopen D-029.
+- **Post-`CLASS-A-VAL-001` activation (§134):** Founder-activated Class A product-validation cycle under the Outcome Gate §4 contract. Synthetic / visibly non-live only. Does **not** authorize Class B execution, customer-money activity, counsel send, market/provider selection as launch market, Evidence Register domain acceptance-for-show, gate clearance, or institutional MVP “done.” Does **not** reopen D-029. Remains active as Lane V under D-032.
+- **Post-`GOV-GREEN-001` closeout (§136):** Documentation-only Green Lane delegation pilot completed. ADR **0025**, `AGENTS.md` operator rules, and **§6g** envelope remain. Does **not** activate a product experiment. Does **not** authorize Class B / Class C or customer-money activity. Singular-ticket restored for `CLASS-A-VAL-001`.
 - **Post-`GOV-PHILOSOPHY-001` sequencing (governance-accepted):** Philosophy codified; does not widen execution. Future tickets appear only when separately named in **§7** / **§7a**.
-- **Post-`GOV-PARALLEL-002` sequencing (governance-accepted):** Checklist remains non-authorizing by itself. A future parallel pass requires a new Founder decision.
-- **Post-`GOV-PARALLEL-001` sequencing (governance-accepted):** **§6e** / D-026 remains the lane-model / exception-framework authority only. v1 and v2 named tickets are complete; no active pass naming remains.
+- **Post-`GOV-PARALLEL-002` sequencing (governance-accepted):** Checklist remains non-authorizing by itself. A future parallel pass beyond completed D-032 requires a new Founder decision.
+- **Post-`GOV-PARALLEL-001` sequencing (governance-accepted):** **§6e** / D-026 remains the lane-model / exception-framework authority only. v1, v2, and v3 named tickets are complete; no active pass naming remains.
 - **Post-`PH-COMP-B-002` sequencing (governance-accepted):** Source-pointer classification completed (**§121**). Separately named `PH-COMP-B-003` exact public locator preservation completed (**§126**); Lane A is idle and no successor is activated.
 - **Post-`COUNSEL-B-001` sequencing (governance-accepted):** Packet draft completed (**§118**). Send authorization is **DEFER** per **§6f.1** / D-028.
 - **§6b** is not sequencing authority. **§6e** / **§6f** authorize controlled multi-lane activation only for explicitly named lanes/tickets; absence/ambiguity/pause/deprecation/completion restores the singular-ticket default.
-- When **§7** names an approved ticket, the active brief lives in **§7a** until closeout. Controlled Parallelism v2 is closed; the singular-ticket default applies with **`CLASS-A-VAL-001`** as the sole active ticket.
+- When **§7** names an approved ticket, the active brief lives in **§7a** until closeout. Controlled Parallelism v3 is closed; the singular-ticket default applies with **`CLASS-A-VAL-001`** as the sole active ticket.
 - Cursor must not connect Lane C outputs or `CLASS-A-VAL-001` session findings to live Class B execution, provider adapters, or customer-money paths.
-- Cursor must not treat UX feedback or research findings as Class B authorization or automatic §7 sequencing authority.
+- Cursor must not treat UX feedback, research findings, or Green Lane classification as Class B authorization or automatic §7 sequencing authority.
 - No active lane may widen, inherit, approve, or modify another lane’s authority without a separate Founder decision and repo-native governance update.
-- Kenya counsel path remains **DEFER** (**§6f.1**); Controlled Parallelism v2 does not send counsel materials or reopen counsel engagement.
-- Do not treat backlog, roadmap, Outcome Gate disposition alone, or *Proposed* ADRs as sequenced work unless **§7** is updated explicitly.
+- Kenya counsel path remains **DEFER** (**§6f.1**); Controlled Parallelism v3 does not send counsel materials or reopen counsel engagement.
+- Do not treat backlog, roadmap, Outcome Gate disposition alone, Green Lane labels, or *Proposed* ADRs as sequenced work unless **§7** is updated explicitly.
 - Convergence gate remains unsatisfied. `CLASS-A-VAL-001` does not satisfy it. Session findings remain exploration / MVP-evidence inputs until governed review.
 
 ---
 
 ## 7a. Active execution ticket — `CLASS-A-VAL-001`
 
-**Active ticket:** `CLASS-A-VAL-001` — Class A product-validation outcome (activation **§134**).
+**Active ticket:** `CLASS-A-VAL-001` — Class A product-validation outcome (activation **§134**). Continues after `GOV-GREEN-001` closeout (**§136**) under restored singular-ticket default.
 
 **Objective:** By **31 July 2026**, determine whether target cross-border freelancers understand Hedgr’s stability proposition and synthetic withdrawal journey well enough to justify a one-market Class B feasibility cycle — under synthetic, visibly non-live conditions only.
 
@@ -3900,7 +3981,7 @@ Current active ticket status:
 
 **Execution class:** Class A informational / synthetic. Non-executing for customer money. May include bounded presentation-only Class A engineering changes **only** when required by evidence from this cycle and still inside the approved product slice; any such change must remain reversible and visibly non-live.
 
-**Authority basis:** Founder disposition **1** (Internal **D-031** / **§133**) + this **§7** / **§7a** naming (Founder-approved activation **§134**) + Outcome Gate contract (`docs/ops/governance/mvp/HEDGR_FOUNDER_OUTCOME_GATE_CLASS_A_TO_CLASS_B.md` §4–§5) + ADR **0024** (evidence principle only) + ADRs **0013–0015** (read-only / informational engine boundaries) + closed `FE-TRUST-002` research surface (**§129**).
+**Authority basis:** Founder disposition **1** (Internal **D-031** / **§133**) + this **§7** / **§7a** naming (Founder-approved activation **§134**) + Outcome Gate contract (`docs/ops/governance/mvp/HEDGR_FOUNDER_OUTCOME_GATE_CLASS_A_TO_CLASS_B.md` §4–§5) + ADR **0024** (evidence principle only) + ADRs **0013–0015** (read-only / informational engine boundaries) + closed `FE-TRUST-002` research surface (**§129**) + ADR **0025** / **§6g** (Green Lane pilot exists but does **not** widen this ticket).
 
 **DRI:** Founder — @mhibajene.
 
@@ -3909,9 +3990,9 @@ Current active ticket status:
 - **Lane A:** idle
 - **Lane B:** idle
 - **Lane C:** idle — `FE-TRUST-002` closed; journey reused as research surface only
-- **Singular active ticket:** `CLASS-A-VAL-001` (does **not** reopen D-029)
+- **Singular active ticket:** `CLASS-A-VAL-001` (D-032 completed; does **not** reopen D-029)
 
-**Sequencing posture:** Singular-ticket default; one active validation ticket. Kenya counsel: **DEFER** (**§6f.1** / D-028). Convergence gate: unsatisfied.
+**Sequencing posture:** Singular-ticket default; one active validation ticket. Kenya counsel: **DEFER** (**§6f.1** / D-028). Convergence gate: unsatisfied. Green Lane pilot envelope (**§6g**) remains active as authority-model only and does **not** activate product work.
 
 **In scope:**
 - Run **8** diagnostic sessions with freelancers who receive, hold, or convert foreign-currency income, using the shipped `FE-TRUST-002` synthetic withdrawal journey and Stability Wallet product slice: proposition → balance / stability → allocation → synthetic withdrawal → exception / support.
@@ -3928,7 +4009,8 @@ Current active ticket status:
 - Select launch market, provider, rail, custody, chain, or stablecoin; send counsel packets; alter Kenya `DEFER`.
 - Authorize Class B execution, Class C automation, live yield routing, or customer-money activity.
 - Accept Evidence Register domains or clear gates **G0–G7** merely to show progress; declare institutional MVP “done.”
-- Reopen D-029 or open a second active / parallel ticket without a separate Founder decision.
+- Reopen D-029 / D-032 as standing concurrency or open a second active / parallel ticket without a separate Founder decision.
+- Treat Green Lane classification or HedgrOps briefs as ticket activation or scope widening.
 - Introduce unsupported guarantees, fee/FX/payout precision that does not exist, gamification, yield-first framing, or allocation-as-accounting.
 - Bypass Stability Engine read-only / informational boundaries (ADRs **0013–0015**).
 - Treat session findings as automatic Class B progression authority — founder decision rule in Outcome Gate §5 still applies after evidence.
@@ -3952,7 +4034,19 @@ Current active ticket status:
 - Stop on unresolved critical misconceptions, persistent yield/trading-first framing, demand for unsupported guarantees, weak demand signal, missed **31 July 2026** without founder disposition, or pressure to accept domains / widen Class B.
 - Rollback = revert any presentation iteration; disable research variant; docs/evidence artifacts remain reconstructible.
 
-Procedural support (non-authorizing): Outcome Gate §5–§8; ADR **0024**; `GOV-PARALLEL-002` checklist (does not authorize parallelism).
+Procedural support (non-authorizing): Outcome Gate §5–§8; ADR **0024**; ADR **0025** / **§6g** (Green Lane pilot; does not activate work); `GOV-PARALLEL-002` checklist (does not authorize parallelism).
+
+### Archived brief — `GOV-GREEN-001`
+
+**Completed execution ticket:** `GOV-GREEN-001` — Repo-Native Green Lane Delegation Pilot (documentation-only; activation **§135**; closeout **§136**; Internal **D-032** / **D-033**; ADR **0025**).
+
+**Objective:** Translate Green Lane delegation into repo-native governance (ADR / AGENTS / **§6g**) without activating product experiments or widening financial execution posture.
+
+**Type:** Documentation-only governance / operator-control translation.
+
+**Resulting posture at closeout:** Singular-ticket default restored; **`CLASS-A-VAL-001`** remains the sole active ticket; D-032 completed historical pass authority; Green Lane pilot envelope (**§6g**) remains active as authority-model only.
+
+**Governance guarantees held (closeout):** No product experiment activated; no Class B / Class C / customer-money authority; Green Lane classification does not override **§7** / **§7a**; Class A ≠ Green preserved; HedgrOps briefs are not executable tickets.
 
 Historical briefs remain below for audit context.
 
@@ -8153,3 +8247,80 @@ Any Class A validation execution (`CLASS-A-VAL-001`), Class B feasibility, couns
 **Notion staging posture:** Reconciled after activation to mirror `CLASS-A-VAL-001` as the sole active ticket. Repo-native **§7** / **§7a** remains the sequencing authority; the mirror does not independently sequence or close the ticket.
 
 **Stop condition:** Return for governance review if real-money / live-availability claims appear, if research geography is treated as market selection, if Class B / customer-money authority is implied, if domains are accepted to show progress, if counsel send is inferred, if D-029 is reopened, or if a second active ticket / parallel pass is opened without a separate Founder decision.
+
+**Later note (2026-07-14):** Founder separately authorized Controlled Parallelism v3 (**§6f.3** / Internal **D-032** / **§135**), naming `GOV-GREEN-001` concurrent with this ticket. That later pass does **not** rewrite this activation’s original singular-ticket posture; Lane V scope remains as stated in **§7a**.
+
+---
+
+## 135. Founder activation - GOV-GREEN-001 (Repo-Native Green Lane Delegation Pilot) + Controlled Parallelism v3
+
+**Ticket:** `GOV-GREEN-001` — Repo-Native Green Lane Delegation Pilot (documentation-only governance / operator-control translation)
+
+**Status:** Completed — superseded by closeout **§136**. Activation brief previously held in **§7a** (Lane G).
+
+**Execution posture at activation:** Concurrent Lane G under Controlled Parallelism v3; Class A documentation-only; non-executing for customer money
+
+**Activation authority:** Founder approval to activate `GOV-GREEN-001` in parallel with active `CLASS-A-VAL-001` + Internal **D-032** / **§6f.3** + this **§7** / **§7a** naming
+
+**Parallelism posture:** Internal **D-032** / **§6f.3** names only `CLASS-A-VAL-001` (Lane V) and `GOV-GREEN-001` (Lane G). D-029 remains completed historical authority and is not reopened as standing concurrency. Lane A / B / C remain idle. Singular-ticket default remains the baseline and restores on D-032 pause / completion / ambiguity.
+
+**Class B execution authorized:** No
+
+**Customer-money activity authorized:** No
+
+**Convergence gate satisfied:** No
+
+**Product experiment activated:** No
+
+**Successor product / research ticket activated:** No
+
+**Disposition.** Activate `GOV-GREEN-001` as Lane G under Controlled Parallelism v3 so the Green Lane delegation principle can be translated into ADR **0025**, `AGENTS.md` operator rules, and **§6g** pilot envelope — without activating a product experiment and without widening financial execution posture.
+
+**Implementation posture.** Documentation-only. Expected edit surfaces: `docs/decisions/0025-repo-native-green-lane-delegation-pilot.md`, `AGENTS.md`, `docs/ops/HEDGR_STATUS.md` (**§6f.3**, **§6g**, **§7**, **§7a**, this **§135**), and `docs/ops/NOTION_GOVERNANCE_STAGING.md` when required. Default is **not** to create an optional operating-standard file unless ADR / AGENTS / STATUS cannot express the envelope without excessive duplication.
+
+**Scope boundary.** The exact active brief is **§7a** Lane G. This activation does not reopen D-029 as standing concurrency, authorize unrestricted multi-ticket execution, authorize Class B / Class C, alter Kenya counsel `DEFER`, gather external evidence, accept Evidence Register domains, declare institutional MVP “done,” activate a Green Lane product experiment, or treat Green Lane classification as ticket activation authority.
+
+**Expected closeout evidence.** ADR **0025** Accepted; `AGENTS.md` Green Lane rules present; **§6g** envelope recorded; staging reconciled; verification checklist passed; unauthorized-authority language review completed; on closeout, Lane G removed from **§7** / **§7a** (Lane V may remain under D-032 or return to singular posture per Founder closeout).
+
+**Notion staging posture:** Reconciled to mirror D-032 / ADR **0025** / dual active tickets. Repo-native **§7** / **§7a** remains the sequencing authority; the mirror does not independently sequence or close tickets.
+
+**Stop condition:** Return for governance review if Green Lane is treated as product activation, if HedgrOps briefs are treated as executable tickets, if Class A is treated as automatically Green, if singular-ticket default is weakened beyond D-032’s named tickets, if Class B / customer-money authority is implied, if counsel send is inferred, or if doctrine / accepted ADR meaning (other than recording ADR **0025**) would be altered.
+
+---
+
+## 136. Completed closeout - GOV-GREEN-001 (Repo-Native Green Lane Delegation Pilot)
+
+**Ticket:** `GOV-GREEN-001` — Repo-Native Green Lane Delegation Pilot (documentation-only governance / operator-control translation)
+
+**Status:** Completed. Implementation and closeout recorded 2026-07-14.
+
+**Activation authority:** Founder-approved activation **§135** + Controlled Parallelism v3 / Internal **D-032** + active brief previously held in **§7a** (Lane G).
+
+**Decision Log:** Internal **D-032** (parallel pass; Notion mirror) · Internal **D-033** ↔ ADR **0025** (Notion mirror).
+
+**Objective.** Establish a coherent, non-duplicative repo-native Green Lane delegation authority model so HedgrOps may prepare and govern routine, reversible Class A product-learning translation inside founder outcome envelopes — without independent ticket activation or unrestricted sequencing authority.
+
+### Completed scope
+
+- **`docs/decisions/0025-repo-native-green-lane-delegation-pilot.md`** — ADR **0025** Accepted; defines outcome / translation / activation / implementation separation, Green Lane conditions, non-delegations, dispositions, evidence requirements, review / kill criteria.
+- **`AGENTS.md`** — Green Lane operator verification and stop rules; parallelism posture updated for D-032 then restored to completed-pass truth on this closeout.
+- **`docs/ops/HEDGR_STATUS.md`** — **§6f.3** (D-032), **§6g** pilot envelope, activation **§135**, this closeout; **§7** / **§7a** restore singular-ticket with `CLASS-A-VAL-001` sole active.
+- **`docs/ops/NOTION_GOVERNANCE_STAGING.md`** — D-032 / D-033 mirrors + dual-ticket then post-closeout reconciliation.
+
+**Optional support artifact:** Not created. ADR **0025**, `AGENTS.md`, and **§6g** express the envelope without excessive duplication.
+
+### Governance guarantees held
+
+No product experiment activated. No application / runtime / CI / environment change. No Class B / Class C execution or customer-money authority. No Evidence Register domain acceptance. No counsel send. No market / provider / rail / custody selection. Singular-ticket default restored. D-032 completed and does not supply standing concurrency. Green Lane classification does not activate work and does not override **§7** / **§7a**. Class A ≠ Green preserved. HedgrOps briefs are not executable tickets.
+
+### Resulting posture
+
+Singular-ticket default. Sole active ticket: `CLASS-A-VAL-001` (**§134** / **§7a**). Lane A / B / C idle. D-029 and D-032 are completed historical pass authorities. Kenya counsel send remains **DEFER**. Convergence gate remains unsatisfied. **§6g** Green Lane pilot envelope remains **Active** as authority-model only until founder review / expiry / revocation.
+
+### Rollback
+
+Deprecate or supersede ADR **0025** through repo convention; restore prior `AGENTS.md` operator rules; mark **§6g** paused or revoked; reconcile Notion staging; confirm no active ticket relies solely on the revoked delegation. Do not silently rewrite historical records.
+
+### Follow-ups
+
+Any Green Lane product-learning experiment requires a separately founder-authorized outcome plus **§7** / **§7a** naming. Pilot review ~2026-08-04 (or after one product-learning cycle). Expansion is not automatic.
