@@ -6,7 +6,7 @@
 
 **Authority:** The repository is source of truth. Wording here must match `docs/decisions/0016-warmth-layer-doctrine-constrained-retail-refinement-track.md`, `docs/decisions/SPRINT-2-ADR-INDEX.md`, and `docs/ops/HEDGR_STATUS.md`. Wording must match **Accepted** ADR **0016** in repo; do not broaden scope or soften read-only / non-execution boundaries in Notion.
 
-**Last reconciled:** 2026-07-13 (`GOV-FOG-001` closed in `HEDGR_STATUS.md` **§133**; Internal **D-031** records disposition **1 — Class A validation**; `CLASS-A-VAL-001` was separately Founder-activated in **§134** and is the sole active ticket under **§7** / **§7a**; prior `MVP-EVID-001` / **§131** Evidence Register priming unchanged — domains remain incomplete / unscored; **§6f.1** / **D-028** keeps `COUNSEL-SEND-B-001` **DEFER**; **§6f.2** / **D-029** remains completed historical parallel-pass authority with no active concurrency; Lane A / B / C idle; **§6e** / **D-026** remains lane-model / exception-framework authority only; Kenya remains the primary thesis stress test and is not rejected or closed)
+**Last reconciled:** 2026-07-14 (`GOV-GREEN-001` closed in `HEDGR_STATUS.md` **§136**; ADR **0025** / **D-033** / **§6g** Green Lane delegation pilot remains as authority-model only — does **not** activate product work, does **not** authorize unrestricted parallel execution, does **not** widen financial execution posture; Controlled Parallelism v3 / **D-032** completed with Lane G closed and singular-ticket restored; `CLASS-A-VAL-001` remains the sole active ticket under **§7** / **§7a** / **§134**; prior `GOV-FOG-001` / **D-031** / **§133** disposition **1** unchanged; **§6f.1** / **D-028** keeps `COUNSEL-SEND-B-001` **DEFER**; **§6f.2** / **D-029** remains completed historical parallel-pass authority; Lane A / B / C idle; **§6e** / **D-026** remains lane-model / exception-framework authority only; Kenya remains the primary thesis stress test and is not rejected or closed)
 
 ---
 
@@ -48,13 +48,17 @@ Use as a governed workstream line, **not** as a shipped-feature claim. Placement
 
 - **MVP acceptance is evidence-gated (ADR 0024 / D-030, Accepted):** Institutional MVP acceptance requires recorded evidence dispositions under the Acceptance Framework and Evidence Register, not feature-count rhetoric. Does **not** authorize implementation, Evidence Register dispositions, institutional MVP “done,” Class B / Class C execution, or customer-money activity. Closeout hygiene **§129**.
 
+- **Green Lane delegation pilot (ADR 0025 / D-033, Accepted):** Time-bounded HedgrOps translation / disposition authority for routine reversible Class A product-learning work inside founder outcome envelopes. Operational envelope in `HEDGR_STATUS.md` **§6g**. Ticket of record `GOV-GREEN-001` completed (**§136**). This is an **authority-model pilot**: it does **not** activate product work, does **not** authorize parallel execution by itself, does **not** widen financial execution posture, and leaves repo authority controlling. Green Lane classification does **not** override **§7** / **§7a**.
+
 - **MVP Evidence Register domain priming (`MVP-EVID-001`, completed):** Schema-complete D1–D10 records merged via PR **#281** and closed in **§131**. D1–D8 and D10 remain `Evidence incomplete`; D9 remains `Missing` / `Not started`; all domains remain `Unscored`; no domain is accepted, no G0–G7 gate is cleared, and no successor or execution authority is created.
 
-- **Founder Outcome Gate disposition (`GOV-FOG-001` / D-031, completed):** Disposition **1 — Class A validation** recorded 2026-07-13 (**§133**). `CLASS-A-VAL-001` was separately Founder-activated through **§7** / **§7a** / **§134** as the sole active ticket through **31 July 2026**; synthetic / visibly non-live only. The disposition did not self-activate the ticket. Class B execution and customer-money activity remain unauthorised. Artifact: `docs/ops/governance/mvp/HEDGR_FOUNDER_OUTCOME_GATE_CLASS_A_TO_CLASS_B.md`.
+- **Founder Outcome Gate disposition (`GOV-FOG-001` / D-031, completed):** Disposition **1 — Class A validation** recorded 2026-07-13 (**§133**). `CLASS-A-VAL-001` was separately Founder-activated through **§7** / **§7a** / **§134** and remains the sole active ticket through **31 July 2026**; synthetic / visibly non-live only. Concurrent `GOV-GREEN-001` under **D-032** completed (**§136**). The disposition did not self-activate either ticket. Class B execution and customer-money activity remain unauthorised. Artifact: `docs/ops/governance/mvp/HEDGR_FOUNDER_OUTCOME_GATE_CLASS_A_TO_CLASS_B.md`.
 
 - **Kenya counsel engagement (D-028, Accepted — DEFER):** `COUNSEL-SEND-B-001` deferred. Kenya remains primary thesis stress test; thesis not rejected or closed. No packet authorized to send. See `HEDGR_STATUS.md` **§6f.1**.
 
-- **Controlled Parallelism v2 (D-029, Accepted — completed historical pass):** **`PH-COMP-B-003`** and `FE-TRUST-002` reached independent pass closeouts (**§126** / prior closeout **§127**) with `NO CROSS-LANE IMPACT`; D-029 closed with all lanes idle and no longer supplies active concurrency. Later singular hardening (**§128**) and Founder closeout (**§129**) do not reopen D-029, satisfy the convergence gate, activate a successor, or authorize Class B execution. See `HEDGR_STATUS.md` **§6f.2** / **§7** / **§7a** / **§129**.
+- **Controlled Parallelism v2 (D-029, Accepted — completed historical pass):** **`PH-COMP-B-003`** and `FE-TRUST-002` reached independent pass closeouts (**§126** / prior closeout **§127**) with `NO CROSS-LANE IMPACT`; D-029 closed with all lanes idle and no longer supplies standing concurrency. Later singular hardening (**§128**) and Founder closeout (**§129**) do not reopen D-029, satisfy the convergence gate, or authorize Class B execution. See `HEDGR_STATUS.md` **§6f.2** / **§7** / **§7a** / **§129**.
+
+- **Controlled Parallelism v3 (D-032, Accepted — completed historical pass):** Named `CLASS-A-VAL-001` (Lane V) and `GOV-GREEN-001` (Lane G). Lane G closed (**§136**) with singular-ticket restored; D-032 no longer supplies active concurrency. Does **not** reopen D-029 as standing concurrency. Does **not** authorize unrestricted multi-ticket execution, Class B execution, or customer-money activity. See `HEDGR_STATUS.md` **§6f.3** / **§135** / **§136**.
 
 - **`MC-S3-006` (merged, test-only):** Further Vitest regression resistance on **already-shipped** Stability Engine trust surfaces — **no** new states, **no** new behavior, **no** new surfaces; **not** Warmth v2 and **not** a presentation-queue successor to **`MC-S3-005`**. Merged truth **§37**.
 
@@ -585,6 +589,57 @@ Use when mirroring the completed **test-only** regression tranche 4. **Not** new
 
 ---
 
+## 8d.3 Decision Log — D-032 / Controlled Parallelism v3 (Internal; Notion mirror)
+
+**Notion Decision Log ID:** **D-032**. Canonical detail: **`docs/ops/HEDGR_STATUS.md` §6f.3**, activation **§135**, closeout **§136**. Visibility: **Internal** — do **not** auto-export as a public repo ADR.
+
+| Field | Value |
+| ----- | ----- |
+| **Decision ID** | D-032 |
+| **Title** | Controlled Parallelism v3 — `CLASS-A-VAL-001` + `GOV-GREEN-001` |
+| **Status** | Accepted and completed |
+| **Decision Type** | Ops / Sequencing |
+| **Strategic Horizon** | Short-term (MVP) |
+| **Visibility** | Internal |
+| **Date** | 2026-07-14 |
+| **Repo authority** | `HEDGR_STATUS.md` **§6f.3**; activation **§135**; closeout **§136**; under **§6e** / D-026 lane-model exception |
+| **Tickets** | Lane V `CLASS-A-VAL-001` (continues singular); Lane G `GOV-GREEN-001` (completed) |
+
+**Summary / notes (concise)**
+
+- Founder authorized concurrent activation of only these two named tickets.
+- Does **not** reopen D-029 as standing concurrency.
+- Does **not** authorize unrestricted multi-ticket execution, cross-lane authority inheritance, Class B execution, or customer-money activity.
+- Green Lane (`GOV-GREEN-001`) is documentation-only governance translation; it does **not** activate a product experiment.
+- Singular-ticket default remains the baseline and restores on D-032 pause / completion / ambiguity.
+
+---
+
+## 8d.4 Decision Log — D-033 / ADR 0025 / GOV-GREEN-001 (Public governance rationale)
+
+**Notion Decision Log ID:** **D-033** ↔ Repo ADR: **0025**. Canonical detail: **`docs/decisions/0025-repo-native-green-lane-delegation-pilot.md`**, **`HEDGR_STATUS.md` §6g**, activation **§135**, and closeout **§136**.
+
+| Field | Value |
+| ----- | ----- |
+| **Decision ID** | D-033 |
+| **Title** | Repo-Native Green Lane Delegation Pilot |
+| **Status** | Accepted |
+| **Decision Type** | Ops / Governance |
+| **Strategic Horizon** | Short-term (time-bounded pilot) |
+| **Visibility** | Public (governance rationale) |
+| **Date** | 2026-07-14 |
+| **Repo file** | `docs/decisions/0025-repo-native-green-lane-delegation-pilot.md` |
+| **Ticket** | `GOV-GREEN-001` (completed **§136**) |
+
+**Summary / notes (concise)**
+
+- Authority-model pilot only: HedgrOps bounded translation / disposition authority inside founder outcome envelopes.
+- Does **not** activate product work; does **not** authorize parallel execution by itself; does **not** widen financial execution posture; repo authority remains controlling.
+- Green Lane classification does **not** activate work and does **not** override **§7** / **§7a**.
+- Class A is not automatically Green. HedgrOps briefs are not executable tickets.
+
+---
+
 ## 8e. Decision Log — D-028 / COUNSEL-SEND-B-001 DEFER (Internal; Notion mirror)
 
 **Notion Decision Log ID:** **D-028**. Canonical detail: **`docs/ops/HEDGR_STATUS.md` §6f.1**. Visibility: **Internal**.
@@ -643,8 +698,8 @@ Use when mirroring the completed **test-only** regression tranche 4. **Not** new
 | **Status** | **Closed / shipped as governance readiness only** (documentation + governed implementation milestones complete through **`MC-S3-018`**; post-closeout test-only smoke hardening merged through **`MC-S3-019`**). Repo **`§7`** subsequently records additional **documentation-only** governance completions (**`COP-GOV-001`**, **`MC-S3-020`**, **`GOV-B-001`** through current completed GOV-B spine artifacts; **§52-§65d** / **§73**) — **not** a reopening of Transition Readiness and **not** execution authority. |
 | **Ship date / latest merged milestone** | Governance-readiness ship date: 2026-05-04 *(**MC-S3-018**, PR **#146**).* Post-closeout smoke: 2026-05-04 *(**MC-S3-019**, PR **#148**).* Later **`GOV-B-001`** through current completed GOV-B spine artifacts are staged under **Class B Pilot Governance Spine**, not as active Transition Readiness implementation scope. |
 | **Objective** | Establish and exercise **post-Foundation** boundary readiness (**§6b** taxonomy and scrutiny), governance handoff traceability, ADR **0016** acceptance as **boundary** (not queue authority), regression resistance for shipped trust surfaces (**MC-S3-004**, **MC-S3-006** through **MC-S3-009**, **MC-S3-013**, **MC-S3-015**, **MC-S3-016**, **MC-S3-019**), **one** constrained **Warmth Layer v1** presentation pass (**MC-S3-005**), bounded retail UI prototype / shipped-route presentation evidence (**MC-S3-012**, **UI-SRA-001**, **UI-USH-001**), documentation / governance reconciliation (**MC-S3-010**, **MC-S3-011**, **MC-S3-014**, **MC-S3-017**), and governance-readiness closeout assessment (**MC-S3-018**) — all **subordinate** to read-only / informational Stability Engine posture. **After** that closure, repo **`§7`** also lists completed **advisory / Class-B framing** governance artifacts (**`COP-GOV-001`**, **`MC-S3-020`**, **`GOV-B-001`** through current completed GOV-B spine artifacts) per **§52-§65d** / **§73** — still **documentation-only**, still **no** execution widening, and for **`GOV-B-*`** now staged under **Class B Pilot Governance Spine**. |
-| **Non-goals** | Execution semantics; accounting or ledger-truth drift; backend/live engine coupling; Copilot runtime binding; treating **§6b** taxonomy, **§6c** closeout, inventory examples, disposition labels, external labels, Notion, roadmap prose, Cursor plans, or **ADR 0016** as **approved next** work; implying **Warmth v2** or any **queued** presentation successor; treating test-only, presentation-only, documentation-only, or governance-readiness closeouts as execution tracks; widening ADR **0017** seam; treating **`COP-GOV-001`** or **`GOV-B-*`** memos as Class B / Copilot **implementation** approval. Current **§7** / **§7a** name `CLASS-A-VAL-001` as the sole active Class A synthetic-validation ticket (**§134**); Lane A / B / C are idle; D-029 remains closed; no parallel pass is active. Class B execution, custody, rails, conversion, settlement, and customer-money activity remain gated. Convergence gate is **not** satisfied. Kenya counsel send remains **DEFER** (**D-028**). |
-| **Doctrine traceability** | ADR **0013**, **0014**, **0015**, **0016** (boundary), **0017** (where relevant), **0023**, **0024** (MVP acceptance principle); closeout records **ADR 0018-0022**; Decision Log **D-023** / **D-024** / **D-025** (MC-S3-006 / MC-S3-007 / MC-S3-008 — **Notion mirrors**, no ticket-intent repo ADR); canonical ops **`HEDGR_STATUS.md`** (**§52-§65d** / **§73** for post-**MC-S3-019** governance spine). |
+| **Non-goals** | Execution semantics; accounting or ledger-truth drift; backend/live engine coupling; Copilot runtime binding; treating **§6b** taxonomy, **§6c** closeout, inventory examples, disposition labels, external labels, Notion, roadmap prose, Cursor plans, or **ADR 0016** as **approved next** work; implying **Warmth v2** or any **queued** presentation successor; treating test-only, presentation-only, documentation-only, or governance-readiness closeouts as execution tracks; widening ADR **0017** seam; treating **`COP-GOV-001`** or **`GOV-B-*`** memos as Class B / Copilot **implementation** approval. Current **§7** / **§7a** name `CLASS-A-VAL-001` as the sole active Class A synthetic-validation ticket (**§134**); `GOV-GREEN-001` completed (**§136**); Lane A / B / C are idle; D-029 and D-032 remain closed as standing concurrency; Green Lane (**§6g** / ADR **0025**) does not activate product work. Class B execution, custody, rails, conversion, settlement, and customer-money activity remain gated. Convergence gate is **not** satisfied. Kenya counsel send remains **DEFER** (**D-028**). |
+| **Doctrine traceability** | ADR **0013**, **0014**, **0015**, **0016** (boundary), **0017** (where relevant), **0023**, **0024** (MVP acceptance principle), **0025** (Green Lane delegation pilot); closeout records **ADR 0018-0022**; Decision Log **D-023** / **D-024** / **D-025** (MC-S3-006 / MC-S3-007 / MC-S3-008 — **Notion mirrors**, no ticket-intent repo ADR); canonical ops **`HEDGR_STATUS.md`** (**§52-§65d** / **§73** for post-**MC-S3-019** governance spine). |
 | **Success criteria (repo-grounded)** | **`MC-S3-001`** — §6b standard documented (**§32**); **`MC-S3-002`** — §6b/§7 handoff (**§33**); **`MC-S3-003`** — ADR **0016** Accepted + index/ops reconciliation (**§34**); **`MC-S3-004`** — Vitest regression contract merged (**§35**, PR **#111**); **`MC-S3-005`** — presentation-only Warmth v1 merged (**§36**, PR **#112**); **`MC-S3-006`** — test-only regression extension merged (**§37**, PR **#114**); **`MC-S3-007`** — test-only copy-contract tranche 3 merged (**§38**, PR **#117**); **`MC-S3-008`** — test-only copy-contract tranche 4 merged (**§39**, PR **#119**); **`MC-S3-009`** — test-only allocation band-description regression merged (**§40**, PR **#121**); **`MC-S3-010`** — documentation-only retail UI governance read-path alignment merged (**§41**, PR **#123**); **`MC-S3-011`** — documentation-only trust-surface coverage matrix merged (**§42**, PR **#125**); **`MC-S3-012`** — prototype-route-only money-first shell spike merged (**§43**, PR **#129**); **`UI-SRA-001`** — shipped dashboard presentation adaptation merged (**§44**, PR **#132**); **`UI-USH-001`** — previously merged bounded presentation-only upper-shell continuation, represented in **§7** completed list; **`MC-S3-013`** — test-only engine type export contract merged (**§45**, PR **#134**); **`MC-S3-014`** — documentation/governance merged-truth reconciliation complete (**§46**); **`MC-S3-015`** — test-only allocation bands panel copy contract merged (**§47**, PR **#138**); **`MC-S3-016`** — test-only Playwright posture-context smoke coverage merged (**§48**, PR **#141**); **`MC-S3-017`** — documentation-only §6b inventory and readability refinement merged (**§49**, PR **#144**); **`MC-S3-018`** — documentation-only Transition Readiness closeout assessment merged (**§50**, PR **#146**); **`MC-S3-019`** — test-only Playwright smoke trust-surface coverage extension merged (**§51**, PR **#148**). Later **`GOV-B-*`** completions are staged under **Class B Pilot Governance Spine**, not this release. **Foundation** remains prior closed baseline (**§6a**, **MC-S2-023**). |
 | **Work items (completed)** | `MC-S3-001`, `MC-S3-002`, `MC-S3-003`, `MC-S3-004`, `MC-S3-005`, `MC-S3-006`, `MC-S3-007`, `MC-S3-008`, `MC-S3-009`, `MC-S3-010`, `MC-S3-011`, `MC-S3-012`, `UI-SRA-001`, `UI-USH-001`, `MC-S3-013`, `MC-S3-014`, `MC-S3-015`, `MC-S3-016`, `MC-S3-017`, `MC-S3-018`, `MC-S3-019` — all merged per **`HEDGR_STATUS.md` §7** and numbered completed records **§32–§51** where applicable. |
 | **Progress %** | 100% *for this named Transition Readiness milestone set* — does **not** imply backlog completion or automatic follow-on. |
@@ -1088,4 +1143,4 @@ Apply **only** if the live Notion row contradicts repo truth. **Repo wins.** Do 
 | **Release: HedgrOps Read-Only Review Evidence Bridge** | Should list **`HOPS-BRIDGE-001`** as **Done** per **§9i**; bridge is non-authorizing evidence retrieval only and does **not** imply implementation, sequencing, governance, or customer-money authority. |
 | **Release: Brand System Governance** | Should list **`BRAND-001`** through **`BRAND-009`** as **Done / Shipped** per **§9h**; spine and first two remediation steps are **not** broad UI redesign approval, shipped app remediation approval beyond scoped shared UI files, or successor remediation approval. |
 | **Release / reference: Stability Condition Interface Reference** | Should list **`DOC-SE-REF-001`** as **Done** documentation-only governance closeout for the already-merged reference artifact; reference is non-authoritative and does **not** authorize implementation, runtime state, UI changes, ADR changes, or sequencing. |
-| **Executive / Strategy surfaces** | Current repo **§7** / **§7a** name **`CLASS-A-VAL-001`** as the sole active Class A synthetic-validation ticket (**§134**). Lane A / B / C are idle. D-029 remains completed historical pass authority and supplies no active concurrency. ADR **0024** is **Accepted** (evidence-gated MVP acceptance principle; non-executing). Evidence Register priming does not accept institutional MVP: D1–D8 and D10 remain `Evidence incomplete`, D9 remains `Missing` / `Not started`, all domains remain `Unscored`, and G0–G7 remain uncleared. Kenya counsel send: **`COUNSEL-SEND-B-001` DEFER** (**§6f.1** / **D-028**). Last completed closeout: **`GOV-FOG-001`** (**§133**). Do **not** treat row presence, source pointers, Class A validation, closed-user UX testing, participant interpretation, or completed PH source-pointer preservation as Class B readiness, counsel engagement, market selection, endpoint approval, provider selection, implementation, or customer-money authority. Convergence gate remains unsatisfied. |
+| **Executive / Strategy surfaces** | Current repo **§7** / **§7a** name **`CLASS-A-VAL-001`** as the sole active Class A synthetic-validation ticket (**§134**). `GOV-GREEN-001` completed (**§136**). Lane A / B / C are idle. D-029 and D-032 remain completed historical pass authorities and supply no active concurrency. ADR **0025** / **§6g** is an authority-model pilot and does **not** activate product work. ADR **0024** is **Accepted** (evidence-gated MVP acceptance principle; non-executing). Evidence Register priming does not accept institutional MVP: D1–D8 and D10 remain `Evidence incomplete`, D9 remains `Missing` / `Not started`, all domains remain `Unscored`, and G0–G7 remain uncleared. Kenya counsel send: **`COUNSEL-SEND-B-001` DEFER** (**§6f.1** / **D-028**). Last completed closeout: **`GOV-GREEN-001`** (**§136**). Do **not** treat row presence, source pointers, Class A validation, closed-user UX testing, participant interpretation, or completed PH source-pointer preservation as Class B readiness, counsel engagement, market selection, endpoint approval, provider selection, implementation, or customer-money authority. Convergence gate remains unsatisfied. |
