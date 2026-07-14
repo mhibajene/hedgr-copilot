@@ -8,7 +8,7 @@
 
 **Date:** 2026-07-13
 
-**Status:** Proposed outcome — not activated until founder disposition is recorded and corresponding work is named in **§7** / **§7a**.
+**Status:** Disposition **1 — Class A validation** recorded (Internal **D-031** / **§133**). Outcome contract **§7-activated** as `CLASS-A-VAL-001` (**§7** / **§7a** / **§134**). Class B execution and customer-money activity remain **unauthorised**.
 
 ---
 
@@ -16,15 +16,15 @@
 
 This artifact proposes **one bounded product-validation outcome**, the evidence it must produce, and the decision that evidence will unlock.
 
-It records decision support and founder disposition inputs. It does **not** itself activate work or authorise customer-money activity.
+It records decision support and founder disposition inputs. It does **not** itself activate work or authorise customer-money activity — activation of `CLASS-A-VAL-001` occurred via separate **§7** / **§7a** naming (**§134**).
 
 **Three layers (keep separate):**
 
-1. **Founder disposition** — recorded in a repo-native decision record after this session.
-2. **Repo-native activation** — only via `HEDGR_STATUS.md` **§7** / **§7a**.
-3. **Execution** — only inside an activated, bounded ticket brief.
+1. **Founder disposition** — **Recorded:** disposition **1 — Class A validation** (2026-07-13; DRI Founder @mhibajene; Internal **D-031** / **§133**).
+2. **Repo-native activation** — **`CLASS-A-VAL-001` named** in `HEDGR_STATUS.md` **§7** / **§7a** (activation **§134**). Exact execution brief lives in **§7a**.
+3. **Execution** — inside the activated `CLASS-A-VAL-001` brief only; still synthetic / visibly non-live; Class B remains unauthorised.
 
-**Live sequencer (verified 2026-07-13 from `docs/ops/HEDGR_STATUS.md`):** **§7** / **§7a** name **no active ticket**. `MVP-EVID-001` completed (**§131**). Singular-ticket default. Kenya counsel send remains **DEFER** (**§6f.1** / D-028). Convergence gate (**§6e**) unsatisfied.
+**Live sequencer (verified 2026-07-13 from `docs/ops/HEDGR_STATUS.md`):** **§7** / **§7a** name **`CLASS-A-VAL-001`** (activation **§134**). Disposition **1** recorded (**D-031** / **§133**). `GOV-FOG-001` completed. `MVP-EVID-001` completed (**§131**). Singular-ticket default. Kenya counsel send remains **DEFER** (**§6f.1** / D-028). Convergence gate (**§6e**) unsatisfied.
 
 ---
 
@@ -73,32 +73,33 @@ Yield routing and Class C automation stay **downstream** of a working Class B pi
 
 ---
 
-## 3. Founder decision requested
+## 3. Founder decision — recorded
 
-**Recommended disposition:** Authorise a bounded Class A product-validation outcome through **31 July 2026**.
+**Recorded disposition (2026-07-13):** **1. Class A validation**
 
-Options are **mutually exclusive**. Select one:
+**DRI:** Founder — @mhibajene
+**Decision Log:** Internal **D-031** (Notion mirror) · repo closeout **`HEDGR_STATUS.md` §133**
+**Ticket of record:** `GOV-FOG-001` (activation **§132**; closeout **§133**)
 
-| Disposition | Meaning |
-|-------------|---------|
-| **1. Class A validation** | Test whether target users understand and value the stability and withdrawal proposition under synthetic, visibly non-live conditions. |
-| **2. Class B feasibility** | Determine whether one market, rail, provider, and custody path could support a capped pilot. Does **not** authorise live execution. |
-| **3. Pause or reframe** | Stop product expansion while the target user, product thesis, or resource posture is reconsidered. |
+| Disposition | Meaning | Status |
+|-------------|---------|--------|
+| **1. Class A validation** | Test whether target users understand and value the stability and withdrawal proposition under synthetic, visibly non-live conditions. | **Selected** |
+| **2. Class B feasibility** | Determine whether one market, rail, provider, and custody path could support a capped pilot. Does **not** authorise live execution. | Not selected |
+| **3. Pause or reframe** | Stop product expansion while the target user, product thesis, or resource posture is reconsidered. | Not selected |
 
-Silence is not a disposition. If disposition **1** is selected, the proposed outcome contract in **§4** becomes the candidate for separate **§7** / **§7a** activation.
+The outcome contract in **§4** is **§7-activated** as `CLASS-A-VAL-001` (**§134**). Exact scope is **`HEDGR_STATUS.md` §7a**.
+
+**Non-authorization:** Class B execution, customer-money activity, counsel send, market/provider/rail/custody selection, Evidence Register domain acceptance-for-show, gate clearance, and institutional MVP “done” remain **unauthorised**.
 
 ---
 
-## 4. Proposed active outcome contract
+## 4. Active outcome contract (§7-activated as `CLASS-A-VAL-001`)
 
-**Proposed active outcome (not activated by this page):**
+**Active outcome (named in `HEDGR_STATUS.md` §7 / §7a / §134):**
 
 > By **31 July 2026**, determine whether target cross-border freelancers understand Hedgr’s stability proposition and synthetic withdrawal journey well enough to justify a one-market Class B feasibility cycle.
 
-This outcome remains **explicitly proposed** until:
-
-1. founder disposition is recorded in a repo-native decision record, and
-2. corresponding work is activated through current `HEDGR_STATUS.md` **§7** / **§7a**.
+**Activation:** Disposition **1** recorded (**D-031** / **§133**). Execution ticket **`CLASS-A-VAL-001`** activated (**§134**). Exact brief: **`HEDGR_STATUS.md` §7a**.
 
 ### Outcome contract
 
@@ -113,7 +114,7 @@ This outcome remains **explicitly proposed** until:
 | **Supporting workstreams** | Product research; bounded Class A engineering changes (only if §7-named); HedgrOps evidence review |
 | **Decision date** | **31 July 2026** |
 | **Execution boundary** | Synthetic and visibly non-live; no real funds; no live availability claims |
-| **Evidence domains fed** | **D1, D2, D3, D4, D8, D9** (Acceptance Framework receives evidence from the product cycle; it does not substitute for it) |
+| **Evidence domains fed** | **D1, D2, D3, D4, D8, D9** (Acceptance Framework receives evidence from the product cycle; it does not substitute for it). Cross-links: ADR **0024**; `FE-TRUST-002` residual interpretation evidence (**§129**); primed Evidence Register (**§131**) — domains remain incomplete / unscored. |
 | **Evidence container** | MVP Evidence Register may receive mapped findings where repo authority supports updates; register activity is not the user outcome |
 | **Final evidence** | Session records; misconception register; product changes; validation findings; acceptance-domain mapping; founder disposition |
 | **Rollback / stop** | Revert or disable the research variant; stop expansion if trust-critical failures persist |
@@ -266,21 +267,21 @@ Do **not** mark a dependency “decided” where underlying feasibility evidence
 
 ## 9. Required founder-session output
 
-Record outside this file (Decision Log / status note). Then activate work separately via **§7** / **§7a** if disposition requires it.
+Disposition and decision record live in Internal **D-031** / `HEDGR_STATUS.md` **§133**. Activate validation work separately via **§7** / **§7a**.
 
-- [ ] One outcome selected (Class A validation / Class B feasibility / pause-reframe)
-- [ ] Outcome hypothesis recorded
-- [ ] Target cohort and research context recorded
-- [ ] Tested product slice and exclusions recorded
+- [x] One outcome selected — **1. Class A validation** (2026-07-13)
+- [x] Outcome hypothesis recorded — §4 outcome contract
+- [x] Target cohort and research context recorded — freelancers / participant-context geography (not pilot-market selection)
+- [x] Tested product slice and exclusions recorded — §4 product slice; synthetic / visibly non-live only
 - [x] **One named DRI** recorded — Founder (@mhibajene)
-- [ ] Supporting workstreams identified
-- [ ] Success, failure, and stop thresholds recorded
-- [ ] Critical misconceptions defined
-- [ ] Decision date recorded (**31 July 2026** for Class A validation path)
-- [ ] Founder disposition entered in the appropriate repo-native decision record
-- [ ] Resulting **§7** / **§7a** activation handled **separately** through repo authority
-- [ ] First participant sessions scheduled (if Class A validation selected)
-- [ ] Class B execution explicitly remains **unauthorised**
+- [x] Supporting workstreams identified — product research; bounded Class A engineering (only if §7-named); HedgrOps evidence review
+- [x] Success, failure, and stop thresholds recorded — §5 measures / decision rule / §8 stop conditions
+- [x] Critical misconceptions defined — §5
+- [x] Decision date recorded — **31 July 2026**
+- [x] Founder disposition entered in the appropriate repo-native decision record — **D-031** / **§133**
+- [x] Disposition-capture ticket closed — `GOV-FOG-001` (**§132** / **§133**); validation ticket activated separately as `CLASS-A-VAL-001` (**§134**)
+- [ ] First participant sessions scheduled (in progress under `CLASS-A-VAL-001` **§7a**)
+- [x] Class B execution explicitly remains **unauthorised**
 
 ---
 
@@ -304,7 +305,7 @@ Former C1–C7 substance, retained as a sequenced evidence checklist — not a f
 
 ## Appendix B — Governing references
 
-- `docs/ops/HEDGR_STATUS.md` — §2, §6e, §6f.1, **§7** / **§7a**, §129, §131
+- `docs/ops/HEDGR_STATUS.md` — §2, §6e, §6f.1, **§7** / **§7a**, §129, §131, §132, §133, §134
 - `docs/doctrine/hedgr-mvp-project-specification.md` — success criteria; execution classes
 - `docs/doctrine/hedgr-constitutional-charter.md` — capital preservation; risk visibility; narrative integrity
 - `docs/doctrine/hedgr-ux-constitution.md` — exit clarity; no unsupported promises
@@ -317,4 +318,4 @@ Former C1–C7 substance, retained as a sequenced evidence checklist — not a f
 
 ---
 
-**Boundary statement:** This artifact records decision support and founder disposition. It does not itself activate work or authorise customer-money activity.
+**Boundary statement:** This artifact records decision support and founder disposition. It does not itself activate work or authorise customer-money activity. Disposition **1** did not self-activate `CLASS-A-VAL-001`; separate Founder **§7** / **§7a** naming activated it in **§134**.

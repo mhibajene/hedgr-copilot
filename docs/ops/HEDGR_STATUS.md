@@ -3854,103 +3854,133 @@ Completed and merged:
 - `FE-TRUST-002` - Visibly synthetic withdrawal journey + research-contract hardening closed (Class A informational / synthetic frontend trust surface; prior closeout **§127**; hardening activation **§128**; Founder closeout **§129**)
 - `GOV-ADR-0024` - ADR 0024 Accepted + `AGENTS.md` parallelism drift reconciliation (documentation-only governance hygiene; completed with **§129**)
 - `MVP-EVID-001` - MVP Evidence Register domain priming (documentation-only evidence-process; implementation PR **#281**; completed record **§131**)
+- `GOV-FOG-001` - Founder Outcome Gate disposition capture (documentation-only governance / decision-support; disposition **1 — Class A validation**; Internal **D-031**; completed record **§133**)
 
 Current active ticket status:
 
-- **Approved next / active ticket:** None. `MVP-EVID-001` completed in **§131** after implementation PR **#281**; no successor activated.
-- **Sequencing posture:** Singular-ticket default. No active ticket. D-029 remains completed historical pass authority and supplies **no** active concurrency. No parallel pass is open.
+- **Approved next / active ticket:** `CLASS-A-VAL-001` — Class A product-validation outcome (synthetic / visibly non-live research cycle through **31 July 2026**). Exact brief in **§7a**. Activation record **§134**. Authority basis: Internal **D-031** (disposition **1**) + this Founder **§7** / **§7a** naming.
+- **Sequencing posture:** Singular-ticket default. One active Class A validation ticket. D-029 remains completed historical pass authority and supplies **no** active concurrency. No parallel pass is open.
 - **Kenya counsel path (`COUNSEL-SEND-B-001` / Internal D-028):** **DEFER**. No packet authorized to send. Kenya remains primary thesis stress test; thesis not rejected or closed. No successor Kenya legal ticket active unless separately named. See **§6f.1**.
 - **Governed parallelism (Accepted; §6e / D-026 lane model; completed pass §6f.2 / D-029; Founder-confirmed 2026-07-10):** Controlled Parallelism **v2** named `PH-COMP-B-003` (Lane A) and `FE-TRUST-002` (Lane C). Both reached independent pass closeouts (**§126** / prior closeout **§127**). D-029 remains a completed historical pass decision, not standing concurrency authority. The later singular `FE-TRUST-002` hardening activation (**§128**) and Founder closeout (**§129**) do not reopen it. Parallel authorization did **not** authorize unrestricted multi-ticket execution, cross-lane authority inheritance, or Class B execution, custody, rails, conversion, settlement, legal reliance, or customer-money activity. The convergence gate in **§6e** remains unsatisfied. Kenya counsel path remains **DEFER** and separate. Procedural checklist: `docs/ops/governance/HEDGR_GOVERNED_PARALLEL_PASS_CHECKLIST.md` (**§124**) — non-authorizing by itself.
 - **Active Lane A (Class B Evidence Readiness):** None. `PH-COMP-B-003` completed independently (**§126**); Lane A is idle.
 - **Active Lane B (backend foundation):** None (not named in Controlled Parallelism v2).
-- **Active Lane C (UX Trust Testing):** None. `FE-TRUST-002` research-contract hardening closed under Founder-directed closeout (**§129**). Lane C is idle.
-- **Last completed ticket (summary):** `MVP-EVID-001` (**§131**) — schema-complete D1–D10 MVP Evidence Register priming; D1–D8 and D10 remain `Evidence incomplete`, D9 remains `Missing` / `Not started`, every domain remains `Unscored`, no gate is cleared, and no successor is activated. Prior: `FE-TRUST-002` / `GOV-ADR-0024` closeout hygiene (**§129**); `PH-COMP-B-003` (**§126**); `GOV-PHILOSOPHY-001` / ADR **0023** (**§125**); `GOV-PARALLEL-002` (**§124**); `FE-TRUST-001` (**§123**); `BE-FOUND-001` (**§122**); `PH-COMP-B-002` (**§121**); `GOV-PARALLEL-001` (**§120**); `PH-COMP-B-001` (**§119**); `COUNSEL-B-001` (**§118**).
+- **Active Lane C (UX Trust Testing):** None. `FE-TRUST-002` research-contract hardening closed under Founder-directed closeout (**§129**). Lane C is idle. `CLASS-A-VAL-001` uses the closed `FE-TRUST-002` synthetic journey as the research surface under singular-ticket authority; it does **not** reopen D-029 or Lane C concurrency.
+- **Last completed ticket (summary):** `GOV-FOG-001` (**§133**) — Founder Outcome Gate absorbed; disposition **1 — Class A validation** recorded (Internal **D-031**). Prior: `MVP-EVID-001` (**§131**); `FE-TRUST-002` / `GOV-ADR-0024` closeout hygiene (**§129**); `PH-COMP-B-003` (**§126**); `GOV-PHILOSOPHY-001` / ADR **0023** (**§125**); `GOV-PARALLEL-002` (**§124**); `FE-TRUST-001` (**§123**); `BE-FOUND-001` (**§122**); `PH-COMP-B-002` (**§121**); `GOV-PARALLEL-001` (**§120**); `PH-COMP-B-001` (**§119**); `COUNSEL-B-001` (**§118**).
 - **Post-`COUNSEL-SEND-B-001` DEFER (governance-accepted; §6f.1 / D-028):** Founder deferred authorization to send the Kenya counsel packet. Does not reject Kenya, establish a negative legal conclusion, close the thesis, infer unsuitability, authorize internal legal reliance, or authorize Class B execution. Revisit only under conditions in **§6f.1**.
 - **Post-Controlled Parallelism v2 closeout (governance-accepted; §6f.2 / D-029):** Founder activated concurrent `PH-COMP-B-003` and `FE-TRUST-002` only. Both reached independent pass closeouts (**§126** / prior closeout **§127**) with `NO CROSS-LANE IMPACT`; all lanes were idle when D-029 closed. Lane independence and non-convergence held. Later singular hardening (**§128**) and Founder closeout (**§129**) are not successor or parallel passes. Completion does **not** authorize Class B execution, counsel send, market/provider/endpoint selection, or customer-money activity.
-- **Post-`FE-TRUST-002` hardening closeout (Founder-directed; §129):** Bounded hardening merged via PR **#274** remains the implementation truth. Founder closed the ticket with residual note that targeted-user interpretation evidence is **not claimed** and remains a future exploration / MVP-evidence need only. D-029 remains completed historical authority.
-- **Post-ADR 0024 acceptance (Founder-directed; §129):** ADR **0024** is **Accepted** as the evidence-gated MVP acceptance principle. Acceptance does **not** authorize Evidence Register dispositions by itself, institutional MVP “done,” or execution-class widening. `MVP-EVID-001` is the first §7-named ticket to operationalize register priming under that principle.
+- **Post-`FE-TRUST-002` hardening closeout (Founder-directed; §129):** Bounded hardening merged via PR **#274** remains the implementation truth. Founder closed the ticket with residual note that targeted-user interpretation evidence is **not claimed** and remains a future exploration / MVP-evidence need only. D-029 remains completed historical authority. `CLASS-A-VAL-001` is the §7-named ticket to collect that interpretation evidence under synthetic conditions.
+- **Post-ADR 0024 acceptance (Founder-directed; §129):** ADR **0024** is **Accepted** as the evidence-gated MVP acceptance principle. Acceptance does **not** authorize Evidence Register dispositions by itself, institutional MVP “done,” or execution-class widening.
 - **Post-`AGENTS.md` parallelism reconciliation (Founder-directed; §129):** Operator docs now match repo truth that D-029 is completed historical pass authority and the singular-ticket default applies.
-- **Post-`MVP-EVID-001` closeout (§131):** Documentation-only Evidence Register domain priming completed via PR **#281**. Domain records identify sources and gaps only; no domain was accepted, no gate was cleared, institutional MVP was not accepted, all lanes remain idle, and no successor was activated.
+- **Post-`MVP-EVID-001` closeout (§131):** Documentation-only Evidence Register domain priming completed via PR **#281**. Domain records identify sources and gaps only; no domain was accepted, no gate was cleared, institutional MVP was not accepted.
+- **Post-`GOV-FOG-001` closeout (§133 / D-031):** Disposition **1 — Class A validation** recorded. Outcome Gate governed at `docs/ops/governance/mvp/HEDGR_FOUNDER_OUTCOME_GATE_CLASS_A_TO_CLASS_B.md`. Decision date **31 July 2026**.
+- **Post-`CLASS-A-VAL-001` activation (§134):** Founder-activated Class A product-validation cycle under the Outcome Gate §4 contract. Synthetic / visibly non-live only. Does **not** authorize Class B execution, customer-money activity, counsel send, market/provider selection as launch market, Evidence Register domain acceptance-for-show, gate clearance, or institutional MVP “done.” Does **not** reopen D-029.
 - **Post-`GOV-PHILOSOPHY-001` sequencing (governance-accepted):** Philosophy codified; does not widen execution. Future tickets appear only when separately named in **§7** / **§7a**.
 - **Post-`GOV-PARALLEL-002` sequencing (governance-accepted):** Checklist remains non-authorizing by itself. A future parallel pass requires a new Founder decision.
 - **Post-`GOV-PARALLEL-001` sequencing (governance-accepted):** **§6e** / D-026 remains the lane-model / exception-framework authority only. v1 and v2 named tickets are complete; no active pass naming remains.
 - **Post-`PH-COMP-B-002` sequencing (governance-accepted):** Source-pointer classification completed (**§121**). Separately named `PH-COMP-B-003` exact public locator preservation completed (**§126**); Lane A is idle and no successor is activated.
 - **Post-`COUNSEL-B-001` sequencing (governance-accepted):** Packet draft completed (**§118**). Send authorization is **DEFER** per **§6f.1** / D-028.
 - **§6b** is not sequencing authority. **§6e** / **§6f** authorize controlled multi-lane activation only for explicitly named lanes/tickets; absence/ambiguity/pause/deprecation/completion restores the singular-ticket default.
-- When **§7** names an approved ticket, the active brief lives in **§7a** until closeout. Controlled Parallelism v2 is closed; the singular-ticket default applies with **no active ticket**.
-- Cursor must not connect Lane C outputs to live Class B execution, provider adapters, or customer-money paths.
-- Cursor must not treat UX feedback as Class B authorization or §7 sequencing authority.
+- When **§7** names an approved ticket, the active brief lives in **§7a** until closeout. Controlled Parallelism v2 is closed; the singular-ticket default applies with **`CLASS-A-VAL-001`** as the sole active ticket.
+- Cursor must not connect Lane C outputs or `CLASS-A-VAL-001` session findings to live Class B execution, provider adapters, or customer-money paths.
+- Cursor must not treat UX feedback or research findings as Class B authorization or automatic §7 sequencing authority.
 - No active lane may widen, inherit, approve, or modify another lane’s authority without a separate Founder decision and repo-native governance update.
 - Kenya counsel path remains **DEFER** (**§6f.1**); Controlled Parallelism v2 does not send counsel materials or reopen counsel engagement.
-- Do not treat backlog, roadmap, or *Proposed* ADRs as sequenced work unless **§7** is updated explicitly.
-- Convergence gate remains unsatisfied. Completion of both D-029 named lanes, later `FE-TRUST-002` hardening closeout, and `MVP-EVID-001` domain priming does not satisfy it.
+- Do not treat backlog, roadmap, Outcome Gate disposition alone, or *Proposed* ADRs as sequenced work unless **§7** is updated explicitly.
+- Convergence gate remains unsatisfied. `CLASS-A-VAL-001` does not satisfy it. Session findings remain exploration / MVP-evidence inputs until governed review.
 
 ---
 
-## 7a. Active execution ticket — none
+## 7a. Active execution ticket — `CLASS-A-VAL-001`
 
-**Active ticket:** None.
+**Active ticket:** `CLASS-A-VAL-001` — Class A product-validation outcome (activation **§134**).
+
+**Objective:** By **31 July 2026**, determine whether target cross-border freelancers understand Hedgr’s stability proposition and synthetic withdrawal journey well enough to justify a one-market Class B feasibility cycle — under synthetic, visibly non-live conditions only.
+
+**Type:** Product / research (Class A informational / synthetic).
+
+**Execution class:** Class A informational / synthetic. Non-executing for customer money. May include bounded presentation-only Class A engineering changes **only** when required by evidence from this cycle and still inside the approved product slice; any such change must remain reversible and visibly non-live.
+
+**Authority basis:** Founder disposition **1** (Internal **D-031** / **§133**) + this **§7** / **§7a** naming (Founder-approved activation **§134**) + Outcome Gate contract (`docs/ops/governance/mvp/HEDGR_FOUNDER_OUTCOME_GATE_CLASS_A_TO_CLASS_B.md` §4–§5) + ADR **0024** (evidence principle only) + ADRs **0013–0015** (read-only / informational engine boundaries) + closed `FE-TRUST-002` research surface (**§129**).
+
+**DRI:** Founder — @mhibajene.
+
+**Current posture (lanes):**
+
+- **Lane A:** idle
+- **Lane B:** idle
+- **Lane C:** idle — `FE-TRUST-002` closed; journey reused as research surface only
+- **Singular active ticket:** `CLASS-A-VAL-001` (does **not** reopen D-029)
+
+**Sequencing posture:** Singular-ticket default; one active validation ticket. Kenya counsel: **DEFER** (**§6f.1** / D-028). Convergence gate: unsatisfied.
+
+**In scope:**
+- Run **8** diagnostic sessions with freelancers who receive, hold, or convert foreign-currency income, using the shipped `FE-TRUST-002` synthetic withdrawal journey and Stability Wallet product slice: proposition → balance / stability → allocation → synthetic withdrawal → exception / support.
+- Record session evidence, misconception register, and facilitator notes under governed ops paths (prefer `docs/ops/governance/mvp/` or a clearly linked research companion).
+- Perform **at most one** evidence-driven product iteration inside the approved slice (presentation / copy / comprehension fixes only; no execution semantics).
+- Run **4** fresh post-iteration validation sessions against Outcome Gate §5 thresholds (participant counts, not percentages).
+- Map findings to Evidence Register domains **D1, D2, D3, D4, D8, D9** as incomplete / under-review evidence inputs — **not** as domain `Accepted` dispositions unless a separate Founder / HedgrOps review explicitly does so under ADR **0024** controls.
+- Record research geography as **participant context** only (accessible Zambian or regional freelancers allowed without selecting any jurisdiction as launch market).
+- Preserve visible synthetic / no-money-moved boundaries throughout.
+- Update `docs/ops/HEDGR_STATUS.md` / `docs/ops/NOTION_GOVERNANCE_STAGING.md` on closeout with founder decision rule outcome: progress to Class B **feasibility** (work only), iterate once (if still inside this ticket’s one-iteration budget), or stop/reframe.
+
+**Must not:**
+- Move or imply real funds; claim live market, provider, rail, or custody availability; present synthetic journeys as live withdrawal proof.
+- Select launch market, provider, rail, custody, chain, or stablecoin; send counsel packets; alter Kenya `DEFER`.
+- Authorize Class B execution, Class C automation, live yield routing, or customer-money activity.
+- Accept Evidence Register domains or clear gates **G0–G7** merely to show progress; declare institutional MVP “done.”
+- Reopen D-029 or open a second active / parallel ticket without a separate Founder decision.
+- Introduce unsupported guarantees, fee/FX/payout precision that does not exist, gamification, yield-first framing, or allocation-as-accounting.
+- Bypass Stability Engine read-only / informational boundaries (ADRs **0013–0015**).
+- Treat session findings as automatic Class B progression authority — founder decision rule in Outcome Gate §5 still applies after evidence.
+
+**Surfaces (edit / research scope):**
+- Research / evidence artifacts under `docs/ops/governance/mvp/` (and clearly linked companions)
+- `docs/ops/governance/mvp/HEDGR_MVP_EVIDENCE_REGISTER.md` — mapped findings only; no silent Accept
+- `docs/ops/governance/mvp/HEDGR_FOUNDER_OUTCOME_GATE_CLASS_A_TO_CLASS_B.md` — progress checklist hygiene
+- Shipped `FE-TRUST-002` synthetic journey / related Class A presentation surfaces **only** if a bounded evidence-driven iteration is required
+- `docs/ops/HEDGR_STATUS.md` / `docs/ops/NOTION_GOVERNANCE_STAGING.md` on closeout
+
+**Acceptance shape:**
+- Diagnostic cohort (8) and fresh validation cohort (4) completed, or an explicit founder stop/reframe before decision date with recorded rationale.
+- Misconception register maintained; Outcome Gate §5 critical misconceptions tracked.
+- Fresh-cohort thresholds evaluated with participant counts; decision rule outcome recorded (progress / iterate-once already consumed / stop-reframe).
+- Evidence mapped to D1/D2/D3/D4/D8/D9 without false domain acceptance.
+- Synthetic / non-live / non-authorization language held in all research and product surfaces touched.
+- **§7** / **§7a** restored to no-active-ticket **or** a separately named successor on closeout — this ticket does not auto-activate Class B feasibility.
+
+**Stop / rollback:**
+- Stop on unresolved critical misconceptions, persistent yield/trading-first framing, demand for unsupported guarantees, weak demand signal, missed **31 July 2026** without founder disposition, or pressure to accept domains / widen Class B.
+- Rollback = revert any presentation iteration; disable research variant; docs/evidence artifacts remain reconstructible.
+
+Procedural support (non-authorizing): Outcome Gate §5–§8; ADR **0024**; `GOV-PARALLEL-002` checklist (does not authorize parallelism).
+
+Historical briefs remain below for audit context.
+
+### Archived brief — `GOV-FOG-001`
+
+**Completed execution ticket:** `GOV-FOG-001` — Founder Outcome Gate disposition capture and governance absorption (documentation-only; activation **§132**; closeout **§133**; Internal Decision **D-031**).
+
+**Objective:** Make the Founder Outcome Gate a governed repo-native decision-support artifact, and record **one** mutually exclusive founder disposition — without activating product validation, Class B feasibility work, or customer-money authority by this ticket alone.
+
+**Recorded disposition:** **1 — Class A validation** (2026-07-13; DRI Founder @mhibajene). Later separate activation of `CLASS-A-VAL-001` is **§134**.
+
+**Type:** Documentation-only governance / decision-support.
+
+**Resulting posture at closeout:** Singular-ticket default restored; **no** successor activated by `GOV-FOG-001` itself.
+
+**Governance guarantees held (closeout):** Disposition recorded without auto-activating validation; no domain `Accepted`; no gates cleared; institutional MVP not done; Class B / customer-money authority unchanged.
 
 ### Archived brief — `MVP-EVID-001`
 
 **Completed execution ticket:** `MVP-EVID-001` — MVP Evidence Register domain priming (documentation-only; activation **§130**; implementation PR **#281**; closeout **§131**).
 
-**Objective:** Make ADR **0024** operable by creating the first governed domain records for **D1–D10** in the MVP Evidence Register (or a clearly linked companion review artifact under `docs/ops/governance/mvp/`), using honest `Missing` / `Not started` / `Evidence incomplete` states and explicit source pointers from existing repo evidence — without declaring institutional MVP acceptance.
+**Objective:** Make ADR **0024** operable by creating the first governed domain records for **D1–D10** without declaring institutional MVP acceptance.
 
 **Type:** Documentation-only governance / evidence-process.
 
-**Execution class:** Non-executing. No `apps/`, `packages/`, runtime, CI, or product-behavior change required.
+**Resulting posture at closeout:** Singular-ticket default restored; no successor activated by `MVP-EVID-001` itself.
 
-**Authority basis:** This **§7** / **§7a** naming (Founder-approved activation **§130**) + ADR **0024** (Accepted principle only) + `docs/ops/governance/mvp/HEDGR_MVP_ACCEPTANCE_FRAMEWORK.md` + `docs/ops/governance/mvp/HEDGR_MVP_EVIDENCE_REGISTER.md`.
-
-**Current posture (lanes):**
-
-- **Lane A:** idle — `PH-COMP-B-003` completed independently (**§126**); no successor named
-- **Lane B:** idle
-- **Lane C:** idle — `FE-TRUST-002` closed (**§129**); no successor named
-- **Singular active ticket:** None. `MVP-EVID-001` completed without opening a D-026/D-029 lane or naming a successor.
-
-**Sequencing posture:** Singular-ticket default; no active ticket. D-029 remains completed historical pass authority. Kenya counsel disposition: **DEFER** (`COUNSEL-SEND-B-001` / **§6f.1** / D-028).
-
-**In scope:**
-- Add or update domain records for **D1–D10** using the Evidence Register schema (`HEDGR_MVP_EVIDENCE_REGISTER.md` §5.1).
-- For each domain: `claim_under_review`, `authorized_execution_class` (default **Class A** informational unless a claim explicitly requires a higher class and is marked blocked/incomplete), `evidence_category_ids`, `source_pointers` to existing repo artifacts, `evidence_state`, `confidence` (`Unscored` allowed), `disposition` (`Not started` or `Evidence incomplete` preferred for this ticket; `Under review` only if a real review is started).
-- Prefer pointing at already-merged evidence (e.g. **§6** / **§129** records, Class B scaffolds, `FE-TRUST-002` residual note, `COP-GOV-001`, MVP phase alignment) over inventing new evidence.
-- Update `docs/ops/HEDGR_STATUS.md` / `docs/ops/NOTION_GOVERNANCE_STAGING.md` only as closeout hygiene after merge, consistent with docs-only tickets.
-- Preserve `non_authorization_ack` on every domain record.
-
-**Must not:**
-- Record domain disposition `Accepted` or `Accepted with bounded residual risk` unless Founder / HedgrOps explicitly reviews and the schema residual-risk controls are complete — default for this ticket is **not** to accept domains.
-- Clear gates **G0–G7** or claim institutional MVP “done.”
-- Change evidence states in the Class B Evidence Registry; gather external evidence; send counsel packets; select market / provider / rail / custody.
-- Widen Class B / Class C execution; enable live deposit / withdraw; imply product availability from synthetic surfaces.
-- Modify `apps/`, `packages/`, engine contracts, Copilot runtime, or brand tokens.
-- Open a parallel pass or a second active ticket.
-- Treat row presence, source pointers, or this ticket’s merge as evidence sufficiency or readiness.
-
-**Surfaces (edit scope):**
-- `docs/ops/governance/mvp/HEDGR_MVP_EVIDENCE_REGISTER.md` (and/or a new governed companion under `docs/ops/governance/mvp/` if a separate domain-record artifact is cleaner)
-- `docs/ops/HEDGR_STATUS.md` (closeout record on completion)
-- `docs/ops/NOTION_GOVERNANCE_STAGING.md` (mirror after merge only)
-
-**Acceptance shape:**
-- All ten domains **D1–D10** have a schema-complete record.
-- No domain is silently left blank; `Missing` / `Not started` / `Evidence incomplete` remain visible where appropriate.
-- At least one explicit residual note that interpretation evidence for `FE-TRUST-002` and Class B convergence remain open (may sit under **D2** / **D5** / **D9** as incomplete).
-- Non-authorization language preserved in artifact and status closeout.
-- **§7** / **§7a** restored to no-active-ticket (or a separately named successor) on closeout — this ticket does not name a successor.
-
-**Stop / rollback:**
-- Stop if the work pressure becomes “accept domains to show progress.”
-- Rollback = revert docs PR; no runtime rollback needed.
-
-Procedural support (non-authorizing by itself): `docs/ops/governance/HEDGR_GOVERNED_PARALLEL_PASS_CHECKLIST.md` (`GOV-PARALLEL-002`, **§124**).
-
-Governance philosophy (non-authorizing operating doctrine): `docs/doctrine/hedgr-governance-philosophy.md` (`GOV-PHILOSOPHY-001`, **§125**, ADR **0023**).
-
-MVP acceptance principle (non-authorizing by acceptance alone): ADR **0024** (**Accepted**; **§129**).
-
-Historical briefs remain below for audit context. The prior active `FE-TRUST-002` hardening brief is archived immediately below; original implementation brief and records **§127** / **§128** remain evidence of the journey and hardening activation.
+**Governance guarantees held (closeout):** No domain `Accepted`; no gates cleared; institutional MVP not done; Class B / customer-money authority unchanged.
 
 ---
 
@@ -8002,4 +8032,124 @@ Future implementation, evidence-intake, or parallel-pass work appears only when 
 
 **Rollback:** Revert PR **#281** and this documentation-only closeout PR if the priming records must be removed; no runtime rollback or migration is required.
 
-**Follow-ups:** Any domain evidence intake, institutional review, domain acceptance, gate clearance/deferral, user research, qualified legal/compliance review, Class B progression, or implementation requires separate Founder direction and repo-native **§7** / **§7a** naming. This closeout does not recommend or activate a successor.
+**Follow-ups:** Any domain evidence intake, institutional review, domain acceptance, gate clearance/deferral, user research, qualified legal/compliance review, Class B progression, or implementation requires separate Founder direction and repo-native **§7** / **§7a** naming. This closeout does not recommend or activate a successor. Later Founder activation of `GOV-FOG-001` is recorded separately in **§132**.
+
+---
+
+## 132. Founder activation - GOV-FOG-001 (Founder Outcome Gate disposition capture)
+
+**Ticket:** `GOV-FOG-001` — Founder Outcome Gate disposition capture and governance absorption (documentation-only)
+
+**Status:** Completed — superseded by closeout **§133** (disposition **1 — Class A validation** recorded; Internal **D-031**). Activation brief previously held in **§7a**.
+
+**Execution posture at activation:** Singular active ticket; documentation-only governance / decision-support; non-executing
+
+**Activation authority:** Founder approval to activate the recommended governance candidate `GOV-FOG-001` + this **§7** / **§7a** naming
+
+**Parallelism posture:** D-029 remains completed historical authority; Lane A / B / C remain idle; no active concurrency; singular-ticket default intact
+
+**Class B execution authorized:** No
+
+**Customer-money activity authorized:** No
+
+**Convergence gate satisfied:** No
+
+**Successor ticket activated:** No (this record *is* the activation of `GOV-FOG-001`; it does not name `CLASS-A-VAL-001` or any further successor)
+
+**Disposition.** Activate `GOV-FOG-001` as the sole approved next ticket so the Founder Outcome Gate can be absorbed as governed decision-support and **one** mutually exclusive founder disposition (Class A validation / Class B feasibility / pause-reframe) can be recorded reconstructibly. This activation does **not** itself select that disposition. Founder later selected disposition **1** during execution; see **§133**.
+
+**Implementation posture.** Documentation-only. Expected edit surfaces are `docs/ops/governance/mvp/HEDGR_FOUNDER_OUTCOME_GATE_CLASS_A_TO_CLASS_B.md`, MVP governance navigation hygiene if needed, a repo-native decision record (Decision Log row and/or closeout section in this file), plus status / Notion staging closeout hygiene. Prefer honest incomplete founder-session checklist items until disposition is explicitly recorded. Default is **not** to auto-activate Class A validation or Class B feasibility work.
+
+**Scope boundary.** The exact active brief is **§7a**. This activation does not reopen Controlled Parallelism v2, create standing parallel authority, clear gates **G0–G7**, authorize Class B / Class C execution, alter Kenya counsel `DEFER`, gather external evidence, send counsel packets, select market / provider / rail / custody, treat research geography as pilot-market selection, accept Evidence Register domains, or treat Outcome Gate presence as product or execution readiness.
+
+**Expected closeout evidence.** Governed Outcome Gate artifact in-repo; exactly one recorded disposition with date and DRI; Class B / customer-money non-authorization held; explicit note that any follow-on validation or feasibility ticket requires separate **§7** / **§7a** naming; **§7** / **§7a** restored to no-active-ticket (or a separately named successor) on closeout.
+
+**Notion staging posture:** Not updated by this activation move. Repo-native **§7** / **§7a** remains the sequencing authority; any later mirror update must follow repo truth and must not independently sequence or close the ticket.
+
+**Stop condition:** Return for governance review if a disposition is invented without Founder selection, if Evidence Register domains are accepted to show progress, if research geography is treated as market selection, if Class B / customer-money authority is implied, if counsel send is inferred, or if a second active ticket / parallel pass is opened without a separate Founder decision.
+
+**Later closeout:** Founder selected disposition **1 — Class A validation**; ticket closed in **§133** without activating `CLASS-A-VAL-001`.
+
+---
+
+## 133. Completed closeout - GOV-FOG-001 (Founder Outcome Gate disposition 1 — Class A validation)
+
+**Ticket:** `GOV-FOG-001` — Founder Outcome Gate disposition capture and governance absorption (documentation-only governance / decision-support)
+
+**Status:** Completed. Disposition recorded 2026-07-13; this record performs closeout hygiene.
+
+**Activation authority:** Founder-approved activation **§132** + active brief previously held in **§7** / **§7a**.
+
+**Decision Log:** Internal **D-031** (Notion mirror in `docs/ops/NOTION_GOVERNANCE_STAGING.md`). Visibility: **Internal** — not auto-exported as a public repo ADR.
+
+**Objective.** Absorb the Founder Outcome Gate as governed decision-support and record exactly one mutually exclusive founder disposition without activating product validation, Class B feasibility, or customer-money authority.
+
+### Recorded disposition
+
+| Field | Value |
+|-------|-------|
+| **Disposition** | **1 — Class A validation** |
+| **Date** | 2026-07-13 |
+| **DRI** | Founder — @mhibajene |
+| **Outcome hypothesis** | By **31 July 2026**, determine whether target cross-border freelancers understand Hedgr’s stability proposition and synthetic withdrawal journey well enough to justify a one-market Class B feasibility cycle |
+| **Decision date** | **31 July 2026** |
+| **Execution boundary** | Synthetic / visibly non-live only; no real funds; no live availability claims |
+| **Evidence domains fed (when validation runs)** | D1, D2, D3, D4, D8, D9 — cross-linked to ADR **0024**, `FE-TRUST-002` residual (**§129**), primed Evidence Register (**§131**); domains remain incomplete / unscored |
+| **Candidate follow-on ticket** | `CLASS-A-VAL-001` — **not activated** by this closeout |
+
+### Completed scope
+
+- **`docs/ops/governance/mvp/HEDGR_FOUNDER_OUTCOME_GATE_CLASS_A_TO_CLASS_B.md`** — disposition **1** recorded; §4 outcome contract marked candidate (not §7-activated); founder-session checklist updated; Class B / customer-money non-authorization held.
+- **`docs/ops/governance/mvp/README.md`** — navigation hygiene for recorded disposition / closed ticket.
+- **`docs/ops/HEDGR_STATUS.md`** — **§7** / **§7a** restored to no-active-ticket; brief archived; this closeout recorded; **§132** marked completed.
+- **`docs/ops/NOTION_GOVERNANCE_STAGING.md`** — Internal **D-031** mirror + idle-posture reconciliation.
+
+### Governance guarantees held
+
+No `CLASS-A-VAL-001` activation. No Evidence Register domain `Accepted`. No gates **G0–G7** cleared. Institutional MVP not declared done. No Class B Evidence Registry state change. No counsel send. No market / provider / rail / custody / jurisdiction selection as launch market. No `apps/`, `packages/`, engine, Copilot, brand-token, CI, or product-behavior change. No Class B / Class C execution or customer-money authority. Research geography remains participant context, not pilot-market selection. Convergence gate remains unsatisfied.
+
+### Resulting posture
+
+Singular-ticket default. No active ticket. Lane A / B / C idle. D-029 remains completed historical pass authority. Kenya counsel send remains **DEFER**. Candidate `CLASS-A-VAL-001` may be considered only through a separate Founder **§7** / **§7a** naming.
+
+### Rollback
+
+Revert this documentation-only closeout (and related Outcome Gate / Notion staging edits) if the disposition record must be removed; no runtime rollback or migration is required.
+
+### Follow-ups
+
+Any Class A validation execution (`CLASS-A-VAL-001`), Class B feasibility, counsel send, Evidence Register intake/acceptance, gate clearance, or implementation requires separate Founder direction and repo-native **§7** / **§7a** naming. This closeout does **not** activate a successor. Later Founder activation of `CLASS-A-VAL-001` is recorded separately in **§134**.
+
+---
+
+## 134. Founder activation - CLASS-A-VAL-001 (Class A product-validation outcome)
+
+**Ticket:** `CLASS-A-VAL-001` — Class A product-validation outcome (synthetic / visibly non-live research cycle)
+
+**Status:** Active — Founder-approved activation 2026-07-13. Exact brief in **§7a**.
+
+**Execution posture at activation:** Singular active ticket; Class A informational / synthetic product validation; non-executing for customer money
+
+**Activation authority:** Internal **D-031** (disposition **1 — Class A validation**) + Founder approval to activate `CLASS-A-VAL-001` + this **§7** / **§7a** naming
+
+**Parallelism posture:** D-029 remains completed historical authority; Lane A / B / C remain idle; no active concurrency; singular-ticket default intact. Reuses closed `FE-TRUST-002` journey as research surface only; does **not** reopen Lane C or D-029.
+
+**Class B execution authorized:** No
+
+**Customer-money activity authorized:** No
+
+**Convergence gate satisfied:** No
+
+**Successor ticket activated:** No (this record *is* the activation of `CLASS-A-VAL-001`; it does not name Class B feasibility or any further successor)
+
+**Disposition.** Activate `CLASS-A-VAL-001` as the sole approved next ticket to execute the Outcome Gate §4 contract: by **31 July 2026**, determine whether target cross-border freelancers understand Hedgr’s stability proposition and synthetic withdrawal journey well enough to justify a one-market Class B feasibility cycle.
+
+**Implementation posture.** Research-led Class A cycle: **8** diagnostic sessions → at most **one** evidence-driven presentation/copy iteration inside the approved product slice → **4** fresh validation sessions against Outcome Gate §5 thresholds. Map findings to Evidence Register domains D1/D2/D3/D4/D8/D9 as incomplete / under-review inputs. Prefer the shipped `FE-TRUST-002` synthetic journey. Research geography is participant context only. Default is **not** to accept Evidence Register domains or clear gates.
+
+**Scope boundary.** The exact active brief is **§7a**. This activation does not reopen Controlled Parallelism v2, create standing parallel authority, authorize Class B / Class C execution, alter Kenya counsel `DEFER`, send counsel packets, select launch market / provider / rail / custody, treat synthetic journeys as live proof, declare institutional MVP “done,” or treat session findings as automatic Class B progression.
+
+**Expected closeout evidence.** Session records; misconception register; threshold evaluation with participant counts; decision-rule outcome (progress to Class B feasibility work only / stop-reframe / iterate-once consumed); Evidence Register mapping without false acceptance; synthetic / non-authorization language held; **§7** / **§7a** restored to no-active-ticket (or a separately named successor) on closeout.
+
+**Notion staging posture:** Reconciled after activation to mirror `CLASS-A-VAL-001` as the sole active ticket. Repo-native **§7** / **§7a** remains the sequencing authority; the mirror does not independently sequence or close the ticket.
+
+**Stop condition:** Return for governance review if real-money / live-availability claims appear, if research geography is treated as market selection, if Class B / customer-money authority is implied, if domains are accepted to show progress, if counsel send is inferred, if D-029 is reopened, or if a second active ticket / parallel pass is opened without a separate Founder decision.
