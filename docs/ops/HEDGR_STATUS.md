@@ -8631,6 +8631,8 @@ Any Green Lane product-learning experiment requires a separately founder-authori
 
 **Status:** Completed. Documentation-only adoption and closeout recorded 2026-07-15.
 
+**Adoption PR of record:** **#289**.
+
 **Activation authority:** Founder Bridge Contract Adoption disposition + Founder instruction to activate a post-closeout ticket + Controlled Parallelism v5 / Internal **D-035** / **§6f.5** + activation **§138** + the exact active brief previously held in **§7a**.
 
 **Canonical adopted contract:** `docs/ops/bridge/HEDGROPS_BRIDGE_CAPABILITY_CONTRACT.md`.

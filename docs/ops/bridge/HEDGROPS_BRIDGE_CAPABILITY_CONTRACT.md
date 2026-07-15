@@ -759,7 +759,7 @@ This adoption reconciles the README to reference this contract but does not rena
 
 ## 18. Adoption Record and Continuing Acceptance Gates
 
-This contract was adopted under `GOV-BRIDGE-ADOPT-001` after the refined proposal merged through PR **#287**, `GOV-BRIDGE-001` closed in `docs/ops/HEDGR_STATUS.md` §138, the historical proposal was preserved, the canonical adopted path was created, and direct documentation references were reconciled without runtime change.
+This contract was adopted under `GOV-BRIDGE-ADOPT-001` through PR **#289** after the refined proposal merged through PR **#287**, `GOV-BRIDGE-001` closed in `docs/ops/HEDGR_STATUS.md` §138, the historical proposal was preserved, the canonical adopted path was created, and direct documentation references were reconciled without runtime change.
 
 The following acceptance gates remain binding after adoption:
 
