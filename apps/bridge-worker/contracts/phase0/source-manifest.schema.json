@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://hedgr.dev/bridge/phase0/source-manifest.schema.json",
+  "title": "HedgrOps Bridge Phase 0 Source Manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "manifest_id",
+    "revision_policy",
+    "common_source_revision",
+    "freshness_policy_reference",
+    "sources"
+  ],
+  "properties": {
+    "manifest_id": { "type": "string", "minLength": 1 },
+    "revision_policy": { "const": "COMMON_SOURCE_REVISION_REQUIRED" },
+    "common_source_revision": {
+      "type": ["string", "null"],
+      "minLength": 1
+    },
+    "freshness_policy_reference": { "type": "string", "minLength": 1 },
+    "sources": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/sourceEntry" }
+    }
+  },
+  "$defs": {
+    "sourceEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_path",
+        "source_role",
+        "requirement",
+        "source_classification",
+        "expected_revision",
+        "actual_revision",
+        "freshness_requirement",
+        "freshness",
+        "structural_validation",
+        "stable_locator_support",
+        "inclusion_status",
+        "reason",
+        "conflict_status"
+      ],
+      "properties": {
+        "source_path": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"
+        },
+        "source_role": { "type": "string", "minLength": 1 },
+        "requirement": { "enum": ["MANDATORY", "OPTIONAL"] },
+        "source_classification": {
+          "enum": [
+            "REPO_AUTHORITY",
+            "REVIEW_EVIDENCE",
+            "SUPPORTING_EVIDENCE"
+          ]
+        },
+        "expected_revision": {
+          "type": ["string", "null"],
+          "minLength": 1
+        },
+        "actual_revision": {
+          "type": ["string", "null"],
+          "minLength": 1
+        },
+        "freshness_requirement": {
+          "enum": ["CURRENT_REQUIRED", "CURRENT_OR_STALE_RECORDED"]
+        },
+        "freshness": { "enum": ["CURRENT", "STALE", "UNKNOWN"] },
+        "structural_validation": {
+          "enum": ["VALID", "INVALID", "UNREADABLE", "NOT_EVALUATED"]
+        },
+        "stable_locator_support": {
+          "enum": ["REQUIRED", "SUPPORTED", "UNSUPPORTED", "NOT_EVALUATED"]
+        },
+        "inclusion_status": {
+          "enum": ["INCLUDED", "OMITTED", "MISSING", "NOT_EVALUATED"]
+        },
+        "reason": { "type": "string", "minLength": 1 },
+        "conflict_status": {
+          "enum": ["NONE", "DETECTED", "NOT_EVALUATED"]
+        }
+      }
+    }
+  }
+}

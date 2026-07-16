@@ -11,6 +11,7 @@
 **Adoption ticket:** `GOV-BRIDGE-ADOPT-001`
 **Adoption authority:** Founder Bridge Contract Adoption disposition + `docs/ops/HEDGR_STATUS.md` §138 / §139
 **Runtime status:** Adoption does not implement a capability or activate Phase 0 or any later phase
+**Phase 0 implementation reference:** `BRIDGE-P0-001` was separately activated under `docs/ops/HEDGR_STATUS.md` §6f.6 / §7 / §7a / §140; canonical unused-at-runtime contracts are under `apps/bridge-worker/contracts/phase0/`; ADR 0026 is the accepted architecture principle; Phase 1 remains inactive
 
 ---
 

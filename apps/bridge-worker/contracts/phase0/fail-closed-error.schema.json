@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://hedgr.dev/bridge/phase0/fail-closed-error.schema.json",
+  "title": "HedgrOps Bridge Fail-Closed Error",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "code",
+    "path",
+    "message",
+    "authorizing",
+    "freshness",
+    "coverage"
+  ],
+  "properties": {
+    "code": {
+      "enum": [
+        "MISSING_MANDATORY_SOURCE",
+        "UNREADABLE_SOURCE",
+        "REVISION_MISMATCH",
+        "STALE_MANDATORY_SOURCE",
+        "STRUCTURALLY_INVALID_SOURCE",
+        "UNSUPPORTED_AUTHORITY_CLASS",
+        "MISSING_MATERIAL_PROVENANCE",
+        "UNKNOWN_SCHEMA_CONCEPT",
+        "UNRESOLVED_AUTHORITY_CONFLICT",
+        "ATTEMPTED_MUTATION_FIELD",
+        "ATTEMPTED_ACTIVATION_FIELD",
+        "ATTEMPTED_SEQUENCING_FIELD",
+        "UNSUPPORTED_INFERENCE_FIELD",
+        "INVALID_SOURCE_CLASSIFICATION",
+        "INVALID_READ_ONLY_MODE",
+        "UNKNOWN_FRESHNESS",
+        "INSUFFICIENT_COVERAGE"
+      ]
+    },
+    "path": { "type": "string", "minLength": 1 },
+    "message": { "type": "string", "minLength": 1 },
+    "authorizing": { "const": false },
+    "freshness": { "const": "UNKNOWN" },
+    "coverage": { "const": "INSUFFICIENT" }
+  }
+}
