@@ -64,7 +64,7 @@ Important active constraints:
 
 **Sprint 3** is framed here as **Transition Readiness** (named track above), not as Foundation continuation: governance defines the explicit standard for any later boundary widening; execution architecture remains out of scope until explicitly approved.
 
-**Sequencing authority:** Only **§7** / **§7a** name approved active ticket(s). **Default posture:** one active implementation ticket. Concurrent lanes are permitted only where this file records an accepted, active, and unambiguous Founder-approved parallelism decision (**§6e** lane model / Internal **D-026** plus separate active-pass naming under **§6f**), explicitly names each active lane and ticket, defines authority class and exclusions, and preserves independent stop conditions and rollback. Internal **D-029**, Internal **D-032** / **§6f.3**, Internal **D-034** / **§6f.4**, and Internal **D-035** / **§6f.5** are completed historical pass authorities. Internal **D-036** / **§6f.6** is the active two-lane pass naming only `CLASS-A-VAL-001` (Lane V) and `BRIDGE-P0-001` (Lane R). Any future concurrency requires a separate Founder decision plus explicit **§7** / **§7a** naming. Parallel authorization applies only to explicitly named lanes and does **not** authorize unrestricted multi-ticket execution. No lane may widen another lane’s authority without a separate Founder decision and repo-native governance update. **§6b** is Transition Readiness taxonomy and scrutiny input only—not backlog approval or sequencing. **§6e** / **§6f** / **§6g** do **not** widen Class B execution, custody, rails, conversion, settlement, or customer-money authority. Green Lane classification (**§6g** / ADR **0025**) does not activate work and does not override **§7** / **§7a**.
+**Sequencing authority:** Only **§7** / **§7a** name approved active ticket(s). **Default posture:** one active implementation ticket. Concurrent lanes are permitted only where this file records an accepted, active, and unambiguous Founder-approved parallelism decision (**§6e** lane model / Internal **D-026** plus separate active-pass naming under **§6f**), explicitly names each active lane and ticket, defines authority class and exclusions, and preserves independent stop conditions and rollback. Internal **D-029**, Internal **D-032** / **§6f.3**, Internal **D-034** / **§6f.4**, Internal **D-035** / **§6f.5**, and Internal **D-036** / **§6f.6** are completed historical pass authorities and no longer supply concurrency. Singular-ticket default is restored with `CLASS-A-VAL-001` as the sole active ticket. Any future concurrency requires a separate Founder decision plus explicit **§7** / **§7a** naming. Parallel authorization applies only to explicitly named lanes and does **not** authorize unrestricted multi-ticket execution. No lane may widen another lane’s authority without a separate Founder decision and repo-native governance update. **§6b** is Transition Readiness taxonomy and scrutiny input only—not backlog approval or sequencing. **§6e** / **§6f** / **§6g** do **not** widen Class B execution, custody, rails, conversion, settlement, or customer-money authority. Green Lane classification (**§6g** / ADR **0025**) does not activate work and does not override **§7** / **§7a**.
 
 **MVP phased alignment (interpretation aid):** See **`docs/ops/governance/mvp/HEDGR_MVP_PHASE_ALIGNMENT.md`** for how **`docs/doctrine/hedgr-mvp-project-specification.md`** governance-gated phases and success criteria map to the posture stated in this section and in **§6a–§6c**. That readout is **subordinate** to this file and to **§7** / **§7a**; it does **not** widen execution authority or substitute for **§7** naming.
 
@@ -3834,7 +3834,7 @@ This section does **not** authorize provider-specific implementation, legal reli
 
 ### 6f.6 Controlled Parallelism v6 — `CLASS-A-VAL-001` + `BRIDGE-P0-001` (Internal **D-036**)
 
-**Status:** **Accepted and active.** Founder-authorized 2026-07-16. Visibility is **Internal** — not auto-exported as a public ADR. This pass authorizes only the two named lanes below; it does not reopen or extend any prior pass.
+**Status:** Accepted and **completed**. Founder-authorized 2026-07-16; Lane R `BRIDGE-P0-001` closed in **§141** after implementation PR **#291** merged. Visibility remains **Internal** — not auto-exported as a public ADR. D-036 no longer supplies concurrency; singular-ticket posture is restored for `CLASS-A-VAL-001`.
 
 **Authority basis:** **§6e** / D-026 lane-model / exception-framework + Founder approval of a parallel pass for `BRIDGE-P0-001` while `CLASS-A-VAL-001` remains active + the adopted `docs/ops/bridge/HEDGROPS_BRIDGE_CAPABILITY_CONTRACT.md` + **§7** / **§7a** naming + activation record **§140**. Procedural support: `docs/ops/governance/HEDGR_GOVERNED_PARALLEL_PASS_CHECKLIST.md` (**§124**) — non-authorizing by itself.
 
@@ -3865,11 +3865,11 @@ This section does **not** authorize provider-specific implementation, legal reli
 | ----- | ----- |
 | **Decision ID** | D-036 |
 | **Title** | Controlled Parallelism v6 — `CLASS-A-VAL-001` + `BRIDGE-P0-001` |
-| **Status** | Accepted and active |
+| **Status** | Accepted and completed |
 | **Visibility** | Internal |
 | **Date** | 2026-07-16 |
-| **Repo authority** | This **§6f.6**; activation **§140**; **§7** / **§7a**; `AGENTS.md` governed-parallelism exception |
-| **Reversibility** | Revert activation **§140**, remove Lane R from **§7** / **§7a**, leave Lane V unchanged, and reconcile the staging mirror |
+| **Repo authority** | This **§6f.6**; activation **§140**; closeout **§141**; `AGENTS.md` governed-parallelism exception |
+| **Reversibility** | Completed historical pass; revert **§141** only if the recorded closeout is factually wrong; leave Lane V unchanged |
 
 ---
 
@@ -3904,7 +3904,7 @@ This section does **not** authorize provider-specific implementation, legal reli
 
 **Relationship to §7 / §7a:** This envelope does **not** activate product work. Implementation remains executable only through **§7** / **§7a**. Green Lane classification does not activate work and does not override **§7** / **§7a**.
 
-**Relationship to governed parallelism:** Green Lane delegation does **not** create parallel authority. D-032 / **§6f.3**, D-034 / **§6f.4**, and D-035 / **§6f.5** are completed historical authorities. D-036 / **§6f.6** is separately Founder-authorized and names only `CLASS-A-VAL-001` and `BRIDGE-P0-001`; Green Lane does not widen either lane. Singular-ticket default restores when D-036 completes, pauses, is revoked, or becomes ambiguous.
+**Relationship to governed parallelism:** Green Lane delegation does **not** create parallel authority. D-032 / **§6f.3**, D-034 / **§6f.4**, D-035 / **§6f.5**, and D-036 / **§6f.6** are completed historical authorities and are not standing concurrency. Singular-ticket default is restored with `CLASS-A-VAL-001` as the sole active ticket.
 
 **Non-authorization:** This section is an authority-model pilot. It does not activate product work, does not authorize parallel execution by itself, does not widen financial execution posture, and leaves repo authority controlling.
 
@@ -4047,20 +4047,20 @@ Completed and merged:
 - `GOV-GREEN-001` - Repo-Native Green Lane Delegation Pilot (documentation-only governance / operator-control translation; ADR **0025**; Internal **D-032** / **D-033**; completed record **§136**)
 - `GOV-BRIDGE-001` - Refine HedgrOps Bridge Capability Contract (Class A documentation-only governance refinement; PR **#287**; completed record **§138**; proposal remains historically preserved)
 - `GOV-BRIDGE-ADOPT-001` - Adopt HedgrOps Bridge Capability Contract (Class A documentation-only governance adoption; completed record **§139**; no runtime or phase activation)
+- `BRIDGE-P0-001` - HedgrOps Bridge Phase 0 Contract and Schema Foundation (Class A / execution-neutral governance and infrastructure assurance; implementation PR **#291**; completed record **§141**; no runtime or Phase 1 activation)
 
 Current active ticket status:
 
-- **Active Lane V:** `CLASS-A-VAL-001` — Class A product-validation outcome (synthetic / visibly non-live research cycle through **31 July 2026**). Exact brief in **§7a**. Activation record **§134**. Scope, thresholds, decision rule, and stop / rollback controls remain unchanged by D-036.
-- **Active Lane R:** `BRIDGE-P0-001` — Class A / execution-neutral Bridge governance and schema foundation. Exact brief in **§7a**. Activation record **§140**. No live runtime capability, endpoint, route, action schema, snapshot, or later-phase authority.
-- **Sequencing posture:** Controlled Parallelism v6 / Internal **D-036** is active and names only Lane V `CLASS-A-VAL-001` and Lane R `BRIDGE-P0-001`. D-029, D-032, D-034, and D-035 are completed historical pass authorities. No unrestricted multi-ticket execution.
+- **Sole active ticket:** `CLASS-A-VAL-001` — Class A product-validation outcome (synthetic / visibly non-live research cycle through **31 July 2026**). Exact brief in **§7a**. Activation record **§134**. Scope, thresholds, decision rule, and stop / rollback controls remain unchanged by completed D-036.
+- **Sequencing posture:** Singular-ticket default. D-029, D-032, D-034, D-035, and D-036 are completed historical pass authorities and supply no standing concurrency. No unrestricted multi-ticket execution.
 - **Kenya counsel path (`COUNSEL-SEND-B-001` / Internal D-028):** **DEFER**. No packet authorized to send. Kenya remains primary thesis stress test; thesis not rejected or closed. No successor Kenya legal ticket active unless separately named. See **§6f.1**.
-- **Governed parallelism posture:** D-036 / **§6f.6** is Accepted and active for the two named tickets only. **§6e** / D-026 remains the lane-model / exception-framework, not standing concurrency. Any additional lane or scope change requires a separate Founder decision and explicit **§7** / **§7a** update. The Class B convergence gate remains unsatisfied. Kenya counsel remains **DEFER** and separate. Procedural checklist: `docs/ops/governance/HEDGR_GOVERNED_PARALLEL_PASS_CHECKLIST.md` (**§124**) — non-authorizing by itself.
+- **Governed parallelism posture:** No active pass. **§6e** / D-026 remains the lane-model / exception-framework only. D-029, D-032, D-034, D-035, and D-036 are completed historical decisions. Any future concurrency requires a separate Founder decision and explicit **§7** / **§7a** naming. The Class B convergence gate remains unsatisfied. Kenya counsel remains **DEFER** and separate. Procedural checklist: `docs/ops/governance/HEDGR_GOVERNED_PARALLEL_PASS_CHECKLIST.md` (**§124**) — non-authorizing by itself.
 - **Active Lane A (Class B Evidence Readiness):** None. `PH-COMP-B-003` completed independently (**§126**); Lane A is idle.
 - **Active Lane B (backend foundation):** None.
 - **Active Lane C (UX Trust Testing):** None. `FE-TRUST-002` research-contract hardening closed under Founder-directed closeout (**§129**). Lane C is idle. `CLASS-A-VAL-001` uses the closed `FE-TRUST-002` synthetic journey as the research surface under Lane V authority; it does **not** reopen D-029 or Lane C concurrency.
-- **Active Lane R:** `BRIDGE-P0-001` under D-036 / **§6f.6** / **§140**. Phase 0 contracts and tests remain unused by runtime; no endpoint, route, action schema, snapshot, runtime allow-list, production Worker behavior, Phase 1, mutation, or customer-money authority.
+- **Active Lane R:** None. `BRIDGE-P0-001` completed in **§141**; Phase 0 contracts remain unused by runtime and Phase 1 remains inactive.
 - **Green Lane pilot (§6g / ADR 0025):** Active authority-model pilot envelope (time-bounded; founder-revocable). Ticket of record `GOV-GREEN-001` completed (**§136**). Does **not** activate product experiments. Does **not** by itself authorize parallelism. Does **not** widen financial execution posture.
-- **Last completed ticket (summary):** `GOV-BRIDGE-ADOPT-001` (**§139**) — adopted the Bridge capability documentation contract, preserved the historical proposal, reconciled direct references, and restored singular-ticket posture with no runtime or phase activation and `NO CROSS-LANE IMPACT`. Prior: `GOV-BRIDGE-001` (**§138**); `GOV-GREEN-001` (**§136**); `GOV-FOG-001` (**§133**); `MVP-EVID-001` (**§131**); `FE-TRUST-002` / `GOV-ADR-0024` closeout hygiene (**§129**); `PH-COMP-B-003` (**§126**); `GOV-PHILOSOPHY-001` / ADR **0023** (**§125**); `GOV-PARALLEL-002` (**§124**); `FE-TRUST-001` (**§123**); `BE-FOUND-001` (**§122**); `PH-COMP-B-002` (**§121**); `GOV-PARALLEL-001` (**§120**); `PH-COMP-B-001` (**§119**); `COUNSEL-B-001` (**§118**).
+- **Last completed ticket (summary):** `BRIDGE-P0-001` (**§141**) — accepted ADR **0026**, added canonical unused-at-runtime Phase 0 contracts, fixtures, deterministic fail-closed validation, and documentation through PR **#291**, with `NO CROSS-LANE IMPACT` and no runtime or Phase 1 activation. Prior: `GOV-BRIDGE-ADOPT-001` (**§139**); `GOV-BRIDGE-001` (**§138**); `GOV-GREEN-001` (**§136**); `GOV-FOG-001` (**§133**); `MVP-EVID-001` (**§131**); `FE-TRUST-002` / `GOV-ADR-0024` closeout hygiene (**§129**); `PH-COMP-B-003` (**§126**); `GOV-PHILOSOPHY-001` / ADR **0023** (**§125**); `GOV-PARALLEL-002` (**§124**); `FE-TRUST-001` (**§123**); `BE-FOUND-001` (**§122**); `PH-COMP-B-002` (**§121**); `GOV-PARALLEL-001` (**§120**); `PH-COMP-B-001` (**§119**); `COUNSEL-B-001` (**§118**).
 - **Post-`COUNSEL-SEND-B-001` DEFER (governance-accepted; §6f.1 / D-028):** Founder deferred authorization to send the Kenya counsel packet. Does not reject Kenya, establish a negative legal conclusion, close the thesis, infer unsuitability, authorize internal legal reliance, or authorize Class B execution. Revisit only under conditions in **§6f.1**.
 - **Post-Controlled Parallelism v2 closeout (governance-accepted; §6f.2 / D-029):** Founder activated concurrent `PH-COMP-B-003` and `FE-TRUST-002` only. Both reached independent pass closeouts (**§126** / prior closeout **§127**) with `NO CROSS-LANE IMPACT`; all lanes were idle when D-029 closed. Lane independence and non-convergence held. Later singular hardening (**§128**) and Founder closeout (**§129**) are not successor or parallel passes. Completion does **not** authorize Class B execution, counsel send, market/provider/endpoint selection, or customer-money activity.
 - **Post-Controlled Parallelism v3 closeout (governance-accepted; §6f.3 / D-032 / §135 activation / §136 closeout):** Founder activated concurrent `CLASS-A-VAL-001` (Lane V) and `GOV-GREEN-001` (Lane G) only. Lane G completed independently (**§136**) with `NO CROSS-LANE IMPACT`; singular-ticket restored for remaining `CLASS-A-VAL-001`. D-032 is completed historical pass authority. Does **not** reopen D-029 as standing concurrency. Does **not** authorize Class B execution, customer-money activity, counsel send, or product-experiment activation via Green Lane alone.
@@ -4068,35 +4068,35 @@ Current active ticket status:
 - **Post-`FE-TRUST-002` hardening closeout (Founder-directed; §129):** Bounded hardening merged via PR **#274** remains the implementation truth. Founder closed the ticket with residual note that targeted-user interpretation evidence is **not claimed** and remains a future exploration / MVP-evidence need only. D-029 remains completed historical authority. `CLASS-A-VAL-001` is the §7-named Lane V ticket to collect that interpretation evidence under synthetic conditions.
 - **Post-ADR 0024 acceptance (Founder-directed; §129):** ADR **0024** is **Accepted** as the evidence-gated MVP acceptance principle. Acceptance does **not** authorize Evidence Register dispositions by itself, institutional MVP “done,” or execution-class widening.
 - **Post-ADR 0025 acceptance (Founder-directed; §135 / §136 / `GOV-GREEN-001`):** ADR **0025** is **Accepted** as the Green Lane delegation pilot principle. Acceptance does **not** activate product work, create standing parallelism, or override **§7** / **§7a**.
-- **Post-`AGENTS.md` parallelism reconciliation (Founder-directed; §129; updated §135 / §136 / §137 / §138 / §139 / §140):** D-029, D-032, D-034, and D-035 are completed historical pass authorities. D-036 is the active two-lane pass. Green Lane classification does not activate work.
+- **Post-`AGENTS.md` parallelism reconciliation (Founder-directed; §129; updated §135 / §136 / §137 / §138 / §139 / §140 / §141):** D-029, D-032, D-034, D-035, and D-036 are completed historical pass authorities. No active governed-parallel pass remains. Green Lane classification does not activate work.
 - **Post-`MVP-EVID-001` closeout (§131):** Documentation-only Evidence Register domain priming completed via PR **#281**. Domain records identify sources and gaps only; no domain was accepted, no gate was cleared, institutional MVP was not accepted.
 - **Post-`GOV-FOG-001` closeout (§133 / D-031):** Disposition **1 — Class A validation** recorded. Outcome Gate governed at `docs/ops/governance/mvp/HEDGR_FOUNDER_OUTCOME_GATE_CLASS_A_TO_CLASS_B.md`. Decision date **31 July 2026**.
-- **Post-`CLASS-A-VAL-001` activation (§134):** Founder-activated Class A product-validation cycle under the Outcome Gate §4 contract. Synthetic / visibly non-live only. Does **not** authorize Class B execution, customer-money activity, counsel send, market/provider selection as launch market, Evidence Register domain acceptance-for-show, gate clearance, or institutional MVP “done.” Continues unchanged as Lane V under D-036.
+- **Post-`CLASS-A-VAL-001` activation (§134):** Founder-activated Class A product-validation cycle under the Outcome Gate §4 contract. Synthetic / visibly non-live only. Does **not** authorize Class B execution, customer-money activity, counsel send, market/provider selection as launch market, Evidence Register domain acceptance-for-show, gate clearance, or institutional MVP “done.” Remains the sole active ticket after D-036 closeout.
 - **Post-`GOV-GREEN-001` closeout (§136):** Documentation-only Green Lane delegation pilot completed. ADR **0025**, `AGENTS.md` operator rules, and **§6g** envelope remain. Does **not** activate a product experiment. Does **not** authorize Class B / Class C or customer-money activity. Singular-ticket restored for `CLASS-A-VAL-001`.
 - **Post-`GOV-PHILOSOPHY-001` sequencing (governance-accepted):** Philosophy codified; does not widen execution. Future tickets appear only when separately named in **§7** / **§7a**.
 - **Post-`GOV-BRIDGE-001` closeout (§138):** The refined proposal merged via PR **#287**; the ticket closed with `NO CROSS-LANE IMPACT`, no runtime change, no contract adoption, no Phase 0, and no ADR activation. D-034 completed. `GOV-BRIDGE-ADOPT-001` was separately activated under D-035 to perform documentation-only adoption.
 - **Post-`GOV-BRIDGE-ADOPT-001` closeout (§139):** The refined contract was adopted as a documentation-only governance contract; the historical proposal was preserved; direct Bridge documentation references were reconciled; D-035 completed with `NO CROSS-LANE IMPACT`; singular-ticket posture restored for `CLASS-A-VAL-001`. No Phase 0, runtime capability, endpoint, route, schema, generator, snapshot, ADR, evidence acceptance, or customer-money authority was activated.
-- **Post-`BRIDGE-P0-001` activation (§140):** D-036 names only `CLASS-A-VAL-001` (Lane V, unchanged) and `BRIDGE-P0-001` (Lane R, Phase 0 contract/schema foundation). No Phase 1, live runtime, endpoint, route, action-schema, snapshot, retrieval-widening, mutation, evidence-acceptance, or customer-money authority.
-- **Post-`GOV-PARALLEL-002` sequencing (governance-accepted):** Checklist remains non-authorizing by itself. D-036 is separately Founder-authorized and repo-natively active.
-- **Post-`GOV-PARALLEL-001` sequencing (governance-accepted):** **§6e** / D-026 remains the lane-model / exception-framework authority only. v1 through v5 are completed historical passes; v6 / D-036 is active only for its named lanes.
+- **Post-`BRIDGE-P0-001` closeout (§141):** Phase 0 completed through PR **#291** with ADR **0026**, canonical contracts, fixtures, deterministic fail-closed tests, documentation, and runtime-preservation evidence. D-036 completed with `NO CROSS-LANE IMPACT`. No Phase 1, live runtime, endpoint, route, action-schema, snapshot, retrieval-widening, mutation, evidence-acceptance, or customer-money authority.
+- **Post-`GOV-PARALLEL-002` sequencing (governance-accepted):** Checklist remains non-authorizing by itself. No active parallel pass remains; any future pass requires another Founder decision.
+- **Post-`GOV-PARALLEL-001` sequencing (governance-accepted):** **§6e** / D-026 remains the lane-model / exception-framework authority only. v1 through v6 are completed historical passes.
 - **Post-`PH-COMP-B-002` sequencing (governance-accepted):** Source-pointer classification completed (**§121**). Separately named `PH-COMP-B-003` exact public locator preservation completed (**§126**); Lane A is idle and no successor is activated.
 - **Post-`COUNSEL-B-001` sequencing (governance-accepted):** Packet draft completed (**§118**). Send authorization is **DEFER** per **§6f.1** / D-028.
 - **§6b** is not sequencing authority. **§6e** / **§6f** authorize controlled multi-lane activation only for explicitly named lanes/tickets; absence/ambiguity/pause/deprecation/completion restores the singular-ticket default.
-- When **§7** names approved tickets under a governed-parallel pass, each active brief lives in **§7a** until independent closeout. D-036 currently names only `CLASS-A-VAL-001` and `BRIDGE-P0-001`; singular-ticket default restores when D-036 completes, pauses, is revoked, or becomes ambiguous.
+- When **§7** names an approved ticket, the active brief lives in **§7a** until closeout. Singular-ticket default is restored with `CLASS-A-VAL-001` as the sole active ticket.
 - Cursor must not connect Lane C outputs or `CLASS-A-VAL-001` session findings to live Class B execution, provider adapters, or customer-money paths.
 - Cursor must not treat UX feedback, research findings, or Green Lane classification as Class B authorization or automatic §7 sequencing authority.
 - No active lane may widen, inherit, approve, or modify another lane’s authority without a separate Founder decision and repo-native governance update.
-- Kenya counsel path remains **DEFER** (**§6f.1**); active Controlled Parallelism v6 does not send counsel materials or reopen counsel engagement.
+- Kenya counsel path remains **DEFER** (**§6f.1**); completed Controlled Parallelism v6 did not send counsel materials or reopen counsel engagement.
 - Do not treat backlog, roadmap, Outcome Gate disposition alone, Green Lane labels, or *Proposed* ADRs as sequenced work unless **§7** is updated explicitly.
 - Convergence gate remains unsatisfied. `CLASS-A-VAL-001` does not satisfy it. Session findings remain exploration / MVP-evidence inputs until governed review.
 
 ---
 
-## 7a. Active execution tickets — Controlled Parallelism v6 / Internal D-036
+## 7a. Active execution ticket — `CLASS-A-VAL-001`
 
 ### Lane V — `CLASS-A-VAL-001`
 
-**Active ticket:** `CLASS-A-VAL-001` — Class A product-validation outcome (activation **§134**). Continues unchanged as Lane V under Controlled Parallelism v6 / Internal **D-036** / **§140**.
+**Active ticket:** `CLASS-A-VAL-001` — Class A product-validation outcome (activation **§134**). Continues unchanged under restored singular-ticket posture after Controlled Parallelism v6 / Internal **D-036** completed in **§141**.
 
 **Objective:** By **31 July 2026**, determine whether target cross-border freelancers understand Hedgr’s stability proposition and synthetic withdrawal journey well enough to justify a one-market Class B feasibility cycle — under synthetic, visibly non-live conditions only.
 
@@ -4113,10 +4113,9 @@ Current active ticket status:
 - **Lane A:** idle
 - **Lane B:** idle
 - **Lane C:** idle — `FE-TRUST-002` closed; journey reused as research surface only
-- **Lane V:** `CLASS-A-VAL-001` (unchanged)
-- **Lane R:** `BRIDGE-P0-001` (Phase 0 contract/schema foundation only)
+- **Singular active ticket:** `CLASS-A-VAL-001` (D-029, D-032, D-034, D-035, and D-036 remain completed historical authorities)
 
-**Sequencing posture:** D-036 active for the two named lanes only. Singular-ticket default restores on D-036 completion, pause, revocation, or ambiguity. Kenya counsel: **DEFER** (**§6f.1** / D-028). Class B convergence gate: unsatisfied. Green Lane pilot envelope (**§6g**) remains active as authority-model only and does **not** activate product work.
+**Sequencing posture:** Singular-ticket default. Kenya counsel: **DEFER** (**§6f.1** / D-028). Class B convergence gate: unsatisfied. Green Lane pilot envelope (**§6g**) remains active as authority-model only and does **not** activate product work.
 
 **In scope:**
 - Run **8** diagnostic sessions with freelancers who receive, hold, or convert foreign-currency income, using the shipped `FE-TRUST-002` synthetic withdrawal journey and Stability Wallet product slice: proposition → balance / stability → allocation → synthetic withdrawal → exception / support.
@@ -4160,9 +4159,9 @@ Current active ticket status:
 
 Procedural support (non-authorizing): Outcome Gate §5–§8; ADR **0024**; ADR **0025** / **§6g** (Green Lane pilot; does not activate work); `GOV-PARALLEL-002` checklist (does not authorize parallelism).
 
-### Lane R — `BRIDGE-P0-001`
+### Archived brief — `BRIDGE-P0-001`
 
-**Active ticket:** `BRIDGE-P0-001` — HedgrOps Bridge Phase 0 Contract and Schema Foundation (activation **§140**).
+**Completed execution ticket:** `BRIDGE-P0-001` — HedgrOps Bridge Phase 0 Contract and Schema Foundation (activation **§140**; implementation PR **#291**; closeout **§141**).
 
 **Objective:** Establish the deterministic, testable, fail-closed contract and schema foundation required for the Bridge to evolve safely toward a read-only institutional evidence layer, without changing live Bridge behavior, outputs, routes, action schemas, snapshot generation, or authority posture.
 
@@ -8810,3 +8809,86 @@ The adopted contract governs an evidence-observability expansion only. It does n
 **Notion staging posture:** Reconciled in this activation patch to mirror D-036 and both active lanes. Repo-native **§7** / **§7a** remains controlling; staging does not independently activate or sequence work.
 
 **Rollback:** Revert this activation change; remove `BRIDGE-P0-001` from **§7** / **§7a**; complete or revoke D-036 as factually appropriate; leave `CLASS-A-VAL-001` unchanged; restore singular-ticket posture; reconcile staging; confirm no Phase 0 implementation began from an unmerged activation.
+
+---
+
+## 141. Completed closeout - BRIDGE-P0-001 (HedgrOps Bridge Phase 0 Contract and Schema Foundation)
+
+**Ticket:** `BRIDGE-P0-001` — HedgrOps Bridge Phase 0 Contract and Schema Foundation
+
+**Date:** 2026-07-16
+
+**Status:** **COMPLETED**
+
+**Authority basis:** Founder-approved Controlled Parallelism v6 / Internal **D-036** / **§6f.6** + activation **§140** + the exact Lane R brief previously held in **§7a**.
+
+**Implementation truth:** PR **#291**, squash merge commit `f3980adebdacd2983ce63d30aeb87c3f06879dca`.
+
+**ADR:** **0026 — HedgrOps Bridge as Read-Only Institutional Evidence Infrastructure**, Accepted and indexed at `docs/decisions/0026-hedgrops-bridge-read-only-institutional-evidence-infrastructure.md`.
+
+### Completed scope
+
+- Canonical Phase 0 contracts: `apps/bridge-worker/contracts/phase0/`.
+- Common response envelope, Repo Authority Projection payload, field-level provenance, source-manifest, conflict-record, and fail-closed error schemas.
+- Closed freshness, coverage, authority-class, and source-classification enums.
+- Bridge-specific source precedence used only for deterministic conflict classification; no conflict resolution or global doctrine-precedence change.
+- Initial allow-listed authority-source declaration with mandatory `HEDGR_STATUS.md`, `AGENTS.md`, accepted-ADR index, explicit relevant-doctrine set, and unresolved common-revision state. The declaration does not load sources or infer completeness.
+- Dependency-free deterministic validation at `apps/bridge-worker/contracts/phase0/validate.mjs`.
+- Valid and fail-closed fixtures at `apps/bridge-worker/tests/fixtures/phase0-contract-fixtures.mjs`.
+- Deterministic validation tests at `apps/bridge-worker/tests/phase0-contracts.test.mjs`.
+- Canonical location, failure, inactive-runtime, Phase 1, and rollback documentation in the Phase 0 README, Worker README / verification, Bridge README, adopted-contract cross-reference, ADR, and ADR index.
+
+### Fail-closed evidence
+
+Tests cover missing `HEDGR_STATUS.md`, missing `AGENTS.md`, missing relevant ADR or doctrine declaration, mixed revisions, unknown or stale freshness, unreadable or structurally invalid mandatory sources, insufficient coverage, unresolved conflicts, missing material provenance, invalid source classification, authority Boolean violations, mutation / activation / sequencing fields, unsupported product inference, and unknown schema concepts.
+
+Identical inputs and configuration produce identical validation results. Source ordering, conflict identity, closed enum rendering, optional omission handling, revision binding, and semantic output remain stable. Generation and detection timestamps are explicitly excluded from semantic-equality comparisons.
+
+### Runtime-preservation evidence
+
+- `apps/bridge-worker/src/index.js`: unchanged; SHA-256 remains `05d70f6c1476a9f22c95d513bd96bca7f8d817879c56bdcd21211b10f7583f9c`.
+- `apps/bridge-worker/openapi.yaml`: unchanged; SHA-256 remains `96bb9f596a67aa353920ee41a078a6715a09a442445511cb853c49698b8120c6`.
+- Route index: unchanged; no route added, removed, renamed, or redirected.
+- Runtime route-to-file allow-list: unchanged.
+- `current-status.json`, latest weekly / MVP review snapshots, and review index: unchanged; preflight and post-implementation hashes match in `apps/bridge-worker/VERIFICATION.md`.
+- No existing endpoint imports or consumes Phase 0 contracts.
+- No live Repo Authority Projection, runtime source loading, general-purpose repository search, mutation, or deployed Worker behavior was implemented.
+
+### Validation evidence
+
+Local:
+
+- Node **20.19.5** / pnpm **9.12.0**.
+- Bridge Worker suite: **20 passed** (**11** Phase 0 contract tests + **9** existing Worker tests).
+- Bridge snapshot generator suite: **10 passed**.
+- Frontend Vitest: **729 passed**.
+- Snapshot freshness, trust check, trust-phrase check, workspace lint, validator syntax, JSON schema parsing, and `git diff --check`: passed.
+- `pnpm run validate` passed through all tests and stopped only at the unchanged local React `Suspense` **TS2786** errors in `apps/frontend/app/(app)/deposit/page.tsx:331` and `apps/frontend/app/(app)/withdraw/page.tsx:444`.
+- Local `e2e:ci` could not begin Playwright because its production build stopped at the same unchanged deposit-page TS2786 error. Those frontend files were outside scope and unchanged. Port **5050** was cleared after the attempt.
+
+Hosted PR **#291**:
+
+- `validate`: pass
+- `bridge-snapshots`: pass
+- `Fork-safe checks (typecheck/lint)`: pass
+- `build`: pass
+- `E2E smoke (@hedgr/frontend)`: pass
+- `e2e`: pass (**3m58s**)
+- `evidence-pack`: pass
+- Vercel: skipped / not affected; preview-comments check passed
+
+### Authority and phase disposition
+
+No mutation, ticket activation, sequencing, evidence acceptance, readiness, product direction, architecture judgment beyond accepted ADR **0026**, Class B / Class C execution, financial execution, or customer-money authority was created.
+
+Phase 1 and all later phases remain inactive. Phase 0 completion does not nominate or activate a successor ticket.
+
+**Phase 1 planning-groundedness note:** The adopted contract, ADR **0026**, canonical schemas, source declaration, fixtures, deterministic failure semantics, and runtime-preservation evidence are sufficient for separate Founder consideration of a bounded Phase 1 authority-integrity planning proposal. They are not Phase 1 authority. Any proposal must separately resolve or preserve as explicit configuration the freshness-duration policy, exact live source locators, runtime integration boundary, security review, and rollout-specific stop / rollback controls before activation.
+
+**Cross-lane impact:** `NO CROSS-LANE IMPACT`. `CLASS-A-VAL-001` scope, evidence, thresholds, research surfaces, decision rule, timing, and stop / rollback controls remain unchanged.
+
+**Controlled Parallelism v6 disposition:** Internal **D-036** / **§6f.6** is completed historical authority and no longer supplies concurrency.
+
+**Resulting posture:** Singular-ticket default restored. `CLASS-A-VAL-001` is the sole active ticket under **§7** / **§7a** / **§134**. Lane A / B / C / R are idle. D-029, D-032, D-034, D-035, and D-036 are completed historical pass authorities. Kenya counsel remains **DEFER**. The Class B convergence gate remains unsatisfied.
+
+**Rollback:** Revert the Phase 0 schemas, policy, source declaration, fixtures, tests, and documentation references; confirm the live Worker remains independent. Preserve accepted ADR **0026** as historical. Reversing its principle requires a superseding ADR. Reconcile **§6f.6**, **§7**, **§7a**, this closeout, and the staging mirror; leave Lane V unchanged.
