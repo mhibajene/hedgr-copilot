@@ -176,6 +176,25 @@ test("machine-readable policy and schemas preserve closed enums", async () => {
     policy.source_classifications
   );
   assert.equal(errorSchema.properties.authorizing.const, false);
+  const requiredFailureCodes = [
+    "MISSING_MANDATORY_SOURCE",
+    "UNREADABLE_SOURCE",
+    "REVISION_MISMATCH",
+    "STALE_MANDATORY_SOURCE",
+    "STRUCTURALLY_INVALID_SOURCE",
+    "UNSUPPORTED_AUTHORITY_CLASS",
+    "MISSING_MATERIAL_PROVENANCE",
+    "UNKNOWN_SCHEMA_CONCEPT",
+    "UNRESOLVED_AUTHORITY_CONFLICT",
+    "ATTEMPTED_MUTATION_FIELD",
+    "ATTEMPTED_ACTIVATION_FIELD",
+    "ATTEMPTED_SEQUENCING_FIELD",
+    "UNSUPPORTED_INFERENCE_FIELD"
+  ];
+  for (const code of requiredFailureCodes) {
+    assert.ok(errorSchema.properties.code.enum.includes(code), code);
+    assert.ok(invalidFixtures.some((fixture) => fixture.expectedCode === code), code);
+  }
   assert.equal(policy.freshness_policy.ttl_seconds, null);
   assert.equal(policy.freshness_policy.ttl_status, "UNRESOLVED_CONFIGURATION");
 });
