@@ -1,0 +1,50 @@
+{
+  "mode": "READ_ONLY",
+  "authority_booleans": {
+    "execution_authority": false,
+    "mutation_allowed": false,
+    "ticket_activation_allowed": false,
+    "sequencing_allowed": false
+  },
+  "authority_classes": [
+    "REPO_AUTHORITY_PROJECTION",
+    "REVIEW_EVIDENCE",
+    "SUPPORTING_EVIDENCE"
+  ],
+  "source_classifications": [
+    "REPO_AUTHORITY",
+    "REVIEW_EVIDENCE",
+    "SUPPORTING_EVIDENCE"
+  ],
+  "freshness": ["CURRENT", "STALE", "UNKNOWN"],
+  "coverage": ["COMPLETE", "PARTIAL", "INSUFFICIENT"],
+  "source_precedence": [
+    "HEDGR_STATUS",
+    "AGENTS",
+    "ACCEPTED_ADRS",
+    "ACTIVE_DOCTRINE",
+    "ACTIVE_GOVERNANCE_REGISTERS",
+    "PRODUCT_EXPERIMENT_USER_EVIDENCE",
+    "WEEKLY_MVP_PROCESS_REVIEWS",
+    "SUPPORTING_ARTIFACTS"
+  ],
+  "source_precedence_scope": "Bridge conflict classification only; it does not redefine global doctrine precedence and does not resolve conflicts.",
+  "freshness_policy": {
+    "ttl_seconds": null,
+    "ttl_status": "UNRESOLVED_CONFIGURATION",
+    "current_requires": [
+      "all mandatory sources included and structurally valid",
+      "all mandatory sources bound to the common source revision",
+      "all mandatory sources CURRENT",
+      "no unresolved authority conflict"
+    ]
+  },
+  "canonical_concepts": [
+    "repo_authority_projection",
+    "review_evidence",
+    "supporting_evidence",
+    "review.record",
+    "supporting.record"
+  ],
+  "runtime_integration": "INACTIVE_UNTIL_SEPARATELY_AUTHORIZED"
+}

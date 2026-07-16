@@ -237,6 +237,34 @@ The following shipped under **`MC-S4-*`** ids; see **`docs/ops/HEDGR_STATUS.md`*
 
 ---
 
+## Adjacent institutional architecture decisions
+
+### ADR 0023 — Governed Progress Under Uncertainty
+
+Accepted governance operating philosophy. Evidence and assumptions remain subordinate to repo-native authority and explicit activation.
+
+### ADR 0024 — MVP Acceptance Is Evidence-Gated, Not Feature-Gated
+
+Accepted institutional evidence principle. Acceptance does not activate implementation or accept evidence by itself.
+
+### ADR 0025 — Repo-Native Green Lane Delegation Pilot
+
+Accepted time-bounded Class A translation / disposition pilot. Green Lane classification does not activate work or create standing parallelism.
+
+### ADR 0026 — HedgrOps Bridge as Read-Only Institutional Evidence Infrastructure
+
+Accepted principle for a read-only, source-bound institutional evidence transport layer. Repo authority remains controlling; Bridge output remains non-authoritative; mandatory sources and common revision binding are required for `CURRENT`; missing or conflicting context fails closed; material fields require direct provenance; conflict precedence classifies but does not resolve; Phase 1 and later phases require separate authorization.
+
+**Ticket of record:** `BRIDGE-P0-001`
+
+**Detailed contract:** `docs/ops/bridge/HEDGROPS_BRIDGE_CAPABILITY_CONTRACT.md`
+
+**Phase 0 contracts:** `apps/bridge-worker/contracts/phase0/`
+
+No endpoint, route, action schema, snapshot, runtime allow-list, deployed Worker behavior, evidence acceptance, mutation, activation, sequencing, financial, or customer-money authority is created by ADR 0026.
+
+---
+
 ## Usage Rule
 
 Even where this index is only indirectly relevant, engine-facing work remains subject to `AGENTS.md` and current authority in `docs/ops/HEDGR_STATUS.md`.

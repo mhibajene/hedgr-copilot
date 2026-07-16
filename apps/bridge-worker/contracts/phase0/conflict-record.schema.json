@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://hedgr.dev/bridge/phase0/conflict-record.schema.json",
+  "title": "HedgrOps Bridge Unresolved Conflict Record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "conflict_id",
+    "concept",
+    "stronger_source_path",
+    "stronger_source_section",
+    "stronger_source_revision",
+    "stronger_source_classification",
+    "lower_source_path",
+    "lower_source_section",
+    "lower_source_revision",
+    "lower_source_classification",
+    "description",
+    "resolved",
+    "detected_at",
+    "non_resolution_statement"
+  ],
+  "properties": {
+    "conflict_id": { "type": "string", "pattern": "^conflict-[0-9a-f]{8}$" },
+    "concept": { "type": "string", "minLength": 1 },
+    "stronger_source_path": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"
+    },
+    "stronger_source_section": { "type": "string", "minLength": 1 },
+    "stronger_source_revision": { "type": "string", "minLength": 1 },
+    "stronger_source_classification": {
+      "enum": [
+        "REPO_AUTHORITY",
+        "REVIEW_EVIDENCE",
+        "SUPPORTING_EVIDENCE"
+      ]
+    },
+    "lower_source_path": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"
+    },
+    "lower_source_section": { "type": "string", "minLength": 1 },
+    "lower_source_revision": { "type": "string", "minLength": 1 },
+    "lower_source_classification": {
+      "enum": [
+        "REPO_AUTHORITY",
+        "REVIEW_EVIDENCE",
+        "SUPPORTING_EVIDENCE"
+      ]
+    },
+    "description": { "type": "string", "minLength": 1 },
+    "resolved": { "const": false },
+    "detected_at": { "type": "string", "format": "date-time" },
+    "non_resolution_statement": { "type": "string", "minLength": 1 }
+  }
+}

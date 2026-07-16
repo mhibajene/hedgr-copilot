@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://hedgr.dev/bridge/phase0/response-envelope.schema.json",
+  "title": "HedgrOps Bridge Phase 0 Response Envelope",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "mode",
+    "execution_authority",
+    "mutation_allowed",
+    "ticket_activation_allowed",
+    "sequencing_allowed",
+    "authority_class",
+    "source_commit",
+    "generated_at",
+    "freshness",
+    "coverage",
+    "sources",
+    "conflicts",
+    "payload"
+  ],
+  "properties": {
+    "mode": { "const": "READ_ONLY" },
+    "execution_authority": { "const": false },
+    "mutation_allowed": { "const": false },
+    "ticket_activation_allowed": { "const": false },
+    "sequencing_allowed": { "const": false },
+    "authority_class": {
+      "enum": [
+        "REPO_AUTHORITY_PROJECTION",
+        "REVIEW_EVIDENCE",
+        "SUPPORTING_EVIDENCE"
+      ]
+    },
+    "source_commit": { "type": "string", "minLength": 1 },
+    "generated_at": { "type": "string", "format": "date-time" },
+    "freshness": { "enum": ["CURRENT", "STALE", "UNKNOWN"] },
+    "coverage": { "enum": ["COMPLETE", "PARTIAL", "INSUFFICIENT"] },
+    "sources": {
+      "type": "array",
+      "items": {
+        "$ref": "source-manifest.schema.json#/$defs/sourceEntry"
+      }
+    },
+    "conflicts": {
+      "type": "array",
+      "items": { "$ref": "conflict-record.schema.json" }
+    },
+    "payload": { "type": "object" }
+  }
+}

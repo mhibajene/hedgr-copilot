@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://hedgr.dev/bridge/phase0/provenance.schema.json",
+  "title": "HedgrOps Bridge Field-Level Provenance",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "value",
+    "source_path",
+    "source_section",
+    "source_commit",
+    "source_classification",
+    "freshness"
+  ],
+  "properties": {
+    "value": {},
+    "source_path": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"
+    },
+    "source_section": { "type": "string", "minLength": 1 },
+    "source_commit": { "type": "string", "minLength": 1 },
+    "recorded_at": { "type": "string", "format": "date-time" },
+    "source_classification": {
+      "enum": [
+        "REPO_AUTHORITY",
+        "REVIEW_EVIDENCE",
+        "SUPPORTING_EVIDENCE"
+      ]
+    },
+    "freshness": { "enum": ["CURRENT", "STALE", "UNKNOWN"] }
+  }
+}

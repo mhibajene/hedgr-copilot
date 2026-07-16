@@ -46,6 +46,83 @@ The Worker must not:
 - mutate repo state
 - create ADRs or governance authority
 
+## BRIDGE-P0-001 Phase 0 Runtime-Preservation Evidence
+
+`BRIDGE-P0-001` adds contract, fixture, validation, ADR, and documentation artifacts only. The new files are not imported by `src/index.js` and are not referenced by `openapi.yaml`.
+
+Preflight and post-implementation SHA-256 values are identical:
+
+| Surface | Preflight SHA-256 | Post-implementation SHA-256 |
+| ------- | ----------------- | -------------------------- |
+| `apps/bridge-worker/src/index.js` | `05d70f6c1476a9f22c95d513bd96bca7f8d817879c56bdcd21211b10f7583f9c` | `05d70f6c1476a9f22c95d513bd96bca7f8d817879c56bdcd21211b10f7583f9c` |
+| `apps/bridge-worker/openapi.yaml` | `96bb9f596a67aa353920ee41a078a6715a09a442445511cb853c49698b8120c6` | `96bb9f596a67aa353920ee41a078a6715a09a442445511cb853c49698b8120c6` |
+| `docs/ops/bridge/current-status.json` | `181dfa46feb0f25149b81cc17516cce0efc89eab95d3e30e9f2b82affcc1fc2a` | `181dfa46feb0f25149b81cc17516cce0efc89eab95d3e30e9f2b82affcc1fc2a` |
+| `docs/ops/bridge/latest-weekly-review.json` | `ec0f5bd398411111303307e9bbc24b1dfd5203415feef4d7d26e469c7cd7a489` | `ec0f5bd398411111303307e9bbc24b1dfd5203415feef4d7d26e469c7cd7a489` |
+| `docs/ops/bridge/latest-mvp-process-review.json` | `85b1f905436d17f5aab5f70775e2b60ba708236b1dff92485b6e2b9449beaf27` | `85b1f905436d17f5aab5f70775e2b60ba708236b1dff92485b6e2b9449beaf27` |
+| `docs/ops/bridge/review-index.json` | `d36cc733eb3b1e520459f950623ba4d3f88ae4be0cf2ae18019465aad2c95d6f` | `d36cc733eb3b1e520459f950623ba4d3f88ae4be0cf2ae18019465aad2c95d6f` |
+
+Route index before and after Phase 0:
+
+```text
+/
+/health
+/authority
+/authority-summary
+/current-status
+/weekly-review
+/hedgr/status/authority-summary
+/hedgr/reviews/latest-weekly
+/hedgr/reviews/latest-mvp-process
+/hedgr/reviews/index
+```
+
+Runtime file allow-list before and after Phase 0:
+
+```text
+/authority                          -> docs/ops/bridge/current-status.json
+/authority-summary                  -> docs/ops/bridge/current-status.json
+/current-status                     -> docs/ops/bridge/current-status.json
+/weekly-review                      -> docs/ops/bridge/latest-weekly-review.json
+/hedgr/status/authority-summary     -> docs/ops/bridge/current-status.json
+/hedgr/reviews/latest-weekly        -> docs/ops/bridge/latest-weekly-review.json
+/hedgr/reviews/latest-mvp-process   -> docs/ops/bridge/latest-mvp-process-review.json
+/hedgr/reviews/index                -> docs/ops/bridge/review-index.json
+```
+
+Comparison command:
+
+```bash
+git diff --exit-code origin/main -- \
+  apps/bridge-worker/src/index.js \
+  apps/bridge-worker/openapi.yaml \
+  docs/ops/bridge/current-status.json \
+  docs/ops/bridge/latest-weekly-review.json \
+  docs/ops/bridge/latest-mvp-process-review.json \
+  docs/ops/bridge/review-index.json
+```
+
+Result: no diff. No route, action schema, snapshot output, runtime allow-list, or deployed Worker behavior is changed by Phase 0.
+
+Targeted verification:
+
+- `pnpm --filter @hedgr/bridge-worker test`: 20 passed, including 11 Phase 0 contract tests and 9 existing Worker tests;
+- `pnpm bridge:snapshots:test`: 10 passed; and
+- `pnpm bridge:snapshots:check`: current snapshot pointers remain fresh;
+- `node --check apps/bridge-worker/contracts/phase0/validate.mjs`: passed;
+- `pnpm -w trust:check` and `pnpm -w trust:phrases`: passed;
+- `pnpm -w lint`: passed; and
+- `git diff --check`: passed.
+
+Local full-validation limitation:
+
+- `pnpm run validate` passed trust checks, snapshot freshness, 10 snapshot tests, 20 Bridge tests, 729 frontend tests, and `packages/ui` typecheck, then stopped at the unchanged React `Suspense` TS2786 errors in `apps/frontend/app/(app)/deposit/page.tsx:331` and `apps/frontend/app/(app)/withdraw/page.tsx:444`;
+- the Bridge Worker package defines no `typecheck` script; its changed JavaScript validator passed `node --check` and its machine-readable schemas were parsed and checked by the Phase 0 suite; and
+- `pnpm --filter @hedgr/frontend e2e:ci` could not begin Playwright because its production build stopped on the same unchanged deposit-page TS2786 error.
+
+The two frontend page files are outside `BRIDGE-P0-001` and were not modified. Hosted PR checks remain the merge gate for full typecheck, build, and E2E evidence.
+
+Phase 0 does not generate a live Repo Authority Projection and does not activate Phase 1.
+
 ## Closeout Assessment: HOPS-BRIDGE-001
 
 Title: Closeout Assessment - HedgrOps Read-Only Review Evidence Bridge

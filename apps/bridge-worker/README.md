@@ -8,6 +8,18 @@ Runtime: Cloudflare Worker
 
 This Worker exposes allowlisted Hedgr review evidence snapshots for HedgrOps Custom GPT Actions.
 
+## Phase 0 contract foundation (inactive at runtime)
+
+`BRIDGE-P0-001` adds canonical, dependency-free contract artifacts under:
+
+- `contracts/phase0/` — JSON Schemas, the Bridge-specific policy declaration, the initial allow-listed authority-source declaration, and deterministic validation utilities;
+- `tests/fixtures/phase0-contract-fixtures.mjs` — representative valid and fail-closed fixtures; and
+- `tests/phase0-contracts.test.mjs` — deterministic schema, provenance, revision, freshness, coverage, conflict, precedence, and failure tests.
+
+Architecture principle: `docs/decisions/0026-hedgrops-bridge-read-only-institutional-evidence-infrastructure.md`. Detailed contract: `docs/ops/bridge/HEDGROPS_BRIDGE_CAPABILITY_CONTRACT.md`.
+
+These Phase 0 artifacts are intentionally unused by `src/index.js` and `openapi.yaml`. They do not add a route, change an action schema, load live authority sources, replace a snapshot, widen the runtime allow-list, or activate Phase 1. Any runtime consumption requires separate Founder and repo-native authorization.
+
 It only retrieves static JSON snapshots from `docs/ops/bridge/*.json`. It does not generate snapshots, parse markdown, summarize reviews, browse the repo, infer governance state, activate tickets, sequence work, or mutate repository state.
 
 ## Endpoints

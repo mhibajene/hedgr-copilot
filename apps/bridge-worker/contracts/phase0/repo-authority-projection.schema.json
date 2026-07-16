@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://hedgr.dev/bridge/phase0/repo-authority-projection.schema.json",
+  "title": "HedgrOps Bridge Repo Authority Projection Payload",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["concept", "fields"],
+  "properties": {
+    "concept": { "const": "repo_authority_projection" },
+    "fields": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "active_ticket_ids",
+        "sequencing_posture",
+        "authority_boundaries"
+      ],
+      "properties": {
+        "active_ticket_ids": { "$ref": "provenance.schema.json" },
+        "sequencing_posture": { "$ref": "provenance.schema.json" },
+        "authority_boundaries": { "$ref": "provenance.schema.json" }
+      }
+    }
+  }
+}
