@@ -1,6 +1,6 @@
 Status: Canonical hand-off file
 Purpose: Strategic continuity, merged implementation truth, and next-ticket authority for Cursor execution
-Last updated: 2026-07-14
+Last updated: 2026-07-17
 
 ---
 
@@ -64,7 +64,7 @@ Important active constraints:
 
 **Sprint 3** is framed here as **Transition Readiness** (named track above), not as Foundation continuation: governance defines the explicit standard for any later boundary widening; execution architecture remains out of scope until explicitly approved.
 
-**Sequencing authority:** Only **§7** / **§7a** name approved active ticket(s). **Default posture:** one active implementation ticket. Concurrent lanes are permitted only where this file records an accepted, active, and unambiguous Founder-approved parallelism decision (**§6e** lane model / Internal **D-026** plus separate active-pass naming under **§6f**), explicitly names each active lane and ticket, defines authority class and exclusions, and preserves independent stop conditions and rollback. Internal **D-029**, Internal **D-032** / **§6f.3**, Internal **D-034** / **§6f.4**, Internal **D-035** / **§6f.5**, and Internal **D-036** / **§6f.6** are completed historical pass authorities and no longer supply concurrency. Singular-ticket default is restored with `CLASS-A-VAL-001` as the sole active ticket. Any future concurrency requires a separate Founder decision plus explicit **§7** / **§7a** naming. Parallel authorization applies only to explicitly named lanes and does **not** authorize unrestricted multi-ticket execution. No lane may widen another lane’s authority without a separate Founder decision and repo-native governance update. **§6b** is Transition Readiness taxonomy and scrutiny input only—not backlog approval or sequencing. **§6e** / **§6f** / **§6g** do **not** widen Class B execution, custody, rails, conversion, settlement, or customer-money authority. Green Lane classification (**§6g** / ADR **0025**) does not activate work and does not override **§7** / **§7a**.
+**Sequencing authority:** Only **§7** / **§7a** name approved active ticket(s). **Default posture:** one active implementation ticket. Concurrent lanes are permitted only where this file records an accepted, active, and unambiguous Founder-approved parallelism decision (**§6e** lane model / Internal **D-026** plus separate active-pass naming under **§6f**), explicitly names each active lane and ticket, defines authority class and exclusions, and preserves independent stop conditions and rollback. Internal **D-029**, Internal **D-032** / **§6f.3**, Internal **D-034** / **§6f.4**, Internal **D-035** / **§6f.5**, and Internal **D-036** / **§6f.6** are completed historical pass authorities and no longer supply concurrency. Singular-ticket posture is active with `CLASS-A-VAL-002` as the sole active ticket after the Founder-directed `CLASS-A-VAL-001` stop/reframe and successor activation (**§142** / **§143**; Internal **D-037**). Any future concurrency requires a separate Founder decision plus explicit **§7** / **§7a** naming. Parallel authorization applies only to explicitly named lanes and does **not** authorize unrestricted multi-ticket execution. No lane may widen another lane’s authority without a separate Founder decision and repo-native governance update. **§6b** is Transition Readiness taxonomy and scrutiny input only—not backlog approval or sequencing. **§6e** / **§6f** / **§6g** do **not** widen Class B execution, custody, rails, conversion, settlement, or customer-money authority. Green Lane classification (**§6g** / ADR **0025**) does not activate work and does not override **§7** / **§7a**.
 
 **MVP phased alignment (interpretation aid):** See **`docs/ops/governance/mvp/HEDGR_MVP_PHASE_ALIGNMENT.md`** for how **`docs/doctrine/hedgr-mvp-project-specification.md`** governance-gated phases and success criteria map to the posture stated in this section and in **§6a–§6c**. That readout is **subordinate** to this file and to **§7** / **§7a**; it does **not** widen execution authority or substitute for **§7** naming.
 
@@ -3904,7 +3904,7 @@ This section does **not** authorize provider-specific implementation, legal reli
 
 **Relationship to §7 / §7a:** This envelope does **not** activate product work. Implementation remains executable only through **§7** / **§7a**. Green Lane classification does not activate work and does not override **§7** / **§7a**.
 
-**Relationship to governed parallelism:** Green Lane delegation does **not** create parallel authority. D-032 / **§6f.3**, D-034 / **§6f.4**, D-035 / **§6f.5**, and D-036 / **§6f.6** are completed historical authorities and are not standing concurrency. Singular-ticket default is restored with `CLASS-A-VAL-001` as the sole active ticket.
+**Relationship to governed parallelism:** Green Lane delegation does **not** create parallel authority. D-032 / **§6f.3**, D-034 / **§6f.4**, D-035 / **§6f.5**, and D-036 / **§6f.6** are completed historical authorities and are not standing concurrency. Singular-ticket posture is active with `CLASS-A-VAL-002` as the sole active ticket after **§142** / **§143**.
 
 **Non-authorization:** This section is an authority-model pilot. It does not activate product work, does not authorize parallel execution by itself, does not widen financial execution posture, and leaves repo authority controlling.
 
@@ -4048,19 +4048,20 @@ Completed and merged:
 - `GOV-BRIDGE-001` - Refine HedgrOps Bridge Capability Contract (Class A documentation-only governance refinement; PR **#287**; completed record **§138**; proposal remains historically preserved)
 - `GOV-BRIDGE-ADOPT-001` - Adopt HedgrOps Bridge Capability Contract (Class A documentation-only governance adoption; completed record **§139**; no runtime or phase activation)
 - `BRIDGE-P0-001` - HedgrOps Bridge Phase 0 Contract and Schema Foundation (Class A / execution-neutral governance and infrastructure assurance; implementation PR **#291**; completed record **§141**; no runtime or Phase 1 activation)
+- `CLASS-A-VAL-001` - Class A product-validation outcome stopped and reframed by Founder decision before cohort completion; no participant-evidence or threshold-completion claim; successor activation record **§142** / **§143**
 
 Current active ticket status:
 
-- **Sole active ticket:** `CLASS-A-VAL-001` — Class A product-validation outcome (synthetic / visibly non-live research cycle through **31 July 2026**). Exact brief in **§7a**. Activation record **§134**. Scope, thresholds, decision rule, and stop / rollback controls remain unchanged by completed D-036.
+- **Sole active ticket:** `CLASS-A-VAL-002` — Validate the End-to-End Synthetic Stability Journey. Class A product validation; synthetic / visibly non-live only. Exact brief in **§7a**. Founder transition and activation records **§142** / **§143**; Internal **D-037**.
 - **Sequencing posture:** Singular-ticket default. D-029, D-032, D-034, D-035, and D-036 are completed historical pass authorities and supply no standing concurrency. No unrestricted multi-ticket execution.
 - **Kenya counsel path (`COUNSEL-SEND-B-001` / Internal D-028):** **DEFER**. No packet authorized to send. Kenya remains primary thesis stress test; thesis not rejected or closed. No successor Kenya legal ticket active unless separately named. See **§6f.1**.
 - **Governed parallelism posture:** No active pass. **§6e** / D-026 remains the lane-model / exception-framework only. D-029, D-032, D-034, D-035, and D-036 are completed historical decisions. Any future concurrency requires a separate Founder decision and explicit **§7** / **§7a** naming. The Class B convergence gate remains unsatisfied. Kenya counsel remains **DEFER** and separate. Procedural checklist: `docs/ops/governance/HEDGR_GOVERNED_PARALLEL_PASS_CHECKLIST.md` (**§124**) — non-authorizing by itself.
 - **Active Lane A (Class B Evidence Readiness):** None. `PH-COMP-B-003` completed independently (**§126**); Lane A is idle.
 - **Active Lane B (backend foundation):** None.
-- **Active Lane C (UX Trust Testing):** None. `FE-TRUST-002` research-contract hardening closed under Founder-directed closeout (**§129**). Lane C is idle. `CLASS-A-VAL-001` uses the closed `FE-TRUST-002` synthetic journey as the research surface under Lane V authority; it does **not** reopen D-029 or Lane C concurrency.
+- **Active Lane C (UX Trust Testing):** None. `FE-TRUST-002` research-contract hardening closed under Founder-directed closeout (**§129**). Lane C is idle. `CLASS-A-VAL-002` is the sole active Class A product-validation ticket and does **not** reopen D-029 or Lane C concurrency.
 - **Active Lane R:** None. `BRIDGE-P0-001` completed in **§141**; Phase 0 contracts remain unused by runtime and Phase 1 remains inactive.
 - **Green Lane pilot (§6g / ADR 0025):** Active authority-model pilot envelope (time-bounded; founder-revocable). Ticket of record `GOV-GREEN-001` completed (**§136**). Does **not** activate product experiments. Does **not** by itself authorize parallelism. Does **not** widen financial execution posture.
-- **Last completed ticket (summary):** `BRIDGE-P0-001` (**§141**) — accepted ADR **0026**, added canonical unused-at-runtime Phase 0 contracts, fixtures, deterministic fail-closed validation, and documentation through PR **#291**, with `NO CROSS-LANE IMPACT` and no runtime or Phase 1 activation. Prior: `GOV-BRIDGE-ADOPT-001` (**§139**); `GOV-BRIDGE-001` (**§138**); `GOV-GREEN-001` (**§136**); `GOV-FOG-001` (**§133**); `MVP-EVID-001` (**§131**); `FE-TRUST-002` / `GOV-ADR-0024` closeout hygiene (**§129**); `PH-COMP-B-003` (**§126**); `GOV-PHILOSOPHY-001` / ADR **0023** (**§125**); `GOV-PARALLEL-002` (**§124**); `FE-TRUST-001` (**§123**); `BE-FOUND-001` (**§122**); `PH-COMP-B-002` (**§121**); `GOV-PARALLEL-001` (**§120**); `PH-COMP-B-001` (**§119**); `COUNSEL-B-001` (**§118**).
+- **Last completed ticket (summary):** `CLASS-A-VAL-001` (**§142**) — Founder-directed stop/reframe before completion of the 8+4 participant-session pathway; no participant-evidence, threshold, Evidence Register acceptance, gate-clearance, or Class B-readiness claim. Successor `CLASS-A-VAL-002` is separately activated in **§143**. Prior: `BRIDGE-P0-001` (**§141**); `GOV-BRIDGE-ADOPT-001` (**§139**); `GOV-BRIDGE-001` (**§138**); `GOV-GREEN-001` (**§136**); `GOV-FOG-001` (**§133**); `MVP-EVID-001` (**§131**); `FE-TRUST-002` / `GOV-ADR-0024` closeout hygiene (**§129**); `PH-COMP-B-003` (**§126**); `GOV-PHILOSOPHY-001` / ADR **0023** (**§125**); `GOV-PARALLEL-002` (**§124**); `FE-TRUST-001` (**§123**); `BE-FOUND-001` (**§122**); `PH-COMP-B-002` (**§121**); `GOV-PARALLEL-001` (**§120**); `PH-COMP-B-001` (**§119**); `COUNSEL-B-001` (**§118**).
 - **Post-`COUNSEL-SEND-B-001` DEFER (governance-accepted; §6f.1 / D-028):** Founder deferred authorization to send the Kenya counsel packet. Does not reject Kenya, establish a negative legal conclusion, close the thesis, infer unsuitability, authorize internal legal reliance, or authorize Class B execution. Revisit only under conditions in **§6f.1**.
 - **Post-Controlled Parallelism v2 closeout (governance-accepted; §6f.2 / D-029):** Founder activated concurrent `PH-COMP-B-003` and `FE-TRUST-002` only. Both reached independent pass closeouts (**§126** / prior closeout **§127**) with `NO CROSS-LANE IMPACT`; all lanes were idle when D-029 closed. Lane independence and non-convergence held. Later singular hardening (**§128**) and Founder closeout (**§129**) are not successor or parallel passes. Completion does **not** authorize Class B execution, counsel send, market/provider/endpoint selection, or customer-money activity.
 - **Post-Controlled Parallelism v3 closeout (governance-accepted; §6f.3 / D-032 / §135 activation / §136 closeout):** Founder activated concurrent `CLASS-A-VAL-001` (Lane V) and `GOV-GREEN-001` (Lane G) only. Lane G completed independently (**§136**) with `NO CROSS-LANE IMPACT`; singular-ticket restored for remaining `CLASS-A-VAL-001`. D-032 is completed historical pass authority. Does **not** reopen D-029 as standing concurrency. Does **not** authorize Class B execution, customer-money activity, counsel send, or product-experiment activation via Green Lane alone.
@@ -4071,7 +4072,9 @@ Current active ticket status:
 - **Post-`AGENTS.md` parallelism reconciliation (Founder-directed; §129; updated §135 / §136 / §137 / §138 / §139 / §140 / §141):** D-029, D-032, D-034, D-035, and D-036 are completed historical pass authorities. No active governed-parallel pass remains. Green Lane classification does not activate work.
 - **Post-`MVP-EVID-001` closeout (§131):** Documentation-only Evidence Register domain priming completed via PR **#281**. Domain records identify sources and gaps only; no domain was accepted, no gate was cleared, institutional MVP was not accepted.
 - **Post-`GOV-FOG-001` closeout (§133 / D-031):** Disposition **1 — Class A validation** recorded. Outcome Gate governed at `docs/ops/governance/mvp/HEDGR_FOUNDER_OUTCOME_GATE_CLASS_A_TO_CLASS_B.md`. Decision date **31 July 2026**.
-- **Post-`CLASS-A-VAL-001` activation (§134):** Founder-activated Class A product-validation cycle under the Outcome Gate §4 contract. Synthetic / visibly non-live only. Does **not** authorize Class B execution, customer-money activity, counsel send, market/provider selection as launch market, Evidence Register domain acceptance-for-show, gate clearance, or institutional MVP “done.” Remains the sole active ticket after D-036 closeout.
+- **Post-`CLASS-A-VAL-001` activation (§134):** Founder-activated Class A product-validation cycle under the Outcome Gate §4 contract. Synthetic / visibly non-live only. Did **not** authorize Class B execution, customer-money activity, counsel send, market/provider selection as launch market, Evidence Register domain acceptance-for-show, gate clearance, or institutional MVP “done.” It remained the sole active ticket after D-036 closeout until the later Founder stop/reframe in **§142**.
+- **Post-`CLASS-A-VAL-001` stop/reframe (§142 / D-037):** Founder closed the ticket before the 8 diagnostic + 4 fresh validation session pathway completed and reframed the product-validation instrument around a coherent end-to-end synthetic journey. No participant evidence, threshold satisfaction, Evidence Register acceptance, gate clearance, Class B feasibility approval, or institutional MVP completion is claimed.
+- **Post-`CLASS-A-VAL-002` activation (§143 / D-037):** Founder activated the successor as the sole ticket. The authorized slice is Dashboard → Deposit → Withdraw → Activity plus the shared trust/navigation shell, with internally consistent governed synthetic fixtures and a participant validation protocol. Settings and Copilot remain outside the primary journey. No live money movement, custody, provider/banking integration, production FX, settlement, payout, engine execution, Class B implementation, broad redesign, or customer-money authority.
 - **Post-`GOV-GREEN-001` closeout (§136):** Documentation-only Green Lane delegation pilot completed. ADR **0025**, `AGENTS.md` operator rules, and **§6g** envelope remain. Does **not** activate a product experiment. Does **not** authorize Class B / Class C or customer-money activity. Singular-ticket restored for `CLASS-A-VAL-001`.
 - **Post-`GOV-PHILOSOPHY-001` sequencing (governance-accepted):** Philosophy codified; does not widen execution. Future tickets appear only when separately named in **§7** / **§7a**.
 - **Post-`GOV-BRIDGE-001` closeout (§138):** The refined proposal merged via PR **#287**; the ticket closed with `NO CROSS-LANE IMPACT`, no runtime change, no contract adoption, no Phase 0, and no ADR activation. D-034 completed. `GOV-BRIDGE-ADOPT-001` was separately activated under D-035 to perform documentation-only adoption.
@@ -4082,29 +4085,29 @@ Current active ticket status:
 - **Post-`PH-COMP-B-002` sequencing (governance-accepted):** Source-pointer classification completed (**§121**). Separately named `PH-COMP-B-003` exact public locator preservation completed (**§126**); Lane A is idle and no successor is activated.
 - **Post-`COUNSEL-B-001` sequencing (governance-accepted):** Packet draft completed (**§118**). Send authorization is **DEFER** per **§6f.1** / D-028.
 - **§6b** is not sequencing authority. **§6e** / **§6f** authorize controlled multi-lane activation only for explicitly named lanes/tickets; absence/ambiguity/pause/deprecation/completion restores the singular-ticket default.
-- When **§7** names an approved ticket, the active brief lives in **§7a** until closeout. Singular-ticket default is restored with `CLASS-A-VAL-001` as the sole active ticket.
-- Cursor must not connect Lane C outputs or `CLASS-A-VAL-001` session findings to live Class B execution, provider adapters, or customer-money paths.
+- When **§7** names an approved ticket, the active brief lives in **§7a** until closeout. Singular-ticket posture is active with `CLASS-A-VAL-002` as the sole active ticket.
+- Cursor must not connect `CLASS-A-VAL-002` implementation or participant findings to live Class B execution, provider adapters, or customer-money paths.
 - Cursor must not treat UX feedback, research findings, or Green Lane classification as Class B authorization or automatic §7 sequencing authority.
 - No active lane may widen, inherit, approve, or modify another lane’s authority without a separate Founder decision and repo-native governance update.
 - Kenya counsel path remains **DEFER** (**§6f.1**); completed Controlled Parallelism v6 did not send counsel materials or reopen counsel engagement.
 - Do not treat backlog, roadmap, Outcome Gate disposition alone, Green Lane labels, or *Proposed* ADRs as sequenced work unless **§7** is updated explicitly.
-- Convergence gate remains unsatisfied. `CLASS-A-VAL-001` does not satisfy it. Session findings remain exploration / MVP-evidence inputs until governed review.
+- Convergence gate remains unsatisfied. `CLASS-A-VAL-002` does not satisfy it by interface completion alone. Participant findings remain exploration / MVP-evidence inputs until governed review.
 
 ---
 
-## 7a. Active execution ticket — `CLASS-A-VAL-001`
+## 7a. Active execution ticket — `CLASS-A-VAL-002`
 
-### Lane V — `CLASS-A-VAL-001`
+### Lane V — `CLASS-A-VAL-002`
 
-**Active ticket:** `CLASS-A-VAL-001` — Class A product-validation outcome (activation **§134**). Continues unchanged under restored singular-ticket posture after Controlled Parallelism v6 / Internal **D-036** completed in **§141**.
+**Active ticket:** `CLASS-A-VAL-002` — Validate the End-to-End Synthetic Stability Journey (Founder transition / activation **§142** / **§143**; Internal **D-037**).
 
-**Objective:** By **31 July 2026**, determine whether target cross-border freelancers understand Hedgr’s stability proposition and synthetic withdrawal journey well enough to justify a one-market Class B feasibility cycle — under synthetic, visibly non-live conditions only.
+**Objective:** Create a coherent, visibly synthetic, end-to-end customer journey through Dashboard → Deposit → Withdraw → Activity plus the shared trust and navigation shell so target cross-border freelancers can understand Hedgr’s core stability proposition without inferring that real funds moved.
 
-**Type:** Product / research (Class A informational / synthetic).
+**Product question:** Can target cross-border freelancers understand Hedgr’s stability proposition through a complete synthetic journey sufficiently to justify consideration of a future one-market Class B feasibility cycle?
 
-**Execution class:** Class A informational / synthetic. Non-executing for customer money. May include bounded presentation-only Class A engineering changes **only** when required by evidence from this cycle and still inside the approved product slice; any such change must remain reversible and visibly non-live.
+**Type / execution class:** Product validation; Class A informational / synthetic. Non-executing for customer money.
 
-**Authority basis:** Founder disposition **1** (Internal **D-031** / **§133**) + this **§7** / **§7a** naming (Founder-approved activation **§134**) + Outcome Gate contract (`docs/ops/governance/mvp/HEDGR_FOUNDER_OUTCOME_GATE_CLASS_A_TO_CLASS_B.md` §4–§5) + ADR **0024** (evidence principle only) + ADRs **0013–0015** (read-only / informational engine boundaries) + closed `FE-TRUST-002` research surface (**§129**) + ADR **0025** / **§6g** (Green Lane pilot exists but does **not** widen this ticket).
+**Authority basis:** Founder approval to close/reframe `CLASS-A-VAL-001` and activate `CLASS-A-VAL-002` as its sole successor + Internal **D-037** + **§142** / **§143** + this **§7** / **§7a** naming + ADR **0024** (evidence principle only) + ADRs **0013–0015** (read-only / informational Stability Engine boundaries) + the existing synthetic transaction and withdrawal trust surfaces.
 
 **DRI:** Founder — @mhibajene.
 
@@ -4112,52 +4115,89 @@ Current active ticket status:
 
 - **Lane A:** idle
 - **Lane B:** idle
-- **Lane C:** idle — `FE-TRUST-002` closed; journey reused as research surface only
-- **Singular active ticket:** `CLASS-A-VAL-001` (D-029, D-032, D-034, D-035, and D-036 remain completed historical authorities)
+- **Lane C:** idle — this ticket does not reopen the historical Lane C pass
+- **Lane R:** idle
+- **Singular active ticket:** `CLASS-A-VAL-002` (D-029, D-032, D-034, D-035, and D-036 remain completed historical pass authorities)
 
-**Sequencing posture:** Singular-ticket default. Kenya counsel: **DEFER** (**§6f.1** / D-028). Class B convergence gate: unsatisfied. Green Lane pilot envelope (**§6g**) remains active as authority-model only and does **not** activate product work.
+**Sequencing posture:** Singular-ticket default. No concurrent successor is active. Kenya counsel: **DEFER** (**§6f.1** / D-028). Class B convergence gate: unsatisfied. Green Lane pilot envelope (**§6g**) remains active as authority-model only and does **not** widen this ticket.
+
+**Required participant outcomes:**
+
+1. Explain what Hedgr is intended to do.
+2. Distinguish informational targets from ledger balances.
+3. Understand the purpose of the Stability Engine posture.
+4. Follow the synthetic journey from balance through withdrawal and activity.
+5. Correctly state that no real money moved.
+6. Identify what action is available and what remains unavailable.
+7. Express whether the proposition is useful and trustworthy enough to continue exploring.
 
 **In scope:**
-- Run **8** diagnostic sessions with freelancers who receive, hold, or convert foreign-currency income, using the shipped `FE-TRUST-002` synthetic withdrawal journey and Stability Wallet product slice: proposition → balance / stability → allocation → synthetic withdrawal → exception / support.
-- Record session evidence, misconception register, and facilitator notes under governed ops paths (prefer `docs/ops/governance/mvp/` or a clearly linked research companion).
-- Perform **at most one** evidence-driven product iteration inside the approved slice (presentation / copy / comprehension fixes only; no execution semantics).
-- Run **4** fresh post-iteration validation sessions against Outcome Gate §5 thresholds (participant counts, not percentages).
-- Map findings to Evidence Register domains **D1, D2, D3, D4, D8, D9** as incomplete / under-review evidence inputs — **not** as domain `Accepted` dispositions unless a separate Founder / HedgrOps review explicitly does so under ADR **0024** controls.
-- Record research geography as **participant context** only (accessible Zambian or regional freelancers allowed without selecting any jurisdiction as launch market).
-- Preserve visible synthetic / no-money-moved boundaries throughout.
-- Update `docs/ops/HEDGR_STATUS.md` / `docs/ops/NOTION_GOVERNANCE_STAGING.md` on closeout with founder decision rule outcome: progress to Class B **feasibility** (work only), iterate once (if still inside this ticket’s one-iteration budget), or stop/reframe.
 
-**Must not:**
-- Move or imply real funds; claim live market, provider, rail, or custody availability; present synthetic journeys as live withdrawal proof.
-- Select launch market, provider, rail, custody, chain, or stablecoin; send counsel packets; alter Kenya `DEFER`.
-- Authorize Class B execution, Class C automation, live yield routing, or customer-money activity.
-- Accept Evidence Register domains or clear gates **G0–G7** merely to show progress; declare institutional MVP “done.”
-- Reopen D-029 / D-032 / D-034 / D-035 as standing concurrency or open any additional active / parallel ticket without a separate Founder decision.
-- Treat Green Lane classification or HedgrOps briefs as ticket activation or scope widening.
-- Introduce unsupported guarantees, fee/FX/payout precision that does not exist, gamification, yield-first framing, or allocation-as-accounting.
-- Bypass Stability Engine read-only / informational boundaries (ADRs **0013–0015**).
-- Treat session findings as automatic Class B progression authority — founder decision rule in Outcome Gate §5 still applies after evidence.
+- Establish internally consistent governed synthetic balance and transaction states.
+- Provide uninterrupted traversal through Dashboard, Deposit, Withdraw, and Activity.
+- Align the product narrative across the authorized route slice and shared trust/navigation shell.
+- Preserve and clarify the persistent simulation boundary.
+- Remove contradictions that prevent valid participant interpretation.
+- Create one bounded participant-validation protocol and evidence-capture method under `docs/ops/governance/mvp/`.
+- Include a secondary blocked or unavailable-data scenario for trust and exception testing.
+- Make only the minimum presentation and shared-component changes required to support the validation journey.
 
-**Surfaces (edit / research scope):**
-- Research / evidence artifacts under `docs/ops/governance/mvp/` (and clearly linked companions)
-- `docs/ops/governance/mvp/HEDGR_MVP_EVIDENCE_REGISTER.md` — mapped findings only; no silent Accept
-- `docs/ops/governance/mvp/HEDGR_FOUNDER_OUTCOME_GATE_CLASS_A_TO_CLASS_B.md` — progress checklist hygiene
-- Shipped `FE-TRUST-002` synthetic journey / related Class A presentation surfaces **only** if a bounded evidence-driven iteration is required
-- `docs/ops/HEDGR_STATUS.md` / `docs/ops/NOTION_GOVERNANCE_STAGING.md` on closeout
+**Primary validation condition:** The primary participant journey must be a visibly synthetic end-to-end state. The existing blocked FX or deposit state may remain only as a secondary exception scenario; it must not be the sole or primary product-proposition condition.
 
-**Acceptance shape:**
-- Diagnostic cohort (8) and fresh validation cohort (4) completed, or an explicit founder stop/reframe before decision date with recorded rationale.
-- Misconception register maintained; Outcome Gate §5 critical misconceptions tracked.
-- Fresh-cohort thresholds evaluated with participant counts; decision rule outcome recorded (progress / iterate-once already consumed / stop-reframe).
-- Evidence mapped to D1/D2/D3/D4/D8/D9 without false domain acceptance.
-- Synthetic / non-live / non-authorization language held in all research and product surfaces touched.
-- **§7** / **§7a** restored to no-active-ticket **or** a separately named successor on closeout — this ticket does not auto-activate Class B feasibility.
+**Explicitly excluded:**
 
-**Stop / rollback:**
-- Stop on unresolved critical misconceptions, persistent yield/trading-first framing, demand for unsupported guarantees, weak demand signal, missed **31 July 2026** without founder disposition, or pressure to accept domains / widen Class B.
-- Rollback = revert any presentation iteration; disable research variant; docs/evidence artifacts remain reconstructible.
+- Live money movement; custody; provider or banking integrations; production FX; settlement or payout capability.
+- Ledger mutation beyond governed synthetic fixtures; Stability Engine execution; Class B implementation.
+- Broad brand redesign; general dashboard beautification; unrelated accessibility or design-system remediation.
+- Expansion of Copilot functionality or customer productisation of Settings.
+- Settings and Copilot in the primary participant journey unless separately authorized.
+- Launch-market, provider, rail, custody, chain, or stablecoin selection; Kenya counsel send; Evidence Register acceptance; gate clearance; institutional MVP completion.
 
-Procedural support (non-authorizing): Outcome Gate §5–§8; ADR **0024**; ADR **0025** / **§6g** (Green Lane pilot; does not activate work); `GOV-PARALLEL-002` checklist (does not authorize parallelism).
+**Authorized implementation surfaces (must be narrowed to the minimum actual patch):**
+
+- `apps/frontend/app/(app)/dashboard/**`
+- `apps/frontend/app/(app)/deposit/page.tsx`
+- `apps/frontend/app/(app)/withdraw/page.tsx`
+- `apps/frontend/app/(app)/activity/page.tsx`
+- `apps/frontend/app/(app)/layout.tsx` and `apps/frontend/app/(app)/layout.client.tsx` — shared trust/navigation shell only
+- Existing ticket-relevant modules under `apps/frontend/components/`, `apps/frontend/lib/state/`, and `apps/frontend/lib/tx/` — governed synthetic state and shared trust presentation only
+- `packages/ui/src/EmptyState.tsx` and package export/test surfaces only if required by the primary journey
+- Ticket-relevant frontend unit and Playwright tests under `apps/frontend/__tests__/` and `apps/frontend/tests-e2e/`
+- One participant protocol / evidence-capture artifact under `docs/ops/governance/mvp/`
+- `docs/ops/HEDGR_STATUS.md` and `docs/ops/NOTION_GOVERNANCE_STAGING.md` for closeout reconciliation only
+
+`apps/frontend/lib/engine/**` is outside the default implementation surface. Any required engine-facing presentation change must stop for explicit scope confirmation and follow the engine-governance read order before editing.
+
+**Acceptance criteria:**
+
+- The authorized synthetic journey is traversable end to end with no unavoidable blocked loop in the primary condition.
+- Balances, transaction states, and Activity records are internally consistent.
+- The simulation boundary remains persistent and unambiguous.
+- Informational allocations cannot reasonably be interpreted as completed movement.
+- Withdrawal states do not imply live settlement or payout.
+- Settings and Copilot are removed from or clearly excluded from the primary validation narrative.
+- Desktop and mobile preserve the core journey and required context.
+- The participant protocol and evidence-capture method are documented.
+- Tests cover governed synthetic states and prevent accidental live-capability implication.
+- Implementation remains within Class A authority.
+
+**Evidence required at closeout:**
+
+- Screenshots or recordings of the complete synthetic journey.
+- Test evidence for the authorized states.
+- Confirmation that no execution authority or live integration was introduced.
+- Participant-session script, comprehension and interpretation questions, and evidence-capture template.
+- Explicit mapping from evidence collected to the future Class B feasibility decision.
+
+**Decision unlocked:** Evidence may support Founder disposition to (1) proceed to a one-market Class B feasibility proposal, (2) use the authorized Class A presentation iteration to address one evidenced comprehension failure, (3) reframe the proposition or target cohort, or (4) pause the lane. Interface completion alone does not close this ticket.
+
+**Stop / rollback:** Stop if work requires live financial capability, provider / banking integration, production FX, settlement / payout, engine execution, broad redesign, Settings / Copilot expansion, Evidence Register acceptance, Class B implementation, a second active ticket, or scope outside the surfaces above. Rollback is a single revert or removal/disablement of the governed synthetic fixture path, with documentation evidence preserved for reconstruction.
+
+### Archived brief — `CLASS-A-VAL-001`
+
+**Completed ticket:** `CLASS-A-VAL-001` — Class A product-validation outcome. Activated in **§134**; Founder-directed stop/reframe and successor transition recorded in **§142** / Internal **D-037**.
+
+**Closeout treatment:** The planned 8 diagnostic + at most one presentation iteration + 4 fresh validation pathway was not completed. No participant-session evidence, threshold satisfaction, Evidence Register acceptance, gate clearance, Class B readiness, or institutional MVP completion is claimed. The Founder reframed the research instrument around a coherent end-to-end synthetic journey and separately activated `CLASS-A-VAL-002` in **§143**.
 
 ### Archived brief — `BRIDGE-P0-001`
 
@@ -8892,3 +8932,65 @@ Phase 1 and all later phases remain inactive. Phase 0 completion does not nomina
 **Resulting posture:** Singular-ticket default restored. `CLASS-A-VAL-001` is the sole active ticket under **§7** / **§7a** / **§134**. Lane A / B / C / R are idle. D-029, D-032, D-034, D-035, and D-036 are completed historical pass authorities. Kenya counsel remains **DEFER**. The Class B convergence gate remains unsatisfied.
 
 **Rollback:** Revert the Phase 0 schemas, policy, source declaration, fixtures, tests, and documentation references; confirm the live Worker remains independent. Preserve accepted ADR **0026** as historical. Reversing its principle requires a superseding ADR. Reconcile **§6f.6**, **§7**, **§7a**, this closeout, and the staging mirror; leave Lane V unchanged.
+
+---
+
+## 142. Founder-directed closeout - CLASS-A-VAL-001 (stop / reframe)
+
+**Ticket:** `CLASS-A-VAL-001` — Class A product-validation outcome
+
+**Status:** Completed by Founder-directed stop/reframe on 2026-07-17; superseded for current sequencing by `CLASS-A-VAL-002` activation **§143**
+
+**Decision Log:** Internal **D-037**. Visibility: **Internal** — not auto-exported as a public ADR.
+
+**Closeout authority:** Founder approval to proceed with `CLASS-A-VAL-002` as the sole successor after governed closeout of `CLASS-A-VAL-001` + this repo-native record + **§7** / **§7a** transition
+
+**Closeout disposition:** Stop / reframe. The prior research plan did not complete its 8 diagnostic sessions, optional evidence-driven presentation iteration, and 4 fresh validation sessions. The Founder reframed the required research instrument around a coherent, visibly synthetic end-to-end journey before further participant validation.
+
+**Evidence treatment:** No participant-session completion, misconception-threshold result, fresh-cohort threshold satisfaction, Evidence Register domain acceptance, gate **G0–G7** clearance, Class B feasibility approval, Class B execution authority, or institutional MVP completion is claimed by this closeout. Existing merged product and research surfaces remain historical inputs only.
+
+**Successor ticket activated:** `CLASS-A-VAL-002` — separately activated as the sole ticket in **§143** and named in **§7** / **§7a**.
+
+**Authority boundary:** This closeout does not authorize live money movement, custody, provider or banking integrations, production FX, settlement, payout, Stability Engine execution, Class B implementation, customer-money activity, Evidence Register acceptance, Kenya counsel send, market selection, or a concurrent ticket.
+
+**Resulting posture:** `CLASS-A-VAL-001` is closed; singular-ticket posture continues without overlap through the separately recorded `CLASS-A-VAL-002` activation. D-029, D-032, D-034, D-035, and D-036 remain completed historical pass authorities. Kenya counsel remains **DEFER**. The Class B convergence gate remains unsatisfied.
+
+---
+
+## 143. Founder activation - CLASS-A-VAL-002 (Validate the End-to-End Synthetic Stability Journey)
+
+**Ticket:** `CLASS-A-VAL-002` — Validate the End-to-End Synthetic Stability Journey
+
+**Status:** Active — Founder-approved activation 2026-07-17. Exact brief in **§7a**.
+
+**Execution posture at activation:** Sole active ticket; Class A product validation; synthetic / visibly non-live; non-executing for customer money
+
+**Decision Log:** Internal **D-037**. Visibility: **Internal** — not auto-exported as a public ADR.
+
+**Activation authority:** Founder approval to activate `CLASS-A-VAL-002` as the sole successor after `CLASS-A-VAL-001` closeout **§142** + this **§7** / **§7a** naming
+
+**Parallelism posture:** Singular-ticket default. No active governed-parallel pass. D-029, D-032, D-034, D-035, and D-036 remain completed historical authorities and supply no concurrency. Lane A / B / C / R remain idle. No concurrent successor is activated.
+
+**Authorized outcome:** Create a coherent, visibly synthetic end-to-end customer journey through Dashboard, Deposit, Withdraw, Activity, and the shared trust/navigation shell. The journey must function as a valid research instrument connecting synthetic balance, informational Stability Engine posture, transaction history, and withdrawal while making clear that no real funds moved.
+
+**Primary validation condition:** A traversable synthetic end-to-end state is primary. The existing blocked FX/deposit state may remain as a secondary exception scenario only.
+
+**Implementation posture:** Bounded product-validation implementation may begin only inside the exact **§7a** Class A scope. Minimum presentation, governed synthetic fixture, shared-component, test, and participant-protocol changes are authorized. Settings and Copilot remain outside the primary journey. Interface completion alone does not close the ticket; decision-quality participant evidence is required.
+
+**Class B execution authorized:** No
+
+**Customer-money activity authorized:** No
+
+**Convergence gate satisfied:** No
+
+**Successor ticket activated:** No. This record activates only `CLASS-A-VAL-002`.
+
+**Evidence required at closeout:** Complete-journey screenshots or recordings; governed-state tests; no-live-authority confirmation; participant script; comprehension and interpretation questions; evidence-capture template; mapping from collected evidence to the future Class B feasibility decision.
+
+**Decision unlocked:** Founder may later choose a one-market Class B feasibility proposal, one evidenced Class A presentation iteration, proposition/cohort reframe, or lane pause. None is preselected by activation.
+
+**Notion staging posture:** Reconciled to mirror D-037, `CLASS-A-VAL-001` stop/reframe, and `CLASS-A-VAL-002` sole-ticket activation. Repo-native **§7** / **§7a** remains controlling; the staging file does not independently activate or close tickets.
+
+**Stop condition:** Stop if implementation would imply live financial capability, widen beyond the authorized product slice, require provider/banking integration, production FX, settlement/payout, Stability Engine execution, broad redesign, Settings/Copilot expansion, Evidence Register acceptance, Class B implementation, or concurrent-ticket activation.
+
+**Rollback:** Revert this activation and any separately merged implementation change as appropriate; restore `CLASS-A-VAL-001` only through a fresh Founder decision rather than inference; reconcile **§7**, **§7a**, D-037, this record, and the staging mirror. Preserve historical closeout evidence.
