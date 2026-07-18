@@ -89,6 +89,36 @@ afterEach(() => {
 });
 
 describe('DepositPage market-data degraded state (MC-S2-020)', () => {
+  test('rejects a negative amount without retaining or submitting the previous value', async () => {
+    vi.useFakeTimers();
+    vi.mocked(postDeposit).mockClear();
+    vi.mocked(useLatestFx).mockReturnValue({
+      status: 'success',
+      data: { pair: 'USDZMW', rate: 20, ts: 1 },
+      retry: vi.fn(),
+    });
+
+    render(<DepositPage />);
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(350);
+    });
+
+    const amount = screen.getByTestId('deposit-amount') as HTMLInputElement;
+    fireEvent.change(amount, { target: { value: '-15' } });
+
+    expect(amount.value).toBe('-15');
+    expect(amount.getAttribute('aria-invalid')).toBe('true');
+    expect(screen.getByRole('alert').textContent).toMatch(/greater than 0 ZMW/i);
+    expect(screen.getByTestId('deposit-conversion-preview').textContent).toContain(
+      CONVERSION_PREVIEW_UNAVAILABLE_PLACEHOLDER,
+    );
+
+    const confirm = screen.getByRole('button', { name: 'Confirm' }) as HTMLButtonElement;
+    expect(confirm.disabled).toBe(true);
+    fireEvent.click(confirm);
+    expect(postDeposit).not.toHaveBeenCalled();
+  });
+
   test('FX failure: continuity panel before route body, context visible, confirm disabled, no false $0 preview', async () => {
     vi.useFakeTimers();
     const retry = vi.fn();

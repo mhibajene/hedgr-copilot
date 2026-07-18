@@ -122,6 +122,58 @@ afterEach(() => {
 });
 
 describe('WithdrawPage status surface', () => {
+  test('starts blank, rejects negative amounts, and does not prefix new input with zero', async () => {
+    vi.useFakeTimers();
+    vi.mocked(withdrawMock.createWithdraw).mockClear();
+    vi.mocked(useBalance).mockReturnValue({
+      total: 25,
+      available: 25,
+      pending: 0,
+      currency: 'USD',
+      asOf: 1,
+      isLoading: false,
+      error: null,
+      refresh: vi.fn(),
+    });
+    vi.mocked(useLatestFx).mockReturnValue({
+      status: 'success',
+      data: { pair: 'USDZMW', rate: 20, ts: 1 },
+      retry: vi.fn(),
+    });
+
+    render(<WithdrawPage />);
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(350);
+    });
+
+    const amount = screen.getByTestId('withdraw-amount') as HTMLInputElement;
+    const confirm = screen.getByRole('button', { name: 'Confirm' }) as HTMLButtonElement;
+    expect(amount.value).toBe('');
+    expect(amount.placeholder).toBe('0.00');
+    expect(confirm.disabled).toBe(true);
+
+    fireEvent.change(amount, { target: { value: '-15' } });
+    expect(amount.value).toBe('-15');
+    expect(amount.getAttribute('aria-invalid')).toBe('true');
+    expect(screen.getByRole('alert').textContent).toMatch(/greater than \$0/i);
+    expect(confirm.disabled).toBe(true);
+    expect(withdrawMock.createWithdraw).not.toHaveBeenCalled();
+
+    fireEvent.change(amount, { target: { value: '' } });
+    fireEvent.change(amount, { target: { value: '15' } });
+    expect(amount.value).toBe('15');
+    expect(screen.queryByRole('alert')).toBeNull();
+    expect(confirm.disabled).toBe(false);
+
+    await act(async () => {
+      fireEvent.click(confirm);
+      await Promise.resolve();
+    });
+    expect(withdrawMock.createWithdraw).toHaveBeenCalledWith(15, {
+      skipAutoConfirm: false,
+    });
+  });
+
   test('does not show trust sub-strips when withdraw status card is absent', async () => {
     vi.useFakeTimers();
     vi.mocked(useBalance).mockReturnValue({
@@ -372,6 +424,9 @@ describe('WithdrawPage tx review seam (MC-S2-021)', () => {
 
     expect(screen.getByTestId('withdraw-tx-review-simulator-banner')).toBeTruthy();
     expect(screen.queryByTestId('withdraw-fx-block')).toBeNull();
+    fireEvent.change(screen.getByLabelText('Amount (USD)'), {
+      target: { value: '1' },
+    });
     const confirm = screen.getByRole('button', { name: 'Confirm' }) as HTMLButtonElement;
     expect(confirm.disabled).toBe(false);
   });
@@ -403,6 +458,9 @@ describe('WithdrawPage tx review seam (MC-S2-021)', () => {
       await vi.advanceTimersByTimeAsync(350);
     });
 
+    fireEvent.change(screen.getByLabelText('Amount (USD)'), {
+      target: { value: '1' },
+    });
     await act(async () => {
       fireEvent.click(screen.getByRole('button', { name: 'Confirm' }));
       await Promise.resolve();
@@ -449,6 +507,9 @@ describe('WithdrawPage CLASS-A-VAL-002 primary condition', () => {
     expect(screen.getByTestId('withdraw-fx-block').textContent).toContain(
       '1 USD = 20.00 ZMW',
     );
+    fireEvent.change(screen.getByLabelText('Amount (USD)'), {
+      target: { value: '1' },
+    });
     expect((screen.getByRole('button', { name: 'Confirm' }) as HTMLButtonElement).disabled).toBe(
       false,
     );

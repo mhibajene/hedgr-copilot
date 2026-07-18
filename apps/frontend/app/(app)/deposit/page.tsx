@@ -71,9 +71,15 @@ function DepositPageContent() {
   const [methodsLoading, setMethodsLoading] = useState(true);
   const [methodsError, setMethodsError] = useState<string | null>(null);
 
-  const amountLocalNum = amountLocalStr === '' ? null : parseInt(amountLocalStr, 10);
+  const parsedAmountLocal = amountLocalStr === '' ? null : Number(amountLocalStr);
+  const amountLocalNum =
+    parsedAmountLocal !== null && Number.isFinite(parsedAmountLocal)
+      ? parsedAmountLocal
+      : null;
+  const hasPositiveAmount = amountLocalNum !== null && amountLocalNum > 0;
+  const amountIsInvalid = amountLocalStr !== '' && !hasPositiveAmount;
   const usdPreview =
-    amountLocalNum !== null && rate !== null ? +(amountLocalNum / rate).toFixed(2) : 0;
+    hasPositiveAmount && rate !== null ? +(amountLocalNum / rate).toFixed(2) : null;
 
   const stubConfirmTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -130,7 +136,7 @@ function DepositPageContent() {
     if (amountLocalNum === null || amountLocalNum <= 0) return;
     if (!rateAllowsConfirm) return;
 
-    const usdForStub = rate !== null ? usdPreview : 0;
+    const usdForStub = rate !== null && usdPreview !== null ? usdPreview : 0;
     setStatus('PENDING');
     setUsdToCredit(usdForStub);
 
@@ -149,7 +155,7 @@ function DepositPageContent() {
       const now = Date.now();
       // When rate is missing, zeros are technical simulation placeholders only (MC-S2-021);
       // UI must keep conversion preview unavailable — not economic truth.
-      const amountUsdLedger = rate !== null ? usdPreview : 0;
+      const amountUsdLedger = rate !== null && usdPreview !== null ? usdPreview : 0;
       const fxRateLedger = rate !== null ? rate : 0;
       appendTx({
         txn_ref,
@@ -180,8 +186,7 @@ function DepositPageContent() {
   const availableMethods = paymentMethods.filter((m) => m.available);
   const isConfirmDisabled =
     status === 'PENDING' ||
-    amountLocalNum === null ||
-    amountLocalNum <= 0 ||
+    !hasPositiveAmount ||
     !rateAllowsConfirm;
 
   if (methodsError) {
@@ -286,24 +291,30 @@ function DepositPageContent() {
           value={amountLocalStr}
           onChange={(e) => {
             const next = e.target.value;
-            if (next === '' || /^\d*$/.test(next)) setAmountLocalStr(next);
+            if (/^-?\d*$/.test(next)) setAmountLocalStr(next);
           }}
           onBlur={() => {
-            if (amountLocalStr === '') return;
-            const parsed = parseInt(amountLocalStr, 10);
-            if (!Number.isFinite(parsed)) return;
+            if (!hasPositiveAmount || amountLocalNum === null) return;
+            const parsed = Math.trunc(amountLocalNum);
             setAmountLocalStr(String(parsed));
           }}
           data-testid="deposit-amount"
           aria-label="Deposit amount"
+          aria-invalid={amountIsInvalid}
+          aria-describedby={amountIsInvalid ? 'deposit-amount-error' : undefined}
           className="border rounded-xl p-3 w-full"
         />
+        {amountIsInvalid ? (
+          <p id="deposit-amount-error" className="text-sm text-hedgr-800" role="alert">
+            Enter a deposit amount greater than 0 {quote}.
+          </p>
+        ) : null}
       </div>
       <div
         className="rounded-xl p-3 bg-gray-50 text-sm"
         data-testid="deposit-conversion-preview"
       >
-        {rate !== null && amountLocalNum !== null ? (
+        {rate !== null && usdPreview !== null ? (
           <>
             FX Preview: <strong>${usdPreview.toFixed(2)}</strong>
           </>
