@@ -134,7 +134,7 @@ function WithdrawPageContent() {
   }, []);
 
   useEffect(() => {
-    if (!txnRef) return;
+    if (!txnRef || status !== 'PENDING') return;
 
     const h = setInterval(async () => {
       const s = await withdrawMock.status(txnRef);
@@ -170,7 +170,7 @@ function WithdrawPageContent() {
     }, 500);
 
     return () => clearInterval(h);
-  }, [txnRef, debitWallet, usd, confirmTx, failTx, refresh]);
+  }, [txnRef, status, debitWallet, usd, confirmTx, failTx, refresh]);
 
   const confirm = async () => {
     if (!hasPositiveAmount || amountExceedsBalance || !rateAllowsConfirm) return;

@@ -6,6 +6,13 @@ import { act, cleanup, fireEvent, render, screen } from '@testing-library/react'
 
 (globalThis as typeof globalThis & { React: typeof React }).React = React;
 
+const withdrawStateMocks = vi.hoisted(() => ({
+  confirm: vi.fn(),
+  fail: vi.fn(),
+  debitUSD: vi.fn(),
+  getWalletState: vi.fn(() => ({ usdBalance: 40 })),
+}));
+
 vi.mock('../lib/hooks/useBalance', () => ({
   useBalance: vi.fn(),
 }));
@@ -18,20 +25,22 @@ vi.mock('../lib/state/ledger', () => ({
   useLedgerStore: vi.fn(
     (selector: (state: { confirm: () => void; fail: () => void }) => unknown) =>
       selector({
-        confirm: vi.fn(),
-        fail: vi.fn(),
+        confirm: withdrawStateMocks.confirm,
+        fail: withdrawStateMocks.fail,
       }),
   ),
 }));
 
-vi.mock('../lib/state/wallet', () => ({
-  useWalletStore: vi.fn(
-    (selector: (state: { debitUSD: () => void }) => unknown) =>
+vi.mock('../lib/state/wallet', () => {
+  const useWalletStore = Object.assign(
+    vi.fn((selector: (state: { debitUSD: () => void }) => unknown) =>
       selector({
-        debitUSD: vi.fn(),
-      }),
-  ),
-}));
+        debitUSD: withdrawStateMocks.debitUSD,
+      })),
+    { getState: withdrawStateMocks.getWalletState },
+  );
+  return { useWalletStore };
+});
 
 vi.mock('../lib/state/balance.mode', () => ({
   getBalanceMode: vi.fn(() => 'ledger'),
@@ -101,6 +110,7 @@ import { useLatestFx } from '../lib/hooks/useLatestFx';
 import { useSearchParams } from 'next/navigation';
 import { withdrawMock } from '../lib/payments/withdraw.mock';
 import { TX_REVIEW_BYPASS_FX_PARAM, TX_REVIEW_HOLD_PENDING_PARAM } from '../lib/tx';
+import { getBalanceMode } from '../lib/state/balance.mode';
 
 const ORIGINAL_CI = process.env.CI;
 const ORIGINAL_NODE_ENV = process.env.NODE_ENV;
@@ -109,6 +119,13 @@ const ORIGINAL_APP_ENV = process.env.NEXT_PUBLIC_APP_ENV;
 afterEach(() => {
   cleanup();
   vi.restoreAllMocks();
+  withdrawStateMocks.confirm.mockClear();
+  withdrawStateMocks.fail.mockClear();
+  withdrawStateMocks.debitUSD.mockClear();
+  withdrawStateMocks.getWalletState.mockClear();
+  withdrawStateMocks.getWalletState.mockReturnValue({ usdBalance: 40 });
+  vi.mocked(getBalanceMode).mockReturnValue('ledger');
+  vi.mocked(withdrawMock.status).mockResolvedValue('PENDING');
   vi.useRealTimers();
   vi.mocked(useSearchParams).mockReturnValue(new URLSearchParams() as ReturnType<typeof useSearchParams>);
   vi.unstubAllEnvs();
@@ -473,6 +490,56 @@ describe('WithdrawPage tx review seam (MC-S2-021)', () => {
 });
 
 describe('WithdrawPage CLASS-A-VAL-002 primary condition', () => {
+  test('debits wallet fallback exactly once when the withdrawal confirms', async () => {
+    vi.stubEnv('NEXT_PUBLIC_AUTH_MODE', 'mock');
+    vi.stubEnv('NEXT_PUBLIC_FX_MODE', 'stub');
+    vi.stubEnv('NEXT_PUBLIC_APP_ENV', 'dev');
+    vi.useFakeTimers();
+    vi.mocked(getBalanceMode).mockReturnValue('wallet');
+    vi.mocked(withdrawMock.status).mockResolvedValue('CONFIRMED');
+    vi.mocked(useSearchParams).mockReturnValue(
+      new URLSearchParams('journey=class-a-val-002') as ReturnType<typeof useSearchParams>,
+    );
+    vi.mocked(useBalance).mockImplementation(() => ({
+      total: 50,
+      available: 50,
+      pending: 0,
+      currency: 'USD',
+      asOf: 1,
+      isLoading: false,
+      error: null,
+      refresh: vi.fn(),
+    }));
+    vi.mocked(useLatestFx).mockReturnValue({
+      status: 'error',
+      retry: vi.fn(),
+    });
+
+    render(<WithdrawPage />);
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(350);
+    });
+
+    fireEvent.change(screen.getByLabelText('Amount (USD)'), {
+      target: { value: '10' },
+    });
+    await act(async () => {
+      fireEvent.click(screen.getByRole('button', { name: 'Confirm' }));
+      await Promise.resolve();
+    });
+
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(600);
+    });
+    expect(withdrawStateMocks.debitUSD).toHaveBeenCalledTimes(1);
+    expect(withdrawStateMocks.debitUSD).toHaveBeenCalledWith(10);
+
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(600);
+    });
+    expect(withdrawStateMocks.debitUSD).toHaveBeenCalledTimes(1);
+  });
+
   test('uses the local fixture and explicitly denies payout or settlement meaning', async () => {
     vi.stubEnv('NEXT_PUBLIC_AUTH_MODE', 'mock');
     vi.stubEnv('NEXT_PUBLIC_FX_MODE', 'stub');
