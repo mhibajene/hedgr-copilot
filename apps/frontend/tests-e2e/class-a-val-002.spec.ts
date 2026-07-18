@@ -10,6 +10,7 @@ async function login(page: Page) {
   await page.getByPlaceholder('you@example.com').fill('class-a-val-002@hedgr.test');
   await page.getByRole('button', { name: 'Continue' }).click();
   await expect(page).toHaveURL(/\/dashboard/);
+  await page.goto('/dashboard?journey=class-a-val-002');
 }
 
 test.beforeEach(async ({ context }) => {
@@ -113,6 +114,10 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   await expect(page.getByTestId('usd-balance')).toHaveText('$3.00');
   await expect(page.getByText('Synthetic deposit').first()).toBeVisible();
   await expect(page.getByText('Synthetic withdrawal').first()).toBeVisible();
+  await expect(page.getByRole('link', { name: 'View all' })).toHaveAttribute(
+    'href',
+    '/activity?journey=class-a-val-002',
+  );
 });
 
 test('unavailable data remains a blocked secondary trust scenario', async ({ page }) => {
@@ -141,7 +146,14 @@ test('mobile keeps the persistent boundary and four-step research path visible',
   await page.getByTestId('nav-toggle').click();
   const mobileNav = page.getByTestId('nav-links-mobile');
   await expect(mobileNav).toBeVisible();
-  for (const label of ['Dashboard', 'Deposit', 'Withdraw', 'Activity']) {
-    await expect(mobileNav.getByRole('link', { name: label, exact: true })).toBeVisible();
+  for (const [label, href] of [
+    ['Dashboard', '/dashboard?journey=class-a-val-002'],
+    ['Deposit', '/deposit?journey=class-a-val-002'],
+    ['Withdraw', '/withdraw?journey=class-a-val-002'],
+    ['Activity', '/activity?journey=class-a-val-002'],
+  ]) {
+    const navLink = mobileNav.getByRole('link', { name: label, exact: true });
+    await expect(navLink).toBeVisible();
+    await expect(navLink).toHaveAttribute('href', href);
   }
 });

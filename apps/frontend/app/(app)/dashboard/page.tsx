@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { EngineAllocationBands } from "./EngineAllocationBands";
 import { EnginePostureHeader } from "./EnginePostureHeader";
@@ -55,7 +56,10 @@ export default function DashboardPage() {
   const [apy, setApy] = useState<number | null>(null);
   const [apyError, setApyError] = useState<string | null>(null);
   const [ready, setReady] = useState(false);
-  const syntheticJourneyActive = isSyntheticJourneyPrimaryCondition();
+  const searchParams = useSearchParams();
+  const syntheticJourneyActive = isSyntheticJourneyPrimaryCondition(
+    searchParams?.toString()
+  );
 
   useEffect(() => {
     defiAdapter
@@ -265,7 +269,11 @@ export default function DashboardPage() {
                 Recent activity
               </h2>
               <Link
-                href="/activity"
+                href={
+                  syntheticJourneyActive
+                    ? getSyntheticJourneyHref("/activity")
+                    : "/activity"
+                }
                 className="shrink-0 text-sm font-medium text-hedgr-600 underline-offset-2 hover:text-hedgr-primary hover:underline"
               >
                 View all

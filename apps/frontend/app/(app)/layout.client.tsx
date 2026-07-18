@@ -2,11 +2,14 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 import { TrustDisclosureBanner } from '../../components';
 import { isCopilotEnabled } from '../../config/env';
 import { usePolicy } from '@/lib/policy/usePolicy';
-import { isSyntheticJourneyPrimaryCondition } from '@/lib/state/synthetic-journey';
+import {
+  getSyntheticJourneyHref,
+  isSyntheticJourneyPrimaryCondition,
+} from '@/lib/state/synthetic-journey';
 
 // ---------------------------------------------------------------------------
 // Nav-link type — `feature` ties the link to a policy flag; `shipped` guards
@@ -22,11 +25,26 @@ type NavLink = {
   shipped?: boolean;
 };
 
+type SyntheticJourneyPath = Parameters<typeof getSyntheticJourneyHref>[0];
+
+function isSyntheticJourneyPath(href: string): href is SyntheticJourneyPath {
+  return ['/dashboard', '/deposit', '/withdraw', '/activity'].includes(href);
+}
+
+function navHref(href: string, syntheticJourneyActive: boolean): string {
+  return syntheticJourneyActive && isSyntheticJourneyPath(href)
+    ? getSyntheticJourneyHref(href)
+    : href;
+}
+
 export function AppLayoutClient({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const [isNavOpen, setIsNavOpen] = useState(false);
   const { status, isFeatureEnabled } = usePolicy();
-  const syntheticJourneyActive = isSyntheticJourneyPrimaryCondition();
+  const syntheticJourneyActive = isSyntheticJourneyPrimaryCondition(
+    searchParams?.toString(),
+  );
 
   const journeySteps = [
     { href: '/dashboard' as const, label: 'Dashboard' },
@@ -96,7 +114,7 @@ export function AppLayoutClient({ children }: { children: React.ReactNode }) {
                 {navLinks.map((link) => (
                   <Link
                     key={link.href}
-                    href={link.href}
+                    href={navHref(link.href, syntheticJourneyActive)}
                     data-testid={link.testId}
                     className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${
                       pathname === link.href
@@ -121,7 +139,7 @@ export function AppLayoutClient({ children }: { children: React.ReactNode }) {
             {navLinks.map((link) => (
               <Link
                 key={link.href}
-                href={link.href}
+                href={navHref(link.href, syntheticJourneyActive)}
                 data-testid={link.testId}
                 onClick={() => setIsNavOpen(false)}
                 className={`block px-3 py-2 rounded-md text-base font-medium ${
