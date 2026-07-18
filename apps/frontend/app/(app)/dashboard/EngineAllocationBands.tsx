@@ -1,29 +1,41 @@
-'use client';
+"use client";
 
-import React from 'react';
-import type { EngineState } from '../../../lib/engine/types';
-import { EngineProtectiveGuidance } from './EngineProtectiveGuidance';
-import { EngineStabilityReviewSnapshot } from './EngineStabilityReviewSnapshot';
-import { EngineStabilityExplainer } from './EngineStabilityExplainer';
+import React from "react";
+import type { EngineState } from "../../../lib/engine/types";
 
 type EngineAllocationBandsProps = {
   engineState: EngineState;
 };
 
-type LaneKey = 'liquidityTargetPct' | 'coreTargetPct' | 'yieldCapPct';
+type LaneKey = "liquidityTargetPct" | "coreTargetPct" | "yieldCapPct";
 
 // Stable balance is the dominant primary holding lane; conservative yield and
 // reserve are quieter supporting lanes. Order and roles are fixed across every
 // posture so the structure stays invariant (only the values change by state).
 const PRIMARY_LANE: { key: LaneKey; label: string; role: string } = {
-  key: 'coreTargetPct',
-  label: 'Stable balance',
-  role: 'Primary holding lane',
+  key: "coreTargetPct",
+  label: "Stable balance",
+  role: "Primary holding lane",
 };
 
-const SUPPORTING_LANES: Array<{ key: LaneKey; label: string }> = [
-  { key: 'yieldCapPct', label: 'Conservative yield' },
-  { key: 'liquidityTargetPct', label: 'Reserve' },
+const SUPPORTING_LANES: Array<{
+  key: LaneKey;
+  label: string;
+  accentClass: string;
+  labelClass: string;
+}> = [
+  {
+    key: "yieldCapPct",
+    label: "Conservative yield",
+    accentClass: "border-t-[#8391C9]",
+    labelClass: "text-[#4658A0]",
+  },
+  {
+    key: "liquidityTargetPct",
+    label: "Reserve",
+    accentClass: "border-t-[#4658A0]",
+    labelClass: "text-[#36447C]",
+  },
 ];
 
 function formatPct(value: number) {
@@ -32,14 +44,14 @@ function formatPct(value: number) {
 
 function laneDescription(key: LaneKey, value: number): string {
   switch (key) {
-    case 'coreTargetPct':
-      return 'Held steady to preserve value.';
-    case 'yieldCapPct':
+    case "coreTargetPct":
+      return "Held steady to preserve value.";
+    case "yieldCapPct":
       return `Up to ${formatPct(
-        value,
+        value
       )} can support returns when conditions allow.`;
-    case 'liquidityTargetPct':
-      return 'A quiet buffer, kept ready if you need it.';
+    case "liquidityTargetPct":
+      return "A quiet buffer, kept ready if you need it.";
   }
 }
 
@@ -49,52 +61,23 @@ export function EngineAllocationBands({
   return (
     <section
       aria-labelledby="engine-allocation-bands-title"
-      className="space-y-5 rounded-2xl border border-slate-200/50 bg-slate-50/50 p-5 shadow-sm shadow-slate-900/[0.02]"
+      className="space-y-6 rounded-3xl border border-[#A6B0D8] bg-white p-5 sm:p-6"
       data-testid="engine-allocation-bands"
     >
-      <div className="space-y-3">
+      <div className="space-y-2">
         <h2
           id="engine-allocation-bands-title"
-          className="text-sm font-semibold tracking-tight text-slate-800"
+          className="text-base font-semibold tracking-tight text-[#171D35]"
         >
-          Target posture
+          Stability structure
         </h2>
         <p
-          className="max-w-2xl text-sm leading-relaxed text-slate-600"
+          className="max-w-xl text-sm leading-relaxed text-[#1F2937]"
           data-testid="engine-allocation-bands-caption"
         >
           Most of your balance is held steady for stability. The rest supports
-          that posture, with a reserve kept ready—there is nothing here you need
-          to manage.
+          that posture, with a reserve kept ready.
         </p>
-        <ul
-          className="max-w-2xl list-none space-y-3 p-0 text-sm leading-relaxed text-slate-600"
-          data-testid="engine-allocation-trust-legend"
-        >
-          <li>
-            <span className="font-medium text-slate-700">Targets</span>
-            <span className="text-slate-600">
-              {' '}
-              — Informational system targets only. A lower conservative yield
-              target means less yield opportunity within this structure.
-            </span>
-          </li>
-          <li>
-            <span className="font-medium text-slate-700">Balances</span>
-            <span className="text-slate-600">
-              {' '}
-              — Your ledger shows what you hold—not these percentages. These are
-              target shares of the structure, not your spendable balance.
-            </span>
-          </li>
-          <li>
-            <span className="font-medium text-slate-700">Movement</span>
-            <span className="text-slate-600">
-              {' '}
-              — Targets do not mean funds have already moved.
-            </span>
-          </li>
-        </ul>
       </div>
 
       <div className="space-y-3" data-testid="engine-allocation-structure">
@@ -104,31 +87,25 @@ export function EngineAllocationBands({
 
           return (
             <div
-              className="relative overflow-hidden rounded-2xl border border-slate-800/70 bg-slate-900 p-5 pl-6"
+              className="rounded-2xl border border-[#1F2747] border-l-4 border-l-[#A6B0D8] bg-[#171D35] p-5 pl-6"
               data-testid={`engine-allocation-band-${PRIMARY_LANE.key}`}
               data-allocation-lane="primary"
               aria-describedby={descId}
             >
-              {/* Primary Stability Edge: a subtle, static architectural cue owned
-                  only by the Stable balance lane—not a chart, bar, or progress rail. */}
-              <span
-                aria-hidden="true"
-                className="absolute inset-y-3 left-0 w-1 rounded-full bg-slate-400/70"
-              />
               <div className="flex items-baseline justify-between gap-4">
                 <span className="text-base font-semibold tracking-tight text-white">
                   {PRIMARY_LANE.label}
                 </span>
-                <span className="text-sm font-medium tabular-nums text-slate-300">
+                <span className="text-sm font-medium tabular-nums text-[#CAD0E8]">
                   {formatPct(value)}
                 </span>
               </div>
-              <p className="mt-1 text-[11px] font-medium uppercase tracking-wide text-slate-400">
+              <p className="mt-1 text-[11px] font-medium uppercase tracking-wide text-[#A6B0D8]">
                 {PRIMARY_LANE.role}
               </p>
               <p
                 id={descId}
-                className="mt-3 max-w-2xl text-sm leading-relaxed text-slate-200"
+                className="mt-3 max-w-xl text-sm leading-relaxed text-[#CAD0E8]"
               >
                 {laneDescription(PRIMARY_LANE.key, value)}
               </p>
@@ -137,29 +114,29 @@ export function EngineAllocationBands({
         })()}
 
         <div className="grid gap-3 sm:grid-cols-2">
-          {SUPPORTING_LANES.map(({ key, label }) => {
+          {SUPPORTING_LANES.map(({ key, label, accentClass, labelClass }) => {
             const value = engineState[key];
             const descId = `engine-allocation-band-${key}-desc`;
 
             return (
               <div
                 key={key}
-                className="rounded-xl border border-slate-200/70 bg-white/60 p-4"
+                className={`rounded-xl border border-[#CAD0E8] border-t-2 bg-white p-4 ${accentClass}`}
                 data-testid={`engine-allocation-band-${key}`}
                 data-allocation-lane="supporting"
                 aria-describedby={descId}
               >
                 <div className="flex items-baseline justify-between gap-3">
-                  <span className="text-sm font-medium text-slate-700">
+                  <span className={`text-sm font-medium ${labelClass}`}>
                     {label}
                   </span>
-                  <span className="text-xs font-medium tabular-nums text-slate-500">
+                  <span className="text-xs font-medium tabular-nums text-[#36447C]">
                     {formatPct(value)}
                   </span>
                 </div>
                 <p
                   id={descId}
-                  className="mt-2 text-xs leading-relaxed text-slate-500"
+                  className="mt-2 text-xs leading-relaxed text-[#1F2937]"
                 >
                   {laneDescription(key, value)}
                 </p>
@@ -169,9 +146,20 @@ export function EngineAllocationBands({
         </div>
       </div>
 
-      <EngineProtectiveGuidance />
-      <EngineStabilityReviewSnapshot engineState={engineState} />
-      <EngineStabilityExplainer />
+      <aside
+        className="max-w-xl rounded-2xl border border-[#A6B0D8] bg-[#CAD0E8]/30 px-4 py-3 text-xs leading-relaxed text-[#171D35]"
+        data-testid="engine-allocation-trust-legend"
+        aria-label="Informational target notice"
+      >
+        <span className="font-semibold">Targets</span> — Informational system
+        targets only. A lower conservative yield target means less yield
+        opportunity within this structure.{" "}
+        <span className="font-semibold">Balances</span> — Your ledger shows what
+        you hold—not these percentages. These are target shares of the
+        structure, not your spendable balance.{" "}
+        <span className="font-semibold">Movement</span> — Targets do not mean
+        funds have already moved.
+      </aside>
     </section>
   );
 }

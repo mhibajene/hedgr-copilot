@@ -1,35 +1,42 @@
-'use client';
+"use client";
 
-import React from 'react';
+import React from "react";
 import {
   ENGINE_PROTECTIVE_GUIDANCE_FRAMING,
   ENGINE_PROTECTIVE_GUIDANCE_POINTS,
   ENGINE_PROTECTIVE_GUIDANCE_TITLE,
-} from '../../../lib/engine/protective-guidance-copy';
+} from "../../../lib/engine/protective-guidance-copy";
 
 export function EngineProtectiveGuidance() {
-  const titleId = 'engine-protective-guidance-title';
+  const titleId = "engine-protective-guidance-title";
 
   return (
-    <div
-      className="max-w-2xl rounded-2xl border border-slate-200/90 bg-white/70 p-5 text-sm text-slate-700 shadow-sm shadow-slate-900/5"
+    <details
+      className="max-w-2xl rounded-2xl border border-[#A6B0D8] bg-white p-5 text-sm text-[#1F2937]"
       data-testid="engine-protective-guidance"
       aria-labelledby={titleId}
     >
-      <h3
+      <summary
         id={titleId}
-        className="text-base font-semibold tracking-tight text-slate-900"
+        className="cursor-pointer list-none font-medium text-[#171D35] marker:content-none select-none [&::-webkit-details-marker]:hidden"
       >
-        {ENGINE_PROTECTIVE_GUIDANCE_TITLE}
-      </h3>
-      <p className="mt-3 leading-relaxed text-slate-600">
-        {ENGINE_PROTECTIVE_GUIDANCE_FRAMING}
-      </p>
-      <ul className="mt-4 list-disc space-y-2.5 pl-5 leading-relaxed text-slate-600">
-        {ENGINE_PROTECTIVE_GUIDANCE_POINTS.map((line, i) => (
-          <li key={i}>{line}</li>
-        ))}
-      </ul>
-    </div>
+        <span className="flex items-center justify-between gap-4">
+          <span>{ENGINE_PROTECTIVE_GUIDANCE_TITLE}</span>
+          <span className="text-xs font-medium uppercase tracking-wide text-[#4658A0]">
+            View
+          </span>
+        </span>
+      </summary>
+      <div className="mt-4 border-t border-[#CAD0E8] pt-4">
+        <p className="max-w-xl leading-relaxed text-[#1F2937]">
+          {ENGINE_PROTECTIVE_GUIDANCE_FRAMING}
+        </p>
+        <ul className="mt-4 max-w-xl list-disc space-y-2.5 pl-5 leading-relaxed text-[#36447C]">
+          {ENGINE_PROTECTIVE_GUIDANCE_POINTS.map((line, i) => (
+            <li key={i}>{line}</li>
+          ))}
+        </ul>
+      </div>
+    </details>
   );
 }

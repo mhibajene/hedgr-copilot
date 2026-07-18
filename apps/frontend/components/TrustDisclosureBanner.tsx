@@ -82,24 +82,25 @@ export function TrustDisclosureBanner({
     return (
       <div
         data-testid={testId}
-        className="rounded-xl bg-amber-50 border border-amber-200 p-4"
+        className="rounded-xl border border-[#8391C9] bg-[#CAD0E8] p-4 text-[#171D35]"
       >
         <div className="flex items-start gap-3">
-          <span className="text-amber-600 text-lg" aria-hidden="true">⚠️</span>
+          <span
+            className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#1F2747] text-xs font-semibold text-white"
+            aria-hidden="true"
+          >
+            i
+          </span>
           <div className="flex-1 min-w-0">
-            <h3 className="font-semibold text-amber-900 text-sm">Simulation Environment</h3>
-            <p className="text-amber-800 text-xs mt-1">
+            <h3 className="text-sm font-semibold text-[#171D35]">Simulation environment</h3>
+            <p className="mt-1 text-xs text-[#1F2937]">
               This app is running with simulated data. Balances, yields, and transactions are not real.
             </p>
             <div className="flex flex-wrap gap-2 mt-3">
               {envBadges.map((badge) => (
                 <span
                   key={badge.label}
-                  className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${
-                    badge.isLive
-                      ? 'bg-green-100 text-green-800'
-                      : 'bg-amber-100 text-amber-800'
-                  }`}
+                  className="inline-flex items-center rounded border border-[#A6B0D8] bg-white px-2 py-0.5 text-xs font-medium text-[#1F2747]"
                 >
                   {badge.label}: {badge.value}
                 </span>
@@ -108,7 +109,7 @@ export function TrustDisclosureBanner({
             {learnMoreUrl && (
               <a
                 href={learnMoreUrl}
-                className="inline-block mt-3 text-xs text-amber-700 underline hover:text-amber-900"
+                className="mt-3 inline-block text-xs font-medium text-[#1F2747] underline underline-offset-2 hover:text-[#36447C]"
               >
                 Learn more about environments →
               </a>
@@ -124,18 +125,23 @@ export function TrustDisclosureBanner({
     <div
       data-testid={testId}
       role="alert"
-      className="bg-gradient-to-r from-amber-500 via-orange-500 to-amber-500 text-white"
+      className="border-b border-[#8391C9] bg-[#CAD0E8] text-[#171D35]"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
         <div className="flex items-center justify-between gap-4 flex-wrap">
           <div className="flex items-center gap-3 min-w-0">
-            <span className="text-xl flex-shrink-0" aria-hidden="true">🧪</span>
+            <span
+              className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-[#1F2747] text-xs font-semibold text-white"
+              aria-hidden="true"
+            >
+              i
+            </span>
             <div className="min-w-0">
               <p className="font-semibold text-sm">
                 Simulation Mode — No Real Money
               </p>
-              <p className="text-xs opacity-90 mt-0.5">
-                All balances, DeFi yields, and transactions are simulated. This environment uses mock data for testing.
+              <p className="mt-0.5 text-xs text-[#1F2937]">
+                Balances and activity are local fixtures. A completed step does not mean a deposit, payout, or settlement occurred.
               </p>
             </div>
           </div>
@@ -144,11 +150,7 @@ export function TrustDisclosureBanner({
               {envBadges.map((badge) => (
                 <span
                   key={badge.label}
-                  className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${
-                    badge.isLive
-                      ? 'bg-white/20 text-white'
-                      : 'bg-white/30 text-white'
-                  }`}
+                  className="inline-flex items-center rounded border border-[#A6B0D8] bg-white px-2 py-0.5 text-xs font-medium text-[#1F2747]"
                   title={`${badge.label} mode: ${badge.value}`}
                 >
                   {badge.label}: {badge.value}
@@ -158,7 +160,7 @@ export function TrustDisclosureBanner({
                 <select
                   value={currentMarket}
                   onChange={(e) => handleMarketChange(e.target.value as MarketCode)}
-                  className="text-xs px-2 py-0.5 rounded bg-white/30 text-white font-medium border border-white/40 hover:bg-white/40 transition-colors"
+                  className="rounded border border-[#A6B0D8] bg-white px-2 py-0.5 text-xs font-medium text-[#1F2747] transition-colors hover:border-[#8391C9]"
                   title="Demo market selection (affects currency display)"
                   data-testid="market-switcher"
                 >
@@ -173,7 +175,7 @@ export function TrustDisclosureBanner({
             {learnMoreUrl && (
               <a
                 href={learnMoreUrl}
-                className="text-xs underline hover:no-underline whitespace-nowrap"
+                className="whitespace-nowrap text-xs font-medium text-[#1F2747] underline underline-offset-2 hover:text-[#36447C]"
               >
                 Learn more
               </a>
@@ -181,7 +183,7 @@ export function TrustDisclosureBanner({
             {dismissible && (
               <button
                 onClick={() => setDismissed(true)}
-                className="text-white/80 hover:text-white p-1"
+                className="rounded p-1 text-[#36447C] hover:bg-white hover:text-[#171D35] focus:outline-none focus:ring-2 focus:ring-[#4658A0] focus:ring-offset-2 focus:ring-offset-[#CAD0E8]"
                 aria-label="Dismiss trust disclosure"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -197,4 +199,3 @@ export function TrustDisclosureBanner({
 }
 
 export default TrustDisclosureBanner;
-

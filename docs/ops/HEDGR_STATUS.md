@@ -4053,6 +4053,7 @@ Completed and merged:
 Current active ticket status:
 
 - **Sole active ticket:** `CLASS-A-VAL-002` — Validate the End-to-End Synthetic Stability Journey. Class A product validation; synthetic / visibly non-live only. Exact brief in **§7a**. Founder transition and activation records **§142** / **§143**; Internal **D-037**.
+- **Completed nested refinement:** `HEDGR-UI-001` — Dashboard Review Readiness Refinement. Implemented and verified on 2026-07-17 as a bounded presentation pass inside `CLASS-A-VAL-002`; activation / execution record **§144**; Internal **D-038**. It was not a second ticket, created no concurrency, and did not close or replace the parent ticket or its participant-evidence requirements.
 - **Sequencing posture:** Singular-ticket default. D-029, D-032, D-034, D-035, and D-036 are completed historical pass authorities and supply no standing concurrency. No unrestricted multi-ticket execution.
 - **Kenya counsel path (`COUNSEL-SEND-B-001` / Internal D-028):** **DEFER**. No packet authorized to send. Kenya remains primary thesis stress test; thesis not rejected or closed. No successor Kenya legal ticket active unless separately named. See **§6f.1**.
 - **Governed parallelism posture:** No active pass. **§6e** / D-026 remains the lane-model / exception-framework only. D-029, D-032, D-034, D-035, and D-036 are completed historical decisions. Any future concurrency requires a separate Founder decision and explicit **§7** / **§7a** naming. The Class B convergence gate remains unsatisfied. Kenya counsel remains **DEFER** and separate. Procedural checklist: `docs/ops/governance/HEDGR_GOVERNED_PARALLEL_PASS_CHECKLIST.md` (**§124**) — non-authorizing by itself.
@@ -4120,6 +4121,51 @@ Current active ticket status:
 - **Singular active ticket:** `CLASS-A-VAL-002` (D-029, D-032, D-034, D-035, and D-036 remain completed historical pass authorities)
 
 **Sequencing posture:** Singular-ticket default. No concurrent successor is active. Kenya counsel: **DEFER** (**§6f.1** / D-028). Class B convergence gate: unsatisfied. Green Lane pilot envelope (**§6g**) remains active as authority-model only and does **not** widen this ticket.
+
+#### Completed nested refinement — `HEDGR-UI-001`
+
+**Status:** Implemented and verified on 2026-07-17 as a bounded refinement pass within `CLASS-A-VAL-002`; activation / execution record **§144**; Internal **D-038**. The nested pass is complete; the parent remains active.
+
+**Relationship to the parent ticket:** `HEDGR-UI-001` is not a concurrent lane, successor, or independently active ticket. It refines the existing Dashboard research surface so the `CLASS-A-VAL-002` synthetic journey is easier to review. `CLASS-A-VAL-002` remains the sole active ticket and remains open until its governed participant-evidence and Founder-disposition requirements are satisfied.
+
+**Objective:** Improve Dashboard scanability, hierarchy, and first-time comprehension so a synthetic reviewer can quickly identify current status, total balance, the meaning and relative hierarchy of Stable balance / Conservative yield / Reserve, the Review snapshot, and whether the informational surface requires action.
+
+**Presentation sources:** Paper Row 08 Dominant + Supporting, Row 10 Primary Stability Edge, and Row 11 Source-lock Summary are approved as presentation-only inputs. They do not authorize the broader Stability Condition Interface or any Rows 12–20 condition-system implementation.
+
+**In scope:**
+
+- Reorder the existing Dashboard presentation into clearly separated current-status, balance, stability-structure, Review snapshot, educational, and disclosure sections.
+- Preserve Stable balance as the dominant primary holding lane and Conservative yield / Reserve as supporting lanes without increasing yield prominence.
+- Preserve and refine the subtle Primary Stability Edge on Stable balance only; it must remain architectural and must not read as a chart, progress rail, allocation bar, or execution state.
+- Use restrained visual differentiation from the existing governed Hedgr navy / lavender palette only. Founder approval explicitly replaces the proposed green / amber / blue lane accents; no palette expansion is authorized.
+- Place educational explanation and policy / risk disclosures behind accessible progressive-disclosure controls while preserving governed wording and default availability.
+- Promote the existing Review snapshot into an earlier, concise confidence surface without changing fingerprint, memory, timestamp, posture, target, or runtime-state logic.
+- Consolidate repeated informational-target / balance / movement framing into one visible notice without changing its meaning.
+- Refine spacing, paragraph width, and section separation for scanning over uninterrupted reading.
+
+**Authorized implementation surfaces:**
+
+- `apps/frontend/app/(app)/dashboard/page.tsx`
+- `apps/frontend/app/(app)/dashboard/EngineAllocationBands.tsx`
+- `apps/frontend/app/(app)/dashboard/EnginePostureHeader.tsx`
+- `apps/frontend/app/(app)/dashboard/EngineProtectiveGuidance.tsx`
+- `apps/frontend/app/(app)/dashboard/EngineStabilityExplainer.tsx`
+- `apps/frontend/app/(app)/dashboard/EngineStabilityReviewSnapshot.tsx`
+- Ticket-relevant frontend unit and Playwright tests under `apps/frontend/__tests__/` and `apps/frontend/tests-e2e/`
+- `design-qa.md` — local, non-authoritative visual-comparison evidence only
+- `docs/ops/HEDGR_STATUS.md` — this nested-refinement activation and later closeout reconciliation only
+
+**Must not:**
+
+- Change Stability Engine logic, engine state, posture logic, target values, allocation meaning, review-memory behavior, runtime state, balance / ledger logic, transaction behavior, navigation, policy meaning, or disclosure wording.
+- Implement the Condition Interface, Trust Object, Balanced / Monitoring / Protected rollout, Rows 12–20, a new state model, a new product concept, or a new authority surface.
+- Introduce raw green, amber, blue, red, yellow, orange, gradients, alert colour systems, progress semantics, performance-led yield, urgency, or gamification.
+- Modify `apps/frontend/lib/engine/**`, backend, providers, custody, rails, FX, settlement, payout, customer-money paths, Settings, or Copilot.
+- Close `CLASS-A-VAL-002`, claim participant comprehension, accept Evidence Register evidence, clear a gate, activate Class B, or nominate a successor.
+
+**Acceptance and verification:** Stable balance is the immediate visual anchor; supporting lanes remain quiet and distinguishable; current state, balance, structure, Review snapshot, and no-management meaning are scannable; educational and disclosure copy remains available on demand; desktop and mobile remain coherent; governed wording and informational / non-ledger / non-movement contracts remain intact; targeted unit, lint, trust, typecheck, E2E, and visual-comparison evidence is reported truthfully.
+
+**Stop / rollback:** Stop on any required engine-library or runtime-logic edit, brand-token conflict, new disclosure meaning, broader Condition Interface adoption, or participant-evidence / Class B claim. Rollback is a single revert of the Dashboard presentation, tests, local QA evidence, and this nested-refinement record while leaving `CLASS-A-VAL-002` active and its prior implementation evidence intact.
 
 **Required participant outcomes:**
 
@@ -8994,3 +9040,33 @@ Phase 1 and all later phases remain inactive. Phase 0 completion does not nomina
 **Stop condition:** Stop if implementation would imply live financial capability, widen beyond the authorized product slice, require provider/banking integration, production FX, settlement/payout, Stability Engine execution, broad redesign, Settings/Copilot expansion, Evidence Register acceptance, Class B implementation, or concurrent-ticket activation.
 
 **Rollback:** Revert this activation and any separately merged implementation change as appropriate; restore `CLASS-A-VAL-001` only through a fresh Founder decision rather than inference; reconcile **§7**, **§7a**, D-037, this record, and the staging mirror. Preserve historical closeout evidence.
+
+---
+
+## 144. Founder activation - HEDGR-UI-001 nested Dashboard refinement within CLASS-A-VAL-002
+
+**Refinement:** `HEDGR-UI-001` — Dashboard Review Readiness Refinement
+
+**Status:** Completed — Founder-approved activation and execution on 2026-07-17 inside the sole active `CLASS-A-VAL-002` ticket. The nested presentation pass is implemented and verified; exact brief and completion posture in **§7a**.
+
+**Decision Log:** Internal **D-038**. Visibility: **Internal** — not auto-exported as a public ADR.
+
+**Founder clarification:** `HEDGR-UI-001` is part of `CLASS-A-VAL-002` as a refinement. `CLASS-A-VAL-002` must not be closed by this pass. This is not a governed-parallel activation, second lane, successor, or authority widening beyond the Dashboard presentation boundary.
+
+**Brand disposition:** Founder approved proceeding with navy / lavender differentiation from the established Hedgr brand palette. The proposed green / amber / blue accents are superseded for implementation; no new token or palette value is authorized.
+
+**Authorized outcome:** Refine the existing synthetic Dashboard presentation for review readiness while preserving all product, Stability Engine, allocation, governance, runtime-state, ledger, policy, and disclosure semantics.
+
+**Paper disposition:** Row 08 Dominant + Supporting, Row 10 Primary Stability Edge, and Row 11 Source-lock Summary are presentation guidance only. The existing shipped dominant/supporting lane object and edge remain the implementation basis; Rows 12–20 and the broader Stability Condition Interface remain outside scope.
+
+**Parent-ticket posture:** `CLASS-A-VAL-002` remains active and singular. Participant-session evidence, complete-journey visual evidence, and Founder disposition remain required. Interface refinement alone does not close the ticket or unlock Class B.
+
+**Notion staging posture:** No separate ticket or lane is created, so the staging mirror remains on `CLASS-A-VAL-002` as the sole active ticket. This nested pass is repo-native implementation detail and does not independently sequence or close work.
+
+**Implementation evidence:** Dashboard presentation now follows Current status → Balance → Stability structure → Review snapshot → Educational content → Disclosures. Stable balance is the dominant navy holding surface and sole owner of the restrained left edge; Conservative yield and Reserve remain white supporting lanes with quiet governed lavender / navy label accents. Review snapshot is a standalone confidence card. Review details, protective guidance, the structure explainer, and policy disclosures default to closed native disclosure controls. Existing engine values, fingerprint / memory behavior, ledger, policy, transaction, and disclosure meaning remain unchanged.
+
+**Verification evidence:** Targeted Dashboard / allocation / posture / Review snapshot unit contracts passed (**32/32**); complete frontend unit suite passed (**735/735**) and frontend lint passed. Trust mode, trust phrase, Bridge snapshot, and whitespace checks passed. Browser-rendered review passed at **390 × 844** and **1280 × 900**, disclosure interactions worked, no browser console errors / warnings were observed, and `design-qa.md` records `final result: passed`. The full E2E run passed **54/56** on its first concurrent run; two existing Balance SSoT navigation cases timed out on the Deposit route, then the complete affected file passed **5/5** when rerun serially. Frontend typecheck remains blocked only by the pre-existing React `Suspense` **TS2786** failures in Deposit and Withdraw; no Dashboard type error was reported.
+
+**Completion disposition:** `HEDGR-UI-001` is complete as a nested implementation refinement only. `CLASS-A-VAL-002` remains the sole active, open ticket; participant-session evidence, complete-journey visual evidence, and Founder disposition remain outstanding and are not satisfied by this UI pass.
+
+**Stop / rollback:** Stop and revert if the pass requires engine logic, new runtime state, new allocation semantics, new disclosure meaning, ungoverned colours, Condition Interface implementation, Class B authority, or parent-ticket closeout.

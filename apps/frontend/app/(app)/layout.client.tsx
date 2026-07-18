@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import { TrustDisclosureBanner } from '../../components';
 import { isCopilotEnabled } from '../../config/env';
 import { usePolicy } from '@/lib/policy/usePolicy';
+import { isSyntheticJourneyPrimaryCondition } from '@/lib/state/synthetic-journey';
 
 // ---------------------------------------------------------------------------
 // Nav-link type — `feature` ties the link to a policy flag; `shipped` guards
@@ -25,6 +26,14 @@ export function AppLayoutClient({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [isNavOpen, setIsNavOpen] = useState(false);
   const { status, isFeatureEnabled } = usePolicy();
+  const syntheticJourneyActive = isSyntheticJourneyPrimaryCondition();
+
+  const journeySteps = [
+    { href: '/dashboard' as const, label: 'Dashboard' },
+    { href: '/deposit' as const, label: 'Deposit' },
+    { href: '/withdraw' as const, label: 'Withdraw' },
+    { href: '/activity' as const, label: 'Activity' },
+  ];
 
   const allNavLinks: NavLink[] = [
     { href: '/dashboard', label: 'Dashboard' },
@@ -49,7 +58,7 @@ export function AppLayoutClient({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <TrustDisclosureBanner dismissible />
+      <TrustDisclosureBanner dismissible={!syntheticJourneyActive} />
       <nav data-testid="app-nav" className="bg-white border-b shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
@@ -124,6 +133,47 @@ export function AppLayoutClient({ children }: { children: React.ReactNode }) {
           </div>
         </div>
       </nav>
+      {syntheticJourneyActive ? (
+        <section
+          aria-label="Synthetic validation journey"
+          className="border-b border-[#A6B0D8] bg-white"
+          data-testid="synthetic-journey-shell"
+        >
+          <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
+            <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-wide text-[#4658A0]">
+                  CLASS-A-VAL-002 · synthetic research path
+                </p>
+                <p className="mt-1 text-sm text-[#1F2937]">
+                  Follow the four steps in order. Settings and Copilot are outside this
+                  participant journey.
+                </p>
+              </div>
+              <ol className="flex max-w-full gap-2 overflow-x-auto pb-1" aria-label="Journey steps">
+                {journeySteps.map((step, index) => {
+                  const isActive = pathname === step.href;
+                  return (
+                    <li key={step.href} className="shrink-0">
+                      <span
+                        aria-current={isActive ? 'step' : undefined}
+                        className={`inline-flex items-center gap-2 rounded-lg border px-3 py-2 text-sm font-medium transition-colors ${
+                          isActive
+                            ? 'border-[#1F2747] bg-[#1F2747] text-white'
+                            : 'border-[#A6B0D8] bg-white text-[#1F2747] hover:border-[#8391C9] hover:text-[#36447C]'
+                        }`}
+                      >
+                        <span aria-hidden="true">{index + 1}</span>
+                        {step.label}
+                      </span>
+                    </li>
+                  );
+                })}
+              </ol>
+            </div>
+          </div>
+        </section>
+      ) : null}
       {children}
     </div>
   );

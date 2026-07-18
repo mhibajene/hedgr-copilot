@@ -1,10 +1,10 @@
 // @vitest-environment jsdom
 
-import React from 'react';
-import { afterEach, beforeEach, describe, expect, test } from 'vitest';
-import { cleanup, render, screen, waitFor } from '@testing-library/react';
-import { EngineStabilityReviewSnapshot } from '../app/(app)/dashboard/EngineStabilityReviewSnapshot';
-import { formatEngineSnapshotUpdatedAt } from '../lib/engine/format-engine-snapshot-updated-at';
+import React from "react";
+import { afterEach, beforeEach, describe, expect, test } from "vitest";
+import { cleanup, render, screen, waitFor } from "@testing-library/react";
+import { EngineStabilityReviewSnapshot } from "../app/(app)/dashboard/EngineStabilityReviewSnapshot";
+import { formatEngineSnapshotUpdatedAt } from "../lib/engine/format-engine-snapshot-updated-at";
 import {
   ENGINE_STABILITY_REVIEW_AVAILABLE_CONTINUITY,
   ENGINE_STABILITY_REVIEW_CADENCE_CUE,
@@ -19,18 +19,18 @@ import {
   ENGINE_STABILITY_REVIEW_WITHDRAWAL_CONTINUITY,
   getEngineStabilityReviewSnapshotStance,
   getEngineStabilityReviewTimestampLine,
-} from '../lib/engine/stability-review-snapshot-copy';
-import { getMockEngineState } from '../lib/engine/mock';
+} from "../lib/engine/stability-review-snapshot-copy";
+import { getMockEngineState } from "../lib/engine/mock";
 import {
   buildReviewSnapshotFingerprint,
   REVIEW_SNAPSHOT_FINGERPRINT_STORAGE_KEY,
-} from '../lib/engine/review-snapshot-fingerprint';
-import { REVIEW_SNAPSHOT_MEMORY_STORAGE_KEY } from '../lib/engine/review-snapshot-memory';
-import type { EngineState } from '../lib/engine/types';
+} from "../lib/engine/review-snapshot-fingerprint";
+import { REVIEW_SNAPSHOT_MEMORY_STORAGE_KEY } from "../lib/engine/review-snapshot-memory";
+import type { EngineState } from "../lib/engine/types";
 
 function makeEngineState(overrides: Partial<EngineState> = {}): EngineState {
   return {
-    ...getMockEngineState('normal'),
+    ...getMockEngineState("normal"),
     ...overrides,
   };
 }
@@ -46,219 +46,238 @@ afterEach(() => {
   window.localStorage.removeItem(REVIEW_SNAPSHOT_MEMORY_STORAGE_KEY);
 });
 
-describe('EngineStabilityReviewSnapshot', () => {
-  test('renders the minimal review snapshot contract', async () => {
+describe("EngineStabilityReviewSnapshot", () => {
+  test("renders the minimal review snapshot contract", async () => {
     const engineState = makeEngineState({
-      posture: 'tightened',
-      updatedAt: '2026-03-08T00:00:00.000Z',
+      posture: "tightened",
+      updatedAt: "2026-03-08T00:00:00.000Z",
     });
 
     render(<EngineStabilityReviewSnapshot engineState={engineState} />);
 
-    const snapshot = screen.getByTestId('engine-stability-review-snapshot');
-    expect(snapshot.textContent).toContain(ENGINE_STABILITY_REVIEW_SNAPSHOT_TITLE);
+    const snapshot = screen.getByTestId("engine-stability-review-snapshot");
     expect(snapshot.textContent).toContain(
-      getEngineStabilityReviewSnapshotStance(engineState.posture),
+      ENGINE_STABILITY_REVIEW_SNAPSHOT_TITLE
     );
     expect(snapshot.textContent).toContain(
-      ENGINE_STABILITY_REVIEW_AVAILABLE_CONTINUITY,
+      getEngineStabilityReviewSnapshotStance(engineState.posture)
     );
     expect(snapshot.textContent).toContain(
-      ENGINE_STABILITY_REVIEW_WITHDRAWAL_CONTINUITY,
+      ENGINE_STABILITY_REVIEW_AVAILABLE_CONTINUITY
+    );
+    expect(snapshot.textContent).toContain(
+      ENGINE_STABILITY_REVIEW_WITHDRAWAL_CONTINUITY
     );
     expect(snapshot.textContent).toContain(ENGINE_STABILITY_REVIEW_CADENCE_CUE);
 
-    const formattedUpdatedAt = formatEngineSnapshotUpdatedAt(engineState.updatedAt);
-    expect(snapshot.textContent).toContain(
-      getEngineStabilityReviewTimestampLine(formattedUpdatedAt),
+    const formattedUpdatedAt = formatEngineSnapshotUpdatedAt(
+      engineState.updatedAt
     );
+    expect(snapshot.textContent).toContain(
+      getEngineStabilityReviewTimestampLine(formattedUpdatedAt)
+    );
+    const details = screen.getByTestId("engine-stability-review-details");
+    expect(details.tagName).toBe("DETAILS");
+    expect(details.hasAttribute("open")).toBe(false);
 
     await waitFor(() => {
       expect(
-        screen.queryByTestId('engine-stability-review-snapshot-change-signal'),
+        screen.queryByTestId("engine-stability-review-snapshot-change-signal")
       ).toBeNull();
     });
   });
 
-  test('uses the calmer stance copy for within-range postures', async () => {
+  test("uses the calmer stance copy for within-range postures", async () => {
     const engineState = makeEngineState({
-      posture: 'recovery',
+      posture: "recovery",
     });
 
     render(<EngineStabilityReviewSnapshot engineState={engineState} />);
 
     expect(
-      screen.getByTestId('engine-stability-review-snapshot-stance').textContent,
+      screen.getByTestId("engine-stability-review-snapshot-stance").textContent
     ).toBe(getEngineStabilityReviewSnapshotStance(engineState.posture));
 
     await waitFor(() => {
       expect(
-        screen.queryByTestId('engine-stability-review-snapshot-change-signal'),
+        screen.queryByTestId("engine-stability-review-snapshot-change-signal")
       ).toBeNull();
     });
   });
 
-  test('MC-S2-013: shows unchanged and disclaimer when prior fingerprint matches', async () => {
+  test("MC-S2-013: shows unchanged and disclaimer when prior fingerprint matches", async () => {
     const engineState = makeEngineState();
     window.localStorage.setItem(
       REVIEW_SNAPSHOT_FINGERPRINT_STORAGE_KEY,
-      buildReviewSnapshotFingerprint(engineState),
+      buildReviewSnapshotFingerprint(engineState)
     );
 
     render(<EngineStabilityReviewSnapshot engineState={engineState} />);
 
     await waitFor(() => {
       expect(
-        screen.getByTestId('engine-stability-review-snapshot-change-signal')
-          .textContent,
+        screen.getByTestId("engine-stability-review-snapshot-change-signal")
+          .textContent
       ).toBe(ENGINE_STABILITY_REVIEW_CHANGE_UNCHANGED);
     });
 
     const disclaimer = screen.getByTestId(
-      'engine-stability-review-snapshot-change-disclaimer',
+      "engine-stability-review-snapshot-change-disclaimer"
     );
-    expect(disclaimer.textContent).toBe(ENGINE_STABILITY_REVIEW_CHANGE_DISCLAIMER);
+    expect(disclaimer.textContent).toBe(
+      ENGINE_STABILITY_REVIEW_CHANGE_DISCLAIMER
+    );
     expect(disclaimer.textContent).toMatch(/system targets/i);
     expect(disclaimer.textContent).toMatch(/ledger/i);
     expect(disclaimer.textContent).toMatch(/funds moved|movement/i);
 
-    const cadence = screen.getByTestId('engine-stability-review-snapshot-cadence');
-    const changeLine = screen.getByTestId(
-      'engine-stability-review-snapshot-change-signal',
+    const cadence = screen.getByTestId(
+      "engine-stability-review-snapshot-cadence"
     );
-    const updatedAt = screen.getByTestId('engine-stability-review-snapshot-updated-at');
+    const changeLine = screen.getByTestId(
+      "engine-stability-review-snapshot-change-signal"
+    );
+    const updatedAt = screen.getByTestId(
+      "engine-stability-review-snapshot-updated-at"
+    );
     expect(
-      cadence.compareDocumentPosition(changeLine) & Node.DOCUMENT_POSITION_FOLLOWING,
+      cadence.compareDocumentPosition(changeLine) &
+        Node.DOCUMENT_POSITION_FOLLOWING
     ).toBeTruthy();
     expect(
-      changeLine.compareDocumentPosition(updatedAt) & Node.DOCUMENT_POSITION_FOLLOWING,
+      changeLine.compareDocumentPosition(updatedAt) &
+        Node.DOCUMENT_POSITION_FOLLOWING
     ).toBeTruthy();
   });
 
-  test('MC-S2-013: shows changed when prior fingerprint differs', async () => {
+  test("MC-S2-013: shows changed when prior fingerprint differs", async () => {
     window.localStorage.setItem(
       REVIEW_SNAPSHOT_FINGERPRINT_STORAGE_KEY,
-      buildReviewSnapshotFingerprint(makeEngineState({ posture: 'normal' })),
+      buildReviewSnapshotFingerprint(makeEngineState({ posture: "normal" }))
     );
 
-    const engineState = makeEngineState({ posture: 'tightened' });
+    const engineState = makeEngineState({ posture: "tightened" });
     render(<EngineStabilityReviewSnapshot engineState={engineState} />);
 
     await waitFor(() => {
       expect(
-        screen.getByTestId('engine-stability-review-snapshot-change-signal')
-          .textContent,
+        screen.getByTestId("engine-stability-review-snapshot-change-signal")
+          .textContent
       ).toBe(ENGINE_STABILITY_REVIEW_CHANGE_CHANGED);
     });
   });
 
-  test('MC-S2-013: change copy frames review snapshot and system targets', async () => {
+  test("MC-S2-013: change copy frames review snapshot and system targets", async () => {
     window.localStorage.setItem(
       REVIEW_SNAPSHOT_FINGERPRINT_STORAGE_KEY,
-      buildReviewSnapshotFingerprint(makeEngineState()),
+      buildReviewSnapshotFingerprint(makeEngineState())
     );
 
     render(<EngineStabilityReviewSnapshot engineState={makeEngineState()} />);
 
     await waitFor(() => {
-      const line = screen.getByTestId('engine-stability-review-snapshot-change-signal');
+      const line = screen.getByTestId(
+        "engine-stability-review-snapshot-change-signal"
+      );
       expect(line.textContent).toMatch(/review snapshot/i);
       expect(line.textContent).toMatch(/informational system targets/i);
     });
   });
 
-  test('keeps snapshot language free of small high-risk urgency and execution semantics when change signal is shown', async () => {
+  test("keeps snapshot language free of small high-risk urgency and execution semantics when change signal is shown", async () => {
     window.localStorage.setItem(
       REVIEW_SNAPSHOT_FINGERPRINT_STORAGE_KEY,
-      buildReviewSnapshotFingerprint(makeEngineState()),
+      buildReviewSnapshotFingerprint(makeEngineState())
     );
 
     render(<EngineStabilityReviewSnapshot engineState={makeEngineState()} />);
 
     await waitFor(() => {
       expect(
-        screen.getByTestId('engine-stability-review-snapshot-change-signal'),
+        screen.getByTestId("engine-stability-review-snapshot-change-signal")
       ).toBeDefined();
     });
 
     const snapshotText =
-      screen.getByTestId('engine-stability-review-snapshot').textContent ?? '';
+      screen.getByTestId("engine-stability-review-snapshot").textContent ?? "";
 
     for (const phrase of [
-      'alert',
-      'notification',
-      'act now',
-      'real-time',
-      'monitoring',
-      'profit',
-      'rebalance',
-      'execute',
+      "alert",
+      "notification",
+      "act now",
+      "real-time",
+      "monitoring",
+      "profit",
+      "rebalance",
+      "execute",
     ]) {
       expect(snapshotText.toLowerCase()).not.toContain(phrase);
     }
   });
 
-  test('MC-S2-014: does not show recent memory until a prior fingerprint enables comparison', async () => {
+  test("MC-S2-014: does not show recent memory until a prior fingerprint enables comparison", async () => {
     const engineState = makeEngineState();
     render(<EngineStabilityReviewSnapshot engineState={engineState} />);
 
     await waitFor(() => {
-      expect(
-        screen.queryByTestId('engine-stability-review-memory'),
-      ).toBeNull();
+      expect(screen.queryByTestId("engine-stability-review-memory")).toBeNull();
     });
   });
 
-  test('MC-S2-014: shows recent stability memory after a prior fingerprint exists', async () => {
-    const engineState = makeEngineState({ posture: 'tightened' });
+  test("MC-S2-014: shows recent stability memory after a prior fingerprint exists", async () => {
+    const engineState = makeEngineState({ posture: "tightened" });
     window.localStorage.setItem(
       REVIEW_SNAPSHOT_FINGERPRINT_STORAGE_KEY,
-      buildReviewSnapshotFingerprint(engineState),
+      buildReviewSnapshotFingerprint(engineState)
     );
 
     render(<EngineStabilityReviewSnapshot engineState={engineState} />);
 
     await waitFor(() => {
-      expect(screen.getByTestId('engine-stability-review-memory')).toBeTruthy();
+      expect(screen.getByTestId("engine-stability-review-memory")).toBeTruthy();
     });
 
-    const memory = screen.getByTestId('engine-stability-review-memory');
+    const memory = screen.getByTestId("engine-stability-review-memory");
     expect(memory.textContent).toContain(ENGINE_STABILITY_REVIEW_MEMORY_TITLE);
-    expect(memory.textContent).toContain(ENGINE_STABILITY_REVIEW_MEMORY_DISCLAIMER);
     expect(memory.textContent).toContain(
-      getEngineStabilityReviewSnapshotStance(engineState.posture),
+      ENGINE_STABILITY_REVIEW_MEMORY_DISCLAIMER
     );
     expect(memory.textContent).toContain(
-      ENGINE_STABILITY_REVIEW_MEMORY_TARGETS_UNCHANGED,
+      getEngineStabilityReviewSnapshotStance(engineState.posture)
+    );
+    expect(memory.textContent).toContain(
+      ENGINE_STABILITY_REVIEW_MEMORY_TARGETS_UNCHANGED
     );
 
-    const entries = screen.getAllByTestId('engine-stability-review-memory-entry');
+    const entries = screen.getAllByTestId(
+      "engine-stability-review-memory-entry"
+    );
     expect(entries.length).toBeGreaterThanOrEqual(1);
     expect(entries.length).toBeLessThanOrEqual(2);
   });
 
-  test('MC-S2-014: memory surface copy does not read as activity log, feed, or operational record', async () => {
+  test("MC-S2-014: memory surface copy does not read as activity log, feed, or operational record", async () => {
     window.localStorage.setItem(
       REVIEW_SNAPSHOT_FINGERPRINT_STORAGE_KEY,
-      buildReviewSnapshotFingerprint(makeEngineState()),
+      buildReviewSnapshotFingerprint(makeEngineState())
     );
 
     render(<EngineStabilityReviewSnapshot engineState={makeEngineState()} />);
 
     await waitFor(() => {
-      expect(screen.getByTestId('engine-stability-review-memory')).toBeTruthy();
+      expect(screen.getByTestId("engine-stability-review-memory")).toBeTruthy();
     });
 
     const memoryText =
-      screen.getByTestId('engine-stability-review-memory').textContent ?? '';
+      screen.getByTestId("engine-stability-review-memory").textContent ?? "";
 
     for (const phrase of [
-      'history trail',
-      'recent review views',
-      'activity log',
-      'event feed',
-      'operational record',
-      'logged',
+      "history trail",
+      "recent review views",
+      "activity log",
+      "event feed",
+      "operational record",
+      "logged",
     ]) {
       expect(memoryText.toLowerCase()).not.toContain(phrase);
     }
@@ -267,59 +286,60 @@ describe('EngineStabilityReviewSnapshot', () => {
     expect(memoryText).toContain(ENGINE_STABILITY_REVIEW_MEMORY_DISCLAIMER);
   });
 
-  test('MC-S2-014: newest memory row reflects latest visit when targets change', async () => {
+  test("MC-S2-014: newest memory row reflects latest visit when targets change", async () => {
     window.localStorage.setItem(
       REVIEW_SNAPSHOT_FINGERPRINT_STORAGE_KEY,
-      buildReviewSnapshotFingerprint(makeEngineState({ posture: 'normal' })),
+      buildReviewSnapshotFingerprint(makeEngineState({ posture: "normal" }))
     );
 
     const { rerender } = render(
       <EngineStabilityReviewSnapshot
-        engineState={makeEngineState({ posture: 'tightened' })}
-      />,
+        engineState={makeEngineState({ posture: "tightened" })}
+      />
     );
 
     await waitFor(() => {
-      expect(screen.getByTestId('engine-stability-review-memory')).toBeTruthy();
+      expect(screen.getByTestId("engine-stability-review-memory")).toBeTruthy();
     });
 
     expect(
-      screen.getByTestId('engine-stability-review-memory').textContent,
+      screen.getByTestId("engine-stability-review-memory").textContent
     ).toContain(ENGINE_STABILITY_REVIEW_MEMORY_TARGETS_CHANGED);
 
     rerender(
       <EngineStabilityReviewSnapshot
-        engineState={makeEngineState({ posture: 'recovery' })}
-      />,
+        engineState={makeEngineState({ posture: "recovery" })}
+      />
     );
 
     await waitFor(() => {
-      const text = screen.getByTestId('engine-stability-review-memory').textContent ?? '';
+      const text =
+        screen.getByTestId("engine-stability-review-memory").textContent ?? "";
       expect(text).toContain(
-        getEngineStabilityReviewSnapshotStance('recovery'),
+        getEngineStabilityReviewSnapshotStance("recovery")
       );
     });
   });
 
-  test('keeps cadence language free of high-risk prompting and monitoring semantics', async () => {
+  test("keeps cadence language free of high-risk prompting and monitoring semantics", async () => {
     render(<EngineStabilityReviewSnapshot engineState={makeEngineState()} />);
 
     await waitFor(() => {
       expect(
-        screen.queryByTestId('engine-stability-review-snapshot-change-signal'),
+        screen.queryByTestId("engine-stability-review-snapshot-change-signal")
       ).toBeNull();
     });
 
     const snapshotText =
-      screen.getByTestId('engine-stability-review-snapshot').textContent ?? '';
+      screen.getByTestId("engine-stability-review-snapshot").textContent ?? "";
 
     for (const phrase of [
-      'act now',
-      'alert',
-      'reminder',
-      'notification',
-      'real-time',
-      'monitoring',
+      "act now",
+      "alert",
+      "reminder",
+      "notification",
+      "real-time",
+      "monitoring",
     ]) {
       expect(snapshotText.toLowerCase()).not.toContain(phrase);
     }
