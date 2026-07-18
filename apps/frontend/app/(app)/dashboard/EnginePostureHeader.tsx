@@ -1,21 +1,21 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { ENGINE_POSTURE_CONTEXT } from '../../../lib/engine/posture-context';
-import type { EnginePosture, EngineState } from '../../../lib/engine/types';
+import React from "react";
+import { ENGINE_POSTURE_CONTEXT } from "../../../lib/engine/posture-context";
+import type { EnginePosture, EngineState } from "../../../lib/engine/types";
 
 const BADGE_LABELS: Record<EnginePosture, string> = {
-  normal: 'NORMAL',
-  tightening: 'TIGHTENING',
-  tightened: 'TIGHTENED',
-  recovery: 'RECOVERY',
+  normal: "NORMAL",
+  tightening: "TIGHTENING",
+  tightened: "TIGHTENED",
+  recovery: "RECOVERY",
 };
 
 const BADGE_TONES: Record<EnginePosture, string> = {
-  normal: 'bg-slate-100 text-slate-700 border-slate-200',
-  tightening: 'bg-amber-50 text-amber-800 border-amber-200',
-  tightened: 'bg-orange-50 text-orange-800 border-orange-200',
-  recovery: 'bg-sky-50 text-sky-800 border-sky-200',
+  normal: "bg-[#CAD0E8] text-[#171D35] border-[#A6B0D8]",
+  tightening: "bg-white text-[#1F2937] border-[#8391C9]",
+  tightened: "bg-white text-[#171D35] border-[#1F2747]",
+  recovery: "bg-white text-[#36447C] border-[#A6B0D8]",
 };
 
 type EnginePostureHeaderProps = {
@@ -24,23 +24,31 @@ type EnginePostureHeaderProps = {
 
 export function EnginePostureHeader({ engineState }: EnginePostureHeaderProps) {
   const { posture, notice } = engineState;
-  const showNotice = posture !== 'normal' && Boolean(notice);
+  const showNotice = posture !== "normal" && Boolean(notice);
 
-  if (posture !== 'normal' && !notice && process.env.NODE_ENV !== 'production') {
+  if (
+    posture !== "normal" &&
+    !notice &&
+    process.env.NODE_ENV !== "production"
+  ) {
     console.warn(
-      `[EnginePostureHeader] Missing EngineState.notice for posture "${posture}"`,
+      `[EnginePostureHeader] Missing EngineState.notice for posture "${posture}"`
     );
   }
 
   return (
-    <header className="space-y-3">
+    <header
+      className="space-y-3 border-b border-[#A6B0D8] pb-6"
+      aria-labelledby="dashboard-current-status-label"
+      data-testid="dashboard-current-status"
+    >
       <h1 className="sr-only">Dashboard</h1>
       <div className="flex items-start justify-between gap-3">
         <p
-          className="text-xs font-medium uppercase tracking-wide text-slate-500"
-          aria-hidden="true"
+          id="dashboard-current-status-label"
+          className="text-xs font-semibold uppercase tracking-[0.12em] text-[#4658A0]"
         >
-          Overview
+          Current status
         </p>
         <span
           data-testid="engine-posture-badge"
@@ -52,20 +60,27 @@ export function EnginePostureHeader({ engineState }: EnginePostureHeaderProps) {
       </div>
 
       <p
-        className="max-w-2xl text-sm leading-relaxed text-slate-600"
+        className="max-w-xl text-base leading-relaxed text-[#1F2937]"
         data-testid="engine-posture-context"
       >
         {ENGINE_POSTURE_CONTEXT[posture]}
+      </p>
+
+      <p
+        className="text-sm font-medium text-[#36447C]"
+        data-testid="engine-posture-action-guidance"
+      >
+        There is nothing here you need to manage.
       </p>
 
       {showNotice ? (
         <div
           data-testid="engine-posture-banner"
           role="status"
-          className="rounded-2xl border border-amber-200/90 bg-amber-50/95 px-5 py-3.5 text-sm leading-snug text-amber-950 shadow-sm shadow-amber-900/5"
+          className="rounded-2xl border border-[#8391C9] bg-white px-5 py-3.5 text-sm leading-snug text-[#171D35]"
         >
-          <p className="font-semibold text-amber-950">{notice?.title}</p>
-          <p className="mt-2 text-amber-900/90">{notice?.body}</p>
+          <p className="font-semibold text-[#171D35]">{notice?.title}</p>
+          <p className="mt-2 text-[#1F2937]">{notice?.body}</p>
         </div>
       ) : null}
     </header>

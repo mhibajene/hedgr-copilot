@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { Suspense, useState, useEffect, useRef, useMemo } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { postDeposit } from '../../../lib/deposits/client';
@@ -18,6 +19,12 @@ import {
   resolveTxReviewSimulatorFlags,
   isTxReviewSeamActive,
 } from '../../../lib/tx';
+import {
+  getSyntheticJourneyHref,
+  getSyntheticJourneyRate,
+  isSyntheticJourneyPrimaryCondition,
+  isSyntheticJourneyUnavailableDataScenario,
+} from '../../../lib/state/synthetic-journey';
 
 interface PaymentMethod {
   id: string;
@@ -36,6 +43,8 @@ function DepositPageContent() {
 
   const txReviewFlags = useMemo(() => resolveTxReviewSimulatorFlags(search), [search]);
   const reviewSeamActive = isTxReviewSeamActive(txReviewFlags);
+  const syntheticJourneyActive = isSyntheticJourneyPrimaryCondition(search);
+  const unavailableDataScenario = isSyntheticJourneyUnavailableDataScenario(search);
 
   const { refresh } = useBalance();
   const appendTx = useLedgerStore((s) => s.append);
@@ -46,7 +55,12 @@ function DepositPageContent() {
   const fx = useLatestFx('USDZMW');
   const market = resolveMarket();
   const quote = resolveLocalCurrencyCode(market);
-  const rate = fx.status === 'success' && fx.data ? fx.data.rate : null;
+  const backendRate = fx.status === 'success' && fx.data ? fx.data.rate : null;
+  const rate = syntheticJourneyActive
+    ? getSyntheticJourneyRate(quote)
+    : unavailableDataScenario
+      ? null
+      : backendRate;
 
   const [amountLocalStr, setAmountLocalStr] = useState<string>('100');
   const [txnRef, setTxnRef] = useState<string | null>(null);
@@ -121,11 +135,13 @@ function DepositPageContent() {
     setUsdToCredit(usdForStub);
 
     const txn_ref = crypto.randomUUID();
-    try {
-      await postDeposit({ txn_ref, amount_zmw: amountLocalNum });
-    } catch {
-      setStatus('FAILED');
-      return;
+    if (!syntheticJourneyActive) {
+      try {
+        await postDeposit({ txn_ref, amount_zmw: amountLocalNum });
+      } catch {
+        setStatus('FAILED');
+        return;
+      }
     }
 
     const mode = getBalanceMode();
@@ -230,7 +246,28 @@ function DepositPageContent() {
         <TxReviewSimulatorBanner data-testid="deposit-tx-review-simulator-banner" />
       ) : null}
 
-      {fx.status === 'error' ? (
+      {syntheticJourneyActive ? (
+        <section
+          className="rounded-xl border border-[#8391C9] bg-[#CAD0E8] p-4 text-[#171D35]"
+          data-testid="deposit-synthetic-condition"
+          aria-label="Synthetic deposit condition"
+        >
+          <p className="text-sm font-semibold">Synthetic deposit · no real funds</p>
+          <p className="mt-1 text-sm text-[#1F2937]">
+            This step writes only a local ledger fixture. The fixed preview is for
+            participant interpretation and is not a live quote or conversion.
+          </p>
+        </section>
+      ) : null}
+
+      {syntheticJourneyActive ? (
+        <div
+          className="rounded-xl border border-[#A6B0D8] bg-white p-3 text-sm text-[#1F2937]"
+          data-testid="deposit-fx-block"
+        >
+          Synthetic preview rate: 1 USD = {rate?.toFixed(2)} {quote}
+        </div>
+      ) : unavailableDataScenario || fx.status === 'error' ? (
         <MarketDataContinuityPanel
           route="deposit"
           onRetryFx={fx.retry}
@@ -277,14 +314,33 @@ function DepositPageContent() {
       <button
         onClick={confirm}
         disabled={isConfirmDisabled}
-        className="rounded-xl p-3 shadow w-full bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+        className="w-full rounded-xl bg-[#1F2747] p-3 text-white transition-colors hover:bg-[#36447C] focus:outline-none focus:ring-2 focus:ring-[#4658A0] focus:ring-offset-2 disabled:cursor-not-allowed disabled:border disabled:border-[#A6B0D8] disabled:bg-[#CAD0E8] disabled:text-[#1F2747]"
       >
         {status === 'PENDING' ? 'Processing…' : 'Confirm'}
       </button>
       {status === 'CONFIRMED' && (
-        <div className="text-green-600" data-testid="deposit-confirmed">
-          Deposit CONFIRMED
-        </div>
+        <section
+          className="rounded-xl border border-[#A6B0D8] bg-white p-4 text-[#171D35]"
+          data-testid="deposit-confirmation-region"
+        >
+          <p className="font-semibold" data-testid="deposit-confirmed">
+            Deposit CONFIRMED
+          </p>
+          {syntheticJourneyActive ? (
+            <>
+              <p className="mt-1 text-sm text-[#1F2937]">
+                The synthetic deposit is now part of the local fixture balance. No
+                external account was charged and no money moved.
+              </p>
+              <Link
+                href={getSyntheticJourneyHref('/withdraw')}
+                className="mt-3 inline-flex rounded-xl bg-[#1F2747] px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-[#36447C] focus:outline-none focus:ring-2 focus:ring-[#4658A0] focus:ring-offset-2"
+              >
+                Continue to synthetic withdrawal
+              </Link>
+            </>
+          ) : null}
+        </section>
       )}
       {status === 'FAILED' && (
         <div className="space-y-3">
@@ -311,6 +367,25 @@ function DepositPageContent() {
           ) : null}
         </div>
       )}
+      {syntheticJourneyActive ? (
+        <p className="text-sm text-[#1F2937]">
+          Secondary trust check:{' '}
+          <Link
+            href={getSyntheticJourneyHref('/deposit', { unavailableData: true })}
+            className="font-medium text-[#1F2747] underline underline-offset-2 hover:text-[#36447C]"
+          >
+            review the unavailable-data scenario
+          </Link>
+          .
+        </p>
+      ) : unavailableDataScenario ? (
+        <Link
+          href={getSyntheticJourneyHref('/deposit')}
+          className="inline-flex text-sm font-medium text-[#1F2747] underline underline-offset-2 hover:text-[#36447C]"
+        >
+          Return to the primary synthetic journey
+        </Link>
+      ) : null}
     </main>
   );
 }

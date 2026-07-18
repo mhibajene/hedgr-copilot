@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { Suspense, useState, useEffect, useMemo } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { withdrawMock } from '../../../lib/payments/withdraw.mock';
@@ -27,6 +28,11 @@ import {
   resolveTxReviewSimulatorFlags,
   isTxReviewSeamActive,
 } from '../../../lib/tx';
+import {
+  getSyntheticJourneyHref,
+  getSyntheticJourneyRate,
+  isSyntheticJourneyPrimaryCondition,
+} from '../../../lib/state/synthetic-journey';
 
 interface WithdrawMethod {
   id: string;
@@ -58,6 +64,20 @@ const WITHDRAW_STATUS_CONTENT: Record<
   },
 };
 
+const SYNTHETIC_WITHDRAW_STATUS_CONTENT: typeof WITHDRAW_STATUS_CONTENT = {
+  PENDING: {
+    publicStatus: PublicTxStatus.IN_PROGRESS,
+    title: 'Synthetic withdrawal in progress',
+    description: 'The local fixture is updating. No payout or external transfer is in progress.',
+    disclosure: 'This research step cannot move money or initiate settlement.',
+  },
+  CONFIRMED: {
+    publicStatus: PublicTxStatus.SUCCESS,
+    title: 'Synthetic withdrawal recorded',
+    description: 'The local fixture balance is updated. No bank transfer, payout, or settlement occurred.',
+  },
+};
+
 function WithdrawPageContent() {
   const searchParams = useSearchParams();
   const search = useMemo(() => {
@@ -67,11 +87,13 @@ function WithdrawPageContent() {
 
   const txReviewFlags = useMemo(() => resolveTxReviewSimulatorFlags(search), [search]);
   const reviewSeamActive = isTxReviewSeamActive(txReviewFlags);
+  const syntheticJourneyActive = isSyntheticJourneyPrimaryCondition(search);
 
   const { available, refresh, isLoading: balanceLoading, error: balanceError } = useBalance();
   const fx = useLatestFx('USDZMW');
   const quote = resolveLocalCurrencyCode(resolveMarket());
-  const rate = fx.status === 'success' && fx.data ? fx.data.rate : null;
+  const backendRate = fx.status === 'success' && fx.data ? fx.data.rate : null;
+  const rate = syntheticJourneyActive ? getSyntheticJourneyRate(quote) : backendRate;
   const confirmTx = useLedgerStore((s) => s.confirm);
   const failTx = useLedgerStore((s) => s.fail);
 
@@ -170,7 +192,11 @@ function WithdrawPageContent() {
 
   const availableMethods = withdrawMethods.filter((m) => m.available);
   const activeStatus =
-    status === 'PENDING' || status === 'CONFIRMED' ? WITHDRAW_STATUS_CONTENT[status] : null;
+    status === 'PENDING' || status === 'CONFIRMED'
+      ? syntheticJourneyActive
+        ? SYNTHETIC_WITHDRAW_STATUS_CONTENT[status]
+        : WITHDRAW_STATUS_CONTENT[status]
+      : null;
   const activeStatusPresentation = activeStatus
     ? getPresentationForPublicStatus(activeStatus.publicStatus)
     : null;
@@ -295,7 +321,27 @@ function WithdrawPageContent() {
       {reviewSeamActive ? (
         <TxReviewSimulatorBanner data-testid="withdraw-tx-review-simulator-banner" />
       ) : null}
-      {fx.status === 'error' ? (
+      {syntheticJourneyActive ? (
+        <section
+          className="rounded-xl border border-[#8391C9] bg-[#CAD0E8] p-4 text-[#171D35]"
+          data-testid="withdraw-synthetic-condition"
+          aria-label="Synthetic withdrawal condition"
+        >
+          <p className="text-sm font-semibold">Synthetic withdrawal · no payout</p>
+          <p className="mt-1 text-sm text-[#1F2937]">
+            This step updates only the local ledger fixture. It cannot contact a bank,
+            provider, rail, or settlement service.
+          </p>
+        </section>
+      ) : null}
+      {syntheticJourneyActive ? (
+        <div
+          className="rounded-xl border border-[#A6B0D8] bg-white p-3 text-sm text-[#1F2937]"
+          data-testid="withdraw-fx-block"
+        >
+          Synthetic display rate: 1 USD = {rate?.toFixed(2)} {quote}
+        </div>
+      ) : fx.status === 'error' ? (
         <MarketDataContinuityPanel
           route="withdraw"
           onRetryFx={fx.retry}
@@ -322,7 +368,7 @@ function WithdrawPageContent() {
       <button
         onClick={confirm}
         disabled={status === 'PENDING' || usd <= 0 || usd > available || !rateAllowsConfirm}
-        className="rounded-xl p-3 shadow w-full bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+        className="w-full rounded-xl bg-[#1F2747] p-3 text-white transition-colors hover:bg-[#36447C] focus:outline-none focus:ring-2 focus:ring-[#4658A0] focus:ring-offset-2 disabled:cursor-not-allowed disabled:border disabled:border-[#A6B0D8] disabled:bg-[#CAD0E8] disabled:text-[#1F2747]"
       >
         {status === 'PENDING' ? 'Processing…' : 'Confirm'}
       </button>
@@ -413,6 +459,16 @@ function WithdrawPageContent() {
               ))}
             </div>
           )}
+          {status === 'CONFIRMED' && syntheticJourneyActive ? (
+            <div className="mt-4 border-t border-[#A6B0D8] pt-4">
+              <Link
+                href={getSyntheticJourneyHref('/activity')}
+                className="inline-flex rounded-xl bg-[#1F2747] px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-[#36447C] focus:outline-none focus:ring-2 focus:ring-[#4658A0] focus:ring-offset-2"
+              >
+                Continue to synthetic activity
+              </Link>
+            </div>
+          ) : null}
         </section>
       )}
       {status === 'FAILED' && (

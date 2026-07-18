@@ -1,10 +1,15 @@
 'use client';
 
+import Link from 'next/link';
 import { useState, useMemo } from 'react';
 import { useLedgerStore } from '../../../lib/state/ledger';
 import { TxStatusPill, TxDetailModal } from '../../../components';
 import { txToLifecycle, type TxLifecycle } from '../../../lib/tx';
 import { EmptyState } from '@hedgr/ui';
+import {
+  getSyntheticJourneyHref,
+  isSyntheticJourneyPrimaryCondition,
+} from '../../../lib/state/synthetic-journey';
 
 function formatDate(timestamp: number): string {
   const date = new Date(timestamp);
@@ -85,9 +90,11 @@ function TransactionTypeIcon({ type }: { type: 'DEPOSIT' | 'WITHDRAW' }) {
 function ActivityRow({
   tx,
   onClick,
+  syntheticJourneyActive,
 }: {
   tx: TxLifecycle;
   onClick: () => void;
+  syntheticJourneyActive: boolean;
 }) {
   return (
     <button
@@ -107,7 +114,13 @@ function ActivityRow({
               className="font-medium text-gray-900"
               data-testid={`activity-type-${tx.type.toLowerCase()}`}
             >
-              {tx.type === 'DEPOSIT' ? 'Deposit' : 'Withdrawal'}
+              {syntheticJourneyActive
+                ? tx.type === 'DEPOSIT'
+                  ? 'Synthetic deposit'
+                  : 'Synthetic withdrawal'
+                : tx.type === 'DEPOSIT'
+                  ? 'Deposit'
+                  : 'Withdrawal'}
             </span>
             <TxStatusPill status={tx.status} />
           </div>
@@ -147,6 +160,7 @@ function ActivityRow({
 
 export default function ActivityPage() {
   const transactions = useLedgerStore((s) => s.transactions);
+  const syntheticJourneyActive = isSyntheticJourneyPrimaryCondition();
   const [selectedTx, setSelectedTx] = useState<TxLifecycle | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [filter, setFilter] = useState<FilterType>('all');
@@ -206,7 +220,10 @@ export default function ActivityPage() {
               />
             </svg>
           }
-          primaryAction={{ label: 'Make your first deposit', href: '/deposit' }}
+          primaryAction={{
+            label: syntheticJourneyActive ? 'Start synthetic deposit' : 'Make your first deposit',
+            href: syntheticJourneyActive ? getSyntheticJourneyHref('/deposit') : '/deposit',
+          }}
           data-testid="activity-empty-state"
         />
       );
@@ -254,6 +271,21 @@ export default function ActivityPage() {
         )}
       </div>
 
+      {syntheticJourneyActive ? (
+        <section
+          className="rounded-xl border border-[#8391C9] bg-[#CAD0E8] p-4 text-[#171D35]"
+          data-testid="activity-synthetic-condition"
+          aria-label="Synthetic activity condition"
+        >
+          <p className="text-sm font-semibold">Local fixture records only</p>
+          <p className="mt-1 text-sm text-[#1F2937]">
+            These entries reconcile the synthetic balance used in this research path.
+            “Completed” means the local scenario step finished; it is not proof of a
+            deposit, payout, provider action, or external settlement.
+          </p>
+        </section>
+      ) : null}
+
       {/* Filter buttons - only show when there are transactions */}
       {transactions.length > 0 && (
         <div className="flex gap-2">
@@ -289,6 +321,7 @@ export default function ActivityPage() {
                     key={tx.id}
                     tx={tx}
                     onClick={() => handleRowClick(tx)}
+                    syntheticJourneyActive={syntheticJourneyActive}
                   />
                 ))}
               </div>
@@ -302,6 +335,14 @@ export default function ActivityPage() {
         isOpen={isModalOpen}
         onClose={handleCloseModal}
       />
+      {syntheticJourneyActive && transactions.length > 0 ? (
+        <Link
+          href={getSyntheticJourneyHref('/dashboard')}
+          className="inline-flex rounded-xl border border-[#A6B0D8] bg-white px-4 py-2 text-sm font-medium text-[#1F2747] transition-colors hover:border-[#8391C9] hover:text-[#36447C] focus:outline-none focus:ring-2 focus:ring-[#4658A0] focus:ring-offset-2"
+        >
+          Return to dashboard summary
+        </Link>
+      ) : null}
     </main>
   );
 }

@@ -291,3 +291,81 @@ describe('DepositPage local stub deposit review hints (MC-S2-022)', () => {
     expect(screen.queryByTestId('deposit-local-stub-failure-hints')).toBeNull();
   });
 });
+
+describe('DepositPage CLASS-A-VAL-002 primary and exception conditions', () => {
+  function stubSyntheticEnvironment() {
+    vi.stubEnv('NEXT_PUBLIC_AUTH_MODE', 'mock');
+    vi.stubEnv('NEXT_PUBLIC_FX_MODE', 'stub');
+    vi.stubEnv('NEXT_PUBLIC_APP_ENV', 'dev');
+  }
+
+  test('uses a fixed synthetic preview and never calls the backend deposit contract', async () => {
+    stubSyntheticEnvironment();
+    vi.useFakeTimers();
+    vi.mocked(useSearchParams).mockReturnValue(
+      new URLSearchParams('journey=class-a-val-002') as ReturnType<typeof useSearchParams>,
+    );
+    vi.mocked(useLatestFx).mockReturnValue({
+      status: 'error',
+      retry: vi.fn(),
+    });
+
+    render(<DepositPage />);
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(350);
+    });
+
+    expect(screen.getByTestId('deposit-synthetic-condition').textContent).toMatch(
+      /no real funds/i,
+    );
+    expect(screen.getByTestId('deposit-fx-block').textContent).toContain(
+      '1 USD = 20.00 ZMW',
+    );
+    expect(screen.getByTestId('deposit-conversion-preview').textContent).toContain('$5.00');
+
+    await act(async () => {
+      fireEvent.click(screen.getByRole('button', { name: 'Confirm' }));
+      await Promise.resolve();
+    });
+    expect(postDeposit).not.toHaveBeenCalled();
+
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(1600);
+    });
+    expect(screen.getByTestId('deposit-confirmation-region').textContent).toMatch(
+      /no money moved/i,
+    );
+    expect(
+      screen.getByRole('link', { name: 'Continue to synthetic withdrawal' }),
+    ).toBeTruthy();
+  });
+
+  test('forces unavailable data to remain blocked as the secondary scenario', async () => {
+    stubSyntheticEnvironment();
+    vi.useFakeTimers();
+    vi.mocked(useSearchParams).mockReturnValue(
+      new URLSearchParams(
+        'journey=class-a-val-002&scenario=unavailable-data',
+      ) as ReturnType<typeof useSearchParams>,
+    );
+    vi.mocked(useLatestFx).mockReturnValue({
+      status: 'success',
+      data: { pair: 'USDZMW', rate: 20, ts: 1 },
+      retry: vi.fn(),
+    });
+
+    render(<DepositPage />);
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(350);
+    });
+
+    expect(screen.getByTestId('deposit-market-data-continuity')).toBeTruthy();
+    expect(screen.queryByTestId('deposit-synthetic-condition')).toBeNull();
+    expect((screen.getByRole('button', { name: 'Confirm' }) as HTMLButtonElement).disabled).toBe(
+      true,
+    );
+    expect(
+      screen.getByRole('link', { name: 'Return to the primary synthetic journey' }),
+    ).toBeTruthy();
+  });
+});

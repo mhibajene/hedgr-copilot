@@ -259,7 +259,9 @@ test.describe('Transaction Lifecycle - Activity Display', () => {
     await page.goto('/activity');
 
     // Get all status pills on the page
+    await expect(page.getByTestId('activity-list')).toBeVisible();
     const statusPills = page.getByTestId('tx-status-pill');
+    await expect(statusPills).toHaveCount(2);
     const count = await statusPills.count();
 
     expect(count).toBe(2);
@@ -375,4 +377,3 @@ test.describe('Transaction Lifecycle - Activity Display', () => {
     await expect(modal).not.toBeVisible();
   });
 });
-

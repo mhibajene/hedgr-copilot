@@ -413,3 +413,59 @@ describe('WithdrawPage tx review seam (MC-S2-021)', () => {
     });
   });
 });
+
+describe('WithdrawPage CLASS-A-VAL-002 primary condition', () => {
+  test('uses the local fixture and explicitly denies payout or settlement meaning', async () => {
+    vi.stubEnv('NEXT_PUBLIC_AUTH_MODE', 'mock');
+    vi.stubEnv('NEXT_PUBLIC_FX_MODE', 'stub');
+    vi.stubEnv('NEXT_PUBLIC_APP_ENV', 'dev');
+    vi.useFakeTimers();
+    vi.mocked(useSearchParams).mockReturnValue(
+      new URLSearchParams('journey=class-a-val-002') as ReturnType<typeof useSearchParams>,
+    );
+    vi.mocked(useBalance).mockReturnValue({
+      total: 25,
+      available: 25,
+      pending: 0,
+      currency: 'USD',
+      asOf: 1,
+      isLoading: false,
+      error: null,
+      refresh: vi.fn(),
+    });
+    vi.mocked(useLatestFx).mockReturnValue({
+      status: 'error',
+      retry: vi.fn(),
+    });
+
+    render(<WithdrawPage />);
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(350);
+    });
+
+    expect(screen.getByTestId('withdraw-synthetic-condition').textContent).toMatch(
+      /cannot contact a bank, provider, rail, or settlement service/i,
+    );
+    expect(screen.getByTestId('withdraw-fx-block').textContent).toContain(
+      '1 USD = 20.00 ZMW',
+    );
+    expect((screen.getByRole('button', { name: 'Confirm' }) as HTMLButtonElement).disabled).toBe(
+      false,
+    );
+
+    await act(async () => {
+      fireEvent.click(screen.getByRole('button', { name: 'Confirm' }));
+      await Promise.resolve();
+    });
+
+    expect(screen.getByTestId('withdraw-status-title').textContent).toBe(
+      'Synthetic withdrawal in progress',
+    );
+    expect(screen.getByTestId('withdraw-status-description').textContent).toMatch(
+      /no payout or external transfer/i,
+    );
+    expect(withdrawMock.createWithdraw).toHaveBeenCalledWith(1, {
+      skipAutoConfirm: false,
+    });
+  });
+});
