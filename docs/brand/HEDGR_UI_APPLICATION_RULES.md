@@ -30,6 +30,12 @@ If the work touches Stability Engine trust surfaces, follow the additional gover
 - Maintain WCAG AA contrast expectations for brand-facing UI.
 - Keep implementation incremental, reversible, and scoped to the approved ticket.
 
+## Controlled Visual Differentiation
+
+Restrained tonal or semantic differentiation may support hierarchy, accessibility, and comprehension when it uses only approved `DESIGN.md` tokens or `semanticStatus` aliases. Labels, copy, and structure must remain the primary carriers of meaning; the treatment must remain legible without color and pass contrast checks in the final medium.
+
+Differentiation must preserve Hedgr's calm, institutional, trust-first posture and must not imply performance, urgency, guarantees, execution, or changes to product or Stability Engine state. Paper source locks, prototypes, and other exploration treatments may inform review, but they do not add tokens, approve raw hues, or create runtime or state authority.
+
 ## AI Generation Constraints
 
 AI-assisted UI work must remain subordinate to approved brand authority.
