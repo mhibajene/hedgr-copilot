@@ -108,9 +108,8 @@ function DepositPageContent() {
     if (!txnRef || status !== 'PENDING') return;
     stubConfirmTimerRef.current = setTimeout(() => {
       const mode = getBalanceMode();
-      if (mode === 'ledger') {
-        confirmTx(txnRef);
-      } else {
+      confirmTx(txnRef);
+      if (mode === 'wallet') {
         creditWallet(usdToCredit);
         try {
           if (typeof window !== 'undefined') {
@@ -150,24 +149,21 @@ function DepositPageContent() {
       }
     }
 
-    const mode = getBalanceMode();
-    if (mode === 'ledger') {
-      const now = Date.now();
-      // When rate is missing, zeros are technical simulation placeholders only (MC-S2-021);
-      // UI must keep conversion preview unavailable — not economic truth.
-      const amountUsdLedger = rate !== null && usdPreview !== null ? usdPreview : 0;
-      const fxRateLedger = rate !== null ? rate : 0;
-      appendTx({
-        txn_ref,
-        type: 'deposit',
-        status: 'pending',
-        amount_zmw: amountLocalNum,
-        amount_usd: amountUsdLedger,
-        fx_rate: fxRateLedger,
-        created_at: now,
-        updated_at: now,
-      });
-    }
+    const now = Date.now();
+    // When rate is missing, zeros are technical simulation placeholders only (MC-S2-021);
+    // UI must keep conversion preview unavailable — not economic truth.
+    const amountUsdLedger = rate !== null && usdPreview !== null ? usdPreview : 0;
+    const fxRateLedger = rate !== null ? rate : 0;
+    appendTx({
+      txn_ref,
+      type: 'deposit',
+      status: 'pending',
+      amount_zmw: amountLocalNum,
+      amount_usd: amountUsdLedger,
+      fx_rate: fxRateLedger,
+      created_at: now,
+      updated_at: now,
+    });
 
     setTxnRef(txn_ref);
   };

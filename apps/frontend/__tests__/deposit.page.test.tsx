@@ -6,6 +6,13 @@ import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-libra
 
 (globalThis as typeof globalThis & { React: typeof React }).React = React;
 
+const depositStateMocks = vi.hoisted(() => ({
+  append: vi.fn(),
+  confirm: vi.fn(),
+  creditUSD: vi.fn(),
+  getWalletState: vi.fn(() => ({ usdBalance: 5 })),
+}));
+
 vi.mock('../lib/hooks/useBalance', () => ({
   useBalance: vi.fn(() => ({
     refresh: vi.fn(),
@@ -20,20 +27,24 @@ vi.mock('../lib/state/ledger', () => ({
   useLedgerStore: vi.fn(
     (selector: (state: { append: () => void; confirm: () => void }) => unknown) =>
       selector({
-        append: vi.fn(),
-        confirm: vi.fn(),
+        append: depositStateMocks.append,
+        confirm: depositStateMocks.confirm,
       }),
   ),
 }));
 
-vi.mock('../lib/state/wallet', () => ({
-  useWalletStore: vi.fn(
-    (selector: (state: { creditUSD: () => void }) => unknown) =>
-      selector({
-        creditUSD: vi.fn(),
-      }),
-  ),
-}));
+vi.mock('../lib/state/wallet', () => {
+  const useWalletStore = Object.assign(
+    vi.fn(
+      (selector: (state: { creditUSD: () => void }) => unknown) =>
+        selector({
+          creditUSD: depositStateMocks.creditUSD,
+        }),
+    ),
+    { getState: depositStateMocks.getWalletState },
+  );
+  return { useWalletStore };
+});
 
 vi.mock('../lib/state/balance.mode', () => ({
   getBalanceMode: vi.fn(() => 'ledger'),
@@ -68,6 +79,7 @@ import { useLatestFx } from '../lib/hooks/useLatestFx';
 import { CONVERSION_PREVIEW_UNAVAILABLE_PLACEHOLDER } from '../lib/fx/market-data-continuity-copy';
 import { useSearchParams } from 'next/navigation';
 import { TX_REVIEW_BYPASS_FX_PARAM } from '../lib/tx';
+import { getBalanceMode } from '../lib/state/balance.mode';
 
 const ORIGINAL_CI = process.env.CI;
 const ORIGINAL_NODE_ENV = process.env.NODE_ENV;
@@ -76,6 +88,12 @@ const ORIGINAL_APP_ENV = process.env.NEXT_PUBLIC_APP_ENV;
 afterEach(() => {
   cleanup();
   vi.restoreAllMocks();
+  depositStateMocks.append.mockClear();
+  depositStateMocks.confirm.mockClear();
+  depositStateMocks.creditUSD.mockClear();
+  depositStateMocks.getWalletState.mockClear();
+  depositStateMocks.getWalletState.mockReturnValue({ usdBalance: 5 });
+  vi.mocked(getBalanceMode).mockReturnValue('ledger');
   vi.useRealTimers();
   vi.mocked(useSearchParams).mockReturnValue(new URLSearchParams() as ReturnType<typeof useSearchParams>);
   vi.unstubAllEnvs();
@@ -368,6 +386,48 @@ describe('DepositPage CLASS-A-VAL-002 primary and exception conditions', () => {
     expect(
       screen.getByRole('link', { name: 'Continue to synthetic withdrawal' }),
     ).toBeTruthy();
+  });
+
+  test('records and settles the deposit in Activity when wallet fallback drives balance', async () => {
+    stubSyntheticEnvironment();
+    vi.useFakeTimers();
+    vi.mocked(getBalanceMode).mockReturnValue('wallet');
+    vi.mocked(useSearchParams).mockReturnValue(
+      new URLSearchParams('journey=class-a-val-002') as ReturnType<typeof useSearchParams>,
+    );
+    vi.mocked(useLatestFx).mockReturnValue({
+      status: 'error',
+      retry: vi.fn(),
+    });
+
+    render(<DepositPage />);
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(350);
+    });
+
+    await act(async () => {
+      fireEvent.click(screen.getByRole('button', { name: 'Confirm' }));
+      await Promise.resolve();
+    });
+
+    expect(depositStateMocks.append).toHaveBeenCalledTimes(1);
+    const deposit = depositStateMocks.append.mock.calls[0][0];
+    expect(deposit).toMatchObject({
+      type: 'deposit',
+      status: 'pending',
+      amount_zmw: 100,
+      amount_usd: 5,
+      fx_rate: 20,
+    });
+
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(1600);
+    });
+
+    expect(depositStateMocks.confirm).toHaveBeenCalledTimes(1);
+    expect(depositStateMocks.confirm).toHaveBeenCalledWith(deposit.txn_ref);
+    expect(depositStateMocks.creditUSD).toHaveBeenCalledTimes(1);
+    expect(depositStateMocks.creditUSD).toHaveBeenCalledWith(5);
   });
 
   test('forces unavailable data to remain blocked as the secondary scenario', async () => {
