@@ -87,29 +87,29 @@ export default function DashboardPage() {
     >
       <p
         id="dashboard-total-balance-label"
-        className="text-xs font-semibold uppercase tracking-[0.12em] text-[#4658A0]"
+        className="text-xs font-semibold uppercase tracking-[0.12em] text-hedgr-500"
       >
         Total balance
       </p>
       {isLoading ? (
-        <div className="text-4xl font-semibold tabular-nums tracking-tight text-[#171D35] sm:text-[2.75rem] sm:leading-tight">
+        <div className="text-4xl font-semibold tabular-nums tracking-tight text-hedgr-800 sm:text-[2.75rem] sm:leading-tight">
           …
         </div>
       ) : (
         <BalanceWithLocalEstimate
           usdAmount={ready ? total : 0}
           data-testid="usd-balance"
-          className="text-4xl font-semibold tabular-nums tracking-tight text-[#171D35] sm:text-[2.75rem] sm:leading-tight"
+          className="text-4xl font-semibold tabular-nums tracking-tight text-hedgr-800 sm:text-[2.75rem] sm:leading-tight"
         />
       )}
       {ready && !isLoading && total !== available ? (
-        <p className="pt-1 text-sm text-[#4658A0]">
+        <p className="pt-1 text-sm text-hedgr-500">
           Available now:{" "}
-          <span className="font-medium text-[#1F2937] tabular-nums">
+          <span className="font-medium text-hedgr-dark tabular-nums">
             ${available.toFixed(2)}
           </span>
           {pending !== 0 ? (
-            <span className="text-[#5F71B9]">
+            <span className="text-hedgr-400">
               {" "}
               · Pending {pending > 0 ? "+" : ""}
               {pending.toFixed(2)} {currency}
@@ -117,6 +117,28 @@ export default function DashboardPage() {
           ) : null}
         </p>
       ) : null}
+    </section>
+  );
+
+  const currentOverview = (
+    <section
+      aria-label={
+        syntheticJourneyActive
+          ? "Current simulation overview"
+          : "Current account overview"
+      }
+      className="rounded-3xl border border-hedgr-200 bg-white p-5 sm:p-6"
+      data-testid="dashboard-current-overview"
+    >
+      <div className="grid gap-5 sm:grid-cols-[minmax(0,1.2fr)_minmax(13rem,0.8fr)] sm:gap-6">
+        <EnginePostureHeader
+          engineState={engineState}
+          syntheticJourneyActive={syntheticJourneyActive}
+        />
+        <div className="border-t border-hedgr-100 pt-5 sm:border-l sm:border-t-0 sm:pl-6 sm:pt-0">
+          {balanceHero}
+        </div>
+      </div>
     </section>
   );
 
@@ -129,11 +151,11 @@ export default function DashboardPage() {
       <div className="space-y-1">
         <h2
           id="dashboard-education-heading"
-          className="text-base font-semibold tracking-tight text-[#171D35]"
+          className="text-base font-semibold tracking-tight text-hedgr-800"
         >
           Educational content
         </h2>
-        <p className="max-w-xl text-sm leading-relaxed text-[#4658A0]">
+        <p className="max-w-xl text-sm leading-relaxed text-hedgr-500">
           Open these explanations when you want more context about the existing
           stability structure.
         </p>
@@ -147,18 +169,18 @@ export default function DashboardPage() {
 
   const disclosureSection = (
     <details
-      className="rounded-2xl border border-[#A6B0D8] bg-white p-5"
+      className="rounded-2xl border border-hedgr-200 bg-white p-5"
       data-testid="dashboard-disclosures"
     >
-      <summary className="cursor-pointer list-none font-medium text-[#171D35] marker:content-none select-none [&::-webkit-details-marker]:hidden">
+      <summary className="cursor-pointer list-none font-medium text-hedgr-800 marker:content-none select-none [&::-webkit-details-marker]:hidden">
         <span className="flex items-center justify-between gap-4">
           <span>Important disclosures</span>
-          <span className="text-xs font-medium uppercase tracking-wide text-[#4658A0]">
+          <span className="text-xs font-medium uppercase tracking-wide text-hedgr-500">
             View
           </span>
         </span>
       </summary>
-      <div className="mt-4 border-t border-[#CAD0E8] pt-4">
+      <div className="mt-4 border-t border-hedgr-100 pt-4">
         <PolicyDisclosure />
       </div>
     </details>
@@ -166,10 +188,9 @@ export default function DashboardPage() {
 
   if (error) {
     return (
-      <main className="p-6 sm:p-8">
-        <div className="mx-auto max-w-2xl space-y-8">
-          <EnginePostureHeader engineState={engineState} />
-          {balanceHero}
+      <main className="p-4 sm:p-8">
+        <div className="mx-auto max-w-2xl space-y-6 sm:space-y-8">
+          {currentOverview}
           <EngineAllocationBands engineState={engineState} />
           <EngineStabilityReviewSnapshot engineState={engineState} />
           <ErrorState
@@ -186,58 +207,43 @@ export default function DashboardPage() {
   }
 
   return (
-    <main className="p-6 sm:p-8">
-      <div className="mx-auto max-w-2xl space-y-8">
-        <EnginePostureHeader engineState={engineState} />
-        {balanceHero}
+    <main className="p-4 sm:p-8">
+      <div className="mx-auto max-w-2xl space-y-6 sm:space-y-8">
+        {currentOverview}
 
         {isFirstTimeUser && (
           <div
-            className="rounded-2xl border border-[#A6B0D8] bg-[#CAD0E8] p-6 text-[#171D35]"
+            className="rounded-2xl border border-hedgr-200 bg-hedgr-100/60 p-5 text-hedgr-800 sm:p-6"
             data-testid="dashboard-empty-state"
           >
-            <div className="flex items-start gap-4">
-              <div className="flex-shrink-0">
-                <svg
-                  className="h-10 w-10 text-[#1F2747]"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={1.5}
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
-              </div>
-              <div className="flex-1">
-                <h2 className="text-lg font-semibold text-[#171D35]">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+              <div className="max-w-lg">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-hedgr-500">
+                  Primary journey action
+                </p>
+                <h2 className="mt-1 text-lg font-semibold text-hedgr-800">
                   {syntheticJourneyActive
                     ? "Explore a synthetic stability journey"
                     : "Welcome to Hedgr"}
                 </h2>
-                <p className="mt-1 text-sm text-[#1F2937]">
+                <p className="mt-1 text-sm leading-relaxed text-hedgr-dark">
                   {syntheticJourneyActive
                     ? "Start with a simulated local-currency deposit, then make a simulated withdrawal and verify both fixture records in Activity. No real funds will move."
                     : "Get started by making your first deposit. Your balance and transaction history will appear here once you begin."}
                 </p>
-                <div className="mt-4 flex flex-wrap gap-3">
-                  <Link
-                    href={
-                      syntheticJourneyActive
-                        ? getSyntheticJourneyHref("/deposit")
-                        : "/deposit"
-                    }
-                    className="inline-flex items-center rounded-xl bg-[#1F2747] px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-[#36447C] focus:outline-none focus:ring-2 focus:ring-[#4658A0] focus:ring-offset-2 focus:ring-offset-[#CAD0E8]"
-                  >
-                    {syntheticJourneyActive
-                      ? "Start synthetic deposit"
-                      : "Make your first deposit"}
-                  </Link>
-                </div>
               </div>
+              <Link
+                href={
+                  syntheticJourneyActive
+                    ? getSyntheticJourneyHref("/deposit")
+                    : "/deposit"
+                }
+                className="inline-flex shrink-0 items-center justify-center rounded-xl bg-hedgr-primary px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-hedgr-600 focus:outline-none focus:ring-2 focus:ring-hedgr-500 focus:ring-offset-2 focus:ring-offset-hedgr-100"
+              >
+                {syntheticJourneyActive
+                  ? "Start synthetic deposit"
+                  : "Make your first deposit"}
+              </Link>
             </div>
           </div>
         )}
@@ -248,42 +254,42 @@ export default function DashboardPage() {
 
         {!isFirstTimeUser && !hasNoTransactions && (
           <section
-            className="border-t border-[#A6B0D8] pt-6"
+            className="border-t border-hedgr-200 pt-6"
             aria-labelledby="dashboard-recent-activity-heading"
           >
             <div className="flex items-baseline justify-between gap-3">
               <h2
                 id="dashboard-recent-activity-heading"
-                className="text-base font-semibold tracking-tight text-[#171D35]"
+                className="text-base font-semibold tracking-tight text-hedgr-800"
               >
                 Recent activity
               </h2>
               <Link
                 href="/activity"
-                className="shrink-0 text-sm font-medium text-[#36447C] underline-offset-2 hover:text-[#1F2747] hover:underline"
+                className="shrink-0 text-sm font-medium text-hedgr-600 underline-offset-2 hover:text-hedgr-primary hover:underline"
               >
                 View all
               </Link>
             </div>
-            <ul className="mt-4 divide-y divide-[#CAD0E8] border-t border-[#CAD0E8]">
+            <ul className="mt-4 divide-y divide-hedgr-100 border-t border-hedgr-100">
               {recentActivity.map((tx) => (
                 <li
                   key={tx.id}
                   className="flex items-baseline justify-between gap-4 py-3"
                 >
                   <div className="min-w-0">
-                    <p className="font-medium text-[#171D35]">
+                    <p className="font-medium text-hedgr-800">
                       {activityTitle(tx, syntheticJourneyActive)}
                     </p>
-                    <p className="text-sm text-[#4658A0]">
+                    <p className="text-sm text-hedgr-500">
                       {formatActivityDayLabel(tx.createdAt)}
                     </p>
                   </div>
                   <p
                     className={`shrink-0 tabular-nums text-sm font-semibold ${
                       tx.type === "DEPOSIT"
-                        ? "text-[#36447C]"
-                        : "text-[#1F2937]"
+                        ? "text-hedgr-600"
+                        : "text-hedgr-dark"
                     }`}
                   >
                     {tx.type === "DEPOSIT" ? "+" : "-"}$
@@ -300,18 +306,18 @@ export default function DashboardPage() {
         {isFeatureEnabled("earn") && (
           <div className="max-w-sm">
             <div
-              className="rounded-xl border border-[#A6B0D8] bg-white p-4"
+              className="rounded-xl border border-hedgr-200 bg-white p-4"
               data-testid="dashboard-earn-tile"
             >
-              <div className="text-xs font-medium text-[#4658A0]">
+              <div className="text-xs font-medium text-hedgr-500">
                 APY (context)
               </div>
               {apyError ? (
-                <div className="mt-1 text-xs font-medium text-[#171D35]">
+                <div className="mt-1 text-xs font-medium text-hedgr-800">
                   {apyError}
                 </div>
               ) : (
-                <div className="mt-1 text-xl font-semibold tabular-nums text-[#1F2937]">
+                <div className="mt-1 text-xl font-semibold tabular-nums text-hedgr-dark">
                   {apy !== null ? `${(apy * 100).toFixed(2)}%` : "—"}
                 </div>
               )}
@@ -320,7 +326,7 @@ export default function DashboardPage() {
         )}
 
         {!isFirstTimeUser && hasNoTransactions && (
-          <div className="rounded-2xl border border-[#A6B0D8] bg-white p-6">
+          <div className="rounded-2xl border border-hedgr-200 bg-white p-6">
             <h2 className="mb-4 text-lg font-semibold">Recommended Actions</h2>
             <EmptyState
               title="No recommended actions"

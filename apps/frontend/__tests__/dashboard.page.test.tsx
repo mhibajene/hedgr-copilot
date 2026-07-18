@@ -108,6 +108,7 @@ describe("DashboardPage engine trust surface", () => {
 
     render(<DashboardPage />);
 
+    expect(screen.getByTestId("dashboard-current-overview")).toBeDefined();
     expect(screen.getByTestId("engine-posture-badge")).toBeDefined();
     expect(screen.getByTestId("engine-posture-badge").textContent).toBe(
       "TIGHTENING"

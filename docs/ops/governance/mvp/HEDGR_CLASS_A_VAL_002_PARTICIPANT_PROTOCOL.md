@@ -66,9 +66,15 @@ Ask the participant to think aloud. Do not explain Hedgr's proposition beyond vi
 ### Step 1 — Dashboard
 
 1. Ask: “In your own words, what do you think Hedgr is intended to help with?”
-2. Ask: “What does the Stability Engine posture tell you?”
-3. Ask: “Do the target percentages show money that has already moved, or something else?”
-4. Ask the participant to identify the next available action.
+2. Ask the participant to identify the primary action without opening any disclosure.
+3. Ask: “What does Stable balance mean here?”
+4. Ask: “How are Conservative yield and Reserve different from Stable balance and from each other?”
+5. Ask: “What does the Stability Engine posture tell you?”
+6. Ask: “Do the target percentages show money that has already moved, or something else?”
+7. Ask: “What is Review Snapshot for?”
+8. Ask the participant to distinguish the current simulation status, fixture target date, and last viewed locally.
+9. Ask: “Did any colour make a lane feel guaranteed safe, higher performing, urgent, active, or already approved?”
+10. Ask the participant to open the consolidated simulation and target explanations, then ask whether the disclosure placement increased, reduced, or did not change confidence.
 
 ### Step 2 — Deposit
 
@@ -114,11 +120,18 @@ Ask free recall first, then use the probe only if needed.
 | Outcome | Free-recall question | Allowed probe |
 | --- | --- | --- |
 | Proposition | What is Hedgr intended to do for someone like you? | Is the main idea stability, payments speed, trading, or something else? Why? |
+| Primary action | What did the page ask you to do next? | Which control appeared to begin the participant journey? |
+| Stable balance | What does Stable balance mean here? | Is it the main holding lane, a performance result, or an action control? |
+| Supporting lanes | How do Conservative yield and Reserve support Stable balance? | Did either feel like a separate product or something you could manage? |
 | Ledger vs targets | What is the difference between the balance and the target posture percentages? | Did the percentages prove that funds had moved? |
 | Engine posture | What did the Stability Engine section help you understand? | Was it information, an instruction, or an executed action? |
+| Review Snapshot | What is Review Snapshot for? | Does it orient you, ask you to act, or report execution? |
+| Temporal clarity | What is the difference between current simulation status, fixture target date, and last viewed locally? | Which describes the fixture and which is only stored in this browser? |
 | Journey continuity | Walk me through what happened from the first balance to Activity. | How did `$5.00` become `$3.00`? |
 | Simulation boundary | Did real money move anywhere in this session? | What on screen supports your answer? |
 | Available action | What could you do in the primary condition, and what was blocked in the exception condition? | Why was Confirm disabled? |
+| Colour interpretation | What, if anything, did colour imply? | Did colour imply guaranteed safety, performance, urgency, activation, or approval? |
+| Disclosure consolidation | How did the consolidated explanations affect confidence? | Was important meaning easy to find without making the page feel repetitive? |
 | Utility and trust | Would this proposition be useful enough to explore further? What increased or reduced trust? | What is the one thing you would need clarified before continuing? |
 
 ## 6. Evidence-capture template
@@ -150,11 +163,18 @@ Score only as a compact retrieval aid; the participant's words and observed beha
 | Outcome | Score | Free-recall response / observed behavior | Probe used? | Misconception or hesitation | Short redacted quote |
 | --- | ---: | --- | --- | --- | --- |
 | Explain the Hedgr proposition | | | | | |
+| Identify the primary journey action | | | | | |
+| Interpret Stable balance as the dominant holding lane | | | | | |
+| Distinguish Conservative yield and Reserve as supporting lanes | | | | | |
 | Distinguish ledger balance from informational targets | | | | | |
 | Explain the Stability Engine posture | | | | | |
+| Explain the role of Review Snapshot | | | | | |
+| Distinguish current status, fixture date, and local viewing history | | | | | |
 | Reconcile Dashboard → Deposit → Withdraw → Activity | | | | | |
 | State that no real money moved | | | | | |
 | Identify available and unavailable actions | | | | | |
+| Deny unintended safety, performance, urgency, activation, or approval meaning from colour | | | | | |
+| Confirm disclosure consolidation preserved confidence and findability | | | | | |
 | Express usefulness and trust | | | | | |
 
 ### Journey record
@@ -189,8 +209,12 @@ Do not convert scores into automatic approval. Synthesize repeated observations 
 | Proposition understood without prompting | Supports or weakens the case for continued Class A exploration | Does not establish demand or Class B feasibility |
 | Ledger / target distinction understood | Tests shadow-accounting and fund-movement interpretation risk | Does not validate accounting, custody, or engine execution |
 | Engine posture understood as informational | Tests the read-only Stability Engine trust expression | Does not authorize engine action or allocation execution |
+| Dominant and supporting lanes understood | Tests whether Stable balance, Conservative yield, and Reserve form a comprehensible stability structure | Does not redefine the lanes or validate an allocation product |
+| Review Snapshot and temporal labels understood | Tests orientation, fixture-date, and browser-local memory comprehension | Does not validate monitoring, recordkeeping, or runtime state |
 | End-to-end fixture reconciled | Tests product continuity and internal narrative consistency | Does not prove operational rails or real transaction reliability |
 | No-real-money boundary correctly stated | Tests the simulation and non-settlement disclosure | Does not establish compliance or customer-money readiness |
+| Colour carries no unintended financial meaning | Tests whether restrained differentiation remains secondary to labels and structure | Does not establish safety, performance, approval, or protection |
+| Consolidated disclosures preserve confidence | Tests findability and trust after progressive disclosure | Does not authorize removal or reinterpretation of trust claims |
 | Exception behavior understood | Tests trust under unavailable data | Does not select a live rate source or degraded execution policy |
 | Utility / trust judgment | Informs Founder disposition among continue, one iteration, reframe, or pause | Does not select a market, provider, rail, custody model, or successor ticket |
 
