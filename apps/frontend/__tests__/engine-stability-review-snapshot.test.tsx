@@ -69,6 +69,13 @@ describe("EngineStabilityReviewSnapshot", () => {
       ENGINE_STABILITY_REVIEW_WITHDRAWAL_CONTINUITY
     );
     expect(snapshot.textContent).toContain(ENGINE_STABILITY_REVIEW_CADENCE_CUE);
+    expect(snapshot.textContent).toContain("Current simulation status");
+    expect(snapshot.textContent).toContain("Fixture target date");
+    expect(snapshot.textContent).toContain("Last viewed locally");
+    expect(
+      screen.getByTestId("engine-stability-review-last-viewed-locally")
+        .textContent
+    ).toBe("No prior local view in this browser.");
 
     const formattedUpdatedAt = formatEngineSnapshotUpdatedAt(
       engineState.updatedAt
@@ -131,6 +138,8 @@ describe("EngineStabilityReviewSnapshot", () => {
     expect(disclaimer.textContent).toMatch(/ledger/i);
     expect(disclaimer.textContent).toMatch(/funds moved|movement/i);
 
+    const details = screen.getByTestId("engine-stability-review-details");
+    expect(details.hasAttribute("open")).toBe(false);
     const cadence = screen.getByTestId(
       "engine-stability-review-snapshot-cadence"
     );
@@ -140,14 +149,33 @@ describe("EngineStabilityReviewSnapshot", () => {
     const updatedAt = screen.getByTestId(
       "engine-stability-review-snapshot-updated-at"
     );
+    expect(details.contains(cadence)).toBe(true);
+    expect(details.contains(changeLine)).toBe(true);
+    expect(details.contains(updatedAt)).toBe(false);
     expect(
       cadence.compareDocumentPosition(changeLine) &
         Node.DOCUMENT_POSITION_FOLLOWING
     ).toBeTruthy();
     expect(
-      changeLine.compareDocumentPosition(updatedAt) &
+      updatedAt.compareDocumentPosition(details) &
         Node.DOCUMENT_POSITION_FOLLOWING
     ).toBeTruthy();
+  });
+
+  test("keeps the open Review Snapshot surface free of Orientation chrome", async () => {
+    render(<EngineStabilityReviewSnapshot engineState={makeEngineState()} />);
+
+    const snapshot = screen.getByTestId("engine-stability-review-snapshot");
+    expect(snapshot.textContent).not.toMatch(/\bOrientation\b/);
+    expect(
+      screen.getByTestId("engine-stability-review-details").hasAttribute("open")
+    ).toBe(false);
+
+    await waitFor(() => {
+      expect(
+        screen.queryByTestId("engine-stability-review-snapshot-change-signal")
+      ).toBeNull();
+    });
   });
 
   test("MC-S2-013: shows changed when prior fingerprint differs", async () => {

@@ -94,77 +94,96 @@ export function EngineStabilityReviewSnapshot({
 
   return (
     <section
-      className="max-w-2xl rounded-3xl border border-[#A6B0D8] bg-white p-5 text-sm text-[#1F2937] sm:p-6"
+      className="max-w-2xl rounded-3xl border border-hedgr-200 bg-white p-5 text-sm text-hedgr-dark sm:p-6"
       data-testid="engine-stability-review-snapshot"
       aria-labelledby="engine-stability-review-snapshot-title"
     >
-      <div className="flex flex-wrap items-start justify-between gap-3">
-        <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[#4658A0]">
-            Review
-          </p>
-          <h2
-            id="engine-stability-review-snapshot-title"
-            className="mt-1 text-lg font-semibold tracking-tight text-[#171D35]"
-          >
-            {ENGINE_STABILITY_REVIEW_SNAPSHOT_TITLE}
-          </h2>
-        </div>
-        <span className="rounded-full border border-[#A6B0D8] bg-[#CAD0E8] px-3 py-1 text-xs font-semibold text-[#171D35]">
-          Current
-        </span>
-      </div>
-      <p
-        className="mt-4 text-base font-medium leading-relaxed text-[#171D35]"
-        data-testid="engine-stability-review-snapshot-stance"
-      >
-        {getEngineStabilityReviewSnapshotStance(engineState.posture)}
-      </p>
-      <p
-        className="mt-2 max-w-xl leading-relaxed text-[#1F2937]"
-        data-testid="engine-stability-review-snapshot-cadence"
-      >
-        {ENGINE_STABILITY_REVIEW_CADENCE_CUE}
-      </p>
-      {changeSignal !== null && (
-        <p
-          className="mt-3 text-sm font-medium leading-relaxed text-[#36447C]"
-          data-testid="engine-stability-review-snapshot-change-signal"
-        >
-          {changeSignal === "unchanged"
-            ? ENGINE_STABILITY_REVIEW_CHANGE_UNCHANGED
-            : ENGINE_STABILITY_REVIEW_CHANGE_CHANGED}
+      <div>
+        <p className="text-xs font-semibold uppercase tracking-[0.12em] text-hedgr-500">
+          Review
         </p>
-      )}
-      <p
-        className="mt-3 text-xs leading-snug text-[#4658A0]"
-        data-testid="engine-stability-review-snapshot-updated-at"
-      >
-        {getEngineStabilityReviewTimestampLine(formattedUpdatedAt)}
-      </p>
-
+        <h2
+          id="engine-stability-review-snapshot-title"
+          className="mt-1 text-lg font-semibold tracking-tight text-hedgr-800"
+        >
+          {ENGINE_STABILITY_REVIEW_SNAPSHOT_TITLE}
+        </h2>
+      </div>
+      <div className="mt-4" data-testid="engine-stability-review-orientation">
+        <p className="text-[11px] font-semibold uppercase tracking-wide text-hedgr-500">
+          Current simulation status
+        </p>
+        <p
+          className="mt-1 text-sm font-medium leading-relaxed text-hedgr-800"
+          data-testid="engine-stability-review-snapshot-stance"
+        >
+          {getEngineStabilityReviewSnapshotStance(engineState.posture)}
+        </p>
+      </div>
+      <dl className="mt-4 grid gap-4 border-t border-hedgr-100 pt-4 sm:grid-cols-2">
+        <div>
+          <dt className="text-[11px] font-semibold uppercase tracking-wide text-hedgr-500">
+            Fixture target date
+          </dt>
+          <dd
+            className="mt-1 text-xs leading-relaxed text-hedgr-600"
+            data-testid="engine-stability-review-snapshot-updated-at"
+          >
+            {getEngineStabilityReviewTimestampLine(formattedUpdatedAt)}
+          </dd>
+        </div>
+        <div>
+          <dt className="text-[11px] font-semibold uppercase tracking-wide text-hedgr-500">
+            Last viewed locally
+          </dt>
+          <dd
+            className="mt-1 text-xs leading-relaxed text-hedgr-600"
+            data-testid="engine-stability-review-last-viewed-locally"
+          >
+            {memoryEntries[0]
+              ? formatEngineSnapshotUpdatedAt(memoryEntries[0].viewedAt)
+              : "No prior local view in this browser."}
+          </dd>
+        </div>
+      </dl>
       <details
-        className="mt-5 border-t border-[#CAD0E8] pt-4"
+        className="mt-4 border-t border-hedgr-100 pt-4"
         data-testid="engine-stability-review-details"
       >
-        <summary className="cursor-pointer list-none font-medium text-[#171D35] marker:content-none select-none [&::-webkit-details-marker]:hidden">
+        <summary className="cursor-pointer list-none font-medium text-hedgr-800 marker:content-none select-none [&::-webkit-details-marker]:hidden">
           <span className="flex items-center justify-between gap-4">
             <span>Review details</span>
-            <span className="text-xs font-medium uppercase tracking-wide text-[#4658A0]">
+            <span className="text-xs font-medium uppercase tracking-wide text-hedgr-500">
               View
             </span>
           </span>
         </summary>
-        <div className="mt-4 space-y-3 border-t border-[#CAD0E8] pt-4">
-          <p className="max-w-xl leading-relaxed text-[#1F2937]">
+        <div className="mt-4 space-y-3 border-t border-hedgr-100 pt-4">
+          <p
+            className="max-w-xl leading-relaxed text-hedgr-dark"
+            data-testid="engine-stability-review-snapshot-cadence"
+          >
+            {ENGINE_STABILITY_REVIEW_CADENCE_CUE}
+          </p>
+          {changeSignal !== null && (
+            <p
+              className="max-w-xl text-sm font-medium leading-relaxed text-hedgr-600"
+              data-testid="engine-stability-review-snapshot-change-signal"
+            >
+              {changeSignal === "unchanged"
+                ? ENGINE_STABILITY_REVIEW_CHANGE_UNCHANGED
+                : ENGINE_STABILITY_REVIEW_CHANGE_CHANGED}
+            </p>
+          )}
+          <p className="max-w-xl leading-relaxed text-hedgr-dark">
             {ENGINE_STABILITY_REVIEW_AVAILABLE_CONTINUITY}
           </p>
-          <p className="max-w-xl leading-relaxed text-[#1F2937]">
+          <p className="max-w-xl leading-relaxed text-hedgr-dark">
             {ENGINE_STABILITY_REVIEW_WITHDRAWAL_CONTINUITY}
           </p>
           {changeSignal !== null && (
             <p
-              className="max-w-xl text-xs leading-relaxed text-[#4658A0]"
+              className="max-w-xl text-xs leading-relaxed text-hedgr-500"
               data-testid="engine-stability-review-snapshot-change-disclaimer"
             >
               {ENGINE_STABILITY_REVIEW_CHANGE_DISCLAIMER}
@@ -172,13 +191,13 @@ export function EngineStabilityReviewSnapshot({
           )}
           {memoryEntries.length > 0 && (
             <div
-              className="space-y-3 border-t border-[#CAD0E8] pt-4"
+              className="space-y-3 border-t border-hedgr-100 pt-4"
               data-testid="engine-stability-review-memory"
             >
-              <h3 className="text-xs font-medium text-[#171D35]">
+              <h3 className="text-xs font-medium text-hedgr-800">
                 {ENGINE_STABILITY_REVIEW_MEMORY_TITLE}
               </h3>
-              <p className="max-w-xl text-xs leading-relaxed text-[#4658A0]">
+              <p className="max-w-xl text-xs leading-relaxed text-hedgr-500">
                 {ENGINE_STABILITY_REVIEW_MEMORY_DISCLAIMER}
               </p>
               <div className="space-y-4">
@@ -188,15 +207,15 @@ export function EngineStabilityReviewSnapshot({
                     className="space-y-1"
                     data-testid="engine-stability-review-memory-entry"
                   >
-                    <p className="text-sm text-[#1F2937]">
+                    <p className="text-sm text-hedgr-dark">
                       {getEngineStabilityReviewSnapshotStance(entry.posture)}
                     </p>
-                    <p className="text-sm text-[#1F2937]">
+                    <p className="text-sm text-hedgr-dark">
                       {entry.changeVsPrior === "unchanged"
                         ? ENGINE_STABILITY_REVIEW_MEMORY_TARGETS_UNCHANGED
                         : ENGINE_STABILITY_REVIEW_MEMORY_TARGETS_CHANGED}
                     </p>
-                    <p className="text-xs text-[#4658A0]">
+                    <p className="text-xs text-hedgr-500">
                       {formatEngineSnapshotUpdatedAt(entry.viewedAt)}
                     </p>
                   </div>

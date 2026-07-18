@@ -58,6 +58,11 @@ describe("EngineAllocationBands", () => {
     ).toBe("supporting");
 
     expect(screen.getByTestId("engine-allocation-trust-legend")).toBeDefined();
+    const targetDetails = screen.getByTestId(
+      "engine-allocation-target-details"
+    );
+    expect(targetDetails.tagName).toBe("DETAILS");
+    expect(targetDetails.hasAttribute("open")).toBe(false);
 
     const caption = screen.getByTestId(
       "engine-allocation-bands-caption"
@@ -214,10 +219,58 @@ describe("EngineAllocationBands", () => {
     );
 
     expect(primary.className).toContain("border-l-4");
-    expect(primary.className).toContain("bg-[#171D35]");
-    expect(yieldLane.className).toContain("bg-white");
-    expect(reserveLane.className).toContain("bg-white");
+    expect(primary.className).toContain("bg-hedgr-800");
+    expect(primary.getAttribute("data-primary-stability-edge")).toBe("true");
+    expect(yieldLane.className).toContain("bg-hedgr-100");
+    expect(reserveLane.className).toContain("bg-hedgr-200");
+    expect(reserveLane.className).not.toContain("bg-hedgr-100");
+    expect(yieldLane.getAttribute("data-supporting-lane-surface")).toBe(
+      "static"
+    );
+    expect(reserveLane.getAttribute("data-supporting-lane-surface")).toBe(
+      "static"
+    );
     expect(yieldLane.className).not.toContain("border-l-4");
     expect(reserveLane.className).not.toContain("border-l-4");
+    expect(yieldLane.className).not.toContain("bg-hedgr-800");
+    expect(reserveLane.className).not.toContain("bg-hedgr-800");
+  });
+
+  test("keeps supporting-lane surfaces static across postures", () => {
+    const { rerender } = render(
+      <EngineAllocationBands engineState={getMockEngineState("normal")} />
+    );
+
+    const yieldClassesNormal = screen.getByTestId(
+      "engine-allocation-band-yieldCapPct"
+    ).className;
+    const reserveClassesNormal = screen.getByTestId(
+      "engine-allocation-band-liquidityTargetPct"
+    ).className;
+
+    rerender(
+      <EngineAllocationBands engineState={getMockEngineState("tightened")} />
+    );
+
+    expect(
+      screen.getByTestId("engine-allocation-band-yieldCapPct").className
+    ).toBe(yieldClassesNormal);
+    expect(
+      screen.getByTestId("engine-allocation-band-liquidityTargetPct").className
+    ).toBe(reserveClassesNormal);
+  });
+
+  test("labels every percentage as an informational target share", () => {
+    render(<EngineAllocationBands engineState={makeEngineState()} />);
+
+    for (const testId of [
+      "engine-allocation-band-coreTargetPct",
+      "engine-allocation-band-yieldCapPct",
+      "engine-allocation-band-liquidityTargetPct",
+    ]) {
+      expect(screen.getByTestId(testId).textContent).toMatch(
+        /target share\s*·\s*\d+%/i
+      );
+    }
   });
 });

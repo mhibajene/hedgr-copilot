@@ -39,6 +39,12 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   await expect(page.getByTestId('trust-disclosure-banner')).toContainText(
     'Simulation Mode — No Real Money',
   );
+  const simulationDetails = page.getByTestId('simulation-technical-details');
+  await expect(simulationDetails).not.toHaveAttribute('open', '');
+  await simulationDetails.getByText('How this simulation works').click();
+  await expect(simulationDetails).toContainText('Auth: mock');
+  await expect(simulationDetails).toContainText('DeFi: mock');
+  await expect(simulationDetails).toContainText('FX: fixed');
   await expect(page.getByRole('button', { name: 'Dismiss trust disclosure' })).toHaveCount(0);
   const journeyShell = page.getByTestId('synthetic-journey-shell');
   await expect(journeyShell).toContainText('CLASS-A-VAL-002');
@@ -46,6 +52,15 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
     'Settings and Copilot are outside this participant journey',
   );
   await expect(page.getByTestId('usd-balance')).toHaveText('$0.00');
+  await expect(page.getByTestId('engine-allocation-band-coreTargetPct')).toContainText(
+    'Target share · 50%',
+  );
+  await expect(page.getByTestId('engine-stability-review-snapshot')).toContainText(
+    'Fixture target date',
+  );
+  await expect(page.getByTestId('engine-stability-review-snapshot')).toContainText(
+    'Last viewed locally',
+  );
 
   await page.getByRole('link', { name: 'Start synthetic deposit' }).click();
   await expect(page).toHaveURL(/\/deposit\?journey=class-a-val-002/);

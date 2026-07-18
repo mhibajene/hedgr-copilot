@@ -58,8 +58,11 @@ export function AppLayoutClient({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <TrustDisclosureBanner dismissible={!syntheticJourneyActive} />
-      <nav data-testid="app-nav" className="bg-white border-b shadow-sm">
+      <TrustDisclosureBanner
+        dismissible={!syntheticJourneyActive}
+        consolidateTechnicalDetails={syntheticJourneyActive}
+      />
+      <nav data-testid="app-nav" className="border-b border-hedgr-100 bg-white shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
             {/* Mobile hamburger button */}
@@ -67,7 +70,7 @@ export function AppLayoutClient({ children }: { children: React.ReactNode }) {
               <button
                 data-testid="nav-toggle"
                 onClick={() => setIsNavOpen(!isNavOpen)}
-                className="inline-flex items-center justify-center p-2 rounded-md text-gray-500 hover:text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
+                className="inline-flex items-center justify-center rounded-md p-2 text-hedgr-500 hover:bg-hedgr-100 hover:text-hedgr-dark focus:outline-none focus:ring-2 focus:ring-inset focus:ring-hedgr-500"
                 aria-expanded={isNavOpen}
                 aria-label="Toggle navigation menu"
               >
@@ -97,8 +100,8 @@ export function AppLayoutClient({ children }: { children: React.ReactNode }) {
                     data-testid={link.testId}
                     className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${
                       pathname === link.href
-                        ? 'border-blue-500 text-gray-900'
-                        : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                        ? 'border-hedgr-primary text-hedgr-dark'
+                        : 'border-transparent text-hedgr-500 hover:border-hedgr-200 hover:text-hedgr-dark'
                     }`}
                   >
                     {link.label}
@@ -112,7 +115,7 @@ export function AppLayoutClient({ children }: { children: React.ReactNode }) {
         {/* Mobile nav menu */}
         <div
           data-testid="nav-links-mobile"
-          className={`${isNavOpen ? 'block' : 'hidden'} md:hidden border-t border-gray-200`}
+          className={`${isNavOpen ? 'block' : 'hidden'} border-t border-hedgr-100 md:hidden`}
         >
           <div className="px-2 pt-2 pb-3 space-y-1">
             {navLinks.map((link) => (
@@ -123,8 +126,8 @@ export function AppLayoutClient({ children }: { children: React.ReactNode }) {
                 onClick={() => setIsNavOpen(false)}
                 className={`block px-3 py-2 rounded-md text-base font-medium ${
                   pathname === link.href
-                    ? 'bg-blue-50 text-blue-700'
-                    : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'
+                    ? 'bg-hedgr-100 text-hedgr-primary'
+                    : 'text-hedgr-500 hover:bg-gray-50 hover:text-hedgr-dark'
                 }`}
               >
                 {link.label}
@@ -136,16 +139,16 @@ export function AppLayoutClient({ children }: { children: React.ReactNode }) {
       {syntheticJourneyActive ? (
         <section
           aria-label="Synthetic validation journey"
-          className="border-b border-[#A6B0D8] bg-white"
+          className="border-b border-hedgr-200 bg-white"
           data-testid="synthetic-journey-shell"
         >
-          <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
-            <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+          <div className="mx-auto max-w-7xl px-4 py-3 sm:px-6 lg:px-8">
+            <div className="flex flex-col gap-2 lg:flex-row lg:items-center lg:justify-between">
               <div>
-                <p className="text-xs font-semibold uppercase tracking-wide text-[#4658A0]">
+                <p className="text-xs font-semibold uppercase tracking-wide text-hedgr-500">
                   CLASS-A-VAL-002 · synthetic research path
                 </p>
-                <p className="mt-1 text-sm text-[#1F2937]">
+                <p className="mt-1 text-sm text-hedgr-dark">
                   Follow the four steps in order. Settings and Copilot are outside this
                   participant journey.
                 </p>
@@ -159,8 +162,8 @@ export function AppLayoutClient({ children }: { children: React.ReactNode }) {
                         aria-current={isActive ? 'step' : undefined}
                         className={`inline-flex items-center gap-2 rounded-lg border px-3 py-2 text-sm font-medium transition-colors ${
                           isActive
-                            ? 'border-[#1F2747] bg-[#1F2747] text-white'
-                            : 'border-[#A6B0D8] bg-white text-[#1F2747] hover:border-[#8391C9] hover:text-[#36447C]'
+                            ? 'border-hedgr-primary bg-hedgr-primary text-white'
+                            : 'border-hedgr-200 bg-white text-hedgr-primary hover:border-hedgr-300 hover:text-hedgr-600'
                         }`}
                       >
                         <span aria-hidden="true">{index + 1}</span>

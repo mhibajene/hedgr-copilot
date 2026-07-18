@@ -12,17 +12,21 @@ const BADGE_LABELS: Record<EnginePosture, string> = {
 };
 
 const BADGE_TONES: Record<EnginePosture, string> = {
-  normal: "bg-[#CAD0E8] text-[#171D35] border-[#A6B0D8]",
-  tightening: "bg-white text-[#1F2937] border-[#8391C9]",
-  tightened: "bg-white text-[#171D35] border-[#1F2747]",
-  recovery: "bg-white text-[#36447C] border-[#A6B0D8]",
+  normal: "border-hedgr-200 bg-hedgr-100 text-hedgr-800",
+  tightening: "border-hedgr-300 bg-white text-hedgr-dark",
+  tightened: "border-hedgr-primary bg-white text-hedgr-800",
+  recovery: "border-hedgr-200 bg-white text-hedgr-600",
 };
 
 type EnginePostureHeaderProps = {
   engineState: EngineState;
+  syntheticJourneyActive?: boolean;
 };
 
-export function EnginePostureHeader({ engineState }: EnginePostureHeaderProps) {
+export function EnginePostureHeader({
+  engineState,
+  syntheticJourneyActive = false,
+}: EnginePostureHeaderProps) {
   const { posture, notice } = engineState;
   const showNotice = posture !== "normal" && Boolean(notice);
 
@@ -38,7 +42,7 @@ export function EnginePostureHeader({ engineState }: EnginePostureHeaderProps) {
 
   return (
     <header
-      className="space-y-3 border-b border-[#A6B0D8] pb-6"
+      className="space-y-3"
       aria-labelledby="dashboard-current-status-label"
       data-testid="dashboard-current-status"
     >
@@ -46,9 +50,9 @@ export function EnginePostureHeader({ engineState }: EnginePostureHeaderProps) {
       <div className="flex items-start justify-between gap-3">
         <p
           id="dashboard-current-status-label"
-          className="text-xs font-semibold uppercase tracking-[0.12em] text-[#4658A0]"
+          className="text-xs font-semibold uppercase tracking-[0.12em] text-hedgr-500"
         >
-          Current status
+          {syntheticJourneyActive ? "Current simulation status" : "Current status"}
         </p>
         <span
           data-testid="engine-posture-badge"
@@ -60,14 +64,14 @@ export function EnginePostureHeader({ engineState }: EnginePostureHeaderProps) {
       </div>
 
       <p
-        className="max-w-xl text-base leading-relaxed text-[#1F2937]"
+        className="max-w-xl text-base leading-relaxed text-hedgr-dark"
         data-testid="engine-posture-context"
       >
         {ENGINE_POSTURE_CONTEXT[posture]}
       </p>
 
       <p
-        className="text-sm font-medium text-[#36447C]"
+        className="text-sm font-medium text-hedgr-600"
         data-testid="engine-posture-action-guidance"
       >
         There is nothing here you need to manage.
@@ -77,10 +81,10 @@ export function EnginePostureHeader({ engineState }: EnginePostureHeaderProps) {
         <div
           data-testid="engine-posture-banner"
           role="status"
-          className="rounded-2xl border border-[#8391C9] bg-white px-5 py-3.5 text-sm leading-snug text-[#171D35]"
+          className="rounded-2xl border border-hedgr-300 bg-white px-5 py-3.5 text-sm leading-snug text-hedgr-800"
         >
-          <p className="font-semibold text-[#171D35]">{notice?.title}</p>
-          <p className="mt-2 text-[#1F2937]">{notice?.body}</p>
+          <p className="font-semibold text-hedgr-800">{notice?.title}</p>
+          <p className="mt-2 text-hedgr-dark">{notice?.body}</p>
         </div>
       ) : null}
     </header>
