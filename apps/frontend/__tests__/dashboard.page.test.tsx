@@ -39,6 +39,10 @@ vi.mock("../lib/policy/usePolicy", () => ({
   })),
 }));
 
+vi.mock("next/navigation", () => ({
+  useSearchParams: vi.fn(() => new URLSearchParams()),
+}));
+
 vi.mock("../components", () => ({
   BalanceWithLocalEstimate: ({
     usdAmount,
@@ -78,6 +82,7 @@ import DashboardPage from "../app/(app)/dashboard/page";
 import { getMockEngineState } from "../lib/engine/mock";
 import { useBalance } from "../lib/hooks/useBalance";
 import { useEngineState } from "../lib/engine/useEngineState";
+import { useSearchParams } from "next/navigation";
 
 function makeBalanceState(
   overrides: Partial<ReturnType<typeof useBalance>> = {}
@@ -97,9 +102,41 @@ function makeBalanceState(
 afterEach(() => {
   cleanup();
   vi.restoreAllMocks();
+  vi.mocked(useSearchParams).mockReturnValue(
+    new URLSearchParams() as ReturnType<typeof useSearchParams>
+  );
+  vi.unstubAllEnvs();
 });
 
 describe("DashboardPage engine trust surface", () => {
+  test("honors the explicit synthetic journey query outside local development", async () => {
+    vi.stubEnv("NEXT_PUBLIC_AUTH_MODE", "mock");
+    vi.stubEnv("NEXT_PUBLIC_FX_MODE", "stub");
+    vi.stubEnv("NEXT_PUBLIC_APP_ENV", "prod");
+    vi.mocked(useSearchParams).mockReturnValue(
+      new URLSearchParams(
+        "journey=class-a-val-002"
+      ) as ReturnType<typeof useSearchParams>
+    );
+    vi.mocked(useBalance).mockReturnValue(
+      makeBalanceState({ total: 0, available: 0 })
+    );
+    vi.mocked(useEngineState).mockReturnValue(
+      getMockEngineState("normal") as EngineState
+    );
+
+    render(<DashboardPage />);
+
+    expect(
+      (
+        await screen.findByRole("link", { name: "Start synthetic deposit" })
+      ).getAttribute("href")
+    ).toBe("/deposit?journey=class-a-val-002");
+    expect(
+      screen.getByTestId("dashboard-current-overview").getAttribute("aria-label")
+    ).toBe("Current simulation overview");
+  });
+
   test("mounts the engine posture header in the primary dashboard path", () => {
     vi.mocked(useBalance).mockReturnValue(makeBalanceState());
     vi.mocked(useEngineState).mockReturnValue(

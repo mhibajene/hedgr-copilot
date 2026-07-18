@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import { useState, useMemo } from 'react';
 import { useLedgerStore } from '../../../lib/state/ledger';
 import { TxStatusPill, TxDetailModal } from '../../../components';
@@ -160,7 +161,10 @@ function ActivityRow({
 
 export default function ActivityPage() {
   const transactions = useLedgerStore((s) => s.transactions);
-  const syntheticJourneyActive = isSyntheticJourneyPrimaryCondition();
+  const searchParams = useSearchParams();
+  const syntheticJourneyActive = isSyntheticJourneyPrimaryCondition(
+    searchParams?.toString(),
+  );
   const [selectedTx, setSelectedTx] = useState<TxLifecycle | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [filter, setFilter] = useState<FilterType>('all');
