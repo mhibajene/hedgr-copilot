@@ -72,9 +72,17 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
     'Synthetic preview rate: 1 USD = 20.00 ZMW',
   );
 
-  await page.getByTestId('deposit-amount').fill('100');
+  const depositAmount = page.getByTestId('deposit-amount');
+  const depositConfirm = page.getByRole('button', { name: 'Confirm' });
+  await depositAmount.fill('-100');
+  await expect(depositAmount).toHaveValue('-100');
+  await expect(depositAmount).toHaveAttribute('aria-invalid', 'true');
+  await expect(page.getByText('Enter a deposit amount greater than 0 ZMW.')).toBeVisible();
+  await expect(depositConfirm).toBeDisabled();
+
+  await depositAmount.fill('100');
   await expect(page.getByTestId('deposit-conversion-preview')).toContainText('$5.00');
-  await page.getByRole('button', { name: 'Confirm' }).click();
+  await depositConfirm.click();
   await expect(page.getByTestId('deposit-confirmation-region')).toContainText(
     'No external account was charged and no money moved',
     { timeout: 10_000 },
@@ -88,8 +96,27 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   );
   await expect(page.getByText('Current balance:')).toContainText('$5.00');
 
-  await page.getByLabel('Amount (USD)').fill('2');
-  await page.getByRole('button', { name: 'Confirm' }).click();
+  const withdrawAmount = page.getByTestId('withdraw-amount');
+  const withdrawConfirm = page.getByRole('button', { name: 'Confirm' });
+  await expect(withdrawAmount).toHaveValue('');
+  await expect(withdrawConfirm).toBeDisabled();
+
+  await withdrawAmount.fill('-2');
+  await expect(withdrawAmount).toHaveAttribute('aria-invalid', 'true');
+  await expect(page.getByText('Enter a withdrawal amount greater than $0.')).toBeVisible();
+  await expect(withdrawConfirm).toBeDisabled();
+
+  await withdrawAmount.fill('');
+  await expect(withdrawAmount).toHaveValue('');
+  await withdrawAmount.press('1');
+  await withdrawAmount.press('5');
+  await expect(withdrawAmount).toHaveValue('15');
+  await expect(page.getByText('Amount exceeds available balance.')).toBeVisible();
+  await expect(withdrawConfirm).toBeDisabled();
+
+  await withdrawAmount.fill('2');
+  await expect(withdrawConfirm).toBeEnabled();
+  await withdrawConfirm.click();
   await expect(page.getByTestId('withdraw-status-region')).toHaveAttribute(
     'data-status',
     'SUCCESS',

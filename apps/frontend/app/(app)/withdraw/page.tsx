@@ -99,7 +99,7 @@ function WithdrawPageContent() {
 
   const debitWallet = useWalletStore((s) => s.debitUSD);
 
-  const [usd, setUsd] = useState(1);
+  const [usdInput, setUsdInput] = useState('');
   const [txnRef, setTxnRef] = useState<string | null>(null);
   const [status, setStatus] = useState<WithdrawPageStatus>('IDLE');
 
@@ -109,6 +109,10 @@ function WithdrawPageContent() {
 
   const canConfirmWithoutRate = txReviewFlags.bypassFxForConfirm;
   const rateAllowsConfirm = rate !== null || canConfirmWithoutRate;
+  const usd = usdInput === '' ? 0 : Number(usdInput);
+  const hasPositiveAmount = Number.isFinite(usd) && usd > 0;
+  const amountIsInvalid = usdInput !== '' && !hasPositiveAmount;
+  const amountExceedsBalance = hasPositiveAmount && usd > available;
 
   useEffect(() => {
     const fetchWithdrawMethods = async () => {
@@ -169,7 +173,7 @@ function WithdrawPageContent() {
   }, [txnRef, debitWallet, usd, confirmTx, failTx, refresh]);
 
   const confirm = async () => {
-    if (usd <= 0 || usd > available || !rateAllowsConfirm) return;
+    if (!hasPositiveAmount || amountExceedsBalance || !rateAllowsConfirm) return;
 
     setStatus('PENDING');
     const tx = await withdrawMock.createWithdraw(usd, {
@@ -357,17 +361,38 @@ function WithdrawPageContent() {
       <input
         id="amount-usd"
         type="number"
-        value={usd}
-        onChange={(e) => setUsd(Number(e.target.value || 0))}
+        inputMode="decimal"
+        min="0.01"
+        step="0.01"
+        placeholder="0.00"
+        value={usdInput}
+        onChange={(e) => setUsdInput(e.target.value)}
+        disabled={status === 'PENDING'}
+        aria-invalid={amountIsInvalid || amountExceedsBalance}
+        aria-describedby={
+          amountIsInvalid || amountExceedsBalance ? 'withdraw-amount-error' : undefined
+        }
+        data-testid="withdraw-amount"
         className="border rounded-xl p-3 w-full"
         max={available}
       />
-      {usd > available && (
-        <p className="text-sm text-red-500">Amount exceeds available balance</p>
-      )}
+      {amountIsInvalid ? (
+        <p id="withdraw-amount-error" className="text-sm text-hedgr-800" role="alert">
+          Enter a withdrawal amount greater than $0.
+        </p>
+      ) : amountExceedsBalance ? (
+        <p id="withdraw-amount-error" className="text-sm text-hedgr-800" role="alert">
+          Amount exceeds available balance.
+        </p>
+      ) : null}
       <button
         onClick={confirm}
-        disabled={status === 'PENDING' || usd <= 0 || usd > available || !rateAllowsConfirm}
+        disabled={
+          status === 'PENDING' ||
+          !hasPositiveAmount ||
+          amountExceedsBalance ||
+          !rateAllowsConfirm
+        }
         className="w-full rounded-xl bg-[#1F2747] p-3 text-white transition-colors hover:bg-[#36447C] focus:outline-none focus:ring-2 focus:ring-[#4658A0] focus:ring-offset-2 disabled:cursor-not-allowed disabled:border disabled:border-[#A6B0D8] disabled:bg-[#CAD0E8] disabled:text-[#1F2747]"
       >
         {status === 'PENDING' ? 'Processing…' : 'Confirm'}
