@@ -145,6 +145,43 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
     'href',
     '/activity?journey=class-a-val-002',
   );
+
+  const restartJourney = page.getByRole('button', { name: 'Restart synthetic journey' });
+  await expect(restartJourney).toBeVisible();
+  page.once('dialog', async (dialog) => {
+    expect(dialog.message()).toContain(
+      'clears only the simulated balance and Activity stored on this device',
+    );
+    await dialog.accept();
+  });
+  await restartJourney.click();
+
+  await expect(page.getByTestId('usd-balance')).toHaveText('$0.00');
+  await expect(page.getByRole('link', { name: 'Start synthetic deposit' })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'View all' })).toHaveCount(0);
+
+  await page.getByRole('link', { name: 'Start synthetic deposit' }).click();
+  await page.getByTestId('deposit-amount').fill('100');
+  await page.getByRole('button', { name: 'Confirm' }).click();
+  await expect(page.getByTestId('deposit-confirmation-region')).toBeVisible({
+    timeout: 10_000,
+  });
+  await page.getByRole('link', { name: 'Continue to synthetic withdrawal' }).click();
+  await page.getByTestId('withdraw-amount').fill('2');
+  await page.getByRole('button', { name: 'Confirm' }).click();
+  await expect(page.getByTestId('withdraw-status-region')).toHaveAttribute(
+    'data-status',
+    'SUCCESS',
+    { timeout: 10_000 },
+  );
+  await page.getByRole('link', { name: 'Continue to synthetic activity' }).click();
+
+  await expect(page.getByTestId('activity-type-deposit')).toHaveCount(1);
+  await expect(page.getByTestId('activity-type-withdraw')).toHaveCount(1);
+  await expect(page.locator('[data-testid="tx-status-pill"][data-status="SUCCESS"]')).toHaveCount(2);
+  await page.getByRole('link', { name: 'Return to dashboard summary' }).click();
+  await expect(page.getByTestId('usd-balance')).toHaveText('$3.00');
+  await expect(page.getByRole('button', { name: 'Restart synthetic journey' })).toBeVisible();
 });
 
 test('unavailable data remains a blocked secondary trust scenario', async ({ page }) => {

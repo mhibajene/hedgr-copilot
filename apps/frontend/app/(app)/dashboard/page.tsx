@@ -11,6 +11,7 @@ import { EngineStabilityReviewSnapshot } from "./EngineStabilityReviewSnapshot";
 import { useBalance } from "../../../lib/hooks/useBalance";
 import { defiAdapter } from "../../../lib/defi";
 import { useLedgerStore } from "../../../lib/state/ledger";
+import { useWalletStore } from "../../../lib/state/wallet";
 import { EmptyState, ErrorState } from "@hedgr/ui";
 import {
   BalanceWithLocalEstimate,
@@ -53,6 +54,8 @@ export default function DashboardPage() {
   const engineState = useEngineState();
   const { isFeatureEnabled } = usePolicy();
   const transactions = useLedgerStore((s) => s.transactions);
+  const clearTransactions = useLedgerStore((s) => s.clear);
+  const resetWallet = useWalletStore((s) => s.reset);
   const [apy, setApy] = useState<number | null>(null);
   const [apyError, setApyError] = useState<string | null>(null);
   const [ready, setReady] = useState(false);
@@ -75,6 +78,20 @@ export default function DashboardPage() {
   const hasNoTransactions = transactions.length === 0;
   const isFirstTimeUser =
     ready && hasNoTransactions && available === 0 && !isLoading;
+  const hasSyntheticFixtureState =
+    ready && !isLoading && (!hasNoTransactions || available !== 0);
+
+  const restartSyntheticJourney = () => {
+    if (!syntheticJourneyActive) return;
+
+    const confirmed = window.confirm(
+      "Restart the synthetic journey? This clears only the simulated balance and Activity stored on this device. No real funds or external records are affected."
+    );
+    if (!confirmed) return;
+
+    clearTransactions();
+    resetWallet();
+  };
 
   const recentActivity = useMemo(() => {
     const sorted = [...transactions].sort(
@@ -250,6 +267,40 @@ export default function DashboardPage() {
               </Link>
             </div>
           </div>
+        )}
+
+        {syntheticJourneyActive && hasSyntheticFixtureState && (
+          <section
+            className="rounded-2xl border border-hedgr-200 bg-hedgr-100/60 p-5 text-hedgr-800 sm:p-6"
+            data-testid="dashboard-restart-journey"
+            aria-labelledby="dashboard-restart-journey-heading"
+          >
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+              <div className="max-w-lg">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-hedgr-500">
+                  Synthetic journey replay
+                </p>
+                <h2
+                  id="dashboard-restart-journey-heading"
+                  className="mt-1 text-lg font-semibold text-hedgr-800"
+                >
+                  Run the synthetic journey again
+                </h2>
+                <p className="mt-1 text-sm leading-relaxed text-hedgr-dark">
+                  Restarting removes only this device&apos;s simulated balance and
+                  Activity so the fixed journey begins again at $0. No real funds
+                  or external records are affected.
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={restartSyntheticJourney}
+                className="inline-flex shrink-0 items-center justify-center rounded-xl bg-hedgr-primary px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-hedgr-600 focus:outline-none focus:ring-2 focus:ring-hedgr-500 focus:ring-offset-2 focus:ring-offset-hedgr-100"
+              >
+                Restart synthetic journey
+              </button>
+            </div>
+          </section>
         )}
 
         <EngineAllocationBands engineState={engineState} />
