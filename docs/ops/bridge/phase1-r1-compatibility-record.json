@@ -33,6 +33,42 @@
     "authenticated_payload_observed": false,
     "evidence_limit": "The public route index confirms deployment of the post-cutover Worker surface. RAP-only authority mapping is established by the committed Worker allow-list and hermetic tests; no valid local Bridge API key was available for an authenticated live payload check."
   },
+  "post_merge_revision_verification": {
+    "approval_target_merge_commit": "cbdd8bc546ef23c46f85734894ff7fa2163fce77",
+    "superseding_main_revision": "581a59592f4b557de759da11e107a0c6857a1376",
+    "supersession_reason": "PR #311 merged before the required authenticated verification and changed mandatory repo authority under D-048; the corrective RAP therefore binds to the newer immutable main revision.",
+    "pre_correction_live_observation": {
+      "observed_at": "2026-07-19T14:46:31Z",
+      "authentication_surface": "HEDGROPS_CUSTOM_GPT_BRIDGE_ACTION",
+      "authenticated_payload_observed": true,
+      "live_response_revision": "05e64cfad12f9510e690effc4571b0fa34b3e627",
+      "freshness": "CURRENT",
+      "coverage": "COMPLETE",
+      "mandatory_source_count": 4,
+      "mandatory_sources_share_live_revision": true,
+      "conflict_count": 0,
+      "material_fields_share_live_revision": true,
+      "inference_indicator": "NOT_PRESENT_IN_LIVE_RESPONSE",
+      "no_field_inference_confirmed": true,
+      "no_field_inference_confirmation_basis": "All material values were extracted from explicit stable sections of the bound mandatory source and carried source-path, section, and immutable source-commit provenance; missing explicit ticket records fail generation instead of being inferred."
+    },
+    "f8_control": {
+      "trigger_status": "POTENTIAL_F8_CONDITION_OBSERVED",
+      "reason": "The authenticated runtime emitted CURRENT while serving a RAP revision that preceded both the approved R1 merge and the superseding main authority revision.",
+      "affected_rollout_status": "STOPPED_PENDING_CORRECTIVE_PR_AND_AUTHENTICATED_RECHECK"
+    },
+    "correction": {
+      "generated_rap_revision": "581a59592f4b557de759da11e107a0c6857a1376",
+      "freshness": "CURRENT",
+      "coverage": "COMPLETE",
+      "mandatory_source_count": 4,
+      "mandatory_sources_share_generated_revision": true,
+      "conflict_count": 0,
+      "material_fields_share_generated_revision": true,
+      "no_field_inference_confirmed": true,
+      "verification_status": "PENDING_AUTHENTICATED_POST_MERGE_RECHECK"
+    }
+  },
   "retirement_allowed_under_this_ticket": false,
   "retirement_ticket_active": false,
   "retirement_requires_separate_founder_authorized_ticket": true,

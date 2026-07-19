@@ -75,6 +75,53 @@ test("all compatibility authority routes remain RAP-only", () => {
   }
 });
 
+test("F8 correction binds the RAP to the superseding immutable main revision", async () => {
+  const record = await readRepoJson(R1_RECORD_PATH);
+  const projection = await readRepoJson(RAP_PATH);
+  const verification = record.post_merge_revision_verification;
+  const observation = verification.pre_correction_live_observation;
+  const correction = verification.correction;
+
+  assert.equal(
+    verification.approval_target_merge_commit,
+    "cbdd8bc546ef23c46f85734894ff7fa2163fce77"
+  );
+  assert.equal(
+    verification.superseding_main_revision,
+    "581a59592f4b557de759da11e107a0c6857a1376"
+  );
+  assert.equal(observation.authenticated_payload_observed, true);
+  assert.equal(observation.live_response_revision, "05e64cfad12f9510e690effc4571b0fa34b3e627");
+  assert.equal(observation.freshness, "CURRENT");
+  assert.equal(observation.coverage, "COMPLETE");
+  assert.equal(observation.mandatory_sources_share_live_revision, true);
+  assert.equal(observation.material_fields_share_live_revision, true);
+  assert.equal(observation.no_field_inference_confirmed, true);
+  assert.equal(
+    verification.f8_control.affected_rollout_status,
+    "STOPPED_PENDING_CORRECTIVE_PR_AND_AUTHENTICATED_RECHECK"
+  );
+  assert.equal(correction.generated_rap_revision, verification.superseding_main_revision);
+  assert.equal(correction.verification_status, "PENDING_AUTHENTICATED_POST_MERGE_RECHECK");
+  assert.equal(projection.source_commit, correction.generated_rap_revision);
+  assert.equal(projection.freshness, "CURRENT");
+  assert.equal(projection.coverage, "COMPLETE");
+  assert.equal(projection.conflicts.length, 0);
+  assert.ok(
+    projection.sources.every(
+      (source) =>
+        source.requirement === "MANDATORY" &&
+        source.expected_revision === correction.generated_rap_revision &&
+        source.actual_revision === correction.generated_rap_revision
+    )
+  );
+  assert.ok(
+    Object.values(projection.payload.fields).every(
+      (field) => field.source_commit === correction.generated_rap_revision
+    )
+  );
+});
+
 test("Phase 1 surfaces contain no Phase 2 routes or projection fields", async () => {
   const projection = await readRepoJson(RAP_PATH);
   const openapi = (await readRepoFile("apps/bridge-worker/openapi.yaml")).toString();
