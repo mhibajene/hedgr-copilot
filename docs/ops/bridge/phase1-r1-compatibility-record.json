@@ -55,9 +55,11 @@
     "f8_control": {
       "trigger_status": "POTENTIAL_F8_CONDITION_OBSERVED",
       "reason": "The authenticated runtime emitted CURRENT while serving a RAP revision that preceded both the approved R1 merge and the superseding main authority revision.",
-      "affected_rollout_status": "STOPPED_PENDING_CORRECTIVE_PR_AND_AUTHENTICATED_RECHECK"
+      "affected_rollout_status": "RESUMED_AFTER_CORRECTIVE_PR_AND_AUTHENTICATED_RECHECK"
     },
     "correction": {
+      "corrective_pr": 312,
+      "corrective_merge_commit": "f31fdf04f021c0054e413b1e0debe7111bd5681b",
       "generated_rap_revision": "581a59592f4b557de759da11e107a0c6857a1376",
       "freshness": "CURRENT",
       "coverage": "COMPLETE",
@@ -66,7 +68,23 @@
       "conflict_count": 0,
       "material_fields_share_generated_revision": true,
       "no_field_inference_confirmed": true,
-      "verification_status": "PENDING_AUTHENTICATED_POST_MERGE_RECHECK"
+      "verification_status": "VERIFIED_AUTHENTICATED_CURRENT"
+    },
+    "post_correction_live_observation": {
+      "observed_at": "2026-07-19T14:55:51Z",
+      "authentication_surface": "HEDGROPS_CUSTOM_GPT_BRIDGE_ACTION",
+      "operation_id": "getAuthoritySummaryAlias",
+      "authenticated_payload_observed": true,
+      "live_response_revision": "581a59592f4b557de759da11e107a0c6857a1376",
+      "freshness": "CURRENT",
+      "coverage": "COMPLETE",
+      "mandatory_source_count": 4,
+      "mandatory_sources_share_live_revision": true,
+      "conflict_count": 0,
+      "material_fields_share_live_revision": true,
+      "inference_indicator": "NOT_PRESENT_IN_AUTHENTICATED_RESPONSE",
+      "no_field_inference_confirmed": true,
+      "no_field_inference_confirmation_basis": "The authenticated response returned only values with immutable revision provenance; the deterministic generator extracts material values from explicit stable source sections, and regression coverage proves missing explicit ticket records fail instead of being inferred."
     }
   },
   "retirement_allowed_under_this_ticket": false,

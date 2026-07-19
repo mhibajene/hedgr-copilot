@@ -81,6 +81,7 @@ test("F8 correction binds the RAP to the superseding immutable main revision", a
   const verification = record.post_merge_revision_verification;
   const observation = verification.pre_correction_live_observation;
   const correction = verification.correction;
+  const postCorrection = verification.post_correction_live_observation;
 
   assert.equal(
     verification.approval_target_merge_commit,
@@ -99,10 +100,26 @@ test("F8 correction binds the RAP to the superseding immutable main revision", a
   assert.equal(observation.no_field_inference_confirmed, true);
   assert.equal(
     verification.f8_control.affected_rollout_status,
-    "STOPPED_PENDING_CORRECTIVE_PR_AND_AUTHENTICATED_RECHECK"
+    "RESUMED_AFTER_CORRECTIVE_PR_AND_AUTHENTICATED_RECHECK"
+  );
+  assert.equal(correction.corrective_pr, 312);
+  assert.equal(
+    correction.corrective_merge_commit,
+    "f31fdf04f021c0054e413b1e0debe7111bd5681b"
   );
   assert.equal(correction.generated_rap_revision, verification.superseding_main_revision);
-  assert.equal(correction.verification_status, "PENDING_AUTHENTICATED_POST_MERGE_RECHECK");
+  assert.equal(correction.verification_status, "VERIFIED_AUTHENTICATED_CURRENT");
+  assert.equal(postCorrection.operation_id, "getAuthoritySummaryAlias");
+  assert.equal(postCorrection.authenticated_payload_observed, true);
+  assert.equal(postCorrection.live_response_revision, correction.generated_rap_revision);
+  assert.equal(postCorrection.freshness, "CURRENT");
+  assert.equal(postCorrection.coverage, "COMPLETE");
+  assert.equal(postCorrection.mandatory_source_count, 4);
+  assert.equal(postCorrection.mandatory_sources_share_live_revision, true);
+  assert.equal(postCorrection.conflict_count, 0);
+  assert.equal(postCorrection.material_fields_share_live_revision, true);
+  assert.equal(postCorrection.inference_indicator, "NOT_PRESENT_IN_AUTHENTICATED_RESPONSE");
+  assert.equal(postCorrection.no_field_inference_confirmed, true);
   assert.equal(projection.source_commit, correction.generated_rap_revision);
   assert.equal(projection.freshness, "CURRENT");
   assert.equal(projection.coverage, "COMPLETE");
