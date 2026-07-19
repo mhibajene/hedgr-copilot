@@ -49,7 +49,18 @@ The Phase 0 validator returns deterministic non-authorizing errors for missing, 
 
 ### Phase 1 ops / reliability (active)
 
-`BRIDGE-P1-OPS-001` is **active** under Controlled Parallelism v9 (`HEDGR_STATUS.md` §6f.9 / §7 / §7a / §155; Internal **D-045**). Scope: record RAP first-serve / R1 clock evidence, harden regen/verification hygiene, retain Deprecated legacy through at least **2026-08-02**. No Phase 2. No legacy retirement under this ticket. Lane V (`CLASS-A-VAL-002`) remains independent.
+`BRIDGE-P1-OPS-001` is **active** under Controlled Parallelism v11 (`HEDGR_STATUS.md` §6f.11 / §7 / §7a / §158; Internal **D-047**), continuing unchanged from its historical activation under **D-045** / §155. Scope: record RAP first-serve / R1 clock evidence, harden regen/verification hygiene, retain Deprecated legacy through at least **2026-08-02**. No Phase 2. No legacy retirement under this ticket. Lanes V (`CLASS-A-VAL-002`) and N (`NARRATIVE-002`) remain independent.
+
+The canonical R1 compatibility record is `phase1-r1-compatibility-record.json`:
+
+- canonical first-serve date: **2026-07-19**, anchored to RAP route-cutover PR **#307** (merge commit `d2a83ce3a7ddff71e3c60f0a8e93624c7f5c0965`);
+- public post-cutover Worker observation: **2026-07-19T12:47:05.253Z**, `READ_ONLY`, with the compatibility route index present and protected authority access requiring an API key;
+- compatibility floor: **14 calendar days**;
+- earliest legacy retirement consideration: **2026-08-02**;
+- legacy posture: **Deprecated and retained**, SHA-256 `181dfa46feb0f25149b81cc17516cce0efc89eab95d3e30e9f2b82affcc1fc2a`;
+- retirement: **not authorized** under this ticket and requires a separately named Founder-authorized ticket.
+
+The public observation establishes deployment of the post-cutover Worker surface. No valid local Bridge API key was available for an authenticated live RAP payload check; RAP-only authority mapping is therefore confirmed by the committed Worker allow-list and hermetic tests. The date-only R1 floor does not itself authorize retirement on **2026-08-02**.
 
 ### Phase 1 Repo Authority Projection cutover
 
@@ -60,9 +71,11 @@ After the Phase 1 cutover, `/authority`, `/authority-summary`, `/current-status`
 Generate and verify with:
 
 ```bash
-pnpm --filter @hedgr/bridge-worker rap:generate
-pnpm --filter @hedgr/bridge-worker rap:check
+pnpm bridge:rap:generate
+pnpm bridge:rap:check
 ```
+
+`pnpm bridge:rap:generate` binds the RAP to the current committed mandatory-source revision; mandatory authority sources must be committed first. `pnpm bridge:rap:check` verifies byte-deterministic generation for the recorded immutable revision and fails when the working mandatory-source set no longer matches that revision. The root `pnpm run validate` gate runs `bridge:rap:check` before snapshot and test gates.
 
 `current-status.json` is **Deprecated** from the first deployed RAP serve. It remains the legacy bounded placeholder with `generated_at: 2026-06-24T00:00:00.000Z`; it is not regenerated, date-bumped, presented as a RAP, or mapped by authority routes after cutover. R1 requires retention for at least 14 calendar days after the RAP is first deployed and served on `/authority`, `/authority-summary`, and `/current-status`. Retirement requires a separately named Founder-authorized ticket and a recorded first-serve date.
 
@@ -80,6 +93,7 @@ The adopted runtime terminology is **HedgrOps Read-Only Institutional Evidence B
 
 - `repo-authority-projection.json` - deterministic source-bound Repo Authority Projection served by existing authority routes
 - `current-status.json` - Deprecated legacy bounded status placeholder (`generated_at` **2026-06-24**); retained for the R1 compatibility period; not served as RAP and not refreshed by `pnpm bridge:snapshots:refresh`
+- `phase1-r1-compatibility-record.json` - non-authorizing first-serve / compatibility-floor evidence for `BRIDGE-P1-OPS-001`; does not authorize retirement
 - `latest-weekly-review.json` - latest weekly review evidence pointer
 - `latest-mvp-process-review.json` - latest MVP process review evidence pointer
 - `review-index.json` - evidence-discovery index

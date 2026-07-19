@@ -4507,9 +4507,11 @@ Current active ticket status:
 
 | Field | Value |
 | ----- | ----- |
-| **Provisional first-serve date** | **2026-07-19** (RAP route cutover merge PR **#307**; to be confirmed/recorded under this ticket) |
-| **Earliest legacy retirement consideration** | **2026-08-02** (14 calendar days after provisional first-serve) |
+| **Canonical first-serve date** | **2026-07-19** (RAP route cutover merge PR **#307**; recorded in `docs/ops/bridge/phase1-r1-compatibility-record.json`) |
+| **Earliest legacy retirement consideration** | **2026-08-02** (14 calendar days after canonical first-serve) |
 | **Retirement ticket** | Separately named Founder-authorized candidate only (e.g. `BRIDGE-LEGACY-RETIRE-001`) — **not active** under this ticket |
+
+**Operational evidence note:** Public post-cutover Worker observation at **2026-07-19T12:47:05.253Z** confirmed `READ_ONLY` health and the compatibility route index; protected authority access correctly required an API key. No valid local Bridge API key was available for an authenticated payload check. RAP-only route mapping remains established by the committed Worker allow-list and hermetic tests. This date-only R1 clock is a retention floor, not retirement authority.
 
 **In scope:**
 

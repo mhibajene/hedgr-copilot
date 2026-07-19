@@ -47,6 +47,36 @@ The Worker must not:
 - mutate repo state
 - create ADRs or governance authority
 
+## BRIDGE-P1-OPS-001 R1 Compatibility Evidence
+
+Canonical supporting-evidence record:
+
+```text
+docs/ops/bridge/phase1-r1-compatibility-record.json
+```
+
+Recorded controls:
+
+- canonical first-serve date: **2026-07-19**, anchored to merged route-cutover PR **#307** / `d2a83ce3a7ddff71e3c60f0a8e93624c7f5c0965`;
+- public post-cutover Worker observation: **2026-07-19T12:47:05.253Z**, `READ_ONLY`, compatibility route index present, protected authority route returning `401` without a valid key;
+- compatibility floor: **14 calendar days**;
+- earliest retirement consideration: **2026-08-02**;
+- legacy placeholder: retained unchanged with SHA-256 `181dfa46feb0f25149b81cc17516cce0efc89eab95d3e30e9f2b82affcc1fc2a`;
+- retirement: not authorized under `BRIDGE-P1-OPS-001`; a separately named Founder-authorized ticket remains required;
+- Phase 2 and cross-lane impact: none.
+
+No valid local Bridge API key was available for an authenticated live RAP payload check. The public observation proves the post-cutover Worker surface is deployed; RAP-only authority mapping is proved hermetically by `tests/r1-ops.test.mjs` and `tests/worker.test.mjs` against the committed hard allow-list.
+
+Regeneration and verification discipline:
+
+```bash
+pnpm bridge:rap:generate
+pnpm bridge:rap:check
+pnpm --filter @hedgr/bridge-worker test
+```
+
+Mandatory authority-source changes must be committed before generation. The RAP records that immutable source revision; `bridge:rap:check` rejects working mandatory-source drift and byte mismatch. Root `pnpm run validate` runs the RAP check.
+
 ## BRIDGE-P1-001 Phase 1 Authority-Integrity Evidence
 
 The Phase 1 generator consumes exactly four mandatory sources at one full git commit SHA:
