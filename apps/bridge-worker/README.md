@@ -20,6 +20,10 @@ Architecture principle: `docs/decisions/0026-hedgrops-bridge-read-only-instituti
 
 These Phase 0 artifacts are intentionally unused by `src/index.js` and `openapi.yaml`. They do not add a route, change an action schema, load live authority sources, replace a snapshot, widen the runtime allow-list, or activate Phase 1. Any runtime consumption requires separate Founder and repo-native authorization.
 
+Phase 1 prep planning (documentation only) lives at `docs/ops/bridge/HEDGROPS_BRIDGE_PHASE1_AUTHORITY_INTEGRITY_PLAN.md` under `BRIDGE-P1-PREP-001`. It does not change this Worker.
+
+**Known stale authority placeholder:** `docs/ops/bridge/current-status.json` remains a legacy placeholder dated **2026-06-24** and is still served by `/authority`, `/authority-summary`, and `/current-status`. It is not a Repo Authority Projection. Do not date-bump it. Runtime RAP replacement requires a separately named Phase 1 implementation ticket.
+
 It only retrieves static JSON snapshots from `docs/ops/bridge/*.json`. It does not generate snapshots, parse markdown, summarize reviews, browse the repo, infer governance state, activate tickets, sequence work, or mutate repository state.
 
 ## Endpoints

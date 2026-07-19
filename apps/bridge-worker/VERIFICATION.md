@@ -50,6 +50,8 @@ The Worker must not:
 
 `BRIDGE-P0-001` adds contract, fixture, validation, ADR, and documentation artifacts only. The new files are not imported by `src/index.js` and are not referenced by `openapi.yaml`.
 
+**Post-Phase-0 note (2026-07-19 / `BRIDGE-P1-PREP-001`):** The SHA-256 table below is the Phase 0 closeout baseline. It does **not** claim that `current-status.json` is fresh institutional truth. That file remains a legacy placeholder (`generated_at` **2026-06-24**) and is the subject of Phase 1 prep planning in `docs/ops/bridge/HEDGROPS_BRIDGE_PHASE1_AUTHORITY_INTEGRITY_PLAN.md`. Review-snapshot files may be refreshed later by the existing operator script without remediating the authority placeholder. Phase 1 runtime remains inactive.
+
 Preflight and post-implementation SHA-256 values are identical:
 
 | Surface | Preflight SHA-256 | Post-implementation SHA-256 |
