@@ -50,8 +50,8 @@
       "conflict_status": "NOT_EVALUATED"
     },
     {
-      "source_path": "docs/doctrine/hedgr-constitutional-charter.md",
-      "source_role": "ACTIVE_DOCTRINE_SET_CONSTITUTIONAL_CHARTER",
+      "source_path": "docs/doctrine/HEDGR_ACTIVE_DOCTRINE_INDEX.md",
+      "source_role": "ACTIVE_DOCTRINE_SET_INDEX",
       "requirement": "MANDATORY",
       "source_classification": "REPO_AUTHORITY",
       "expected_revision": null,
@@ -61,22 +61,7 @@
       "structural_validation": "NOT_EVALUATED",
       "stable_locator_support": "REQUIRED",
       "inclusion_status": "NOT_EVALUATED",
-      "reason": "Explicit relevant-doctrine member; no complete doctrine index is inferred.",
-      "conflict_status": "NOT_EVALUATED"
-    },
-    {
-      "source_path": "docs/doctrine/hedgr-governance-philosophy.md",
-      "source_role": "ACTIVE_DOCTRINE_SET_GOVERNANCE_PHILOSOPHY",
-      "requirement": "MANDATORY",
-      "source_classification": "REPO_AUTHORITY",
-      "expected_revision": null,
-      "actual_revision": null,
-      "freshness_requirement": "CURRENT_REQUIRED",
-      "freshness": "UNKNOWN",
-      "structural_validation": "NOT_EVALUATED",
-      "stable_locator_support": "REQUIRED",
-      "inclusion_status": "NOT_EVALUATED",
-      "reason": "Explicit relevant-doctrine member; no complete doctrine index is inferred.",
+      "reason": "Canonical repo-defined doctrine completeness index adopted under BRIDGE-P1-001 R2; the Bridge does not discover or infer membership.",
       "conflict_status": "NOT_EVALUATED"
     }
   ]

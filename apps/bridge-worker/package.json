@@ -4,6 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "rap:generate": "node scripts/generate-repo-authority-projection.mjs --write",
+    "rap:check": "node scripts/generate-repo-authority-projection.mjs --check",
     "test": "node --test tests/*.test.mjs"
   }
 }

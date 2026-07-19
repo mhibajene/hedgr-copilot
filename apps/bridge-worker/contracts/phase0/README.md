@@ -16,6 +16,14 @@ These artifacts are the canonical, machine-readable foundation for `BRIDGE-P0-00
 
 Fixtures live at `apps/bridge-worker/tests/fixtures/phase0-contract-fixtures.mjs`; tests live at `apps/bridge-worker/tests/phase0-contracts.test.mjs`.
 
+## Phase 1 source-bound generator
+
+`BRIDGE-P1-001` adds the dependency-free build-time generator at `apps/bridge-worker/scripts/generate-repo-authority-projection.mjs`. It consumes only the four mandatory paths locked by Phase 1: `HEDGR_STATUS.md`, `AGENTS.md`, the accepted ADR index, and the canonical active doctrine index. Sources are loaded from one full git commit SHA with no globbing, recursive scan, runtime discovery, or external retrieval.
+
+The generator reuses this directory's validator and closed schemas. Missing explicit records, incomplete sources, mixed or non-immutable revisions, and authority disagreements fail closed. Conflict precedence classifies the sources but never resolves the disagreement.
+
+The generator foundation does not by itself change the Worker route allow-list. Runtime cutover requires a generated artifact bound to a durable merged revision and the separately reviewed mapping change authorized by `BRIDGE-P1-001` R5.
+
 ## Failure semantics
 
 A future Repo Authority Projection may be `CURRENT` only when every mandatory source is included, readable, structurally valid, current under the governed policy, and bound to the common immutable revision. Missing, unreadable, stale, structurally invalid, revision-mismatched, or conflicting mandatory context fails closed with `UNKNOWN` freshness and `INSUFFICIENT` coverage.
