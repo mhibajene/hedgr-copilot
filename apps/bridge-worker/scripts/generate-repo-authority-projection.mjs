@@ -187,9 +187,12 @@ function provenance(value, sourceSection, sourceCommit, freshness) {
 
 function buildProjection({ sourceCommit, generatedAt, sourceDocuments }) {
   assertFullGitSha(sourceCommit);
-  if (Number.isNaN(Date.parse(generatedAt))) {
+  const generatedAtDate = new Date(generatedAt);
+  if (Number.isNaN(generatedAtDate.getTime())) {
     throw new ProjectionGenerationError("generated_at must be a valid timestamp.");
   }
+  generatedAtDate.setUTCHours(0, 0, 0, 0);
+  const deterministicGeneratedAt = generatedAtDate.toISOString();
 
   for (const definition of SOURCE_DEFINITIONS) {
     assertStructuralSource(
@@ -251,7 +254,7 @@ function buildProjection({ sourceCommit, generatedAt, sourceDocuments }) {
           },
           concept: "repo.active_ticket_ids",
           description: NON_RESOLUTION_DESCRIPTION,
-          detectedAt: generatedAt
+          detectedAt: deterministicGeneratedAt
         })
       ]
     : [];
@@ -264,7 +267,7 @@ function buildProjection({ sourceCommit, generatedAt, sourceDocuments }) {
     sequencing_allowed: false,
     authority_class: "REPO_AUTHORITY_PROJECTION",
     source_commit: sourceCommit,
-    generated_at: new Date(generatedAt).toISOString(),
+    generated_at: deterministicGeneratedAt,
     freshness,
     coverage,
     sources,

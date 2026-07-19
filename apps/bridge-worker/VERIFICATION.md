@@ -29,7 +29,8 @@ Successful snapshot responses must include:
   "mode": "READ_ONLY",
   "execution_authority": false,
   "mutation_allowed": false,
-  "ticket_activation_allowed": false
+  "ticket_activation_allowed": false,
+  "sequencing_allowed": false
 }
 ```
 
@@ -46,11 +47,46 @@ The Worker must not:
 - mutate repo state
 - create ADRs or governance authority
 
+## BRIDGE-P1-001 Phase 1 Authority-Integrity Evidence
+
+The Phase 1 generator consumes exactly four mandatory sources at one full git commit SHA:
+
+```text
+docs/ops/HEDGR_STATUS.md
+AGENTS.md
+docs/decisions/SPRINT-2-ADR-INDEX.md
+docs/doctrine/HEDGR_ACTIVE_DOCTRINE_INDEX.md
+```
+
+`docs/ops/bridge/repo-authority-projection.json` is byte-deterministic for the same bound revision. `apps/bridge-worker/tests/rap-artifact.test.mjs` regenerates from the artifact's immutable revision and requires exact byte equality, `CURRENT` freshness, `COMPLETE` coverage, no conflicts, and all four non-authorizing booleans set to false.
+
+Authority route mapping after cutover:
+
+```text
+/authority                          -> docs/ops/bridge/repo-authority-projection.json
+/authority-summary                  -> docs/ops/bridge/repo-authority-projection.json
+/current-status                     -> docs/ops/bridge/repo-authority-projection.json
+/hedgr/status/authority-summary     -> docs/ops/bridge/repo-authority-projection.json
+```
+
+`docs/ops/bridge/current-status.json` is retained unchanged as a Deprecated legacy placeholder. It is not mapped by authority routes after cutover, cannot be represented as CURRENT RAP, and cannot be retired before the R1 minimum 14-day period after the first deployed RAP serve. Retirement requires a separately named Founder-authorized ticket.
+
+Targeted verification:
+
+```bash
+pnpm --filter @hedgr/bridge-worker rap:check
+pnpm --filter @hedgr/bridge-worker test
+pnpm bridge:snapshots:check
+pnpm bridge:snapshots:test
+```
+
+The generator has no runtime source loading, external retrieval, glob expansion, recursive scan, dynamic route, mutation, activation, sequencing, evidence-acceptance, Phase 2, or customer-money capability. Lane V remains unchanged.
+
 ## BRIDGE-P0-001 Phase 0 Runtime-Preservation Evidence
 
 `BRIDGE-P0-001` adds contract, fixture, validation, ADR, and documentation artifacts only. The new files are not imported by `src/index.js` and are not referenced by `openapi.yaml`.
 
-**Post-Phase-0 note (2026-07-19 / `BRIDGE-P1-PREP-001`):** The SHA-256 table below is the Phase 0 closeout baseline. It does **not** claim that `current-status.json` is fresh institutional truth. That file remains a legacy placeholder (`generated_at` **2026-06-24**) and is the subject of Phase 1 prep planning in `docs/ops/bridge/HEDGROPS_BRIDGE_PHASE1_AUTHORITY_INTEGRITY_PLAN.md`. Review-snapshot files may be refreshed later by the existing operator script without remediating the authority placeholder. Phase 1 runtime remains inactive.
+**Historical post-Phase-0 note (2026-07-19 / `BRIDGE-P1-PREP-001`):** The SHA-256 table below is the Phase 0 closeout baseline, before the separately authorized Phase 1 cutover recorded above. It does **not** claim that `current-status.json` is fresh institutional truth. That file remains the legacy placeholder (`generated_at` **2026-06-24**). Review-snapshot files may be refreshed by the existing operator script without changing RAP authority integrity.
 
 Preflight and post-implementation SHA-256 values are identical:
 

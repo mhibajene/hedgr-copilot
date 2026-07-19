@@ -12,15 +12,15 @@ const env = {
 };
 
 const snapshot = {
-  artifact_type: "test_snapshot",
-  generated_at: "2026-06-24T00:00:00.000Z",
-  source_path: "docs/ops/bridge/current-status.json",
-  authority_posture: { mode: "READ_ONLY" },
-  non_authorization_statement:
-    "This snapshot is evidence/retrieval only. It does not authorize implementation, sequencing, ticket activation, or repo mutation.",
+  mode: "READ_ONLY",
   execution_authority: false,
-  may_activate_ticket: false,
-  mutation_allowed: false
+  mutation_allowed: false,
+  ticket_activation_allowed: false,
+  sequencing_allowed: false,
+  authority_class: "REPO_AUTHORITY_PROJECTION",
+  source_commit: "d034277dcd37717512659f396b3faf2eb4505d7e",
+  freshness: "CURRENT",
+  coverage: "COMPLETE"
 };
 
 function request(path, options = {}) {
@@ -61,12 +61,13 @@ test("root route is public and lists available routes without fetching snapshots
   const body = await json(response);
 
   assert.equal(response.status, 200);
-  assert.equal(body.bridge, "HedgrOps Read-Only Review Evidence Bridge");
+  assert.equal(body.bridge, "HedgrOps Read-Only Institutional Evidence Bridge");
   assert.equal(body.status, "ok");
   assert.equal(body.mode, "READ_ONLY");
   assert.equal(body.execution_authority, false);
   assert.equal(body.mutation_allowed, false);
   assert.equal(body.ticket_activation_allowed, false);
+  assert.equal(body.sequencing_allowed, false);
   assert.ok(body.routes.includes("/health"));
   assert.ok(body.routes.includes("/authority-summary"));
   assert.ok(body.routes.includes("/hedgr/status/authority-summary"));
@@ -132,13 +133,16 @@ test("successful snapshot responses include the required read-only envelope", as
   const body = await json(response);
 
   assert.equal(response.status, 200);
-  assert.equal(body.bridge.name, "HedgrOps Read-Only Review Evidence Bridge");
+  assert.equal(body.bridge.name, "HedgrOps Read-Only Institutional Evidence Bridge");
   assert.equal(body.bridge.mode, "READ_ONLY");
   assert.equal(body.bridge.execution_authority, false);
   assert.equal(body.bridge.mutation_allowed, false);
   assert.equal(body.bridge.ticket_activation_allowed, false);
+  assert.equal(body.bridge.sequencing_allowed, false);
   assert.equal(body.bridge.source_path, ALLOWED_FILES["/hedgr/status/authority-summary"]);
-  assert.equal(body.data.artifact_type, "test_snapshot");
+  assert.equal(body.data.authority_class, "REPO_AUTHORITY_PROJECTION");
+  assert.equal(body.data.execution_authority, false);
+  assert.equal(body.data.sequencing_allowed, false);
   assert.equal(calls.length, 1);
 });
 
@@ -177,15 +181,59 @@ test("alias routes use the same protected snapshot allowlist", async () => {
   assert.equal(weekly.status, 200);
   assert.match(
     calls[0].url,
-    /docs\/ops\/bridge\/current-status\.json\?ref=main$/
+    /docs\/ops\/bridge\/repo-authority-projection\.json\?ref=main$/
   );
   assert.match(
     calls[1].url,
     /docs\/ops\/bridge\/latest-weekly-review\.json\?ref=main$/
   );
-  assert.equal(ALLOWED_FILES["/authority"], "docs/ops/bridge/current-status.json");
-  assert.equal(ALLOWED_FILES["/current-status"], "docs/ops/bridge/current-status.json");
+  assert.equal(
+    ALLOWED_FILES["/authority"],
+    "docs/ops/bridge/repo-authority-projection.json"
+  );
+  assert.equal(
+    ALLOWED_FILES["/authority-summary"],
+    "docs/ops/bridge/repo-authority-projection.json"
+  );
+  assert.equal(
+    ALLOWED_FILES["/current-status"],
+    "docs/ops/bridge/repo-authority-projection.json"
+  );
+  assert.equal(
+    ALLOWED_FILES["/hedgr/status/authority-summary"],
+    "docs/ops/bridge/repo-authority-projection.json"
+  );
+  assert.ok(!Object.values(ALLOWED_FILES).includes("docs/ops/bridge/current-status.json"));
   assert.equal(ALLOWED_FILES["/weekly-review"], "docs/ops/bridge/latest-weekly-review.json");
+});
+
+test("all existing authority compatibility routes serve the same generated RAP", async () => {
+  const calls = mockGitHubFetch();
+  const authorityRoutes = [
+    "/authority",
+    "/authority-summary",
+    "/current-status",
+    "/hedgr/status/authority-summary"
+  ];
+
+  for (const route of authorityRoutes) {
+    const response = await worker.fetch(
+      request(route, {
+        headers: { "x-hedgrops-api-key": "test-key" }
+      }),
+      env
+    );
+    const body = await json(response);
+    assert.equal(response.status, 200, route);
+    assert.equal(body.data.authority_class, "REPO_AUTHORITY_PROJECTION", route);
+  }
+
+  assert.equal(calls.length, authorityRoutes.length);
+  assert.ok(
+    calls.every((call) =>
+      /docs\/ops\/bridge\/repo-authority-projection\.json\?ref=main$/.test(call.url)
+    )
+  );
 });
 
 test("missing GitHub configuration fails closed", async () => {
