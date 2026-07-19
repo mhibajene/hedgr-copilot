@@ -41,13 +41,15 @@ Freshness and coverage remain closed enums. No time-to-live is invented: the pol
 
 The Phase 0 validator returns deterministic non-authorizing errors for missing, unreadable, stale, structurally invalid, revision-mismatched, conflicting, unsupported, or improperly inferred inputs. Optional omissions may produce `PARTIAL` only when the omission is explicit and no fallback inference is used.
 
-### Phase 1 implementation (active — authority integrity only)
+### Phase 1 implementation (completed)
 
-`BRIDGE-P1-001` is **active** under Controlled Parallelism v8 (`HEDGR_STATUS.md` §6f.8 / §7 / §7a / §152; Internal **D-044**). Governing specification:
+`BRIDGE-P1-001` is **completed** (**§154**; PRs **#306** / **#307**). Governing specification remains:
 
 - `docs/ops/bridge/HEDGROPS_BRIDGE_PHASE1_AUTHORITY_INTEGRITY_PLAN.md`
 
-Founder dispositions F1–F8 (**D-042** / §150) and residuals R1–R5 (locked in §7a) bind implementation. Lane V (`CLASS-A-VAL-002`) remains independent. No Phase 2.
+### Phase 1 ops / reliability (active)
+
+`BRIDGE-P1-OPS-001` is **active** under Controlled Parallelism v9 (`HEDGR_STATUS.md` §6f.9 / §7 / §7a / §155; Internal **D-045**). Scope: record RAP first-serve / R1 clock evidence, harden regen/verification hygiene, retain Deprecated legacy through at least **2026-08-02**. No Phase 2. No legacy retirement under this ticket. Lane V (`CLASS-A-VAL-002`) remains independent.
 
 ### Phase 1 Repo Authority Projection cutover
 
