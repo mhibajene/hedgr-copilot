@@ -7,7 +7,7 @@
 | **Authority** | Non-authorising |
 | **Owner** | Founder |
 | **Purpose** | Institutional narrative source |
-| **Ticket** | `NARRATIVE-001` |
+| **Ticket** | `NARRATIVE-002` (refinement of `NARRATIVE-001`) |
 | **Date** | 2026-07-19 |
 
 ---
@@ -61,7 +61,7 @@ Derived artifacts — not independent sources of truth — include:
 
 Derived materials must inherit this story’s category, product framing, geographic posture, trust language, and exclusions. They must not invent capability, market commitments, or authority beyond what repo-native governance separately allows.
 
-Creation of this story does **not** activate or approve those derived artifacts.
+Creation or refinement of this story does **not** activate or approve those derived artifacts.
 
 ---
 
@@ -94,6 +94,8 @@ Hedgr is **not** primarily:
 ---
 
 ## 1. The Stability Gap
+
+When money stops behaving as expected, ordinary life becomes harder to plan — pay, save, and decide under pressure lose their footing.
 
 In volatile economies, the core problem is not a shortage of financial apps.
 
@@ -133,7 +135,21 @@ If a trade-off exists between safety and return, safety prevails.
 
 ---
 
-## 3. Introducing Hedgr
+## 3. What We Mean by Financial Stability
+
+**Financial Stability**, for Hedgr, is the capacity of money to preserve purchasing power, remain accessible, and stay understandable under stress — not merely to hold a nominal balance.
+
+Stability is therefore broader than a number on a screen. It includes liquidity integrity, visible risk, and calm system behavior when conditions deteriorate.
+
+**Financial Fidelity** is Hedgr’s deeper institutional language for that outcome: the degree to which a user’s money behaves as expected over time. In practical terms, higher fidelity means fewer unmanaged surprises — clearer posture, more credible access, and better alignment with user intent within governed constraints.
+
+Financial Fidelity supports the public category of Financial Stability. It does not replace it. Public materials should use it sparingly and explanatorily, not as a slogan.
+
+**State Before Action** is Hedgr’s behavioural principle: clarify where value sits and what the system’s current posture is before inviting the next step. The aim is enabling understanding, not directing people.
+
+---
+
+## 4. Introducing Hedgr
 
 Hedgr is a **Financial Stability Operating System**.
 
@@ -151,7 +167,7 @@ Trust is the outcome.
 
 ---
 
-## 4. The Stability Experience
+## 5. The Stability Experience
 
 The Stability Wallet experience is ordered for clarity under stress:
 
@@ -164,6 +180,8 @@ Users should be able to understand:
 - how capital is conceptually structured
 - what remains informational versus what would require separate operational authority
 
+Only after that clarity does the product invite the next available step.
+
 Language stays institutional and calm:
 
 - prefer **Allocate** over **Earn**
@@ -175,7 +193,7 @@ The experience must reduce anxiety without hiding trade-offs. Silence and restra
 
 ---
 
-## 5. The Hedgr System
+## 6. The Hedgr System
 
 Hedgr is one system with multiple product surfaces:
 
@@ -195,7 +213,7 @@ No product surface may bypass the Stability Engine for capital allocation logic.
 
 ---
 
-## 6. Trust by Design
+## 7. Trust by Design
 
 Trust is Hedgr’s competitive advantage.
 
@@ -213,7 +231,7 @@ A system that asks users to “just trust us” has already failed. Hedgr is des
 
 ---
 
-## 7. Why Volatile Economies
+## 8. Why Volatile Economies
 
 Hedgr leads with **volatile economies** — contexts where currency instability, purchasing-power pressure, and fragile access make stability infrastructure uniquely valuable.
 
@@ -227,7 +245,7 @@ The users Hedgr is designed to serve are seeking resilience, not speculation: fr
 
 ---
 
-## 8. Business & Platform
+## 9. Business & Platform
 
 Hedgr’s business logic follows the same doctrine as its product logic.
 
@@ -237,6 +255,8 @@ The platform creates durable value by becoming the stability layer other experie
 - professional treasury through Hedgr Pro
 - partner distribution through Hedgr APIs
 
+Hedgr’s institutional advantage is that trust compounds through the interaction of governance, the Stability Engine, the experience layer, and disciplined system behaviour — not through faster speculative features.
+
 Commercial expansion must not erode liquidity integrity, risk visibility, or trust posture.
 
 Growth that weakens solvency, hides risk, or outruns governance is not progress.
@@ -245,7 +265,7 @@ Hedgr’s category advantage is institutional: a governed stability operating sy
 
 ---
 
-## 9. Institutional Roadmap
+## 10. Institutional Roadmap
 
 Hedgr evolves by authority, not by hype.
 
@@ -263,7 +283,7 @@ Where uncertainty remains, Hedgr prefers reversible steps, explicit assumptions,
 
 ---
 
-## 10. Long-Term Vision
+## 11. Long-Term Vision
 
 Long-term, Hedgr aims to become the default financial stability operating system for people and institutions operating under volatility: a system where capital preservation, liquidity integrity, and visible risk are native properties of the platform — not afterthoughts.
 
