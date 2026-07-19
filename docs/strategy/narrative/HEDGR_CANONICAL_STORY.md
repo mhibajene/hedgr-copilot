@@ -2,12 +2,14 @@
 
 | Field | Value |
 | ----- | ----- |
-| **Status** | Canonical Narrative Source |
-| **Classification** | Strategic / Product Narrative |
+| **Status** | Accepted |
+| **Version** | 1.0 |
+| **Classification** | Canonical Narrative Source |
+| **Narrative State** | Frozen |
 | **Authority** | Non-authorising |
 | **Owner** | Founder |
 | **Purpose** | Institutional narrative source |
-| **Ticket** | `NARRATIVE-002` (refinement of `NARRATIVE-001`) |
+| **Ticket** | `NARRATIVE-002` (final editorial freeze; successor to `NARRATIVE-001`) |
 | **Date** | 2026-07-19 |
 
 ---
@@ -54,14 +56,14 @@ Derived artifacts — not independent sources of truth — include:
 - Customer One Pager
 - Investor One Pager
 - Product Overview
-- Website
+- Website narrative
 - Investor Deck
-- Future Whitepaper
 - Technical Brief
+- Future Whitepaper
 
-Derived materials must inherit this story’s category, product framing, geographic posture, trust language, and exclusions. They must not invent capability, market commitments, or authority beyond what repo-native governance separately allows.
+Derived materials may simplify, expand, or tailor the story for specific audiences, but they must inherit this narrative rather than redefine Hedgr independently. They must not invent capability, market commitments, or authority beyond what repo-native governance separately allows.
 
-Creation or refinement of this story does **not** activate or approve those derived artifacts.
+Creation, refinement, or freeze of this story does **not** activate or approve those derived artifacts.
 
 ---
 
@@ -95,7 +97,9 @@ Hedgr is **not** primarily:
 
 ## 1. The Stability Gap
 
-When money stops behaving as expected, ordinary life becomes harder to plan — pay, save, and decide under pressure lose their footing.
+People can work hard, save consistently, and plan carefully — yet still move backwards when the money they depend on no longer behaves as expected.
+
+When money stops behaving as expected, ordinary life becomes harder to plan. Paying bills, saving for the future, and making confident decisions all become more uncertain.
 
 In volatile economies, the core problem is not a shortage of financial apps.
 
@@ -122,7 +126,7 @@ Stability precedes growth.
 
 Capital preservation comes before yield. Liquidity reliability comes before optimization. Trust comes before scale.
 
-People in volatile conditions do not need more speculative choice. They need more reliable financial behavior:
+People in volatile conditions do not need more speculative choice. They need better financial behaviour under uncertainty, supported by systems designed for stability rather than speculation:
 
 - value that holds
 - access that remains credible
@@ -203,7 +207,7 @@ Hedgr is one system with multiple product surfaces:
 
 All surfaces are downstream interfaces into a shared core.
 
-At the centre is the **Hedgr Stability Engine**: the system’s canonical allocator and capital-safety control layer.
+At the centre is the **Hedgr Stability Engine**: the system’s canonical stability and capital-governance layer.
 
 Yield routing, wallet infrastructure, payment rails, and AI Copilot are subordinate to engine safety constraints and governance.
 
@@ -215,7 +219,7 @@ No product surface may bypass the Stability Engine for capital allocation logic.
 
 ## 7. Trust by Design
 
-Trust is Hedgr’s competitive advantage.
+Trust is Hedgr’s primary product outcome.
 
 It is not a marketing theme layered on after the product is built. It is a design constraint:
 
@@ -255,7 +259,7 @@ The platform creates durable value by becoming the stability layer other experie
 - professional treasury through Hedgr Pro
 - partner distribution through Hedgr APIs
 
-Hedgr’s institutional advantage is that trust compounds through the interaction of governance, the Stability Engine, the experience layer, and disciplined system behaviour — not through faster speculative features.
+Hedgr’s institutional advantage is that trust compounds through the interaction of governance, the Stability Engine, the experience layer, and disciplined system behaviour. Each layer reinforces the next, rather than relying on faster speculative features or isolated product features.
 
 Commercial expansion must not erode liquidity integrity, risk visibility, or trust posture.
 
@@ -296,10 +300,32 @@ In that future:
 
 Hedgr does not exist to give people more ways to chase return.
 
-Hedgr exists so money can behave with greater fidelity when conditions do not.
+Hedgr exists so people can make better financial decisions when certainty is scarce.
+
+When money behaves with greater fidelity, people regain something more valuable than optimisation: the confidence to plan, save, build, and move forward.
+
+---
+
+## Canonical Governance
+
+This document is intended to evolve slowly.
+
+Changes should occur only when supported by one or more of the following:
+
+- accepted doctrine changes;
+- founder-approved category evolution;
+- accepted strategic direction;
+- material product-thesis refinement;
+- significant user evidence that changes Hedgr’s core narrative.
+
+Editorial improvements that do not alter meaning may be made without changing the narrative version.
+
+The Canonical Story should remain substantially more stable than product documentation, marketing material, or implementation artifacts.
 
 ---
 
 ## Versioning Note
 
-If doctrine materially changes, revise this Canonical Story and retain version history. Do not create competing narrative sources.
+**Version 1.0** is frozen as the Accepted Canonical Narrative Source.
+
+If a genuine institutional trigger arises (per Canonical Governance), revise this Canonical Story, retain version history, and do not create competing narrative sources.
