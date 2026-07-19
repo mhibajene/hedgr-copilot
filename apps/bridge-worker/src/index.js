@@ -1,4 +1,4 @@
-const BRIDGE_NAME = "HedgrOps Read-Only Review Evidence Bridge";
+const BRIDGE_NAME = "HedgrOps Read-Only Institutional Evidence Bridge";
 
 const NON_AUTHORIZATION_STATEMENT =
   "This response is evidence/retrieval only. It does not authorize implementation, sequencing, ticket activation, or repo mutation.";
@@ -6,11 +6,11 @@ const NON_AUTHORIZATION_STATEMENT =
 const MODE = "READ_ONLY";
 
 const ALLOWED_FILES = Object.freeze({
-  "/authority": "docs/ops/bridge/current-status.json",
-  "/authority-summary": "docs/ops/bridge/current-status.json",
-  "/current-status": "docs/ops/bridge/current-status.json",
+  "/authority": "docs/ops/bridge/repo-authority-projection.json",
+  "/authority-summary": "docs/ops/bridge/repo-authority-projection.json",
+  "/current-status": "docs/ops/bridge/repo-authority-projection.json",
   "/weekly-review": "docs/ops/bridge/latest-weekly-review.json",
-  "/hedgr/status/authority-summary": "docs/ops/bridge/current-status.json",
+  "/hedgr/status/authority-summary": "docs/ops/bridge/repo-authority-projection.json",
   "/hedgr/reviews/latest-weekly": "docs/ops/bridge/latest-weekly-review.json",
   "/hedgr/reviews/latest-mvp-process": "docs/ops/bridge/latest-mvp-process-review.json",
   "/hedgr/reviews/index": "docs/ops/bridge/review-index.json"
@@ -64,6 +64,7 @@ function routeIndex() {
     execution_authority: false,
     mutation_allowed: false,
     ticket_activation_allowed: false,
+    sequencing_allowed: false,
     retrieved_at: new Date().toISOString(),
     non_authorization_statement: NON_AUTHORIZATION_STATEMENT
   });
@@ -150,6 +151,7 @@ function envelope(sourcePath, data) {
       execution_authority: false,
       mutation_allowed: false,
       ticket_activation_allowed: false,
+      sequencing_allowed: false,
       retrieved_at: new Date().toISOString(),
       source_path: sourcePath,
       non_authorization_statement: NON_AUTHORIZATION_STATEMENT

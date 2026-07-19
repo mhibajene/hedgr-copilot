@@ -52,6 +52,7 @@ test("identical source revision produces byte-identical current RAP output", asy
   assert.equal(first.validation.ok, true);
   assert.equal(first.projection.freshness, "CURRENT");
   assert.equal(first.projection.coverage, "COMPLETE");
+  assert.equal(first.projection.generated_at, "2026-07-19T00:00:00.000Z");
   assert.equal(serializeProjection(first.projection), serializeProjection(second.projection));
   assert.deepEqual(first.projection.payload.fields.active_ticket_ids.value, [
     "CLASS-A-VAL-002",

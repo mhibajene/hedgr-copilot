@@ -12,6 +12,8 @@ import fs from "node:fs";
 import path from "node:path";
 import process from "node:process";
 
+import { validateResponseEnvelope } from "../../apps/bridge-worker/contracts/phase0/validate.mjs";
+
 const NON_AUTHORIZATION_STATEMENT =
   "This snapshot is evidence/retrieval only. It does not authorize implementation, sequencing, ticket activation, or repo mutation.";
 
@@ -24,6 +26,8 @@ const GENERATED_SNAPSHOTS = Object.freeze({
   latestMvpProcess: "docs/ops/bridge/latest-mvp-process-review.json",
   reviewIndex: "docs/ops/bridge/review-index.json"
 });
+const REPO_AUTHORITY_PROJECTION =
+  "docs/ops/bridge/repo-authority-projection.json";
 
 const REQUIRED_FALSE_GUARDRAILS = Object.freeze([
   "execution_authority",
@@ -352,6 +356,18 @@ function assertSnapshotGuardrails(snapshot, relativePath) {
 
 function validateSnapshotObject(root, relativePath, snapshot) {
   assertGeneratedAt(snapshot.generated_at, relativePath);
+
+  if (relativePath === REPO_AUTHORITY_PROJECTION) {
+    const validation = validateResponseEnvelope(snapshot);
+    if (!validation.ok) {
+      const codes = [...new Set(validation.errors.map((error) => error.code))];
+      throw new BridgeSnapshotError(
+        `${relativePath} fails Phase 0 RAP validation: ${codes.join(", ")}`
+      );
+    }
+    return;
+  }
+
   assertNoProhibitedKeys(snapshot, relativePath);
   assertSnapshotGuardrails(snapshot, relativePath);
 

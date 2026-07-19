@@ -182,3 +182,19 @@ test("check fails when JSON formatting differs from deterministic output", () =>
 
   assertBridgeSnapshotError(() => checkSnapshots(root, { today: TODAY }), /differs from generated output/);
 });
+
+test("check validates a committed Repo Authority Projection with Phase 0 contracts", () => {
+  const root = makeRepo();
+  writeSnapshots(root, { today: TODAY });
+  const artifact = readJson(process.cwd(), "docs/ops/bridge/repo-authority-projection.json");
+  writeJson(root, "docs/ops/bridge/repo-authority-projection.json", artifact);
+
+  assert.doesNotThrow(() => checkSnapshots(root, { today: TODAY }));
+
+  artifact.sequencing_allowed = true;
+  writeJson(root, "docs/ops/bridge/repo-authority-projection.json", artifact);
+  assertBridgeSnapshotError(
+    () => checkSnapshots(root, { today: TODAY }),
+    /fails Phase 0 RAP validation: ATTEMPTED_SEQUENCING_FIELD/
+  );
+});

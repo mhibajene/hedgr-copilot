@@ -1,8 +1,8 @@
 openapi: 3.1.0
 info:
-  title: HedgrOps Read-Only Review Evidence Bridge
-  version: 0.1.0
-  description: Read-only, non-authoritative evidence retrieval only for approved Hedgr review snapshots.
+  title: HedgrOps Read-Only Institutional Evidence Bridge
+  version: 0.2.0
+  description: Read-only, non-authoritative retrieval of a source-bound Repo Authority Projection and approved Hedgr review evidence snapshots.
 servers:
   - url: https://hedgrops-bridge.hedgr.workers.dev
 security:
@@ -48,11 +48,11 @@ paths:
   /authority:
     get:
       operationId: getAuthoritySnapshotAlias
-      summary: Retrieve the authority-summary snapshot
-      description: Alias for the read-only authority-summary snapshot. Non-authoritative. Evidence retrieval only.
+      summary: Retrieve the Repo Authority Projection
+      description: Alias for the source-bound, read-only Repo Authority Projection. Non-authoritative. The legacy current-status placeholder is Deprecated and is not served by this route.
       responses:
         "200":
-          description: Read-only bridge envelope containing the authority-summary snapshot.
+          description: Read-only bridge envelope containing the Repo Authority Projection.
           content:
             application/json:
               schema:
@@ -66,11 +66,11 @@ paths:
   /authority-summary:
     get:
       operationId: getAuthoritySummaryAlias
-      summary: Retrieve the authority-summary snapshot
-      description: Alias for the read-only authority-summary snapshot. Non-authoritative. Evidence retrieval only.
+      summary: Retrieve the Repo Authority Projection
+      description: Alias for the source-bound, read-only Repo Authority Projection. Non-authoritative. The legacy current-status placeholder is Deprecated and is not served by this route.
       responses:
         "200":
-          description: Read-only bridge envelope containing the authority-summary snapshot.
+          description: Read-only bridge envelope containing the Repo Authority Projection.
           content:
             application/json:
               schema:
@@ -84,11 +84,11 @@ paths:
   /current-status:
     get:
       operationId: getCurrentStatusAlias
-      summary: Retrieve the authority-summary snapshot
-      description: Alias for the read-only current-status snapshot. Non-authoritative. Evidence retrieval only.
+      summary: Retrieve the Repo Authority Projection
+      description: Compatibility alias for the source-bound, read-only Repo Authority Projection. Non-authoritative. The legacy current-status placeholder is Deprecated and retained in-repo for the governed compatibility period.
       responses:
         "200":
-          description: Read-only bridge envelope containing the authority-summary snapshot.
+          description: Read-only bridge envelope containing the Repo Authority Projection.
           content:
             application/json:
               schema:
@@ -120,11 +120,11 @@ paths:
   /hedgr/status/authority-summary:
     get:
       operationId: getHedgrAuthoritySummary
-      summary: Retrieve the authority-summary snapshot
-      description: Read-only. Non-authoritative. Evidence retrieval only. Retrieves an allowlisted snapshot without generating, summarizing, or interpreting governance state.
+      summary: Retrieve the Repo Authority Projection
+      description: Read-only and non-authoritative. Retrieves the allowlisted, build-time Repo Authority Projection without request-time generation, summarization, or governance-state interpretation.
       responses:
         "200":
-          description: Read-only bridge envelope containing the authority-summary snapshot.
+          description: Read-only bridge envelope containing the Repo Authority Projection.
           content:
             application/json:
               schema:
@@ -234,12 +234,13 @@ components:
         - execution_authority
         - mutation_allowed
         - ticket_activation_allowed
+        - sequencing_allowed
         - retrieved_at
         - non_authorization_statement
       properties:
         bridge:
           type: string
-          const: HedgrOps Read-Only Review Evidence Bridge
+          const: HedgrOps Read-Only Institutional Evidence Bridge
         status:
           type: string
           const: ok
@@ -257,6 +258,9 @@ components:
           type: boolean
           const: false
         ticket_activation_allowed:
+          type: boolean
+          const: false
+        sequencing_allowed:
           type: boolean
           const: false
         retrieved_at:
@@ -280,13 +284,14 @@ components:
             - execution_authority
             - mutation_allowed
             - ticket_activation_allowed
+            - sequencing_allowed
             - retrieved_at
             - source_path
             - non_authorization_statement
           properties:
             name:
               type: string
-              const: HedgrOps Read-Only Review Evidence Bridge
+              const: HedgrOps Read-Only Institutional Evidence Bridge
             mode:
               type: string
               const: READ_ONLY
@@ -297,6 +302,9 @@ components:
               type: boolean
               const: false
             ticket_activation_allowed:
+              type: boolean
+              const: false
+            sequencing_allowed:
               type: boolean
               const: false
             retrieved_at:
