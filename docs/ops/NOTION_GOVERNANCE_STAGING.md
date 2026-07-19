@@ -6,7 +6,7 @@
 
 **Authority:** The repository is source of truth. Wording here must match `docs/decisions/0016-warmth-layer-doctrine-constrained-retail-refinement-track.md`, `docs/decisions/SPRINT-2-ADR-INDEX.md`, and `docs/ops/HEDGR_STATUS.md`. Wording must match **Accepted** ADR **0016** in repo; do not broaden scope or soften read-only / non-execution boundaries in Notion.
 
-**Last reconciled:** 2026-07-19 (mirror after `BRIDGE-P1-001` activation **§152** / Internal **D-044** / **§6f.8** concurrent with Lane V `CLASS-A-VAL-002`; prep `BRIDGE-P1-PREP-001` remains completed **§151**; D-042 F1–F8 + §7a R1–R5 bind Lane R; Kenya counsel **DEFER**; repo **§7** / **§7a** controls sequencing)
+**Last reconciled:** 2026-07-19 (mirror after `BRIDGE-P1-001` closeout **§154** + `BRIDGE-P1-OPS-001` activation **§155** / Internal **D-045** / **§6f.9** concurrent with Lane V `CLASS-A-VAL-002`; R1 retirement deferred to on/after **2026-08-02**; Kenya counsel **DEFER**; repo **§7** / **§7a** controls sequencing)
 
 ---
 
@@ -74,7 +74,11 @@ Use as a governed workstream line, **not** as a shipped-feature claim. Placement
 
 - **Bridge Phase 1 prep closeout (D-043, Accepted):** Close `BRIDGE-P1-PREP-001` prep-complete; authorize formation of proposed `BRIDGE-P1-001`. Recorded **§151**.
 
-- **Controlled Parallelism v8 (D-044, Accepted — active):** Named `CLASS-A-VAL-002` (Lane V, unchanged) and `BRIDGE-P1-001` (Lane R Phase 1 authority-integrity implementation). Activation **§152** / **§6f.8**. Residuals R1–R5 locked in **§7a**. `NO CROSS-LANE IMPACT`.
+- **Controlled Parallelism v8 (D-044, Accepted — completed historical pass):** Named `CLASS-A-VAL-002` (Lane V) and `BRIDGE-P1-001` (Lane R). Lane R closed **§154**; D-044 no longer supplies concurrency. `NO CROSS-LANE IMPACT`.
+
+- **Controlled Parallelism v9 (D-045, Accepted — active):** Named `CLASS-A-VAL-002` (Lane V, unchanged) and `BRIDGE-P1-OPS-001` (Lane R Phase 1 reliability / R1 clock ops). Activation **§155** / **§6f.9**. Legacy retirement deferred to on/after **2026-08-02**. `NO CROSS-LANE IMPACT`.
+
+- **Bridge Phase 1 implementation closeout (Accepted):** Close `BRIDGE-P1-001` complete (**§154**; PRs **#306** / **#307**); activate successor `BRIDGE-P1-OPS-001` (**§155**).
 
 - **`MC-S3-006` (merged, test-only):** Further Vitest regression resistance on **already-shipped** Stability Engine trust surfaces — **no** new states, **no** new behavior, **no** new surfaces; **not** Warmth v2 and **not** a presentation-queue successor to **`MC-S3-005`**. Merged truth **§37**.
 
@@ -843,19 +847,43 @@ Use when mirroring the completed **test-only** regression tranche 4. **Not** new
 | ----- | ----- |
 | **Decision ID** | D-044 |
 | **Title** | Controlled Parallelism v8 — `CLASS-A-VAL-002` + `BRIDGE-P1-001` |
-| **Status** | Accepted and active |
+| **Status** | Accepted and completed (superseded as active concurrency by **D-045**) |
 | **Decision Type** | Ops / Architecture / Sequencing |
 | **Strategic Horizon** | Short-term (MVP / immediate sprint) |
 | **Visibility** | Internal |
 | **Date** | 2026-07-19 |
-| **Repo authority** | `HEDGR_STATUS.md` **§6f.8**; activation **§152** |
-| **Tickets** | Lane V `CLASS-A-VAL-002` (continues); Lane R `BRIDGE-P1-001` (active) |
+| **Repo authority** | `HEDGR_STATUS.md` **§6f.8**; activation **§152**; closeout **§154** |
+| **Tickets** | Lane V `CLASS-A-VAL-002` (continues); Lane R `BRIDGE-P1-001` (completed) |
 
 **Summary / notes (concise)**
 
 - Activates Phase 1 authority-integrity implementation beside unchanged Lane V.
 - Bound by plan + D-042 F1–F8 + §7a R1–R5.
 - No Phase 2; no evidence acceptance; no ticket sequencing via Bridge; no customer-money.
+- Cross-lane default `NO CROSS-LANE IMPACT`.
+
+---
+
+## 8d.13 Decision Log — D-045 / Controlled Parallelism v9 (Internal; Notion mirror)
+
+**Notion Decision Log ID:** **D-045**. Canonical detail: **`docs/ops/HEDGR_STATUS.md` §6f.9**, activation **§155**; closeout predecessor **§154**. Visibility: **Internal**.
+
+| Field | Value |
+| ----- | ----- |
+| **Decision ID** | D-045 |
+| **Title** | Controlled Parallelism v9 — `CLASS-A-VAL-002` + `BRIDGE-P1-OPS-001` |
+| **Status** | Accepted and active |
+| **Decision Type** | Ops / Architecture / Sequencing |
+| **Strategic Horizon** | Short-term (MVP / immediate sprint) |
+| **Visibility** | Internal |
+| **Date** | 2026-07-19 |
+| **Repo authority** | `HEDGR_STATUS.md` **§6f.9**; activation **§155** |
+| **Tickets** | Lane V `CLASS-A-VAL-002` (continues); Lane R `BRIDGE-P1-OPS-001` (active); `BRIDGE-P1-001` (completed **§154**) |
+
+**Summary / notes (concise)**
+
+- Closes Phase 1 RAP cutover ticket and activates Phase 1 reliability / R1 clock ops.
+- No Phase 2; no legacy retirement before **2026-08-02**; no evidence acceptance; no customer-money.
 - Cross-lane default `NO CROSS-LANE IMPACT`.
 
 ---
@@ -1364,4 +1392,4 @@ Apply **only** if the live Notion row contradicts repo truth. **Repo wins.** Do 
 | **Release: HedgrOps Read-Only Review Evidence Bridge** | Should list **`HOPS-BRIDGE-001`** as **Done** per **§9i**; bridge is non-authorizing evidence retrieval only and does **not** imply implementation, sequencing, governance, or customer-money authority. |
 | **Release: Brand System Governance** | Should list **`BRAND-001`** through **`BRAND-009`** as **Done / Shipped** per **§9h**; spine and first two remediation steps are **not** broad UI redesign approval, shipped app remediation approval beyond scoped shared UI files, or successor remediation approval. |
 | **Release / reference: Stability Condition Interface Reference** | Should list **`DOC-SE-REF-001`** as **Done** documentation-only governance closeout for the already-merged reference artifact; reference is non-authoritative and does **not** authorize implementation, runtime state, UI changes, ADR changes, or sequencing. |
-| **Executive / Strategy surfaces** | Dual actives under Controlled Parallelism v8 (**D-044** / **§152**): Lane V **`CLASS-A-VAL-002`**; Lane R **`BRIDGE-P1-001`** (Phase 1 authority-integrity implementation; R1–R5 locked). Prep `BRIDGE-P1-PREP-001` completed (**§151**). D-042 F1–F8 binding. Kenya counsel **DEFER**. Convergence gate unsatisfied. |
+| **Executive / Strategy surfaces** | Dual actives under Controlled Parallelism v9 (**D-045** / **§155**): Lane V **`CLASS-A-VAL-002`**; Lane R **`BRIDGE-P1-OPS-001`** (Phase 1 reliability / R1 clock; retirement deferred ≥ **2026-08-02**). `BRIDGE-P1-001` completed (**§154**). Kenya counsel **DEFER**. Convergence gate unsatisfied. |

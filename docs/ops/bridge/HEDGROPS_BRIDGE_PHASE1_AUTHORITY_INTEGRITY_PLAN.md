@@ -1,12 +1,13 @@
 # HedgrOps Bridge — Phase 1 Authority-Integrity Plan
 
-**Status:** Governing implementation specification for active `BRIDGE-P1-001` (Phase 1 authority-integrity only)  
+**Status:** Governing specification for completed `BRIDGE-P1-001` (Phase 1 authority-integrity); successor ops ticket active separately  
 **Ticket of record (prep):** `BRIDGE-P1-PREP-001` — **Completed** (**§151** / Internal **D-043**)  
-**Active implementation ticket:** `BRIDGE-P1-001` (**§152** / Internal **D-044** / **§6f.8**)  
-**Authority:** `docs/ops/HEDGR_STATUS.md` **§6f.8** / **D-044** / **§152**; Founder dispositions **F1–F8** **D-042** / **§150**; prep closeout **§151** / **D-043**; ADR **0026**; adopted Bridge capability contract; residuals **R1–R5** locked in **§7a**  
+**Completed implementation ticket:** `BRIDGE-P1-001` (**§154**; PRs **#306** / **#307**; origin **§152** / **D-044**)  
+**Active successor (ops):** `BRIDGE-P1-OPS-001` (**§155** / Internal **D-045** / **§6f.9**)  
+**Authority:** `docs/ops/HEDGR_STATUS.md` **§6f.9** / **D-045** / **§155**; Founder dispositions **F1–F8** **D-042** / **§150**; ADR **0026**; adopted Bridge capability contract; R1–R5 meaning retained  
 **Date:** 2026-07-19  
 **Visibility:** Internal  
-**HedgrOps / Founder path:** Prep complete → `BRIDGE-P1-001` activated for Phase 1 authority-integrity implementation under Controlled Parallelism v8 
+**HedgrOps / Founder path:** `BRIDGE-P1-001` complete → `BRIDGE-P1-OPS-001` active for Phase 1 reliability / R1 clock under Controlled Parallelism v9 
 
 ---
 
@@ -288,7 +289,7 @@ Still required in a future Phase 1 implementation §7a (not invented here):
 - legacy placeholder is remediated in production;
 - Lane V is affected.
 
-**Next governed step:** `BRIDGE-P1-001` is **active** under **§152** / **D-044**. Implement per **§7a** with locked R1–R5. Lane V remains independent (`NO CROSS-LANE IMPACT`).
+**Next governed step:** `BRIDGE-P1-001` is **complete** (**§154**). Active successor `BRIDGE-P1-OPS-001` under **§155** / **D-045**. Legacy retirement remains deferred to on/after **2026-08-02**. Lane V remains independent (`NO CROSS-LANE IMPACT`).
 
 ---
 
