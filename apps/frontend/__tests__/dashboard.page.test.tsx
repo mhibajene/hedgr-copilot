@@ -2,7 +2,7 @@
 
 import React from "react";
 import { afterEach, describe, expect, test, vi } from "vitest";
-import { cleanup, render, screen } from "@testing-library/react";
+import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { ENGINE_NOTICE_COPY } from "../lib/engine/notices";
 import type { EngineState } from "../lib/engine/types";
 import {
@@ -11,6 +11,21 @@ import {
 } from "../lib/engine/stability-review-snapshot-copy";
 
 (globalThis as typeof globalThis & { React: typeof React }).React = React;
+
+const dashboardStateMocks = vi.hoisted(() => ({
+  transactions: [] as Array<{
+    txn_ref: string;
+    type: "deposit" | "withdrawal";
+    status: "pending" | "settled" | "failed";
+    amount_zmw: number;
+    amount_usd: number;
+    fx_rate: number;
+    created_at: number;
+    updated_at: number;
+  }>,
+  clearLedger: vi.fn(),
+  resetWallet: vi.fn(),
+}));
 
 vi.mock("../lib/hooks/useBalance", () => ({
   useBalance: vi.fn(),
@@ -24,8 +39,18 @@ vi.mock("../lib/defi", () => ({
 
 vi.mock("../lib/state/ledger", () => ({
   useLedgerStore: vi.fn(
-    (selector: (state: { transactions: unknown[] }) => unknown) =>
-      selector({ transactions: [] })
+    (selector: (state: { transactions: unknown[]; clear: () => void }) => unknown) =>
+      selector({
+        transactions: dashboardStateMocks.transactions,
+        clear: dashboardStateMocks.clearLedger,
+      })
+  ),
+}));
+
+vi.mock("../lib/state/wallet", () => ({
+  useWalletStore: vi.fn(
+    (selector: (state: { reset: () => void }) => unknown) =>
+      selector({ reset: dashboardStateMocks.resetWallet })
   ),
 }));
 
@@ -99,9 +124,37 @@ function makeBalanceState(
   };
 }
 
+function makeCompletedJourneyTransactions(): typeof dashboardStateMocks.transactions {
+  return [
+    {
+      txn_ref: "deposit-1",
+      type: "deposit",
+      status: "settled",
+      amount_zmw: 100,
+      amount_usd: 5,
+      fx_rate: 20,
+      created_at: 1,
+      updated_at: 2,
+    },
+    {
+      txn_ref: "withdrawal-1",
+      type: "withdrawal",
+      status: "settled",
+      amount_zmw: 0,
+      amount_usd: 2,
+      fx_rate: 0,
+      created_at: 3,
+      updated_at: 4,
+    },
+  ];
+}
+
 afterEach(() => {
   cleanup();
   vi.restoreAllMocks();
+  dashboardStateMocks.transactions = [];
+  dashboardStateMocks.clearLedger.mockClear();
+  dashboardStateMocks.resetWallet.mockClear();
   vi.mocked(useSearchParams).mockReturnValue(
     new URLSearchParams() as ReturnType<typeof useSearchParams>
   );
@@ -135,6 +188,65 @@ describe("DashboardPage engine trust surface", () => {
     expect(
       screen.getByTestId("dashboard-current-overview").getAttribute("aria-label")
     ).toBe("Current simulation overview");
+  });
+
+  test("restarts a completed explicit synthetic journey only after confirmation", async () => {
+    vi.stubEnv("NEXT_PUBLIC_AUTH_MODE", "mock");
+    vi.stubEnv("NEXT_PUBLIC_FX_MODE", "stub");
+    vi.stubEnv("NEXT_PUBLIC_APP_ENV", "prod");
+    vi.mocked(useSearchParams).mockReturnValue(
+      new URLSearchParams(
+        "journey=class-a-val-002"
+      ) as ReturnType<typeof useSearchParams>
+    );
+    dashboardStateMocks.transactions = makeCompletedJourneyTransactions();
+    vi.mocked(useBalance).mockReturnValue(
+      makeBalanceState({ total: 3, available: 3 })
+    );
+    vi.mocked(useEngineState).mockReturnValue(
+      getMockEngineState("normal") as EngineState
+    );
+    const confirmRestart = vi
+      .spyOn(window, "confirm")
+      .mockReturnValueOnce(false)
+      .mockReturnValueOnce(true);
+
+    render(<DashboardPage />);
+
+    const restartButton = await screen.findByRole("button", {
+      name: "Restart synthetic journey",
+    });
+    expect(screen.getByTestId("dashboard-restart-journey").textContent).toContain(
+      "begins again at $0"
+    );
+
+    fireEvent.click(restartButton);
+    expect(dashboardStateMocks.clearLedger).not.toHaveBeenCalled();
+    expect(dashboardStateMocks.resetWallet).not.toHaveBeenCalled();
+
+    fireEvent.click(restartButton);
+    expect(confirmRestart).toHaveBeenCalledTimes(2);
+    expect(dashboardStateMocks.clearLedger).toHaveBeenCalledTimes(1);
+    expect(dashboardStateMocks.resetWallet).toHaveBeenCalledTimes(1);
+  });
+
+  test("does not expose synthetic replay outside the explicit production journey", async () => {
+    vi.stubEnv("NEXT_PUBLIC_AUTH_MODE", "mock");
+    vi.stubEnv("NEXT_PUBLIC_FX_MODE", "stub");
+    vi.stubEnv("NEXT_PUBLIC_APP_ENV", "prod");
+    dashboardStateMocks.transactions = makeCompletedJourneyTransactions();
+    vi.mocked(useBalance).mockReturnValue(
+      makeBalanceState({ total: 3, available: 3 })
+    );
+    vi.mocked(useEngineState).mockReturnValue(
+      getMockEngineState("normal") as EngineState
+    );
+
+    render(<DashboardPage />);
+
+    expect(
+      screen.queryByRole("button", { name: "Restart synthetic journey" })
+    ).toBeNull();
   });
 
   test("mounts the engine posture header in the primary dashboard path", () => {
