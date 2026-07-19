@@ -47,6 +47,7 @@ test("R1 record fixes the compatibility clock without authorizing retirement", a
   assert.equal(record.phase_2_allowed, false);
   assert.equal(record.cross_lane_impact, "NONE");
   assert.equal(record.execution_authority, false);
+  assert.equal(record.may_activate_ticket, false);
   assert.equal(record.mutation_allowed, false);
   assert.equal(record.ticket_activation_allowed, false);
   assert.equal(record.sequencing_allowed, false);

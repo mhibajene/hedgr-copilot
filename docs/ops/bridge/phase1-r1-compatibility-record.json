@@ -3,6 +3,7 @@
   "ticket_id": "BRIDGE-P1-OPS-001",
   "authority_class": "SUPPORTING_EVIDENCE",
   "mode": "READ_ONLY",
+  "generated_at": "2026-07-19T00:00:00.000Z",
   "recorded_at": "2026-07-19T12:49:36Z",
   "canonical_first_serve_date": "2026-07-19",
   "clock_anchor_basis": "FOUNDER_RECORDED_RAP_ROUTE_CUTOVER_MERGE_DATE",
@@ -38,8 +39,9 @@
   "phase_2_allowed": false,
   "cross_lane_impact": "NONE",
   "execution_authority": false,
+  "may_activate_ticket": false,
   "mutation_allowed": false,
   "ticket_activation_allowed": false,
   "sequencing_allowed": false,
-  "non_authorization_statement": "This record preserves compatibility evidence only. It does not authorize legacy retirement, Phase 2, implementation sequencing, ticket activation, evidence acceptance, or repo mutation."
+  "non_authorization_statement": "This snapshot is evidence/retrieval only. It does not authorize implementation, sequencing, ticket activation, or repo mutation."
 }
