@@ -2,7 +2,7 @@
 
 | Field | Value |
 | ----- | ----- |
-| **Status** | Internal review record |
+| **Status** | Founder / HedgrOps review complete |
 | **Authority** | Non-authoritative |
 | **Ticket** | `NARRATIVE-003` |
 | **Reviewed artifact** | `docs/strategy/customer/HEDGR_CUSTOMER_ONE_PAGER.md` |
@@ -18,14 +18,14 @@ This record supports bounded review. It does **not** approve publication, custom
 
 | Canonical element | Present in one-pager? | Notes |
 | ----------------- | --------------------- | ----- |
-| Stability Gap (human → systemic) | Yes | Plain-language customer form |
-| Financial Stability Operating System | Yes | Introduced once |
+| Stability Gap (human → systemic) | Yes | Humanised opening; financial explanation follows |
+| Financial Stability Operating System | Yes | Introduced after plain-language “financial stability system” |
 | Stability Wallet as first experience | Yes | Customer surface |
-| Stability before return | Yes | Explicit |
-| State before action hierarchy | Yes | Expressed as benefit order; term used sparingly |
+| Stability before growth / return | Yes | Customer language uses “growth” |
+| State before action hierarchy | Yes | Benefit order; translated into everyday language |
 | Trust / risk visibility | Yes | Dedicated boundary section |
 | Volatile economies (no country claim) | Yes | No jurisdiction named |
-| Advisory Copilot | Yes | Educational / non-directive |
+| Advisory Copilot | Yes | Explain options; encourage thoughtful decisions |
 | Non-DeFi / non-yield-first posture | Yes | Explicit contrast |
 | Frozen parent not redefined | Yes | Metadata + exclusions |
 
@@ -47,7 +47,7 @@ This record supports bounded review. It does **not** approve publication, custom
 | Financial advice / investment management | Absent |
 | Fixed returns or rates | Absent |
 
-**Result:** Pass — no capability inflation detected in draft.
+**Result:** Pass — no capability inflation detected after editorial pass.
 
 ---
 
@@ -55,10 +55,11 @@ This record supports bounded review. It does **not** approve publication, custom
 
 - Stage notice present: research and prototype stage.
 - Distinguishes informational/synthetic exploration from live financial service.
+- Capability-widening principle stated in plain language (no governance jargon).
 - CTA bounded to prototype exploration and feedback.
 - No deposit / earn / waitlist-for-named-market language.
 
-**Result:** Pass for internal draft. External use still requires Founder publication decision.
+**Result:** Pass for freeze as customer narrative source. External use still requires Founder publication decision.
 
 ---
 
@@ -66,11 +67,9 @@ This record supports bounded review. It does **not** approve publication, custom
 
 Target: first-time reader understands core proposition in under two minutes without prior crypto/DeFi knowledge.
 
-Draft uses concrete outcomes (position, stability/risk, liquidity, next action) and limits institutional terms.
+Editorial pass applied Founder guidance: spoken rhythm, short sentences, human opening first, institutional terms translated after everyday language.
 
-Residual risk: “Financial Stability Operating System” may still feel abstract for some readers — acceptable once, with Stability Wallet as the concrete experience.
-
-**Result:** Pass with residual abstraction risk noted.
+**Result:** Pass after approved refinements.
 
 ---
 
@@ -88,29 +87,34 @@ Capture answers outside this file or append session notes here when collected. D
 
 ---
 
-## 6. Unresolved Founder decisions
+## 6. Founder decisions
 
 | Decision | Status |
 | -------- | ------ |
-| Final customer headline wording | Draft candidate only |
-| Whether to produce a designed PDF/image variant under brand rules | Not activated |
-| External circulation to research participants | Not authorised by this ticket |
-| Any CTA stronger than prototype exploration | Not authorised |
+| Customer headline wording | Accepted as drafting direction for v1.0 freeze |
+| Editorial refinements 1–9 | Accepted and incorporated |
+| Spoken-not-written narrative style principle | Accepted for future customer-facing communication |
+| Freeze as Customer One-Pager v1.0 | Accepted |
+| Designed PDF/image variant under brand rules | Not activated |
+| External publication / circulation | Not authorised by freeze alone |
+| Narrative style guide artifact | Recommended future path only (`docs/strategy/website/HEDGR_NARRATIVE_STYLE_GUIDE.md`) |
 
 ---
 
 ## 7. Disposition
 
-**Recommended disposition:** `retain`
+**Founder / HedgrOps disposition:** `Accept with minor editorial refinements` → refinements incorporated → **freeze as HEDGR_CUSTOMER_ONE_PAGER v1.0**.
 
-Conditions:
+The frozen document is the canonical customer narrative source for:
 
-- keep as internal derived source under `NARRATIVE-003`;
-- do not publish externally until Founder publication decision;
-- optional comprehension test before circulation to research contacts;
-- escalate if any reviewer infers live money movement or market launch.
+- prototype sharing;
+- customer interviews;
+- partner introductions;
+- accelerator applications;
+- website homepage messaging;
+- future designed one-page variants.
 
-Alternative dispositions available after evidence: `revise`, `remove`, `retest`, `escalate`.
+Publication, acquisition, and designed distribution assets remain separately authorised.
 
 ---
 
@@ -121,3 +125,4 @@ Alternative dispositions available after evidence: `revise`, `remove`, `retest`,
 3. UX Constitution (trust-first, calm, no urgency)
 4. Current repo authority / Sprint posture (read-only / informational engine; Class A)
 5. Brand governance note (designed variants only; not required for Markdown source)
+6. Founder / HedgrOps editorial review (2026-07-20)
