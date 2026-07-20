@@ -110,10 +110,10 @@ test("missing explicit active-ticket records fail instead of being inferred", as
 test("authority disagreement is attributed and never resolved", async () => {
   const sourceDocuments = await currentSourceDocuments();
   sourceDocuments["AGENTS.md"] = sourceDocuments["AGENTS.md"].replaceAll(
-    " and **`BRIDGE-P1-OPS-001`** (Lane R, Phase 1 reliability / R1 clock ops)",
+    ", and **`NARRATIVE-003`** (Lane N, customer one-pager + strategy index)",
     ""
   ).replaceAll(
-    " and `BRIDGE-P1-OPS-001` (Lane R, Phase 1 reliability / R1 clock ops)",
+    ", and `NARRATIVE-003` (Lane N, customer one-pager + strategy index)",
     ""
   );
 
