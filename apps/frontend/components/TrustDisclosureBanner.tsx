@@ -141,7 +141,7 @@ export function TrustDisclosureBanner({
             </span>
             <div className="min-w-0">
               <p className="font-semibold text-sm">
-                Simulation Mode — No Real Money
+                Simulation Mode. No Real Money
               </p>
               <p className="mt-0.5 text-xs text-hedgr-dark">
                 Balances and activity are local fixtures. A completed step does not mean a deposit, payout, or settlement occurred.

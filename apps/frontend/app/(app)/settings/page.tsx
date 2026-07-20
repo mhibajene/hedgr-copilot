@@ -95,7 +95,7 @@ export default function SettingsPage() {
             </div>
             
             <div className="p-3 bg-gray-50 rounded-lg">
-              <div className="text-xs text-gray-500 uppercase tracking-wide">DeFi Provider</div>
+              <div className="text-xs text-gray-500 uppercase tracking-wide">Yield source (simulated)</div>
               <div className="font-medium mt-1 flex items-center gap-2">
                 {defiMode}
                 {defiMode === 'mock' && (
@@ -121,7 +121,7 @@ export default function SettingsPage() {
             </p>
             <ul className="list-disc list-inside mt-2 space-y-1 text-gray-500">
               <li><strong>Mock Auth:</strong> Login bypasses real identity verification</li>
-              <li><strong>Mock DeFi:</strong> Yields are calculated locally, not from real protocols</li>
+              <li><strong>Mock yield source:</strong> Returns are calculated locally, not from live protocols</li>
               <li><strong>Fixed FX:</strong> Exchange rates use a fixed value, not live market data</li>
             </ul>
           </div>

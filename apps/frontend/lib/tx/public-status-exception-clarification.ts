@@ -11,7 +11,7 @@ import { isTerminalStatus } from './status-mapper';
  * Terminal outcomes (success, failure, reversed, expired) return null — no exception-path block.
  */
 const NON_FINAL_CLARIFICATION_LINES: readonly string[] = [
-  'Still processing — this is not final yet. Taking more time can be normal; it does not mean funds are at risk.',
+  'Still processing. This is not final yet. Taking more time can be normal; it does not mean funds are at risk.',
   'This status alone does not mean funds are gone from your account before this step completes.',
   'No completion time is promised on this screen.',
 ];

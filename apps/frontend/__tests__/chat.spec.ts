@@ -18,8 +18,8 @@ describe('chat client stub', () => {
     await vi.runAllTimersAsync();
     
     const response = await promise;
-    expect(response).toContain('Hedgr is a savings platform');
-    expect(response).toContain('DeFi yield opportunities');
+    expect(response).toContain('Hedgr is a stability wallet');
+    expect(response).toContain('when conditions change');
   });
 
   it('returns Hedgr description for case-insensitive "hedgr" query', async () => {
@@ -28,7 +28,7 @@ describe('chat client stub', () => {
     await vi.runAllTimersAsync();
     
     const response = await promise;
-    expect(response).toContain('Hedgr is a savings platform');
+    expect(response).toContain('Hedgr is a stability wallet');
   });
 
   it('returns generic response for other queries', async () => {
@@ -38,7 +38,7 @@ describe('chat client stub', () => {
     
     const response = await promise;
     expect(response).toContain("I'm here to help you learn");
-    expect(response).toContain('savings and financial planning');
+    expect(response).toContain('stability, access');
   });
 
   it('has artificial delay between 500-1500ms', async () => {

@@ -60,7 +60,7 @@ export function AppLayoutClient({ children }: { children: React.ReactNode }) {
     { href: '/activity', label: 'Activity' },
     { href: '/settings', label: 'Settings' },
     // Policy-gated — flip shipped→true once each route is built
-    { href: '/earn', label: 'Earn', feature: 'earn', testId: 'nav-earn-link', shipped: false },
+    { href: '/earn', label: 'Allocate', feature: 'earn', testId: 'nav-earn-link', shipped: false },
     { href: '/paylinks', label: 'PayLinks', feature: 'payLinks', testId: 'nav-paylinks-link', shipped: false },
     { href: '/send', label: 'Send', feature: 'stablecoinSend', testId: 'nav-send-link', shipped: false },
     // Env-gated

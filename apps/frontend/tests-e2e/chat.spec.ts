@@ -128,7 +128,7 @@ test.describe('Chat Page', () => {
     // Wait for assistant reply (stub has 500-1500ms delay)
     const assistantMessage = page.getByTestId('chat-message-assistant').first();
     await expect(assistantMessage).toBeVisible({ timeout: 3000 });
-    await expect(assistantMessage).toContainText('Hedgr is a savings platform');
+    await expect(assistantMessage).toContainText('Hedgr is a stability wallet');
   });
 
   test('disclaimer is always visible', async ({ page }) => {

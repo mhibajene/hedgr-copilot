@@ -12,7 +12,7 @@ import { isTerminalStatus } from './status-mapper';
  * Terminals and other non-final statuses return null so this stays a narrow clarification layer.
  */
 const IN_PROGRESS_RECONCILIATION_LINES: readonly string[] = [
-  'This withdrawal is not final yet — some details may still be confirmed before it is complete.',
+  'This withdrawal is not final yet. Some details may still be confirmed before it is complete.',
   'Waiting longer during this step can be normal and does not automatically mean something is wrong.',
   'This screen does not promise when confirmation will finish.',
 ];

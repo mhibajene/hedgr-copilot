@@ -38,7 +38,7 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   await login(page);
 
   await expect(page.getByTestId('trust-disclosure-banner')).toContainText(
-    'Simulation Mode — No Real Money',
+    'Simulation Mode. No Real Money',
   );
   const simulationDetails = page.getByTestId('simulation-technical-details');
   await expect(simulationDetails).not.toHaveAttribute('open', '');
