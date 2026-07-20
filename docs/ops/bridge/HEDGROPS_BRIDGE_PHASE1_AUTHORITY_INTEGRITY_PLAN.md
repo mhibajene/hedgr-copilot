@@ -1,13 +1,13 @@
 # HedgrOps Bridge — Phase 1 Authority-Integrity Plan
 
-**Status:** Governing specification for completed `BRIDGE-P1-001` (Phase 1 authority-integrity); successor ops ticket active separately  
+**Status:** Governing specification for completed `BRIDGE-P1-001` (Phase 1 authority-integrity); ops successor completed  
 **Ticket of record (prep):** `BRIDGE-P1-PREP-001` — **Completed** (**§151** / Internal **D-043**)  
 **Completed implementation ticket:** `BRIDGE-P1-001` (**§154**; PRs **#306** / **#307**; origin **§152** / **D-044**)  
-**Active successor (ops):** `BRIDGE-P1-OPS-001` (**§155** / Internal **D-045** / **§6f.9**)  
-**Authority:** `docs/ops/HEDGR_STATUS.md` **§6f.9** / **D-045** / **§155**; Founder dispositions **F1–F8** **D-042** / **§150**; ADR **0026**; adopted Bridge capability contract; R1–R5 meaning retained  
-**Date:** 2026-07-19  
+**Completed ops ticket:** `BRIDGE-P1-OPS-001` (**§161**; activation **§155** / Internal **D-045** / **§6f.9**)  
+**Authority:** `docs/ops/HEDGR_STATUS.md` **§161** / **D-050**; Founder dispositions **F1–F8** **D-042** / **§150**; ADR **0026**; adopted Bridge capability contract; R1–R5 meaning retained  
+**Date:** 2026-07-19 (ops closeout 2026-07-20)  
 **Visibility:** Internal  
-**HedgrOps / Founder path:** `BRIDGE-P1-001` complete → `BRIDGE-P1-OPS-001` active for Phase 1 reliability / R1 clock under Controlled Parallelism v9 
+**HedgrOps / Founder path:** `BRIDGE-P1-001` complete → `BRIDGE-P1-OPS-001` complete; Lane R idle; legacy retirement deferred ≥ **2026-08-02** 
 
 ---
 
@@ -289,7 +289,7 @@ Still required in a future Phase 1 implementation §7a (not invented here):
 - legacy placeholder is remediated in production;
 - Lane V is affected.
 
-**Next governed step:** `BRIDGE-P1-001` is **complete** (**§154**). Active successor `BRIDGE-P1-OPS-001` under **§155** / **D-045**. Legacy retirement remains deferred to on/after **2026-08-02**. Lane V remains independent (`NO CROSS-LANE IMPACT`).
+**Next governed step:** `BRIDGE-P1-001` and `BRIDGE-P1-OPS-001` are **complete** (**§154** / **§161**). Lane R idle. Legacy retirement remains deferred to on/after **2026-08-02** under a separately named Founder ticket only. Lane V remains independent (`NO CROSS-LANE IMPACT`).
 
 ---
 
