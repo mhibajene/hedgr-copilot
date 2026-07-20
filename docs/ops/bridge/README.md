@@ -47,9 +47,9 @@ The Phase 0 validator returns deterministic non-authorizing errors for missing, 
 
 - `docs/ops/bridge/HEDGROPS_BRIDGE_PHASE1_AUTHORITY_INTEGRITY_PLAN.md`
 
-### Phase 1 ops / reliability (active)
+### Phase 1 ops / reliability (completed)
 
-`BRIDGE-P1-OPS-001` is **active** under Controlled Parallelism v11 (`HEDGR_STATUS.md` §6f.11 / §7 / §7a / §158; Internal **D-047**), continuing unchanged from its historical activation under **D-045** / §155. Scope: record RAP first-serve / R1 clock evidence, harden regen/verification hygiene, retain Deprecated legacy through at least **2026-08-02**. No Phase 2. No legacy retirement under this ticket. Lanes V (`CLASS-A-VAL-002`) and N (`NARRATIVE-002`) remain independent.
+`BRIDGE-P1-OPS-001` is **completed** (`HEDGR_STATUS.md` §161 / Internal **D-050** / §6f.14; historical activation **D-045** / §155). Scope delivered: RAP first-serve / R1 clock evidence, regen/verification hygiene, Deprecated legacy retention through at least **2026-08-02**. No Phase 2. No legacy retirement under this ticket. Lane R is idle. Deferred candidate `BRIDGE-LEGACY-RETIRE-001` remains inactive until separately named on/after **2026-08-02**. Lanes V (`CLASS-A-VAL-002`) and N (`NARRATIVE-003`) remain independent under Controlled Parallelism v14.
 
 The canonical R1 compatibility record is `phase1-r1-compatibility-record.json`:
 
@@ -93,7 +93,7 @@ The adopted runtime terminology is **HedgrOps Read-Only Institutional Evidence B
 
 - `repo-authority-projection.json` - deterministic source-bound Repo Authority Projection served by existing authority routes
 - `current-status.json` - Deprecated legacy bounded status placeholder (`generated_at` **2026-06-24**); retained for the R1 compatibility period; not served as RAP and not refreshed by `pnpm bridge:snapshots:refresh`
-- `phase1-r1-compatibility-record.json` - non-authorizing first-serve / compatibility-floor evidence for `BRIDGE-P1-OPS-001`; does not authorize retirement
+- `phase1-r1-compatibility-record.json` - non-authorizing first-serve / compatibility-floor evidence from completed `BRIDGE-P1-OPS-001`; does not authorize retirement
 - `latest-weekly-review.json` - latest weekly review evidence pointer
 - `latest-mvp-process-review.json` - latest MVP process review evidence pointer
 - `review-index.json` - evidence-discovery index
