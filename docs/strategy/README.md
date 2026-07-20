@@ -5,7 +5,7 @@
 | **Status** | Operational index |
 | **Authority** | Non-authorising |
 | **Purpose** | Explain narrative hierarchy and locate audience-specific artifacts |
-| **Ticket** | `NARRATIVE-003` (customer one-pager freeze; index retained) |
+| **Ticket** | Narrative stack through `NARRATIVE-004` (style guide freeze; index retained) |
 | **Date** | 2026-07-20 |
 
 ---
@@ -33,7 +33,7 @@ Doctrine and repo authority
         ↓
 Frozen Canonical Story
         ↓
-Narrative style (spoken, not written)
+Narrative Style Guide
         ↓
 Audience-specific narrative sources
         ↓
@@ -42,28 +42,22 @@ Designed and distributed communication assets / product copy
 
 Rules:
 
-1. The Canonical Story is the **parent narrative**.
-2. Derived materials may adapt emphasis, tone, and detail for an audience.
-3. Derived materials may **not** independently redefine Hedgr.
-4. Narrative artifacts do **not** define execution truth.
-5. `HEDGR_STATUS.md`, `AGENTS.md`, accepted ADRs, and active doctrine remain controlling.
-6. Publication or distribution requires separate review where claims are externally material.
-7. Public-facing content should **feel spoken, not written**. Prefer short sentences, one main idea per sentence, plain language, active voice, and commas or full stops instead of em dashes. Translate institutional language into everyday language before using it.
+1. The Canonical Story is the **parent narrative** (meaning).
+2. The Narrative Style Guide preserves **voice** (how Hedgr sounds).
+3. Derived materials may adapt emphasis, tone, and detail for an audience.
+4. Derived materials may **not** independently redefine Hedgr.
+5. Narrative artifacts do **not** define execution truth.
+6. `HEDGR_STATUS.md`, `AGENTS.md`, accepted ADRs, and active doctrine remain controlling.
+7. Publication or distribution requires separate review where claims are externally material.
+8. Public-facing content should follow `docs/strategy/website/HEDGR_NARRATIVE_STYLE_GUIDE.md` v1.0.
 
 ---
 
 ## Translation principle
 
-The Canonical Story protects meaning. Audience artifacts prove meaning can be understood.
+The Canonical Story protects meaning. The Narrative Style Guide protects voice. Audience artifacts prove meaning can be understood.
 
-| Canonical / institutional | Customer language (preferred) |
-| ------------------------- | ----------------------------- |
-| Financial Fidelity | Know what your money is worth, where it is, and how accessible it is. |
-| State Before Action | Understand your situation before deciding what to do next. |
-| Stability posture | See how stable your financial position looks today. |
-| Liquidity integrity | Know when and how your money can be accessed. |
-
-Product copy should ask: would a trusted person explain it this way? If not, simplify.
+Illustrative customer translations live in the Style Guide. Product copy should ask: would a trusted person explain it this way? If not, simplify.
 
 ---
 
@@ -78,13 +72,14 @@ docs/strategy/
 ├── customer/
 │   ├── HEDGR_CUSTOMER_ONE_PAGER.md    ← customer narrative source (v1.0 Frozen)
 │   └── HEDGR_CUSTOMER_ONE_PAGER_REVIEW.md
+├── website/
+│   └── HEDGR_NARRATIVE_STYLE_GUIDE.md ← narrative voice (v1.0 Frozen)
 ├── investor/                          ← planned paths only
 ├── product/                           ← planned paths only
-├── website/                           ← planned paths only
 └── technical/                         ← planned paths only
 ```
 
-Directories for investor, product, website, and technical audience packs are **planned architecture**. They are not created by this index unless a separately activated ticket requires them.
+Directories for investor, product, and technical audience packs remain **planned architecture** unless a separately activated ticket requires them.
 
 ---
 
@@ -96,7 +91,7 @@ Directories for investor, product, website, and technical audience packs are **p
 | Stability System Thesis | `docs/strategy/hedgr-stability-system-thesis.md` | Existing strategic context | Non-binding; subordinate to Canonical Story and doctrine. |
 | Customer One-Pager | `docs/strategy/customer/HEDGR_CUSTOMER_ONE_PAGER.md` | **Active / Frozen v1.0** | Canonical customer narrative source. Publication not authorised by freeze alone. |
 | Customer One-Pager Review | `docs/strategy/customer/HEDGR_CUSTOMER_ONE_PAGER_REVIEW.md` | **Review complete** | Non-authoritative evidence; Founder accept + freeze disposition recorded. |
-| Narrative Style Guide | `docs/strategy/website/HEDGR_NARRATIVE_STYLE_GUIDE.md` | **Planned** | Recommended future voice/rhythm guide. Not created. Not approved. |
+| Narrative Style Guide | `docs/strategy/website/HEDGR_NARRATIVE_STYLE_GUIDE.md` | **Active / Frozen v1.0** | Canonical narrative governance for voice, rhythm, and translation. Non-authorising. |
 | Investor One-Pager | `docs/strategy/investor/HEDGR_INVESTOR_ONE_PAGER.md` | **Planned** | Not created. Not approved. |
 | Investor Deck | `docs/strategy/investor/HEDGR_INVESTOR_DECK.md` | **Planned** | Not created. Not approved. |
 | Product Overview | `docs/strategy/product/HEDGR_PRODUCT_OVERVIEW.md` | **Planned** | Not created. Not approved. |
@@ -119,7 +114,7 @@ When a derived source is turned into a designed PDF, page, or visual asset, foll
 - restrained, high-contrast, institutional presentation
 - Plus Jakarta Sans where the medium supports it
 
-Narrative sources may remain structured Markdown until a separately scoped design pass is authorised.
+Narrative sources may remain structured Markdown until a separately scoped design pass is authorised. Narrative voice follows the Style Guide; visual brand follows `DESIGN.md` and `docs/brand/**`.
 
 ---
 
