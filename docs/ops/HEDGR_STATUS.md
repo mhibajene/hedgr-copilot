@@ -64,7 +64,7 @@ Important active constraints:
 
 **Sprint 3** is framed here as **Transition Readiness** (named track above), not as Foundation continuation: governance defines the explicit standard for any later boundary widening; execution architecture remains out of scope until explicitly approved.
 
-**Sequencing authority:** Only **§7** / **§7a** name approved active ticket(s). **Default posture:** one active implementation ticket. Concurrent lanes are permitted only where this file records an accepted, active, and unambiguous Founder-approved parallelism decision (**§6e** lane model / Internal **D-026** plus separate active-pass naming under **§6f**), explicitly names each active lane and ticket, defines authority class and exclusions, and preserves independent stop conditions and rollback. Internal **D-029**, Internal **D-032** / **§6f.3**, Internal **D-034** / **§6f.4**, Internal **D-035** / **§6f.5**, Internal **D-036** / **§6f.6**, Internal **D-041** / **§6f.7**, Internal **D-044** / **§6f.8**, Internal **D-045** / **§6f.9**, Internal **D-046** / **§6f.10**, Internal **D-047** / **§6f.11**, Internal **D-048** / **§6f.12**, Internal **D-049** / **§6f.13**, and Internal **D-050** / **§6f.14** are completed historical pass authorities and no longer supply concurrency. Singular-ticket posture is active with `CLASS-A-VAL-002` as the sole active ticket after Customer One-Pager v1.0 freeze / `NARRATIVE-003` closeout (**§162**). Lane N idle. Lane R idle after `BRIDGE-P1-OPS-001` closeout. Any future concurrency requires a separate Founder decision plus explicit **§7** / **§7a** naming. Parallel authorization applies only to explicitly named lanes and does **not** authorize unrestricted multi-ticket execution. No lane may widen another lane’s authority without a separate Founder decision and repo-native governance update. **§6b** is Transition Readiness taxonomy and scrutiny input only—not backlog approval or sequencing. **§6e** / **§6f** / **§6g** do **not** widen Class B execution, custody, rails, conversion, settlement, or customer-money authority. Green Lane classification (**§6g** / ADR **0025**) does not activate work and does not override **§7** / **§7a**.
+**Sequencing authority:** Only **§7** / **§7a** name approved active ticket(s). **Default posture:** one active implementation ticket. Concurrent lanes are permitted only where this file records an accepted, active, and unambiguous Founder-approved parallelism decision (**§6e** lane model / Internal **D-026** plus separate active-pass naming under **§6f**), explicitly names each active lane and ticket, defines authority class and exclusions, and preserves independent stop conditions and rollback. Internal **D-029**, Internal **D-032** / **§6f.3**, Internal **D-034** / **§6f.4**, Internal **D-035** / **§6f.5**, Internal **D-036** / **§6f.6**, Internal **D-041** / **§6f.7**, Internal **D-044** / **§6f.8**, Internal **D-045** / **§6f.9**, Internal **D-046** / **§6f.10**, Internal **D-047** / **§6f.11**, Internal **D-048** / **§6f.12**, Internal **D-049** / **§6f.13**, Internal **D-050** / **§6f.14**, and Internal **D-051** / **§6f.15** are completed historical pass authorities and no longer supply concurrency. Singular-ticket posture is active with `CLASS-A-VAL-002` as the sole active ticket after Narrative Style Guide v1.0 freeze / `NARRATIVE-004` closeout (**§164**). Lane N idle. Lane R idle after `BRIDGE-P1-OPS-001` closeout. Any future concurrency requires a separate Founder decision plus explicit **§7** / **§7a** naming. Parallel authorization applies only to explicitly named lanes and does **not** authorize unrestricted multi-ticket execution. No lane may widen another lane’s authority without a separate Founder decision and repo-native governance update. **§6b** is Transition Readiness taxonomy and scrutiny input only—not backlog approval or sequencing. **§6e** / **§6f** / **§6g** do **not** widen Class B execution, custody, rails, conversion, settlement, or customer-money authority. Green Lane classification (**§6g** / ADR **0025**) does not activate work and does not override **§7** / **§7a**.
 
 **MVP phased alignment (interpretation aid):** See **`docs/ops/governance/mvp/HEDGR_MVP_PHASE_ALIGNMENT.md`** for how **`docs/doctrine/hedgr-mvp-project-specification.md`** governance-gated phases and success criteria map to the posture stated in this section and in **§6a–§6c**. That readout is **subordinate** to this file and to **§7** / **§7a**; it does **not** widen execution authority or substitute for **§7** naming.
 
@@ -4163,6 +4163,41 @@ This section does **not** authorize provider-specific implementation, legal reli
 | **Reversibility** | Reversible historically; active posture now singular-ticket `CLASS-A-VAL-002` |
 
 
+### 6f.15 Controlled Parallelism v15 — `CLASS-A-VAL-002` + `NARRATIVE-004` (Internal **D-051**)
+
+**Status:** Accepted and **completed**. Founder-authorized 2026-07-20; activation **§163**; Lane N freeze closeout **§164**. Visibility remains **Internal** — not auto-exported as a public ADR. D-051 no longer supplies active concurrency.
+
+**Authority basis:** **§6e** / D-026 lane-model / exception-framework + Founder approval to create the Narrative Style Guide as Canonical Narrative Governance while `CLASS-A-VAL-002` remains active + Internal **D-051** + **§7** / **§7a** naming + activation **§163** + closeout **§164**. Prior pass **D-050** / **§6f.14** remains historically valid; it no longer supplies concurrency. Canonical Story v1.0 and Customer One-Pager v1.0 remain Frozen and are **not** reopened by this pass.
+
+**Founder-approved concurrent activation (only these named lanes/tickets):**
+
+| Lane | Ticket | Execution class | Authority |
+| ---- | ------ | --------------- | --------- |
+| V — Class A product validation | `CLASS-A-VAL-002` | Class A informational / synthetic product validation | Continues unchanged under existing **§7a** / **§143** authority; D-051 does not alter it |
+| N — Narrative governance | `NARRATIVE-004` | Class A informational / non-authorising narrative governance | Create and freeze Narrative Style Guide v1.0; no Canonical Story or Customer One-Pager edit; no publication |
+
+**Lane independence (binding):**
+
+- `NARRATIVE-004` cannot alter Lane V research scope, evidence, thresholds, decision rule, timing, stop conditions, rollback, or closeout.
+- `NARRATIVE-004` cannot modify frozen Canonical Story v1.0 or frozen Customer One-Pager v1.0.
+- `CLASS-A-VAL-002` findings cannot alter Style Guide meaning or force publication.
+- Neither lane widens, inherits, approves, modifies, pauses, or closes the other.
+- Completion does not satisfy the Class B convergence gate, accept institutional evidence, authorize customer-money activity, or authorize external publication.
+- Cross-lane default: `NO CROSS-LANE IMPACT`. Material assumption/authority change: `AUTHORITY CHANGE REQUIRED — STOP`.
+
+**Non-authorization statement:** D-051 does not authorize external publication, customer acquisition, financial operations, market entry, Canonical Story or Customer One-Pager unfreeze, investor/website/product/technical substantive artifacts beyond the Style Guide, product/runtime change, doctrine override, ADR override, live capability implication, evidence acceptance, Class B / Class C, counsel send, or customer-money activity. Kenya counsel remains **DEFER**.
+
+| Field | Value |
+| ----- | ----- |
+| **Decision ID** | D-051 |
+| **Title** | Controlled Parallelism v15 — `CLASS-A-VAL-002` + `NARRATIVE-004` |
+| **Status** | Accepted and completed (Lane N **§164**; singular-ticket restored) |
+| **Visibility** | Internal |
+| **Date** | 2026-07-20 |
+| **Repo authority** | This **§6f.15**; activation **§163**; closeout **§164**; `AGENTS.md` governed-parallelism exception |
+| **Reversibility** | Reversible historically; active posture now singular-ticket `CLASS-A-VAL-002` |
+
+
 ## 6g. Green Lane Delegation Pilot envelope (ADR 0025 / `GOV-GREEN-001`)
 
 **Delegation status:** **Active** (time-bounded authority-model pilot). Founder-revocable at any time.
@@ -4180,7 +4215,7 @@ This section does **not** authorize provider-specific implementation, legal reli
 | **Execution class** | Class A only (documentation-only governance for this ticket) |
 | **Start date** | 2026-07-14 |
 | **Review / expiry date** | ~2026-08-04 (after one product-learning cycle or approximately three weeks); earlier founder revocation allowed |
-| **Concurrency limit** | One active implementation ticket by default unless an active Founder-approved **§6f** pass is named; no active **§6f** pass after **D-050** closeout (**§162**). Singular-ticket `CLASS-A-VAL-002` only. Green Lane does not itself create or widen concurrency. |
+| **Concurrency limit** | One active implementation ticket by default unless an active Founder-approved **§6f** pass is named; no active **§6f** pass after **D-051** closeout (**§164**). Singular-ticket `CLASS-A-VAL-002` only. Green Lane does not itself create or widen concurrency. |
 | **External-spend limit** | None (zero) |
 | **Data posture** | No unapproved personal or regulated data; no customer-money behavior |
 | **Escalation owner** | Founder — @mhibajene |
@@ -4194,7 +4229,7 @@ This section does **not** authorize provider-specific implementation, legal reli
 
 **Relationship to §7 / §7a:** This envelope does **not** activate product work. Implementation remains executable only through **§7** / **§7a**. Green Lane classification does not activate work and does not override **§7** / **§7a**.
 
-**Relationship to governed parallelism:** Green Lane delegation does **not** create parallel authority. D-032 / **§6f.3**, D-034 / **§6f.4**, D-035 / **§6f.5**, D-036 / **§6f.6**, D-041 / **§6f.7**, D-044 / **§6f.8**, D-045 / **§6f.9**, D-046 / **§6f.10**, D-047 / **§6f.11**, D-048 / **§6f.12**, D-049 / **§6f.13**, and D-050 / **§6f.14** are completed historical authorities. Singular-ticket posture is active with `CLASS-A-VAL-002` as the sole active ticket after **§162**.
+**Relationship to governed parallelism:** Green Lane delegation does **not** create parallel authority. D-032 / **§6f.3**, D-034 / **§6f.4**, D-035 / **§6f.5**, D-036 / **§6f.6**, D-041 / **§6f.7**, D-044 / **§6f.8**, D-045 / **§6f.9**, D-046 / **§6f.10**, D-047 / **§6f.11**, D-048 / **§6f.12**, D-049 / **§6f.13**, D-050 / **§6f.14**, and D-051 / **§6f.15** are completed historical authorities. Singular-ticket posture is active with `CLASS-A-VAL-002` as the sole active ticket after **§164**.
 
 **Non-authorization:** This section is an authority-model pilot. It does not activate product work, does not authorize parallel execution by itself, does not widen financial execution posture, and leaves repo authority controlling.
 
@@ -4345,22 +4380,23 @@ Completed and merged:
 
 Current active ticket status:
 
-- **Active tickets (singular-ticket default / §162):**
+- **Active tickets (singular-ticket default / §164):**
   - **Lane V:** `CLASS-A-VAL-002` — Validate the End-to-End Synthetic Stability Journey. Unchanged. Exact brief in **§7a**.
-- **Completed Lane N:** `NARRATIVE-003` (**§162**) — Customer One-Pager v1.0 Accepted / Frozen; strategy index retained; publication not authorised by freeze.
+- **Completed Lane N:** `NARRATIVE-004` (**§164**) — Narrative Style Guide v1.0 Accepted / Frozen; strategy index updated; non-authorising voice governance only.
+- **Completed Lane N predecessors:** `NARRATIVE-003` (**§162**) — Customer One-Pager v1.0 Accepted / Frozen; `NARRATIVE-002` (**§159**); `NARRATIVE-001` (**§157**).
 - **Completed Lane R:** `BRIDGE-P1-OPS-001` (**§161**) — R1 clock recorded; regen/verification hygiene complete; legacy Deprecated retained; no retirement; no Phase 2; no successor activated.
-- **Completed Lane N predecessors:** `NARRATIVE-002` (**§159**) — Canonical Story v1.0 Accepted / Frozen; `NARRATIVE-001` (**§157**).
 - **Completed Bridge Phase 1 implementation:** `BRIDGE-P1-001` (**§154**; PRs **#306** / **#307**).
 - **Completed prep:** `BRIDGE-P1-PREP-001` (**§151** / D-043). Governing plan preserved.
 - **Completed nested refinements inside Lane V:** `HEDGR-UI-001`–`003` (**§144**–**§148**).
-- **Sequencing posture:** Singular-ticket default. D-029, D-032, D-034, D-035, D-036, D-041, D-044, D-045, D-046, D-047, D-048, D-049, and D-050 remain completed historical pass authorities and supply no standing concurrency.
+- **Sequencing posture:** Singular-ticket default. D-029, D-032, D-034, D-035, D-036, D-041, D-044, D-045, D-046, D-047, D-048, D-049, D-050, and D-051 remain completed historical pass authorities and supply no standing concurrency.
 - **Kenya counsel path:** **DEFER** (**§6f.1** / D-028).
-- **Governed parallelism posture:** No active **§6f** pass. Singular-ticket `CLASS-A-VAL-002` only. Lane N idle after Customer One-Pager v1.0 freeze. Lane R idle. **§6e** / D-026 remains lane-model only. Class B convergence gate unsatisfied.
+- **Governed parallelism posture:** No active **§6f** pass. Singular-ticket `CLASS-A-VAL-002` only. Lane N idle after Narrative Style Guide v1.0 freeze. Lane R idle. **§6e** / D-026 remains lane-model only. Class B convergence gate unsatisfied.
 - **Active Lane A / B / C / N / R:** None.
 - **Green Lane pilot (§6g / ADR 0025):** Authority-model only; does not activate product experiments or widen this pass.
-- **Last completed narrative ticket:** `NARRATIVE-003` (**§162**). Last completed Bridge ticket: `BRIDGE-P1-OPS-001` (**§161**). Last completed Bridge implementation: `BRIDGE-P1-001` (**§154**).
-- **Post-`NARRATIVE-003` closeout / Customer One-Pager v1.0 freeze (§162):** Founder accepted editorial refinements and froze customer narrative source; Lane N closed; singular-ticket restored for Lane V. Cross-lane default `NO CROSS-LANE IMPACT`.
-- **Post-`BRIDGE-P1-OPS-001` closeout / Controlled Parallelism v14 (§161 / D-050):** Historical; closed Lane R; dual V + N under **D-050** until **§162**.
+- **Last completed narrative ticket:** `NARRATIVE-004` (**§164**). Last completed Bridge ticket: `BRIDGE-P1-OPS-001` (**§161**). Last completed Bridge implementation: `BRIDGE-P1-001` (**§154**).
+- **Post-`NARRATIVE-004` closeout / Narrative Style Guide v1.0 freeze (§164 / D-051):** Founder-approved Style Guide created and frozen; Lane N closed; singular-ticket restored for Lane V. Cross-lane default `NO CROSS-LANE IMPACT`.
+- **Post-`NARRATIVE-003` closeout / Customer One-Pager v1.0 freeze (§162):** Historical.
+- **Post-`BRIDGE-P1-OPS-001` closeout / Controlled Parallelism v14 (§161 / D-050):** Historical.
 - **Post-Controlled Parallelism v13 activation (§160 / D-049):** Historical; activated `NARRATIVE-003`.
 - **Post-`NARRATIVE-002` closeout / Canonical Story v1.0 freeze (§159 / D-048):** Historical.
 - **Post-Controlled Parallelism v11 activation (§158 / D-047):** Historical; activated `NARRATIVE-002`.
@@ -4371,7 +4407,7 @@ Current active ticket status:
 - **Post-`BRIDGE-P1-PREP-001` closeout (§151 / D-043):** Prep complete; D-042 remains binding.
 - **Post-Founder F1–F8 (§150 / D-042):** Binding for Lane R Phase 1 meaning (including R1).
 - When **§7** names an approved ticket, the active brief lives in **§7a**. Current sole active: `CLASS-A-VAL-002`.
-- Cursor must not modify frozen Canonical Story v1.0 or frozen Customer One-Pager v1.0 without institutional trigger + new **§7** naming; must not treat customer one-pager or strategy index as publication, sequencing, evidence acceptance, readiness approval, or live capability; must not retire legacy Bridge placeholder without a separately named Founder ticket on/after **2026-08-02**.
+- Cursor must not modify frozen Canonical Story v1.0, frozen Customer One-Pager v1.0, or frozen Narrative Style Guide v1.0 without institutional trigger + new **§7** naming; must not treat narrative artifacts as publication, sequencing, evidence acceptance, readiness approval, or live capability; must not retire legacy Bridge placeholder without a separately named Founder ticket on/after **2026-08-02**.
 - Kenya counsel remains **DEFER**. Convergence gate remains unsatisfied.
 - Legacy `docs/ops/bridge/current-status.json` remains **Deprecated** under R1/F6 through at least **2026-08-02**; no silent date-bump to fake CURRENT; retirement requires separately named Founder ticket (`BRIDGE-LEGACY-RETIRE-001` candidate — not active).
 
@@ -4381,7 +4417,7 @@ Current active ticket status:
 
 ### Lane V — `CLASS-A-VAL-002`
 
-**Active ticket:** `CLASS-A-VAL-002` — Validate the End-to-End Synthetic Stability Journey (Founder transition / activation **§142** / **§143**; Internal **D-037**; continues under singular-ticket default after **§162**).
+**Active ticket:** `CLASS-A-VAL-002` — Validate the End-to-End Synthetic Stability Journey (Founder transition / activation **§142** / **§143**; Internal **D-037**; continues under singular-ticket default after **§164**).
 
 **Objective:** Create a coherent, visibly synthetic, end-to-end customer journey through Dashboard → Deposit → Withdraw → Activity plus the shared trust and navigation shell so target cross-border freelancers can understand Hedgr’s core stability proposition without inferring that real funds moved.
 
@@ -4389,7 +4425,7 @@ Current active ticket status:
 
 **Type / execution class:** Product validation; Class A informational / synthetic. Non-executing for customer money.
 
-**Authority basis:** Founder approval to close/reframe `CLASS-A-VAL-001` and activate `CLASS-A-VAL-002` as its sole successor + Internal **D-037** + **§142** / **§143** + this **§7** / **§7a** naming + ADR **0024** (evidence principle only) + ADRs **0013–0015** (read-only / informational Stability Engine boundaries) + the existing synthetic transaction and withdrawal trust surfaces. Customer One-Pager freeze / **§162** does **not** widen this Lane V authority.
+**Authority basis:** Founder approval to close/reframe `CLASS-A-VAL-001` and activate `CLASS-A-VAL-002` as its sole successor + Internal **D-037** + **§142** / **§143** + this **§7** / **§7a** naming + ADR **0024** (evidence principle only) + ADRs **0013–0015** (read-only / informational Stability Engine boundaries) + the existing synthetic transaction and withdrawal trust surfaces. Narrative Style Guide freeze / **§164** does **not** widen this Lane V authority.
 
 **DRI:** Founder — @mhibajene.
 
@@ -4602,11 +4638,17 @@ Current active ticket status:
 
 **Closeout treatment:** R1 first-serve / compatibility clock recorded (`docs/ops/bridge/phase1-r1-compatibility-record.json`; evidence PRs **#310** / **#312** / **#313**). Canonical first-serve **2026-07-19**; earliest legacy retirement consideration **2026-08-02**. Authority routes remain RAP-only. Legacy `current-status.json` remains Deprecated and retained (not retired). Regen/verification hygiene documented and hermetic tests retained. No Phase 2. No evidence acceptance. No ticket sequencing via Bridge. No customer-money activity. No Bridge successor activated. Controlled Parallelism v13 / D-049 completed as active concurrency; dual concurrency for Lanes V + N continues under **D-050** / **§6f.14**. `NO CROSS-LANE IMPACT` held. Deferred candidate `BRIDGE-LEGACY-RETIRE-001` remains inactive until separately named on/after **2026-08-02**.
 
+### Archived brief — `NARRATIVE-004`
+
+**Completed ticket:** `NARRATIVE-004` — Establish Hedgr Narrative Style Guide as Canonical Narrative Governance. Activated **§163** / **D-051**; closed **§164**.
+
+**Closeout treatment:** Founder-approved Style Guide created at `docs/strategy/website/HEDGR_NARRATIVE_STYLE_GUIDE.md` as Accepted **Version 1.0** / Narrative State **Frozen**. Strategy index updated to place Style Guide in the communication stack. No product/runtime change. No Canonical Story or Customer One-Pager edit. No external publication authorised. Controlled Parallelism v15 / D-051 completed as active concurrency; singular-ticket restored for Lane V under **§164**. `NO CROSS-LANE IMPACT` held. Further Style Guide edits require a genuine Founder trigger and new **§7** / **§7a** naming.
+
 ### Archived brief — `NARRATIVE-003`
 
 **Completed ticket:** `NARRATIVE-003` — Create the Customer One-Pager and Audience Narrative Strategy Index. Activated **§160** / **D-049**; continued under **D-050**; closed **§162**.
 
-**Closeout treatment:** Founder / HedgrOps review accepted with minor editorial refinements. `docs/strategy/customer/HEDGR_CUSTOMER_ONE_PAGER.md` Accepted as **Version 1.0** / Narrative State **Frozen**. Strategy index retained at `docs/strategy/README.md` with spoken-not-written narrative style principle and planned Narrative Style Guide path. Review record disposition: accept + freeze. No product/runtime change. No Canonical Story edit. No external publication authorised by freeze. Controlled Parallelism v14 / D-050 completed as active concurrency; singular-ticket restored for Lane V under **§162**. `NO CROSS-LANE IMPACT` held. Further Customer One-Pager edits require a genuine Founder trigger and new **§7** / **§7a** naming.
+**Closeout treatment:** Founder / HedgrOps review accepted with minor editorial refinements. `docs/strategy/customer/HEDGR_CUSTOMER_ONE_PAGER.md` Accepted as **Version 1.0** / Narrative State **Frozen**. Strategy index retained at `docs/strategy/README.md` with spoken-not-written narrative style principle and planned Narrative Style Guide path (later completed under `NARRATIVE-004` / **§164**). Review record disposition: accept + freeze. No product/runtime change. No Canonical Story edit. No external publication authorised by freeze. Controlled Parallelism v14 / D-050 completed as active concurrency; singular-ticket restored for Lane V under **§162**. `NO CROSS-LANE IMPACT` held. Further Customer One-Pager edits require a genuine Founder trigger and new **§7** / **§7a** naming.
 
 ### Archived brief — `NARRATIVE-002`
 
@@ -9964,6 +10006,60 @@ Draft boundary for future activation brief is recorded under **§7a** as **Propo
 **Non-claims:** Closeout does not publish externally, authorise customer acquisition, create the Narrative Style Guide, unfreeze Canonical Story v1.0, or widen execution authority.
 
 **Notion staging posture:** Reconcile to mirror singular `CLASS-A-VAL-002`; Lane N idle; Customer One-Pager v1.0 frozen; D-050 completed. Repo-native **§7** / **§7a** remains controlling.
+
+**Rollback:** Revert this closeout and freeze metadata only if Founder revokes ACCEPT — VERSION 1.0; leave Lane V unchanged; do not silently reopen Lane N without explicit reactivation.
+
+## 163. Founder activation - NARRATIVE-004 + Controlled Parallelism v15
+
+**Ticket:** `NARRATIVE-004` — Establish Hedgr Narrative Style Guide as Canonical Narrative Governance
+
+**Date:** 2026-07-20
+
+**Status:** **ACTIVE briefly under this change set — Class A non-authorising narrative governance; closed in §164**
+
+**Activation authority:** Founder disposition **Approved for repository creation** + Internal **D-051** / **§6f.15** + explicit **§7** / **§7a** naming in this change + frozen parents Canonical Story v1.0 and Customer One-Pager v1.0.
+
+**Parallelism posture:** D-051 names `CLASS-A-VAL-002` (Lane V, unchanged) and `NARRATIVE-004` (Lane N). Prior passes through D-050 remain completed historical authorities. Singular-ticket default restores on D-051 completion.
+
+**Opening authority result:** `PASS — parallel pass may proceed under named authority` once this activation change is recorded.
+
+**Disposition:** Activate `NARRATIVE-004` as Lane N to create `docs/strategy/website/HEDGR_NARRATIVE_STYLE_GUIDE.md` per Founder-approved structure and freeze as Canonical Guidance v1.0. Canonical Story and Customer One-Pager remain Frozen. Lane V continues unchanged.
+
+**Lane independence:** `NO CROSS-LANE IMPACT` default. Style Guide remains non-authorising. Publication not authorised by activation alone.
+
+**Runtime boundary:** Documentation / narrative governance only. No product/runtime change. No live capability implication. No Canonical Story or Customer One-Pager edit. Kenya counsel remains **DEFER**.
+
+**PR topology:** Activation, Style Guide creation/freeze, closeout, and RAP hygiene may ship together for this documentation-only ticket. Repo Steward owns final reconciliation.
+
+**Notion staging posture:** Reconcile after **§164** closeout. Repo-native **§7** / **§7a** remains controlling.
+
+**Rollback:** Revert this activation change; remove `NARRATIVE-004` from **§7** / **§7a**; complete or revoke D-051 as factually appropriate; leave `CLASS-A-VAL-002` unchanged; leave frozen narrative parents untouched; restore prior concurrency posture; remove or revise Style Guide created under unauthorised conditions.
+
+## 164. Founder closeout - NARRATIVE-004 Narrative Style Guide v1.0 freeze + singular-ticket restore
+
+**Ticket:** `NARRATIVE-004` — Establish Hedgr Narrative Style Guide as Canonical Narrative Governance
+
+**Date:** 2026-07-20
+
+**Status:** **COMPLETED — Narrative Style Guide Accepted / Version 1.0 / Frozen**
+
+**Closeout authority:** Founder disposition **Approved for repository creation** + implementation of approved structure + this **§164** record completing Controlled Parallelism v15 / Internal **D-051** and restoring singular-ticket posture for Lane V.
+
+**Evidence of completion:**
+
+1. `docs/strategy/website/HEDGR_NARRATIVE_STYLE_GUIDE.md` created with Founder-approved purpose, core principle, seven principles, writing standards, punctuation rule, translation principle, product writing, silence, reading test, governance boundary, stack, and closing principle.
+2. Freeze metadata set (Accepted / Version 1.0 / Frozen / Canonical Narrative Governance / non-authorising).
+3. Strategy index updated to place Style Guide in the communication stack and mark it Active / Frozen v1.0.
+4. No Canonical Story or Customer One-Pager edit; no product/runtime change; no publication authorised.
+5. Lane N closed; Lane V continues unchanged under singular-ticket default (`NO CROSS-LANE IMPACT`).
+
+**Disposition:** Narrative Style Guide v1.0 is the reference for future customer, investor, partner, website, and product copy reviews. Evolve only when Founder-approved changes materially alter Hedgr’s communication philosophy.
+
+**Parallelism posture after closeout:** No active **§6f** pass. Singular-ticket `CLASS-A-VAL-002` (Lane V) only. D-051 completed as active concurrency. Lane N idle. Lane R idle. Kenya counsel remains **DEFER**.
+
+**Non-claims:** Closeout does not publish externally, authorise customer acquisition, unfreeze Canonical Story or Customer One-Pager, create investor/website/product/technical audience packs, or widen execution authority.
+
+**Notion staging posture:** Reconcile to mirror singular `CLASS-A-VAL-002`; Lane N idle; Style Guide v1.0 frozen; D-051 completed. Repo-native **§7** / **§7a** remains controlling.
 
 **Rollback:** Revert this closeout and freeze metadata only if Founder revokes ACCEPT — VERSION 1.0; leave Lane V unchanged; do not silently reopen Lane N without explicit reactivation.
 

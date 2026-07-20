@@ -6,7 +6,7 @@
 
 **Authority:** The repository is source of truth. Wording here must match `docs/decisions/0016-warmth-layer-doctrine-constrained-retail-refinement-track.md`, `docs/decisions/SPRINT-2-ADR-INDEX.md`, and `docs/ops/HEDGR_STATUS.md`. Wording must match **Accepted** ADR **0016** in repo; do not broaden scope or soften read-only / non-execution boundaries in Notion.
 
-**Last reconciled:** 2026-07-20 (mirror after `NARRATIVE-003` closeout **§162**; Customer One-Pager v1.0 Frozen; singular active Lane V `CLASS-A-VAL-002`; Lane N idle; Lane R idle; D-050 completed as active concurrency; Canonical Story v1.0 remains Frozen; R1 retirement deferred ≥ **2026-08-02**; Kenya counsel **DEFER**; repo **§7** / **§7a** controls sequencing)
+**Last reconciled:** 2026-07-20 (mirror after `NARRATIVE-004` closeout **§164**; Narrative Style Guide v1.0 Frozen; singular active Lane V `CLASS-A-VAL-002`; Lane N idle; Lane R idle; D-051 completed as active concurrency; Canonical Story v1.0 and Customer One-Pager v1.0 remain Frozen; R1 retirement deferred ≥ **2026-08-02**; Kenya counsel **DEFER**; repo **§7** / **§7a** controls sequencing)
 
 ---
 
@@ -87,6 +87,8 @@ Use as a governed workstream line, **not** as a shipped-feature claim. Placement
 - **Controlled Parallelism v13 (D-049, Accepted — completed historical pass):** Named `CLASS-A-VAL-002` (Lane V), `BRIDGE-P1-OPS-001` (Lane R), and `NARRATIVE-003` (Lane N — customer one-pager + strategy index). Activation **§160** / **§6f.13**; Lane R closed **§161**. Superseded as active concurrency by **D-050**. `NO CROSS-LANE IMPACT`.
 
 - **Controlled Parallelism v14 (D-050, Accepted — completed historical pass):** Named `CLASS-A-VAL-002` (Lane V) and `NARRATIVE-003` (Lane N) only. Activation with Lane R closeout **§161** / **§6f.14**; Lane N freeze closeout **§162**. Superseded by singular-ticket restore. Canonical Story v1.0 and Customer One-Pager v1.0 remain Frozen. Publication not authorised. `NO CROSS-LANE IMPACT`.
+
+- **Controlled Parallelism v15 (D-051, Accepted — completed historical pass):** Named `CLASS-A-VAL-002` (Lane V) and `NARRATIVE-004` (Lane N — Narrative Style Guide). Activation **§163** / **§6f.15**; Lane N freeze closeout **§164**. Superseded by singular-ticket restore. Style Guide v1.0 Frozen. Publication not authorised. `NO CROSS-LANE IMPACT`.
 
 - **Bridge Phase 1 ops closeout (Accepted):** Close `BRIDGE-P1-OPS-001` complete (**§161**; evidence PRs **#310** / **#312** / **#313**); no Bridge successor activated; legacy retirement deferred ≥ **2026-08-02**.
 
@@ -1025,6 +1027,31 @@ Use when mirroring the completed **test-only** regression tranche 4. **Not** new
 
 ---
 
+## 8d.19 Decision Log — D-051 / Controlled Parallelism v15 (Internal; Notion mirror)
+
+**Notion Decision Log ID:** **D-051**. Canonical detail: **`docs/ops/HEDGR_STATUS.md` §6f.15**, activation **§163**, closeout **§164**. Visibility: **Internal**.
+
+| Field | Value |
+| ----- | ----- |
+| **Decision ID** | D-051 |
+| **Title** | Controlled Parallelism v15 — `CLASS-A-VAL-002` + `NARRATIVE-004` |
+| **Status** | Accepted and completed (Lane N **§164**; singular-ticket restored) |
+| **Decision Type** | Ops / Architecture / Sequencing |
+| **Strategic Horizon** | Short-term (MVP / immediate sprint) |
+| **Visibility** | Internal |
+| **Date** | 2026-07-20 |
+| **Repo authority** | `HEDGR_STATUS.md` **§6f.15**; activation **§163**; closeout **§164** |
+| **Tickets** | Lane V `CLASS-A-VAL-002` (continues as sole active); Lane N `NARRATIVE-004` (closed **§164**) |
+
+**Summary / notes (concise)**
+
+- Created and froze Narrative Style Guide v1.0 as Canonical Narrative Governance.
+- Completed as active concurrency on **§164**; singular-ticket restored.
+- Non-authorising; publication not authorised.
+- Cross-lane default `NO CROSS-LANE IMPACT`.
+
+---
+
 ## 8e. Decision Log — D-028 / COUNSEL-SEND-B-001 DEFER (Internal; Notion mirror)
 
 **Notion Decision Log ID:** **D-028**. Canonical detail: **`docs/ops/HEDGR_STATUS.md` §6f.1**. Visibility: **Internal**.
@@ -1529,4 +1556,4 @@ Apply **only** if the live Notion row contradicts repo truth. **Repo wins.** Do 
 | **Release: HedgrOps Read-Only Review Evidence Bridge** | Should list **`HOPS-BRIDGE-001`** as **Done** per **§9i**; bridge is non-authorizing evidence retrieval only and does **not** imply implementation, sequencing, governance, or customer-money authority. |
 | **Release: Brand System Governance** | Should list **`BRAND-001`** through **`BRAND-009`** as **Done / Shipped** per **§9h**; spine and first two remediation steps are **not** broad UI redesign approval, shipped app remediation approval beyond scoped shared UI files, or successor remediation approval. |
 | **Release / reference: Stability Condition Interface Reference** | Should list **`DOC-SE-REF-001`** as **Done** documentation-only governance closeout for the already-merged reference artifact; reference is non-authoritative and does **not** authorize implementation, runtime state, UI changes, ADR changes, or sequencing. |
-| **Executive / Strategy surfaces** | Singular active under **§162**: Lane V **`CLASS-A-VAL-002`**. Lane N idle after Customer One-Pager **v1.0** Frozen (`NARRATIVE-003` closed). Lane R idle. Canonical Story **v1.0** remains Frozen. D-050 completed as active concurrency. Kenya counsel **DEFER**. Convergence gate unsatisfied. |
+| **Executive / Strategy surfaces** | Singular active under **§164**: Lane V **`CLASS-A-VAL-002`**. Lane N idle after Narrative Style Guide **v1.0** Frozen (`NARRATIVE-004` closed). Lane R idle. Canonical Story **v1.0** and Customer One-Pager **v1.0** remain Frozen. D-051 completed as active concurrency. Kenya counsel **DEFER**. Convergence gate unsatisfied. |
