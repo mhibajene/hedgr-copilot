@@ -6,7 +6,7 @@
 
 **Authority:** The repository is source of truth. Wording here must match `docs/decisions/0016-warmth-layer-doctrine-constrained-retail-refinement-track.md`, `docs/decisions/SPRINT-2-ADR-INDEX.md`, and `docs/ops/HEDGR_STATUS.md`. Wording must match **Accepted** ADR **0016** in repo; do not broaden scope or soften read-only / non-execution boundaries in Notion.
 
-**Last reconciled:** 2026-07-20 (mirror after `BRIDGE-P1-OPS-001` closeout **§161** / Internal **D-050** / **§6f.14**; Lane R idle; dual actives Lane V `CLASS-A-VAL-002` + Lane N `NARRATIVE-003`; Canonical Story v1.0 remains Frozen; D-049 completed as active concurrency; R1 retirement deferred ≥ **2026-08-02**; Kenya counsel **DEFER**; repo **§7** / **§7a** controls sequencing)
+**Last reconciled:** 2026-07-20 (mirror after `NARRATIVE-003` closeout **§162**; Customer One-Pager v1.0 Frozen; singular active Lane V `CLASS-A-VAL-002`; Lane N idle; Lane R idle; D-050 completed as active concurrency; Canonical Story v1.0 remains Frozen; R1 retirement deferred ≥ **2026-08-02**; Kenya counsel **DEFER**; repo **§7** / **§7a** controls sequencing)
 
 ---
 
@@ -86,7 +86,7 @@ Use as a governed workstream line, **not** as a shipped-feature claim. Placement
 
 - **Controlled Parallelism v13 (D-049, Accepted — completed historical pass):** Named `CLASS-A-VAL-002` (Lane V), `BRIDGE-P1-OPS-001` (Lane R), and `NARRATIVE-003` (Lane N — customer one-pager + strategy index). Activation **§160** / **§6f.13**; Lane R closed **§161**. Superseded as active concurrency by **D-050**. `NO CROSS-LANE IMPACT`.
 
-- **Controlled Parallelism v14 (D-050, Accepted — active):** Named `CLASS-A-VAL-002` (Lane V) and `NARRATIVE-003` (Lane N) only. Activation with Lane R closeout **§161** / **§6f.14**. Lane R idle. Canonical Story v1.0 remains Frozen. Publication not authorised. `NO CROSS-LANE IMPACT`.
+- **Controlled Parallelism v14 (D-050, Accepted — completed historical pass):** Named `CLASS-A-VAL-002` (Lane V) and `NARRATIVE-003` (Lane N) only. Activation with Lane R closeout **§161** / **§6f.14**; Lane N freeze closeout **§162**. Superseded by singular-ticket restore. Canonical Story v1.0 and Customer One-Pager v1.0 remain Frozen. Publication not authorised. `NO CROSS-LANE IMPACT`.
 
 - **Bridge Phase 1 ops closeout (Accepted):** Close `BRIDGE-P1-OPS-001` complete (**§161**; evidence PRs **#310** / **#312** / **#313**); no Bridge successor activated; legacy retirement deferred ≥ **2026-08-02**.
 
@@ -984,19 +984,43 @@ Use when mirroring the completed **test-only** regression tranche 4. **Not** new
 | ----- | ----- |
 | **Decision ID** | D-049 |
 | **Title** | Controlled Parallelism v13 — `CLASS-A-VAL-002` + `BRIDGE-P1-OPS-001` + `NARRATIVE-003` |
-| **Status** | Accepted and active |
+| **Status** | Accepted and completed (superseded as active concurrency by **D-050**) |
 | **Decision Type** | Ops / Architecture / Sequencing |
 | **Strategic Horizon** | Short-term (MVP / immediate sprint) |
 | **Visibility** | Internal |
 | **Date** | 2026-07-20 |
 | **Repo authority** | `HEDGR_STATUS.md` **§6f.13**; activation **§160** |
-| **Tickets** | Lane V `CLASS-A-VAL-002` (continues); Lane R `BRIDGE-P1-OPS-001` (continues); Lane N `NARRATIVE-003` (active) |
+| **Tickets** | Lane V `CLASS-A-VAL-002`; Lane R `BRIDGE-P1-OPS-001` (historical); Lane N `NARRATIVE-003` (historical under this pass) |
 
 **Summary / notes (concise)**
 
-- Activates customer one-pager + strategy index beside unchanged Lanes V and R.
-- Canonical Story v1.0 remains Frozen; not reopened.
-- Class A informational / non-authorising; publication not authorised.
+- Activated customer one-pager + strategy index beside Lanes V and R.
+- Historical pass; active concurrency later **D-050**, then singular restore **§162**.
+- Cross-lane default `NO CROSS-LANE IMPACT`.
+
+---
+
+## 8d.18 Decision Log — D-050 / Controlled Parallelism v14 (Internal; Notion mirror)
+
+**Notion Decision Log ID:** **D-050**. Canonical detail: **`docs/ops/HEDGR_STATUS.md` §6f.14**, activation **§161**, closeout **§162**. Visibility: **Internal**.
+
+| Field | Value |
+| ----- | ----- |
+| **Decision ID** | D-050 |
+| **Title** | Controlled Parallelism v14 — `CLASS-A-VAL-002` + `NARRATIVE-003` |
+| **Status** | Accepted and completed (Lane N **§162**; singular-ticket restored) |
+| **Decision Type** | Ops / Architecture / Sequencing |
+| **Strategic Horizon** | Short-term (MVP / immediate sprint) |
+| **Visibility** | Internal |
+| **Date** | 2026-07-20 |
+| **Repo authority** | `HEDGR_STATUS.md` **§6f.14**; activation **§161**; closeout **§162** |
+| **Tickets** | Lane V `CLASS-A-VAL-002` (continues as sole active); Lane N `NARRATIVE-003` (closed **§162**) |
+
+**Summary / notes (concise)**
+
+- Closed Lane R after Bridge Phase 1 reliability / R1 clock complete.
+- Continued V + N until Customer One-Pager v1.0 freeze.
+- Completed as active concurrency on **§162**; singular-ticket restored.
 - Cross-lane default `NO CROSS-LANE IMPACT`.
 
 ---
@@ -1505,4 +1529,4 @@ Apply **only** if the live Notion row contradicts repo truth. **Repo wins.** Do 
 | **Release: HedgrOps Read-Only Review Evidence Bridge** | Should list **`HOPS-BRIDGE-001`** as **Done** per **§9i**; bridge is non-authorizing evidence retrieval only and does **not** imply implementation, sequencing, governance, or customer-money authority. |
 | **Release: Brand System Governance** | Should list **`BRAND-001`** through **`BRAND-009`** as **Done / Shipped** per **§9h**; spine and first two remediation steps are **not** broad UI redesign approval, shipped app remediation approval beyond scoped shared UI files, or successor remediation approval. |
 | **Release / reference: Stability Condition Interface Reference** | Should list **`DOC-SE-REF-001`** as **Done** documentation-only governance closeout for the already-merged reference artifact; reference is non-authoritative and does **not** authorize implementation, runtime state, UI changes, ADR changes, or sequencing. |
-| **Executive / Strategy surfaces** | Triple actives under Controlled Parallelism v13 (**D-049** / **§160**): Lane V **`CLASS-A-VAL-002`**; Lane R **`BRIDGE-P1-OPS-001`**; Lane N **`NARRATIVE-003`** (customer one-pager + strategy index; non-authorising; publication not authorised). Canonical Story **v1.0** remains Frozen. D-048 completed as active concurrency. Kenya counsel **DEFER**. Convergence gate unsatisfied. |
+| **Executive / Strategy surfaces** | Singular active under **§162**: Lane V **`CLASS-A-VAL-002`**. Lane N idle after Customer One-Pager **v1.0** Frozen (`NARRATIVE-003` closed). Lane R idle. Canonical Story **v1.0** remains Frozen. D-050 completed as active concurrency. Kenya counsel **DEFER**. Convergence gate unsatisfied. |
