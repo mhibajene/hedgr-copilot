@@ -96,7 +96,7 @@ export default function TrustPage() {
         <ul className="list-disc list-inside text-gray-700 space-y-1">
           <li>External custodians and their policies</li>
           <li>Network conditions and third-party availability</li>
-          <li>Third-party infrastructure (e.g. DeFi protocols, oracles)</li>
+          <li>Third-party infrastructure (for example underlying protocols and data feeds)</li>
         </ul>
       </section>
     </main>

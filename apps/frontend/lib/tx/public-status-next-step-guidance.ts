@@ -8,7 +8,7 @@ import { PublicTxStatus } from './types';
 import { isTerminalStatus } from './status-mapper';
 
 const NEXT_STEP_GUIDANCE_LINES: readonly [string, string] = [
-  'Your withdrawal is still in progress here — Hedgr has not gone quiet on this request.',
+  'Your withdrawal is still in progress here. Hedgr has not gone quiet on this request.',
   'Non-final status on this screen does not mean failure; it only means completion is not shown yet.',
 ];
 

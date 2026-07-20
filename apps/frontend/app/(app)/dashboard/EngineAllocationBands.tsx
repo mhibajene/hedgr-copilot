@@ -159,8 +159,8 @@ export function EngineAllocationBands({
         <p>
           <span className="font-semibold text-hedgr-800">
             Informational targets
-          </span>{" "}
-          — These percentages are system targets, not ledger balances or proof
+          </span>
+          . These percentages are system targets, not ledger balances or proof
           that funds moved.
         </p>
         <details className="mt-3" data-testid="engine-allocation-target-details">
@@ -169,17 +169,17 @@ export function EngineAllocationBands({
           </summary>
           <div className="mt-3 space-y-2 border-l border-hedgr-200 pl-3">
             <p>
-              <span className="font-semibold text-hedgr-800">Targets</span> —
+              <span className="font-semibold text-hedgr-800">Targets</span>.{" "}
               Informational system targets only. A lower conservative yield
               target means less yield opportunity within this structure.
             </p>
             <p>
-              <span className="font-semibold text-hedgr-800">Balances</span> —
-              Your ledger shows what you hold—not these percentages. These are
+              <span className="font-semibold text-hedgr-800">Balances</span>.{" "}
+              Your ledger shows what you hold, not these percentages. These are
               target shares of the structure, not your spendable balance.
             </p>
             <p>
-              <span className="font-semibold text-hedgr-800">Movement</span> —
+              <span className="font-semibold text-hedgr-800">Movement</span>.{" "}
               Targets do not mean funds have already moved.
             </p>
           </div>

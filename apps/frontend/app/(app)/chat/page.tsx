@@ -150,7 +150,7 @@ export default function ChatPage() {
           {messages.length === 0 && (
             <div className="text-center text-gray-500 mt-12">
               <p className="text-lg mb-2">Welcome to Hedgr Copilot</p>
-              <p className="text-sm">Ask me anything about savings and financial planning.</p>
+              <p className="text-sm">Ask about stability, access, or how your position is structured.</p>
             </div>
           )}
 

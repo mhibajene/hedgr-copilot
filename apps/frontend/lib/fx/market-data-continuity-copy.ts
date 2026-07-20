@@ -17,7 +17,7 @@ const DEPOSIT: MarketDataContinuityCopy = {
   lines: [
     'We could not load current market data for the exchange rate.',
     'That means we cannot show a reliable conversion between your local amount and USD.',
-    'You are still on Deposit — your payment method and amount field stay here for context.',
+    'You are still on Deposit. Your payment method and amount field stay here for context.',
     'Confirm stays off until a current rate is available; without it we will not show a dollar credit preview.',
   ],
 };
@@ -27,7 +27,7 @@ const WITHDRAW: MarketDataContinuityCopy = {
   lines: [
     'We could not load current market data for the exchange rate.',
     'That means we cannot show a reliable local-currency estimate for your withdrawal while the rate is missing.',
-    'You are still on Withdraw — your USD balance and payout methods stay visible.',
+    'You are still on Withdraw. Your USD balance and payout methods stay visible.',
     'Confirm stays off until a current rate is available; without it we will not imply conversion certainty.',
   ],
 };

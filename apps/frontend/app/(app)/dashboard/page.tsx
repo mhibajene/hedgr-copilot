@@ -245,12 +245,12 @@ export default function DashboardPage() {
                 <h2 className="mt-1 text-lg font-semibold text-hedgr-800">
                   {syntheticJourneyActive
                     ? "Explore a synthetic stability journey"
-                    : "Welcome to Hedgr"}
+                    : "See your position clearly"}
                 </h2>
                 <p className="mt-1 text-sm leading-relaxed text-hedgr-dark">
                   {syntheticJourneyActive
                     ? "Start with a simulated local-currency deposit, then make a simulated withdrawal and verify both fixture records in Activity. No real funds will move."
-                    : "Get started by making your first deposit. Your balance and transaction history will appear here once you begin."}
+                    : "Start by exploring a deposit when you are ready. Your balance and activity will appear here once you begin."}
                 </p>
               </div>
               <Link
@@ -369,7 +369,7 @@ export default function DashboardPage() {
               data-testid="dashboard-earn-tile"
             >
               <div className="text-xs font-medium text-hedgr-500">
-                APY (context)
+                Return rate (context)
               </div>
               {apyError ? (
                 <div className="mt-1 text-xs font-medium text-hedgr-800">
@@ -377,7 +377,7 @@ export default function DashboardPage() {
                 </div>
               ) : (
                 <div className="mt-1 text-xl font-semibold tabular-nums text-hedgr-dark">
-                  {apy !== null ? `${(apy * 100).toFixed(2)}%` : "—"}
+                  {apy !== null ? `${(apy * 100).toFixed(2)}%` : "n/a"}
                 </div>
               )}
             </div>
@@ -386,10 +386,10 @@ export default function DashboardPage() {
 
         {!isFirstTimeUser && hasNoTransactions && (
           <div className="rounded-2xl border border-hedgr-200 bg-white p-6">
-            <h2 className="mb-4 text-lg font-semibold">Recommended Actions</h2>
+            <h2 className="mb-4 text-lg font-semibold">Nothing needs action</h2>
             <EmptyState
-              title="No recommended actions"
-              description="You're all caught up! Check back later for personalized recommendations."
+              title="Nothing has changed"
+              description="Nothing has changed that requires a decision. Check again when you want an update."
               className="py-8"
               data-testid="dashboard-no-actions"
             />

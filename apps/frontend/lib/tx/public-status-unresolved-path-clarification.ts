@@ -8,7 +8,7 @@ import { PublicTxStatus } from './types';
 import { isTerminalStatus } from './status-mapper';
 
 const UNRESOLVED_PATH_LINES: readonly [string, string] = [
-  'This withdrawal is still unresolved here — it has not been forgotten or dropped.',
+  'This withdrawal is still unresolved here. It has not been forgotten or dropped.',
   'That does not automatically mean something is wrong, or loss, lockup, or hidden balance changes.',
 ];
 

@@ -36,9 +36,9 @@ export async function sendMessage(messages: Message[] | string): Promise<string>
 
   // Special response for "hedgr" query
   if (normalizedMessage.includes('hedgr')) {
-    return 'Hedgr is a savings platform that helps you grow your money safely through DeFi yield opportunities. It provides educational support to help you make informed savings decisions.';
+    return 'Hedgr is a stability wallet that helps you understand your money and keep it clearer when conditions change. It provides educational support so you can make calmer savings decisions.';
   }
 
   // Generic educational response for other queries
-  return "I'm here to help you learn about savings and financial planning. What would you like to know?";
+  return "I'm here to help you learn about stability, access, and how your position is structured. What would you like to know?";
 }
