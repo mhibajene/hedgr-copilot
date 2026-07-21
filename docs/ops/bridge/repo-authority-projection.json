@@ -5,8 +5,8 @@
   "ticket_activation_allowed": false,
   "sequencing_allowed": false,
   "authority_class": "REPO_AUTHORITY_PROJECTION",
-  "source_commit": "f882be4a721556332607a8499e4038485a7816a0",
-  "generated_at": "2026-07-20T00:00:00.000Z",
+  "source_commit": "3d573ce0369e936d1f4398d082eaf5a29609a7be",
+  "generated_at": "2026-07-21T00:00:00.000Z",
   "freshness": "CURRENT",
   "coverage": "COMPLETE",
   "sources": [
@@ -15,8 +15,8 @@
       "source_role": "CURRENT_SEQUENCE_AND_ACTIVE_AUTHORITY",
       "requirement": "MANDATORY",
       "source_classification": "REPO_AUTHORITY",
-      "expected_revision": "f882be4a721556332607a8499e4038485a7816a0",
-      "actual_revision": "f882be4a721556332607a8499e4038485a7816a0",
+      "expected_revision": "3d573ce0369e936d1f4398d082eaf5a29609a7be",
+      "actual_revision": "3d573ce0369e936d1f4398d082eaf5a29609a7be",
       "freshness_requirement": "CURRENT_REQUIRED",
       "freshness": "CURRENT",
       "structural_validation": "VALID",
@@ -30,8 +30,8 @@
       "source_role": "REPO_EXECUTION_CONTRACT",
       "requirement": "MANDATORY",
       "source_classification": "REPO_AUTHORITY",
-      "expected_revision": "f882be4a721556332607a8499e4038485a7816a0",
-      "actual_revision": "f882be4a721556332607a8499e4038485a7816a0",
+      "expected_revision": "3d573ce0369e936d1f4398d082eaf5a29609a7be",
+      "actual_revision": "3d573ce0369e936d1f4398d082eaf5a29609a7be",
       "freshness_requirement": "CURRENT_REQUIRED",
       "freshness": "CURRENT",
       "structural_validation": "VALID",
@@ -45,8 +45,8 @@
       "source_role": "ACCEPTED_ADR_INDEX",
       "requirement": "MANDATORY",
       "source_classification": "REPO_AUTHORITY",
-      "expected_revision": "f882be4a721556332607a8499e4038485a7816a0",
-      "actual_revision": "f882be4a721556332607a8499e4038485a7816a0",
+      "expected_revision": "3d573ce0369e936d1f4398d082eaf5a29609a7be",
+      "actual_revision": "3d573ce0369e936d1f4398d082eaf5a29609a7be",
       "freshness_requirement": "CURRENT_REQUIRED",
       "freshness": "CURRENT",
       "structural_validation": "VALID",
@@ -60,8 +60,8 @@
       "source_role": "ACTIVE_DOCTRINE_SET_INDEX",
       "requirement": "MANDATORY",
       "source_classification": "REPO_AUTHORITY",
-      "expected_revision": "f882be4a721556332607a8499e4038485a7816a0",
-      "actual_revision": "f882be4a721556332607a8499e4038485a7816a0",
+      "expected_revision": "3d573ce0369e936d1f4398d082eaf5a29609a7be",
+      "actual_revision": "3d573ce0369e936d1f4398d082eaf5a29609a7be",
       "freshness_requirement": "CURRENT_REQUIRED",
       "freshness": "CURRENT",
       "structural_validation": "VALID",
@@ -77,27 +77,28 @@
     "fields": {
       "active_ticket_ids": {
         "value": [
-          "CLASS-A-VAL-002"
+          "CLASS-A-VAL-002",
+          "MONEY-STACK-001"
         ],
         "source_path": "docs/ops/HEDGR_STATUS.md",
         "source_section": "§7 Current active ticket status",
-        "source_commit": "f882be4a721556332607a8499e4038485a7816a0",
+        "source_commit": "3d573ce0369e936d1f4398d082eaf5a29609a7be",
         "source_classification": "REPO_AUTHORITY",
         "freshness": "CURRENT"
       },
       "sequencing_posture": {
-        "value": "Singular-ticket default. D-029, D-032, D-034, D-035, D-036, D-041, D-044, D-045, D-046, D-047, D-048, D-049, D-050, D-051, and D-052 remain completed historical pass authorities and supply no standing concurrency.",
+        "value": "Dual active under D-053 / **§6f.17**. D-029, D-032, D-034, D-035, D-036, D-041, D-044, D-045, D-046, D-047, D-048, D-049, D-050, D-051, and D-052 remain completed historical pass authorities and supply no standing concurrency beyond their historical records.",
         "source_path": "docs/ops/HEDGR_STATUS.md",
         "source_section": "§7 Current active ticket status",
-        "source_commit": "f882be4a721556332607a8499e4038485a7816a0",
+        "source_commit": "3d573ce0369e936d1f4398d082eaf5a29609a7be",
         "source_classification": "REPO_AUTHORITY",
         "freshness": "CURRENT"
       },
       "authority_boundaries": {
-        "value": "Only **§7** / **§7a** name approved active ticket(s). **Default posture:** one active implementation ticket. Concurrent lanes are permitted only where this file records an accepted, active, and unambiguous Founder-approved parallelism decision (**§6e** lane model / Internal **D-026** plus separate active-pass naming under **§6f**), explicitly names each active lane and ticket, defines authority class and exclusions, and preserves independent stop conditions and rollback. Internal **D-029**, Internal **D-032** / **§6f.3**, Internal **D-034** / **§6f.4**, Internal **D-035** / **§6f.5**, Internal **D-036** / **§6f.6**, Internal **D-041** / **§6f.7**, Internal **D-044** / **§6f.8**, Internal **D-045** / **§6f.9**, Internal **D-046** / **§6f.10**, Internal **D-047** / **§6f.11**, Internal **D-048** / **§6f.12**, Internal **D-049** / **§6f.13**, Internal **D-050** / **§6f.14**, Internal **D-051** / **§6f.15**, and Internal **D-052** / **§6f.16** are completed historical pass authorities and no longer supply concurrency. Singular-ticket posture is active with `CLASS-A-VAL-002` as the sole active ticket after `UI-NARR-001` closeout (**§166**). Lane N idle. Lane R idle after `BRIDGE-P1-OPS-001` closeout. Any future concurrency requires a separate Founder decision plus explicit **§7** / **§7a** naming. Parallel authorization applies only to explicitly named lanes and does **not** authorize unrestricted multi-ticket execution. No lane may widen another lane’s authority without a separate Founder decision and repo-native governance update. **§6b** is Transition Readiness taxonomy and scrutiny input only—not backlog approval or sequencing. **§6e** / **§6f** / **§6g** do **not** widen Class B execution, custody, rails, conversion, settlement, or customer-money authority. Green Lane classification (**§6g** / ADR **0025**) does not activate work and does not override **§7** / **§7a**.",
+        "value": "Only **§7** / **§7a** name approved active ticket(s). **Default posture:** one active implementation ticket. Concurrent lanes are permitted only where this file records an accepted, active, and unambiguous Founder-approved parallelism decision (**§6e** lane model / Internal **D-026** plus separate active-pass naming under **§6f**), explicitly names each active lane and ticket, defines authority class and exclusions, and preserves independent stop conditions and rollback. Internal **D-029**, Internal **D-032** / **§6f.3**, Internal **D-034** / **§6f.4**, Internal **D-035** / **§6f.5**, Internal **D-036** / **§6f.6**, Internal **D-041** / **§6f.7**, Internal **D-044** / **§6f.8**, Internal **D-045** / **§6f.9**, Internal **D-046** / **§6f.10**, Internal **D-047** / **§6f.11**, Internal **D-048** / **§6f.12**, Internal **D-049** / **§6f.13**, Internal **D-050** / **§6f.14**, Internal **D-051** / **§6f.15**, and Internal **D-052** / **§6f.16** are completed historical pass authorities and no longer supply concurrency. Active governed pass: Internal **D-053** / **§6f.17** names `CLASS-A-VAL-002` (Lane V) and `MONEY-STACK-001` (Lane M) after Founder Option 1 activation (**§167**). Lane N idle after `UI-NARR-001` closeout. Lane R idle after `BRIDGE-P1-OPS-001` closeout. Any additional concurrency requires a separate Founder decision plus explicit **§7** / **§7a** naming. Parallel authorization applies only to explicitly named lanes and does **not** authorize unrestricted multi-ticket execution. No lane may widen another lane’s authority without a separate Founder decision and repo-native governance update. **§6b** is Transition Readiness taxonomy and scrutiny input only—not backlog approval or sequencing. **§6e** / **§6f** / **§6g** do **not** widen Class B execution, custody, rails, conversion, settlement, or customer-money authority. Green Lane classification (**§6g** / ADR **0025**) does not activate work and does not override **§7** / **§7a**.",
         "source_path": "docs/ops/HEDGR_STATUS.md",
         "source_section": "§2 Sequencing authority",
-        "source_commit": "f882be4a721556332607a8499e4038485a7816a0",
+        "source_commit": "3d573ce0369e936d1f4398d082eaf5a29609a7be",
         "source_classification": "REPO_AUTHORITY",
         "freshness": "CURRENT"
       }
