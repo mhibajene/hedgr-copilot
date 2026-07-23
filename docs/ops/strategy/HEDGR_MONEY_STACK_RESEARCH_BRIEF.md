@@ -4,22 +4,22 @@
 
 | Field | Position |
 | --- | --- |
-| Status | v1.0: Founder-approved governing research frame; repo-native activated |
-| Authority status | Frame approved; research activity **active** under `MONEY-STACK-001` |
+| Status | v1.0: historical governing research frame; research cycle completed |
+| Authority status | Frame and resulting package approved; `MONEY-STACK-001` **closed as converged** |
 | Decision lane | Yellow: bounded external and architectural uncertainty |
 | Execution class | Class A: informational research only |
 | Owners | Founder / HedgrOps |
 | Research support | Hedgr Consultant, bounded by Section 1.1 |
 | Repo ticket | `MONEY-STACK-001` (Lane M) |
-| Concurrent ticket | `CLASS-A-VAL-002` (Lane V) — unchanged |
-| Concurrency posture | Controlled Parallelism v17 / Internal **D-053** / **§6f.17** (activation **§167**) |
-| Governing surfaces | `docs/ops/HEDGR_STATUS.md` **§7** / **§7a** / **§6f.17** / **§167** |
+| Current active ticket | `CLASS-A-VAL-002` (Lane V) — unchanged |
+| Concurrency posture | Controlled Parallelism v17 / Internal **D-053** completed; singular Lane V restored under **§168** |
+| Governing surfaces | `docs/ops/HEDGR_STATUS.md` **§7** / **§7a** / **§6f.17** / **§167** / **§168** |
 | Implementation authority | None |
 | Provider or network commitment authority | None |
 | Market-selection authority | None |
 | Founder-approved reference cases | Kenya, Philippines, Brazil |
 
-> Founder Option 1 (2026-07-21) activates this research under repo-native **§7** / **§7a** with explicit concurrency alongside `CLASS-A-VAL-002`. The earlier frame-only “inactive / no concurrency” header is superseded by Internal **D-053**. This document remains Class A informational only: it does not authorise implementation, provider engagement, or customer-money activity.
+> Founder Option 1 activated this research on 21 July 2026 under repo-native **§7** / **§7a** with explicit concurrency alongside `CLASS-A-VAL-002`. Founder and HedgrOps approved the package and closed the cycle as converged on 23 July 2026 under **§168**. Internal **D-053** is now completed historical authority. This document remains Class A informational only and creates no implementation, provider-engagement, doctrine, evidence-dossier, or customer-money authority.
 
 ---
 
@@ -957,25 +957,25 @@ Founder approval:
 
 This is approval of the frame only. It does not activate research or authorise the Hedgr Consultant to begin the substantive assignment.
 
-### 21.2 Repo disposition B: activity activation
+### 21.2 Repo disposition B: activity activation and closeout
 
-> **Active: `MONEY-STACK-001` named under `HEDGR_STATUS.md` §7 / §7a via Controlled Parallelism v17 / Internal D-053 / §167 (Founder Option 1, 2026-07-21).**
+> **Completed: `MONEY-STACK-001` activated under `HEDGR_STATUS.md` §7 / §7a via Controlled Parallelism v17 / Internal D-053 / §167, then approved and closed as converged under §168 on 23 July 2026.**
 
-Repo-native activation now records:
+The historical repo-native record preserves:
 
-- active research ticket: `MONEY-STACK-001` (Lane M);
+- completed research ticket: `MONEY-STACK-001` (Lane M);
 - singular outcome and deliverable: one Hedgr Money Stack Deliberation Report narrowing to ≤2 starting-path configurations;
 - owners: Founder / HedgrOps; research support: Hedgr Consultant per §1.1;
 - approved candidates, control architecture, and market cases: as bounded in this brief;
 - scope and exclusions: Class A informational only; §18 exclusions remain binding;
-- concurrency posture: dual active with `CLASS-A-VAL-002` (Lane V) under **D-053** / **§6f.17**;
+- historical concurrency posture: dual active with `CLASS-A-VAL-002` (Lane V) under **D-053** / **§6f.17**; singular Lane V restored at closeout;
 - source, evidence, and data rules: §14;
 - critical evidence-gap rule: §7.6;
 - stop and escalation conditions: §19;
 - closure condition: §15;
 - confirmation that no provider engagement, implementation, or customer-money activity is authorised.
 
-Historical note: under the pre-activation projection at `f882be4a721556332607a8499e4038485a7816a0`, `CLASS-A-VAL-002` was the sole active ticket and this brief granted no concurrency. Founder Option 1 superseded that snapshot through **D-053**.
+Historical note: under the pre-activation projection at `f882be4a721556332607a8499e4038485a7816a0`, `CLASS-A-VAL-002` was the sole active ticket and this brief granted no concurrency. Founder Option 1 superseded that snapshot through **D-053**; **§168** completed D-053 and restored singular Lane V.
 
 ### 21.3 Decisions expressly deferred
 
@@ -998,7 +998,7 @@ Any shortlisted path must return to Founder and HedgrOps for explicit dispositio
 
 ## 22. Authority reminder
 
-This brief is the governing research frame for active ticket `MONEY-STACK-001`. Activation authority lives only in `docs/ops/HEDGR_STATUS.md` **§7** / **§7a** / **§6f.17** / **§167**.
+This brief is the historical governing research frame for completed ticket `MONEY-STACK-001`. Activation and closeout authority live only in `docs/ops/HEDGR_STATUS.md` **§7** / **§7a** / **§6f.17** / **§167** / **§168**.
 
 It does not:
 

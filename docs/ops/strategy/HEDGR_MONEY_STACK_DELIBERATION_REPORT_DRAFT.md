@@ -14,15 +14,17 @@
 
 **Retain with revision.** Retain the principle **design for controlled replaceability; implement one governed value path at a time**. Revise “multi-network by destination” to mean **a second governed path may later be admitted if it passes explicit need, evidence, containment, migration, and user-comprehension gates**. Do not treat multiple networks as an inevitable product milestone.
 
-### Decision requested from Founder–HedgrOps
+### Recorded Founder–HedgrOps disposition
 
-Record one closure disposition for `MONEY-STACK-001`. The evidence supports:
+Founder and HedgrOps approved the research package and closed `MONEY-STACK-001` as converged on 23 July 2026. The recorded disposition:
 
-- **retain** the stability-first invariants, truth boundaries, modular domain model, and three reference-market cases;
-- **retest** the regulated account-ledger control and Stellar/native-USDC configurations through separately authorised legal, provider, custody, liquidity, reconciliation, and security diligence;
-- **defer** Polygon, Polygon Open Money Stack, stable-asset selection, custody selection, provider selection, launch-market selection, and any second network;
-- **remove** bridge-dependent core balances, automated cross-network routing, and yield from any starting-path proposition; and
-- **escalate** only if Founder wishes to authorise the missing diligence through a new repo-native surface.
+- **retain** the research direction and architectural framing;
+- **retain** financial truth as an emerging organising principle;
+- **revise over time** the architectural vocabulary into reusable doctrine through separately authorised doctrine work;
+- **defer** implementation decisions pending separately authorised evidence dossiers; and
+- **close** the current research cycle as converged.
+
+No additional network comparison, provider comparison, infrastructure survey, retest, evidence dossier, doctrine translation, or implementation is authorised by this disposition. Full record: `docs/ops/strategy/HEDGR_MONEY_STACK_FOUNDER_HEDGROPS_DISPOSITION_2026-07-23.md`.
 
 ---
 
@@ -30,19 +32,19 @@ Record one closure disposition for `MONEY-STACK-001`. The evidence supports:
 
 | Field | Position |
 | --- | --- |
-| Status | Draft v0.1 for Founder–HedgrOps review |
-| Research authority | `MONEY-STACK-001` |
-| Authority basis | Controlled Parallelism v17 / Internal D-053 / §167, concurrent with Lane V |
+| Status | Research package approved; research cycle closed as converged on 23 July 2026 |
+| Research authority | `MONEY-STACK-001` — completed; historical only |
+| Authority basis | Controlled Parallelism v17 / Internal D-053 / §167 activation; §168 closeout; singular Lane V restored |
 | Execution class | Class A — informational only |
 | Research owner | Founder / HedgrOps |
-| Research support | Hedgr Consultant, within the approved role boundary |
+| Research support | Hedgr Consultant role ended at ticket closeout; no standing authority |
 | Evidence cut-off | 21 July 2026 |
 | Implementation authority | None |
 | Provider, asset, network, market, or protocol commitment authority | None |
 | Customer-money authority | None |
-| Closure condition | Delivery plus recorded Founder–HedgrOps disposition |
+| Closure condition | Satisfied under §168 |
 
-> **Authority boundary.** This report is research evidence and Hedgr Consultant interpretation. It does not approve a market, provider, asset, custody model, settlement network, integration, live test, or movement of customer money. Review evidence is evidence, not direction.
+> **Authority boundary.** This report is retained research evidence and Hedgr Consultant interpretation. Approval of the package does not approve a market, provider, asset, custody model, settlement network, integration, live test, doctrine change, evidence dossier, or movement of customer money. Review evidence is evidence, not implementation direction.
 
 ### Hedgr Consultant role boundary
 
