@@ -1,6 +1,6 @@
 Status: Canonical hand-off file
 Purpose: Strategic continuity, merged implementation truth, and next-ticket authority for Cursor execution
-Last updated: 2026-07-20
+Last updated: 2026-07-21
 
 ---
 
@@ -64,7 +64,7 @@ Important active constraints:
 
 **Sprint 3** is framed here as **Transition Readiness** (named track above), not as Foundation continuation: governance defines the explicit standard for any later boundary widening; execution architecture remains out of scope until explicitly approved.
 
-**Sequencing authority:** Only **§7** / **§7a** name approved active ticket(s). **Default posture:** one active implementation ticket. Concurrent lanes are permitted only where this file records an accepted, active, and unambiguous Founder-approved parallelism decision (**§6e** lane model / Internal **D-026** plus separate active-pass naming under **§6f**), explicitly names each active lane and ticket, defines authority class and exclusions, and preserves independent stop conditions and rollback. Internal **D-029**, Internal **D-032** / **§6f.3**, Internal **D-034** / **§6f.4**, Internal **D-035** / **§6f.5**, Internal **D-036** / **§6f.6**, Internal **D-041** / **§6f.7**, Internal **D-044** / **§6f.8**, Internal **D-045** / **§6f.9**, Internal **D-046** / **§6f.10**, Internal **D-047** / **§6f.11**, Internal **D-048** / **§6f.12**, Internal **D-049** / **§6f.13**, Internal **D-050** / **§6f.14**, Internal **D-051** / **§6f.15**, and Internal **D-052** / **§6f.16** are completed historical pass authorities and no longer supply concurrency. Singular-ticket posture is active with `CLASS-A-VAL-002` as the sole active ticket after `UI-NARR-001` closeout (**§166**). Lane N idle. Lane R idle after `BRIDGE-P1-OPS-001` closeout. Any future concurrency requires a separate Founder decision plus explicit **§7** / **§7a** naming. Parallel authorization applies only to explicitly named lanes and does **not** authorize unrestricted multi-ticket execution. No lane may widen another lane’s authority without a separate Founder decision and repo-native governance update. **§6b** is Transition Readiness taxonomy and scrutiny input only—not backlog approval or sequencing. **§6e** / **§6f** / **§6g** do **not** widen Class B execution, custody, rails, conversion, settlement, or customer-money authority. Green Lane classification (**§6g** / ADR **0025**) does not activate work and does not override **§7** / **§7a**.
+**Sequencing authority:** Only **§7** / **§7a** name approved active ticket(s). **Default posture:** one active implementation ticket. Concurrent lanes are permitted only where this file records an accepted, active, and unambiguous Founder-approved parallelism decision (**§6e** lane model / Internal **D-026** plus separate active-pass naming under **§6f**), explicitly names each active lane and ticket, defines authority class and exclusions, and preserves independent stop conditions and rollback. Internal **D-029**, Internal **D-032** / **§6f.3**, Internal **D-034** / **§6f.4**, Internal **D-035** / **§6f.5**, Internal **D-036** / **§6f.6**, Internal **D-041** / **§6f.7**, Internal **D-044** / **§6f.8**, Internal **D-045** / **§6f.9**, Internal **D-046** / **§6f.10**, Internal **D-047** / **§6f.11**, Internal **D-048** / **§6f.12**, Internal **D-049** / **§6f.13**, Internal **D-050** / **§6f.14**, Internal **D-051** / **§6f.15**, and Internal **D-052** / **§6f.16** are completed historical pass authorities and no longer supply concurrency. Active governed pass: Internal **D-053** / **§6f.17** names `CLASS-A-VAL-002` (Lane V) and `MONEY-STACK-001` (Lane M) after Founder Option 1 activation (**§167**). Lane N idle after `UI-NARR-001` closeout. Lane R idle after `BRIDGE-P1-OPS-001` closeout. Any additional concurrency requires a separate Founder decision plus explicit **§7** / **§7a** naming. Parallel authorization applies only to explicitly named lanes and does **not** authorize unrestricted multi-ticket execution. No lane may widen another lane’s authority without a separate Founder decision and repo-native governance update. **§6b** is Transition Readiness taxonomy and scrutiny input only—not backlog approval or sequencing. **§6e** / **§6f** / **§6g** do **not** widen Class B execution, custody, rails, conversion, settlement, or customer-money authority. Green Lane classification (**§6g** / ADR **0025**) does not activate work and does not override **§7** / **§7a**.
 
 **MVP phased alignment (interpretation aid):** See **`docs/ops/governance/mvp/HEDGR_MVP_PHASE_ALIGNMENT.md`** for how **`docs/doctrine/hedgr-mvp-project-specification.md`** governance-gated phases and success criteria map to the posture stated in this section and in **§6a–§6c**. That readout is **subordinate** to this file and to **§7** / **§7a**; it does **not** widen execution authority or substitute for **§7** naming.
 
@@ -4228,6 +4228,35 @@ This section does **not** authorize provider-specific implementation, legal reli
 | **Repo authority** | This **§6f.16**; activation **§165**; closeout **§166**; `AGENTS.md` governed-parallelism exception |
 | **Reversibility** | Reversible historically; active posture now singular-ticket `CLASS-A-VAL-002` |
 
+### 6f.17 Controlled Parallelism v17 — `CLASS-A-VAL-002` + `MONEY-STACK-001` (Internal **D-053**)
+
+**Status:** Accepted and **active**. Founder-authorized 2026-07-21 (Option 1); activation **§167**. Visibility remains **Internal** — not auto-exported as a public ADR. D-053 supplies the current concurrency exception.
+
+**Authority basis:** **§6e** / D-026 lane-model / exception-framework + Founder Option 1 to activate Hedgr Money Stack research while `CLASS-A-VAL-002` remains active + Internal **D-053** + **§7** / **§7a** naming + activation **§167** + governing frame `docs/ops/strategy/HEDGR_MONEY_STACK_RESEARCH_BRIEF.md`. Prior pass **D-052** / **§6f.16** remains historically valid; it no longer supplies concurrency. The brief’s pre-activation “no concurrency” clause is superseded only by this explicit Founder Option 1 / **D-053** decision.
+
+| Lane | Ticket | Authority class | Notes |
+| ---- | ------ | --------------- | ----- |
+| V — Class A product validation | `CLASS-A-VAL-002` | Class A informational / synthetic product validation | Continues unchanged under existing **§7a** / **§143** authority; D-053 does not alter it |
+| M — Money Stack research | `MONEY-STACK-001` | Class A informational research only | Produce one Hedgr Money Stack Deliberation Report; ≤2 starting-path configurations; no implementation |
+
+**Cross-lane exclusions:**
+
+- `MONEY-STACK-001` cannot alter Lane V research scope, evidence, thresholds, decision rule, timing, stop conditions, rollback, or closeout.
+- `MONEY-STACK-001` cannot introduce implementation, provider engagement, custody/rail/conversion/settlement authority, live capability, or Class B / Class C.
+- `MONEY-STACK-001` findings, shortlists, or consultant recommendations do not create infrastructure approval or execution authority.
+- `CLASS-A-VAL-002` findings cannot force Money Stack shortlist disposition, provider selection, or architecture adoption.
+
+**Non-authorization statement:** D-053 does not authorize external publication, provider contact, commercial engagement, legal conclusions, customer-money activity, network/asset/custody/rail selection, implementation, doctrine override, ADR override, Evidence Register acceptance, Class B / Class C, or Kenya counsel send. Kenya counsel remains **DEFER**.
+
+| Field | Value |
+| ----- | ----- |
+| **Decision ID** | D-053 |
+| **Title** | Controlled Parallelism v17 — `CLASS-A-VAL-002` + `MONEY-STACK-001` |
+| **Status** | Accepted and active (activation **§167**) |
+| **Visibility** | Internal |
+| **Repo authority** | This **§6f.17**; activation **§167**; `AGENTS.md` governed-parallelism exception |
+| **Reversibility** | Reversible; restore singular-ticket `CLASS-A-VAL-002` on Lane M closeout or Founder revoke |
+
 ## 6g. Green Lane Delegation Pilot envelope (ADR 0025 / `GOV-GREEN-001`)
 
 **Delegation status:** **Active** (time-bounded authority-model pilot). Founder-revocable at any time.
@@ -4245,7 +4274,7 @@ This section does **not** authorize provider-specific implementation, legal reli
 | **Execution class** | Class A only (documentation-only governance for this ticket) |
 | **Start date** | 2026-07-14 |
 | **Review / expiry date** | ~2026-08-04 (after one product-learning cycle or approximately three weeks); earlier founder revocation allowed |
-| **Concurrency limit** | One active implementation ticket by default unless an active Founder-approved **§6f** pass is named; no active **§6f** pass after **D-052** closeout (**§166**). Singular-ticket `CLASS-A-VAL-002` only. Green Lane does not itself create or widen concurrency. |
+| **Concurrency limit** | One active implementation ticket by default unless an active Founder-approved **§6f** pass is named; active pass **D-053** / **§6f.17** names `CLASS-A-VAL-002` + `MONEY-STACK-001`. Green Lane does not itself create or widen concurrency. |
 | **External-spend limit** | None (zero) |
 | **Data posture** | No unapproved personal or regulated data; no customer-money behavior |
 | **Escalation owner** | Founder — @mhibajene |
@@ -4259,7 +4288,7 @@ This section does **not** authorize provider-specific implementation, legal reli
 
 **Relationship to §7 / §7a:** This envelope does **not** activate product work. Implementation remains executable only through **§7** / **§7a**. Green Lane classification does not activate work and does not override **§7** / **§7a**.
 
-**Relationship to governed parallelism:** Green Lane delegation does **not** create parallel authority. D-032 / **§6f.3**, D-034 / **§6f.4**, D-035 / **§6f.5**, D-036 / **§6f.6**, D-041 / **§6f.7**, D-044 / **§6f.8**, D-045 / **§6f.9**, D-046 / **§6f.10**, D-047 / **§6f.11**, D-048 / **§6f.12**, D-049 / **§6f.13**, D-050 / **§6f.14**, D-051 / **§6f.15**, and D-052 / **§6f.16** are completed historical authorities. Singular-ticket posture is active with `CLASS-A-VAL-002` as the sole active ticket after **§166**.
+**Relationship to governed parallelism:** Green Lane delegation does **not** create parallel authority. D-032 / **§6f.3**, D-034 / **§6f.4**, D-035 / **§6f.5**, D-036 / **§6f.6**, D-041 / **§6f.7**, D-044 / **§6f.8**, D-045 / **§6f.9**, D-046 / **§6f.10**, D-047 / **§6f.11**, D-048 / **§6f.12**, D-049 / **§6f.13**, D-050 / **§6f.14**, D-051 / **§6f.15**, and D-052 / **§6f.16** are completed historical authorities. Active governed pass: **D-053** / **§6f.17** names `CLASS-A-VAL-002` (Lane V) and `MONEY-STACK-001` (Lane M) after **§167**.
 
 **Non-authorization:** This section is an authority-model pilot. It does not activate product work, does not authorize parallel execution by itself, does not widen financial execution posture, and leaves repo authority controlling.
 
@@ -4410,21 +4439,23 @@ Completed and merged:
 
 Current active ticket status:
 
-- **Active tickets (singular-ticket default / §166):**
+- **Active tickets (Controlled Parallelism v17 / D-053 / §167):**
   - **Lane V:** `CLASS-A-VAL-002` — Validate the End-to-End Synthetic Stability Journey. Unchanged. Exact brief in **§7a**.
+  - **Lane M:** `MONEY-STACK-001` — Hedgr Money Stack Deliberation Report (Class A informational research). Exact brief in **§7a**. Governing frame: `docs/ops/strategy/HEDGR_MONEY_STACK_RESEARCH_BRIEF.md`.
 - **Completed Lane N:** `UI-NARR-001` (**§166**) — Customer-language consistency pass (narrative integrity); Copilot identity, Earn→Allocate label, spoken trust/engine copy. Cross-lane default `NO CROSS-LANE IMPACT`.
 - **Completed Lane N predecessors:** `NARRATIVE-004` (**§164**); `NARRATIVE-003` (**§162**); `NARRATIVE-002` (**§159**); `NARRATIVE-001` (**§157**).
 - **Completed Lane R:** `BRIDGE-P1-OPS-001` (**§161**) — R1 clock recorded; regen/verification hygiene complete; legacy Deprecated retained; no retirement; no Phase 2; no successor activated.
 - **Completed Bridge Phase 1 implementation:** `BRIDGE-P1-001` (**§154**; PRs **#306** / **#307**).
 - **Completed prep:** `BRIDGE-P1-PREP-001` (**§151** / D-043). Governing plan preserved.
 - **Completed nested refinements inside Lane V:** `HEDGR-UI-001`–`003` (**§144**–**§148**).
-- **Sequencing posture:** Singular-ticket default. D-029, D-032, D-034, D-035, D-036, D-041, D-044, D-045, D-046, D-047, D-048, D-049, D-050, D-051, and D-052 remain completed historical pass authorities and supply no standing concurrency.
+- **Sequencing posture:** Dual active under D-053 / **§6f.17**. D-029, D-032, D-034, D-035, D-036, D-041, D-044, D-045, D-046, D-047, D-048, D-049, D-050, D-051, and D-052 remain completed historical pass authorities and supply no standing concurrency beyond their historical records.
 - **Kenya counsel path:** **DEFER** (**§6f.1** / D-028).
-- **Governed parallelism posture:** No active **§6f** pass. Singular-ticket `CLASS-A-VAL-002` only. Lane N idle after `UI-NARR-001` closeout. Lane R idle. **§6e** / D-026 remains lane-model only. Class B convergence gate unsatisfied.
-- **Active Lane A / B / C / N / R:** None.
+- **Governed parallelism posture:** Active **§6f.17** / D-053. Lane V + Lane M. Lane N idle after `UI-NARR-001` closeout. Lane R idle. **§6e** / D-026 remains lane-model only. Class B convergence gate unsatisfied.
+- **Active Lane A / B / C / N / R:** None. **Active Lane M:** `MONEY-STACK-001`.
 - **Green Lane pilot (§6g / ADR 0025):** Authority-model only; does not activate product experiments or widen this pass.
 - **Last completed product-copy ticket:** `UI-NARR-001` (**§166**). Last completed narrative governance ticket: `NARRATIVE-004` (**§164**). Last completed Bridge ticket: `BRIDGE-P1-OPS-001` (**§161**). Last completed Bridge implementation: `BRIDGE-P1-001` (**§154**).
-- **Post-`UI-NARR-001` closeout / Controlled Parallelism v16 (§166 / D-052):** Customer-language consistency pass completed; Lane N closed; singular-ticket restored for Lane V. Cross-lane default `NO CROSS-LANE IMPACT`.
+- **Post-`MONEY-STACK-001` activation / Controlled Parallelism v17 (§167 / D-053):** Founder Option 1 activates Money Stack Class A research concurrent with Lane V. No implementation, provider, or customer-money authority.
+- **Post-`UI-NARR-001` closeout / Controlled Parallelism v16 (§166 / D-052):** Customer-language consistency pass completed; Lane N closed; historically restored singular-ticket for Lane V before **§167**. Cross-lane default `NO CROSS-LANE IMPACT`.
 - **Post-`NARRATIVE-004` closeout / Narrative Style Guide v1.0 freeze (§164 / D-051):** Historical.
 - **Post-`NARRATIVE-003` closeout / Customer One-Pager v1.0 freeze (§162):** Historical.
 - **Post-`BRIDGE-P1-OPS-001` closeout / Controlled Parallelism v14 (§161 / D-050):** Historical.
@@ -4437,18 +4468,18 @@ Current active ticket status:
 - **Post-Controlled Parallelism v8 activation (§152 / D-044):** Historical.
 - **Post-`BRIDGE-P1-PREP-001` closeout (§151 / D-043):** Prep complete; D-042 remains binding.
 - **Post-Founder F1–F8 (§150 / D-042):** Binding for Lane R Phase 1 meaning (including R1).
-- When **§7** names an approved ticket, the active brief lives in **§7a**. Current sole active: `CLASS-A-VAL-002`.
-- Cursor must not modify frozen Canonical Story v1.0, frozen Customer One-Pager v1.0, or frozen Narrative Style Guide v1.0 without institutional trigger + new **§7** naming; must not treat narrative artifacts as publication, sequencing, evidence acceptance, readiness approval, or live capability; must not retire legacy Bridge placeholder without a separately named Founder ticket on/after **2026-08-02**.
+- When **§7** names approved tickets, active briefs live in **§7a**. Current actives: `CLASS-A-VAL-002` (Lane V) and `MONEY-STACK-001` (Lane M).
+- Cursor must not modify frozen Canonical Story v1.0, frozen Customer One-Pager v1.0, or frozen Narrative Style Guide v1.0 without institutional trigger + new **§7** naming; must not treat narrative artifacts as publication, sequencing, evidence acceptance, readiness approval, or live capability; must not retire legacy Bridge placeholder without a separately named Founder ticket on/after **2026-08-02**; must not treat Money Stack research findings as implementation or provider approval.
 - Kenya counsel remains **DEFER**. Convergence gate remains unsatisfied.
 - Legacy `docs/ops/bridge/current-status.json` remains **Deprecated** under R1/F6 through at least **2026-08-02**; no silent date-bump to fake CURRENT; retirement requires separately named Founder ticket (`BRIDGE-LEGACY-RETIRE-001` candidate — not active).
 
 ---
 
-## 7a. Active execution ticket — singular-ticket default
+## 7a. Active execution tickets — Controlled Parallelism v17 / D-053
 
 ### Lane V — `CLASS-A-VAL-002`
 
-**Active ticket:** `CLASS-A-VAL-002` — Validate the End-to-End Synthetic Stability Journey (Founder transition / activation **§142** / **§143**; Internal **D-037**; continues under singular-ticket default after **§166**).
+**Active ticket:** `CLASS-A-VAL-002` — Validate the End-to-End Synthetic Stability Journey (Founder transition / activation **§142** / **§143**; Internal **D-037**; continues under Controlled Parallelism v17 / **D-053** after **§167**).
 
 **Objective:** Create a coherent, visibly synthetic, end-to-end customer journey through Dashboard → Deposit → Withdraw → Activity plus the shared trust and navigation shell so target cross-border freelancers can understand Hedgr’s core stability proposition without inferring that real funds moved.
 
@@ -4456,7 +4487,7 @@ Current active ticket status:
 
 **Type / execution class:** Product validation; Class A informational / synthetic. Non-executing for customer money.
 
-**Authority basis:** Founder approval to close/reframe `CLASS-A-VAL-001` and activate `CLASS-A-VAL-002` as its sole successor + Internal **D-037** + **§142** / **§143** + this **§7** / **§7a** naming + ADR **0024** (evidence principle only) + ADRs **0013–0015** (read-only / informational Stability Engine boundaries) + the existing synthetic transaction and withdrawal trust surfaces. Narrative Style Guide freeze / **§164** and `UI-NARR-001` / **§166** do **not** widen this Lane V authority.
+**Authority basis:** Founder approval to close/reframe `CLASS-A-VAL-001` and activate `CLASS-A-VAL-002` as its sole successor + Internal **D-037** + **§142** / **§143** + this **§7** / **§7a** naming + ADR **0024** (evidence principle only) + ADRs **0013–0015** (read-only / informational Stability Engine boundaries) + the existing synthetic transaction and withdrawal trust surfaces. Narrative Style Guide freeze / **§164**, `UI-NARR-001` / **§166**, and `MONEY-STACK-001` / **D-053** / **§167** do **not** widen this Lane V authority.
 
 **DRI:** Founder — @mhibajene.
 
@@ -4464,8 +4495,9 @@ Current active ticket status:
 
 - **Lane A / B / C / N / R:** idle
 - **Active Lane V ticket:** `CLASS-A-VAL-002`
+- **Active Lane M ticket:** `MONEY-STACK-001` (parallel under **D-053**; independent stop/rollback)
 
-**Sequencing posture:** Singular-ticket default. Kenya counsel: **DEFER** (**§6f.1** / D-028). Class B convergence gate: unsatisfied. Green Lane pilot envelope (**§6g**) remains authority-model only and does **not** widen this ticket.
+**Sequencing posture:** Dual active under Controlled Parallelism v17 / **D-053**. Kenya counsel: **DEFER** (**§6f.1** / D-028). Class B convergence gate: unsatisfied. Green Lane pilot envelope (**§6g**) remains authority-model only and does **not** widen this ticket.
 
 #### Completed nested refinement — `HEDGR-UI-003`
 
@@ -4661,7 +4693,61 @@ Current active ticket status:
 
 **Decision unlocked:** Evidence may support Founder disposition to (1) proceed to a one-market Class B feasibility proposal, (2) use the authorized Class A presentation iteration to address one evidenced comprehension failure, (3) reframe the proposition or target cohort, or (4) pause the lane. Interface completion alone does not close this ticket.
 
-**Stop / rollback:** Stop if work requires live financial capability, provider / banking integration, production FX, settlement / payout, engine execution, broad redesign, Settings / Copilot expansion, Evidence Register acceptance, Class B implementation, a second Lane V ticket, or scope outside the surfaces above. Rollback is a single revert or removal/disablement of the governed synthetic fixture path, with documentation evidence preserved for reconstruction. Lane R issues cannot override these controls.
+**Stop / rollback:** Stop if work requires live financial capability, provider / banking integration, production FX, settlement / payout, engine execution, broad redesign, Settings / Copilot expansion, Evidence Register acceptance, Class B implementation, a second Lane V ticket, or scope outside the surfaces above. Rollback is a single revert or removal/disablement of the governed synthetic fixture path, with documentation evidence preserved for reconstruction. Lane M / Lane R issues cannot override these controls.
+
+### Lane M — `MONEY-STACK-001`
+
+**Active ticket:** `MONEY-STACK-001` — Hedgr Money Stack: Starting Point, Reference-Market Pattern Analysis, and Multi-Network Direction (Founder Option 1 activation **§167**; Internal **D-053** / **§6f.17**).
+
+**Objective:** Produce one **Hedgr Money Stack Deliberation Report** that applies the agreed truth boundaries and invariant gates, analyses the three reference-market patterns (Kenya, Philippines, Brazil), and narrows the option space to no more than two starting-path configurations.
+
+**Primary research question:** What characteristics should the Hedgr money stack have to support a stability-first financial operating system?
+
+**Type / execution class:** Class A informational research only. Non-executing. No customer-money activity.
+
+**Authority basis:** Founder Option 1 (2026-07-21) to activate Money Stack research concurrent with `CLASS-A-VAL-002` + Internal **D-053** / **§6f.17** + this **§7** / **§7a** naming + activation **§167** + governing frame `docs/ops/strategy/HEDGR_MONEY_STACK_RESEARCH_BRIEF.md`. The brief’s pre-activation “no concurrency” clause is superseded only by **D-053**.
+
+**Owners:** Founder / HedgrOps. **Research support:** Hedgr Consultant, bounded by brief §1.1 (active only while this ticket remains named).
+
+**DRI:** Founder — @mhibajene.
+
+**Singular authorised outcome:** One deliberation report with sections required by brief §15; disposition retain / revise / remove / retest / defer / escalate. Closure creates no automatic follow-on.
+
+**In scope:**
+
+- Stage 1–6 research method in the governing brief (taxonomy lock → reference-market baseline → candidate-path construction → invariant gating → shortlisting ≤2 → bounded deep diligence / disposition).
+- Settlement-environment candidates: Stellar; Polygon; one additional public settlement environment only if Stage 1 shows a materially different assumption.
+- Architecture topologies: network-anchored single path; modular / Open Money-style (term must be defined); bounded multi-network destination architecture.
+- Control architecture: regulated custodial or account-ledger control path (falsification case for user-facing public-chain necessity).
+- Reference markets: Kenya, Philippines, Brazil only; pattern replay against Zambia or another explicitly selected operating jurisdiction before any implementation conclusion.
+- Evidence standards, critical evidence-gap rule, disqualifying/deferral conditions, and stop/escalation rules from the governing brief.
+
+**Authorized surfaces:**
+
+- `docs/ops/strategy/HEDGR_MONEY_STACK_RESEARCH_BRIEF.md` — governing frame (already activated)
+- `docs/ops/strategy/**` — deliberation report and Stage working artifacts for this ticket only
+- `docs/ops/HEDGR_STATUS.md` and `docs/ops/NOTION_GOVERNANCE_STAGING.md` — activation / closeout reconciliation only
+- Public primary sources listed in the brief for desk research (timestamped; no provider outreach)
+
+**Must not / exclusions:**
+
+- Live fund movement; customer-money testing; personal or regulated-data collection.
+- Provider engagement, contracting, endorsement, solicitation, or external representation of Hedgr.
+- Legal or regulatory conclusions presented as institutional advice.
+- Custody implementation; network or bridge integration; production architecture; automated routing; protocol deposits; yield implementation.
+- Final stable-asset, network, provider, custody-model, or launch-market selection.
+- Implementation tickets, ADR creation as if research equals architecture acceptance, Class B / Class C, or Evidence Register acceptance.
+- Adding markets, networks, providers, or money paths without a material unresolved hypothesis and applicable Founder approval.
+- Altering Lane V scope, evidence, thresholds, or closeout; unfreezing Canonical Story / Customer One-Pager / Narrative Style Guide.
+
+**Acceptance / closure:**
+
+1. Deliberation report delivered against brief §15 checklist.
+2. Founder and HedgrOps review completed.
+3. One disposition recorded: retain, revise, remove, retest, defer, or escalate.
+4. Lane M closed in **§7** / **§7a**; **D-053** completed as active concurrency; singular-ticket restored for Lane V unless a new Founder pass names otherwise.
+
+**Stop / rollback:** Pause and escalate per brief §19 (provider commitment drift; regulated data; live-capability implication; custody/conversion/settlement testing; inferred legal conclusions; truth-domain collapse; option-space expansion; liquidity-honesty erosion; unapproved market/network/architecture addition). Rollback is revoke/pause **D-053**, remove Lane M from **§7** / **§7a**, and leave Lane V and all research artifacts as historical evidence only.
 
 ### Archived brief — `BRIDGE-P1-OPS-001`
 
@@ -10160,3 +10246,26 @@ Draft boundary for future activation brief is recorded under **§7a** as **Propo
 
 **Rollback:** Revert this closeout and the bounded copy/test changes only if Founder revokes the pass; leave Lane V unchanged; do not silently reopen Lane N without explicit reactivation.
 
+## 167. Founder activation - MONEY-STACK-001 + Controlled Parallelism v17
+
+**Ticket:** `MONEY-STACK-001` — Hedgr Money Stack Deliberation Report (Class A informational research)
+
+**Status:** Activated 2026-07-21.
+
+**Decision Log:** Internal **D-053**. Visibility: **Internal** — not auto-exported as a public ADR.
+
+**Activation authority:** Founder Option 1 instruction to activate Money Stack research concurrent with `CLASS-A-VAL-002` + Internal **D-053** / **§6f.17** + explicit **§7** / **§7a** naming in this change + governing frame `docs/ops/strategy/HEDGR_MONEY_STACK_RESEARCH_BRIEF.md`.
+
+**Parallelism posture:** D-053 names `CLASS-A-VAL-002` (Lane V, unchanged) and `MONEY-STACK-001` (Lane M). Prior passes through D-052 remain completed historical authorities. Singular-ticket default restores on D-053 completion or Founder revoke.
+
+**Disposition:** Activate `MONEY-STACK-001` as Lane M to produce one Hedgr Money Stack Deliberation Report applying truth boundaries and invariant gates, analysing Kenya / Philippines / Brazil reference-market patterns, and narrowing to ≤2 starting-path configurations. Hedgr Consultant support is bounded by brief §1.1. Lane V continues unchanged. No implementation, provider engagement, or customer-money authority.
+
+**In scope:** Desk research and deliberation artifacts under `docs/ops/strategy/**` per **§7a** Lane M brief; Stages 1–6; Stellar / Polygon / optional third settlement only if Stage 1 justifies; regulated custodial control architecture; evidence and critical-gap rules from the governing brief.
+
+**Out of scope / must not:** Implementation; provider/regulator/partner contact; legal conclusions; custody/network/bridge/yield execution; market/network/asset/custody selection; Class B / Class C; Evidence Register acceptance; Lane V interference; frozen narrative-source edits.
+
+**Runtime boundary:** Documentation / research only. No fund movement. No accounting truth. Kenya counsel remains **DEFER**.
+
+**Notion staging posture:** Reconcile to mirror D-053 dual actives (Lane V + Lane M). Repo-native **§7** / **§7a** remains controlling.
+
+**Rollback:** Revert this activation; remove `MONEY-STACK-001` from **§7** / **§7a**; complete or revoke D-053 as factually appropriate; leave `CLASS-A-VAL-002` unchanged.
