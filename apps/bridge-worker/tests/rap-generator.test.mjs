@@ -55,8 +55,7 @@ test("identical source revision produces byte-identical current RAP output", asy
   assert.equal(first.projection.generated_at, "2026-07-19T00:00:00.000Z");
   assert.equal(serializeProjection(first.projection), serializeProjection(second.projection));
   assert.deepEqual(first.projection.payload.fields.active_ticket_ids.value, [
-    "CLASS-A-VAL-002",
-    "MONEY-STACK-001"
+    "CLASS-A-VAL-002"
   ]);
   assert.equal(first.projection.execution_authority, false);
   assert.equal(first.projection.mutation_allowed, false);
@@ -109,7 +108,7 @@ test("missing explicit active-ticket records fail instead of being inferred", as
 test("authority disagreement is attributed and never resolved", async () => {
   const sourceDocuments = await currentSourceDocuments();
   sourceDocuments["AGENTS.md"] = sourceDocuments["AGENTS.md"].replaceAll(
-    "MONEY-STACK-001",
+    "CLASS-A-VAL-002",
     "WRONG-TICKET-001"
   );
 
