@@ -6,7 +6,7 @@
 
 **Authority:** The repository is source of truth. Wording here must match `docs/decisions/0016-warmth-layer-doctrine-constrained-retail-refinement-track.md`, `docs/decisions/SPRINT-2-ADR-INDEX.md`, and `docs/ops/HEDGR_STATUS.md`. Wording must match **Accepted** ADR **0016** in repo; do not broaden scope or soften read-only / non-execution boundaries in Notion.
 
-**Last reconciled:** 2026-07-23 (mirror after `MONEY-STACK-001` Founder–HedgrOps closeout **§168**; D-053 completed historical; singular active Lane V `CLASS-A-VAL-002`; Lane M idle; Lane N idle; Lane R idle; Money Stack research package approved and cycle closed as converged; Canonical Story v1.0, Customer One-Pager v1.0, and Narrative Style Guide v1.0 remain Frozen; R1 retirement deferred ≥ **2026-08-02**; Kenya counsel **DEFER**; repo **§7** / **§7a** controls sequencing)
+**Last reconciled:** 2026-07-27 (mirror after Controlled Parallelism v18 / **D-054** / **§169** activation; dual active Lane V `CLASS-A-VAL-002` + Lane N `NARRATIVE-005` Investor Orientation Brief; Lane M idle; Lane R idle; D-053 completed historical; Canonical Story v1.0, Customer One-Pager v1.0, and Narrative Style Guide v1.0 remain Frozen; no publication authority for investor brief; R1 retirement deferred ≥ **2026-08-02**; Kenya counsel **DEFER**; repo **§7** / **§7a** controls sequencing)
 
 ---
 
@@ -90,7 +90,8 @@ Use as a governed workstream line, **not** as a shipped-feature claim. Placement
 
 - **Controlled Parallelism v15 (D-051, Accepted — completed historical pass):** Named `CLASS-A-VAL-002` (Lane V) and `NARRATIVE-004` (Lane N — Narrative Style Guide). Activation **§163** / **§6f.15**; Lane N freeze closeout **§164**. Superseded by singular-ticket restore. Style Guide v1.0 Frozen. Publication not authorised. `NO CROSS-LANE IMPACT`.
 - **Controlled Parallelism v16 (D-052, Accepted — completed historical pass):** Named `CLASS-A-VAL-002` (Lane V) and `UI-NARR-001` (Lane N — customer-language consistency). Activation **§165** / **§6f.16**; Lane N closeout **§166**. Superseded by singular-ticket restore, then by **D-053**. Copy-only narrative integrity. `NO CROSS-LANE IMPACT`.
-- **Controlled Parallelism v17 (D-053, Accepted — completed historical pass):** Named `CLASS-A-VAL-002` (Lane V) and `MONEY-STACK-001` (Lane M — Money Stack Class A research). Activation **§167** / **§6f.17**; Founder–HedgrOps closeout **§168**. Research package approved; cycle closed as converged; singular Lane V restored. No implementation / doctrine / evidence-dossier / provider / customer-money authority. `NO CROSS-LANE IMPACT`.
+- **Controlled Parallelism v17 (D-053, Accepted — completed historical pass):** Named `CLASS-A-VAL-002` (Lane V) and `MONEY-STACK-001` (Lane M — Money Stack Class A research). Activation **§167** / **§6f.17**; Founder–HedgrOps closeout **§168**. Research package approved; cycle closed as converged; historically restored singular Lane V before **D-054**. No implementation / doctrine / evidence-dossier / provider / customer-money authority. `NO CROSS-LANE IMPACT`.
+- **Controlled Parallelism v18 (D-054, Accepted — active):** Named `CLASS-A-VAL-002` (Lane V, unchanged) and `NARRATIVE-005` (Lane N — Investor Orientation Brief). Activation **§169** / **§6f.18**. Orientation, not reformulation. No publication / deck / fundraising / traction authority. Green eligibility subordinate to verified D-054 / **§7** / **§7a**. `NO CROSS-LANE IMPACT`.
 
 - **Bridge Phase 1 ops closeout (Accepted):** Close `BRIDGE-P1-OPS-001` complete (**§161**; evidence PRs **#310** / **#312** / **#313**); no Bridge successor activated; legacy retirement deferred ≥ **2026-08-02**.
 
@@ -1103,6 +1104,33 @@ Use when mirroring the completed **test-only** regression tranche 4. **Not** new
 - Governing historical frame: `docs/ops/strategy/HEDGR_MONEY_STACK_RESEARCH_BRIEF.md`; disposition: `docs/ops/strategy/HEDGR_MONEY_STACK_FOUNDER_HEDGROPS_DISPOSITION_2026-07-23.md`.
 - Retain the direction and framing; retain Financial Truth as an emerging organising principle; develop reusable doctrine only through separate authority; defer implementation pending separately authorised evidence dossiers.
 - No additional network/provider/infrastructure survey and no implementation / doctrine / evidence-dossier / provider / customer-money authority.
+- Cross-lane default `NO CROSS-LANE IMPACT`.
+
+---
+
+## 8d.22 Decision Log — D-054 / Controlled Parallelism v18 (Internal; Notion mirror)
+
+**Notion Decision Log ID:** **D-054**. Canonical detail: **`docs/ops/HEDGR_STATUS.md` §6f.18**, activation **§169**. Visibility: **Internal**.
+
+| Field | Value |
+| ----- | ----- |
+| **Decision ID** | D-054 |
+| **Title** | Controlled Parallelism v18 — `CLASS-A-VAL-002` + `NARRATIVE-005` |
+| **Status** | Accepted and active (activation **§169**) |
+| **Decision Type** | Ops / Architecture / Sequencing |
+| **Strategic Horizon** | Short-term (MVP / immediate sprint) |
+| **Visibility** | Internal |
+| **Date** | 2026-07-27 |
+| **Repo authority** | `HEDGR_STATUS.md` **§6f.18**; activation **§169** |
+| **Tickets** | Lane V `CLASS-A-VAL-002` (active, unchanged); Lane N `NARRATIVE-005` (active — Investor Orientation Brief) |
+
+**Summary / notes (concise)**
+
+- Founder activated Investor Orientation Brief concurrent with unchanged Lane V.
+- Orientation, not reformulation; derive from frozen Canonical Story + Style Guide + current repo implementation truth.
+- ≤2 pages; internal review artifact; no publication / deck / fundraising / traction / live-capability authority.
+- Green-eligible Class A documentation subordinate to verified D-054 / **§7** / **§7a**; Green does not independently activate.
+- Automatic return to singular-ticket posture on either closeout.
 - Cross-lane default `NO CROSS-LANE IMPACT`.
 
 ---
