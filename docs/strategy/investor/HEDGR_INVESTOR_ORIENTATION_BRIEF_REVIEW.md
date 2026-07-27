@@ -2,7 +2,7 @@
 
 | Field | Value |
 | ----- | ----- |
-| **Status** | Final HedgrOps review pass applied; Founder disposition pending |
+| **Status** | Founder accepted; `NARRATIVE-005` completed |
 | **Authority** | Non-authoritative review record |
 | **Ticket** | `NARRATIVE-005` |
 | **Reviewed artifact** | `docs/strategy/investor/HEDGR_INVESTOR_ORIENTATION_BRIEF.md` |
@@ -12,7 +12,7 @@
 | **Date** | 2026-07-27 |
 | **Publication status** | Not authorised |
 
-This record captures bounded HedgrOps feedback and supports Founder review. HedgrOps feedback is review input only. It does not approve publication, fundraising use, investor circulation, market claims, implementation, or live capability.
+This record captures bounded HedgrOps feedback and the Founder acceptance recorded in `HEDGR_STATUS.md` **§170**. Acceptance applies to the source brief only. It does not approve publication, fundraising use, investor circulation, market claims, implementation, or live capability.
 
 ---
 
@@ -20,7 +20,7 @@ This record captures bounded HedgrOps feedback and supports Founder review. Hedg
 
 **Result:** `PASS FOR GOVERNED REVIEW`
 
-The revised draft is complete enough for Founder review against `NARRATIVE-005`. This result combines an Implementer completeness check with applied HedgrOps review feedback. It is not narrative acceptance, ticket closeout, or publication authority.
+The revised draft passed governed review against `NARRATIVE-005`. Founder acceptance and ticket closeout are now recorded in **§170**. This does not create publication authority.
 
 ---
 
@@ -216,23 +216,23 @@ Success requires materially correct answers without founder reconstruction. Any 
 | Decision | Status |
 | -------- | ------ |
 | Record HedgrOps recommendation: strongly retain with targeted refinement | Complete; non-authoritative feedback applied |
-| Accept as the `NARRATIVE-005` derived orientation source | Pending |
-| Accept with minor editorial refinements | Pending |
-| Return for material revision | Pending |
-| Defer | Pending |
+| Accept as the `NARRATIVE-005` derived orientation source | **Accepted — §170** |
+| Accept with minor editorial refinements | Not selected |
+| Return for material revision | Not selected |
+| Defer | Not selected |
 | Authorise external publication or circulation | Not requested; separately governed |
 | Authorise a deck, website use, or broader fundraising materials | Not requested; outside ticket scope |
 
-**Disposition:** `PENDING FOUNDER DISPOSITION`
+**Disposition:** `ACCEPTED AS SOURCE — NARRATIVE-005 COMPLETED`
 
-Do not close Lane N, complete D-054, restore singular-ticket posture, freeze this draft, or change publication status until Founder disposition is recorded repo-natively.
+Founder acceptance closes `NARRATIVE-005` and completes D-054. `NARRATIVE-006` is a separately authorised design-expression successor under D-055 / **§170**. Publication status remains unchanged: not authorised.
 
 ---
 
 ## 10. Review stack used
 
 1. `AGENTS.md`, `.cursorrules`, and `.cursor/rules.md`
-2. `docs/ops/HEDGR_STATUS.md`, especially §6f.18, §7, §7a, and §169
+2. `docs/ops/HEDGR_STATUS.md`, especially §6f.18, §6f.19, §7, §7a, §169, and §170
 3. Canonical Story v1.0 and Narrative Style Guide v1.0
 4. Constitutional Charter and UX Constitution
 5. Sprint 2 ADR index and ADRs 0013–0015
