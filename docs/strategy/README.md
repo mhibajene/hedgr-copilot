@@ -5,8 +5,8 @@
 | **Status** | Operational index |
 | **Authority** | Non-authorising |
 | **Purpose** | Explain narrative hierarchy and locate audience-specific artifacts |
-| **Ticket** | Narrative stack through `NARRATIVE-004` (style guide freeze; index retained) |
-| **Date** | 2026-07-20 |
+| **Ticket** | Narrative stack through `NARRATIVE-005` (Investor Orientation Brief active under D-054 / §169; prior style-guide freeze retained) |
+| **Date** | 2026-07-27 |
 
 ---
 
@@ -74,12 +74,14 @@ docs/strategy/
 │   └── HEDGR_CUSTOMER_ONE_PAGER_REVIEW.md
 ├── website/
 │   └── HEDGR_NARRATIVE_STYLE_GUIDE.md ← narrative voice (v1.0 Frozen)
-├── investor/                          ← planned paths only
+├── investor/
+│   ├── HEDGR_INVESTOR_ORIENTATION_BRIEF.md   ← HedgrOps final pass applied; Founder disposition pending
+│   └── HEDGR_INVESTOR_ORIENTATION_BRIEF_REVIEW.md ← preflight complete; disposition pending
 ├── product/                           ← planned paths only
 └── technical/                         ← planned paths only
 ```
 
-Directories for investor, product, and technical audience packs remain **planned architecture** unless a separately activated ticket requires them.
+Directories for product and technical audience packs remain **planned architecture** unless a separately activated ticket requires them. Investor Orientation Brief creation is authorised only under active `NARRATIVE-005` / **§7a**.
 
 ---
 
@@ -92,7 +94,9 @@ Directories for investor, product, and technical audience packs remain **planned
 | Customer One-Pager | `docs/strategy/customer/HEDGR_CUSTOMER_ONE_PAGER.md` | **Active / Frozen v1.0** | Canonical customer narrative source. Publication not authorised by freeze alone. |
 | Customer One-Pager Review | `docs/strategy/customer/HEDGR_CUSTOMER_ONE_PAGER_REVIEW.md` | **Review complete** | Non-authoritative evidence; Founder accept + freeze disposition recorded. |
 | Narrative Style Guide | `docs/strategy/website/HEDGR_NARRATIVE_STYLE_GUIDE.md` | **Active / Frozen v1.0** | Canonical narrative governance for voice, rhythm, and translation. Non-authorising. |
-| Investor One-Pager | `docs/strategy/investor/HEDGR_INVESTOR_ONE_PAGER.md` | **Planned** | Not created. Not approved. |
+| Investor Orientation Brief | `docs/strategy/investor/HEDGR_INVESTOR_ORIENTATION_BRIEF.md` | **Final HedgrOps pass applied / Founder disposition pending** | `NARRATIVE-005` / D-054 / §169. Release-candidate review quality; no acceptance, publication, or title change. |
+| Investor Orientation Brief Review | `docs/strategy/investor/HEDGR_INVESTOR_ORIENTATION_BRIEF_REVIEW.md` | **Final HedgrOps feedback applied / Founder disposition pending** | Review record for `NARRATIVE-005`; canonical-language, derivation, title, and audience-expansion recommendations remain unapproved. |
+| Investor One-Pager (legacy planned label) | `docs/strategy/investor/HEDGR_INVESTOR_ONE_PAGER.md` | **Superseded as planned label** | Replaced by Investor Orientation Brief path under `NARRATIVE-005`; do not create under the old filename unless Founder renames. |
 | Investor Deck | `docs/strategy/investor/HEDGR_INVESTOR_DECK.md` | **Planned** | Not created. Not approved. |
 | Product Overview | `docs/strategy/product/HEDGR_PRODUCT_OVERVIEW.md` | **Planned** | Not created. Not approved. |
 | Website Narrative | `docs/strategy/website/HEDGR_WEBSITE_NARRATIVE.md` | **Planned** | Not created. Not approved. |
