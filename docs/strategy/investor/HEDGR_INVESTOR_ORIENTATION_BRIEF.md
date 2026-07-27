@@ -2,7 +2,7 @@
 
 | Field | Value |
 | ----- | ----- |
-| **Status** | Final HedgrOps pass applied; Founder disposition pending |
+| **Status** | Accepted source; `NARRATIVE-005` completed |
 | **Classification** | Derived investor orientation narrative |
 | **Authority** | Non-authorising |
 | **Publication** | Not authorised |
@@ -13,6 +13,8 @@
 | **Narrative voice** | `docs/strategy/website/HEDGR_NARRATIVE_STYLE_GUIDE.md` v1.0 (Frozen) |
 
 This brief is an orientation aid for evaluation. It is not a fundraising deck, an offer, a readiness statement, or evidence of investor commitment.
+
+Founder acceptance and ticket closeout are recorded in `docs/ops/HEDGR_STATUS.md` **§170**. Acceptance preserves this source as written and does not authorise publication, circulation, or design expansion. Any designed expression requires a separately named ticket.
 
 ---
 
