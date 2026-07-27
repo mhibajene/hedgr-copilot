@@ -75,7 +75,7 @@ docs/strategy/
 ├── website/
 │   └── HEDGR_NARRATIVE_STYLE_GUIDE.md ← narrative voice (v1.0 Frozen)
 ├── investor/
-│   ├── HEDGR_INVESTOR_ORIENTATION_BRIEF.md   ← draft created; Founder / HedgrOps review pending
+│   ├── HEDGR_INVESTOR_ORIENTATION_BRIEF.md   ← HedgrOps final pass applied; Founder disposition pending
 │   └── HEDGR_INVESTOR_ORIENTATION_BRIEF_REVIEW.md ← preflight complete; disposition pending
 ├── product/                           ← planned paths only
 └── technical/                         ← planned paths only
@@ -94,8 +94,8 @@ Directories for product and technical audience packs remain **planned architectu
 | Customer One-Pager | `docs/strategy/customer/HEDGR_CUSTOMER_ONE_PAGER.md` | **Active / Frozen v1.0** | Canonical customer narrative source. Publication not authorised by freeze alone. |
 | Customer One-Pager Review | `docs/strategy/customer/HEDGR_CUSTOMER_ONE_PAGER_REVIEW.md` | **Review complete** | Non-authoritative evidence; Founder accept + freeze disposition recorded. |
 | Narrative Style Guide | `docs/strategy/website/HEDGR_NARRATIVE_STYLE_GUIDE.md` | **Active / Frozen v1.0** | Canonical narrative governance for voice, rhythm, and translation. Non-authorising. |
-| Investor Orientation Brief | `docs/strategy/investor/HEDGR_INVESTOR_ORIENTATION_BRIEF.md` | **Draft created / review pending** | `NARRATIVE-005` / D-054 / §169. Derived orientation aid; no publication. |
-| Investor Orientation Brief Review | `docs/strategy/investor/HEDGR_INVESTOR_ORIENTATION_BRIEF_REVIEW.md` | **Preflight complete / disposition pending** | Review record for `NARRATIVE-005`; Founder / HedgrOps decision not yet recorded. |
+| Investor Orientation Brief | `docs/strategy/investor/HEDGR_INVESTOR_ORIENTATION_BRIEF.md` | **Final HedgrOps pass applied / Founder disposition pending** | `NARRATIVE-005` / D-054 / §169. Release-candidate review quality; no acceptance, publication, or title change. |
+| Investor Orientation Brief Review | `docs/strategy/investor/HEDGR_INVESTOR_ORIENTATION_BRIEF_REVIEW.md` | **Final HedgrOps feedback applied / Founder disposition pending** | Review record for `NARRATIVE-005`; canonical-language, derivation, title, and audience-expansion recommendations remain unapproved. |
 | Investor One-Pager (legacy planned label) | `docs/strategy/investor/HEDGR_INVESTOR_ONE_PAGER.md` | **Superseded as planned label** | Replaced by Investor Orientation Brief path under `NARRATIVE-005`; do not create under the old filename unless Founder renames. |
 | Investor Deck | `docs/strategy/investor/HEDGR_INVESTOR_DECK.md` | **Planned** | Not created. Not approved. |
 | Product Overview | `docs/strategy/product/HEDGR_PRODUCT_OVERVIEW.md` | **Planned** | Not created. Not approved. |
