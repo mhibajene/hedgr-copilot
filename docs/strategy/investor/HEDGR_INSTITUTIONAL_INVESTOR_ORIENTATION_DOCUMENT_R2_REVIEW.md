@@ -18,15 +18,16 @@ This record supports bounded internal Research R2 design review. It does not app
 | Artifact | Locator | Status |
 | -------- | ------- | ------ |
 | Paper source | [Institutional Investor Orientation — Research R2](https://app.paper.design/file/01KXZPD24Z0XYVY8MCVPJ67R5K/3-0/O-0) | Delivered; eight ordered page images in one horizontal review frame |
-| PDF review proof | `/Users/musalwa/Desktop/BUSINESS/HEDGR/Branding/Institutional Investor Orientation/R2/Hedgr_Institutional_Investor_Orientation_R2.pdf` | Delivered; SHA-256 `769a52396121c558b9878181009adfd51435e7b4eda4aee568775cf226d73435` |
-| Page images / contact sheet | `/Users/musalwa/Desktop/BUSINESS/HEDGR/Branding/Institutional Investor Orientation/R2/pages/` and `/Users/musalwa/Desktop/BUSINESS/HEDGR/Branding/Institutional Investor Orientation/R2/Hedgr_Institutional_Investor_Orientation_R2_Contact_Sheet.png` | Delivered; contact-sheet SHA-256 `df50271db50b882c56c53f8c4c5dd1ce85521b412aa81fd0db4bc7fdb60e71a1` |
-| Reference / candidate comparison | `/Users/musalwa/Desktop/BUSINESS/HEDGR/Branding/Institutional Investor Orientation/R2/Hedgr_Institutional_Investor_Orientation_R1_R2_QA_Comparison.png` | Delivered and inspected in the same frame; SHA-256 `01b600014bc1357e31009d63db8afa263ecb8fc62585fc599e38c719d227a127` |
+| PDF review proof | `/Users/musalwa/Desktop/BUSINESS/HEDGR/Branding/Institutional Investor Orientation/R2/Hedgr_Institutional_Investor_Orientation_R2.pdf` | Delivered; SHA-256 `88f1eb65db6e501d868d95029bba915b0dad9eec228c4de34a6132876bc40a19` |
+| Page images / contact sheet | `/Users/musalwa/Desktop/BUSINESS/HEDGR/Branding/Institutional Investor Orientation/R2/pages/` and `/Users/musalwa/Desktop/BUSINESS/HEDGR/Branding/Institutional Investor Orientation/R2/Hedgr_Institutional_Investor_Orientation_R2_Contact_Sheet.png` | Delivered; contact-sheet SHA-256 `3aa9e7d6a1eafe4da0bf9604f604261138df2749973540dde36f686f951e690e` |
+| Reference / candidate comparison | `/Users/musalwa/Desktop/BUSINESS/HEDGR/Branding/Institutional Investor Orientation/R2/Hedgr_Institutional_Investor_Orientation_R1_R2_QA_Comparison.png` | Delivered and inspected in the same frame; SHA-256 `7343d1c99c4cf428ade340d7ee15cc680d3d6e6a0c99bd95c8e206c9a91c7d25` |
 
 ## 2. Founder-locked revision QA
 
 | Check | Result |
 | ----- | ------ |
 | Interior footer reads `Hedgr Investor Orientation Brief` | Pass — present once on each interior page, pages 2–8 |
+| Cover omits reader-facing `Research R2` metadata | Pass — Founder annotation closed; internal Paper and PDF metadata retain the Research R2 source identity |
 | No reader-facing `NARRATIVE-005` lifecycle footer remains | Pass |
 | Page 8 running title reads `LONG-TERM VISION` | Pass |
 | Page 8 evaluation label removed | Pass |
