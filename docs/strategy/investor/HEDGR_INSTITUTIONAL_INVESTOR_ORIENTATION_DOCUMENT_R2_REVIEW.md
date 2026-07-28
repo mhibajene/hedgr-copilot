@@ -2,16 +2,16 @@
 
 | Field | Value |
 | ----- | ----- |
-| **Status** | Research R2 proof delivered; Founder review pending |
+| **Status** | Founder accepted; `NARRATIVE-006` completed |
 | **Authority** | Non-authoritative review record |
 | **Ticket** | `NARRATIVE-006` |
-| **Founder disposition basis** | Research R1 accepted with bounded revisions; §171 / Internal D-056 |
+| **Founder disposition basis** | Research R1 accepted with bounded revisions under §171 / Internal D-056; Research R2 reviewed and approved by Founder on 2026-07-28; closeout §172 |
 | **Accepted source** | `docs/strategy/investor/HEDGR_INVESTOR_ORIENTATION_BRIEF.md` |
 | **Revision brief** | `docs/strategy/investor/HEDGR_INSTITUTIONAL_INVESTOR_ORIENTATION_DOCUMENT_R2_REVISION_BRIEF.md` |
 | **Date** | 2026-07-28 |
 | **Publication status** | Not authorised |
 
-This record supports bounded internal Research R2 design review. It does not approve publication, circulation, fundraising use, market claims, implementation, or live capability.
+This record captures the bounded internal Research R2 design review and Founder acceptance recorded in `HEDGR_STATUS.md` **§172**. Acceptance applies to the internal design artifact only. It does not approve publication, circulation, fundraising use, market claims, implementation, or live capability.
 
 ## 1. Artifact locators
 
@@ -100,12 +100,12 @@ This record supports bounded internal Research R2 design review. It does not app
 
 | Decision | Status |
 | -------- | ------ |
-| Accept Research R2 design | Pending |
-| Accept with bounded revisions | Pending |
-| Return for material revision | Pending |
-| Defer | Pending |
-| Authorise external publication or circulation | Not requested; separately governed |
+| Accept Research R2 design | **Accepted — Founder reviewed and approved on 2026-07-28** |
+| Accept with bounded revisions | Not selected |
+| Return for material revision | Not selected |
+| Defer | Not selected |
+| Authorise external publication or circulation | **Not authorised; separately governed** |
 
-**Disposition:** `PENDING FOUNDER REVIEW`
+**Disposition:** `ACCEPT — RESEARCH R2 DESIGN`
 
-Do not close `NARRATIVE-006`, complete D-055, or change publication status until the Research R2 proof and Founder disposition are complete.
+`NARRATIVE-006` is completed and Controlled Parallelism v19 / D-055 is closed as active concurrency under `HEDGR_STATUS.md` **§172**. Publication status remains unchanged and not authorised.
