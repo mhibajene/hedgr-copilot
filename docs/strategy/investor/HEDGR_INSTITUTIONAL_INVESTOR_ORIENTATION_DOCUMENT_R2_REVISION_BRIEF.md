@@ -2,10 +2,10 @@
 
 | Field | Value |
 | ----- | ----- |
-| **Status** | Active bounded revision brief |
+| **Status** | Completed — Founder-accepted Research R2 |
 | **Classification** | Class A informational / non-authorising |
 | **Ticket** | `NARRATIVE-006` |
-| **Authority** | `HEDGR_STATUS.md` §6f.19 / §7 / §7a / §171; Internal D-055 + D-056 |
+| **Authority** | `HEDGR_STATUS.md` §6f.19 / §7 / §7a / §171 / §172; Internal D-055 + D-056 |
 | **Owner / DRI** | Founder — @mhibajene |
 | **Date** | 2026-07-28 |
 | **Accepted source narrative** | `docs/strategy/investor/HEDGR_INVESTOR_ORIENTATION_BRIEF.md` |
@@ -100,23 +100,23 @@ Use official Hedgr logo assets only. Preserve approved palette, typography, logo
 
 ## 7. Acceptance checklist
 
-- [ ] Eight pages total.
-- [ ] Paper source exists and is reviewable as Research R2.
-- [ ] Research R2 PDF proof exported.
-- [ ] Footer reads `Hedgr Investor Orientation Brief`.
-- [ ] No `NARRATIVE-005` lifecycle language appears in the reader-facing footer.
-- [ ] Page 8 running title reads `LONG-TERM VISION`.
-- [ ] Page 8 contains no evaluation label, question, or evaluation panel.
-- [ ] Page 4 shows Governance, Stability Engine, and Stability Wallet as a governed system rather than peers.
-- [ ] Pages 3, 4, and 8 carry the major visual architecture.
-- [ ] Pages 1 and 5 retain their restraint.
-- [ ] Approved narrative meaning and current capability boundary remain unchanged.
-- [ ] No new positioning, capability, hype, investment, solicitation, or readiness language appears.
-- [ ] Internal-status and publication-not-authorised labels remain visible.
-- [ ] Brand QA and narrative-boundary QA are recorded in the R2 review file.
+- [x] Eight pages total.
+- [x] Paper source exists and is reviewable as Research R2.
+- [x] Research R2 PDF proof exported.
+- [x] Footer reads `Hedgr Investor Orientation Brief`.
+- [x] No `NARRATIVE-005` lifecycle language appears in the reader-facing footer.
+- [x] Page 8 running title reads `LONG-TERM VISION`.
+- [x] Page 8 contains no evaluation label, question, or evaluation panel.
+- [x] Page 4 shows Governance, Stability Engine, and Stability Wallet as a governed system rather than peers.
+- [x] Pages 3, 4, and 8 carry the major visual architecture.
+- [x] Pages 1 and 5 retain their restraint.
+- [x] Approved narrative meaning and current capability boundary remain unchanged.
+- [x] No new positioning, capability, hype, investment, solicitation, or readiness language appears.
+- [x] Internal-status and publication-not-authorised labels remain visible.
+- [x] Brand QA and narrative-boundary QA are recorded in the R2 review file.
 
-## 8. Stop / rollback
+## 8. Historical stop / rollback
 
-Stop if R2 requires new narrative, unsupported evidence, an unofficial asset, a new contact channel, a ninth page, external circulation, or any product / trust-boundary interpretation beyond the accepted source.
+The active revision cycle required a stop if R2 introduced new narrative, unsupported evidence, an unofficial asset, a new contact channel, a ninth page, external circulation, or any product / trust-boundary interpretation beyond the accepted source. No stop condition was triggered before Founder acceptance.
 
-Rollback is removal of the Research R2 Paper and local PDF review artifacts plus reversion of the §171 amendment. Research R1, the accepted `NARRATIVE-005` source, and frozen narrative parents remain preserved.
+Rollback of the accepted closeout requires reversion of `HEDGR_STATUS.md` **§172** only if the recorded Founder acceptance is factually wrong. Research R1, the accepted `NARRATIVE-005` source, frozen narrative parents, and publication-not-authorised posture remain preserved.
