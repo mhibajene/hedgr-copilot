@@ -18,10 +18,11 @@ This record supports bounded internal Research R2 design review. It does not app
 | Artifact | Locator | Status |
 | -------- | ------- | ------ |
 | Paper source | [Institutional Investor Orientation — Research R2](https://app.paper.design/file/01KXZPD24Z0XYVY8MCVPJ67R5K/3-0/O-0) | Delivered; eight ordered page images in one horizontal review frame |
-| PDF review proof | `/Users/musalwa/Desktop/BUSINESS/HEDGR/Branding/Institutional Investor Orientation/R2/Hedgr_Institutional_Investor_Orientation_R2.pdf` | Delivered; SHA-256 `20ff140d9f0bcef770223b06170454969ed94464e91ea3b690fccbce8352f588` |
-| Page images / contact sheet | `/Users/musalwa/Desktop/BUSINESS/HEDGR/Branding/Institutional Investor Orientation/R2/pages/` and `/Users/musalwa/Desktop/BUSINESS/HEDGR/Branding/Institutional Investor Orientation/R2/Hedgr_Institutional_Investor_Orientation_R2_Contact_Sheet.png` | Delivered; contact-sheet SHA-256 `1070e519307d5ea94f97fee35fb56e240412af35de17afbcb43a5f29563934e7` |
-| Reference / candidate comparison | `/Users/musalwa/Desktop/BUSINESS/HEDGR/Branding/Institutional Investor Orientation/R2/Hedgr_Institutional_Investor_Orientation_R1_R2_QA_Comparison.png` | Delivered and inspected in the same frame; SHA-256 `f57cf961d9eb39c511b45e8d539b1083a3f6d11ba884ff895aee229978ce0ad7` |
+| PDF review proof | `/Users/musalwa/Desktop/BUSINESS/HEDGR/Branding/Institutional Investor Orientation/R2/Hedgr_Institutional_Investor_Orientation_R2.pdf` | Delivered; SHA-256 `2f8f8ea1a5d0aa1467e2cf7e2e9d6eacb1b66395cbe8036e4e301cf80ebe6239` |
+| Page images / contact sheet | `/Users/musalwa/Desktop/BUSINESS/HEDGR/Branding/Institutional Investor Orientation/R2/pages/` and `/Users/musalwa/Desktop/BUSINESS/HEDGR/Branding/Institutional Investor Orientation/R2/Hedgr_Institutional_Investor_Orientation_R2_Contact_Sheet.png` | Delivered; contact-sheet SHA-256 `640341b5eeedf1d1a204162a637849e17ca4e464f8ebfb1ac3aaf2b3144667f5` |
+| Reference / candidate comparison | `/Users/musalwa/Desktop/BUSINESS/HEDGR/Branding/Institutional Investor Orientation/R2/Hedgr_Institutional_Investor_Orientation_R1_R2_QA_Comparison.png` | Delivered and inspected in the same frame; SHA-256 `14470db958bebe4baedee36203eef07e17066e060cb70815b99c588d3eff7182` |
 | Page 2 line-colour comparison | `/Users/musalwa/Desktop/BUSINESS/HEDGR/Branding/Institutional Investor Orientation/R2/Hedgr_Institutional_Investor_Orientation_R2_Page2_Line_Color_QA.png` | Delivered and inspected in the same frame; SHA-256 `b2992961563ab929edf59f5b446ff9718406eb9e4c73f1146a03f3038fe96439` |
+| Page 4 connector comparison | `/Users/musalwa/Desktop/BUSINESS/HEDGR/Branding/Institutional Investor Orientation/R2/Hedgr_Institutional_Investor_Orientation_R2_Page4_Connector_QA.png` | Delivered and inspected in the same frame; SHA-256 `7f6bc06d45fa93966c1ded09103e98ee10df6acc8273b0d1625deb6ac5e0fa8a` |
 
 ## 2. Founder-locked revision QA
 
@@ -61,6 +62,7 @@ This record supports bounded internal Research R2 design review. It does not app
 | Page 2 journey rule preserves label legibility | Pass — the rule is routed beneath `MOVE / STORE / GROW` with short vertical stems; no copy changed |
 | Page 2 journey rule uses one consistent stroke colour | Pass — all horizontal, vertical, and diagonal segments use governed `color-100` (`#CAD0E8`); geometry and line weight remain unchanged |
 | Page 4 depicts Governance, Engine, and Wallet as a governed system | Pass |
+| Page 4 Engine-to-Wallet relationship uses a governed interface connector | Pass — directional arrowhead removed; Wallet moved closer to the Engine and joined through a shallow 45-degree notch; copy and hierarchy remain unchanged |
 | Pages 3, 4, and 8 carry the major visual architecture | Pass |
 | Pages 1 and 5 retain restraint | Pass |
 | Body copy remains readable at ordinary laptop scale and in A4 print | Pass |
