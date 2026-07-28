@@ -2,7 +2,7 @@
 
 | Field | Value |
 | ----- | ----- |
-| **Status** | Active; Research R1 proof delivered; Founder review pending |
+| **Status** | Research R1 reviewed; bounded Research R2 revision authorised |
 | **Authority** | Non-authoritative review record |
 | **Ticket** | `NARRATIVE-006` |
 | **Reviewed artifact** | Paper source + eight-page-maximum PDF proof |
@@ -81,12 +81,12 @@ This record supports bounded internal design review. It does not approve publica
 
 | Decision | Status |
 | -------- | ------ |
-| Accept Research R1 design | Pending |
-| Accept with bounded revisions | Pending |
-| Return for material revision | Pending |
-| Defer | Pending |
+| Accept Research R1 design | Not selected |
+| Accept with bounded revisions | **Accepted — Research R2 authorised under §171 / Internal D-056** |
+| Return for material revision | Not selected |
+| Defer | Not selected |
 | Authorise external publication or circulation | Not requested; separately governed |
 
-**Disposition:** `RESEARCH R1 DELIVERED — FOUNDER REVIEW PENDING`
+**Disposition:** `ACCEPT WITH BOUNDED REVISIONS — PROCEED TO RESEARCH R2`
 
-Do not close `NARRATIVE-006`, complete D-055, or change publication status until Founder disposition is recorded. The Research R1 proof does not authorise publication or circulation.
+Research R1 remains preserved as the predecessor proof. Continue `NARRATIVE-006` under the bounded Research R2 revision brief. Do not complete D-055, close the ticket, or change publication status until the Research R2 proof and Founder disposition are recorded.

@@ -1,6 +1,6 @@
 Status: Canonical hand-off file
 Purpose: Strategic continuity, merged implementation truth, and next-ticket authority for Cursor execution
-Last updated: 2026-07-21
+Last updated: 2026-07-28
 
 ---
 
@@ -64,7 +64,7 @@ Important active constraints:
 
 **Sprint 3** is framed here as **Transition Readiness** (named track above), not as Foundation continuation: governance defines the explicit standard for any later boundary widening; execution architecture remains out of scope until explicitly approved.
 
-**Sequencing authority:** Only **§7** / **§7a** name approved active ticket(s). **Default posture:** one active implementation ticket. Concurrent lanes are permitted only where this file records an accepted, active, and unambiguous Founder-approved parallelism decision (**§6e** lane model / Internal **D-026** plus separate active-pass naming under **§6f**), explicitly names each active lane and ticket, defines authority class and exclusions, and preserves independent stop conditions and rollback. Internal **D-029**, Internal **D-032** / **§6f.3**, Internal **D-034** / **§6f.4**, Internal **D-035** / **§6f.5**, Internal **D-036** / **§6f.6**, Internal **D-041** / **§6f.7**, Internal **D-044** / **§6f.8**, Internal **D-045** / **§6f.9**, Internal **D-046** / **§6f.10**, Internal **D-047** / **§6f.11**, Internal **D-048** / **§6f.12**, Internal **D-049** / **§6f.13**, Internal **D-050** / **§6f.14**, Internal **D-051** / **§6f.15**, Internal **D-052** / **§6f.16**, Internal **D-053** / **§6f.17**, and Internal **D-054** / **§6f.18** are completed historical pass authorities and no longer supply concurrency. Active governed-parallel pass: Controlled Parallelism **v19** / Internal **D-055** / **§6f.19** naming `CLASS-A-VAL-002` (Lane V) and `NARRATIVE-006` (Lane N — Institutional Investor Orientation Document, Research R1). Lane M idle after `MONEY-STACK-001` closeout. Lane R idle after `BRIDGE-P1-OPS-001` closeout. The accepted `NARRATIVE-005` Investor Orientation Brief is the source for Lane N design expression and remains non-authorising. Any additional concurrency beyond the named D-055 lanes requires a separate Founder decision plus explicit **§7** / **§7a** naming. Parallel authorization applies only to explicitly named lanes and does **not** authorize unrestricted multi-ticket execution. No lane may widen another lane’s authority without a separate Founder decision and repo-native governance update. **§6b** is Transition Readiness taxonomy and scrutiny input only—not backlog approval or sequencing. **§6e** / **§6f** / **§6g** do **not** widen Class B execution, custody, rails, conversion, settlement, or customer-money authority. Green Lane classification (**§6g** / ADR **0025**) does not activate work and does not override **§7** / **§7a**.
+**Sequencing authority:** Only **§7** / **§7a** name approved active ticket(s). **Default posture:** one active implementation ticket. Concurrent lanes are permitted only where this file records an accepted, active, and unambiguous Founder-approved parallelism decision (**§6e** lane model / Internal **D-026** plus separate active-pass naming under **§6f**), explicitly names each active lane and ticket, defines authority class and exclusions, and preserves independent stop conditions and rollback. Internal **D-029**, Internal **D-032** / **§6f.3**, Internal **D-034** / **§6f.4**, Internal **D-035** / **§6f.5**, Internal **D-036** / **§6f.6**, Internal **D-041** / **§6f.7**, Internal **D-044** / **§6f.8**, Internal **D-045** / **§6f.9**, Internal **D-046** / **§6f.10**, Internal **D-047** / **§6f.11**, Internal **D-048** / **§6f.12**, Internal **D-049** / **§6f.13**, Internal **D-050** / **§6f.14**, Internal **D-051** / **§6f.15**, Internal **D-052** / **§6f.16**, Internal **D-053** / **§6f.17**, and Internal **D-054** / **§6f.18** are completed historical pass authorities and no longer supply concurrency. Active governed-parallel pass: Controlled Parallelism **v19** / Internal **D-055** / **§6f.19** naming `CLASS-A-VAL-002` (Lane V) and `NARRATIVE-006` (Lane N — Institutional Investor Orientation Document, Research R2 bounded revision). Research R1 was accepted with bounded revisions under Internal **D-056** / **§171**; publication remains unauthorized. Lane M idle after `MONEY-STACK-001` closeout. Lane R idle after `BRIDGE-P1-OPS-001` closeout. The accepted `NARRATIVE-005` Investor Orientation Brief is the source for Lane N design expression and remains non-authorising. Any additional concurrency beyond the named D-055 lanes requires a separate Founder decision plus explicit **§7** / **§7a** naming. Parallel authorization applies only to explicitly named lanes and does **not** authorize unrestricted multi-ticket execution. No lane may widen another lane’s authority without a separate Founder decision and repo-native governance update. **§6b** is Transition Readiness taxonomy and scrutiny input only—not backlog approval or sequencing. **§6e** / **§6f** / **§6g** do **not** widen Class B execution, custody, rails, conversion, settlement, or customer-money authority. Green Lane classification (**§6g** / ADR **0025**) does not activate work and does not override **§7** / **§7a**.
 
 **MVP phased alignment (interpretation aid):** See **`docs/ops/governance/mvp/HEDGR_MVP_PHASE_ALIGNMENT.md`** for how **`docs/doctrine/hedgr-mvp-project-specification.md`** governance-gated phases and success criteria map to the posture stated in this section and in **§6a–§6c**. That readout is **subordinate** to this file and to **§7** / **§7a**; it does **not** widen execution authority or substitute for **§7** naming.
 
@@ -4296,16 +4296,16 @@ This section does **not** authorize provider-specific implementation, legal reli
 
 ### 6f.19 Controlled Parallelism v19 — `CLASS-A-VAL-002` + `NARRATIVE-006` (Internal **D-055**)
 
-**Status:** Accepted and **active**. Founder-authorized 2026-07-27; activation **§170**. Visibility remains **Internal** — not auto-exported as a public ADR.
+**Status:** Accepted and **active**. Founder-authorized 2026-07-27; activation **§170**; bounded Research R2 amendment **§171** / Internal **D-056**. Visibility remains **Internal** — not auto-exported as a public ADR.
 
-**Authority basis:** **§6e** / D-026 lane-model / exception-framework + Founder acceptance of the `NARRATIVE-005` source brief + Founder approval to establish a separately named design-expression ticket + Internal **D-055** + **§7** / **§7a** naming + activation **§170**. D-054 / **§6f.18** is completed historical authority and no longer supplies concurrency. Canonical Story v1.0, Customer One-Pager v1.0, Narrative Style Guide v1.0, and the accepted Investor Orientation Brief remain unchanged.
+**Authority basis:** **§6e** / D-026 lane-model / exception-framework + Founder acceptance of the `NARRATIVE-005` source brief + Founder approval to establish a separately named design-expression ticket + Internal **D-055** + **§7** / **§7a** naming + activation **§170** + Founder Research R1 disposition and bounded Research R2 amendment **§171** / Internal **D-056**. D-054 / **§6f.18** is completed historical authority and no longer supplies concurrency. Canonical Story v1.0, Customer One-Pager v1.0, Narrative Style Guide v1.0, and the accepted Investor Orientation Brief remain unchanged.
 
 **Founder-approved concurrent activation (only these named lanes/tickets):**
 
 | Lane | Ticket | Authority class | Notes |
 | ---- | ------ | --------------- | ----- |
 | V — Class A product validation | `CLASS-A-VAL-002` | Class A informational / synthetic product validation | Continues unchanged under existing **§7a** / **§143** authority; D-055 does not alter it |
-| N — Institutional orientation design expression | `NARRATIVE-006` | Class A informational / non-authorising derived design artifact | Create one internal Research R1 orientation document in Paper and export an eight-page-maximum PDF review proof; not a pitch deck; no publication |
+| N — Institutional orientation design expression | `NARRATIVE-006` | Class A informational / non-authorising derived design artifact | Revise the delivered Research R1 into one internal Research R2 orientation document in Paper and export an eight-page-maximum PDF review proof; not a pitch deck; no publication |
 
 **Lane independence (binding):**
 
@@ -4325,10 +4325,10 @@ This section does **not** authorize provider-specific implementation, legal reli
 | ----- | ----- |
 | **Decision ID** | D-055 |
 | **Title** | Controlled Parallelism v19 — `CLASS-A-VAL-002` + `NARRATIVE-006` |
-| **Status** | Accepted and active (activation **§170**) |
+| **Status** | Accepted and active (activation **§170**; bounded amendment **§171**) |
 | **Visibility** | Internal |
 | **Date** | 2026-07-27 |
-| **Repo authority** | This **§6f.19**; activation **§170**; `AGENTS.md` governed-parallelism exception |
+| **Repo authority** | This **§6f.19**; activation **§170**; bounded amendment **§171**; `AGENTS.md` governed-parallelism exception |
 | **Reversibility** | Reversible; remove Lane N design artifacts and restore singular-ticket default on pause / deprecation / closeout / ambiguity |
 
 ## 6g. Green Lane Delegation Pilot envelope (ADR 0025 / `GOV-GREEN-001`)
@@ -4517,20 +4517,21 @@ Current active ticket status:
 
 - **Active tickets (Controlled Parallelism v19 / D-055):**
   - **Lane V:** `CLASS-A-VAL-002` — Validate the End-to-End Synthetic Stability Journey. Unchanged. Exact brief in **§7a**.
-  - **Lane N:** `NARRATIVE-006` — Institutional Investor Orientation Document, Research R1. Exact brief in **§7a**. Activation **§170**.
+  - **Lane N:** `NARRATIVE-006` — Institutional Investor Orientation Document, Research R2 bounded revision. Exact brief in **§7a**. Activation **§170**; bounded amendment **§171** / Internal **D-056**.
 - **Completed Lane M:** `MONEY-STACK-001` (**§168**) — Founder–HedgrOps approved the research package and closed the cycle as converged; D-053 completed; no follow-on authority.
 - **Completed Lane N predecessors:** `NARRATIVE-005` (**§170**); `UI-NARR-001` (**§166**); `NARRATIVE-004` (**§164**); `NARRATIVE-003` (**§162**); `NARRATIVE-002` (**§159**); `NARRATIVE-001` (**§157**).
 - **Completed Lane R:** `BRIDGE-P1-OPS-001` (**§161**) — R1 clock recorded; regen/verification hygiene complete; legacy Deprecated retained; no retirement; no Phase 2; no successor activated.
 - **Completed Bridge Phase 1 implementation:** `BRIDGE-P1-001` (**§154**; PRs **#306** / **#307**).
 - **Completed prep:** `BRIDGE-P1-PREP-001` (**§151** / D-043). Governing plan preserved.
 - **Completed nested refinements inside Lane V:** `HEDGR-UI-001`–`003` (**§144**–**§148**).
-- **Sequencing posture:** Dual-ticket under Controlled Parallelism **v19** / Internal **D-055** / **§6f.19** / **§170**. D-029, D-032, D-034, D-035, D-036, D-041, D-044, D-045, D-046, D-047, D-048, D-049, D-050, D-051, D-052, D-053, and D-054 are completed historical pass authorities and supply no standing concurrency beyond their historical records.
+- **Sequencing posture:** Dual-ticket under Controlled Parallelism **v19** / Internal **D-055** / **§6f.19**; Lane N activation **§170** and bounded Research R2 amendment **§171** / Internal **D-056**. D-029, D-032, D-034, D-035, D-036, D-041, D-044, D-045, D-046, D-047, D-048, D-049, D-050, D-051, D-052, D-053, and D-054 are completed historical pass authorities and supply no standing concurrency beyond their historical records.
 - **Kenya counsel path:** **DEFER** (**§6f.1** / D-028).
 - **Governed parallelism posture:** Active **§6f.19** / D-055. Lane V + Lane N active. Lane A / B / C / M / R idle. **§6e** / D-026 remains lane-model only. Class B convergence gate unsatisfied.
 - **Active Lane A / B / C / M / R:** None. **Active Lane N:** `NARRATIVE-006`.
 - **Green Lane pilot (§6g / ADR 0025):** Authority-model only; does not activate product experiments or independently authorize `NARRATIVE-006`. Green eligibility for Lane N is subordinate to verified D-055 / **§7** / **§7a** authority.
 - **Last completed product-copy ticket:** `UI-NARR-001` (**§166**). Last completed narrative ticket: `NARRATIVE-005` (**§170**). Last completed narrative governance ticket: `NARRATIVE-004` (**§164**). Last completed Bridge ticket: `BRIDGE-P1-OPS-001` (**§161**). Last completed Bridge implementation: `BRIDGE-P1-001` (**§154**).
-- **Post-`NARRATIVE-005` closeout + Controlled Parallelism v19 activation (§170 / D-055):** Active; accepted the Investor Orientation Brief as source, completed D-054, and names Lane V `CLASS-A-VAL-002` (unchanged) plus Lane N `NARRATIVE-006` (Institutional Investor Orientation Document, Research R1). No publication authority.
+- **Post-Research R1 disposition + Research R2 amendment (§171 / D-056):** Active; Research R1 is preserved and accepted with bounded revisions, Research R2 is authorised, page 8 is `Long-Term Vision` only, the reader-facing interior footer is `Hedgr Investor Orientation Brief`, and publication remains unauthorized.
+- **Post-`NARRATIVE-005` closeout + Controlled Parallelism v19 activation (§170 / D-055):** Active; accepted the Investor Orientation Brief as source, completed D-054, and names Lane V `CLASS-A-VAL-002` (unchanged) plus Lane N `NARRATIVE-006` (Institutional Investor Orientation Document). Research R2 amendment recorded at **§171**. No publication authority.
 - **Post-Controlled Parallelism v18 activation (§169 / D-054):** Historical; NARRATIVE-005 accepted and closed at **§170**.
 - **Post-`MONEY-STACK-001` closeout / Controlled Parallelism v17 (§168 / D-053):** Historical; singular Lane V restored before **§169**.
 - **Post-`MONEY-STACK-001` activation / Controlled Parallelism v17 (§167 / D-053):** Historical activation record.
@@ -4776,7 +4777,7 @@ Current active ticket status:
 
 ### Lane N — `NARRATIVE-006`
 
-**Active ticket:** `NARRATIVE-006` — Institutional Investor Orientation Document, Research R1 (Founder activation **§170**; Internal **D-055** / **§6f.19**).
+**Active ticket:** `NARRATIVE-006` — Institutional Investor Orientation Document, Research R2 bounded revision (Founder activation **§170**; Founder Research R1 disposition and bounded amendment **§171**; Internal **D-055** / **D-056** / **§6f.19**).
 
 **Objective:** Translate the accepted `NARRATIVE-005` Investor Orientation Brief into one calm, institutional, editorial-quality internal orientation document that helps a sophisticated evaluator understand Hedgr without turning the artifact into an investor deck, marketing collateral, or an investment solicitation.
 
@@ -4784,11 +4785,11 @@ Current active ticket status:
 
 **Type / execution class:** Class A informational / non-authorising design expression. Green-eligible only after parallel-lane authority is verified in **D-055** / **§7** / **§7a**; Green classification does **not** independently activate or widen this ticket (ADR **0025** / **§6g**).
 
-**Authority basis:** Founder acceptance of `NARRATIVE-005` and approval to execute this separately named design-expression sequence on 2026-07-27 + Internal **D-055** / **§6f.19** + this **§7** / **§7a** naming + activation **§170** + accepted source `docs/strategy/investor/HEDGR_INVESTOR_ORIENTATION_BRIEF.md` + frozen Canonical Story v1.0, Customer One-Pager v1.0, and Narrative Style Guide v1.0 + governed brand authority.
+**Authority basis:** Founder acceptance of `NARRATIVE-005` and approval to execute this separately named design-expression sequence on 2026-07-27 + Internal **D-055** / **§6f.19** + activation **§170** + Founder approval on 2026-07-28 to accept Research R1 with bounded revisions and proceed with Research R2 + Internal **D-056** / **§171** + this **§7** / **§7a** naming + accepted source `docs/strategy/investor/HEDGR_INVESTOR_ORIENTATION_BRIEF.md` + active revision brief `docs/strategy/investor/HEDGR_INSTITUTIONAL_INVESTOR_ORIENTATION_DOCUMENT_R2_REVISION_BRIEF.md` + frozen Canonical Story v1.0, Customer One-Pager v1.0, and Narrative Style Guide v1.0 + governed brand authority.
 
 **DRI:** Founder — @mhibajene.
 
-**Artifact status:** Internal Research R1 design artifact and review proof; **no publication or circulation authority**.
+**Artifact status:** Research R1 delivered, reviewed, and preserved; internal Research R2 design revision active; **no publication or circulation authority**.
 
 **Maximum length:** Eight pages total.
 
@@ -4801,19 +4802,23 @@ Current active ticket status:
 5. Institutional Philosophy.
 6. What Exists Today.
 7. Evidence.
-8. Long-Term Vision + Evaluation.
-
-The final page combines Long-Term Vision and Evaluation to preserve the eight-page maximum.
+8. Long-Term Vision.
 
 **In scope / must:**
 
 - Preserve the accepted `NARRATIVE-005` source meaning and current repo implementation truth.
+- Preserve all approved Research R1 narrative copy. The bounded revision is visual and editorial except for the exact Founder-locked reader-facing metadata changes below.
 - Use only approved Hedgr brand assets, typography, palette, and logo-derived geometric language.
 - Use Paper as the reviewable design source and export one PDF review proof.
 - Keep the narrative primary; use diagrams only to clarify relationships already present in the source.
 - Distinguish clearly among current implementation, bounded evidence, institutional intent, and future vision.
 - State the non-executing, non-custodial, no-customer-money boundary clearly.
-- Record the Paper file locator and PDF proof status in `docs/strategy/investor/HEDGR_INSTITUTIONAL_INVESTOR_ORIENTATION_DOCUMENT_REVIEW.md`.
+- Replace the reader-facing footer on interior pages with exactly `Hedgr Investor Orientation Brief`.
+- Change the page 8 running title to exactly `LONG-TERM VISION`.
+- Remove the page 8 `THE EVALUATION QUESTION` label, the evaluation question, and the full-width navy evaluation panel.
+- Recompose the reclaimed page 8 area as a controlled-ambition close led by the governed-core architecture and the existing final narrative statement.
+- Keep all `INTERNAL RESEARCH ARTEFACT / PUBLICATION NOT AUTHORISED` status language.
+- Record the Paper file locator and PDF proof status in `docs/strategy/investor/HEDGR_INSTITUTIONAL_INVESTOR_ORIENTATION_DOCUMENT_R2_REVIEW.md`.
 - Reconcile `docs/ops/HEDGR_STATUS.md` / `docs/ops/NOTION_GOVERNANCE_STAGING.md` on activation and closeout only.
 
 **Out of scope / must not:**
@@ -4836,13 +4841,13 @@ The final page combines Long-Term Vision and Evaluation to preserve the eight-pa
 
 **Acceptance / closeout shape:**
 
-1. Paper source delivered against the eight-page architecture and governed brand rules.
+1. Paper source delivered against the Research R2 eight-page architecture and governed brand rules.
 2. PDF review proof exported and visually checked.
 3. Review record completed with source locators, brand QA, narrative-boundary QA, and unresolved inputs.
 4. Founder disposition recorded (accept / revise / defer).
 5. Lane N closed in **§7** / **§7a**; D-055 completed as active concurrency; singular-ticket restored for Lane V unless a new Founder pass names otherwise.
 
-**Rollback:** Revert this activation; remove `NARRATIVE-006` from **§7** / **§7a**; complete or revoke D-055 as factually appropriate; leave `CLASS-A-VAL-002`, accepted `NARRATIVE-005`, and frozen narrative parents unchanged; remove or revise design artifacts created under unauthorised conditions; restore singular-ticket posture; reconcile staging.
+**Rollback:** Revert the **§171** amendment and remove Research R2 artifacts; preserve the delivered Research R1 proof, `CLASS-A-VAL-002`, accepted `NARRATIVE-005`, and frozen narrative parents unchanged. If the underlying ticket is also revoked or closed, remove `NARRATIVE-006` from **§7** / **§7a**, complete or revoke D-055 as factually appropriate, restore singular-ticket posture, and reconcile staging.
 
 ### Archived Lane N brief — `NARRATIVE-005`
 
@@ -10535,3 +10540,52 @@ Draft boundary for future activation brief is recorded under **§7a** as **Propo
 **Notion staging posture:** Reconcile to mirror D-055 and dual actives (Lane V + Lane N). Repo-native **§7** / **§7a** remains controlling.
 
 **Rollback:** Revert this transition; remove `NARRATIVE-006` from **§7** / **§7a**; complete or revoke D-055 as factually appropriate; restore singular-ticket Lane V; leave the accepted `NARRATIVE-005` source and frozen narrative parents unchanged; remove or revise design artifacts created under unauthorised conditions; reconcile staging.
+
+## 171. Founder disposition — NARRATIVE-006 Research R1 bounded revision + Research R2 authority
+
+**Ticket unchanged:** `NARRATIVE-006` — Institutional Investor Orientation Document
+
+**Date:** 2026-07-28
+
+**Status:** Research R1 **ACCEPTED WITH BOUNDED REVISIONS**; Research R2 **ACTIVE — Class A non-authorising design expression**
+
+**Decision Log:** Internal **D-056**. Visibility: **Internal** — not auto-exported as a public ADR.
+
+**Founder disposition:** Proceed with Research R2. Preserve the delivered Research R1 proof and all approved narrative copy. Apply the bounded reader-facing metadata and page 8 changes below, then elevate the document through hierarchy, composition, typography, pacing, and information design within the approved narrative and brand boundaries.
+
+**Supersession boundary:** This section supersedes only the Research R1 page 8 evaluation requirement and the reader-facing lifecycle footer. It does not reopen `NARRATIVE-005`, frozen narrative sources, current capability statements, evidence posture, trust boundaries, or the publication boundary.
+
+**Founder-locked footer change:** On interior pages, replace `Accepted Investor Orientation Brief / NARRATIVE-005` with exactly `Hedgr Investor Orientation Brief`. Retain page numbers on the opposite side.
+
+**Founder-locked page 8 changes:**
+
+- Change the running section title from `LONG-TERM VISION + EVALUATION` to exactly `LONG-TERM VISION`.
+- Remove `THE EVALUATION QUESTION`.
+- Remove the evaluation question.
+- Remove the full-width navy evaluation panel.
+- Recompose the reclaimed area around the governed-core architecture and the existing final narrative statement. Do not add replacement messaging.
+
+**Permitted editorial refinement:** Strengthen page-role contrast, readability, system hierarchy, logo-derived geometric meaning, and visual pacing. Page 4 should distinguish Governance as policy boundary, Stability Engine as system centre, and Stability Wallet as consumer delivery surface. Page 8 should close on controlled ambition. All approved narrative sentences remain unchanged.
+
+**Artifact identity:** Institutional Investor Orientation Document, Research R2. It remains an orientation document, not an investor deck, pitch deck, fundraising deck, white paper, investment memorandum, marketing campaign, or solicitation.
+
+**Source and review records:**
+
+- Active revision brief: `docs/strategy/investor/HEDGR_INSTITUTIONAL_INVESTOR_ORIENTATION_DOCUMENT_R2_REVISION_BRIEF.md`.
+- Research R2 review record: `docs/strategy/investor/HEDGR_INSTITUTIONAL_INVESTOR_ORIENTATION_DOCUMENT_R2_REVIEW.md`.
+- Preserved Research R1 predecessor brief: `docs/strategy/investor/HEDGR_INSTITUTIONAL_INVESTOR_ORIENTATION_DOCUMENT_BRIEF.md`.
+- Preserved Research R1 review proof: `docs/strategy/investor/HEDGR_INSTITUTIONAL_INVESTOR_ORIENTATION_DOCUMENT_REVIEW.md`.
+
+**Publication posture:** **NOT AUTHORISED.** Research R2 production, Paper import, PDF export, QA, or Founder design approval does not publish, distribute, circulate, upload to a public surface, send, or convert the artifact into external fundraising material. External use requires a separate Founder decision and repo-native authority.
+
+**Current-capability boundary:** Unchanged. Hedgr remains in research and validation; current product journeys are synthetic and informational; there is no live custody, money movement, conversion, settlement, automated allocation, approved rail, customer-money operation, or regulated advice authority.
+
+**Parallelism posture:** Controlled Parallelism v19 / Internal **D-055** remains active and continues to name only `CLASS-A-VAL-002` (Lane V, unchanged) and `NARRATIVE-006` (Lane N). Internal **D-056** amends Lane N's bounded artifact requirement; it does not create a new lane or change concurrency.
+
+**Lane independence:** `NO CROSS-LANE IMPACT`. This disposition does not alter Lane V scope, evidence, thresholds, decision rule, timing, stop conditions, rollback, or closeout.
+
+**Opening authority result:** `PASS — NARRATIVE-006 Research R2 may proceed under D-055 / D-056 / §6f.19 / §7 / §7a / §171`.
+
+**Closeout posture:** Do not complete D-055 or close `NARRATIVE-006` until the Research R2 Paper source, eight-page-maximum PDF proof, same-frame visual QA, completed Research R2 review record, and Founder disposition are recorded.
+
+**Rollback:** Revert this **§171** amendment and remove Research R2 artifacts. Preserve the delivered Research R1 proof, accepted `NARRATIVE-005` source, frozen narrative parents, and unchanged Lane V authority.

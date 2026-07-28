@@ -6,7 +6,7 @@
 | **Authority** | Non-authorising |
 | **Purpose** | Explain narrative hierarchy and locate audience-specific artifacts |
 | **Ticket** | Narrative stack through `NARRATIVE-006` (Institutional Investor Orientation Document active under D-055 / §170; accepted `NARRATIVE-005` source retained) |
-| **Date** | 2026-07-27 |
+| **Date** | 2026-07-28 |
 
 ---
 
@@ -77,8 +77,10 @@ docs/strategy/
 ├── investor/
 │   ├── HEDGR_INVESTOR_ORIENTATION_BRIEF.md   ← accepted source; NARRATIVE-005 completed
 │   ├── HEDGR_INVESTOR_ORIENTATION_BRIEF_REVIEW.md ← Founder acceptance recorded
-│   ├── HEDGR_INSTITUTIONAL_INVESTOR_ORIENTATION_DOCUMENT_BRIEF.md ← active NARRATIVE-006 design brief
-│   └── HEDGR_INSTITUTIONAL_INVESTOR_ORIENTATION_DOCUMENT_REVIEW.md ← Paper / PDF review record
+│   ├── HEDGR_INSTITUTIONAL_INVESTOR_ORIENTATION_DOCUMENT_BRIEF.md ← Research R1 predecessor brief
+│   ├── HEDGR_INSTITUTIONAL_INVESTOR_ORIENTATION_DOCUMENT_REVIEW.md ← Research R1 proof + bounded-revision disposition
+│   ├── HEDGR_INSTITUTIONAL_INVESTOR_ORIENTATION_DOCUMENT_R2_REVISION_BRIEF.md ← active NARRATIVE-006 R2 brief
+│   └── HEDGR_INSTITUTIONAL_INVESTOR_ORIENTATION_DOCUMENT_R2_REVIEW.md ← Research R2 review record
 ├── product/                           ← planned paths only
 └── technical/                         ← planned paths only
 ```
@@ -98,8 +100,10 @@ Directories for product and technical audience packs remain **planned architectu
 | Narrative Style Guide | `docs/strategy/website/HEDGR_NARRATIVE_STYLE_GUIDE.md` | **Active / Frozen v1.0** | Canonical narrative governance for voice, rhythm, and translation. Non-authorising. |
 | Investor Orientation Brief | `docs/strategy/investor/HEDGR_INVESTOR_ORIENTATION_BRIEF.md` | **Accepted source** | `NARRATIVE-005` completed under §170; publication not authorised. |
 | Investor Orientation Brief Review | `docs/strategy/investor/HEDGR_INVESTOR_ORIENTATION_BRIEF_REVIEW.md` | **Founder acceptance recorded** | Review record for the accepted `NARRATIVE-005` source; no publication or frozen-source change. |
-| Institutional Investor Orientation Document — Research R1 Design Brief | `docs/strategy/investor/HEDGR_INSTITUTIONAL_INVESTOR_ORIENTATION_DOCUMENT_BRIEF.md` | **Active** | `NARRATIVE-006` / D-055 / §170; Paper source + eight-page-maximum PDF proof; not an investor deck; no publication. |
-| Institutional Investor Orientation Document — Research R1 Review | `docs/strategy/investor/HEDGR_INSTITUTIONAL_INVESTOR_ORIENTATION_DOCUMENT_REVIEW.md` | **Active / proof pending** | Brand, narrative-boundary, and visual review record for `NARRATIVE-006`. |
+| Institutional Investor Orientation Document — Research R1 Design Brief | `docs/strategy/investor/HEDGR_INSTITUTIONAL_INVESTOR_ORIENTATION_DOCUMENT_BRIEF.md` | **Historical predecessor brief** | `NARRATIVE-006` / D-055 / §170; Research R1 delivered and preserved. |
+| Institutional Investor Orientation Document — Research R1 Review | `docs/strategy/investor/HEDGR_INSTITUTIONAL_INVESTOR_ORIENTATION_DOCUMENT_REVIEW.md` | **Founder disposition recorded** | Research R1 accepted with bounded revisions; Research R2 authorised under §171 / Internal D-056. |
+| Institutional Investor Orientation Document — Research R2 Revision Brief | `docs/strategy/investor/HEDGR_INSTITUTIONAL_INVESTOR_ORIENTATION_DOCUMENT_R2_REVISION_BRIEF.md` | **Active** | `NARRATIVE-006` / D-055 + D-056 / §171; eight-page internal Paper/PDF revision; no publication. |
+| Institutional Investor Orientation Document — Research R2 Review | `docs/strategy/investor/HEDGR_INSTITUTIONAL_INVESTOR_ORIENTATION_DOCUMENT_R2_REVIEW.md` | **Active / proof pending** | Founder-locked revision, editorial-elevation, brand, and narrative-boundary QA record. |
 | Investor One-Pager (legacy planned label) | `docs/strategy/investor/HEDGR_INVESTOR_ONE_PAGER.md` | **Superseded as planned label** | Replaced by Investor Orientation Brief path under `NARRATIVE-005`; do not create under the old filename unless Founder renames. |
 | Investor Deck | `docs/strategy/investor/HEDGR_INVESTOR_DECK.md` | **Not approved** | Not created. `NARRATIVE-006` is an internal orientation document, not a deck. |
 | Product Overview | `docs/strategy/product/HEDGR_PRODUCT_OVERVIEW.md` | **Planned** | Not created. Not approved. |
