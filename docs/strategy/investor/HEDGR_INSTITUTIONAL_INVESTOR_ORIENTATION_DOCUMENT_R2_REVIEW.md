@@ -2,7 +2,7 @@
 
 | Field | Value |
 | ----- | ----- |
-| **Status** | Active; Research R2 production pending |
+| **Status** | Research R2 proof delivered; Founder review pending |
 | **Authority** | Non-authoritative review record |
 | **Ticket** | `NARRATIVE-006` |
 | **Founder disposition basis** | Research R1 accepted with bounded revisions; §171 / Internal D-056 |
@@ -17,74 +17,75 @@ This record supports bounded internal Research R2 design review. It does not app
 
 | Artifact | Locator | Status |
 | -------- | ------- | ------ |
-| Paper source | Pending | Research R2 not yet created |
-| PDF review proof | Pending | Research R2 not yet exported |
-| Page images / contact sheet | Pending | Research R2 not yet exported |
-| Reference / candidate comparison | Pending | Research R1 / R2 comparison not yet created |
+| Paper source | [Institutional Investor Orientation — Research R2](https://app.paper.design/file/01KXZPD24Z0XYVY8MCVPJ67R5K/3-0/O-0) | Delivered; eight ordered page images in one horizontal review frame |
+| PDF review proof | `/Users/musalwa/Desktop/BUSINESS/HEDGR/Branding/Institutional Investor Orientation/R2/Hedgr_Institutional_Investor_Orientation_R2.pdf` | Delivered; SHA-256 `769a52396121c558b9878181009adfd51435e7b4eda4aee568775cf226d73435` |
+| Page images / contact sheet | `/Users/musalwa/Desktop/BUSINESS/HEDGR/Branding/Institutional Investor Orientation/R2/pages/` and `/Users/musalwa/Desktop/BUSINESS/HEDGR/Branding/Institutional Investor Orientation/R2/Hedgr_Institutional_Investor_Orientation_R2_Contact_Sheet.png` | Delivered; contact-sheet SHA-256 `df50271db50b882c56c53f8c4c5dd1ce85521b412aa81fd0db4bc7fdb60e71a1` |
+| Reference / candidate comparison | `/Users/musalwa/Desktop/BUSINESS/HEDGR/Branding/Institutional Investor Orientation/R2/Hedgr_Institutional_Investor_Orientation_R1_R2_QA_Comparison.png` | Delivered and inspected in the same frame; SHA-256 `01b600014bc1357e31009d63db8afa263ecb8fc62585fc599e38c719d227a127` |
 
 ## 2. Founder-locked revision QA
 
 | Check | Result |
 | ----- | ------ |
-| Interior footer reads `Hedgr Investor Orientation Brief` | Pending |
-| No reader-facing `NARRATIVE-005` lifecycle footer remains | Pending |
-| Page 8 running title reads `LONG-TERM VISION` | Pending |
-| Page 8 evaluation label removed | Pending |
-| Page 8 evaluation question removed | Pending |
-| Page 8 evaluation panel removed | Pending |
-| Internal-status and publication-not-authorised labels retained | Pending |
+| Interior footer reads `Hedgr Investor Orientation Brief` | Pass — present once on each interior page, pages 2–8 |
+| No reader-facing `NARRATIVE-005` lifecycle footer remains | Pass |
+| Page 8 running title reads `LONG-TERM VISION` | Pass |
+| Page 8 evaluation label removed | Pass |
+| Page 8 evaluation question removed | Pass |
+| Page 8 evaluation panel removed | Pass |
+| Internal-status and publication-not-authorised labels retained | Pass — visible on the cover and closing page |
 
 ## 3. Page architecture review
 
 | Page | Required content | Review status |
 | ---- | ---------------- | ------------- |
-| 1 | Cover | Pending |
-| 2 | The Financial Stability Problem | Pending |
-| 3 | A New Category / The Stability Wallet | Pending |
-| 4 | What Hedgr Is / A Financial Stability Operating System | Pending |
-| 5 | Institutional Philosophy | Pending |
-| 6 | What Exists Today | Pending |
-| 7 | Evidence | Pending |
-| 8 | Long-Term Vision | Pending |
+| 1 | Cover | Pass |
+| 2 | The Financial Stability Problem | Pass |
+| 3 | A New Category / The Stability Wallet | Pass |
+| 4 | What Hedgr Is / A Financial Stability Operating System | Pass |
+| 5 | Institutional Philosophy | Pass |
+| 6 | What Exists Today | Pass |
+| 7 | Evidence | Pass |
+| 8 | Long-Term Vision | Pass |
 
-**Page-count result:** Pending.
+**Page-count result:** `PASS — 8 A4 portrait pages`.
 
 ## 4. Editorial elevation QA
 
 | Check | Result |
 | ----- | ------ |
-| Page roles create deliberate narrative pacing | Pending |
-| Logo-derived geometry carries meaning rather than decoration | Pending |
-| Generic equal-weight rectangles reduced | Pending |
-| Page 4 depicts Governance, Engine, and Wallet as a governed system | Pending |
-| Pages 3, 4, and 8 carry the major visual architecture | Pending |
-| Pages 1 and 5 retain restraint | Pending |
-| Body copy remains readable at ordinary laptop scale and in A4 print | Pending |
-| Final page closes with controlled ambition rather than solicitation | Pending |
+| Page roles create deliberate narrative pacing | Pass |
+| Logo-derived geometry carries meaning rather than decoration | Pass |
+| Generic equal-weight rectangles reduced | Pass |
+| Page 2 journey rule preserves label legibility | Pass — the rule is routed beneath `MOVE / STORE / GROW` with short vertical stems; no copy changed |
+| Page 4 depicts Governance, Engine, and Wallet as a governed system | Pass |
+| Pages 3, 4, and 8 carry the major visual architecture | Pass |
+| Pages 1 and 5 retain restraint | Pass |
+| Body copy remains readable at ordinary laptop scale and in A4 print | Pass |
+| Final page closes with controlled ambition rather than solicitation | Pass |
 
 ## 5. Narrative-boundary QA
 
 | Check | Result |
 | ----- | ------ |
-| Accepted `NARRATIVE-005` meaning preserved | Pending |
-| No approved narrative sentence rewritten or expanded | Pending |
-| No new positioning or capability | Pending |
-| Current implementation separated from future intent | Pending |
-| Evidence remains bounded and non-traction | Pending |
-| Synthetic / informational / no-real-money boundary visible | Pending |
-| No fundraising, solicitation, valuation, projection, return, or readiness framing | Pending |
-| Publication remains not authorised | Pending |
+| Accepted `NARRATIVE-005` meaning preserved | Pass |
+| No approved narrative sentence rewritten or expanded | Pass |
+| No new positioning or capability | Pass |
+| Current implementation separated from future intent | Pass |
+| Evidence remains bounded and non-traction | Pass |
+| Synthetic / informational / no-real-money boundary visible | Pass |
+| No fundraising, solicitation, valuation, projection, return, or readiness framing | Pass |
+| Publication remains not authorised | Pass |
 
 ## 6. Brand QA
 
 | Check | Result |
 | ----- | ------ |
-| Official logo assets only | Pending |
-| Approved palette and typography only | Pending |
-| Logo geometry and proportions preserved | Pending |
-| Logo-derived geometry remains subordinate to content | Pending |
-| No gradients, glows, crypto motifs, speculative fintech imagery, or generic AI art | Pending |
-| Customer One-Pager and Research R1 continuity preserved without compositional copying | Pending |
+| Official logo assets only | Pass |
+| Approved palette and typography only | Pass — Plus Jakarta Sans; `#1F2747`, `#1F2937`, `#36447C`, `#4658A0`, `#CAD0E8`, and white only |
+| Logo geometry and proportions preserved | Pass |
+| Logo-derived geometry remains subordinate to content | Pass |
+| No gradients, glows, crypto motifs, speculative fintech imagery, or generic AI art | Pass |
+| Customer One-Pager and Research R1 continuity preserved without compositional copying | Pass |
 
 ## 7. Missing inputs
 
@@ -100,6 +101,6 @@ This record supports bounded internal Research R2 design review. It does not app
 | Defer | Pending |
 | Authorise external publication or circulation | Not requested; separately governed |
 
-**Disposition:** `PENDING RESEARCH R2 PROOF AND FOUNDER REVIEW`
+**Disposition:** `PENDING FOUNDER REVIEW`
 
 Do not close `NARRATIVE-006`, complete D-055, or change publication status until the Research R2 proof and Founder disposition are complete.
