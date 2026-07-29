@@ -1,6 +1,6 @@
 Status: Canonical hand-off file
 Purpose: Strategic continuity, merged implementation truth, and next-ticket authority for Cursor execution
-Last updated: 2026-07-28
+Last updated: 2026-07-29
 
 ---
 
@@ -4513,6 +4513,7 @@ Completed and merged:
 - `MONEY-STACK-001` - Hedgr Money Stack Deliberation Report (Class A informational research; activation **§167** / D-053; research package approved and cycle closed as converged **§168**; no follow-on authority)
 - `NARRATIVE-005` - Investor Orientation Brief (Class A informational derived narrative; activation **§169** / D-054; Founder accepted source and closed ticket **§170**; publication not authorised)
 - `NARRATIVE-006` - Institutional Investor Orientation Document, Research R2 (Class A informational / non-authorising design expression; activation **§170** / D-055; bounded amendment **§171** / D-056; Founder accepted design and closed ticket **§172**; publication not authorised)
+- `STATUS-HYGIENE-001` - Reconcile stale **§7a** dual-ticket language after `NARRATIVE-006` closeout (documentation-only governance hygiene; Founder-activated and closed **§173**; restores singular-ticket Lane V truth)
 
 Current active ticket status:
 
@@ -4524,12 +4525,14 @@ Current active ticket status:
 - **Completed Bridge Phase 1 implementation:** `BRIDGE-P1-001` (**§154**; PRs **#306** / **#307**).
 - **Completed prep:** `BRIDGE-P1-PREP-001` (**§151** / D-043). Governing plan preserved.
 - **Completed nested refinements inside Lane V:** `HEDGR-UI-001`–`003` (**§144**–**§148**).
-- **Sequencing posture:** Singular-ticket `CLASS-A-VAL-002` (Lane V) after `NARRATIVE-006` Founder acceptance and closeout **§172**. Controlled Parallelism **v19** / Internal **D-055** / **§6f.19** is completed historical authority. D-029, D-032, D-034, D-035, D-036, D-041, D-044, D-045, D-046, D-047, D-048, D-049, D-050, D-051, D-052, D-053, D-054, and D-055 supply no standing concurrency beyond their historical records.
+- **Completed status hygiene:** `STATUS-HYGIENE-001` (**§173**) — reconciled stale **§7a** dual-ticket language; no product, narrative, Bridge, or Class B authority change.
+- **Sequencing posture:** Singular-ticket `CLASS-A-VAL-002` (Lane V) after `NARRATIVE-006` Founder acceptance and closeout **§172**, with **§7a** live-brief drift reconciled under `STATUS-HYGIENE-001` / **§173**. Controlled Parallelism **v19** / Internal **D-055** / **§6f.19** is completed historical authority. D-029, D-032, D-034, D-035, D-036, D-041, D-044, D-045, D-046, D-047, D-048, D-049, D-050, D-051, D-052, D-053, D-054, and D-055 supply no standing concurrency beyond their historical records.
 - **Kenya counsel path:** **DEFER** (**§6f.1** / D-028).
 - **Governed parallelism posture:** No active **§6f** pass. Lane V is the sole active lane. Lanes A / B / C / M / N / R are idle. **§6e** / D-026 remains lane-model only. Class B convergence gate unsatisfied.
 - **Active Lane A / B / C / M / N / R:** None.
 - **Green Lane pilot (§6g / ADR 0025):** Authority-model only; does not activate product experiments or independently authorize a new ticket.
-- **Last completed product-copy ticket:** `UI-NARR-001` (**§166**). Last completed narrative ticket: `NARRATIVE-006` (**§172**). Last completed narrative governance ticket: `NARRATIVE-004` (**§164**). Last completed Bridge ticket: `BRIDGE-P1-OPS-001` (**§161**). Last completed Bridge implementation: `BRIDGE-P1-001` (**§154**).
+- **Last completed product-copy ticket:** `UI-NARR-001` (**§166**). Last completed narrative ticket: `NARRATIVE-006` (**§172**). Last completed narrative governance ticket: `NARRATIVE-004` (**§164**). Last completed Bridge ticket: `BRIDGE-P1-OPS-001` (**§161**). Last completed Bridge implementation: `BRIDGE-P1-001` (**§154**). Last completed governance-hygiene ticket: `STATUS-HYGIENE-001` (**§173**).
+- **Post-`STATUS-HYGIENE-001` closeout (§173):** Complete; **§7a** Lane V live brief matches **§7** / **§172** singular-ticket truth; `CLASS-A-VAL-002` remains sole active ticket; no successor activated.
 - **Post-Research R2 Founder acceptance + `NARRATIVE-006` closeout (§172):** Complete; Research R2 accepted as the internal Institutional Investor Orientation Document; D-055 completed as active concurrency; singular Lane V restored; publication remains unauthorized.
 - **Post-Research R1 disposition + Research R2 amendment (§171 / D-056):** Historical; superseded as active Lane N posture by Founder acceptance and closeout **§172**.
 - **Post-`NARRATIVE-005` closeout + Controlled Parallelism v19 activation (§170 / D-055):** Historical; `NARRATIVE-006` accepted and closed at **§172**.
@@ -4560,7 +4563,7 @@ Current active ticket status:
 
 ### Lane V — `CLASS-A-VAL-002`
 
-**Active ticket:** `CLASS-A-VAL-002` — Validate the End-to-End Synthetic Stability Journey (Founder transition / activation **§142** / **§143**; Internal **D-037**; concurrent with Lane N under Controlled Parallelism **v19** / Internal **D-055** / **§170**).
+**Active ticket:** `CLASS-A-VAL-002` — Validate the End-to-End Synthetic Stability Journey (Founder transition / activation **§142** / **§143**; Internal **D-037**; singular-ticket restored after `NARRATIVE-006` closeout **§172** / Internal **D-055** completed historical; **§7a** live-brief drift reconciled under `STATUS-HYGIENE-001` / **§173**).
 
 **Objective:** Create a coherent, visibly synthetic, end-to-end customer journey through Dashboard → Deposit → Withdraw → Activity plus the shared trust and navigation shell so target cross-border freelancers can understand Hedgr’s core stability proposition without inferring that real funds moved.
 
@@ -4568,17 +4571,17 @@ Current active ticket status:
 
 **Type / execution class:** Product validation; Class A informational / synthetic. Non-executing for customer money.
 
-**Authority basis:** Founder approval to close/reframe `CLASS-A-VAL-001` and activate `CLASS-A-VAL-002` as its sole successor + Internal **D-037** + **§142** / **§143** + this **§7** / **§7a** naming + ADR **0024** (evidence principle only) + ADRs **0013–0015** (read-only / informational Stability Engine boundaries) + the existing synthetic transaction and withdrawal trust surfaces. Narrative Style Guide freeze / **§164**, `UI-NARR-001` / **§166**, `MONEY-STACK-001` / **D-053** / **§167**, `NARRATIVE-005` closeout / **§170**, and Controlled Parallelism **v19** / **D-055** / **§170** do **not** widen this Lane V authority.
+**Authority basis:** Founder approval to close/reframe `CLASS-A-VAL-001` and activate `CLASS-A-VAL-002` as its sole successor + Internal **D-037** + **§142** / **§143** + this **§7** / **§7a** naming + ADR **0024** (evidence principle only) + ADRs **0013–0015** (read-only / informational Stability Engine boundaries) + the existing synthetic transaction and withdrawal trust surfaces. Narrative Style Guide freeze / **§164**, `UI-NARR-001` / **§166**, `MONEY-STACK-001` / **D-053** / **§167**, `NARRATIVE-005` closeout / **§170**, Controlled Parallelism **v19** / **D-055** / **§172** closeout, and `STATUS-HYGIENE-001` / **§173** do **not** widen this Lane V authority.
 
 **DRI:** Founder — @mhibajene.
 
 **Current posture (lanes):**
 
-- **Lane A / B / C / M / R:** idle
+- **Lane A / B / C / M / N / R:** idle
 - **Active Lane V ticket:** `CLASS-A-VAL-002`
-- **Active Lane N ticket:** `NARRATIVE-006` (under **D-055** / **§6f.19**; independent)
+- **Active Lane N ticket:** None (idle after `NARRATIVE-006` / **§172**)
 
-**Sequencing posture:** Dual-ticket under Controlled Parallelism **v19** / Internal **D-055** / **§6f.19** / **§170**. Kenya counsel: **DEFER** (**§6f.1** / D-028). Class B convergence gate: unsatisfied. Green Lane pilot envelope (**§6g**) remains authority-model only and does **not** widen this ticket.
+**Sequencing posture:** Singular-ticket under Lane V after Controlled Parallelism **v19** / Internal **D-055** / **§172** closeout (`STATUS-HYGIENE-001` / **§173** reconciled this live brief). Kenya counsel: **DEFER** (**§6f.1** / D-028). Class B convergence gate: unsatisfied. Green Lane pilot envelope (**§6g**) remains authority-model only and does **not** widen this ticket.
 
 #### Completed nested refinement — `HEDGR-UI-003`
 
@@ -10622,3 +10625,46 @@ Draft boundary for future activation brief is recorded under **§7a** as **Propo
 **Lane independence:** `NO CROSS-LANE IMPACT`. This closeout does not alter Lane V scope, evidence, thresholds, decision rule, timing, stop conditions, rollback, or closeout.
 
 **Rollback:** Revert this **§172** closeout only if the recorded Founder acceptance is factually wrong. Preserve Research R1, the accepted `NARRATIVE-005` source, frozen narrative parents, Lane V authority, and publication-not-authorised posture. Reopening `NARRATIVE-006`, authorising a successor, or permitting external use requires a new Founder decision plus explicit repo-native authority.
+
+## 173. Founder activation + closeout — STATUS-HYGIENE-001 (§7a dual-ticket drift reconciliation)
+
+**Ticket:** `STATUS-HYGIENE-001` — Reconcile stale **§7a** dual-ticket language after `NARRATIVE-006` closeout
+
+**Date:** 2026-07-29
+
+**Status:** `STATUS-HYGIENE-001` **ACTIVATED, EXECUTED, AND COMPLETED** in one documentation-only pass. Singular-ticket `CLASS-A-VAL-002` (Lane V) restored / retained as the sole active ticket.
+
+**Authority basis:** Founder direction to activate and execute governance candidate option 2 (`STATUS-HYGIENE-001`) + this **§7** / **§7a** naming + closeout under this **§173**. Does **not** create parallelism, reopen Lane N, alter Lane V product authority, or authorize a successor.
+
+**Objective:** Align the live **§7a** Lane V posture / sequencing language with **§7** / **§172** singular-ticket truth after Controlled Parallelism **v19** / Internal **D-055** completed and `NARRATIVE-006` closed.
+
+**Type / execution class:** Documentation-only governance hygiene. Class A. Non-product. Non-executing.
+
+**In scope / executed:**
+
+- Corrected the live **§7a** Lane V **Active ticket** line that still claimed concurrency with Lane N under **D-055** / **§170**.
+- Corrected **Current posture (lanes)** so Lane N is idle / None after `NARRATIVE-006` / **§172**.
+- Corrected **Sequencing posture** from dual-ticket under **D-055** to singular-ticket under Lane V after **§172**.
+- Recorded this ticket in **§7** completed list and current-active-status hygiene notes.
+- Mirrored the reconciliation in `docs/ops/NOTION_GOVERNANCE_STAGING.md`.
+
+**Out of scope / must not (held):**
+
+- No change to `CLASS-A-VAL-002` product objective, acceptance criteria, evidence rule, stop/rollback, or authorized surfaces.
+- No reopen of `NARRATIVE-006`, frozen narrative sources, or accepted `NARRATIVE-005`.
+- No publication / circulation authority.
+- No Bridge, Money Stack, Class B, custody, rail, counsel-send, RAP regeneration requirement, or customer-money authority.
+- No `apps/`, `packages/`, `scripts/`, `.github/`, CI, tests, backend, or engine edits.
+
+**Closeout result:**
+
+1. Live **§7a** Lane V brief matches **§7** / **§172** singular-ticket truth — **Pass**.
+2. `CLASS-A-VAL-002` remains the sole active ticket — **Pass**.
+3. No product, narrative, Bridge, or Class B authority widened — **Pass**.
+4. Notion staging last-reconciled mirror updated — **Pass**.
+
+**Parallelism posture after closeout:** No active **§6f** pass. `CLASS-A-VAL-002` is the sole active ticket in Lane V. Lanes A / B / C / M / N / R remain idle. No successor activated.
+
+**Lane independence:** `NO CROSS-LANE IMPACT`. This hygiene pass does not alter Lane V research scope, evidence, thresholds, decision rule, timing, stop conditions, rollback, or closeout.
+
+**Rollback:** Revert this **§173** record and the **§7** / **§7a** / Notion staging wording changes only if the recorded Founder activation or the factual drift claim is wrong. Preserve `CLASS-A-VAL-002` authority and **§172** closeout meaning.
