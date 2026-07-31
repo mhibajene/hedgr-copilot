@@ -6,7 +6,7 @@
 
 **Authority:** The repository is source of truth. Wording here must match `docs/decisions/0016-warmth-layer-doctrine-constrained-retail-refinement-track.md`, `docs/decisions/SPRINT-2-ADR-INDEX.md`, and `docs/ops/HEDGR_STATUS.md`. Wording must match **Accepted** ADR **0016** in repo; do not broaden scope or soften read-only / non-execution boundaries in Notion.
 
-**Last reconciled:** 2026-07-31 (mirror after Founder validation disposition Internal **D-057** / **§174** retained `CLASS-A-VAL-002` as the sole active Lane V ticket and open validation objective; current participant findings remain directional learning evidence only; no implementation, participant-comprehension, Class B, MVP-acceptance, Evidence Register, gate-clearance, successor, or parallel-lane authority; `STATUS-HYGIENE-001` / **§173** remains completed; `NARRATIVE-006` remains closed under **§172**; Controlled Parallelism v19 / **D-055** completed historical; Lane N idle; Research R1 preserved; Research R2 accepted as an internal design artifact; publication remains unauthorized; Lane M idle; Lane R idle; D-054 completed historical; Canonical Story v1.0, Customer One-Pager v1.0, Narrative Style Guide v1.0, and accepted Investor Orientation Brief remain unchanged; R1 retirement deferred ≥ **2026-08-02**; Kenya counsel **DEFER**; repo **§7** / **§7a** controls sequencing)
+**Last reconciled:** 2026-07-31 (mirror after Founder activation of nested `HEDGR-UI-004` / Internal **D-058** / **§175** under open `CLASS-A-VAL-002`; parent validation disposition Internal **D-057** / **§174** remains Accepted — continue / retest after nested closeout; no second ticket, successor, parallel lane, Class B, MVP-acceptance, Evidence Register, gate-clearance, or participant-comprehension claim; `STATUS-HYGIENE-001` / **§173** remains completed; `NARRATIVE-006` remains closed under **§172**; Controlled Parallelism v19 / **D-055** completed historical; Lane N idle; Research R1 preserved; Research R2 accepted as an internal design artifact; publication remains unauthorized; Lane M idle; Lane R idle; D-054 completed historical; Canonical Story v1.0, Customer One-Pager v1.0, Narrative Style Guide v1.0, and accepted Investor Orientation Brief remain unchanged; R1 retirement deferred ≥ **2026-08-02**; Kenya counsel **DEFER**; repo **§7** / **§7a** controls sequencing)
 
 ---
 
@@ -68,7 +68,9 @@ Use as a governed workstream line, **not** as a shipped-feature claim. Placement
 
 - **Class A validation successor transition (D-037, Accepted):** Founder closed `CLASS-A-VAL-001` as stop/reframe before cohort completion (**§142**) and activated `CLASS-A-VAL-002` as the successor (**§143** / **§7** / **§7a**). The primary condition is a coherent, visibly synthetic Dashboard → Deposit → Withdraw → Activity journey with shared trust/navigation context. Settings and Copilot remain outside the primary journey. No live money movement, custody, provider/banking integration, production FX, settlement, payout, Stability Engine execution, Class B implementation. Later Controlled Parallelism v7 (**D-041**) adds Lane R without changing this Lane V authority.
 
-- **`CLASS-A-VAL-002` Founder validation disposition (D-057, Accepted — ticket remains open):** Founder reviewed the Forms summary, all three participant responses, response workbook, validation review, current repo authority, and participant protocol. The evidence identifies synthetic-money-journey comprehension as the principal uncertainty but remains directional learning only. One bounded comprehension iteration is a candidate hypothesis for a separately scoped and authorized pass, followed by protocol-complete retesting. D-057 does not approve implementation, claim participant comprehension, close the ticket, create Class B readiness, satisfy MVP acceptance, accept Evidence Register evidence, clear a gate, authorize unsupported trust claims, or create a successor / concurrent lane. Canonical detail: **§174**; live brief: **§7a**.
+- **`CLASS-A-VAL-002` Founder validation disposition (D-057, Accepted — ticket remains open):** Founder reviewed the Forms summary, all three participant responses, response workbook, validation review, current repo authority, and participant protocol. The evidence identifies synthetic-money-journey comprehension as the principal uncertainty but remains directional learning only. D-057 does not itself approve implementation, claim participant comprehension, close the ticket, create Class B readiness, satisfy MVP acceptance, accept Evidence Register evidence, clear a gate, authorize unsupported trust claims, or create a successor / concurrent lane. Canonical detail: **§174**; live brief: **§7a**.
+
+- **`HEDGR-UI-004` nested comprehension pass (D-058, Accepted — active nested refinement):** Founder activated one bounded Class A presentation / copy iteration under open `CLASS-A-VAL-002` to test synthetic money-journey continuity, where-money-is / what-remains framing, and target-versus-balance distinction. Not a second ticket, successor, or concurrent lane. Nested closeout does not close the parent; protocol-complete retest remains required. No Class B, MVP, Evidence Register, gate-clearance, or unsupported trust authority. Canonical detail: **§175**; live nested brief: **§7a**.
 
 - **Controlled Parallelism v7 (D-041, Accepted — completed historical pass):** Named `CLASS-A-VAL-002` (Lane V) and `BRIDGE-P1-PREP-001` (Lane R prep). Lane R closed prep-complete (**§151** / **D-043**); singular-ticket restored; D-041 no longer supplies concurrency. Proposed `BRIDGE-P1-001` formed not active. `NO CROSS-LANE IMPACT`.
 
@@ -1226,8 +1228,37 @@ Use when mirroring the completed **test-only** regression tranche 4. **Not** new
 - Retest only with verified target participants, recorded build/version, full participant protocol, behavioral observation, moderator checkpoints, and required metadata.
 - Moderate trust, proposition recognition, positive curiosity, and numeric survey scores are not evidence of understanding.
 - Do not answer requests for regulation, institutional backing, endorsement, testimonials, or external proof through unsupported interface claims.
-- D-057 does not approve implementation, widen execution, create Class B readiness, satisfy MVP acceptance, close `CLASS-A-VAL-002`, claim comprehension, accept Evidence Register evidence, clear a gate, or create a successor / concurrent lane.
+- D-057 itself does not approve implementation, widen execution, create Class B readiness, satisfy MVP acceptance, close `CLASS-A-VAL-002`, claim comprehension, accept Evidence Register evidence, clear a gate, or create a successor / concurrent lane.
+- Nested implementation for the one bounded comprehension iteration is authorized separately by Internal **D-058** / **§175** as `HEDGR-UI-004`.
 - Singular-ticket Lane V remains active; all other lanes remain idle; `NO CROSS-LANE IMPACT`.
+
+---
+
+## 8d.26 Decision Log — D-058 / HEDGR-UI-004 nested activation (Internal; Notion mirror)
+
+**Notion Decision Log ID:** **D-058**. Canonical detail: **`docs/ops/HEDGR_STATUS.md` §175** and live nested brief in **§7a**. Visibility: **Internal**.
+
+| Field | Value |
+| ----- | ----- |
+| **Decision ID** | D-058 |
+| **Title** | Activate `HEDGR-UI-004` nested synthetic money-journey comprehension pass within `CLASS-A-VAL-002` |
+| **Status** | Accepted — active nested refinement |
+| **Decision Type** | Product / UX-Trust / Nested validation refinement activation |
+| **Strategic Horizon** | Short-term (MVP evidence generation) |
+| **Visibility** | Internal |
+| **Date** | 2026-07-31 |
+| **Repo authority** | `HEDGR_STATUS.md` **§175**; nested brief **§7a**; parent disposition **§174** / D-057 |
+| **Ticket** | Nested under Lane V `CLASS-A-VAL-002` (sole active ticket; remains open) |
+
+**Summary / notes (concise)**
+
+- Activates one bounded Class A presentation / copy iteration to test synthetic money-journey comprehension.
+- Locked primary hypotheses: synthetic-money continuity across Dashboard → Deposit → Withdraw → Activity; plain-language where-money-is / what-remains framing; target-versus-balance distinction.
+- Secondary hypotheses (newcomer orientation; prototype-boundary reinforcement) only if required to preserve continuity / synthetic boundary without new product meaning.
+- Not a second ticket, successor, concurrent lane, or parent closeout.
+- Nested interface completion alone does not prove comprehension; protocol-complete retest remains required after nested closeout.
+- No Class B, MVP acceptance, Evidence Register acceptance, gate clearance, live capability, or unsupported trust / regulatory / endorsement claims.
+- Singular-ticket Lane V remains; all other lanes remain idle; `NO CROSS-LANE IMPACT`.
 
 ---
 
