@@ -188,6 +188,17 @@ describe("DashboardPage engine trust surface", () => {
     expect(
       screen.getByTestId("dashboard-current-overview").getAttribute("aria-label")
     ).toBe("Current simulation overview");
+    expect(screen.getByText("Simulated balance")).toBeDefined();
+    const explainer = screen.getByTestId(
+      "dashboard-synthetic-balance-explainer"
+    );
+    expect(explainer.textContent).toContain("one local fixture balance");
+    expect(explainer.textContent).toContain(
+      "target shares below describe an informational stability posture"
+    );
+    expect(explainer.textContent).toContain(
+      "do not split this balance into separate accounts"
+    );
   });
 
   test("restarts a completed explicit synthetic journey only after confirmation", async () => {

@@ -110,7 +110,7 @@ export default function DashboardPage() {
         id="dashboard-total-balance-label"
         className="text-xs font-semibold uppercase tracking-[0.12em] text-hedgr-500"
       >
-        Total balance
+        {syntheticJourneyActive ? "Simulated balance" : "Total balance"}
       </p>
       {isLoading ? (
         <div className="text-4xl font-semibold tabular-nums tracking-tight text-hedgr-800 sm:text-[2.75rem] sm:leading-tight">
@@ -123,6 +123,17 @@ export default function DashboardPage() {
           className="text-4xl font-semibold tabular-nums tracking-tight text-hedgr-800 sm:text-[2.75rem] sm:leading-tight"
         />
       )}
+      {syntheticJourneyActive && ready && !isLoading ? (
+        <p
+          className="max-w-md pt-1 text-sm leading-relaxed text-hedgr-dark"
+          data-testid="dashboard-synthetic-balance-explainer"
+        >
+          This is the one local fixture balance shared by Dashboard, Deposit,
+          Withdraw, and Activity. The target shares below describe an
+          informational stability posture; they do not split this balance into
+          separate accounts or show that funds moved.
+        </p>
+      ) : null}
       {ready && !isLoading && total !== available ? (
         <p className="pt-1 text-sm text-hedgr-500">
           Available now:{" "}

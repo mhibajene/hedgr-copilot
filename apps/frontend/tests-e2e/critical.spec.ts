@@ -71,7 +71,7 @@ test('deposit stub increases balance', async ({ page }) => {
 
   await waitForDepositFxReady(page);
   await page.getByRole('button', { name: 'Confirm' }).click();
-  await expect(page.getByText('Deposit CONFIRMED')).toBeVisible({ timeout: 6000 });
+  await expect(page.getByText('Synthetic deposit recorded')).toBeVisible({ timeout: 6000 });
   await page.goto('/dashboard');
   const usd = page.getByTestId('usd-balance');
   await expect(usd).toBeVisible({ timeout: 10000 });
@@ -96,7 +96,7 @@ test('withdraw stub decreases balance', async ({ page }) => {
   await page.getByTestId('deposit-amount').fill('100');
   await waitForDepositFxReady(page);
   await page.getByRole('button', { name: 'Confirm' }).click();
-  await expect(page.getByText('Deposit CONFIRMED')).toBeVisible({ timeout: 6000 });
+  await expect(page.getByText('Synthetic deposit recorded')).toBeVisible({ timeout: 6000 });
 
   // withdraw 1 USD
   await page.goto('/withdraw');
@@ -126,7 +126,7 @@ test('activity page shows confirmed transactions', async ({ page }) => {
   await page.getByTestId('deposit-amount').fill('100');
   await waitForDepositFxReady(page);
   await page.getByRole('button', { name: 'Confirm' }).click();
-  await expect(page.getByText('Deposit CONFIRMED')).toBeVisible({ timeout: 6000 });
+  await expect(page.getByText('Synthetic deposit recorded')).toBeVisible({ timeout: 6000 });
 
   // Withdraw $1
   await page.goto('/withdraw');

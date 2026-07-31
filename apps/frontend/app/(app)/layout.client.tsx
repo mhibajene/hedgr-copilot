@@ -156,7 +156,7 @@ export function AppLayoutClient({ children }: { children: React.ReactNode }) {
       </nav>
       {syntheticJourneyActive ? (
         <section
-          aria-label="Synthetic validation journey"
+          aria-labelledby="synthetic-journey-heading"
           className="border-b border-hedgr-200 bg-white"
           data-testid="synthetic-journey-shell"
         >
@@ -166,19 +166,30 @@ export function AppLayoutClient({ children }: { children: React.ReactNode }) {
                 <p className="text-xs font-semibold uppercase tracking-wide text-hedgr-500">
                   CLASS-A-VAL-002 · synthetic research path
                 </p>
-                <p className="mt-1 text-sm text-hedgr-dark">
-                  Follow the four steps in order. Settings and Copilot are outside this
-                  participant journey.
+                <h2
+                  id="synthetic-journey-heading"
+                  className="mt-1 text-sm font-semibold text-hedgr-800"
+                >
+                  One simulated balance, four connected steps
+                </h2>
+                <p className="mt-1 max-w-2xl text-sm leading-relaxed text-hedgr-dark">
+                  Deposit adds a local fixture record, Withdraw subtracts one,
+                  and Activity explains the result. Target shares describe an
+                  informational posture only; they do not divide this balance or
+                  prove money moved.
                 </p>
               </div>
-              <ol className="flex max-w-full gap-2 overflow-x-auto pb-1" aria-label="Journey steps">
+              <ol
+                className="grid w-full grid-cols-2 gap-2 sm:flex sm:w-auto sm:max-w-full sm:overflow-x-auto sm:pb-1"
+                aria-label="Journey steps"
+              >
                 {journeySteps.map((step, index) => {
                   const isActive = pathname === step.href;
                   return (
                     <li key={step.href} className="shrink-0">
                       <span
                         aria-current={isActive ? 'step' : undefined}
-                        className={`inline-flex items-center gap-2 rounded-lg border px-3 py-2 text-sm font-medium transition-colors ${
+                        className={`inline-flex w-full items-center justify-center gap-2 rounded-lg border px-3 py-2 text-sm font-medium transition-colors sm:w-auto ${
                           isActive
                             ? 'border-hedgr-primary bg-hedgr-primary text-white'
                             : 'border-hedgr-200 bg-white text-hedgr-primary hover:border-hedgr-300 hover:text-hedgr-600'

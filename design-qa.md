@@ -1,3 +1,86 @@
+# HEDGR-UI-004 Design QA and Change Log
+
+## Comparison target
+
+- Immediate baseline: completed `HEDGR-UI-003` synthetic Dashboard → Deposit → Withdraw → Activity route.
+- Governing scope: Internal **D-058** / `HEDGR_STATUS.md` **§175** and the active **§7a** nested brief.
+- Locked hypotheses: one continuous synthetic-money journey; plain-language where-money-is / what-remains framing; target-versus-balance distinction.
+- Brand authority: `DESIGN.md`, `assets/brand/README.md`, `docs/brand/HEDGR_UI_APPLICATION_RULES.md`, and the Brand QA checklist. No Brand Guidelines PDF is present in governed repo assets for this pass.
+- Rendered route: `http://localhost:3000/dashboard?journey=class-a-val-002`.
+
+## Complete journey evidence
+
+- Dashboard start: `/Users/musalwa/.codex/visualizations/2026/07/31/hedgr-ui-004/01-dashboard-start-desktop.png`
+- Deposit preview: `/Users/musalwa/.codex/visualizations/2026/07/31/hedgr-ui-004/02-deposit-preview-desktop.png`
+- Deposit result: `/Users/musalwa/.codex/visualizations/2026/07/31/hedgr-ui-004/03-deposit-result-desktop.png`
+- Withdrawal preview: `/Users/musalwa/.codex/visualizations/2026/07/31/hedgr-ui-004/04-withdraw-preview-desktop.png`
+- Withdrawal result: `/Users/musalwa/.codex/visualizations/2026/07/31/hedgr-ui-004/05-withdraw-result-desktop.png`
+- Activity reconciliation: `/Users/musalwa/.codex/visualizations/2026/07/31/hedgr-ui-004/06-activity-reconciliation-desktop.png`
+- Dashboard return at `$3.00`: `/Users/musalwa/.codex/visualizations/2026/07/31/hedgr-ui-004/07-dashboard-return-desktop.png`
+- Activity mobile: `/Users/musalwa/.codex/visualizations/2026/07/31/hedgr-ui-004/08-activity-reconciliation-mobile.png`
+- Activity mobile grayscale: `/Users/musalwa/.codex/visualizations/2026/07/31/hedgr-ui-004/09-activity-reconciliation-mobile-grayscale.png`
+
+All captures contain local synthetic fixtures only. No participant data, real financial data, provider call, payout, conversion, settlement, or external account action is represented.
+
+## Hypothesis treatment
+
+### One continuous simulated balance
+
+- The persistent journey shell states that one simulated balance connects Dashboard, Deposit, Withdraw, and Activity.
+- Dashboard labels the value `Simulated balance` and identifies it as the one local fixture balance shared by all four surfaces.
+- Deposit explains the `+$5.00` local fixture change before confirmation and names the matching Activity record afterward.
+- Withdraw shows the fixed participant-path arithmetic `$5.00 − $2.00 = $3.00` and states where the remainder stays.
+- Activity reconciles completed synthetic deposits minus completed synthetic withdrawals to the remaining simulated balance, then routes back to the matching Dashboard value.
+
+### Target versus balance
+
+- The shared shell and Dashboard state that target shares are informational posture, not separate accounts, ledger balances, or proof of movement.
+- No allocation-band copy, percentages, engine state, or engine library changed.
+- No dollars-in-lanes or derived allocation-lane balances were introduced; the only arithmetic is the existing synthetic deposit / withdrawal fixture reconciliation.
+
+### Prototype boundary
+
+- `Simulation Mode. No Real Money` remains persistent and non-dismissible on the explicit research route.
+- Deposit, Withdraw, and Activity continue to deny live quote, account charge, payout, provider action, settlement, and external-finality meaning.
+- `Completed` remains defined as completion of a local scenario step only.
+
+## Visual and accessibility review
+
+- Desktop viewport: 1280 × 900. Mobile viewport: 390 × 844.
+- Final mobile document width equals viewport width (`390`); no page-level horizontal overflow.
+- All four journey steps remain visible on mobile in a two-column grid, with the current step identifiable by label, number, position, and governed active treatment.
+- The first mobile pass exposed collision between the existing Activity status pill and amounts plus a visible zero local amount on the withdrawal row. The final pass separates status/time from amount, hides non-meaningful zero local currency, and preserves legibility at desktop, mobile, and grayscale.
+- Activity direction remains carried by transaction labels, signs, and arrows; colour is secondary. New or revised surfaces use existing `hedgr-*` token classes only.
+- No console error, page error, governed-asset change, new token, raw hue, gradient, glow, animation, or decorative crypto treatment was introduced.
+
+## Research-instrument change
+
+- The participant protocol now asks free-recall questions about the one simulated balance before moderator explanation.
+- Required checkpoints record `$0.00 → +$5.00 → −$2.00 → $3.00`, the matching Activity records, and the target-versus-balance distinction.
+- The protocol remains synthetic-only, minimal-data, behavior-led, and non-authorizing. It records no participant result or comprehension claim.
+
+## Scoped validation evidence
+
+- Dashboard / Deposit / Withdraw unit tests: **25/25 passed**.
+- Targeted `CLASS-A-VAL-002` Playwright journey: **3/3 passed** (complete traversal, blocked unavailable-data scenario, mobile boundary / navigation).
+- Full repository unit run: Bridge snapshot tests **11/11**, Bridge Worker tests **34/34**, and frontend tests **748/748** passed.
+- Full production-build Playwright parity: **56/56 passed** against the Flask stub with the required mock / stub environment.
+- Frontend typecheck: passed.
+- Workspace lint: passed.
+- Production frontend build with mock / stub configuration: passed.
+- `git diff --check`: passed.
+- Aggregate `pnpm run validate` and hosted checks are recorded after immutable RAP binding through final Hedgr PR posture.
+
+## No-live-authority confirmation
+
+- No `apps/frontend/lib/engine/**`, backend, state-store, ledger, fixture, transaction, provider, banking, custody, rail, production FX, settlement, payout, routing, Settings, or Copilot implementation changed.
+- No live-money, execution, accounting, protection guarantee, performance, financial approval, rebalancing, allocation-management, regulatory, institutional-backing, endorsement, testimonial, or external-proof claim was introduced.
+- Interface completion does not prove participant comprehension, close `CLASS-A-VAL-002`, accept Evidence Register evidence, clear a gate, activate Class B, complete the institutional MVP, nominate a successor, or establish production readiness.
+
+final result: passed
+
+---
+
 # HEDGR-UI-003 Design QA and Change Log
 
 ## Comparison target

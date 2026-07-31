@@ -5,7 +5,7 @@ import { useSearchParams } from 'next/navigation';
 import { useState, useMemo } from 'react';
 import { useLedgerStore } from '../../../lib/state/ledger';
 import { TxStatusPill, TxDetailModal } from '../../../components';
-import { txToLifecycle, type TxLifecycle } from '../../../lib/tx';
+import { PublicTxStatus, txToLifecycle, type TxLifecycle } from '../../../lib/tx';
 import { EmptyState } from '@hedgr/ui';
 import {
   getSyntheticJourneyHref,
@@ -51,9 +51,9 @@ type FilterType = 'all' | 'deposits' | 'withdrawals';
 function TransactionTypeIcon({ type }: { type: 'DEPOSIT' | 'WITHDRAW' }) {
   if (type === 'DEPOSIT') {
     return (
-      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-emerald-50">
+      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-hedgr-100">
         <svg
-          className="h-5 w-5 text-emerald-600"
+          className="h-5 w-5 text-hedgr-600"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -70,9 +70,9 @@ function TransactionTypeIcon({ type }: { type: 'DEPOSIT' | 'WITHDRAW' }) {
   }
 
   return (
-    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-orange-50">
+    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-hedgr-200">
       <svg
-        className="h-5 w-5 text-orange-600"
+        className="h-5 w-5 text-hedgr-800"
         fill="none"
         viewBox="0 0 24 24"
         stroke="currentColor"
@@ -104,45 +104,43 @@ function ActivityRow({
       data-testid={`activity-row-${tx.type.toLowerCase()}`}
       data-activity-type={tx.type}
       data-activity-status={tx.status}
-      className="w-full text-left rounded-xl border border-gray-100 p-4 bg-white shadow-sm hover:shadow-md hover:border-gray-200 transition-all cursor-pointer"
+      className="w-full cursor-pointer rounded-xl border border-hedgr-100 bg-white p-4 text-left transition-colors hover:border-hedgr-300"
     >
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-3 sm:gap-4">
         <TransactionTypeIcon type={tx.type} />
-        
-        <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2 mb-1">
-            <span
-              className="font-medium text-gray-900"
-              data-testid={`activity-type-${tx.type.toLowerCase()}`}
-            >
-              {syntheticJourneyActive
-                ? tx.type === 'DEPOSIT'
-                  ? 'Synthetic deposit'
-                  : 'Synthetic withdrawal'
-                : tx.type === 'DEPOSIT'
-                  ? 'Deposit'
-                  : 'Withdrawal'}
-            </span>
+
+        <div className="min-w-0 flex-1">
+          <span
+            className="font-medium text-hedgr-800"
+            data-testid={`activity-type-${tx.type.toLowerCase()}`}
+          >
+            {syntheticJourneyActive
+              ? tx.type === 'DEPOSIT'
+                ? 'Synthetic deposit'
+                : 'Synthetic withdrawal'
+              : tx.type === 'DEPOSIT'
+                ? 'Deposit'
+                : 'Withdrawal'}
+          </span>
+          <div className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1">
             <TxStatusPill status={tx.status} />
-          </div>
-          <div className="text-sm text-gray-500">
-            {formatTime(tx.createdAt)}
+            <span className="text-sm text-hedgr-500">{formatTime(tx.createdAt)}</span>
           </div>
         </div>
 
-        <div className="text-right">
-          <div className="font-semibold text-gray-900">
+        <div className="shrink-0 text-right">
+          <div className="font-semibold tabular-nums text-hedgr-800">
             {tx.type === 'DEPOSIT' ? '+' : '-'}${tx.amountUSD.toFixed(2)}
           </div>
-          {tx.amountZMW && (
-            <div className="text-sm text-gray-500">
+          {tx.amountZMW !== undefined && tx.amountZMW > 0 ? (
+            <div className="text-sm tabular-nums text-hedgr-500">
               {tx.amountZMW.toFixed(2)} ZMW
             </div>
-          )}
+          ) : null}
         </div>
 
         <svg
-          className="h-5 w-5 text-gray-400"
+          className="hidden h-5 w-5 shrink-0 text-hedgr-300 sm:block"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -174,6 +172,22 @@ export default function ActivityPage() {
     () => transactions.map(txToLifecycle),
     [transactions]
   );
+
+  const syntheticBalanceReconciliation = useMemo(() => {
+    const completed = lifecycleTxs.filter((tx) => tx.status === PublicTxStatus.SUCCESS);
+    const deposits = completed
+      .filter((tx) => tx.type === 'DEPOSIT')
+      .reduce((sum, tx) => sum + tx.amountUSD, 0);
+    const withdrawals = completed
+      .filter((tx) => tx.type === 'WITHDRAW')
+      .reduce((sum, tx) => sum + tx.amountUSD, 0);
+
+    return {
+      deposits: +deposits.toFixed(2),
+      withdrawals: +withdrawals.toFixed(2),
+      remaining: +(deposits - withdrawals).toFixed(2),
+    };
+  }, [lifecycleTxs]);
 
   // Apply filter
   const filteredTxs = useMemo(() => {
@@ -267,9 +281,9 @@ export default function ActivityPage() {
   return (
     <main className="p-6 space-y-6 max-w-4xl">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-semibold text-gray-900">Activity</h1>
+        <h1 className="text-2xl font-semibold text-hedgr-800">Activity</h1>
         {transactions.length > 0 && (
-          <span className="text-sm text-gray-500">
+          <span className="text-sm text-hedgr-500">
             {transactions.length} transaction{transactions.length !== 1 ? 's' : ''}
           </span>
         )}
@@ -277,16 +291,54 @@ export default function ActivityPage() {
 
       {syntheticJourneyActive ? (
         <section
-          className="rounded-xl border border-[#8391C9] bg-[#CAD0E8] p-4 text-[#171D35]"
+          className="rounded-xl border border-hedgr-300 bg-hedgr-100 p-4 text-hedgr-800"
           data-testid="activity-synthetic-condition"
           aria-label="Synthetic activity condition"
         >
-          <p className="text-sm font-semibold">Local fixture records only</p>
-          <p className="mt-1 text-sm text-[#1F2937]">
-            These entries reconcile the synthetic balance used in this research path.
-            “Completed” means the local scenario step finished; it is not proof of a
-            deposit, payout, provider action, or external settlement.
+          <p className="text-sm font-semibold">Step 4 · explain the simulated balance</p>
+          <p className="mt-1 text-sm leading-relaxed text-hedgr-dark">
+            These local fixture records explain the same simulated balance shown on
+            Dashboard. “Completed” means the local scenario step finished; it is not
+            proof of a deposit, payout, provider action, or external settlement.
           </p>
+        </section>
+      ) : null}
+
+      {syntheticJourneyActive && transactions.length > 0 ? (
+        <section
+          className="rounded-xl border border-hedgr-200 bg-white p-4 text-hedgr-dark"
+          data-testid="activity-balance-reconciliation"
+          aria-labelledby="activity-balance-reconciliation-heading"
+        >
+          <p className="text-xs font-semibold uppercase tracking-wide text-hedgr-500">
+            Same local fixture balance
+          </p>
+          <h2
+            id="activity-balance-reconciliation-heading"
+            className="mt-1 text-base font-semibold text-hedgr-800"
+          >
+            Deposits minus withdrawals show what remains
+          </h2>
+          <dl className="mt-3 grid grid-cols-1 gap-3 text-sm sm:grid-cols-3">
+            <div className="rounded-lg bg-hedgr-100/50 p-3">
+              <dt className="text-hedgr-500">Synthetic deposits</dt>
+              <dd className="mt-1 font-semibold tabular-nums text-hedgr-800">
+                +${syntheticBalanceReconciliation.deposits.toFixed(2)}
+              </dd>
+            </div>
+            <div className="rounded-lg bg-hedgr-100/50 p-3">
+              <dt className="text-hedgr-500">Synthetic withdrawals</dt>
+              <dd className="mt-1 font-semibold tabular-nums text-hedgr-800">
+                −${syntheticBalanceReconciliation.withdrawals.toFixed(2)}
+              </dd>
+            </div>
+            <div className="rounded-lg bg-hedgr-200/60 p-3">
+              <dt className="text-hedgr-600">Remaining simulated balance</dt>
+              <dd className="mt-1 font-semibold tabular-nums text-hedgr-800">
+                ${syntheticBalanceReconciliation.remaining.toFixed(2)}
+              </dd>
+            </div>
+          </dl>
         </section>
       ) : null}
 
@@ -299,8 +351,8 @@ export default function ActivityPage() {
               onClick={() => setFilter(f)}
               className={`px-4 py-2 text-sm font-medium rounded-lg transition-colors ${
                 filter === f
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                  ? 'bg-hedgr-primary text-white'
+                  : 'bg-hedgr-100/50 text-hedgr-600 hover:bg-hedgr-100'
               }`}
               data-testid={`filter-${f}`}
             >
@@ -316,7 +368,7 @@ export default function ActivityPage() {
         <div className="space-y-6" data-testid="activity-list">
           {Array.from(grouped.entries()).map(([day, txs]) => (
             <div key={day} className="space-y-3">
-              <h2 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
+              <h2 className="text-xs font-semibold text-hedgr-500 uppercase tracking-wider">
                 {day}
               </h2>
               <div className="space-y-2">
@@ -342,7 +394,7 @@ export default function ActivityPage() {
       {syntheticJourneyActive && transactions.length > 0 ? (
         <Link
           href={getSyntheticJourneyHref('/dashboard')}
-          className="inline-flex rounded-xl border border-[#A6B0D8] bg-white px-4 py-2 text-sm font-medium text-[#1F2747] transition-colors hover:border-[#8391C9] hover:text-[#36447C] focus:outline-none focus:ring-2 focus:ring-[#4658A0] focus:ring-offset-2"
+          className="inline-flex rounded-xl border border-hedgr-200 bg-white px-4 py-2 text-sm font-medium text-hedgr-primary transition-colors hover:border-hedgr-300 hover:text-hedgr-600 focus:outline-none focus:ring-2 focus:ring-hedgr-500 focus:ring-offset-2"
         >
           Return to dashboard summary
         </Link>

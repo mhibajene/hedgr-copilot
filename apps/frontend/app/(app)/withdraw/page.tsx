@@ -102,6 +102,7 @@ function WithdrawPageContent() {
   const [usdInput, setUsdInput] = useState('');
   const [txnRef, setTxnRef] = useState<string | null>(null);
   const [status, setStatus] = useState<WithdrawPageStatus>('IDLE');
+  const [balanceBeforeWithdrawal, setBalanceBeforeWithdrawal] = useState<number | null>(null);
 
   const [withdrawMethods, setWithdrawMethods] = useState<WithdrawMethod[]>([]);
   const [methodsLoading, setMethodsLoading] = useState(true);
@@ -113,6 +114,11 @@ function WithdrawPageContent() {
   const hasPositiveAmount = Number.isFinite(usd) && usd > 0;
   const amountIsInvalid = usdInput !== '' && !hasPositiveAmount;
   const amountExceedsBalance = hasPositiveAmount && usd > available;
+  const displayedBalanceBefore = balanceBeforeWithdrawal ?? available;
+  const remainingAfterWithdrawal =
+    hasPositiveAmount && usd <= displayedBalanceBefore
+      ? +(displayedBalanceBefore - usd).toFixed(2)
+      : null;
 
   useEffect(() => {
     const fetchWithdrawMethods = async () => {
@@ -175,6 +181,7 @@ function WithdrawPageContent() {
   const confirm = async () => {
     if (!hasPositiveAmount || amountExceedsBalance || !rateAllowsConfirm) return;
 
+    setBalanceBeforeWithdrawal(available);
     setStatus('PENDING');
     const tx = await withdrawMock.createWithdraw(usd, {
       skipAutoConfirm: txReviewFlags.holdWithdrawPending,
@@ -327,20 +334,21 @@ function WithdrawPageContent() {
       ) : null}
       {syntheticJourneyActive ? (
         <section
-          className="rounded-xl border border-[#8391C9] bg-[#CAD0E8] p-4 text-[#171D35]"
+          className="rounded-xl border border-hedgr-300 bg-hedgr-100 p-4 text-hedgr-800"
           data-testid="withdraw-synthetic-condition"
           aria-label="Synthetic withdrawal condition"
         >
-          <p className="text-sm font-semibold">Synthetic withdrawal · no payout</p>
-          <p className="mt-1 text-sm text-[#1F2937]">
-            This step updates only the local ledger fixture. It cannot contact a bank,
-            provider, rail, or settlement service.
+          <p className="text-sm font-semibold">Step 3 · subtract from the simulated balance</p>
+          <p className="mt-1 text-sm leading-relaxed text-hedgr-dark">
+            This step subtracts from the same local fixture balance created on Deposit.
+            The remainder stays in that simulated balance and both changes appear in
+            Activity. It cannot contact a bank, provider, rail, or settlement service.
           </p>
         </section>
       ) : null}
       {syntheticJourneyActive ? (
         <div
-          className="rounded-xl border border-[#A6B0D8] bg-white p-3 text-sm text-[#1F2937]"
+          className="rounded-xl border border-hedgr-200 bg-white p-3 text-sm text-hedgr-dark"
           data-testid="withdraw-fx-block"
         >
           Synthetic display rate: 1 USD = {rate?.toFixed(2)} {quote}
@@ -354,8 +362,9 @@ function WithdrawPageContent() {
       ) : (
         <FxRateBlock fx={fx} quoteLabel={quote} data-testid="withdraw-fx-block" />
       )}
-      <div className="rounded-xl p-3 bg-gray-50">
-        Current balance: <BalanceWithLocalEstimate usdAmount={available} inline />
+      <div className="rounded-xl border border-hedgr-100 bg-hedgr-100/40 p-3 text-hedgr-dark">
+        {syntheticJourneyActive ? 'Simulated balance before this step: ' : 'Current balance: '}
+        <BalanceWithLocalEstimate usdAmount={displayedBalanceBefore} inline />
       </div>
       <label htmlFor="amount-usd" className="block space-y-2">Amount (USD)</label>
       <input
@@ -384,6 +393,25 @@ function WithdrawPageContent() {
         <p id="withdraw-amount-error" className="text-sm text-hedgr-800" role="alert">
           Amount exceeds available balance.
         </p>
+      ) : null}
+      {syntheticJourneyActive && remainingAfterWithdrawal !== null ? (
+        <section
+          className="rounded-xl border border-hedgr-200 bg-white p-4 text-hedgr-dark"
+          data-testid="withdraw-balance-preview"
+          aria-label="Simulated balance preview"
+        >
+          <p className="text-xs font-semibold uppercase tracking-wide text-hedgr-500">
+            What would remain
+          </p>
+          <p className="mt-1 text-lg font-semibold tabular-nums text-hedgr-800">
+            ${displayedBalanceBefore.toFixed(2)} − ${usd.toFixed(2)} = $
+            {remainingAfterWithdrawal.toFixed(2)}
+          </p>
+          <p className="mt-1 text-sm leading-relaxed text-hedgr-500">
+            This is local fixture arithmetic only. Confirmation records a synthetic
+            withdrawal; it does not create a payout or settlement.
+          </p>
+        </section>
       ) : null}
       <button
         onClick={confirm}
@@ -485,10 +513,22 @@ function WithdrawPageContent() {
             </div>
           )}
           {status === 'CONFIRMED' && syntheticJourneyActive ? (
-            <div className="mt-4 border-t border-[#A6B0D8] pt-4">
+            <div className="mt-4 border-t border-hedgr-200 pt-4">
+              {remainingAfterWithdrawal !== null ? (
+                <p
+                  className="mb-3 text-sm leading-relaxed text-hedgr-dark"
+                  data-testid="withdraw-balance-reconciliation"
+                >
+                  <strong className="tabular-nums">
+                    ${remainingAfterWithdrawal.toFixed(2)} remains
+                  </strong>{' '}
+                  in the same local fixture balance. Activity will show the synthetic
+                  deposit and withdrawal that explain it.
+                </p>
+              ) : null}
               <Link
                 href={getSyntheticJourneyHref('/activity')}
-                className="inline-flex rounded-xl bg-[#1F2747] px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-[#36447C] focus:outline-none focus:ring-2 focus:ring-[#4658A0] focus:ring-offset-2"
+                className="inline-flex rounded-xl bg-hedgr-primary px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-hedgr-600 focus:outline-none focus:ring-2 focus:ring-hedgr-500 focus:ring-offset-2"
               >
                 Continue to synthetic activity
               </Link>
