@@ -57,7 +57,7 @@ test("2 · login page renders and mock auth redirects to dashboard", async ({
   await expect(page.getByPlaceholder("you@example.com")).toBeVisible();
 
   await loginMock(page);
-  await expect(page.getByText("Total balance")).toBeVisible();
+  await expect(page.getByText("Simulated balance", { exact: true })).toBeVisible();
 });
 
 test("3 · dashboard shows balance after login", async ({ page }) => {

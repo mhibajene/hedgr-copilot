@@ -571,12 +571,20 @@ describe('WithdrawPage CLASS-A-VAL-002 primary condition', () => {
     expect(screen.getByTestId('withdraw-synthetic-condition').textContent).toMatch(
       /cannot contact a bank, provider, rail, or settlement service/i,
     );
+    expect(screen.getByTestId('withdraw-synthetic-condition').textContent).toMatch(
+      /same local fixture balance created on Deposit/i,
+    );
     expect(screen.getByTestId('withdraw-fx-block').textContent).toContain(
       '1 USD = 20.00 ZMW',
     );
     fireEvent.change(screen.getByLabelText('Amount (USD)'), {
       target: { value: '1' },
     });
+    const balancePreview = screen.getByTestId('withdraw-balance-preview');
+    expect(balancePreview.textContent).toContain('$25.00');
+    expect(balancePreview.textContent).toContain('$1.00');
+    expect(balancePreview.textContent).toContain('$24.00');
+    expect(balancePreview.textContent).toMatch(/local fixture arithmetic only/i);
     expect((screen.getByRole('button', { name: 'Confirm' }) as HTMLButtonElement).disabled).toBe(
       false,
     );

@@ -194,7 +194,7 @@ test.describe('State Transitions', () => {
     await page.getByTestId('deposit-amount').fill('200');
     await waitForDepositFxReady(page);
     await page.getByRole('button', { name: 'Confirm' }).click();
-    await expect(page.getByText('Deposit CONFIRMED')).toBeVisible({ timeout: 10000 });
+    await expect(page.getByText('Synthetic deposit recorded')).toBeVisible({ timeout: 10000 });
 
     // Return to dashboard and verify balance changed
     await page.goto('/dashboard');
@@ -220,7 +220,7 @@ test.describe('State Transitions', () => {
     await page.getByTestId('deposit-amount').fill('100');
     await waitForDepositFxReady(page);
     await page.getByRole('button', { name: 'Confirm' }).click();
-    await expect(page.getByText('Deposit CONFIRMED')).toBeVisible({ timeout: 10000 });
+    await expect(page.getByText('Synthetic deposit recorded')).toBeVisible({ timeout: 10000 });
 
     // Go to activity and verify transaction appears
     await page.goto('/activity');

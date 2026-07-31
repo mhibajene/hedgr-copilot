@@ -65,14 +65,15 @@ test.describe('Balance SSoT - Ledger as Single Source of Truth', () => {
     await waitForDepositFxReady(page);
     const preview = page.getByTestId('deposit-conversion-preview');
     await expect(preview).toBeVisible();
-    await expect(preview).toContainText(/FX Preview/);
+    await expect(preview).toContainText(/Simulated balance change/);
+    await expect(preview).toContainText(/adds \+\$5\.00/);
 
     await page.getByRole('button', { name: 'Confirm' }).click();
 
     // Wait for confirmation (mock should confirm quickly)
     const confirmationMsg = page.getByTestId('deposit-confirmed');
     await expect(confirmationMsg).toBeVisible({ timeout: 10000 });
-    await expect(confirmationMsg).toHaveText('Deposit CONFIRMED');
+    await expect(confirmationMsg).toHaveText('Synthetic deposit recorded');
 
     // Navigate to dashboard using nav link
     await page
@@ -177,12 +178,14 @@ test.describe('Balance SSoT - Ledger as Single Source of Truth', () => {
       .click();
     await expect(page).toHaveURL(/\/withdraw/);
 
-    // Should show current balance
-    const balanceText = page.locator('text=Current balance');
+    // Should show the same synthetic balance carried forward from deposit.
+    const balanceText = page.getByText('Simulated balance before this step:', {
+      exact: false,
+    });
     await expect(balanceText).toBeVisible();
     
     // Balance should be greater than 0
-    const balanceValue = await page.locator('text=Current balance').locator('..').textContent();
+    const balanceValue = await balanceText.textContent();
     expect(balanceValue).toMatch(/\$\d+\.\d{2}/);
   });
 });

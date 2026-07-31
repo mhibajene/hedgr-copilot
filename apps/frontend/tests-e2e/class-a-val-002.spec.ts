@@ -50,9 +50,16 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   const journeyShell = page.getByTestId('synthetic-journey-shell');
   await expect(journeyShell).toContainText('CLASS-A-VAL-002');
   await expect(journeyShell).toContainText(
-    'Settings and Copilot are outside this participant journey',
+    'One simulated balance, four connected steps',
+  );
+  await expect(journeyShell).toContainText(
+    'Target shares describe an informational posture only',
   );
   await expect(page.getByTestId('usd-balance')).toHaveText('$0.00');
+  await expect(page.getByText('Simulated balance', { exact: true })).toBeVisible();
+  await expect(page.getByTestId('dashboard-synthetic-balance-explainer')).toContainText(
+    'do not split this balance into separate accounts',
+  );
   await expect(page.getByTestId('engine-allocation-band-coreTargetPct')).toContainText(
     'Target share · 50%',
   );
@@ -66,7 +73,7 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   await page.getByRole('link', { name: 'Start synthetic deposit' }).click();
   await expect(page).toHaveURL(/\/deposit\?journey=class-a-val-002/);
   await expect(page.getByTestId('deposit-synthetic-condition')).toContainText(
-    'no real funds',
+    'same simulated balance shown on Dashboard',
   );
   await expect(page.getByTestId('deposit-fx-block')).toContainText(
     'Synthetic preview rate: 1 USD = 20.00 ZMW',
@@ -82,19 +89,25 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
 
   await depositAmount.fill('100');
   await expect(page.getByTestId('deposit-conversion-preview')).toContainText('$5.00');
+  await expect(page.getByTestId('deposit-balance-change')).toContainText(
+    'adds +$5.00 to the one local fixture balance',
+  );
   await depositConfirm.click();
   await expect(page.getByTestId('deposit-confirmation-region')).toContainText(
-    'No external account was charged and no money moved',
+    'The simulated balance increased by $5.00',
     { timeout: 10_000 },
+  );
+  await expect(page.getByTestId('deposit-confirmation-region')).toContainText(
+    'No external account was charged and no money moved',
   );
   expect(depositContractRequests).toBe(0);
 
   await page.getByRole('link', { name: 'Continue to synthetic withdrawal' }).click();
   await expect(page).toHaveURL(/\/withdraw\?journey=class-a-val-002/);
   await expect(page.getByTestId('withdraw-synthetic-condition')).toContainText(
-    'cannot contact a bank, provider, rail, or settlement service',
+    'same local fixture balance created on Deposit',
   );
-  await expect(page.getByText('Current balance:')).toContainText('$5.00');
+  await expect(page.getByText('Simulated balance before this step:')).toContainText('$5.00');
 
   const withdrawAmount = page.getByTestId('withdraw-amount');
   const withdrawConfirm = page.getByRole('button', { name: 'Confirm' });
@@ -116,6 +129,10 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
 
   await withdrawAmount.fill('2');
   await expect(withdrawConfirm).toBeEnabled();
+  const withdrawBalancePreview = page.getByTestId('withdraw-balance-preview');
+  await expect(withdrawBalancePreview).toContainText('$5.00');
+  await expect(withdrawBalancePreview).toContainText('$2.00');
+  await expect(withdrawBalancePreview).toContainText('$3.00');
   await withdrawConfirm.click();
   await expect(page.getByTestId('withdraw-status-region')).toHaveAttribute(
     'data-status',
@@ -125,16 +142,26 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   await expect(page.getByTestId('withdraw-status-description')).toContainText(
     'No bank transfer, payout, or settlement occurred',
   );
+  await expect(page.getByTestId('withdraw-balance-reconciliation')).toContainText(
+    '$3.00 remains',
+  );
 
   await page.getByRole('link', { name: 'Continue to synthetic activity' }).click();
   await expect(page).toHaveURL(/\/activity\?journey=class-a-val-002/);
   await expect(page.getByTestId('activity-synthetic-condition')).toContainText(
     'not proof of a deposit, payout, provider action, or external settlement',
   );
+  const activityReconciliation = page.getByTestId('activity-balance-reconciliation');
+  await expect(activityReconciliation).toContainText('Synthetic deposits+$5.00');
+  await expect(activityReconciliation).toContainText('Synthetic withdrawals−$2.00');
+  await expect(activityReconciliation).toContainText('Remaining simulated balance$3.00');
   await expect(page.getByTestId('activity-type-deposit')).toHaveText('Synthetic deposit');
   await expect(page.getByTestId('activity-type-withdraw')).toHaveText(
     'Synthetic withdrawal',
   );
+  await expect(
+    page.getByTestId('activity-row-withdraw').getByText('0', { exact: true }),
+  ).toHaveCount(0);
   await expect(page.locator('[data-testid="tx-status-pill"][data-status="SUCCESS"]')).toHaveCount(2);
 
   await page.getByRole('link', { name: 'Return to dashboard summary' }).click();
