@@ -6,7 +6,7 @@
 
 **Authority:** The repository is source of truth. Wording here must match `docs/decisions/0016-warmth-layer-doctrine-constrained-retail-refinement-track.md`, `docs/decisions/SPRINT-2-ADR-INDEX.md`, and `docs/ops/HEDGR_STATUS.md`. Wording must match **Accepted** ADR **0016** in repo; do not broaden scope or soften read-only / non-execution boundaries in Notion.
 
-**Last reconciled:** 2026-07-29 (mirror after `STATUS-HYGIENE-001` / **§173** reconciled stale **§7a** dual-ticket language; singular-ticket Lane V `CLASS-A-VAL-002` retained; `NARRATIVE-006` remains closed under **§172**; Controlled Parallelism v19 / **D-055** completed historical; Lane N idle; Research R1 preserved; Research R2 accepted as an internal design artifact; publication remains unauthorized; Lane M idle; Lane R idle; D-054 completed historical; Canonical Story v1.0, Customer One-Pager v1.0, Narrative Style Guide v1.0, and accepted Investor Orientation Brief remain unchanged; R1 retirement deferred ≥ **2026-08-02**; Kenya counsel **DEFER**; repo **§7** / **§7a** controls sequencing)
+**Last reconciled:** 2026-07-31 (mirror after Founder validation disposition Internal **D-057** / **§174** retained `CLASS-A-VAL-002` as the sole active Lane V ticket and open validation objective; current participant findings remain directional learning evidence only; no implementation, participant-comprehension, Class B, MVP-acceptance, Evidence Register, gate-clearance, successor, or parallel-lane authority; `STATUS-HYGIENE-001` / **§173** remains completed; `NARRATIVE-006` remains closed under **§172**; Controlled Parallelism v19 / **D-055** completed historical; Lane N idle; Research R1 preserved; Research R2 accepted as an internal design artifact; publication remains unauthorized; Lane M idle; Lane R idle; D-054 completed historical; Canonical Story v1.0, Customer One-Pager v1.0, Narrative Style Guide v1.0, and accepted Investor Orientation Brief remain unchanged; R1 retirement deferred ≥ **2026-08-02**; Kenya counsel **DEFER**; repo **§7** / **§7a** controls sequencing)
 
 ---
 
@@ -67,6 +67,8 @@ Use as a governed workstream line, **not** as a shipped-feature claim. Placement
 - **Controlled Parallelism v6 (D-036, Accepted — completed historical pass):** Named only `CLASS-A-VAL-001` (Lane V, unchanged) and `BRIDGE-P0-001` (Lane R, Class A / execution-neutral Phase 0 contract and schema foundation). Lane R completed through PR **#291** / **§141** with ADR **0026**, canonical unused-at-runtime contracts, fixtures, deterministic fail-closed tests, documentation, runtime-preservation evidence, and `NO CROSS-LANE IMPACT`. D-036 no longer supplies concurrency. No endpoint, route, action-schema, snapshot, runtime allow-list, production Worker behavior, mutation, activation, sequencing, evidence acceptance, Phase 1, Class B / Class C, or customer-money capability.
 
 - **Class A validation successor transition (D-037, Accepted):** Founder closed `CLASS-A-VAL-001` as stop/reframe before cohort completion (**§142**) and activated `CLASS-A-VAL-002` as the successor (**§143** / **§7** / **§7a**). The primary condition is a coherent, visibly synthetic Dashboard → Deposit → Withdraw → Activity journey with shared trust/navigation context. Settings and Copilot remain outside the primary journey. No live money movement, custody, provider/banking integration, production FX, settlement, payout, Stability Engine execution, Class B implementation. Later Controlled Parallelism v7 (**D-041**) adds Lane R without changing this Lane V authority.
+
+- **`CLASS-A-VAL-002` Founder validation disposition (D-057, Accepted — ticket remains open):** Founder reviewed the Forms summary, all three participant responses, response workbook, validation review, current repo authority, and participant protocol. The evidence identifies synthetic-money-journey comprehension as the principal uncertainty but remains directional learning only. One bounded comprehension iteration is a candidate hypothesis for a separately scoped and authorized pass, followed by protocol-complete retesting. D-057 does not approve implementation, claim participant comprehension, close the ticket, create Class B readiness, satisfy MVP acceptance, accept Evidence Register evidence, clear a gate, authorize unsupported trust claims, or create a successor / concurrent lane. Canonical detail: **§174**; live brief: **§7a**.
 
 - **Controlled Parallelism v7 (D-041, Accepted — completed historical pass):** Named `CLASS-A-VAL-002` (Lane V) and `BRIDGE-P1-PREP-001` (Lane R prep). Lane R closed prep-complete (**§151** / **D-043**); singular-ticket restored; D-041 no longer supplies concurrency. Proposed `BRIDGE-P1-001` formed not active. `NO CROSS-LANE IMPACT`.
 
@@ -1195,6 +1197,37 @@ Use when mirroring the completed **test-only** regression tranche 4. **Not** new
 - Founder accepted Research R2 and closed `NARRATIVE-006` under **§172**.
 - Controlled Parallelism v19 / D-055 is completed historical authority; singular-ticket Lane V restored; `NO CROSS-LANE IMPACT`.
 - Publication and circulation remain **NOT AUTHORISED**; acceptance creates no external-use authority.
+
+---
+
+## 8d.25 Decision Log — D-057 / CLASS-A-VAL-002 validation disposition (Internal; Notion mirror)
+
+**Notion Decision Log ID:** **D-057**. Canonical detail: **`docs/ops/HEDGR_STATUS.md` §174** and live Lane V brief in **§7a**. Visibility: **Internal**.
+
+| Field | Value |
+| ----- | ----- |
+| **Decision ID** | D-057 |
+| **Title** | `CLASS-A-VAL-002` participant-evidence validation disposition |
+| **Status** | Accepted — continue; ticket remains open; retest after one bounded comprehension iteration |
+| **Decision Type** | Product / UX-Trust / Validation disposition |
+| **Strategic Horizon** | Short-term (MVP evidence generation) |
+| **Visibility** | Internal |
+| **Date** | 2026-07-31 |
+| **Repo authority** | `HEDGR_STATUS.md` **§174**; active brief **§7a** |
+| **Ticket** | Lane V `CLASS-A-VAL-002` (sole active ticket; remains open) |
+
+**Summary / notes (concise)**
+
+- Current evidence identifies the principal uncertainty but does not demonstrate participant comprehension or satisfy closeout.
+- The value-preservation proposition remains visible; the synthetic-money journey lacks a coherent participant mental model across local-currency entry, synthetic value representation, withdrawal, remaining balance, and Activity.
+- Retain Stability-first positioning, capital-preservation narrative, the prototype safety boundary, and visible synthetic / no-real-money disclosure.
+- Candidate next pass: one bounded comprehension-focused Class A iteration. Potential refinements remain hypotheses, not predetermined implementation requirements.
+- Remove nothing from the core thesis on current evidence.
+- Retest only with verified target participants, recorded build/version, full participant protocol, behavioral observation, moderator checkpoints, and required metadata.
+- Moderate trust, proposition recognition, positive curiosity, and numeric survey scores are not evidence of understanding.
+- Do not answer requests for regulation, institutional backing, endorsement, testimonials, or external proof through unsupported interface claims.
+- D-057 does not approve implementation, widen execution, create Class B readiness, satisfy MVP acceptance, close `CLASS-A-VAL-002`, claim comprehension, accept Evidence Register evidence, clear a gate, or create a successor / concurrent lane.
+- Singular-ticket Lane V remains active; all other lanes remain idle; `NO CROSS-LANE IMPACT`.
 
 ---
 
