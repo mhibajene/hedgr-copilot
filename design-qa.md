@@ -69,7 +69,8 @@ All captures contain local synthetic fixtures only. No participant data, real fi
 - Workspace lint: passed.
 - Production frontend build with mock / stub configuration: passed.
 - `git diff --check`: passed.
-- Aggregate `pnpm run validate` and hosted checks are recorded after immutable RAP binding through final Hedgr PR posture.
+- Aggregate `pnpm run validate`: passed after immutable RAP binding.
+- Hosted checks are recorded through final Hedgr PR posture.
 
 ## No-live-authority confirmation
 
