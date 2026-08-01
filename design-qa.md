@@ -1,3 +1,86 @@
+# HEDGR-UI-005 Design QA and Change Log
+
+## Comparison target
+
+- Immediate baseline: completed `HEDGR-UI-004` synthetic Dashboard → Deposit → Withdraw → Activity journey.
+- Governing scope: Internal **D-059** / `HEDGR_STATUS.md` **§177** and the active **§7a** nested brief.
+- Locked hypothesis: ordinary money language plus contextual, rather than advance, journey explanation can improve retest validity while preserving simulated arithmetic and the no-real-money boundary.
+- Brand authority: `DESIGN.md`, `assets/brand/README.md`, `docs/brand/HEDGR_BRAND_SYSTEM.md`, `docs/brand/HEDGR_BRAND_ASSET_RULES.md`, `docs/brand/HEDGR_DESIGN_TOKENS.md`, `docs/brand/HEDGR_UI_APPLICATION_RULES.md`, and `docs/brand/HEDGR_BRAND_QA_CHECKLIST.md`. No Brand Guidelines PDF is present in governed repo assets for this pass.
+- Rendered route: `http://localhost:3000/dashboard?journey=class-a-val-002`.
+
+## Complete journey evidence
+
+- Dashboard start: `/Users/musalwa/.codex/visualizations/2026/08/01/hedgr-ui-005/01-dashboard-start-desktop.png`
+- Deposit preview: `/Users/musalwa/.codex/visualizations/2026/08/01/hedgr-ui-005/02-deposit-preview-desktop.png`
+- Deposit result: `/Users/musalwa/.codex/visualizations/2026/08/01/hedgr-ui-005/03-deposit-result-desktop.png`
+- Withdrawal preview: `/Users/musalwa/.codex/visualizations/2026/08/01/hedgr-ui-005/04-withdraw-preview-desktop.png`
+- Withdrawal result: `/Users/musalwa/.codex/visualizations/2026/08/01/hedgr-ui-005/05-withdraw-result-desktop.png`
+- Activity reconciliation: `/Users/musalwa/.codex/visualizations/2026/08/01/hedgr-ui-005/06-activity-reconciliation-desktop.png`
+- Activity detail: `/Users/musalwa/.codex/visualizations/2026/08/01/hedgr-ui-005/07-activity-detail-desktop.png`
+- Dashboard return at `$3.00`: `/Users/musalwa/.codex/visualizations/2026/08/01/hedgr-ui-005/08-dashboard-return-desktop.png`
+- Activity mobile: `/Users/musalwa/.codex/visualizations/2026/08/01/hedgr-ui-005/09-activity-reconciliation-mobile.png`
+- Activity mobile grayscale: `/Users/musalwa/.codex/visualizations/2026/08/01/hedgr-ui-005/10-activity-reconciliation-mobile-grayscale.png`
+- Unavailable-rate mobile: `/Users/musalwa/.codex/visualizations/2026/08/01/hedgr-ui-005/11-unavailable-rate-mobile.png`
+
+All captures contain simulated research data only. No participant data, real financial data, provider call, bank action, payout, conversion, settlement, or external account action is represented.
+
+## Plain-language and information-order treatment
+
+### Immediate-step presentation
+
+- The shared shell identifies only the current step. It no longer narrates the full four-route model before the participant experiences it.
+- Dashboard asks for a simulated deposit and states the example result and no-real-money boundary without teaching the later withdrawal / Activity relationship.
+- Deposit presents what is happening, the example result, and what is not happening. The matching Activity entry is named only after confirmation.
+- Withdraw presents the subtraction and remaining-balance example before confirmation. The deposit / withdrawal reconciliation is named only after the simulated result exists.
+- Activity is where the complete relationship becomes relevant: simulated deposits minus simulated withdrawals explain the remaining simulated balance.
+
+### Customer-facing terminology
+
+- Primary financial labels consistently use `simulated`: simulated balance, simulated example rate, simulated deposit, simulated withdrawal, simulated Activity entries, and simulated amount.
+- `Local fixture`, `fixture arithmetic`, `target share`, `informational posture`, and customer-facing `settlement` language were removed from the primary journey.
+- Stability percentages are labelled `Stability target` and explained as `Guidance only`; they remain separate from the displayed simulated balance and remain non-executing.
+- Activity detail now names the simulation record and simulated step status, denies bank / payment-provider record meaning, and suppresses the withdrawal's non-meaningful zero local-currency display.
+
+## Visual and accessibility review
+
+- Desktop viewport: 1280 × 900. Mobile viewport: 390 × 844.
+- Final mobile document width equals viewport width (`390`); no page-level horizontal overflow.
+- The current step remains identifiable by number, route label, `aria-label="Current journey step"`, and governed active treatment without exposing future-step narration.
+- The persistent `Simulation Mode. No Real Money` disclosure remains visible at every financial surface; detailed environment labels remain behind the existing native disclosure.
+- Activity direction remains carried by labels, signs, and arrows; colour is secondary. Mobile and grayscale captures preserve route state, amounts, reconciliation, status, and return action.
+- Visual inspection found and corrected one bare `0` local-currency value in the withdrawal detail modal. The final capture contains no non-meaningful local amount.
+- No console error, page error, governed-asset change, new token, raw hue, gradient, glow, animation, or decorative crypto treatment was introduced.
+
+## Research-instrument change
+
+- The participant protocol no longer asks for the complete journey model at Dashboard or names Activity before Deposit confirmation.
+- It records the first correct explanation at unaided, independently opened disclosure, neutral-probe, or moderator-explanation level.
+- Delayed recall and a bounded transfer question expose teaching dependence without changing participant success thresholds.
+- The protocol remains simulated-only, minimal-data, behavior-led, and non-authorizing. It records no participant result or comprehension claim.
+
+## Scoped validation evidence
+
+- Targeted Dashboard / Deposit / Withdraw / allocation / Review Snapshot unit tests: **46/46 passed**.
+- Targeted `CLASS-A-VAL-002` Playwright journey: **3/3 passed**.
+- Full repository unit run: Bridge snapshot tests **11/11**, Bridge Worker tests **34/34**, and frontend tests **748/748** passed.
+- Full production-build Playwright parity: **56/56 passed** against the Flask stub with required mock / stub configuration.
+- Frontend typecheck: passed.
+- Production frontend build with mock / stub configuration: passed.
+- `git diff --check`: passed before closeout reconciliation.
+- Aggregate `pnpm run validate`: required again after closeout and immutable RAP binding.
+- Hosted checks are recorded through final Hedgr PR posture.
+
+## No-live-authority confirmation
+
+- No file under `apps/frontend/lib/engine/**`, backend, state store, ledger, transaction lifecycle, provider, banking, custody, rail, production FX, payout, routing, Settings, or Copilot implementation changed.
+- No arithmetic, financial state, state transition, navigation order, Dashboard IA, engine meaning, allocation semantics, Activity record structure, unavailable-data behavior, or withdrawal status logic changed.
+- No live-money, execution, accounting, protection guarantee, performance, financial approval, regulatory, institutional-backing, endorsement, testimonial, or external-proof claim was introduced.
+- Interface completion does not prove participant comprehension, close `CLASS-A-VAL-002`, accept Evidence Register evidence, clear a gate, activate Class B, complete the institutional MVP, nominate a successor, or establish production readiness.
+
+final result: passed
+
+---
+
 # HEDGR-UI-004 Design QA and Change Log
 
 ## Comparison target

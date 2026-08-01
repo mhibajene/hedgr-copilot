@@ -61,10 +61,10 @@ test.describe('Empty and Error States', () => {
     // Navigate to activity
     await page.goto('/activity');
     await waitForPageLoaded(page);
-    await expect(page.getByRole('heading', { name: 'Activity' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Activity', exact: true })).toBeVisible();
 
     // Page should show either empty state text or transaction list (never raw errors)
-    const emptyStateText = page.getByText('No transactions yet');
+    const emptyStateText = page.getByTestId('activity-empty-state');
     const activityList = page.getByTestId('activity-list');
     
     const hasEmptyState = await emptyStateText.isVisible().catch(() => false);
@@ -88,7 +88,7 @@ test.describe('Empty and Error States', () => {
 
     // Page should either show no-funds state, or the withdraw form
     const noFundsState = page.getByTestId('withdraw-no-funds');
-    const withdrawForm = page.getByLabel('Amount (USD)');
+    const withdrawForm = page.getByLabel('Amount to simulate (USD)');
     
     const hasNoFunds = await noFundsState.isVisible().catch(() => false);
     const hasWithdrawForm = await withdrawForm.isVisible().catch(() => false);
@@ -194,7 +194,7 @@ test.describe('State Transitions', () => {
     await page.getByTestId('deposit-amount').fill('200');
     await waitForDepositFxReady(page);
     await page.getByRole('button', { name: 'Confirm' }).click();
-    await expect(page.getByText('Synthetic deposit recorded')).toBeVisible({ timeout: 10000 });
+    await expect(page.getByText('Simulated deposit recorded')).toBeVisible({ timeout: 10000 });
 
     // Return to dashboard and verify balance changed
     await page.goto('/dashboard');
@@ -220,7 +220,7 @@ test.describe('State Transitions', () => {
     await page.getByTestId('deposit-amount').fill('100');
     await waitForDepositFxReady(page);
     await page.getByRole('button', { name: 'Confirm' }).click();
-    await expect(page.getByText('Synthetic deposit recorded')).toBeVisible({ timeout: 10000 });
+    await expect(page.getByText('Simulated deposit recorded')).toBeVisible({ timeout: 10000 });
 
     // Go to activity and verify transaction appears
     await page.goto('/activity');

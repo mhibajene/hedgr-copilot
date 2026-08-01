@@ -251,13 +251,12 @@ function DepositPageContent() {
         <section
           className="rounded-xl border border-hedgr-300 bg-hedgr-100 p-4 text-hedgr-800"
           data-testid="deposit-synthetic-condition"
-          aria-label="Synthetic deposit condition"
+          aria-label="Simulated deposit condition"
         >
           <p className="text-sm font-semibold">Step 2 · add to the simulated balance</p>
           <p className="mt-1 text-sm leading-relaxed text-hedgr-dark">
-            This step adds one local fixture record to the same simulated balance
-            shown on Dashboard. The fixed preview is not a live quote or conversion,
-            no external account is charged, and no real funds move.
+            Enter an amount to see the example result. Confirming records only a
+            simulated deposit. No account is charged and no real money moves.
           </p>
         </section>
       ) : null}
@@ -267,7 +266,7 @@ function DepositPageContent() {
           className="rounded-xl border border-hedgr-200 bg-white p-3 text-sm text-hedgr-dark"
           data-testid="deposit-fx-block"
         >
-          Synthetic preview rate: 1 USD = {rate?.toFixed(2)} {quote}
+          Simulated example rate: 1 USD = {rate?.toFixed(2)} {quote}
         </div>
       ) : unavailableDataScenario || fx.status === 'error' ? (
         <MarketDataContinuityPanel
@@ -280,7 +279,9 @@ function DepositPageContent() {
       )}
 
       <div className="block space-y-2">
-        <label htmlFor="deposit-amount">Amount ({quote})</label>
+        <label htmlFor="deposit-amount">
+          {syntheticJourneyActive ? 'Amount to simulate' : 'Amount'} ({quote})
+        </label>
         <input
           id="deposit-amount"
           type="text"
@@ -296,7 +297,7 @@ function DepositPageContent() {
             setAmountLocalStr(String(parsed));
           }}
           data-testid="deposit-amount"
-          aria-label="Deposit amount"
+          aria-label={syntheticJourneyActive ? 'Simulated deposit amount' : 'Deposit amount'}
           aria-invalid={amountIsInvalid}
           aria-describedby={amountIsInvalid ? 'deposit-amount-error' : undefined}
           className="border rounded-xl p-3 w-full"
@@ -311,22 +312,21 @@ function DepositPageContent() {
         className="rounded-xl border border-hedgr-100 bg-hedgr-100/40 p-3 text-sm text-hedgr-dark"
         data-testid="deposit-conversion-preview"
       >
-        {rate !== null && usdPreview !== null ? (
+        {rate !== null && usdPreview !== null && amountLocalNum !== null ? (
           syntheticJourneyActive ? (
             <div className="space-y-1" data-testid="deposit-balance-change">
               <p className="text-xs font-semibold uppercase tracking-wide text-hedgr-500">
                 Simulated balance change
               </p>
               <p>
-                This step adds{' '}
+                The simulation shows {amountLocalNum.toFixed(0)} {quote} as{' '}
                 <strong className="tabular-nums text-hedgr-800">
                   +${usdPreview.toFixed(2)}
-                </strong>{' '}
-                to the one local fixture balance.
+                </strong>
+                .
               </p>
               <p className="text-hedgr-500">
-                After confirmation, Activity will contain one matching synthetic
-                deposit record.
+                Confirming adds this amount to the simulated balance.
               </p>
             </div>
           ) : (
@@ -351,21 +351,21 @@ function DepositPageContent() {
           data-testid="deposit-confirmation-region"
         >
           <p className="font-semibold" data-testid="deposit-confirmed">
-            {syntheticJourneyActive ? 'Synthetic deposit recorded' : 'Deposit CONFIRMED'}
+            {syntheticJourneyActive ? 'Simulated deposit recorded' : 'Deposit CONFIRMED'}
           </p>
           {syntheticJourneyActive ? (
             <>
               <p className="mt-1 text-sm leading-relaxed text-hedgr-dark">
                 The simulated balance increased by{' '}
                 <strong className="tabular-nums">${usdToCredit.toFixed(2)}</strong>.
-                Activity now contains the matching local fixture record. No external
-                account was charged and no money moved.
+                Activity now shows the matching simulated deposit. No account was
+                charged and no real money moved.
               </p>
               <Link
                 href={getSyntheticJourneyHref('/withdraw')}
                 className="mt-3 inline-flex rounded-xl bg-hedgr-primary px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-hedgr-600 focus:outline-none focus:ring-2 focus:ring-hedgr-500 focus:ring-offset-2"
               >
-                Continue to synthetic withdrawal
+                Continue to simulated withdrawal
               </Link>
             </>
           ) : null}
@@ -398,12 +398,12 @@ function DepositPageContent() {
       )}
       {syntheticJourneyActive ? (
         <p className="text-sm text-hedgr-dark">
-          Secondary trust check:{' '}
+          Optional trust check:{' '}
           <Link
             href={getSyntheticJourneyHref('/deposit', { unavailableData: true })}
             className="font-medium text-hedgr-primary underline underline-offset-2 hover:text-hedgr-600"
           >
-            review the unavailable-data scenario
+            View unavailable-rate example
           </Link>
           .
         </p>
@@ -412,7 +412,7 @@ function DepositPageContent() {
           href={getSyntheticJourneyHref('/deposit')}
           className="inline-flex text-sm font-medium text-[#1F2747] underline underline-offset-2 hover:text-[#36447C]"
         >
-          Return to the primary synthetic journey
+          Return to the simulated deposit
         </Link>
       ) : null}
     </main>

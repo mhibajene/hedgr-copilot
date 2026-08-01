@@ -182,7 +182,7 @@ describe("DashboardPage engine trust surface", () => {
 
     expect(
       (
-        await screen.findByRole("link", { name: "Start synthetic deposit" })
+        await screen.findByRole("link", { name: "Start simulated deposit" })
       ).getAttribute("href")
     ).toBe("/deposit?journey=class-a-val-002");
     expect(
@@ -192,12 +192,13 @@ describe("DashboardPage engine trust surface", () => {
     const explainer = screen.getByTestId(
       "dashboard-synthetic-balance-explainer"
     );
-    expect(explainer.textContent).toContain("one local fixture balance");
     expect(explainer.textContent).toContain(
-      "target shares below describe an informational stability posture"
+      "exists only in this research simulation"
     );
-    expect(explainer.textContent).toContain(
-      "do not split this balance into separate accounts"
+    expect(explainer.textContent).toContain("not a real account balance");
+    expect(explainer.textContent).toContain("no money is being held or moved");
+    expect(explainer.textContent).not.toMatch(
+      /fixture|informational posture|settlement/i
     );
   });
 
@@ -225,7 +226,7 @@ describe("DashboardPage engine trust surface", () => {
     render(<DashboardPage />);
 
     const restartButton = await screen.findByRole("button", {
-      name: "Restart synthetic journey",
+      name: "Restart simulated journey",
     });
     expect(screen.getByTestId("dashboard-restart-journey").textContent).toContain(
       "begins again at $0"
@@ -256,7 +257,7 @@ describe("DashboardPage engine trust surface", () => {
     render(<DashboardPage />);
 
     expect(
-      screen.queryByRole("button", { name: "Restart synthetic journey" })
+      screen.queryByRole("button", { name: "Restart simulated journey" })
     ).toBeNull();
   });
 

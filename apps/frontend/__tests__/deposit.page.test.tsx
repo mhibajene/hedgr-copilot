@@ -347,7 +347,7 @@ describe('DepositPage CLASS-A-VAL-002 primary and exception conditions', () => {
     vi.stubEnv('NEXT_PUBLIC_APP_ENV', 'dev');
   }
 
-  test('uses a fixed synthetic preview and never calls the backend deposit contract', async () => {
+  test('uses a fixed simulated preview and never calls the backend deposit contract', async () => {
     stubSyntheticEnvironment();
     vi.useFakeTimers();
     vi.mocked(useSearchParams).mockReturnValue(
@@ -364,17 +364,20 @@ describe('DepositPage CLASS-A-VAL-002 primary and exception conditions', () => {
     });
 
     expect(screen.getByTestId('deposit-synthetic-condition').textContent).toMatch(
-      /no real funds/i,
+      /no real money moves/i,
     );
     expect(screen.getByTestId('deposit-synthetic-condition').textContent).toMatch(
-      /same simulated balance shown on Dashboard/i,
+      /records only a simulated deposit/i,
     );
     expect(screen.getByTestId('deposit-fx-block').textContent).toContain(
       '1 USD = 20.00 ZMW',
     );
     expect(screen.getByTestId('deposit-conversion-preview').textContent).toContain('$5.00');
     expect(screen.getByTestId('deposit-balance-change').textContent).toMatch(
-      /adds \+\$5\.00 to the one local fixture balance/i,
+      /shows 100 ZMW as \+\$5\.00/i,
+    );
+    expect(screen.getByTestId('deposit-balance-change').textContent).not.toMatch(
+      /fixture|synthetic|settlement/i,
     );
 
     await act(async () => {
@@ -387,16 +390,16 @@ describe('DepositPage CLASS-A-VAL-002 primary and exception conditions', () => {
       await vi.advanceTimersByTimeAsync(1600);
     });
     expect(screen.getByTestId('deposit-confirmation-region').textContent).toMatch(
-      /no money moved/i,
+      /no real money moved/i,
     );
     expect(screen.getByTestId('deposit-confirmation-region').textContent).toMatch(
       /simulated balance increased by \$5\.00/i,
     );
     expect(screen.getByTestId('deposit-confirmation-region').textContent).toMatch(
-      /matching local fixture record/i,
+      /matching simulated deposit/i,
     );
     expect(
-      screen.getByRole('link', { name: 'Continue to synthetic withdrawal' }),
+      screen.getByRole('link', { name: 'Continue to simulated withdrawal' }),
     ).toBeTruthy();
   });
 
@@ -467,7 +470,7 @@ describe('DepositPage CLASS-A-VAL-002 primary and exception conditions', () => {
       true,
     );
     expect(
-      screen.getByRole('link', { name: 'Return to the primary synthetic journey' }),
+      screen.getByRole('link', { name: 'Return to the simulated deposit' }),
     ).toBeTruthy();
   });
 });

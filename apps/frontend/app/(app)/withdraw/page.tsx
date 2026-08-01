@@ -67,14 +67,14 @@ const WITHDRAW_STATUS_CONTENT: Record<
 const SYNTHETIC_WITHDRAW_STATUS_CONTENT: typeof WITHDRAW_STATUS_CONTENT = {
   PENDING: {
     publicStatus: PublicTxStatus.IN_PROGRESS,
-    title: 'Synthetic withdrawal in progress',
-    description: 'The local fixture is updating. No payout or external transfer is in progress.',
-    disclosure: 'This research step cannot move money or initiate settlement.',
+    title: 'Simulated withdrawal in progress',
+    description: 'The simulation is updating the balance. No bank transfer or real payout is in progress.',
+    disclosure: 'No real money can move in this step.',
   },
   CONFIRMED: {
     publicStatus: PublicTxStatus.SUCCESS,
-    title: 'Synthetic withdrawal recorded',
-    description: 'The local fixture balance is updated. No bank transfer, payout, or settlement occurred.',
+    title: 'Simulated withdrawal recorded',
+    description: 'The simulated balance is updated. No bank transfer or real payout occurred.',
   },
 };
 
@@ -336,13 +336,12 @@ function WithdrawPageContent() {
         <section
           className="rounded-xl border border-hedgr-300 bg-hedgr-100 p-4 text-hedgr-800"
           data-testid="withdraw-synthetic-condition"
-          aria-label="Synthetic withdrawal condition"
+          aria-label="Simulated withdrawal condition"
         >
           <p className="text-sm font-semibold">Step 3 · subtract from the simulated balance</p>
           <p className="mt-1 text-sm leading-relaxed text-hedgr-dark">
-            This step subtracts from the same local fixture balance created on Deposit.
-            The remainder stays in that simulated balance and both changes appear in
-            Activity. It cannot contact a bank, provider, rail, or settlement service.
+            Enter an amount to subtract from the simulated balance. The preview
+            below shows what would remain. No bank or payment provider is contacted.
           </p>
         </section>
       ) : null}
@@ -351,7 +350,7 @@ function WithdrawPageContent() {
           className="rounded-xl border border-hedgr-200 bg-white p-3 text-sm text-hedgr-dark"
           data-testid="withdraw-fx-block"
         >
-          Synthetic display rate: 1 USD = {rate?.toFixed(2)} {quote}
+          Simulated example rate: 1 USD = {rate?.toFixed(2)} {quote}
         </div>
       ) : fx.status === 'error' ? (
         <MarketDataContinuityPanel
@@ -366,7 +365,9 @@ function WithdrawPageContent() {
         {syntheticJourneyActive ? 'Simulated balance before this step: ' : 'Current balance: '}
         <BalanceWithLocalEstimate usdAmount={displayedBalanceBefore} inline />
       </div>
-      <label htmlFor="amount-usd" className="block space-y-2">Amount (USD)</label>
+      <label htmlFor="amount-usd" className="block space-y-2">
+        {syntheticJourneyActive ? 'Amount to simulate' : 'Amount'} (USD)
+      </label>
       <input
         id="amount-usd"
         type="number"
@@ -408,8 +409,8 @@ function WithdrawPageContent() {
             {remainingAfterWithdrawal.toFixed(2)}
           </p>
           <p className="mt-1 text-sm leading-relaxed text-hedgr-500">
-            This is local fixture arithmetic only. Confirmation records a synthetic
-            withdrawal; it does not create a payout or settlement.
+            This is an example calculation. Confirming records only a simulated
+            withdrawal; it does not create a real payout.
           </p>
         </section>
       ) : null}
@@ -452,7 +453,8 @@ function WithdrawPageContent() {
               {activeStatusPresentation.label}
             </span>
           </div>
-          {exceptionClarificationLines && exceptionClarificationLines.length > 0 && (
+          {!syntheticJourneyActive &&
+            exceptionClarificationLines && exceptionClarificationLines.length > 0 && (
             <div
               className="mt-3 border-t border-gray-100 pt-3 space-y-2"
               data-testid="withdraw-status-exception-clarification"
@@ -464,7 +466,8 @@ function WithdrawPageContent() {
               ))}
             </div>
           )}
-          {reconciliationClarificationLines && reconciliationClarificationLines.length > 0 && (
+          {!syntheticJourneyActive &&
+            reconciliationClarificationLines && reconciliationClarificationLines.length > 0 && (
             <div
               className="mt-3 border-t border-gray-100 pt-3 space-y-2"
               data-testid="withdraw-status-reconciliation-clarification"
@@ -476,7 +479,8 @@ function WithdrawPageContent() {
               ))}
             </div>
           )}
-          {unresolvedPathClarificationLines && unresolvedPathClarificationLines.length > 0 && (
+          {!syntheticJourneyActive &&
+            unresolvedPathClarificationLines && unresolvedPathClarificationLines.length > 0 && (
             <div
               className="mt-3 border-t border-gray-100 pt-2 space-y-1"
               data-testid="withdraw-status-unresolved-path-clarification"
@@ -488,7 +492,8 @@ function WithdrawPageContent() {
               ))}
             </div>
           )}
-          {nextStepGuidanceLines && nextStepGuidanceLines.length > 0 && (
+          {!syntheticJourneyActive &&
+            nextStepGuidanceLines && nextStepGuidanceLines.length > 0 && (
             <div
               className="mt-3 border-t border-gray-100 pt-2 space-y-1"
               data-testid="withdraw-status-next-step-guidance"
@@ -500,7 +505,8 @@ function WithdrawPageContent() {
               ))}
             </div>
           )}
-          {fallbackPathClarificationLines && fallbackPathClarificationLines.length > 0 && (
+          {!syntheticJourneyActive &&
+            fallbackPathClarificationLines && fallbackPathClarificationLines.length > 0 && (
             <div
               className="mt-2 border-t border-gray-100/80 pt-1.5 space-y-1"
               data-testid="withdraw-status-fallback-path-clarity"
@@ -522,15 +528,15 @@ function WithdrawPageContent() {
                   <strong className="tabular-nums">
                     ${remainingAfterWithdrawal.toFixed(2)} remains
                   </strong>{' '}
-                  in the same local fixture balance. Activity will show the synthetic
-                  deposit and withdrawal that explain it.
+                  in the simulated balance. Activity now shows the simulated deposit
+                  and withdrawal that explain the result.
                 </p>
               ) : null}
               <Link
                 href={getSyntheticJourneyHref('/activity')}
                 className="inline-flex rounded-xl bg-hedgr-primary px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-hedgr-600 focus:outline-none focus:ring-2 focus:ring-hedgr-500 focus:ring-offset-2"
               >
-                Continue to synthetic activity
+                Review simulated activity
               </Link>
             </div>
           ) : null}

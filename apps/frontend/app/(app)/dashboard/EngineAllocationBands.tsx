@@ -15,7 +15,7 @@ type LaneKey = "liquidityTargetPct" | "coreTargetPct" | "yieldCapPct";
 const PRIMARY_LANE: { key: LaneKey; label: string; role: string } = {
   key: "coreTargetPct",
   label: "Stable balance",
-  role: "Primary holding lane",
+  role: "Primary stability target",
 };
 
 // Supporting-lane fills are static hierarchy cues from governed navy/lavender
@@ -48,13 +48,13 @@ function formatPct(value: number) {
 function laneDescription(key: LaneKey, value: number): string {
   switch (key) {
     case "coreTargetPct":
-      return "Held steady to preserve value.";
+      return "The largest target, focused on preserving value.";
     case "yieldCapPct":
       return `Up to ${formatPct(
         value
       )} can support returns when conditions allow.`;
     case "liquidityTargetPct":
-      return "A quiet buffer, kept ready if you need it.";
+      return "A buffer target, kept ready if needed.";
   }
 }
 
@@ -78,8 +78,8 @@ export function EngineAllocationBands({
           className="max-w-xl text-sm leading-relaxed text-hedgr-dark"
           data-testid="engine-allocation-bands-caption"
         >
-          Most of your balance is held steady for stability. The rest supports
-          that posture, with a reserve kept ready.
+          These percentages show stability priorities for guidance. They do not
+          divide the balance shown above.
         </p>
       </div>
 
@@ -101,7 +101,7 @@ export function EngineAllocationBands({
                   {PRIMARY_LANE.label}
                 </span>
                 <span className="text-xs font-medium tabular-nums text-hedgr-100">
-                  Target share · {formatPct(value)}
+                  Stability target · {formatPct(value)}
                 </span>
               </div>
               <p className="mt-1 text-[11px] font-medium uppercase tracking-wide text-hedgr-200">
@@ -136,7 +136,7 @@ export function EngineAllocationBands({
                     {label}
                   </span>
                   <span className="text-[11px] font-medium tabular-nums text-hedgr-600">
-                    Target share · {formatPct(value)}
+                    Stability target · {formatPct(value)}
                   </span>
                 </div>
                 <p
@@ -154,33 +154,37 @@ export function EngineAllocationBands({
       <aside
         className="max-w-xl border-t border-hedgr-100 pt-4 text-xs leading-relaxed text-hedgr-dark"
         data-testid="engine-allocation-trust-legend"
-        aria-label="Informational target notice"
+        aria-label="Stability target guidance"
       >
         <p>
           <span className="font-semibold text-hedgr-800">
-            Informational targets
+            Guidance only
           </span>
-          . These percentages are system targets, not ledger balances or proof
-          that funds moved.
+          . These percentages are stability targets, not balances and not proof
+          that money moved.
         </p>
         <details className="mt-3" data-testid="engine-allocation-target-details">
           <summary className="cursor-pointer font-medium text-hedgr-600 underline decoration-hedgr-200 underline-offset-4">
-            Why targets are not balances
+            How stability targets differ from the balance
           </summary>
           <div className="mt-3 space-y-2 border-l border-hedgr-200 pl-3">
             <p>
-              <span className="font-semibold text-hedgr-800">Targets</span>.{" "}
-              Informational system targets only. A lower conservative yield
-              target means less yield opportunity within this structure.
+              <span className="font-semibold text-hedgr-800">
+                Stability targets
+              </span>
+              . These percentages show the intended structure only. A lower
+              conservative yield target means less return opportunity within it.
             </p>
             <p>
-              <span className="font-semibold text-hedgr-800">Balances</span>.{" "}
-              Your ledger shows what you hold, not these percentages. These are
-              target shares of the structure, not your spendable balance.
+              <span className="font-semibold text-hedgr-800">Balance</span>.{" "}
+              The balance shown above is separate from these percentages. The
+              percentages do not divide it.
             </p>
             <p>
-              <span className="font-semibold text-hedgr-800">Movement</span>.{" "}
-              Targets do not mean funds have already moved.
+              <span className="font-semibold text-hedgr-800">
+                No money movement
+              </span>
+              . A target does not mean money has moved.
             </p>
           </div>
         </details>

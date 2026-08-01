@@ -1,10 +1,10 @@
 # CLASS-A-VAL-002 Participant Protocol and Evidence Capture
 
-**Status:** Active retest instrument for the sole active `CLASS-A-VAL-002` ticket and its nested `HEDGR-UI-004` comprehension pass
+**Status:** Active retest instrument for the sole active `CLASS-A-VAL-002` ticket, refined under nested `HEDGR-UI-005` before protocol-complete participant retesting
 
 **Execution class:** Class A product validation; visibly synthetic; non-executing for customer money
 
-**Authority:** `docs/ops/HEDGR_STATUS.md` §7 / §7a, §143, and §175; Internal D-037 and D-058
+**Authority:** `docs/ops/HEDGR_STATUS.md` §7 / §7a, §143, §174, and §177; Internal D-037, D-057, and D-059
 
 **Non-authorization:** This protocol does not authorize live money movement, custody, provider or banking integration, production FX, settlement, payout, Stability Engine execution, Class B implementation, Evidence Register acceptance, gate clearance, participant-data collection beyond the bounded fields below, or a successor ticket. Interface completion and completed session records do not by themselves close `CLASS-A-VAL-002`.
 
@@ -38,19 +38,19 @@ Use a random participant code such as `P-001`. Keep any recruitment contact data
 - Start at `/dashboard?journey=class-a-val-002` with a zero balance.
 - Keep the persistent `Simulation Mode — No Real Money` disclosure visible.
 - Do not open Settings or Copilot during the primary journey.
-- Use the default ZMW fixture amounts only as synthetic research data, not as launch-market evidence.
+- Use the default ZMW amounts only as simulated research data, not as launch-market evidence.
 - Capture one desktop or mobile recording or a screenshot at each required checkpoint. App captures must contain synthetic data only.
 
 ### Required checkpoints
 
 | Checkpoint | Expected synthetic state |
 | --- | --- |
-| Dashboard start | `$0.00` simulated balance; one-balance / four-step shell visible; target shares explicitly non-ledger; start-synthetic-deposit action visible |
-| Deposit preview | `100 ZMW` shows a `+$5.00` change to the same local fixture balance; fixed preview is labeled synthetic and non-live |
-| Deposit result | Local settled deposit fixture; simulated balance increased by `$5.00`; matching Activity record named; no external account charge or movement claim |
-| Withdrawal result | Before / subtract / remaining arithmetic shows `$5.00 − $2.00 = $3.00`; synthetic withdrawal recorded; no payout or settlement claim |
-| Activity | Reconciliation shows one synthetic `+$5.00` deposit minus one synthetic `-$2.00` withdrawal equals `$3.00` remaining; both are local fixture records |
-| Dashboard return | `$3.00` simulated balance and both recent synthetic records; target shares remain distinct from that balance |
+| Dashboard start | `$0.00` simulated balance; current-step shell visible; stability targets described as guidance that does not divide the balance; start-simulated-deposit action visible |
+| Deposit preview | `100 ZMW` shows an example `+$5.00` simulated-balance change; example rate and no-real-money boundary visible; no advance Activity explanation |
+| Deposit result | Simulated deposit recorded; simulated balance increased by `$5.00`; matching simulated Activity entry named; no account charge or real-money movement claim |
+| Withdrawal result | Before / subtract / remaining example calculation shows `$5.00 − $2.00 = $3.00`; simulated withdrawal recorded; no bank transfer or real-payout claim |
+| Activity | Reconciliation shows one simulated `+$5.00` deposit minus one simulated `-$2.00` withdrawal equals `$3.00` remaining; both entries remain visibly simulated |
+| Dashboard return | `$3.00` simulated balance and both recent simulated entries; stability targets remain distinct from that balance |
 | Secondary exception | `/deposit?journey=class-a-val-002&scenario=unavailable-data`; preview unavailable and Confirm disabled |
 
 ## 4. Moderator script
@@ -59,7 +59,7 @@ Use a random participant code such as `P-001`. Keep any recruitment contact data
 
 Read exactly:
 
-> This is a research simulation. The balances, rates, deposits, withdrawals, and activity you see are local fixtures. Do not enter real financial or personal information. No real money can move in this session.
+> This is a research simulation. Every balance, rate, deposit, withdrawal, and Activity entry you see is simulated. Do not enter real financial or personal information. No real money can move in this session.
 
 Ask the participant to think aloud. Do not explain Hedgr's proposition beyond visible product copy until the free-recall questions have been answered.
 
@@ -67,46 +67,47 @@ Ask the participant to think aloud. Do not explain Hedgr's proposition beyond vi
 
 1. Ask: “In your own words, what do you think Hedgr is intended to help with?”
 2. Ask the participant to identify the primary action without opening any disclosure.
-3. Ask: “What connects Dashboard, Deposit, Withdraw, and Activity?”
-4. Ask: “What does Stable balance mean here?”
-5. Ask: “How are Conservative yield and Reserve different from Stable balance and from each other?”
-6. Ask: “What does the Stability Engine posture tell you?”
-7. Ask: “Do the target percentages divide the displayed balance or show money that has already moved, or do they mean something else?”
-8. Ask: “What is Review Snapshot for?”
-9. Ask the participant to distinguish the current simulation status, fixture target date, and last viewed locally.
-10. Ask: “Did any colour make a lane feel guaranteed safe, higher performing, urgent, active, or already approved?”
-11. Ask the participant to open the consolidated simulation and target explanations, then ask whether the disclosure placement increased, reduced, or did not change confidence.
+3. Ask: “What does Stable balance mean here?”
+4. Ask: “How are Conservative yield and Reserve different from Stable balance and from each other?”
+5. Ask: “What does the Stability Engine posture tell you?”
+6. Ask: “Do the stability-target percentages divide the simulated balance or show money that has already moved, or do they mean something else?”
+7. Ask: “What is Review Snapshot for?”
+8. Ask the participant to distinguish the current simulation status, simulation date, and last viewed locally.
+9. Ask: “Did any colour make a lane feel guaranteed safe, higher performing, urgent, active, or already approved?”
+10. Only after the unaided answers are recorded, ask the participant to open the consolidated simulation and stability-target explanations. Record whether the disclosure changed their answer or confidence.
+
+Do not ask the participant to explain the complete route relationship on Dashboard. The full-journey free-recall question belongs at Activity, after the participant has experienced each step.
 
 ### Step 2 — Deposit
 
-1. Ask the participant to start the synthetic deposit.
+1. Ask the participant to start the simulated deposit.
 2. Enter `100` in the visible local-currency amount field.
 3. Before confirming, ask: “What balance do you expect after this step, and why?”
-4. Ask: “Where would that `$5.00` be represented, and where would you expect to find its record?”
-5. Ask the participant to confirm and continue only when they are comfortable.
-6. Ask: “What actually happened here? What did not happen?”
+4. Ask the participant to confirm and continue only when they are comfortable.
+5. Ask: “What actually happened here? What did not happen?”
+6. After the confirmation appears, ask: “Where can you now find the simulated deposit that explains this change?”
 
-Expected interpretation: a local fixture record worth `$5.00` was created; no account was charged and no conversion or money movement occurred.
+Expected interpretation: a simulated deposit worth `$5.00` was recorded; no account was charged and no real conversion or money movement occurred.
 
 ### Step 3 — Withdraw
 
 1. Ask the participant to continue to Withdraw.
 2. Enter `$2.00`.
 3. Before confirming, ask: “What balance do you expect afterward?”
-4. Ask: “Where does the remaining `$3.00` stay in this simulation?”
+4. Ask: “Where would the remaining `$3.00` stay in this simulation?”
 5. Ask the participant to confirm and describe the result.
-6. Ask: “Does this screen prove that a bank transfer, payout, or settlement happened?”
+6. Ask: “Does this screen prove that a bank transfer or real payout happened?”
 
-Expected interpretation: the local fixture balance becomes `$3.00`; no payout, provider action, or settlement occurred.
+Expected interpretation: the simulated balance becomes `$3.00`; no bank transfer, provider action, or real payout occurred.
 
 ### Step 4 — Activity and reconciliation
 
 1. Ask the participant to continue to Activity.
-2. Ask them to explain both records and reconcile the current balance without moderator help, using the displayed arithmetic only if they choose to.
+2. Without restating the route model, ask them to explain both records and reconcile the current balance. Record the answer before any disclosure, probe, or moderator explanation.
 3. Ask: “What does ‘Completed’ mean in this screen?”
 4. Ask the participant to return to Dashboard and verify the `$3.00` balance.
 
-Expected interpretation: “Completed” means a local scenario step finished, not external financial finality.
+Expected interpretation: “Completed” means a simulated step finished, not external financial finality.
 
 ### Secondary exception scenario
 
@@ -126,16 +127,27 @@ Ask free recall first, then use the probe only if needed.
 | Primary action | What did the page ask you to do next? | Which control appeared to begin the participant journey? |
 | Stable balance | What does Stable balance mean here? | Is it the main holding lane, a performance result, or an action control? |
 | Supporting lanes | How do Conservative yield and Reserve support Stable balance? | Did either feel like a separate product or something you could manage? |
-| Ledger vs targets | What is the difference between the one simulated balance and the target posture percentages? | Did the percentages divide that balance or prove that funds had moved? |
+| Balance vs targets | What is the difference between the simulated balance and the stability-target percentages? | Did the percentages divide that balance or prove that money had moved? |
 | Engine posture | What did the Stability Engine section help you understand? | Was it information, an instruction, or an executed action? |
 | Review Snapshot | What is Review Snapshot for? | Does it orient you, ask you to act, or report execution? |
-| Temporal clarity | What is the difference between current simulation status, fixture target date, and last viewed locally? | Which describes the fixture and which is only stored in this browser? |
+| Temporal clarity | What is the difference between current simulation status, simulation date, and last viewed locally? | Which describes the simulated example and which is only stored in this browser? |
 | Journey continuity | Walk me through the one simulated balance across Dashboard, Deposit, Withdraw, and Activity. | How did `$0.00` become `$5.00`, then `$3.00`, and which records explain it? |
 | Simulation boundary | Did real money move anywhere in this session? | What on screen supports your answer? |
 | Available action | What could you do in the primary condition, and what was blocked in the exception condition? | Why was Confirm disabled? |
 | Colour interpretation | What, if anything, did colour imply? | Did colour imply guaranteed safety, performance, urgency, activation, or approval? |
 | Disclosure consolidation | How did the consolidated explanations affect confidence? | Was important meaning easy to find without making the page feel repetitive? |
 | Utility and trust | Would this proposition be useful enough to explore further? What increased or reduced trust? | What is the one thing you would need clarified before continuing? |
+
+### Scaffolding and delayed-recall controls
+
+For every comprehension outcome, record the first support level at which the participant gives a materially correct explanation:
+
+- `U` — unaided, using only the currently visible interface;
+- `D` — after the participant independently opens an available disclosure;
+- `N` — after the neutral probe in the table above;
+- `M` — only after moderator explanation; this is moderator rescue, not demonstrated comprehension.
+
+After the secondary exception or a five-minute unrelated discussion, hide the journey screens and ask: “Without looking at the interface, how did the simulated balance change from start to finish, and which entries explained the result?” Record this delayed-recall answer separately. Then ask one transfer question without changing the application: “If a simulated deposit added `$8` and a simulated withdrawal subtracted `$3`, what would remain, and where would you check why?” These fields expose teaching dependence; they do not change the governed participant success thresholds or create an automatic disposition.
 
 ## 6. Evidence-capture template
 
@@ -163,22 +175,33 @@ Score only as a compact retrieval aid; the participant's words and observed beha
 - `1` — partial understanding or correct only after a probe
 - `2` — clear, unprompted, and materially correct
 
-| Outcome | Score | Free-recall response / observed behavior | Probe used? | Misconception or hesitation | Short redacted quote |
+| Outcome | Score | First correct at U / D / N / M | Free-recall response / observed behavior | Misconception or hesitation | Short redacted quote |
 | --- | ---: | --- | --- | --- | --- |
 | Explain the Hedgr proposition | | | | | |
 | Identify the primary journey action | | | | | |
 | Interpret Stable balance as the dominant holding lane | | | | | |
 | Distinguish Conservative yield and Reserve as supporting lanes | | | | | |
-| Distinguish ledger balance from informational targets | | | | | |
+| Distinguish simulated balance from stability targets | | | | | |
 | Explain the Stability Engine posture | | | | | |
 | Explain the role of Review Snapshot | | | | | |
-| Distinguish current status, fixture date, and local viewing history | | | | | |
+| Distinguish current status, simulation date, and local viewing history | | | | | |
 | Reconcile Dashboard → Deposit → Withdraw → Activity | | | | | |
 | State that no real money moved | | | | | |
 | Identify available and unavailable actions | | | | | |
 | Deny unintended safety, performance, urgency, activation, or approval meaning from colour | | | | | |
 | Confirm disclosure consolidation preserved confidence and findability | | | | | |
 | Express usefulness and trust | | | | | |
+
+### Independence checks
+
+| Check | Response / evidence note |
+| --- | --- |
+| Delayed recall after screens are hidden | |
+| Transfer answer for `$8 − $3` and where to verify it | |
+| Any disclosure opened before the initial answer | |
+| Neutral probe required | |
+| Moderator explanation required | |
+| Terms the participant repeated without explaining in their own words | |
 
 ### Journey record
 
@@ -188,7 +211,7 @@ Score only as a compact retrieval aid; the participant's words and observed beha
 | Predicted `$5.00` after the synthetic deposit | Pass / Fail | |
 | Predicted `$3.00` after the synthetic withdrawal | Pass / Fail | |
 | Reconciled both Activity records to `$3.00` | Pass / Fail | |
-| Denied real deposit / payout / settlement meaning | Pass / Fail | |
+| Denied real deposit / bank-transfer / payout meaning | Pass / Fail | |
 | Understood the unavailable-data scenario | Pass / Fail | |
 | Required moderator rescue | None / Minor / Material | |
 
@@ -210,12 +233,12 @@ Do not convert scores into automatic approval. Synthesize repeated observations 
 | Evidence pattern | Future decision relevance | Non-authority boundary |
 | --- | --- | --- |
 | Proposition understood without prompting | Supports or weakens the case for continued Class A exploration | Does not establish demand or Class B feasibility |
-| Ledger / target distinction understood | Tests shadow-accounting and fund-movement interpretation risk | Does not validate accounting, custody, or engine execution |
+| Simulated-balance / stability-target distinction understood | Tests shadow-accounting and fund-movement interpretation risk | Does not validate accounting, custody, or engine execution |
 | Engine posture understood as informational | Tests the read-only Stability Engine trust expression | Does not authorize engine action or allocation execution |
 | Dominant and supporting lanes understood | Tests whether Stable balance, Conservative yield, and Reserve form a comprehensible stability structure | Does not redefine the lanes or validate an allocation product |
-| Review Snapshot and temporal labels understood | Tests orientation, fixture-date, and browser-local memory comprehension | Does not validate monitoring, recordkeeping, or runtime state |
-| End-to-end fixture reconciled | Tests product continuity and internal narrative consistency | Does not prove operational rails or real transaction reliability |
-| No-real-money boundary correctly stated | Tests the simulation and non-settlement disclosure | Does not establish compliance or customer-money readiness |
+| Review Snapshot and temporal labels understood | Tests orientation, simulation-date, and browser-local memory comprehension | Does not validate monitoring, recordkeeping, or runtime state |
+| End-to-end simulated journey reconciled | Tests product continuity and internal narrative consistency | Does not prove operational rails or real transaction reliability |
+| No-real-money boundary correctly stated | Tests the simulation and no-real-payout disclosure | Does not establish compliance or customer-money readiness |
 | Colour carries no unintended financial meaning | Tests whether restrained differentiation remains secondary to labels and structure | Does not establish safety, performance, approval, or protection |
 | Consolidated disclosures preserve confidence | Tests findability and trust after progressive disclosure | Does not authorize removal or reinterpretation of trust claims |
 | Exception behavior understood | Tests trust under unavailable data | Does not select a live rate source or degraded execution policy |

@@ -24,7 +24,7 @@ test.beforeEach(async ({ context }) => {
   });
 });
 
-test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity with consistent fixtures', async ({
+test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity with consistent simulated records', async ({
   page,
 }) => {
   let depositContractRequests = 0;
@@ -49,34 +49,34 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   await expect(page.getByRole('button', { name: 'Dismiss trust disclosure' })).toHaveCount(0);
   const journeyShell = page.getByTestId('synthetic-journey-shell');
   await expect(journeyShell).toContainText('CLASS-A-VAL-002');
-  await expect(journeyShell).toContainText(
-    'One simulated balance, four connected steps',
-  );
-  await expect(journeyShell).toContainText(
-    'Target shares describe an informational posture only',
-  );
+  await expect(journeyShell).toContainText('Simulated money journey');
+  await expect(journeyShell).toContainText('Complete the current step');
+  await expect(page.getByTestId('synthetic-journey-current-step')).toHaveText('1Dashboard');
+  const initialJourneyCopy = (await journeyShell.textContent()) ?? '';
+  expect(initialJourneyCopy).not.toMatch(/Activity explains|fixture|informational posture|settlement/i);
   await expect(page.getByTestId('usd-balance')).toHaveText('$0.00');
   await expect(page.getByText('Simulated balance', { exact: true })).toBeVisible();
   await expect(page.getByTestId('dashboard-synthetic-balance-explainer')).toContainText(
-    'do not split this balance into separate accounts',
+    'not a real account balance',
   );
   await expect(page.getByTestId('engine-allocation-band-coreTargetPct')).toContainText(
-    'Target share · 50%',
+    'Stability target · 50%',
   );
   await expect(page.getByTestId('engine-stability-review-snapshot')).toContainText(
-    'Fixture target date',
+    'Simulation date',
   );
   await expect(page.getByTestId('engine-stability-review-snapshot')).toContainText(
     'Last viewed locally',
   );
 
-  await page.getByRole('link', { name: 'Start synthetic deposit' }).click();
+  await page.getByRole('link', { name: 'Start simulated deposit' }).click();
   await expect(page).toHaveURL(/\/deposit\?journey=class-a-val-002/);
+  await expect(page.getByTestId('synthetic-journey-current-step')).toHaveText('2Deposit');
   await expect(page.getByTestId('deposit-synthetic-condition')).toContainText(
-    'same simulated balance shown on Dashboard',
+    'records only a simulated deposit',
   );
   await expect(page.getByTestId('deposit-fx-block')).toContainText(
-    'Synthetic preview rate: 1 USD = 20.00 ZMW',
+    'Simulated example rate: 1 USD = 20.00 ZMW',
   );
 
   const depositAmount = page.getByTestId('deposit-amount');
@@ -90,7 +90,7 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   await depositAmount.fill('100');
   await expect(page.getByTestId('deposit-conversion-preview')).toContainText('$5.00');
   await expect(page.getByTestId('deposit-balance-change')).toContainText(
-    'adds +$5.00 to the one local fixture balance',
+    'shows 100 ZMW as +$5.00',
   );
   await depositConfirm.click();
   await expect(page.getByTestId('deposit-confirmation-region')).toContainText(
@@ -98,14 +98,15 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
     { timeout: 10_000 },
   );
   await expect(page.getByTestId('deposit-confirmation-region')).toContainText(
-    'No external account was charged and no money moved',
+    'No account was charged and no real money moved',
   );
   expect(depositContractRequests).toBe(0);
 
-  await page.getByRole('link', { name: 'Continue to synthetic withdrawal' }).click();
+  await page.getByRole('link', { name: 'Continue to simulated withdrawal' }).click();
   await expect(page).toHaveURL(/\/withdraw\?journey=class-a-val-002/);
+  await expect(page.getByTestId('synthetic-journey-current-step')).toHaveText('3Withdraw');
   await expect(page.getByTestId('withdraw-synthetic-condition')).toContainText(
-    'same local fixture balance created on Deposit',
+    'No bank or payment provider is contacted',
   );
   await expect(page.getByText('Simulated balance before this step:')).toContainText('$5.00');
 
@@ -140,40 +141,55 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
     { timeout: 10_000 },
   );
   await expect(page.getByTestId('withdraw-status-description')).toContainText(
-    'No bank transfer, payout, or settlement occurred',
+    'No bank transfer or real payout occurred',
   );
+  await expect(page.getByTestId('withdraw-status-exception-clarification')).toHaveCount(0);
+  await expect(page.getByTestId('withdraw-status-next-step-guidance')).toHaveCount(0);
   await expect(page.getByTestId('withdraw-balance-reconciliation')).toContainText(
     '$3.00 remains',
   );
 
-  await page.getByRole('link', { name: 'Continue to synthetic activity' }).click();
+  await page.getByRole('link', { name: 'Review simulated activity' }).click();
   await expect(page).toHaveURL(/\/activity\?journey=class-a-val-002/);
+  await expect(page.getByTestId('synthetic-journey-current-step')).toHaveText('4Activity');
   await expect(page.getByTestId('activity-synthetic-condition')).toContainText(
-    'not proof of a deposit, payout, provider action, or external settlement',
+    'It does not mean a bank transfer or real payout occurred',
   );
   const activityReconciliation = page.getByTestId('activity-balance-reconciliation');
-  await expect(activityReconciliation).toContainText('Synthetic deposits+$5.00');
-  await expect(activityReconciliation).toContainText('Synthetic withdrawals−$2.00');
+  await expect(activityReconciliation).toContainText('Simulated deposits+$5.00');
+  await expect(activityReconciliation).toContainText('Simulated withdrawals−$2.00');
   await expect(activityReconciliation).toContainText('Remaining simulated balance$3.00');
-  await expect(page.getByTestId('activity-type-deposit')).toHaveText('Synthetic deposit');
+  await expect(page.getByTestId('activity-type-deposit')).toHaveText('Simulated deposit');
   await expect(page.getByTestId('activity-type-withdraw')).toHaveText(
-    'Synthetic withdrawal',
+    'Simulated withdrawal',
   );
   await expect(
     page.getByTestId('activity-row-withdraw').getByText('0', { exact: true }),
   ).toHaveCount(0);
   await expect(page.locator('[data-testid="tx-status-pill"][data-status="SUCCESS"]')).toHaveCount(2);
 
-  await page.getByRole('link', { name: 'Return to dashboard summary' }).click();
+  await page.getByTestId('activity-row-withdraw').click();
+  await expect(page.getByTestId('tx-detail-type')).toHaveText('Simulated withdrawal');
+  await expect(page.getByText('Simulation record ID')).toBeVisible();
+  await expect(page.getByText('Simulated step status')).toBeVisible();
+  await expect(page.getByTestId('tx-detail-simulation-note')).toContainText(
+    'not a bank or payment provider record',
+  );
+  await expect(
+    page.getByTestId('tx-detail-modal').getByText('0', { exact: true }),
+  ).toHaveCount(0);
+  await page.getByTestId('tx-detail-close').click();
+
+  await page.getByRole('link', { name: 'Return to simulated balance' }).click();
   await expect(page.getByTestId('usd-balance')).toHaveText('$3.00');
-  await expect(page.getByText('Synthetic deposit').first()).toBeVisible();
-  await expect(page.getByText('Synthetic withdrawal').first()).toBeVisible();
+  await expect(page.getByText('Simulated deposit').first()).toBeVisible();
+  await expect(page.getByText('Simulated withdrawal').first()).toBeVisible();
   await expect(page.getByRole('link', { name: 'View all' })).toHaveAttribute(
     'href',
     '/activity?journey=class-a-val-002',
   );
 
-  const restartJourney = page.getByRole('button', { name: 'Restart synthetic journey' });
+  const restartJourney = page.getByRole('button', { name: 'Restart simulated journey' });
   await expect(restartJourney).toBeVisible();
   page.once('dialog', async (dialog) => {
     expect(dialog.message()).toContain(
@@ -184,16 +200,16 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   await restartJourney.click();
 
   await expect(page.getByTestId('usd-balance')).toHaveText('$0.00');
-  await expect(page.getByRole('link', { name: 'Start synthetic deposit' })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Start simulated deposit' })).toBeVisible();
   await expect(page.getByRole('link', { name: 'View all' })).toHaveCount(0);
 
-  await page.getByRole('link', { name: 'Start synthetic deposit' }).click();
+  await page.getByRole('link', { name: 'Start simulated deposit' }).click();
   await page.getByTestId('deposit-amount').fill('100');
   await page.getByRole('button', { name: 'Confirm' }).click();
   await expect(page.getByTestId('deposit-confirmation-region')).toBeVisible({
     timeout: 10_000,
   });
-  await page.getByRole('link', { name: 'Continue to synthetic withdrawal' }).click();
+  await page.getByRole('link', { name: 'Continue to simulated withdrawal' }).click();
   await page.getByTestId('withdraw-amount').fill('2');
   await page.getByRole('button', { name: 'Confirm' }).click();
   await expect(page.getByTestId('withdraw-status-region')).toHaveAttribute(
@@ -201,14 +217,14 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
     'SUCCESS',
     { timeout: 10_000 },
   );
-  await page.getByRole('link', { name: 'Continue to synthetic activity' }).click();
+  await page.getByRole('link', { name: 'Review simulated activity' }).click();
 
   await expect(page.getByTestId('activity-type-deposit')).toHaveCount(1);
   await expect(page.getByTestId('activity-type-withdraw')).toHaveCount(1);
   await expect(page.locator('[data-testid="tx-status-pill"][data-status="SUCCESS"]')).toHaveCount(2);
-  await page.getByRole('link', { name: 'Return to dashboard summary' }).click();
+  await page.getByRole('link', { name: 'Return to simulated balance' }).click();
   await expect(page.getByTestId('usd-balance')).toHaveText('$3.00');
-  await expect(page.getByRole('button', { name: 'Restart synthetic journey' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Restart simulated journey' })).toBeVisible();
 });
 
 test('unavailable data remains a blocked secondary trust scenario', async ({ page }) => {
@@ -221,18 +237,19 @@ test('unavailable data remains a blocked secondary trust scenario', async ({ pag
   );
   await expect(page.getByRole('button', { name: 'Confirm' })).toBeDisabled();
   await expect(
-    page.getByRole('link', { name: 'Return to the primary synthetic journey' }),
+    page.getByRole('link', { name: 'Return to the simulated deposit' }),
   ).toBeVisible();
 });
 
-test('mobile keeps the persistent boundary and four-step research path visible', async ({ page }) => {
+test('mobile keeps the persistent boundary and current research step visible', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await clearStorage(page);
   await login(page);
 
   await expect(page.getByTestId('trust-disclosure-banner')).toBeVisible();
   await expect(page.getByTestId('synthetic-journey-shell')).toBeVisible();
-  await expect(page.getByRole('link', { name: 'Start synthetic deposit' })).toBeVisible();
+  await expect(page.getByTestId('synthetic-journey-current-step')).toHaveText('1Dashboard');
+  await expect(page.getByRole('link', { name: 'Start simulated deposit' })).toBeVisible();
 
   await page.getByTestId('nav-toggle').click();
   const mobileNav = page.getByTestId('nav-links-mobile');

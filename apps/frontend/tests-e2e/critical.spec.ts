@@ -71,7 +71,7 @@ test('deposit stub increases balance', async ({ page }) => {
 
   await waitForDepositFxReady(page);
   await page.getByRole('button', { name: 'Confirm' }).click();
-  await expect(page.getByText('Synthetic deposit recorded')).toBeVisible({ timeout: 6000 });
+  await expect(page.getByText('Simulated deposit recorded')).toBeVisible({ timeout: 6000 });
   await page.goto('/dashboard');
   const usd = page.getByTestId('usd-balance');
   await expect(usd).toBeVisible({ timeout: 10000 });
@@ -96,11 +96,11 @@ test('withdraw stub decreases balance', async ({ page }) => {
   await page.getByTestId('deposit-amount').fill('100');
   await waitForDepositFxReady(page);
   await page.getByRole('button', { name: 'Confirm' }).click();
-  await expect(page.getByText('Synthetic deposit recorded')).toBeVisible({ timeout: 6000 });
+  await expect(page.getByText('Simulated deposit recorded')).toBeVisible({ timeout: 6000 });
 
   // withdraw 1 USD
   await page.goto('/withdraw');
-  await page.getByLabel('Amount (USD)').fill('1');
+  await page.getByLabel('Amount to simulate (USD)').fill('1');
   await waitForWithdrawFxReady(page);
   await page.getByRole('button', { name: 'Confirm' }).click();
   const withdrawStatus = page.getByTestId('withdraw-status-region');
@@ -126,11 +126,11 @@ test('activity page shows confirmed transactions', async ({ page }) => {
   await page.getByTestId('deposit-amount').fill('100');
   await waitForDepositFxReady(page);
   await page.getByRole('button', { name: 'Confirm' }).click();
-  await expect(page.getByText('Synthetic deposit recorded')).toBeVisible({ timeout: 6000 });
+  await expect(page.getByText('Simulated deposit recorded')).toBeVisible({ timeout: 6000 });
 
   // Withdraw $1
   await page.goto('/withdraw');
-  await page.getByLabel('Amount (USD)').fill('1');
+  await page.getByLabel('Amount to simulate (USD)').fill('1');
   await waitForWithdrawFxReady(page);
   await page.getByRole('button', { name: 'Confirm' }).click();
   const withdrawStatus = page.getByTestId('withdraw-status-region');
@@ -138,7 +138,7 @@ test('activity page shows confirmed transactions', async ({ page }) => {
 
   // Check Activity page shows two CONFIRMED entries
   await page.goto('/activity');
-  await expect(page.getByRole('heading', { name: 'Activity' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Activity', exact: true })).toBeVisible();
   
   // Wait for activity list to appear
   const activityList = page.getByTestId('activity-list');

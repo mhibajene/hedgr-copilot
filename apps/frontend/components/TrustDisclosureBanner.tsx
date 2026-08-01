@@ -19,7 +19,7 @@ export type TrustDisclosureBannerProps = {
   learnMoreUrl?: string;
   /** Allow dismissal (only for banner variant in non-production) */
   dismissible?: boolean;
-  /** Keep technical fixture labels behind an accessible disclosure control */
+  /** Keep technical environment labels behind an accessible disclosure control */
   consolidateTechnicalDetails?: boolean;
   /** Test ID for e2e testing */
   'data-testid'?: string;
@@ -144,7 +144,9 @@ export function TrustDisclosureBanner({
                 Simulation Mode. No Real Money
               </p>
               <p className="mt-0.5 text-xs text-hedgr-dark">
-                Balances and activity are local fixtures. A completed step does not mean a deposit, payout, or settlement occurred.
+                Every balance, rate, deposit, withdrawal, and Activity entry is
+                simulated. A completed step does not move money or contact a bank
+                or payment provider.
               </p>
             </div>
           </div>

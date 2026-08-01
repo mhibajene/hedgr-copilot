@@ -67,22 +67,22 @@ describe("EngineAllocationBands", () => {
     const caption = screen.getByTestId(
       "engine-allocation-bands-caption"
     ).textContent;
-    expect(caption).toMatch(/held steady/i);
+    expect(caption).toMatch(/percentages/i);
     expect(caption).toMatch(/stability/i);
-    expect(caption).toMatch(/reserve/i);
-    expect(caption).toMatch(/posture/i);
+    expect(caption).toMatch(/guidance/i);
+    expect(caption).toMatch(/do not divide/i);
     expect(caption).toMatch(/balance/i);
 
     const legend = screen.getByTestId(
       "engine-allocation-trust-legend"
     ).textContent;
-    expect(legend).toMatch(/informational.*system targets/is);
+    expect(legend).toMatch(/guidance only/i);
+    expect(legend).toMatch(/stability targets/i);
     expect(legend).toMatch(/conservative yield/i);
-    expect(legend).toMatch(/yield opportunity/i);
-    expect(legend).toMatch(/ledger/i);
-    expect(legend).toMatch(/target share/i);
-    expect(legend).toMatch(/spendable balance/i);
-    expect(legend).toMatch(/targets do not mean funds have already moved/i);
+    expect(legend).toMatch(/return opportunity/i);
+    expect(legend).toMatch(/percentages do not divide it/i);
+    expect(legend).toMatch(/target does not mean money has moved/i);
+    expect(legend).not.toMatch(/fixture|informational posture|settlement/i);
   });
 
   test("keeps caption and trust legend free of execution, accounting-as-truth, and hype drift", () => {
@@ -99,7 +99,7 @@ describe("EngineAllocationBands", () => {
     }
     expect(combined).not.toMatch(/\bexecuted\b/);
     expect(combined).not.toMatch(/\ballocated to your\b/);
-    expect(combined).toMatch(/informational/i);
+    expect(combined).toMatch(/guidance/i);
     expect(combined).toMatch(/target/i);
   });
 
@@ -117,15 +117,15 @@ describe("EngineAllocationBands", () => {
     const reserveBand = screen.getByTestId(
       "engine-allocation-band-liquidityTargetPct"
     );
-    expect(reserveBand.textContent).toMatch(/quiet buffer/i);
+    expect(reserveBand.textContent).toMatch(/buffer target/i);
     expect(reserveBand.textContent).toMatch(/kept ready/i);
 
     const stableBand = screen.getByTestId(
       "engine-allocation-band-coreTargetPct"
     );
-    expect(stableBand.textContent).toMatch(/held steady/i);
-    expect(stableBand.textContent).toMatch(/preserve value/i);
-    expect(stableBand.textContent).toMatch(/primary holding lane/i);
+    expect(stableBand.textContent).toMatch(/largest target/i);
+    expect(stableBand.textContent).toMatch(/preserving value/i);
+    expect(stableBand.textContent).toMatch(/primary stability target/i);
 
     const yieldBand = screen.getByTestId("engine-allocation-band-yieldCapPct");
     expect(yieldBand.textContent).toMatch(/up to 14%/i);
@@ -260,7 +260,7 @@ describe("EngineAllocationBands", () => {
     ).toBe(reserveClassesNormal);
   });
 
-  test("labels every percentage as an informational target share", () => {
+  test("labels every percentage as a stability target", () => {
     render(<EngineAllocationBands engineState={makeEngineState()} />);
 
     for (const testId of [
@@ -269,7 +269,7 @@ describe("EngineAllocationBands", () => {
       "engine-allocation-band-liquidityTargetPct",
     ]) {
       expect(screen.getByTestId(testId).textContent).toMatch(
-        /target share\s*·\s*\d+%/i
+        /stability target\s*·\s*\d+%/i
       );
     }
   });

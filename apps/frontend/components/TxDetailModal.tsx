@@ -13,6 +13,7 @@ export interface TxDetailModalProps {
   transaction: TxLifecycle | null;
   isOpen: boolean;
   onClose: () => void;
+  simulated?: boolean;
 }
 
 function formatDateTime(timestamp: number): string {
@@ -128,6 +129,7 @@ export function TxDetailModal({
   transaction,
   isOpen,
   onClose,
+  simulated = false,
 }: TxDetailModalProps) {
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
@@ -179,7 +181,13 @@ export function TxDetailModal({
                 className="text-lg font-semibold text-gray-900"
                 data-testid="tx-detail-type"
               >
-                {transaction.type === 'DEPOSIT' ? 'Deposit' : 'Withdrawal'}
+                {simulated
+                  ? transaction.type === 'DEPOSIT'
+                    ? 'Simulated deposit'
+                    : 'Simulated withdrawal'
+                  : transaction.type === 'DEPOSIT'
+                    ? 'Deposit'
+                    : 'Withdrawal'}
               </h3>
               <button
                 type="button"
@@ -210,14 +218,19 @@ export function TxDetailModal({
             {/* Amount and Status */}
             <div className="flex items-center justify-between">
               <div data-testid="tx-detail-amount">
+                {simulated ? (
+                  <p className="mb-1 text-xs uppercase tracking-wide text-gray-500">
+                    Simulated amount
+                  </p>
+                ) : null}
                 <p className="text-3xl font-bold text-gray-900">
                   ${transaction.amountUSD.toFixed(2)}
                 </p>
-                {transaction.amountZMW && (
+                {transaction.amountZMW !== undefined && transaction.amountZMW > 0 ? (
                   <p className="text-sm text-gray-500 mt-1">
                     {transaction.amountZMW.toFixed(2)} ZMW
                   </p>
-                )}
+                ) : null}
               </div>
               <TxStatusPill status={transaction.status} size="md" />
             </div>
@@ -225,7 +238,7 @@ export function TxDetailModal({
             {/* Transaction ID */}
             <div className="rounded-lg bg-gray-50 px-4 py-3">
               <p className="text-xs text-gray-500 uppercase tracking-wide">
-                Transaction ID
+                {simulated ? 'Simulation record ID' : 'Transaction ID'}
               </p>
               <p
                 className="text-sm font-mono text-gray-700 mt-1 truncate"
@@ -238,7 +251,7 @@ export function TxDetailModal({
             {/* Timeline */}
             <div data-testid="tx-detail-timeline">
               <p className="text-xs text-gray-500 uppercase tracking-wide mb-4">
-                Timeline
+                {simulated ? 'Simulated step status' : 'Timeline'}
               </p>
               <div className="pl-1">
                 {timelineSteps.map((step, index) => (
@@ -278,6 +291,15 @@ export function TxDetailModal({
                 <p className="text-sm text-blue-700 mt-1">{transaction.note}</p>
               </div>
             )}
+            {simulated ? (
+              <p
+                className="rounded-lg border border-hedgr-200 bg-hedgr-100/50 px-4 py-3 text-sm leading-relaxed text-hedgr-dark"
+                data-testid="tx-detail-simulation-note"
+              >
+                This is a simulation record. It is not a bank or payment provider
+                record.
+              </p>
+            ) : null}
           </div>
 
           {/* Footer */}
@@ -297,5 +319,4 @@ export function TxDetailModal({
 }
 
 export default TxDetailModal;
-
 

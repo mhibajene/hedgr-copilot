@@ -45,7 +45,7 @@ function activityTitle(
   syntheticJourneyActive: boolean
 ): string {
   const title = tx.type === "DEPOSIT" ? "Deposit" : "Withdrawal";
-  return syntheticJourneyActive ? `Synthetic ${title.toLowerCase()}` : title;
+  return syntheticJourneyActive ? `Simulated ${title.toLowerCase()}` : title;
 }
 
 export default function DashboardPage() {
@@ -85,7 +85,7 @@ export default function DashboardPage() {
     if (!syntheticJourneyActive) return;
 
     const confirmed = window.confirm(
-      "Restart the synthetic journey? This clears only the simulated balance and Activity stored on this device. No real funds or external records are affected."
+      "Restart the simulated journey? This clears only the simulated balance and Activity stored on this device. No real money or external records are affected."
     );
     if (!confirmed) return;
 
@@ -128,10 +128,8 @@ export default function DashboardPage() {
           className="max-w-md pt-1 text-sm leading-relaxed text-hedgr-dark"
           data-testid="dashboard-synthetic-balance-explainer"
         >
-          This is the one local fixture balance shared by Dashboard, Deposit,
-          Withdraw, and Activity. The target shares below describe an
-          informational stability posture; they do not split this balance into
-          separate accounts or show that funds moved.
+          This amount exists only in this research simulation. It is not a real
+          account balance, and no money is being held or moved.
         </p>
       ) : null}
       {ready && !isLoading && total !== available ? (
@@ -255,12 +253,12 @@ export default function DashboardPage() {
                 </p>
                 <h2 className="mt-1 text-lg font-semibold text-hedgr-800">
                   {syntheticJourneyActive
-                    ? "Explore a synthetic stability journey"
+                    ? "Try a simulated deposit"
                     : "See your position clearly"}
                 </h2>
                 <p className="mt-1 text-sm leading-relaxed text-hedgr-dark">
                   {syntheticJourneyActive
-                    ? "Start with a simulated local-currency deposit, then make a simulated withdrawal and verify both fixture records in Activity. No real funds will move."
+                    ? "Enter ZMW 100 to see an example $5.00 increase. No account is charged and no real money moves."
                     : "Start by exploring a deposit when you are ready. Your balance and activity will appear here once you begin."}
                 </p>
               </div>
@@ -273,7 +271,7 @@ export default function DashboardPage() {
                 className="inline-flex shrink-0 items-center justify-center rounded-xl bg-hedgr-primary px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-hedgr-600 focus:outline-none focus:ring-2 focus:ring-hedgr-500 focus:ring-offset-2 focus:ring-offset-hedgr-100"
               >
                 {syntheticJourneyActive
-                  ? "Start synthetic deposit"
+                  ? "Start simulated deposit"
                   : "Make your first deposit"}
               </Link>
             </div>
@@ -289,18 +287,18 @@ export default function DashboardPage() {
             <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
               <div className="max-w-lg">
                 <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-hedgr-500">
-                  Synthetic journey replay
+                  Simulated journey replay
                 </p>
                 <h2
                   id="dashboard-restart-journey-heading"
                   className="mt-1 text-lg font-semibold text-hedgr-800"
                 >
-                  Run the synthetic journey again
+                  Run the simulated journey again
                 </h2>
                 <p className="mt-1 text-sm leading-relaxed text-hedgr-dark">
                   Restarting removes only this device&apos;s simulated balance and
-                  Activity so the fixed journey begins again at $0. No real funds
-                  or external records are affected.
+                  Activity so the example begins again at $0. No real money or
+                  external records are affected.
                 </p>
               </div>
               <button
@@ -308,7 +306,7 @@ export default function DashboardPage() {
                 onClick={restartSyntheticJourney}
                 className="inline-flex shrink-0 items-center justify-center rounded-xl bg-hedgr-primary px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-hedgr-600 focus:outline-none focus:ring-2 focus:ring-hedgr-500 focus:ring-offset-2 focus:ring-offset-hedgr-100"
               >
-                Restart synthetic journey
+                Restart simulated journey
               </button>
             </div>
           </section>
