@@ -66,14 +66,14 @@ test.describe('Balance SSoT - Ledger as Single Source of Truth', () => {
     const preview = page.getByTestId('deposit-conversion-preview');
     await expect(preview).toBeVisible();
     await expect(preview).toContainText(/Simulated balance change/);
-    await expect(preview).toContainText(/adds \+\$5\.00/);
+    await expect(preview).toContainText(/shows 100 ZMW as \+\$5\.00/);
 
     await page.getByRole('button', { name: 'Confirm' }).click();
 
     // Wait for confirmation (mock should confirm quickly)
     const confirmationMsg = page.getByTestId('deposit-confirmed');
     await expect(confirmationMsg).toBeVisible({ timeout: 10000 });
-    await expect(confirmationMsg).toHaveText('Synthetic deposit recorded');
+    await expect(confirmationMsg).toHaveText('Simulated deposit recorded');
 
     // Navigate to dashboard using nav link
     await page

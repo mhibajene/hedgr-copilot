@@ -6,7 +6,7 @@
 
 **Authority:** The repository is source of truth. Wording here must match `docs/decisions/0016-warmth-layer-doctrine-constrained-retail-refinement-track.md`, `docs/decisions/SPRINT-2-ADR-INDEX.md`, and `docs/ops/HEDGR_STATUS.md`. Wording must match **Accepted** ADR **0016** in repo; do not broaden scope or soften read-only / non-execution boundaries in Notion.
 
-**Last reconciled:** 2026-08-01 (mirror after Founder acceptance of Internal **D-059** / activation **§177** — nested `HEDGR-UI-005` plain-language / information-order pass active under open `CLASS-A-VAL-002`; `HEDGR-UI-004` remains completed under **D-058** / **§175**–**§176**; protocol-complete participant retesting follows nested `HEDGR-UI-005` closeout; parent validation disposition Internal **D-057** / **§174** remains Accepted — continue; no participant-comprehension, second-ticket, successor, parallel-lane, Class B, MVP-acceptance, Evidence Register, or gate-clearance claim; `STATUS-HYGIENE-001` / **§173** remains completed; `NARRATIVE-006` remains closed under **§172**; Controlled Parallelism v19 / **D-055** completed historical; Lane N idle; Research R1 preserved; Research R2 accepted as an internal design artifact; publication remains unauthorized; Lane M idle; Lane R idle; D-054 completed historical; Canonical Story v1.0, Customer One-Pager v1.0, Narrative Style Guide v1.0, and accepted Investor Orientation Brief remain unchanged; R1 retirement deferred ≥ **2026-08-02**; Kenya counsel **DEFER**; repo **§7** / **§7a** controls sequencing)
+**Last reconciled:** 2026-08-01 (mirror after implementation closeout of Internal **D-059** / **§177**–**§178** — nested `HEDGR-UI-005` plain-language / information-order pass completed under open `CLASS-A-VAL-002`; no nested refinement remains active; protocol-complete participant retesting is next; `HEDGR-UI-004` remains completed under **D-058** / **§175**–**§176**; parent validation disposition Internal **D-057** / **§174** remains Accepted — continue; no participant-comprehension, second-ticket, successor, parallel-lane, further-UI-pass, Class B, MVP-acceptance, Evidence Register, or gate-clearance claim; `STATUS-HYGIENE-001` / **§173** remains completed; `NARRATIVE-006` remains closed under **§172**; Controlled Parallelism v19 / **D-055** completed historical; Lane N idle; Research R1 preserved; Research R2 accepted as an internal design artifact; publication remains unauthorized; Lane M idle; Lane R idle; D-054 completed historical; Canonical Story v1.0, Customer One-Pager v1.0, Narrative Style Guide v1.0, and accepted Investor Orientation Brief remain unchanged; R1 retirement deferred ≥ **2026-08-02**; Kenya counsel **DEFER**; repo **§7** / **§7a** controls sequencing)
 
 ---
 
@@ -68,11 +68,11 @@ Use as a governed workstream line, **not** as a shipped-feature claim. Placement
 
 - **Class A validation successor transition (D-037, Accepted):** Founder closed `CLASS-A-VAL-001` as stop/reframe before cohort completion (**§142**) and activated `CLASS-A-VAL-002` as the successor (**§143** / **§7** / **§7a**). The primary condition is a coherent, visibly synthetic Dashboard → Deposit → Withdraw → Activity journey with shared trust/navigation context. Settings and Copilot remain outside the primary journey. No live money movement, custody, provider/banking integration, production FX, settlement, payout, Stability Engine execution, Class B implementation. Later Controlled Parallelism v7 (**D-041**) adds Lane R without changing this Lane V authority.
 
-- **`CLASS-A-VAL-002` Founder validation disposition (D-057, Accepted — ticket remains open):** Founder reviewed the Forms summary, all three participant responses, response workbook, validation review, current repo authority, and participant protocol. The evidence identifies synthetic-money-journey comprehension as the principal uncertainty but remains directional learning only. D-057 does not itself approve implementation, claim participant comprehension, close the ticket, create Class B readiness, satisfy MVP acceptance, accept Evidence Register evidence, clear a gate, authorize unsupported trust claims, or create a successor / concurrent lane. Immediate post-`HEDGR-UI-004` sequencing is amended by **D-059**. Canonical detail: **§174**; live brief: **§7a**.
+- **`CLASS-A-VAL-002` Founder validation disposition (D-057, Accepted — ticket remains open):** Founder reviewed the Forms summary, all three participant responses, response workbook, validation review, current repo authority, and participant protocol. The evidence identifies synthetic-money-journey comprehension as the principal uncertainty but remains directional learning only. D-057 does not itself approve implementation, claim participant comprehension, close the ticket, create Class B readiness, satisfy MVP acceptance, accept Evidence Register evidence, clear a gate, authorize unsupported trust claims, or create a successor / concurrent lane. The D-059 nested amendment is implementation-closed; protocol-complete participant retesting is next. Canonical detail: **§174**; live brief: **§7a**.
 
 - **`HEDGR-UI-004` nested comprehension pass (D-058, Accepted and completed):** The bounded Class A presentation / copy iteration under open `CLASS-A-VAL-002` now expresses one simulated balance across Dashboard → Deposit → Withdraw → Activity, plain-language before / change / remaining arithmetic, target-versus-balance distinction, and persistent no-real-money continuity. Implementation closeout does not prove comprehension or close the parent. Not a second ticket, successor, or concurrent lane. No Class B, MVP, Evidence Register, gate-clearance, or unsupported trust authority. Canonical detail: activation **§175**, closeout **§176**, completed nested brief **§7a**.
 
-- **`HEDGR-UI-005` nested plain-language pass (D-059, Accepted — active):** Final pre-retest Class A presentation / copy / protocol-instrument pass under open `CLASS-A-VAL-002`. Authorizes ordinary-money terminology, information-order, and trust-boundary copy refinement only; preserves simulated arithmetic and non-live boundaries; forbids another UI pass after closeout, parent closeout, Class B, and redesign. Protocol-complete retest follows nested closeout. Not a second ticket, successor, or concurrent lane. Green classification does not independently activate. Canonical detail: activation **§177**; active nested brief **§7a**.
+- **`HEDGR-UI-005` nested plain-language pass (D-059, Accepted and completed):** Final pre-retest Class A presentation / copy / protocol-instrument pass under open `CLASS-A-VAL-002`. Ordinary-money terminology, contextual information order, and trust-boundary copy refinement are implemented and verified while simulated arithmetic and non-live boundaries remain unchanged. Protocol-complete retest is next; no further UI pass is authorized. Not a second ticket, successor, concurrent lane, parent closeout, or comprehension claim. Green classification does not independently activate. Canonical detail: activation **§177**, closeout **§178**, completed nested brief **§7a**.
 
 - **Controlled Parallelism v7 (D-041, Accepted — completed historical pass):** Named `CLASS-A-VAL-002` (Lane V) and `BRIDGE-P1-PREP-001` (Lane R prep). Lane R closed prep-complete (**§151** / **D-043**); singular-ticket restored; D-041 no longer supplies concurrency. Proposed `BRIDGE-P1-001` formed not active. `NO CROSS-LANE IMPACT`.
 
@@ -1231,7 +1231,7 @@ Use when mirroring the completed **test-only** regression tranche 4. **Not** new
 - Moderate trust, proposition recognition, positive curiosity, and numeric survey scores are not evidence of understanding.
 - Do not answer requests for regulation, institutional backing, endorsement, testimonials, or external proof through unsupported interface claims.
 - D-057 itself does not approve implementation, widen execution, create Class B readiness, satisfy MVP acceptance, close `CLASS-A-VAL-002`, claim comprehension, accept Evidence Register evidence, clear a gate, or create a successor / concurrent lane.
-- The one bounded comprehension iteration `HEDGR-UI-004` was authorized by Internal **D-058** / **§175** and implementation-closed under **§176**. Immediate sequencing is amended by Internal **D-059** / **§177** (`HEDGR-UI-005` final pre-retest language pass); protocol-complete participant retesting follows that nested closeout under the open parent.
+- The one bounded comprehension iteration `HEDGR-UI-004` was authorized by Internal **D-058** / **§175** and implementation-closed under **§176**. Internal **D-059** / **§177**–**§178** supplied and closed `HEDGR-UI-005` as the final pre-retest language pass. Protocol-complete participant retesting is next under the open parent.
 - Singular-ticket Lane V remains active; all other lanes remain idle; `NO CROSS-LANE IMPACT`.
 
 ---
@@ -1244,7 +1244,7 @@ Use when mirroring the completed **test-only** regression tranche 4. **Not** new
 | ----- | ----- |
 | **Decision ID** | D-058 |
 | **Title** | Activate `HEDGR-UI-004` nested synthetic money-journey comprehension pass within `CLASS-A-VAL-002` |
-| **Status** | Accepted — implementation completed; further pre-retest language pass authorized separately by D-059 |
+| **Status** | Accepted — implementation completed; subsequent D-059 nested language pass also completed |
 | **Decision Type** | Product / UX-Trust / Nested validation refinement activation |
 | **Strategic Horizon** | Short-term (MVP evidence generation) |
 | **Visibility** | Internal |
@@ -1258,7 +1258,7 @@ Use when mirroring the completed **test-only** regression tranche 4. **Not** new
 - Locked primary hypotheses: synthetic-money continuity across Dashboard → Deposit → Withdraw → Activity; plain-language where-money-is / what-remains framing; target-versus-balance distinction.
 - Secondary hypotheses (newcomer orientation; prototype-boundary reinforcement) only if required to preserve continuity / synthetic boundary without new product meaning.
 - Not a second ticket, successor, concurrent lane, or parent closeout.
-- Nested interface completion alone does not prove comprehension; D-059 inserts one final language-friction pass before protocol-complete retest.
+- Nested interface completion alone does not prove comprehension; the D-059 language-friction pass is also complete, and protocol-complete retesting is next.
 - No Class B, MVP acceptance, Evidence Register acceptance, gate clearance, live capability, or unsupported trust / regulatory / endorsement claims.
 - Singular-ticket Lane V remains; all other lanes remain idle; `NO CROSS-LANE IMPACT`.
 
@@ -1266,26 +1266,26 @@ Use when mirroring the completed **test-only** regression tranche 4. **Not** new
 
 ## 8d.27 Decision Log — D-059 / HEDGR-UI-005 nested activation (Internal; Notion mirror)
 
-**Notion Decision Log ID:** **D-059**. Canonical detail: **`docs/ops/HEDGR_STATUS.md` §177** and active nested brief in **§7a**. Visibility: **Internal**.
+**Notion Decision Log ID:** **D-059**. Canonical detail: **`docs/ops/HEDGR_STATUS.md` §177**–**§178** and completed nested brief in **§7a**. Visibility: **Internal**.
 
 | Field | Value |
 | ----- | ----- |
 | **Decision ID** | D-059 |
 | **Title** | Activate `HEDGR-UI-005` final pre-retest plain-language / information-order pass within `CLASS-A-VAL-002` |
-| **Status** | Accepted — nested pass active; parent remains open |
+| **Status** | Accepted — nested pass implementation completed; parent remains open |
 | **Decision Type** | Product / UX Trust / Validation |
 | **Strategic Horizon** | Short-term (MVP evidence generation) |
 | **Visibility** | Internal |
 | **Date** | 2026-08-01 |
-| **Repo authority** | `HEDGR_STATUS.md` **§177**; active nested brief **§7a**; parent disposition **§174** / D-057; prior nested closeout **§176** / D-058 |
+| **Repo authority** | `HEDGR_STATUS.md` **§177**–**§178**; completed nested brief **§7a**; parent disposition **§174** / D-057; prior nested closeout **§176** / D-058 |
 | **Ticket** | Nested under Lane V `CLASS-A-VAL-002` (sole active ticket; remains open) |
 
 **Summary / notes (concise)**
 
-- Final pre-retest Class A presentation / copy / protocol-instrument pass to remove institutional-language friction and advance journey narration.
+- Completed final pre-retest Class A presentation / copy / protocol-instrument pass to remove institutional-language friction and advance journey narration.
 - Ordinary money language; information order What / Result / Not happening; keep “simulated” on financial-state surfaces.
 - Not a second ticket, successor, concurrent lane, parent closeout, or comprehension claim.
-- No further UI pass may be inferred after nested closeout; protocol-complete retest follows immediately.
+- No further UI pass may be inferred; protocol-complete retest is next.
 - No Class B / Class C, MVP acceptance, Evidence Register acceptance, gate clearance, live capability, redesign, or unsupported trust claims.
 - Green classification does not independently activate; `NO CROSS-LANE IMPACT`.
 

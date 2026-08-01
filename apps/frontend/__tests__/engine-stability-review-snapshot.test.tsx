@@ -70,7 +70,7 @@ describe("EngineStabilityReviewSnapshot", () => {
     );
     expect(snapshot.textContent).toContain(ENGINE_STABILITY_REVIEW_CADENCE_CUE);
     expect(snapshot.textContent).toContain("Current simulation status");
-    expect(snapshot.textContent).toContain("Fixture target date");
+    expect(snapshot.textContent).toContain("Simulation date");
     expect(snapshot.textContent).toContain("Last viewed locally");
     expect(
       screen.getByTestId("engine-stability-review-last-viewed-locally")

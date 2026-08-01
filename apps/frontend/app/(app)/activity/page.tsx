@@ -116,8 +116,8 @@ function ActivityRow({
           >
             {syntheticJourneyActive
               ? tx.type === 'DEPOSIT'
-                ? 'Synthetic deposit'
-                : 'Synthetic withdrawal'
+                ? 'Simulated deposit'
+                : 'Simulated withdrawal'
               : tx.type === 'DEPOSIT'
                 ? 'Deposit'
                 : 'Withdrawal'}
@@ -221,8 +221,12 @@ export default function ActivityPage() {
     if (transactions.length === 0) {
       return (
         <EmptyState
-          title="No transactions yet"
-          description="Your deposit and withdrawal history will appear here once you make your first transaction."
+          title={syntheticJourneyActive ? 'No simulated activity yet' : 'No transactions yet'}
+          description={
+            syntheticJourneyActive
+              ? 'Your simulated deposits and withdrawals will appear here after you record the first step.'
+              : 'Your deposit and withdrawal history will appear here once you make your first transaction.'
+          }
           icon={
             <svg
               className="h-12 w-12 text-gray-300"
@@ -239,7 +243,7 @@ export default function ActivityPage() {
             </svg>
           }
           primaryAction={{
-            label: syntheticJourneyActive ? 'Start synthetic deposit' : 'Make your first deposit',
+            label: syntheticJourneyActive ? 'Start simulated deposit' : 'Make your first deposit',
             href: syntheticJourneyActive ? getSyntheticJourneyHref('/deposit') : '/deposit',
           }}
           data-testid="activity-empty-state"
@@ -284,7 +288,10 @@ export default function ActivityPage() {
         <h1 className="text-2xl font-semibold text-hedgr-800">Activity</h1>
         {transactions.length > 0 && (
           <span className="text-sm text-hedgr-500">
-            {transactions.length} transaction{transactions.length !== 1 ? 's' : ''}
+            {transactions.length}{' '}
+            {syntheticJourneyActive
+              ? `simulated entr${transactions.length !== 1 ? 'ies' : 'y'}`
+              : `transaction${transactions.length !== 1 ? 's' : ''}`}
           </span>
         )}
       </div>
@@ -293,13 +300,13 @@ export default function ActivityPage() {
         <section
           className="rounded-xl border border-hedgr-300 bg-hedgr-100 p-4 text-hedgr-800"
           data-testid="activity-synthetic-condition"
-          aria-label="Synthetic activity condition"
+          aria-label="Simulated activity condition"
         >
           <p className="text-sm font-semibold">Step 4 · explain the simulated balance</p>
           <p className="mt-1 text-sm leading-relaxed text-hedgr-dark">
-            These local fixture records explain the same simulated balance shown on
-            Dashboard. “Completed” means the local scenario step finished; it is not
-            proof of a deposit, payout, provider action, or external settlement.
+            Activity shows the simulated deposit and withdrawal that changed the
+            balance. “Completed” means this simulated step finished. It does not
+            mean a bank transfer or real payout occurred.
           </p>
         </section>
       ) : null}
@@ -311,7 +318,7 @@ export default function ActivityPage() {
           aria-labelledby="activity-balance-reconciliation-heading"
         >
           <p className="text-xs font-semibold uppercase tracking-wide text-hedgr-500">
-            Same local fixture balance
+            Simulated balance calculation
           </p>
           <h2
             id="activity-balance-reconciliation-heading"
@@ -321,13 +328,13 @@ export default function ActivityPage() {
           </h2>
           <dl className="mt-3 grid grid-cols-1 gap-3 text-sm sm:grid-cols-3">
             <div className="rounded-lg bg-hedgr-100/50 p-3">
-              <dt className="text-hedgr-500">Synthetic deposits</dt>
+              <dt className="text-hedgr-500">Simulated deposits</dt>
               <dd className="mt-1 font-semibold tabular-nums text-hedgr-800">
                 +${syntheticBalanceReconciliation.deposits.toFixed(2)}
               </dd>
             </div>
             <div className="rounded-lg bg-hedgr-100/50 p-3">
-              <dt className="text-hedgr-500">Synthetic withdrawals</dt>
+              <dt className="text-hedgr-500">Simulated withdrawals</dt>
               <dd className="mt-1 font-semibold tabular-nums text-hedgr-800">
                 −${syntheticBalanceReconciliation.withdrawals.toFixed(2)}
               </dd>
@@ -390,13 +397,14 @@ export default function ActivityPage() {
         transaction={selectedTx}
         isOpen={isModalOpen}
         onClose={handleCloseModal}
+        simulated={syntheticJourneyActive}
       />
       {syntheticJourneyActive && transactions.length > 0 ? (
         <Link
           href={getSyntheticJourneyHref('/dashboard')}
           className="inline-flex rounded-xl border border-hedgr-200 bg-white px-4 py-2 text-sm font-medium text-hedgr-primary transition-colors hover:border-hedgr-300 hover:text-hedgr-600 focus:outline-none focus:ring-2 focus:ring-hedgr-500 focus:ring-offset-2"
         >
-          Return to dashboard summary
+          Return to simulated balance
         </Link>
       ) : null}
     </main>

@@ -52,6 +52,13 @@ export function AppLayoutClient({ children }: { children: React.ReactNode }) {
     { href: '/withdraw' as const, label: 'Withdraw' },
     { href: '/activity' as const, label: 'Activity' },
   ];
+  const currentJourneyStepIndex = journeySteps.findIndex(
+    (step) => pathname === step.href,
+  );
+  const currentJourneyStep =
+    journeySteps[currentJourneyStepIndex] ?? journeySteps[0];
+  const currentJourneyStepNumber =
+    currentJourneyStepIndex >= 0 ? currentJourneyStepIndex + 1 : 1;
 
   const allNavLinks: NavLink[] = [
     { href: '/dashboard', label: 'Dashboard' },
@@ -164,44 +171,28 @@ export function AppLayoutClient({ children }: { children: React.ReactNode }) {
             <div className="flex flex-col gap-2 lg:flex-row lg:items-center lg:justify-between">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-wide text-hedgr-500">
-                  CLASS-A-VAL-002 · synthetic research path
+                  CLASS-A-VAL-002 · simulated research path
                 </p>
                 <h2
                   id="synthetic-journey-heading"
                   className="mt-1 text-sm font-semibold text-hedgr-800"
                 >
-                  One simulated balance, four connected steps
+                  Simulated money journey
                 </h2>
                 <p className="mt-1 max-w-2xl text-sm leading-relaxed text-hedgr-dark">
-                  Deposit adds a local fixture record, Withdraw subtracts one,
-                  and Activity explains the result. Target shares describe an
-                  informational posture only; they do not divide this balance or
-                  prove money moved.
+                  Complete the current step using the example amounts, then
+                  continue when the next step appears. Every amount shown is
+                  simulated; no real money moves.
                 </p>
               </div>
-              <ol
-                className="grid w-full grid-cols-2 gap-2 sm:flex sm:w-auto sm:max-w-full sm:overflow-x-auto sm:pb-1"
-                aria-label="Journey steps"
+              <p
+                className="inline-flex w-fit items-center gap-2 rounded-lg border border-hedgr-primary bg-hedgr-primary px-3 py-2 text-sm font-medium text-white"
+                aria-label="Current journey step"
+                data-testid="synthetic-journey-current-step"
               >
-                {journeySteps.map((step, index) => {
-                  const isActive = pathname === step.href;
-                  return (
-                    <li key={step.href} className="shrink-0">
-                      <span
-                        aria-current={isActive ? 'step' : undefined}
-                        className={`inline-flex w-full items-center justify-center gap-2 rounded-lg border px-3 py-2 text-sm font-medium transition-colors sm:w-auto ${
-                          isActive
-                            ? 'border-hedgr-primary bg-hedgr-primary text-white'
-                            : 'border-hedgr-200 bg-white text-hedgr-primary hover:border-hedgr-300 hover:text-hedgr-600'
-                        }`}
-                      >
-                        <span aria-hidden="true">{index + 1}</span>
-                        {step.label}
-                      </span>
-                    </li>
-                  );
-                })}
-              </ol>
+                <span aria-hidden="true">{currentJourneyStepNumber}</span>
+                {currentJourneyStep.label}
+              </p>
             </div>
           </div>
         </section>

@@ -520,7 +520,7 @@ describe('WithdrawPage CLASS-A-VAL-002 primary condition', () => {
       await vi.advanceTimersByTimeAsync(350);
     });
 
-    fireEvent.change(screen.getByLabelText('Amount (USD)'), {
+    fireEvent.change(screen.getByLabelText('Amount to simulate (USD)'), {
       target: { value: '10' },
     });
     await act(async () => {
@@ -540,7 +540,7 @@ describe('WithdrawPage CLASS-A-VAL-002 primary condition', () => {
     expect(withdrawStateMocks.debitUSD).toHaveBeenCalledTimes(1);
   });
 
-  test('uses the local fixture and explicitly denies payout or settlement meaning', async () => {
+  test('uses plain simulated-money copy and explicitly denies real payout meaning', async () => {
     vi.stubEnv('NEXT_PUBLIC_AUTH_MODE', 'mock');
     vi.stubEnv('NEXT_PUBLIC_FX_MODE', 'stub');
     vi.stubEnv('NEXT_PUBLIC_APP_ENV', 'dev');
@@ -569,22 +569,26 @@ describe('WithdrawPage CLASS-A-VAL-002 primary condition', () => {
     });
 
     expect(screen.getByTestId('withdraw-synthetic-condition').textContent).toMatch(
-      /cannot contact a bank, provider, rail, or settlement service/i,
+      /no bank or payment provider is contacted/i,
     );
     expect(screen.getByTestId('withdraw-synthetic-condition').textContent).toMatch(
-      /same local fixture balance created on Deposit/i,
+      /subtract from the simulated balance/i,
     );
     expect(screen.getByTestId('withdraw-fx-block').textContent).toContain(
       '1 USD = 20.00 ZMW',
     );
-    fireEvent.change(screen.getByLabelText('Amount (USD)'), {
+    fireEvent.change(screen.getByLabelText('Amount to simulate (USD)'), {
       target: { value: '1' },
     });
     const balancePreview = screen.getByTestId('withdraw-balance-preview');
     expect(balancePreview.textContent).toContain('$25.00');
     expect(balancePreview.textContent).toContain('$1.00');
     expect(balancePreview.textContent).toContain('$24.00');
-    expect(balancePreview.textContent).toMatch(/local fixture arithmetic only/i);
+    expect(balancePreview.textContent).toMatch(/example calculation/i);
+    expect(balancePreview.textContent).toMatch(/does not create a real payout/i);
+    expect(balancePreview.textContent).not.toMatch(
+      /fixture|synthetic|settlement/i,
+    );
     expect((screen.getByRole('button', { name: 'Confirm' }) as HTMLButtonElement).disabled).toBe(
       false,
     );
@@ -595,11 +599,14 @@ describe('WithdrawPage CLASS-A-VAL-002 primary condition', () => {
     });
 
     expect(screen.getByTestId('withdraw-status-title').textContent).toBe(
-      'Synthetic withdrawal in progress',
+      'Simulated withdrawal in progress',
     );
     expect(screen.getByTestId('withdraw-status-description').textContent).toMatch(
-      /no payout or external transfer/i,
+      /no bank transfer or real payout/i,
     );
+    expect(screen.queryByTestId('withdraw-status-exception-clarification')).toBeNull();
+    expect(screen.queryByTestId('withdraw-status-reconciliation-clarification')).toBeNull();
+    expect(screen.queryByTestId('withdraw-status-next-step-guidance')).toBeNull();
     expect(withdrawMock.createWithdraw).toHaveBeenCalledWith(1, {
       skipAutoConfirm: false,
     });

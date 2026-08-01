@@ -123,7 +123,7 @@ export function EngineStabilityReviewSnapshot({
       <dl className="mt-4 grid gap-4 border-t border-hedgr-100 pt-4 sm:grid-cols-2">
         <div>
           <dt className="text-[11px] font-semibold uppercase tracking-wide text-hedgr-500">
-            Fixture target date
+            Simulation date
           </dt>
           <dd
             className="mt-1 text-xs leading-relaxed text-hedgr-600"

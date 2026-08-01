@@ -122,14 +122,13 @@ test("4 · dashboard shows Stability Engine posture context after login", async 
   expect(allocationBandsText).toContain("Stable balance");
   expect(allocationBandsText).toContain("Conservative yield");
   expect(allocationBandsText).toContain("Reserve");
-  expect(allocationBandsText).toContain("Targets");
-  expect(allocationBandsText).toContain("Informational system targets only");
-  expect(allocationBandsText).toContain("Balances");
-  expect(allocationBandsText).toContain("Your ledger shows what you hold");
-  expect(allocationBandsText).toContain("not your spendable balance");
-  expect(allocationBandsText).toContain("Movement");
+  expect(allocationBandsText).toContain("Stability targets");
+  expect(allocationBandsText).toContain("Guidance only");
+  expect(allocationBandsText).toContain("Balance");
+  expect(allocationBandsText).toContain("The percentages do not divide it");
+  expect(allocationBandsText).toContain("No money movement");
   expect(allocationBandsText).toContain(
-    "Targets do not mean funds have already moved"
+    "A target does not mean money has moved"
   );
 
   const allocationExecutionDriftTerms = [

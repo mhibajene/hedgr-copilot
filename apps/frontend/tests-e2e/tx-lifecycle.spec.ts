@@ -72,7 +72,7 @@ test.describe('Transaction Lifecycle - Activity Display', () => {
 
     // Verify transaction type in modal
     const txType = page.getByTestId('tx-detail-type');
-    await expect(txType).toHaveText('Deposit');
+    await expect(txType).toHaveText('Simulated deposit');
 
     // Verify amount is shown
     const txAmount = page.getByTestId('tx-detail-amount');
@@ -207,7 +207,7 @@ test.describe('Transaction Lifecycle - Activity Display', () => {
 
     // Verify transaction type
     const txType = page.getByTestId('tx-detail-type');
-    await expect(txType).toHaveText('Withdrawal');
+    await expect(txType).toHaveText('Simulated withdrawal');
 
     // Verify timeline shows failed state
     const failedStep = page.getByTestId('timeline-step-FAILED');
