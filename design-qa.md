@@ -67,8 +67,9 @@ All captures contain simulated research data only. No participant data, real fin
 - Frontend typecheck: passed.
 - Frontend lint: passed.
 - Production frontend build with mock / stub configuration: passed.
-- `git diff --check`: required after closeout reconciliation.
-- Aggregate `pnpm run validate`: required after closeout and immutable RAP binding.
+- Bridge snapshot tests: **11/11 passed**; Bridge Worker tests: **34/34 passed**.
+- `git diff --check`: passed after closeout reconciliation.
+- Aggregate `pnpm run validate`: passed with the RAP deterministically bound to source commit `8cb1361411de58dfc43c2ce366c7b6342757bf5c`.
 - Hosted checks are recorded through final Hedgr PR posture.
 
 ## No-live-authority confirmation
