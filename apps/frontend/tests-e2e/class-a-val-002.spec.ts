@@ -49,11 +49,22 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   await expect(page.getByRole('button', { name: 'Dismiss trust disclosure' })).toHaveCount(0);
   const journeyShell = page.getByTestId('synthetic-journey-shell');
   await expect(journeyShell).toContainText('CLASS-A-VAL-002');
-  await expect(journeyShell).toContainText('Simulated money journey');
-  await expect(journeyShell).toContainText('Complete the current step');
+  await expect(journeyShell).toContainText('start with the situation');
+  await expect(journeyShell).toContainText('Understand the situation before the next step');
+  await expect(journeyShell).toContainText('current stability view and simulated balance');
   await expect(page.getByTestId('synthetic-journey-current-step')).toHaveText('1Dashboard');
   const initialJourneyCopy = (await journeyShell.textContent()) ?? '';
-  expect(initialJourneyCopy).not.toMatch(/Activity explains|fixture|informational posture|settlement/i);
+  expect(initialJourneyCopy).not.toMatch(
+    /Financial Stability Companion|Activity explains|fixture|informational posture|settlement/i,
+  );
+  const dashboardOrientation = page.getByTestId('dashboard-orientation');
+  await expect(dashboardOrientation).toContainText('Financial position');
+  await expect(dashboardOrientation).toContainText(
+    'Understand your situation before deciding what to do next.',
+  );
+  await expect(dashboardOrientation).toContainText(
+    'not as an instruction or proof that money moved',
+  );
   await expect(page.getByTestId('usd-balance')).toHaveText('$0.00');
   await expect(page.getByText('Simulated balance', { exact: true })).toBeVisible();
   await expect(page.getByTestId('dashboard-synthetic-balance-explainer')).toContainText(
@@ -72,8 +83,11 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   await page.getByRole('link', { name: 'Start simulated deposit' }).click();
   await expect(page).toHaveURL(/\/deposit\?journey=class-a-val-002/);
   await expect(page.getByTestId('synthetic-journey-current-step')).toHaveText('2Deposit');
+  await expect(page.getByTestId('synthetic-journey-shell')).toContainText(
+    'See how the simulated position changes',
+  );
   await expect(page.getByTestId('deposit-synthetic-condition')).toContainText(
-    'records only a simulated deposit',
+    'see how the simulated position changes',
   );
   await expect(page.getByTestId('deposit-fx-block')).toContainText(
     'Simulated example rate: 1 USD = 20.00 ZMW',
@@ -105,8 +119,11 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   await page.getByRole('link', { name: 'Continue to simulated withdrawal' }).click();
   await expect(page).toHaveURL(/\/withdraw\?journey=class-a-val-002/);
   await expect(page.getByTestId('synthetic-journey-current-step')).toHaveText('3Withdraw');
+  await expect(page.getByTestId('synthetic-journey-shell')).toContainText(
+    'See the position after a simulated withdrawal',
+  );
   await expect(page.getByTestId('withdraw-synthetic-condition')).toContainText(
-    'No bank or payment provider is contacted',
+    'check the position after a simulated withdrawal',
   );
   await expect(page.getByText('Simulated balance before this step:')).toContainText('$5.00');
 
@@ -152,8 +169,11 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   await page.getByRole('link', { name: 'Review simulated activity' }).click();
   await expect(page).toHaveURL(/\/activity\?journey=class-a-val-002/);
   await expect(page.getByTestId('synthetic-journey-current-step')).toHaveText('4Activity');
+  await expect(page.getByTestId('synthetic-journey-shell')).toContainText(
+    'Review what changed and why',
+  );
   await expect(page.getByTestId('activity-synthetic-condition')).toContainText(
-    'It does not mean a bank transfer or real payout occurred',
+    'understand what changed and why',
   );
   const activityReconciliation = page.getByTestId('activity-balance-reconciliation');
   await expect(activityReconciliation).toContainText('Simulated deposits+$5.00');
@@ -180,11 +200,11 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   ).toHaveCount(0);
   await page.getByTestId('tx-detail-close').click();
 
-  await page.getByRole('link', { name: 'Return to simulated balance' }).click();
+  await page.getByRole('link', { name: 'Return to simulated stability view' }).click();
   await expect(page.getByTestId('usd-balance')).toHaveText('$3.00');
   await expect(page.getByText('Simulated deposit').first()).toBeVisible();
   await expect(page.getByText('Simulated withdrawal').first()).toBeVisible();
-  await expect(page.getByRole('link', { name: 'View all' })).toHaveAttribute(
+  await expect(page.getByRole('link', { name: 'Review Activity' })).toHaveAttribute(
     'href',
     '/activity?journey=class-a-val-002',
   );
@@ -201,7 +221,7 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
 
   await expect(page.getByTestId('usd-balance')).toHaveText('$0.00');
   await expect(page.getByRole('link', { name: 'Start simulated deposit' })).toBeVisible();
-  await expect(page.getByRole('link', { name: 'View all' })).toHaveCount(0);
+  await expect(page.getByRole('link', { name: 'Review Activity' })).toHaveCount(0);
 
   await page.getByRole('link', { name: 'Start simulated deposit' }).click();
   await page.getByTestId('deposit-amount').fill('100');
@@ -222,7 +242,7 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   await expect(page.getByTestId('activity-type-deposit')).toHaveCount(1);
   await expect(page.getByTestId('activity-type-withdraw')).toHaveCount(1);
   await expect(page.locator('[data-testid="tx-status-pill"][data-status="SUCCESS"]')).toHaveCount(2);
-  await page.getByRole('link', { name: 'Return to simulated balance' }).click();
+  await page.getByRole('link', { name: 'Return to simulated stability view' }).click();
   await expect(page.getByTestId('usd-balance')).toHaveText('$3.00');
   await expect(page.getByRole('button', { name: 'Restart simulated journey' })).toBeVisible();
 });

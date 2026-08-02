@@ -27,6 +27,36 @@ type NavLink = {
 
 type SyntheticJourneyPath = Parameters<typeof getSyntheticJourneyHref>[0];
 
+const SYNTHETIC_JOURNEY_ORIENTATION: Record<
+  SyntheticJourneyPath,
+  { context: string; heading: string; description: string }
+> = {
+  '/dashboard': {
+    context: 'start with the situation',
+    heading: 'Understand the situation before the next step',
+    description:
+      'Review what the current stability view and simulated balance show before choosing the next step.',
+  },
+  '/deposit': {
+    context: 'see the change',
+    heading: 'See how the simulated position changes',
+    description:
+      'Use the example deposit to observe the change, then continue when the next step appears.',
+  },
+  '/withdraw': {
+    context: 'check what remains',
+    heading: 'See the position after a simulated withdrawal',
+    description:
+      'Use the example withdrawal to understand what remains before continuing.',
+  },
+  '/activity': {
+    context: 'understand why',
+    heading: 'Review what changed and why',
+    description:
+      'Use the simulated entries to explain the balance that remains after both changes.',
+  },
+};
+
 function isSyntheticJourneyPath(href: string): href is SyntheticJourneyPath {
   return ['/dashboard', '/deposit', '/withdraw', '/activity'].includes(href);
 }
@@ -59,6 +89,8 @@ export function AppLayoutClient({ children }: { children: React.ReactNode }) {
     journeySteps[currentJourneyStepIndex] ?? journeySteps[0];
   const currentJourneyStepNumber =
     currentJourneyStepIndex >= 0 ? currentJourneyStepIndex + 1 : 1;
+  const currentJourneyOrientation =
+    SYNTHETIC_JOURNEY_ORIENTATION[currentJourneyStep.href];
 
   const allNavLinks: NavLink[] = [
     { href: '/dashboard', label: 'Dashboard' },
@@ -171,17 +203,16 @@ export function AppLayoutClient({ children }: { children: React.ReactNode }) {
             <div className="flex flex-col gap-2 lg:flex-row lg:items-center lg:justify-between">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-wide text-hedgr-500">
-                  CLASS-A-VAL-002 · simulated research path
+                  CLASS-A-VAL-002 · {currentJourneyOrientation.context}
                 </p>
                 <h2
                   id="synthetic-journey-heading"
                   className="mt-1 text-sm font-semibold text-hedgr-800"
                 >
-                  Simulated money journey
+                  {currentJourneyOrientation.heading}
                 </h2>
                 <p className="mt-1 max-w-2xl text-sm leading-relaxed text-hedgr-dark">
-                  Complete the current step using the example amounts, then
-                  continue when the next step appears. Every amount shown is
+                  {currentJourneyOrientation.description} Every amount shown is
                   simulated; no real money moves.
                 </p>
               </div>

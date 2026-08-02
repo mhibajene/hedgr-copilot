@@ -6,7 +6,7 @@
 
 **Authority:** The repository is source of truth. Wording here must match `docs/decisions/0016-warmth-layer-doctrine-constrained-retail-refinement-track.md`, `docs/decisions/SPRINT-2-ADR-INDEX.md`, and `docs/ops/HEDGR_STATUS.md`. Wording must match **Accepted** ADR **0016** in repo; do not broaden scope or soften read-only / non-execution boundaries in Notion.
 
-**Last reconciled:** 2026-08-02 (mirror after Founder acceptance of Internal **D-060** / **§179** and activation of nested `HEDGR-UI-006` under Internal **D-061** / **§180** within open `CLASS-A-VAL-002`; `HEDGR-UI-005` remains completed under **D-059** / **§177**–**§178**; dual-layer protocol-complete retesting follows nested `HEDGR-UI-006` closeout; no participant-comprehension, second-ticket, successor, parallel-lane, naming-adoption, Class B, MVP-acceptance, Evidence Register, or gate-clearance claim; `STATUS-HYGIENE-001` / **§173** remains completed; `NARRATIVE-006` remains closed under **§172**; Controlled Parallelism v19 / **D-055** completed historical; Lane N idle; Research R1 preserved; Research R2 accepted as an internal design artifact; publication remains unauthorized; Lane M idle; Lane R idle; D-054 completed historical; Canonical Story v1.0, Customer One-Pager v1.0, Narrative Style Guide v1.0, and accepted Investor Orientation Brief remain unchanged; R1 retirement deferred ≥ **2026-08-02**; Kenya counsel **DEFER**; repo **§7** / **§7a** controls sequencing)
+**Last reconciled:** 2026-08-02 (mirror after Founder acceptance of Internal **D-060** / **§179**, activation of nested `HEDGR-UI-006` under Internal **D-061** / **§180**, and bounded implementation closeout **§181** within open `CLASS-A-VAL-002`; `HEDGR-UI-005` remains completed under **D-059** / **§177**–**§178**; no nested refinement is active; protocol-complete dual-layer participant retesting is next; no participant-comprehension, category-adoption, second-ticket, successor, parallel-lane, naming-adoption, Class B, MVP-acceptance, Evidence Register, or gate-clearance claim; `STATUS-HYGIENE-001` / **§173** remains completed; `NARRATIVE-006` remains closed under **§172**; Controlled Parallelism v19 / **D-055** completed historical; Lane N idle; Research R1 preserved; Research R2 accepted as an internal design artifact; publication remains unauthorized; Lane M idle; Lane R idle; D-054 completed historical; Canonical Story v1.0, Customer One-Pager v1.0, Narrative Style Guide v1.0, and accepted Investor Orientation Brief remain unchanged; R1 retirement deferred ≥ **2026-08-02**; Kenya counsel **DEFER**; repo **§7** / **§7a** controls sequencing)
 
 ---
 
@@ -76,7 +76,7 @@ Use as a governed workstream line, **not** as a shipped-feature claim. Placement
 
 - **`HEDGR-UI-005` nested plain-language pass (D-059, Accepted and completed):** Historical final pre-retest language pass. Sequence later amended by **D-060** / **D-061**. Canonical detail: activation **§177**, closeout **§178**.
 
-- **`HEDGR-UI-006` nested category / narrative-orientation pass (D-061, Accepted — active):** Bounded Class A presentation / copy / protocol-instrument pass under open `CLASS-A-VAL-002`, activated ahead of dual-layer retest. Not a second ticket, successor, concurrent lane, naming adoption, parent closeout, or comprehension claim. No Class B / MVP / Evidence Register / gate authority. Canonical detail: activation **§180**; active nested brief **§7a**.
+- **`HEDGR-UI-006` nested category / narrative-orientation pass (D-061, Accepted and completed):** Bounded Class A presentation / copy / protocol-instrument pass completed under open `CLASS-A-VAL-002`; protocol-complete dual-layer participant retesting is next. Not a second ticket, successor, concurrent lane, naming adoption, parent closeout, category-adoption, or comprehension claim. No Class B / MVP / Evidence Register / gate authority. Canonical detail: activation **§180**, closeout **§181**; completed nested brief **§7a**.
 
 - **Controlled Parallelism v7 (D-041, Accepted — completed historical pass):** Named `CLASS-A-VAL-002` (Lane V) and `BRIDGE-P1-PREP-001` (Lane R prep). Lane R closed prep-complete (**§151** / **D-043**); singular-ticket restored; D-041 no longer supplies concurrency. Proposed `BRIDGE-P1-001` formed not active. `NO CROSS-LANE IMPACT`.
 
@@ -1303,7 +1303,7 @@ Use when mirroring the completed **test-only** regression tranche 4. **Not** new
 | ----- | ----- |
 | **Decision ID** | D-060 |
 | **Title** | Narrative Convergence and Category Validation under `CLASS-A-VAL-002` |
-| **Status** | Accepted — parent remains open; dual-layer retest after nested `HEDGR-UI-006` |
+| **Status** | Accepted — parent remains open; nested `HEDGR-UI-006` complete; dual-layer participant retest next |
 | **Decision Type** | Product / Narrative / Validation |
 | **Strategic Horizon** | Short-term (MVP evidence generation) |
 | **Visibility** | Internal |
@@ -1316,32 +1316,32 @@ Use when mirroring the completed **test-only** regression tranche 4. **Not** new
 - Highest-value remaining uncertainty shifts toward category / product-identity formation while retaining journey comprehension as prerequisite.
 - Working hypotheses: Financial Stability Companion; stability-before-action / financial-position interpretation — test-only, not public naming.
 - Does not authorize Class B, naming adoption, parent closeout, or UI by inference.
-- Nested UI ahead of retest authorized separately by **D-061** / **§180**.
+- Nested UI ahead of retest was authorized and closed separately by **D-061** / **§180**–**§181**.
 - `NO CROSS-LANE IMPACT`.
 
 ---
 
 ## 8d.29 Decision Log — D-061 / HEDGR-UI-006 nested activation (Internal; Notion mirror)
 
-**Notion Decision Log ID:** **D-061**. Canonical detail: **`docs/ops/HEDGR_STATUS.md` §180** and active nested brief in **§7a**. Visibility: **Internal**.
+**Notion Decision Log ID:** **D-061**. Canonical detail: **`docs/ops/HEDGR_STATUS.md` §180** activation, **§181** closeout, and completed nested brief in **§7a**. Visibility: **Internal**.
 
 | Field | Value |
 | ----- | ----- |
 | **Decision ID** | D-061 |
 | **Title** | Activate `HEDGR-UI-006` nested category / narrative-orientation pass within `CLASS-A-VAL-002` |
-| **Status** | Accepted — nested pass active; parent remains open |
+| **Status** | Accepted and completed — parent remains open; dual-layer participant retest next |
 | **Decision Type** | Product / UX-Trust / Nested validation refinement activation |
 | **Strategic Horizon** | Short-term (MVP evidence generation) |
 | **Visibility** | Internal |
 | **Date** | 2026-08-02 |
-| **Repo authority** | `HEDGR_STATUS.md` **§180**; active nested brief **§7a**; parent disposition **§179** / D-060 |
+| **Repo authority** | `HEDGR_STATUS.md` **§180** activation; **§181** closeout; completed nested brief **§7a**; parent disposition **§179** / D-060 |
 | **Ticket** | Nested under Lane V `CLASS-A-VAL-002` (sole active ticket; remains open) |
 
 **Summary / notes (concise)**
 
-- Founder-authorized nested UI ahead of dual-layer retest after D-060.
-- Bounded presentation / copy / protocol-instrument only; no state, arithmetic, engine, naming adoption, or Class B authority.
-- Dual-layer retest follows nested closeout; no further UI pass by inference.
+- Founder-authorized nested UI completed ahead of dual-layer participant retest after D-060.
+- Bounded presentation / copy / protocol-instrument only; no state, arithmetic, engine, naming adoption, category-adoption, or Class B authority.
+- Dual-layer participant retest is next; no further UI pass by inference.
 - Singular-ticket Lane V remains; `NO CROSS-LANE IMPACT`.
 
 ---

@@ -188,6 +188,17 @@ describe("DashboardPage engine trust surface", () => {
     expect(
       screen.getByTestId("dashboard-current-overview").getAttribute("aria-label")
     ).toBe("Current simulation overview");
+    const orientation = screen.getByTestId("dashboard-orientation");
+    expect(orientation.textContent).toContain("Financial position");
+    expect(orientation.textContent).toContain(
+      "Understand your situation before deciding what to do next."
+    );
+    expect(orientation.textContent).toContain(
+      "not as an instruction or proof that money moved"
+    );
+    expect(orientation.textContent).not.toMatch(
+      /Financial Stability Companion|crypto wallet|bank|budgeting app|trading product/i
+    );
     expect(screen.getByText("Simulated balance")).toBeDefined();
     const explainer = screen.getByTestId(
       "dashboard-synthetic-balance-explainer"
@@ -259,6 +270,7 @@ describe("DashboardPage engine trust surface", () => {
     expect(
       screen.queryByRole("button", { name: "Restart simulated journey" })
     ).toBeNull();
+    expect(screen.queryByTestId("dashboard-orientation")).toBeNull();
   });
 
   test("mounts the engine posture header in the primary dashboard path", () => {

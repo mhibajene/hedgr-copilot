@@ -1,16 +1,29 @@
 # CLASS-A-VAL-002 Participant Protocol and Evidence Capture
 
-**Status:** Active retest instrument for the sole active `CLASS-A-VAL-002` ticket, refined under nested `HEDGR-UI-005` before protocol-complete participant retesting
+**Status:** Active dual-layer retest instrument for the sole active `CLASS-A-VAL-002` ticket, refined by the completed nested `HEDGR-UI-006` pass before protocol-complete participant retesting
 
 **Execution class:** Class A product validation; visibly synthetic; non-executing for customer money
 
-**Authority:** `docs/ops/HEDGR_STATUS.md` §7 / §7a, §143, §174, and §177; Internal D-037, D-057, and D-059
+**Authority:** `docs/ops/HEDGR_STATUS.md` §7 / §7a, §143, §179, §180, and §181; Internal D-037, D-060, and D-061
 
 **Non-authorization:** This protocol does not authorize live money movement, custody, provider or banking integration, production FX, settlement, payout, Stability Engine execution, Class B implementation, Evidence Register acceptance, gate clearance, participant-data collection beyond the bounded fields below, or a successor ticket. Interface completion and completed session records do not by themselves close `CLASS-A-VAL-002`.
 
 ## 1. Research decision
 
-Determine whether target cross-border freelancers can understand Hedgr's stability proposition through the complete synthetic Dashboard → Deposit → Withdraw → Activity journey well enough for the Founder to decide whether to:
+Determine whether target cross-border freelancers can both:
+
+1. understand the simulated Dashboard → Deposit → Withdraw → Activity journey and its non-live trust boundary; and
+2. independently form an accurate explanation of the problem Hedgr addresses, what kind of product it appears to be, when it would matter, and what decision or behaviour it could inform.
+
+Capture the dual-layer result through five linked evidence layers:
+
+1. **Problem recognition** — the participant identifies the financial-stability problem in their own words.
+2. **Journey comprehension** — the participant explains the simulated state, changes, arithmetic, and no-real-money boundary.
+3. **Product identity** — the participant describes what kind of product Hedgr appears to be without copying a supplied category label.
+4. **Decision relevance** — the participant identifies a situation or decision for which the product could be relevant.
+5. **Behavioural value** — the participant explains what they would understand or do differently after using it.
+
+Use the resulting evidence for the Founder to decide whether to:
 
 1. consider a one-market Class B feasibility proposal;
 2. use one evidenced Class A presentation iteration;
@@ -45,7 +58,7 @@ Use a random participant code such as `P-001`. Keep any recruitment contact data
 
 | Checkpoint | Expected synthetic state |
 | --- | --- |
-| Dashboard start | `$0.00` simulated balance; current-step shell visible; stability targets described as guidance that does not divide the balance; start-simulated-deposit action visible |
+| Dashboard start | `$0.00` simulated balance; financial-position orientation and current-step shell visible; stability targets described as guidance that does not divide the balance; start-simulated-deposit action visible |
 | Deposit preview | `100 ZMW` shows an example `+$5.00` simulated-balance change; example rate and no-real-money boundary visible; no advance Activity explanation |
 | Deposit result | Simulated deposit recorded; simulated balance increased by `$5.00`; matching simulated Activity entry named; no account charge or real-money movement claim |
 | Withdrawal result | Before / subtract / remaining example calculation shows `$5.00 − $2.00 = $3.00`; simulated withdrawal recorded; no bank transfer or real-payout claim |
@@ -63,18 +76,23 @@ Read exactly:
 
 Ask the participant to think aloud. Do not explain Hedgr's proposition beyond visible product copy until the free-recall questions have been answered.
 
+Do not say or show “Financial Stability Companion” or another proposed category label to the participant. Do not offer bank, wallet, budgeting, trading, investment, or payments classifications until the participant's unaided entry answer has been recorded. Functional understanding in the participant's own language is the evidence; repetition of interface wording is not enough.
+
 ### Step 1 — Dashboard
 
-1. Ask: “In your own words, what do you think Hedgr is intended to help with?”
-2. Ask the participant to identify the primary action without opening any disclosure.
-3. Ask: “What does Stable balance mean here?”
-4. Ask: “How are Conservative yield and Reserve different from Stable balance and from each other?”
-5. Ask: “What does the Stability Engine posture tell you?”
-6. Ask: “Do the stability-target percentages divide the simulated balance or show money that has already moved, or do they mean something else?”
-7. Ask: “What is Review Snapshot for?”
-8. Ask the participant to distinguish the current simulation status, simulation date, and last viewed locally.
-9. Ask: “Did any colour make a lane feel guaranteed safe, higher performing, urgent, active, or already approved?”
-10. Only after the unaided answers are recorded, ask the participant to open the consolidated simulation and stability-target explanations. Record whether the disclosure changed their answer or confidence.
+1. Ask: “Without opening anything else, what problem do you think Hedgr is trying to help with?”
+2. Ask: “What kind of product do you think this is? What on this screen makes you say that?”
+3. Ask: “When, if ever, might a view like this be useful to you?”
+4. Ask: “What decision or next step, if any, could this view help you think about?”
+5. Ask the participant to identify the primary action without opening any disclosure.
+6. Ask: “What does Stable balance mean here?”
+7. Ask: “How are Conservative yield and Reserve different from Stable balance and from each other?”
+8. Ask: “What does the Stability Engine posture tell you?”
+9. Ask: “Do the stability-target percentages divide the simulated balance or show money that has already moved, or do they mean something else?”
+10. Ask: “What is Review Snapshot for?”
+11. Ask the participant to distinguish the current simulation status, simulation date, and last viewed locally.
+12. Ask: “Did any colour make a lane feel guaranteed safe, higher performing, urgent, active, or already approved?”
+13. Only after the unaided answers are recorded, ask the participant to open the consolidated simulation and stability-target explanations. Record whether the disclosure changed their answer or confidence.
 
 Do not ask the participant to explain the complete route relationship on Dashboard. The full-journey free-recall question belongs at Activity, after the participant has experienced each step.
 
@@ -106,6 +124,10 @@ Expected interpretation: the simulated balance becomes `$3.00`; no bank transfer
 2. Without restating the route model, ask them to explain both records and reconcile the current balance. Record the answer before any disclosure, probe, or moderator explanation.
 3. Ask: “What does ‘Completed’ mean in this screen?”
 4. Ask the participant to return to Dashboard and verify the `$3.00` balance.
+5. With the returned Dashboard visible, ask: “Now that you have completed the example, what do you think Hedgr is intended to help someone achieve?”
+6. Ask: “What kind of product do you now think this is? What changed or stayed the same from your first answer?”
+7. Ask: “When would it matter, and what decision or behaviour could it affect?”
+8. Ask: “Which parts of the experience led you to that answer?”
 
 Expected interpretation: “Completed” means a simulated step finished, not external financial finality.
 
@@ -123,7 +145,10 @@ Ask free recall first, then use the probe only if needed.
 
 | Outcome | Free-recall question | Allowed probe |
 | --- | --- | --- |
-| Proposition | What is Hedgr intended to do for someone like you? | Is the main idea stability, payments speed, trading, or something else? Why? |
+| Problem recognition | What problem is Hedgr trying to help with? | Is the main problem preserving and understanding a financial position, moving money faster, tracking a budget, trading, or something else? Why? |
+| Product identity | What kind of product does Hedgr appear to be? | Does it seem primarily like a bank, crypto wallet, budgeting app, investment or trading product, live payments tool, or something else? What evidence supports your answer? |
+| Decision relevance | When would Hedgr matter, and what decision could it inform? | Would it help before acting, after a transaction, during trading, or in another situation? Why? |
+| Behavioural value | What, if anything, would Hedgr help you understand or do differently? | Did the experience change how you would assess the situation before a next step? |
 | Primary action | What did the page ask you to do next? | Which control appeared to begin the participant journey? |
 | Stable balance | What does Stable balance mean here? | Is it the main holding lane, a performance result, or an action control? |
 | Supporting lanes | How do Conservative yield and Reserve support Stable balance? | Did either feel like a separate product or something you could manage? |
@@ -147,7 +172,14 @@ For every comprehension outcome, record the first support level at which the par
 - `N` — after the neutral probe in the table above;
 - `M` — only after moderator explanation; this is moderator rescue, not demonstrated comprehension.
 
-After the secondary exception or a five-minute unrelated discussion, hide the journey screens and ask: “Without looking at the interface, how did the simulated balance change from start to finish, and which entries explained the result?” Record this delayed-recall answer separately. Then ask one transfer question without changing the application: “If a simulated deposit added `$8` and a simulated withdrawal subtracted `$3`, what would remain, and where would you check why?” These fields expose teaching dependence; they do not change the governed participant success thresholds or create an automatic disposition.
+After the secondary exception or a five-minute unrelated discussion, hide the journey screens and ask these questions in order:
+
+1. “Without looking at the interface, what problem do you think Hedgr is intended to help with, and what kind of product is it?”
+2. “When might it matter, and what decision or behaviour could it affect?”
+3. “How did the simulated balance change from start to finish, and which entries explained the result?”
+4. “If a simulated deposit added `$8` and a simulated withdrawal subtracted `$3`, what would remain, and where would you check why?”
+
+Record these delayed-recall answers separately. These fields expose category-label parroting, mental-model decay, and teaching dependence; they do not change the governed participant success thresholds or create an automatic disposition.
 
 ## 6. Evidence-capture template
 
@@ -177,7 +209,10 @@ Score only as a compact retrieval aid; the participant's words and observed beha
 
 | Outcome | Score | First correct at U / D / N / M | Free-recall response / observed behavior | Misconception or hesitation | Short redacted quote |
 | --- | ---: | --- | --- | --- | --- |
-| Explain the Hedgr proposition | | | | | |
+| Recognize the problem Hedgr addresses | | | | | |
+| Explain Hedgr's product identity in their own words | | | | | |
+| Identify a relevant situation or decision | | | | | |
+| Explain potential behavioural value | | | | | |
 | Identify the primary journey action | | | | | |
 | Interpret Stable balance as the dominant holding lane | | | | | |
 | Distinguish Conservative yield and Reserve as supporting lanes | | | | | |
@@ -192,10 +227,38 @@ Score only as a compact retrieval aid; the participant's words and observed beha
 | Confirm disclosure consolidation preserved confidence and findability | | | | | |
 | Express usefulness and trust | | | | | |
 
+### Dual-layer category-convergence record
+
+Record the participant's words before applying any interpretation. `Entry` is the first Dashboard answer, `Exit` is the answer after the complete journey and Dashboard return, and `Delayed` is the answer after the screens are hidden. Do not backfill an earlier column from a later answer.
+
+| Evidence layer | Entry | Exit | Delayed | First correct at U / D / N / M | Misclassification, copied phrase, or trajectory note |
+| --- | --- | --- | --- | --- | --- |
+| Layer 1 — Problem recognition | | | | | |
+| Layer 2 — Journey comprehension | | | | | |
+| Layer 3 — Product identity | | | | | |
+| Layer 4 — Decision relevance | | | | | |
+| Layer 5 — Behavioural value | | | | | |
+
+### Open category interpretation
+
+Complete only after the unaided product-identity response is recorded. Multiple observations may apply; do not force the participant into one label.
+
+| Interpretation | Entry evidence | Exit evidence | Delayed evidence |
+| --- | --- | --- | --- |
+| Financial-position / stability interpretation | | | |
+| Crypto wallet | | | |
+| Bank or account | | | |
+| Budgeting app | | | |
+| Investment or trading product | | | |
+| Live money-moving or payments tool | | | |
+| Other participant-defined interpretation | | | |
+
 ### Independence checks
 
 | Check | Response / evidence note |
 | --- | --- |
+| Entry-to-exit mental-model change | |
+| Exit-to-delayed mental-model change | |
 | Delayed recall after screens are hidden | |
 | Transfer answer for `$8 − $3` and where to verify it | |
 | Any disclosure opened before the initial answer | |
@@ -232,7 +295,9 @@ Do not convert scores into automatic approval. Synthesize repeated observations 
 
 | Evidence pattern | Future decision relevance | Non-authority boundary |
 | --- | --- | --- |
-| Proposition understood without prompting | Supports or weakens the case for continued Class A exploration | Does not establish demand or Class B feasibility |
+| Problem recognized without prompting | Tests whether the stability need is legible before category language is supplied | Does not establish demand, market selection, or Class B feasibility |
+| Product identity converges in the participant's own words | Tests whether the intended category is formable rather than merely repeated | Does not adopt public naming or validate a settled category |
+| Decision relevance and behavioural value are concrete | Tests whether the proposition connects to a real mental model and potential use | Does not establish customer intent, demand, advice authority, or readiness |
 | Simulated-balance / stability-target distinction understood | Tests shadow-accounting and fund-movement interpretation risk | Does not validate accounting, custody, or engine execution |
 | Engine posture understood as informational | Tests the read-only Stability Engine trust expression | Does not authorize engine action or allocation execution |
 | Dominant and supporting lanes understood | Tests whether Stable balance, Conservative yield, and Reserve form a comprehensible stability structure | Does not redefine the lanes or validate an allocation product |

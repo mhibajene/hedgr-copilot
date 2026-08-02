@@ -369,6 +369,9 @@ describe('DepositPage CLASS-A-VAL-002 primary and exception conditions', () => {
     expect(screen.getByTestId('deposit-synthetic-condition').textContent).toMatch(
       /records only a simulated deposit/i,
     );
+    expect(screen.getByTestId('deposit-synthetic-condition').textContent).toMatch(
+      /see how the simulated position changes/i,
+    );
     expect(screen.getByTestId('deposit-fx-block').textContent).toContain(
       '1 USD = 20.00 ZMW',
     );

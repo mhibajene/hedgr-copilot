@@ -239,6 +239,29 @@ export default function DashboardPage() {
   return (
     <main className="p-4 sm:p-8">
       <div className="mx-auto max-w-2xl space-y-6 sm:space-y-8">
+        {syntheticJourneyActive ? (
+          <section
+            aria-labelledby="dashboard-orientation-heading"
+            className="space-y-2"
+            data-testid="dashboard-orientation"
+          >
+            <p className="text-xs font-semibold uppercase tracking-[0.12em] text-hedgr-500">
+              Financial position
+            </p>
+            <h2
+              id="dashboard-orientation-heading"
+              className="text-2xl font-semibold tracking-tight text-hedgr-800 sm:text-3xl"
+            >
+              Understand your situation before deciding what to do next.
+            </h2>
+            <p className="max-w-xl text-sm leading-relaxed text-hedgr-dark">
+              Start with the current stability view and simulated balance. Use
+              the guidance below as context for the position, not as an
+              instruction or proof that money moved.
+            </p>
+          </section>
+        ) : null}
+
         {currentOverview}
 
         {isFirstTimeUser && (
@@ -249,16 +272,18 @@ export default function DashboardPage() {
             <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
               <div className="max-w-lg">
                 <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-hedgr-500">
-                  Primary journey action
+                  {syntheticJourneyActive
+                    ? "See one change in context"
+                    : "Primary journey action"}
                 </p>
                 <h2 className="mt-1 text-lg font-semibold text-hedgr-800">
                   {syntheticJourneyActive
-                    ? "Try a simulated deposit"
+                    ? "See how the simulated position changes"
                     : "See your position clearly"}
                 </h2>
                 <p className="mt-1 text-sm leading-relaxed text-hedgr-dark">
                   {syntheticJourneyActive
-                    ? "Enter ZMW 100 to see an example $5.00 increase. No account is charged and no real money moves."
+                    ? "Use the example deposit to see how the position responds. No account is charged and no real money moves."
                     : "Start by exploring a deposit when you are ready. Your balance and activity will appear here once you begin."}
                 </p>
               </div>
@@ -326,7 +351,7 @@ export default function DashboardPage() {
                 id="dashboard-recent-activity-heading"
                 className="text-base font-semibold tracking-tight text-hedgr-800"
               >
-                Recent activity
+                {syntheticJourneyActive ? "What changed" : "Recent activity"}
               </h2>
               <Link
                 href={
@@ -336,7 +361,7 @@ export default function DashboardPage() {
                 }
                 className="shrink-0 text-sm font-medium text-hedgr-600 underline-offset-2 hover:text-hedgr-primary hover:underline"
               >
-                View all
+                {syntheticJourneyActive ? "Review Activity" : "View all"}
               </Link>
             </div>
             <ul className="mt-4 divide-y divide-hedgr-100 border-t border-hedgr-100">

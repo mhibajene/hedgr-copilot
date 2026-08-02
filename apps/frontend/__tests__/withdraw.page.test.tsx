@@ -572,7 +572,10 @@ describe('WithdrawPage CLASS-A-VAL-002 primary condition', () => {
       /no bank or payment provider is contacted/i,
     );
     expect(screen.getByTestId('withdraw-synthetic-condition').textContent).toMatch(
-      /subtract from the simulated balance/i,
+      /check the position after a simulated withdrawal/i,
+    );
+    expect(screen.getByTestId('withdraw-synthetic-condition').textContent).toMatch(
+      /what would remain in the simulated balance/i,
     );
     expect(screen.getByTestId('withdraw-fx-block').textContent).toContain(
       '1 USD = 20.00 ZMW',
