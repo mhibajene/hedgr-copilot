@@ -6,7 +6,7 @@
 
 **Authority:** The repository is source of truth. Wording here must match `docs/decisions/0016-warmth-layer-doctrine-constrained-retail-refinement-track.md`, `docs/decisions/SPRINT-2-ADR-INDEX.md`, and `docs/ops/HEDGR_STATUS.md`. Wording must match **Accepted** ADR **0016** in repo; do not broaden scope or soften read-only / non-execution boundaries in Notion.
 
-**Last reconciled:** 2026-08-02 (mirror after Founder acceptance and closeout of Internal **D-062** / **§182**–**§183** for nested analytical `CLASS-A-VAL-002-CA-001` within open `CLASS-A-VAL-002` under Option 2 non-blocking sequencing; Internal **D-060** / **§179** remains current parent disposition; nested `HEDGR-UI-006` remains completed under Internal **D-061** / **§180**–**§181**; no nested refinement is active; protocol-complete dual-layer participant retesting remains next and was **ungated** by the nested review; report at `docs/validation/CLASS-A-VAL-002-CA-001_COGNITIVE_ABSTRACTION_REVIEW.md`; no participant-comprehension, category-adoption, second-ticket, successor, parallel-lane, naming-adoption, Class B, MVP-acceptance, Evidence Register, or gate-clearance claim; `STATUS-HYGIENE-001` / **§173** remains completed; `NARRATIVE-006` remains closed under **§172**; Controlled Parallelism v19 / **D-055** completed historical; Lane N idle; Research R1 preserved; Research R2 accepted as an internal design artifact; publication remains unauthorized; Lane M idle; Lane R idle; D-054 completed historical; Canonical Story v1.0, Customer One-Pager v1.0, Narrative Style Guide v1.0, and accepted Investor Orientation Brief remain unchanged; R1 retirement deferred ≥ **2026-08-02**; Kenya counsel **DEFER**; repo **§7** / **§7a** controls sequencing)
+**Last reconciled:** 2026-08-02 (mirror after Founder acceptance and activation of Internal **D-063** / **§184** for one bounded nested `CLASS-A-VAL-002-CA-002` pre-retest cognitive-friction reduction pass within open `CLASS-A-VAL-002`; the pass temporarily resequences protocol-complete dual-layer participant retesting and commits to that retest immediately after verified closeout, with no second UI pass by inference; baseline commit `6790de229a9b923df7563c45ea936e9c5a761ce8` preserved; Internal **D-062** / **§182**–**§183** remains completed historical analytical evidence and is not rewritten as implementation authority; Internal **D-060** / **§179** remains current parent disposition; nested `HEDGR-UI-006` remains completed under Internal **D-061** / **§180**–**§181**; no participant-comprehension, category-adoption, second-ticket, successor, parallel-lane, naming-adoption, Class B, MVP-acceptance, Evidence Register, or gate-clearance claim; `STATUS-HYGIENE-001` / **§173** remains completed; `NARRATIVE-006` remains closed under **§172**; Controlled Parallelism v19 / **D-055** completed historical; Lane N idle; Research R1 preserved; Research R2 accepted as an internal design artifact; publication remains unauthorized; Lane M idle; Lane R idle; D-054 completed historical; Canonical Story v1.0, Customer One-Pager v1.0, Narrative Style Guide v1.0, and accepted Investor Orientation Brief remain unchanged; R1 retirement deferred ≥ **2026-08-02**; Kenya counsel **DEFER**; repo **§7** / **§7a** controls sequencing)
 
 ---
 
@@ -79,6 +79,8 @@ Use as a governed workstream line, **not** as a shipped-feature claim. Placement
 - **`HEDGR-UI-006` nested category / narrative-orientation pass (D-061, Accepted and completed):** Bounded Class A presentation / copy / protocol-instrument pass completed under open `CLASS-A-VAL-002`; protocol-complete dual-layer participant retesting remains next and ungated. Not a second ticket, successor, concurrent lane, naming adoption, parent closeout, category-adoption, or comprehension claim. No Class B / MVP / Evidence Register / gate authority. Canonical detail: activation **§180**, closeout **§181**; completed nested brief **§7a**.
 
 - **`CLASS-A-VAL-002-CA-001` nested cognitive abstraction review (D-062, Accepted and completed):** Nested Class A review-only cognitive-abstraction / product-identity analysis completed under open `CLASS-A-VAL-002`; Option 2 non-blocking — dual-layer participant retesting remained next and was **not** gated. Not a second ticket, successor, concurrent lane, UI pass, naming adoption, parent closeout, or implementation authority. Output: `docs/validation/CLASS-A-VAL-002-CA-001_COGNITIVE_ABSTRACTION_REVIEW.md`. Canonical detail: activation **§182**, closeout **§183**; completed nested brief **§7a**.
+
+- **`CLASS-A-VAL-002-CA-002` pre-retest cognitive-friction reduction (D-063, Accepted and active):** One bounded minimum-effective Class A Dashboard-first-session presentation / copy / protocol-instrument pass inside open `CLASS-A-VAL-002`; baseline `6790de2` preserved; defers internal review apparatus, humanizes status framing, makes target-only language distinct from Simulated Balance, and removes participant-facing ticket chrome without changing engine meaning or the `$0 → +$5 → −$2 → $3` control journey. Protocol-complete dual-layer participant retesting follows immediately after verified closeout. No second UI pass, parent closeout, comprehension claim, naming adoption, Class B, MVP, Evidence Register, or gate authority. Canonical detail: activation **§184**; active brief **§7a**.
 
 - **Controlled Parallelism v7 (D-041, Accepted — completed historical pass):** Named `CLASS-A-VAL-002` (Lane V) and `BRIDGE-P1-PREP-001` (Lane R prep). Lane R closed prep-complete (**§151** / **D-043**); singular-ticket restored; D-041 no longer supplies concurrency. Proposed `BRIDGE-P1-001` formed not active. `NO CROSS-LANE IMPACT`.
 
@@ -1371,6 +1373,34 @@ Use when mirroring the completed **test-only** regression tranche 4. **Not** new
 - No code, final copy, journey mutation, naming adoption, Class B, or UI-pass-by-inference authority.
 - Output delivered: `docs/validation/CLASS-A-VAL-002-CA-001_COGNITIVE_ABSTRACTION_REVIEW.md`.
 - `CLASS-A-VAL-003` remains unused / reserved for a future parent successor if named.
+- Singular-ticket Lane V remains; `NO CROSS-LANE IMPACT`.
+
+---
+
+## 8d.31 Decision Log — D-063 / CLASS-A-VAL-002-CA-002 nested activation (Internal; Notion mirror)
+
+**Notion Decision Log ID:** **D-063**. Canonical detail: **`docs/ops/HEDGR_STATUS.md` §184** activation and active nested brief in **§7a**. Visibility: **Internal**.
+
+| Field | Value |
+| ----- | ----- |
+| **Decision ID** | D-063 |
+| **Title** | Activate `CLASS-A-VAL-002-CA-002` pre-retest cognitive-friction reduction within `CLASS-A-VAL-002` |
+| **Status** | Accepted and active — parent remains open; dual-layer participant retest immediately after verified closeout |
+| **Decision Type** | Product / UX Trust / Validation sequencing |
+| **Strategic Horizon** | Short-term (MVP evidence generation) |
+| **Visibility** | Internal |
+| **Date** | 2026-08-02 |
+| **Repo authority** | `HEDGR_STATUS.md` **§184** activation; active brief **§7a**; parent disposition **§179** / D-060 |
+| **Ticket** | Nested under Lane V `CLASS-A-VAL-002` (sole active ticket; remains open) |
+
+**Summary / notes (concise)**
+
+- Founder-authorized one minimum-effective pre-retest pass after the completed D-062 analytical review surfaced directly observable first-session system-language and concept-density friction.
+- Preserve baseline commit `6790de229a9b923df7563c45ea936e9c5a761ce8`, before captures, hierarchy / copy inventory, test output, and per-change hypotheses.
+- Primary scope: defer first-session Review Snapshot history; humanize status framing; defer Stability Structure prominence; remove Simulated Balance / Stable Balance collision; hide internal ticket chrome from participant identity hierarchy.
+- Preserve engine, state, target meaning / values, arithmetic, unavailable-data behaviour, and Dashboard → Deposit → Withdraw → Activity `$0 → +$5 → −$2 → $3` control journey.
+- Implementation is intended to improve test-instrument credibility; it does not validate comprehension, cognitive burden, category convergence, or trust-boundary accuracy.
+- After verified closeout, proceed directly to protocol-complete dual-layer participant retesting. No second UI pass by inference.
 - Singular-ticket Lane V remains; `NO CROSS-LANE IMPACT`.
 
 ---
