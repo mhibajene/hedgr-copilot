@@ -1,10 +1,10 @@
 # CLASS-A-VAL-002 Participant Protocol and Evidence Capture
 
-**Status:** Active dual-layer retest instrument for the sole active `CLASS-A-VAL-002` ticket, aligned to the active bounded `CLASS-A-VAL-002-CA-002` pre-retest pass; sessions begin only after verified nested closeout and a recorded test build
+**Status:** Active dual-layer retest instrument for the sole active `CLASS-A-VAL-002` ticket, aligned to the completed bounded `CLASS-A-VAL-002-CA-002` pre-retest pass; the verified test build is recorded and protocol-complete participant sessions are immediately next
 
 **Execution class:** Class A product validation; visibly synthetic; non-executing for customer money
 
-**Authority:** `docs/ops/HEDGR_STATUS.md` §7 / §7a, §143, §179, §180–§181, and §184; Internal D-037, D-060, D-061, and D-063
+**Authority:** `docs/ops/HEDGR_STATUS.md` §7 / §7a, §143, §179, §180–§181, and §184–§185; Internal D-037, D-060, D-061, and D-063
 
 **Non-authorization:** This protocol does not authorize live money movement, custody, provider or banking integration, production FX, settlement, payout, Stability Engine execution, Class B implementation, Evidence Register acceptance, gate clearance, participant-data collection beyond the bounded fields below, or a successor ticket. Interface completion and completed session records do not by themselves close `CLASS-A-VAL-002`.
 
