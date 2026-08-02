@@ -1,6 +1,6 @@
 Status: Canonical hand-off file
 Purpose: Strategic continuity, merged implementation truth, and next-ticket authority for Cursor execution
-Last updated: 2026-08-01
+Last updated: 2026-08-02
 
 ---
 
@@ -64,7 +64,7 @@ Important active constraints:
 
 **Sprint 3** is framed here as **Transition Readiness** (named track above), not as Foundation continuation: governance defines the explicit standard for any later boundary widening; execution architecture remains out of scope until explicitly approved.
 
-**Sequencing authority:** Only **§7** / **§7a** name approved active ticket(s). **Default posture:** one active implementation ticket. Concurrent lanes are permitted only where this file records an accepted, active, and unambiguous Founder-approved parallelism decision (**§6e** lane model / Internal **D-026** plus separate active-pass naming under **§6f**), explicitly names each active lane and ticket, defines authority class and exclusions, and preserves independent stop conditions and rollback. Internal **D-029**, Internal **D-032** / **§6f.3**, Internal **D-034** / **§6f.4**, Internal **D-035** / **§6f.5**, Internal **D-036** / **§6f.6**, Internal **D-041** / **§6f.7**, Internal **D-044** / **§6f.8**, Internal **D-045** / **§6f.9**, Internal **D-046** / **§6f.10**, Internal **D-047** / **§6f.11**, Internal **D-048** / **§6f.12**, Internal **D-049** / **§6f.13**, Internal **D-050** / **§6f.14**, Internal **D-051** / **§6f.15**, Internal **D-052** / **§6f.16**, Internal **D-053** / **§6f.17**, Internal **D-054** / **§6f.18**, and Internal **D-055** / **§6f.19** are completed historical pass authorities and no longer supply concurrency. No governed-parallel pass is active. Singular-ticket `CLASS-A-VAL-002` (Lane V) is the sole active ticket after Founder acceptance and closeout of `NARRATIVE-006` under **§172**. Nested refinement `HEDGR-UI-005` is completed historical authority under Internal **D-059** / **§177**–**§178** and supplies no second ticket or concurrency; no nested refinement is active, and protocol-complete participant retesting is next under the open parent. Research R1 remains preserved; Research R2 is accepted as an internal design artifact; publication remains unauthorized. Lane M idle after `MONEY-STACK-001` closeout. Lane N idle after `NARRATIVE-006` closeout. Lane R idle after `BRIDGE-P1-OPS-001` closeout. The accepted `NARRATIVE-005` Investor Orientation Brief remains the controlling narrative source and non-authorising. Any additional concurrency requires a separate Founder decision plus explicit **§7** / **§7a** naming. Parallel authorization applies only to explicitly named lanes and does **not** authorize unrestricted multi-ticket execution. No lane may widen another lane’s authority without a separate Founder decision and repo-native governance update. **§6b** is Transition Readiness taxonomy and scrutiny input only—not backlog approval or sequencing. **§6e** / **§6f** / **§6g** do **not** widen Class B execution, custody, rails, conversion, settlement, or customer-money authority. Green Lane classification (**§6g** / ADR **0025**) does not activate work and does not override **§7** / **§7a**.
+**Sequencing authority:** Only **§7** / **§7a** name approved active ticket(s). **Default posture:** one active implementation ticket. Concurrent lanes are permitted only where this file records an accepted, active, and unambiguous Founder-approved parallelism decision (**§6e** lane model / Internal **D-026** plus separate active-pass naming under **§6f**), explicitly names each active lane and ticket, defines authority class and exclusions, and preserves independent stop conditions and rollback. Internal **D-029**, Internal **D-032** / **§6f.3**, Internal **D-034** / **§6f.4**, Internal **D-035** / **§6f.5**, Internal **D-036** / **§6f.6**, Internal **D-041** / **§6f.7**, Internal **D-044** / **§6f.8**, Internal **D-045** / **§6f.9**, Internal **D-046** / **§6f.10**, Internal **D-047** / **§6f.11**, Internal **D-048** / **§6f.12**, Internal **D-049** / **§6f.13**, Internal **D-050** / **§6f.14**, Internal **D-051** / **§6f.15**, Internal **D-052** / **§6f.16**, Internal **D-053** / **§6f.17**, Internal **D-054** / **§6f.18**, and Internal **D-055** / **§6f.19** are completed historical pass authorities and no longer supply concurrency. No governed-parallel pass is active. Singular-ticket `CLASS-A-VAL-002` (Lane V) is the sole active ticket after Founder acceptance and closeout of `NARRATIVE-006` under **§172**. Nested refinement `HEDGR-UI-005` is completed historical authority under Internal **D-059** / **§177**–**§178**. Nested refinement `HEDGR-UI-006` is active under the parent via Internal **D-061** / **§180** and is not a second ticket or concurrent lane. Internal **D-060** / **§179** refines the parent validation objective toward dual-layer journey + category-convergence evidence. Research R1 remains preserved; Research R2 is accepted as an internal design artifact; publication remains unauthorized. Lane M idle after `MONEY-STACK-001` closeout. Lane N idle after `NARRATIVE-006` closeout. Lane R idle after `BRIDGE-P1-OPS-001` closeout. The accepted `NARRATIVE-005` Investor Orientation Brief remains the controlling narrative source and non-authorising. Any additional concurrency requires a separate Founder decision plus explicit **§7** / **§7a** naming. Parallel authorization applies only to explicitly named lanes and does **not** authorize unrestricted multi-ticket execution. No lane may widen another lane’s authority without a separate Founder decision and repo-native governance update. **§6b** is Transition Readiness taxonomy and scrutiny input only—not backlog approval or sequencing. **§6e** / **§6f** / **§6g** do **not** widen Class B execution, custody, rails, conversion, settlement, or customer-money authority. Green Lane classification (**§6g** / ADR **0025**) does not activate work and does not override **§7** / **§7a**.
 
 **MVP phased alignment (interpretation aid):** See **`docs/ops/governance/mvp/HEDGR_MVP_PHASE_ALIGNMENT.md`** for how **`docs/doctrine/hedgr-mvp-project-specification.md`** governance-gated phases and success criteria map to the posture stated in this section and in **§6a–§6c**. That readout is **subordinate** to this file and to **§7** / **§7a**; it does **not** widen execution authority or substitute for **§7** naming.
 
@@ -4518,25 +4518,27 @@ Completed and merged:
 Current active ticket status:
 
 - **Active ticket (singular-ticket posture):**
-  - **Lane V:** `CLASS-A-VAL-002` — Validate the End-to-End Synthetic Stability Journey. Remains open. Nested `HEDGR-UI-005` plain-language / information-order pass is implementation-closed under Internal **D-059** / **§177**–**§178** after `HEDGR-UI-004` closeout (**§176** / D-058). Protocol-complete participant retesting is next. Exact brief in **§7a**.
+  - **Lane V:** `CLASS-A-VAL-002` — Validate the End-to-End Synthetic Stability Journey. Remains open. Nested `HEDGR-UI-005` is complete under Internal **D-059** / **§177**–**§178**. Nested `HEDGR-UI-006` category / narrative-orientation pass is active under Internal **D-061** / **§180** after Founder disposition Internal **D-060** / **§179**. Protocol-complete dual-layer retesting follows nested closeout. Exact brief in **§7a**.
 - **Completed Lane M:** `MONEY-STACK-001` (**§168**) — Founder–HedgrOps approved the research package and closed the cycle as converged; D-053 completed; no follow-on authority.
 - **Completed Lane N:** `NARRATIVE-006` (**§172**); `NARRATIVE-005` (**§170**); `UI-NARR-001` (**§166**); `NARRATIVE-004` (**§164**); `NARRATIVE-003` (**§162**); `NARRATIVE-002` (**§159**); `NARRATIVE-001` (**§157**).
 - **Completed Lane R:** `BRIDGE-P1-OPS-001` (**§161**) — R1 clock recorded; regen/verification hygiene complete; legacy Deprecated retained; no retirement; no Phase 2; no successor activated.
 - **Completed Bridge Phase 1 implementation:** `BRIDGE-P1-001` (**§154**; PRs **#306** / **#307**).
 - **Completed prep:** `BRIDGE-P1-PREP-001` (**§151** / D-043). Governing plan preserved.
 - **Completed nested refinements inside Lane V:** `HEDGR-UI-001`–`005` (**§144**–**§148**; **§175**–**§178**). `HEDGR-UI-004` and `HEDGR-UI-005` are completed historical nested authority only; neither supplies standing authority for further UI work.
-- **Active nested refinement inside Lane V:** None. Protocol-complete participant retesting is next under the open parent.
+- **Active nested refinement inside Lane V:** `HEDGR-UI-006` (**§180** / D-061) — bounded category / narrative-orientation presentation pass ahead of dual-layer retest. Not a second ticket, successor, concurrent lane, parent closeout, naming adoption, or participant-comprehension claim.
 - **Completed status hygiene:** `STATUS-HYGIENE-001` (**§173**) — reconciled stale **§7a** dual-ticket language; no product, narrative, Bridge, or Class B authority change.
-- **Founder validation disposition:** Internal **D-057** / **§174** retains `CLASS-A-VAL-002` as open. Internal **D-059** / **§177**–**§178** supplied and closed the final nested plain-language / information-order pass (`HEDGR-UI-005`); protocol-complete retesting is next. Current participant evidence identifies institutional-language friction and over-teaching risk as avoidable contamination; it does not demonstrate participant comprehension, satisfy parent closeout, create Class B readiness, or support MVP acceptance.
-- **Sequencing posture:** Singular-ticket `CLASS-A-VAL-002` (Lane V) after `NARRATIVE-006` Founder acceptance and closeout **§172**, with **§7a** live-brief drift reconciled under `STATUS-HYGIENE-001` / **§173**, open-ticket validation disposition under Internal **D-057** / **§174**, nested comprehension implementation `HEDGR-UI-004` completed under Internal **D-058** / **§175**–**§176**, and nested plain-language pass `HEDGR-UI-005` completed under Internal **D-059** / **§177**–**§178**. Protocol-complete participant retesting is next. Controlled Parallelism **v19** / Internal **D-055** / **§6f.19** is completed historical authority. D-029, D-032, D-034, D-035, D-036, D-041, D-044, D-045, D-046, D-047, D-048, D-049, D-050, D-051, D-052, D-053, D-054, and D-055 supply no standing concurrency beyond their historical records. D-057 / D-058 / D-059 do not create a lane or concurrency.
+- **Founder validation disposition:** Internal **D-060** / **§179** is the current disposition: dual-layer validation (journey comprehension + category convergence) under open `CLASS-A-VAL-002`. Internal **D-057** / **§174** remains historical open-ticket continuity. Internal **D-059** / **§177**–**§178** closed the plain-language pass. Founder-authorized nested `HEDGR-UI-006` under Internal **D-061** / **§180** precedes dual-layer retest. No participant-comprehension, Class B, MVP, Evidence Register, naming-adoption, or gate claim follows from recording alone.
+- **Sequencing posture:** Singular-ticket `CLASS-A-VAL-002` (Lane V) after `NARRATIVE-006` Founder acceptance and closeout **§172**, with nested `HEDGR-UI-006` active under Internal **D-061** / **§180**, parent objective refined by Internal **D-060** / **§179**, and prior nested passes `HEDGR-UI-004` / `HEDGR-UI-005` completed historical only. Controlled Parallelism **v19** / Internal **D-055** / **§6f.19** is completed historical authority. D-029, D-032, D-034, D-035, D-036, D-041, D-044, D-045, D-046, D-047, D-048, D-049, D-050, D-051, D-052, D-053, D-054, and D-055 supply no standing concurrency beyond their historical records. D-057 / D-058 / D-059 / D-060 / D-061 do not create a lane or concurrency.
 - **Kenya counsel path:** **DEFER** (**§6f.1** / D-028).
 - **Governed parallelism posture:** No active **§6f** pass. Lane V is the sole active lane. Lanes A / B / C / M / N / R are idle. **§6e** / D-026 remains lane-model only. Class B convergence gate unsatisfied.
 - **Active Lane A / B / C / M / N / R:** None.
-- **Green Lane pilot (§6g / ADR 0025):** Authority-model only; does not activate product experiments or independently authorize a new ticket. D-059 Green classification does not substitute for **§7** / **§7a** naming.
-- **Last completed product-copy ticket:** `UI-NARR-001` (**§166**). Last completed narrative ticket: `NARRATIVE-006` (**§172**). Last completed narrative governance ticket: `NARRATIVE-004` (**§164**). Last completed Bridge ticket: `BRIDGE-P1-OPS-001` (**§161**). Last completed Bridge implementation: `BRIDGE-P1-001` (**§154**). Last completed governance-hygiene ticket: `STATUS-HYGIENE-001` (**§173**). Last completed nested Lane V refinement: `HEDGR-UI-005` (**§178**). Active nested Lane V refinement: none.
-- **Post-`HEDGR-UI-005` closeout (§177–§178 / D-059):** Final pre-retest plain-language / information-order nested pass complete under the open parent; protocol-complete retest is next; no participant-comprehension, Class B, MVP, Evidence Register, successor, further UI-pass, or parallel-lane authority.
-- **Post-`HEDGR-UI-004` closeout (§176 / D-058):** Nested comprehension implementation complete under open parent `CLASS-A-VAL-002`; the later D-059 amendment is also complete under **§177**–**§178**, with protocol-complete retesting next.
-- **Post-Founder validation disposition (§174 / D-057):** `CLASS-A-VAL-002` remains open; evidence is directional learning only; D-059 amends the immediate next implementation step without closing the parent or claiming comprehension.
+- **Green Lane pilot (§6g / ADR 0025):** Authority-model only; does not activate product experiments or independently authorize a new ticket. D-060 / D-061 Green classification does not substitute for **§7** / **§7a** naming.
+- **Last completed product-copy ticket:** `UI-NARR-001` (**§166**). Last completed narrative ticket: `NARRATIVE-006` (**§172**). Last completed narrative governance ticket: `NARRATIVE-004` (**§164**). Last completed Bridge ticket: `BRIDGE-P1-OPS-001` (**§161**). Last completed Bridge implementation: `BRIDGE-P1-001` (**§154**). Last completed governance-hygiene ticket: `STATUS-HYGIENE-001` (**§173**). Last completed nested Lane V refinement: `HEDGR-UI-005` (**§178**). Active nested Lane V refinement: `HEDGR-UI-006` (**§180**).
+- **Post-`HEDGR-UI-006` activation (§180 / D-061):** Bounded category / narrative-orientation nested pass active under open parent after D-060; dual-layer retest follows nested closeout; no naming adoption, Class B, MVP, Evidence Register, successor, further UI-pass-by-inference, or parallel-lane authority.
+- **Post-D-060 recording (§179):** Parent validation objective refined to dual-layer journey + category-convergence evidence; working category hypotheses remain test-only.
+- **Post-`HEDGR-UI-005` closeout (§177–§178 / D-059):** Plain-language nested pass complete; sequence amended by **D-060** / **D-061** to insert `HEDGR-UI-006` before dual-layer retest.
+- **Post-`HEDGR-UI-004` closeout (§176 / D-058):** Historical nested comprehension implementation under open parent.
+- **Post-Founder validation disposition (§174 / D-057):** Historical open-ticket continuity; superseded as current disposition wording by **D-060** / **§179**.
 - **Post-`STATUS-HYGIENE-001` closeout (§173):** Complete; **§7a** Lane V live brief matches **§7** / **§172** singular-ticket truth; `CLASS-A-VAL-002` remains sole active ticket; no successor activated.
 - **Post-Research R2 Founder acceptance + `NARRATIVE-006` closeout (§172):** Complete; Research R2 accepted as the internal Institutional Investor Orientation Document; D-055 completed as active concurrency; singular Lane V restored; publication remains unauthorized.
 - **Post-Research R1 disposition + Research R2 amendment (§171 / D-056):** Historical; superseded as active Lane N posture by Founder acceptance and closeout **§172**.
@@ -4557,7 +4559,7 @@ Current active ticket status:
 - **Post-Controlled Parallelism v8 activation (§152 / D-044):** Historical.
 - **Post-`BRIDGE-P1-PREP-001` closeout (§151 / D-043):** Prep complete; D-042 remains binding.
 - **Post-Founder F1–F8 (§150 / D-042):** Binding for Lane R Phase 1 meaning (including R1).
-- When **§7** names approved tickets, active briefs live in **§7a**. Current active: `CLASS-A-VAL-002` (Lane V) only. Active nested refinement: none; protocol-complete participant retesting is next. No second lane or concurrent ticket.
+- When **§7** names approved tickets, active briefs live in **§7a**. Current active: `CLASS-A-VAL-002` (Lane V) only. Active nested refinement: `HEDGR-UI-006` (**§180** / D-061). No second lane or concurrent ticket.
 - Cursor must not modify frozen Canonical Story v1.0, frozen Customer One-Pager v1.0, frozen Narrative Style Guide v1.0, or the accepted `NARRATIVE-005` source brief without institutional trigger + new **§7** naming; must not treat narrative or design artifacts as publication, sequencing, evidence acceptance, readiness approval, live capability, fundraising, or investment solicitation; must not retire legacy Bridge placeholder without a separately named Founder ticket on/after **2026-08-02**; must not treat Money Stack research findings as implementation or provider approval.
 - Kenya counsel remains **DEFER**. Convergence gate remains unsatisfied.
 - Legacy `docs/ops/bridge/current-status.json` remains **Deprecated** under R1/F6 through at least **2026-08-02**; no silent date-bump to fake CURRENT; retirement requires separately named Founder ticket (`BRIDGE-LEGACY-RETIRE-001` candidate — not active).
@@ -4568,15 +4570,15 @@ Current active ticket status:
 
 ### Lane V — `CLASS-A-VAL-002`
 
-**Active ticket:** `CLASS-A-VAL-002` — Validate the End-to-End Synthetic Stability Journey (Founder transition / activation **§142** / **§143**; Internal **D-037**; singular-ticket restored after `NARRATIVE-006` closeout **§172** / Internal **D-055** completed historical; **§7a** live-brief drift reconciled under `STATUS-HYGIENE-001` / **§173**; Founder validation disposition Internal **D-057** / **§174** retains the ticket as open; nested comprehension pass `HEDGR-UI-004` completed under Internal **D-058** / **§175**–**§176**; final pre-retest plain-language pass `HEDGR-UI-005` completed under Internal **D-059** / **§177**–**§178**; protocol-complete participant retesting is next).
+**Active ticket:** `CLASS-A-VAL-002` — Validate the End-to-End Synthetic Stability Journey (Founder transition / activation **§142** / **§143**; Internal **D-037**; singular-ticket restored after `NARRATIVE-006` closeout **§172** / Internal **D-055** completed historical; **§7a** live-brief drift reconciled under `STATUS-HYGIENE-001` / **§173**; Founder validation disposition Internal **D-060** / **§179** refines the open parent toward dual-layer journey + category-convergence evidence; nested `HEDGR-UI-004` / `HEDGR-UI-005` completed under **D-058** / **D-059**; nested category / narrative-orientation pass `HEDGR-UI-006` active under Internal **D-061** / **§180**; dual-layer retest follows nested closeout).
 
-**Objective:** Create a coherent, visibly synthetic, end-to-end customer journey through Dashboard → Deposit → Withdraw → Activity plus the shared trust and navigation shell so target cross-border freelancers can understand Hedgr’s core stability proposition without inferring that real funds moved.
+**Objective:** Create a coherent, visibly synthetic, end-to-end customer journey through Dashboard → Deposit → Withdraw → Activity plus the shared trust and navigation shell so target cross-border freelancers can understand Hedgr’s core stability proposition without inferring that real funds moved, and so the protocol-complete retest can also observe whether participants form the intended product mental model (financial-position interpretation / stability before action).
 
-**Product question:** Can target cross-border freelancers understand Hedgr’s stability proposition through a complete synthetic journey sufficiently to justify consideration of a future one-market Class B feasibility cycle?
+**Product question:** Can target cross-border freelancers (1) accurately understand the simulated money journey and trust boundary, and (2) naturally explain what Hedgr exists to help them achieve, sufficiently to justify consideration of a future one-market Class B feasibility cycle?
 
 **Type / execution class:** Product validation; Class A informational / synthetic. Non-executing for customer money.
 
-**Authority basis:** Founder approval to close/reframe `CLASS-A-VAL-001` and activate `CLASS-A-VAL-002` as its sole successor + Internal **D-037** + **§142** / **§143** + this **§7** / **§7a** naming + ADR **0024** (evidence principle only) + ADRs **0013–0015** (read-only / informational Stability Engine boundaries) + the existing synthetic transaction and withdrawal trust surfaces. Narrative Style Guide freeze / **§164**, `UI-NARR-001` / **§166**, `MONEY-STACK-001` / **D-053** / **§167**, `NARRATIVE-005` closeout / **§170**, Controlled Parallelism **v19** / **D-055** / **§172** closeout, `STATUS-HYGIENE-001` / **§173**, and the validation disposition Internal **D-057** / **§174** do **not** widen this Lane V authority. Nested pass `HEDGR-UI-004` / Internal **D-058** / **§175**–**§176** and nested pass `HEDGR-UI-005` / Internal **D-059** / **§177**–**§178** are completed historical nested authority only; neither supplies standing UI authority or widens the open parent.
+**Authority basis:** Founder approval to close/reframe `CLASS-A-VAL-001` and activate `CLASS-A-VAL-002` as its sole successor + Internal **D-037** + **§142** / **§143** + this **§7** / **§7a** naming + ADR **0024** (evidence principle only) + ADRs **0013–0015** (read-only / informational Stability Engine boundaries) + the existing synthetic transaction and withdrawal trust surfaces. Narrative Style Guide freeze / **§164**, `UI-NARR-001` / **§166**, `MONEY-STACK-001` / **D-053** / **§167**, `NARRATIVE-005` closeout / **§170**, Controlled Parallelism **v19** / **D-055** / **§172** closeout, `STATUS-HYGIENE-001` / **§173**, and Internal **D-057** / **§174** do **not** widen this Lane V authority. Nested passes `HEDGR-UI-004` / **D-058** and `HEDGR-UI-005` / **D-059** are completed historical nested authority only. Internal **D-060** / **§179** refines the parent validation objective only. Nested pass `HEDGR-UI-006` / Internal **D-061** / **§180** authorizes only the bounded category / narrative-orientation iteration named below.
 
 **DRI:** Founder — @mhibajene.
 
@@ -4584,36 +4586,104 @@ Current active ticket status:
 
 - **Lane A / B / C / M / N / R:** idle
 - **Active Lane V ticket:** `CLASS-A-VAL-002`
-- **Active nested refinement inside Lane V:** None; protocol-complete participant retesting is next
+- **Active nested refinement inside Lane V:** `HEDGR-UI-006` (**§180**; Internal **D-061**)
 - **Active Lane N ticket:** None (idle after `NARRATIVE-006` / **§172**)
 
-**Sequencing posture:** Singular-ticket under Lane V after Controlled Parallelism **v19** / Internal **D-055** / **§172** closeout (`STATUS-HYGIENE-001` / **§173** reconciled this live brief). Internal **D-057** / **§174** retains the parent open with unresolved validation objective. Internal **D-058** / **§175**–**§176** completed nested `HEDGR-UI-004`; Internal **D-059** / **§177**–**§178** completed nested `HEDGR-UI-005` as the final pre-retest UI pass. Protocol-complete participant retesting is next. Neither nested pass creates a lane, successor, concurrency, comprehension claim, or further UI-pass authority. Kenya counsel: **DEFER** (**§6f.1** / D-028). Class B convergence gate: unsatisfied. Green Lane pilot envelope (**§6g**) remains authority-model only and does **not** widen this ticket.
+**Sequencing posture:** Singular-ticket under Lane V after Controlled Parallelism **v19** / Internal **D-055** / **§172** closeout. Internal **D-060** / **§179** is the current parent validation disposition. Internal **D-061** / **§180** activates nested `HEDGR-UI-006` ahead of dual-layer retest. Prior nested passes and D-057 / D-059 remain historical. Kenya counsel: **DEFER** (**§6f.1** / D-028). Class B convergence gate: unsatisfied. Green Lane pilot envelope (**§6g**) remains authority-model only and does **not** widen this ticket.
 
-#### Current Founder disposition — Internal `D-059`
+#### Current Founder disposition — Internal `D-060`
 
-**Status:** Accepted 2026-08-01 and implementation-closed under **§178**. Amended the post-`HEDGR-UI-004` sequence under open `CLASS-A-VAL-002` and supplied one final nested plain-language and information-order pass (`HEDGR-UI-005`) before protocol-complete participant retest. Does not close the parent, claim comprehension, authorize further UI iteration, or widen Class B / Class C posture.
+**Status:** Accepted 2026-08-02. Refines the open `CLASS-A-VAL-002` validation objective toward dual-layer evidence: journey comprehension remains a prerequisite trust layer; category / product-identity formation is the higher-order remaining uncertainty. Does not close the parent, claim comprehension, adopt public category naming, authorize Class B / Class C, or by itself authorize UI work. Separate Founder activation Internal **D-061** / **§180** supplies the nested UI pass ahead of retest.
 
-**Decision type:** Product / UX Trust / Validation
+**Decision type:** Product / Narrative / Validation
 
 **Execution class:** Class A — informational and simulated only
 
-**Decision lane:** Green — reversible product-learning work (classification only; **§7** / **§7a** remain activation authority)
+**Decision lane:** Green — reversible product learning (classification only; **§7** / **§7a** remain activation authority)
 
-**Evidence basis:** Founder review, HedgrOps assessment, adversarial implementation review, current interface evidence, and consultant reconciliation. `HEDGR-UI-004` improved visible continuity of the simulated `$0 → +$5 → −$2 → $3` journey and remained governance-safe. Residual institutional vocabulary and advance narration of the complete journey risk contaminating the comprehension retest.
+**Evidence basis:** Current `CLASS-A-VAL-002` posture; completed synthetic money-journey work through `HEDGR-UI-005`; adversarial review of `HEDGR-UI-004`; plain-language / low-scaffolding recommendation; current Dashboard → Deposit → Withdraw → Activity experience; remaining product-identity confusion; distinction among interface comprehension, mental-model formation, and category formation.
 
-**Governing hypothesis:** A newcomer will better understand Hedgr’s simulated money journey when internal implementation language is replaced with ordinary money language, while the interface avoids narrating the complete mental model in advance and retains “simulated” wherever financial state is shown.
+**Governing product question:** Can a newcomer form an accurate first-principles understanding of why Hedgr exists and what decision it helps them make, while still accurately understanding the simulated money journey and non-live boundary?
 
-**Intended outcome:** A test-ready Class A journey in which each action is understandable in ordinary money language; the immediate arithmetic result is visible; the non-live boundary remains clear; future journey relationships are revealed contextually rather than explained in advance; participants are not required to understand Hedgr’s implementation vocabulary; and the retest can distinguish category unfamiliarity from true money-journey misunderstanding.
+**Working category hypotheses (test-only; not approved naming):** “Financial Stability Companion”; functional role — helping users understand where their financial stability stands before they act / financial-position interpretation. These remain test hypotheses, not public or settled market language.
 
-**Retain:** End-to-end synthetic journey; `$0 → +$5 → −$2 → $3` arithmetic; visible simulated-state boundaries; parent comprehension objective; protocol-complete retest requirement after nested closeout.
+**Intended narrative direction (test framing, not redesign mandate by itself):** Understand financial position → see whether stability is changing → understand why → take an informed next step if appropriate. Dashboard as evidence; Stability status as interpretation; Activity as explanation; allocation targets as guidance; safe action optional and bounded.
 
-**Revise:** Institutional terminology; sentence length; information order; disclaimer repetition; timing of journey explanations.
+**Retain:** Synthetic money journey; visible no-real-money boundary; `$0 → +$5 → −$2 → $3` continuity; simulation-versus-live distinction; protocol-complete retest; Class A / Green boundaries; open parent `CLASS-A-VAL-002`; completed plain-language pass as enabling condition.
 
-**Remove:** Primary UI references to fixtures, informational posture, settlement, and similar internal vocabulary; advance narration of the complete money model.
+**Revise:** Dominant validation question after language pass — from interface-only comprehension toward intended Hedgr mental-model / category formation, with journey comprehension retained as Layer 2 prerequisite.
 
-**Retest:** `HEDGR-UI-005` is implemented and verified under **§178**. Return directly to protocol-complete participant retest under the parent. Capture unaided understanding, scaffolding dependence, transfer, delayed recall, simulated-versus-real understanding, and residual terminology confusion per the refined parent protocol.
+**Add:** Category-convergence evidence layer (entry/exit identity, problem solved, when/why use, decision affected, delayed recall, unaided explanation without copying Hedgr language). Five-layer synthesis frame: problem recognition; journey comprehension; product identity; decision relevance; behavioural value.
 
-**Authority boundary:** D-059 authorized only the nested `HEDGR-UI-005` brief and is complete historical authority under **§178**. It does not approve another UI pass; close `CLASS-A-VAL-002`; claim participant comprehension; accept Evidence Register evidence; clear a gate; activate Class B / Class C; complete institutional MVP; nominate a successor; or reopen D-058 as standing authority.
+**Remove:** Assumption that accurate explanation of individual interface components is sufficient product understanding; assumption that any unfamiliarity is automatically a UX failure.
+
+**Retest:** After nested `HEDGR-UI-006` closeout, run protocol-complete dual-layer sessions on the recorded build with target participants, unaided recall, category interpretation at entry and exit, mental-model trajectory, transfer, trust-boundary comprehension, behavioural observation, moderator-rescue evidence, and delayed recall.
+
+**Authority boundary:** D-060 does not create a new execution class; authorize customer-money / custody / rails / conversion / settlement / payout / ledger / accounting behaviour; close the parent; establish Class B readiness; approve another UI pass by inference; adopt public category labels; or replace `HEDGR_STATUS.md`, `AGENTS.md`, accepted ADRs, or active doctrine. Nested UI authority for the Founder-selected pre-retest category / narrative-orientation pass is supplied only by Internal **D-061** / **§180**.
+
+#### Active nested refinement — `HEDGR-UI-006`
+
+**Status:** Active 2026-08-02 as a bounded category / narrative-orientation Class A presentation / copy pass within `CLASS-A-VAL-002`; activation **§180**; Internal **D-061**. The parent remains the sole active ticket and remains open.
+
+**Relationship to the parent ticket:** `HEDGR-UI-006` is the Founder-authorized nested UI pass activated ahead of dual-layer retest after Internal **D-060**. It is not a concurrent lane, successor, independently active ticket, parent closeout, naming adoption, or comprehension claim. After verified nested closeout, the sequence returns to protocol-complete dual-layer retest. No further UI iteration may be inferred.
+
+**Objective:** Make the intended product category formable through minimal presentation, copy hierarchy, and orientation changes so a verified target newcomer can explain what Hedgr exists to help them achieve—financial-position interpretation and stability-before-action—while preserving simulated arithmetic, visible simulated-state boundaries, and non-live capability posture, without over-teaching the complete mental model or supplying a parrot-able category label.
+
+**Primary product question for this nested pass:** After one bounded category / narrative-orientation iteration on the plain-language build, can a newcomer independently explain what Hedgr helps them achieve without classifying it primarily as a crypto wallet, bank, budgeting app, investment/trading product, or live money-moving system?
+
+**Type / execution class:** Nested product-validation refinement; Class A informational / synthetic presentation and copy only. Non-executing for customer money.
+
+**Authority basis:** Founder direction to activate nested UI ahead of retest after accepting Internal **D-060** + Internal **D-061** + activation **§180** + this **§7a** nested brief + parent `CLASS-A-VAL-002` authority + completed nested `HEDGR-UI-005` / **D-059** / **§177**–**§178** + ADRs **0013–0015** + ADR **0024** (evidence principle only) + participant protocol `docs/ops/governance/mvp/HEDGR_CLASS_A_VAL_002_PARTICIPANT_PROTOCOL.md`.
+
+**In scope:**
+
+- Dashboard orientation and primary / secondary copy hierarchy so the surface reads as financial-position / stability evidence rather than generic wallet or transaction introduction.
+- Minimal shared-shell and journey-surface framing supporting “understand before acting,” without narrating the complete category answer in advance.
+- Deposit / Withdraw / Activity supporting copy only where required for category continuity with the existing simulated journey.
+- Protocol capture fields for category-convergence Layers 1–5 and the approved unaided prompts.
+- Ticket-relevant unit / Playwright updates and local design-qa evidence.
+
+**Authorized implementation surfaces:**
+
+- `apps/frontend/app/(app)/dashboard/**`
+- `apps/frontend/app/(app)/deposit/page.tsx`
+- `apps/frontend/app/(app)/withdraw/page.tsx`
+- `apps/frontend/app/(app)/activity/page.tsx`
+- `apps/frontend/app/(app)/layout.tsx` and `apps/frontend/app/(app)/layout.client.tsx` — shared trust / navigation shell copy / hierarchy only
+- Existing ticket-relevant modules under `apps/frontend/components/`, `apps/frontend/lib/state/`, and `apps/frontend/lib/tx/` — consumer-facing presentation only when required by the nested objective
+- Ticket-relevant frontend unit and Playwright tests under `apps/frontend/__tests__/` and `apps/frontend/tests-e2e/`
+- `docs/ops/governance/mvp/HEDGR_CLASS_A_VAL_002_PARTICIPANT_PROTOCOL.md` — dual-layer / category capture-field refinement only
+- `design-qa.md` — local, non-authoritative visual-comparison evidence only
+- `docs/ops/HEDGR_STATUS.md` and `docs/ops/NOTION_GOVERNANCE_STAGING.md` — activation and later closeout reconciliation only
+
+`apps/frontend/lib/engine/**` remains outside the default implementation surface.
+
+**Must not:**
+
+- Change financial state, arithmetic, state transitions, navigation / journey order, Dashboard IA beyond copy hierarchy, Stability Engine posture, allocation or target semantics, Activity record structure, unavailable-data behaviour, withdrawal status logic, or live-versus-simulated boundaries.
+- Modify backend or engine modules; ledger / accounting semantics; provider, custody, rail, payout, conversion, or settlement behaviour; broader visual redesign; product category strategy as settled naming; or participant success thresholds.
+- Place “Financial Stability Companion” or equivalent as a parrot-able primary customer label that replaces unaided category formation.
+- Imply real conversion, payout, allocation, account balance, fund movement, guaranteed preservation, yield maximisation, automated financial control, or directive advice.
+- Close `CLASS-A-VAL-002`, claim participant comprehension, accept Evidence Register evidence, clear a gate, activate Class B / Class C, complete institutional MVP, nominate a successor, or authorize another UI pass after this one.
+- Open a concurrent lane or treat this nested pass as independent sequencing authority.
+
+**Acceptance and verification:**
+
+- Primary consumer surfaces support category formation without requiring Hedgr implementation vocabulary.
+- Simulated financial state remains visibly simulated; non-live boundary remains clear.
+- Journey arithmetic and continuity remain `$0 → +$5 → −$2 → $3`.
+- No copy implies live money movement, guarantees, or directive control.
+- Protocol can capture dual-layer journey + category-convergence evidence.
+- Relevant unit, lint, typecheck, trust, and targeted E2E checks for edited surfaces pass.
+- PR states that implementation completion does not demonstrate comprehension or category adoption.
+
+**Stop / rollback:** Stop and escalate if work changes navigation, state, arithmetic, engine meaning, Activity structure, broader visual redesign, execution semantics, or adopts public category naming as settled truth. Rollback is one bounded revert to the recorded `HEDGR-UI-005` build while leaving `CLASS-A-VAL-002`, **D-060**, and prior nested-pass evidence intact.
+
+#### Prior Founder disposition — Internal `D-059`
+
+**Status:** Accepted 2026-08-01 and implementation-closed under **§178**. Supplied and closed nested `HEDGR-UI-005`. Sequence later amended by **D-060** / **D-061** to insert `HEDGR-UI-006` before dual-layer retest. Complete historical nested-pass authority only.
+
+**Authority boundary:** D-059 authorized only `HEDGR-UI-005` and supplies no standing UI authority.
 
 #### Prior Founder validation disposition — Internal `D-057`
 
@@ -4637,7 +4707,7 @@ Current active ticket status:
 
 **Status:** Implemented and verified 2026-08-01 as the final pre-retest plain-language and information-order Class A presentation / copy pass within `CLASS-A-VAL-002`; activation **§177**; closeout **§178**; Internal **D-059**. The parent remains the sole active ticket and remains open.
 
-**Relationship to the parent ticket:** `HEDGR-UI-005` is the completed Founder-authorized final nested language-friction pass under Internal **D-059**. It is not a concurrent lane, successor, independently active ticket, parent closeout, or comprehension claim. `CLASS-A-VAL-002` remains open until its governed participant-evidence and Founder-disposition requirements are satisfied. Nested closeout alone does not close the parent. The sequence now returns directly to protocol-complete retest — no further UI iteration may be inferred.
+**Relationship to the parent ticket:** `HEDGR-UI-005` is the completed Founder-authorized final nested language-friction pass under Internal **D-059**. It is not a concurrent lane, successor, independently active ticket, parent closeout, or comprehension claim. Sequence was later amended by Internal **D-060** / **D-061** to insert nested `HEDGR-UI-006` before dual-layer retest. Nested closeout alone does not close the parent.
 
 **Objective:** Reduce avoidable institutional-language friction and premature explanation of the complete journey so the protocol-complete retest can distinguish category unfamiliarity from money-journey misunderstanding, while preserving the simulated `$0 → +$5 → −$2 → $3` arithmetic, visible simulated-state boundaries, and non-live capability posture.
 
@@ -11077,3 +11147,57 @@ Any implementation remains subject to current repository authority and a separat
 **Notion staging posture:** Reconcile the staging mirror to `HEDGR-UI-005` implementation-complete under D-059 / **§177**–**§178**, no active nested refinement, parent `CLASS-A-VAL-002` still open, and protocol-complete participant retesting next. Repo-native **§7** / **§7a** remain controlling.
 
 **Rollback:** Revert the bounded presentation / copy, tests, participant-protocol refinement, `design-qa.md`, and this closeout reconciliation in one commit while preserving `CLASS-A-VAL-002` activation, Internal **D-057** / **§174**, and prior nested-pass evidence.
+
+## 179. Founder acceptance — Internal D-060 narrative convergence / category validation disposition
+
+**Decision:** Internal **D-060** — Narrative Convergence and Category Validation
+
+**Date:** 2026-08-02
+
+**Status:** **Accepted** — Founder disposition recorded under open `CLASS-A-VAL-002`. Exact live disposition text lives in **§7a**.
+
+**Decision Log:** Internal **D-060**. Visibility: **Internal** — not auto-exported as a public ADR.
+
+**Decision type:** Product / Narrative / Validation
+
+**Strategic horizon:** Short-term (MVP evidence generation)
+
+**Founder clarification:** D-060 refines the parent validation objective toward dual-layer evidence (journey comprehension + category / product-identity formation). It does not close the parent, claim comprehension, adopt public category naming, authorize Class B / Class C, or by itself authorize UI work. Separate Founder activation Internal **D-061** / **§180** supplies nested `HEDGR-UI-006` ahead of dual-layer retest.
+
+**Authority basis:** Founder acceptance of the narrative-convergence interpretation + this **§179** recording + parent `CLASS-A-VAL-002` authority + completed nested `HEDGR-UI-005` / **D-059** / **§177**–**§178** + ADRs **0013–0015** + ADR **0024** (evidence principle only).
+
+**Working category hypotheses (test-only):** Financial Stability Companion; functional role — helping users understand financial-position / stability before acting. Not approved public naming.
+
+**Parent-ticket posture:** `CLASS-A-VAL-002` remains active, singular, and open. Dual-layer retest follows nested `HEDGR-UI-006` closeout under **D-061**.
+
+**Parallelism posture:** Unchanged. No active **§6f** pass. D-060 creates no lane or concurrency.
+
+**Notion staging posture:** Mirror D-060 as Accepted parent disposition; nested UI activation recorded separately under D-061 / **§180**.
+
+## 180. Founder activation — HEDGR-UI-006 nested category / narrative-orientation pass within CLASS-A-VAL-002
+
+**Refinement:** `HEDGR-UI-006` — Bounded category / narrative-orientation presentation pass ahead of dual-layer retest
+
+**Date:** 2026-08-02
+
+**Status:** **ACTIVE** — Founder activated nested `HEDGR-UI-006` inside the sole active `CLASS-A-VAL-002` ticket after Internal **D-060** / **§179**. Exact nested brief and execution boundaries live in **§7a**.
+
+**Decision Log:** Internal **D-061**. Visibility: **Internal** — not auto-exported as a public ADR.
+
+**Decision type:** Product / UX-Trust / Nested validation refinement activation
+
+**Strategic horizon:** Short-term (MVP evidence generation)
+
+**Founder clarification:** `HEDGR-UI-006` is a bounded nested Class A presentation / copy / protocol-instrument pass within `CLASS-A-VAL-002`, activated ahead of dual-layer retest. It is not a second ticket, concurrent lane, successor, parent closeout, naming adoption, comprehension claim, Class B progression, or standing authority for another UI pass after closeout. D-059 / `HEDGR-UI-005` remains completed historical nested authority only.
+
+**Authority basis:** Founder direction to activate nested UI (governance option 2) ahead of retest after accepting Internal **D-060** + Internal **D-061** + explicit **§7** / **§7a** naming in this change + parent `CLASS-A-VAL-002` authority + ADRs **0013–0015** + ADR **0024** (evidence principle only) + participant protocol `docs/ops/governance/mvp/HEDGR_CLASS_A_VAL_002_PARTICIPANT_PROTOCOL.md`.
+
+**Authorized outcome:** Test whether one bounded category / narrative-orientation iteration can make the intended product mental model formable without over-teaching, without adopting settled public naming, and without weakening simulated-state or non-live boundaries.
+
+**Parent-ticket posture:** `CLASS-A-VAL-002` remains active, singular, and open. After nested implementation and verification, proceed to protocol-complete dual-layer retest → governed evidence synthesis → Founder disposition under the parent.
+
+**Parallelism posture:** Unchanged. No active **§6f** pass. Nested activation creates no lane or concurrency. Lanes A / B / C / M / N / R remain idle. Green Lane classification does not independently authorize or widen this ticket.
+
+**Notion staging posture:** No separate ticket or lane is created. The staging mirror remains on `CLASS-A-VAL-002` as the sole active ticket, with nested `HEDGR-UI-006` / D-061 noted as repo-native implementation detail under Lane V.
+
+**Stop / rollback:** Stop on engine or runtime-state changes, live-financial assumptions, unsupported trust / regulatory / endorsement claims, Condition Interface adoption, Class B authority, Evidence Register / gate claims, parent closeout, broader redesign, public naming adoption as settled truth, or scope outside the **§7a** nested surfaces. Rollback is a single bounded revert to the recorded `HEDGR-UI-005` build while preserving `CLASS-A-VAL-002` activation, Internal **D-060** / **§179**, and prior nested-pass evidence.
