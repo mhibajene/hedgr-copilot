@@ -5,16 +5,17 @@ import type { EngineState } from "../../../lib/engine/types";
 
 type EngineAllocationBandsProps = {
   engineState: EngineState;
+  collapsed?: boolean;
 };
 
 type LaneKey = "liquidityTargetPct" | "coreTargetPct" | "yieldCapPct";
 
-// Stable balance is the dominant primary holding lane; conservative yield and
-// reserve are quieter supporting lanes. Order and roles are fixed across every
-// posture so the structure stays invariant (only the values change by state).
+// The core stability target is the dominant guidance lane; conservative yield
+// and reserve are quieter supporting lanes. Order and roles are fixed across
+// every posture so the structure stays invariant (only values change by state).
 const PRIMARY_LANE: { key: LaneKey; label: string; role: string } = {
   key: "coreTargetPct",
-  label: "Stable balance",
+  label: "Core stability target",
   role: "Primary stability target",
 };
 
@@ -60,29 +61,10 @@ function laneDescription(key: LaneKey, value: number): string {
 
 export function EngineAllocationBands({
   engineState,
+  collapsed = false,
 }: EngineAllocationBandsProps) {
-  return (
-    <section
-      aria-labelledby="engine-allocation-bands-title"
-      className="space-y-5 rounded-3xl border border-hedgr-200 bg-white p-5 sm:p-6"
-      data-testid="engine-allocation-bands"
-    >
-      <div className="space-y-2">
-        <h2
-          id="engine-allocation-bands-title"
-          className="text-base font-semibold tracking-tight text-hedgr-800"
-        >
-          Stability structure
-        </h2>
-        <p
-          className="max-w-xl text-sm leading-relaxed text-hedgr-dark"
-          data-testid="engine-allocation-bands-caption"
-        >
-          These percentages show stability priorities for guidance. They do not
-          divide the balance shown above.
-        </p>
-      </div>
-
+  const structure = (
+    <>
       <div className="space-y-3" data-testid="engine-allocation-structure">
         {(() => {
           const value = engineState[PRIMARY_LANE.key];
@@ -189,6 +171,50 @@ export function EngineAllocationBands({
           </div>
         </details>
       </aside>
+    </>
+  );
+
+  return (
+    <section
+      aria-labelledby="engine-allocation-bands-title"
+      className="space-y-5 rounded-3xl border border-hedgr-200 bg-white p-5 sm:p-6"
+      data-testid="engine-allocation-bands"
+      data-presentation={collapsed ? "collapsed" : "expanded"}
+    >
+      <div className="space-y-2">
+        <h2
+          id="engine-allocation-bands-title"
+          className="text-base font-semibold tracking-tight text-hedgr-800"
+        >
+          {collapsed ? "Stability guidance" : "Stability structure"}
+        </h2>
+        <p
+          className="max-w-xl text-sm leading-relaxed text-hedgr-dark"
+          data-testid="engine-allocation-bands-caption"
+        >
+          {collapsed
+            ? "These targets are guidance only—not balances, holdings, or proof that money moved."
+            : "These percentages show stability priorities for guidance. They do not divide the balance shown above."}
+        </p>
+      </div>
+
+      {collapsed ? (
+        <details data-testid="engine-allocation-details">
+          <summary className="cursor-pointer list-none font-medium text-hedgr-800 marker:content-none select-none [&::-webkit-details-marker]:hidden">
+            <span className="flex items-center justify-between gap-4">
+              <span>View stability targets</span>
+              <span className="text-xs font-medium uppercase tracking-wide text-hedgr-500">
+                View
+              </span>
+            </span>
+          </summary>
+          <div className="mt-4 space-y-5 border-t border-hedgr-100 pt-4">
+            {structure}
+          </div>
+        </details>
+      ) : (
+        structure
+      )}
     </section>
   );
 }

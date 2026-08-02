@@ -71,7 +71,7 @@ test("3 · dashboard shows balance after login", async ({ page }) => {
   expect(text).toMatch(/^\$\d+\.\d{2}$/);
 });
 
-test("4 · dashboard shows Stability Engine posture context after login", async ({
+test("4 · dashboard shows human-readable stability context after login", async ({
   page,
 }) => {
   await page.goto("/");
@@ -90,36 +90,39 @@ test("4 · dashboard shows Stability Engine posture context after login", async 
   await expect(postureContext).toBeVisible({ timeout: 10_000 });
   const postureContextText = await postureContext.textContent();
   expect(postureContextText?.trim().length).toBeGreaterThan(0);
-  expect(postureContextText).toContain("Within expected range");
-  expect(postureContextText).toContain("conservative yield");
+  expect(postureContextText).toBe(
+    "The simulated position is within its expected range."
+  );
   for (const forbidden of heldOrRejectedPrimaryTerms) {
     expect(postureContextText).not.toMatch(forbidden);
   }
 
-  const postureBadge = page.getByTestId("engine-posture-badge");
-  await expect(postureBadge).toBeVisible({ timeout: 10_000 });
-  const postureBadgeText = await postureBadge.textContent();
-  expect(postureBadgeText?.trim().length).toBeGreaterThan(0);
-  expect(postureBadgeText).toBe("NORMAL");
-
-  const snapshotStance = page.getByTestId(
-    "engine-stability-review-snapshot-stance"
+  await expect(page.getByText("Does anything need attention?")).toBeVisible();
+  await expect(page.getByTestId("engine-simulation-attention-answer")).toHaveText(
+    "No important change shown"
   );
-  await expect(snapshotStance).toBeVisible({ timeout: 10_000 });
-  const snapshotStanceText = await snapshotStance.textContent();
-  expect(snapshotStanceText).toBe("Where things stand: within expected range");
-  for (const forbidden of heldOrRejectedPrimaryTerms) {
-    expect(snapshotStanceText).not.toMatch(forbidden);
-  }
+  await expect(page.getByTestId("engine-posture-badge")).toHaveCount(0);
+
+  await expect(page.getByTestId("engine-stability-review-snapshot")).toHaveCount(0);
+  await expect(page.getByText("Simulation date")).toHaveCount(0);
+  await expect(page.getByText("Last viewed locally")).toHaveCount(0);
 
   const allocationBands = page.getByTestId("engine-allocation-bands");
   await expect(allocationBands).toBeVisible({ timeout: 10_000 });
+  await expect(allocationBands).toHaveAttribute("data-presentation", "collapsed");
   await expect(
-    allocationBands.getByRole("heading", { name: "Stability structure" })
+    allocationBands.getByRole("heading", { name: "Stability guidance" })
   ).toBeVisible();
+  await expect(allocationBands).toContainText(
+    "guidance only—not balances, holdings, or proof that money moved"
+  );
+  const allocationDetails = page.getByTestId("engine-allocation-details");
+  await expect(allocationDetails).not.toHaveAttribute("open", "");
+  await allocationDetails.getByText("View stability targets").click();
   const allocationBandsText = await allocationBands.textContent();
   expect(allocationBandsText?.trim().length).toBeGreaterThan(0);
-  expect(allocationBandsText).toContain("Stable balance");
+  expect(allocationBandsText).toContain("Core stability target");
+  expect(allocationBandsText).not.toContain("Stable balance");
   expect(allocationBandsText).toContain("Conservative yield");
   expect(allocationBandsText).toContain("Reserve");
   expect(allocationBandsText).toContain("Stability targets");

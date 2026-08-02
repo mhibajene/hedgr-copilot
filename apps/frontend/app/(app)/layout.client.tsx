@@ -203,7 +203,7 @@ export function AppLayoutClient({ children }: { children: React.ReactNode }) {
             <div className="flex flex-col gap-2 lg:flex-row lg:items-center lg:justify-between">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-wide text-hedgr-500">
-                  CLASS-A-VAL-002 · {currentJourneyOrientation.context}
+                  Simulated example · {currentJourneyOrientation.context}
                 </p>
                 <h2
                   id="synthetic-journey-heading"

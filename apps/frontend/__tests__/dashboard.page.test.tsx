@@ -211,6 +211,33 @@ describe("DashboardPage engine trust surface", () => {
     expect(explainer.textContent).not.toMatch(
       /fixture|informational posture|settlement/i
     );
+
+    expect(screen.getByText("Does anything need attention?")).toBeDefined();
+    expect(
+      screen.getByTestId("engine-simulation-attention-answer").textContent
+    ).toBe("No important change shown");
+    expect(screen.queryByTestId("engine-posture-badge")).toBeNull();
+    expect(screen.queryByText("NORMAL")).toBeNull();
+    expect(screen.getByTestId("engine-posture-context").textContent).toBe(
+      "The simulated position is within its expected range."
+    );
+
+    const allocation = screen.getByTestId("engine-allocation-bands");
+    expect(allocation.getAttribute("data-presentation")).toBe("collapsed");
+    expect(allocation.textContent).toContain("Stability guidance");
+    expect(allocation.textContent).toContain(
+      "guidance only—not balances, holdings, or proof that money moved"
+    );
+    const allocationDetails = screen.getByTestId("engine-allocation-details");
+    expect(allocationDetails.tagName).toBe("DETAILS");
+    expect(allocationDetails.hasAttribute("open")).toBe(false);
+
+    expect(
+      screen.queryByTestId("engine-stability-review-snapshot")
+    ).toBeNull();
+    expect(screen.queryByText("Simulation date")).toBeNull();
+    expect(screen.queryByText("Last viewed locally")).toBeNull();
+    expect(screen.queryByTestId("dashboard-education")).toBeNull();
   });
 
   test("restarts a completed explicit synthetic journey only after confirmation", async () => {

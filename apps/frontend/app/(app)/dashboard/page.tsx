@@ -172,7 +172,7 @@ export default function DashboardPage() {
     </section>
   );
 
-  const educationSection = (
+  const educationSection = syntheticJourneyActive ? null : (
     <section
       className="space-y-4"
       aria-labelledby="dashboard-education-heading"
@@ -221,8 +221,13 @@ export default function DashboardPage() {
       <main className="p-4 sm:p-8">
         <div className="mx-auto max-w-2xl space-y-6 sm:space-y-8">
           {currentOverview}
-          <EngineAllocationBands engineState={engineState} />
-          <EngineStabilityReviewSnapshot engineState={engineState} />
+          <EngineAllocationBands
+            engineState={engineState}
+            collapsed={syntheticJourneyActive}
+          />
+          {!syntheticJourneyActive ? (
+            <EngineStabilityReviewSnapshot engineState={engineState} />
+          ) : null}
           <ErrorState
             title="Unable to load your balance"
             description="We couldn't fetch your account balance. Please try again."
@@ -337,9 +342,14 @@ export default function DashboardPage() {
           </section>
         )}
 
-        <EngineAllocationBands engineState={engineState} />
+        <EngineAllocationBands
+          engineState={engineState}
+          collapsed={syntheticJourneyActive}
+        />
 
-        <EngineStabilityReviewSnapshot engineState={engineState} />
+        {!syntheticJourneyActive ? (
+          <EngineStabilityReviewSnapshot engineState={engineState} />
+        ) : null}
 
         {!isFirstTimeUser && !hasNoTransactions && (
           <section

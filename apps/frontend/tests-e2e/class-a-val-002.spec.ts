@@ -48,7 +48,8 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   await expect(simulationDetails).toContainText('FX: fixed');
   await expect(page.getByRole('button', { name: 'Dismiss trust disclosure' })).toHaveCount(0);
   const journeyShell = page.getByTestId('synthetic-journey-shell');
-  await expect(journeyShell).toContainText('CLASS-A-VAL-002');
+  await expect(journeyShell).toContainText('Simulated example');
+  await expect(journeyShell).not.toContainText('CLASS-A-VAL-002');
   await expect(journeyShell).toContainText('start with the situation');
   await expect(journeyShell).toContainText('Understand the situation before the next step');
   await expect(journeyShell).toContainText('current stability view and simulated balance');
@@ -70,15 +71,35 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   await expect(page.getByTestId('dashboard-synthetic-balance-explainer')).toContainText(
     'not a real account balance',
   );
+  await expect(page.getByText('Does anything need attention?')).toBeVisible();
+  await expect(page.getByTestId('engine-simulation-attention-answer')).toHaveText(
+    'No important change shown',
+  );
+  await expect(page.getByTestId('dashboard-current-status')).not.toContainText('NORMAL');
+  await expect(page.getByTestId('engine-posture-context')).toHaveText(
+    'The simulated position is within its expected range.',
+  );
+  const stabilityGuidance = page.getByTestId('engine-allocation-bands');
+  await expect(stabilityGuidance).toHaveAttribute('data-presentation', 'collapsed');
+  await expect(stabilityGuidance).toContainText('Stability guidance');
+  await expect(stabilityGuidance).toContainText(
+    'guidance only—not balances, holdings, or proof that money moved',
+  );
+  const stabilityDetails = page.getByTestId('engine-allocation-details');
+  await expect(stabilityDetails).not.toHaveAttribute('open', '');
+  await expect(page.getByTestId('engine-allocation-band-coreTargetPct')).not.toBeVisible();
+  await stabilityDetails.getByText('View stability targets').click();
+  await expect(page.getByTestId('engine-allocation-band-coreTargetPct')).toBeVisible();
+  await expect(page.getByTestId('engine-allocation-band-coreTargetPct')).toContainText(
+    'Core stability target',
+  );
   await expect(page.getByTestId('engine-allocation-band-coreTargetPct')).toContainText(
     'Stability target · 50%',
   );
-  await expect(page.getByTestId('engine-stability-review-snapshot')).toContainText(
-    'Simulation date',
-  );
-  await expect(page.getByTestId('engine-stability-review-snapshot')).toContainText(
-    'Last viewed locally',
-  );
+  await expect(page.getByTestId('engine-stability-review-snapshot')).toHaveCount(0);
+  await expect(page.getByText('Simulation date')).toHaveCount(0);
+  await expect(page.getByText('Last viewed locally')).toHaveCount(0);
+  await expect(page.getByTestId('dashboard-education')).toHaveCount(0);
 
   await page.getByRole('link', { name: 'Start simulated deposit' }).click();
   await expect(page).toHaveURL(/\/deposit\?journey=class-a-val-002/);
