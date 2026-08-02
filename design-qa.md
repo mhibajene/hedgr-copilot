@@ -2,7 +2,7 @@
 
 ## Baseline preservation before implementation
 
-- Governing scope: Founder acceptance Internal **D-063** / `HEDGR_STATUS.md` **§184** and the active **§7a** nested brief.
+- Governing scope: Founder acceptance Internal **D-063** / `HEDGR_STATUS.md` **§184**, closeout **§185**, and the completed **§7a** nested brief.
 - Permanent-main baseline: `6790de229a9b923df7563c45ea936e9c5a761ce8` (`docs: publish 2026-07-31 review cycle (#355)`).
 - Baseline route: `http://127.0.0.1:3000/dashboard?journey=class-a-val-002` with mock auth, stub / fixed financial surfaces, zero-balance first-session state, and normal read-only engine posture.
 - Desktop capture: `artifacts/class-a-val-002-ca-002/baseline-dashboard-desktop.png` — 1440 × 2112; SHA-256 `833495a70d70de3e7c516bdd61e8187a9987396be14117bb8d938ad226dc976c`.
@@ -76,8 +76,8 @@ These are hypotheses about test quality, not claims that comprehension, cognitiv
 - Production frontend build with mock / stub configuration: passed.
 - Full local production-build Playwright parity: **56/56 passed**. The first run exposed one stale smoke expectation for the intentionally removed posture / Review Snapshot chrome; the ticket-relevant assertion was updated and both the focused smoke contract and the full suite then passed.
 - Trust check and trust-phrase check: passed.
-- Aggregate `pnpm run validate` reached the RAP provenance gate after those checks because `HEDGR_STATUS.md` now differs from the projection's older bound revision. RAP binding is completed only after the authority / closeout source is committed; this is provenance sequencing, not a product-test failure.
-- `git diff --check`: passed before implementation commit preparation.
+- Aggregate `pnpm run validate`: passed after the RAP was deterministically bound to closeout source commit `faf8351f0881579f5bc13f2e3b198fc0bf1d3ab1` in a provenance-only commit.
+- `git diff --check`: passed through final evidence reconciliation.
 
 ## Evidence and authority boundary
 
