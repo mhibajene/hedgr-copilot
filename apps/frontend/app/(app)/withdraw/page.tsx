@@ -338,10 +338,12 @@ function WithdrawPageContent() {
           data-testid="withdraw-synthetic-condition"
           aria-label="Simulated withdrawal condition"
         >
-          <p className="text-sm font-semibold">Step 3 · subtract from the simulated balance</p>
+          <p className="text-sm font-semibold">
+            Step 3 · check the position after a simulated withdrawal
+          </p>
           <p className="mt-1 text-sm leading-relaxed text-hedgr-dark">
-            Enter an amount to subtract from the simulated balance. The preview
-            below shows what would remain. No bank or payment provider is contacted.
+            Enter an amount to see what would remain in the simulated balance.
+            No bank or payment provider is contacted.
           </p>
         </section>
       ) : null}

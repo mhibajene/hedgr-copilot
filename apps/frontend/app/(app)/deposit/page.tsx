@@ -253,10 +253,12 @@ function DepositPageContent() {
           data-testid="deposit-synthetic-condition"
           aria-label="Simulated deposit condition"
         >
-          <p className="text-sm font-semibold">Step 2 · add to the simulated balance</p>
+          <p className="text-sm font-semibold">
+            Step 2 · see how the simulated position changes
+          </p>
           <p className="mt-1 text-sm leading-relaxed text-hedgr-dark">
-            Enter an amount to see the example result. Confirming records only a
-            simulated deposit. No account is charged and no real money moves.
+            Enter an amount to see the change in context. Confirming records only
+            a simulated deposit. No account is charged and no real money moves.
           </p>
         </section>
       ) : null}

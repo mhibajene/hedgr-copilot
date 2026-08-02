@@ -302,11 +302,11 @@ export default function ActivityPage() {
           data-testid="activity-synthetic-condition"
           aria-label="Simulated activity condition"
         >
-          <p className="text-sm font-semibold">Step 4 · explain the simulated balance</p>
+          <p className="text-sm font-semibold">Step 4 · understand what changed and why</p>
           <p className="mt-1 text-sm leading-relaxed text-hedgr-dark">
-            Activity shows the simulated deposit and withdrawal that changed the
-            balance. “Completed” means this simulated step finished. It does not
-            mean a bank transfer or real payout occurred.
+            Use Activity to explain the simulated position: which changes happened
+            and what remains. “Completed” means this simulated step finished. It
+            does not mean a bank transfer or real payout occurred.
           </p>
         </section>
       ) : null}
@@ -404,7 +404,7 @@ export default function ActivityPage() {
           href={getSyntheticJourneyHref('/dashboard')}
           className="inline-flex rounded-xl border border-hedgr-200 bg-white px-4 py-2 text-sm font-medium text-hedgr-primary transition-colors hover:border-hedgr-300 hover:text-hedgr-600 focus:outline-none focus:ring-2 focus:ring-hedgr-500 focus:ring-offset-2"
         >
-          Return to simulated balance
+          Return to simulated stability view
         </Link>
       ) : null}
     </main>

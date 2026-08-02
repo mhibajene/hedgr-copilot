@@ -1,3 +1,87 @@
+# HEDGR-UI-006 Design QA and Change Log
+
+## Comparison target
+
+- Immediate baseline: completed `HEDGR-UI-005` plain-language synthetic Dashboard → Deposit → Withdraw → Activity journey.
+- Governing scope: Internal **D-061** / `HEDGR_STATUS.md` **§180**, closeout **§181**, and the completed **§7a** nested brief, after parent disposition Internal **D-060** / **§179**.
+- Locked hypothesis: minimal functional orientation can make financial-position interpretation and stability-before-action formable without supplying a settled category label or narrating the complete mental model in advance.
+- Narrative constraints: frozen Canonical Story, Customer One-Pager, and Narrative Style Guide meaning retained; the accepted Investor Orientation Brief remains unchanged and non-authorising.
+- Brand authority: `DESIGN.md`, `assets/brand/README.md`, `docs/brand/HEDGR_BRAND_SYSTEM.md`, `docs/brand/HEDGR_BRAND_ASSET_RULES.md`, `docs/brand/HEDGR_DESIGN_TOKENS.md`, `docs/brand/HEDGR_UI_APPLICATION_RULES.md`, and `docs/brand/HEDGR_BRAND_QA_CHECKLIST.md`. No Brand Guidelines PDF is present in governed repo assets for this pass.
+- Rendered route: `http://localhost:3000/dashboard?journey=class-a-val-002`.
+
+## Complete journey evidence
+
+- Dashboard start: `/Users/musalwa/.codex/visualizations/2026/08/02/hedgr-ui-006/01-dashboard-start-desktop.png`
+- Deposit preview: `/Users/musalwa/.codex/visualizations/2026/08/02/hedgr-ui-006/02-deposit-preview-desktop.png`
+- Deposit result: `/Users/musalwa/.codex/visualizations/2026/08/02/hedgr-ui-006/03-deposit-result-desktop.png`
+- Withdrawal preview: `/Users/musalwa/.codex/visualizations/2026/08/02/hedgr-ui-006/04-withdraw-preview-desktop.png`
+- Withdrawal result: `/Users/musalwa/.codex/visualizations/2026/08/02/hedgr-ui-006/05-withdraw-result-desktop.png`
+- Activity reconciliation: `/Users/musalwa/.codex/visualizations/2026/08/02/hedgr-ui-006/06-activity-reconciliation-desktop.png`
+- Activity detail: `/Users/musalwa/.codex/visualizations/2026/08/02/hedgr-ui-006/07-activity-detail-desktop.png`
+- Dashboard return at `$3.00`: `/Users/musalwa/.codex/visualizations/2026/08/02/hedgr-ui-006/08-dashboard-return-desktop.png`
+- Activity mobile: `/Users/musalwa/.codex/visualizations/2026/08/02/hedgr-ui-006/09-activity-reconciliation-mobile.png`
+- Activity mobile grayscale: `/Users/musalwa/.codex/visualizations/2026/08/02/hedgr-ui-006/10-activity-reconciliation-mobile-grayscale.png`
+- Unavailable-rate mobile: `/Users/musalwa/.codex/visualizations/2026/08/02/hedgr-ui-006/11-unavailable-rate-mobile.png`
+
+All captures contain simulated research data only. No participant data, real financial data, provider call, bank action, payout, conversion, settlement, or external account action is represented.
+
+## Category and narrative-orientation treatment
+
+### Functional orientation without category-label adoption
+
+- Dashboard introduces the functional question `Understand your situation before deciding what to do next.` and labels the frame `Financial position` without naming Hedgr as a `Financial Stability Companion`, bank, wallet category, budgeting app, or investment / trading product.
+- The orientation is informational: current stability view, simulated balance, and guidance are context for understanding the position, not instructions or proof that money moved.
+- The primary Dashboard action remains one simulated deposit. It is reframed as one change in context rather than generic transaction onboarding.
+- The completed Dashboard uses `What changed` and `Review Activity` so Activity supports explanation rather than presenting itself as independent ledger truth.
+
+### Step-specific narrative continuity
+
+- Dashboard: understand the situation before the next step.
+- Deposit: see how the simulated position changes.
+- Withdraw: see the position after the simulated withdrawal and check what remains.
+- Activity: review what changed and why, then return to the simulated stability view.
+- The shell still identifies only the current route and does not enumerate future steps, supply a settled category name, or weaken the persistent simulation boundary.
+
+## Visual and accessibility review
+
+- Desktop viewport: 1280 × 900. Mobile viewport: 390 × 844.
+- The new orientation uses only existing typography, spacing, layout, and governed `hedgr-*` palette utilities; no new token, asset, raw hue, gradient, glow, animation, or decorative treatment was introduced.
+- New text pairings use governed `color-500`, `color-800`, `dark`, and `primary` against white, with measured contrast from **6.64:1** to **16.62:1**.
+- Desktop hierarchy reads shared research orientation → financial-position statement → current status / simulated balance → one bounded example action.
+- Mobile Activity preserves the persistent no-real-money disclosure, current step, reconciliation, entries, and return action without page-level horizontal overflow. The grayscale capture preserves meaning through labels, arithmetic, hierarchy, and borders rather than colour alone.
+- Production-build screenshots contain no Next.js development overlay. A development-only review exposed the existing balance local-estimate hydration warning caused by server/client rate availability; the changed files do not touch that component or its data path, and production build plus Playwright parity pass.
+
+## Research-instrument change
+
+- The protocol now captures dual-layer evidence: simulated-journey comprehension plus category / product-identity formation.
+- Five explicit layers are recorded at entry, exit, and delayed recall: problem recognition, journey comprehension, product identity, decision relevance, and behavioural value.
+- Open category interpretation records crypto-wallet, bank/account, budgeting, investment/trading, live-money-moving, financial-position/stability, and participant-defined interpretations only after the unaided answer.
+- The moderator must not supply the test-only `Financial Stability Companion` label. Copied interface phrases, probe level, mental-model trajectory, delayed recall, and moderator rescue remain visible in the evidence record.
+- The protocol remains simulated-only, minimal-data, behaviour-led, and non-authorising. It records no participant result, category adoption, or comprehension claim.
+
+## Scoped validation evidence
+
+- Frontend unit tests: **748/748 passed**.
+- Targeted `CLASS-A-VAL-002` Playwright journey: **3/3 passed**.
+- Full local production-build Playwright parity: **56/56 passed** against the Flask stub with required mock / stub configuration.
+- Frontend typecheck: passed.
+- Frontend lint: passed.
+- Production frontend build with mock / stub configuration: passed.
+- `git diff --check`: required after closeout reconciliation.
+- Aggregate `pnpm run validate`: required after closeout and immutable RAP binding.
+- Hosted checks are recorded through final Hedgr PR posture.
+
+## No-live-authority confirmation
+
+- No file under `apps/frontend/lib/engine/**`, backend, state store, ledger, transaction lifecycle, provider, banking, custody, rail, production FX, payout, routing, Settings, or Copilot implementation changed.
+- No arithmetic, financial state, state transition, navigation order, Dashboard IA beyond the authorised copy hierarchy, engine meaning, allocation semantics, Activity record structure, unavailable-data behaviour, or withdrawal status logic changed.
+- No settled category label, live-money, execution, accounting, protection guarantee, performance, financial approval, regulatory, institutional-backing, endorsement, testimonial, or external-proof claim was introduced.
+- Interface completion does not demonstrate participant comprehension or category adoption, close `CLASS-A-VAL-002`, accept Evidence Register evidence, clear a gate, activate Class B, complete the institutional MVP, nominate a successor, authorize another UI pass, or establish production readiness.
+
+final result: passed
+
+---
+
 # HEDGR-UI-005 Design QA and Change Log
 
 ## Comparison target
