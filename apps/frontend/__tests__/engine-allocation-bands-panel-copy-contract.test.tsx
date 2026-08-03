@@ -35,10 +35,16 @@ describe("EngineAllocationBands panel copy contract", () => {
   test("locks non-empty shipped panel copy segments", () => {
     render(<EngineAllocationBands engineState={makeContractEngineState()} />);
 
-    expect(screen.getByText("Stability structure")).toBeDefined();
+    expect(screen.getByText("Stability guidance")).toBeDefined();
 
     const caption =
       screen.getByTestId("engine-allocation-bands-caption").textContent ?? "";
+    const philosophy =
+      screen.getByTestId("engine-allocation-philosophy").textContent ?? "";
+    const boundary =
+      screen.getByTestId("engine-allocation-boundary").textContent ?? "";
+    const targetsIntro =
+      screen.getByTestId("engine-allocation-targets-intro").textContent ?? "";
     const trustLegend =
       screen.getByTestId("engine-allocation-trust-legend").textContent ?? "";
     const descriptorIds = [
@@ -52,9 +58,21 @@ describe("EngineAllocationBands panel copy contract", () => {
       return node!.textContent ?? "";
     });
 
-    for (const segment of [caption, trustLegend, ...descriptors]) {
+    for (const segment of [
+      caption,
+      philosophy,
+      boundary,
+      targetsIntro,
+      trustLegend,
+      ...descriptors,
+    ]) {
       expect(segment.trim().length).toBeGreaterThan(0);
     }
+
+    expect(caption).not.toMatch(/these targets/i);
+    expect(philosophy).toMatch(/preserve value/i);
+    expect(boundary).toMatch(/context, not an instruction/i);
+    expect(targetsIntro).toMatch(/simulated targets/i);
   });
 
   test("keeps shipped panel copy informational and non-accounting", () => {
@@ -62,6 +80,9 @@ describe("EngineAllocationBands panel copy contract", () => {
 
     const segments = [
       screen.getByTestId("engine-allocation-bands-caption").textContent ?? "",
+      screen.getByTestId("engine-allocation-philosophy").textContent ?? "",
+      screen.getByTestId("engine-allocation-boundary").textContent ?? "",
+      screen.getByTestId("engine-allocation-targets-intro").textContent ?? "",
       screen.getByTestId("engine-allocation-trust-legend").textContent ?? "",
       document.getElementById("engine-allocation-band-liquidityTargetPct-desc")
         ?.textContent ?? "",

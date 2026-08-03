@@ -51,9 +51,9 @@ function laneDescription(key: LaneKey, value: number): string {
     case "coreTargetPct":
       return "The largest target, focused on preserving value.";
     case "yieldCapPct":
-      return `Up to ${formatPct(
+      return `A limited ${formatPct(
         value
-      )} can support returns when conditions allow.`;
+      )} target for return opportunity when conditions allow.`;
     case "liquidityTargetPct":
       return "A buffer target, kept ready if needed.";
   }
@@ -63,7 +63,7 @@ export function EngineAllocationBands({
   engineState,
   collapsed = false,
 }: EngineAllocationBandsProps) {
-  const structure = (
+  const targets = (
     <>
       <div className="space-y-3" data-testid="engine-allocation-structure">
         {(() => {
@@ -136,14 +136,14 @@ export function EngineAllocationBands({
       <aside
         className="max-w-xl border-t border-hedgr-100 pt-4 text-xs leading-relaxed text-hedgr-dark"
         data-testid="engine-allocation-trust-legend"
-        aria-label="Stability target guidance"
+        aria-label="Detailed stability target distinction"
       >
         <p>
           <span className="font-semibold text-hedgr-800">
-            Guidance only
+            Target detail
           </span>
-          . These percentages are stability targets, not balances and not proof
-          that money moved.
+          . The percentages show intended stability priorities in this
+          simulation only.
         </p>
         <details className="mt-3" data-testid="engine-allocation-target-details">
           <summary className="cursor-pointer font-medium text-hedgr-600 underline decoration-hedgr-200 underline-offset-4">
@@ -154,19 +154,20 @@ export function EngineAllocationBands({
               <span className="font-semibold text-hedgr-800">
                 Stability targets
               </span>
-              . These percentages show the intended structure only. A lower
-              conservative yield target means less return opportunity within it.
+              . A lower Conservative yield target limits the return opportunity
+              shown within the guidance.
             </p>
             <p>
               <span className="font-semibold text-hedgr-800">Balance</span>.{" "}
-              The balance shown above is separate from these percentages. The
-              percentages do not divide it.
+              The simulated balance shown above is separate from the targets.
+              The percentages do not divide it.
             </p>
             <p>
               <span className="font-semibold text-hedgr-800">
-                No money movement
+                No instruction or money movement
               </span>
-              . A target does not mean money has moved.
+              . Guidance does not tell you what to do, and a target does not
+              mean money has been divided, held, or moved.
             </p>
           </div>
         </details>
@@ -186,17 +187,34 @@ export function EngineAllocationBands({
           id="engine-allocation-bands-title"
           className="text-base font-semibold tracking-tight text-hedgr-800"
         >
-          {collapsed ? "Stability guidance" : "Stability structure"}
+          Stability guidance
         </h2>
         <p
           className="max-w-xl text-sm leading-relaxed text-hedgr-dark"
           data-testid="engine-allocation-bands-caption"
         >
-          {collapsed
-            ? "These targets are guidance only—not balances, holdings, or proof that money moved."
-            : "These percentages show stability priorities for guidance. They do not divide the balance shown above."}
+          See what Hedgr prioritizes when interpreting stability.
         </p>
       </div>
+
+      <p
+        className="max-w-xl text-sm leading-relaxed text-hedgr-dark"
+        data-testid="engine-allocation-philosophy"
+      >
+        Hedgr&apos;s guidance makes its priorities visible in this simulation:
+        preserve value, keep access and risk visible, and understand the
+        situation before action.
+      </p>
+
+      <aside
+        className="max-w-xl border-l-2 border-hedgr-200 pl-3 text-sm leading-relaxed text-hedgr-dark"
+        data-testid="engine-allocation-boundary"
+        aria-label="Stability guidance boundary"
+      >
+        <span className="font-semibold text-hedgr-800">Guidance only</span>—this
+        is context, not an instruction. Nothing here represents a balance,
+        holding, account, or money being divided or moved.
+      </aside>
 
       {collapsed ? (
         <details data-testid="engine-allocation-details">
@@ -209,11 +227,27 @@ export function EngineAllocationBands({
             </span>
           </summary>
           <div className="mt-4 space-y-5 border-t border-hedgr-100 pt-4">
-            {structure}
+            <p
+              className="max-w-xl text-sm leading-relaxed text-hedgr-dark"
+              data-testid="engine-allocation-targets-intro"
+            >
+              The percentages below are simulated targets that express those
+              priorities.
+            </p>
+            {targets}
           </div>
         </details>
       ) : (
-        structure
+        <div className="space-y-5">
+          <p
+            className="max-w-xl text-sm leading-relaxed text-hedgr-dark"
+            data-testid="engine-allocation-targets-intro"
+          >
+            The percentages below are simulated targets that express those
+            priorities.
+          </p>
+          {targets}
+        </div>
       )}
     </section>
   );

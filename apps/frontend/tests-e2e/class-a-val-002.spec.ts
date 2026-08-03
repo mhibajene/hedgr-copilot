@@ -83,12 +83,27 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   await expect(stabilityGuidance).toHaveAttribute('data-presentation', 'collapsed');
   await expect(stabilityGuidance).toContainText('Stability guidance');
   await expect(stabilityGuidance).toContainText(
-    'guidance only—not balances, holdings, or proof that money moved',
+    'See what Hedgr prioritizes when interpreting stability',
+  );
+  await expect(stabilityGuidance).toContainText(
+    'preserve value, keep access and risk visible',
+  );
+  await expect(stabilityGuidance).toContainText(
+    'context, not an instruction',
+  );
+  await expect(stabilityGuidance).toContainText(
+    'Nothing here represents a balance, holding, account, or money being divided or moved',
+  );
+  await expect(page.getByTestId('engine-allocation-bands-caption')).not.toContainText(
+    'these targets',
   );
   const stabilityDetails = page.getByTestId('engine-allocation-details');
   await expect(stabilityDetails).not.toHaveAttribute('open', '');
   await expect(page.getByTestId('engine-allocation-band-coreTargetPct')).not.toBeVisible();
   await stabilityDetails.getByText('View stability targets').click();
+  await expect(page.getByTestId('engine-allocation-targets-intro')).toHaveText(
+    'The percentages below are simulated targets that express those priorities.',
+  );
   await expect(page.getByTestId('engine-allocation-band-coreTargetPct')).toBeVisible();
   await expect(page.getByTestId('engine-allocation-band-coreTargetPct')).toContainText(
     'Core stability target',
