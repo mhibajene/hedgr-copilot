@@ -64,3 +64,12 @@ These are hypotheses about test-instrument credibility, not evidence of comprehe
 5. Detailed distinction: target-versus-balance, limited return opportunity, non-instruction, and no-money-movement detail remain optional confirmation after the cards.
 
 The existing native `details` / `summary` controls, approved Hedgr tokens, typography, target-card hierarchy, and target values remain unchanged. Focused Playwright verifies that both disclosure summaries receive keyboard focus and open with Enter. The development captures retain the same pre-existing local Next.js issue indicator observed on the baseline; production-build verification is recorded separately and is authoritative for release behavior.
+
+## Production visual verification
+
+| Capture | Size | SHA-256 |
+| --- | --- | --- |
+| `verified-production-dashboard-collapsed-desktop.png` | 1440 x 1311 | `6c99901164972f68460da4e4955abfcb82fe1f39cc5a47d50beda7e451acdfcd` |
+| `verified-production-dashboard-collapsed-mobile.png` | 390 x 1740 | `646f145ec528428914d80f7fa1f9ce1e36889a5eedebdc8b83a9647a985def34` |
+
+The production captures contain no development overlay and preserve the same semantic order and layout reviewed in the comparison captures.

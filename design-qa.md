@@ -52,6 +52,17 @@ These are test-instrument hypotheses only. Implementation cannot establish parti
 - Existing approved `hedgr-*` tokens and typography are reused. No token, asset, raw colour, gradient, glow, shadow, motion, dependency, logo, or visual-system change was introduced.
 - No Brand Guidelines PDF is present in governed repo assets or attached implementation materials; the machine-readable and repo-native brand authorities govern this pass.
 
+## Validation evidence
+
+- Targeted allocation / Dashboard units: **18 / 18 passed**; baseline was **17 / 17**.
+- Focused `CLASS-A-VAL-002` plus smoke Playwright after implementation: **10 / 10 passed**; keyboard-only nested disclosure check: **1 / 1 passed**.
+- Full repository unit command passed: Bridge snapshots **11 / 11**, Bridge Worker **34 / 34**, frontend **751 / 751**.
+- Workspace typecheck, workspace lint, Bridge snapshot freshness, trust check, trust-phrase check, and `git diff --check` passed.
+- Production frontend build with build-time Copilot flag and mock / stub modes passed.
+- The first production-build Playwright attempt passed **52 / 56** and timed out four unrelated Copilot cases despite captured pages showing the chat UI. The same affected Copilot group then passed **10 / 10** against the identical build, and a complete parity rerun passed **56 / 56** in 30 seconds. No app or test change was made between those runs.
+- Clean production desktop and mobile captures passed visual inspection and are recorded in `artifacts/class-a-val-002-ca-003/README.md`.
+- Aggregate `pnpm run validate` passed trust checks and then stopped at the expected RAP source-binding gate. Final aggregate validation follows the committed closeout-source revision and deterministic RAP generation.
+
 ## Locked controls and exclusions
 
 - Required order: purpose → philosophy → boundary → targets → detailed distinction.
