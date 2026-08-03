@@ -18,6 +18,20 @@ const BADGE_TONES: Record<EnginePosture, string> = {
   recovery: "border-hedgr-200 bg-white text-hedgr-600",
 };
 
+const SIMULATION_ATTENTION_ANSWERS: Record<EnginePosture, string> = {
+  normal: "No important change shown",
+  tightening: "A change is shown",
+  tightened: "A change is shown",
+  recovery: "A change is shown",
+};
+
+const SIMULATION_STATUS_CONTEXT: Record<EnginePosture, string> = {
+  normal: "The simulated position is within its expected range.",
+  tightening: "The simulation shows stability guidance becoming more cautious.",
+  tightened: "The simulation shows stability guidance in a more cautious state.",
+  recovery: "The simulation shows stability guidance easing toward its expected range.",
+};
+
 type EnginePostureHeaderProps = {
   engineState: EngineState;
   syntheticJourneyActive?: boolean;
@@ -52,30 +66,45 @@ export function EnginePostureHeader({
           id="dashboard-current-status-label"
           className="text-xs font-semibold uppercase tracking-[0.12em] text-hedgr-500"
         >
-          {syntheticJourneyActive ? "Current simulation status" : "Current status"}
+          {syntheticJourneyActive
+            ? "Does anything need attention?"
+            : "Current status"}
         </p>
-        <span
-          data-testid="engine-posture-badge"
-          data-posture={posture}
-          className={`shrink-0 inline-flex items-center rounded-full border px-3 py-1 text-[11px] font-semibold tracking-wide ${BADGE_TONES[posture]}`}
-        >
-          {BADGE_LABELS[posture]}
-        </span>
+        {syntheticJourneyActive ? (
+          <span
+            data-testid="engine-simulation-attention-answer"
+            className="shrink-0 inline-flex items-center rounded-full border border-hedgr-200 bg-hedgr-100 px-3 py-1 text-[11px] font-semibold tracking-wide text-hedgr-800"
+          >
+            {SIMULATION_ATTENTION_ANSWERS[posture]}
+          </span>
+        ) : (
+          <span
+            data-testid="engine-posture-badge"
+            data-posture={posture}
+            className={`shrink-0 inline-flex items-center rounded-full border px-3 py-1 text-[11px] font-semibold tracking-wide ${BADGE_TONES[posture]}`}
+          >
+            {BADGE_LABELS[posture]}
+          </span>
+        )}
       </div>
 
       <p
         className="max-w-xl text-base leading-relaxed text-hedgr-dark"
         data-testid="engine-posture-context"
       >
-        {ENGINE_POSTURE_CONTEXT[posture]}
+        {syntheticJourneyActive
+          ? SIMULATION_STATUS_CONTEXT[posture]
+          : ENGINE_POSTURE_CONTEXT[posture]}
       </p>
 
-      <p
-        className="text-sm font-medium text-hedgr-600"
-        data-testid="engine-posture-action-guidance"
-      >
-        There is nothing here you need to manage.
-      </p>
+      {!syntheticJourneyActive ? (
+        <p
+          className="text-sm font-medium text-hedgr-600"
+          data-testid="engine-posture-action-guidance"
+        >
+          There is nothing here you need to manage.
+        </p>
+      ) : null}
 
       {showNotice ? (
         <div

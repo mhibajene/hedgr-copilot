@@ -27,7 +27,7 @@ describe("EngineAllocationBands", () => {
     expect(
       within(
         screen.getByTestId("engine-allocation-band-coreTargetPct")
-      ).getByText("Stable balance")
+      ).getByText("Core stability target")
     ).toBeDefined();
     expect(
       within(
@@ -40,7 +40,7 @@ describe("EngineAllocationBands", () => {
       ).getByText("Reserve")
     ).toBeDefined();
 
-    // Stable balance is the dominant primary lane; the other two are supporting.
+    // The core stability target is dominant; the other two are supporting.
     expect(
       screen
         .getByTestId("engine-allocation-band-coreTargetPct")
@@ -83,6 +83,31 @@ describe("EngineAllocationBands", () => {
     expect(legend).toMatch(/percentages do not divide it/i);
     expect(legend).toMatch(/target does not mean money has moved/i);
     expect(legend).not.toMatch(/fixture|informational posture|settlement/i);
+  });
+
+  test("defers detailed targets behind target-only guidance when collapsed", () => {
+    render(
+      <EngineAllocationBands
+        engineState={makeEngineState()}
+        collapsed
+      />
+    );
+
+    const panel = screen.getByTestId("engine-allocation-bands");
+    expect(panel.getAttribute("data-presentation")).toBe("collapsed");
+    expect(screen.getByText("Stability guidance")).toBeDefined();
+    expect(
+      screen.getByTestId("engine-allocation-bands-caption").textContent
+    ).toBe(
+      "These targets are guidance only—not balances, holdings, or proof that money moved."
+    );
+
+    const details = screen.getByTestId("engine-allocation-details");
+    expect(details.tagName).toBe("DETAILS");
+    expect(details.hasAttribute("open")).toBe(false);
+    expect(details.textContent).toContain("View stability targets");
+    expect(details.textContent).toContain("Core stability target");
+    expect(details.textContent).not.toContain("Stable balance");
   });
 
   test("keeps caption and trust legend free of execution, accounting-as-truth, and hype drift", () => {
@@ -209,7 +234,7 @@ describe("EngineAllocationBands", () => {
     expect(screen.queryByText(/total \(incl\. pending\)/i)).toBeNull();
   });
 
-  test("keeps Stable balance dominant and both other lanes supporting", () => {
+  test("keeps the core stability target dominant and both other lanes supporting", () => {
     render(<EngineAllocationBands engineState={makeEngineState()} />);
 
     const primary = screen.getByTestId("engine-allocation-band-coreTargetPct");

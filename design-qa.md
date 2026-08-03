@@ -1,3 +1,92 @@
+# CLASS-A-VAL-002-CA-002 Design QA and Change Log
+
+## Baseline preservation before implementation
+
+- Governing scope: Founder acceptance Internal **D-063** / `HEDGR_STATUS.md` **§184**, closeout **§185**, and the completed **§7a** nested brief.
+- Permanent-main baseline: `6790de229a9b923df7563c45ea936e9c5a761ce8` (`docs: publish 2026-07-31 review cycle (#355)`).
+- Baseline route: `http://127.0.0.1:3000/dashboard?journey=class-a-val-002` with mock auth, stub / fixed financial surfaces, zero-balance first-session state, and normal read-only engine posture.
+- Desktop capture: `artifacts/class-a-val-002-ca-002/baseline-dashboard-desktop.png` — 1440 × 2112; SHA-256 `833495a70d70de3e7c516bdd61e8187a9987396be14117bb8d938ad226dc976c`.
+- Mobile capture: `artifacts/class-a-val-002-ca-002/baseline-dashboard-mobile.png` — 390 × 2636; SHA-256 `f738802aaa6757a2ddd255165329a5a28e57ee5b43445cd33b8e3b1ad2892256`.
+- Baseline targeted unit suite: **71/71 passed** across Dashboard, posture, allocation, and Review Snapshot contracts.
+- Baseline targeted `CLASS-A-VAL-002` Playwright suite: **3/3 passed**, including complete traversal, unavailable-data handling, and mobile boundary / current-step visibility.
+- Captures and test data contain simulated research data only. No participant, real financial, account, provider, custody, payment, conversion, payout, or settlement data is present.
+
+## Baseline first-session hierarchy and copy inventory
+
+1. Persistent `Simulation Mode. No Real Money` trust disclosure.
+2. Primary navigation.
+3. Shared journey shell displaying `CLASS-A-VAL-002 · START WITH THE SITUATION`, current orientation, and `1 Dashboard`.
+4. `Financial position` purpose statement.
+5. Combined `Current simulation status` / `NORMAL` posture and `Simulated balance` overview.
+6. One bounded simulated-deposit action.
+7. Fully expanded `Stability structure` taxonomy: `Stable balance`, `Conservative yield`, and `Reserve`, plus percentages and target-versus-balance disclosure.
+8. Primary-view `Review snapshot`: repeated current simulation status, simulation date, last-viewed-local metadata, and optional review details / recent readings.
+9. Educational disclosures and important disclosures.
+
+## Minimum-effective change hypotheses
+
+| Surface | Baseline contaminant | Bounded change | Test-instrument hypothesis |
+| --- | --- | --- | --- |
+| Journey shell | Internal `CLASS-A-VAL-002` identifier competes with product identity | Retain route / capture traceability but replace participant-facing identifier with ordinary simulated-journey context | Reduces experiment-ticket anchoring without weakening research provenance |
+| Current status | `Current simulation status`, `NORMAL`, posture definition, and management guidance require system-taxonomy decoding | On the explicit participant journey only, ask whether anything needs attention and answer in simulation-state language without exposing the formal posture badge | Lets a participant answer the human question before learning Hedgr posture vocabulary |
+| Stability Structure | A fully expanded three-part taxonomy appears before lived journey context | Keep target meaning and values unchanged but collapse detailed structure behind optional disclosure on the explicit participant journey | Reduces early portfolio / holdings classification while preserving inspectable financial truth |
+| Balance terminology | `Simulated balance` and `Stable balance` look like competing balances | Rename the primary structure label to a visibly target-only term without changing `coreTargetPct` semantics | Makes one displayed monetary amount distinguishable from informational guidance |
+| Review Snapshot | History, system dates, browser-local memory, target comparison, ledger / backend distinctions, and recent readings dominate first-session review | Omit the Review Snapshot component from the explicit first-session participant journey; retain the unchanged component for non-participant / later surfaces | Removes returning-user apparatus from identity formation without deleting or rewriting its implementation |
+
+These are hypotheses about test quality, not claims that comprehension, cognitive burden, category convergence, or trust-boundary accuracy has improved.
+
+## Locked control surface and exclusions
+
+- Dashboard → Deposit → Withdraw → Activity remains the control journey.
+- Arithmetic remains `$0 → +$5 → −$2 → $3`.
+- No engine module, engine state, target value, target meaning, financial state, ledger, Activity record, transaction transition, unavailable-data behaviour, backend, navigation order, live-versus-simulated boundary, provider, custody, rail, payout, conversion, settlement, Copilot, category-name, or brand-system change is authorized.
+- After the verified bounded pass, protocol-complete dual-layer participant retesting is immediately next. No second UI pass is inferred.
+
+## Implemented minimum-effective treatment
+
+- The shared participant shell now reads `Simulated example` while the unchanged `journey=class-a-val-002` route parameter, test ids, capture paths, and repo records preserve research traceability.
+- The explicit participant Dashboard asks `Does anything need attention?` and answers `No important change shown` for the fixed normal posture. Formal `NORMAL` badge and system-first posture context remain unchanged on non-participant Dashboard conditions.
+- The explicit participant Dashboard retains one visible simulated amount and one target-only sentence, while detailed target values are initially collapsed behind `View stability targets`.
+- `Stable balance` is replaced on the allocation surface with `Core stability target`; `coreTargetPct`, all target values, descriptions, hierarchy, and guidance-only / no-movement semantics remain unchanged.
+- Review Snapshot, simulation date, last-viewed-local metadata, recent readings, and early structural education are not rendered in the explicit participant journey. The unchanged Review Snapshot implementation and engine memory / fingerprint logic remain available on non-participant Dashboard conditions.
+- Deposit, Withdraw, Activity, unavailable-data, replay, financial state, arithmetic, and navigation behaviour did not change.
+
+## After captures and comparison
+
+- Closed-detail desktop: `artifacts/class-a-val-002-ca-002/after-dashboard-desktop.png` — 1440 × 1180; SHA-256 `5391bb896599b4806a33d33f8616290716487a842788731eeda4bac4d2a1e6e7`.
+- Closed-detail mobile: `artifacts/class-a-val-002-ca-002/after-dashboard-mobile.png` — 390 × 1518; SHA-256 `2fbf2156311c1f6c6e8c6d43b0b6c5014e6caa0523afa8cee19e12fb03e4a0ed`.
+- Optional target detail desktop: `artifacts/class-a-val-002-ca-002/after-dashboard-targets-open-desktop.png` — 1440 × 1556; SHA-256 `0d31282b6c8a9f3438e541fe8eeceea4f68595edbf2c39f75b9936a942ca1e74`.
+- Desktop primary-view height reduced from 2112 to 1180 pixels and mobile from 2636 to 1518 pixels in like-for-like local captures. This measures concept / page-length deferral only; it does not measure participant comprehension.
+- Before and after local captures share the previously recorded development-only balance local-estimate hydration indicator. The production build compiled successfully and full production-build Playwright parity passed **56/56**, so the indicator is not treated as a changed-file regression.
+
+## Visual, accessibility, and brand review
+
+- Existing `hedgr-*` utilities, native `details` / `summary`, headings, labels, borders, and focus affordances are reused. No token value, asset, typography, layout system, dependency, raw hue, gradient, glow, shadow, animation, or brand authority changed.
+- Closed target detail keeps target meaning available through explicit text, not colour. Open target detail retains the dominant / supporting hierarchy, percentages, target-versus-balance explanation, and no-money-movement statement.
+- Desktop and mobile preserve the persistent no-real-money disclosure, one primary action, readable question / answer hierarchy, and important disclosures.
+- No Brand Guidelines PDF is present in governed repo assets or attached implementation materials; the existing machine-readable and repo-native brand authorities govern this pass.
+
+## Verification evidence
+
+- Targeted Dashboard / posture / allocation / Review Snapshot units: **73/73 passed** after implementation; baseline was **71/71**.
+- Full repository unit command: **passed** — Bridge snapshot tests **11/11**, Bridge Worker tests **34/34**, frontend tests **750/750**.
+- Targeted `CLASS-A-VAL-002` Playwright journey: **3/3 passed** with `$0 → +$5 → −$2 → $3`, unavailable-data, and mobile boundary coverage unchanged.
+- Frontend typecheck: passed.
+- Workspace lint: passed.
+- Production frontend build with mock / stub configuration: passed.
+- Full local production-build Playwright parity: **56/56 passed**. The first run exposed one stale smoke expectation for the intentionally removed posture / Review Snapshot chrome; the ticket-relevant assertion was updated and both the focused smoke contract and the full suite then passed.
+- Trust check and trust-phrase check: passed.
+- Aggregate `pnpm run validate`: passed after the RAP was deterministically bound to closeout source commit `faf8351f0881579f5bc13f2e3b198fc0bf1d3ab1` in a provenance-only commit.
+- `git diff --check`: passed through final evidence reconciliation.
+
+## Evidence and authority boundary
+
+- This refinement is intended to improve the credibility of the test instrument by reducing an identified first-session contaminant.
+- Interface completion does not prove improved comprehension, lower cognitive burden, category convergence, trust-boundary accuracy, usefulness, demand, readiness, or participant success.
+- It does not close `CLASS-A-VAL-002`, accept Evidence Register evidence, clear a gate, activate Class B / Class C, adopt public category naming, authorize live capability, nominate a successor, or authorize another UI pass.
+
+---
+
 # HEDGR-UI-006 Design QA and Change Log
 
 ## Comparison target

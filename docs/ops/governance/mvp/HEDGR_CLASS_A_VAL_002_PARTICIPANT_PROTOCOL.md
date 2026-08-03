@@ -1,10 +1,10 @@
 # CLASS-A-VAL-002 Participant Protocol and Evidence Capture
 
-**Status:** Active dual-layer retest instrument for the sole active `CLASS-A-VAL-002` ticket, refined by the completed nested `HEDGR-UI-006` pass before protocol-complete participant retesting
+**Status:** Active dual-layer retest instrument for the sole active `CLASS-A-VAL-002` ticket, aligned to the completed bounded `CLASS-A-VAL-002-CA-002` pre-retest pass; the verified test build is recorded and protocol-complete participant sessions are immediately next
 
 **Execution class:** Class A product validation; visibly synthetic; non-executing for customer money
 
-**Authority:** `docs/ops/HEDGR_STATUS.md` §7 / §7a, §143, §179, §180, and §181; Internal D-037, D-060, and D-061
+**Authority:** `docs/ops/HEDGR_STATUS.md` §7 / §7a, §143, §179, §180–§181, and §184–§185; Internal D-037, D-060, D-061, and D-063
 
 **Non-authorization:** This protocol does not authorize live money movement, custody, provider or banking integration, production FX, settlement, payout, Stability Engine execution, Class B implementation, Evidence Register acceptance, gate clearance, participant-data collection beyond the bounded fields below, or a successor ticket. Interface completion and completed session records do not by themselves close `CLASS-A-VAL-002`.
 
@@ -58,12 +58,12 @@ Use a random participant code such as `P-001`. Keep any recruitment contact data
 
 | Checkpoint | Expected synthetic state |
 | --- | --- |
-| Dashboard start | `$0.00` simulated balance; financial-position orientation and current-step shell visible; stability targets described as guidance that does not divide the balance; start-simulated-deposit action visible |
+| Dashboard start | `$0.00` simulated balance; financial-position orientation and current-step shell visible; human-readable attention answer visible without formal posture vocabulary; detailed stability targets collapsed behind target-only guidance; no Review Snapshot history / date apparatus in primary view; start-simulated-deposit action visible |
 | Deposit preview | `100 ZMW` shows an example `+$5.00` simulated-balance change; example rate and no-real-money boundary visible; no advance Activity explanation |
 | Deposit result | Simulated deposit recorded; simulated balance increased by `$5.00`; matching simulated Activity entry named; no account charge or real-money movement claim |
 | Withdrawal result | Before / subtract / remaining example calculation shows `$5.00 − $2.00 = $3.00`; simulated withdrawal recorded; no bank transfer or real-payout claim |
 | Activity | Reconciliation shows one simulated `+$5.00` deposit minus one simulated `-$2.00` withdrawal equals `$3.00` remaining; both entries remain visibly simulated |
-| Dashboard return | `$3.00` simulated balance and both recent simulated entries; stability targets remain distinct from that balance |
+| Dashboard return | `$3.00` simulated balance and both recent simulated entries; target-only stability guidance remains distinct from that balance; Review Snapshot history / date apparatus remains deferred |
 | Secondary exception | `/deposit?journey=class-a-val-002&scenario=unavailable-data`; preview unavailable and Confirm disabled |
 
 ## 4. Moderator script
@@ -85,14 +85,14 @@ Do not say or show “Financial Stability Companion” or another proposed categ
 3. Ask: “When, if ever, might a view like this be useful to you?”
 4. Ask: “What decision or next step, if any, could this view help you think about?”
 5. Ask the participant to identify the primary action without opening any disclosure.
-6. Ask: “What does Stable balance mean here?”
-7. Ask: “How are Conservative yield and Reserve different from Stable balance and from each other?”
-8. Ask: “What does the Stability Engine posture tell you?”
-9. Ask: “Do the stability-target percentages divide the simulated balance or show money that has already moved, or do they mean something else?”
-10. Ask: “What is Review Snapshot for?”
-11. Ask the participant to distinguish the current simulation status, simulation date, and last viewed locally.
-12. Ask: “Did any colour make a lane feel guaranteed safe, higher performing, urgent, active, or already approved?”
-13. Only after the unaided answers are recorded, ask the participant to open the consolidated simulation and stability-target explanations. Record whether the disclosure changed their answer or confidence.
+6. Ask: “Does anything need attention here? What on the screen makes you say that?”
+7. Ask: “What is the difference between the simulated balance and the stability targets?”
+8. Before opening target details, ask: “What do you think this stability guidance is for?”
+9. Only after the unaided answers are recorded, ask the participant to open `View stability targets`. Ask what Core stability target, Conservative yield, and Reserve mean and whether any is a separate balance, holding, account, or proof that money moved.
+10. Ask: “Did any colour make a target feel guaranteed safe, higher performing, urgent, active, or already approved?”
+11. Ask the participant to open the available simulation / stability-target explanations only after the primary answers. Record whether disclosure changed the answer or confidence.
+
+Record the time to the participant's first materially accurate product-purpose explanation, every clarification request, unfamiliar terms they mention or recall, and whether the primary hierarchy or optional target detail caused visible hesitation. These are cognitive-burden observations, not automatic success thresholds.
 
 Do not ask the participant to explain the complete route relationship on Dashboard. The full-journey free-recall question belongs at Activity, after the participant has experienced each step.
 
@@ -150,17 +150,16 @@ Ask free recall first, then use the probe only if needed.
 | Decision relevance | When would Hedgr matter, and what decision could it inform? | Would it help before acting, after a transaction, during trading, or in another situation? Why? |
 | Behavioural value | What, if anything, would Hedgr help you understand or do differently? | Did the experience change how you would assess the situation before a next step? |
 | Primary action | What did the page ask you to do next? | Which control appeared to begin the participant journey? |
-| Stable balance | What does Stable balance mean here? | Is it the main holding lane, a performance result, or an action control? |
-| Supporting lanes | How do Conservative yield and Reserve support Stable balance? | Did either feel like a separate product or something you could manage? |
+| Attention state | Does anything need attention here? | Does the screen show an important change, a required action, or neither? What supports your answer? |
+| Target guidance | What is the stability guidance for? | After the unaided answer, open the target details: is any target a separate balance, holding, account, or executed action? |
+| Supporting targets | How do Core stability target, Conservative yield, and Reserve differ? | Do they describe guidance priorities or money already divided among holdings? |
 | Balance vs targets | What is the difference between the simulated balance and the stability-target percentages? | Did the percentages divide that balance or prove that money had moved? |
-| Engine posture | What did the Stability Engine section help you understand? | Was it information, an instruction, or an executed action? |
-| Review Snapshot | What is Review Snapshot for? | Does it orient you, ask you to act, or report execution? |
-| Temporal clarity | What is the difference between current simulation status, simulation date, and last viewed locally? | Which describes the simulated example and which is only stored in this browser? |
 | Journey continuity | Walk me through the one simulated balance across Dashboard, Deposit, Withdraw, and Activity. | How did `$0.00` become `$5.00`, then `$3.00`, and which records explain it? |
 | Simulation boundary | Did real money move anywhere in this session? | What on screen supports your answer? |
 | Available action | What could you do in the primary condition, and what was blocked in the exception condition? | Why was Confirm disabled? |
 | Colour interpretation | What, if anything, did colour imply? | Did colour imply guaranteed safety, performance, urgency, activation, or approval? |
-| Disclosure consolidation | How did the consolidated explanations affect confidence? | Was important meaning easy to find without making the page feel repetitive? |
+| Progressive disclosure | How did opening the optional simulation / stability-target explanations affect confidence? | Was important meaning clear before opening detail, and still findable when requested? |
+| Cognitive burden | What felt hardest to interpret before taking the first step? | Which words, sections, or choices required clarification or slowed your explanation? |
 | Utility and trust | Would this proposition be useful enough to explore further? What increased or reduced trust? | What is the one thing you would need clarified before continuing? |
 
 ### Scaffolding and delayed-recall controls
@@ -214,17 +213,15 @@ Score only as a compact retrieval aid; the participant's words and observed beha
 | Identify a relevant situation or decision | | | | | |
 | Explain potential behavioural value | | | | | |
 | Identify the primary journey action | | | | | |
-| Interpret Stable balance as the dominant holding lane | | | | | |
-| Distinguish Conservative yield and Reserve as supporting lanes | | | | | |
+| Explain whether anything needs attention without formal posture vocabulary | | | | | |
+| Interpret Core stability target, Conservative yield, and Reserve as guidance targets rather than balances / holdings | | | | | |
 | Distinguish simulated balance from stability targets | | | | | |
-| Explain the Stability Engine posture | | | | | |
-| Explain the role of Review Snapshot | | | | | |
-| Distinguish current status, simulation date, and local viewing history | | | | | |
 | Reconcile Dashboard → Deposit → Withdraw → Activity | | | | | |
 | State that no real money moved | | | | | |
 | Identify available and unavailable actions | | | | | |
 | Deny unintended safety, performance, urgency, activation, or approval meaning from colour | | | | | |
-| Confirm disclosure consolidation preserved confidence and findability | | | | | |
+| Confirm progressive disclosure preserved clarity and findability | | | | | |
+| Identify first-session cognitive burden in their own words | | | | | |
 | Express usefulness and trust | | | | | |
 
 ### Dual-layer category-convergence record
@@ -265,6 +262,13 @@ Complete only after the unaided product-identity response is recorded. Multiple 
 | Neutral probe required | |
 | Moderator explanation required | |
 | Terms the participant repeated without explaining in their own words | |
+| Time to first materially accurate product-purpose explanation | |
+| Clarification requests before the first action | |
+| Unfamiliar terms mentioned or recalled | |
+| Initial and final category assignment | |
+| Whether target details were interpreted as guidance or holdings | |
+| Whether any balance terminology remained confusing | |
+| Whether the participant understood when no important change was shown | |
 
 ### Journey record
 
@@ -299,13 +303,13 @@ Do not convert scores into automatic approval. Synthesize repeated observations 
 | Product identity converges in the participant's own words | Tests whether the intended category is formable rather than merely repeated | Does not adopt public naming or validate a settled category |
 | Decision relevance and behavioural value are concrete | Tests whether the proposition connects to a real mental model and potential use | Does not establish customer intent, demand, advice authority, or readiness |
 | Simulated-balance / stability-target distinction understood | Tests shadow-accounting and fund-movement interpretation risk | Does not validate accounting, custody, or engine execution |
-| Engine posture understood as informational | Tests the read-only Stability Engine trust expression | Does not authorize engine action or allocation execution |
-| Dominant and supporting lanes understood | Tests whether Stable balance, Conservative yield, and Reserve form a comprehensible stability structure | Does not redefine the lanes or validate an allocation product |
-| Review Snapshot and temporal labels understood | Tests orientation, simulation-date, and browser-local memory comprehension | Does not validate monitoring, recordkeeping, or runtime state |
+| Human-readable attention state understood without formal posture vocabulary | Tests whether the participant can tell when the simulation shows no important change | Does not validate advice, monitoring, alerts, or engine action |
+| Detailed targets understood after optional disclosure | Tests whether Core stability target, Conservative yield, and Reserve remain guidance rather than balances / holdings | Does not redefine targets or validate an allocation product |
 | End-to-end simulated journey reconciled | Tests product continuity and internal narrative consistency | Does not prove operational rails or real transaction reliability |
 | No-real-money boundary correctly stated | Tests the simulation and no-real-payout disclosure | Does not establish compliance or customer-money readiness |
 | Colour carries no unintended financial meaning | Tests whether restrained differentiation remains secondary to labels and structure | Does not establish safety, performance, approval, or protection |
-| Consolidated disclosures preserve confidence | Tests findability and trust after progressive disclosure | Does not authorize removal or reinterpretation of trust claims |
+| Progressive disclosure preserves confidence | Tests findability and trust after first-session concept deferral | Does not authorize removal or reinterpretation of trust claims |
+| Cognitive burden is observable and bounded | Tests whether hierarchy / terminology still delays purpose formation or prompts clarification | Does not prove that the D-063 implementation improved comprehension |
 | Exception behavior understood | Tests trust under unavailable data | Does not select a live rate source or degraded execution policy |
 | Utility / trust judgment | Informs Founder disposition among continue, one iteration, reframe, or pause | Does not select a market, provider, rail, custody model, or successor ticket |
 

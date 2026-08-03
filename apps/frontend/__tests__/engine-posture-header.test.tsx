@@ -35,6 +35,26 @@ describe('EnginePostureHeader', () => {
     expect(screen.queryByTestId('engine-posture-banner')).toBeNull();
   });
 
+  test('uses a human question and answer instead of formal posture chrome in the participant journey', () => {
+    render(
+      <EnginePostureHeader
+        engineState={getMockEngineState('normal')}
+        syntheticJourneyActive
+      />,
+    );
+
+    expect(screen.getByText('Does anything need attention?')).toBeDefined();
+    expect(
+      screen.getByTestId('engine-simulation-attention-answer').textContent,
+    ).toBe('No important change shown');
+    expect(screen.getByTestId('engine-posture-context').textContent).toBe(
+      'The simulated position is within its expected range.',
+    );
+    expect(screen.queryByTestId('engine-posture-badge')).toBeNull();
+    expect(screen.queryByText('NORMAL')).toBeNull();
+    expect(screen.queryByTestId('engine-posture-action-guidance')).toBeNull();
+  });
+
   test('does not render a notice banner for normal posture even if notice is present', () => {
     const engineState = {
       ...getMockEngineState('normal'),
