@@ -1,12 +1,12 @@
 # CLASS-A-VAL-002 Participant Protocol and Evidence Capture
 
-**Status:** Active dual-layer retest instrument for the sole active `CLASS-A-VAL-002` ticket, aligned to completed nested `CLASS-A-VAL-002-CA-003`; the verified test build is recorded and protocol-complete participant sessions are immediately next
+**Status:** Active dual-layer retest instrument for the sole active `CLASS-A-VAL-002` ticket, aligned to completed nested `CLASS-A-VAL-002-CA-003` and Internal **D-065** Institutional Coherence observation; the verified test build is recorded and protocol-complete participant sessions are immediately next
 
 **Execution class:** Class A product validation; visibly synthetic; non-executing for customer money
 
-**Authority:** `docs/ops/HEDGR_STATUS.md` §7 / §7a, §143, §179, §180–§181, §184–§185, and §186–§187; Internal D-037, D-060, D-061, D-063, and D-064
+**Authority:** `docs/ops/HEDGR_STATUS.md` §7 / §7a, §143, §179, §180–§181, §184–§185, §186–§187, and §188; Internal D-037, D-060, D-061, D-063, D-064, and D-065
 
-**Non-authorization:** This protocol does not authorize live money movement, custody, provider or banking integration, production FX, settlement, payout, Stability Engine execution, Class B implementation, Evidence Register acceptance, gate clearance, participant-data collection beyond the bounded fields below, or a successor ticket. Interface completion and completed session records do not by themselves close `CLASS-A-VAL-002`.
+**Non-authorization:** This protocol does not authorize live money movement, custody, provider or banking integration, production FX, settlement, payout, Stability Engine execution, Class B implementation, Evidence Register acceptance, gate clearance, participant-data collection beyond the bounded fields below, a successor ticket, or any product change. Interface completion, completed session records, and Institutional Coherence observation do not by themselves close `CLASS-A-VAL-002`. D-065 creates no implementation authority.
 
 ## 1. Research decision
 
@@ -22,6 +22,10 @@ Capture the dual-layer result through five linked evidence layers:
 3. **Product identity** — the participant describes what kind of product Hedgr appears to be without copying a supplied category label.
 4. **Decision relevance** — the participant identifies a situation or decision for which the product could be relevant.
 5. **Behavioural value** — the participant explains what they would understand or do differently after using it.
+
+Additionally observe **Institutional Coherence** under Internal **D-065** / **§188** without weakening journey, simulation, or trust-boundary evidence: whether the participant naturally understands what Hedgr believes about their situation, why Hedgr appears to believe it, what evidence supports that interpretation, what remains uncertain, and what remains their decision. Strong supporting evidence exists when the participant explains Hedgr's reasoning, priorities, and decision boundaries before relying on numerical representation or interface terminology. Do not use the internal term "Institutional Coherence" with participants.
+
+Institutional Coherence supplements — and does not replace — the five evidence layers above. It is an evaluation criterion for institutional legibility, not evidence of product success by itself.
 
 Use the resulting evidence for the Founder to decide whether to:
 
@@ -93,6 +97,8 @@ Do not say or show “Financial Stability Companion” or another proposed categ
 11. Ask what Core stability target, Conservative yield, and Reserve mean and whether any is a separate balance, holding, account, or proof that money moved.
 12. Ask: “Did any colour make a target feel guaranteed safe, higher performing, urgent, active, or already approved?”
 13. Only after every pre-disclosure answer is recorded, ask the participant to open `How stability targets differ from the balance`. Record whether the detailed distinction changed the purpose model, corrected a misconception, or only increased confidence and precision.
+14. After the guidance answers above, ask without teaching: “What is Hedgr saying about your situation?”; “Why do you think Hedgr is saying that?”; “What information is Hedgr using to reach that view?”; “What still seems uncertain?”; and “What remains your decision?” Record whether reasoning, priorities, and decision boundaries formed before reliance on percentages or interface terminology.
+15. After those answers, ask one trust-formation prompt without teaching: “At what point did Hedgr begin to feel credible to you, if at all? What specifically caused that?” If needed as a neutral alternate, ask: “Was there a particular moment where Hedgr’s reasoning started to make sense?” Record the moment and cause; do not treat absence of trust as automatic failure.
 
 Record the time to the participant's first materially accurate product-purpose explanation, every clarification request, unfamiliar terms they mention or recall, and whether the primary hierarchy or optional target detail caused visible hesitation. These are cognitive-burden observations, not automatic success thresholds.
 
@@ -242,6 +248,12 @@ Score only as a compact retrieval aid; the participant's words and observed beha
 | Confirm progressive disclosure preserved clarity and findability | | | | | |
 | Identify first-session cognitive burden in their own words | | | | | |
 | Express usefulness and trust | | | | | |
+| Explain what Hedgr appears to believe about the situation before relying on percentages or interface terminology | | | | | |
+| Explain why Hedgr appears to reach that interpretation | | | | | |
+| Identify supporting evidence for that interpretation | | | | | |
+| Identify what remains uncertain | | | | | |
+| Identify what remains their decision | | | | | |
+| Name a credibility / trust-formation moment and cause, if any | | | | | |
 
 ### Dual-layer category-convergence record
 
@@ -254,6 +266,29 @@ Record the participant's words before applying any interpretation. `Entry` is th
 | Layer 3 — Product identity | | | | | |
 | Layer 4 — Decision relevance | | | | | |
 | Layer 5 — Behavioural value | | | | | |
+
+### Institutional Coherence — trust-formation sequence
+
+Use this as an analytical lens for synthesis, not as a separate scoring system. Record where reasoning succeeded or broke down in the participant's own words. Leave a stage blank if unobserved. Do not force a stage score.
+
+| Trust formation stage | Observation / breakdown note |
+| --- | --- |
+| Situation understood | |
+| Interpretation understood | |
+| Priorities understood | |
+| Evidence understood | |
+| Boundaries understood | |
+| Decision ownership retained | |
+
+Also record:
+
+| Trust-formation check | Response / evidence note |
+| --- | --- |
+| Moment credibility began, if any | |
+| Specific cause named by the participant | |
+| Reasoning / priorities / boundaries preceded numerical or terminology reliance | Yes / Partial / No |
+
+Post-session synthesis should follow this same sequence: record not only what participants understood, but where in the trust-formation sequence they succeeded or broke down. That informs Founder disposition about the specific stage of institutional legibility that may need refinement. It does not by itself authorize product change, prove comprehension improvement, or close the parent ticket.
 
 ### Open category interpretation
 
@@ -288,6 +323,10 @@ Complete only after the unaided product-identity response is recorded. Multiple 
 | Whether target details were interpreted as guidance or holdings | |
 | Whether any balance terminology remained confusing | |
 | Whether the participant understood when no important change was shown | |
+| Whether reasoning about Hedgr's interpretation formed before reliance on percentages or interface terminology | |
+| Whether priorities and decision boundaries were understood before numerical reliance | |
+| Whether the participant retained agency / decision ownership | |
+| Trust-formation moment and cause, if any | |
 
 ### Journey record
 
@@ -309,8 +348,10 @@ Complete only after the unaided product-identity response is recorded. Multiple 
 | What felt least clear? | |
 | What increased trust? | |
 | What reduced trust? | |
+| At what point did Hedgr begin to feel credible, if at all, and what specifically caused that? | |
 | Would you continue exploring this proposition? Why or why not? | |
 | Single most important comprehension failure, if any | |
+| Earliest trust-formation stage that broke down, if any | |
 
 ## 7. Decision mapping
 
@@ -332,6 +373,9 @@ Do not convert scores into automatic approval. Synthesize repeated observations 
 | Colour carries no unintended financial meaning | Tests whether restrained differentiation remains secondary to labels and structure | Does not establish safety, performance, approval, or protection |
 | Progressive disclosure preserves confidence | Tests findability and trust after first-session concept deferral | Does not authorize removal or reinterpretation of trust claims |
 | Cognitive burden is observable and bounded | Tests whether hierarchy / terminology still delays purpose formation or prompts clarification | Does not prove that the D-063 or D-064 implementation improved comprehension |
+| Institutional reasoning forms before numerical reliance | Tests Institutional Coherence under D-065 — purpose / why / evidence / uncertainty / agency | Does not prove D-065 improved comprehension or authorize product change |
+| Trust formation has an identifiable moment and cause | Tests when Hedgr’s interpretation began to feel credible, not merely whether trust was preferred | Does not prove product success or authorize redesign |
+| Breakdown locates to a trust-formation stage | Supports synthesis against situation → interpretation → priorities → evidence → boundaries → agency | Does not convert stage notes into automatic approval or a scoring threshold |
 | Exception behavior understood | Tests trust under unavailable data | Does not select a live rate source or degraded execution policy |
 | Utility / trust judgment | Informs Founder disposition among continue, one iteration, reframe, or pause | Does not select a market, provider, rail, custody model, or successor ticket |
 
@@ -342,7 +386,7 @@ After each session:
 1. verify that no personal, real financial, provider, rail, or regulated data entered the app or session record;
 2. save the completed redacted template in the governed research location when one is approved, or mark the capture locator `not recorded`;
 3. record the tested build or commit;
-4. label missing or ambiguous evidence explicitly;
+4. label missing or ambiguous evidence explicitly, including the earliest trust-formation stage that broke down when observed;
 5. do not update the Evidence Register, `HEDGR_STATUS.md`, or ticket state from a single session;
 6. escalate any repeated comprehension failure for governed review before changing the presentation.
 
