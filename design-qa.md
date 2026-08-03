@@ -1,3 +1,77 @@
+# CLASS-A-VAL-002-CA-003 Design QA and Change Log
+
+## Baseline preservation before implementation
+
+- Governing scope: Founder acceptance Internal **D-064** / `HEDGR_STATUS.md` **§186** and the active **§7a** nested brief.
+- Permanent-main baseline: `3851fbf0df826c0e8a6d7a5a868f0367abf80320`; runtime UI baseline: `8c9bdaecda382ef5472902e81deba395f51ce96b`.
+- Exact collapsed, expanded-target, detailed-distinction, desktop, and mobile capture hashes are recorded in `artifacts/class-a-val-002-ca-003/README.md`.
+- Baseline targeted units: **17 / 17 passed** across the allocation and Dashboard contracts.
+- Baseline target `CLASS-A-VAL-002` Playwright: **3 / 3 passed**.
+- Existing targets remain Core stability target **50%**, Conservative yield **20%**, and Reserve **30%**. These values and their canonical meanings are locked.
+
+## Pre-implementation semantic-order finding
+
+The baseline collapsed proposition begins with what the targets are not, then discloses percentages and return-oriented detail before explaining why Stability Guidance exists or establishing preservation / liquidity-before-yield philosophy. The deeper target-versus-balance distinction is accurate but cannot supply purpose before the target composition that precedes it.
+
+## Bounded implementation hypotheses
+
+- A positive purpose statement before defensive boundary copy may help the participant understand why the guidance exists before classifying it.
+- Preservation and ready-access philosophy before any `yield` or `returns` language may reduce investment-product coding without changing `yieldCapPct` meaning.
+- Keeping the full target-only / non-balance / no-money-movement boundary before the disclosure can preserve financial truth while the introduction becomes purpose-first.
+- Leaving exact percentages inside the existing native disclosure can keep them subordinate without hiding them.
+- Retaining the detailed distinction after targets can confirm rather than introduce the boundary.
+
+These are test-instrument hypotheses only. Implementation cannot establish participant comprehension, cognitive-burden reduction, category convergence, trust-boundary accuracy, demand, or readiness.
+
+## Implemented bounded treatment
+
+- `Stability guidance` is now the common collapsed and expanded heading.
+- Purpose is visible first: `See what Hedgr prioritizes when interpreting stability.`
+- Hedgr's philosophy follows before percentages: preserve value, keep access and risk visible, and understand the situation before action.
+- The boundary follows immediately: context rather than instruction, with no balance, holding, account, division, or money-movement implication.
+- Only the existing `View stability targets` disclosure reveals percentage detail on the participant Dashboard. Its introduction describes the unchanged values as simulated expressions of the visible priorities.
+- `Core stability target`, `Conservative yield`, and `Reserve` retain their values, meanings, visual roles, and order. Return language is limited to one supporting description after purpose / philosophy / boundary.
+- The deeper distinction remains after the target cards and confirms target-versus-balance, limited return opportunity, non-instruction, and no-money-movement meaning.
+- The component structure, approved token classes, route behavior, and every engine input remain unchanged.
+
+## After captures and comparison
+
+- Closed-detail desktop: `artifacts/class-a-val-002-ca-003/after-dashboard-collapsed-desktop.png` — 1440 x 1311; SHA-256 `a77e543b73ac7ea01ea0ab6017cb9e6c3a42c9991d7f5b0cc4f7421749cd3ba7`.
+- Closed-detail mobile: `artifacts/class-a-val-002-ca-003/after-dashboard-collapsed-mobile.png` — 390 x 1740; SHA-256 `b9d9d854b7490bb5d157eef2c4cc17b9d73439b17246a93d611266c41359b1c3`.
+- Optional targets desktop: `artifacts/class-a-val-002-ca-003/after-dashboard-targets-open-desktop.png` — 1440 x 1710; SHA-256 `e7628884ea769bf7c3c92e899789ccec942922a70058186152838f52fceb45c6`.
+- Detailed distinction desktop: `artifacts/class-a-val-002-ca-003/after-dashboard-distinction-open-desktop.png` — 1440 x 1855; SHA-256 `21f26682784396321ce0952628f7368e1a13f738698a53b0fb25cc6797a54339`.
+- The collapsed first-session view is 131 pixels taller on desktop and 222 pixels taller on mobile because it now carries purpose, philosophy, and boundary before disclosure. No additional component, target, action, or framework was added.
+- The development captures retain the same pre-existing local Next.js issue indicator observed on the baseline. Production-build verification is recorded separately and governs release behavior.
+
+## Visual, accessibility, and brand review
+
+- Desktop and mobile retain a calm single-column reading path with the Stability Guidance content after the simulated action and before Important disclosures.
+- Purpose, philosophy, boundary, disclosure, target cards, and deeper distinction remain legible through headings, copy, DOM order, borders, and spacing without relying on colour.
+- Native `details` / `summary` controls remain. Focused Playwright verifies focus and Enter-key expansion for both disclosure levels.
+- The section remains labelled by its `h2`; both asides have descriptive accessible labels; target descriptions remain connected with `aria-describedby`.
+- Existing approved `hedgr-*` tokens and typography are reused. No token, asset, raw colour, gradient, glow, shadow, motion, dependency, logo, or visual-system change was introduced.
+- No Brand Guidelines PDF is present in governed repo assets or attached implementation materials; the machine-readable and repo-native brand authorities govern this pass.
+
+## Validation evidence
+
+- Targeted allocation / Dashboard units: **18 / 18 passed**; baseline was **17 / 17**.
+- Focused `CLASS-A-VAL-002` plus smoke Playwright after implementation: **10 / 10 passed**; keyboard-only nested disclosure check: **1 / 1 passed**.
+- Full repository unit command passed: Bridge snapshots **11 / 11**, Bridge Worker **34 / 34**, frontend **751 / 751**.
+- Workspace typecheck, workspace lint, Bridge snapshot freshness, trust check, trust-phrase check, and `git diff --check` passed.
+- Production frontend build with build-time Copilot flag and mock / stub modes passed.
+- The first production-build Playwright attempt passed **52 / 56** and timed out four unrelated Copilot cases despite captured pages showing the chat UI. The same affected Copilot group then passed **10 / 10** against the identical build, and a complete parity rerun passed **56 / 56** in 30 seconds. No app or test change was made between those runs.
+- Clean production desktop and mobile captures passed visual inspection and are recorded in `artifacts/class-a-val-002-ca-003/README.md`.
+- Aggregate `pnpm run validate` passed trust checks and then stopped at the expected RAP source-binding gate. Final aggregate validation follows the committed closeout-source revision and deterministic RAP generation.
+
+## Locked controls and exclusions
+
+- Required order: purpose → philosophy → boundary → targets → detailed distinction.
+- Dashboard → Deposit → Withdraw → Activity and `$0 → +$5 → −$2 → $3` remain unchanged.
+- No engine module, engine state, target value / meaning, financial state, balance, Activity structure, backend, ledger, unavailable-data behavior, live boundary, provider, custody, rail, payout, conversion, settlement, brand-system, public-category, advisory, Class B, or Class C change is authorized.
+- After verified closeout, protocol-complete dual-layer participant retesting is immediately next. No further UI pass may be inferred.
+
+---
+
 # CLASS-A-VAL-002-CA-002 Design QA and Change Log
 
 ## Baseline preservation before implementation

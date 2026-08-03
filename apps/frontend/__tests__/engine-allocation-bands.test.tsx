@@ -20,10 +20,10 @@ afterEach(() => {
 });
 
 describe("EngineAllocationBands", () => {
-  test("renders the stability structure labels, caption, and trust legend", () => {
+  test("renders purpose-led stability guidance, target labels, and detailed distinction", () => {
     render(<EngineAllocationBands engineState={makeEngineState()} />);
 
-    expect(screen.getByText("Stability structure")).toBeDefined();
+    expect(screen.getByText("Stability guidance")).toBeDefined();
     expect(
       within(
         screen.getByTestId("engine-allocation-band-coreTargetPct")
@@ -64,25 +64,65 @@ describe("EngineAllocationBands", () => {
     expect(targetDetails.tagName).toBe("DETAILS");
     expect(targetDetails.hasAttribute("open")).toBe(false);
 
-    const caption = screen.getByTestId(
-      "engine-allocation-bands-caption"
+    const caption = screen.getByTestId("engine-allocation-bands-caption")
+      .textContent;
+    expect(caption).toBe(
+      "See what Hedgr prioritizes when interpreting stability."
+    );
+
+    const philosophy = screen.getByTestId(
+      "engine-allocation-philosophy"
     ).textContent;
-    expect(caption).toMatch(/percentages/i);
-    expect(caption).toMatch(/stability/i);
-    expect(caption).toMatch(/guidance/i);
-    expect(caption).toMatch(/do not divide/i);
-    expect(caption).toMatch(/balance/i);
+    expect(philosophy).toMatch(/preserve value/i);
+    expect(philosophy).toMatch(/keep access and risk visible/i);
+    expect(philosophy).toMatch(/before action/i);
+
+    const boundary = screen.getByTestId("engine-allocation-boundary")
+      .textContent;
+    expect(boundary).toMatch(/context, not an instruction/i);
+    expect(boundary).toMatch(/balance, holding, account/i);
+    expect(boundary).toMatch(/divided or moved/i);
+
+    const targetsIntro = screen.getByTestId(
+      "engine-allocation-targets-intro"
+    ).textContent;
+    expect(targetsIntro).toMatch(/simulated targets/i);
+    expect(targetsIntro).toMatch(/express those priorities/i);
 
     const legend = screen.getByTestId(
       "engine-allocation-trust-legend"
     ).textContent;
-    expect(legend).toMatch(/guidance only/i);
+    expect(legend).toMatch(/target detail/i);
     expect(legend).toMatch(/stability targets/i);
     expect(legend).toMatch(/conservative yield/i);
     expect(legend).toMatch(/return opportunity/i);
     expect(legend).toMatch(/percentages do not divide it/i);
-    expect(legend).toMatch(/target does not mean money has moved/i);
+    expect(legend).toMatch(/guidance does not tell you what to do/i);
+    expect(legend).toMatch(/divided, held, or moved/i);
     expect(legend).not.toMatch(/fixture|informational posture|settlement/i);
+  });
+
+  test("orders purpose, philosophy, boundary, targets, and detailed distinction", () => {
+    render(<EngineAllocationBands engineState={makeEngineState()} />);
+
+    const purpose = screen.getByTestId("engine-allocation-bands-caption");
+    const philosophy = screen.getByTestId("engine-allocation-philosophy");
+    const boundary = screen.getByTestId("engine-allocation-boundary");
+    const targetsIntro = screen.getByTestId("engine-allocation-targets-intro");
+    const structure = screen.getByTestId("engine-allocation-structure");
+    const distinction = screen.getByTestId("engine-allocation-trust-legend");
+
+    const comesBefore = (first: HTMLElement, second: HTMLElement) =>
+      Boolean(
+        first.compareDocumentPosition(second) &
+          Node.DOCUMENT_POSITION_FOLLOWING
+      );
+
+    expect(comesBefore(purpose, philosophy)).toBe(true);
+    expect(comesBefore(philosophy, boundary)).toBe(true);
+    expect(comesBefore(boundary, targetsIntro)).toBe(true);
+    expect(comesBefore(targetsIntro, structure)).toBe(true);
+    expect(comesBefore(structure, distinction)).toBe(true);
   });
 
   test("defers detailed targets behind target-only guidance when collapsed", () => {
@@ -98,9 +138,20 @@ describe("EngineAllocationBands", () => {
     expect(screen.getByText("Stability guidance")).toBeDefined();
     expect(
       screen.getByTestId("engine-allocation-bands-caption").textContent
-    ).toBe(
-      "These targets are guidance only—not balances, holdings, or proof that money moved."
+    ).toBe("See what Hedgr prioritizes when interpreting stability.");
+    expect(
+      screen.getByTestId("engine-allocation-philosophy").textContent
+    ).toMatch(/preserve value/i);
+    expect(screen.getByTestId("engine-allocation-boundary").textContent).toMatch(
+      /context, not an instruction/i
     );
+
+    const preDisclosureCopy = [
+      screen.getByTestId("engine-allocation-bands-caption").textContent,
+      screen.getByTestId("engine-allocation-philosophy").textContent,
+      screen.getByTestId("engine-allocation-boundary").textContent,
+    ].join("\n");
+    expect(preDisclosureCopy).not.toMatch(/these targets/i);
 
     const details = screen.getByTestId("engine-allocation-details");
     expect(details.tagName).toBe("DETAILS");
@@ -110,14 +161,18 @@ describe("EngineAllocationBands", () => {
     expect(details.textContent).not.toContain("Stable balance");
   });
 
-  test("keeps caption and trust legend free of execution, accounting-as-truth, and hype drift", () => {
+  test("keeps purpose, philosophy, boundary, and detail free of execution, accounting-as-truth, and hype drift", () => {
     render(<EngineAllocationBands engineState={makeEngineState()} />);
 
-    const caption =
-      screen.getByTestId("engine-allocation-bands-caption").textContent ?? "";
-    const legend =
-      screen.getByTestId("engine-allocation-trust-legend").textContent ?? "";
-    const combined = `${caption}\n${legend}`.toLowerCase();
+    const combined = [
+      screen.getByTestId("engine-allocation-bands-caption").textContent ?? "",
+      screen.getByTestId("engine-allocation-philosophy").textContent ?? "",
+      screen.getByTestId("engine-allocation-boundary").textContent ?? "",
+      screen.getByTestId("engine-allocation-targets-intro").textContent ?? "",
+      screen.getByTestId("engine-allocation-trust-legend").textContent ?? "",
+    ]
+      .join("\n")
+      .toLowerCase();
 
     for (const forbidden of ENGINE_TRUST_INFORMATIONAL_DENYLIST) {
       expect(combined).not.toContain(forbidden);
@@ -153,7 +208,7 @@ describe("EngineAllocationBands", () => {
     expect(stableBand.textContent).toMatch(/primary stability target/i);
 
     const yieldBand = screen.getByTestId("engine-allocation-band-yieldCapPct");
-    expect(yieldBand.textContent).toMatch(/up to 14%/i);
+    expect(yieldBand.textContent).toMatch(/limited 14% target/i);
     expect(yieldBand.textContent).toMatch(/conditions allow/i);
   });
 

@@ -114,11 +114,24 @@ test("4 · dashboard shows human-readable stability context after login", async 
     allocationBands.getByRole("heading", { name: "Stability guidance" })
   ).toBeVisible();
   await expect(allocationBands).toContainText(
-    "guidance only—not balances, holdings, or proof that money moved"
+    "See what Hedgr prioritizes when interpreting stability"
+  );
+  await expect(allocationBands).toContainText(
+    "preserve value, keep access and risk visible"
+  );
+  await expect(allocationBands).toContainText(
+    "context, not an instruction"
+  );
+  await expect(allocationBands).toContainText(
+    "Nothing here represents a balance, holding, account, or money being divided or moved"
   );
   const allocationDetails = page.getByTestId("engine-allocation-details");
   await expect(allocationDetails).not.toHaveAttribute("open", "");
-  await allocationDetails.getByText("View stability targets").click();
+  const allocationSummary = allocationDetails.locator(":scope > summary");
+  await allocationSummary.focus();
+  await expect(allocationSummary).toBeFocused();
+  await allocationSummary.press("Enter");
+  await expect(allocationDetails).toHaveAttribute("open", "");
   const allocationBandsText = await allocationBands.textContent();
   expect(allocationBandsText?.trim().length).toBeGreaterThan(0);
   expect(allocationBandsText).toContain("Core stability target");
@@ -129,10 +142,20 @@ test("4 · dashboard shows human-readable stability context after login", async 
   expect(allocationBandsText).toContain("Guidance only");
   expect(allocationBandsText).toContain("Balance");
   expect(allocationBandsText).toContain("The percentages do not divide it");
-  expect(allocationBandsText).toContain("No money movement");
+  expect(allocationBandsText).toContain("No instruction or money movement");
   expect(allocationBandsText).toContain(
-    "A target does not mean money has moved"
+    "a target does not mean money has been divided, held, or moved"
   );
+  const targetDistinction = page.getByTestId(
+    "engine-allocation-target-details"
+  );
+  const targetDistinctionSummary = targetDistinction.locator(
+    ":scope > summary"
+  );
+  await targetDistinctionSummary.focus();
+  await expect(targetDistinctionSummary).toBeFocused();
+  await targetDistinctionSummary.press("Enter");
+  await expect(targetDistinction).toHaveAttribute("open", "");
 
   const allocationExecutionDriftTerms = [
     /\bexecuted allocation\b/i,

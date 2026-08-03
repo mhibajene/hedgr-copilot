@@ -226,7 +226,16 @@ describe("DashboardPage engine trust surface", () => {
     expect(allocation.getAttribute("data-presentation")).toBe("collapsed");
     expect(allocation.textContent).toContain("Stability guidance");
     expect(allocation.textContent).toContain(
-      "guidance only—not balances, holdings, or proof that money moved"
+      "See what Hedgr prioritizes when interpreting stability"
+    );
+    expect(allocation.textContent).toContain(
+      "preserve value, keep access and risk visible"
+    );
+    expect(allocation.textContent).toContain(
+      "context, not an instruction"
+    );
+    expect(allocation.textContent).toContain(
+      "Nothing here represents a balance, holding, account, or money being divided or moved"
     );
     const allocationDetails = screen.getByTestId("engine-allocation-details");
     expect(allocationDetails.tagName).toBe("DETAILS");

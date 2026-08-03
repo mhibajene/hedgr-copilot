@@ -1,10 +1,10 @@
 # CLASS-A-VAL-002 Participant Protocol and Evidence Capture
 
-**Status:** Active dual-layer retest instrument for the sole active `CLASS-A-VAL-002` ticket, aligned to the completed bounded `CLASS-A-VAL-002-CA-002` pre-retest pass; the verified test build is recorded and protocol-complete participant sessions are immediately next
+**Status:** Active dual-layer retest instrument for the sole active `CLASS-A-VAL-002` ticket, aligned to completed nested `CLASS-A-VAL-002-CA-003`; the verified test build is recorded and protocol-complete participant sessions are immediately next
 
 **Execution class:** Class A product validation; visibly synthetic; non-executing for customer money
 
-**Authority:** `docs/ops/HEDGR_STATUS.md` §7 / §7a, §143, §179, §180–§181, and §184–§185; Internal D-037, D-060, D-061, and D-063
+**Authority:** `docs/ops/HEDGR_STATUS.md` §7 / §7a, §143, §179, §180–§181, §184–§185, and §186–§187; Internal D-037, D-060, D-061, D-063, and D-064
 
 **Non-authorization:** This protocol does not authorize live money movement, custody, provider or banking integration, production FX, settlement, payout, Stability Engine execution, Class B implementation, Evidence Register acceptance, gate clearance, participant-data collection beyond the bounded fields below, or a successor ticket. Interface completion and completed session records do not by themselves close `CLASS-A-VAL-002`.
 
@@ -58,7 +58,7 @@ Use a random participant code such as `P-001`. Keep any recruitment contact data
 
 | Checkpoint | Expected synthetic state |
 | --- | --- |
-| Dashboard start | `$0.00` simulated balance; financial-position orientation and current-step shell visible; human-readable attention answer visible without formal posture vocabulary; detailed stability targets collapsed behind target-only guidance; no Review Snapshot history / date apparatus in primary view; start-simulated-deposit action visible |
+| Dashboard start | `$0.00` simulated balance; financial-position orientation and current-step shell visible; human-readable attention answer visible without formal posture vocabulary; Stability Guidance purpose, philosophy, and boundary visible before detailed stability targets; no Review Snapshot history / date apparatus in primary view; start-simulated-deposit action visible |
 | Deposit preview | `100 ZMW` shows an example `+$5.00` simulated-balance change; example rate and no-real-money boundary visible; no advance Activity explanation |
 | Deposit result | Simulated deposit recorded; simulated balance increased by `$5.00`; matching simulated Activity entry named; no account charge or real-money movement claim |
 | Withdrawal result | Before / subtract / remaining example calculation shows `$5.00 − $2.00 = $3.00`; simulated withdrawal recorded; no bank transfer or real-payout claim |
@@ -86,11 +86,13 @@ Do not say or show “Financial Stability Companion” or another proposed categ
 4. Ask: “What decision or next step, if any, could this view help you think about?”
 5. Ask the participant to identify the primary action without opening any disclosure.
 6. Ask: “Does anything need attention here? What on the screen makes you say that?”
-7. Ask: “What is the difference between the simulated balance and the stability targets?”
-8. Before opening target details, ask: “What do you think this stability guidance is for?”
-9. Only after the unaided answers are recorded, ask the participant to open `View stability targets`. Ask what Core stability target, Conservative yield, and Reserve mean and whether any is a separate balance, holding, account, or proof that money moved.
-10. Ask: “Did any colour make a target feel guaranteed safe, higher performing, urgent, active, or already approved?”
-11. Ask the participant to open the available simulation / stability-target explanations only after the primary answers. Record whether disclosure changed the answer or confidence.
+7. Before opening target details, ask: “What do you think this stability guidance is for?”
+8. Ask: “What does Hedgr appear to prioritize when thinking about stability?”
+9. Only after those unaided answers are recorded, ask the participant to open `View stability targets`, but do not open `How stability targets differ from the balance` yet.
+10. With the percentages visible and the detailed distinction still closed, ask in order: “What do these percentages represent?”; “Does the simulated balance get divided by these targets?”; “Would a different simulated balance automatically be split in this way?”; “Is Hedgr telling you what to do?”; and “Has any money been allocated, held, or moved?”
+11. Ask what Core stability target, Conservative yield, and Reserve mean and whether any is a separate balance, holding, account, or proof that money moved.
+12. Ask: “Did any colour make a target feel guaranteed safe, higher performing, urgent, active, or already approved?”
+13. Only after every pre-disclosure answer is recorded, ask the participant to open `How stability targets differ from the balance`. Record whether the detailed distinction changed the purpose model, corrected a misconception, or only increased confidence and precision.
 
 Record the time to the participant's first materially accurate product-purpose explanation, every clarification request, unfamiliar terms they mention or recall, and whether the primary hierarchy or optional target detail caused visible hesitation. These are cognitive-burden observations, not automatic success thresholds.
 
@@ -151,9 +153,13 @@ Ask free recall first, then use the probe only if needed.
 | Behavioural value | What, if anything, would Hedgr help you understand or do differently? | Did the experience change how you would assess the situation before a next step? |
 | Primary action | What did the page ask you to do next? | Which control appeared to begin the participant journey? |
 | Attention state | Does anything need attention here? | Does the screen show an important change, a required action, or neither? What supports your answer? |
-| Target guidance | What is the stability guidance for? | After the unaided answer, open the target details: is any target a separate balance, holding, account, or executed action? |
+| Guidance purpose | What is the stability guidance for? | Does it help interpret stability, tell you what to do, or show where money is held? Why? |
+| Stability philosophy | What does Hedgr appear to prioritize when thinking about stability? | Does the visible guidance emphasize preserving value, access, visible risk, understanding before action, return opportunity, or something else? |
+| Target guidance | What do the visible percentages represent? | Are they simulated expressions of priorities, a balance split, holdings, accounts, instructions, or executed actions? |
 | Supporting targets | How do Core stability target, Conservative yield, and Reserve differ? | Do they describe guidance priorities or money already divided among holdings? |
 | Balance vs targets | What is the difference between the simulated balance and the stability-target percentages? | Did the percentages divide that balance or prove that money had moved? |
+| Transfer | Would a different simulated balance automatically be split by the same percentages? | Are the percentages context for interpreting the simulation or proof of amounts placed somewhere? |
+| Instruction vs context | Is Hedgr telling you what to do? | Does seeing guidance imply an action, recommendation, or money movement? |
 | Journey continuity | Walk me through the one simulated balance across Dashboard, Deposit, Withdraw, and Activity. | How did `$0.00` become `$5.00`, then `$3.00`, and which records explain it? |
 | Simulation boundary | Did real money move anywhere in this session? | What on screen supports your answer? |
 | Available action | What could you do in the primary condition, and what was blocked in the exception condition? | Why was Confirm disabled? |
@@ -176,9 +182,18 @@ After the secondary exception or a five-minute unrelated discussion, hide the jo
 1. “Without looking at the interface, what problem do you think Hedgr is intended to help with, and what kind of product is it?”
 2. “When might it matter, and what decision or behaviour could it affect?”
 3. “How did the simulated balance change from start to finish, and which entries explained the result?”
-4. “If a simulated deposit added `$8` and a simulated withdrawal subtracted `$3`, what would remain, and where would you check why?”
+4. “What was Stability Guidance for, what did its percentages represent, and did they divide the simulated balance or tell you what to do?”
+5. “If a simulated deposit added `$8` and a simulated withdrawal subtracted `$3`, what would remain, and where would you check why?”
 
 Record these delayed-recall answers separately. These fields expose category-label parroting, mental-model decay, and teaching dependence; they do not change the governed participant success thresholds or create an automatic disposition.
+
+### Stability Guidance semantic-order signals
+
+Treat these as interpretation evidence, not automatic pass / fail gates.
+
+Positive evidence includes an unaided explanation that Stability Guidance helps interpret financial stability; its percentages express simulated priorities; the targets do not divide the balance or represent holdings / accounts; no instruction, allocation, or money movement follows from the guidance; and the purpose survives transfer and delayed recall before detailed disclosure or moderator rescue.
+
+Weak or adverse evidence includes describing 50 / 20 / 30 primarily as a portfolio or balance split; classifying Hedgr mainly as an investment or managed-allocation product because of the guidance; believing the percentages are holdings or that Hedgr allocated / protected money; understanding purpose only after detailed disclosure or moderator rescue; repeating only the boundary; remembering only percentages or target names; or interpreting the guidance as a recommendation.
 
 ## 6. Evidence-capture template
 
@@ -214,8 +229,12 @@ Score only as a compact retrieval aid; the participant's words and observed beha
 | Explain potential behavioural value | | | | | |
 | Identify the primary journey action | | | | | |
 | Explain whether anything needs attention without formal posture vocabulary | | | | | |
+| Explain the purpose of Stability Guidance before detailed disclosure | | | | | |
+| Identify preservation, access, visible risk, or understanding-before-action as governing priorities | | | | | |
 | Interpret Core stability target, Conservative yield, and Reserve as guidance targets rather than balances / holdings | | | | | |
 | Distinguish simulated balance from stability targets | | | | | |
+| Transfer the target-versus-balance distinction to another simulated balance | | | | | |
+| Distinguish guidance context from instruction or recommendation | | | | | |
 | Reconcile Dashboard → Deposit → Withdraw → Activity | | | | | |
 | State that no real money moved | | | | | |
 | Identify available and unavailable actions | | | | | |
@@ -303,13 +322,16 @@ Do not convert scores into automatic approval. Synthesize repeated observations 
 | Product identity converges in the participant's own words | Tests whether the intended category is formable rather than merely repeated | Does not adopt public naming or validate a settled category |
 | Decision relevance and behavioural value are concrete | Tests whether the proposition connects to a real mental model and potential use | Does not establish customer intent, demand, advice authority, or readiness |
 | Simulated-balance / stability-target distinction understood | Tests shadow-accounting and fund-movement interpretation risk | Does not validate accounting, custody, or engine execution |
+| Guidance purpose and philosophy understood before detailed disclosure | Tests whether purpose and priorities form before target mechanics or corrective detail | Does not prove that D-064 improved comprehension or adopt final product language |
+| Target meaning transfers to another simulated balance | Tests whether the participant understands context rather than a fixed portfolio split | Does not validate an allocation model, accounting behavior, or live financial capability |
+| Guidance remains context rather than instruction | Tests non-advisory interpretation and whether visibility implies action | Does not establish advice, recommendation, or execution authority |
 | Human-readable attention state understood without formal posture vocabulary | Tests whether the participant can tell when the simulation shows no important change | Does not validate advice, monitoring, alerts, or engine action |
 | Detailed targets understood after optional disclosure | Tests whether Core stability target, Conservative yield, and Reserve remain guidance rather than balances / holdings | Does not redefine targets or validate an allocation product |
 | End-to-end simulated journey reconciled | Tests product continuity and internal narrative consistency | Does not prove operational rails or real transaction reliability |
 | No-real-money boundary correctly stated | Tests the simulation and no-real-payout disclosure | Does not establish compliance or customer-money readiness |
 | Colour carries no unintended financial meaning | Tests whether restrained differentiation remains secondary to labels and structure | Does not establish safety, performance, approval, or protection |
 | Progressive disclosure preserves confidence | Tests findability and trust after first-session concept deferral | Does not authorize removal or reinterpretation of trust claims |
-| Cognitive burden is observable and bounded | Tests whether hierarchy / terminology still delays purpose formation or prompts clarification | Does not prove that the D-063 implementation improved comprehension |
+| Cognitive burden is observable and bounded | Tests whether hierarchy / terminology still delays purpose formation or prompts clarification | Does not prove that the D-063 or D-064 implementation improved comprehension |
 | Exception behavior understood | Tests trust under unavailable data | Does not select a live rate source or degraded execution policy |
 | Utility / trust judgment | Informs Founder disposition among continue, one iteration, reframe, or pause | Does not select a market, provider, rail, custody model, or successor ticket |
 
