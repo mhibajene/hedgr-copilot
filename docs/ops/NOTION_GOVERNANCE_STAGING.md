@@ -6,7 +6,7 @@
 
 **Authority:** The repository is source of truth. Wording here must match `docs/decisions/0016-warmth-layer-doctrine-constrained-retail-refinement-track.md`, `docs/decisions/SPRINT-2-ADR-INDEX.md`, and `docs/ops/HEDGR_STATUS.md`. Wording must match **Accepted** ADR **0016** in repo; do not broaden scope or soften read-only / non-execution boundaries in Notion.
 
-**Last reconciled:** 2026-08-03 (mirror after verified closeout of Internal **D-064** / **§186**–**§187** for nested `CLASS-A-VAL-002-CA-003`, the final bounded Stability Guidance semantic-order pass inside open `CLASS-A-VAL-002`; no nested refinement remains active; protocol-complete dual-layer participant retesting is immediately next, with no further UI pass by inference; permanent-main baseline `3851fbf0df826c0e8a6d7a5a868f0367abf80320` and before / after / production evidence preserved; Internal **D-060** / **§179** remains current parent disposition; no participant-comprehension, category-adoption, second parent ticket, successor, parallel lane, naming adoption, Class B, MVP-acceptance, Evidence Register, or gate-clearance claim; Lanes M / N / R idle; frozen narrative sources unchanged; publication unauthorized; Kenya counsel **DEFER**; repo **§7** / **§7a** controls sequencing)
+**Last reconciled:** 2026-08-03 (mirror after Founder acceptance of Internal **D-065** / **§188** Institutional Coherence as an internal product-evaluation principle under open `CLASS-A-VAL-002`; proposed Decision ID D-064 remapped because that identity is already occupied by completed nested `CLASS-A-VAL-002-CA-003` / **§186**–**§187**; D-065 creates no implementation authority; nested refinements through `CA-003` remain completed historical authority; protocol-complete dual-layer participant retesting is immediately next, with added Institutional Coherence observation and no further UI pass by inference; Internal **D-060** / **§179** remains current parent validation disposition; no participant-comprehension, category-adoption, second parent ticket, successor, parallel lane, naming adoption, Class B, MVP-acceptance, Evidence Register, or gate-clearance claim; Lanes M / N / R idle; frozen narrative sources unchanged; publication unauthorized; Kenya counsel **DEFER**; repo **§7** / **§7a** controls sequencing)
 
 ---
 
@@ -83,6 +83,8 @@ Use as a governed workstream line, **not** as a shipped-feature claim. Placement
 - **`CLASS-A-VAL-002-CA-002` pre-retest cognitive-friction reduction (D-063, Accepted and completed):** One bounded minimum-effective Class A Dashboard-first-session presentation / copy / protocol-instrument pass completed inside open `CLASS-A-VAL-002`; baseline `6790de2` and before / after evidence preserved; internal review apparatus deferred, status framing humanized, target-only language separated from Simulated Balance, and participant-facing ticket chrome removed without changing engine meaning or the `$0 → +$5 → −$2 → $3` control journey. Protocol-complete dual-layer participant retesting is immediately next. No second UI pass, parent closeout, comprehension claim, naming adoption, Class B, MVP, Evidence Register, or gate authority. Canonical detail: activation **§184**, closeout **§185**; completed brief **§7a**.
 
 - **`CLASS-A-VAL-002-CA-003` Stability Guidance semantic order (D-064, Accepted and completed):** One final bounded Class A pass completed inside open `CLASS-A-VAL-002`; the existing guidance now reads purpose → philosophy → boundary → unchanged targets → detailed distinction. Target values / meanings, engine state, balance, control journey, and all execution boundaries remain unchanged. Permanent-main baseline `3851fbf`; canonical activation **§186**; closeout **§187**; completed nested brief **§7a**. Protocol-complete dual-layer participant retesting is immediately next, with no further UI pass by inference. `NO CROSS-LANE IMPACT`.
+
+- **`CLASS-A-VAL-002` Institutional Coherence principle (D-065, Accepted):** Adopts Institutional Coherence as an internal product-evaluation principle under open `CLASS-A-VAL-002`. Complements constitutional correctness, cognitive simplicity, trust, product identity, and category convergence. Does not close the parent, authorize product changes, create implementation authority, alter Stability Engine behaviour, or authorize Class B / Class C. Proposed Decision ID D-064 remapped because that identity belongs to completed `CA-003`. Canonical detail: **§188**; live brief: **§7a**. Retest remains immediately next with added reasoning-sequence observation. `NO CROSS-LANE IMPACT`.
 
 - **Controlled Parallelism v7 (D-041, Accepted — completed historical pass):** Named `CLASS-A-VAL-002` (Lane V) and `BRIDGE-P1-PREP-001` (Lane R prep). Lane R closed prep-complete (**§151** / **D-043**); singular-ticket restored; D-041 no longer supplies concurrency. Proposed `BRIDGE-P1-001` formed not active. `NO CROSS-LANE IMPACT`.
 
@@ -1431,6 +1433,34 @@ Use when mirroring the completed **test-only** regression tranche 4. **Not** new
 - Preserve target percentages / meanings, `apps/frontend/lib/engine/**`, financial state, Simulated Balance, Dashboard → Deposit → Withdraw → Activity `$0 → +$5 → −$2 → $3` journey, backend / ledger / unavailable-data behavior, and all live / custody / provider / rail / payout / settlement boundaries.
 - Permanent-main baseline `3851fbf0df826c0e8a6d7a5a868f0367abf80320`; baseline / after / clean production captures and verification evidence are preserved. Participant effects remain hypotheses. Implementation improves test-instrument credibility but does not validate comprehension.
 - Verified closeout is recorded in **§187**. Protocol-complete dual-layer participant retesting is immediately next. No further UI pass by inference.
+- Singular-ticket Lane V remains; `NO CROSS-LANE IMPACT`.
+
+---
+
+## 8d.33 Decision Log — D-065 / Institutional Coherence product-evaluation principle (Internal; Notion mirror)
+
+**Notion Decision Log ID:** **D-065**. Canonical detail: **`docs/ops/HEDGR_STATUS.md` §188** and live brief in **§7a**. Visibility: **Internal**. Proposed Decision ID **D-064** remapped because that identity is already occupied by completed `CLASS-A-VAL-002-CA-003`.
+
+| Field | Value |
+| ----- | ----- |
+| **Decision ID** | D-065 |
+| **Title** | Adopt Institutional Coherence as an internal product-evaluation principle |
+| **Status** | Accepted — parent remains open; dual-layer participant retest immediately next; no implementation authority |
+| **Decision Type** | Product Doctrine / Validation / Narrative Convergence |
+| **Strategic Horizon** | Short-term (MVP evidence generation) with durable internal evaluation posture |
+| **Visibility** | Internal |
+| **Date** | 2026-08-03 |
+| **Repo authority** | `HEDGR_STATUS.md` **§188**; live brief **§7a**; parent disposition **§179** / D-060 |
+| **Ticket** | Under Lane V `CLASS-A-VAL-002` (sole active parent ticket; remains open) |
+
+**Summary / notes (concise)**
+
+- Founder accepts Institutional Coherence: reveal interpretation, priorities, evidence, and constitutional boundaries in the sequence users naturally develop trust.
+- Complements constitutional correctness, cognitive simplicity, trust, product identity, and category convergence; does not replace them.
+- Preferred review sequence: Interpretation → Priorities → Representation → Detailed explanation.
+- Illustrative precedent: completed D-064 / `CA-003` Stability Guidance semantic-order pass (purpose → philosophy → boundary → targets → detailed distinction).
+- Creates no implementation authority, no UI pass, no parent closeout, no Class B / Class C, no Stability Engine or customer-money change.
+- Retest remains immediately next; additionally observe whether participants understand what Hedgr believes, why, supporting evidence, remaining uncertainty, and retained agency.
 - Singular-ticket Lane V remains; `NO CROSS-LANE IMPACT`.
 
 ---
