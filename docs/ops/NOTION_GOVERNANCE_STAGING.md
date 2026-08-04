@@ -6,7 +6,7 @@
 
 **Authority:** The repository is source of truth. Wording here must match `docs/decisions/0016-warmth-layer-doctrine-constrained-retail-refinement-track.md`, `docs/decisions/SPRINT-2-ADR-INDEX.md`, and `docs/ops/HEDGR_STATUS.md`. Wording must match **Accepted** ADR **0016** in repo; do not broaden scope or soften read-only / non-execution boundaries in Notion.
 
-**Last reconciled:** 2026-08-05 (mirror after verified closeout of Internal **D-066** / `CLASS-A-VAL-002-GF-001` under **§189**–**§190**; the bounded Stability Guidance sequence is purpose → priorities → target roles → unchanged target values → detailed constitutional verification; parent `CLASS-A-VAL-002` remains the sole active and open ticket; no nested refinement is active; Internal **D-065** / **§188** remains an evaluation principle; protocol-complete dual-layer participant retesting is immediately next; implementation does not prove comprehension and no further refinement may be inferred; no target, engine, balance, journey, backend, architecture, product-category, Class B, MVP-acceptance, Evidence Register, or gate-clearance change; Lanes M / N / R idle; frozen narrative sources unchanged; publication unauthorized; Kenya counsel **DEFER**; repo **§7** / **§7a** controls sequencing)
+**Last reconciled:** 2026-08-05 (mirror after Founder acceptance of Internal **D-067** / Progressive Institutional Reasoning under **§191** as a durable internal product-architecture and evaluation principle extending Institutional Coherence under **D-065** / **§188**; no implementation authority, lane, concurrency, UI work, or financial-authority change; verified `CLASS-A-VAL-002-GF-001` remains completed historical authority under **D-066** / **§189**–**§190**; parent `CLASS-A-VAL-002` remains the sole active and open ticket; no nested refinement is active; protocol-complete dual-layer participant validation on the verified GF-001 build is immediately next; no further refinement may be inferred; Lanes M / N / R idle; frozen narrative sources unchanged; publication unauthorized; Kenya counsel **DEFER**; repo **§7** / **§7a** controls sequencing)
 
 ---
 
@@ -87,6 +87,8 @@ Use as a governed workstream line, **not** as a shipped-feature claim. Placement
 - **`CLASS-A-VAL-002` Institutional Coherence principle (D-065, Accepted):** Adopts Institutional Coherence as an internal product-evaluation principle under open `CLASS-A-VAL-002`. Complements constitutional correctness, cognitive simplicity, trust, product identity, and category convergence. Does not close the parent, authorize product changes, create implementation authority, alter Stability Engine behaviour, or authorize Class B / Class C. Proposed Decision ID D-064 remapped because that identity belongs to completed `CA-003`. Canonical detail: **§188**; live brief: **§7a**. Retest remains immediately next with added reasoning-sequence observation. `NO CROSS-LANE IMPACT`.
 
 - **`CLASS-A-VAL-002-GF-001` Graduated Fidelity structural pass (D-066, Accepted and completed):** One bounded Class A Stability Guidance refinement completed inside open `CLASS-A-VAL-002`; purpose → priorities → target roles → unchanged target values → detailed constitutional verification. Target meanings, engine outputs, simulated balance, financial state, Dashboard control journey, backend, visual system, product category, and execution authority remain unchanged. Canonical activation **§189**; verified closeout **§190**; completed brief **§7a**. Protocol-complete dual-layer participant retesting is immediately next; no further refinement by inference. `NO CROSS-LANE IMPACT`.
+
+- **`CLASS-A-VAL-002` Progressive Institutional Reasoning principle (D-067, Accepted):** Records five durable internal product-architecture learnings: reveal understanding rather than more information; answer the next natural question; place purpose before representation; reveal institutional reasoning before machinery; and compound trust through understandable reasoning. Extends Institutional Coherence under D-065 / **§188**; does not create implementation authority or reopen completed GF-001. Canonical detail: **§191**; live brief: **§7a**. Protocol-complete participant validation on the verified GF-001 build remains immediately next. `NO CROSS-LANE IMPACT`.
 
 - **Controlled Parallelism v7 (D-041, Accepted — completed historical pass):** Named `CLASS-A-VAL-002` (Lane V) and `BRIDGE-P1-PREP-001` (Lane R prep). Lane R closed prep-complete (**§151** / **D-043**); singular-ticket restored; D-041 no longer supplies concurrency. Proposed `BRIDGE-P1-001` formed not active. `NO CROSS-LANE IMPACT`.
 
@@ -1491,6 +1493,35 @@ Use when mirroring the completed **test-only** regression tranche 4. **Not** new
 - Preserve target values / semantics, `apps/frontend/lib/engine/**`, simulated balance, financial state, Deposit / Withdraw / Activity, `$0 → +$5 → −$2 → $3`, backend / ledger / unavailable-data behaviour, visual system, product category, and all live / custody / provider / rail / payout / settlement boundaries.
 - Targeted Vitest **18 / 18**, targeted Playwright **10 / 10**, aggregate validation, production build, and full production Playwright **56 / 56** passed; hosted checks remain the merge gate.
 - Implementation may improve test-instrument credibility but does not validate comprehension. Protocol-complete dual-layer participant retesting is immediately next. No further refinement by inference.
+- Singular-ticket Lane V remains; `NO CROSS-LANE IMPACT`.
+
+---
+
+## 8d.35 Decision Log — D-067 / Progressive Institutional Reasoning product-architecture principle (Internal; Notion mirror)
+
+**Notion Decision Log ID:** **D-067**. Canonical detail: **`docs/ops/HEDGR_STATUS.md` §191** and live brief in **§7a**. Visibility: **Internal**. The approved relationship is to Institutional Coherence under **D-065** / **§188**; GF-001 is already completed under **D-066** / **§189**–**§190**.
+
+| Field | Value |
+| ----- | ----- |
+| **Decision ID** | D-067 |
+| **Title** | Adopt Progressive Institutional Reasoning as an internal product-architecture and evaluation principle |
+| **Status** | Accepted — parent remains open; participant validation on verified GF-001 build immediately next; no implementation authority |
+| **Decision Type** | Product Architecture / Validation / Institutional Learning |
+| **Strategic Horizon** | Durable internal product-evaluation posture |
+| **Visibility** | Internal |
+| **Date** | 2026-08-05 |
+| **Repo authority** | `HEDGR_STATUS.md` **§191**; live brief **§7a**; D-065 Institutional Coherence **§188**; GF-001 closeout **§189**–**§190**; parent disposition **§179** / D-060 |
+| **Ticket** | Under Lane V `CLASS-A-VAL-002` (sole active parent ticket; remains open) |
+
+**Summary / notes (concise)**
+
+- Founder accepts Progressive Institutional Reasoning as durable institutional product learning, not doctrine or implementation instruction.
+- Graduated fidelity should reveal understanding rather than merely more information; each layer should answer the next natural question; purpose precedes representation; institutional reasoning precedes machinery; trust compounds through progressively understandable reasoning.
+- Evaluation sequence: Situation → Interpretation → Priorities → Representation → Verification.
+- Future reviews consider constitutional correctness, cognitive simplicity, Institutional Coherence, Progressive Institutional Reasoning, and user agency; ask whether each layer increases understanding.
+- Participant validation should observe whether understanding compounds naturally without teaching internal vocabulary or creating a new score or automatic disposition.
+- Creates no UI, product, architecture, Stability Engine, target, financial, customer-money, Class B / Class C, parent-closeout, nested-ticket, successor, or concurrency authority.
+- `CLASS-A-VAL-002-GF-001` remains completed historical authority. Proceed to protocol-complete dual-layer participant validation on the verified build; no further refinement by inference.
 - Singular-ticket Lane V remains; `NO CROSS-LANE IMPACT`.
 
 ---

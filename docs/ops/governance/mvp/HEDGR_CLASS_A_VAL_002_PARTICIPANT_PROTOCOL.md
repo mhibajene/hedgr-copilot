@@ -4,9 +4,9 @@
 
 **Execution class:** Class A product validation; visibly synthetic; non-executing for customer money
 
-**Authority:** `docs/ops/HEDGR_STATUS.md` §7 / §7a, §143, §179, §180–§181, §184–§185, §186–§187, §188, and §189–§190; Internal D-037, D-060, D-061, D-063, D-064, D-065, and D-066
+**Authority:** `docs/ops/HEDGR_STATUS.md` §7 / §7a, §143, §179, §180–§181, §184–§185, §186–§187, §188, §189–§190, and §191; Internal D-037, D-060, D-061, D-063, D-064, D-065, D-066, and D-067
 
-**Non-authorization:** This protocol does not authorize live money movement, custody, provider or banking integration, production FX, settlement, payout, Stability Engine execution, Class B implementation, Evidence Register acceptance, gate clearance, participant-data collection beyond the bounded fields below, a successor ticket, or any product change. Interface completion, completed session records, Institutional Coherence observation, and graduated-fidelity observation do not by themselves close `CLASS-A-VAL-002`. D-066 supplied and closed only the bounded implementation in §189–§190 / §7a and authorizes no further refinement.
+**Non-authorization:** This protocol does not authorize live money movement, custody, provider or banking integration, production FX, settlement, payout, Stability Engine execution, Class B implementation, Evidence Register acceptance, gate clearance, participant-data collection beyond the bounded fields below, a successor ticket, or any product change. Interface completion, completed session records, Institutional Coherence observation, graduated-fidelity observation, and Progressive Institutional Reasoning observation do not by themselves close `CLASS-A-VAL-002`. D-066 supplied and closed only the bounded implementation in §189–§190 / §7a and authorizes no further refinement. D-067 / §191 is an internal evaluation principle only and creates no implementation authority.
 
 ## 1. Research decision
 
@@ -28,6 +28,8 @@ Additionally observe **Institutional Coherence** under Internal **D-065** / **§
 Institutional Coherence supplements — and does not replace — the five evidence layers above. It is an evaluation criterion for institutional legibility, not evidence of product success by itself.
 
 Additionally observe the `CLASS-A-VAL-002-GF-001` graduated-fidelity sequence without teaching it: whether the participant understands purpose before opening priorities, priorities before target roles, target roles before numerical values, and the detailed constitutional distinction as verification rather than the first source of understanding. Do not name the five levels or the internal term "Graduated Fidelity" to participants.
+
+Additionally observe **Progressive Institutional Reasoning** under Internal **D-067** / **§191** without teaching it: whether each layer makes the previous layer more meaningful; whether the participant's own next question naturally progresses through situation → interpretation → priorities → representation → verification; whether purpose forms before numerical representation; whether institutional reasoning becomes legible before machinery; and whether decision ownership remains intact. Record the participant's questions and explanation trajectory rather than scoring conformity to the internal sequence. Do not use the internal term "Progressive Institutional Reasoning" with participants.
 
 Use the resulting evidence for the Founder to decide whether to:
 
@@ -101,6 +103,8 @@ Do not say or show “Financial Stability Companion” or another proposed categ
 13. Only after every pre-verification answer is recorded, ask the participant to open `Verify what stability targets mean`. Record whether the detailed distinction changed the purpose / priority / role model, corrected a misconception, or only increased confidence and precision.
 14. After the guidance answers above, ask without teaching: “What is Hedgr saying about your situation?”; “Why do you think Hedgr is saying that?”; “What information is Hedgr using to reach that view?”; “What still seems uncertain?”; and “What remains your decision?” Record whether reasoning, priorities, and decision boundaries formed before reliance on percentages or interface terminology.
 15. After those answers, ask one trust-formation prompt without teaching: “At what point did Hedgr begin to feel credible to you, if at all? What specifically caused that?” If needed as a neutral alternate, ask: “Was there a particular moment where Hedgr’s reasoning started to make sense?” Record the moment and cause; do not treat absence of trust as automatic failure.
+
+Before directing the participant to each next disclosure in steps 8–13, briefly record what they say they would want or need to understand next. Do not offer the stage labels, suggest the next question, or delay the existing protocol if no question arises. Treat alignment or non-alignment with Hedgr's internal sequence as qualitative trajectory evidence only, not a score or success threshold.
 
 Record the time to the participant's first materially accurate product-purpose explanation, every clarification request, unfamiliar terms they mention or recall, and whether the primary hierarchy or optional target detail caused visible hesitation. These are cognitive-burden observations, not automatic success thresholds.
 
@@ -293,6 +297,20 @@ Also record:
 
 Post-session synthesis should follow this same sequence: record not only what participants understood, but where in the trust-formation sequence they succeeded or broke down. That informs Founder disposition about the specific stage of institutional legibility that may need refinement. It does not by itself authorize product change, prove comprehension improvement, or close the parent ticket.
 
+### Progressive Institutional Reasoning — compounding-understanding sequence
+
+Use this as a qualitative trajectory record under D-067 / §191, not as a separate scoring system or prescribed participant vocabulary. Record the participant's own next question, whether the next layer increased understanding, and whether it made the prior layer more meaningful. Leave fields blank when unobserved.
+
+| Internal evaluation layer | Participant's own next question or curiosity | Did the layer increase understanding? | How the prior layer became more meaningful or broke down |
+| --- | --- | --- | --- |
+| Situation | | | |
+| Interpretation | | | |
+| Priorities | | | |
+| Representation | | | |
+| Verification | | | |
+
+Also record whether purpose preceded representation, institutional reasoning preceded machinery, and decision ownership remained explicit. These observations may inform governed synthesis; they do not prove D-067, authorize refinement, weaken disclosure, or change any existing success threshold.
+
 ### Open category interpretation
 
 Complete only after the unaided product-identity response is recorded. Multiple observations may apply; do not force the participant into one label.
@@ -379,6 +397,8 @@ Do not convert scores into automatic approval. Synthesize repeated observations 
 | Progressive disclosure preserves confidence | Tests findability and trust after first-session concept deferral | Does not authorize removal or reinterpretation of trust claims |
 | Cognitive burden is observable and bounded | Tests whether hierarchy / terminology still delays purpose formation or prompts clarification | Does not prove that the D-063, D-064, or D-066 implementation improved comprehension |
 | Institutional reasoning forms before numerical reliance | Tests Institutional Coherence under D-065 — purpose / why / evidence / uncertainty / agency | Does not prove D-065 improved comprehension or authorize product change |
+| Understanding compounds through natural questions | Tests Progressive Institutional Reasoning under D-067 — whether situation creates interpretation questions, interpretation creates priority questions, priorities create representation questions, and verification confirms meaning | Does not prove the internal architecture principle, create a new success threshold, or authorize implementation |
+| Each layer makes the prior layer more meaningful | Tests whether later reasoning increases comprehension rather than merely adding detail | Does not authorize disclosure removal, weaken constitutional truth, or infer a further refinement |
 | Trust formation has an identifiable moment and cause | Tests when Hedgr’s interpretation began to feel credible, not merely whether trust was preferred | Does not prove product success or authorize redesign |
 | Breakdown locates to a trust-formation stage | Supports synthesis against situation → interpretation → priorities → evidence → boundaries → agency | Does not convert stage notes into automatic approval or a scoring threshold |
 | Exception behavior understood | Tests trust under unavailable data | Does not select a live rate source or degraded execution policy |
