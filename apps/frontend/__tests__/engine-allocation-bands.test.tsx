@@ -20,7 +20,7 @@ afterEach(() => {
 });
 
 describe("EngineAllocationBands", () => {
-  test("renders purpose-led stability guidance, target labels, and detailed distinction", () => {
+  test("renders purpose-led stability guidance, target roles, values, and detailed distinction", () => {
     render(<EngineAllocationBands engineState={makeEngineState()} />);
 
     expect(screen.getByText("Stability guidance")).toBeDefined();
@@ -86,8 +86,15 @@ describe("EngineAllocationBands", () => {
     const targetsIntro = screen.getByTestId(
       "engine-allocation-targets-intro"
     ).textContent;
-    expect(targetsIntro).toMatch(/simulated targets/i);
-    expect(targetsIntro).toMatch(/express those priorities/i);
+    expect(targetsIntro).toMatch(/simulated target values/i);
+    expect(targetsIntro).toMatch(/those roles/i);
+
+    const roles = screen.getByTestId("engine-allocation-target-roles")
+      .textContent;
+    expect(roles).toMatch(/three distinct target roles/i);
+    expect(roles).toMatch(/primary stability role/i);
+    expect(roles).toMatch(/supporting role/i);
+    expect(roles).not.toMatch(/\d+%/);
 
     const legend = screen.getByTestId(
       "engine-allocation-trust-legend"
@@ -102,14 +109,15 @@ describe("EngineAllocationBands", () => {
     expect(legend).not.toMatch(/fixture|informational posture|settlement/i);
   });
 
-  test("orders purpose, philosophy, boundary, targets, and detailed distinction", () => {
+  test("orders purpose, priorities, target roles, values, and constitutional verification", () => {
     render(<EngineAllocationBands engineState={makeEngineState()} />);
 
     const purpose = screen.getByTestId("engine-allocation-bands-caption");
     const philosophy = screen.getByTestId("engine-allocation-philosophy");
-    const boundary = screen.getByTestId("engine-allocation-boundary");
+    const roles = screen.getByTestId("engine-allocation-target-roles");
     const targetsIntro = screen.getByTestId("engine-allocation-targets-intro");
     const structure = screen.getByTestId("engine-allocation-structure");
+    const boundary = screen.getByTestId("engine-allocation-boundary");
     const distinction = screen.getByTestId("engine-allocation-trust-legend");
 
     const comesBefore = (first: HTMLElement, second: HTMLElement) =>
@@ -119,13 +127,14 @@ describe("EngineAllocationBands", () => {
       );
 
     expect(comesBefore(purpose, philosophy)).toBe(true);
-    expect(comesBefore(philosophy, boundary)).toBe(true);
-    expect(comesBefore(boundary, targetsIntro)).toBe(true);
+    expect(comesBefore(philosophy, roles)).toBe(true);
+    expect(comesBefore(roles, targetsIntro)).toBe(true);
     expect(comesBefore(targetsIntro, structure)).toBe(true);
-    expect(comesBefore(structure, distinction)).toBe(true);
+    expect(comesBefore(structure, boundary)).toBe(true);
+    expect(comesBefore(boundary, distinction)).toBe(true);
   });
 
-  test("defers detailed targets behind target-only guidance when collapsed", () => {
+  test("reveals priorities, roles, values, and verification through separate collapsed layers", () => {
     render(
       <EngineAllocationBands
         engineState={makeEngineState()}
@@ -139,26 +148,40 @@ describe("EngineAllocationBands", () => {
     expect(
       screen.getByTestId("engine-allocation-bands-caption").textContent
     ).toBe("See what Hedgr prioritizes when interpreting stability.");
+    const prioritiesDetails = screen.getByTestId(
+      "engine-allocation-priorities-details"
+    );
+    const rolesDetails = screen.getByTestId("engine-allocation-roles-details");
+    const valuesDetails = screen.getByTestId("engine-allocation-values-details");
+
+    for (const details of [prioritiesDetails, rolesDetails, valuesDetails]) {
+      expect(details.tagName).toBe("DETAILS");
+      expect(details.hasAttribute("open")).toBe(false);
+    }
+
+    const prioritiesSummary = prioritiesDetails.querySelector(
+      ":scope > summary"
+    );
+    const rolesSummary = rolesDetails.querySelector(":scope > summary");
+    const valuesSummary = valuesDetails.querySelector(":scope > summary");
+
+    expect(prioritiesSummary?.textContent).toContain(
+      "See what Hedgr is trying to understand"
+    );
+    expect(rolesSummary?.textContent).toContain(
+      "See the role of each priority"
+    );
+    expect(valuesSummary?.textContent).toContain(
+      "View simulated target values"
+    );
+    expect(prioritiesSummary?.textContent).not.toMatch(/\d+%/);
+    expect(rolesSummary?.textContent).not.toMatch(/\d+%/);
     expect(
-      screen.getByTestId("engine-allocation-philosophy").textContent
-    ).toMatch(/preserve value/i);
+      screen.getByTestId("engine-allocation-target-roles").textContent
+    ).not.toMatch(/\d+%/);
     expect(screen.getByTestId("engine-allocation-boundary").textContent).toMatch(
       /context, not an instruction/i
     );
-
-    const preDisclosureCopy = [
-      screen.getByTestId("engine-allocation-bands-caption").textContent,
-      screen.getByTestId("engine-allocation-philosophy").textContent,
-      screen.getByTestId("engine-allocation-boundary").textContent,
-    ].join("\n");
-    expect(preDisclosureCopy).not.toMatch(/these targets/i);
-
-    const details = screen.getByTestId("engine-allocation-details");
-    expect(details.tagName).toBe("DETAILS");
-    expect(details.hasAttribute("open")).toBe(false);
-    expect(details.textContent).toContain("View stability targets");
-    expect(details.textContent).toContain("Core stability target");
-    expect(details.textContent).not.toContain("Stable balance");
   });
 
   test("keeps purpose, philosophy, boundary, and detail free of execution, accounting-as-truth, and hype drift", () => {
@@ -208,7 +231,8 @@ describe("EngineAllocationBands", () => {
     expect(stableBand.textContent).toMatch(/primary stability target/i);
 
     const yieldBand = screen.getByTestId("engine-allocation-band-yieldCapPct");
-    expect(yieldBand.textContent).toMatch(/limited 14% target/i);
+    expect(yieldBand.textContent).toMatch(/limited target/i);
+    expect(yieldBand.textContent).toContain("14%");
     expect(yieldBand.textContent).toMatch(/conditions allow/i);
   });
 

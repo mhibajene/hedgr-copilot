@@ -246,6 +246,68 @@ final result: passed
 
 ---
 
+# CLASS-A-VAL-002-GF-001 — Graduated Fidelity Structural Pass
+
+Status: Verified implementation QA evidence only. Founder authority: Internal D-066 / `HEDGR_STATUS.md` §189 activation, §190 closeout, and completed §7a brief. Parent `CLASS-A-VAL-002` remains open; participant comprehension is not established by this review.
+
+## Baseline and scope
+
+- Permanent-main baseline: `72e07ac`.
+- Runtime scope: `apps/frontend/app/(app)/dashboard/EngineAllocationBands.tsx` only.
+- Evidence: `artifacts/class-a-val-002-gf-001/`.
+- Existing Stability Guidance purpose, priorities, target roles, 50 / 20 / 30 values, and constitutional distinctions were restructured; no new product concept or visual system was introduced.
+
+## Graduated-fidelity sequence
+
+1. Purpose is visible in the collapsed first-session card.
+2. Native disclosure reveals Hedgr's preservation / access / visible-risk priorities.
+3. A second native disclosure reveals Core stability target, Conservative yield, and Reserve roles without percentages.
+4. A third native disclosure reveals the unchanged target values.
+5. Constitutional verification follows the values, with the detailed target-versus-balance explanation closed until requested.
+
+## Visual and structural review
+
+- Desktop and mobile preserve the existing card, typography, spacing, border, and Hedgr token vocabulary.
+- The role layer uses text, order, and definition-list semantics; meaning does not depend on color.
+- Numerical values do not appear in the purpose, priority, or role layers.
+- The target cards retain the existing dominant Core stability target and quieter supporting-lane hierarchy.
+- The persistent Simulation Mode / No Real Money disclosure remains unchanged and visible.
+- No new asset, palette value, typeface, gradient, glow, animation, dependency, or speculative financial treatment was introduced.
+
+## Accessibility review
+
+- All four disclosure interactions use native `details` / `summary` controls and remain keyboard-operable with Enter.
+- The ordered DOM sequence is purpose → priorities → roles → values → compact boundary → detailed verification.
+- Existing focus styles remain intact.
+- Desktop and mobile captures show legible hierarchy without relying on color; existing approved token pairings remain unchanged.
+
+## Trust and authority review
+
+- Target values and meanings remain unchanged.
+- Target-role copy contains no percentages.
+- After values, the compact boundary states that guidance is context, not instruction, and that simulated targets are not balances, holdings, accounts, or proof of division / movement.
+- Detailed verification retains target-versus-balance, no instruction, no division, no holding, and no movement meaning.
+- No engine, balance, Activity, Deposit, Withdraw, arithmetic, backend, ledger, unavailable-data, navigation, product-category, advisory, custody, or execution behavior changed.
+
+## Validation evidence
+
+- Targeted Vitest: **18 / 18 passed**.
+- Targeted Playwright for the synthetic journey and smoke pack: **10 / 10 passed**.
+- Aggregate `pnpm run validate`: passed.
+- Frontend typecheck and lint: passed.
+- Optimized production frontend build: passed.
+- Full production-build Playwright against mock / stub boundaries: **56 / 56 passed**.
+- Baseline, after, mobile, and production-render captures: recorded in `artifacts/class-a-val-002-gf-001/`.
+- Production-render assertions and visual inspection confirmed purpose-first disclosure, percentage-free roles, unchanged 50 / 20 / 30 values only after roles, visible constitutional verification, and no development overlay.
+- `git diff --check`: passed before closeout commit.
+- Hosted PR checks remain the merge gate and are recorded through Hedgr PR posture.
+
+## Disposition boundary
+
+The implementation improves the credibility and sequencing of the participant test instrument. It does not validate comprehension, Institutional Coherence, category convergence, Class B readiness, MVP acceptance, or any live financial capability. Protocol-complete dual-layer participant retesting is immediately next after verified closeout; no further refinement is inferred.
+
+---
+
 # HEDGR-UI-005 Design QA and Change Log
 
 ## Comparison target

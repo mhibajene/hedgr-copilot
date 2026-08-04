@@ -85,24 +85,33 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   await expect(stabilityGuidance).toContainText(
     'See what Hedgr prioritizes when interpreting stability',
   );
-  await expect(stabilityGuidance).toContainText(
-    'preserve value, keep access and risk visible',
-  );
-  await expect(stabilityGuidance).toContainText(
-    'context, not an instruction',
-  );
-  await expect(stabilityGuidance).toContainText(
-    'Nothing here represents a balance, holding, account, or money being divided or moved',
-  );
   await expect(page.getByTestId('engine-allocation-bands-caption')).not.toContainText(
     'these targets',
   );
-  const stabilityDetails = page.getByTestId('engine-allocation-details');
-  await expect(stabilityDetails).not.toHaveAttribute('open', '');
+  const prioritiesDetails = page.getByTestId('engine-allocation-priorities-details');
+  const rolesDetails = page.getByTestId('engine-allocation-roles-details');
+  const valuesDetails = page.getByTestId('engine-allocation-values-details');
+  await expect(prioritiesDetails).not.toHaveAttribute('open', '');
+  await expect(page.getByTestId('engine-allocation-philosophy')).not.toBeVisible();
+  await prioritiesDetails.getByText('See what Hedgr is trying to understand').click();
+  await expect(page.getByTestId('engine-allocation-philosophy')).toBeVisible();
+  await expect(page.getByTestId('engine-allocation-philosophy')).toContainText(
+    'preserve value first, keep access and risk visible',
+  );
+  await expect(rolesDetails).not.toHaveAttribute('open', '');
+  await expect(page.getByTestId('engine-allocation-target-roles')).not.toBeVisible();
+  await rolesDetails.getByText('See the role of each priority').click();
+  const targetRoles = page.getByTestId('engine-allocation-target-roles');
+  await expect(targetRoles).toBeVisible();
+  await expect(targetRoles).toContainText('Core stability target');
+  await expect(targetRoles).toContainText('Conservative yield');
+  await expect(targetRoles).toContainText('Reserve');
+  await expect(targetRoles).not.toContainText(/\d+%/);
+  await expect(valuesDetails).not.toHaveAttribute('open', '');
   await expect(page.getByTestId('engine-allocation-band-coreTargetPct')).not.toBeVisible();
-  await stabilityDetails.getByText('View stability targets').click();
+  await valuesDetails.getByText('View simulated target values').click();
   await expect(page.getByTestId('engine-allocation-targets-intro')).toHaveText(
-    'The percentages below are simulated targets that express those priorities.',
+    'The percentages below are simulated target values for those roles.',
   );
   await expect(page.getByTestId('engine-allocation-band-coreTargetPct')).toBeVisible();
   await expect(page.getByTestId('engine-allocation-band-coreTargetPct')).toContainText(
@@ -110,6 +119,12 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   );
   await expect(page.getByTestId('engine-allocation-band-coreTargetPct')).toContainText(
     'Stability target · 50%',
+  );
+  await expect(page.getByTestId('engine-allocation-boundary')).toContainText(
+    'context, not an instruction',
+  );
+  await expect(page.getByTestId('engine-allocation-boundary')).toContainText(
+    'not a balance, holding, account, or proof that money was divided or moved',
   );
   await expect(page.getByTestId('engine-stability-review-snapshot')).toHaveCount(0);
   await expect(page.getByText('Simulation date')).toHaveCount(0);
