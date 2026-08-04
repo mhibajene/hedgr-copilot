@@ -228,18 +228,18 @@ describe("DashboardPage engine trust surface", () => {
     expect(allocation.textContent).toContain(
       "See what Hedgr prioritizes when interpreting stability"
     );
-    expect(allocation.textContent).toContain(
-      "preserve value, keep access and risk visible"
+    const prioritiesDetails = screen.getByTestId(
+      "engine-allocation-priorities-details"
     );
-    expect(allocation.textContent).toContain(
-      "context, not an instruction"
-    );
-    expect(allocation.textContent).toContain(
-      "Nothing here represents a balance, holding, account, or money being divided or moved"
-    );
-    const allocationDetails = screen.getByTestId("engine-allocation-details");
-    expect(allocationDetails.tagName).toBe("DETAILS");
-    expect(allocationDetails.hasAttribute("open")).toBe(false);
+    const rolesDetails = screen.getByTestId("engine-allocation-roles-details");
+    const valuesDetails = screen.getByTestId("engine-allocation-values-details");
+    for (const details of [prioritiesDetails, rolesDetails, valuesDetails]) {
+      expect(details.tagName).toBe("DETAILS");
+      expect(details.hasAttribute("open")).toBe(false);
+    }
+    expect(
+      screen.getByTestId("engine-allocation-target-roles").textContent
+    ).not.toMatch(/\d+%/);
 
     expect(
       screen.queryByTestId("engine-stability-review-snapshot")

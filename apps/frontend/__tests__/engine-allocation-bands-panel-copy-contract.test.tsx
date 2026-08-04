@@ -43,6 +43,8 @@ describe("EngineAllocationBands panel copy contract", () => {
       screen.getByTestId("engine-allocation-philosophy").textContent ?? "";
     const boundary =
       screen.getByTestId("engine-allocation-boundary").textContent ?? "";
+    const targetRoles =
+      screen.getByTestId("engine-allocation-target-roles").textContent ?? "";
     const targetsIntro =
       screen.getByTestId("engine-allocation-targets-intro").textContent ?? "";
     const trustLegend =
@@ -62,6 +64,7 @@ describe("EngineAllocationBands panel copy contract", () => {
       caption,
       philosophy,
       boundary,
+      targetRoles,
       targetsIntro,
       trustLegend,
       ...descriptors,
@@ -72,7 +75,9 @@ describe("EngineAllocationBands panel copy contract", () => {
     expect(caption).not.toMatch(/these targets/i);
     expect(philosophy).toMatch(/preserve value/i);
     expect(boundary).toMatch(/context, not an instruction/i);
-    expect(targetsIntro).toMatch(/simulated targets/i);
+    expect(targetRoles).toMatch(/three distinct target roles/i);
+    expect(targetRoles).not.toMatch(/\d+%/);
+    expect(targetsIntro).toMatch(/simulated target values/i);
   });
 
   test("keeps shipped panel copy informational and non-accounting", () => {
@@ -82,6 +87,7 @@ describe("EngineAllocationBands panel copy contract", () => {
       screen.getByTestId("engine-allocation-bands-caption").textContent ?? "",
       screen.getByTestId("engine-allocation-philosophy").textContent ?? "",
       screen.getByTestId("engine-allocation-boundary").textContent ?? "",
+      screen.getByTestId("engine-allocation-target-roles").textContent ?? "",
       screen.getByTestId("engine-allocation-targets-intro").textContent ?? "",
       screen.getByTestId("engine-allocation-trust-legend").textContent ?? "",
       document.getElementById("engine-allocation-band-liquidityTargetPct-desc")

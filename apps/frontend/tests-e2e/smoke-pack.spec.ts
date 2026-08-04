@@ -116,22 +116,40 @@ test("4 · dashboard shows human-readable stability context after login", async 
   await expect(allocationBands).toContainText(
     "See what Hedgr prioritizes when interpreting stability"
   );
-  await expect(allocationBands).toContainText(
-    "preserve value, keep access and risk visible"
+  const prioritiesDetails = page.getByTestId(
+    "engine-allocation-priorities-details"
   );
-  await expect(allocationBands).toContainText(
+  const prioritiesSummary = prioritiesDetails.locator(":scope > summary");
+  await expect(prioritiesDetails).not.toHaveAttribute("open", "");
+  await prioritiesSummary.focus();
+  await expect(prioritiesSummary).toBeFocused();
+  await prioritiesSummary.press("Enter");
+  await expect(prioritiesDetails).toHaveAttribute("open", "");
+  await expect(page.getByTestId("engine-allocation-philosophy")).toContainText(
+    "preserve value first, keep access and risk visible"
+  );
+
+  const rolesDetails = page.getByTestId("engine-allocation-roles-details");
+  const rolesSummary = rolesDetails.locator(":scope > summary");
+  await expect(rolesDetails).not.toHaveAttribute("open", "");
+  await rolesSummary.focus();
+  await expect(rolesSummary).toBeFocused();
+  await rolesSummary.press("Enter");
+  await expect(rolesDetails).toHaveAttribute("open", "");
+  const targetRoles = page.getByTestId("engine-allocation-target-roles");
+  await expect(targetRoles).toBeVisible();
+  await expect(targetRoles).not.toContainText(/\d+%/);
+
+  const valuesDetails = page.getByTestId("engine-allocation-values-details");
+  const valuesSummary = valuesDetails.locator(":scope > summary");
+  await expect(valuesDetails).not.toHaveAttribute("open", "");
+  await valuesSummary.focus();
+  await expect(valuesSummary).toBeFocused();
+  await valuesSummary.press("Enter");
+  await expect(valuesDetails).toHaveAttribute("open", "");
+  await expect(page.getByTestId("engine-allocation-boundary")).toContainText(
     "context, not an instruction"
   );
-  await expect(allocationBands).toContainText(
-    "Nothing here represents a balance, holding, account, or money being divided or moved"
-  );
-  const allocationDetails = page.getByTestId("engine-allocation-details");
-  await expect(allocationDetails).not.toHaveAttribute("open", "");
-  const allocationSummary = allocationDetails.locator(":scope > summary");
-  await allocationSummary.focus();
-  await expect(allocationSummary).toBeFocused();
-  await allocationSummary.press("Enter");
-  await expect(allocationDetails).toHaveAttribute("open", "");
   const allocationBandsText = await allocationBands.textContent();
   expect(allocationBandsText?.trim().length).toBeGreaterThan(0);
   expect(allocationBandsText).toContain("Core stability target");
