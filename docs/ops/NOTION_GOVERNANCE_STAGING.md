@@ -6,7 +6,7 @@
 
 **Authority:** The repository is source of truth. Wording here must match `docs/decisions/0016-warmth-layer-doctrine-constrained-retail-refinement-track.md`, `docs/decisions/SPRINT-2-ADR-INDEX.md`, and `docs/ops/HEDGR_STATUS.md`. Wording must match **Accepted** ADR **0016** in repo; do not broaden scope or soften read-only / non-execution boundaries in Notion.
 
-**Last reconciled:** 2026-08-05 (mirror after Founder acceptance of Internal **D-067** / Progressive Institutional Reasoning under **§191** as a durable internal product-architecture and evaluation principle extending Institutional Coherence under **D-065** / **§188**; no implementation authority, lane, concurrency, UI work, or financial-authority change; verified `CLASS-A-VAL-002-GF-001` remains completed historical authority under **D-066** / **§189**–**§190**; parent `CLASS-A-VAL-002` remains the sole active and open ticket; no nested refinement is active; protocol-complete dual-layer participant validation on the verified GF-001 build is immediately next; no further refinement may be inferred; Lanes M / N / R idle; frozen narrative sources unchanged; publication unauthorized; Kenya counsel **DEFER**; repo **§7** / **§7a** controls sequencing)
+**Last reconciled:** 2026-08-05 (mirror after Founder acceptance of Internal **D-068** / Orientation Before Explanation under **§192** as the behavioural foundation beneath Progressive Institutional Reasoning under **D-067** / **§191** and Institutional Coherence under **D-065** / **§188**; “Financial Stability Companion” remains an internal behavioural frame and test-only category hypothesis, not settled or public naming; reassurance must remain grounded in observable interpretation, with uncertainty or required attention surfaced when present; no implementation authority, lane, concurrency, UI work, or financial-authority change; verified `CLASS-A-VAL-002-GF-001` remains completed historical authority under **D-066** / **§189**–**§190**; parent `CLASS-A-VAL-002` remains the sole active and open ticket; no nested refinement is active; protocol-complete dual-layer participant validation on the verified GF-001 build is immediately next; no further refinement may be inferred; Lanes M / N / R idle; frozen narrative sources unchanged; publication unauthorized; Kenya counsel **DEFER**; repo **§7** / **§7a** controls sequencing)
 
 ---
 
@@ -89,6 +89,7 @@ Use as a governed workstream line, **not** as a shipped-feature claim. Placement
 - **`CLASS-A-VAL-002-GF-001` Graduated Fidelity structural pass (D-066, Accepted and completed):** One bounded Class A Stability Guidance refinement completed inside open `CLASS-A-VAL-002`; purpose → priorities → target roles → unchanged target values → detailed constitutional verification. Target meanings, engine outputs, simulated balance, financial state, Dashboard control journey, backend, visual system, product category, and execution authority remain unchanged. Canonical activation **§189**; verified closeout **§190**; completed brief **§7a**. Protocol-complete dual-layer participant retesting is immediately next; no further refinement by inference. `NO CROSS-LANE IMPACT`.
 
 - **`CLASS-A-VAL-002` Progressive Institutional Reasoning principle (D-067, Accepted):** Records five durable internal product-architecture learnings: reveal understanding rather than more information; answer the next natural question; place purpose before representation; reveal institutional reasoning before machinery; and compound trust through understandable reasoning. Extends Institutional Coherence under D-065 / **§188**; does not create implementation authority or reopen completed GF-001. Canonical detail: **§191**; live brief: **§7a**. Protocol-complete participant validation on the verified GF-001 build remains immediately next. `NO CROSS-LANE IMPACT`.
+- **`CLASS-A-VAL-002` Orientation Before Explanation principle (D-068, Accepted):** Records the behavioural foundation beneath the existing internal product-architecture principles: Layer 1 reduces uncertainty and establishes grounded readiness before deeper reasoning. Reassurance applies only when supported by observable interpretation; otherwise uncertainty or required attention must be surfaced. “Financial Stability Companion” remains an internal behavioural frame and test-only category hypothesis, not settled or public naming. Does not create implementation authority or reopen completed GF-001. Canonical detail: **§192**; live brief: **§7a**. Protocol-complete participant validation on the verified GF-001 build remains immediately next. `NO CROSS-LANE IMPACT`.
 
 - **Controlled Parallelism v7 (D-041, Accepted — completed historical pass):** Named `CLASS-A-VAL-002` (Lane V) and `BRIDGE-P1-PREP-001` (Lane R prep). Lane R closed prep-complete (**§151** / **D-043**); singular-ticket restored; D-041 no longer supplies concurrency. Proposed `BRIDGE-P1-001` formed not active. `NO CROSS-LANE IMPACT`.
 
@@ -1521,6 +1522,36 @@ Use when mirroring the completed **test-only** regression tranche 4. **Not** new
 - Future reviews consider constitutional correctness, cognitive simplicity, Institutional Coherence, Progressive Institutional Reasoning, and user agency; ask whether each layer increases understanding.
 - Participant validation should observe whether understanding compounds naturally without teaching internal vocabulary or creating a new score or automatic disposition.
 - Creates no UI, product, architecture, Stability Engine, target, financial, customer-money, Class B / Class C, parent-closeout, nested-ticket, successor, or concurrency authority.
+- `CLASS-A-VAL-002-GF-001` remains completed historical authority. Proceed to protocol-complete dual-layer participant validation on the verified build; no further refinement by inference.
+- Singular-ticket Lane V remains; `NO CROSS-LANE IMPACT`.
+
+---
+
+## 8d.36 Decision Log — D-068 / Orientation Before Explanation product-architecture principle (Internal; Notion mirror)
+
+**Notion Decision Log ID:** **D-068**. Canonical detail: **`docs/ops/HEDGR_STATUS.md` §192** and live brief in **§7a**. Visibility: **Internal**. The approved relationship is beneath Progressive Institutional Reasoning under **D-067** / **§191** and Institutional Coherence under **D-065** / **§188**; GF-001 is already completed under **D-066** / **§189**–**§190**.
+
+| Field | Value |
+| ----- | ----- |
+| **Decision ID** | D-068 |
+| **Title** | Adopt Orientation Before Explanation as an internal product-architecture and evaluation principle |
+| **Status** | Accepted — parent remains open; participant validation on verified GF-001 build immediately next; no implementation or public-naming authority |
+| **Decision Type** | Product Architecture / Institutional Learning / Experience Philosophy |
+| **Strategic Horizon** | Durable internal product-evaluation posture |
+| **Visibility** | Internal |
+| **Date** | 2026-08-05 |
+| **Repo authority** | `HEDGR_STATUS.md` **§192**; live brief **§7a**; D-067 Progressive Institutional Reasoning **§191**; D-065 Institutional Coherence **§188**; GF-001 closeout **§189**–**§190**; parent disposition **§179** / D-060 |
+| **Ticket** | Under Lane V `CLASS-A-VAL-002` (sole active parent ticket; remains open) |
+
+**Summary / notes (concise)**
+
+- Founder accepts Orientation Before Explanation as durable institutional product learning, not doctrine, implementation instruction, or a new product requirement.
+- The first interaction should reduce uncertainty before increasing knowledge; Layer 1 establishes enough grounded orientation to continue rather than complete comprehension; trust can begin before full understanding and deepen through progressive reasoning; evidence-grounded reassurance precedes deeper reasoning; explanation should feel invited rather than imposed.
+- Approved correction: “Financial Stability Companion” remains an internal behavioural frame and test-only category hypothesis. D-068 does not adopt settled or public naming.
+- Approved correction: “safe to continue” and “nothing urgent requires your attention” apply only where supported by observable interpretation. Otherwise Layer 1 must orient to uncertainty or required attention.
+- Internal behavioural frame: calm orientation, progressive understanding, institutional reasoning, and preserved agency — not conversational AI, personality, emotional coaching, manipulation, or unsupported reassurance.
+- Participant validation should qualitatively observe initial orientation, accurate attention recognition, grounded readiness, and invited explanation without teaching internal vocabulary, changing scores, or weakening existing journey / simulation / trust-boundary evidence.
+- Creates no UI, product, architecture, Stability Engine, target, financial, customer-money, Class B / Class C, parent-closeout, nested-ticket, successor, public-category, or concurrency authority.
 - `CLASS-A-VAL-002-GF-001` remains completed historical authority. Proceed to protocol-complete dual-layer participant validation on the verified build; no further refinement by inference.
 - Singular-ticket Lane V remains; `NO CROSS-LANE IMPACT`.
 

@@ -4,9 +4,9 @@
 
 **Execution class:** Class A product validation; visibly synthetic; non-executing for customer money
 
-**Authority:** `docs/ops/HEDGR_STATUS.md` §7 / §7a, §143, §179, §180–§181, §184–§185, §186–§187, §188, §189–§190, and §191; Internal D-037, D-060, D-061, D-063, D-064, D-065, D-066, and D-067
+**Authority:** `docs/ops/HEDGR_STATUS.md` §7 / §7a, §143, §179, §180–§181, §184–§185, §186–§187, §188, §189–§190, §191, and §192; Internal D-037, D-060, D-061, D-063, D-064, D-065, D-066, D-067, and D-068
 
-**Non-authorization:** This protocol does not authorize live money movement, custody, provider or banking integration, production FX, settlement, payout, Stability Engine execution, Class B implementation, Evidence Register acceptance, gate clearance, participant-data collection beyond the bounded fields below, a successor ticket, or any product change. Interface completion, completed session records, Institutional Coherence observation, graduated-fidelity observation, and Progressive Institutional Reasoning observation do not by themselves close `CLASS-A-VAL-002`. D-066 supplied and closed only the bounded implementation in §189–§190 / §7a and authorizes no further refinement. D-067 / §191 is an internal evaluation principle only and creates no implementation authority.
+**Non-authorization:** This protocol does not authorize live money movement, custody, provider or banking integration, production FX, settlement, payout, Stability Engine execution, Class B implementation, Evidence Register acceptance, gate clearance, participant-data collection beyond the bounded fields below, a successor ticket, public category naming, or any product change. Interface completion, completed session records, Institutional Coherence observation, graduated-fidelity observation, Progressive Institutional Reasoning observation, and Orientation Before Explanation observation do not by themselves close `CLASS-A-VAL-002`. D-066 supplied and closed only the bounded implementation in §189–§190 / §7a and authorizes no further refinement. D-067 / §191 and D-068 / §192 are internal evaluation principles only and create no implementation authority.
 
 ## 1. Research decision
 
@@ -30,6 +30,8 @@ Institutional Coherence supplements — and does not replace — the five eviden
 Additionally observe the `CLASS-A-VAL-002-GF-001` graduated-fidelity sequence without teaching it: whether the participant understands purpose before opening priorities, priorities before target roles, target roles before numerical values, and the detailed constitutional distinction as verification rather than the first source of understanding. Do not name the five levels or the internal term "Graduated Fidelity" to participants.
 
 Additionally observe **Progressive Institutional Reasoning** under Internal **D-067** / **§191** without teaching it: whether each layer makes the previous layer more meaningful; whether the participant's own next question naturally progresses through situation → interpretation → priorities → representation → verification; whether purpose forms before numerical representation; whether institutional reasoning becomes legible before machinery; and whether decision ownership remains intact. Record the participant's questions and explanation trajectory rather than scoring conformity to the internal sequence. Do not use the internal term "Progressive Institutional Reasoning" with participants.
+
+Additionally observe **Orientation Before Explanation** under Internal **D-068** / **§192** without teaching it: whether the participant first understands where they are and whether anything requires attention; whether the initial surface reduces uncertainty and creates grounded readiness to continue before deeper explanation; whether explanation feels invited by the participant's next question; and whether any reassurance matches the observable state. If the state is uncertain or requires attention, observe whether the participant recognizes that instead of seeking a generic “safe” signal. “Financial Stability Companion” remains an internal behavioural frame and test-only category hypothesis; do not show or teach the phrase. Record these as qualitative observations, not a new score, trust promise, or implementation disposition.
 
 Use the resulting evidence for the Founder to decide whether to:
 
@@ -86,14 +88,16 @@ Ask the participant to think aloud. Do not explain Hedgr's proposition beyond vi
 
 Do not say or show “Financial Stability Companion” or another proposed category label to the participant. Do not offer bank, wallet, budgeting, trading, investment, or payments classifications until the participant's unaided entry answer has been recorded. Functional understanding in the participant's own language is the evidence; repetition of interface wording is not enough.
 
+Before asking for deeper explanation, record whether the participant can locate themselves in the current state, identify whether anything requires attention, and describe whether they feel ready to continue. Do not promise safety or suggest that nothing is urgent. Where the observable state contains uncertainty or an attention requirement, record whether the participant recognizes it. Treat calmness, support, readiness, and curiosity as qualitative observations only.
+
 ### Step 1 — Dashboard
 
-1. Ask: “Without opening anything else, what problem do you think Hedgr is trying to help with?”
-2. Ask: “What kind of product do you think this is? What on this screen makes you say that?”
-3. Ask: “When, if ever, might a view like this be useful to you?”
-4. Ask: “What decision or next step, if any, could this view help you think about?”
-5. Ask the participant to identify the primary action without opening any disclosure.
-6. Ask: “Does anything need attention here? What on the screen makes you say that?”
+1. Before asking what Hedgr is, ask: “Where do you think you are, and does anything need attention here? What on the screen makes you say that? Do you feel you know enough to continue, or is there something you would need next?” Record location, attention state, uncertainty, and grounded readiness without affirming that the participant is safe.
+2. Ask: “Without opening anything else, what problem do you think Hedgr is trying to help with?”
+3. Ask: “What kind of product do you think this is? What on this screen makes you say that?”
+4. Ask: “When, if ever, might a view like this be useful to you?”
+5. Ask: “What decision or next step, if any, could this view help you think about?”
+6. Ask the participant to identify the primary action without opening any disclosure.
 7. Before opening any Stability Guidance disclosure, ask: “What do you think this stability guidance is for?” Record whether purpose is understood without priorities, roles, percentages, or constitutional detail.
 8. Only after that answer is recorded, ask the participant to open `See what Hedgr is trying to understand`. Ask: “What does Hedgr appear to prioritize when thinking about stability?”
 9. Only after the priorities answer is recorded, ask the participant to open `See the role of each priority`. Ask what Core stability target, Conservative yield, and Reserve each do in the guidance. Record the answer before values are visible.
@@ -311,6 +315,21 @@ Use this as a qualitative trajectory record under D-067 / §191, not as a separa
 
 Also record whether purpose preceded representation, institutional reasoning preceded machinery, and decision ownership remained explicit. These observations may inform governed synthesis; they do not prove D-067, authorize refinement, weaken disclosure, or change any existing success threshold.
 
+### Orientation Before Explanation — Layer 1 readiness
+
+Use this as a qualitative observation record under D-068 / §192, not as a separate scoring system, safety assessment, or prescribed participant vocabulary. Record observable behaviour and the participant's own words. Leave fields blank when unobserved.
+
+| Layer 1 observation | Response / evidence note |
+| --- | --- |
+| Current location or situation understood | |
+| Attention requirement accurately understood | |
+| Grounded readiness to continue before deeper explanation | |
+| Participant appears calmer or supported without prompted reassurance | |
+| Participant's own curiosity invites the next explanation | |
+| Uncertainty or required attention is surfaced when present | |
+
+These observations may inform governed synthesis; they do not prove trust, promise safety, validate D-068, adopt “Financial Stability Companion” as public naming, authorize refinement, or change any existing success threshold.
+
 ### Open category interpretation
 
 Complete only after the unaided product-identity response is recorded. Multiple observations may apply; do not force the participant into one label.
@@ -399,6 +418,8 @@ Do not convert scores into automatic approval. Synthesize repeated observations 
 | Institutional reasoning forms before numerical reliance | Tests Institutional Coherence under D-065 — purpose / why / evidence / uncertainty / agency | Does not prove D-065 improved comprehension or authorize product change |
 | Understanding compounds through natural questions | Tests Progressive Institutional Reasoning under D-067 — whether situation creates interpretation questions, interpretation creates priority questions, priorities create representation questions, and verification confirms meaning | Does not prove the internal architecture principle, create a new success threshold, or authorize implementation |
 | Each layer makes the prior layer more meaningful | Tests whether later reasoning increases comprehension rather than merely adding detail | Does not authorize disclosure removal, weaken constitutional truth, or infer a further refinement |
+| Layer 1 orientation precedes explanation | Tests Orientation Before Explanation under D-068 — whether the participant first locates themselves, understands attention state, and feels grounded readiness before deeper reasoning | Does not prove trust, promise safety, adopt a public category, create a new success threshold, or authorize implementation |
+| Reassurance matches the observable state | Tests whether calm or readiness follows evidence and whether uncertainty or required attention is recognized when present | Does not authorize unsupported reassurance, conceal risk, weaken constitutional truth, or infer a further refinement |
 | Trust formation has an identifiable moment and cause | Tests when Hedgr’s interpretation began to feel credible, not merely whether trust was preferred | Does not prove product success or authorize redesign |
 | Breakdown locates to a trust-formation stage | Supports synthesis against situation → interpretation → priorities → evidence → boundaries → agency | Does not convert stage notes into automatic approval or a scoring threshold |
 | Exception behavior understood | Tests trust under unavailable data | Does not select a live rate source or degraded execution policy |
