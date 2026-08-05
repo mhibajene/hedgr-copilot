@@ -6,7 +6,7 @@
 
 **Authority:** The repository is source of truth. Wording here must match `docs/decisions/0016-warmth-layer-doctrine-constrained-retail-refinement-track.md`, `docs/decisions/SPRINT-2-ADR-INDEX.md`, and `docs/ops/HEDGR_STATUS.md`. Wording must match **Accepted** ADR **0016** in repo; do not broaden scope or soften read-only / non-execution boundaries in Notion.
 
-**Last reconciled:** 2026-08-05 (mirror after Founder acceptance of Internal **D-068** / Orientation Before Explanation under **§192** as the behavioural foundation beneath Progressive Institutional Reasoning under **D-067** / **§191** and Institutional Coherence under **D-065** / **§188**; “Financial Stability Companion” remains an internal behavioural frame and test-only category hypothesis, not settled or public naming; reassurance must remain grounded in observable interpretation, with uncertainty or required attention surfaced when present; no implementation authority, lane, concurrency, UI work, or financial-authority change; verified `CLASS-A-VAL-002-GF-001` remains completed historical authority under **D-066** / **§189**–**§190**; parent `CLASS-A-VAL-002` remains the sole active and open ticket; no nested refinement is active; protocol-complete dual-layer participant validation on the verified GF-001 build is immediately next; no further refinement may be inferred; Lanes M / N / R idle; frozen narrative sources unchanged; publication unauthorized; Kenya counsel **DEFER**; repo **§7** / **§7a** controls sequencing)
+**Last reconciled:** 2026-08-05 (mirror after Founder acceptance of Internal **D-069** / Cognitive Stewardship under **§193** as enduring institutional product learning: Hedgr progressively carries interpretation while the participant retains judgement; preserves Constitutional correctness, Institutional Coherence under **D-065** / **§188**, Graduated Fidelity through completed **D-066** / **§189**–**§190**, Progressive Institutional Reasoning under **D-067** / **§191**, and Orientation Before Explanation under **D-068** / **§192**; “Financial Stability Companion” remains an internal behavioural frame and test-only category hypothesis, not settled or public naming; no doctrine, implementation authority, lane, concurrency, UI work, or financial-authority change; parent `CLASS-A-VAL-002` remains the sole active and open ticket; no nested refinement is active; protocol-complete dual-layer participant validation on the verified GF-001 build is immediately next; no further refinement may be inferred; Lanes M / N / R idle; frozen narrative sources unchanged; publication unauthorized; Kenya counsel **DEFER**; repo **§7** / **§7a** controls sequencing)
 
 ---
 
@@ -90,6 +90,7 @@ Use as a governed workstream line, **not** as a shipped-feature claim. Placement
 
 - **`CLASS-A-VAL-002` Progressive Institutional Reasoning principle (D-067, Accepted):** Records five durable internal product-architecture learnings: reveal understanding rather than more information; answer the next natural question; place purpose before representation; reveal institutional reasoning before machinery; and compound trust through understandable reasoning. Extends Institutional Coherence under D-065 / **§188**; does not create implementation authority or reopen completed GF-001. Canonical detail: **§191**; live brief: **§7a**. Protocol-complete participant validation on the verified GF-001 build remains immediately next. `NO CROSS-LANE IMPACT`.
 - **`CLASS-A-VAL-002` Orientation Before Explanation principle (D-068, Accepted):** Records the behavioural foundation beneath the existing internal product-architecture principles: Layer 1 reduces uncertainty and establishes grounded readiness before deeper reasoning. Reassurance applies only when supported by observable interpretation; otherwise uncertainty or required attention must be surfaced. “Financial Stability Companion” remains an internal behavioural frame and test-only category hypothesis, not settled or public naming. Does not create implementation authority or reopen completed GF-001. Canonical detail: **§192**; live brief: **§7a**. Protocol-complete participant validation on the verified GF-001 build remains immediately next. `NO CROSS-LANE IMPACT`.
+- **`CLASS-A-VAL-002` Cognitive Stewardship institutional product learning (D-069, Accepted):** Records the enduring internal learning that Hedgr should progressively carry interpretation while the participant retains judgement. Consolidates the existing behavioural-architecture stack; preserves agency, material uncertainty, disclosure, and the internal/test-only category boundary; creates no doctrine, implementation authority, or further refinement. Canonical detail: **§193**; live brief: **§7a**. Protocol-complete participant validation on the verified GF-001 build remains immediately next. `NO CROSS-LANE IMPACT`.
 
 - **Controlled Parallelism v7 (D-041, Accepted — completed historical pass):** Named `CLASS-A-VAL-002` (Lane V) and `BRIDGE-P1-PREP-001` (Lane R prep). Lane R closed prep-complete (**§151** / **D-043**); singular-ticket restored; D-041 no longer supplies concurrency. Proposed `BRIDGE-P1-001` formed not active. `NO CROSS-LANE IMPACT`.
 
@@ -1552,6 +1553,36 @@ Use when mirroring the completed **test-only** regression tranche 4. **Not** new
 - Internal behavioural frame: calm orientation, progressive understanding, institutional reasoning, and preserved agency — not conversational AI, personality, emotional coaching, manipulation, or unsupported reassurance.
 - Participant validation should qualitatively observe initial orientation, accurate attention recognition, grounded readiness, and invited explanation without teaching internal vocabulary, changing scores, or weakening existing journey / simulation / trust-boundary evidence.
 - Creates no UI, product, architecture, Stability Engine, target, financial, customer-money, Class B / Class C, parent-closeout, nested-ticket, successor, public-category, or concurrency authority.
+- `CLASS-A-VAL-002-GF-001` remains completed historical authority. Proceed to protocol-complete dual-layer participant validation on the verified build; no further refinement by inference.
+- Singular-ticket Lane V remains; `NO CROSS-LANE IMPACT`.
+
+---
+
+## 8d.37 Decision Log — D-069 / Cognitive Stewardship institutional product learning (Internal; Notion mirror)
+
+**Notion Decision Log ID:** **D-069**. Canonical detail: **`docs/ops/HEDGR_STATUS.md` §193** and live brief in **§7a**. Visibility: **Internal**. The approved learning consolidates the current behavioural-architecture stack beneath Constitutional correctness, Institutional Coherence under **D-065** / **§188**, completed Graduated Fidelity under **D-066** / **§189**–**§190**, Progressive Institutional Reasoning under **D-067** / **§191**, and Orientation Before Explanation under **D-068** / **§192**.
+
+| Field | Value |
+| ----- | ----- |
+| **Decision ID** | D-069 |
+| **Title** | Adopt Cognitive Stewardship as enduring institutional product learning |
+| **Status** | Accepted — parent remains open; participant validation on verified GF-001 build immediately next; no doctrine, implementation, or public-naming authority |
+| **Decision Type** | Institutional Product Learning / Product Architecture |
+| **Strategic Horizon** | Enduring institutional learning; implementation-independent evaluation posture |
+| **Visibility** | Internal |
+| **Date** | 2026-08-05 |
+| **Repo authority** | `HEDGR_STATUS.md` **§193**; live brief **§7a**; D-068 Orientation Before Explanation **§192**; D-067 Progressive Institutional Reasoning **§191**; D-065 Institutional Coherence **§188**; GF-001 closeout **§189**–**§190**; parent disposition **§179** / D-060 |
+| **Ticket** | Under Lane V `CLASS-A-VAL-002` (sole active parent ticket; remains open) |
+
+**Summary / notes (concise)**
+
+- Founder accepts Cognitive Stewardship as enduring institutional product learning: the institution progressively carries interpretation while progressively returning judgement to the participant.
+- Preserve the seven accepted learnings: reveal understanding rather than more information; answer each next natural question; place purpose before representation; reveal reasoning before machinery; compound trust through understandable reasoning; let the institution carry the first cognitive step while the participant retains the decision; and reduce uncertainty before increasing understanding.
+- Intended behavioural model: Institution observes → interprets → explains → Participant understands → decides. Challenge institution-presents → participant-interprets flows when the institution could reasonably carry the first interpretive step.
+- “Financial Stability Companion” remains an internal behavioural frame and test-only category hypothesis defined by disciplined institutional behaviour, not personality, coaching, conversational AI, emotional design, persuasion, settled naming, or public naming.
+- Participant validation should qualitatively observe who carries cognitive work, whether unnecessary effort reduces, whether Hedgr's interpretation remains distinct from participant judgement, and whether decision ownership remains intact without teaching internal vocabulary or changing scores.
+- Preserves constitutional disclosure, material uncertainty, evidence-grounded reassurance, simulation boundaries, and participant agency.
+- Creates no doctrine, product specification, UI, copy, product, architecture, Stability Engine, target, financial, customer-money, Class B / Class C, parent-closeout, nested-ticket, successor, public-category, or concurrency authority.
 - `CLASS-A-VAL-002-GF-001` remains completed historical authority. Proceed to protocol-complete dual-layer participant validation on the verified build; no further refinement by inference.
 - Singular-ticket Lane V remains; `NO CROSS-LANE IMPACT`.
 
