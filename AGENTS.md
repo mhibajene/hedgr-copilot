@@ -89,6 +89,8 @@ Internal **D-067** / **§191** accepts Progressive Institutional Reasoning as an
 
 Internal **D-068** / **§192** accepts Orientation Before Explanation as an internal product-architecture and evaluation principle only. “Financial Stability Companion” remains an internal behavioural frame and test-only category hypothesis, not settled or public naming. D-068 creates no implementation authority, lane, concurrency, or further-refinement authority; protocol-complete dual-layer participant retesting remains immediately next.
 
+Internal **D-069** / **§193** accepts Cognitive Stewardship as an enduring internal institutional product learning only: the institution progressively carries interpretation while the participant retains judgement. It creates no doctrine, implementation authority, lane, concurrency, public-naming authority, or further-refinement authority; protocol-complete dual-layer participant retesting remains immediately next.
+
 ### Green Lane operator rules (ADR 0025 / §6g)
 
 When performing or reviewing work labeled Green Lane, Cursor and Codex must verify before acting:
@@ -205,6 +207,8 @@ Current parallelism posture: Internal Decisions **D-029**, **D-032** / **§6f.3*
 Internal **D-067** / **§191** accepts Progressive Institutional Reasoning as an internal product-architecture and evaluation principle only. It creates no implementation authority, lane, concurrency, or further-refinement authority; protocol-complete dual-layer participant retesting remains immediately next.
 
 Internal **D-068** / **§192** accepts Orientation Before Explanation as an internal product-architecture and evaluation principle only. “Financial Stability Companion” remains an internal behavioural frame and test-only category hypothesis, not settled or public naming. D-068 creates no implementation authority, lane, concurrency, or further-refinement authority; protocol-complete dual-layer participant retesting remains immediately next.
+
+Internal **D-069** / **§193** accepts Cognitive Stewardship as an enduring internal institutional product learning only: the institution progressively carries interpretation while the participant retains judgement. It creates no doctrine, implementation authority, lane, concurrency, public-naming authority, or further-refinement authority; protocol-complete dual-layer participant retesting remains immediately next.
 
 ### Green Lane operator rules (ADR 0025 / §6g)
 
@@ -409,6 +413,8 @@ Current parallelism posture: Internal Decisions **D-029**, **D-032** / `§6f.3`,
 Internal **D-067** / **§191** accepts Progressive Institutional Reasoning as an internal product-architecture and evaluation principle only. It creates no implementation authority, lane, concurrency, or further-refinement authority; protocol-complete dual-layer participant retesting remains immediately next.
 
 Internal **D-068** / **§192** accepts Orientation Before Explanation as an internal product-architecture and evaluation principle only. “Financial Stability Companion” remains an internal behavioural frame and test-only category hypothesis, not settled or public naming. D-068 creates no implementation authority, lane, concurrency, or further-refinement authority; protocol-complete dual-layer participant retesting remains immediately next.
+
+Internal **D-069** / **§193** accepts Cognitive Stewardship as an enduring internal institutional product learning only: the institution progressively carries interpretation while the participant retains judgement. It creates no doctrine, implementation authority, lane, concurrency, public-naming authority, or further-refinement authority; protocol-complete dual-layer participant retesting remains immediately next.
 
 ### Green Lane operator rules (ADR 0025 / §6g)
 

@@ -4,9 +4,9 @@
 
 **Execution class:** Class A product validation; visibly synthetic; non-executing for customer money
 
-**Authority:** `docs/ops/HEDGR_STATUS.md` §7 / §7a, §143, §179, §180–§181, §184–§185, §186–§187, §188, §189–§190, §191, and §192; Internal D-037, D-060, D-061, D-063, D-064, D-065, D-066, D-067, and D-068
+**Authority:** `docs/ops/HEDGR_STATUS.md` §7 / §7a, §143, §179, §180–§181, §184–§185, §186–§187, §188, §189–§190, §191, §192, and §193; Internal D-037, D-060, D-061, D-063, D-064, D-065, D-066, D-067, D-068, and D-069
 
-**Non-authorization:** This protocol does not authorize live money movement, custody, provider or banking integration, production FX, settlement, payout, Stability Engine execution, Class B implementation, Evidence Register acceptance, gate clearance, participant-data collection beyond the bounded fields below, a successor ticket, public category naming, or any product change. Interface completion, completed session records, Institutional Coherence observation, graduated-fidelity observation, Progressive Institutional Reasoning observation, and Orientation Before Explanation observation do not by themselves close `CLASS-A-VAL-002`. D-066 supplied and closed only the bounded implementation in §189–§190 / §7a and authorizes no further refinement. D-067 / §191 and D-068 / §192 are internal evaluation principles only and create no implementation authority.
+**Non-authorization:** This protocol does not authorize live money movement, custody, provider or banking integration, production FX, settlement, payout, Stability Engine execution, Class B implementation, Evidence Register acceptance, gate clearance, participant-data collection beyond the bounded fields below, a successor ticket, public category naming, or any product change. Interface completion, completed session records, Institutional Coherence observation, graduated-fidelity observation, Progressive Institutional Reasoning observation, Orientation Before Explanation observation, and Cognitive Stewardship observation do not by themselves close `CLASS-A-VAL-002`. D-066 supplied and closed only the bounded implementation in §189–§190 / §7a and authorizes no further refinement. D-067 / §191, D-068 / §192, and D-069 / §193 are internal evaluation principles only and create no implementation authority.
 
 ## 1. Research decision
 
@@ -32,6 +32,8 @@ Additionally observe the `CLASS-A-VAL-002-GF-001` graduated-fidelity sequence wi
 Additionally observe **Progressive Institutional Reasoning** under Internal **D-067** / **§191** without teaching it: whether each layer makes the previous layer more meaningful; whether the participant's own next question naturally progresses through situation → interpretation → priorities → representation → verification; whether purpose forms before numerical representation; whether institutional reasoning becomes legible before machinery; and whether decision ownership remains intact. Record the participant's questions and explanation trajectory rather than scoring conformity to the internal sequence. Do not use the internal term "Progressive Institutional Reasoning" with participants.
 
 Additionally observe **Orientation Before Explanation** under Internal **D-068** / **§192** without teaching it: whether the participant first understands where they are and whether anything requires attention; whether the initial surface reduces uncertainty and creates grounded readiness to continue before deeper explanation; whether explanation feels invited by the participant's next question; and whether any reassurance matches the observable state. If the state is uncertain or requires attention, observe whether the participant recognizes that instead of seeking a generic “safe” signal. “Financial Stability Companion” remains an internal behavioural frame and test-only category hypothesis; do not show or teach the phrase. Record these as qualitative observations, not a new score, trust promise, or implementation disposition.
+
+Additionally observe **Cognitive Stewardship** under Internal **D-069** / **§193** without teaching it: whether Hedgr performs the first reasonable interpretive step before asking the participant to infer meaning; whether each layer reduces unnecessary cognitive effort while increasing understanding; whether the participant can distinguish Hedgr's interpretation from their own judgement; and whether decision ownership remains with the participant. Record where interpretation feels carried by the institution and where it remains assigned to the participant. Do not use the internal term “Cognitive Stewardship” with participants or show “Financial Stability Companion” before unaided category elicitation. Treat these as qualitative synthesis observations, not a new score, product claim, or implementation disposition.
 
 Use the resulting evidence for the Founder to decide whether to:
 
@@ -330,6 +332,21 @@ Use this as a qualitative observation record under D-068 / §192, not as a separ
 
 These observations may inform governed synthesis; they do not prove trust, promise safety, validate D-068, adopt “Financial Stability Companion” as public naming, authorize refinement, or change any existing success threshold.
 
+### Cognitive Stewardship — interpretation and agency relationship
+
+Use this as a qualitative relationship record under D-069 / §193, not as a separate scoring system or prescribed participant vocabulary. Record observable behaviour and the participant's own words. Leave fields blank when unobserved.
+
+| Cognitive-work observation | Response / evidence note |
+| --- | --- |
+| Hedgr performs the first reasonable interpretive step | |
+| Participant is not required to reconstruct meaning the institution could provide | |
+| Each deeper layer increases understanding rather than only information | |
+| Hedgr's interpretation remains distinguishable from participant judgement | |
+| Participant retains decision ownership after explanation | |
+| Cognitive effort is reduced without hiding uncertainty or boundaries | |
+
+These observations may inform governed synthesis; they do not prove D-069, establish trust or comprehension, adopt “Financial Stability Companion” as public naming, authorize refinement, reduce participant agency, or change any existing success threshold.
+
 ### Open category interpretation
 
 Complete only after the unaided product-identity response is recorded. Multiple observations may apply; do not force the participant into one label.
@@ -420,6 +437,8 @@ Do not convert scores into automatic approval. Synthesize repeated observations 
 | Each layer makes the prior layer more meaningful | Tests whether later reasoning increases comprehension rather than merely adding detail | Does not authorize disclosure removal, weaken constitutional truth, or infer a further refinement |
 | Layer 1 orientation precedes explanation | Tests Orientation Before Explanation under D-068 — whether the participant first locates themselves, understands attention state, and feels grounded readiness before deeper reasoning | Does not prove trust, promise safety, adopt a public category, create a new success threshold, or authorize implementation |
 | Reassurance matches the observable state | Tests whether calm or readiness follows evidence and whether uncertainty or required attention is recognized when present | Does not authorize unsupported reassurance, conceal risk, weaken constitutional truth, or infer a further refinement |
+| Institution carries the first cognitive step | Tests Cognitive Stewardship under D-069 — whether Hedgr interprets the observable state before the participant must reconstruct meaning | Does not prove comprehension, authorize implementation, or transfer judgement away from the participant |
+| Participant retains judgement after interpretation | Tests whether institutional explanation reduces effort while preserving agency, uncertainty, and decision ownership | Does not establish advice, recommendation, protection, product success, or a new success threshold |
 | Trust formation has an identifiable moment and cause | Tests when Hedgr’s interpretation began to feel credible, not merely whether trust was preferred | Does not prove product success or authorize redesign |
 | Breakdown locates to a trust-formation stage | Supports synthesis against situation → interpretation → priorities → evidence → boundaries → agency | Does not convert stage notes into automatic approval or a scoring threshold |
 | Exception behavior understood | Tests trust under unavailable data | Does not select a live rate source or degraded execution policy |
