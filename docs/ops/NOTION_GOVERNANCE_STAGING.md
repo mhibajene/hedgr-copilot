@@ -6,7 +6,7 @@
 
 **Authority:** The repository is source of truth. Wording here must match `docs/decisions/0016-warmth-layer-doctrine-constrained-retail-refinement-track.md`, `docs/decisions/SPRINT-2-ADR-INDEX.md`, and `docs/ops/HEDGR_STATUS.md`. Wording must match **Accepted** ADR **0016** in repo; do not broaden scope or soften read-only / non-execution boundaries in Notion.
 
-**Last reconciled:** 2026-08-10 (mirror after completed Internal **D-070** / `CLASS-A-VAL-002-WARMTH-001` under **§194**–**§195** and Founder authorization of Internal **D-071** / `CLASS-A-VAL-002-AFF-001` under **§196**. The sole active nested refinement removes only the competing “Optional” requirement-status term from three Stability Guidance disclosure affordances while preserving their existing reasoning labels, order, content, native optional interaction, and all financial / execution boundaries. Every other HedgrOps review concern remains test-first. Parent `CLASS-A-VAL-002` remains the sole active and open ticket; no lane or concurrency is created; protocol-complete dual-layer participant validation follows verified closeout; Lanes M / N / R idle; frozen narrative sources unchanged; publication unauthorized; Kenya counsel **DEFER**; repo **§7** / **§7a** controls sequencing)
+**Last reconciled:** 2026-08-10 (mirror after completed Internal **D-070** / `CLASS-A-VAL-002-WARMTH-001` under **§194**–**§195** and completed Internal **D-071** / `CLASS-A-VAL-002-AFF-001` under **§196**–**§197**. The D-071 pass removed only the competing “Optional” requirement-status term from three Stability Guidance disclosure affordances while preserving their existing reasoning labels, order, content, native optional interaction, and all financial / execution boundaries. Every other HedgrOps review concern remains test-first. Parent `CLASS-A-VAL-002` remains the sole active and open ticket; no nested refinement, lane, or concurrency is active; protocol-complete dual-layer participant validation is immediately next; Lanes M / N / R idle; frozen narrative sources unchanged; publication unauthorized; Kenya counsel **DEFER**; repo **§7** / **§7a** controls sequencing)
 
 ---
 
@@ -94,7 +94,7 @@ Use as a governed workstream line, **not** as a shipped-feature claim. Placement
 
 - **`CLASS-A-VAL-002-WARMTH-001` Layer 1 Institutional Warmth pass (D-070, Accepted and completed):** One bounded presentation/copy-only pass completed under activation **§194** and verified closeout **§195**. Parent remains open; the nested authority is historical only; no successor is supplied by D-070. `NO CROSS-LANE IMPACT`.
 
-- **`CLASS-A-VAL-002-AFF-001` Reasoning-Thread Affordance Semantics pass (D-071, Accepted and active):** Founder-authorized minimum-effective removal of the visible / accessible “Optional” status term from the three Stability Guidance disclosure affordances. Preserve existing reasoning labels, semantic order, content, and native optional behaviour. All other feedback remains test-first. Canonical detail: **§196**; active brief: **§7a**. No lane, concurrency, category, engine, financial, or successor authority. `NO CROSS-LANE IMPACT`.
+- **`CLASS-A-VAL-002-AFF-001` Reasoning-Thread Affordance Semantics pass (D-071, Accepted and completed):** Minimum-effective removal of the visible / accessible “Optional” status term from the three Stability Guidance disclosure affordances, with existing reasoning labels, semantic order, content, and native optional behaviour preserved. All other feedback remains test-first. Canonical activation **§196**; verified closeout **§197**; completed brief **§7a**. No active nested refinement, lane, concurrency, category, engine, financial, or successor authority. `NO CROSS-LANE IMPACT`.
 
 - **Controlled Parallelism v7 (D-041, Accepted — completed historical pass):** Named `CLASS-A-VAL-002` (Lane V) and `BRIDGE-P1-PREP-001` (Lane R prep). Lane R closed prep-complete (**§151** / **D-043**); singular-ticket restored; D-041 no longer supplies concurrency. Proposed `BRIDGE-P1-001` formed not active. `NO CROSS-LANE IMPACT`.
 
@@ -1618,18 +1618,18 @@ Use when mirroring the completed **test-only** regression tranche 4. **Not** new
 
 ## 8d.39 Decision Log — D-071 / CLASS-A-VAL-002-AFF-001 Reasoning-Thread Affordance Semantics Pass (Internal; Notion mirror)
 
-**Notion Decision Log ID:** **D-071**. Canonical activation: **`docs/ops/HEDGR_STATUS.md` §196**. Active brief: **§7a**. Visibility: **Internal**.
+**Notion Decision Log ID:** **D-071**. Canonical activation: **`docs/ops/HEDGR_STATUS.md` §196**. Verified closeout: **§197**. Completed brief: **§7a**. Visibility: **Internal**.
 
 | Field | Value |
 | ----- | ----- |
 | **Decision ID** | D-071 |
 | **Title** | Authorize `CLASS-A-VAL-002-AFF-001` Reasoning-Thread Affordance Semantics Pass |
-| **Status** | Accepted and active — sole nested refinement; parent remains open |
+| **Status** | Accepted and completed — historical nested authority only; parent remains open; no active nested refinement |
 | **Decision Type** | Product / Validation / UX Trust / Interaction Semantics |
 | **Visibility** | Internal |
 | **Date** | 2026-08-10 |
-| **Repo authority** | `HEDGR_STATUS.md` **§196**; live brief **§7a**; completed D-070 **§194**–**§195** |
-| **Ticket** | Nested inside Lane V `CLASS-A-VAL-002`; not a second ticket or concurrent lane |
+| **Repo authority** | `HEDGR_STATUS.md` **§196** activation and **§197** verified closeout; completed brief **§7a**; completed D-070 **§194**–**§195** |
+| **Ticket** | Completed nested authority inside Lane V `CLASS-A-VAL-002`; not a second ticket or concurrent lane |
 
 **Summary / notes (concise)**
 
@@ -1638,7 +1638,8 @@ Use when mirroring the completed **test-only** regression tranche 4. **Not** new
 - Preserve the existing reasoning labels and order: `See what Hedgr is trying to understand` → `See the role of each priority` → `View simulated target values` → `Verify what stability targets mean`.
 - Preserve native collapsed / user-controlled disclosure behaviour, all content, targets, engine state, balance, journey, trust boundaries, and non-execution meaning.
 - Do not introduce replacement copy, curiosity prompts, category naming, or any change answering another review concern.
-- After verified closeout, proceed to protocol-complete dual-layer participant testing; implementation is not participant evidence. `NO CROSS-LANE IMPACT`.
+- Implementation commit `ea175a3` removed only the three status-label elements; targeted unit **11 / 11**, focused journey E2E **3 / 3**, full validation with Vitest **751 / 751**, and production-build E2E **56 / 56** passed.
+- Proceed immediately to protocol-complete dual-layer participant testing; every other review concern remains test-first and implementation is not participant evidence. No successor is active or implied. `NO CROSS-LANE IMPACT`.
 
 ---
 
