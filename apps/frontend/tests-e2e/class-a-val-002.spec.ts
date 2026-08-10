@@ -91,12 +91,18 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   const prioritiesDetails = page.getByTestId('engine-allocation-priorities-details');
   const rolesDetails = page.getByTestId('engine-allocation-roles-details');
   const valuesDetails = page.getByTestId('engine-allocation-values-details');
+  await expect(prioritiesDetails.locator(':scope > summary')).toHaveAccessibleName(
+    'See what Hedgr is trying to understand',
+  );
   await expect(prioritiesDetails).not.toHaveAttribute('open', '');
   await expect(page.getByTestId('engine-allocation-philosophy')).not.toBeVisible();
   await prioritiesDetails.getByText('See what Hedgr is trying to understand').click();
   await expect(page.getByTestId('engine-allocation-philosophy')).toBeVisible();
   await expect(page.getByTestId('engine-allocation-philosophy')).toContainText(
     'preserve value first, keep access and risk visible',
+  );
+  await expect(rolesDetails.locator(':scope > summary')).toHaveAccessibleName(
+    'See the role of each priority',
   );
   await expect(rolesDetails).not.toHaveAttribute('open', '');
   await expect(page.getByTestId('engine-allocation-target-roles')).not.toBeVisible();
@@ -107,6 +113,9 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   await expect(targetRoles).toContainText('Conservative yield');
   await expect(targetRoles).toContainText('Reserve');
   await expect(targetRoles).not.toContainText(/\d+%/);
+  await expect(valuesDetails.locator(':scope > summary')).toHaveAccessibleName(
+    'View simulated target values',
+  );
   await expect(valuesDetails).not.toHaveAttribute('open', '');
   await expect(page.getByTestId('engine-allocation-band-coreTargetPct')).not.toBeVisible();
   await valuesDetails.getByText('View simulated target values').click();

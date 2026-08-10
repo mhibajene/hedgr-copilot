@@ -174,6 +174,18 @@ describe("EngineAllocationBands", () => {
     expect(valuesSummary?.textContent).toContain(
       "View simulated target values"
     );
+    expect(prioritiesSummary?.textContent?.trim()).toBe(
+      "See what Hedgr is trying to understand"
+    );
+    expect(rolesSummary?.textContent?.trim()).toBe(
+      "See the role of each priority"
+    );
+    expect(valuesSummary?.textContent?.trim()).toBe(
+      "View simulated target values"
+    );
+    for (const summary of [prioritiesSummary, rolesSummary, valuesSummary]) {
+      expect(summary?.textContent).not.toMatch(/optional/i);
+    }
     expect(prioritiesSummary?.textContent).not.toMatch(/\d+%/);
     expect(rolesSummary?.textContent).not.toMatch(/\d+%/);
     expect(
