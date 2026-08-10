@@ -257,12 +257,13 @@ export default function DashboardPage() {
               id="dashboard-orientation-heading"
               className="text-2xl font-semibold tracking-tight text-hedgr-800 sm:text-3xl"
             >
-              Understand your situation before deciding what to do next.
+              Hedgr has read your simulated position for you.
             </h2>
             <p className="max-w-xl text-sm leading-relaxed text-hedgr-dark">
-              Start with the current stability view and simulated balance. Use
-              the guidance below as context for the position, not as an
-              instruction or proof that money moved.
+              You don&apos;t have to work it out from scratch. The view below is
+              Hedgr&apos;s reading of the simulated balance, offered as context,
+              not an instruction and not proof that money moved. What happens
+              next is your decision.
             </p>
           </section>
         ) : null}
@@ -278,17 +279,17 @@ export default function DashboardPage() {
               <div className="max-w-lg">
                 <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-hedgr-500">
                   {syntheticJourneyActive
-                    ? "See one change in context"
+                    ? "Optional next step"
                     : "Primary journey action"}
                 </p>
                 <h2 className="mt-1 text-lg font-semibold text-hedgr-800">
                   {syntheticJourneyActive
-                    ? "See how the simulated position changes"
+                    ? "Continue the walkthrough whenever you're ready"
                     : "See your position clearly"}
                 </h2>
                 <p className="mt-1 text-sm leading-relaxed text-hedgr-dark">
                   {syntheticJourneyActive
-                    ? "Use the example deposit to see how the position responds. No account is charged and no real money moves."
+                    ? "Continuing is optional. If you would like to see how the simulated position changes, you can run an example deposit — it is part of the research walkthrough, not financial advice or a suggestion to move money. No account is charged and no real money moves."
                     : "Start by exploring a deposit when you are ready. Your balance and activity will appear here once you begin."}
                 </p>
               </div>

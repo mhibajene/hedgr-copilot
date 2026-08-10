@@ -190,12 +190,15 @@ describe("DashboardPage engine trust surface", () => {
     ).toBe("Current simulation overview");
     const orientation = screen.getByTestId("dashboard-orientation");
     expect(orientation.textContent).toContain("Financial position");
+    // Institution carries the first interpretive step (CLASS-A-VAL-002-WARMTH-001).
     expect(orientation.textContent).toContain(
-      "Understand your situation before deciding what to do next."
+      "Hedgr has read your simulated position for you."
     );
-    expect(orientation.textContent).toContain(
-      "not as an instruction or proof that money moved"
-    );
+    // Guidance-versus-instruction and no-money-moved boundary remain (semantic invariant).
+    expect(orientation.textContent).toContain("not an instruction");
+    expect(orientation.textContent).toContain("not proof that money moved");
+    // Participant retains judgement (semantic invariant).
+    expect(orientation.textContent).toContain("your decision");
     expect(orientation.textContent).not.toMatch(
       /Financial Stability Companion|crypto wallet|bank|budgeting app|trading product/i
     );
