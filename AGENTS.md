@@ -91,6 +91,8 @@ Internal **D-068** / **§192** accepts Orientation Before Explanation as an inte
 
 Internal **D-069** / **§193** accepts Cognitive Stewardship as an enduring internal institutional product learning only: the institution progressively carries interpretation while the participant retains judgement. It creates no doctrine, implementation authority, lane, concurrency, public-naming authority, or further-refinement authority; protocol-complete dual-layer participant retesting remains immediately next.
 
+Internal **D-070** / **§194**–**§195** supplied and closed `CLASS-A-VAL-002-WARMTH-001` as historical bounded Layer 1 presentation authority only. Founder-authorized `CLASS-A-VAL-002-AFF-001` is the sole active nested refinement under Internal **D-071** / **§196**: remove the requirement-status word “Optional” from the three Stability Guidance disclosure affordances while preserving their existing reasoning labels, order, content, native user-controlled disclosure behaviour, and all financial / execution boundaries. Every other HedgrOps review concern remains test-first and outside implementation scope. D-071 creates no lane or concurrency; after verified closeout, protocol-complete dual-layer participant retesting is immediately next.
+
 ### Green Lane operator rules (ADR 0025 / §6g)
 
 When performing or reviewing work labeled Green Lane, Cursor and Codex must verify before acting:
@@ -209,6 +211,8 @@ Internal **D-067** / **§191** accepts Progressive Institutional Reasoning as an
 Internal **D-068** / **§192** accepts Orientation Before Explanation as an internal product-architecture and evaluation principle only. “Financial Stability Companion” remains an internal behavioural frame and test-only category hypothesis, not settled or public naming. D-068 creates no implementation authority, lane, concurrency, or further-refinement authority; protocol-complete dual-layer participant retesting remains immediately next.
 
 Internal **D-069** / **§193** accepts Cognitive Stewardship as an enduring internal institutional product learning only: the institution progressively carries interpretation while the participant retains judgement. It creates no doctrine, implementation authority, lane, concurrency, public-naming authority, or further-refinement authority; protocol-complete dual-layer participant retesting remains immediately next.
+
+Internal **D-070** / **§194**–**§195** supplied and closed `CLASS-A-VAL-002-WARMTH-001` as historical bounded Layer 1 presentation authority only. Founder-authorized `CLASS-A-VAL-002-AFF-001` is the sole active nested refinement under Internal **D-071** / **§196**: remove the requirement-status word “Optional” from the three Stability Guidance disclosure affordances while preserving their existing reasoning labels, order, content, native user-controlled disclosure behaviour, and all financial / execution boundaries. Every other HedgrOps review concern remains test-first and outside implementation scope. D-071 creates no lane or concurrency; after verified closeout, protocol-complete dual-layer participant retesting is immediately next.
 
 ### Green Lane operator rules (ADR 0025 / §6g)
 
@@ -415,6 +419,8 @@ Internal **D-067** / **§191** accepts Progressive Institutional Reasoning as an
 Internal **D-068** / **§192** accepts Orientation Before Explanation as an internal product-architecture and evaluation principle only. “Financial Stability Companion” remains an internal behavioural frame and test-only category hypothesis, not settled or public naming. D-068 creates no implementation authority, lane, concurrency, or further-refinement authority; protocol-complete dual-layer participant retesting remains immediately next.
 
 Internal **D-069** / **§193** accepts Cognitive Stewardship as an enduring internal institutional product learning only: the institution progressively carries interpretation while the participant retains judgement. It creates no doctrine, implementation authority, lane, concurrency, public-naming authority, or further-refinement authority; protocol-complete dual-layer participant retesting remains immediately next.
+
+Internal **D-070** / **§194**–**§195** supplied and closed `CLASS-A-VAL-002-WARMTH-001` as historical bounded Layer 1 presentation authority only. Founder-authorized `CLASS-A-VAL-002-AFF-001` is the sole active nested refinement under Internal **D-071** / **§196**: remove the requirement-status word “Optional” from the three Stability Guidance disclosure affordances while preserving their existing reasoning labels, order, content, native user-controlled disclosure behaviour, and all financial / execution boundaries. Every other HedgrOps review concern remains test-first and outside implementation scope. D-071 creates no lane or concurrency; after verified closeout, protocol-complete dual-layer participant retesting is immediately next.
 
 ### Green Lane operator rules (ADR 0025 / §6g)
 
