@@ -61,11 +61,11 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   const dashboardOrientation = page.getByTestId('dashboard-orientation');
   await expect(dashboardOrientation).toContainText('Financial position');
   await expect(dashboardOrientation).toContainText(
-    'Understand your situation before deciding what to do next.',
+    'Hedgr has read your simulated position for you.',
   );
-  await expect(dashboardOrientation).toContainText(
-    'not as an instruction or proof that money moved',
-  );
+  await expect(dashboardOrientation).toContainText('not an instruction');
+  await expect(dashboardOrientation).toContainText('not proof that money moved');
+  await expect(dashboardOrientation).toContainText('your decision');
   await expect(page.getByTestId('usd-balance')).toHaveText('$0.00');
   await expect(page.getByText('Simulated balance', { exact: true })).toBeVisible();
   await expect(page.getByTestId('dashboard-synthetic-balance-explainer')).toContainText(
