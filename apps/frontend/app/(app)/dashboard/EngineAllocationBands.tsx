@@ -265,9 +265,6 @@ export function EngineAllocationBands({
       <summary className="cursor-pointer list-none font-medium text-hedgr-800 marker:content-none select-none [&::-webkit-details-marker]:hidden">
         <span className="flex items-center justify-between gap-4">
           <span>See what Hedgr is trying to understand</span>
-          <span className="text-xs font-medium uppercase tracking-wide text-hedgr-500">
-            Optional
-          </span>
         </span>
       </summary>
       <div className="mt-4 space-y-5 border-t border-hedgr-100 pt-4">
@@ -276,9 +273,6 @@ export function EngineAllocationBands({
           <summary className="cursor-pointer list-none font-medium text-hedgr-800 marker:content-none select-none [&::-webkit-details-marker]:hidden">
             <span className="flex items-center justify-between gap-4">
               <span>See the role of each priority</span>
-              <span className="text-xs font-medium uppercase tracking-wide text-hedgr-500">
-                Optional
-              </span>
             </span>
           </summary>
           <div className="mt-4 space-y-5 border-t border-hedgr-100 pt-4">
@@ -287,9 +281,6 @@ export function EngineAllocationBands({
               <summary className="cursor-pointer list-none font-medium text-hedgr-800 marker:content-none select-none [&::-webkit-details-marker]:hidden">
                 <span className="flex items-center justify-between gap-4">
                   <span>View simulated target values</span>
-                  <span className="text-xs font-medium uppercase tracking-wide text-hedgr-500">
-                    Optional
-                  </span>
                 </span>
               </summary>
               <div className="mt-4 space-y-5 border-t border-hedgr-100 pt-4">
