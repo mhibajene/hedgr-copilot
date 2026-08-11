@@ -4,6 +4,7 @@ import { getFixedRate } from '../fx';
 
 export const CLASS_A_VAL_002_JOURNEY_PARAM = 'journey';
 export const CLASS_A_VAL_002_JOURNEY_VALUE = 'class-a-val-002';
+export const CLASS_A_VAL_002_DASHBOARD_PATH = '/dashboard-synthetic-journey';
 export const CLASS_A_VAL_002_SCENARIO_PARAM = 'scenario';
 export const CLASS_A_VAL_002_UNAVAILABLE_DATA_SCENARIO = 'unavailable-data';
 
@@ -66,6 +67,10 @@ export function getSyntheticJourneyHref(
   pathname: '/dashboard' | '/deposit' | '/withdraw' | '/activity',
   options: { unavailableData?: boolean } = {},
 ): string {
+  if (pathname === '/dashboard' && !options.unavailableData) {
+    return CLASS_A_VAL_002_DASHBOARD_PATH;
+  }
+
   const params = new URLSearchParams({
     [CLASS_A_VAL_002_JOURNEY_PARAM]: CLASS_A_VAL_002_JOURNEY_VALUE,
   });

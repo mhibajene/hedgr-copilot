@@ -49,6 +49,9 @@ describe('CLASS-A-VAL-002 synthetic journey state', () => {
   });
 
   test('builds bounded route links and uses governed fixed preview rates', () => {
+    expect(getSyntheticJourneyHref('/dashboard')).toBe(
+      '/dashboard-synthetic-journey',
+    );
     expect(getSyntheticJourneyHref('/withdraw')).toBe(
       '/withdraw?journey=class-a-val-002',
     );
