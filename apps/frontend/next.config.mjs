@@ -2,6 +2,14 @@
 const nextConfig = {
   reactStrictMode: true,
   transpilePackages: ['@hedgr/ui'],
+  async rewrites() {
+    return [
+      {
+        source: '/dashboard-synthetic-journey',
+        destination: '/dashboard?journey=class-a-val-002',
+      },
+    ];
+  },
   webpack: (config) => {
     // Handle optional analytics modules
     config.resolve.fallback = {

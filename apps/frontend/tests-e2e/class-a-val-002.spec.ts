@@ -10,7 +10,8 @@ async function login(page: Page) {
   await page.getByPlaceholder('you@example.com').fill('class-a-val-002@hedgr.test');
   await page.getByRole('button', { name: 'Continue' }).click();
   await expect(page).toHaveURL(/\/dashboard/);
-  await page.goto('/dashboard?journey=class-a-val-002');
+  await page.goto('/dashboard-synthetic-journey');
+  await expect(page).toHaveURL(/\/dashboard-synthetic-journey$/);
 }
 
 test.beforeEach(async ({ context }) => {
@@ -335,7 +336,7 @@ test('mobile keeps the persistent boundary and current research step visible', a
   const mobileNav = page.getByTestId('nav-links-mobile');
   await expect(mobileNav).toBeVisible();
   for (const [label, href] of [
-    ['Dashboard', '/dashboard?journey=class-a-val-002'],
+    ['Dashboard', '/dashboard-synthetic-journey'],
     ['Deposit', '/deposit?journey=class-a-val-002'],
     ['Withdraw', '/withdraw?journey=class-a-val-002'],
     ['Activity', '/activity?journey=class-a-val-002'],

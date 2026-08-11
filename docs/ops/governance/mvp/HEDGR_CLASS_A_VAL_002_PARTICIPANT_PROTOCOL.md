@@ -1,12 +1,12 @@
 # CLASS-A-VAL-002 Participant Protocol and Evidence Capture
 
-**Status:** Active dual-layer retest instrument for the sole active `CLASS-A-VAL-002` ticket, aligned to the verified `CLASS-A-VAL-002-AFF-001` affordance-semantics build (§196–§197 / Internal D-071; implementation commit `ea175a3`) layered on completed `CLASS-A-VAL-002-WARMTH-001` and `CLASS-A-VAL-002-GF-001`; record the exact tested build commit in each session's Build / commit field; participant sessions are immediately next
+**Status:** Active dual-layer retest instrument for the sole active `CLASS-A-VAL-002` ticket, aligned to the verified human-readable participant-entry build after completed `CLASS-A-VAL-002-ROUTE-001` (§198–§199 / Internal D-072) on top of the affordance-semantics build; record the exact tested build commit in each session's Build / commit field; participant testing is active under the parent
 
 **Execution class:** Class A product validation; visibly synthetic; non-executing for customer money
 
-**Authority:** `docs/ops/HEDGR_STATUS.md` §7 / §7a, §143, §179, §180–§181, §184–§185, §186–§187, §188, §189–§190, §191, §192, §193, §194–§195, and §196–§197; Internal D-037, D-060, D-061, D-063, D-064, D-065, D-066, D-067, D-068, D-069, D-070, and D-071
+**Authority:** `docs/ops/HEDGR_STATUS.md` §7 / §7a, §143, §179, §180–§181, §184–§185, §186–§187, §188, §189–§190, §191, §192, §193, §194–§195, §196–§197, and §198–§199; Internal D-037, D-060, D-061, D-063, D-064, D-065, D-066, D-067, D-068, D-069, D-070, D-071, and D-072
 
-**Non-authorization:** This protocol does not authorize live money movement, custody, provider or banking integration, production FX, settlement, payout, Stability Engine execution, Class B implementation, Evidence Register acceptance, gate clearance, participant-data collection beyond the bounded fields below, a successor ticket, public category naming, or any product change. Interface completion, completed session records, Institutional Coherence observation, graduated-fidelity observation, Progressive Institutional Reasoning observation, Orientation Before Explanation observation, and Cognitive Stewardship observation do not by themselves close `CLASS-A-VAL-002`. D-066 supplied and closed only the bounded implementation in §189–§190 / §7a and authorizes no further refinement. D-067 / §191, D-068 / §192, and D-069 / §193 are internal evaluation principles only and create no implementation authority. D-070 / §194–§195 supplied and closed only the bounded Layer 1 Institutional Warmth presentation/copy pass. D-071 / §196–§197 supplied and closed only removal of the three competing “Optional” status labels while preserving the reasoning labels and native disclosure interaction. Neither completed pass authorizes a successor refinement or evidences warmth, continuity of thought, trust, comprehension, or category convergence.
+**Non-authorization:** This protocol does not authorize live money movement, custody, provider or banking integration, production FX, settlement, payout, Stability Engine execution, Class B implementation, Evidence Register acceptance, gate clearance, participant-data collection beyond the bounded fields below, a successor ticket, public category naming, or any further product change. Interface completion, completed session records, Institutional Coherence observation, graduated-fidelity observation, Progressive Institutional Reasoning observation, Orientation Before Explanation observation, and Cognitive Stewardship observation do not by themselves close `CLASS-A-VAL-002`. D-066, D-070, D-071, and D-072 remain completed historical nested authority only. D-072 / §198–§199 supplied and closed only the human-readable participant-entry route and compatibility coverage; it does not alter the journey or evidence meaning and does not evidence trust, comprehension, or category convergence.
 
 ## 1. Research decision
 
@@ -60,7 +60,7 @@ Use a random participant code such as `P-001`. Keep any recruitment contact data
 
 - Use the frontend in `NEXT_PUBLIC_AUTH_MODE=mock`, fixed/stub FX, and the local development environment.
 - Clear `hedgr:ledger` and `hedgr:wallet` before each session.
-- Start at `/dashboard?journey=class-a-val-002` with a zero balance.
+- Start at `/dashboard-synthetic-journey` with a zero balance. Retain `/dashboard?journey=class-a-val-002` only as the compatibility / rollback fallback.
 - Keep the persistent `Simulation Mode — No Real Money` disclosure visible.
 - Do not open Settings or Copilot during the primary journey.
 - Use the default ZMW amounts only as simulated research data, not as launch-market evidence.
