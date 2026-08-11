@@ -5,7 +5,7 @@
   "ticket_activation_allowed": false,
   "sequencing_allowed": false,
   "authority_class": "REPO_AUTHORITY_PROJECTION",
-  "source_commit": "159296f37597ca380a97b7848bb5c96b1a08d95e",
+  "source_commit": "d20e47b651989aed4f12bde91a74378257b4e80c",
   "generated_at": "2026-08-11T00:00:00.000Z",
   "freshness": "CURRENT",
   "coverage": "COMPLETE",
@@ -15,8 +15,8 @@
       "source_role": "CURRENT_SEQUENCE_AND_ACTIVE_AUTHORITY",
       "requirement": "MANDATORY",
       "source_classification": "REPO_AUTHORITY",
-      "expected_revision": "159296f37597ca380a97b7848bb5c96b1a08d95e",
-      "actual_revision": "159296f37597ca380a97b7848bb5c96b1a08d95e",
+      "expected_revision": "d20e47b651989aed4f12bde91a74378257b4e80c",
+      "actual_revision": "d20e47b651989aed4f12bde91a74378257b4e80c",
       "freshness_requirement": "CURRENT_REQUIRED",
       "freshness": "CURRENT",
       "structural_validation": "VALID",
@@ -30,8 +30,8 @@
       "source_role": "REPO_EXECUTION_CONTRACT",
       "requirement": "MANDATORY",
       "source_classification": "REPO_AUTHORITY",
-      "expected_revision": "159296f37597ca380a97b7848bb5c96b1a08d95e",
-      "actual_revision": "159296f37597ca380a97b7848bb5c96b1a08d95e",
+      "expected_revision": "d20e47b651989aed4f12bde91a74378257b4e80c",
+      "actual_revision": "d20e47b651989aed4f12bde91a74378257b4e80c",
       "freshness_requirement": "CURRENT_REQUIRED",
       "freshness": "CURRENT",
       "structural_validation": "VALID",
@@ -45,8 +45,8 @@
       "source_role": "ACCEPTED_ADR_INDEX",
       "requirement": "MANDATORY",
       "source_classification": "REPO_AUTHORITY",
-      "expected_revision": "159296f37597ca380a97b7848bb5c96b1a08d95e",
-      "actual_revision": "159296f37597ca380a97b7848bb5c96b1a08d95e",
+      "expected_revision": "d20e47b651989aed4f12bde91a74378257b4e80c",
+      "actual_revision": "d20e47b651989aed4f12bde91a74378257b4e80c",
       "freshness_requirement": "CURRENT_REQUIRED",
       "freshness": "CURRENT",
       "structural_validation": "VALID",
@@ -60,8 +60,8 @@
       "source_role": "ACTIVE_DOCTRINE_SET_INDEX",
       "requirement": "MANDATORY",
       "source_classification": "REPO_AUTHORITY",
-      "expected_revision": "159296f37597ca380a97b7848bb5c96b1a08d95e",
-      "actual_revision": "159296f37597ca380a97b7848bb5c96b1a08d95e",
+      "expected_revision": "d20e47b651989aed4f12bde91a74378257b4e80c",
+      "actual_revision": "d20e47b651989aed4f12bde91a74378257b4e80c",
       "freshness_requirement": "CURRENT_REQUIRED",
       "freshness": "CURRENT",
       "structural_validation": "VALID",
@@ -77,27 +77,28 @@
     "fields": {
       "active_ticket_ids": {
         "value": [
-          "CLASS-A-VAL-002"
+          "CLASS-A-VAL-002",
+          "NARRATIVE-007"
         ],
         "source_path": "docs/ops/HEDGR_STATUS.md",
         "source_section": "§7 Current active ticket status",
-        "source_commit": "159296f37597ca380a97b7848bb5c96b1a08d95e",
+        "source_commit": "d20e47b651989aed4f12bde91a74378257b4e80c",
         "source_classification": "REPO_AUTHORITY",
         "freshness": "CURRENT"
       },
       "sequencing_posture": {
-        "value": "Singular-ticket `CLASS-A-VAL-002` (Lane V) after `NARRATIVE-006` Founder acceptance and closeout **§172**. Parent objective remains refined by Internal **D-060** / **§179**; Institutional Coherence, Progressive Institutional Reasoning, Orientation Before Explanation, and Cognitive Stewardship remain evaluation principles under Internal **D-065** / **§188**, **D-067** / **§191**, **D-068** / **§192**, and **D-069** / **§193**. Founder-approved nested `CLASS-A-VAL-002-ROUTE-001` completed under Internal **D-072** / **§198**–**§199** as a bounded route refinement. No nested refinement is active. Participant testing remains active under the parent on the verified human-readable-entry build; every other review concern remains test-first and no further refinement may be inferred. Controlled Parallelism **v19** / Internal **D-055** / **§6f.19** is completed historical authority. D-072 creates no lane or concurrency.",
+        "value": "Controlled Parallelism v20 / Internal **D-074** / **§6f.20** names only `CLASS-A-VAL-002` (Lane V, unchanged) and `NARRATIVE-007` (Lane N, audit-only). No nested Lane V refinement is active. Participant testing remains active on the verified human-readable-entry build with the canonical unpublished Form technically ready; every product-review concern remains test-first and no further refinement may be inferred. Lane N cannot alter Lane V or any frozen narrative source. Prior Controlled Parallelism passes through v19 / D-055 are completed historical authority.",
         "source_path": "docs/ops/HEDGR_STATUS.md",
         "source_section": "§7 Current active ticket status",
-        "source_commit": "159296f37597ca380a97b7848bb5c96b1a08d95e",
+        "source_commit": "d20e47b651989aed4f12bde91a74378257b4e80c",
         "source_classification": "REPO_AUTHORITY",
         "freshness": "CURRENT"
       },
       "authority_boundaries": {
-        "value": "Only **§7** / **§7a** name approved active ticket(s). **Default posture:** one active implementation ticket. Concurrent lanes are permitted only where this file records an accepted, active, and unambiguous Founder-approved parallelism decision (**§6e** lane model / Internal **D-026** plus separate active-pass naming under **§6f**), explicitly names each active lane and ticket, defines authority class and exclusions, and preserves independent stop conditions and rollback. Internal **D-029**, Internal **D-032** / **§6f.3**, Internal **D-034** / **§6f.4**, Internal **D-035** / **§6f.5**, Internal **D-036** / **§6f.6**, Internal **D-041** / **§6f.7**, Internal **D-044** / **§6f.8**, Internal **D-045** / **§6f.9**, Internal **D-046** / **§6f.10**, Internal **D-047** / **§6f.11**, Internal **D-048** / **§6f.12**, Internal **D-049** / **§6f.13**, Internal **D-050** / **§6f.14**, Internal **D-051** / **§6f.15**, Internal **D-052** / **§6f.16**, Internal **D-053** / **§6f.17**, Internal **D-054** / **§6f.18**, and Internal **D-055** / **§6f.19** are completed historical pass authorities and no longer supply concurrency. No governed-parallel pass is active. Singular-ticket `CLASS-A-VAL-002` (Lane V) is the sole active ticket after Founder acceptance and closeout of `NARRATIVE-006` under **§172**. Nested refinements through `CLASS-A-VAL-002-ROUTE-001` are completed historical authority under their named decisions through Internal **D-072** / **§198**–**§199**. Internal **D-073** / **§200**–**§201** activated and completed `CLASS-A-VAL-002-FORM-001` as a bounded nested instrument-formulation ticket inside the open parent; it is now completed historical authority and supplies no independent lane or product-refinement authority. Internal **D-065** / **§188**, **D-067** / **§191**, **D-068** / **§192**, and **D-069** / **§193** remain evaluation principles only. Protocol-complete dual-layer participant testing remains active on the verified human-readable-entry build with the canonical digital instrument technically ready and unpublished; every product-review concern remains test-first, with no further refinement by inference. Research R1 remains preserved; Research R2 is accepted as an internal design artifact; publication remains unauthorized. Lane M idle after `MONEY-STACK-001` closeout. Lane N idle after `NARRATIVE-006` closeout. Lane R idle after `BRIDGE-P1-OPS-001` closeout. The accepted `NARRATIVE-005` Investor Orientation Brief remains the controlling narrative source and non-authorising. Any additional concurrency requires a separate Founder decision plus explicit **§7** / **§7a** naming. Parallel authorization applies only to explicitly named lanes and does **not** authorize unrestricted multi-ticket execution. No lane may widen another lane’s authority without a separate Founder decision and repo-native governance update. **§6b** is Transition Readiness taxonomy and scrutiny input only—not backlog approval or sequencing. **§6e** / **§6f** / **§6g** do **not** widen Class B execution, custody, rails, conversion, settlement, or customer-money authority. Green Lane classification (**§6g** / ADR **0025**) does not activate work and does not override **§7** / **§7a**.",
+        "value": "Only **§7** / **§7a** name approved active ticket(s). **Default posture:** one active implementation ticket. Concurrent lanes are permitted only where this file records an accepted, active, and unambiguous Founder-approved parallelism decision (**§6e** lane model / Internal **D-026** plus separate active-pass naming under **§6f**), explicitly names each active lane and ticket, defines authority class and exclusions, and preserves independent stop conditions and rollback. Internal **D-029**, Internal **D-032** / **§6f.3**, Internal **D-034** / **§6f.4**, Internal **D-035** / **§6f.5**, Internal **D-036** / **§6f.6**, Internal **D-041** / **§6f.7**, Internal **D-044** / **§6f.8**, Internal **D-045** / **§6f.9**, Internal **D-046** / **§6f.10**, Internal **D-047** / **§6f.11**, Internal **D-048** / **§6f.12**, Internal **D-049** / **§6f.13**, Internal **D-050** / **§6f.14**, Internal **D-051** / **§6f.15**, Internal **D-052** / **§6f.16**, Internal **D-053** / **§6f.17**, Internal **D-054** / **§6f.18**, and Internal **D-055** / **§6f.19** are completed historical pass authorities and no longer supply concurrency. Controlled Parallelism **v20** / Internal **D-074** / **§6f.20** is active and names only `CLASS-A-VAL-002` (Lane V, unchanged) and `NARRATIVE-007` (Lane N, Human Narrative Lead role plus read-only Customer One-Pager fidelity audit and translation map). Nested refinements through `CLASS-A-VAL-002-ROUTE-001` are completed historical authority under their named decisions through Internal **D-072** / **§198**–**§199**. Internal **D-073** / **§200**–**§201** activated and completed `CLASS-A-VAL-002-FORM-001` as a bounded nested instrument-formulation ticket inside the open parent; it is now completed historical authority and supplies no independent lane or product-refinement authority. Internal **D-065** / **§188**, **D-067** / **§191**, **D-068** / **§192**, and **D-069** / **§193** remain product-evaluation principles only; NARRATIVE-007 may use them as audit lenses but not as customer-narrative authority. Protocol-complete dual-layer participant testing remains active on the verified human-readable-entry build with the canonical digital instrument technically ready and unpublished; every product-review concern remains test-first, with no further refinement by inference. Lane N is audit-only: the Canonical Story v1.0, Customer One-Pager v1.0, Narrative Style Guide v1.0, and accepted `NARRATIVE-005` Investor Orientation Brief remain unchanged; no `vNext`, publication, public messaging, positioning, product copy, or marketing authority is supplied. Lane M and Lane R remain idle. Any concurrency beyond the two named V / N tickets requires a separate Founder decision plus explicit **§7** / **§7a** naming. Parallel authorization applies only to explicitly named lanes and does **not** authorize unrestricted multi-ticket execution. No lane may widen another lane’s authority without a separate Founder decision and repo-native governance update. **§6b** is Transition Readiness taxonomy and scrutiny input only—not backlog approval or sequencing. **§6e** / **§6f** / **§6g** do **not** widen Class B execution, custody, rails, conversion, settlement, or customer-money authority. Green Lane classification (**§6g** / ADR **0025**) does not activate work and does not override **§7** / **§7a**.",
         "source_path": "docs/ops/HEDGR_STATUS.md",
         "source_section": "§2 Sequencing authority",
-        "source_commit": "159296f37597ca380a97b7848bb5c96b1a08d95e",
+        "source_commit": "d20e47b651989aed4f12bde91a74378257b4e80c",
         "source_classification": "REPO_AUTHORITY",
         "freshness": "CURRENT"
       }
