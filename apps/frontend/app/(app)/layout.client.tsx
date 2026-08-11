@@ -7,6 +7,7 @@ import { TrustDisclosureBanner } from '../../components';
 import { isCopilotEnabled } from '../../config/env';
 import { usePolicy } from '@/lib/policy/usePolicy';
 import {
+  CLASS_A_VAL_002_DASHBOARD_PATH,
   getSyntheticJourneyHref,
   isSyntheticJourneyPrimaryCondition,
 } from '@/lib/state/synthetic-journey';
@@ -74,7 +75,10 @@ export function AppLayoutClient({ children }: { children: React.ReactNode }) {
   const { status, isFeatureEnabled } = usePolicy();
   const syntheticJourneyActive = isSyntheticJourneyPrimaryCondition(
     searchParams?.toString(),
+    pathname,
   );
+  const activePathname =
+    pathname === CLASS_A_VAL_002_DASHBOARD_PATH ? '/dashboard' : pathname;
 
   const journeySteps = [
     { href: '/dashboard' as const, label: 'Dashboard' },
@@ -83,7 +87,7 @@ export function AppLayoutClient({ children }: { children: React.ReactNode }) {
     { href: '/activity' as const, label: 'Activity' },
   ];
   const currentJourneyStepIndex = journeySteps.findIndex(
-    (step) => pathname === step.href,
+    (step) => activePathname === step.href,
   );
   const currentJourneyStep =
     journeySteps[currentJourneyStepIndex] ?? journeySteps[0];
@@ -156,7 +160,7 @@ export function AppLayoutClient({ children }: { children: React.ReactNode }) {
                     href={navHref(link.href, syntheticJourneyActive)}
                     data-testid={link.testId}
                     className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${
-                      pathname === link.href
+                      activePathname === link.href
                         ? 'border-hedgr-primary text-hedgr-dark'
                         : 'border-transparent text-hedgr-500 hover:border-hedgr-200 hover:text-hedgr-dark'
                     }`}
@@ -182,7 +186,7 @@ export function AppLayoutClient({ children }: { children: React.ReactNode }) {
                 data-testid={link.testId}
                 onClick={() => setIsNavOpen(false)}
                 className={`block px-3 py-2 rounded-md text-base font-medium ${
-                  pathname === link.href
+                  activePathname === link.href
                     ? 'bg-hedgr-100 text-hedgr-primary'
                     : 'text-hedgr-500 hover:bg-gray-50 hover:text-hedgr-dark'
                 }`}

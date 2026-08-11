@@ -65,6 +65,7 @@ vi.mock("../lib/policy/usePolicy", () => ({
 }));
 
 vi.mock("next/navigation", () => ({
+  usePathname: vi.fn(() => "/dashboard"),
   useSearchParams: vi.fn(() => new URLSearchParams()),
 }));
 
@@ -107,7 +108,7 @@ import DashboardPage from "../app/(app)/dashboard/page";
 import { getMockEngineState } from "../lib/engine/mock";
 import { useBalance } from "../lib/hooks/useBalance";
 import { useEngineState } from "../lib/engine/useEngineState";
-import { useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 
 function makeBalanceState(
   overrides: Partial<ReturnType<typeof useBalance>> = {}
@@ -158,10 +159,35 @@ afterEach(() => {
   vi.mocked(useSearchParams).mockReturnValue(
     new URLSearchParams() as ReturnType<typeof useSearchParams>
   );
+  vi.mocked(usePathname).mockReturnValue("/dashboard");
   vi.unstubAllEnvs();
 });
 
 describe("DashboardPage engine trust surface", () => {
+  test("honors the human-readable synthetic journey path outside local development", async () => {
+    vi.stubEnv("NEXT_PUBLIC_AUTH_MODE", "mock");
+    vi.stubEnv("NEXT_PUBLIC_FX_MODE", "stub");
+    vi.stubEnv("NEXT_PUBLIC_APP_ENV", "prod");
+    vi.mocked(usePathname).mockReturnValue("/dashboard-synthetic-journey");
+    vi.mocked(useBalance).mockReturnValue(
+      makeBalanceState({ total: 0, available: 0 })
+    );
+    vi.mocked(useEngineState).mockReturnValue(
+      getMockEngineState("normal") as EngineState
+    );
+
+    render(<DashboardPage />);
+
+    expect(
+      (
+        await screen.findByRole("link", { name: "Start simulated deposit" })
+      ).getAttribute("href")
+    ).toBe("/deposit?journey=class-a-val-002");
+    expect(screen.getByTestId("dashboard-orientation").textContent).toContain(
+      "Hedgr has read your simulated position for you."
+    );
+  });
+
   test("honors the explicit synthetic journey query outside local development", async () => {
     vi.stubEnv("NEXT_PUBLIC_AUTH_MODE", "mock");
     vi.stubEnv("NEXT_PUBLIC_FX_MODE", "stub");
