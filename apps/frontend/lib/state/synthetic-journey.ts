@@ -24,12 +24,16 @@ export function isSyntheticJourneyEnvironment(): boolean {
   return getAuthMode() === 'mock' && isNonLiveFx;
 }
 
-export function isSyntheticJourneyPrimaryCondition(search?: string): boolean {
+export function isSyntheticJourneyPrimaryCondition(
+  search?: string,
+  pathname?: string | null,
+): boolean {
   if (!isSyntheticJourneyEnvironment()) return false;
 
   const params = getSearchParams(search);
   const explicitlyRequested =
-    params.get(CLASS_A_VAL_002_JOURNEY_PARAM) === CLASS_A_VAL_002_JOURNEY_VALUE;
+    params.get(CLASS_A_VAL_002_JOURNEY_PARAM) === CLASS_A_VAL_002_JOURNEY_VALUE ||
+    pathname === CLASS_A_VAL_002_DASHBOARD_PATH;
   const isUnavailableDataScenario =
     params.get(CLASS_A_VAL_002_SCENARIO_PARAM) ===
     CLASS_A_VAL_002_UNAVAILABLE_DATA_SCENARIO;

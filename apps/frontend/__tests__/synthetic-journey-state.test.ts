@@ -40,6 +40,16 @@ describe('CLASS-A-VAL-002 synthetic journey state', () => {
     ).toBe(true);
   });
 
+  test('recognizes the human-readable entry path outside local development', () => {
+    stubSyntheticEnvironment();
+    vi.stubEnv('NEXT_PUBLIC_APP_ENV', 'prod');
+
+    expect(
+      isSyntheticJourneyPrimaryCondition('', '/dashboard-synthetic-journey'),
+    ).toBe(true);
+    expect(isSyntheticJourneyPrimaryCondition('', '/dashboard')).toBe(false);
+  });
+
   test('keeps unavailable data as a deterministic secondary scenario', () => {
     stubSyntheticEnvironment();
     const search = '?journey=class-a-val-002&scenario=unavailable-data';

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { EngineAllocationBands } from "./EngineAllocationBands";
 import { EnginePostureHeader } from "./EnginePostureHeader";
@@ -59,9 +59,11 @@ export default function DashboardPage() {
   const [apy, setApy] = useState<number | null>(null);
   const [apyError, setApyError] = useState<string | null>(null);
   const [ready, setReady] = useState(false);
+  const pathname = usePathname();
   const searchParams = useSearchParams();
   const syntheticJourneyActive = isSyntheticJourneyPrimaryCondition(
-    searchParams?.toString()
+    searchParams?.toString(),
+    pathname
   );
 
   useEffect(() => {
