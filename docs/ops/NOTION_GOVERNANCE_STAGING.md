@@ -6,7 +6,7 @@
 
 **Authority:** The repository is source of truth. Wording here must match `docs/decisions/0016-warmth-layer-doctrine-constrained-retail-refinement-track.md`, `docs/decisions/SPRINT-2-ADR-INDEX.md`, and `docs/ops/HEDGR_STATUS.md`. Wording must match **Accepted** ADR **0016** in repo; do not broaden scope or soften read-only / non-execution boundaries in Notion.
 
-**Last reconciled:** 2026-08-11 (mirror after completed Internal **D-073** / `CLASS-A-VAL-002-FORM-001` under **§200**–**§201** and active Controlled Parallelism v20 / Internal **D-074** / **§6f.20** / **§202**. Lane V `CLASS-A-VAL-002` remains active and unchanged, with participant testing active on the verified human-readable-entry build and the canonical unpublished Form technically ready. Lane N `NARRATIVE-007` is concurrently active for a `PROPOSE_ONLY` Human Narrative Lead role, read-only Customer One-Pager fidelity audit, and translation map. Frozen narrative sources remain unchanged; no `vNext`, publication, public messaging, product copy, marketing, or product/runtime authority is supplied. Lanes A / B / C / M / R remain idle; Kenya counsel **DEFER**; `NO CROSS-LANE IMPACT`; repo **§7** / **§7a** controls sequencing)
+**Last reconciled:** 2026-08-13 (mirror after Internal **D-075** / **§203** accepted the Customer One-Pager Fidelity Audit and Narrative Translation Map and amended active Lane N `NARRATIVE-007` to authorize one `PROPOSE_ONLY` candidate vNext at `docs/strategy/customer/HEDGR_CUSTOMER_ONE_PAGER_VNEXT.md`. Controlled Parallelism v20 / Internal **D-074** / **§6f.20** remains the active concurrency decision and still names only Lane V `CLASS-A-VAL-002` and Lane N `NARRATIVE-007`. Lane V remains active and unchanged, with participant testing active on the verified human-readable-entry build and the canonical unpublished Form technically ready. Customer One-Pager v1.0 and every other frozen source remain unchanged; candidate acceptance, publication, public messaging, product copy, marketing, positioning, and product/runtime authority remain unauthorized. Lanes A / B / C / M / R remain idle; Kenya counsel **DEFER**; `NO CROSS-LANE IMPACT`; repo **§7** / **§7a** controls sequencing)
 
 ---
 
@@ -100,7 +100,7 @@ Use as a governed workstream line, **not** as a shipped-feature claim. Placement
 
 - **`CLASS-A-VAL-002-FORM-001` Google Forms Participant Retest Instrument (D-073, Accepted and completed):** The canonical 41-question instrument is implemented and technically verified in the existing Google Form, remains unpublished with zero responses, and supplies no participant-evidence or product-refinement claim. Canonical activation **§200**; verified closeout **§201**; completed brief **§7a**. Parent participant testing remains active; no nested ticket or independent lane remains active. `NO CROSS-LANE IMPACT`.
 
-- **Controlled Parallelism v20 / `NARRATIVE-007` (D-074, Accepted and active):** Names only Lane V `CLASS-A-VAL-002` (unchanged) and Lane N `NARRATIVE-007` (a `PROPOSE_ONLY` Human Narrative Lead role plus read-only Customer One-Pager fidelity audit and translation map). Canonical pass **§6f.20**; activation **§202**; live briefs **§7** / **§7a**. Frozen narrative sources remain unchanged; no `vNext`, replacement copy, publication, public category adoption, marketing, positioning, product/runtime, or cross-lane authority. `NO CROSS-LANE IMPACT`.
+- **Controlled Parallelism v20 / `NARRATIVE-007` (D-074, Accepted and active; Lane N amended by D-075):** Names only Lane V `CLASS-A-VAL-002` (unchanged) and Lane N `NARRATIVE-007`. D-075 / **§203** accepts the audit and translation map and authorizes one `PROPOSE_ONLY` candidate vNext at the named path. Customer One-Pager v1.0 remains frozen; no candidate acceptance, publication, public category adoption, marketing, positioning, product/runtime, or cross-lane authority. `NO CROSS-LANE IMPACT`.
 
 - **Controlled Parallelism v7 (D-041, Accepted — completed historical pass):** Named `CLASS-A-VAL-002` (Lane V) and `BRIDGE-P1-PREP-001` (Lane R prep). Lane R closed prep-complete (**§151** / **D-043**); singular-ticket restored; D-041 no longer supplies concurrency. Proposed `BRIDGE-P1-001` formed not active. `NO CROSS-LANE IMPACT`.
 
@@ -1726,6 +1726,36 @@ Use when mirroring the completed **test-only** regression tranche 4. **Not** new
 - No `vNext`, replacement copy, audit approval, publication, circulation, public category adoption, marketing, positioning, product/runtime change, participant-evidence interpretation, or live financial capability is authorized.
 - Delivering the proposed role and audit artifacts does not self-approve or close `NARRATIVE-007`; Founder / HedgrOps disposition is required. `NO CROSS-LANE IMPACT`.
 
+**Subsequent amendment:** Internal **D-075** / `HEDGR_STATUS.md` **§203** accepts the audit and translation map and authorizes one bounded candidate vNext without changing D-074's two-lane concurrency.
+
+---
+
+## 8d.43 Decision Log — D-075 / NARRATIVE-007 Customer Narrative Fidelity vNext (Internal; Notion mirror)
+
+**Notion Decision Log ID:** **D-075**. Canonical disposition and activation: **`docs/ops/HEDGR_STATUS.md` §203**. Active pass: **§6f.20**. Active briefs: **§7** / **§7a**. Visibility: **Internal**.
+
+| Field | Value |
+| ----- | ----- |
+| **Decision ID** | D-075 |
+| **Title** | `NARRATIVE-007` — Customer Narrative Fidelity and Translation vNext |
+| **Status** | Accepted and active — audit accepted; one bounded candidate revision authorized |
+| **Decision Type** | Narrative / Customer Fidelity / Institutional Learning |
+| **Visibility** | Internal |
+| **Date** | 2026-08-13 |
+| **Repo authority** | `HEDGR_STATUS.md` **§6f.20**, **§7**, **§7a**, and **§203** |
+| **Tickets** | Lane V `CLASS-A-VAL-002` (active, unchanged); Lane N `NARRATIVE-007` (active, `PROPOSE_ONLY`) |
+
+**Summary / notes (concise)**
+
+- Founder accepts the Customer One-Pager Fidelity Audit and Customer Narrative Translation Map as non-authoritative decision-support / translation-control artifacts.
+- The principal issue is fidelity and sequencing, not positioning or substantive narrative failure.
+- Human Narrative Lead may prepare exactly one proposed candidate at `docs/strategy/customer/HEDGR_CUSTOMER_ONE_PAGER_VNEXT.md`.
+- Retain the human opening, problem framing, target audience, research-stage truth, trust boundaries, research invitation, and established Hedgr thesis.
+- Revise only `What Hedgr is` sequencing, human-readable delivery of `What is real today`, `safe next action` semantics, and Copilot placement where fidelity warrants.
+- Check `dependable` against the Canonical Story and Narrative Style Guide before customer-facing use; choose a more interpretive formulation if the sources do not support the stronger implication.
+- Customer One-Pager v1.0 remains Accepted / Frozen and controlling. The candidate cannot approve itself, supersede the source, create public `Financial Stability Companion` naming, or authorize publication, positioning, marketing, product change, financial execution, or investor-narrative revision.
+- Controlled Parallelism v20 / D-074 remains the active concurrency decision and still names only Lane V and Lane N. Lane V is unchanged. `NO CROSS-LANE IMPACT`.
+
 ---
 
 ## 8e. Decision Log — D-028 / COUNSEL-SEND-B-001 DEFER (Internal; Notion mirror)
@@ -2232,4 +2262,4 @@ Apply **only** if the live Notion row contradicts repo truth. **Repo wins.** Do 
 | **Release: HedgrOps Read-Only Review Evidence Bridge** | Should list **`HOPS-BRIDGE-001`** as **Done** per **§9i**; bridge is non-authorizing evidence retrieval only and does **not** imply implementation, sequencing, governance, or customer-money authority. |
 | **Release: Brand System Governance** | Should list **`BRAND-001`** through **`BRAND-009`** as **Done / Shipped** per **§9h**; spine and first two remediation steps are **not** broad UI redesign approval, shipped app remediation approval beyond scoped shared UI files, or successor remediation approval. |
 | **Release / reference: Stability Condition Interface Reference** | Should list **`DOC-SE-REF-001`** as **Done** documentation-only governance closeout for the already-merged reference artifact; reference is non-authoritative and does **not** authorize implementation, runtime state, UI changes, ADR changes, or sequencing. |
-| **Executive / Strategy surfaces** | Controlled Parallelism v20 / **D-074** names Lane V **`CLASS-A-VAL-002`** (active, unchanged) and Lane N **`NARRATIVE-007`** (active, `PROPOSE_ONLY`, audit-only). Lane M **`MONEY-STACK-001`** approved and closed as converged (**§168**); D-053 completed historical. Lane R idle. Canonical Story **v1.0**, Customer One-Pager **v1.0**, and Narrative Style Guide **v1.0** remain Frozen. No `vNext`, publication, public messaging, or product/runtime authority. Kenya counsel **DEFER**. Class B convergence gate unsatisfied. |
+| **Executive / Strategy surfaces** | Controlled Parallelism v20 / **D-074** names Lane V **`CLASS-A-VAL-002`** (active, unchanged) and Lane N **`NARRATIVE-007`** (active, `PROPOSE_ONLY`). Internal **D-075** / **§203** accepts the audit / translation map and authorizes one candidate Customer One-Pager vNext at the named path. Lane M **`MONEY-STACK-001`** approved and closed as converged (**§168**); D-053 completed historical. Lane R idle. Canonical Story **v1.0**, Customer One-Pager **v1.0**, and Narrative Style Guide **v1.0** remain Frozen. Candidate acceptance, publication, public messaging, positioning, and product/runtime authority remain unauthorized. Kenya counsel **DEFER**. Class B convergence gate unsatisfied. |
