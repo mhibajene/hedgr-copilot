@@ -2,7 +2,7 @@
 
 | Field | Value |
 | --- | --- |
-| **Status** | Proposed / Founder and HedgrOps review required |
+| **Status** | Accepted as decision-support evidence under Internal D-075 |
 | **Authority** | Non-authoritative review evidence |
 | **Ticket** | `NARRATIVE-007` |
 | **Role** | Human Narrative Lead |
@@ -11,8 +11,9 @@
 | **Audience** | First-time customer reader in the existing source audience, especially mobile-first savers and freelancers navigating volatile or cross-border income |
 | **Sensitivity** | Internal |
 | **Date** | 2026-08-11 |
+| **Founder disposition** | Internal D-075 / `HEDGR_STATUS.md` §203 (2026-08-13) |
 
-This audit does not rewrite, unfreeze, supersede, or fail the Customer One-Pager. It applies a new fidelity lens to a source that already passed its original derivation, claims, synthetic-boundary, and under-two-minute readability review.
+Founder accepted this audit as decision-support evidence under Internal D-075. It does not rewrite, unfreeze, supersede, or fail the Customer One-Pager. Customer One-Pager v1.0 remains the frozen canonical customer source while §203 separately authorizes one proposed vNext candidate at the named path.
 
 ---
 
@@ -148,6 +149,6 @@ The system identity and product-surface name may be useful, but they are not nec
 
 **Review finding:** The frozen Customer One-Pager is institutionally coherent and conservative. The strongest candidate improvement is a bounded fidelity and sequencing refinement inside `What Hedgr is`, plus claim-risk review of `safe next action`. Necessary prototype and capability boundaries must remain complete.
 
-This finding is non-authoritative. It does not approve source edits, `vNext`, public messaging, publication, positioning, product copy, or implementation.
+This finding remains non-authoritative evidence. Internal D-075 accepts the finding and separately authorizes one proposed vNext candidate under `HEDGR_STATUS.md` §203; it does not approve canonical-source edits, candidate acceptance, public messaging, publication, positioning, product copy, or implementation.
 
-**Required next step:** Founder / HedgrOps disposition on the audit only.
+**Required next step:** Prepare the bounded candidate under §203, then return it to Founder / HedgrOps for disposition. Do not edit Customer One-Pager v1.0 or infer publication.

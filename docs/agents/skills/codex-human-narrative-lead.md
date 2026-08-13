@@ -329,3 +329,15 @@ Review only. No source revision, vNext, publication, or implementation implied.
 The first authorized use is the read-only Fidelity Audit and Narrative Translation Map for `docs/strategy/customer/HEDGR_CUSTOMER_ONE_PAGER.md` v1.0.
 
 That activation does not authorize source revision, `vNext`, website or product copy, marketing, publication, external circulation, participant-evidence interpretation, or changes to `CLASS-A-VAL-002`.
+
+## NARRATIVE-007 D-075 Revision Boundary
+
+Internal D-075 / `HEDGR_STATUS.md` §203 accepts the Fidelity Audit and Narrative Translation Map and authorizes one subsequent candidate output:
+
+- `docs/strategy/customer/HEDGR_CUSTOMER_ONE_PAGER_VNEXT.md`
+
+The candidate must remain `PROPOSE_ONLY`, visibly non-authoritative, and subject to Founder / HedgrOps review. Customer One-Pager v1.0 remains Accepted / Frozen and controlling. The candidate may improve sequencing, human-readable boundary delivery, `safe next action` semantics, Copilot placement, and equivalent fidelity issues only within §203's acceptance criteria and exclusions.
+
+Before using `dependable` as customer-facing replacement language, check the Canonical Story and Narrative Style Guide for support. If they do not support the achieved-property implication, use a more interpretive formulation.
+
+This amendment does not authorize canonical-source mutation, candidate acceptance or freeze, publication, public positioning, website or product copy, marketing, investor narrative, product changes, participant-evidence interpretation, or changes to `CLASS-A-VAL-002`.

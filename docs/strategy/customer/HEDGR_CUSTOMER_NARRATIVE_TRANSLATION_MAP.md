@@ -2,7 +2,7 @@
 
 | Field | Value |
 | --- | --- |
-| **Status** | Proposed / Founder and HedgrOps review required |
+| **Status** | Accepted as a non-authoritative translation-control artifact under Internal D-075 |
 | **Authority** | Non-authoritative translation aid |
 | **Ticket** | `NARRATIVE-007` |
 | **Role** | Human Narrative Lead |
@@ -10,8 +10,9 @@
 | **Audience** | First-time customer reader within the frozen Customer One-Pager audience |
 | **Sensitivity** | Internal |
 | **Date** | 2026-08-11 |
+| **Founder disposition** | Internal D-075 / `HEDGR_STATUS.md` §203 (2026-08-13) |
 
-This map supports the read-only Customer One-Pager Fidelity Audit. It does not authorize replacement copy, source revision, `vNext`, public positioning, product copy, or publication.
+Founder accepted this map as a non-authoritative translation-control artifact under Internal D-075. It constrains the one proposed vNext candidate authorized by `HEDGR_STATUS.md` §203, but does not authorize edits to Customer One-Pager v1.0, candidate acceptance, public positioning, product copy, or publication.
 
 ---
 
@@ -21,7 +22,7 @@ This map supports the read-only Customer One-Pager Fidelity Audit. It does not a
 
 | Institutional phrase | Human meaning | Prohibited overclaim | Primary source |
 | --- | --- | --- | --- |
-| Financial Stability | Help people understand whether their money remains dependable, accessible, and understandable when conditions change | Hedgr keeps your money safe or prevents value loss | Canonical Story §3; Style Guide translation principle |
+| Financial Stability | Provisionally: help people understand whether their money remains dependable, accessible, and understandable when conditions change | Hedgr keeps your money safe or prevents value loss | Canonical Story §3; Style Guide translation principle; D-075 semantic check required before customer-facing use |
 | Financial Fidelity | Know what your money is worth, where it is, and how accessible it is over time | Your money will always behave exactly as expected | Canonical Story §3; Style Guide translation principle |
 | State Before Action | Understand your situation before deciding what to do next | Hedgr decides the right action for you | Canonical Story §3; Style Guide translation principle |
 | Stability posture | See how stable your financial position looks today | Hedgr certifies that your position is safe | Style Guide translation principle |
@@ -39,6 +40,8 @@ This map supports the read-only Customer One-Pager Fidelity Audit. It does not a
 ---
 
 ## Boundary Checks
+
+Before `dependable` is used as customer-facing replacement language, verify that the Canonical Story and Narrative Style Guide support its implication. If they do not, use a more interpretive formulation. This check does not reopen the definition of Financial Stability.
 
 Every future use of this map must confirm:
 
