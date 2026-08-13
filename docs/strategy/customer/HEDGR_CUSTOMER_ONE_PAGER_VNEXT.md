@@ -36,7 +36,7 @@ People can work hard, save consistently, and plan carefully, yet still move back
 
 When money becomes less predictable, paying bills, planning ahead, and making confident decisions all become harder.
 
-In volatile economies, the hard part is not finding another app. It is trusting that money will hold its place, stay understandable, and remain available when life requires it.
+In volatile economies, the hard part is not finding another app. It is understanding where you stand and what may be available to use when conditions become less predictable.
 
 ---
 
@@ -44,7 +44,7 @@ In volatile economies, the hard part is not finding another app. It is trusting 
 
 Hedgr is building a calm digital experience to help people understand where they stand financially before deciding what to do next.
 
-It is designed to make three things easier to see: the value you hold, the risks that may affect it, and any limits or uncertainty around access.
+It is designed to make three things easier to see: the value of your financial position, the risks that may affect it, and any limits or uncertainty around access.
 
 Protecting existing value comes before chasing growth. Risk stays visible, and access matters as much as the number on the screen.
 
