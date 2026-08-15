@@ -1,6 +1,6 @@
 # Hedgr Stability Engine Reasoning Research Brief
 
-**Status:** Active governing research frame (activation only; research outputs not yet produced)  
+**Status:** Active governing research frame; three research outputs delivered as non-authoritative proposals; `SE-REASON-001` remains active pending Founder / HedgrOps disposition<br>
 **Ticket:** `SE-REASON-001` (Lane E)  
 **Decision:** Internal **D-076** / Controlled Parallelism v21  
 **Repo authority:** `docs/ops/HEDGR_STATUS.md` **§6f.21**, **§7**, **§7a**, **§204**  
