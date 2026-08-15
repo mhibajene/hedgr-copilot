@@ -4403,9 +4403,9 @@ This section does **not** authorize provider-specific implementation, legal reli
 **Lane E named files:**
 
 - `docs/ops/stability-engine/research/HEDGR_STABILITY_ENGINE_REASONING_RESEARCH_BRIEF.md` — governing frame
-- `docs/ops/stability-engine/research/HEDGR_STABILITY_FUNCTION_MODEL.md` — authorized research output; not yet created
-- `docs/ops/stability-engine/research/HEDGR_STABILITY_STATE_MODEL.md` — authorized research output; not yet created
-- `docs/ops/stability-engine/research/HEDGR_STABILITY_INTERPRETATION_TESTS.md` — authorized research output; not yet created
+- `docs/ops/stability-engine/research/HEDGR_STABILITY_FUNCTION_MODEL.md` — authorized research output delivered as a non-authoritative proposal; pending Founder / HedgrOps disposition
+- `docs/ops/stability-engine/research/HEDGR_STABILITY_STATE_MODEL.md` — authorized research output delivered as a non-authoritative proposal; pending Founder / HedgrOps disposition
+- `docs/ops/stability-engine/research/HEDGR_STABILITY_INTERPRETATION_TESTS.md` — authorized research output delivered as a non-authoritative proposal; pending Founder / HedgrOps disposition
 - `docs/ops/HEDGR_STATUS.md`
 - `docs/ops/NOTION_GOVERNANCE_STAGING.md`
 - `AGENTS.md`
@@ -4625,7 +4625,7 @@ Current active ticket status:
 - **Active tickets (Controlled Parallelism v21 / D-076; nested Lane V `CLASS-A-VAL-002-ORIENT-001` under D-077 / §205; Lane N scope continues under D-075 / §203):**
   - **Lane V:** `CLASS-A-VAL-002` — Validate the End-to-End Synthetic Stability Journey. Remains open. Nested `CLASS-A-VAL-002-ORIENT-001` is active under Internal **D-077** / **§205** as one bounded governed-narrative orientation-surface experiment. Participant testing remains the parent path and resumes on the verified orientation-inclusive build after nested closeout; the canonical unpublished Form remains technically ready under completed D-073 / **§200**–**§201**. Exact parent, nested, and completed briefs remain in **§7a**.
   - **Lane N:** `NARRATIVE-007` — Human Narrative Lead + Customer One-Pager Fidelity Revision. Active in `PROPOSE_ONLY` mode under original **§6f.20** / **§202** / **§203** scope, now concurrent under **§6f.21** / **§204**; audit and translation map accepted; one candidate vNext is authorized at the named path; canonical v1.0 remains frozen and publication is unauthorized.
-  - **Lane E:** `SE-REASON-001` — Stability Engine Reasoning Architecture Research. Active as Class A informational / Yellow research only under **§6f.21** / **§204**; governing brief at `docs/ops/stability-engine/research/HEDGR_STABILITY_ENGINE_REASONING_RESEARCH_BRIEF.md`; three named research artifacts authorized and not yet created; no product-refinement, asset-expansion, or execution authority.
+  - **Lane E:** `SE-REASON-001` — Stability Engine Reasoning Architecture Research. Active as Class A informational / Yellow research only under **§6f.21** / **§204**; governing brief at `docs/ops/stability-engine/research/HEDGR_STABILITY_ENGINE_REASONING_RESEARCH_BRIEF.md`; three named research artifacts delivered as non-authoritative proposals and pending Founder / HedgrOps disposition; ticket remains active; no product-refinement, asset-expansion, or execution authority.
 - **Completed Lane M:** `MONEY-STACK-001` (**§168**) — Founder–HedgrOps approved the research package and closed the cycle as converged; D-053 completed; no follow-on authority.
 - **Completed historical Lane N tickets:** `NARRATIVE-006` (**§172**); `NARRATIVE-005` (**§170**); `UI-NARR-001` (**§166**); `NARRATIVE-004` (**§164**); `NARRATIVE-003` (**§162**); `NARRATIVE-002` (**§159**); `NARRATIVE-001` (**§157**).
 - **Completed Lane R:** `BRIDGE-P1-OPS-001` (**§161**) — R1 clock recorded; regen/verification hygiene complete; legacy Deprecated retained; no retirement; no Phase 2; no successor activated.
