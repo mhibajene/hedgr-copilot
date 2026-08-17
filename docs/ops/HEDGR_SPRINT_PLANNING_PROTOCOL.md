@@ -25,7 +25,7 @@ Use when choosing, refining, or deferring work **before** a ticket is executable
 - Maintain or refine **classification and scrutiny inputs** (e.g. `HEDGR_STATUS.md` **§6b**, transition readiness lens in **§9**) as **documentation and judgment support only**.  
 - Maintain ADRs and `SPRINT-2-ADR-INDEX.md` when boundaries or traceability change.  
 - Build or refresh a **candidate slate** (format below).  
-- **Do not** treat roadmap narrative, Notion, Cursor plan files, or *Proposed* ADRs as approved work.  
+- **Do not** treat roadmap narrative, retired Notion records, Obsidian notes, Cursor plan files, or *Proposed* ADRs as approved work.  
 
 **Stop condition:** Nothing in governance mode substitutes for **§7** naming the next ticket.
 
@@ -42,7 +42,7 @@ Use only when **§7** names a single approved next ticket and **§7a** holds the
 
 Use after merge to `main` (or equivalent canonical branch) for a completed ticket.
 
-- Restore **repo truth** first, then mirror **Notion**, then **ADR / index** follow-ups if the merge changed a boundary.  
+- Restore **repo truth** first, then **ADR / index** follow-ups if the merge changed a boundary. Notion is retired and is not a closeout destination.  
 - Order is strict (see below).  
 
 ## Single-ticket sequencing rule
@@ -93,8 +93,7 @@ The slate is **not** authority; it is input for human governance.
 After the PR is merged:
 
 1. **Repo truth** — Update `docs/ops/HEDGR_STATUS.md`: merged implementation bullets in **§6** if applicable; completed ticket record in the numbered history sections; **§7** updated to next approved ticket or “none”; **§7a** updated to new brief or archived/no-active pattern; **§30** / pointers consistent.  
-2. **Notion** — Reconcile executive / decision surfaces **from the repo**, using [`NOTION_GOVERNANCE_STAGING.md`](NOTION_GOVERNANCE_STAGING.md) where applicable. Notion must not run ahead of repo wording.  
-3. **ADR / governance follow-up** — If the change **materially** alters an architectural or trust boundary, add or update ADRs and `SPRINT-2-ADR-INDEX.md` in the same merge window when possible; otherwise file an explicit follow-up ticket for **§7**.
+2. **ADR / governance follow-up** — If the change **materially** alters an architectural or trust boundary, add or update ADRs and `SPRINT-2-ADR-INDEX.md` in the same merge window when possible; otherwise file an explicit follow-up ticket for **§7**. Notion is retired (Internal **D-078** / **§207**) and is not a closeout or publishing destination.
 
 ## Anti-patterns
 
@@ -102,7 +101,7 @@ After the PR is merged:
 |--------------|--------------|------------|
 | **Momentum sequencing** | “We finished X so Y is next” without **§7** | Update **§7** / **§7a** first, then implement |
 | **ADR-as-backlog** | Treating ADR list or *Proposed* ADR as sequenced work | ADRs constrain; **§7** sequences |
-| **Notion-as-authority** | Editing Notion first or copying forward unchecked | Repo first; Notion mirrors after merge |
+| **External-surface-as-authority** | Treating retired Notion records, Obsidian notes, or other non-repo surfaces as current truth | Repo first; Notion is retired; Obsidian is cognition only |
 | **Plan-file-as-authority** | Treating Cursor `.cursor/plans/*` (or generated plan UI) as scope approval | Plans are **working drafts**; must align with **§7a** |
 | **Multi-ticket ambiguity** | Two “next” tickets or overlapping **§7a** briefs | Enforce single-ticket sequencing rule |
 
@@ -110,7 +109,7 @@ After the PR is merged:
 
 - `docs/ops/HEDGR_STATUS.md` — canonical status and sequencing  
 - `docs/decisions/SPRINT-2-ADR-INDEX.md` — Sprint 2 ADR map and usage rule  
-- `docs/ops/NOTION_GOVERNANCE_STAGING.md` — Notion copy source  
+- `docs/ops/NOTION_GOVERNANCE_STAGING.md` — retired historical archive; not an active copy source (Internal **D-078** / **§207**)  
 - `docs/ops/governance/mvp/HEDGR_ATLAS_PRODUCT_CONCEPT_NOTE.md` — example of exploration-stage product framing (may inform future sequencing discussion); **not** queue authority and **not** a substitute for §7 / §7a
 - `AGENTS.md` — execution and engine-facing read order  
 - `.cursor/commands/propose-next-ticket.md` — optional Cursor helper for **governance mode**: recommendation-only candidate slate plus **draft** §7 / §7a text; **not** authorization and **not** a substitute for updating **`HEDGR_STATUS.md`** (same class of artifact as working drafts—see anti-pattern **Plan-file-as-authority**; treat like a structured scratchpad until §7 / §7a are edited in-repo)  

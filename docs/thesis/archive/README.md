@@ -22,6 +22,10 @@ Appropriate triggers include:
 
 Snapshots should preserve the thesis posture at the time they were created.
 
+Current snapshots:
+
+- `v1-pre-notion-retirement.md` — living thesis immediately before Internal **D-078** retired Notion as an operating, governance, and institutional-memory surface.
+
 ## Naming Convention
 
 Use lowercase, versioned, descriptive filenames:

@@ -1,3 +1,13 @@
+# Hedgr Governance System — Archive Snapshot v1
+
+Status: Historical snapshot (immutable)  
+Snapshot ID: `v1-pre-notion-retirement`  
+Captured: 2026-08-17  
+Trigger: Founder disposition to retire Notion from the Hedgr operating system (Internal **D-078** / `GOV-NOTION-RETIRE-001`)  
+Authority: Historical record only. The living thesis is `docs/thesis/HEDGR_GOVERNANCE_SYSTEM.md`. This snapshot does not authorize implementation, sequencing, or restore Notion as an operating surface.
+
+---
+
 # Hedgr Governance System
 
 Status: Living governance thesis; non-authoritative interpretive artifact
@@ -107,7 +117,7 @@ The result is important:
 
 The rules increasingly exist as institutional structure.
 
-The repository became the authority surface. Notion was later retired as a parallel governance and institutional-memory environment; it is historical only and is not a live mirror or successor knowledge base.
+The repository became the authority surface.
 
 HedgrOps evolved into:
 
@@ -152,9 +162,8 @@ If something is not reconciled into the repo, it is not authoritative.
 This matters because early-stage products often suffer from fragmented truth:
 
 - Slack truth
-- retired Notion truth
+- Notion truth
 - founder-memory truth
-- Obsidian or journaling truth
 - roadmap truth
 - AI-chat truth
 
@@ -221,7 +230,7 @@ Ideas move through a hierarchy:
 3. Ticket: bounded intent
 4. Repo implementation: governed execution
 5. ADRs / `HEDGR_STATUS.md`: canonical truth
-6. Founder cognition and other external artifacts, including Obsidian: non-authoritative until absorbed through governed repo process
+6. Notion and external artifacts: reconciled mirrors
 
 This prevents organizational hallucination.
 
@@ -230,8 +239,7 @@ That happens when teams begin treating:
 - AI outputs
 - roadmap notes
 - founder comments
-- retired Notion pages
-- Obsidian notes
+- Notion pages
 - planning documents
 - exploratory conversations
 

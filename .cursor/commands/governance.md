@@ -13,7 +13,7 @@ Default stance:
 - `docs/ops/HEDGR_STATUS.md` is the institutional source of truth
 - ADRs constrain boundaries but do not sequence work
 - `.cursor/plans` are working execution artifacts, not authority
-- Notion mirrors repo after merge
+- Notion is retired; Obsidian is cognition only and is not authority
 
 ## `/governance` vs `/propose-next-ticket`
 
@@ -50,7 +50,7 @@ Required output shape:
 - Next action
 
 Hard rules:
-- Do not treat backlog, roadmap, Notion, or Proposed ADRs as authorization
+- Do not treat backlog, roadmap, retired Notion records, Obsidian notes, or Proposed ADRs as authorization
 - Do not sequence by momentum
 - Do not widen doctrine silently
 - Do not open more than one active ticket
