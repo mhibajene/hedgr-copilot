@@ -10,7 +10,7 @@ This file organizes operational and governance documentation. It is a directory 
 These files remain at the root of `docs/ops/` because they are common workflow and governance anchors:
 
 - `HEDGR_STATUS.md` - canonical handoff file; merged truth and `§7` / `§7a` sequencing authority.
-- `NOTION_GOVERNANCE_STAGING.md` - manual copy source for downstream Notion governance reconciliation.
+- `NOTION_GOVERNANCE_STAGING.md` - retired historical archive of the former Notion copy source; not an active operating surface (Internal **D-078** / **§207**).
 - `HEDGR_SPRINT_PLANNING_PROTOCOL.md` - sprint planning and candidate-ticket procedure, subordinate to `HEDGR_STATUS.md`.
 - `runbook.md` - PR, QA, label, and merge workflow.
 
@@ -34,4 +34,4 @@ These files remain at the root of `docs/ops/` because they are common workflow a
 - `§7` / `§7a` in `HEDGR_STATUS.md` remain the only activation surfaces.
 - Folder placement does not imply queue order, implementation approval, ADR acceptance, or product readiness.
 - Review, readout, critique, dependency-map, and eligibility artifacts remain subordinate evidence unless absorbed through the governed repo chain.
-- Notion mirrors repo truth; it must not run ahead of `HEDGR_STATUS.md` or accepted ADRs.
+- The repository is the sole canonical institutional authority and durable institutional-memory surface. Notion is retired. Obsidian may continue as founder cognition and is not a successor knowledge base.

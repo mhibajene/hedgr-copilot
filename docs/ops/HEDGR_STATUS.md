@@ -1,12 +1,18 @@
 Status: Canonical hand-off file
 Purpose: Strategic continuity, merged implementation truth, and next-ticket authority for Cursor execution
-Last updated: 2026-08-05
+Last updated: 2026-08-17
 
 ---
 
-## Notion governance (manual copy source)
+## Institutional operating model
 
-For Notion **Decision Log** and **Strategy & Insights** (or equivalent executive) surfaces, reconcile from `docs/ops/NOTION_GOVERNANCE_STAGING.md`. That staging file is derived from repo ADRs and this document; **do not** let Notion wording run ahead of or beyond repo truth.
+The repository is the sole canonical institutional authority and durable institutional-memory surface for doctrine, governance, accepted decisions, implementation posture, and material institutional truth.
+
+Cursor is the primary repo operating interface. Codex and other governed agents remain bounded operators, not authority surfaces. HedgrOps remains the governance, strategic-deliberation, and execution-translation layer within its established authority boundaries.
+
+Obsidian may continue as the founder cognition and journaling environment, including governed Narrative Steward review of emerging observations. It is not a successor institutional knowledge base. Material concepts become institutional truth only through the established deliberation, decision, and repo-native governance process.
+
+**Notion is retired.** It is not an active Hedgr governance, institutional-memory, or operating-system surface. Historical Notion-related records remain as history and must not be treated as a live closeout or publishing requirement. See Internal **D-078** / **§207** and `docs/ops/governance/HEDGR_NOTION_RETIREMENT_CLOSEOUT.md`.
 
 ---
 
@@ -64,13 +70,15 @@ Important active constraints:
 
 **Sprint 3** is framed here as **Transition Readiness** (named track above), not as Foundation continuation: governance defines the explicit standard for any later boundary widening; execution architecture remains out of scope until explicitly approved.
 
-**Sequencing authority:** Only **§7** / **§7a** name approved active ticket(s). **Default posture:** one active implementation ticket. Concurrent lanes are permitted only where this file records an accepted, active, and unambiguous Founder-approved parallelism decision (**§6e** lane model / Internal **D-026** plus separate active-pass naming under **§6f**), explicitly names each active lane and ticket, defines authority class and exclusions, and preserves independent stop conditions and rollback. Internal **D-029**, Internal **D-032** / **§6f.3**, Internal **D-034** / **§6f.4**, Internal **D-035** / **§6f.5**, Internal **D-036** / **§6f.6**, Internal **D-041** / **§6f.7**, Internal **D-044** / **§6f.8**, Internal **D-045** / **§6f.9**, Internal **D-046** / **§6f.10**, Internal **D-047** / **§6f.11**, Internal **D-048** / **§6f.12**, Internal **D-049** / **§6f.13**, Internal **D-050** / **§6f.14**, Internal **D-051** / **§6f.15**, Internal **D-052** / **§6f.16**, Internal **D-053** / **§6f.17**, Internal **D-054** / **§6f.18**, and Internal **D-055** / **§6f.19** are completed historical pass authorities and no longer supply concurrency. Controlled Parallelism **v20** / Internal **D-074** / **§6f.20** is active and names only `CLASS-A-VAL-002` (Lane V, unchanged) and `NARRATIVE-007` (Lane N, Human Narrative Lead role plus Founder-accepted Customer One-Pager fidelity controls and one bounded candidate vNext under Internal **D-075** / **§203**). Nested refinements through `CLASS-A-VAL-002-ROUTE-001` are completed historical authority under their named decisions through Internal **D-072** / **§198**–**§199**. Internal **D-073** / **§200**–**§201** activated and completed `CLASS-A-VAL-002-FORM-001` as a bounded nested instrument-formulation ticket inside the open parent; it is now completed historical authority and supplies no independent lane or product-refinement authority. Internal **D-065** / **§188**, **D-067** / **§191**, **D-068** / **§192**, and **D-069** / **§193** remain product-evaluation principles only; NARRATIVE-007 may use them as evaluation lenses but not as customer-narrative authority. Protocol-complete dual-layer participant testing remains active on the verified human-readable-entry build with the canonical digital instrument technically ready and unpublished; every product-review concern remains test-first, with no further refinement by inference. Lane N is bounded to the candidate file named in **§203**: the Canonical Story v1.0, Customer One-Pager v1.0, Narrative Style Guide v1.0, and accepted `NARRATIVE-005` Investor Orientation Brief remain unchanged; no candidate acceptance, publication, public messaging, positioning, product copy, or marketing authority is supplied. Lane M and Lane R remain idle. Any concurrency beyond the two named V / N tickets requires a separate Founder decision plus explicit **§7** / **§7a** naming. Parallel authorization applies only to explicitly named lanes and does **not** authorize unrestricted multi-ticket execution. No lane may widen another lane’s authority without a separate Founder decision and repo-native governance update. **§6b** is Transition Readiness taxonomy and scrutiny input only—not backlog approval or sequencing. **§6e** / **§6f** / **§6g** do **not** widen Class B execution, custody, rails, conversion, settlement, or customer-money authority. Green Lane classification (**§6g** / ADR **0025**) does not activate work and does not override **§7** / **§7a**.
+**Sequencing authority:** Only **§7** / **§7a** name approved active ticket(s). **Default posture:** one active implementation ticket. Concurrent lanes are permitted only where this file records an accepted, active, and unambiguous Founder-approved parallelism decision (**§6e** lane model / Internal **D-026** plus separate active-pass naming under **§6f**), explicitly names each active lane and ticket, defines authority class and exclusions, and preserves independent stop conditions and rollback. Internal **D-029**, Internal **D-032** / **§6f.3**, Internal **D-034** / **§6f.4**, Internal **D-035** / **§6f.5**, Internal **D-036** / **§6f.6**, Internal **D-041** / **§6f.7**, Internal **D-044** / **§6f.8**, Internal **D-045** / **§6f.9**, Internal **D-046** / **§6f.10**, Internal **D-047** / **§6f.11**, Internal **D-048** / **§6f.12**, Internal **D-049** / **§6f.13**, Internal **D-050** / **§6f.14**, Internal **D-051** / **§6f.15**, Internal **D-052** / **§6f.16**, Internal **D-053** / **§6f.17**, Internal **D-054** / **§6f.18**, Internal **D-055** / **§6f.19**, and Internal **D-074** / **§6f.20** are completed historical pass authorities and no longer supply concurrency. Controlled Parallelism **v21** / Internal **D-076** / **§6f.21** is active and names `CLASS-A-VAL-002` (Lane V, unchanged), `NARRATIVE-007` (Lane N, Human Narrative Lead role plus Founder-accepted Customer One-Pager fidelity controls and one bounded candidate vNext under Internal **D-075** / **§203**), and `SE-REASON-001` (Lane E, Class A informational Stability Engine reasoning research only). Nested refinements through `CLASS-A-VAL-002-ROUTE-001` are completed historical authority under their named decisions through Internal **D-072** / **§198**–**§199**. Internal **D-073** / **§200**–**§201** activated and completed `CLASS-A-VAL-002-FORM-001` as a bounded nested instrument-formulation ticket inside the open parent; it is now completed historical authority and supplies no independent lane or product-refinement authority. Internal **D-077** / **§205**–**§206** activated and closed nested `CLASS-A-VAL-002-ORIENT-001` inside Lane V as one bounded Class A informational governed-narrative orientation-surface experiment; it is completed historical authority and did not create a fourth lane or alter D-076 concurrency, Lane N, or Lane E. Internal **D-078** / **§207** retires Notion as an operating, governance, and institutional-memory surface; it does not create a fourth lane or alter D-076 concurrency. Internal **D-065** / **§188**, **D-067** / **§191**, **D-068** / **§192**, and **D-069** / **§193** remain product-evaluation principles only and do not themselves authorize this nested pass; NARRATIVE-007 may use them as evaluation lenses but not as customer-narrative authority. Protocol-complete dual-layer participant testing is active on the verified orientation-inclusive build under the open parent; the canonical Form remains the approved instrument, with its externally observed responder state recorded in **§206** and no distribution authority outside the governed cohort; every other product-review concern remains test-first, with no further refinement by inference. Lane N is bounded to the candidate file named in **§203**: the Canonical Story v1.0, Customer One-Pager v1.0, Narrative Style Guide v1.0, and accepted `NARRATIVE-005` Investor Orientation Brief remain unchanged; no candidate acceptance, publication, public messaging, positioning, product copy, or marketing authority is supplied. Lane E may produce only the three named research artifacts under `docs/ops/stability-engine/research/**`; it cannot modify the synthetic journey, participant-facing engine surfaces, or financial execution posture. Lane M and Lane R remain idle. Any concurrency beyond the three named V / N / E tickets requires a separate Founder decision plus explicit **§7** / **§7a** naming. Parallel authorization applies only to explicitly named lanes and does **not** authorize unrestricted multi-ticket execution. No lane may widen another lane’s authority without a separate Founder decision and repo-native governance update. **§6b** is Transition Readiness taxonomy and scrutiny input only—not backlog approval or sequencing. **§6e** / **§6f** / **§6g** do **not** widen Class B execution, custody, rails, conversion, settlement, or customer-money authority. Green Lane classification (**§6g** / ADR **0025**) does not activate work and does not override **§7** / **§7a**.
 
-**Progressive Institutional Reasoning (Internal D-067 / §191):** Accepted as an internal product-architecture and evaluation principle extending Institutional Coherence under **D-065** / **§188**. It creates no implementation authority, lane, concurrency, UI work, or financial-authority change. `CLASS-A-VAL-002-GF-001` remains completed historical authority under **D-066** / **§189**–**§190**; protocol-complete dual-layer participant validation on the verified build remains immediately next.
+**Progressive Institutional Reasoning (Internal D-067 / §191):** Accepted as an internal product-architecture and evaluation principle extending Institutional Coherence under **D-065** / **§188**. It creates no implementation authority, lane, concurrency, UI work, or financial-authority change. `CLASS-A-VAL-002-GF-001` remains completed historical authority under **D-066** / **§189**–**§190**; protocol-complete dual-layer participant validation is active on the verified orientation-inclusive build.
 
-**Orientation Before Explanation (Internal D-068 / §192):** Accepted as an internal product-architecture and evaluation principle beneath Institutional Coherence, Graduated Fidelity, and Progressive Institutional Reasoning. Layer 1 should orient before deeper explanation, and any reassurance that nothing requires attention or that it is safe to continue must be supported by observable interpretation; otherwise the interface should orient the participant to uncertainty or required attention. “Financial Stability Companion” remains an internal behavioural frame and test-only category hypothesis, not settled or public naming. D-068 creates no implementation authority, lane, concurrency, UI work, or financial-authority change; protocol-complete dual-layer participant validation on the verified GF-001 build remains immediately next.
+**Orientation Before Explanation (Internal D-068 / §192):** Accepted as an internal product-architecture and evaluation principle beneath Institutional Coherence, Graduated Fidelity, and Progressive Institutional Reasoning. Layer 1 should orient before deeper explanation, and any reassurance that nothing requires attention or that it is safe to continue must be supported by observable interpretation; otherwise the interface should orient the participant to uncertainty or required attention. “Financial Stability Companion” remains an internal behavioural frame and test-only category hypothesis, not settled or public naming. D-068 creates no implementation authority, lane, concurrency, UI work, or financial-authority change; protocol-complete dual-layer participant validation is active on the verified orientation-inclusive build.
 
-**Cognitive Stewardship (Internal D-069 / §193):** Accepted as an enduring internal institutional product learning completing the current behavioural-architecture stack: Hedgr should progressively carry the work of interpretation while progressively returning judgement to the participant. The institution reduces unnecessary cognitive effort without removing agency, hiding uncertainty, weakening disclosure, or implying certainty beyond observable interpretation. “Financial Stability Companion” remains an internal behavioural frame and test-only category hypothesis, not settled or public naming. D-069 creates no doctrine, implementation authority, lane, concurrency, UI work, or financial-authority change; protocol-complete dual-layer participant validation on the verified GF-001 build remains immediately next.
+**Cognitive Stewardship (Internal D-069 / §193):** Accepted as an enduring internal institutional product learning completing the current behavioural-architecture stack: Hedgr should progressively carry the work of interpretation while progressively returning judgement to the participant. The institution reduces unnecessary cognitive effort without removing agency, hiding uncertainty, weakening disclosure, or implying certainty beyond observable interpretation. “Financial Stability Companion” remains an internal behavioural frame and test-only category hypothesis, not settled or public naming. D-069 creates no doctrine, implementation authority, lane, concurrency, UI work, or financial-authority change; protocol-complete dual-layer participant validation is active on the verified orientation-inclusive build.
+
+**Governed Narrative Orientation Surface (Internal D-077 / §§205–206):** Founder-activated nested `CLASS-A-VAL-002-ORIENT-001` is implemented, technically verified, and closed as completed historical authority inside open `CLASS-A-VAL-002`. D-068 remains an evaluation principle only. The completed pass is Class A informational / synthetic, did not create a fourth lane, and did not unfreeze narrative sources. Participant testing is active on the verified orientation-inclusive build under the open parent.
 
 **MVP phased alignment (interpretation aid):** See **`docs/ops/governance/mvp/HEDGR_MVP_PHASE_ALIGNMENT.md`** for how **`docs/doctrine/hedgr-mvp-project-specification.md`** governance-gated phases and success criteria map to the posture stated in this section and in **§6a–§6c**. That readout is **subordinate** to this file and to **§7** / **§7a**; it does **not** widen execution authority or substitute for **§7** naming.
 
@@ -4339,7 +4347,7 @@ This section does **not** authorize provider-specific implementation, legal reli
 
 ### 6f.20 Controlled Parallelism v20 — `CLASS-A-VAL-002` + `NARRATIVE-007` (Internal **D-074**)
 
-**Status:** **Accepted and active.** Founder-approved 2026-08-11; activation **§202**; Lane N bounded-revision amendment Internal **D-075** / **§203** recorded 2026-08-13. Visibility is **Internal** and is not auto-exported as a public ADR.
+**Status:** Accepted and **superseded as active concurrency** by Controlled Parallelism v21 / Internal **D-076** / **§6f.21** / **§204**. Founder-approved 2026-08-11; activation **§202**; Lane N bounded-revision amendment Internal **D-075** / **§203** recorded 2026-08-13 and continues under v21 without change. Visibility is **Internal** and is not auto-exported as a public ADR. D-074 no longer supplies active concurrency.
 
 **Authority basis:** **§6e** / D-026 lane-model / exception-framework + Founder approval of a concurrent narrative lane on 2026-08-11 + the proposed Human Narrative Lead brief supplied for review + Internal **D-074** + explicit **§7** / **§7a** naming + activation **§202** + Founder acceptance of the audit and translation map and bounded candidate-revision authorization under Internal **D-075** / **§203**. Prior Controlled Parallelism v19 / D-055 remains completed historical authority and supplies no current concurrency.
 
@@ -4378,11 +4386,59 @@ This section does **not** authorize provider-specific implementation, legal reli
 | --- | --- |
 | **Decision ID** | D-074 |
 | **Title** | Controlled Parallelism v20 — `CLASS-A-VAL-002` + `NARRATIVE-007` |
-| **Status** | Accepted and active; Lane N scope amended by D-075 / §203 |
+| **Status** | Accepted and superseded as active concurrency by D-076 / **§6f.21**; Lane N ticket and D-075 / §203 scope continue under v21 |
 | **Visibility** | Internal |
 | **Date** | 2026-08-11 |
-| **Repo authority** | This **§6f.20**; activation **§202**; bounded revision amendment **§203**; §7 / §7a; `AGENTS.md` governed-parallelism exception |
-| **Reversibility** | Reversible; close or pause Lane N and restore singular Lane V without altering either frozen narrative sources or Lane V authority |
+| **Repo authority** | This **§6f.20**; activation **§202**; bounded revision amendment **§203**; superseded as concurrency by **§6f.21** / **§204**; `AGENTS.md` governed-parallelism exception |
+| **Reversibility** | Historical two-lane concurrency only; Lane N closeout remains revert D-075 / §203 then D-074 / §202 without altering frozen narrative sources or Lane V |
+
+### 6f.21 Controlled Parallelism v21 — `CLASS-A-VAL-002` + `NARRATIVE-007` + `SE-REASON-001` (Internal **D-076**)
+
+**Status:** **Accepted and active.** Founder-approved 2026-08-14; activation **§204**. Visibility is **Internal** and is not auto-exported as a public ADR. Later Internal **D-077** / **§§205–206** supplied and closed `CLASS-A-VAL-002-ORIENT-001` inside Lane V without adding a fourth named lane or changing Lane N or Lane E.
+
+**Authority basis:** **§6e** / D-026 lane-model / exception-framework + Founder disposition of 14 August 2026 to activate a bounded parallel Stability Engine research lane while `CLASS-A-VAL-002` continues unchanged + Internal **D-076** + explicit **§7** / **§7a** naming + activation **§204** + governing frame `docs/ops/stability-engine/research/HEDGR_STABILITY_ENGINE_REASONING_RESEARCH_BRIEF.md`. Lane N `NARRATIVE-007` continues unchanged under Internal **D-074** / **§202** and Internal **D-075** / **§203**. Prior Controlled Parallelism v20 / D-074 remains historically valid for Lane N origin and is completed historical concurrency only.
+
+**Founder-approved concurrent activation (only these named lanes/tickets):**
+
+| Lane | Ticket | Authority class | Notes |
+| --- | --- | --- | --- |
+| V — Class A product validation | `CLASS-A-VAL-002` | Class A informational / synthetic product validation | Continues under its existing §7a authority; Internal **D-077** / **§§205–206** later supplied and closed `CLASS-A-VAL-002-ORIENT-001` inside this lane without changing D-076 named-lane concurrency |
+| N — Human customer-narrative translation | `NARRATIVE-007` | Class A informational / non-authorising narrative governance and candidate translation | Continues unchanged under D-074 / D-075; Human Narrative Lead remains `PROPOSE_ONLY`; one bounded candidate Customer One-Pager vNext remains authorized; canonical v1.0 remains frozen and publication remains unauthorized |
+| E — Stability Engine reasoning research | `SE-REASON-001` | Class A informational research only; Yellow decision lane; no widening beyond informational concepts | Produce a Stability Function Model, State Model, and Interpretation Tests; research only; no product refinement, asset expansion, or execution authority |
+
+**Lane E named files:**
+
+- `docs/ops/stability-engine/research/HEDGR_STABILITY_ENGINE_REASONING_RESEARCH_BRIEF.md` — governing frame
+- `docs/ops/stability-engine/research/HEDGR_STABILITY_FUNCTION_MODEL.md` — authorized research output delivered as a non-authoritative proposal; pending Founder / HedgrOps disposition
+- `docs/ops/stability-engine/research/HEDGR_STABILITY_STATE_MODEL.md` — authorized research output delivered as a non-authoritative proposal; pending Founder / HedgrOps disposition
+- `docs/ops/stability-engine/research/HEDGR_STABILITY_INTERPRETATION_TESTS.md` — authorized research output delivered as a non-authoritative proposal; pending Founder / HedgrOps disposition
+- `docs/ops/HEDGR_STATUS.md`
+- `AGENTS.md`
+
+**Lane independence (binding):**
+
+- `SE-REASON-001` cannot alter Lane V research scope, participant instrument, distribution posture, evidence domains, thresholds, decision rule, timing, stop conditions, rollback, closeout, or the synthetic journey.
+- `SE-REASON-001` cannot alter Lane N frozen sources, D-075 candidate-revision authority, publication posture, or closeout.
+- `NARRATIVE-007` cannot alter Lane E research scope, artifacts, dispositions, or stop conditions.
+- `CLASS-A-VAL-002` evidence cannot automatically trigger Lane E product translation, engine implementation, or architecture adoption.
+- No lane widens, inherits, approves, modifies, pauses, or closes another.
+- Completion of any lane does not satisfy the Class B convergence gate, accept institutional evidence, authorize public positioning, or authorize customer-money activity.
+- Cross-lane default: `NO CROSS-LANE IMPACT`. Material assumption or authority change: `AUTHORITY CHANGE REQUIRED — STOP`.
+- Closing or pausing Lane E restores the prior v20 two-lane V / N posture unless a later Founder decision explicitly names otherwise. Closing Lane N does not close Lane E.
+
+**Non-authorization statement:** D-076 does not authorize modification of `CLASS-A-VAL-002`; nested refinement of the synthetic journey; new participant-facing Stability Engine functionality; live macro or market-data integrations; collection of new participant financial data; custody or customer-money activity; automated allocation or rebalancing; asset or provider admission; target portfolio weights; personalised investment instructions; live recommendations; production execution; expansion into property, infrastructure, private credit, gold, or other RWAs; legal, regulatory, provider, or liquidity claims; doctrine or ADR change; Evidence Register acceptance; Class B / Class C; or any financial execution-authority widening. Yellow classification does not authorize external commitments, customer-money behaviour, live financial integrations, or automated allocation. Kenya counsel remains **DEFER**. Green Lane classification does **not** independently activate or widen this pass (ADR **0025** / **§6g**).
+
+**Reversibility:** Revert D-076 / §204 / §6f.21 / §7 / §7a Lane E naming, remove unaccepted Lane E research outputs if created, reconcile `AGENTS.md`, and restore Controlled Parallelism v20 / D-074 as the active two-lane V / N pass. Do not modify Lane V, Lane N, frozen narrative sources, or financial execution posture during rollback.
+
+| Field | Value |
+| --- | --- |
+| **Decision ID** | D-076 |
+| **Title** | Controlled Parallelism v21 — `CLASS-A-VAL-002` + `NARRATIVE-007` + `SE-REASON-001` |
+| **Status** | Accepted and active |
+| **Visibility** | Internal |
+| **Date** | 2026-08-14 |
+| **Repo authority** | This **§6f.21**; activation **§204**; §7 / §7a; `AGENTS.md` governed-parallelism exception |
+| **Reversibility** | Reversible; close or pause Lane E and restore the prior V / N concurrency without altering Lane V, Lane N, or financial execution authority |
 
 ## 6g. Green Lane Delegation Pilot envelope (ADR 0025 / `GOV-GREEN-001`)
 
@@ -4392,7 +4448,7 @@ This section does **not** authorize provider-specific implementation, legal reli
 
 **Founder-authorized outcome:** Establish a coherent, non-duplicative repo-native authority model so HedgrOps may prepare and govern routine, reversible Class A product-learning translation inside founder outcome envelopes — without independent ticket activation or unrestricted sequencing authority.
 
-**Permitted product surface / file scope (this pilot):** Governance documentation and operator-control translation only — ADR **0025**, `AGENTS.md` Green Lane operator rules, this **§6g** envelope, **§7** / **§7a** activation hygiene for `GOV-GREEN-001`, and Notion staging reconciliation when required. No product experiment is named by this envelope.
+**Permitted product surface / file scope (this pilot):** Governance documentation and operator-control translation only — ADR **0025**, `AGENTS.md` Green Lane operator rules, this **§6g** envelope, and **§7** / **§7a** activation hygiene for `GOV-GREEN-001`. No product experiment is named by this envelope. Notion staging reconciliation is retired (Internal **D-078** / **§207**).
 
 **Excluded systems and files:** `apps/**`, `packages/**`, tests unrelated to governance validation, Stability Engine types/semantics, product copy, user-research flows, deployment / environment / CI configuration, financial integrations, custody / rails / deposits / withdrawals / conversion / settlement / treasury behavior, Class B evidence acceptance, institutional MVP acceptance, market / legal / provider / jurisdiction posture, existing accepted ADR meaning (other than recording ADR **0025**), doctrine files unless a direct conflict makes implementation impossible.
 
@@ -4401,7 +4457,7 @@ This section does **not** authorize provider-specific implementation, legal reli
 | **Execution class** | Class A only (documentation-only governance for this ticket) |
 | **Start date** | 2026-07-14 |
 | **Review / expiry date** | ~2026-08-04 (after one product-learning cycle or approximately three weeks); earlier founder revocation allowed |
-| **Concurrency limit** | One active implementation ticket by default unless an active Founder-approved **§6f** pass is named. Controlled Parallelism v20 / Internal **D-074** / **§6f.20** currently names only Lane V `CLASS-A-VAL-002` and Lane N `NARRATIVE-007`. Green Lane does not itself create or widen that concurrency. |
+| **Concurrency limit** | One active implementation ticket by default unless an active Founder-approved **§6f** pass is named. Controlled Parallelism v21 / Internal **D-076** / **§6f.21** currently names Lane V `CLASS-A-VAL-002`, Lane N `NARRATIVE-007`, and Lane E `SE-REASON-001`. Green Lane does not itself create or widen that concurrency. |
 | **External-spend limit** | None (zero) |
 | **Data posture** | No unapproved personal or regulated data; no customer-money behavior |
 | **Escalation owner** | Founder — @mhibajene |
@@ -4411,11 +4467,11 @@ This section does **not** authorize provider-specific implementation, legal reli
 
 **Review criteria:** decision-to-test latency; founder routing burden; authority-boundary preservation; experiments reaching clear disposition; missing/late escalations; conflicting product narratives; operator misinterpretation; governance overhead; retain / narrow / revise / expand / revoke recommendation. Expansion is not automatic.
 
-**Revocation rule:** Founder may pause or revoke at any time via repo-native update to this section. On pause/revoke: mark status paused/revoked; confirm no active ticket relies solely on the revoked delegation; reconcile Notion staging; do not silently rewrite historical records. ADR **0025** remains historical unless separately deprecated/superseded.
+**Revocation rule:** Founder may pause or revoke at any time via repo-native update to this section. On pause/revoke: mark status paused/revoked; confirm no active ticket relies solely on the revoked delegation; update this section and related repo-native operator rules; do not silently rewrite historical records. ADR **0025** remains historical unless separately deprecated/superseded. Notion staging reconciliation is retired (Internal **D-078** / **§207**).
 
 **Relationship to §7 / §7a:** This envelope does **not** activate product work. Implementation remains executable only through **§7** / **§7a**. Green Lane classification does not activate work and does not override **§7** / **§7a**.
 
-**Relationship to governed parallelism:** Green Lane delegation does **not** create parallel authority. D-032 / **§6f.3** through D-055 / **§6f.19** are completed historical authorities. Controlled Parallelism v20 / **D-074** / **§6f.20** is active only because the Founder separately approved and **§7** / **§7a** name `CLASS-A-VAL-002` and `NARRATIVE-007`. Green classification does not independently authorize either ticket or widen their scope.
+**Relationship to governed parallelism:** Green Lane delegation does **not** create parallel authority. D-032 / **§6f.3** through D-055 / **§6f.19**, and D-074 / **§6f.20**, are completed historical authorities. Controlled Parallelism v21 / **D-076** / **§6f.21** is active only because the Founder separately approved and **§7** / **§7a** name `CLASS-A-VAL-002`, `NARRATIVE-007`, and `SE-REASON-001`. Green classification does not independently authorize any of those tickets or widen their scope. Lane E is Yellow research and is not Green Lane work.
 
 **Non-authorization:** This section is an authority-model pilot. It does not activate product work, does not authorize parallel execution by itself, does not widen financial execution posture, and leaves repo authority controlling.
 
@@ -4567,28 +4623,32 @@ Completed and merged:
 - `NARRATIVE-005` - Investor Orientation Brief (Class A informational derived narrative; activation **§169** / D-054; Founder accepted source and closed ticket **§170**; publication not authorised)
 - `NARRATIVE-006` - Institutional Investor Orientation Document, Research R2 (Class A informational / non-authorising design expression; activation **§170** / D-055; bounded amendment **§171** / D-056; Founder accepted design and closed ticket **§172**; publication not authorised)
 - `STATUS-HYGIENE-001` - Reconcile stale **§7a** dual-ticket language after `NARRATIVE-006` closeout (documentation-only governance hygiene; Founder-activated and closed **§173**; restores singular-ticket Lane V truth)
+- `GOV-NOTION-RETIRE-001` - Retire Notion from the Hedgr operating system (documentation-only governance hygiene; Founder-activated and closed **§207**; Internal **D-078**)
 - `CLASS-A-VAL-002-FORM-001` - Canonical Google Forms Participant Retest Instrument (bounded nested Lane V formulation; activation **§200** / D-073; technically verified and closed **§201**; unpublished with zero responses; no participant-evidence or product-refinement authority)
+- `CLASS-A-VAL-002-ORIENT-001` - Governed Narrative Orientation Surface (bounded nested Lane V experiment; activation **§205** / D-077; technically verified and closed **§206**; no comprehension, publication-readiness, or product-refinement claim)
 
 Current active ticket status:
 
-- **Active tickets (Controlled Parallelism v20 / D-074, Lane N scope amended by D-075 / §203):**
-  - **Lane V:** `CLASS-A-VAL-002` — Validate the End-to-End Synthetic Stability Journey. Remains open and unchanged. No nested refinement is active. Participant testing is active on the verified human-readable-entry build with the canonical unpublished Form technically ready under completed D-073 / **§200**–**§201**; all product-review concerns remain test-first. Exact parent and completed briefs remain in **§7a**.
-  - **Lane N:** `NARRATIVE-007` — Human Narrative Lead + Customer One-Pager Fidelity Revision. Active in `PROPOSE_ONLY` mode under **§6f.20** / **§202** / **§203**; audit and translation map accepted; one candidate vNext is authorized at the named path; canonical v1.0 remains frozen and publication is unauthorized.
+- **Active tickets (Controlled Parallelism v21 / D-076; Lane N scope continues under D-075 / §203):**
+  - **Lane V:** `CLASS-A-VAL-002` — Validate the End-to-End Synthetic Stability Journey. Remains open with no active nested refinement. `CLASS-A-VAL-002-ORIENT-001` is completed historical authority under Internal **D-077** / **§205**–**§206**. Protocol-complete dual-layer participant testing is active on the verified orientation-inclusive build. The canonical Form remains the approved instrument; its observed responder state is recorded in **§206**, and distribution remains limited to the governed cohort. Exact parent and completed briefs remain in **§7a**.
+  - **Lane N:** `NARRATIVE-007` — Human Narrative Lead + Customer One-Pager Fidelity Revision. Active in `PROPOSE_ONLY` mode under original **§6f.20** / **§202** / **§203** scope, now concurrent under **§6f.21** / **§204**; audit and translation map accepted; one candidate vNext is authorized at the named path; canonical v1.0 remains frozen and publication is unauthorized.
+  - **Lane E:** `SE-REASON-001` — Stability Engine Reasoning Architecture Research. Active as Class A informational / Yellow research only under **§6f.21** / **§204**; governing brief at `docs/ops/stability-engine/research/HEDGR_STABILITY_ENGINE_REASONING_RESEARCH_BRIEF.md`; three named research artifacts delivered as non-authoritative proposals and pending Founder / HedgrOps disposition; ticket remains active; no product-refinement, asset-expansion, or execution authority.
 - **Completed Lane M:** `MONEY-STACK-001` (**§168**) — Founder–HedgrOps approved the research package and closed the cycle as converged; D-053 completed; no follow-on authority.
 - **Completed historical Lane N tickets:** `NARRATIVE-006` (**§172**); `NARRATIVE-005` (**§170**); `UI-NARR-001` (**§166**); `NARRATIVE-004` (**§164**); `NARRATIVE-003` (**§162**); `NARRATIVE-002` (**§159**); `NARRATIVE-001` (**§157**).
 - **Completed Lane R:** `BRIDGE-P1-OPS-001` (**§161**) — R1 clock recorded; regen/verification hygiene complete; legacy Deprecated retained; no retirement; no Phase 2; no successor activated.
 - **Completed Bridge Phase 1 implementation:** `BRIDGE-P1-001` (**§154**; PRs **#306** / **#307**).
 - **Completed prep:** `BRIDGE-P1-PREP-001` (**§151** / D-043). Governing plan preserved.
-- **Completed nested refinements inside Lane V:** `HEDGR-UI-001`–`006` (**§144**–**§148**; **§175**–**§181**); `CLASS-A-VAL-002-CA-001` (**§182**–**§183**); `CLASS-A-VAL-002-CA-002` (**§184**–**§185**); `CLASS-A-VAL-002-CA-003` (**§186**–**§187**); `CLASS-A-VAL-002-GF-001` (**§189**–**§190**); `CLASS-A-VAL-002-WARMTH-001` (**§194**–**§195**); `CLASS-A-VAL-002-AFF-001` (**§196**–**§197**); `CLASS-A-VAL-002-ROUTE-001` (**§198**–**§199**). All are completed historical nested authority only; none supplies standing authority for further UI or product-change work.
-- **Active nested refinement inside Lane V:** None. Participant testing is active under the still-open parent on the verified human-readable-entry build. Every other HedgrOps review concern remains test-first; no further refinement may be inferred.
+- **Completed nested refinements inside Lane V:** `HEDGR-UI-001`–`006` (**§144**–**§148**; **§175**–**§181**); `CLASS-A-VAL-002-CA-001` (**§182**–**§183**); `CLASS-A-VAL-002-CA-002` (**§184**–**§185**); `CLASS-A-VAL-002-CA-003` (**§186**–**§187**); `CLASS-A-VAL-002-GF-001` (**§189**–**§190**); `CLASS-A-VAL-002-WARMTH-001` (**§194**–**§195**); `CLASS-A-VAL-002-AFF-001` (**§196**–**§197**); `CLASS-A-VAL-002-ROUTE-001` (**§198**–**§199**); `CLASS-A-VAL-002-ORIENT-001` (**§205**–**§206**). All are completed historical nested authority only; none supplies standing authority for further UI or product-change work.
+- **Active nested refinement inside Lane V:** none. Participant testing is active under the open parent on the verified orientation-inclusive build. Every other HedgrOps review concern remains test-first; no further refinement may be inferred.
 - **Completed status hygiene:** `STATUS-HYGIENE-001` (**§173**) — reconciled stale **§7a** dual-ticket language; no product, narrative, Bridge, or Class B authority change.
+- **Completed operating-model hygiene:** `GOV-NOTION-RETIRE-001` (**§207** / D-078) — Notion retired as a governance, institutional-memory, and operating-system surface; staging file archived in place; no fourth lane; D-076 concurrency unchanged.
 - **Founder validation disposition:** Internal **D-060** / **§179** remains the parent disposition: dual-layer validation (journey comprehension + category convergence) under open `CLASS-A-VAL-002`. Internal **D-065** / **§188** supplies the Institutional Coherence evaluation principle; Internal **D-067** / **§191** extends it through Progressive Institutional Reasoning; Internal **D-068** / **§192** adds Orientation Before Explanation as the behavioural foundation; Internal **D-069** / **§193** adds Cognitive Stewardship as the enduring institutional learning that the institution carries interpretation while the participant retains judgement. Internal **D-066** / **§189**–**§190**, Internal **D-070** / **§194**–**§195**, and Internal **D-071** / **§196**–**§197** supplied and closed only their named nested implementations. Internal **D-057** / **§174** remains historical open-ticket continuity. No participant-comprehension, Class B, MVP, Evidence Register, public naming-adoption, or gate claim follows from these decisions or nested implementation.
-- **Sequencing posture:** Controlled Parallelism v20 / Internal **D-074** / **§6f.20** names only `CLASS-A-VAL-002` (Lane V, unchanged) and `NARRATIVE-007` (Lane N). Internal **D-075** / **§203** amends only Lane N to authorize one bounded candidate vNext; it creates no new lane or ticket. No nested Lane V refinement is active. Participant testing remains active on the verified human-readable-entry build with the canonical unpublished Form technically ready; every product-review concern remains test-first and no further refinement may be inferred. Lane N cannot alter Lane V or any frozen source. Prior Controlled Parallelism passes through v19 / D-055 are completed historical authority.
+- **Sequencing posture:** Controlled Parallelism v21 / Internal **D-076** / **§6f.21** names `CLASS-A-VAL-002` (Lane V), `NARRATIVE-007` (Lane N, unchanged), and `SE-REASON-001` (Lane E, research only). Internal **D-077** / **§205**–**§206** completed `CLASS-A-VAL-002-ORIENT-001` inside Lane V without creating a fourth lane or changing D-076 concurrency. Internal **D-075** / **§203** remains the Lane N candidate-revision amendment and creates no new lane. Internal **D-074** / **§6f.20** is completed historical two-lane concurrency. Participant testing is active on the verified orientation-inclusive build under the open parent; the canonical Form remains the approved instrument and distribution remains limited to the governed cohort; every other product-review concern remains test-first and no further refinement may be inferred. Lane E cannot alter Lane V, Lane N, or any frozen source. Lane N cannot alter Lane V or Lane E. Prior Controlled Parallelism passes through v20 / D-074 are completed historical concurrency authority.
 - **Kenya counsel path:** **DEFER** (**§6f.1** / D-028).
-- **Governed parallelism posture:** Controlled Parallelism v20 / D-074 is the sole active **§6f** pass. Lane V and Lane N are active only through their named tickets; Lanes A / B / C / M / R are idle. **§6e** / D-026 remains lane-model only. Class B convergence gate unsatisfied.
-- **Active lanes:** Lane V `CLASS-A-VAL-002`; Lane N `NARRATIVE-007`. Lane A / B / C / M / R: none.
-- **Green Lane pilot (§6g / ADR 0025):** Authority-model only; does not activate product experiments or independently authorize a new ticket. D-060 / D-061 / D-063 / D-064 / D-065 / D-066 / D-067 / D-068 / D-069 / D-070 / D-071 Green classification does not substitute for **§7** / **§7a** naming; D-066, D-070, and D-071 are completed historical nested authority, while D-067 / D-068 / D-069 create no implementation authority.
-- **Current narrative ticket:** `NARRATIVE-007` (bounded candidate revision under D-075 / §203). Last completed product-copy ticket: `UI-NARR-001` (**§166**). Last completed narrative ticket: `NARRATIVE-006` (**§172**). Last completed narrative governance ticket: `NARRATIVE-004` (**§164**). Last completed Bridge ticket: `BRIDGE-P1-OPS-001` (**§161**). Last completed Bridge implementation: `BRIDGE-P1-001` (**§154**). Last completed governance-hygiene ticket: `STATUS-HYGIENE-001` (**§173**). Last completed nested Lane V structural refinement: `CLASS-A-VAL-002-GF-001` (**§190** / D-066). Last completed nested Lane V analytical refinement: `CLASS-A-VAL-002-CA-001` (**§183**). Last recorded parent institutional product-learning disposition: Cognitive Stewardship (**§193** / D-069), following Orientation Before Explanation (**§192** / D-068), Progressive Institutional Reasoning (**§191** / D-067), and Institutional Coherence (**§188** / D-065). Last completed nested Lane V presentation refinement: `CLASS-A-VAL-002-AFF-001` (**§197** / D-071), following `CLASS-A-VAL-002-WARMTH-001` (**§195** / D-070). Active nested Lane V refinement: None.
+- **Governed parallelism posture:** Controlled Parallelism v21 / D-076 is the sole active **§6f** pass. Lane V, Lane N, and Lane E are active only through their named tickets; Lanes A / B / C / M / R are idle. **§6e** / D-026 remains lane-model only. Class B convergence gate unsatisfied.
+- **Active lanes:** Lane V `CLASS-A-VAL-002`; Lane N `NARRATIVE-007`; Lane E `SE-REASON-001`. Lane A / B / C / M / R: none.
+- **Green Lane pilot (§6g / ADR 0025):** Authority-model only; does not activate product experiments or independently authorize a new ticket. D-077 Green / Class A classification does not substitute for **§7** / **§7a** naming. D-060 / D-061 / D-063 / D-064 / D-065 / D-066 / D-067 / D-068 / D-069 / D-070 / D-071 Green classification does not substitute for **§7** / **§7a** naming; D-066, D-070, and D-071 are completed historical nested authority, while D-067 / D-068 / D-069 create no implementation authority.
+- **Current narrative ticket:** `NARRATIVE-007` (bounded candidate revision under D-075 / §203). **Current research ticket:** `SE-REASON-001` (Lane E, Class A informational / Yellow Stability Engine reasoning research under D-076 / §204). Last completed product-copy ticket: `UI-NARR-001` (**§166**). Last completed narrative ticket: `NARRATIVE-006` (**§172**). Last completed narrative governance ticket: `NARRATIVE-004` (**§164**). Last completed Bridge ticket: `BRIDGE-P1-OPS-001` (**§161**). Last completed Bridge implementation: `BRIDGE-P1-001` (**§154**). Last completed governance-hygiene ticket: `GOV-NOTION-RETIRE-001` (**§207** / D-078). Prior governance-hygiene ticket: `STATUS-HYGIENE-001` (**§173**). Last completed nested Lane V refinement: `CLASS-A-VAL-002-ORIENT-001` (**§206** / D-077). Last recorded parent institutional product-learning disposition: Cognitive Stewardship (**§193** / D-069), following Orientation Before Explanation (**§192** / D-068), Progressive Institutional Reasoning (**§191** / D-067), and Institutional Coherence (**§188** / D-065). Active nested Lane V refinement: none.
 - **Post-`CLASS-A-VAL-002-CA-002` closeout (§184–§185 / D-063):** One bounded minimum-effective first-session cognitive-friction reduction pass complete under open parent; baseline `6790de2` and before / after evidence preserved; protocol-complete dual-layer participant retesting immediately next; no second UI pass, parent closeout, comprehension claim, naming adoption, Class B, MVP, Evidence Register, successor, or parallel-lane authority.
 - **Post-`CLASS-A-VAL-002-CA-001` closeout (§182–§183 / D-062):** Nested cognitive-abstraction review complete under open parent; dual-layer participant retesting remains next and was ungated; no code / copy / journey mutation; no naming adoption, Class B, MVP, Evidence Register, successor, UI-pass-by-inference, or parallel-lane authority. Report: `docs/validation/CLASS-A-VAL-002-CA-001_COGNITIVE_ABSTRACTION_REVIEW.md`.
 - **Post-`HEDGR-UI-006` closeout (§180–§181 / D-061):** Bounded category / narrative-orientation implementation complete under open parent after D-060; protocol-complete dual-layer participant retesting remains next and ungated; no naming adoption, participant-comprehension, Class B, MVP, Evidence Register, successor, further UI-pass-by-inference, or parallel-lane authority.
@@ -4626,18 +4686,21 @@ Current active ticket status:
 - **Post-Layer 1 Institutional Warmth closeout (§195 / D-070):** `CLASS-A-VAL-002-WARMTH-001` is implemented and technically verified (`pnpm run validate` green incl. Vitest 751/751; `e2e:ci` 56/56; RAP regenerated with `active_ticket_ids` still `["CLASS-A-VAL-002"]`). Runtime change limited to `page.tsx` + `EngineAllocationBands.tsx`; `EnginePostureHeader.tsx` and non-normal states unchanged. A review-only non-normal-state finding (institution observes but does not carry the next interpretive step outside the normal posture; off the current journey path) is recorded for separate governed disposition. `CLASS-A-VAL-002-WARMTH-001` is now completed historical nested authority; the parent returns immediately to protocol-complete dual-layer participant retesting on the verified warmth build with no successor pass.
 - **Controlled Parallelism v20 activation (§202 / D-074):** Founder approves concurrent Lane N `NARRATIVE-007` beside unchanged Lane V. Human Narrative Lead is adopted in `PROPOSE_ONLY` mode for one read-only fidelity audit and translation map of the frozen Customer One-Pager. No source revision, `vNext`, publication, positioning, product copy, public naming, product change, or cross-lane authority is supplied.
 - **Customer Narrative Fidelity disposition (§203 / D-075):** Founder accepts the fidelity audit and translation map and authorizes exactly one proposed Customer One-Pager vNext at `docs/strategy/customer/HEDGR_CUSTOMER_ONE_PAGER_VNEXT.md`. Customer One-Pager v1.0 remains frozen and controlling; no candidate acceptance, publication, positioning, product copy, public naming, product change, or cross-lane authority is supplied.
-- When **§7** names approved tickets, active briefs live in **§7a**. Current active tickets: `CLASS-A-VAL-002` (Lane V, unchanged) and `NARRATIVE-007` (Lane N, bounded candidate revision). No nested Lane V ticket is active. `CLASS-A-VAL-002-FORM-001` is completed historical authority under Internal **D-073** / **§200**–**§201**; `CLASS-A-VAL-002-ROUTE-001` is completed historical authority under Internal **D-072** / **§198**–**§199**. Participant testing remains active under Lane V on the verified human-readable-entry build with the canonical unpublished Form technically ready; Lane N cannot alter that path.
-- Cursor must not modify frozen Canonical Story v1.0, frozen Customer One-Pager v1.0, frozen Narrative Style Guide v1.0, or the accepted `NARRATIVE-005` source brief. `NARRATIVE-007` authorizes only the separately named candidate vNext file under D-075 / §203; adoption or canonical-source mutation requires a further Founder disposition and repo-native update. Narrative and design artifacts are not publication, sequencing, evidence acceptance, readiness approval, live capability, fundraising, or investment solicitation; the legacy Bridge placeholder remains separately governed; Money Stack findings remain non-implementing research.
+- **Controlled Parallelism v21 activation (§204 / D-076):** Founder approves concurrent Lane E `SE-REASON-001` beside unchanged Lane V and unchanged Lane N. The lane is Class A informational / Yellow Stability Engine reasoning research only. It may produce a Stability Function Model, State Model, and Interpretation Tests. No product refinement, asset expansion, live recommendation, or financial execution authority is supplied.
+- **Nested Lane V orientation-surface closeout (§§205–206 / D-077):** `CLASS-A-VAL-002-ORIENT-001` completed as one bounded Class A informational web-native governed-narrative orientation experiment inside open `CLASS-A-VAL-002`. It did not create a fourth lane, unfreeze narrative sources, alter Lane N or Lane E, or convert D-068 into standing implementation authority. Participant testing is active on the verified orientation-inclusive build under the parent protocol.
+- **Notion retirement (§207 / D-078):** Founder retires Notion from the Hedgr operating system. Documentation-only hygiene; no fourth lane; D-076 concurrency unchanged; Obsidian is not a successor institutional knowledge base.
+- When **§7** names approved tickets, active briefs live in **§7a**. Current active tickets: `CLASS-A-VAL-002` (Lane V), `NARRATIVE-007` (Lane N, bounded candidate revision), and `SE-REASON-001` (Lane E, research only). `CLASS-A-VAL-002-ORIENT-001` is completed historical nested authority under Internal **D-077** / **§§205–206**; `CLASS-A-VAL-002-FORM-001` is completed historical authority under Internal **D-073** / **§200**–**§201**; `CLASS-A-VAL-002-ROUTE-001` is completed historical authority under Internal **D-072** / **§198**–**§199**. Participant testing is active on the verified orientation-inclusive build under the governed cohort protocol; Lane N and Lane E cannot alter that path.
+- Cursor must not modify frozen Canonical Story v1.0, frozen Customer One-Pager v1.0, frozen Narrative Style Guide v1.0, or the accepted `NARRATIVE-005` source brief. `NARRATIVE-007` authorizes only the separately named candidate vNext file under D-075 / §203; adoption or canonical-source mutation requires a further Founder disposition and repo-native update. `SE-REASON-001` authorizes only the named research artifacts under `docs/ops/stability-engine/research/**` and cannot modify the synthetic journey, participant-facing engine surfaces, frozen narrative sources, or financial execution posture. Narrative and design artifacts are not publication, sequencing, evidence acceptance, readiness approval, live capability, fundraising, or investment solicitation; the legacy Bridge placeholder remains separately governed; Money Stack findings remain non-implementing research; Lane E research remains non-implementing until a further Founder disposition.
 - Kenya counsel remains **DEFER**. Convergence gate remains unsatisfied.
 - Legacy `docs/ops/bridge/current-status.json` remains **Deprecated** under R1/F6 through at least **2026-08-02**; no silent date-bump to fake CURRENT; retirement requires separately named Founder ticket (`BRIDGE-LEGACY-RETIRE-001` candidate — not active).
 
 ---
 
-## 7a. Active execution tickets — Lanes V and N (Controlled Parallelism v20)
+## 7a. Active execution tickets — Lanes V, N, and E (Controlled Parallelism v21)
 
 ### Lane V — `CLASS-A-VAL-002`
 
-**Active ticket:** `CLASS-A-VAL-002` — Validate the End-to-End Synthetic Stability Journey (Founder transition / activation **§142** / **§143**; Internal **D-037**; singular-ticket restored after `NARRATIVE-006` closeout **§172** / Internal **D-055** completed historical; **§7a** live-brief drift reconciled under `STATUS-HYGIENE-001` / **§173**; Founder validation disposition Internal **D-060** / **§179** refines the open parent toward dual-layer journey + category-convergence evidence; Internal **D-065** / **§188** adopts Institutional Coherence as an evaluation principle; Internal **D-067** / **§191** extends that principle through Progressive Institutional Reasoning; Internal **D-068** / **§192** adds Orientation Before Explanation as its behavioural foundation; Internal **D-069** / **§193** adds Cognitive Stewardship as enduring institutional learning without doctrine, implementation, or public-naming authority; all nested product refinements through `CLASS-A-VAL-002-ROUTE-001` are completed historical authority, with D-072 activation **§198** and verified closeout **§199**; Internal **D-073** / **§200**–**§201** activated and completed the bounded `CLASS-A-VAL-002-FORM-001` instrument pass, leaving the canonical unpublished Form technically ready while protocol-complete dual-layer participant testing remains active on the verified human-readable-entry build).
+**Active ticket:** `CLASS-A-VAL-002` — Validate the End-to-End Synthetic Stability Journey (Founder transition / activation **§142** / **§143**; Internal **D-037**; singular-ticket restored after `NARRATIVE-006` closeout **§172** / Internal **D-055** completed historical; **§7a** live-brief drift reconciled under `STATUS-HYGIENE-001` / **§173**; Founder validation disposition Internal **D-060** / **§179** refines the open parent toward dual-layer journey + category-convergence evidence; Internal **D-065** / **§188** adopts Institutional Coherence as an evaluation principle; Internal **D-067** / **§191** extends that principle through Progressive Institutional Reasoning; Internal **D-068** / **§192** adds Orientation Before Explanation as its behavioural foundation; Internal **D-069** / **§193** adds Cognitive Stewardship as enduring institutional learning without doctrine, implementation, or public-naming authority; all nested product refinements through `CLASS-A-VAL-002-ROUTE-001` are completed historical authority, with D-072 activation **§198** and verified closeout **§199**; Internal **D-073** / **§200**–**§201** activated and completed the bounded `CLASS-A-VAL-002-FORM-001` instrument pass, leaving the canonical Form instrument technically ready; Internal **D-077** / **§§205–206** activated and closed nested `CLASS-A-VAL-002-ORIENT-001` as one bounded governed-narrative orientation-surface experiment; protocol-complete dual-layer participant testing is active on the verified orientation-inclusive build under the governed cohort protocol).
 
 **Objective:** Create a coherent, visibly synthetic, end-to-end customer journey through Dashboard → Deposit → Withdraw → Activity plus the shared trust and navigation shell so target cross-border freelancers can understand Hedgr’s core stability proposition without inferring that real funds moved, and so the protocol-complete retest can also observe whether participants form the intended product mental model (financial-position interpretation / stability before action).
 
@@ -4645,7 +4708,7 @@ Current active ticket status:
 
 **Type / execution class:** Product validation; Class A informational / synthetic. Non-executing for customer money.
 
-**Authority basis:** Founder approval to close/reframe `CLASS-A-VAL-001` and activate `CLASS-A-VAL-002` as its sole successor + Internal **D-037** + **§142** / **§143** + this **§7** / **§7a** naming + ADR **0024** (evidence principle only) + ADRs **0013–0015** (read-only / informational Stability Engine boundaries) + the existing synthetic transaction and withdrawal trust surfaces. Narrative Style Guide freeze / **§164**, `UI-NARR-001` / **§166**, `MONEY-STACK-001` / **D-053** / **§167**, `NARRATIVE-005` closeout / **§170**, Controlled Parallelism **v19** / **D-055** / **§172** closeout, `STATUS-HYGIENE-001` / **§173**, and Internal **D-057** / **§174** do **not** widen this Lane V authority. All nested passes through `CLASS-A-VAL-002-ROUTE-001` / **D-072** / **§198**–**§199** are completed historical nested authority only. Internal **D-060** / **§179** refines the parent validation objective; Internal **D-065** / **§188** supplies the Institutional Coherence evaluation lens; Internal **D-067** / **§191** supplies Progressive Institutional Reasoning; Internal **D-068** / **§192** supplies Orientation Before Explanation; and Internal **D-069** / **§193** supplies Cognitive Stewardship as durable internal evaluation principles only. D-068 and D-069 neither adopt “Financial Stability Companion” as settled or public naming nor create implementation authority. Controlled Parallelism v20 / Internal **D-074** / **§6f.20** adds Lane N only; it does not change this Lane V authority.
+**Authority basis:** Founder approval to close/reframe `CLASS-A-VAL-001` and activate `CLASS-A-VAL-002` as its sole successor + Internal **D-037** + **§142** / **§143** + this **§7** / **§7a** naming + ADR **0024** (evidence principle only) + ADRs **0013–0015** (read-only / informational Stability Engine boundaries) + the existing synthetic transaction and withdrawal trust surfaces. Narrative Style Guide freeze / **§164**, `UI-NARR-001` / **§166**, `MONEY-STACK-001` / **D-053** / **§167**, `NARRATIVE-005` closeout / **§170**, Controlled Parallelism **v19** / **D-055** / **§172** closeout, `STATUS-HYGIENE-001` / **§173**, and Internal **D-057** / **§174** do **not** widen this Lane V authority. All nested passes through `CLASS-A-VAL-002-ROUTE-001` / **D-072** / **§198**–**§199** are completed historical nested authority only. Internal **D-060** / **§179** refines the parent validation objective; Internal **D-065** / **§188** supplies the Institutional Coherence evaluation lens; Internal **D-067** / **§191** supplies Progressive Institutional Reasoning; Internal **D-068** / **§192** supplies Orientation Before Explanation; and Internal **D-069** / **§193** supplies Cognitive Stewardship as durable internal evaluation principles only. D-068 and D-069 neither adopt “Financial Stability Companion” as settled or public naming nor create implementation authority. Internal **D-077** / **§§205–206** separately supplied and closed the bounded nested orientation-surface implementation and did not convert D-068 into standing implementation authority. Controlled Parallelism v20 / Internal **D-074** / **§6f.20** added Lane N only and is now completed historical concurrency; it does not change this Lane V authority. Controlled Parallelism v21 / Internal **D-076** / **§6f.21** adds Lane E only; it does not change this Lane V authority.
 
 **DRI:** Founder — @mhibajene.
 
@@ -4653,16 +4716,66 @@ Current active ticket status:
 
 - **Lane A / B / C / M / R:** idle
 - **Active Lane V ticket:** `CLASS-A-VAL-002`
-- **Active nested ticket inside Lane V:** None (`CLASS-A-VAL-002-FORM-001` completed under Internal **D-073** / **§200**–**§201**)
+- **Active nested ticket inside Lane V:** none (`CLASS-A-VAL-002-ORIENT-001` completed under Internal **D-077** / **§§205–206**)
 - **Active Lane N ticket:** `NARRATIVE-007`
+- **Active Lane E ticket:** `SE-REASON-001`
 
-**Sequencing posture:** Controlled Parallelism **v20** / Internal **D-074** / **§6f.20** names only Lane V `CLASS-A-VAL-002` and Lane N `NARRATIVE-007`; Internal **D-075** / **§203** amends only Lane N's bounded output authority and does not create a new lane or ticket. Internal **D-060** / **§179** remains the Lane V parent validation disposition; Internal **D-065** / **§188**, Internal **D-067** / **§191**, Internal **D-068** / **§192**, and Internal **D-069** / **§193** remain product-evaluation principles only. `CLASS-A-VAL-002-ROUTE-001` completed under Internal **D-072** / **§198**–**§199**; `CLASS-A-VAL-002-FORM-001` completed under Internal **D-073** / **§200**–**§201**. No nested Lane V ticket is active. Participant testing remains active on the verified route-refinement build with the canonical unpublished Form technically ready. Lane N may prepare one candidate Customer One-Pager vNext and cannot intervene in Lane V. Kenya counsel: **DEFER**. Class B convergence gate: unsatisfied. Green Lane remains authority-model only.
+**Sequencing posture:** Controlled Parallelism **v21** / Internal **D-076** / **§6f.21** names Lane V `CLASS-A-VAL-002`, Lane N `NARRATIVE-007`, and Lane E `SE-REASON-001`; Internal **D-077** / **§§205–206** supplied and closed `CLASS-A-VAL-002-ORIENT-001` inside Lane V without creating a fourth lane. Internal **D-075** / **§203** remains Lane N's bounded output authority and does not create a new lane or ticket. Internal **D-074** / **§6f.20** is completed historical two-lane concurrency. Internal **D-060** / **§179** remains the Lane V parent validation disposition; Internal **D-065** / **§188**, Internal **D-067** / **§191**, Internal **D-068** / **§192**, and Internal **D-069** / **§193** remain product-evaluation principles only. `CLASS-A-VAL-002-ROUTE-001` completed under Internal **D-072** / **§198**–**§199**; `CLASS-A-VAL-002-FORM-001` completed under Internal **D-073** / **§200**–**§201**. Participant testing is active on the verified orientation-inclusive build under the governed cohort protocol. The canonical Form instrument remains approved; its currently observed responder state and distribution boundary are recorded in **§206**. Lane N may prepare one candidate Customer One-Pager vNext and cannot intervene in Lane V or Lane E. Lane E may produce only the named research artifacts and cannot intervene in Lane V or Lane N. Kenya counsel: **DEFER**. Class B convergence gate: unsatisfied. Green Lane remains authority-model only. Lane E is Yellow research and is not Green Lane work.
+
+#### Completed historical nested refinement brief — `CLASS-A-VAL-002-ORIENT-001`
+
+**Status:** **COMPLETED** (Founder-authorized 2026-08-14; activated under Internal **D-077** / **§205**; verified closeout **§206**). One bounded Class A informational / synthetic nested experiment inside open `CLASS-A-VAL-002`. Green reversible product-learning classification only; **§6g** did not independently activate this ticket. No fourth lane. No independent concurrency.
+
+**Objective:** Create one reusable, web-native governed narrative orientation surface that a participant can read before encountering the synthetic product journey, so the parent retest can observe whether orientation establishes a stability-first mental model without false confidence or implied live financial capability.
+
+**Highest-value uncertainty:** Can a reusable Hedgr orientation surface establish the correct stability-first mental model before a user encounters the product, without creating false confidence or implying unauthorised financial capability?
+
+**Journey role:** Strengthen **Entry → Orientation → Stability → Insight → Safe action**. `/orientation` is the first informational orientation surface. `/dashboard-synthetic-journey` remains the human-readable product-journey entry. The legacy query route remains the rollback seam. This pass must not duplicate Dashboard, Deposit, Withdraw, or Activity logic.
+
+**Governing conviction (non-authorising source):** `docs/strategy/learnings/HEDGR_FOUNDER_CONVICTION_GOVERNED_NARRATIVE_ORIENTATION_SURFACE.md`. Implementation authority is this nested ticket, not the conviction document.
+
+**Derived-from sources (consume; do not edit):** frozen Canonical Story v1.0 (`docs/strategy/narrative/HEDGR_CANONICAL_STORY.md`); frozen Customer One-Pager v1.0 (`docs/strategy/customer/HEDGR_CUSTOMER_ONE_PAGER.md`); `DESIGN.md` and governed brand docs. Do **not** consume `docs/strategy/customer/HEDGR_CUSTOMER_ONE_PAGER_VNEXT.md` or treat the orientation surface as an independent source of Hedgr positioning.
+
+**Named files:**
+
+- `apps/frontend/lib/narrative/orientation-surface.ts` — derived copy + provenance module; consumer of frozen narrative, not a positioning source
+- `apps/frontend/app/orientation/page.tsx` — one static informational route under the root layout only; not the `(app)` wallet / product shell
+- `apps/frontend/__tests__/orientation-surface.test.ts` — provenance, boundary, and no-live-capability contract
+- `apps/frontend/tests-e2e/` orientation coverage and `class-a-val-002.spec.ts` only as needed to start from `/orientation` then continue into the existing synthetic journey
+- `docs/ops/governance/mvp/HEDGR_CLASS_A_VAL_002_PARTICIPANT_PROTOCOL.md` — start-URL / stimulus alignment only
+- this status record, `AGENTS.md`, `docs/ops/NOTION_GOVERNANCE_STAGING.md`, and the conviction document's activation metadata only
+
+Generated Bridge authority projection may be refreshed only after the authority-bearing source is committed. Nested tickets do not join `active_ticket_ids`; the parent remains `CLASS-A-VAL-002`.
+
+**Required preservation:** Existing Dashboard → Deposit → Withdraw → Activity sequence; simulation / no-real-money disclosure; `$0 → +$5 → −$2 → $3` arithmetic; restart semantics; local fixture ledger / wallet state; mock / stub environment guard; target meaning; Stability Engine outputs; backend boundary; frozen narrative sources; approved Form instrument and governed distribution boundary; and all read-only / informational / non-executing constraints.
+
+**Required orientation content (derived, not invented):** why Hedgr exists; that Hedgr is concerned with financial stability and value preservation; how Hedgr approaches stability conceptually; that risk, liquidity, and exit readiness remain material; and what Hedgr can and cannot currently do. The surface must remain distinguishable from live financial capability and must not use DeFi or crypto as the primary explanation.
+
+**Category / evidence boundary:** Orientation is an intentional pre-product intervention on the participant path. Do not use `Financial Stability Companion`, `Cognitive Stewardship`, `Institutional Warmth`, or other internal research vocabulary on the participant-facing surface. Do not rewrite the approved canonical Form instrument. Category-formation evidence must treat orientation as the stimulus being tested, not as accidental priming to be ignored.
+
+**Explicit exclusions:** No general corporate or marketing-site programme; no public launch or publication; no CMS; no lead-generation or growth machinery; no new sensitive-data collection; no live financial data; no deposits, withdrawals, conversion, custody, allocation, settlement, or customer-money capability; no provider or regulatory claims; no unfreezing or rewriting of Canonical Story, Customer One-Pager v1.0, Narrative Style Guide, or the accepted Investor Orientation Brief; no use of the unaccepted One-Pager vNext as source; no Dashboard / Deposit / Withdraw / Activity product-copy rewrite; no `apps/frontend/lib/engine/**` change; no Lane N or Lane E mutation; no Class B / Class C, Evidence Register, gate, doctrine, or ADR change by inference.
+
+**Acceptance criteria:**
+
+1. `/orientation` renders a static informational surface under approved mock / stub configuration, without the product wallet shell.
+2. Rendered claims remain traceable to frozen governed narrative and do not create new positioning.
+3. Live financial capability, deposits, withdrawals, custody, yield entitlement, and advice are not implied.
+4. Continuation to `/dashboard-synthetic-journey` is available; the existing four-step synthetic journey, arithmetic, engine, and targets remain unchanged; the legacy query route remains a compatible fallback.
+5. Directly relevant unit tests and production-build journey E2E pass with hermetic boundaries.
+6. Lane N frozen sources and Lane E research files remain unchanged; `NO CROSS-LANE IMPACT` is verified.
+7. Closeout must not claim comprehension, category convergence, publication readiness, or that the orientation pattern is institutionally settled.
+
+**Stop / rollback:** Stop and escalate if the rendered narrative begins creating new positioning; publication is proposed without explicit publication authority; the surface implies live financial capability; risk, liquidity, synthetic-state, or execution boundaries become less clear; new data, provider, legal, regulatory, or security exposure appears; implementation expands into a general marketing-site programme; the work conflicts with active participant validation or narrative evidence; Lane N or Lane E would need to change; or the work requires authority beyond this Class A envelope. Rollback is one bounded revert of the orientation module, route, tests, protocol start-URL alignment, and governance activation while preserving the open parent, completed nested history, frozen narrative sources, approved Form instrument, Lane N, and Lane E.
+
+**Retest commitment:** Protocol-complete dual-layer participant testing is active on the recorded orientation-inclusive build under the governed cohort protocol, using the approved canonical Form instrument. The currently observed responder state and distribution boundary are recorded in **§206**. Implementation completion is not participant evidence. Evidence disposition remains **Retain · Revise · Remove · Retest · Escalate**.
+
+**Governance treatment:** No new ADR expected unless implementation discovers a durable narrative-primitive architecture not already represented by accepted authority. The durable institutional asset is the governed narrative primitive, not an About page.
 
 ### Lane N — `NARRATIVE-007`
 
 **Active ticket:** `NARRATIVE-007` — Human Narrative Lead + Customer One-Pager Fidelity Revision.
 
-**Status:** **ACTIVE** — Founder-approved Class A informational / non-authorising narrative-governance ticket under Controlled Parallelism v20 / Internal **D-074** / **§6f.20** / activation **§202**, with the bounded candidate-revision amendment Internal **D-075** / **§203**.
+**Status:** **ACTIVE** — Founder-approved Class A informational / non-authorising narrative-governance ticket under original Controlled Parallelism v20 / Internal **D-074** / **§6f.20** / activation **§202**, with the bounded candidate-revision amendment Internal **D-075** / **§203**, now concurrent under Controlled Parallelism v21 / Internal **D-076** / **§6f.21** without change to Lane N scope.
 
 **Objective:** Preserve the Human Narrative Lead as a distinct `PROPOSE_ONLY` role downstream of Narrative Steward; retain the Founder-accepted fidelity audit and translation map as decision-support controls; and prepare one narrowly bounded candidate Customer One-Pager vNext that makes the existing story human before institutional without strengthening any claim.
 
@@ -4675,7 +4788,6 @@ Current active ticket status:
 - `docs/strategy/customer/HEDGR_CUSTOMER_NARRATIVE_TRANSLATION_MAP.md`
 - `docs/strategy/customer/HEDGR_CUSTOMER_ONE_PAGER_VNEXT.md` (candidate output; not yet created or accepted)
 - `docs/ops/HEDGR_STATUS.md`
-- `docs/ops/NOTION_GOVERNANCE_STAGING.md`
 - `AGENTS.md`
 
 **Required source hierarchy:** Repo execution / doctrine authority controls current truth; the frozen Canonical Story controls institutional narrative meaning; the frozen Narrative Style Guide controls voice; the frozen Customer One-Pager v1.0 remains the canonical customer narrative source and revision baseline; the accepted Investor Orientation Brief controls investor orientation only; the accepted audit and translation map constrain candidate preparation but do not become narrative authority; internal product learnings remain evaluation lenses only.
@@ -4703,6 +4815,57 @@ Current active ticket status:
 **Stop / rollback:** Stop if translation would strengthen or weaken a claim; current capability cannot be verified; the role would need to change the Canonical Story or constitutional terminology; select positioning, category, public naming, target audience, investor narrative, or marketing objectives; weaken a material risk / capability boundary; require product change to make the narrative true; edit a frozen source; turn humanisation into persuasion; treat participant evidence as direction by inference; or affect Lane V. Roll back D-075 / §203 and remove any unaccepted candidate output to return Lane N to the accepted-audit state. Revert D-074 / §202 only if closing the lane; all frozen sources and Lane V remain unchanged.
 
 **Completion boundary:** Candidate delivery does not close `NARRATIVE-007`, accept or freeze vNext, supersede Customer One-Pager v1.0, or authorize publication. Founder / HedgrOps must dispose the candidate. Adoption, canonical-source mutation, publication, successor work, or Lane N closeout requires a further recorded decision.
+
+### Lane E — `SE-REASON-001`
+
+**Active ticket:** `SE-REASON-001` — Stability Engine Reasoning Architecture Research.
+
+**Status:** **ACTIVE** — Founder-approved Class A informational / Yellow research ticket under Controlled Parallelism v21 / Internal **D-076** / **§6f.21** / activation **§204**.
+
+**Objective:** Determine whether Hedgr can interpret whether a participant’s financial position is becoming more stable, less stable, or materially unchanged from a small, legible set of participant and environmental conditions—without predicting markets or prescribing an asset allocation.
+
+**Research question:** What minimum set of observable conditions is sufficient for that interpretation?
+
+**Type / execution class:** Class A informational research only. Yellow decision lane. Non-executing. No customer-money activity. No widening beyond informational concepts.
+
+**Authority basis:** Founder disposition of 14 August 2026 to activate a bounded parallel Stability Engine research lane + Internal **D-076** / **§6f.21** + this **§7** / **§7a** naming + activation **§204** + governing frame `docs/ops/stability-engine/research/HEDGR_STABILITY_ENGINE_REASONING_RESEARCH_BRIEF.md`. ADRs **0013–0015** continue to bound the Stability Engine as read-only / informational. D-076 does not alter Lane V or Lane N.
+
+**DRI:** Founder — @mhibajene.
+
+**Owners:** Founder / HedgrOps.
+
+**Intended reasoning sequence:** Participant condition → material vulnerability → required stability function → regime interaction → eligible instruments → bounded interpretation → governed action. The research must stop short of live recommendations or execution.
+
+**Required outputs:**
+
+1. Stability Function Model at `docs/ops/stability-engine/research/HEDGR_STABILITY_FUNCTION_MODEL.md`.
+2. State Model at `docs/ops/stability-engine/research/HEDGR_STABILITY_STATE_MODEL.md`.
+3. Interpretation Tests at `docs/ops/stability-engine/research/HEDGR_STABILITY_INTERPRETATION_TESTS.md`.
+
+Each proposed variable, stability function, or regime distinction must record: what Hedgr believes; why the distinction matters; what evidence supports it; what interpretation would change; what would falsify or weaken it; and a disposition of retain, revise, remove, retest, or escalate.
+
+**Expected disposition:** A founder-reviewable determination of whether the emerging reasoning architecture should be retained, revised, removed, retested, or escalated into formal product / architecture work. This ticket is not expected to produce a complete Stability Engine specification.
+
+**Authorized surfaces:**
+
+- `docs/ops/stability-engine/research/**` — governing brief and the three named research artifacts only
+- `docs/ops/HEDGR_STATUS.md` — activation / closeout reconciliation only
+- `AGENTS.md` — parallelism-posture reconciliation only
+
+**Explicit exclusions:** No modification of `CLASS-A-VAL-002`; no nested refinement of the synthetic journey; no new participant-facing Stability Engine functionality; no live macro or market-data integrations; no collection of new participant financial data; no custody or customer-money activity; no automated allocation or rebalancing; no asset or provider admission; no target portfolio weights; no personalised investment instructions; no live recommendations; no production execution; no expansion into property, infrastructure, private credit, gold, or other RWAs; no legal, regulatory, provider, or liquidity claims; no Class B or Class C capability; no doctrine or ADR change by research inference; no Lane N change.
+
+**Acceptance criteria:**
+
+1. The three named artifacts exist as research-only documents and remain non-authoritative.
+2. Stability functions are defined with conflicts identified rather than assumed jointly maximisable.
+3. The state model prefers the smallest sufficient information set and rejects variables that do not change interpretation.
+4. Interpretation tests explain why stability changed in bounded scenarios and do not prescribe a portfolio.
+5. Lane V and Lane N remain unchanged; `NO CROSS-LANE IMPACT` is verified.
+6. A founder-reviewable retain / revise / remove / retest / escalate determination is prepared. Artifact delivery does not self-approve that determination.
+
+**Stop / rollback:** Pause and return for founder review if the research implies a material change to the Hedgr product thesis; begins affecting `CLASS-A-VAL-002` or another active product surface; requires personal or sensitive participant data; requires live external integrations; needs approval of a specific asset, provider, jurisdiction, or execution path; moves from interpretation toward personalised financial recommendation; becomes material enough to require an ADR; would widen Class A / B / C authority; or begins producing conflicting product narratives. Rollback is revert of D-076 / §204 / §6f.21 / §7 / §7a Lane E naming and removal of unaccepted Lane E outputs; restore the prior V / N concurrency. Do not modify Lane V, Lane N, or financial execution posture.
+
+**Completion boundary:** Delivering research artifacts does not close `SE-REASON-001`, accept the model, change the product, or authorize architecture work. Founder / HedgrOps must dispose the research. Convergence with Lane V, engine implementation, asset eligibility, portfolio construction, optimisation, and execution remain downstream questions requiring separate disposition.
 
 #### Completed nested instrument brief — `CLASS-A-VAL-002-FORM-001`
 
@@ -12504,7 +12667,7 @@ Any implementation remains subject to current repository authority and a separat
 
 **Non-authorisation:** This activation does not edit or unfreeze any canonical narrative source, create Customer One-Pager `vNext`, approve audit findings, authorize replacement copy, publish or circulate messaging, adopt public category language, authorize marketing, change product positioning, interpret participant evidence, alter Lane V, imply live capability, or authorize product/runtime, provider, custody, rail, conversion, settlement, payout, advice, recommendation, Class B / Class C, or customer-money activity.
 
-**Parallelism posture:** Controlled Parallelism v20 / D-074 is active and names only Lane V `CLASS-A-VAL-002` and Lane N `NARRATIVE-007`. Lanes A / B / C / M / R remain idle. `NO CROSS-LANE IMPACT`.
+**Parallelism posture:** At activation, Controlled Parallelism v20 / D-074 named only Lane V `CLASS-A-VAL-002` and Lane N `NARRATIVE-007`. Later Controlled Parallelism v21 / D-076 / **§204** superseded D-074 as the concurrency envelope without changing this Lane N origin. Lanes A / B / C / M / R remain idle. `NO CROSS-LANE IMPACT`.
 
 **Review and closeout:** Delivering the role contract and audit outputs does not self-approve or close the lane. Founder / HedgrOps disposition is required. Any revision, `vNext`, publication, successor, or Lane N closeout requires a further recorded decision.
 
@@ -12550,6 +12713,170 @@ Any implementation remains subject to current repository authority and a separat
 
 **Review and closeout:** Preparing the candidate does not self-approve or close `NARRATIVE-007`. Founder / HedgrOps disposition is required before adoption, canonical-source mutation, publication, successor work, or Lane N closeout.
 
-**Notion staging posture:** Record D-075 as Accepted and active under existing `NARRATIVE-007`; preserve D-074 as the active two-lane concurrency decision; show audit and map accepted, one candidate vNext authorized, canonical v1.0 frozen, publication deferred, Lane V unchanged, and `NO CROSS-LANE IMPACT`.
+**Notion staging posture:** Record D-075 as Accepted and active under existing `NARRATIVE-007`; at the time of this amendment D-074 remained the active two-lane concurrency decision. Later Controlled Parallelism v21 / D-076 / **§204** superseded D-074 as the concurrency envelope without changing this D-075 Lane N scope. Show audit and map accepted, one candidate vNext authorized, canonical v1.0 frozen, publication deferred, Lane V unchanged, and `NO CROSS-LANE IMPACT`.
 
 **Reversibility:** Revert D-075 / this §203 / amended §6f.20 / §7 / §7a scope and remove any unaccepted candidate file to return Lane N to the accepted-audit state under D-074. Do not alter Customer One-Pager v1.0, any other frozen source, or Lane V during rollback.
+
+---
+
+## 204. Founder disposition + activation — SE-REASON-001 Stability Engine Reasoning Research Lane
+
+**Date:** 2026-08-14
+
+**Status:** **ACTIVE** — Founder-approved concurrent Lane E research ticket
+
+**Decision ID:** Internal **D-076**
+
+**Decision type:** Stability Engine Research / Class A Informational / Yellow bounded-research uncertainty
+
+**Founder direction:** Approve a bounded parallel Stability Engine research lane while currently authorised product-validation work continues unchanged. Research only; no widening of financial execution authority. No modification to the current synthetic validation journey.
+
+**Recorded disposition:** Activate Controlled Parallelism v21 with Lane V `CLASS-A-VAL-002` (unchanged), Lane N `NARRATIVE-007` (unchanged), and Lane E `SE-REASON-001`. Adopt the Founder disposition of 14 August 2026 as the governing research contract. Authorise three research artifacts only: Stability Function Model, State Model, and Interpretation Tests.
+
+**Authority basis:** Founder disposition above + §6e / D-026 lane model + §6f.21 / D-076 + explicit §7 / §7a naming + governing brief `docs/ops/stability-engine/research/HEDGR_STABILITY_ENGINE_REASONING_RESEARCH_BRIEF.md` + ADRs **0013–0015** (read-only / informational Stability Engine boundaries) + current Lane V and Lane N authority.
+
+**Lane V preservation:** `CLASS-A-VAL-002` remains active and unchanged. Participant distribution, evidence collection, governed synthesis, and Founder disposition remain its governed path. No nested Lane V ticket is activated. The research must mature underneath, not inside, the current synthetic journey. No research finding automatically triggers a product refinement.
+
+**Lane N preservation:** `NARRATIVE-007` remains active and unchanged under D-074 / D-075. Frozen narrative sources, the D-075 candidate vNext path, and publication posture are unaffected.
+
+**Lane E outputs:**
+
+- `docs/ops/stability-engine/research/HEDGR_STABILITY_ENGINE_REASONING_RESEARCH_BRIEF.md` (governing frame; created at activation)
+- `docs/ops/stability-engine/research/HEDGR_STABILITY_FUNCTION_MODEL.md` (authorized; not yet created)
+- `docs/ops/stability-engine/research/HEDGR_STABILITY_STATE_MODEL.md` (authorized; not yet created)
+- `docs/ops/stability-engine/research/HEDGR_STABILITY_INTERPRETATION_TESTS.md` (authorized; not yet created)
+
+**Research question preserved:** What minimum set of observable conditions is sufficient for Hedgr to determine whether a participant’s financial position is becoming more stable, less stable, or materially unchanged—without pretending to predict markets or prematurely prescribing an asset allocation?
+
+**Non-authorisation:** This activation does not modify `CLASS-A-VAL-002`; refine the synthetic journey; add participant-facing engine functionality; integrate live macro or market data; collect new participant financial data; authorize custody or customer-money activity; automate allocation; admit assets or providers; set target weights; issue personalised investment instructions or live recommendations; execute in production; expand into property, infrastructure, private credit, gold, or other RWAs; make legal, regulatory, provider, or liquidity claims; change doctrine or accepted ADR meaning; accept Evidence Register items; or authorize Class B / Class C. Yellow classification does not authorize external commitments or live financial integrations. Green Lane does not apply.
+
+**Parallelism posture:** Controlled Parallelism v21 / D-076 is active and names Lane V `CLASS-A-VAL-002`, Lane N `NARRATIVE-007`, and Lane E `SE-REASON-001`. D-074 is completed historical two-lane concurrency. Lanes A / B / C / M / R remain idle. `NO CROSS-LANE IMPACT`.
+
+**Review and closeout:** Delivering research artifacts does not self-approve or close the lane. Founder / HedgrOps disposition is required. The expected outcome is retain, revise, remove, retest, or escalate. Asset eligibility, portfolio construction, optimisation, and execution remain downstream questions.
+
+**Notion staging posture:** Retired. Internal **D-078** / **§207** removes Notion as an operating or closeout surface. Do not reconcile or republish `docs/ops/NOTION_GOVERNANCE_STAGING.md`.
+
+**Rollback:** Revert D-076 / this §204 / §6f.21 / §7 / §7a Lane E activation, remove unaccepted Lane E research outputs, reconcile `AGENTS.md`, and restore Controlled Parallelism v20 / D-074 as the active two-lane V / N pass. Do not modify Lane V, Lane N, frozen narrative sources, or financial execution posture during rollback.
+
+---
+
+## 205. Founder approval + activation — CLASS-A-VAL-002-ORIENT-001 Governed Narrative Orientation Surface
+
+**Date:** 2026-08-14
+
+**Status:** **COMPLETED** — Founder-approved bounded nested Lane V orientation-surface experiment; activation retained here and verified closeout recorded in **§206**
+
+**Decision ID:** Internal **D-077**
+
+**Decision type:** Product / Validation / Narrative Orientation / UX Trust
+
+**Execution class / lane:** Class A informational / synthetic only; Green reversible product-learning classification inside Lane V. No new lane or concurrency. Green Lane **§6g** does not independently activate this ticket.
+
+**Founder direction:** Activate a nested ticket in Lane V based on `docs/strategy/learnings/HEDGR_FOUNDER_CONVICTION_GOVERNED_NARRATIVE_ORIENTATION_SURFACE.md`.
+
+**Authority basis:** The Founder direction above + the Founder-approved conviction recorded 2026-08-14 + open parent `CLASS-A-VAL-002` / Internal **D-037** + current parent disposition Internal **D-060** / **§179** + evaluation principles Internal **D-065** / **§188**, **D-067** / **§191**, **D-068** / **§192**, and **D-069** / **§193** (principles only; they do not themselves authorize this pass) + completed nested history through `CLASS-A-VAL-002-FORM-001` / **D-073** / **§200**–**§201** + ADRs **0013–0015** + ADR **0024** evidence principle + this explicit **§7** / **§7a** naming. Controlled Parallelism v21 / Internal **D-076** / **§6f.21** remains the named-lane concurrency envelope and is not widened.
+
+**Decision:** Insert one bounded nested implementation inside open `CLASS-A-VAL-002` to produce a reusable, web-native governed narrative orientation surface as a comprehension experiment before the synthetic product journey. Treat the first surface as a consumer of frozen governed narrative, not as an independent source of Hedgr positioning, and not as the launch of a general marketing website.
+
+**Governing hypothesis:** A first-time participant can form the correct stability-first mental model before encountering the product if Hedgr presents a calm, bounded orientation surface derived from governed narrative. Implementation completion is not evidence the hypothesis is correct.
+
+**Named implementation scope:** Exact files and exclusions are recorded in the active nested brief in **§7a**. In summary: a derived provenance-bearing copy module; one static `/orientation` route outside the product wallet shell; continuation into the existing `/dashboard-synthetic-journey`; targeted tests; participant-protocol start-URL alignment; and activation / closeout reconciliation only.
+
+**Parent-ticket posture:** `CLASS-A-VAL-002` remains active and open. This nested pass creates no successor, second parent ticket, fourth lane, parent closeout, comprehension claim, public naming adoption, Evidence Register disposition, gate clearance, or Class B / Class C authority.
+
+**Parallelism posture:** Unchanged named-lane concurrency. Controlled Parallelism v21 / D-076 continues to name only Lane V `CLASS-A-VAL-002`, Lane N `NARRATIVE-007`, and Lane E `SE-REASON-001`. `CLASS-A-VAL-002-ORIENT-001` is nested within Lane V and supplies no independent concurrency. Lane N frozen sources and the D-075 candidate vNext remain unchanged. Lane E remains research-only. `NO CROSS-LANE IMPACT`.
+
+**Retest commitment:** Protocol-complete dual-layer participant testing is active on the recorded orientation-inclusive build under the governed cohort protocol with the approved canonical Form instrument. The Form is not rewritten. The externally observed responder state and distribution boundary are reconciled in **§206**. Orientation is an intentional pre-product stimulus; category-formation evidence must treat it as the intervention being tested.
+
+**Acceptance criteria:** Recorded in **§7a**. Closeout must not claim comprehension, category convergence, publication readiness, or that a general orientation platform has been launched.
+
+**Governance treatment:** No new ADR expected unless implementation discovers a durable narrative-primitive architecture not already represented by accepted authority.
+
+**Notion staging posture:** Mirror D-077 as Accepted and completed under **§§205–206**, with `CLASS-A-VAL-002-ORIENT-001` completed historical nested Lane V authority, no active nested Lane V refinement, D-076 concurrency unchanged, frozen narrative sources unchanged, participant testing active under the governed cohort protocol, no fourth lane, and `NO CROSS-LANE IMPACT`.
+
+**Stop / rollback:** Stop conditions are those in the conviction and the **§7a** nested brief. Rollback is one bounded revert of the orientation module, route, tests, protocol start-URL alignment, and this D-077 / **§205** activation while preserving the open parent, completed nested history, frozen narrative sources, approved Form instrument, Lane N, Lane E, and D-076 concurrency.
+
+---
+
+## 206. Verified closeout — CLASS-A-VAL-002-ORIENT-001 Governed Narrative Orientation Surface
+
+**Date:** 2026-08-17
+
+**Status:** **COMPLETED** — bounded nested Lane V orientation-surface implementation verified and closed
+
+**Decision ID:** Internal **D-077**
+
+**Authority basis:** Founder approval to close out `CLASS-A-VAL-002-ORIENT-001` on 2026-08-17 + activation **§205** + the exact **§7** / **§7a** nested brief + open parent `CLASS-A-VAL-002`. This closeout does not activate a successor or widen Controlled Parallelism v21 / Internal **D-076** / **§6f.21**.
+
+**Implementation evidence:** PR **#387** merged the bounded orientation surface as squash commit `268b4bee59d25c359e5f0265f6a37053bdd7fb3d`; PR **#388** permanently rebound the Repo Authority Projection as squash commit `cdb49526e78549820eb53fa24c95e040786e602c`. The implementation provides the derived provenance-bearing narrative module, static `/orientation` route outside the wallet shell, continuation to `/dashboard-synthetic-journey`, targeted unit and journey coverage, protocol start-URL alignment, governed brand-asset custody, and governance activation records.
+
+**Verification evidence:** The implementation PR completed all 13 hosted checks, including `validate` with 759 passing Vitest tests and production E2E with 57 passing tests. Closeout recon on permanent main `650f5840163fed1c2179c5a36631c6031032d42f` reconfirmed 6/6 orientation unit tests, a successful production frontend build, 4/4 targeted orientation and Class A journey E2E tests, `bridge:rap:check`, and HTTP 200 responses for `/orientation`, `/dashboard-synthetic-journey`, and the legacy query-route rollback seam. The deployed orientation surface contained the required informational and synthetic-boundary markers and no product wallet-shell markers.
+
+**Acceptance disposition:** All seven nested acceptance criteria are met for technical closeout. This disposition does **not** claim participant comprehension, category convergence, publication readiness, public category adoption, institutional settlement of the pattern, Class B / Class C readiness, Evidence Register acceptance, financial execution, live capability, or public distribution authority.
+
+**Bounded scope reconciliation:** Founder closeout approval explicitly accepts the implementation's use and custody of `apps/frontend/public/brand/hedgr_logo.svg`, `assets/brand/logos/hedgr_logo.svg`, `assets/brand/README.md`, and the full conviction record `docs/strategy/learnings/HEDGR_FOUNDER_CONVICTION_GOVERNED_NARRATIVE_ORIENTATION_SURFACE.md` as a narrow traceability and governed-asset variance from the activation brief's exact named-file list. The two SVG copies are content-identical. This reconciliation creates no new brand system, positioning source, marketing-site programme, publication authority, or product capability.
+
+**Form external-state reconciliation:** Historical **§201** correctly records that the canonical Form was unpublished and not accepting responses at that ticket's closeout. During this closeout recon, the external responder URL returned HTTP 200 and rendered **Hedgr Product Experience Study**, indicating that external Form state has since changed. This closeout did not publish, configure, or distribute the Form. The approved instrument remains governed by the participant protocol; distribution is authorized only to the governed cohort, and recruitment contact data and consent records remain outside repo session records.
+
+**Parent and lane posture:** `CLASS-A-VAL-002` remains active and open with no active nested Lane V refinement. Protocol-complete dual-layer participant testing is active on the verified orientation-inclusive build under the governed cohort protocol. Lane N `NARRATIVE-007` and Lane E `SE-REASON-001` remain unchanged. Frozen narrative sources remain unchanged. `NO CROSS-LANE IMPACT`.
+
+**Rollback:** The implementation remains reversible through the bounded orientation implementation revert described in **§205**. Closeout-record rollback must not erase historical evidence; any future reopening or successor requires a new Founder disposition and explicit **§7** / **§7a** authority.
+
+---
+
+## 207. Founder activation + closeout — GOV-NOTION-RETIRE-001 Notion retirement from the Hedgr operating system
+
+**Ticket:** `GOV-NOTION-RETIRE-001` — Retire Notion from the Hedgr operating system
+
+**Date:** 2026-08-17
+
+**Status:** `GOV-NOTION-RETIRE-001` **ACTIVATED, EXECUTED, AND COMPLETED** in one documentation-only pass. Controlled Parallelism v21 / Internal **D-076** remains the named-lane concurrency envelope. Lane V `CLASS-A-VAL-002`, Lane N `NARRATIVE-007`, and Lane E `SE-REASON-001` remain active and unchanged.
+
+**Decision ID:** Internal **D-078**
+
+**Decision type:** Operating-model / governance hygiene
+
+**Visibility:** Internal — not auto-exported as a public ADR
+
+**Founder direction:** Retire Notion as a Hedgr governance, institutional-memory, and operating-system surface. Preserve the repository as the sole canonical institutional authority. Do not migrate Notion content into the repo. Do not make Obsidian a successor institutional knowledge base.
+
+**Authority basis:** Founder disposition of 17 August 2026 to retire Notion + this **§7** / **§7a** naming + closeout under this **§207**. Does **not** create a fourth product lane, alter D-076 concurrency, change Lane V / Lane N / Lane E product-narrative-research authority, amend accepted ADR meaning, or authorize a successor.
+
+**Objective:** Leave Hedgr with a simpler institutional architecture in which the repository is the sole canonical institutional-memory surface, Cursor remains the primary repo operating interface, Codex and other governed agents remain bounded operators, HedgrOps remains within established authority boundaries, and Obsidian remains upstream founder cognition only.
+
+**Type / execution class:** Documentation-only governance hygiene. Class A. Non-product. Non-executing.
+
+**In scope / executed:**
+
+- Recorded the Founder operating-model outcome in this file’s institutional-operating-model header and this **§207**.
+- Archived `docs/ops/NOTION_GOVERNANCE_STAGING.md` in place as a retired historical mirror.
+- Archived `docs/ops/reconciliation/NOTION_REPO_RECONCILIATION_REPORT_2026-06-01.md` as historical process evidence.
+- Removed Notion as a live closeout, publishing, or mirror step from active operator procedures.
+- Removed the staging file from active Lane N and Lane E named-file / authorized-surface lists as operating-procedure alignment only.
+- Snapshotted the living governance thesis and adapted current operating-model language.
+- Recorded the assessment inventory in `docs/ops/governance/HEDGR_NOTION_RETIREMENT_CLOSEOUT.md`.
+
+**Out of scope / must not (held):**
+
+- No change to `CLASS-A-VAL-002`, `NARRATIVE-007`, or `SE-REASON-001` product, narrative, or research objectives.
+- No unfreeze of Canonical Story, Customer One-Pager v1.0, Narrative Style Guide, or accepted `NARRATIVE-005`.
+- No mechanical migration of Notion workspace content into the repository.
+- No creation of an Obsidian, Vault, or other parallel institutional knowledge base.
+- No amendment of accepted ADR **0025** meaning; its Notion mirror / rollback wording is retained as historical decision text and is operationally superseded.
+- No rewrite of historical completed-ticket records that mentioned Notion staging as a then-required closeout step.
+- No Class B / Class C, custody, rail, counsel-send, RAP regeneration requirement, customer-money, `apps/`, `packages/`, `scripts/`, `.github/`, CI, tests, backend, or engine edits.
+
+**Closeout result:**
+
+1. No active Hedgr governance or operating process depends on Notion — **Pass**.
+2. No artefact is maintained solely to satisfy a Notion downstream requirement — **Pass**.
+3. Unique material institutional knowledge requiring preservation has been retained or archived — **Pass**.
+4. Obsolete Notion-specific machinery has been removed or explicitly deprecated — **Pass**.
+5. Active repo governance reflects the resulting operating model — **Pass**.
+6. No replacement parallel authority or institutional-memory system has been created — **Pass**.
+
+**Parallelism posture after closeout:** Unchanged named-lane concurrency. Controlled Parallelism v21 / D-076 continues to name only Lane V `CLASS-A-VAL-002`, Lane N `NARRATIVE-007`, and Lane E `SE-REASON-001`. `GOV-NOTION-RETIRE-001` is completed hygiene and supplies no independent concurrency. `NO CROSS-LANE IMPACT`.
+
+**Surfaced decisions:** Accepted ADR **0025** Notion mirror language is not amended here. Historical completed-ticket Notion staging steps are left unchanged. The out-of-repo `hedgr-pr-posture` skill still mentions Notion staging and is outside this repository.
+
+**Rollback:** Revert this **§207** record and the documentation/operator-procedure changes named in the closeout memo only if the recorded Founder disposition is withdrawn. Preserve Lane V, Lane N, Lane E, frozen narrative sources, and D-076 concurrency. Do not restore Notion as a live authority or closeout surface unless a later Founder decision explicitly does so.

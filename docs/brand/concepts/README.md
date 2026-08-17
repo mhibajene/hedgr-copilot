@@ -30,6 +30,8 @@ Repo-native governance determines whether any concept becomes accepted narrative
 
 Obsidian Canvas may be used to visualize concept relationships as Hedgr's institutional knowledge grows.
 
+Obsidian is not the successor institutional knowledge base to retired Notion. It remains an upstream cognition and visualization environment. Access to repo context from Obsidian or its agents does not confer repo authority on Obsidian.
+
 Canvas relationships are interpretive until reviewed.
 
 The Narrative Steward may propose canvas connections but must not treat canvas structure as authority.

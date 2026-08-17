@@ -28,7 +28,7 @@ You are producing a **recommendation-only** pre-§7 sequencing aid. This command
 ## Method (repo-first, deterministic)
 
 1. **Quote or paraphrase with file pointers** from `HEDGR_STATUS.md` for current §7 / §7a state. Do not invent tickets not grounded in repo text, §6b classification, or explicit backlog rows **as candidates**—candidates may include “doc-only governance refinement” only if consistent with protocol red lines.
-2. **Do not** treat Notion, roadmap narrative, *Proposed* ADRs, §6b disposition labels, or `.cursor/plans/*` as approval.
+2. **Do not** treat retired Notion records, Obsidian notes, roadmap narrative, *Proposed* ADRs, §6b disposition labels, or `.cursor/plans/*` as approval.
 3. **Do not** create `docs/ops/HEDGR_SEQUENCER.md` or new doctrine.
 4. Cap **four** distinct candidate tickets (or fewer if fewer are plausible); if the repo gives no grounded candidates, state that in sections 4–5 and still complete all nine output sections.
 5. Prefer **narrow, reversible** shapes aligned with Sprint 2 read-only / informational engine posture unless §7 explicitly authorizes otherwise.
@@ -69,7 +69,7 @@ Full brief pattern (objective, in scope, must not, surfaces, acceptance shape) *
 
 ### 9. Recommendation is not authorization
 
-One short paragraph, mandatory wording in substance: this output is **not** authorization until governance updates **`docs/ops/HEDGR_STATUS.md`** §7 and §7a in the repo; ADRs constrain boundaries only; §6b does not authorize; Notion and plans are not authority.
+One short paragraph, mandatory wording in substance: this output is **not** authorization until governance updates **`docs/ops/HEDGR_STATUS.md`** §7 and §7a in the repo; ADRs constrain boundaries only; §6b does not authorize; retired Notion records, Obsidian notes, and plans are not authority.
 
 ---
 

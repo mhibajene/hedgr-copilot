@@ -80,11 +80,13 @@ ADRs define:
 ADRs constrain what is allowed.  
 They do **not** sequence work.
 
-### 3.4 Notion
+### 3.4 Retired and non-authority surfaces
 
-Notion is a mirror of repo truth.
+Notion is retired from the Hedgr operating system. It is not a governance, institutional-memory, or closeout surface.
 
-It must not:
+Obsidian may continue as founder cognition and journaling, including governed Narrative Steward review of emerging observations. It is not a successor institutional knowledge base.
+
+Neither may:
 
 - authorize work
 - define sequence
@@ -186,7 +188,7 @@ Parallel implementation requires explicit governance change.
 
 ### 5.4 Candidate slates are not authority
 
-Recommendation packages, candidate slates, Notion entries, and plan files are comparative planning inputs only.
+Recommendation packages, candidate slates, retired Notion records, Obsidian notes, and plan files are comparative planning inputs only.
 
 They do not imply:
 - approval
@@ -215,7 +217,6 @@ The default operating cadence is:
 6. execution
 7. merge
 8. repo closeout
-9. Notion reconciliation
 
 This cadence exists to reduce ambiguity before execution.
 
@@ -248,7 +249,6 @@ Use only when:
 ### `/closeout`
 Use after merge for:
 - repo truth reconciliation
-- Notion reconciliation
 - governance follow-up only if required
 
 ---

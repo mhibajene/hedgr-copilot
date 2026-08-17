@@ -10,7 +10,9 @@ async function login(page: Page) {
   await page.getByPlaceholder('you@example.com').fill('class-a-val-002@hedgr.test');
   await page.getByRole('button', { name: 'Continue' }).click();
   await expect(page).toHaveURL(/\/dashboard/);
-  await page.goto('/dashboard-synthetic-journey');
+  await page.goto('/orientation');
+  await expect(page).toHaveURL(/\/orientation$/);
+  await page.getByTestId('orientation-continue').click();
   await expect(page).toHaveURL(/\/dashboard-synthetic-journey$/);
 }
 

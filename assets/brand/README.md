@@ -22,7 +22,7 @@ The current machine-readable authority references the following approved asset f
 
 | Asset | Intended governed location | Status |
 | ----- | -------------------------- | ------ |
-| `hedgr_logo.svg` | `assets/brand/logos/hedgr_logo.svg` | Missing from repo at BRAND-001 validation time |
+| `hedgr_logo.svg` | `assets/brand/logos/hedgr_logo.svg` | Present (supplied from the governed brand package on 2026-08-14 for `CLASS-A-VAL-002-ORIENT-001`) |
 | `hedgr_logo.png` | `assets/brand/logos/hedgr_logo.png` | Missing from repo at BRAND-001 validation time |
 | `hedgr_logo_white.png` | `assets/brand/logos/hedgr_logo_white.png` | Missing from repo at BRAND-001 validation time |
 | `hedgr_icon_color.png` | `assets/brand/icons/hedgr_icon_color.png` | Missing from repo at BRAND-001 validation time |
