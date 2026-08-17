@@ -2,17 +2,17 @@
 
 | Field | Value |
 | ----- | ----- |
-| **Status** | Founder-approved conviction; repo-natively activated as nested Lane V ticket `CLASS-A-VAL-002-ORIENT-001` |
+| **Status** | Founder-approved conviction; bounded nested Lane V implementation `CLASS-A-VAL-002-ORIENT-001` completed and verified |
 | **Classification** | Green / Class A informational product learning |
-| **Authority** | Conviction remains non-doctrine; implementation authority is Internal **D-077** / `HEDGR_STATUS.md` **§205** / **§7a** only |
-| **Decision / ticket** | Internal **D-077**; nested `CLASS-A-VAL-002-ORIENT-001` inside `CLASS-A-VAL-002` |
+| **Authority** | Conviction remains non-doctrine; historical implementation and closeout authority is Internal **D-077** / `HEDGR_STATUS.md` **§§205–206** / **§7a** only |
+| **Decision / ticket** | Internal **D-077**; completed historical nested `CLASS-A-VAL-002-ORIENT-001` inside open `CLASS-A-VAL-002` |
 | **Recorded** | 2026-08-14 |
 
 ---
 
 ## Repository custody and authority boundary
 
-This document preserves a Founder-approved product conviction for future institutional judgement. It is not doctrine, an ADR, a governance decision log, an implementation brief, or independent sequencing authority. Implementation authority for the first bounded orientation experiment is the nested Lane V ticket `CLASS-A-VAL-002-ORIENT-001` under Internal **D-077** / `docs/ops/HEDGR_STATUS.md` **§205** / **§7a**.
+This document preserves a Founder-approved product conviction for future institutional judgement. It is not doctrine, an ADR, a governance decision log, an implementation brief, or independent sequencing authority. Historical implementation and closeout authority for the first bounded orientation experiment is the completed nested Lane V ticket `CLASS-A-VAL-002-ORIENT-001` under Internal **D-077** / `docs/ops/HEDGR_STATUS.md` **§§205–206** / **§7a**.
 
 It does not:
 
@@ -21,7 +21,7 @@ It does not:
 - unfreeze or rewrite a governed narrative source; or
 - make this document an independent source of Hedgr positioning.
 
-Repo-native activation for the first bounded orientation experiment is recorded as Internal **D-077** / nested `CLASS-A-VAL-002-ORIENT-001` in `HEDGR_STATUS.md` **§7** / **§7a** / **§205**.
+Repo-native activation and verified closeout for the first bounded orientation experiment are recorded as Internal **D-077** / completed nested `CLASS-A-VAL-002-ORIENT-001` in `HEDGR_STATUS.md` **§7** / **§7a** / **§§205–206**.
 
 ---
 
@@ -125,11 +125,11 @@ The first web orientation surface is therefore a consumer of this capability, no
 
 ## Governance disposition
 
-**Founder disposition: APPROVED and repo-natively activated**
+**Founder disposition: APPROVED; bounded nested implementation completed and verified**
 
 Approval established the desired outcome and bounded product belief.
 
-The nested Lane V ticket `CLASS-A-VAL-002-ORIENT-001` is now named under Internal **D-077** / `HEDGR_STATUS.md` **§7** / **§7a** / **§205**. This activation does not create an additional concurrent lane. Lane N and Lane E remain unchanged under Controlled Parallelism v21 / Internal **D-076**.
+The nested Lane V ticket `CLASS-A-VAL-002-ORIENT-001` completed under Internal **D-077** / `HEDGR_STATUS.md` **§7** / **§7a** / **§§205–206**. Its activation and closeout did not create an additional concurrent lane. Lane N and Lane E remain unchanged under Controlled Parallelism v21 / Internal **D-076**.
 
 ## Stop conditions
 
