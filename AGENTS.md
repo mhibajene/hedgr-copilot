@@ -93,6 +93,8 @@ Internal **D-069** / **§193** accepts Cognitive Stewardship as an enduring inte
 
 Internal **D-070** / **§194**–**§195**, Internal **D-071** / **§196**–**§197**, and Internal **D-072** / **§198**–**§199** supplied and closed `CLASS-A-VAL-002-WARMTH-001`, `CLASS-A-VAL-002-AFF-001`, and `CLASS-A-VAL-002-ROUTE-001` as historical bounded nested authority only. The completed D-072 pass makes `/dashboard-synthetic-journey` the human-readable participant entry while retaining the legacy query route as a compatibility / rollback seam and preserving the journey, state, arithmetic, engine, targets, and financial / execution boundaries. Every other HedgrOps review concern remains test-first and outside implementation scope. Internal **D-073** / **§200**–**§201** completed the bounded Form instrument pass as historical nested authority. Controlled Parallelism v20 / Internal **D-074** / **§6f.20** added Lane N `NARRATIVE-007` without altering Lane V and is now completed historical concurrency; Internal **D-075** / **§203** later accepts the audit outputs and authorizes one bounded candidate vNext while frozen narrative sources remain unchanged. Controlled Parallelism v21 / Internal **D-076** / **§6f.21** adds Lane E `SE-REASON-001` without altering Lane V or Lane N. Internal **D-077** / **§§205–206** supplied and closed nested `CLASS-A-VAL-002-ORIENT-001` inside Lane V as one bounded Class A informational governed-narrative orientation-surface experiment; it did not create a fourth lane or alter Lane N or Lane E. Internal **D-078** / **§207** retires Notion as an operating, governance, and institutional-memory surface; it does not create a fourth lane or alter D-076 concurrency. Participant testing is active on the verified orientation-inclusive build under the governed cohort protocol.
 
+Internal **D-079** / **§209** supersedes the preceding no-active-nested Lane V wording and activates `CLASS-A-VAL-002-ORIENT-002` as one bounded copy-only customer-narrative fidelity amendment. Participant distribution is paused until verified closeout. The Customer One-Pager vNext remains proposed, non-canonical, unpublished, and non-authoritative except as the five-amendment translation control explicitly named in **§7a** / **§209**. D-079 creates no fourth lane, does not alter Lane N or Lane E, and supplies no live financial capability or cross-lane authority.
+
 ### Green Lane operator rules (ADR 0025 / §6g)
 
 When performing or reviewing work labeled Green Lane, Cursor and Codex must verify before acting:
@@ -114,6 +116,8 @@ Material decisions must be logged as ADRs under docs/ using the HedgrOps ADR sta
 Examples: architecture boundary, custody/trust posture, compliance posture, sequencing decisions.
 
 # AGENTS.md — Hedgr Repo Execution Standard (v2)
+
+Current Lane V override: Internal **D-079** / **§209** activates `CLASS-A-VAL-002-ORIENT-002` as one bounded copy-only customer-narrative fidelity amendment and supersedes any later no-active-nested wording in this repeated execution-standard block. Participant distribution is paused until verified closeout. The Customer One-Pager vNext remains proposed, non-canonical, unpublished, and non-authoritative except as the five-amendment translation control named in **§7a** / **§209**. D-079 does not alter Controlled Parallelism v21, Lane N, Lane E, or financial capability.
 
 Status: Binding (Repo workflow, engineering conventions, CI posture)
 Scope: apps/, packages/, scripts/, .github/, docs/
@@ -294,6 +298,8 @@ See `README.md` — quick reference:
 
 Python venv lives at `apps/backend/.venv`. Activate it before running backend commands. Backend tests: `cd apps/backend && source .venv/bin/activate && pytest`.
 # AGENTS.md — Hedgr Repo Execution Standard
+
+Current Lane V override: Internal **D-079** / **§209** activates `CLASS-A-VAL-002-ORIENT-002` as one bounded copy-only customer-narrative fidelity amendment and supersedes any later no-active-nested wording in this repeated execution-standard block. Participant distribution is paused until verified closeout. The Customer One-Pager vNext remains proposed, non-canonical, unpublished, and non-authoritative except as the five-amendment translation control named in **§7a** / **§209**. D-079 does not alter Controlled Parallelism v21, Lane N, Lane E, or financial capability.
 
 Status: Binding (repo workflow, engineering conventions, CI posture, agent operating rules)  
 Scope: apps/, packages/, scripts/, .github/, docs/  
