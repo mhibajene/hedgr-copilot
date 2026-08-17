@@ -44,13 +44,13 @@ In volatile economies, the hard part is not finding another app. It is understan
 
 Hedgr is building a calm digital experience to help people understand where they stand financially before deciding what to do next.
 
-It is designed to make three things easier to see: the value of your financial position, the risks that may affect it, and any limits or uncertainty around access.
+It is designed to make three things easier to understand: what you have, what could affect it, and what may limit your access to it.
 
 Protecting existing value comes before chasing growth. Risk stays visible, and access matters as much as the number on the screen.
 
 The first customer experience Hedgr is building is the **Stability Wallet**, a clear place to see a financial position and its stability context.
 
-Behind that experience is the Hedgr **Financial Stability Operating System**. This is the deeper system intended to support the same stability-first approach across Hedgr.
+It is part of a broader Hedgr system designed around the same stability-first principles. Internally, that broader system is the Hedgr **Financial Stability Operating System**.
 
 Hedgr is not a crypto trading app, a yield-chasing product, or an investment platform. Stability comes first. Growth, if present at all, stays secondary.
 
@@ -72,8 +72,8 @@ This page does not name a launch country or recruitment campaign.
 
 Hedgr is designed around a simple order of understanding:
 
-1. **Understand your position.** See the value you hold in plain language.
-2. **See stability and risk clearly.** Know how stable your financial position looks today, without hype.
+1. **Understand your financial position.** See the value represented in the experience in plain language.
+2. **See stability and risk more clearly.** Understand the factors that may strengthen or weaken your financial position.
 3. **Stay aware of liquidity and access.** Treat exit readiness as central, not optional.
 4. **See what is available next.** Consider a next step only after the picture is clear.
 
