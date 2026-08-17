@@ -9,7 +9,8 @@ Default stance:
 - execute only if `docs/ops/HEDGR_STATUS.md` §7 names an approved ticket
 - `docs/ops/HEDGR_STATUS.md` §7a defines the active execution brief
 - repo is authoritative
-- Notion is not authority
+- Notion is retired and is not authority
+- Obsidian is cognition only and is not authority
 - `.cursor/plans` support execution but do not overrule repo truth
 
 Read first:

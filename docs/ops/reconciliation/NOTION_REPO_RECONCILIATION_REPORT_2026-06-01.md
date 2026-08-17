@@ -1,5 +1,8 @@
 # Notion <-> Repo Reconciliation Report
 
+**Status:** Historical archive  
+**Retired as an operating process:** 2026-08-17 under Internal **D-078** / `GOV-NOTION-RETIRE-001`. This report records a completed 2026-06-01 downstream-mirror pass. It is not an active reconciliation procedure and does not restore Notion as a Hedgr operating surface.
+
 ## Summary
 
 Overall status: Notion was reconciled as a downstream governance mirror of current repo truth for `MC-NOTION-001`.

@@ -41,9 +41,9 @@ Future parallel passes still require: a separate Founder decision; explicit repo
 
 Governed parallelism is an explicit exception; deny-by-default; limited to named lanes; limited to one bounded ticket per authorized lane unless separately decided; and inactive when the governing decision is absent, ambiguous, paused, completed, deprecated, or superseded. The default remains one active implementation ticket.
 
-**Notion posture (required):**
+**Non-repo-surface posture (required):**
 
-> Notion mirrors repo truth. It does not activate, sequence, approve, or lead repo execution state.
+> The repository is the sole canonical institutional authority. Retired Notion records, Obsidian notes, and other non-repo surfaces do not activate, sequence, approve, or lead repo execution state.
 
 **PR topology posture (required):**
 
@@ -71,7 +71,7 @@ Complete before any lane work starts.
 | Singular-ticket default and restoration condition remain recorded | | |
 | Convergence gate is defined before execution begins | | |
 | PR topology and final reconciliation ownership are identified | | |
-| Notion has not been used to activate the work | | |
+| Non-repo surfaces have not been used to activate the work | | |
 | `HEDGR_STATUS.md` **§7** / **§7a** name the lane tickets | | |
 
 **Opening authority result (choose one):**
@@ -197,7 +197,7 @@ Where separate lane PRs are used, require:
 - no premature completion status;
 - all referenced lane work merged or explicitly resolved;
 - final trust and governance checks;
-- repo status updated before Notion;
+- repo status updated before any non-repo explanation;
 - return to idle or singular-ticket posture.
 
 Confirm:
@@ -259,7 +259,7 @@ Backend, frontend, governance, evidence, legal, provider, and operations work mu
 | Applicable Founder decision is no longer being used as active pass authorization | | |
 | Active-ticket posture returns to idle or approved singular-ticket state | | |
 | Convergence gate remains explicitly satisfied or unsatisfied | | |
-| Notion mirrors final repo truth (repo first, Notion second) | | |
+| Repo remains the sole canonical closeout surface | | |
 | No future lane or successor ticket activated automatically | | |
 | A new parallel pass requires a new Founder decision | | |
 
@@ -325,7 +325,7 @@ Convergence-gate outcome:
 
 Repo return-to-idle outcome:
 
-Notion mirror outcome:
+Repo closeout outcome:
 
 Successor ticket activation:
 None.
@@ -374,7 +374,7 @@ This artifact does **not** authorize:
 | Parallelism becomes normalized | Repeat singular-ticket default; require a new Founder decision for each pass; require return to idle |
 | Administrative completion hides technical drift | Require lane-specific implementation truth, tests, provisional outputs, and rework exposure |
 | Separate PRs create inconsistent status | Require final reconciliation ownership and merge ordering |
-| Notion leads repo state | Require repo update first and Notion mirror second |
+| Non-repo surfaces lead repo state | Require repo update first; do not restore Notion or create a successor parallel knowledge system |
 | Cross-lane information becomes authority | Classify cross-lane impacts; stop when authority changes are required |
 
 ---
