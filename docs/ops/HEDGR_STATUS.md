@@ -4363,7 +4363,7 @@ This section does **not** authorize provider-specific implementation, legal reli
 - `docs/agents/skills/codex-human-narrative-lead.md`
 - `docs/strategy/customer/HEDGR_CUSTOMER_ONE_PAGER_FIDELITY_AUDIT.md`
 - `docs/strategy/customer/HEDGR_CUSTOMER_NARRATIVE_TRANSLATION_MAP.md`
-- `docs/strategy/customer/HEDGR_CUSTOMER_ONE_PAGER_VNEXT.md` (authorized candidate output; not yet created or accepted)
+- `docs/strategy/customer/HEDGR_CUSTOMER_ONE_PAGER_VNEXT.md` (candidate source merged in PR #384; remains Proposed / non-canonical / non-authoritative and is not accepted or published)
 - `docs/ops/HEDGR_STATUS.md`
 - `docs/ops/NOTION_GOVERNANCE_STAGING.md`
 - `AGENTS.md`
@@ -4786,7 +4786,7 @@ Generated Bridge authority projection may be refreshed only after the authority-
 - `docs/agents/skills/codex-human-narrative-lead.md`
 - `docs/strategy/customer/HEDGR_CUSTOMER_ONE_PAGER_FIDELITY_AUDIT.md`
 - `docs/strategy/customer/HEDGR_CUSTOMER_NARRATIVE_TRANSLATION_MAP.md`
-- `docs/strategy/customer/HEDGR_CUSTOMER_ONE_PAGER_VNEXT.md` (candidate output; not yet created or accepted)
+- `docs/strategy/customer/HEDGR_CUSTOMER_ONE_PAGER_VNEXT.md` (candidate source merged in PR #384; remains Proposed / non-canonical / non-authoritative and is not accepted or published)
 - `docs/ops/HEDGR_STATUS.md`
 - `AGENTS.md`
 
