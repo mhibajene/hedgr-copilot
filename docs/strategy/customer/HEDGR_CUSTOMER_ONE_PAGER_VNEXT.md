@@ -1,26 +1,26 @@
-# Hedgr Customer One-Pager vNext Candidate
+# Hedgr Customer One-Pager
 
 | Field | Value |
 | ----- | ----- |
-| **Status** | Proposed / Founder and HedgrOps review required |
-| **Version** | vNext candidate |
-| **Narrative State** | Proposed / non-canonical |
-| **Classification** | Candidate customer narrative artifact |
-| **Authority** | Non-authoritative |
-| **Publication** | Not authorised |
-| **Execution mode** | `PROPOSE_ONLY` |
-| **Role** | Human Narrative Lead |
-| **Ticket** | `NARRATIVE-007` |
-| **Founder authority** | Internal D-075 / `docs/ops/HEDGR_STATUS.md` §203 |
-| **Canonical parent** | `docs/strategy/narrative/HEDGR_CANONICAL_STORY.md` v1.0 (Frozen) |
-| **Revision baseline** | `docs/strategy/customer/HEDGR_CUSTOMER_ONE_PAGER.md` v1.0 (Accepted / Frozen) |
+| **Status** | Accepted |
+| **Version** | 2.0 |
+| **Narrative State** | Frozen |
+| **Classification** | Canonical customer narrative source |
+| **Authority** | Non-authorising |
+| **Publication** | Not authorised by freeze alone |
+| **Filename note** | Frozen at the historical `VNEXT` path; do not treat the filename as candidate status |
+| **Parent narrative** | `docs/strategy/narrative/HEDGR_CANONICAL_STORY.md` v1.0 (Frozen) |
+| **Revision baseline** | `docs/strategy/customer/HEDGR_CUSTOMER_ONE_PAGER.md` v1.0 (Superseded / Frozen historical) |
+| **Ticket** | `NARRATIVE-007` (Founder accept + freeze) |
+| **Founder authority** | Internal D-080 / `docs/ops/HEDGR_STATUS.md` §212 |
+| **HedgrOps recommendation** | `docs/strategy/customer/HEDGR_CUSTOMER_ONE_PAGER_VNEXT_HEDGROPS_DISPOSITION.md`; `docs/ops/HEDGR_STATUS.md` §211 |
 | **Audience** | First-time customer reader in the existing source audience, especially mobile-first savers and freelancers navigating volatile or cross-border income |
+| **Owner** | Founder |
 | **Sensitivity** | Internal |
-| **Distribution posture** | Review only |
-| **Reviewer** | Founder / HedgrOps |
-| **Date** | 2026-08-13 |
+| **Distribution posture** | Internal; publication not authorised by this freeze |
+| **Date** | Candidate 2026-08-13; HedgrOps recommendation 2026-08-23; Founder accept + freeze 2026-08-23 |
 
-This file is the single proposed Customer One-Pager vNext candidate authorized by Internal D-075. It does not edit, unfreeze, replace, or supersede Customer One-Pager v1.0. It does not authorize publication, public positioning, website or product copy, marketing, product change, or financial execution.
+This file is the accepted and frozen Customer One-Pager v2.0. It supersedes Customer One-Pager v1.0 as the controlling customer narrative source. It does not authorize publication, public positioning, website or product copy, marketing, product change, or financial execution. Product surfaces, including `/orientation`, are not rewritten by this freeze.
 
 ---
 
@@ -128,27 +128,27 @@ This is a bounded research invitation. It is not a deposit prompt, earnings prom
 
 ---
 
-## Candidate review notes
+## Freeze record notes
 
-These notes are governance context for Founder / HedgrOps review. They are not part of the proposed customer-facing sequence.
+These notes are governance context for the Founder accept + freeze. They are not part of the customer-facing sequence.
 
 ### Semantic check: `dependable`
 
 The Narrative Style Guide uses `dependable` as an illustrative translation, while the Canonical Story defines Financial Stability as a capacity and Internal D-075 prohibits implying that dependability is already an achieved property of a person's money. The UX Constitution uses `dependable` to describe how Hedgr should feel, not as a guaranteed money outcome.
 
-This candidate therefore does not use `dependable` as customer-facing replacement language. It uses observable framing around financial position, risk, and limits or uncertainty around access.
+This freeze therefore does not use `dependable` as customer-facing replacement language. It uses observable framing around financial position, risk, and limits or uncertainty around access.
 
 ### Bounded revision rationale
 
 - The title, human opening, problem framing, target audience, trust boundaries, research invitation, and established thesis remain materially intact.
 - `What Hedgr is` now moves through human role, human meaning, stability philosophy, product representation, and institutional identity.
-- Both customer-facing uses of `safe next action` are removed. The proposed wording makes the current picture clear before an available next step without implying safety certification, suitability, or advice.
+- Both customer-facing uses of `safe next action` are removed. The frozen wording makes the current picture clear before an available next step without implying safety certification, suitability, or advice.
 - Copilot is deferred from the first-time customer sequence because it is not required to understand Hedgr's core role. This is a narrative-placement choice only and does not remove or diminish Copilot.
 - `What is real today` begins with the research and synthetic truth, adds a plain-language no-real-customer-money statement, and preserves every material capability exclusion from v1.0.
 
 ### Acceptance boundary
 
-This candidate cannot approve itself. Founder / HedgrOps disposition is required before adoption, canonical-source mutation, freeze, publication, circulation, website or product use, successor work, or `NARRATIVE-007` closeout.
+Founder confirmed ACCEPT on 2026-08-23 and froze this file as Customer One-Pager v2.0 under Internal D-080 / §212. Publication, circulation, website or product-copy use, recruitment, and financial execution remain unauthorised. `NARRATIVE-007` is closed by that same record. Further edits require a genuine Founder trigger and new **§7** / **§7a** naming.
 
 ---
 
@@ -157,14 +157,17 @@ This candidate cannot approve itself. Founder / HedgrOps disposition is required
 | Field | Value |
 | ----- | ----- |
 | **Derived from** | Canonical Hedgr Story v1.0 |
-| **Revision baseline** | Customer One-Pager v1.0 |
+| **Revision baseline** | Customer One-Pager v1.0 (superseded / frozen historical) |
 | **Voice control** | Narrative Style Guide v1.0 |
 | **Translation controls** | Accepted Customer One-Pager Fidelity Audit and Customer Narrative Translation Map |
-| **May adapt** | Sequencing, emphasis, tone, and detail within Internal D-075 / §203 |
-| **Must not** | Redefine Hedgr independently; strengthen a claim; invent live capability; override doctrine, ADRs, `HEDGR_STATUS.md`, or `AGENTS.md` |
+| **May adapt** | Emphasis, tone, and detail for first-time customers |
+| **Must not** | Redefine Hedgr independently; invent live capability; override doctrine, ADRs, `HEDGR_STATUS.md`, or `AGENTS.md` |
 | **Controlling authority** | Doctrine, accepted ADRs, `docs/ops/HEDGR_STATUS.md`, `AGENTS.md` |
-| **Publication decision** | Founder, separate from candidate review or later source acceptance |
-| **Candidate reviewer** | Founder / HedgrOps |
+| **Canonical customer source for** | Prototype sharing; customer interviews; partner introductions; accelerator applications; website homepage messaging; future designed one-page variants |
+| **Publication decision** | Founder — separate from freeze |
+| **Brand note** | Designed variants must follow `DESIGN.md` and `docs/brand/**`; do not regenerate logos |
 | **Narrative style** | Spoken, calm, plain language; meaning before institutional terminology; no em dashes in customer-facing content |
 
-Where this candidate and repo authority diverge, **repo authority wins**.
+Where this one-pager and repo authority diverge, **repo authority wins**.
+
+Further edits to this frozen customer source require a genuine Founder trigger and new **§7** / **§7a** naming.

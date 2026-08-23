@@ -5,7 +5,7 @@
 - **Status:** `codex-synthesizer` review artifact only; descriptive evidence, not direction
 - **Authority:** Subordinate to `docs/ops/HEDGR_STATUS.md`, `AGENTS.md`, accepted ADRs, and active repo-native doctrine
 - **Scope:** The contiguous completed-ticket records `GOV-A-REV-002`, `EVID-INTAKE-B-002`, `EVID-INTAKE-B-003`, `EVID-INTAKE-B-004`, and `HOPS-REVIEW-B-001`
-Last updated: 2026-08-22
+Last updated: 2026-08-23
 
 Review posture: `READ_ONLY`
 
@@ -14,6 +14,8 @@ Review posture: `READ_ONLY`
 Included evidence is limited to repo-native completed-ticket records, merged governance artifacts, recorded verification and closeout evidence, accepted ADRs required to interpret authority, active doctrine, and the review usage guide.
 
 Excluded: in-progress work, tickets after `HOPS-REVIEW-B-001`, external activity, inferred capability, evidence acceptance, provider or market conclusions, legal reliance, implementation readiness, customer-money readiness, operational approval, and market readiness.
+
+**Founder overlay (Internal D-081 / §213, 2026-08-23):** **RETAIN.** This slice remains a valid bounded process-review artifact. Founder interpretation: this slice successfully reduced authority, classification, and hypothesis ambiguity; it did not materially reduce provider, legal, market, settlement, liquidity, or operational viability uncertainty. Kenya / KES / M-Pesa remains hypothesis-level and supplies no market selection, provider approval, legal clearance, settlement proof, or Class B readiness. No follow-on action is authorised merely because this preparatory chain is complete. This overlay does not activate a ticket or widen execution authority.
 
 ## 2. Purpose
 

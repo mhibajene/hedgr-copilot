@@ -108,7 +108,9 @@ Include, at minimum:
 9. Trust-surface coverage
 10. North Star verdict
 11. Risks / notes
-12. Optional non-authoritative evaluation criteria
+12. Explicit non-authorising boundary
+
+Do not invent a new standing evaluation framework or duplicated governance taxonomy. Durable criteria live in `docs/ops/reviews/README.md` and existing repo-native governance surfaces. Individual process reviews focus on delta → evidence → uncertainty → disposition → decision pressure. Optional local notes are non-authoritative reading aids only.
 
 ## Required execution-class posture
 

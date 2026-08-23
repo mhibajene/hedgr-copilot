@@ -56,7 +56,6 @@ test("identical source revision produces byte-identical current RAP output", asy
   assert.equal(serializeProjection(first.projection), serializeProjection(second.projection));
   assert.deepEqual(first.projection.payload.fields.active_ticket_ids.value, [
     "CLASS-A-VAL-002",
-    "NARRATIVE-007",
     "SE-REASON-001"
   ]);
   assert.equal(first.projection.execution_authority, false);

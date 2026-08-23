@@ -2,16 +2,19 @@
 
 | Field | Value |
 | ----- | ----- |
-| **Status** | Accepted |
+| **Status** | Superseded / Frozen historical |
 | **Version** | 1.0 |
-| **Narrative State** | Frozen |
-| **Classification** | Canonical customer narrative source |
+| **Narrative State** | Frozen historical; no longer controlling |
+| **Classification** | Historical customer narrative source |
 | **Authority** | Non-authorising |
-| **Publication** | Not authorised by freeze alone |
+| **Publication** | Not authorised |
+| **Successor** | `docs/strategy/customer/HEDGR_CUSTOMER_ONE_PAGER_VNEXT.md` v2.0 (Accepted / Frozen) |
 | **Parent narrative** | `docs/strategy/narrative/HEDGR_CANONICAL_STORY.md` v1.0 (Frozen) |
-| **Ticket** | `NARRATIVE-003` (editorial freeze) |
+| **Ticket** | `NARRATIVE-003` (editorial freeze); superseded by `NARRATIVE-007` / Internal D-080 / `docs/ops/HEDGR_STATUS.md` §212 |
 | **Owner** | Founder |
-| **Date** | 2026-07-20 |
+| **Date** | 2026-07-20; superseded 2026-08-23 |
+
+This file is retained as the frozen v1.0 customer one-pager. It is no longer the controlling customer narrative source. Customer-facing body text is unchanged from the 20 July 2026 freeze.
 
 ---
 
@@ -125,11 +128,11 @@ This is a bounded research invitation. It is not a deposit prompt, earnings prom
 | **May adapt** | Emphasis, tone, and detail for first-time customers |
 | **Must not** | Redefine Hedgr independently; invent live capability; override doctrine, ADRs, `HEDGR_STATUS.md`, or `AGENTS.md` |
 | **Controlling authority** | Doctrine, accepted ADRs, `docs/ops/HEDGR_STATUS.md`, `AGENTS.md` |
-| **Canonical customer source for** | Prototype sharing; customer interviews; partner introductions; accelerator applications; website homepage messaging; future designed one-page variants |
-| **Publication decision** | Founder — separate from freeze |
+| **Canonical customer source for** | None. This v1.0 file is historical only. The controlling customer source is Customer One-Pager v2.0. |
+| **Publication decision** | Founder — separate from freeze; this superseded file does not authorise publication |
 | **Brand note** | Designed variants must follow `DESIGN.md` and `docs/brand/**`; do not regenerate logos |
 | **Narrative style** | Public-facing content should feel spoken, not written. Prefer short sentences, plain language, and commas or full stops over em dashes. Translate institutional language rather than repeating it. |
 
 Where this one-pager and repo authority diverge, **repo authority wins**.
 
-Further edits to this frozen customer source require a genuine Founder trigger and new **§7** / **§7a** naming.
+Further edits to this historical frozen file require a genuine Founder trigger and new **§7** / **§7a** naming. Do not restore it as the controlling customer source by inference.
