@@ -289,7 +289,7 @@ Still required in a future Phase 1 implementation §7a (not invented here):
 - legacy placeholder is remediated in production;
 - Lane V is affected.
 
-**Next governed step:** `BRIDGE-P1-001` and `BRIDGE-P1-OPS-001` are **complete** (**§154** / **§161**). Lane R idle. Legacy retirement remains deferred to on/after **2026-08-02** under a separately named Founder ticket only. Lane V remains independent (`NO CROSS-LANE IMPACT`).
+**Next governed step:** `BRIDGE-P1-001` and `BRIDGE-P1-OPS-001` are **complete** (**§154** / **§161**). `BRIDGE-LEGACY-RETIRE-001` is **complete** (**§214** / D-082): live legacy placeholder retired; archive retained; RAP-only routes unchanged. Lane R idle. Lane V remains independent (`NO CROSS-LANE IMPACT`).
 
 ---
 

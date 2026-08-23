@@ -383,7 +383,9 @@ function validateSnapshotObject(root, relativePath, snapshot) {
 }
 
 function validateCommittedBridgeSnapshots(root) {
-  const files = listFilesRecursive(root, BRIDGE_DIR).filter((file) => file.endsWith(".json"));
+  const files = listFilesRecursive(root, BRIDGE_DIR).filter(
+    (file) => file.endsWith(".json") && !file.startsWith(`${BRIDGE_DIR}/archive/`)
+  );
   if (files.length === 0) {
     throw new BridgeSnapshotError(`No bridge snapshot JSON files found under ${BRIDGE_DIR}`);
   }

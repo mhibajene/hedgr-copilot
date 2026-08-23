@@ -49,7 +49,7 @@ The Phase 0 validator returns deterministic non-authorizing errors for missing, 
 
 ### Phase 1 ops / reliability (completed)
 
-`BRIDGE-P1-OPS-001` is **completed** (`HEDGR_STATUS.md` §161 / Internal **D-050** / §6f.14; historical activation **D-045** / §155). Scope delivered: RAP first-serve / R1 clock evidence, regen/verification hygiene, Deprecated legacy retention through at least **2026-08-02**. No Phase 2. No legacy retirement under this ticket. Lane R is idle. Deferred candidate `BRIDGE-LEGACY-RETIRE-001` remains inactive until separately named on/after **2026-08-02**. Lanes V (`CLASS-A-VAL-002`) and N (`NARRATIVE-003`) remain independent under Controlled Parallelism v14.
+`BRIDGE-P1-OPS-001` is **completed** (`HEDGR_STATUS.md` §161 / Internal **D-050** / §6f.14; historical activation **D-045** / §155). Scope delivered: RAP first-serve / R1 clock evidence, regen/verification hygiene, Deprecated legacy retention through at least **2026-08-02**. No Phase 2. No legacy retirement under that ticket. Internal **D-082** / **§214** later completed `BRIDGE-LEGACY-RETIRE-001`: the live placeholder is retired; the byte-identical archive is retained; RAP-only authority routes are unchanged. Lane R is idle. Lanes V (`CLASS-A-VAL-002`) and E (`SE-REASON-001`) remain independent under Controlled Parallelism v21.
 
 The canonical R1 compatibility record is `phase1-r1-compatibility-record.json`:
 
@@ -57,8 +57,8 @@ The canonical R1 compatibility record is `phase1-r1-compatibility-record.json`:
 - public post-cutover Worker observation: **2026-07-19T12:47:05.253Z**, `READ_ONLY`, with the compatibility route index present and protected authority access requiring an API key;
 - compatibility floor: **14 calendar days**;
 - earliest legacy retirement consideration: **2026-08-02**;
-- legacy posture: **Deprecated and retained**, SHA-256 `181dfa46feb0f25149b81cc17516cce0efc89eab95d3e30e9f2b82affcc1fc2a`;
-- retirement: **not authorized** under this ticket and requires a separately named Founder-authorized ticket.
+- historical R1 legacy posture: **Deprecated and retained**, SHA-256 `181dfa46feb0f25149b81cc17516cce0efc89eab95d3e30e9f2b82affcc1fc2a`;
+- retirement under `BRIDGE-P1-OPS-001`: **not authorized**; later completed under Internal **D-082** / **§214** / `BRIDGE-LEGACY-RETIRE-001`.
 
 The public observation establishes deployment of the post-cutover Worker surface. No valid local Bridge API key was available for an authenticated live RAP payload check; RAP-only authority mapping is therefore confirmed by the committed Worker allow-list and hermetic tests. The date-only R1 floor does not itself authorize retirement on **2026-08-02**.
 
@@ -77,7 +77,7 @@ pnpm bridge:rap:check
 
 `pnpm bridge:rap:generate` binds the RAP to the current committed mandatory-source revision; mandatory authority sources must be committed first. `pnpm bridge:rap:check` verifies byte-deterministic generation for the recorded immutable revision and fails when the working mandatory-source set no longer matches that revision. The root `pnpm run validate` gate runs `bridge:rap:check` before snapshot and test gates.
 
-`current-status.json` is **Deprecated** from the first deployed RAP serve. It remains the legacy bounded placeholder with `generated_at: 2026-06-24T00:00:00.000Z`; it is not regenerated, date-bumped, presented as a RAP, or mapped by authority routes after cutover. R1 requires retention for at least 14 calendar days after the RAP is first deployed and served on `/authority`, `/authority-summary`, and `/current-status`. Retirement requires a separately named Founder-authorized ticket and a recorded first-serve date.
+`current-status.json` was **Deprecated** from the first deployed RAP serve and is now **retired** under Internal **D-082** / **§214** / `BRIDGE-LEGACY-RETIRE-001`. The live path is removed. The byte-identical archive is `archive/retired-legacy-current-status.json` (`generated_at: 2026-06-24T00:00:00.000Z`, SHA-256 `181dfa46feb0f25149b81cc17516cce0efc89eab95d3e30e9f2b82affcc1fc2a`). It is not regenerated, date-bumped, presented as a RAP, or mapped by authority routes. `/current-status` continues to serve the RAP.
 
 ### Runtime boundary and rollback
 
@@ -92,7 +92,7 @@ The adopted runtime terminology is **HedgrOps Read-Only Institutional Evidence B
 ## Snapshot Files
 
 - `repo-authority-projection.json` - deterministic source-bound Repo Authority Projection served by existing authority routes
-- `current-status.json` - Deprecated legacy bounded status placeholder (`generated_at` **2026-06-24**); retained for the R1 compatibility period; not served as RAP and not refreshed by `pnpm bridge:snapshots:refresh`
+- `archive/retired-legacy-current-status.json` - retired byte-identical legacy bounded status placeholder (`generated_at` **2026-06-24**); not served as RAP and not refreshed by `pnpm bridge:snapshots:refresh`
 - `phase1-r1-compatibility-record.json` - non-authorizing first-serve / compatibility-floor evidence from completed `BRIDGE-P1-OPS-001`; does not authorize retirement
 - `latest-weekly-review.json` - latest weekly review evidence pointer
 - `latest-mvp-process-review.json` - latest MVP process review evidence pointer

@@ -97,5 +97,16 @@
   "mutation_allowed": false,
   "ticket_activation_allowed": false,
   "sequencing_allowed": false,
-  "non_authorization_statement": "This snapshot is evidence/retrieval only. It does not authorize implementation, sequencing, ticket activation, or repo mutation."
+  "non_authorization_statement": "This snapshot is evidence/retrieval only. It does not authorize implementation, sequencing, ticket activation, or repo mutation.",
+  "later_retirement": {
+    "ticket_id": "BRIDGE-LEGACY-RETIRE-001",
+    "decision_id": "D-082",
+    "status_section": "§214",
+    "retired_on": "2026-08-23",
+    "live_path_removed": true,
+    "archive_path": "docs/ops/bridge/archive/retired-legacy-current-status.json",
+    "legacy_sha256_unchanged": true,
+    "phase_2_allowed": false,
+    "authority_routes_remain_rap_only": true
+  }
 }

@@ -35,7 +35,7 @@ The generator consumes only `docs/ops/HEDGR_STATUS.md`, `AGENTS.md`, `docs/decis
 
 The Worker maps `/authority`, `/authority-summary`, `/current-status`, and `/hedgr/status/authority-summary` to the generated RAP. Route names remain stable; no competing authority endpoint was added.
 
-**Deprecated legacy placeholder:** `docs/ops/bridge/current-status.json` remains the legacy placeholder dated **2026-06-24**. It is not a Repo Authority Projection and is no longer mapped by authority routes after the Phase 1 cutover. It remains in-repo for at least 14 calendar days after the RAP is first deployed and served on all three compatibility routes. Retirement requires a separately named Founder-authorized ticket. Do not date-bump or silently remove it.
+**Retired legacy placeholder:** `docs/ops/bridge/current-status.json` is retired under Internal **D-082** / **§214** / `BRIDGE-LEGACY-RETIRE-001`. The byte-identical archive is `docs/ops/bridge/archive/retired-legacy-current-status.json` dated **2026-06-24**. It is not a Repo Authority Projection and is not mapped by authority routes. Do not date-bump it or restore it as CURRENT.
 
 ## Phase 1 R1 compatibility record
 
