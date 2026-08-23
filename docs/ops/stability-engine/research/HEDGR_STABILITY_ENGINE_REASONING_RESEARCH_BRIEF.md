@@ -1,6 +1,6 @@
 # Hedgr Stability Engine Reasoning Research Brief
 
-**Status:** Active governing research frame; three research outputs remain non-authoritative proposals; `SE-REASON-001` remains active. Founder package disposition **ESCALATE** under Internal **D-081** / **§213**: weekly-summary `RETEST` is not accepted; next bounded decision input is evidence review of the Function Model, State Model, and Interpretation Tests. No model acceptance, product translation, engine/UX implementation, or execution-class change is authorised by artifact delivery or by this brief.<br>
+**Status:** Active governing research frame; three research outputs remain non-authoritative proposals; `SE-REASON-001` remains active. Founder package disposition **ESCALATE** under Internal **D-081** / **§213**. Nested `SE-REASON-001-EVID-001` is **ACTIVE** under Internal **D-083** / **§215**; HedgrOps evidence review is at `docs/ops/stability-engine/research/HEDGR_STABILITY_REASONING_EVIDENCE_REVIEW.md` and awaits Founder disposition. No model acceptance, product translation, engine/UX implementation, or execution-class change is authorised by artifact delivery, by this brief, or by nested evidence review.<br>
 **Ticket:** `SE-REASON-001` (Lane E)  
 **Decision:** Internal **D-076** / Controlled Parallelism v21  
 **Repo authority:** `docs/ops/HEDGR_STATUS.md` **§6f.21**, **§7**, **§7a**, **§204**  
