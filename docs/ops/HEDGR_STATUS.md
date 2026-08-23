@@ -70,7 +70,7 @@ Important active constraints:
 
 **Sprint 3** is framed here as **Transition Readiness** (named track above), not as Foundation continuation: governance defines the explicit standard for any later boundary widening; execution architecture remains out of scope until explicitly approved.
 
-**Sequencing authority:** Controlled Parallelism v21 / Internal **D-076** / **§6f.21** still names Lane V `CLASS-A-VAL-002` and Lane E `SE-REASON-001` as active. Internal **D-080** / **§212** completed Lane N `NARRATIVE-007`. Internal **D-079** / **§§209–210** supplied and closed nested Lane V `CLASS-A-VAL-002-ORIENT-002` as one copy-only customer-narrative fidelity amendment without creating a fourth lane. No nested Lane V refinement is active; protocol-complete participant testing is active on the verified ORIENT-002 build. Customer One-Pager v2.0 is Accepted / Frozen at `docs/strategy/customer/HEDGR_CUSTOMER_ONE_PAGER_VNEXT.md` under Internal **D-080** / **§212**; it remains unpublished. Customer One-Pager v1.0 is superseded / frozen historical. `NARRATIVE-007` is completed and Lane N is idle. This current statement supersedes later stale wording in the historical detail paragraph immediately below; all other detail and deny-by-default boundaries remain binding.
+**Sequencing authority:** Controlled Parallelism v21 / Internal **D-076** / **§6f.21** still names Lane V `CLASS-A-VAL-002` and Lane E `SE-REASON-001` as active. Internal **D-080** / **§212** completed Lane N `NARRATIVE-007`. Internal **D-082** / **§214** activated, executed, and closed `BRIDGE-LEGACY-RETIRE-001` as bounded Lane R Class A / execution-neutral Bridge hygiene: the live legacy placeholder `docs/ops/bridge/current-status.json` is retired after the R1 floor, archived byte-identical, and is no longer a live artifact. D-082 does not create standing fourth-lane concurrency, alter Lane V or Lane E, authorize Phase 2, or change RAP-only authority routes. Internal **D-079** / **§§209–210** supplied and closed nested Lane V `CLASS-A-VAL-002-ORIENT-002` as one copy-only customer-narrative fidelity amendment without creating a fourth lane. No nested Lane V refinement is active; protocol-complete participant testing is active on the verified ORIENT-002 build. Customer One-Pager v2.0 is Accepted / Frozen at `docs/strategy/customer/HEDGR_CUSTOMER_ONE_PAGER_VNEXT.md` under Internal **D-080** / **§212**; it remains unpublished. Customer One-Pager v1.0 is superseded / frozen historical. `NARRATIVE-007` is completed and Lane N is idle. Lane R is idle after `BRIDGE-LEGACY-RETIRE-001` closeout. This current statement supersedes later stale wording in the historical detail paragraph immediately below; all other detail and deny-by-default boundaries remain binding.
 
 **Founder review-process and Lane E package dispositions (Internal D-081 / §213):** Future weekly reviews are **REVISE**d toward delta-and-convergence form with two-dimension North Star reporting. The current MVP process-review slice `GOV-A-REV-002 → HOPS-REVIEW-B-001` is **RETAIN**ed as bounded process-review evidence. Additional standing review frameworks are **REMOVE / STOP**. Artifact-level `RETEST` for `SE-REASON-001` is **not accepted**; the package is **ESCALATE**d to evidence review of the Function Model, State Model, and Interpretation Tests. Highest-value product uncertainty remains whether a target user can complete Orientation → Stability → Insight → Safe action and accurately explain Hedgr, synthetic state, stability-framed value, remaining risk, and exit/safe action without crypto expertise; participant evidence under active Lane V is the material evidence source. D-081 creates no ticket, concurrency, narrative, market/provider, or financial-execution change.
 
@@ -4463,7 +4463,7 @@ This section does **not** authorize provider-specific implementation, legal reli
 | **Execution class** | Class A only (documentation-only governance for this ticket) |
 | **Start date** | 2026-07-14 |
 | **Review / expiry date** | ~2026-08-04 (after one product-learning cycle or approximately three weeks); earlier founder revocation allowed |
-| **Concurrency limit** | One active implementation ticket by default unless an active Founder-approved **§6f** pass is named. Controlled Parallelism v21 / Internal **D-076** / **§6f.21** currently names remaining active Lane V `CLASS-A-VAL-002` and Lane E `SE-REASON-001`; Lane N `NARRATIVE-007` is completed under Internal **D-080** / **§212**. Green Lane does not itself create or widen that concurrency. |
+| **Concurrency limit** | One active implementation ticket by default unless an active Founder-approved **§6f** pass is named. Controlled Parallelism v21 / Internal **D-076** / **§6f.21** currently names remaining active Lane V `CLASS-A-VAL-002` and Lane E `SE-REASON-001`; Lane N `NARRATIVE-007` is completed under Internal **D-080** / **§212**. Internal **D-082** / **§214** completed `BRIDGE-LEGACY-RETIRE-001` without leaving standing Lane R concurrency. Green Lane does not itself create or widen that concurrency. |
 | **External-spend limit** | None (zero) |
 | **Data posture** | No unapproved personal or regulated data; no customer-money behavior |
 | **Escalation owner** | Founder — @mhibajene |
@@ -4633,6 +4633,7 @@ Completed and merged:
 - `CLASS-A-VAL-002-FORM-001` - Canonical Google Forms Participant Retest Instrument (bounded nested Lane V formulation; activation **§200** / D-073; technically verified and closed **§201**; unpublished with zero responses; no participant-evidence or product-refinement authority)
 - `CLASS-A-VAL-002-ORIENT-001` - Governed Narrative Orientation Surface (bounded nested Lane V experiment; activation **§205** / D-077; technically verified and closed **§206**; no comprehension, publication-readiness, or product-refinement claim)
 - `NARRATIVE-007` - Human Narrative Lead + Customer One-Pager Fidelity Revision (Class A informational / non-authorising narrative governance; activation **§202** / D-074; bounded candidate **§203** / D-075; HedgrOps recommendation **§211**; Founder accept + freeze + closeout **§212** / D-080; publication not authorised)
+- `BRIDGE-LEGACY-RETIRE-001` - Retire the Deprecated Bridge legacy placeholder after the R1 compatibility floor (Class A / execution-neutral Bridge hygiene; Founder-activated, executed, and closed **§214**; Internal **D-082**; live `current-status.json` removed; byte-identical archive retained; RAP-only authority routes unchanged; no Phase 2)
 
 Current active ticket status:
 
@@ -4640,9 +4641,10 @@ Current active ticket status:
   - **Lane V:** `CLASS-A-VAL-002` — Validate the End-to-End Synthetic Stability Journey. Remains open with no active nested refinement. `CLASS-A-VAL-002-ORIENT-002` is completed historical authority under Internal **D-079** / **§§209–210**; `CLASS-A-VAL-002-ORIENT-001` remains completed under Internal **D-077** / **§§205–206**. Protocol-complete participant testing is active on the verified ORIENT-002 build. The canonical Form remains the approved instrument; its observed responder state is recorded in **§206**, and distribution remains limited to the governed cohort. Exact parent and completed briefs remain in **§7a**.
   - **Lane N:** none. `NARRATIVE-007` is completed historical authority under Internal **D-080** / **§212**. Customer One-Pager v2.0 is Accepted / Frozen at `docs/strategy/customer/HEDGR_CUSTOMER_ONE_PAGER_VNEXT.md` and remains unpublished. Customer One-Pager v1.0 is superseded / frozen historical.
   - **Lane E:** `SE-REASON-001` — Stability Engine Reasoning Architecture Research. Active as Class A informational / Yellow research only under **§6f.21** / **§204**; governing brief at `docs/ops/stability-engine/research/HEDGR_STABILITY_ENGINE_REASONING_RESEARCH_BRIEF.md`; three named research artifacts remain non-authoritative proposals. Founder package disposition **ESCALATE** under Internal **D-081** / **§213**: weekly-summary `RETEST` is not accepted; next bounded decision input is evidence review of the Function Model, State Model, and Interpretation Tests. Ticket remains active; no model acceptance, product translation, engine/UX implementation, execution-class change, or Lane E widening into Lane V or Lane N.
+  - **Lane R:** none. `BRIDGE-LEGACY-RETIRE-001` is completed historical authority under Internal **D-082** / **§214**. The live legacy placeholder is retired; the byte-identical archive is retained; RAP-only authority routes are unchanged; no Phase 2.
 - **Completed Lane M:** `MONEY-STACK-001` (**§168**) — Founder–HedgrOps approved the research package and closed the cycle as converged; D-053 completed; no follow-on authority.
 - **Completed historical Lane N tickets:** `NARRATIVE-007` (**§212** / D-080); `NARRATIVE-006` (**§172**); `NARRATIVE-005` (**§170**); `UI-NARR-001` (**§166**); `NARRATIVE-004` (**§164**); `NARRATIVE-003` (**§162**); `NARRATIVE-002` (**§159**); `NARRATIVE-001` (**§157**).
-- **Completed Lane R:** `BRIDGE-P1-OPS-001` (**§161**) — R1 clock recorded; regen/verification hygiene complete; legacy Deprecated retained; no retirement; no Phase 2; no successor activated.
+- **Completed Lane R:** `BRIDGE-LEGACY-RETIRE-001` (**§214** / D-082) — live legacy `current-status.json` retired after the R1 floor; byte-identical archive retained; RAP-only authority routes unchanged; no Phase 2. Prior completed Lane R ticket: `BRIDGE-P1-OPS-001` (**§161**) — R1 clock recorded; regen/verification hygiene complete; legacy Deprecated retained at that closeout; no Phase 2.
 - **Completed Bridge Phase 1 implementation:** `BRIDGE-P1-001` (**§154**; PRs **#306** / **#307**).
 - **Completed prep:** `BRIDGE-P1-PREP-001` (**§151** / D-043). Governing plan preserved.
 - **Completed nested refinements inside Lane V:** `HEDGR-UI-001`–`006` (**§144**–**§148**; **§175**–**§181**); `CLASS-A-VAL-002-CA-001` (**§182**–**§183**); `CLASS-A-VAL-002-CA-002` (**§184**–**§185**); `CLASS-A-VAL-002-CA-003` (**§186**–**§187**); `CLASS-A-VAL-002-GF-001` (**§189**–**§190**); `CLASS-A-VAL-002-WARMTH-001` (**§194**–**§195**); `CLASS-A-VAL-002-AFF-001` (**§196**–**§197**); `CLASS-A-VAL-002-ROUTE-001` (**§198**–**§199**); `CLASS-A-VAL-002-ORIENT-001` (**§205**–**§206**). All are completed historical nested authority only; none supplies standing authority for further UI or product-change work.
@@ -4653,7 +4655,7 @@ Current active ticket status:
 - **Sequencing posture:** Controlled Parallelism v21 / Internal **D-076** / **§6f.21** remains the active pass and now names remaining active `CLASS-A-VAL-002` (Lane V) and `SE-REASON-001` (Lane E, research only). Internal **D-080** / **§212** completed `NARRATIVE-007` and idled Lane N without creating a fourth lane or altering Lane V or Lane E. Internal **D-079** / **§§209–210** supplied and closed `CLASS-A-VAL-002-ORIENT-002` inside Lane V; Internal **D-077** / **§§205–206** remains the completed predecessor. Internal **D-075** / **§203** is completed historical candidate-revision authority. Internal **D-074** / **§6f.20** is completed historical two-lane concurrency. Participant testing is active on the verified ORIENT-002 build; the canonical Form remains the approved instrument and distribution remains limited to the governed cohort. Lane E cannot alter Lane V, frozen narrative sources, or financial execution posture. Prior Controlled Parallelism passes through v20 / D-074 are completed historical concurrency authority.
 - **Kenya counsel path:** **DEFER** (**§6f.1** / D-028).
 - **Governed parallelism posture:** Controlled Parallelism v21 / D-076 is the sole active **§6f** pass. Lane V and Lane E remain active through their named tickets; Lane N is idle after `NARRATIVE-007` closeout. Lanes A / B / C / M / R are idle. **§6e** / D-026 remains lane-model only. Class B convergence gate unsatisfied.
-- **Active lanes:** Lane V `CLASS-A-VAL-002`; Lane E `SE-REASON-001`. Lane N / A / B / C / M / R: none.
+- **Active lanes:** Lane V `CLASS-A-VAL-002`; Lane E `SE-REASON-001`. Lane N / A / B / C / M / R: none. Internal **D-082** / **§214** completed `BRIDGE-LEGACY-RETIRE-001` without leaving standing Lane R concurrency.
 - **Green Lane pilot (§6g / ADR 0025):** Authority-model only; does not activate product experiments or independently authorize a new ticket. D-077 Green / Class A classification does not substitute for **§7** / **§7a** naming. D-060 / D-061 / D-063 / D-064 / D-065 / D-066 / D-067 / D-068 / D-069 / D-070 / D-071 Green classification does not substitute for **§7** / **§7a** naming; D-066, D-070, and D-071 are completed historical nested authority, while D-067 / D-068 / D-069 create no implementation authority.
 - **Current narrative ticket:** none. Last completed narrative ticket: `NARRATIVE-007` (**§212** / D-080; Customer One-Pager v2.0 Accepted / Frozen; unpublished). **Current research ticket:** `SE-REASON-001` (Lane E, Class A informational / Yellow Stability Engine reasoning research under D-076 / §204). Last completed product-copy ticket: `UI-NARR-001` (**§166**). Prior completed narrative ticket: `NARRATIVE-006` (**§172**). Last completed narrative governance ticket: `NARRATIVE-004` (**§164**). Last completed Bridge ticket: `BRIDGE-P1-OPS-001` (**§161**). Last completed Bridge implementation: `BRIDGE-P1-001` (**§154**). Last completed governance-hygiene ticket: `GOV-NOTION-RETIRE-001` (**§207** / D-078). Prior governance-hygiene ticket: `STATUS-HYGIENE-001` (**§173**). Last completed nested Lane V refinement: `CLASS-A-VAL-002-ORIENT-002` (**§210** / D-079). Last recorded parent institutional product-learning disposition: Cognitive Stewardship (**§193** / D-069), following Orientation Before Explanation (**§192** / D-068), Progressive Institutional Reasoning (**§191** / D-067), and Institutional Coherence (**§188** / D-065). Active nested Lane V refinement: none.
 - **Post-`CLASS-A-VAL-002-CA-002` closeout (§184–§185 / D-063):** One bounded minimum-effective first-session cognitive-friction reduction pass complete under open parent; baseline `6790de2` and before / after evidence preserved; protocol-complete dual-layer participant retesting immediately next; no second UI pass, parent closeout, comprehension claim, naming adoption, Class B, MVP, Evidence Register, successor, or parallel-lane authority.
@@ -4699,10 +4701,11 @@ Current active ticket status:
 - **Nested Lane V customer-copy closeout (§§209–210 / D-079):** `CLASS-A-VAL-002-ORIENT-002` completed as one bounded copy-only customer-narrative fidelity amendment inside open `CLASS-A-VAL-002`. It did not create a fourth lane, accept or publish the vNext candidate, alter Lane N or Lane E, or widen financial capability. Participant testing is active on the verified ORIENT-002 build under the parent protocol.
 - **Customer One-Pager v2.0 accept + freeze + `NARRATIVE-007` closeout (§212 / D-080):** Founder confirms the HedgrOps `RETAIN / ACCEPT` recommendation, freezes Customer One-Pager v2.0 at the historical vNext path, supersedes v1.0 as frozen historical, and closes Lane N. Publication remains unauthorised. Lane V and Lane E are unchanged.
 - **Founder review-process and Lane E package dispositions (§213 / D-081):** Weekly-review structure **REVISE**; North Star reporting **REVISE** to Governance & Trust Alignment plus Product Convergence; current MVP process-review slice **RETAIN**; additional standing review frameworks **REMOVE / STOP**; `SE-REASON-001` weekly-summary `RETEST` **not accepted** and **ESCALATE**d to underlying-artifact evidence review. No ticket, concurrency, narrative, or financial-execution change.
+- **Bridge legacy retirement (§214 / D-082):** Founder activates, executes, and closes `BRIDGE-LEGACY-RETIRE-001`. The live Deprecated placeholder is retired after the R1 floor; the byte-identical archive is retained; RAP-only authority routes are unchanged; no Phase 2, Lane V, Lane E, narrative, or financial-execution change. Lane R is idle after closeout.
 - When **§7** names approved tickets, active briefs live in **§7a**. Current active tickets: `CLASS-A-VAL-002` (Lane V) and `SE-REASON-001` (Lane E, research only). `NARRATIVE-007` is completed under Internal **D-080** / **§212**. No nested Lane V ticket is active. `CLASS-A-VAL-002-ORIENT-002` is completed historical nested authority under Internal **D-079** / **§§209–210**; `CLASS-A-VAL-002-ORIENT-001` remains completed under Internal **D-077** / **§§205–206**; `CLASS-A-VAL-002-FORM-001` is completed under Internal **D-073** / **§§200–201**; `CLASS-A-VAL-002-ROUTE-001` is completed under Internal **D-072** / **§§198–199**. Participant testing is active on the verified ORIENT-002 build under the governed cohort protocol; Lane E cannot alter that path.
-- Cursor must not modify frozen Canonical Story v1.0, frozen Customer One-Pager v2.0, superseded frozen Customer One-Pager v1.0, frozen Narrative Style Guide v1.0, or the accepted `NARRATIVE-005` source brief. `NARRATIVE-007` is completed; Customer One-Pager v2.0 remains unpublished and does not authorize website, product, marketing, or distribution use. `SE-REASON-001` authorizes only the named research artifacts under `docs/ops/stability-engine/research/**` and cannot modify the synthetic journey, participant-facing engine surfaces, frozen narrative sources, or financial execution posture. Narrative and design artifacts are not publication, sequencing, evidence acceptance, readiness approval, live capability, fundraising, or investment solicitation; the legacy Bridge placeholder remains separately governed; Money Stack findings remain non-implementing research; Lane E research remains non-implementing until a further Founder disposition.
+- Cursor must not modify frozen Canonical Story v1.0, frozen Customer One-Pager v2.0, superseded frozen Customer One-Pager v1.0, frozen Narrative Style Guide v1.0, or the accepted `NARRATIVE-005` source brief. `NARRATIVE-007` is completed; Customer One-Pager v2.0 remains unpublished and does not authorize website, product, marketing, or distribution use. `SE-REASON-001` authorizes only the named research artifacts under `docs/ops/stability-engine/research/**` and cannot modify the synthetic journey, participant-facing engine surfaces, frozen narrative sources, or financial execution posture. Narrative and design artifacts are not publication, sequencing, evidence acceptance, readiness approval, live capability, fundraising, or investment solicitation; the Bridge legacy placeholder is retired under Internal **D-082** / **§214** and remains archive-only; Money Stack findings remain non-implementing research; Lane E research remains non-implementing until a further Founder disposition.
 - Kenya counsel remains **DEFER**. Convergence gate remains unsatisfied.
-- Legacy `docs/ops/bridge/current-status.json` remains **Deprecated** under R1/F6 through at least **2026-08-02**; no silent date-bump to fake CURRENT; retirement requires separately named Founder ticket (`BRIDGE-LEGACY-RETIRE-001` candidate — not active).
+- Legacy `docs/ops/bridge/current-status.json` is **retired** under Internal **D-082** / **§214** / `BRIDGE-LEGACY-RETIRE-001`. The live path is removed. The byte-identical archive is `docs/ops/bridge/archive/retired-legacy-current-status.json`. Authority routes remain RAP-only. No silent date-bump. No Phase 2.
 
 ---
 
@@ -4918,6 +4921,31 @@ Each proposed variable, stability function, or regime distinction must record: w
 **Stop / rollback:** Pause and return for founder review if the research implies a material change to the Hedgr product thesis; begins affecting `CLASS-A-VAL-002` or another active product surface; requires personal or sensitive participant data; requires live external integrations; needs approval of a specific asset, provider, jurisdiction, or execution path; moves from interpretation toward personalised financial recommendation; becomes material enough to require an ADR; would widen Class A / B / C authority; or begins producing conflicting product narratives. Rollback is revert of D-076 / §204 / §6f.21 / §7 / §7a Lane E naming and removal of unaccepted Lane E outputs; restore the prior V / N concurrency. Do not modify Lane V, Lane N, or financial execution posture.
 
 **Completion boundary:** Delivering research artifacts does not close `SE-REASON-001`, accept the model, change the product, or authorize architecture work. Founder / HedgrOps must dispose the research. Convergence with Lane V, engine implementation, asset eligibility, portfolio construction, optimisation, and execution remain downstream questions requiring separate disposition.
+
+### Lane R — `BRIDGE-LEGACY-RETIRE-001`
+
+**Completed ticket:** `BRIDGE-LEGACY-RETIRE-001` — Retire the Deprecated Bridge legacy placeholder after the R1 compatibility floor.
+
+**Status:** **COMPLETED** — Founder-activated, executed, and closed **§214** / Internal **D-082** (2026-08-23). Class A / execution-neutral Bridge hygiene. No standing fourth-lane concurrency. No Phase 2.
+
+**Objective:** Complete the F6 Deprecated → retire step for `docs/ops/bridge/current-status.json` now that the R1 14-day floor (first-serve **2026-07-19**, earliest consideration **2026-08-02**) has passed, without changing RAP-only authority routes or implying CURRENT / Phase 2.
+
+**Named files:**
+
+- `docs/ops/bridge/current-status.json` — live path removed
+- `docs/ops/bridge/archive/retired-legacy-current-status.json` — byte-identical archive
+- `docs/ops/bridge/archive/README.md` — retirement evidence
+- `docs/ops/bridge/phase1-r1-compatibility-record.json` — additive later-retirement pointer only; historical R1 flags unchanged
+- `apps/bridge-worker/tests/r1-ops.test.mjs` and `scripts/bridge/refresh-snapshots.mjs` plus operator READMEs — contract and documentation alignment
+- this status record and `AGENTS.md` — activation / closeout reconciliation
+
+**Required preservation:** `/authority`, `/authority-summary`, `/current-status`, and `/hedgr/status/authority-summary` remain RAP-only. Archived SHA-256 remains `181dfa46feb0f25149b81cc17516cce0efc89eab95d3e30e9f2b82affcc1fc2a`. Lane V, Lane E, frozen narrative sources, and financial execution posture remain unchanged.
+
+**Explicit exclusions:** No Phase 2 routes or fields; no Worker allow-list widening; no date-bump of the archived placeholder into CURRENT; no evidence acceptance; no ticket sequencing via Bridge; no Class B / Class C; no customer-money activity; no Lane V or Lane E mutation.
+
+**Acceptance:** Live path absent; archive byte-identical to the R1-pinned SHA; authority routes RAP-only; hermetic R1 / snapshot tests pass; no Phase 2 leakage.
+
+**Stop / rollback:** Stop if retirement would require serving the legacy file, changing RAP routes, adding Phase 2, or touching Lane V / Lane E. Rollback is restore of the live path from the archive plus revert of D-082 / §214.
 
 #### Completed nested instrument brief — `CLASS-A-VAL-002-FORM-001`
 
@@ -13157,5 +13185,62 @@ Any implementation remains subject to current repository authority and a separat
 **Lane preservation:** `NO CROSS-LANE IMPACT`. Lane V participant testing remains active on the verified ORIENT-002 build. Lane E remains research-only. Lane N remains idle under D-080.
 
 **Rollback:** Revert this **§213** / D-081, restore the pre-D-081 weekly-review standard and operator command, remove Founder overlays from the two named review artifacts, and restore Lane E package status to pending disposition without an institutional `RETEST` or `ESCALATE` conclusion. Do not alter Lane V, D-080, frozen narrative sources, or financial execution posture during rollback.
+
+---
+
+## 214. Founder activation + execution + closeout — BRIDGE-LEGACY-RETIRE-001 Bridge legacy placeholder retirement
+
+**Ticket:** `BRIDGE-LEGACY-RETIRE-001` — Retire the Deprecated Bridge legacy placeholder after the R1 compatibility floor
+
+**Date:** 2026-08-23
+
+**Status:** `BRIDGE-LEGACY-RETIRE-001` **ACTIVATED, EXECUTED, AND COMPLETED** in one Class A / execution-neutral Bridge hygiene pass. Controlled Parallelism v21 / Internal **D-076** remains the named-lane concurrency envelope for remaining active Lane V `CLASS-A-VAL-002` and Lane E `SE-REASON-001`. Lane N remains idle under Internal **D-080** / **§212**. Lane R is idle after this closeout.
+
+**Decision ID:** Internal **D-082**
+
+**Decision type:** Bridge ops / R1 F6 closeout / execution-neutral hygiene
+
+**Visibility:** Internal — not auto-exported as a public ADR
+
+**Founder direction:** “approved to activate Bridge Legacy retirement”
+
+**Authority basis:** Founder disposition of 23 August 2026 to activate Bridge legacy retirement + R1 first-serve **2026-07-19** and earliest consideration **2026-08-02** already recorded in `docs/ops/bridge/phase1-r1-compatibility-record.json` + this **§7** / **§7a** naming + closeout under this **§214**. Does **not** create standing fourth-lane concurrency, alter D-076 remaining V / E authority, reopen Lane N, authorize Phase 2, change RAP-only authority routes, or widen financial execution authority.
+
+**Objective:** Complete the explicit F6 Deprecated → retire step for the live legacy placeholder without silent deletion, silent semantic change, or CURRENT implication.
+
+**Type / execution class:** Class A. Execution-neutral Bridge hygiene. Non-product. Non-executing.
+
+**In scope / executed:**
+
+- Removed the live artifact `docs/ops/bridge/current-status.json`.
+- Archived the byte-identical file at `docs/ops/bridge/archive/retired-legacy-current-status.json` with SHA-256 `181dfa46feb0f25149b81cc17516cce0efc89eab95d3e30e9f2b82affcc1fc2a`.
+- Recorded retirement evidence in `docs/ops/bridge/archive/README.md`.
+- Added an additive `later_retirement` pointer on the historical R1 record without rewriting that ticket’s historical “retirement not allowed under BRIDGE-P1-OPS-001” flags.
+- Updated hermetic R1 / snapshot tests so the live path is absent, the archive remains byte-stable, and authority routes remain RAP-only.
+- Excluded `docs/ops/bridge/archive/**` from live snapshot-guardrail validation.
+- Reconciled operator READMEs, VERIFICATION current statements, this status record, and `AGENTS.md`.
+
+**Out of scope / must not (held):**
+
+- No change to `CLASS-A-VAL-002` or `SE-REASON-001`.
+- No Worker route, allow-list, OpenAPI, or RAP schema change.
+- No Phase 2 fields, routes, or product-learning capability.
+- No date-bump of the archived placeholder into CURRENT.
+- No evidence acceptance, ticket sequencing via Bridge, Class B / Class C, custody, rails, or customer-money activity.
+- No frozen narrative-source change and no Lane N reopening.
+
+**Closeout result:**
+
+1. Live `docs/ops/bridge/current-status.json` is absent — **Pass**.
+2. Archive is byte-identical to the R1-pinned SHA-256 — **Pass**.
+3. `/authority`, `/authority-summary`, `/current-status`, and `/hedgr/status/authority-summary` remain RAP-only — **Pass**.
+4. Historical R1 clock and “not authorized under BRIDGE-P1-OPS-001” flags remain intact — **Pass**.
+5. No Phase 2 leakage — **Pass**.
+6. Lane V, Lane E, Lane N, and financial execution posture unchanged — **Pass**.
+
+**Parallelism posture after closeout:** Unchanged remaining named-lane concurrency. Controlled Parallelism v21 / D-076 continues to name Lane V `CLASS-A-VAL-002` and Lane E `SE-REASON-001`. `BRIDGE-LEGACY-RETIRE-001` is completed hygiene and supplies no independent concurrency. `NO CROSS-LANE IMPACT`.
+
+**Rollback:** Restore `docs/ops/bridge/current-status.json` from the archive, revert this **§214** / D-082 record and the named test/doc changes, and leave Lane V, Lane E, frozen narrative sources, RAP routes, and financial execution posture unchanged. Do not restore the live placeholder as CURRENT.
+
 
 

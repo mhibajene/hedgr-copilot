@@ -99,7 +99,7 @@ Authority route mapping after cutover:
 /hedgr/status/authority-summary     -> docs/ops/bridge/repo-authority-projection.json
 ```
 
-`docs/ops/bridge/current-status.json` is retained unchanged as a Deprecated legacy placeholder. It is not mapped by authority routes after cutover, cannot be represented as CURRENT RAP, and cannot be retired before the R1 minimum 14-day period after the first deployed RAP serve. Retirement requires a separately named Founder-authorized ticket.
+`docs/ops/bridge/current-status.json` is **retired** under Internal **D-082** / **§214** / `BRIDGE-LEGACY-RETIRE-001`. The live path is absent. The byte-identical archive is `docs/ops/bridge/archive/retired-legacy-current-status.json`. It is not mapped by authority routes, cannot be represented as CURRENT RAP, and must not be date-bumped. Authority routes remain RAP-only.
 
 Targeted verification:
 

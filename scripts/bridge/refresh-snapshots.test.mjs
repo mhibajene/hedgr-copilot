@@ -144,9 +144,9 @@ test("check fails when a required guardrail is true", () => {
   const root = makeRepo();
   writeSnapshots(root, { today: TODAY });
 
-  const snapshot = readJson(root, "docs/ops/bridge/current-status.json");
+  const snapshot = readJson(root, "docs/ops/bridge/latest-weekly-review.json");
   snapshot.execution_authority = true;
-  writeJson(root, "docs/ops/bridge/current-status.json", snapshot);
+  writeJson(root, "docs/ops/bridge/latest-weekly-review.json", snapshot);
 
   assertBridgeSnapshotError(() => checkSnapshots(root, { today: TODAY }), /must be false/);
 });

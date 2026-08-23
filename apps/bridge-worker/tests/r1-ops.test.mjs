@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
+import { existsSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
 
@@ -7,7 +8,8 @@ import { ALLOWED_FILES } from "../src/index.js";
 
 const REPO_ROOT = new URL("../../../", import.meta.url);
 const RAP_PATH = "docs/ops/bridge/repo-authority-projection.json";
-const LEGACY_PATH = "docs/ops/bridge/current-status.json";
+const LEGACY_LIVE_PATH = "docs/ops/bridge/current-status.json";
+const LEGACY_ARCHIVE_PATH = "docs/ops/bridge/archive/retired-legacy-current-status.json";
 const R1_RECORD_PATH = "docs/ops/bridge/phase1-r1-compatibility-record.json";
 const AUTHORITY_ROUTES = [
   "/authority",
@@ -53,12 +55,13 @@ test("R1 record fixes the compatibility clock without authorizing retirement", a
   assert.equal(record.sequencing_allowed, false);
 });
 
-test("legacy placeholder remains byte-stable, Deprecated, and outside authority routes", async () => {
+test("legacy placeholder is retired from the live path, byte-stable in archive, and outside authority routes", async () => {
   const record = await readRepoJson(R1_RECORD_PATH);
-  const legacyBytes = await readRepoFile(LEGACY_PATH);
+  const legacyBytes = await readRepoFile(LEGACY_ARCHIVE_PATH);
   const legacy = JSON.parse(legacyBytes);
   const legacySha256 = createHash("sha256").update(legacyBytes).digest("hex");
 
+  assert.equal(existsSync(new URL(LEGACY_LIVE_PATH, REPO_ROOT)), false);
   assert.equal(legacySha256, record.legacy_artifact_sha256);
   assert.equal(legacy.generated_at, record.legacy_generated_at);
   assert.equal(legacy.execution_authority, false);
@@ -66,7 +69,14 @@ test("legacy placeholder remains byte-stable, Deprecated, and outside authority 
   assert.equal(legacy.ticket_activation_allowed, false);
   assert.equal(legacy.status.inferred_execution_state, false);
   assert.equal(legacy.status.inferred_active_ticket, false);
-  assert.ok(!Object.values(ALLOWED_FILES).includes(LEGACY_PATH));
+  assert.ok(!Object.values(ALLOWED_FILES).includes(LEGACY_LIVE_PATH));
+  assert.ok(!Object.values(ALLOWED_FILES).includes(LEGACY_ARCHIVE_PATH));
+  assert.equal(record.later_retirement.ticket_id, "BRIDGE-LEGACY-RETIRE-001");
+  assert.equal(record.later_retirement.live_path_removed, true);
+  assert.equal(record.later_retirement.archive_path, LEGACY_ARCHIVE_PATH);
+  assert.equal(record.later_retirement.legacy_sha256_unchanged, true);
+  assert.equal(record.later_retirement.phase_2_allowed, false);
+  assert.equal(record.later_retirement.authority_routes_remain_rap_only, true);
 });
 
 test("all compatibility authority routes remain RAP-only", () => {
