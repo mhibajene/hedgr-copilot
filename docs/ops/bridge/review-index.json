@@ -1,6 +1,6 @@
 {
   "artifact_type": "hedgrops_bridge_review_index_snapshot",
-  "generated_at": "2026-08-01T00:00:00.000Z",
+  "generated_at": "2026-08-22T00:00:00.000Z",
   "source_path": "docs/ops/reviews/README.md",
   "authority_posture": {
     "class": "A",
@@ -21,11 +21,11 @@
     "entries": [
       {
         "review_type": "weekly",
-        "source_path": "docs/ops/reviews/weekly/2026-07-31-weekly-review.md"
+        "source_path": "docs/ops/reviews/weekly/2026-08-21-weekly-review.md"
       },
       {
         "review_type": "mvp_process",
-        "source_path": "docs/ops/reviews/MVP/HEDGR_MVP_PROCESS_REVIEW_MC_S3_022_TO_OFFRAMP_GOV_002.md"
+        "source_path": "docs/ops/reviews/MVP/HEDGR_MVP_PROCESS_REVIEW_GOV_A_REV_002_TO_HOPS_REVIEW_B_001.md"
       }
     ]
   }
