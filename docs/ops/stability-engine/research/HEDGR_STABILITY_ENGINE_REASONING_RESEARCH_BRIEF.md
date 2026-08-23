@@ -1,6 +1,6 @@
 # Hedgr Stability Engine Reasoning Research Brief
 
-**Status:** Active governing research frame; three research outputs delivered as non-authoritative proposals; `SE-REASON-001` remains active pending Founder / HedgrOps disposition<br>
+**Status:** Active governing research frame; three research outputs remain non-authoritative proposals; `SE-REASON-001` remains active. Founder package disposition **ESCALATE** under Internal **D-081** / **§213**: weekly-summary `RETEST` is not accepted; next bounded decision input is evidence review of the Function Model, State Model, and Interpretation Tests. No model acceptance, product translation, engine/UX implementation, or execution-class change is authorised by artifact delivery or by this brief.<br>
 **Ticket:** `SE-REASON-001` (Lane E)  
 **Decision:** Internal **D-076** / Controlled Parallelism v21  
 **Repo authority:** `docs/ops/HEDGR_STATUS.md` **§6f.21**, **§7**, **§7a**, **§204**  
@@ -14,7 +14,7 @@
 | Owners | Founder / HedgrOps |
 | DRI | Founder — @mhibajene |
 | Research support | HedgrOps / Cursor, bounded by this brief and **§7a** |
-| Concurrent tickets | Lane V `CLASS-A-VAL-002` (unchanged); Lane N `NARRATIVE-007` (unchanged) |
+| Concurrent tickets | Lane V `CLASS-A-VAL-002` (unchanged); Lane N idle after `NARRATIVE-007` closeout under Internal **D-080** / **§212**; this brief cannot alter that posture |
 | Implementation authority | None |
 | Product-refinement authority | None |
 | Asset / provider / allocation authority | None |
@@ -177,6 +177,14 @@ This lane is not expected to produce a complete Stability Engine specification.
 Its expected outcome is a founder-reviewable determination of whether the emerging reasoning architecture should be:
 
 **retained, revised, removed, retested, or escalated** into formal product / architecture work.
+
+**Current Founder package disposition (Internal D-081 / §213):** **ESCALATE.** Artifact-level `RETEST` is not accepted from the weekly summary alone. The next bounded decision input is evidence review of:
+
+- `docs/ops/stability-engine/research/HEDGR_STABILITY_FUNCTION_MODEL.md`
+- `docs/ops/stability-engine/research/HEDGR_STABILITY_STATE_MODEL.md`
+- `docs/ops/stability-engine/research/HEDGR_STABILITY_INTERPRETATION_TESTS.md`
+
+The decision question for that evidence review is whether these models improve Hedgr’s ability to explain preserved-value posture, stability, material risk, liquidity/exit readiness, and appropriate abstention without creating false precision or implying unauthorised financial truth. The permitted resulting disposition remains RETAIN / REVISE / REMOVE / RETEST / ESCALATE. Until that review is complete, the models remain non-authoritative proposals.
 
 Asset eligibility, portfolio construction, optimisation, and execution remain downstream questions.
 

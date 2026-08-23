@@ -286,11 +286,23 @@ Reviews should NOT:
 - create parallel governance artifacts
 They are interpretation layers only
 
+### 8. No Review-Framework Proliferation (Internal D-081 / §213)
+
+Do not create additional standing review frameworks, evaluation taxonomies, or duplicated governance criteria merely because recurring reviews expose similar considerations.
+
+Durable criteria live in this usage guide or in the appropriate existing repo-native governance surface. Individual weekly and process reviews should focus on:
+
+**delta → evidence → uncertainty → disposition → decision pressure.**
+
+A new framework remains appropriate only where genuinely new consequence, trust, authority, legal, security, or execution risk cannot be handled by the existing governance system.
+
+Optional non-authoritative evaluation notes in a single review are historical or local reading aids only. They do not become a new standing framework.
+
 ---
 
 ## Recommended Structure (for agents)
 
-Each review should include:
+MVP process reviews should include:
 
 1. Status / Authority / Scope / Last updated
 2. Purpose
@@ -303,14 +315,64 @@ Each review should include:
 9. Trust-surface coverage
 10. North Star verdict
 11. Risks / notes
-12. Non-authoritative evaluation criteria (optional)
+12. Explicit non-authorising boundary
 
-Weekly reviews should also include the weekly governance additions above:
+Do not add a new standing evaluation taxonomy to process reviews. Optional local notes are permitted only as non-authoritative reading aids.
 
-- authority treatment note
+### Weekly reviews (Internal D-081 / §213)
+
+Future weekly reviews must become materially more **delta- and convergence-led** while preserving current authority discipline.
+
+**Retain:**
+
+- authority/status header
 - status-language watchlist
-- what changed vs what did not change
-- decision pressure
+- what changed / what did not change
+- decision-pressure section
+- explicit non-authorising boundary
+
+**Revise:**
+
+- compress repeated restatements of identical execution/authority constraints already present in the header and non-authorising boundary
+- keep the highest-value unresolved product uncertainty visible near the top
+- include a compact **Convergence Ledger**
+- report North Star as two dimensions, not one broad alignment verdict
+
+**Required weekly structure:**
+
+1. Status / Authority / Scope / Last updated, including the non-authorising boundary once
+2. Highest-value unresolved product uncertainty
+3. Purpose
+4. Governing inputs
+5. Compact Convergence Ledger
+6. Time-based / completed-work summary
+7. Process assessment, without repeating identical authority constraints
+8. Execution classification (A / B / C)
+9. Capability progression
+10. Trust-surface coverage
+11. Two-dimension North Star verdict
+12. Risks / notes
+13. Authority treatment note
+14. Status-language watchlist
+15. What changed vs what did not change
+16. Decision pressure
+17. Completion / non-authorising statement
+
+**Convergence Ledger** format:
+
+| Uncertainty tested | Evidence obtained | Belief changed? | Disposition | Unresolved uncertainty |
+| --- | --- | --- | --- | --- |
+
+Use Founder disposition language only where a repo-native Founder disposition already exists. Reviews may record artifact-level proposed dispositions as evidence, but they must not treat those proposals as institutional dispositions.
+
+**Two-dimension North Star verdict:**
+
+- **Governance & Trust Alignment** — whether completed work preserved or improved authority discipline, synthetic-state honesty, reversibility, and trust legibility
+- **Product Convergence** — whether completed work actually reduced the governing product uncertainty
+
+These are both necessary and are not the same accomplishment. Technically verified synthetic work is not participant comprehension.
+
+**Stop condition:** compression must not obscure authority, synthetic-state, execution, or trust boundaries.
 
 ---
 

@@ -3,7 +3,19 @@
 **Status:** Non-authoritative support-layer review
 **Authority:** Subordinate to `docs/ops/HEDGR_STATUS.md`, `AGENTS.md`, accepted ADRs, and active doctrine
 **Scope:** Completed repo-native evidence merged from 2026-08-15 through 2026-08-21 inclusive (AWST)
-**Last updated:** 2026-08-22
+**Last updated:** 2026-08-23
+
+**Founder overlay (Internal D-081 / §213, 2026-08-23):** This historical weekly review is retained as evidence. It is not rewritten into the later weekly-review template. Founder dispositions recorded after this review:
+
+| Item | Founder disposition |
+| --- | --- |
+| Weekly Review structure | **REVISE** for future reviews |
+| North Star verdict for this reviewed week | **Governance & Trust Alignment: STRONG**; **Product Convergence: PARTIAL — participant evidence pending** |
+| Current MVP Process Review | **RETAIN** |
+| Additional standing review frameworks | **REMOVE / STOP** |
+| Lane E artifact-level `RETEST` | **Not accepted**; package **ESCALATE**d to underlying-artifact evidence review |
+
+Highest-value product uncertainty remains whether a target user can complete Orientation → Stability → Insight → Safe action and accurately explain Hedgr, synthetic state, stability-framed value, remaining risk, and exit/safe action without crypto expertise. Participant evidence under already-active Lane V is the material evidence source. This overlay does not activate a ticket, accept the Lane E models, or change financial execution authority. Subsequent Lane N closeout, if recorded separately under Internal D-080 / §212, is not rewritten by this overlay.
 
 ---
 

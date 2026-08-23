@@ -5,8 +5,8 @@
 | **Status** | Operational index |
 | **Authority** | Non-authorising |
 | **Purpose** | Explain narrative hierarchy and locate audience-specific artifacts |
-| **Ticket** | Narrative stack through `NARRATIVE-006` (Institutional Investor Orientation Document active under D-055 / §170; accepted `NARRATIVE-005` source retained) |
-| **Date** | 2026-07-28 |
+| **Ticket** | Narrative stack through `NARRATIVE-007` closeout (Customer One-Pager v2.0 Accepted / Frozen under D-080 / §212; `NARRATIVE-005` source retained) |
+| **Date** | 2026-08-23 |
 
 ---
 
@@ -70,8 +70,12 @@ docs/strategy/
 ├── narrative/
 │   └── HEDGR_CANONICAL_STORY.md       ← parent narrative (v1.0 Frozen)
 ├── customer/
-│   ├── HEDGR_CUSTOMER_ONE_PAGER.md    ← customer narrative source (v1.0 Frozen)
-│   └── HEDGR_CUSTOMER_ONE_PAGER_REVIEW.md
+│   ├── HEDGR_CUSTOMER_ONE_PAGER.md    ← historical customer source (v1.0 superseded)
+│   ├── HEDGR_CUSTOMER_ONE_PAGER_VNEXT.md ← canonical customer source (v2.0 Frozen)
+│   ├── HEDGR_CUSTOMER_ONE_PAGER_REVIEW.md
+│   ├── HEDGR_CUSTOMER_ONE_PAGER_FIDELITY_AUDIT.md
+│   ├── HEDGR_CUSTOMER_NARRATIVE_TRANSLATION_MAP.md
+│   └── HEDGR_CUSTOMER_ONE_PAGER_VNEXT_HEDGROPS_DISPOSITION.md
 ├── website/
 │   └── HEDGR_NARRATIVE_STYLE_GUIDE.md ← narrative voice (v1.0 Frozen)
 ├── investor/
@@ -95,8 +99,10 @@ Directories for product and technical audience packs remain **planned architectu
 | -------- | ---- | ----- | ----- |
 | Canonical Hedgr Story | `docs/strategy/narrative/HEDGR_CANONICAL_STORY.md` | **Active / Frozen v1.0** | Parent narrative. Do not edit without institutional trigger + §7 naming. |
 | Stability System Thesis | `docs/strategy/hedgr-stability-system-thesis.md` | Existing strategic context | Non-binding; subordinate to Canonical Story and doctrine. |
-| Customer One-Pager | `docs/strategy/customer/HEDGR_CUSTOMER_ONE_PAGER.md` | **Active / Frozen v1.0** | Canonical customer narrative source. Publication not authorised by freeze alone. |
-| Customer One-Pager Review | `docs/strategy/customer/HEDGR_CUSTOMER_ONE_PAGER_REVIEW.md` | **Review complete** | Non-authoritative evidence; Founder accept + freeze disposition recorded. |
+| Customer One-Pager v2.0 | `docs/strategy/customer/HEDGR_CUSTOMER_ONE_PAGER_VNEXT.md` | **Active / Frozen v2.0** | Canonical customer narrative source. Frozen at the historical `VNEXT` path. Publication not authorised by freeze alone. |
+| Customer One-Pager v1.0 | `docs/strategy/customer/HEDGR_CUSTOMER_ONE_PAGER.md` | **Superseded / Frozen historical** | Retained v1.0 artifact. No longer controlling. |
+| Customer One-Pager Review | `docs/strategy/customer/HEDGR_CUSTOMER_ONE_PAGER_REVIEW.md` | **Review complete** | Non-authoritative v1.0 review evidence. |
+| Customer One-Pager vNext HedgrOps Disposition | `docs/strategy/customer/HEDGR_CUSTOMER_ONE_PAGER_VNEXT_HEDGROPS_DISPOSITION.md` | **Founder confirmation recorded** | HedgrOps `RETAIN / ACCEPT` recommendation; Founder accept + freeze in §212. |
 | Narrative Style Guide | `docs/strategy/website/HEDGR_NARRATIVE_STYLE_GUIDE.md` | **Active / Frozen v1.0** | Canonical narrative governance for voice, rhythm, and translation. Non-authorising. |
 | Investor Orientation Brief | `docs/strategy/investor/HEDGR_INVESTOR_ORIENTATION_BRIEF.md` | **Accepted source** | `NARRATIVE-005` completed under §170; publication not authorised. |
 | Investor Orientation Brief Review | `docs/strategy/investor/HEDGR_INVESTOR_ORIENTATION_BRIEF_REVIEW.md` | **Founder acceptance recorded** | Review record for the accepted `NARRATIVE-005` source; no publication or frozen-source change. |

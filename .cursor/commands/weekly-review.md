@@ -56,26 +56,36 @@ Use the run date or weekly window end date for `YYYY-MM-DD`.
 
 ## Required review structure
 
-Follow `docs/ops/reviews/README.md` exactly.
+Follow `docs/ops/reviews/README.md` exactly, including the Internal D-081 weekly-review revision.
 
 Include, at minimum:
 
-1. Status / Authority / Scope / Last updated
-2. Purpose
-3. Governing inputs used
-4. MVP North Star frame
-5. Time-based summary or bounded completed-work summary
-6. Process assessment
-7. Execution classification (A / B / C)
-8. Capability progression
-9. Trust-surface coverage
-10. North Star verdict
-11. Risks / notes
-12. Optional non-authoritative evaluation criteria
+1. Status / Authority / Scope / Last updated, with the non-authorising boundary stated once
+2. Highest-value unresolved product uncertainty
+3. Purpose
+4. Governing inputs used
+5. Compact Convergence Ledger
+6. Time-based summary or bounded completed-work summary
+7. Process assessment, without repeating identical execution/authority constraints
+8. Execution classification (A / B / C)
+9. Capability progression
+10. Trust-surface coverage
+11. Two-dimension North Star verdict: Governance & Trust Alignment; Product Convergence
+12. Risks / notes
 13. Authority treatment note
 14. Status-language watchlist
 15. What changed vs what did not change
 16. Decision pressure
+17. Completion / non-authorising statement
+
+Do not invent a new standing evaluation framework. Durable criteria live in `docs/ops/reviews/README.md` and existing governance surfaces.
+
+The Convergence Ledger must use:
+
+| Uncertainty tested | Evidence obtained | Belief changed? | Disposition | Unresolved uncertainty |
+| --- | --- | --- | --- | --- |
+
+Artifact-level proposed dispositions are evidence only. They are not institutional dispositions unless `HEDGR_STATUS.md` already records a Founder disposition.
 
 ## Required weekly governance additions
 
