@@ -66,10 +66,11 @@ When implementing:
 When changing **`apps/frontend/lib/engine/**`** or shipped Stability Engine trust surfaces (posture, notices, allocation bands, or simulator boundaries per `docs/ops/HEDGR_STATUS.md`), read **in order**:
 
 1. `docs/ops/HEDGR_STATUS.md` — **§7** / **§7a** for the approved next ticket (when named); **§6b** is Transition Readiness taxonomy only, not sequencing authority. Concurrent lanes are permitted only under the **Ticket sequencing / governed parallelism** exception below (currently **§6e** / **D-026** lane model; an active **§6f** pass only when Accepted, unambiguous, and currently naming tickets).
-2. `docs/decisions/SPRINT-2-ADR-INDEX.md`
-3. `docs/decisions/0015-stability-engine-is-the-system-center.md`
-4. `docs/decisions/0014-stability-engine-read-only-in-sprint-2.md`
-5. `docs/decisions/0013-allocation-bands-informational-not-accounting.md`
+2. `docs/doctrine/hedgr-familiar-financial-grammar-and-infrastructure-abstraction.md` — customer-facing product meaning and disclosure-order doctrine; it does not widen the active ticket.
+3. `docs/decisions/SPRINT-2-ADR-INDEX.md`
+4. `docs/decisions/0015-stability-engine-is-the-system-center.md`
+5. `docs/decisions/0014-stability-engine-read-only-in-sprint-2.md`
+6. `docs/decisions/0013-allocation-bands-informational-not-accounting.md`
 
 Sprint planning procedure (subordinate to §7 / §7a): `docs/ops/HEDGR_SPRINT_PLANNING_PROTOCOL.md`
 
@@ -93,7 +94,17 @@ Internal **D-069** / **§193** accepts Cognitive Stewardship as an enduring inte
 
 Internal **D-070** / **§194**–**§195**, Internal **D-071** / **§196**–**§197**, and Internal **D-072** / **§198**–**§199** supplied and closed `CLASS-A-VAL-002-WARMTH-001`, `CLASS-A-VAL-002-AFF-001`, and `CLASS-A-VAL-002-ROUTE-001` as historical bounded nested authority only. The completed D-072 pass makes `/dashboard-synthetic-journey` the human-readable participant entry while retaining the legacy query route as a compatibility / rollback seam and preserving the journey, state, arithmetic, engine, targets, and financial / execution boundaries. Every other HedgrOps review concern remains test-first and outside implementation scope. Internal **D-073** / **§200**–**§201** completed the bounded Form instrument pass as historical nested authority. Controlled Parallelism v20 / Internal **D-074** / **§6f.20** added Lane N `NARRATIVE-007` without altering Lane V and is now completed historical concurrency; Internal **D-075** / **§203** later accepts the audit outputs and authorizes one bounded candidate vNext while frozen narrative sources remain unchanged. Controlled Parallelism v21 / Internal **D-076** / **§6f.21** adds Lane E `SE-REASON-001` without altering Lane V or Lane N. Internal **D-077** / **§§205–206** supplied and closed nested `CLASS-A-VAL-002-ORIENT-001` inside Lane V as one bounded Class A informational governed-narrative orientation-surface experiment; it did not create a fourth lane or alter Lane N or Lane E. Internal **D-078** / **§207** retires Notion as an operating, governance, and institutional-memory surface; it does not create a fourth lane or alter D-076 concurrency. Participant testing is active on the verified orientation-inclusive build under the governed cohort protocol.
 
-Internal **D-079** / **§§209–210** supplied and closed `CLASS-A-VAL-002-ORIENT-002` as one bounded copy-only customer-narrative fidelity amendment. No nested Lane V refinement is active; participant testing is active on the verified ORIENT-002 build under the governed cohort protocol. Customer One-Pager v2.0 is Accepted / Frozen at `docs/strategy/customer/HEDGR_CUSTOMER_ONE_PAGER_VNEXT.md` and remains unpublished; v1.0 is superseded / frozen historical. Internal **D-080** / **§212** completed `NARRATIVE-007` and idled Lane N. Internal **D-081** / **§213** records Founder review-process and Lane E package dispositions: weekly-review structure **REVISE**; North Star reporting **REVISE** to two dimensions; current MVP process-review slice **RETAIN**; additional standing review frameworks **REMOVE / STOP**; `SE-REASON-001` artifact-level `RETEST` **not accepted** and **ESCALATE**d to underlying-artifact evidence review. D-081 creates no ticket, concurrency, narrative acceptance, or financial-execution authority. Internal **D-082** / **§214** completed `BRIDGE-LEGACY-RETIRE-001` as bounded Lane R Bridge hygiene without standing fourth-lane concurrency, Phase 2, or RAP-route change. Internal **D-083** / **§215** activated nested `SE-REASON-001-EVID-001` inside Lane E as one bounded Class A evidence-review ticket. Internal **D-084** / **§216** records the Founder `RETAIN / RETEST` disposition, closes only `SE-REASON-001-EVID-001`, and leaves parent `SE-REASON-001` open; the models remain non-authoritative and no retest, successor, translation, product, engine, UX, Copilot, data, or financial-execution work is activated. D-079 created no fourth lane, did not alter Lane N or Lane E, and supplied no live financial capability or cross-lane authority.
+Internal **D-079** / **§§209–210** supplied and closed `CLASS-A-VAL-002-ORIENT-002`; it remains completed historical authority only, while its verified build and retained responses remain baseline evidence rather than authority.
+
+**Current Lane V override:** Internal **D-086** / **§218** records Founder **REVISE → RETEST** and activates `CLASS-A-VAL-002-GRAMMAR-001` as the sole active nested Lane V ticket. It is limited to the exact Dashboard / Activity presentation files and associated tests named in `HEDGR_STATUS.md` **§7a**. Participant distribution on ORIENT-002 is paused pending verified closeout; existing responses remain directional baseline evidence. No orientation, route, Form, engine, target-value, ledger, wallet, state, arithmetic, frozen-narrative, public-naming, Lane E, Lane N, or financial-capability change is authorized. This current Lane V override supersedes the preceding no-active-nested / participant-testing-active wording in this block.
+
+**Current product-doctrine adoption:** Internal **D-087** / **§219** adopts `docs/doctrine/hedgr-familiar-financial-grammar-and-infrastructure-abstraction.md` as active Founder-level product doctrine: **Borrow the interaction. Own the meaning. Abstract the infrastructure.** It changes doctrine membership and precedence only. It does not amend D-086, activate a ticket, change an interface or survey, reopen ORIENT-002, unfreeze narrative, adopt public naming, or widen financial capability.
+
+Customer One-Pager v2.0 is Accepted / Frozen at `docs/strategy/customer/HEDGR_CUSTOMER_ONE_PAGER_VNEXT.md` and remains unpublished; v1.0 is superseded / frozen historical. Internal **D-080** / **§212** completed `NARRATIVE-007` and idled Lane N.
+
+Internal **D-081** / **§213** records Founder review-process and Lane E package dispositions: weekly-review structure **REVISE**; North Star reporting **REVISE** to two dimensions; current MVP process-review slice **RETAIN**; additional standing review frameworks **REMOVE / STOP**; `SE-REASON-001` artifact-level `RETEST` **not accepted** and **ESCALATE**d to underlying-artifact evidence review. D-081 creates no ticket, concurrency, narrative acceptance, or financial-execution authority.
+
+Internal **D-082** / **§214** completed `BRIDGE-LEGACY-RETIRE-001` as bounded Lane R Bridge hygiene without standing fourth-lane concurrency, Phase 2, or RAP-route change. Internal **D-083** / **§215** activated nested `SE-REASON-001-EVID-001` inside Lane E as one bounded Class A evidence-review ticket. Internal **D-084** / **§216** records the Founder `RETAIN / RETEST` disposition, closes only `SE-REASON-001-EVID-001`, and leaves parent `SE-REASON-001` open; the models remain non-authoritative and no retest, successor, translation, product, engine, UX, Copilot, data, or financial-execution work follows from D-084. Controlled Parallelism v21 remains unchanged; D-086 creates no fourth lane, independent concurrency, live financial capability, or cross-lane authority; D-087 creates no execution authority or ticket-state change.
 
 ### Green Lane operator rules (ADR 0025 / §6g)
 
@@ -119,7 +130,15 @@ Examples: architecture boundary, custody/trust posture, compliance posture, sequ
 
 # AGENTS.md — Hedgr Repo Execution Standard (v2)
 
-Current Lane V override: Internal **D-079** / **§§209–210** supplied and closed `CLASS-A-VAL-002-ORIENT-002` as one bounded copy-only customer-narrative fidelity amendment. Current Lane N override: Internal **D-080** / **§212** accepted and froze Customer One-Pager v2.0, superseded v1.0, closed `NARRATIVE-007`, and idled Lane N without publication or product-copy authority. Current review-process / Lane E override: Internal **D-081** / **§213** revises weekly-review structure and two-dimension North Star reporting, retains the current MVP process-review slice, stops additional standing review frameworks, and escalates `SE-REASON-001` away from weekly-summary `RETEST` to underlying-artifact evidence review without accepting the models. Current nested Lane E override: Internal **D-084** / **§216** records the Founder `RETAIN / RETEST` disposition, closes only `SE-REASON-001-EVID-001`, and leaves `SE-REASON-001` open; the models remain non-authoritative and no retest, successor, translation, product, engine, UX, Copilot, data, or financial-execution work is activated. These current statements supersede any later stale wording in this repeated execution-standard block. No nested Lane V refinement is active; participant testing is active on the verified ORIENT-002 build. D-079 did not alter Controlled Parallelism v21, Lane E, or financial capability. D-081 creates no ticket or concurrency change. Internal **D-082** / **§214** completed `BRIDGE-LEGACY-RETIRE-001` as bounded Lane R hygiene and left Lane R idle.
+**Current Lane V override:** Internal **D-086** / **§218** records Founder **REVISE → RETEST** and activates `CLASS-A-VAL-002-GRAMMAR-001` as the sole active nested Lane V ticket. It is bounded to the exact Dashboard / Activity presentation files and associated tests named in `HEDGR_STATUS.md` **§7a**. Participant distribution on ORIENT-002 is paused pending verified closeout; existing responses remain directional baseline evidence, and D-079 / ORIENT-002 remains closed historical authority. No orientation, route, Form, engine, target-value, ledger, wallet, state, arithmetic, frozen-narrative, public-naming, Lane E, Lane N, or financial-capability change is authorized.
+
+**Current product-doctrine adoption:** Internal **D-087** / **§219** adopts `docs/doctrine/hedgr-familiar-financial-grammar-and-infrastructure-abstraction.md` as active Founder-level product doctrine. It changes doctrine membership and precedence only and does not amend D-086, activate work, change the interface or Form, reopen ORIENT-002, unfreeze narrative, adopt public naming, or widen financial capability.
+
+**Current Lane N override:** Internal **D-080** / **§212** accepted and froze Customer One-Pager v2.0, superseded v1.0, closed `NARRATIVE-007`, and idled Lane N without publication or product-copy authority.
+
+**Current review-process / Lane E override:** Internal **D-081** / **§213** revises weekly-review structure and two-dimension North Star reporting, retains the current MVP process-review slice, stops additional standing review frameworks, and escalates `SE-REASON-001` away from weekly-summary `RETEST` to underlying-artifact evidence review without accepting the models. **Current nested Lane E override:** Internal **D-084** / **§216** records the Founder `RETAIN / RETEST` disposition, closes only `SE-REASON-001-EVID-001`, and leaves `SE-REASON-001` open; the models remain non-authoritative and no retest, successor, translation, product, engine, UX, Copilot, data, or financial-execution work follows from D-084.
+
+These current statements supersede any later stale wording in this repeated execution-standard block. Controlled Parallelism v21 remains unchanged; D-086 creates no fourth lane or independent concurrency; D-087 creates no ticket or execution authority. D-081 creates no ticket or concurrency change. Internal **D-082** / **§214** completed `BRIDGE-LEGACY-RETIRE-001` as bounded Lane R hygiene and left Lane R idle.
 
 Status: Binding (Repo workflow, engineering conventions, CI posture)
 Scope: apps/, packages/, scripts/, .github/, docs/
@@ -193,10 +212,11 @@ When implementing:
 When changing **`apps/frontend/lib/engine/**`** or shipped Stability Engine trust surfaces (posture, notices, allocation bands, or simulator boundaries per `docs/ops/HEDGR_STATUS.md`), read **in order**:
 
 1. `docs/ops/HEDGR_STATUS.md` — **§7** / **§7a** for the approved next ticket (when named); **§6b** is Transition Readiness taxonomy only, not sequencing authority. Concurrent lanes are permitted only under the **Ticket sequencing / governed parallelism** exception below (currently **§6e** / **D-026** lane model; an active **§6f** pass only when Accepted, unambiguous, and currently naming tickets).
-2. `docs/decisions/SPRINT-2-ADR-INDEX.md`
-3. `docs/decisions/0015-stability-engine-is-the-system-center.md`
-4. `docs/decisions/0014-stability-engine-read-only-in-sprint-2.md`
-5. `docs/decisions/0013-allocation-bands-informational-not-accounting.md`
+2. `docs/doctrine/hedgr-familiar-financial-grammar-and-infrastructure-abstraction.md` — customer-facing product meaning and disclosure-order doctrine; it does not widen the active ticket.
+3. `docs/decisions/SPRINT-2-ADR-INDEX.md`
+4. `docs/decisions/0015-stability-engine-is-the-system-center.md`
+5. `docs/decisions/0014-stability-engine-read-only-in-sprint-2.md`
+6. `docs/decisions/0013-allocation-bands-informational-not-accounting.md`
 
 Sprint planning procedure (subordinate to §7 / §7a): `docs/ops/HEDGR_SPRINT_PLANNING_PROTOCOL.md`
 
@@ -303,7 +323,15 @@ See `README.md` — quick reference:
 Python venv lives at `apps/backend/.venv`. Activate it before running backend commands. Backend tests: `cd apps/backend && source .venv/bin/activate && pytest`.
 # AGENTS.md — Hedgr Repo Execution Standard
 
-Current Lane V override: Internal **D-079** / **§§209–210** supplied and closed `CLASS-A-VAL-002-ORIENT-002` as one bounded copy-only customer-narrative fidelity amendment. Current Lane N override: Internal **D-080** / **§212** accepted and froze Customer One-Pager v2.0, superseded v1.0, closed `NARRATIVE-007`, and idled Lane N without publication or product-copy authority. Current review-process / Lane E override: Internal **D-081** / **§213** revises weekly-review structure and two-dimension North Star reporting, retains the current MVP process-review slice, stops additional standing review frameworks, and escalates `SE-REASON-001` away from weekly-summary `RETEST` to underlying-artifact evidence review without accepting the models. Current nested Lane E override: Internal **D-084** / **§216** records the Founder `RETAIN / RETEST` disposition, closes only `SE-REASON-001-EVID-001`, and leaves `SE-REASON-001` open; the models remain non-authoritative and no retest, successor, translation, product, engine, UX, Copilot, data, or financial-execution work is activated. These current statements supersede any later stale wording in this repeated execution-standard block. No nested Lane V refinement is active; participant testing is active on the verified ORIENT-002 build. D-079 did not alter Controlled Parallelism v21, Lane E, or financial capability. D-081 creates no ticket or concurrency change. Internal **D-082** / **§214** completed `BRIDGE-LEGACY-RETIRE-001` as bounded Lane R hygiene and left Lane R idle.
+**Current Lane V override:** Internal **D-086** / **§218** records Founder **REVISE → RETEST** and activates `CLASS-A-VAL-002-GRAMMAR-001` as the sole active nested Lane V ticket. It is bounded to the exact Dashboard / Activity presentation files and associated tests named in `HEDGR_STATUS.md` **§7a**. Participant distribution on ORIENT-002 is paused pending verified closeout; existing responses remain directional baseline evidence, and D-079 / ORIENT-002 remains closed historical authority. No orientation, route, Form, engine, target-value, ledger, wallet, state, arithmetic, frozen-narrative, public-naming, Lane E, Lane N, or financial-capability change is authorized.
+
+**Current product-doctrine adoption:** Internal **D-087** / **§219** adopts `docs/doctrine/hedgr-familiar-financial-grammar-and-infrastructure-abstraction.md` as active Founder-level product doctrine. It changes doctrine membership and precedence only and does not amend D-086, activate work, change the interface or Form, reopen ORIENT-002, unfreeze narrative, adopt public naming, or widen financial capability.
+
+**Current Lane N override:** Internal **D-080** / **§212** accepted and froze Customer One-Pager v2.0, superseded v1.0, closed `NARRATIVE-007`, and idled Lane N without publication or product-copy authority.
+
+**Current review-process / Lane E override:** Internal **D-081** / **§213** revises weekly-review structure and two-dimension North Star reporting, retains the current MVP process-review slice, stops additional standing review frameworks, and escalates `SE-REASON-001` away from weekly-summary `RETEST` to underlying-artifact evidence review without accepting the models. **Current nested Lane E override:** Internal **D-084** / **§216** records the Founder `RETAIN / RETEST` disposition, closes only `SE-REASON-001-EVID-001`, and leaves `SE-REASON-001` open; the models remain non-authoritative and no retest, successor, translation, product, engine, UX, Copilot, data, or financial-execution work follows from D-084.
+
+These current statements supersede any later stale wording in this repeated execution-standard block. Controlled Parallelism v21 remains unchanged; D-086 creates no fourth lane or independent concurrency; D-087 creates no ticket or execution authority. D-081 creates no ticket or concurrency change. Internal **D-082** / **§214** completed `BRIDGE-LEGACY-RETIRE-001` as bounded Lane R hygiene and left Lane R idle.
 
 Status: Binding (repo workflow, engineering conventions, CI posture, agent operating rules)  
 Scope: apps/, packages/, scripts/, .github/, docs/  
@@ -405,10 +433,11 @@ When implementing:
 When changing `apps/frontend/lib/engine/**` or shipped Stability Engine trust surfaces (posture, notices, allocation bands, or simulator boundaries per `docs/ops/HEDGR_STATUS.md`), read in order:
 
 1. `docs/ops/HEDGR_STATUS.md` — `§7` / `§7a` for the approved next ticket (when named); `§6b` is Transition Readiness taxonomy only, not sequencing authority. Concurrent lanes are permitted only under the **Ticket sequencing / governed parallelism** exception below (currently `§6e` / **D-026** lane model; an active `§6f` pass only when Accepted, unambiguous, and currently naming tickets).
-2. `docs/decisions/SPRINT-2-ADR-INDEX.md`
-3. `docs/decisions/0015-stability-engine-is-the-system-center.md`
-4. `docs/decisions/0014-stability-engine-read-only-in-sprint-2.md`
-5. `docs/decisions/0013-allocation-bands-informational-not-accounting.md`
+2. `docs/doctrine/hedgr-familiar-financial-grammar-and-infrastructure-abstraction.md` — customer-facing product meaning and disclosure-order doctrine; it does not widen the active ticket.
+3. `docs/decisions/SPRINT-2-ADR-INDEX.md`
+4. `docs/decisions/0015-stability-engine-is-the-system-center.md`
+5. `docs/decisions/0014-stability-engine-read-only-in-sprint-2.md`
+6. `docs/decisions/0013-allocation-bands-informational-not-accounting.md`
 
 Sprint planning procedure (subordinate to `§7` / `§7a`): `docs/ops/HEDGR_SPRINT_PLANNING_PROTOCOL.md`
 
