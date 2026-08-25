@@ -1,14 +1,15 @@
 # Hedgr Stability Reasoning Evidence Review
 
-**Status:** Nested Lane E deliverable — HedgrOps evidence review for Founder disposition; non-authoritative<br>
+**Status:** **COMPLETED** — Founder disposition recorded; retained as non-canonical research architecture only<br>
 **Ticket:** `SE-REASON-001-EVID-001` (nested inside open `SE-REASON-001`)<br>
 **Activation:** Internal **D-083** / `docs/ops/HEDGR_STATUS.md` **§215**<br>
+**Disposition / closeout:** Internal **D-084** / `docs/ops/HEDGR_STATUS.md` **§216**<br>
 **Parent:** `SE-REASON-001` / Internal **D-076** / **§204**; package routing Internal **D-081** / **§213**<br>
-**Date:** 23 August 2026; revised 24 August 2026 before Founder disposition<br>
+**Date:** 23 August 2026; revised 24 August 2026; Founder disposition recorded 25 August 2026<br>
 **Visibility:** Internal<br>
 **Execution class:** Class A informational research review only; no product, engine, UX, or financial-execution authority
 
-This memo is the bounded evidence review named by Internal **D-081** / **§213** as the next decision input, and activated as nested `SE-REASON-001-EVID-001` by Internal **D-083** / **§215**. It is a HedgrOps recommendation. It does **not** accept the models as product, engine, accounting, or financial truth. It does **not** authorize `SE-REASON-001-XLAT-001` or any other translation ticket. Founder disposition of this memo remains required. Founder intent alone does not create implementation authority; only **§7** / **§7a** name approved active ticket(s).
+This memo is the bounded evidence review named by Internal **D-081** / **§213** as the next decision input, and activated as nested `SE-REASON-001-EVID-001` by Internal **D-083** / **§215**. Founder disposition is recorded under Internal **D-084** / **§216**: retain the candidate as non-canonical research architecture, retest independent interpretability as the primary remaining uncertainty, do not accept the models as product, engine, accounting, ledger, or financial truth, and do not authorize translation or implementation. The nested ticket is closed; parent `SE-REASON-001` remains open. No retest, successor, or `SE-REASON-001-XLAT-001` ticket is activated. Only **§7** / **§7a** name approved active ticket(s).
 
 Reviewed artifacts:
 
@@ -23,7 +24,7 @@ D-081 / **§213** decision question: do these models improve Hedgr’s ability t
 Repo-native basis for the citations in this memo (verified in `docs/ops/HEDGR_STATUS.md`, not inferred from this file):
 
 - **D-081 / §213:** Artifact-level `RETEST` is not the institutional package disposition. Next bounded decision input is evidence review of the three named artifacts. Permitted resulting disposition remains RETAIN / REVISE / REMOVE / RETEST / ESCALATE. Until that evidence is reviewed: no model acceptance; no translation into canonical product truth; no engine or UX implementation instruction; no execution-class change. D-081 created no ticket.
-- **D-083 / §215 and §7a Lane E nested brief:** Nested `SE-REASON-001-EVID-001` is the evidence-review ticket. It does not accept the models or authorize product / engine / UX translation. Founder disposition of this memo still does not, by itself, close the parent or authorize translation.
+- **D-083 / §215 and §7a Lane E nested brief:** Nested `SE-REASON-001-EVID-001` was the evidence-review ticket. Internal **D-084** / **§216** records the Founder disposition and closes only that nested ticket. It does not close the parent, activate the RETEST, accept the models, or authorize product / engine / UX translation.
 - **D-069 / §193:** Cognitive Stewardship is an enduring internal product learning: Hedgr should progressively carry interpretation while the participant retains judgement. D-069 creates no doctrine or implementation authority.
 - **§7 / §7a:** Only those sections name approved active ticket(s). A later translation ticket exists only if separately recorded there.
 
@@ -179,11 +180,11 @@ This table is a planning control for a *future* Founder decision. It does not na
 
 ---
 
-## 7. Recommended Founder next disposition
+## 7. Founder disposition recorded
 
-Founder may dispose this memo as RETAIN / REVISE / REMOVE / RETEST / ESCALATE.
+Founder disposed this memo on 25 August 2026 under Internal **D-084** / **§216**.
 
-HedgrOps asks Founder to confirm:
+The recorded disposition is:
 
 1. **RETAIN AS NON-CANONICAL RESEARCH ARCHITECTURE** the four-function candidate under open `SE-REASON-001`;
 2. **RETEST:** independent interpretability / inter-rater consistency as the primary remaining uncertainty;
@@ -191,6 +192,6 @@ HedgrOps asks Founder to confirm:
 4. **DO NOT AUTHORISE** product, engine, UX, Copilot, data-collection, or live-input translation from this review;
 5. **KEEP `SE-REASON-001` OPEN.**
 
-If Founder later wants translation considered, that is a separate direction to *consider* translation. No translation work becomes authorised until a later ticket is separately recorded in **§7** / **§7a**. Founder intent alone does not create implementation authority. This review does not name `SE-REASON-001-XLAT-001`.
+The `RETEST` disposition does not activate a retest, successor ticket, experiment, or implementation task by inference. If Founder later wants a retest executed or translation considered, each requires separate repo-native naming and authorization under the applicable governance provisions, including **§7** / **§7a** where required. This review does not name `SE-REASON-001-XLAT-001`. Lane V and financial-execution posture remain unchanged. `NO CROSS-LANE IMPACT`.
 
-Rollback of this memo is deletion or revert of this file plus revert of D-083 / **§215** nested naming. Do not alter Lane V, frozen narrative sources, or financial execution posture during rollback.
+Rollback of this disposition recording is revert of Internal **D-084** / **§216** and restoration of the nested ticket to disposition-pending status under D-083 / **§215**. Do not alter Lane V, frozen narrative sources, or financial execution posture during rollback.
