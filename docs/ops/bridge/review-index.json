@@ -1,6 +1,6 @@
 {
   "artifact_type": "hedgrops_bridge_review_index_snapshot",
-  "generated_at": "2026-08-23T00:00:00.000Z",
+  "generated_at": "2026-08-25T00:00:00.000Z",
   "source_path": "docs/ops/reviews/README.md",
   "authority_posture": {
     "class": "A",
@@ -25,7 +25,7 @@
       },
       {
         "review_type": "mvp_process",
-        "source_path": "docs/ops/reviews/MVP/HEDGR_MVP_PROCESS_REVIEW_GOV_A_REV_002_TO_HOPS_REVIEW_B_001.md"
+        "source_path": "docs/ops/reviews/MVP/HEDGR_MVP_PROCESS_REVIEW_LEGAL_PREFLIGHT_B_001_TO_GOV_PARALLEL_001.md"
       }
     ]
   }
