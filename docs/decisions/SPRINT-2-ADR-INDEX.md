@@ -249,7 +249,7 @@ Accepted institutional evidence principle. Acceptance does not activate implemen
 
 ### ADR 0025 — Repo-Native Green Lane Delegation Pilot
 
-Accepted time-bounded Class A translation / disposition pilot. Green Lane classification does not activate work or create standing parallelism.
+Accepted historical time-bounded Class A translation / disposition pilot. The operational **§6g** envelope was retired on 2026-08-25 under Internal **D-085** / **§217**; no active Green Lane delegation remains. Green Lane classification does not activate work or create standing parallelism.
 
 ### ADR 0026 — HedgrOps Bridge as Read-Only Institutional Evidence Infrastructure
 

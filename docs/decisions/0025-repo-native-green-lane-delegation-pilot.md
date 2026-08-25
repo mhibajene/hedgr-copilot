@@ -9,6 +9,7 @@
 **Owners:** Hedgr Core  
 **Reversibility:** Reversible (deprecate / supersede this ADR; pause or revoke the pilot envelope in `HEDGR_STATUS.md`; restore prior `AGENTS.md` operator rules; retain this ADR as historical record)  
 **Ticket of record:** `GOV-GREEN-001`  
+**Operational envelope:** **REVOKED — PILOT CONCLUDED** on 2026-08-25 under Internal **D-085** / `HEDGR_STATUS.md` **§217**; this ADR remains an accepted historical decision and deny-by-default guardrail, not an active delegation
 **Notion mirror (non-authoritative):** D-033 (when staged)
 
 ---
