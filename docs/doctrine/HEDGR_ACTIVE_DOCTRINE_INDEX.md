@@ -6,6 +6,8 @@
 
 **Date adopted:** 2026-07-19
 
+**Last updated:** 2026-08-25 (Internal **D-087** / `HEDGR_STATUS.md` **§219**)
+
 **Scope:** Active doctrine membership for source-bound Repo Authority Projection generation
 
 ## Authority boundary
@@ -26,19 +28,20 @@ This index declares the complete active doctrine set consumed by the HedgrOps Br
 | 1 | `docs/doctrine/hedgr-constitutional-charter.md` | Binding constitutional charter |
 | 2 | `docs/doctrine/hedgr-governance-philosophy.md` | Binding governance operating philosophy |
 | 3 | `docs/doctrine/hedgr-ux-constitution.md` | Canonical UX / trust / interaction doctrine |
-| 4 | `docs/doctrine/hedgr-ux-constitution-addendum.md` | Binding extension to the UX Constitution |
-| 5 | `docs/doctrine/d05-hedgr-consitutional-calibration.md` | Active, binding company-wide calibration |
-| 6 | `docs/doctrine/hedgr-stability-engine.md` | Canonical Stability Engine specification |
-| 7 | `docs/doctrine/hedgr-stability-model™ (Internal).md` | Binding internal Stability Model mechanics |
-| 8 | `docs/doctrine/hedgr-stability-model™.md` | Public Stability Model summary |
-| 9 | `docs/doctrine/hedgr-system-overview.md` | Canonical system architecture overview |
-| 10 | `docs/doctrine/hedgr-product-surfaces.md` | Canonical product-surface definition |
-| 11 | `docs/doctrine/hedgr-default-allocation-policy.md` | Binding retail allocation policy |
-| 12 | `docs/doctrine/hedgr-retail-allocation-ux-specification.md` | Binding retail allocation UX specification |
-| 13 | `docs/doctrine/hedgr-ai-copilot-trust-and-decision-framework.md` | Canonical Copilot trust and decision reference |
-| 14 | `docs/doctrine/hedgr-mvp-project-specification.md` | Canonical doctrine-grade MVP baseline |
-| 15 | `docs/doctrine/hedgr-whitepaper.md` | Canonical whitepaper |
-| 16 | `docs/doctrine/hedgrops-decision-governance-and-adr-export-standard.md` | Decision governance and ADR export standard |
+| 4 | `docs/doctrine/hedgr-familiar-financial-grammar-and-infrastructure-abstraction.md` | Binding customer-facing product meaning and infrastructure-abstraction doctrine |
+| 5 | `docs/doctrine/hedgr-ux-constitution-addendum.md` | Binding extension to the UX Constitution |
+| 6 | `docs/doctrine/d05-hedgr-consitutional-calibration.md` | Active, binding company-wide calibration |
+| 7 | `docs/doctrine/hedgr-stability-engine.md` | Canonical Stability Engine specification |
+| 8 | `docs/doctrine/hedgr-stability-model™ (Internal).md` | Binding internal Stability Model mechanics |
+| 9 | `docs/doctrine/hedgr-stability-model™.md` | Public Stability Model summary |
+| 10 | `docs/doctrine/hedgr-system-overview.md` | Canonical system architecture overview |
+| 11 | `docs/doctrine/hedgr-product-surfaces.md` | Canonical product-surface definition |
+| 12 | `docs/doctrine/hedgr-default-allocation-policy.md` | Binding retail allocation policy |
+| 13 | `docs/doctrine/hedgr-retail-allocation-ux-specification.md` | Binding retail allocation UX specification |
+| 14 | `docs/doctrine/hedgr-ai-copilot-trust-and-decision-framework.md` | Canonical Copilot trust and decision reference |
+| 15 | `docs/doctrine/hedgr-mvp-project-specification.md` | Canonical doctrine-grade MVP baseline |
+| 16 | `docs/doctrine/hedgr-whitepaper.md` | Canonical whitepaper |
+| 17 | `docs/doctrine/hedgrops-decision-governance-and-adr-export-standard.md` | Decision governance and ADR export standard |
 
 ## Explicit non-members
 
