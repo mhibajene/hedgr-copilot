@@ -97,6 +97,8 @@ Internal **D-079** / **§§209–210** supplied and closed `CLASS-A-VAL-002-ORIE
 
 ### Green Lane operator rules (ADR 0025 / §6g)
 
+**Current posture (Internal D-085 / §217):** No active Green Lane delegation envelope exists. The time-bounded pilot was retired after its ~2026-08-04 review / expiry date. Any future Green Lane delegation requires a new Founder-authorized, time-bounded §6g envelope plus explicit §7 / §7a ticket naming; until then, work labeled Green Lane must stop at classification.
+
 When performing or reviewing work labeled Green Lane, Cursor and Codex must verify before acting:
 
 - an active founder-authorized outcome exists and is recorded repo-natively;
@@ -220,6 +222,8 @@ Internal **D-070** / **§194**–**§195**, Internal **D-071** / **§196**–**�
 
 ### Green Lane operator rules (ADR 0025 / §6g)
 
+**Current posture (Internal D-085 / §217):** No active Green Lane delegation envelope exists. The time-bounded pilot was retired after its ~2026-08-04 review / expiry date. Any future Green Lane delegation requires a new Founder-authorized, time-bounded §6g envelope plus explicit §7 / §7a ticket naming; until then, work labeled Green Lane must stop at classification.
+
 When performing or reviewing work labeled Green Lane, Cursor and Codex must verify before acting:
 
 - an active founder-authorized outcome exists and is recorded repo-natively;
@@ -303,7 +307,7 @@ Current Lane V override: Internal **D-079** / **§§209–210** supplied and clo
 
 Status: Binding (repo workflow, engineering conventions, CI posture, agent operating rules)  
 Scope: apps/, packages/, scripts/, .github/, docs/  
-Last updated: 2026-08-17
+Last updated: 2026-08-25
 
 ## 1) Purpose
 AGENTS.md defines how work is executed in this repo and how autonomous or semi-autonomous agents must behave when operating inside Hedgr.
@@ -429,6 +433,8 @@ Internal **D-069** / **§193** accepts Cognitive Stewardship as an enduring inte
 Internal **D-070** / **§194**–**§195**, Internal **D-071** / **§196**–**§197**, and Internal **D-072** / **§198**–**§199** supplied and closed `CLASS-A-VAL-002-WARMTH-001`, `CLASS-A-VAL-002-AFF-001`, and `CLASS-A-VAL-002-ROUTE-001` as historical bounded nested authority only. The completed D-072 pass makes `/dashboard-synthetic-journey` the human-readable participant entry while retaining the legacy query route as a compatibility / rollback seam and preserving the journey, state, arithmetic, engine, targets, and financial / execution boundaries. Every other HedgrOps review concern remains test-first and outside implementation scope. Internal **D-073** / **§200**–**§201** completed the bounded Form instrument pass as historical nested authority. Controlled Parallelism v20 / Internal **D-074** / **§6f.20** added Lane N `NARRATIVE-007` without altering Lane V and is now completed historical concurrency; Internal **D-075** / **§203** later accepts the audit outputs and authorizes one bounded candidate vNext while frozen narrative sources remain unchanged. Controlled Parallelism v21 / Internal **D-076** / **§6f.21** adds Lane E `SE-REASON-001` without altering Lane V or Lane N. Internal **D-077** / **§§205–206** supplied and closed nested `CLASS-A-VAL-002-ORIENT-001` inside Lane V as one bounded Class A informational governed-narrative orientation-surface experiment; it did not create a fourth lane or alter Lane N or Lane E. Internal **D-078** / **§207** retires Notion as an operating, governance, and institutional-memory surface; it does not create a fourth lane or alter D-076 concurrency. Participant testing is active on the verified orientation-inclusive build under the governed cohort protocol.
 
 ### Green Lane operator rules (ADR 0025 / §6g)
+
+**Current posture (Internal D-085 / §217):** No active Green Lane delegation envelope exists. The time-bounded pilot was retired after its ~2026-08-04 review / expiry date. Any future Green Lane delegation requires a new Founder-authorized, time-bounded §6g envelope plus explicit §7 / §7a ticket naming; until then, work labeled Green Lane must stop at classification.
 
 When performing or reviewing work labeled Green Lane, Cursor and Codex must verify before acting:
 
