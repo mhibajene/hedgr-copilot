@@ -44,11 +44,18 @@ describe('EnginePostureHeader', () => {
     );
 
     expect(screen.getByText('Does anything need attention?')).toBeDefined();
+    expect(screen.getByText('Stability Status')).toBeDefined();
     expect(
       screen.getByTestId('engine-simulation-attention-answer').textContent,
     ).toBe('No important change shown');
+    expect(
+      screen.getByTestId('engine-simulation-attention-answer').className,
+    ).not.toContain('rounded-full');
     expect(screen.getByTestId('engine-posture-context').textContent).toBe(
-      'The simulated position is within its expected range.',
+      "Hedgr's qualitative reading of the existing simulated inputs shows no important change.",
+    );
+    expect(screen.getByTestId('dashboard-current-status').textContent).not.toMatch(
+      /score|gauge|safe|guarantee/i,
     );
     expect(screen.queryByTestId('engine-posture-badge')).toBeNull();
     expect(screen.queryByText('NORMAL')).toBeNull();

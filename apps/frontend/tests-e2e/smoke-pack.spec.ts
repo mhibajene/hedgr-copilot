@@ -91,7 +91,7 @@ test("4 · dashboard shows human-readable stability context after login", async 
   const postureContextText = await postureContext.textContent();
   expect(postureContextText?.trim().length).toBeGreaterThan(0);
   expect(postureContextText).toBe(
-    "The simulated position is within its expected range."
+    "Hedgr's qualitative reading of the existing simulated inputs shows no important change."
   );
   for (const forbidden of heldOrRejectedPrimaryTerms) {
     expect(postureContextText).not.toMatch(forbidden);
@@ -100,6 +100,12 @@ test("4 · dashboard shows human-readable stability context after login", async 
   await expect(page.getByText("Does anything need attention?")).toBeVisible();
   await expect(page.getByTestId("engine-simulation-attention-answer")).toHaveText(
     "No important change shown"
+  );
+  await expect(page.getByTestId("dashboard-current-status")).toContainText(
+    "Stability Status"
+  );
+  await expect(page.getByTestId("dashboard-current-status")).not.toContainText(
+    /score|gauge|safe|guarantee/i
   );
   await expect(page.getByTestId("engine-posture-badge")).toHaveCount(0);
 
@@ -114,7 +120,7 @@ test("4 · dashboard shows human-readable stability context after login", async 
     allocationBands.getByRole("heading", { name: "Stability guidance" })
   ).toBeVisible();
   await expect(allocationBands).toContainText(
-    "See what Hedgr prioritizes when interpreting stability"
+    "See the position Hedgr is guiding toward and why"
   );
   const prioritiesDetails = page.getByTestId(
     "engine-allocation-priorities-details"
@@ -156,14 +162,28 @@ test("4 · dashboard shows human-readable stability context after login", async 
   expect(allocationBandsText).not.toContain("Stable balance");
   expect(allocationBandsText).toContain("Conservative yield");
   expect(allocationBandsText).toContain("Reserve");
-  expect(allocationBandsText).toContain("Stability targets");
+  expect(allocationBandsText).toContain("Planning targets");
   expect(allocationBandsText).toContain("Guidance only");
-  expect(allocationBandsText).toContain("Balance");
+  expect(allocationBandsText).toContain("Current state");
   expect(allocationBandsText).toContain("The percentages do not divide it");
-  expect(allocationBandsText).toContain("No instruction or money movement");
+  expect(allocationBandsText).toContain("No instruction or movement");
   expect(allocationBandsText).toContain(
-    "a target does not mean money has been divided, held, or moved"
+    "a target does not divide or move simulated money"
   );
+  const targetStructure = page.getByTestId("engine-allocation-structure");
+  await expect(targetStructure.locator('[role="progressbar"]')).toHaveCount(0);
+  await expect(targetStructure).not.toContainText(
+    /[$£€]|funded|account|holding|allocated/i
+  );
+  await expect(page.getByTestId("engine-allocation-band-coreTargetPct")).toContainText(
+    /Stability target\s*50%/
+  );
+  await expect(page.getByTestId("engine-allocation-band-yieldCapPct")).toContainText(
+    /Stability target\s*20%/
+  );
+  await expect(
+    page.getByTestId("engine-allocation-band-liquidityTargetPct")
+  ).toContainText(/Stability target\s*30%/);
   const targetDistinction = page.getByTestId(
     "engine-allocation-target-details"
   );

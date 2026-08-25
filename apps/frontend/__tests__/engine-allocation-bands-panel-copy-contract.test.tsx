@@ -77,7 +77,8 @@ describe("EngineAllocationBands panel copy contract", () => {
     expect(boundary).toMatch(/context, not an instruction/i);
     expect(targetRoles).toMatch(/three distinct target roles/i);
     expect(targetRoles).not.toMatch(/\d+%/);
-    expect(targetsIntro).toMatch(/simulated target values/i);
+    expect(targetsIntro).toMatch(/simulated planning structure/i);
+    expect(targetsIntro).toMatch(/guidance, not current money/i);
   });
 
   test("keeps shipped panel copy informational and non-accounting", () => {
@@ -99,5 +100,12 @@ describe("EngineAllocationBands panel copy contract", () => {
     ];
 
     expectInformationalTrustFraming(segments.join("\n"));
+
+    const structure = screen.getByTestId("engine-allocation-structure");
+    expect(structure.tagName).toBe("DL");
+    expect(structure.querySelector('[role="progressbar"]')).toBeNull();
+    expect(structure.textContent).not.toMatch(
+      /[$£€]|funded|account|holding|allocated/i
+    );
   });
 });

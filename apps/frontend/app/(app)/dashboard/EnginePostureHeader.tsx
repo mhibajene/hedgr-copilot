@@ -26,10 +26,14 @@ const SIMULATION_ATTENTION_ANSWERS: Record<EnginePosture, string> = {
 };
 
 const SIMULATION_STATUS_CONTEXT: Record<EnginePosture, string> = {
-  normal: "The simulated position is within its expected range.",
-  tightening: "The simulation shows stability guidance becoming more cautious.",
-  tightened: "The simulation shows stability guidance in a more cautious state.",
-  recovery: "The simulation shows stability guidance easing toward its expected range.",
+  normal:
+    "Hedgr's qualitative reading of the existing simulated inputs shows no important change.",
+  tightening:
+    "Hedgr's qualitative reading shows stability guidance becoming more cautious.",
+  tightened:
+    "Hedgr's qualitative reading shows stability guidance in a more cautious state.",
+  recovery:
+    "Hedgr's qualitative reading shows stability guidance easing from a more cautious state.",
 };
 
 type EnginePostureHeaderProps = {
@@ -61,19 +65,24 @@ export function EnginePostureHeader({
       data-testid="dashboard-current-status"
     >
       <h1 className="sr-only">Dashboard</h1>
-      <div className="flex items-start justify-between gap-3">
-        <p
-          id="dashboard-current-status-label"
-          className="text-xs font-semibold uppercase tracking-[0.12em] text-hedgr-500"
-        >
-          {syntheticJourneyActive
-            ? "Does anything need attention?"
-            : "Current status"}
-        </p>
+      <div className="space-y-3">
+        <div className="space-y-1">
+          <p
+            id="dashboard-current-status-label"
+            className="text-xs font-semibold uppercase tracking-[0.12em] text-hedgr-500"
+          >
+            {syntheticJourneyActive ? "Stability Status" : "Current status"}
+          </p>
+          {syntheticJourneyActive ? (
+            <h2 className="text-base font-semibold tracking-tight text-hedgr-800">
+              Does anything need attention?
+            </h2>
+          ) : null}
+        </div>
         {syntheticJourneyActive ? (
           <span
             data-testid="engine-simulation-attention-answer"
-            className="shrink-0 inline-flex items-center rounded-full border border-hedgr-200 bg-hedgr-100 px-3 py-1 text-[11px] font-semibold tracking-wide text-hedgr-800"
+            className="inline-block border-l-2 border-hedgr-200 pl-3 text-sm font-semibold leading-relaxed text-hedgr-800"
           >
             {SIMULATION_ATTENTION_ANSWERS[posture]}
           </span>
@@ -81,7 +90,7 @@ export function EnginePostureHeader({
           <span
             data-testid="engine-posture-badge"
             data-posture={posture}
-            className={`shrink-0 inline-flex items-center rounded-full border px-3 py-1 text-[11px] font-semibold tracking-wide ${BADGE_TONES[posture]}`}
+            className={`inline-flex items-center rounded-full border px-3 py-1 text-[11px] font-semibold tracking-wide ${BADGE_TONES[posture]}`}
           >
             {BADGE_LABELS[posture]}
           </span>
