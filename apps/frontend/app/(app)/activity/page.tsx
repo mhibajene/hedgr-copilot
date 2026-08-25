@@ -46,6 +46,25 @@ function groupByDay(transactions: TxLifecycle[]): Map<string, TxLifecycle[]> {
   return groups;
 }
 
+function getSyntheticResultingBalances(
+  transactions: TxLifecycle[],
+): Map<string, number> {
+  const chronological = [...transactions].sort(
+    (a, b) => a.createdAt - b.createdAt || a.id.localeCompare(b.id),
+  );
+  const resultingById = new Map<string, number>();
+  let runningBalance = 0;
+
+  for (const tx of chronological) {
+    if (tx.status !== PublicTxStatus.SUCCESS) continue;
+
+    runningBalance += tx.type === 'DEPOSIT' ? tx.amountUSD : -tx.amountUSD;
+    resultingById.set(tx.id, +runningBalance.toFixed(2));
+  }
+
+  return resultingById;
+}
+
 type FilterType = 'all' | 'deposits' | 'withdrawals';
 
 function TransactionTypeIcon({ type }: { type: 'DEPOSIT' | 'WITHDRAW' }) {
@@ -92,10 +111,12 @@ function ActivityRow({
   tx,
   onClick,
   syntheticJourneyActive,
+  resultingBalance,
 }: {
   tx: TxLifecycle;
   onClick: () => void;
   syntheticJourneyActive: boolean;
+  resultingBalance?: number;
 }) {
   return (
     <button
@@ -104,7 +125,7 @@ function ActivityRow({
       data-testid={`activity-row-${tx.type.toLowerCase()}`}
       data-activity-type={tx.type}
       data-activity-status={tx.status}
-      className="w-full cursor-pointer rounded-xl border border-hedgr-100 bg-white p-4 text-left transition-colors hover:border-hedgr-300"
+      className="w-full cursor-pointer px-1 py-4 text-left transition-colors hover:bg-hedgr-100/30 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-hedgr-500"
     >
       <div className="flex items-center gap-3 sm:gap-4">
         <TransactionTypeIcon type={tx.type} />
@@ -129,9 +150,22 @@ function ActivityRow({
         </div>
 
         <div className="shrink-0 text-right">
-          <div className="font-semibold tabular-nums text-hedgr-800">
+          <div
+            className="font-semibold tabular-nums text-hedgr-800"
+            data-testid={`activity-delta-${tx.type.toLowerCase()}`}
+          >
             {tx.type === 'DEPOSIT' ? '+' : '-'}${tx.amountUSD.toFixed(2)}
           </div>
+          {syntheticJourneyActive &&
+          tx.status === PublicTxStatus.SUCCESS &&
+          resultingBalance !== undefined ? (
+            <div
+              className="mt-0.5 text-xs font-medium tabular-nums text-hedgr-500"
+              data-testid={`activity-result-${tx.type.toLowerCase()}`}
+            >
+              → ${resultingBalance.toFixed(2)} resulting
+            </div>
+          ) : null}
           {tx.amountZMW !== undefined && tx.amountZMW > 0 ? (
             <div className="text-sm tabular-nums text-hedgr-500">
               {tx.amountZMW.toFixed(2)} ZMW
@@ -188,6 +222,13 @@ export default function ActivityPage() {
       remaining: +(deposits - withdrawals).toFixed(2),
     };
   }, [lifecycleTxs]);
+
+  // Compute result evidence from the full chronological record before filters
+  // or newest-first presentation. Pending and failed records never change it.
+  const syntheticResultingBalances = useMemo(
+    () => getSyntheticResultingBalances(lifecycleTxs),
+    [lifecycleTxs],
+  );
 
   // Apply filter
   const filteredTxs = useMemo(() => {
@@ -318,34 +359,42 @@ export default function ActivityPage() {
           aria-labelledby="activity-balance-reconciliation-heading"
         >
           <p className="text-xs font-semibold uppercase tracking-wide text-hedgr-500">
-            Simulated balance calculation
+            Activity evidence
           </p>
           <h2
             id="activity-balance-reconciliation-heading"
             className="mt-1 text-base font-semibold text-hedgr-800"
           >
-            Deposits minus withdrawals show what remains
+            Completed simulated changes reconcile to what remains
           </h2>
-          <dl className="mt-3 grid grid-cols-1 gap-3 text-sm sm:grid-cols-3">
-            <div className="rounded-lg bg-hedgr-100/50 p-3">
-              <dt className="text-hedgr-500">Simulated deposits</dt>
-              <dd className="mt-1 font-semibold tabular-nums text-hedgr-800">
-                +${syntheticBalanceReconciliation.deposits.toFixed(2)}
-              </dd>
-            </div>
-            <div className="rounded-lg bg-hedgr-100/50 p-3">
-              <dt className="text-hedgr-500">Simulated withdrawals</dt>
-              <dd className="mt-1 font-semibold tabular-nums text-hedgr-800">
-                −${syntheticBalanceReconciliation.withdrawals.toFixed(2)}
-              </dd>
-            </div>
-            <div className="rounded-lg bg-hedgr-200/60 p-3">
-              <dt className="text-hedgr-600">Remaining simulated balance</dt>
-              <dd className="mt-1 font-semibold tabular-nums text-hedgr-800">
-                ${syntheticBalanceReconciliation.remaining.toFixed(2)}
-              </dd>
-            </div>
-          </dl>
+          <p
+            className="mt-3 flex flex-wrap items-baseline gap-x-2 gap-y-1 text-sm text-hedgr-dark"
+            aria-label={`Completed simulated changes: plus $${syntheticBalanceReconciliation.deposits.toFixed(2)} deposits, minus $${syntheticBalanceReconciliation.withdrawals.toFixed(2)} withdrawals, equals $${syntheticBalanceReconciliation.remaining.toFixed(2)} remaining`}
+          >
+            <span
+              className="font-semibold tabular-nums text-hedgr-800"
+              data-testid="activity-reconciliation-deposits"
+            >
+              +${syntheticBalanceReconciliation.deposits.toFixed(2)} deposits
+            </span>
+            <span aria-hidden="true" className="text-hedgr-400">−</span>
+            <span
+              className="font-semibold tabular-nums text-hedgr-800"
+              data-testid="activity-reconciliation-withdrawals"
+            >
+              ${syntheticBalanceReconciliation.withdrawals.toFixed(2)} withdrawals
+            </span>
+            <span aria-hidden="true" className="text-hedgr-400">=</span>
+            <span
+              className="font-semibold tabular-nums text-hedgr-800"
+              data-testid="activity-reconciliation-remaining"
+            >
+              ${syntheticBalanceReconciliation.remaining.toFixed(2)} remaining
+            </span>
+          </p>
+          <p className="mt-2 text-xs leading-relaxed text-hedgr-500">
+            Only completed simulated entries contribute to this evidence.
+          </p>
         </section>
       ) : null}
 
@@ -378,13 +427,14 @@ export default function ActivityPage() {
               <h2 className="text-xs font-semibold text-hedgr-500 uppercase tracking-wider">
                 {day}
               </h2>
-              <div className="space-y-2">
+              <div className="divide-y divide-hedgr-100 border-y border-hedgr-100">
                 {txs.map((tx) => (
                   <ActivityRow
                     key={tx.id}
                     tx={tx}
                     onClick={() => handleRowClick(tx)}
                     syntheticJourneyActive={syntheticJourneyActive}
+                    resultingBalance={syntheticResultingBalances.get(tx.id)}
                   />
                 ))}
               </div>

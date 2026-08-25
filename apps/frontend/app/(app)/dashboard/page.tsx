@@ -134,6 +134,16 @@ export default function DashboardPage() {
           account balance, and no money is being held or moved.
         </p>
       ) : null}
+      {syntheticJourneyActive && ready && !isLoading && transactions.length > 0 ? (
+        <Link
+          href={getSyntheticJourneyHref("/activity")}
+          className="inline-flex max-w-md text-sm font-medium leading-relaxed text-hedgr-600 underline decoration-hedgr-200 underline-offset-4 hover:text-hedgr-primary"
+          data-testid="dashboard-balance-evidence"
+        >
+          Activity shows each completed simulated change and the resulting
+          amount, ending at ${total.toFixed(2)}.
+        </Link>
+      ) : null}
       {ready && !isLoading && total !== available ? (
         <p className="pt-1 text-sm text-hedgr-500">
           Available now:{" "}
@@ -163,12 +173,14 @@ export default function DashboardPage() {
       data-testid="dashboard-current-overview"
     >
       <div className="grid gap-5 sm:grid-cols-[minmax(0,1.2fr)_minmax(13rem,0.8fr)] sm:gap-6">
-        <EnginePostureHeader
-          engineState={engineState}
-          syntheticJourneyActive={syntheticJourneyActive}
-        />
-        <div className="border-t border-hedgr-100 pt-5 sm:border-l sm:border-t-0 sm:pl-6 sm:pt-0">
+        <div>
           {balanceHero}
+        </div>
+        <div className="border-t border-hedgr-100 pt-5 sm:border-l sm:border-t-0 sm:pl-6 sm:pt-0">
+          <EnginePostureHeader
+            engineState={engineState}
+            syntheticJourneyActive={syntheticJourneyActive}
+          />
         </div>
       </div>
     </section>
@@ -253,19 +265,20 @@ export default function DashboardPage() {
             data-testid="dashboard-orientation"
           >
             <p className="text-xs font-semibold uppercase tracking-[0.12em] text-hedgr-500">
-              Financial position
+              Financial stability
             </p>
             <h2
               id="dashboard-orientation-heading"
               className="text-2xl font-semibold tracking-tight text-hedgr-800 sm:text-3xl"
             >
-              Hedgr has read your simulated position for you.
+              See where you stand as your money changes.
             </h2>
             <p className="max-w-xl text-sm leading-relaxed text-hedgr-dark">
-              You don&apos;t have to work it out from scratch. The view below is
-              Hedgr&apos;s reading of the simulated balance, offered as context,
-              not an instruction and not proof that money moved. What happens
-              next is your decision.
+              Hedgr helps you understand and maintain financial stability by
+              showing where you stand, what changed, and what it means. This is
+              Hedgr&apos;s reading of a simulated position—context, not an
+              instruction and not proof that money moved. What happens next is
+              your decision.
             </p>
           </section>
         ) : null}

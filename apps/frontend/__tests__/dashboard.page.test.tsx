@@ -184,7 +184,7 @@ describe("DashboardPage engine trust surface", () => {
       ).getAttribute("href")
     ).toBe("/deposit?journey=class-a-val-002");
     expect(screen.getByTestId("dashboard-orientation").textContent).toContain(
-      "Hedgr has read your simulated position for you."
+      "See where you stand as your money changes."
     );
   });
 
@@ -215,10 +215,13 @@ describe("DashboardPage engine trust surface", () => {
       screen.getByTestId("dashboard-current-overview").getAttribute("aria-label")
     ).toBe("Current simulation overview");
     const orientation = screen.getByTestId("dashboard-orientation");
-    expect(orientation.textContent).toContain("Financial position");
+    expect(orientation.textContent).toContain("Financial stability");
     // Institution carries the first interpretive step (CLASS-A-VAL-002-WARMTH-001).
     expect(orientation.textContent).toContain(
-      "Hedgr has read your simulated position for you."
+      "See where you stand as your money changes."
+    );
+    expect(orientation.textContent).toContain(
+      "understand and maintain financial stability"
     );
     // Guidance-versus-instruction and no-money-moved boundary remain (semantic invariant).
     expect(orientation.textContent).toContain("not an instruction");
@@ -226,7 +229,7 @@ describe("DashboardPage engine trust surface", () => {
     // Participant retains judgement (semantic invariant).
     expect(orientation.textContent).toContain("your decision");
     expect(orientation.textContent).not.toMatch(
-      /Financial Stability Companion|crypto wallet|bank|budgeting app|trading product/i
+      /Financial Stability Companion|crypto|blockchain|stablecoin|DeFi|trading|yield routing/i
     );
     expect(screen.getByText("Simulated balance")).toBeDefined();
     const explainer = screen.getByTestId(
@@ -248,14 +251,14 @@ describe("DashboardPage engine trust surface", () => {
     expect(screen.queryByTestId("engine-posture-badge")).toBeNull();
     expect(screen.queryByText("NORMAL")).toBeNull();
     expect(screen.getByTestId("engine-posture-context").textContent).toBe(
-      "The simulated position is within its expected range."
+      "Hedgr's qualitative reading of the existing simulated inputs shows no important change."
     );
 
     const allocation = screen.getByTestId("engine-allocation-bands");
     expect(allocation.getAttribute("data-presentation")).toBe("collapsed");
     expect(allocation.textContent).toContain("Stability guidance");
     expect(allocation.textContent).toContain(
-      "See what Hedgr prioritizes when interpreting stability"
+      "See the position Hedgr is guiding toward and why"
     );
     const prioritiesDetails = screen.getByTestId(
       "engine-allocation-priorities-details"
@@ -304,6 +307,11 @@ describe("DashboardPage engine trust surface", () => {
     const restartButton = await screen.findByRole("button", {
       name: "Restart simulated journey",
     });
+    const balanceEvidence = screen.getByTestId("dashboard-balance-evidence");
+    expect(balanceEvidence.textContent).toContain("ending at $3.00");
+    expect(balanceEvidence.getAttribute("href")).toBe(
+      "/activity?journey=class-a-val-002"
+    );
     expect(screen.getByTestId("dashboard-restart-journey").textContent).toContain(
       "begins again at $0"
     );
@@ -368,8 +376,8 @@ describe("DashboardPage engine trust surface", () => {
     expect(screen.getByText(ENGINE_NOTICE_COPY.tightening.title)).toBeDefined();
 
     const orderedSections = [
-      screen.getByTestId("dashboard-current-status"),
       screen.getByTestId("dashboard-balance"),
+      screen.getByTestId("dashboard-current-status"),
       screen.getByTestId("engine-allocation-bands"),
       snapshot,
       screen.getByTestId("dashboard-education"),

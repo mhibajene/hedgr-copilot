@@ -62,13 +62,19 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
     /Financial Stability Companion|Activity explains|fixture|informational posture|settlement/i,
   );
   const dashboardOrientation = page.getByTestId('dashboard-orientation');
-  await expect(dashboardOrientation).toContainText('Financial position');
+  await expect(dashboardOrientation).toContainText('Financial stability');
   await expect(dashboardOrientation).toContainText(
-    'Hedgr has read your simulated position for you.',
+    'See where you stand as your money changes.',
+  );
+  await expect(dashboardOrientation).toContainText(
+    'understand and maintain financial stability',
   );
   await expect(dashboardOrientation).toContainText('not an instruction');
   await expect(dashboardOrientation).toContainText('not proof that money moved');
   await expect(dashboardOrientation).toContainText('your decision');
+  await expect(dashboardOrientation).not.toContainText(
+    /crypto|blockchain|stablecoin|DeFi|trading|yield routing/i,
+  );
   await expect(page.getByTestId('usd-balance')).toHaveText('$0.00');
   await expect(page.getByText('Simulated balance', { exact: true })).toBeVisible();
   await expect(page.getByTestId('dashboard-synthetic-balance-explainer')).toContainText(
@@ -80,13 +86,19 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   );
   await expect(page.getByTestId('dashboard-current-status')).not.toContainText('NORMAL');
   await expect(page.getByTestId('engine-posture-context')).toHaveText(
-    'The simulated position is within its expected range.',
+    "Hedgr's qualitative reading of the existing simulated inputs shows no important change.",
+  );
+  await expect(page.getByTestId('dashboard-current-status')).toContainText(
+    'Stability Status',
+  );
+  await expect(page.getByTestId('dashboard-current-status')).not.toContainText(
+    /score|gauge|safe|guarantee/i,
   );
   const stabilityGuidance = page.getByTestId('engine-allocation-bands');
   await expect(stabilityGuidance).toHaveAttribute('data-presentation', 'collapsed');
   await expect(stabilityGuidance).toContainText('Stability guidance');
   await expect(stabilityGuidance).toContainText(
-    'See what Hedgr prioritizes when interpreting stability',
+    'See the position Hedgr is guiding toward and why',
   );
   await expect(page.getByTestId('engine-allocation-bands-caption')).not.toContainText(
     'these targets',
@@ -95,21 +107,21 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   const rolesDetails = page.getByTestId('engine-allocation-roles-details');
   const valuesDetails = page.getByTestId('engine-allocation-values-details');
   await expect(prioritiesDetails.locator(':scope > summary')).toHaveAccessibleName(
-    'See what Hedgr is trying to understand',
+    'See why these planning targets exist',
   );
   await expect(prioritiesDetails).not.toHaveAttribute('open', '');
   await expect(page.getByTestId('engine-allocation-philosophy')).not.toBeVisible();
-  await prioritiesDetails.getByText('See what Hedgr is trying to understand').click();
+  await prioritiesDetails.getByText('See why these planning targets exist').click();
   await expect(page.getByTestId('engine-allocation-philosophy')).toBeVisible();
   await expect(page.getByTestId('engine-allocation-philosophy')).toContainText(
     'preserve value first, keep access and risk visible',
   );
   await expect(rolesDetails.locator(':scope > summary')).toHaveAccessibleName(
-    'See the role of each priority',
+    'See what each target is for',
   );
   await expect(rolesDetails).not.toHaveAttribute('open', '');
   await expect(page.getByTestId('engine-allocation-target-roles')).not.toBeVisible();
-  await rolesDetails.getByText('See the role of each priority').click();
+  await rolesDetails.getByText('See what each target is for').click();
   const targetRoles = page.getByTestId('engine-allocation-target-roles');
   await expect(targetRoles).toBeVisible();
   await expect(targetRoles).toContainText('Core stability target');
@@ -117,26 +129,29 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   await expect(targetRoles).toContainText('Reserve');
   await expect(targetRoles).not.toContainText(/\d+%/);
   await expect(valuesDetails.locator(':scope > summary')).toHaveAccessibleName(
-    'View simulated target values',
+    'View simulated planning targets',
   );
   await expect(valuesDetails).not.toHaveAttribute('open', '');
   await expect(page.getByTestId('engine-allocation-band-coreTargetPct')).not.toBeVisible();
-  await valuesDetails.getByText('View simulated target values').click();
+  await valuesDetails.getByText('View simulated planning targets').click();
   await expect(page.getByTestId('engine-allocation-targets-intro')).toHaveText(
-    'The percentages below are simulated target values for those roles.',
+    'These percentages describe a simulated planning structure for those roles. They are guidance, not current money.',
   );
   await expect(page.getByTestId('engine-allocation-band-coreTargetPct')).toBeVisible();
   await expect(page.getByTestId('engine-allocation-band-coreTargetPct')).toContainText(
     'Core stability target',
   );
   await expect(page.getByTestId('engine-allocation-band-coreTargetPct')).toContainText(
-    'Stability target · 50%',
+    /Stability target\s*50%/,
   );
+  const targetStructure = page.getByTestId('engine-allocation-structure');
+  await expect(targetStructure.locator('[role="progressbar"]')).toHaveCount(0);
+  await expect(targetStructure).not.toContainText(/[$£€]|funded|account|holding|allocated/i);
   await expect(page.getByTestId('engine-allocation-boundary')).toContainText(
     'context, not an instruction',
   );
   await expect(page.getByTestId('engine-allocation-boundary')).toContainText(
-    'not a balance, holding, account, or proof that money was divided or moved',
+    'does not show current money or prove that simulated money was divided or moved',
   );
   await expect(page.getByTestId('engine-stability-review-snapshot')).toHaveCount(0);
   await expect(page.getByText('Simulation date')).toHaveCount(0);
@@ -239,12 +254,20 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
     'understand what changed and why',
   );
   const activityReconciliation = page.getByTestId('activity-balance-reconciliation');
-  await expect(activityReconciliation).toContainText('Simulated deposits+$5.00');
-  await expect(activityReconciliation).toContainText('Simulated withdrawals−$2.00');
-  await expect(activityReconciliation).toContainText('Remaining simulated balance$3.00');
+  await expect(activityReconciliation).toContainText('+$5.00 deposits');
+  await expect(activityReconciliation).toContainText('$2.00 withdrawals');
+  await expect(activityReconciliation).toContainText('$3.00 remaining');
   await expect(page.getByTestId('activity-type-deposit')).toHaveText('Simulated deposit');
   await expect(page.getByTestId('activity-type-withdraw')).toHaveText(
     'Simulated withdrawal',
+  );
+  await expect(page.getByTestId('activity-delta-deposit')).toHaveText('+$5.00');
+  await expect(page.getByTestId('activity-result-deposit')).toHaveText(
+    '→ $5.00 resulting',
+  );
+  await expect(page.getByTestId('activity-delta-withdraw')).toHaveText('-$2.00');
+  await expect(page.getByTestId('activity-result-withdraw')).toHaveText(
+    '→ $3.00 resulting',
   );
   await expect(
     page.getByTestId('activity-row-withdraw').getByText('0', { exact: true }),
@@ -265,6 +288,9 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
 
   await page.getByRole('link', { name: 'Return to simulated stability view' }).click();
   await expect(page.getByTestId('usd-balance')).toHaveText('$3.00');
+  await expect(page.getByTestId('dashboard-balance-evidence')).toContainText(
+    'ending at $3.00',
+  );
   await expect(page.getByText('Simulated deposit').first()).toBeVisible();
   await expect(page.getByText('Simulated withdrawal').first()).toBeVisible();
   await expect(page.getByRole('link', { name: 'Review Activity' })).toHaveAttribute(

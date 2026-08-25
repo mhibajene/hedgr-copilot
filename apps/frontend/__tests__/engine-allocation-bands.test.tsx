@@ -67,7 +67,7 @@ describe("EngineAllocationBands", () => {
     const caption = screen.getByTestId("engine-allocation-bands-caption")
       .textContent;
     expect(caption).toBe(
-      "See what Hedgr prioritizes when interpreting stability."
+      "See the position Hedgr is guiding toward and why."
     );
 
     const philosophy = screen.getByTestId(
@@ -80,14 +80,15 @@ describe("EngineAllocationBands", () => {
     const boundary = screen.getByTestId("engine-allocation-boundary")
       .textContent;
     expect(boundary).toMatch(/context, not an instruction/i);
-    expect(boundary).toMatch(/balance, holding, account/i);
+    expect(boundary).toMatch(/does not show current money/i);
     expect(boundary).toMatch(/divided or moved/i);
+    expect(boundary).not.toMatch(/funded|account|holding|allocated/i);
 
     const targetsIntro = screen.getByTestId(
       "engine-allocation-targets-intro"
     ).textContent;
-    expect(targetsIntro).toMatch(/simulated target values/i);
-    expect(targetsIntro).toMatch(/those roles/i);
+    expect(targetsIntro).toMatch(/simulated planning structure/i);
+    expect(targetsIntro).toMatch(/guidance, not current money/i);
 
     const roles = screen.getByTestId("engine-allocation-target-roles")
       .textContent;
@@ -99,13 +100,14 @@ describe("EngineAllocationBands", () => {
     const legend = screen.getByTestId(
       "engine-allocation-trust-legend"
     ).textContent;
-    expect(legend).toMatch(/target detail/i);
-    expect(legend).toMatch(/stability targets/i);
+    expect(legend).toMatch(/planning targets/i);
+    expect(legend).toMatch(/target role/i);
     expect(legend).toMatch(/conservative yield/i);
     expect(legend).toMatch(/return opportunity/i);
     expect(legend).toMatch(/percentages do not divide it/i);
     expect(legend).toMatch(/guidance does not tell you what to do/i);
-    expect(legend).toMatch(/divided, held, or moved/i);
+    expect(legend).toMatch(/divide or move simulated money/i);
+    expect(legend).not.toMatch(/funded|account|holding|allocated/i);
     expect(legend).not.toMatch(/fixture|informational posture|settlement/i);
   });
 
@@ -147,7 +149,7 @@ describe("EngineAllocationBands", () => {
     expect(screen.getByText("Stability guidance")).toBeDefined();
     expect(
       screen.getByTestId("engine-allocation-bands-caption").textContent
-    ).toBe("See what Hedgr prioritizes when interpreting stability.");
+    ).toBe("See the position Hedgr is guiding toward and why.");
     const prioritiesDetails = screen.getByTestId(
       "engine-allocation-priorities-details"
     );
@@ -166,22 +168,22 @@ describe("EngineAllocationBands", () => {
     const valuesSummary = valuesDetails.querySelector(":scope > summary");
 
     expect(prioritiesSummary?.textContent).toContain(
-      "See what Hedgr is trying to understand"
+      "See why these planning targets exist"
     );
     expect(rolesSummary?.textContent).toContain(
-      "See the role of each priority"
+      "See what each target is for"
     );
     expect(valuesSummary?.textContent).toContain(
-      "View simulated target values"
+      "View simulated planning targets"
     );
     expect(prioritiesSummary?.textContent?.trim()).toBe(
-      "See what Hedgr is trying to understand"
+      "See why these planning targets exist"
     );
     expect(rolesSummary?.textContent?.trim()).toBe(
-      "See the role of each priority"
+      "See what each target is for"
     );
     expect(valuesSummary?.textContent?.trim()).toBe(
-      "View simulated target values"
+      "View simulated planning targets"
     );
     for (const summary of [prioritiesSummary, rolesSummary, valuesSummary]) {
       expect(summary?.textContent).not.toMatch(/optional/i);
@@ -240,7 +242,7 @@ describe("EngineAllocationBands", () => {
     );
     expect(stableBand.textContent).toMatch(/largest target/i);
     expect(stableBand.textContent).toMatch(/preserving value/i);
-    expect(stableBand.textContent).toMatch(/primary stability target/i);
+    expect(stableBand.textContent).toMatch(/primary stability guidance/i);
 
     const yieldBand = screen.getByTestId("engine-allocation-band-yieldCapPct");
     expect(yieldBand.textContent).toMatch(/limited target/i);
@@ -325,7 +327,7 @@ describe("EngineAllocationBands", () => {
     expect(screen.queryByText(/total \(incl\. pending\)/i)).toBeNull();
   });
 
-  test("keeps the core stability target dominant and both other lanes supporting", () => {
+  test("uses guidance rows rather than funded-container or progress grammar", () => {
     render(<EngineAllocationBands engineState={makeEngineState()} />);
 
     const primary = screen.getByTestId("engine-allocation-band-coreTargetPct");
@@ -334,22 +336,24 @@ describe("EngineAllocationBands", () => {
       "engine-allocation-band-liquidityTargetPct"
     );
 
-    expect(primary.className).toContain("border-l-4");
-    expect(primary.className).toContain("bg-hedgr-800");
-    expect(primary.getAttribute("data-primary-stability-edge")).toBe("true");
-    expect(yieldLane.className).toContain("bg-hedgr-100");
-    expect(reserveLane.className).toContain("bg-hedgr-200");
-    expect(reserveLane.className).not.toContain("bg-hedgr-100");
-    expect(yieldLane.getAttribute("data-supporting-lane-surface")).toBe(
-      "static"
-    );
-    expect(reserveLane.getAttribute("data-supporting-lane-surface")).toBe(
-      "static"
-    );
-    expect(yieldLane.className).not.toContain("border-l-4");
-    expect(reserveLane.className).not.toContain("border-l-4");
-    expect(yieldLane.className).not.toContain("bg-hedgr-800");
-    expect(reserveLane.className).not.toContain("bg-hedgr-800");
+    expect(primary.getAttribute("data-guidance-row")).toBe("true");
+    expect(yieldLane.getAttribute("data-guidance-row")).toBe("true");
+    expect(reserveLane.getAttribute("data-guidance-row")).toBe("true");
+    expect(primary.textContent).toMatch(/primary stability guidance/i);
+    expect(yieldLane.textContent).toMatch(/supporting guidance/i);
+    expect(reserveLane.textContent).toMatch(/supporting guidance/i);
+    expect(
+      primary.compareDocumentPosition(yieldLane) &
+        Node.DOCUMENT_POSITION_FOLLOWING
+    ).toBeTruthy();
+
+    const structure = screen.getByTestId("engine-allocation-structure");
+    expect(structure.tagName).toBe("DL");
+    expect(structure.querySelector('[role="progressbar"]')).toBeNull();
+    expect(structure.textContent).not.toMatch(/[$£€]|funded|account|holding|allocated/i);
+    for (const lane of [primary, yieldLane, reserveLane]) {
+      expect(lane.className).not.toMatch(/rounded|bg-hedgr-(?:100|200|800)/);
+    }
   });
 
   test("keeps supporting-lane surfaces static across postures", () => {
@@ -385,7 +389,7 @@ describe("EngineAllocationBands", () => {
       "engine-allocation-band-liquidityTargetPct",
     ]) {
       expect(screen.getByTestId(testId).textContent).toMatch(
-        /stability target\s*·\s*\d+%/i
+        /stability target\s*\d+%/i
       );
     }
   });
