@@ -2,7 +2,13 @@
 
 import React from 'react';
 import { afterEach, describe, expect, test, vi } from 'vitest';
-import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
+import {
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+  within,
+} from '@testing-library/react';
 
 (globalThis as typeof globalThis & { React: typeof React }).React = React;
 
@@ -23,7 +29,7 @@ const activityStateMocks = vi.hoisted(() => ({
 vi.mock('../lib/state/ledger', () => ({
   useLedgerStore: vi.fn(
     (selector: (state: { transactions: unknown[] }) => unknown) =>
-      selector({ transactions: activityStateMocks.transactions }),
+      selector({ transactions: activityStateMocks.transactions })
   ),
 }));
 
@@ -32,7 +38,11 @@ vi.mock('next/navigation', () => ({
 }));
 
 vi.mock('next/link', () => ({
-  default: ({ href, children, ...props }: React.AnchorHTMLAttributes<HTMLAnchorElement>) => (
+  default: ({
+    href,
+    children,
+    ...props
+  }: React.AnchorHTMLAttributes<HTMLAnchorElement>) => (
     <a href={typeof href === 'string' ? href : ''} {...props}>
       {children}
     </a>
@@ -109,7 +119,7 @@ afterEach(() => {
   vi.mocked(useSearchParams).mockReturnValue(
     new URLSearchParams('journey=class-a-val-002') as ReturnType<
       typeof useSearchParams
-    >,
+    >
   );
 });
 
@@ -119,25 +129,39 @@ describe('ActivityPage synthetic evidence grammar', () => {
 
     render(<ActivityPage />);
 
+    const condition = screen.getByTestId('activity-synthetic-condition');
+    expect(condition.textContent).toContain('What happened');
+    expect(condition.textContent).toContain(
+      'Activity records each simulated event and the resulting amount.'
+    );
+    expect(condition.textContent).not.toMatch(/interpret|what it means|why/i);
+
     expect(screen.getByTestId('activity-result-deposit').textContent).toBe(
-      '→ $5.00 resulting',
+      '→ $5.00 resulting'
     );
     expect(screen.getByTestId('activity-result-withdraw').textContent).toBe(
-      '→ $3.00 resulting',
+      '→ $3.00 resulting'
     );
-    expect(screen.getByTestId('activity-reconciliation-deposits').textContent).toBe(
-      '+$5.00 deposits',
-    );
-    expect(screen.getByTestId('activity-reconciliation-withdrawals').textContent).toBe(
-      '$2.00 withdrawals',
-    );
-    expect(screen.getByTestId('activity-reconciliation-remaining').textContent).toBe(
-      '$3.00 remaining',
-    );
+    expect(
+      screen.getByTestId('activity-reconciliation-deposits').textContent
+    ).toBe('+$5.00 deposits');
+    expect(
+      screen.getByTestId('activity-reconciliation-withdrawals').textContent
+    ).toBe('$2.00 withdrawals');
+    expect(
+      screen.getByTestId('activity-reconciliation-remaining').textContent
+    ).toBe('$3.00 remaining');
+    expect(
+      screen
+        .getByRole('link', { name: 'Return to current position' })
+        .getAttribute('href')
+    ).toBe('/dashboard-synthetic-journey');
 
     const pendingDeposit = screen
       .getAllByTestId('activity-row-deposit')
-      .find((row) => row.getAttribute('data-activity-status') === 'PENDING_INIT');
+      .find(
+        (row) => row.getAttribute('data-activity-status') === 'PENDING_INIT'
+      );
     const failedWithdrawal = screen
       .getAllByTestId('activity-row-withdraw')
       .find((row) => row.getAttribute('data-activity-status') === 'FAILED');
@@ -150,7 +174,7 @@ describe('ActivityPage synthetic evidence grammar', () => {
     fireEvent.click(screen.getByTestId('filter-withdrawals'));
 
     expect(screen.getByTestId('activity-result-withdraw').textContent).toBe(
-      '→ $3.00 resulting',
+      '→ $3.00 resulting'
     );
     expect(screen.queryByTestId('activity-result-deposit')).toBeNull();
   });
@@ -158,7 +182,7 @@ describe('ActivityPage synthetic evidence grammar', () => {
   test('does not add resulting-balance treatment outside the governed synthetic journey', () => {
     activityStateMocks.transactions = makeMixedTransactions();
     vi.mocked(useSearchParams).mockReturnValue(
-      new URLSearchParams() as ReturnType<typeof useSearchParams>,
+      new URLSearchParams() as ReturnType<typeof useSearchParams>
     );
 
     render(<ActivityPage />);

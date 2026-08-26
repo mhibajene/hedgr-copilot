@@ -57,7 +57,9 @@ test("2 · login page renders and mock auth redirects to dashboard", async ({
   await expect(page.getByPlaceholder("you@example.com")).toBeVisible();
 
   await loginMock(page);
-  await expect(page.getByText("Simulated balance", { exact: true })).toBeVisible();
+  await expect(
+    page.getByText("Your current position", { exact: true })
+  ).toBeVisible();
 });
 
 test("3 · dashboard shows balance after login", async ({ page }) => {
@@ -91,59 +93,47 @@ test("4 · dashboard shows human-readable stability context after login", async 
   const postureContextText = await postureContext.textContent();
   expect(postureContextText?.trim().length).toBeGreaterThan(0);
   expect(postureContextText).toBe(
-    "Hedgr's qualitative reading of the existing simulated inputs shows no important change."
+    "Nothing to compare yet. A first completed simulated event will create a starting point."
   );
   for (const forbidden of heldOrRejectedPrimaryTerms) {
     expect(postureContextText).not.toMatch(forbidden);
   }
 
   await expect(page.getByText("Does anything need attention?")).toBeVisible();
-  await expect(page.getByTestId("engine-simulation-attention-answer")).toHaveText(
-    "No important change shown"
-  );
+  await expect(
+    page.getByTestId("engine-simulation-attention-answer")
+  ).toHaveText("There is not enough information to compare yet.");
   await expect(page.getByTestId("dashboard-current-status")).toContainText(
-    "Stability Status"
+    "What Hedgr notices"
   );
   await expect(page.getByTestId("dashboard-current-status")).not.toContainText(
-    /score|gauge|safe|guarantee/i
+    /score|gauge|safe|all clear/i
   );
   await expect(page.getByTestId("engine-posture-badge")).toHaveCount(0);
 
-  await expect(page.getByTestId("engine-stability-review-snapshot")).toHaveCount(0);
+  await expect(
+    page.getByTestId("engine-stability-review-snapshot")
+  ).toHaveCount(0);
   await expect(page.getByText("Simulation date")).toHaveCount(0);
   await expect(page.getByText("Last viewed locally")).toHaveCount(0);
 
   const allocationBands = page.getByTestId("engine-allocation-bands");
   await expect(allocationBands).toBeVisible({ timeout: 10_000 });
-  await expect(allocationBands).toHaveAttribute("data-presentation", "collapsed");
+  await expect(allocationBands).toHaveAttribute(
+    "data-presentation",
+    "collapsed"
+  );
   await expect(
-    allocationBands.getByRole("heading", { name: "Stability guidance" })
+    allocationBands.getByRole("heading", {
+      name: "What you are building toward",
+    })
   ).toBeVisible();
-  await expect(allocationBands).toContainText(
-    "These targets are guidance, not current money"
-  );
-  const prioritiesDetails = page.getByTestId(
-    "engine-allocation-priorities-details"
-  );
-  const prioritiesSummary = prioritiesDetails.locator(":scope > summary");
-  await expect(prioritiesDetails).not.toHaveAttribute("open", "");
-  await prioritiesSummary.focus();
-  await expect(prioritiesSummary).toBeFocused();
-  await prioritiesSummary.press("Enter");
-  await expect(prioritiesDetails).toHaveAttribute("open", "");
-  await expect(page.getByTestId("engine-allocation-philosophy")).toContainText(
-    "preserve value first, keep access and risk visible"
-  );
-
-  const rolesDetails = page.getByTestId("engine-allocation-roles-details");
-  const rolesSummary = rolesDetails.locator(":scope > summary");
-  await expect(rolesDetails).not.toHaveAttribute("open", "");
-  await rolesSummary.focus();
-  await expect(rolesSummary).toBeFocused();
-  await rolesSummary.press("Enter");
-  await expect(rolesDetails).toHaveAttribute("open", "");
+  await expect(allocationBands).toContainText("not money set aside");
   const targetRoles = page.getByTestId("engine-allocation-target-roles");
   await expect(targetRoles).toBeVisible();
+  await expect(targetRoles).toContainText("Now");
+  await expect(targetRoles).toContainText("Reserve");
+  await expect(targetRoles).toContainText("Growth");
   await expect(targetRoles).not.toContainText(/\d+%/);
 
   const valuesDetails = page.getByTestId("engine-allocation-values-details");
@@ -154,46 +144,33 @@ test("4 · dashboard shows human-readable stability context after login", async 
   await valuesSummary.press("Enter");
   await expect(valuesDetails).toHaveAttribute("open", "");
   await expect(page.getByTestId("engine-allocation-boundary")).toContainText(
-    "context, not an instruction"
+    "not separate balances"
   );
   const allocationBandsText = await allocationBands.textContent();
   expect(allocationBandsText?.trim().length).toBeGreaterThan(0);
-  expect(allocationBandsText).toContain("Core stability target");
-  expect(allocationBandsText).not.toContain("Stable balance");
-  expect(allocationBandsText).toContain("Conservative yield");
+  expect(allocationBandsText).toContain("Now");
   expect(allocationBandsText).toContain("Reserve");
-  expect(allocationBandsText).toContain("Planning targets");
-  expect(allocationBandsText).toContain("Guidance only");
-  expect(allocationBandsText).toContain("Current state");
-  expect(allocationBandsText).toContain("The percentages do not divide it");
-  expect(allocationBandsText).toContain("No instruction or movement");
+  expect(allocationBandsText).toContain("Growth");
   expect(allocationBandsText).toContain(
-    "a target does not divide or move simulated money"
+    "do not divide or move simulated money"
   );
   const targetStructure = page.getByTestId("engine-allocation-structure");
   await expect(targetStructure.locator('[role="progressbar"]')).toHaveCount(0);
   await expect(targetStructure).not.toContainText(
     /[$£€]|funded|account|holding|allocated/i
   );
-  await expect(page.getByTestId("engine-allocation-band-coreTargetPct")).toContainText(
-    /Stability target\s*50%/
-  );
-  await expect(page.getByTestId("engine-allocation-band-yieldCapPct")).toContainText(
-    /Stability target\s*20%/
-  );
+  await expect(
+    page.getByTestId("engine-allocation-band-coreTargetPct")
+  ).toContainText(/Now\s*50%/);
+  await expect(
+    page.getByTestId("engine-allocation-band-yieldCapPct")
+  ).toContainText(/Growth\s*20%/);
   await expect(
     page.getByTestId("engine-allocation-band-liquidityTargetPct")
-  ).toContainText(/Stability target\s*30%/);
-  const targetDistinction = page.getByTestId(
-    "engine-allocation-target-details"
+  ).toContainText(/Reserve\s*30%/);
+  await expect(page.getByTestId("dashboard-optional-actions")).toContainText(
+    "Do nothing"
   );
-  const targetDistinctionSummary = targetDistinction.locator(
-    ":scope > summary"
-  );
-  await targetDistinctionSummary.focus();
-  await expect(targetDistinctionSummary).toBeFocused();
-  await targetDistinctionSummary.press("Enter");
-  await expect(targetDistinction).toHaveAttribute("open", "");
 
   const allocationExecutionDriftTerms = [
     /\bexecuted allocation\b/i,
@@ -230,22 +207,31 @@ test("6 · deposit page is functional", async ({ page }) => {
   await expect(page.getByRole("button", { name: "Confirm" })).toBeVisible();
 });
 
-test("7 · nav links allow traversal of critical routes", async ({ page }) => {
+test("7 · synthetic primary nav leads with position, evidence, and settings", async ({
+  page,
+}) => {
   await page.goto("/");
   await clearStorage(page);
   await loginMock(page);
 
   const nav = page.getByTestId("app-nav");
   await expect(nav).toBeVisible();
+  await page.goto("/dashboard-synthetic-journey");
 
-  for (const label of [
-    "Deposit",
-    "Withdraw",
-    "Activity",
-    "Settings",
-    "Dashboard",
-  ]) {
-    await page.getByRole("link", { name: label, exact: true }).click();
-    await expect(page).toHaveURL(new RegExp(`/${label.toLowerCase()}`));
-  }
+  const primaryNav = page.getByTestId("nav-links");
+  await expect(
+    primaryNav.getByRole("link", { name: "Home", exact: true })
+  ).toHaveAttribute("href", "/dashboard-synthetic-journey");
+  await expect(
+    primaryNav.getByRole("link", { name: "Activity", exact: true })
+  ).toHaveAttribute("href", "/activity?journey=class-a-val-002");
+  await expect(
+    primaryNav.getByRole("link", { name: "Settings", exact: true })
+  ).toHaveAttribute("href", "/settings");
+  await expect(
+    primaryNav.getByRole("link", { name: "Deposit", exact: true })
+  ).toHaveCount(0);
+  await expect(
+    primaryNav.getByRole("link", { name: "Withdraw", exact: true })
+  ).toHaveCount(0);
 });
