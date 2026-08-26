@@ -111,11 +111,10 @@ test.describe('Balance SSoT - Ledger as Single Source of Truth', () => {
     const confirmationMsg = page.getByTestId('deposit-confirmed');
     await expect(confirmationMsg).toBeVisible({ timeout: 10000 });
 
-    // Navigate to activity page using nav link
-    await page
-      .getByTestId('nav-links')
-      .getByRole('link', { name: 'Activity', exact: true })
-      .click();
+    // Exercise the preserved non-synthetic lifecycle surface explicitly. The
+    // scenario flag disables the dev-only synthetic default without entering
+    // the governed journey because no journey marker is present.
+    await page.goto('/activity?scenario=unavailable-data');
     await expect(page).toHaveURL(/\/activity/);
 
     // Should see the deposit entry using unambiguous test IDs

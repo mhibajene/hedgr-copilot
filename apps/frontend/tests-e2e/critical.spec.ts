@@ -136,8 +136,9 @@ test('activity page shows confirmed transactions', async ({ page }) => {
   const withdrawStatus = page.getByTestId('withdraw-status-region');
   await expect(withdrawStatus).toHaveAttribute('data-status', 'SUCCESS', { timeout: 6000 });
 
-  // Check Activity page shows two CONFIRMED entries
-  await page.goto('/activity');
+  // Check the preserved non-synthetic Activity lifecycle surface. Without a
+  // journey marker, this query only disables the dev-only synthetic default.
+  await page.goto('/activity?scenario=unavailable-data');
   await expect(page.getByRole('heading', { name: 'Activity', exact: true })).toBeVisible();
   
   // Wait for activity list to appear

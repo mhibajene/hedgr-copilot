@@ -3,6 +3,7 @@ import { waitForDepositFxReady } from './helpers/fx-ready';
 
 // Block analytics and external calls for test hermeticity
 const ANALYTICS_HOSTS = [/posthog\./i, /sentry\./i];
+const NON_SYNTHETIC_ACTIVITY_PATH = '/activity?scenario=unavailable-data';
 
 test.beforeEach(async ({ context }) => {
   await context.route('**/*', (route) => {
@@ -44,8 +45,10 @@ test.describe('Transaction Lifecycle - Activity Display', () => {
     const confirmationMsg = page.getByTestId('deposit-confirmed');
     await expect(confirmationMsg).toBeVisible({ timeout: 10000 });
 
-    // Navigate to activity
-    await page.getByRole('link', { name: 'Activity' }).click();
+    // Exercise the preserved non-synthetic lifecycle surface explicitly. The
+    // scenario flag disables the dev-only synthetic default without entering
+    // the governed journey because no journey marker is present.
+    await page.goto(NON_SYNTHETIC_ACTIVITY_PATH);
     await expect(page).toHaveURL(/\/activity/);
 
     // Verify activity list is shown
@@ -72,7 +75,7 @@ test.describe('Transaction Lifecycle - Activity Display', () => {
 
     // Verify transaction type in modal
     const txType = page.getByTestId('tx-detail-type');
-    await expect(txType).toHaveText('Simulated deposit');
+    await expect(txType).toHaveText('Deposit');
 
     // Verify amount is shown
     const txAmount = page.getByTestId('tx-detail-amount');
@@ -119,7 +122,7 @@ test.describe('Transaction Lifecycle - Activity Display', () => {
     });
 
     // Navigate to activity
-    await page.goto('/activity');
+    await page.goto(NON_SYNTHETIC_ACTIVITY_PATH);
 
     // Verify activity list is shown
     const activityList = page.getByTestId('activity-list');
@@ -181,7 +184,7 @@ test.describe('Transaction Lifecycle - Activity Display', () => {
     });
 
     // Navigate to activity
-    await page.goto('/activity');
+    await page.goto(NON_SYNTHETIC_ACTIVITY_PATH);
 
     // Verify activity list is shown
     const activityList = page.getByTestId('activity-list');
@@ -207,7 +210,7 @@ test.describe('Transaction Lifecycle - Activity Display', () => {
 
     // Verify transaction type
     const txType = page.getByTestId('tx-detail-type');
-    await expect(txType).toHaveText('Simulated withdrawal');
+    await expect(txType).toHaveText('Withdrawal');
 
     // Verify timeline shows failed state
     const failedStep = page.getByTestId('timeline-step-FAILED');
@@ -256,7 +259,7 @@ test.describe('Transaction Lifecycle - Activity Display', () => {
       window.localStorage.setItem('hedgr:ledger', JSON.stringify(ledgerState));
     });
 
-    await page.goto('/activity');
+    await page.goto(NON_SYNTHETIC_ACTIVITY_PATH);
 
     // Get all status pills on the page
     await expect(page.getByTestId('activity-list')).toBeVisible();
@@ -309,7 +312,7 @@ test.describe('Transaction Lifecycle - Activity Display', () => {
     await page.getByRole('button', { name: 'Confirm' }).click();
     await expect(page.getByTestId('deposit-confirmed')).toBeVisible({ timeout: 10000 });
 
-    await page.getByRole('link', { name: 'Activity' }).click();
+    await page.goto(NON_SYNTHETIC_ACTIVITY_PATH);
 
     // Verify data-testid="tx-status-pill" is present
     const statusPill = page.getByTestId('tx-status-pill').first();
@@ -350,7 +353,7 @@ test.describe('Transaction Lifecycle - Activity Display', () => {
       );
     });
 
-    await page.goto('/activity');
+    await page.goto(NON_SYNTHETIC_ACTIVITY_PATH);
 
     // Click transaction row to open modal
     const txRow = page.getByTestId('activity-row-deposit').first();
