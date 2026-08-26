@@ -7,6 +7,8 @@ export const CLASS_A_VAL_002_JOURNEY_VALUE = 'class-a-val-002';
 export const CLASS_A_VAL_002_DASHBOARD_PATH = '/dashboard-synthetic-journey';
 export const CLASS_A_VAL_002_SCENARIO_PARAM = 'scenario';
 export const CLASS_A_VAL_002_UNAVAILABLE_DATA_SCENARIO = 'unavailable-data';
+export const CLASS_A_VAL_002_RESET_PARAM = 'reset';
+export const CLASS_A_VAL_002_RESET_VALUE = '1';
 
 function getSearchParams(search?: string): URLSearchParams {
   if (!search) return new URLSearchParams();
@@ -56,6 +58,19 @@ export function isSyntheticJourneyUnavailableDataScenario(search?: string): bool
     params.get(CLASS_A_VAL_002_JOURNEY_PARAM) === CLASS_A_VAL_002_JOURNEY_VALUE &&
     params.get(CLASS_A_VAL_002_SCENARIO_PARAM) ===
       CLASS_A_VAL_002_UNAVAILABLE_DATA_SCENARIO
+  );
+}
+
+/**
+ * One-shot participant-entry marker. The Dashboard consumes and removes it
+ * after clearing only the local synthetic wallet and Activity fixture.
+ */
+export function isSyntheticJourneyResetRequested(search?: string): boolean {
+  if (!isSyntheticJourneyEnvironment()) return false;
+
+  return (
+    getSearchParams(search).get(CLASS_A_VAL_002_RESET_PARAM) ===
+    CLASS_A_VAL_002_RESET_VALUE
   );
 }
 

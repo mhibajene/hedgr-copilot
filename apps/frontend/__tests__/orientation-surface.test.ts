@@ -57,7 +57,9 @@ describe('CLASS-A-VAL-002-ORIENT-002 orientation surface copy', () => {
   test('continues into the existing synthetic journey without inventing a live capability path', () => {
     expect(ORIENTATION_PATH).toBe('/orientation');
     expect(ORIENTATION_SURFACE.continue.href).toBe(ORIENTATION_CONTINUE_HREF);
-    expect(ORIENTATION_CONTINUE_HREF).toBe('/dashboard-synthetic-journey');
+    expect(ORIENTATION_CONTINUE_HREF).toBe(
+      '/dashboard-synthetic-journey?reset=1',
+    );
     expect(ORIENTATION_LEGACY_FALLBACK_HREF).toBe(
       '/dashboard?journey=class-a-val-002',
     );

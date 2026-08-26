@@ -112,7 +112,11 @@ function DisclosureList({
       <h2 id="policy-disclosures-heading" className="sr-only">
         Important disclosures
       </h2>
-      <ul className="text-xs text-gray-500 space-y-1 list-disc list-inside">
+      <ul
+        className={`list-inside list-disc space-y-2 leading-relaxed text-gray-500 ${
+          context === 'synthetic-research' ? 'text-sm' : 'text-xs'
+        }`}
+      >
         {ordered.map((key) => (
           <li key={key} data-disclosure-key={key}>
             {copy[key]}

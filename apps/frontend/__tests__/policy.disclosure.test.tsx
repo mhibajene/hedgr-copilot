@@ -214,6 +214,9 @@ describe('PolicyDisclosure', () => {
     ]);
 
     const combined = items.map((item) => item.textContent).join(' ');
+    expect(
+      screen.getByTestId('policy-disclosures').querySelector('ul')?.className,
+    ).toContain('text-sm');
     expect(combined).toContain('not a live service');
     expect(combined).toContain('No real money is held or moved');
     expect(combined).not.toMatch(

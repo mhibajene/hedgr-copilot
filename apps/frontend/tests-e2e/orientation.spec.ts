@@ -56,7 +56,7 @@ test.describe('CLASS-A-VAL-002-ORIENT-002 orientation surface', () => {
     await expect(continueLink).toHaveText(ORIENTATION_SURFACE.continue.label);
     await expect(continueLink).toHaveAttribute(
       'href',
-      '/dashboard-synthetic-journey',
+      '/dashboard-synthetic-journey?reset=1',
     );
     await expect(surface).toContainText('not a deposit prompt');
   });

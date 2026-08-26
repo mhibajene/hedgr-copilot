@@ -1,8 +1,49 @@
 import { expect, test, type Page } from '@playwright/test';
 
+const browserErrors = new WeakMap<Page, string[]>();
+
 async function clearStorage(page: Page) {
   await page.goto('/');
   await page.evaluate(() => window.localStorage.clear());
+}
+
+async function seedCompletedJourneyStorage(page: Page) {
+  await page.goto('/');
+  await page.evaluate(() => {
+    window.localStorage.clear();
+    window.localStorage.setItem(
+      'hedgr:ledger',
+      JSON.stringify({
+        version: 2,
+        transactions: [
+          {
+            txn_ref: 'stale-deposit',
+            type: 'deposit',
+            status: 'settled',
+            amount_zmw: 100,
+            amount_usd: 5,
+            fx_rate: 20,
+            created_at: 1,
+            updated_at: 2,
+          },
+          {
+            txn_ref: 'stale-withdrawal',
+            type: 'withdrawal',
+            status: 'settled',
+            amount_zmw: 0,
+            amount_usd: 2,
+            fx_rate: 0,
+            created_at: 3,
+            updated_at: 4,
+          },
+        ],
+      })
+    );
+    window.localStorage.setItem(
+      'hedgr:wallet',
+      JSON.stringify({ state: { usdBalance: 3 }, version: 0 })
+    );
+  });
 }
 
 async function login(page: Page) {
@@ -18,7 +59,19 @@ async function login(page: Page) {
   await expect(page).toHaveURL(/\/dashboard-synthetic-journey$/);
 }
 
-test.beforeEach(async ({ context }) => {
+test.beforeEach(async ({ context, page }) => {
+  const errors: string[] = [];
+  browserErrors.set(page, errors);
+  page.on('pageerror', (error) => errors.push(`page: ${error.message}`));
+  page.on('console', (message) => {
+    if (
+      message.type() === 'error' &&
+      message.text() !== 'Failed to load resource: net::ERR_FAILED'
+    ) {
+      errors.push(`console: ${message.text()}`);
+    }
+  });
+
   await context.route('**/*', (route) => {
     const url = new URL(route.request().url());
     const isLocal = ['localhost', '127.0.0.1', '::1'].includes(url.hostname);
@@ -27,6 +80,10 @@ test.beforeEach(async ({ context }) => {
     if (url.pathname === '/v1/fx/latest') return route.abort();
     return route.continue();
   });
+});
+
+test.afterEach(async ({ page }) => {
+  expect(browserErrors.get(page) ?? []).toEqual([]);
 });
 
 test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity with consistent simulated records', async ({
@@ -39,12 +96,21 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
     }
   });
 
-  await clearStorage(page);
+  await seedCompletedJourneyStorage(page);
   await login(page);
 
+  const persistedStart = await page.evaluate(() => ({
+    ledger: JSON.parse(window.localStorage.getItem('hedgr:ledger') ?? '{}'),
+    wallet: JSON.parse(window.localStorage.getItem('hedgr:wallet') ?? '{}'),
+  }));
+  expect(persistedStart.ledger.transactions).toEqual([]);
+  expect(persistedStart.wallet.state.usdBalance).toBe(0);
   await expect(page.getByTestId('trust-disclosure-banner')).toContainText(
-    'Simulation Mode. No Real Money'
+    'Simulation · no real money'
   );
+  await expect(
+    page.getByRole('region', { name: 'Simulation disclosure' })
+  ).toBeVisible();
   const simulationDetails = page.getByTestId('simulation-technical-details');
   await expect(simulationDetails).not.toHaveAttribute('open', '');
   await simulationDetails.getByText('How this simulation works').click();
@@ -56,7 +122,7 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   );
   await expect(simulationDetails).not.toContainText(/Auth:|DeFi:|FX:/);
   const currencyDisplay = page.getByLabel('Simulation currency display');
-  if (process.env.NEXT_PUBLIC_ENABLE_MARKET_SWITCHER === 'true') {
+  if ((await currencyDisplay.count()) === 1) {
     await expect(currencyDisplay).toContainText(
       'Currency display: Zambia (ZMW)'
     );
@@ -67,7 +133,7 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
     page.getByRole('button', { name: 'Dismiss trust disclosure' })
   ).toHaveCount(0);
   const journeyShell = page.getByTestId('synthetic-journey-shell');
-  await expect(journeyShell).toContainText('Simulation · no real money');
+  await expect(journeyShell).not.toContainText('Simulation · no real money');
   await expect(journeyShell).not.toContainText('CLASS-A-VAL-002');
   await expect(journeyShell).toContainText('your position');
   await expect(journeyShell).toContainText('See where you stand');
@@ -84,7 +150,10 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   ).toHaveAttribute('href', '/activity?journey=class-a-val-002');
   await expect(
     primaryNav.getByRole('link', { name: 'Settings', exact: true })
-  ).toHaveAttribute('href', '/settings');
+  ).toHaveCount(0);
+  await expect(
+    primaryNav.getByRole('link', { name: 'Copilot', exact: true })
+  ).toHaveCount(0);
   await expect(
     primaryNav.getByRole('link', { name: 'Deposit', exact: true })
   ).toHaveCount(0);
@@ -109,7 +178,7 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   );
   await expect(dashboardOrientation).toContainText('not an instruction');
   await expect(dashboardOrientation).toContainText(
-    'not an instruction or proof that money moved'
+    'This walkthrough provides context, not an instruction.'
   );
   await expect(dashboardOrientation).not.toContainText(
     /crypto|blockchain|stablecoin|DeFi|trading|yield routing/i
@@ -120,7 +189,7 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   ).toBeVisible();
   await expect(
     page.getByTestId('dashboard-synthetic-balance-explainer')
-  ).toContainText('Not a real balance');
+  ).toHaveText('Illustrative position only.');
   await expect(page.getByTestId('dashboard-change-evidence')).toHaveAttribute(
     'data-comparison-state',
     'empty'
@@ -366,21 +435,37 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   ).toHaveCount(0);
   await expect(
     page.locator('[data-testid="tx-status-pill"][data-status="SUCCESS"]')
-  ).toHaveCount(2);
+  ).toHaveCount(0);
 
-  await page.getByTestId('activity-row-withdraw').click();
+  const withdrawalRow = page.getByTestId('activity-row-withdraw');
+  await withdrawalRow.click();
   await expect(page.getByTestId('tx-detail-type')).toHaveText(
     'Simulated withdrawal'
   );
-  await expect(page.getByText('Simulation record ID')).toBeVisible();
-  await expect(page.getByText('Simulated step status')).toBeVisible();
+  await expect(page.getByTestId('tx-detail-close')).toBeFocused();
+  await expect(page.getByTestId('tx-detail-amount')).toContainText('−$2.00');
+  await expect(page.getByText('Time')).toBeVisible();
+  await expect(page.getByText('Context')).toBeVisible();
+  await expect(page.getByTestId('tx-detail-resulting-position')).toHaveText(
+    '$3.00'
+  );
+  await expect(page.getByTestId('tx-detail-id')).toHaveCount(0);
+  await expect(page.getByTestId('tx-detail-timeline')).toHaveCount(0);
   await expect(page.getByTestId('tx-detail-simulation-note')).toContainText(
-    'not a bank or payment provider record'
+    'No real money moved'
   );
   await expect(
     page.getByTestId('tx-detail-modal').getByText('0', { exact: true })
   ).toHaveCount(0);
-  await page.getByTestId('tx-detail-close').click();
+  await page.keyboard.press('Shift+Tab');
+  await expect(
+    page.getByRole('button', { name: 'Close', exact: true })
+  ).toBeFocused();
+  await page.keyboard.press('Tab');
+  await expect(page.getByTestId('tx-detail-close')).toBeFocused();
+  await page.keyboard.press('Escape');
+  await expect(page.getByTestId('tx-detail-modal')).toHaveCount(0);
+  await expect(withdrawalRow).toBeFocused();
 
   await page.getByRole('link', { name: 'Return to current position' }).click();
   await expect(page.getByTestId('usd-balance')).toHaveText('$3.00');
@@ -442,7 +527,7 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   await expect(page.getByTestId('activity-type-withdraw')).toHaveCount(1);
   await expect(
     page.locator('[data-testid="tx-status-pill"][data-status="SUCCESS"]')
-  ).toHaveCount(2);
+  ).toHaveCount(0);
   await page.getByRole('link', { name: 'Return to current position' }).click();
   await expect(page.getByTestId('usd-balance')).toHaveText('$3.00');
   await expect(
@@ -482,13 +567,32 @@ test('mobile keeps the persistent boundary and current research step visible', a
     page.getByRole('link', { name: /Start first simulated event/ })
   ).toBeVisible();
 
-  await page.getByTestId('nav-toggle').click();
+  const visiblePageMetrics = await page.evaluate(() => ({
+    documentWidth: document.documentElement.scrollWidth,
+    viewportWidth: document.documentElement.clientWidth,
+  }));
+  expect(visiblePageMetrics.documentWidth).toBeLessThanOrEqual(
+    visiblePageMetrics.viewportWidth
+  );
+  const currentOverviewBox = await page
+    .getByTestId('dashboard-current-overview')
+    .boundingBox();
+  const planningBox = await page
+    .getByTestId('engine-allocation-bands')
+    .boundingBox();
+  expect(currentOverviewBox?.y).toBeLessThan(844);
+  expect(planningBox?.y).toBeLessThan(844 * 2);
+
+  const navToggle = page.getByTestId('nav-toggle');
+  const navToggleBox = await navToggle.boundingBox();
+  expect(navToggleBox?.width).toBeGreaterThanOrEqual(44);
+  expect(navToggleBox?.height).toBeGreaterThanOrEqual(44);
+  await navToggle.click();
   const mobileNav = page.getByTestId('nav-links-mobile');
   await expect(mobileNav).toBeVisible();
   for (const [label, href] of [
     ['Home', '/dashboard-synthetic-journey'],
     ['Activity', '/activity?journey=class-a-val-002'],
-    ['Settings', '/settings'],
   ]) {
     const navLink = mobileNav.getByRole('link', { name: label, exact: true });
     await expect(navLink).toBeVisible();
@@ -499,5 +603,11 @@ test('mobile keeps the persistent boundary and current research step visible', a
   ).toHaveCount(0);
   await expect(
     mobileNav.getByRole('link', { name: 'Withdraw', exact: true })
+  ).toHaveCount(0);
+  await expect(
+    mobileNav.getByRole('link', { name: 'Settings', exact: true })
+  ).toHaveCount(0);
+  await expect(
+    mobileNav.getByRole('link', { name: 'Copilot', exact: true })
   ).toHaveCount(0);
 });

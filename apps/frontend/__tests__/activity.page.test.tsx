@@ -132,7 +132,7 @@ describe('ActivityPage synthetic evidence grammar', () => {
     const condition = screen.getByTestId('activity-synthetic-condition');
     expect(condition.textContent).toContain('What happened');
     expect(condition.textContent).toContain(
-      'Activity records each simulated event and the resulting amount.'
+      'Each event shows what changed and the resulting position.'
     );
     expect(condition.textContent).not.toMatch(/interpret|what it means|why/i);
 
@@ -170,6 +170,11 @@ describe('ActivityPage synthetic evidence grammar', () => {
     expect(failedWithdrawal).toBeDefined();
     expect(within(pendingDeposit!).queryByText(/resulting/i)).toBeNull();
     expect(within(failedWithdrawal!).queryByText(/resulting/i)).toBeNull();
+    expect(
+      screen
+        .queryAllByTestId('tx-status-pill')
+        .map((pill) => pill.getAttribute('data-status'))
+    ).not.toContain('SUCCESS');
 
     fireEvent.click(screen.getByTestId('filter-withdrawals'));
 

@@ -4,6 +4,7 @@ import {
   getSyntheticJourneyRate,
   isSyntheticJourneyEnvironment,
   isSyntheticJourneyPrimaryCondition,
+  isSyntheticJourneyResetRequested,
   isSyntheticJourneyUnavailableDataScenario,
 } from '../lib/state/synthetic-journey';
 
@@ -56,6 +57,16 @@ describe('CLASS-A-VAL-002 synthetic journey state', () => {
 
     expect(isSyntheticJourneyPrimaryCondition(search)).toBe(false);
     expect(isSyntheticJourneyUnavailableDataScenario(search)).toBe(true);
+  });
+
+  test('recognizes only the bounded one-shot clean-start marker', () => {
+    stubSyntheticEnvironment();
+
+    expect(isSyntheticJourneyResetRequested('?reset=1')).toBe(true);
+    expect(isSyntheticJourneyResetRequested('?reset=0')).toBe(false);
+
+    vi.stubEnv('NEXT_PUBLIC_AUTH_MODE', 'magic');
+    expect(isSyntheticJourneyResetRequested('?reset=1')).toBe(false);
   });
 
   test('builds bounded route links and uses governed fixed preview rates', () => {

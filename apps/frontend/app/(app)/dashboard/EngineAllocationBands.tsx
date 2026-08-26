@@ -132,7 +132,7 @@ export function EngineAllocationBands({
       </p>
 
       <details data-testid="engine-allocation-values-details">
-        <summary className="cursor-pointer text-sm font-medium text-hedgr-600 underline decoration-hedgr-200 underline-offset-4">
+        <summary className="inline-flex min-h-11 cursor-pointer items-center text-sm font-medium text-hedgr-600 underline decoration-hedgr-200 underline-offset-4">
           View planning percentages
         </summary>
         <dl
@@ -285,7 +285,7 @@ export function EngineAllocationBands({
           className="mt-3"
           data-testid="engine-allocation-target-details"
         >
-          <summary className="cursor-pointer font-medium text-hedgr-600 underline decoration-hedgr-200 underline-offset-4">
+          <summary className="inline-flex min-h-11 cursor-pointer items-center font-medium text-hedgr-600 underline decoration-hedgr-200 underline-offset-4">
             Verify what stability targets mean
           </summary>
           <div className="mt-3 space-y-2 border-l border-hedgr-200 pl-3">

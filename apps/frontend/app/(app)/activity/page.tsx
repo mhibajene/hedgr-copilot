@@ -152,7 +152,10 @@ function ActivityRow({
               : 'Withdrawal'}
           </span>
           <div className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1">
-            <TxStatusPill status={tx.status} />
+            {!syntheticJourneyActive ||
+            tx.status !== PublicTxStatus.SUCCESS ? (
+              <TxStatusPill status={tx.status} />
+            ) : null}
             <span className="text-sm text-hedgr-500">
               {formatTime(tx.createdAt)}
             </span>
@@ -374,9 +377,7 @@ export default function ActivityPage() {
             Evidence behind the current position
           </h2>
           <p className="mt-1 text-sm leading-relaxed text-hedgr-dark">
-            Activity records each simulated event and the resulting amount.
-            “Completed” means only that the simulated step finished. It does not
-            mean a bank transfer or real payout occurred.
+            Each event shows what changed and the resulting position.
           </p>
         </section>
       ) : null}
@@ -445,7 +446,7 @@ export default function ActivityPage() {
             <button
               key={f}
               onClick={() => setFilter(f)}
-              className={`px-4 py-2 text-sm font-medium rounded-lg transition-colors ${
+              className={`min-h-11 rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
                 filter === f
                   ? 'bg-hedgr-primary text-white'
                   : 'bg-hedgr-100/50 text-hedgr-600 hover:bg-hedgr-100'
@@ -492,6 +493,11 @@ export default function ActivityPage() {
         isOpen={isModalOpen}
         onClose={handleCloseModal}
         simulated={syntheticJourneyActive}
+        resultingBalance={
+          selectedTx
+            ? syntheticResultingBalances.get(selectedTx.id)
+            : undefined
+        }
       />
       {syntheticJourneyActive && transactions.length > 0 ? (
         <Link

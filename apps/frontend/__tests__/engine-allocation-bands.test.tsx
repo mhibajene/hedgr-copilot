@@ -63,6 +63,9 @@ describe("EngineAllocationBands", () => {
     );
     expect(targetDetails.tagName).toBe("DETAILS");
     expect(targetDetails.hasAttribute("open")).toBe(false);
+    expect(targetDetails.querySelector("summary")?.className).toContain(
+      "min-h-11"
+    );
 
     const caption = screen.getByTestId(
       "engine-allocation-bands-caption"
@@ -169,6 +172,7 @@ describe("EngineAllocationBands", () => {
     expect(valuesSummary?.textContent?.trim()).toBe(
       "View planning percentages"
     );
+    expect(valuesSummary?.className).toContain("min-h-11");
     expect(
       screen.getByTestId("engine-allocation-boundary").textContent
     ).toMatch(/not separate balances/i);

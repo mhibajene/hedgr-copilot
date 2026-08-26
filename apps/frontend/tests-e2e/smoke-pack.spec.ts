@@ -207,7 +207,7 @@ test("6 · deposit page is functional", async ({ page }) => {
   await expect(page.getByRole("button", { name: "Confirm" })).toBeVisible();
 });
 
-test("7 · synthetic primary nav leads with position, evidence, and settings", async ({
+test("7 · synthetic primary nav stays bounded to position and evidence", async ({
   page,
 }) => {
   await page.goto("/");
@@ -227,7 +227,10 @@ test("7 · synthetic primary nav leads with position, evidence, and settings", a
   ).toHaveAttribute("href", "/activity?journey=class-a-val-002");
   await expect(
     primaryNav.getByRole("link", { name: "Settings", exact: true })
-  ).toHaveAttribute("href", "/settings");
+  ).toHaveCount(0);
+  await expect(
+    primaryNav.getByRole("link", { name: "Copilot", exact: true })
+  ).toHaveCount(0);
   await expect(
     primaryNav.getByRole("link", { name: "Deposit", exact: true })
   ).toHaveCount(0);

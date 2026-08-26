@@ -2,7 +2,13 @@
 
 import React from "react";
 import { afterEach, describe, expect, test, vi } from "vitest";
-import { cleanup, fireEvent, render, screen } from "@testing-library/react";
+import {
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from "@testing-library/react";
 import { ENGINE_NOTICE_COPY } from "../lib/engine/notices";
 import type { EngineState } from "../lib/engine/types";
 import {
@@ -243,7 +249,7 @@ describe("DashboardPage engine trust surface", () => {
     );
     expect(orientation.textContent).toContain("not an instruction");
     expect(orientation.textContent).toContain(
-      "not an instruction or proof that money moved"
+      "This walkthrough provides context, not an instruction."
     );
     expect(orientation.textContent).not.toMatch(
       /Financial Stability Companion|crypto|blockchain|stablecoin|DeFi|trading|yield routing/i
@@ -252,9 +258,7 @@ describe("DashboardPage engine trust surface", () => {
     const explainer = screen.getByTestId(
       "dashboard-synthetic-balance-explainer"
     );
-    expect(explainer.textContent).toContain("Simulation only");
-    expect(explainer.textContent).toContain("Not a real balance");
-    expect(explainer.textContent).toContain("No money is held or moved");
+    expect(explainer.textContent).toBe("Illustrative position only.");
     expect(explainer.textContent).not.toMatch(
       /fixture|informational posture|settlement/i
     );
@@ -311,6 +315,37 @@ describe("DashboardPage engine trust surface", () => {
     expect(screen.queryByText("Simulation date")).toBeNull();
     expect(screen.queryByText("Last viewed locally")).toBeNull();
     expect(screen.queryByTestId("dashboard-education")).toBeNull();
+  });
+
+  test("consumes the orientation clean-start marker before showing persisted journey state", async () => {
+    vi.stubEnv("NEXT_PUBLIC_AUTH_MODE", "mock");
+    vi.stubEnv("NEXT_PUBLIC_FX_MODE", "stub");
+    vi.stubEnv("NEXT_PUBLIC_APP_ENV", "prod");
+    vi.mocked(usePathname).mockReturnValue("/dashboard-synthetic-journey");
+    vi.mocked(useSearchParams).mockReturnValue(
+      new URLSearchParams("reset=1") as ReturnType<typeof useSearchParams>
+    );
+    dashboardStateMocks.transactions = makeCompletedJourneyTransactions();
+    vi.mocked(useBalance).mockReturnValue(
+      makeBalanceState({ total: 3, available: 3 })
+    );
+    vi.mocked(useEngineState).mockReturnValue(
+      getMockEngineState("normal") as EngineState
+    );
+    const replaceState = vi.spyOn(window.history, "replaceState");
+
+    render(<DashboardPage />);
+
+    expect(screen.getByTestId("dashboard-balance").textContent).toContain("0");
+    await waitFor(() => {
+      expect(dashboardStateMocks.clearLedger).toHaveBeenCalledTimes(1);
+      expect(dashboardStateMocks.resetWallet).toHaveBeenCalledTimes(1);
+    });
+    expect(replaceState).toHaveBeenCalledWith(
+      window.history.state,
+      "",
+      "/dashboard-synthetic-journey"
+    );
   });
 
   test("establishes the first completed event without implying a comparison", async () => {
