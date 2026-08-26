@@ -142,8 +142,6 @@ export function AppLayoutClient({ children }: { children: React.ReactNode }) {
   const syntheticNavLinks: NavLink[] = [
     { href: '/dashboard', label: 'Home' },
     { href: '/activity', label: 'Activity' },
-    ...copilotNavLinks,
-    { href: '/settings', label: 'Settings' },
   ];
 
   // Hide unshipped links, and only show gated links once policy is ready.
@@ -173,8 +171,9 @@ export function AppLayoutClient({ children }: { children: React.ReactNode }) {
               <button
                 data-testid="nav-toggle"
                 onClick={() => setIsNavOpen(!isNavOpen)}
-                className="inline-flex items-center justify-center rounded-md p-2 text-hedgr-500 hover:bg-hedgr-100 hover:text-hedgr-dark focus:outline-none focus:ring-2 focus:ring-inset focus:ring-hedgr-500"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-md text-hedgr-500 hover:bg-hedgr-100 hover:text-hedgr-dark focus:outline-none focus:ring-2 focus:ring-inset focus:ring-hedgr-500"
                 aria-expanded={isNavOpen}
+                aria-controls="app-navigation-menu"
                 aria-label="Toggle navigation menu"
               >
                 <svg
@@ -225,6 +224,7 @@ export function AppLayoutClient({ children }: { children: React.ReactNode }) {
 
         {/* Mobile nav menu */}
         <div
+          id="app-navigation-menu"
           data-testid="nav-links-mobile"
           className={`${
             isNavOpen ? 'block' : 'hidden'
@@ -237,7 +237,7 @@ export function AppLayoutClient({ children }: { children: React.ReactNode }) {
                 href={navHref(link.href, explicitSyntheticJourney)}
                 data-testid={link.testId}
                 onClick={() => setIsNavOpen(false)}
-                className={`block px-3 py-2 rounded-md text-base font-medium ${
+                className={`flex min-h-11 items-center rounded-md px-3 py-2 text-base font-medium ${
                   activePathname === link.href
                     ? 'bg-hedgr-100 text-hedgr-primary'
                     : 'text-hedgr-500 hover:bg-gray-50 hover:text-hedgr-dark'
@@ -256,25 +256,23 @@ export function AppLayoutClient({ children }: { children: React.ReactNode }) {
           data-testid="synthetic-journey-shell"
         >
           <div className="mx-auto max-w-7xl px-4 py-3 sm:px-6 lg:px-8">
-            <div className="flex flex-col gap-2 lg:flex-row lg:items-center lg:justify-between">
+            <div className="flex items-center justify-between gap-3">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-wide text-hedgr-500">
-                  Simulation · no real money ·{' '}
                   {currentJourneyOrientation.context}
                 </p>
-                <h2
+                <p
                   id="synthetic-journey-heading"
                   className="mt-1 text-sm font-semibold text-hedgr-800"
                 >
                   {currentJourneyOrientation.heading}
-                </h2>
-                <p className="mt-1 hidden max-w-2xl text-sm leading-relaxed text-hedgr-dark sm:block">
-                  {currentJourneyOrientation.description} Every amount shown is
-                  simulated; no real money moves.
+                </p>
+                <p className="mt-1 hidden max-w-2xl text-sm leading-relaxed text-hedgr-dark lg:block">
+                  {currentJourneyOrientation.description}
                 </p>
               </div>
               <p
-                className="inline-flex w-fit items-center gap-2 rounded-lg border border-hedgr-primary bg-hedgr-primary px-3 py-2 text-sm font-medium text-white"
+                className="inline-flex min-h-11 w-fit shrink-0 items-center gap-2 rounded-lg border border-hedgr-primary bg-hedgr-primary px-3 py-2 text-sm font-medium text-white"
                 aria-label="Current journey step"
                 data-testid="synthetic-journey-current-step"
               >

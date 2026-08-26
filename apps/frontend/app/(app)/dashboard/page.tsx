@@ -24,13 +24,13 @@ import {
   txToLifecycle,
   type TxLifecycle,
 } from "../../../lib/tx";
-import { isCopilotEnabled } from "../../../config/env";
 import {
   CLASS_A_VAL_002_DASHBOARD_PATH,
   CLASS_A_VAL_002_JOURNEY_PARAM,
   CLASS_A_VAL_002_JOURNEY_VALUE,
   getSyntheticJourneyHref,
   isSyntheticJourneyPrimaryCondition,
+  isSyntheticJourneyResetRequested,
 } from "../../../lib/state/synthetic-journey";
 
 function formatActivityDayLabel(timestamp: number): string {
@@ -89,6 +89,9 @@ export default function DashboardPage() {
     (pathname === CLASS_A_VAL_002_DASHBOARD_PATH ||
       searchParams?.get(CLASS_A_VAL_002_JOURNEY_PARAM) ===
         CLASS_A_VAL_002_JOURNEY_VALUE);
+  const cleanStartRequested = isSyntheticJourneyResetRequested(
+    searchParams?.toString()
+  );
 
   useEffect(() => {
     defiAdapter
@@ -98,8 +101,17 @@ export default function DashboardPage() {
   }, []);
 
   useEffect(() => {
+    if (cleanStartRequested) {
+      clearTransactions();
+      resetWallet();
+      window.history.replaceState(
+        window.history.state,
+        "",
+        CLASS_A_VAL_002_DASHBOARD_PATH
+      );
+    }
     setReady(true);
-  }, []);
+  }, [cleanStartRequested, clearTransactions, resetWallet]);
 
   const hasNoTransactions = transactions.length === 0;
   const isFirstTimeUser =
@@ -178,7 +190,7 @@ export default function DashboardPage() {
         </div>
       ) : (
         <BalanceWithLocalEstimate
-          usdAmount={ready ? total : 0}
+          usdAmount={ready && !cleanStartRequested ? total : 0}
           data-testid="usd-balance"
           className="text-4xl font-semibold tabular-nums tracking-tight text-hedgr-800 sm:text-[2.75rem] sm:leading-tight"
         />
@@ -188,7 +200,7 @@ export default function DashboardPage() {
           className="max-w-md pt-1 text-sm leading-relaxed text-hedgr-dark"
           data-testid="dashboard-synthetic-balance-explainer"
         >
-          Simulation only. Not a real balance. No money is held or moved.
+          Illustrative position only.
         </p>
       ) : null}
       {ready && !isLoading && total !== available ? (
@@ -418,15 +430,6 @@ export default function DashboardPage() {
           </p>
         </div>
       </div>
-      {isCopilotEnabled() && syntheticComparison.comparisonState !== "empty" ? (
-        <Link
-          href="/chat"
-          className="inline-flex text-sm font-medium text-hedgr-600 underline decoration-hedgr-200 underline-offset-4 hover:text-hedgr-primary"
-          data-testid="dashboard-copilot-context-link"
-        >
-          Ask Copilot about this change
-        </Link>
-      ) : null}
     </section>
   ) : null;
 
@@ -435,7 +438,7 @@ export default function DashboardPage() {
       className="rounded-2xl border border-hedgr-200 bg-white p-5"
       data-testid="dashboard-disclosures"
     >
-      <summary className="cursor-pointer list-none font-medium text-hedgr-800 marker:content-none select-none [&::-webkit-details-marker]:hidden">
+      <summary className="flex min-h-11 cursor-pointer list-none items-center font-medium text-hedgr-800 marker:content-none select-none [&::-webkit-details-marker]:hidden">
         <span className="flex items-center justify-between gap-4">
           <span>Important disclosures</span>
           <span className="text-xs font-medium uppercase tracking-wide text-hedgr-500">
@@ -483,7 +486,9 @@ export default function DashboardPage() {
   return (
     <main className="p-4 sm:p-8">
       <div
-        className={`mx-auto space-y-6 sm:space-y-8 ${
+        className={`mx-auto ${
+          syntheticJourneyActive ? "space-y-5 sm:space-y-8" : "space-y-6 sm:space-y-8"
+        } ${
           syntheticJourneyActive ? "max-w-5xl" : "max-w-2xl"
         }`}
       >
@@ -493,7 +498,7 @@ export default function DashboardPage() {
         {syntheticJourneyActive ? (
           <section
             aria-labelledby="dashboard-orientation-heading"
-            className="space-y-2"
+            className="space-y-1 sm:space-y-2"
             data-testid="dashboard-orientation"
           >
             <p className="text-xs font-semibold uppercase tracking-[0.12em] text-hedgr-500">
@@ -501,14 +506,13 @@ export default function DashboardPage() {
             </p>
             <h1
               id="dashboard-orientation-heading"
-              className="text-2xl font-semibold tracking-tight text-hedgr-800 sm:text-3xl"
+              className="text-xl font-semibold tracking-tight text-hedgr-800 sm:text-3xl"
             >
               See what you have and what changed.
             </h1>
-            <p className="max-w-xl text-sm leading-relaxed text-hedgr-dark">
+            <p className="hidden max-w-xl text-sm leading-relaxed text-hedgr-dark sm:block">
               Hedgr helps you understand and maintain your financial stability.
-              This simulation provides context, not an instruction or proof that
-              money moved.
+              This walkthrough provides context, not an instruction.
             </p>
           </section>
         ) : null}
@@ -578,7 +582,7 @@ export default function DashboardPage() {
               <button
                 type="button"
                 onClick={restartSyntheticJourney}
-                className="inline-flex shrink-0 items-center justify-center rounded-xl border border-hedgr-200 bg-white px-4 py-2.5 text-sm font-semibold text-hedgr-800 transition-colors hover:border-hedgr-300 focus:outline-none focus:ring-2 focus:ring-hedgr-500 focus:ring-offset-2"
+                className="inline-flex min-h-11 shrink-0 items-center justify-center rounded-xl border border-hedgr-200 bg-white px-4 py-2.5 text-sm font-semibold text-hedgr-800 transition-colors hover:border-hedgr-300 focus:outline-none focus:ring-2 focus:ring-hedgr-500 focus:ring-offset-2"
               >
                 Restart simulated journey
               </button>

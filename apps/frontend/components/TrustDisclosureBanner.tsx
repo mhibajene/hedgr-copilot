@@ -127,11 +127,18 @@ export function TrustDisclosureBanner({
   return (
     <div
       data-testid={testId}
-      role="alert"
+      role={consolidateTechnicalDetails ? 'region' : 'alert'}
+      aria-label={
+        consolidateTechnicalDetails ? 'Simulation disclosure' : undefined
+      }
       className="border-b border-hedgr-300 bg-hedgr-100 text-hedgr-800"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
-        <div className="flex items-start justify-between gap-3 sm:gap-4 flex-wrap">
+      <div
+        className={`mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 ${
+          consolidateTechnicalDetails ? 'py-2' : 'py-3'
+        }`}
+      >
+        <div className="flex flex-wrap items-center justify-between gap-3 sm:gap-4">
           <div className="flex items-start gap-3 min-w-0">
             <span
               className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-hedgr-primary text-xs font-semibold text-white"
@@ -141,23 +148,27 @@ export function TrustDisclosureBanner({
             </span>
             <div className="min-w-0">
               <p className="font-semibold text-sm">
-                Simulation Mode. No Real Money
+                {consolidateTechnicalDetails
+                  ? 'Simulation · no real money'
+                  : 'Simulation Mode. No Real Money'}
               </p>
-              <p className="mt-0.5 text-xs text-hedgr-dark">
-                Every balance, rate, deposit, withdrawal, and Activity entry is
-                simulated. A completed step does not move money or contact a bank
-                or payment provider.
-              </p>
+              {!consolidateTechnicalDetails ? (
+                <p className="mt-0.5 text-xs text-hedgr-dark">
+                  Every balance, rate, deposit, withdrawal, and Activity entry is
+                  simulated. A completed step does not move money or contact a
+                  bank or payment provider.
+                </p>
+              ) : null}
             </div>
           </div>
           <div className={consolidateTechnicalDetails ? 'w-full sm:w-auto' : 'flex items-center gap-3 flex-shrink-0'}>
             {consolidateTechnicalDetails ? (
               <details data-testid="simulation-technical-details" className="group">
-                <summary className="cursor-pointer list-none text-xs font-semibold text-hedgr-600 underline decoration-hedgr-200 underline-offset-4 marker:content-none [&::-webkit-details-marker]:hidden">
+                <summary className="inline-flex min-h-11 cursor-pointer list-none items-center text-sm font-semibold text-hedgr-600 underline decoration-hedgr-200 underline-offset-4 marker:content-none [&::-webkit-details-marker]:hidden">
                   How this simulation works
                 </summary>
                 <div className="mt-3 space-y-3 rounded-xl border border-hedgr-200 bg-white p-3">
-                  <p className="max-w-xl text-xs leading-relaxed text-hedgr-dark">
+                  <p className="max-w-xl text-sm leading-relaxed text-hedgr-dark">
                     Rates are fixed for this walkthrough, and no live financial
                     service is connected. The selected country changes simulated
                     currency display only.
@@ -167,7 +178,7 @@ export function TrustDisclosureBanner({
                       <select
                         value={currentMarket}
                         onChange={(e) => handleMarketChange(e.target.value as MarketCode)}
-                        className="rounded border border-hedgr-200 bg-white px-2 py-0.5 text-xs font-medium text-hedgr-primary transition-colors hover:border-hedgr-300"
+                        className="min-h-11 rounded border border-hedgr-200 bg-white px-2 py-1 text-sm font-medium text-hedgr-primary transition-colors hover:border-hedgr-300"
                         title="Simulation currency display"
                         aria-label="Simulation currency display"
                         data-testid="market-switcher"
@@ -182,7 +193,7 @@ export function TrustDisclosureBanner({
                     {learnMoreUrl && (
                       <a
                         href={learnMoreUrl}
-                        className="whitespace-nowrap text-xs font-medium text-hedgr-primary underline underline-offset-2 hover:text-hedgr-600"
+                        className="inline-flex min-h-11 items-center whitespace-nowrap text-sm font-medium text-hedgr-primary underline underline-offset-2 hover:text-hedgr-600"
                       >
                         Learn more
                       </a>

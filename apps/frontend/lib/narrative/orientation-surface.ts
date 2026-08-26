@@ -8,7 +8,8 @@
  */
 
 export const ORIENTATION_PATH = '/orientation';
-export const ORIENTATION_CONTINUE_HREF = '/dashboard-synthetic-journey';
+export const ORIENTATION_CONTINUE_HREF =
+  '/dashboard-synthetic-journey?reset=1';
 export const ORIENTATION_LEGACY_FALLBACK_HREF =
   '/dashboard?journey=class-a-val-002';
 export const ORIENTATION_LOGO_SRC = '/brand/hedgr_logo.svg';

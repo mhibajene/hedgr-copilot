@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useCallback } from 'react';
+import React, { useEffect, useRef } from 'react';
 import {
   type TxLifecycle,
   type TxTimelineStep,
@@ -14,7 +14,17 @@ export interface TxDetailModalProps {
   isOpen: boolean;
   onClose: () => void;
   simulated?: boolean;
+  resultingBalance?: number;
 }
+
+const FOCUSABLE_SELECTOR = [
+  'a[href]',
+  'button:not([disabled])',
+  'input:not([disabled])',
+  'select:not([disabled])',
+  'textarea:not([disabled])',
+  '[tabindex]:not([tabindex="-1"])',
+].join(',');
 
 function formatDateTime(timestamp: number): string {
   return new Date(timestamp).toLocaleString('en-US', {
@@ -130,33 +140,73 @@ export function TxDetailModal({
   isOpen,
   onClose,
   simulated = false,
+  resultingBalance,
 }: TxDetailModalProps) {
-  const handleKeyDown = useCallback(
-    (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
-    },
-    [onClose]
-  );
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const previouslyFocusedRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
-    if (isOpen) {
-      document.addEventListener('keydown', handleKeyDown);
-      document.body.style.overflow = 'hidden';
-    }
+    if (!isOpen || !dialogRef.current) return;
+
+    previouslyFocusedRef.current =
+      document.activeElement instanceof HTMLElement
+        ? document.activeElement
+        : null;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    const focusFrame = window.requestAnimationFrame(() => {
+      closeButtonRef.current?.focus();
+    });
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        onClose();
+        return;
+      }
+
+      if (event.key !== 'Tab' || !dialogRef.current) return;
+
+      const focusable = Array.from(
+        dialogRef.current.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR)
+      );
+      if (focusable.length === 0) {
+        event.preventDefault();
+        dialogRef.current.focus();
+        return;
+      }
+
+      const first = focusable[0];
+      const last = focusable.at(-1)!;
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
-      document.body.style.overflow = 'unset';
+      window.cancelAnimationFrame(focusFrame);
+      document.body.style.overflow = previousOverflow;
+      previouslyFocusedRef.current?.focus();
     };
-  }, [isOpen, handleKeyDown]);
+  }, [isOpen, onClose]);
 
   if (!isOpen || !transaction) return null;
 
-  const timelineSteps = generateTimelineSteps(transaction);
+  const timelineSteps = simulated ? [] : generateTimelineSteps(transaction);
+  const signedAmount = `${transaction.type === 'DEPOSIT' ? '+' : '−'}$${transaction.amountUSD.toFixed(2)}`;
 
   return (
     <div
       className="fixed inset-0 z-50 overflow-y-auto"
       aria-labelledby="modal-title"
+      aria-describedby={simulated ? 'tx-detail-description' : undefined}
       role="dialog"
       aria-modal="true"
     >
@@ -170,6 +220,8 @@ export function TxDetailModal({
       {/* Modal */}
       <div className="flex min-h-full items-center justify-center p-4">
         <div
+          ref={dialogRef}
+          tabIndex={-1}
           data-testid="tx-detail-modal"
           className="relative transform overflow-hidden rounded-2xl bg-white shadow-2xl transition-all w-full max-w-md"
         >
@@ -190,12 +242,13 @@ export function TxDetailModal({
                     : 'Withdrawal'}
               </h3>
               <button
+                ref={closeButtonRef}
                 type="button"
-                className="rounded-full p-1 text-gray-400 hover:bg-gray-100 hover:text-gray-500 transition-colors"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-full text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-hedgr-500 focus:ring-offset-2"
                 onClick={onClose}
                 data-testid="tx-detail-close"
+                aria-label="Close activity detail"
               >
-                <span className="sr-only">Close</span>
                 <svg
                   className="h-5 w-5"
                   fill="none"
@@ -216,7 +269,7 @@ export function TxDetailModal({
           {/* Content */}
           <div className="px-6 py-5 space-y-6">
             {/* Amount and Status */}
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between gap-4">
               <div data-testid="tx-detail-amount">
                 {simulated ? (
                   <p className="mb-1 text-xs uppercase tracking-wide text-gray-500">
@@ -224,7 +277,9 @@ export function TxDetailModal({
                   </p>
                 ) : null}
                 <p className="text-3xl font-bold text-gray-900">
-                  ${transaction.amountUSD.toFixed(2)}
+                  {simulated
+                    ? signedAmount
+                    : `$${transaction.amountUSD.toFixed(2)}`}
                 </p>
                 {transaction.amountZMW !== undefined && transaction.amountZMW > 0 ? (
                   <p className="text-sm text-gray-500 mt-1">
@@ -232,37 +287,73 @@ export function TxDetailModal({
                   </p>
                 ) : null}
               </div>
-              <TxStatusPill status={transaction.status} size="md" />
+              {!simulated ? (
+                <TxStatusPill status={transaction.status} size="md" />
+              ) : null}
             </div>
 
-            {/* Transaction ID */}
-            <div className="rounded-lg bg-gray-50 px-4 py-3">
-              <p className="text-xs text-gray-500 uppercase tracking-wide">
-                {simulated ? 'Simulation record ID' : 'Transaction ID'}
-              </p>
-              <p
-                className="text-sm font-mono text-gray-700 mt-1 truncate"
-                data-testid="tx-detail-id"
-              >
-                {transaction.id}
-              </p>
-            </div>
+            {simulated ? (
+              <dl className="divide-y divide-hedgr-100 border-y border-hedgr-100 text-sm">
+                <div className="flex items-start justify-between gap-4 py-3">
+                  <dt className="text-hedgr-500">Time</dt>
+                  <dd className="text-right font-medium text-hedgr-800">
+                    <time dateTime={new Date(transaction.createdAt).toISOString()}>
+                      {formatDateTime(transaction.createdAt)}
+                    </time>
+                  </dd>
+                </div>
+                {resultingBalance !== undefined ? (
+                  <div className="flex items-start justify-between gap-4 py-3">
+                    <dt className="text-hedgr-500">Resulting position</dt>
+                    <dd
+                      className="font-semibold tabular-nums text-hedgr-800"
+                      data-testid="tx-detail-resulting-position"
+                    >
+                      ${resultingBalance.toFixed(2)}
+                    </dd>
+                  </div>
+                ) : null}
+                <div className="py-3">
+                  <dt className="text-hedgr-500">Context</dt>
+                  <dd className="mt-1 leading-relaxed text-hedgr-dark">
+                    {transaction.type === 'DEPOSIT'
+                      ? 'This event added to the illustrative position.'
+                      : 'This event reduced the illustrative position.'}
+                  </dd>
+                </div>
+              </dl>
+            ) : (
+              <>
+                {/* Transaction ID */}
+                <div className="rounded-lg bg-gray-50 px-4 py-3">
+                  <p className="text-xs uppercase tracking-wide text-gray-500">
+                    Transaction ID
+                  </p>
+                  <p
+                    className="mt-1 truncate font-mono text-sm text-gray-700"
+                    data-testid="tx-detail-id"
+                  >
+                    {transaction.id}
+                  </p>
+                </div>
 
-            {/* Timeline */}
-            <div data-testid="tx-detail-timeline">
-              <p className="text-xs text-gray-500 uppercase tracking-wide mb-4">
-                {simulated ? 'Simulated step status' : 'Timeline'}
-              </p>
-              <div className="pl-1">
-                {timelineSteps.map((step, index) => (
-                  <TimelineStep
-                    key={step.status}
-                    step={step}
-                    isLast={index === timelineSteps.length - 1}
-                  />
-                ))}
-              </div>
-            </div>
+                {/* Timeline */}
+                <div data-testid="tx-detail-timeline">
+                  <p className="mb-4 text-xs uppercase tracking-wide text-gray-500">
+                    Timeline
+                  </p>
+                  <div className="pl-1">
+                    {timelineSteps.map((step, index) => (
+                      <TimelineStep
+                        key={step.status}
+                        step={step}
+                        isLast={index === timelineSteps.length - 1}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </>
+            )}
 
             {/* Failure Reason */}
             {transaction.failureReason && (
@@ -293,11 +384,11 @@ export function TxDetailModal({
             )}
             {simulated ? (
               <p
+                id="tx-detail-description"
                 className="rounded-lg border border-hedgr-200 bg-hedgr-100/50 px-4 py-3 text-sm leading-relaxed text-hedgr-dark"
                 data-testid="tx-detail-simulation-note"
               >
-                This is a simulation record. It is not a bank or payment provider
-                record.
+                Illustrative evidence only. No real money moved.
               </p>
             ) : null}
           </div>
@@ -306,7 +397,7 @@ export function TxDetailModal({
           <div className="border-t border-gray-100 px-6 py-4">
             <button
               type="button"
-              className="w-full rounded-xl bg-gray-900 px-4 py-3 text-sm font-medium text-white hover:bg-gray-800 transition-colors"
+              className="min-h-11 w-full rounded-xl bg-gray-900 px-4 py-3 text-sm font-medium text-white transition-colors hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-hedgr-500 focus:ring-offset-2"
               onClick={onClose}
             >
               Close
@@ -319,4 +410,3 @@ export function TxDetailModal({
 }
 
 export default TxDetailModal;
-
