@@ -53,9 +53,12 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
     'The selected country changes simulated currency display only.',
   );
   await expect(simulationDetails).not.toContainText(/Auth:|DeFi:|FX:/);
-  await expect(page.getByLabel('Simulation currency display')).toContainText(
-    'Currency display: Zambia (ZMW)',
-  );
+  const currencyDisplay = page.getByLabel('Simulation currency display');
+  if (process.env.NEXT_PUBLIC_ENABLE_MARKET_SWITCHER === 'true') {
+    await expect(currencyDisplay).toContainText('Currency display: Zambia (ZMW)');
+  } else {
+    await expect(currencyDisplay).toHaveCount(0);
+  }
   await expect(page.getByRole('button', { name: 'Dismiss trust disclosure' })).toHaveCount(0);
   const journeyShell = page.getByTestId('synthetic-journey-shell');
   await expect(journeyShell).toContainText('Simulated example');
