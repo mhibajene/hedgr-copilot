@@ -64,7 +64,6 @@ export function EnginePostureHeader({
       aria-labelledby="dashboard-current-status-label"
       data-testid="dashboard-current-status"
     >
-      <h1 className="sr-only">Dashboard</h1>
       <div className="space-y-3">
         <div className="space-y-1">
           <p

@@ -46,9 +46,19 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   const simulationDetails = page.getByTestId('simulation-technical-details');
   await expect(simulationDetails).not.toHaveAttribute('open', '');
   await simulationDetails.getByText('How this simulation works').click();
-  await expect(simulationDetails).toContainText('Auth: mock');
-  await expect(simulationDetails).toContainText('DeFi: mock');
-  await expect(simulationDetails).toContainText('FX: fixed');
+  await expect(simulationDetails).toContainText(
+    'Rates are fixed for this walkthrough, and no live financial service is connected.',
+  );
+  await expect(simulationDetails).toContainText(
+    'The selected country changes simulated currency display only.',
+  );
+  await expect(simulationDetails).not.toContainText(/Auth:|DeFi:|FX:/);
+  const currencyDisplay = page.getByLabel('Simulation currency display');
+  if (process.env.NEXT_PUBLIC_ENABLE_MARKET_SWITCHER === 'true') {
+    await expect(currencyDisplay).toContainText('Currency display: Zambia (ZMW)');
+  } else {
+    await expect(currencyDisplay).toHaveCount(0);
+  }
   await expect(page.getByRole('button', { name: 'Dismiss trust disclosure' })).toHaveCount(0);
   const journeyShell = page.getByTestId('synthetic-journey-shell');
   await expect(journeyShell).toContainText('Simulated example');
@@ -62,15 +72,24 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
     /Financial Stability Companion|Activity explains|fixture|informational posture|settlement/i,
   );
   const dashboardOrientation = page.getByTestId('dashboard-orientation');
+  await expect(
+    page.getByRole('heading', {
+      level: 1,
+      name: 'See where you stand as your money changes.',
+    }),
+  ).toBeVisible();
+  await expect(page.getByRole('heading', { level: 1 })).toHaveCount(1);
   await expect(dashboardOrientation).toContainText('Financial stability');
   await expect(dashboardOrientation).toContainText(
     'See where you stand as your money changes.',
   );
   await expect(dashboardOrientation).toContainText(
-    'understand and maintain financial stability',
+    'Hedgr is designed around financial stability',
   );
   await expect(dashboardOrientation).toContainText('not an instruction');
-  await expect(dashboardOrientation).toContainText('not proof that money moved');
+  await expect(dashboardOrientation).toContainText(
+    'not an instruction or proof that money moved',
+  );
   await expect(dashboardOrientation).toContainText('your decision');
   await expect(dashboardOrientation).not.toContainText(
     /crypto|blockchain|stablecoin|DeFi|trading|yield routing/i,
@@ -98,11 +117,15 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   await expect(stabilityGuidance).toHaveAttribute('data-presentation', 'collapsed');
   await expect(stabilityGuidance).toContainText('Stability guidance');
   await expect(stabilityGuidance).toContainText(
-    'See the position Hedgr is guiding toward and why',
+    'These targets are guidance, not current money',
   );
-  await expect(page.getByTestId('engine-allocation-bands-caption')).not.toContainText(
-    'these targets',
-  );
+  const initialDashboardOrder = await page
+    .locator('[data-testid="engine-allocation-bands"], [data-testid="dashboard-empty-state"]')
+    .evaluateAll((nodes) => nodes.map((node) => node.getAttribute('data-testid')));
+  expect(initialDashboardOrder).toEqual([
+    'engine-allocation-bands',
+    'dashboard-empty-state',
+  ]);
   const prioritiesDetails = page.getByTestId('engine-allocation-priorities-details');
   const rolesDetails = page.getByTestId('engine-allocation-roles-details');
   const valuesDetails = page.getByTestId('engine-allocation-values-details');
@@ -157,6 +180,21 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   await expect(page.getByText('Simulation date')).toHaveCount(0);
   await expect(page.getByText('Last viewed locally')).toHaveCount(0);
   await expect(page.getByTestId('dashboard-education')).toHaveCount(0);
+  const dashboardMainCopy = (await page.getByRole('main').textContent()) ?? '';
+  expect(dashboardMainCopy).not.toContain('—');
+
+  const disclosureDetails = page.getByTestId('dashboard-disclosures');
+  await disclosureDetails.locator(':scope > summary').click();
+  const policyDisclosures = page.getByTestId('policy-disclosures');
+  await expect(policyDisclosures).toContainText(
+    'This research walkthrough creates no real financial exposure.',
+  );
+  await expect(policyDisclosures).toContainText(
+    'This research prototype is not a bank account and does not accept deposits.',
+  );
+  await expect(policyDisclosures).not.toContainText(
+    /digital assets|afford to lose|insured by|government agency/i,
+  );
 
   await page.getByRole('link', { name: 'Start simulated deposit' }).click();
   await expect(page).toHaveURL(/\/deposit\?journey=class-a-val-002/);

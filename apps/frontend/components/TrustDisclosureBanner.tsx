@@ -156,39 +156,38 @@ export function TrustDisclosureBanner({
                 <summary className="cursor-pointer list-none text-xs font-semibold text-hedgr-600 underline decoration-hedgr-200 underline-offset-4 marker:content-none [&::-webkit-details-marker]:hidden">
                   How this simulation works
                 </summary>
-                <div className="mt-3 flex flex-wrap items-center gap-2 rounded-xl border border-hedgr-200 bg-white p-3">
-                  {envBadges.map((badge) => (
-                    <span
-                      key={badge.label}
-                      className="inline-flex items-center rounded border border-hedgr-200 bg-white px-2 py-0.5 text-xs font-medium text-hedgr-primary"
-                      title={`${badge.label} mode: ${badge.value}`}
-                    >
-                      {badge.label}: {badge.value}
-                    </span>
-                  ))}
-                  {marketSwitcherEnabled && currentMarket && (
-                    <select
-                      value={currentMarket}
-                      onChange={(e) => handleMarketChange(e.target.value as MarketCode)}
-                      className="rounded border border-hedgr-200 bg-white px-2 py-0.5 text-xs font-medium text-hedgr-primary transition-colors hover:border-hedgr-300"
-                      title="Demo market selection (affects currency display)"
-                      data-testid="market-switcher"
-                    >
-                      {Object.values(MARKET_CONFIG).map((market) => (
-                        <option key={market.code} value={market.code} className="text-gray-900">
-                          Market: {market.name} ({market.localCurrency})
-                        </option>
-                      ))}
-                    </select>
-                  )}
-                  {learnMoreUrl && (
-                    <a
-                      href={learnMoreUrl}
-                      className="whitespace-nowrap text-xs font-medium text-hedgr-primary underline underline-offset-2 hover:text-hedgr-600"
-                    >
-                      Learn more
-                    </a>
-                  )}
+                <div className="mt-3 space-y-3 rounded-xl border border-hedgr-200 bg-white p-3">
+                  <p className="max-w-xl text-xs leading-relaxed text-hedgr-dark">
+                    Rates are fixed for this walkthrough, and no live financial
+                    service is connected. The selected country changes simulated
+                    currency display only.
+                  </p>
+                  <div className="flex flex-wrap items-center gap-2">
+                    {marketSwitcherEnabled && currentMarket && (
+                      <select
+                        value={currentMarket}
+                        onChange={(e) => handleMarketChange(e.target.value as MarketCode)}
+                        className="rounded border border-hedgr-200 bg-white px-2 py-0.5 text-xs font-medium text-hedgr-primary transition-colors hover:border-hedgr-300"
+                        title="Simulation currency display"
+                        aria-label="Simulation currency display"
+                        data-testid="market-switcher"
+                      >
+                        {Object.values(MARKET_CONFIG).map((market) => (
+                          <option key={market.code} value={market.code} className="text-gray-900">
+                            Currency display: {market.name} ({market.localCurrency})
+                          </option>
+                        ))}
+                      </select>
+                    )}
+                    {learnMoreUrl && (
+                      <a
+                        href={learnMoreUrl}
+                        className="whitespace-nowrap text-xs font-medium text-hedgr-primary underline underline-offset-2 hover:text-hedgr-600"
+                      >
+                        Learn more
+                      </a>
+                    )}
+                  </div>
                 </div>
               </details>
             ) : (

@@ -67,7 +67,7 @@ describe("EngineAllocationBands", () => {
     const caption = screen.getByTestId("engine-allocation-bands-caption")
       .textContent;
     expect(caption).toBe(
-      "See the position Hedgr is guiding toward and why."
+      "See the planning position shown in this simulation and why it is structured this way. These targets are guidance, not current money."
     );
 
     const philosophy = screen.getByTestId(
@@ -79,6 +79,8 @@ describe("EngineAllocationBands", () => {
 
     const boundary = screen.getByTestId("engine-allocation-boundary")
       .textContent;
+    expect(boundary).toContain("Guidance only. This planning structure");
+    expect(boundary).not.toContain("—");
     expect(boundary).toMatch(/context, not an instruction/i);
     expect(boundary).toMatch(/does not show current money/i);
     expect(boundary).toMatch(/divided or moved/i);
@@ -149,7 +151,9 @@ describe("EngineAllocationBands", () => {
     expect(screen.getByText("Stability guidance")).toBeDefined();
     expect(
       screen.getByTestId("engine-allocation-bands-caption").textContent
-    ).toBe("See the position Hedgr is guiding toward and why.");
+    ).toBe(
+      "See the planning position shown in this simulation and why it is structured this way. These targets are guidance, not current money."
+    );
     const prioritiesDetails = screen.getByTestId(
       "engine-allocation-priorities-details"
     );

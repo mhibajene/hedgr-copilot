@@ -3,7 +3,11 @@
 import React from 'react';
 import { describe, test, expect, vi, beforeEach, afterEach } from 'vitest';
 import { render, screen, cleanup } from '@testing-library/react';
-import { PolicyDisclosure, DISCLOSURE_COPY } from '../components/PolicyDisclosure';
+import {
+  PolicyDisclosure,
+  DISCLOSURE_COPY,
+  SYNTHETIC_RESEARCH_DISCLOSURE_COPY,
+} from '../components/PolicyDisclosure';
 import type { UsePolicyResult } from '../lib/policy/usePolicy';
 
 // ---------------------------------------------------------------------------
@@ -180,5 +184,40 @@ describe('PolicyDisclosure', () => {
     const heading = screen.getByRole('heading', { name: /important disclosures/i });
     expect(heading).toBeDefined();
     expect(heading.className).toContain('sr-only');
+  });
+
+  test('uses synthetic-research copy without changing required keys or order', () => {
+    const requiredKeys = [
+      'pilot-program-terms',
+      'not-a-bank',
+      'risk-warning',
+      'unsupported-region',
+    ];
+    mockUsePolicy.mockReturnValue(readyPolicy(requiredKeys));
+
+    render(<PolicyDisclosure context="synthetic-research" />);
+
+    const items = Array.from(
+      screen.getByTestId('policy-disclosures').querySelectorAll('li'),
+    );
+    expect(items.map((item) => item.getAttribute('data-disclosure-key'))).toEqual([
+      'unsupported-region',
+      'risk-warning',
+      'not-a-bank',
+      'pilot-program-terms',
+    ]);
+    expect(items.map((item) => item.textContent)).toEqual([
+      SYNTHETIC_RESEARCH_DISCLOSURE_COPY['unsupported-region'],
+      SYNTHETIC_RESEARCH_DISCLOSURE_COPY['risk-warning'],
+      SYNTHETIC_RESEARCH_DISCLOSURE_COPY['not-a-bank'],
+      SYNTHETIC_RESEARCH_DISCLOSURE_COPY['pilot-program-terms'],
+    ]);
+
+    const combined = items.map((item) => item.textContent).join(' ');
+    expect(combined).toContain('not a live service');
+    expect(combined).toContain('No real money is held or moved');
+    expect(combined).not.toMatch(
+      /digital assets|afford to lose|insured by|government agency/i,
+    );
   });
 });

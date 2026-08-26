@@ -13,6 +13,8 @@ export type DisclosureKey =
   | 'pilot-program-terms'
   | 'unsupported-region';
 
+export type DisclosureContext = 'default' | 'synthetic-research';
+
 /**
  * Human-readable copy for each disclosure key.
  * Tone: factual, plain-language, no hype, no numbers.
@@ -26,6 +28,17 @@ export const DISCLOSURE_COPY: Record<DisclosureKey, string> = {
     'This feature is part of a limited pilot. Terms may change.',
   'unsupported-region':
     'Your region is not fully supported. Some features may be restricted.',
+};
+
+export const SYNTHETIC_RESEARCH_DISCLOSURE_COPY: Record<DisclosureKey, string> = {
+  'risk-warning':
+    'This research walkthrough creates no real financial exposure. It does not hold assets, accept real deposits, or move money.',
+  'not-a-bank':
+    'This research prototype is not a bank account and does not accept deposits. No real money is held or moved.',
+  'pilot-program-terms':
+    'This research walkthrough may change as the prototype is revised.',
+  'unsupported-region':
+    'This research prototype is not a live service in the selected country. The country control changes simulated currency display only.',
 };
 
 /**
@@ -69,9 +82,11 @@ function sortByPriority(keys: DisclosureKey[]): DisclosureKey[] {
 function DisclosureList({
   keys,
   testId,
+  context,
 }: {
   keys: string[];
   testId: string;
+  context: DisclosureContext;
 }) {
   if (keys.length === 0) return null;
 
@@ -87,6 +102,10 @@ function DisclosureList({
   if (knownKeys.length === 0) return null;
 
   const ordered = sortByPriority(knownKeys);
+  const copy =
+    context === 'synthetic-research'
+      ? SYNTHETIC_RESEARCH_DISCLOSURE_COPY
+      : DISCLOSURE_COPY;
 
   return (
     <section data-testid={testId} aria-labelledby="policy-disclosures-heading">
@@ -96,7 +115,7 @@ function DisclosureList({
       <ul className="text-xs text-gray-500 space-y-1 list-disc list-inside">
         {ordered.map((key) => (
           <li key={key} data-disclosure-key={key}>
-            {DISCLOSURE_COPY[key]}
+            {copy[key]}
           </li>
         ))}
       </ul>
@@ -108,12 +127,24 @@ function DisclosureList({
 // Hook-backed variant (calls usePolicy)
 // ---------------------------------------------------------------------------
 
-function PolicyDisclosureFromHook({ testId }: { testId: string }) {
+function PolicyDisclosureFromHook({
+  testId,
+  context,
+}: {
+  testId: string;
+  context: DisclosureContext;
+}) {
   const { status, policy } = usePolicy();
 
   if (status !== 'ready' || !policy) return null;
 
-  return <DisclosureList keys={policy.disclosures.requiredKeys} testId={testId} />;
+  return (
+    <DisclosureList
+      keys={policy.disclosures.requiredKeys}
+      testId={testId}
+      context={context}
+    />
+  );
 }
 
 // ---------------------------------------------------------------------------
@@ -123,6 +154,8 @@ function PolicyDisclosureFromHook({ testId }: { testId: string }) {
 export type PolicyDisclosureProps = {
   /** Override keys instead of reading from usePolicy(). */
   keys?: string[];
+  /** Select copy that matches the participant context without changing policy keys. */
+  context?: DisclosureContext;
   'data-testid'?: string;
 };
 
@@ -135,12 +168,13 @@ export type PolicyDisclosureProps = {
  */
 export function PolicyDisclosure({
   keys,
+  context = 'default',
   'data-testid': testId = 'policy-disclosures',
 }: PolicyDisclosureProps) {
   if (keys !== undefined) {
-    return <DisclosureList keys={keys} testId={testId} />;
+    return <DisclosureList keys={keys} testId={testId} context={context} />;
   }
-  return <PolicyDisclosureFromHook testId={testId} />;
+  return <PolicyDisclosureFromHook testId={testId} context={context} />;
 }
 
 export default PolicyDisclosure;
