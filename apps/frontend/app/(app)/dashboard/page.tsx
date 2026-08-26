@@ -19,8 +19,16 @@ import {
 } from "../../../components";
 import { useEngineState } from "../../../lib/engine/useEngineState";
 import { usePolicy } from "../../../lib/policy/usePolicy";
-import { txToLifecycle, type TxLifecycle } from "../../../lib/tx";
 import {
+  PublicTxStatus,
+  txToLifecycle,
+  type TxLifecycle,
+} from "../../../lib/tx";
+import { isCopilotEnabled } from "../../../config/env";
+import {
+  CLASS_A_VAL_002_DASHBOARD_PATH,
+  CLASS_A_VAL_002_JOURNEY_PARAM,
+  CLASS_A_VAL_002_JOURNEY_VALUE,
   getSyntheticJourneyHref,
   isSyntheticJourneyPrimaryCondition,
 } from "../../../lib/state/synthetic-journey";
@@ -48,6 +56,17 @@ function activityTitle(
   return syntheticJourneyActive ? `Simulated ${title.toLowerCase()}` : title;
 }
 
+type SyntheticComparisonState = "empty" | "first-event" | "change";
+
+function signedAmount(tx: TxLifecycle): number {
+  return tx.type === "DEPOSIT" ? tx.amountUSD : -tx.amountUSD;
+}
+
+function formatSignedUSD(value: number): string {
+  const sign = value >= 0 ? "+" : "−";
+  return `${sign}$${Math.abs(value).toFixed(2)}`;
+}
+
 export default function DashboardPage() {
   const { total, available, pending, isLoading, error, currency, refresh } =
     useBalance();
@@ -65,6 +84,11 @@ export default function DashboardPage() {
     searchParams?.toString(),
     pathname
   );
+  const explicitSyntheticJourney =
+    syntheticJourneyActive &&
+    (pathname === CLASS_A_VAL_002_DASHBOARD_PATH ||
+      searchParams?.get(CLASS_A_VAL_002_JOURNEY_PARAM) ===
+        CLASS_A_VAL_002_JOURNEY_VALUE);
 
   useEffect(() => {
     defiAdapter
@@ -102,6 +126,40 @@ export default function DashboardPage() {
     return sorted.slice(0, 3).map(txToLifecycle);
   }, [transactions]);
 
+  const completedSyntheticActivity = useMemo(
+    () =>
+      transactions
+        .map(txToLifecycle)
+        .filter((tx) => tx.status === PublicTxStatus.SUCCESS)
+        .sort((a, b) => a.createdAt - b.createdAt || a.id.localeCompare(b.id)),
+    [transactions]
+  );
+
+  const syntheticComparison = useMemo(() => {
+    const completedCount = completedSyntheticActivity.length;
+    const comparisonState: SyntheticComparisonState =
+      completedCount === 0
+        ? "empty"
+        : completedCount === 1
+        ? "first-event"
+        : "change";
+    const lastEvent = completedSyntheticActivity.at(-1);
+    const currentPosition = completedSyntheticActivity.reduce(
+      (sum, tx) => sum + signedAmount(tx),
+      0
+    );
+    const previousPosition = lastEvent
+      ? currentPosition - signedAmount(lastEvent)
+      : 0;
+
+    return {
+      comparisonState,
+      lastEvent,
+      previousPosition: +previousPosition.toFixed(2),
+      currentPosition: +currentPosition.toFixed(2),
+    };
+  }, [completedSyntheticActivity]);
+
   const balanceHero = (
     <section
       className="space-y-2"
@@ -112,7 +170,7 @@ export default function DashboardPage() {
         id="dashboard-total-balance-label"
         className="text-xs font-semibold uppercase tracking-[0.12em] text-hedgr-500"
       >
-        {syntheticJourneyActive ? "Simulated balance" : "Total balance"}
+        {syntheticJourneyActive ? "Your current position" : "Total balance"}
       </p>
       {isLoading ? (
         <div className="text-4xl font-semibold tabular-nums tracking-tight text-hedgr-800 sm:text-[2.75rem] sm:leading-tight">
@@ -130,19 +188,8 @@ export default function DashboardPage() {
           className="max-w-md pt-1 text-sm leading-relaxed text-hedgr-dark"
           data-testid="dashboard-synthetic-balance-explainer"
         >
-          This amount exists only in this research simulation. It is not a real
-          account balance, and no money is being held or moved.
+          Simulation only. Not a real balance. No money is held or moved.
         </p>
-      ) : null}
-      {syntheticJourneyActive && ready && !isLoading && transactions.length > 0 ? (
-        <Link
-          href={getSyntheticJourneyHref("/activity")}
-          className="inline-flex max-w-md text-sm font-medium leading-relaxed text-hedgr-600 underline decoration-hedgr-200 underline-offset-4 hover:text-hedgr-primary"
-          data-testid="dashboard-balance-evidence"
-        >
-          Activity shows each completed simulated change and the resulting
-          amount, ending at ${total.toFixed(2)}.
-        </Link>
       ) : null}
       {ready && !isLoading && total !== available ? (
         <p className="pt-1 text-sm text-hedgr-500">
@@ -162,6 +209,97 @@ export default function DashboardPage() {
     </section>
   );
 
+  const syntheticChangeEvidence = (
+    <section
+      className="space-y-3"
+      aria-labelledby="dashboard-change-evidence-heading"
+      data-testid="dashboard-change-evidence"
+      data-comparison-state={syntheticComparison.comparisonState}
+    >
+      <div className="space-y-1">
+        <p className="text-xs font-semibold uppercase tracking-[0.12em] text-hedgr-500">
+          What changed
+        </p>
+        <h2
+          id="dashboard-change-evidence-heading"
+          className="text-base font-semibold tracking-tight text-hedgr-800"
+        >
+          {syntheticComparison.comparisonState === "empty"
+            ? "Nothing to compare yet"
+            : syntheticComparison.comparisonState === "first-event"
+            ? "Your first position is now visible"
+            : "The current position reconciles to the change"}
+        </h2>
+      </div>
+
+      {syntheticComparison.comparisonState === "empty" ? (
+        <p className="max-w-xl text-sm leading-relaxed text-hedgr-dark">
+          Complete the first simulated event to create a starting point.
+        </p>
+      ) : (
+        <div
+          className="grid gap-2 sm:grid-cols-[1fr_auto_1fr_auto_1fr] sm:items-center"
+          aria-label={`Position changed from $${syntheticComparison.previousPosition.toFixed(
+            2
+          )} by ${formatSignedUSD(
+            signedAmount(syntheticComparison.lastEvent!)
+          )} to $${syntheticComparison.currentPosition.toFixed(2)}`}
+        >
+          <div className="rounded-2xl bg-hedgr-100/60 p-4">
+            <p className="text-[11px] font-semibold uppercase tracking-wide text-hedgr-500">
+              {syntheticComparison.comparisonState === "first-event"
+                ? "Started at"
+                : "Before"}
+            </p>
+            <p className="mt-1 text-xl font-semibold tabular-nums text-hedgr-800">
+              ${syntheticComparison.previousPosition.toFixed(2)}
+            </p>
+          </div>
+          <span className="hidden text-hedgr-400 sm:block" aria-hidden="true">
+            →
+          </span>
+          <div className="rounded-2xl border border-hedgr-200 bg-white p-4">
+            <p className="text-[11px] font-semibold uppercase tracking-wide text-hedgr-500">
+              {syntheticComparison.lastEvent?.type === "DEPOSIT"
+                ? "Simulated deposit"
+                : "Simulated expense"}
+            </p>
+            <p
+              className="mt-1 text-xl font-semibold tabular-nums text-hedgr-800"
+              data-testid="dashboard-change-delta"
+            >
+              {formatSignedUSD(signedAmount(syntheticComparison.lastEvent!))}
+            </p>
+          </div>
+          <span className="hidden text-hedgr-400 sm:block" aria-hidden="true">
+            →
+          </span>
+          <div className="rounded-2xl border border-hedgr-primary bg-hedgr-100/40 p-4">
+            <p className="text-[11px] font-semibold uppercase tracking-wide text-hedgr-500">
+              Now
+            </p>
+            <p
+              className="mt-1 text-xl font-semibold tabular-nums text-hedgr-800"
+              data-testid="dashboard-change-result"
+            >
+              ${syntheticComparison.currentPosition.toFixed(2)}
+            </p>
+          </div>
+        </div>
+      )}
+
+      {syntheticComparison.comparisonState !== "empty" ? (
+        <Link
+          href={getSyntheticJourneyHref("/activity")}
+          className="inline-flex text-sm font-medium text-hedgr-600 underline decoration-hedgr-200 underline-offset-4 hover:text-hedgr-primary"
+          data-testid="dashboard-balance-evidence"
+        >
+          View the completed-event evidence
+        </Link>
+      ) : null}
+    </section>
+  );
+
   const currentOverview = (
     <section
       aria-label={
@@ -169,20 +307,37 @@ export default function DashboardPage() {
           ? "Current simulation overview"
           : "Current account overview"
       }
-      className="rounded-3xl border border-hedgr-200 bg-white p-5 sm:p-6"
+      className="rounded-3xl border border-hedgr-200 bg-white p-5 sm:p-7"
       data-testid="dashboard-current-overview"
     >
-      <div className="grid gap-5 sm:grid-cols-[minmax(0,1.2fr)_minmax(13rem,0.8fr)] sm:gap-6">
-        <div>
+      {syntheticJourneyActive ? (
+        <div className="space-y-6">
           {balanceHero}
+          <div className="border-t border-hedgr-100 pt-6">
+            {syntheticChangeEvidence}
+          </div>
+          <div className="border-t border-hedgr-100 pt-6">
+            <EnginePostureHeader
+              engineState={engineState}
+              syntheticJourneyActive
+              comparisonState={syntheticComparison.comparisonState}
+              latestChangeType={syntheticComparison.lastEvent?.type}
+              latestChangeAmountUSD={
+                syntheticComparison.lastEvent
+                  ? syntheticComparison.lastEvent.amountUSD
+                  : undefined
+              }
+            />
+          </div>
         </div>
-        <div className="border-t border-hedgr-100 pt-5 sm:border-l sm:border-t-0 sm:pl-6 sm:pt-0">
-          <EnginePostureHeader
-            engineState={engineState}
-            syntheticJourneyActive={syntheticJourneyActive}
-          />
+      ) : (
+        <div className="grid gap-5 sm:grid-cols-[minmax(0,1.2fr)_minmax(13rem,0.8fr)] sm:gap-6">
+          <div>{balanceHero}</div>
+          <div className="border-t border-hedgr-100 pt-5 sm:border-l sm:border-t-0 sm:pl-6 sm:pt-0">
+            <EnginePostureHeader engineState={engineState} />
+          </div>
         </div>
-      </div>
+      )}
     </section>
   );
 
@@ -211,6 +366,70 @@ export default function DashboardPage() {
     </section>
   );
 
+  const syntheticActions = syntheticJourneyActive ? (
+    <section
+      className="space-y-4 rounded-3xl border border-hedgr-200 bg-white p-5 sm:p-6"
+      aria-labelledby="dashboard-optional-actions-heading"
+      data-testid="dashboard-optional-actions"
+    >
+      <div className="space-y-1">
+        <p className="text-xs font-semibold uppercase tracking-[0.12em] text-hedgr-500">
+          Optional next step
+        </p>
+        <h2
+          id="dashboard-optional-actions-heading"
+          className="text-base font-semibold tracking-tight text-hedgr-800"
+        >
+          What happens next is your decision
+        </h2>
+      </div>
+      <div
+        className="grid gap-3 sm:grid-cols-2"
+        data-testid={
+          syntheticComparison.comparisonState === "empty"
+            ? "dashboard-empty-state"
+            : undefined
+        }
+      >
+        <Link
+          href={
+            syntheticComparison.comparisonState === "empty"
+              ? getSyntheticJourneyHref("/deposit")
+              : getSyntheticJourneyHref("/activity")
+          }
+          className="rounded-2xl bg-hedgr-primary p-4 text-white transition-colors hover:bg-hedgr-600 focus:outline-none focus:ring-2 focus:ring-hedgr-500 focus:ring-offset-2"
+        >
+          <span className="block text-sm font-semibold">
+            {syntheticComparison.comparisonState === "empty"
+              ? "Start first simulated event"
+              : "Review what changed"}
+          </span>
+          <span className="mt-1 block text-sm leading-relaxed text-hedgr-100">
+            {syntheticComparison.comparisonState === "empty"
+              ? "Create a starting point when you are ready."
+              : "See every completed event and its resulting position."}
+          </span>
+        </Link>
+        <div className="rounded-2xl border border-hedgr-200 bg-hedgr-100/40 p-4">
+          <h3 className="text-sm font-semibold text-hedgr-800">Do nothing</h3>
+          <p className="mt-1 text-sm leading-relaxed text-hedgr-dark">
+            Stay with the current position. No action is required by this
+            simulation.
+          </p>
+        </div>
+      </div>
+      {isCopilotEnabled() && syntheticComparison.comparisonState !== "empty" ? (
+        <Link
+          href="/chat"
+          className="inline-flex text-sm font-medium text-hedgr-600 underline decoration-hedgr-200 underline-offset-4 hover:text-hedgr-primary"
+          data-testid="dashboard-copilot-context-link"
+        >
+          Ask Copilot about this change
+        </Link>
+      ) : null}
+    </section>
+  ) : null;
+
   const disclosureSection = (
     <details
       className="rounded-2xl border border-hedgr-200 bg-white p-5"
@@ -235,7 +454,11 @@ export default function DashboardPage() {
   if (error) {
     return (
       <main className="p-4 sm:p-8">
-        <div className="mx-auto max-w-2xl space-y-6 sm:space-y-8">
+        <div
+          className={`mx-auto space-y-6 sm:space-y-8 ${
+            syntheticJourneyActive ? "max-w-5xl" : "max-w-2xl"
+          }`}
+        >
           {currentOverview}
           <EngineAllocationBands
             engineState={engineState}
@@ -259,7 +482,11 @@ export default function DashboardPage() {
 
   return (
     <main className="p-4 sm:p-8">
-      <div className="mx-auto max-w-2xl space-y-6 sm:space-y-8">
+      <div
+        className={`mx-auto space-y-6 sm:space-y-8 ${
+          syntheticJourneyActive ? "max-w-5xl" : "max-w-2xl"
+        }`}
+      >
         {!syntheticJourneyActive ? (
           <h1 className="sr-only">Dashboard</h1>
         ) : null}
@@ -270,31 +497,25 @@ export default function DashboardPage() {
             data-testid="dashboard-orientation"
           >
             <p className="text-xs font-semibold uppercase tracking-[0.12em] text-hedgr-500">
-              Financial stability
+              Financial position
             </p>
             <h1
               id="dashboard-orientation-heading"
               className="text-2xl font-semibold tracking-tight text-hedgr-800 sm:text-3xl"
             >
-              See where you stand as your money changes.
+              See what you have and what changed.
             </h1>
             <p className="max-w-xl text-sm leading-relaxed text-hedgr-dark">
-              Hedgr is designed around financial stability. This simulation
-              helps you understand where you stand, what changed, and what it
-              may mean. This is Hedgr&apos;s reading of a simulated position. It
-              provides context, not an instruction or proof that money moved.
-              What happens next is your decision.
+              Hedgr helps you understand and maintain your financial stability.
+              This simulation provides context, not an instruction or proof that
+              money moved.
             </p>
           </section>
         ) : null}
 
         {currentOverview}
 
-        {syntheticJourneyActive && isFirstTimeUser ? (
-          <EngineAllocationBands engineState={engineState} collapsed />
-        ) : null}
-
-        {isFirstTimeUser && (
+        {isFirstTimeUser && !syntheticJourneyActive && (
           <div
             className="rounded-2xl border border-hedgr-200 bg-hedgr-100/60 p-5 text-hedgr-800 sm:p-6"
             data-testid="dashboard-empty-state"
@@ -302,40 +523,38 @@ export default function DashboardPage() {
             <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
               <div className="max-w-lg">
                 <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-hedgr-500">
-                  {syntheticJourneyActive
-                    ? "Optional next step"
-                    : "Primary journey action"}
+                  Primary journey action
                 </p>
                 <h2 className="mt-1 text-lg font-semibold text-hedgr-800">
-                  {syntheticJourneyActive
-                    ? "Continue the walkthrough whenever you're ready"
-                    : "See your position clearly"}
+                  See your position clearly
                 </h2>
                 <p className="mt-1 text-sm leading-relaxed text-hedgr-dark">
-                  {syntheticJourneyActive
-                    ? "Continuing is optional. If you would like to see how the simulated position changes, you can run an example deposit. It is part of the research walkthrough, not financial advice or a suggestion to move money. No account is charged and no real money moves."
-                    : "Start by exploring a deposit when you are ready. Your balance and activity will appear here once you begin."}
+                  Start by exploring a deposit when you are ready. Your balance
+                  and activity will appear here once you begin.
                 </p>
               </div>
               <Link
-                href={
-                  syntheticJourneyActive
-                    ? getSyntheticJourneyHref("/deposit")
-                    : "/deposit"
-                }
+                href="/deposit"
                 className="inline-flex shrink-0 items-center justify-center rounded-xl bg-hedgr-primary px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-hedgr-600 focus:outline-none focus:ring-2 focus:ring-hedgr-500 focus:ring-offset-2 focus:ring-offset-hedgr-100"
               >
-                {syntheticJourneyActive
-                  ? "Start simulated deposit"
-                  : "Make your first deposit"}
+                Make your first deposit
               </Link>
             </div>
           </div>
         )}
 
+        {syntheticJourneyActive || !isFirstTimeUser ? (
+          <EngineAllocationBands
+            engineState={engineState}
+            collapsed={syntheticJourneyActive}
+          />
+        ) : null}
+
+        {syntheticActions}
+
         {syntheticJourneyActive && hasSyntheticFixtureState && (
           <section
-            className="rounded-2xl border border-hedgr-200 bg-hedgr-100/60 p-5 text-hedgr-800 sm:p-6"
+            className="rounded-2xl border border-hedgr-200 bg-hedgr-100/40 p-5 text-hedgr-800 sm:p-6"
             data-testid="dashboard-restart-journey"
             aria-labelledby="dashboard-restart-journey-heading"
           >
@@ -346,20 +565,20 @@ export default function DashboardPage() {
                 </p>
                 <h2
                   id="dashboard-restart-journey-heading"
-                  className="mt-1 text-lg font-semibold text-hedgr-800"
+                  className="mt-1 text-base font-semibold text-hedgr-800"
                 >
                   Run the simulated journey again
                 </h2>
                 <p className="mt-1 text-sm leading-relaxed text-hedgr-dark">
-                  Restarting removes only this device&apos;s simulated balance and
-                  Activity so the example begins again at $0. No real money or
-                  external records are affected.
+                  Restarting removes only this device&apos;s simulated position
+                  and Activity so the example begins again at $0. No real money
+                  or external records are affected.
                 </p>
               </div>
               <button
                 type="button"
                 onClick={restartSyntheticJourney}
-                className="inline-flex shrink-0 items-center justify-center rounded-xl bg-hedgr-primary px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-hedgr-600 focus:outline-none focus:ring-2 focus:ring-hedgr-500 focus:ring-offset-2 focus:ring-offset-hedgr-100"
+                className="inline-flex shrink-0 items-center justify-center rounded-xl border border-hedgr-200 bg-white px-4 py-2.5 text-sm font-semibold text-hedgr-800 transition-colors hover:border-hedgr-300 focus:outline-none focus:ring-2 focus:ring-hedgr-500 focus:ring-offset-2"
               >
                 Restart simulated journey
               </button>
@@ -367,18 +586,11 @@ export default function DashboardPage() {
           </section>
         )}
 
-        {!(syntheticJourneyActive && isFirstTimeUser) ? (
-          <EngineAllocationBands
-            engineState={engineState}
-            collapsed={syntheticJourneyActive}
-          />
-        ) : null}
-
         {!syntheticJourneyActive ? (
           <EngineStabilityReviewSnapshot engineState={engineState} />
         ) : null}
 
-        {!isFirstTimeUser && !hasNoTransactions && (
+        {!syntheticJourneyActive && !isFirstTimeUser && !hasNoTransactions && (
           <section
             className="border-t border-hedgr-200 pt-6"
             aria-labelledby="dashboard-recent-activity-heading"
@@ -388,17 +600,13 @@ export default function DashboardPage() {
                 id="dashboard-recent-activity-heading"
                 className="text-base font-semibold tracking-tight text-hedgr-800"
               >
-                {syntheticJourneyActive ? "What changed" : "Recent activity"}
+                Recent activity
               </h2>
               <Link
-                href={
-                  syntheticJourneyActive
-                    ? getSyntheticJourneyHref("/activity")
-                    : "/activity"
-                }
+                href="/activity"
                 className="shrink-0 text-sm font-medium text-hedgr-600 underline-offset-2 hover:text-hedgr-primary hover:underline"
               >
-                {syntheticJourneyActive ? "Review Activity" : "View all"}
+                View all
               </Link>
             </div>
             <ul className="mt-4 divide-y divide-hedgr-100 border-t border-hedgr-100">
@@ -409,7 +617,7 @@ export default function DashboardPage() {
                 >
                   <div className="min-w-0">
                     <p className="font-medium text-hedgr-800">
-                      {activityTitle(tx, syntheticJourneyActive)}
+                      {activityTitle(tx, false)}
                     </p>
                     <p className="text-sm text-hedgr-500">
                       {formatActivityDayLabel(tx.createdAt)}
@@ -433,29 +641,30 @@ export default function DashboardPage() {
 
         {educationSection}
 
-        {isFeatureEnabled("earn") && (
-          <div className="max-w-sm">
-            <div
-              className="rounded-xl border border-hedgr-200 bg-white p-4"
-              data-testid="dashboard-earn-tile"
-            >
-              <div className="text-xs font-medium text-hedgr-500">
-                Return rate (context)
+        {(!syntheticJourneyActive || !explicitSyntheticJourney) &&
+          isFeatureEnabled("earn") && (
+            <div className="max-w-sm">
+              <div
+                className="rounded-xl border border-hedgr-200 bg-white p-4"
+                data-testid="dashboard-earn-tile"
+              >
+                <div className="text-xs font-medium text-hedgr-500">
+                  Return rate (context)
+                </div>
+                {apyError ? (
+                  <div className="mt-1 text-xs font-medium text-hedgr-800">
+                    {apyError}
+                  </div>
+                ) : (
+                  <div className="mt-1 text-xl font-semibold tabular-nums text-hedgr-dark">
+                    {apy !== null ? `${(apy * 100).toFixed(2)}%` : "n/a"}
+                  </div>
+                )}
               </div>
-              {apyError ? (
-                <div className="mt-1 text-xs font-medium text-hedgr-800">
-                  {apyError}
-                </div>
-              ) : (
-                <div className="mt-1 text-xl font-semibold tabular-nums text-hedgr-dark">
-                  {apy !== null ? `${(apy * 100).toFixed(2)}%` : "n/a"}
-                </div>
-              )}
             </div>
-          </div>
-        )}
+          )}
 
-        {!isFirstTimeUser && hasNoTransactions && (
+        {!syntheticJourneyActive && !isFirstTimeUser && hasNoTransactions && (
           <div className="rounded-2xl border border-hedgr-200 bg-white p-6">
             <h2 className="mb-4 text-lg font-semibold">Nothing needs action</h2>
             <EmptyState

@@ -19,15 +19,15 @@ const BADGE_TONES: Record<EnginePosture, string> = {
 };
 
 const SIMULATION_ATTENTION_ANSWERS: Record<EnginePosture, string> = {
-  normal: "No important change shown",
-  tightening: "A change is shown",
-  tightened: "A change is shown",
-  recovery: "A change is shown",
+  normal: "No other change stands out in the information shown.",
+  tightening: "A change in the guidance needs review.",
+  tightened: "A change in the guidance needs review.",
+  recovery: "A change in the guidance needs review.",
 };
 
 const SIMULATION_STATUS_CONTEXT: Record<EnginePosture, string> = {
   normal:
-    "Hedgr's qualitative reading of the existing simulated inputs shows no important change.",
+    "The completed simulated changes reconcile with the current position.",
   tightening:
     "Hedgr's qualitative reading shows stability guidance becoming more cautious.",
   tightened:
@@ -36,17 +36,47 @@ const SIMULATION_STATUS_CONTEXT: Record<EnginePosture, string> = {
     "Hedgr's qualitative reading shows stability guidance easing from a more cautious state.",
 };
 
+type ComparisonState = "empty" | "first-event" | "change";
+
+const SIMULATION_COMPARISON_CONTEXT: Record<ComparisonState, string> = {
+  empty:
+    "Nothing to compare yet. A first completed simulated event will create a starting point.",
+  "first-event":
+    "A first simulated position is now visible. There is no earlier position to compare yet.",
+  change: SIMULATION_STATUS_CONTEXT.normal,
+};
+
+const SIMULATION_COMPARISON_ATTENTION: Record<ComparisonState, string> = {
+  empty: "There is not enough information to compare yet.",
+  "first-event": "There is no earlier position to compare yet.",
+  change: SIMULATION_ATTENTION_ANSWERS.normal,
+};
+
 type EnginePostureHeaderProps = {
   engineState: EngineState;
   syntheticJourneyActive?: boolean;
+  comparisonState?: ComparisonState;
+  latestChangeType?: "DEPOSIT" | "WITHDRAW";
+  latestChangeAmountUSD?: number;
 };
 
 export function EnginePostureHeader({
   engineState,
   syntheticJourneyActive = false,
+  comparisonState = "change",
+  latestChangeType,
+  latestChangeAmountUSD,
 }: EnginePostureHeaderProps) {
   const { posture, notice } = engineState;
   const showNotice = posture !== "normal" && Boolean(notice);
+  const changeObservation =
+    latestChangeType && latestChangeAmountUSD !== undefined
+      ? `The simulated ${
+          latestChangeType === "WITHDRAW" ? "expense" : "deposit"
+        } explains why the current position is $${latestChangeAmountUSD.toFixed(
+          2
+        )} ${latestChangeType === "WITHDRAW" ? "lower" : "higher"}.`
+      : SIMULATION_COMPARISON_CONTEXT.change;
 
   if (
     posture !== "normal" &&
@@ -64,28 +94,16 @@ export function EnginePostureHeader({
       aria-labelledby="dashboard-current-status-label"
       data-testid="dashboard-current-status"
     >
-      <div className="space-y-3">
+      <div className="space-y-2">
         <div className="space-y-1">
           <p
             id="dashboard-current-status-label"
             className="text-xs font-semibold uppercase tracking-[0.12em] text-hedgr-500"
           >
-            {syntheticJourneyActive ? "Stability Status" : "Current status"}
+            {syntheticJourneyActive ? "What Hedgr notices" : "Current status"}
           </p>
-          {syntheticJourneyActive ? (
-            <h2 className="text-base font-semibold tracking-tight text-hedgr-800">
-              Does anything need attention?
-            </h2>
-          ) : null}
         </div>
-        {syntheticJourneyActive ? (
-          <span
-            data-testid="engine-simulation-attention-answer"
-            className="inline-block border-l-2 border-hedgr-200 pl-3 text-sm font-semibold leading-relaxed text-hedgr-800"
-          >
-            {SIMULATION_ATTENTION_ANSWERS[posture]}
-          </span>
-        ) : (
+        {!syntheticJourneyActive ? (
           <span
             data-testid="engine-posture-badge"
             data-posture={posture}
@@ -93,7 +111,7 @@ export function EnginePostureHeader({
           >
             {BADGE_LABELS[posture]}
           </span>
-        )}
+        ) : null}
       </div>
 
       <p
@@ -101,9 +119,32 @@ export function EnginePostureHeader({
         data-testid="engine-posture-context"
       >
         {syntheticJourneyActive
-          ? SIMULATION_STATUS_CONTEXT[posture]
+          ? posture === "normal"
+            ? comparisonState === "change"
+              ? changeObservation
+              : SIMULATION_COMPARISON_CONTEXT[comparisonState]
+            : SIMULATION_STATUS_CONTEXT[posture]
           : ENGINE_POSTURE_CONTEXT[posture]}
       </p>
+
+      {syntheticJourneyActive ? (
+        <div className="space-y-2 border-t border-hedgr-100 pt-4">
+          <h2 className="text-base font-semibold tracking-tight text-hedgr-800">
+            Does anything need attention?
+          </h2>
+          <p
+            data-testid="engine-simulation-attention-answer"
+            className="border-l-2 border-hedgr-200 pl-3 text-sm font-semibold leading-relaxed text-hedgr-800"
+          >
+            {posture === "normal"
+              ? SIMULATION_COMPARISON_ATTENTION[comparisonState]
+              : SIMULATION_ATTENTION_ANSWERS[posture]}
+          </p>
+          <p className="text-xs leading-relaxed text-hedgr-500">
+            This is an observation from the simulation, not a guarantee.
+          </p>
+        </div>
+      ) : null}
 
       {!syntheticJourneyActive ? (
         <p

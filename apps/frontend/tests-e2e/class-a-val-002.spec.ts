@@ -7,7 +7,9 @@ async function clearStorage(page: Page) {
 
 async function login(page: Page) {
   await page.goto('/login');
-  await page.getByPlaceholder('you@example.com').fill('class-a-val-002@hedgr.test');
+  await page
+    .getByPlaceholder('you@example.com')
+    .fill('class-a-val-002@hedgr.test');
   await page.getByRole('button', { name: 'Continue' }).click();
   await expect(page).toHaveURL(/\/dashboard/);
   await page.goto('/orientation');
@@ -41,142 +43,166 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   await login(page);
 
   await expect(page.getByTestId('trust-disclosure-banner')).toContainText(
-    'Simulation Mode. No Real Money',
+    'Simulation Mode. No Real Money'
   );
   const simulationDetails = page.getByTestId('simulation-technical-details');
   await expect(simulationDetails).not.toHaveAttribute('open', '');
   await simulationDetails.getByText('How this simulation works').click();
   await expect(simulationDetails).toContainText(
-    'Rates are fixed for this walkthrough, and no live financial service is connected.',
+    'Rates are fixed for this walkthrough, and no live financial service is connected.'
   );
   await expect(simulationDetails).toContainText(
-    'The selected country changes simulated currency display only.',
+    'The selected country changes simulated currency display only.'
   );
   await expect(simulationDetails).not.toContainText(/Auth:|DeFi:|FX:/);
   const currencyDisplay = page.getByLabel('Simulation currency display');
   if (process.env.NEXT_PUBLIC_ENABLE_MARKET_SWITCHER === 'true') {
-    await expect(currencyDisplay).toContainText('Currency display: Zambia (ZMW)');
+    await expect(currencyDisplay).toContainText(
+      'Currency display: Zambia (ZMW)'
+    );
   } else {
     await expect(currencyDisplay).toHaveCount(0);
   }
-  await expect(page.getByRole('button', { name: 'Dismiss trust disclosure' })).toHaveCount(0);
+  await expect(
+    page.getByRole('button', { name: 'Dismiss trust disclosure' })
+  ).toHaveCount(0);
   const journeyShell = page.getByTestId('synthetic-journey-shell');
-  await expect(journeyShell).toContainText('Simulated example');
+  await expect(journeyShell).toContainText('Simulation · no real money');
   await expect(journeyShell).not.toContainText('CLASS-A-VAL-002');
-  await expect(journeyShell).toContainText('start with the situation');
-  await expect(journeyShell).toContainText('Understand the situation before the next step');
-  await expect(journeyShell).toContainText('current stability view and simulated balance');
-  await expect(page.getByTestId('synthetic-journey-current-step')).toHaveText('1Dashboard');
+  await expect(journeyShell).toContainText('your position');
+  await expect(journeyShell).toContainText('See where you stand');
+  await expect(journeyShell).toContainText('current position and its evidence');
+  await expect(page.getByTestId('synthetic-journey-current-step')).toHaveText(
+    '1Position'
+  );
+  const primaryNav = page.getByTestId('nav-links');
+  await expect(
+    primaryNav.getByRole('link', { name: 'Home', exact: true })
+  ).toHaveAttribute('href', '/dashboard-synthetic-journey');
+  await expect(
+    primaryNav.getByRole('link', { name: 'Activity', exact: true })
+  ).toHaveAttribute('href', '/activity?journey=class-a-val-002');
+  await expect(
+    primaryNav.getByRole('link', { name: 'Settings', exact: true })
+  ).toHaveAttribute('href', '/settings');
+  await expect(
+    primaryNav.getByRole('link', { name: 'Deposit', exact: true })
+  ).toHaveCount(0);
+  await expect(
+    primaryNav.getByRole('link', { name: 'Withdraw', exact: true })
+  ).toHaveCount(0);
   const initialJourneyCopy = (await journeyShell.textContent()) ?? '';
   expect(initialJourneyCopy).not.toMatch(
-    /Financial Stability Companion|Activity explains|fixture|informational posture|settlement/i,
+    /Financial Stability Companion|Activity explains|fixture|informational posture|settlement/i
   );
   const dashboardOrientation = page.getByTestId('dashboard-orientation');
   await expect(
     page.getByRole('heading', {
       level: 1,
-      name: 'See where you stand as your money changes.',
-    }),
+      name: 'See what you have and what changed.',
+    })
   ).toBeVisible();
   await expect(page.getByRole('heading', { level: 1 })).toHaveCount(1);
-  await expect(dashboardOrientation).toContainText('Financial stability');
+  await expect(dashboardOrientation).toContainText('Financial position');
   await expect(dashboardOrientation).toContainText(
-    'See where you stand as your money changes.',
-  );
-  await expect(dashboardOrientation).toContainText(
-    'Hedgr is designed around financial stability',
+    'Hedgr helps you understand and maintain your financial stability.'
   );
   await expect(dashboardOrientation).toContainText('not an instruction');
   await expect(dashboardOrientation).toContainText(
-    'not an instruction or proof that money moved',
+    'not an instruction or proof that money moved'
   );
-  await expect(dashboardOrientation).toContainText('your decision');
   await expect(dashboardOrientation).not.toContainText(
-    /crypto|blockchain|stablecoin|DeFi|trading|yield routing/i,
+    /crypto|blockchain|stablecoin|DeFi|trading|yield routing/i
   );
   await expect(page.getByTestId('usd-balance')).toHaveText('$0.00');
-  await expect(page.getByText('Simulated balance', { exact: true })).toBeVisible();
-  await expect(page.getByTestId('dashboard-synthetic-balance-explainer')).toContainText(
-    'not a real account balance',
+  await expect(
+    page.getByText('Your current position', { exact: true })
+  ).toBeVisible();
+  await expect(
+    page.getByTestId('dashboard-synthetic-balance-explainer')
+  ).toContainText('Not a real balance');
+  await expect(page.getByTestId('dashboard-change-evidence')).toHaveAttribute(
+    'data-comparison-state',
+    'empty'
+  );
+  await expect(page.getByTestId('dashboard-change-evidence')).toContainText(
+    'Nothing to compare yet'
   );
   await expect(page.getByText('Does anything need attention?')).toBeVisible();
-  await expect(page.getByTestId('engine-simulation-attention-answer')).toHaveText(
-    'No important change shown',
+  await expect(
+    page.getByTestId('engine-simulation-attention-answer')
+  ).toHaveText('There is not enough information to compare yet.');
+  await expect(page.getByTestId('dashboard-current-status')).not.toContainText(
+    'NORMAL'
   );
-  await expect(page.getByTestId('dashboard-current-status')).not.toContainText('NORMAL');
   await expect(page.getByTestId('engine-posture-context')).toHaveText(
-    "Hedgr's qualitative reading of the existing simulated inputs shows no important change.",
+    'Nothing to compare yet. A first completed simulated event will create a starting point.'
   );
   await expect(page.getByTestId('dashboard-current-status')).toContainText(
-    'Stability Status',
+    'What Hedgr notices'
   );
   await expect(page.getByTestId('dashboard-current-status')).not.toContainText(
-    /score|gauge|safe|guarantee/i,
+    /score|gauge|safe|all clear/i
   );
   const stabilityGuidance = page.getByTestId('engine-allocation-bands');
-  await expect(stabilityGuidance).toHaveAttribute('data-presentation', 'collapsed');
-  await expect(stabilityGuidance).toContainText('Stability guidance');
-  await expect(stabilityGuidance).toContainText(
-    'These targets are guidance, not current money',
+  await expect(stabilityGuidance).toHaveAttribute(
+    'data-presentation',
+    'collapsed'
   );
+  await expect(stabilityGuidance).toContainText('What you are building toward');
+  await expect(stabilityGuidance).toContainText('not money set aside');
   const initialDashboardOrder = await page
-    .locator('[data-testid="engine-allocation-bands"], [data-testid="dashboard-empty-state"]')
-    .evaluateAll((nodes) => nodes.map((node) => node.getAttribute('data-testid')));
+    .locator(
+      '[data-testid="engine-allocation-bands"], [data-testid="dashboard-empty-state"]'
+    )
+    .evaluateAll((nodes) =>
+      nodes.map((node) => node.getAttribute('data-testid'))
+    );
   expect(initialDashboardOrder).toEqual([
     'engine-allocation-bands',
     'dashboard-empty-state',
   ]);
-  const prioritiesDetails = page.getByTestId('engine-allocation-priorities-details');
-  const rolesDetails = page.getByTestId('engine-allocation-roles-details');
   const valuesDetails = page.getByTestId('engine-allocation-values-details');
-  await expect(prioritiesDetails.locator(':scope > summary')).toHaveAccessibleName(
-    'See why these planning targets exist',
-  );
-  await expect(prioritiesDetails).not.toHaveAttribute('open', '');
-  await expect(page.getByTestId('engine-allocation-philosophy')).not.toBeVisible();
-  await prioritiesDetails.getByText('See why these planning targets exist').click();
-  await expect(page.getByTestId('engine-allocation-philosophy')).toBeVisible();
-  await expect(page.getByTestId('engine-allocation-philosophy')).toContainText(
-    'preserve value first, keep access and risk visible',
-  );
-  await expect(rolesDetails.locator(':scope > summary')).toHaveAccessibleName(
-    'See what each target is for',
-  );
-  await expect(rolesDetails).not.toHaveAttribute('open', '');
-  await expect(page.getByTestId('engine-allocation-target-roles')).not.toBeVisible();
-  await rolesDetails.getByText('See what each target is for').click();
   const targetRoles = page.getByTestId('engine-allocation-target-roles');
   await expect(targetRoles).toBeVisible();
-  await expect(targetRoles).toContainText('Core stability target');
-  await expect(targetRoles).toContainText('Conservative yield');
+  await expect(targetRoles).toContainText('Now');
   await expect(targetRoles).toContainText('Reserve');
+  await expect(targetRoles).toContainText('Growth');
   await expect(targetRoles).not.toContainText(/\d+%/);
   await expect(valuesDetails.locator(':scope > summary')).toHaveAccessibleName(
-    'View simulated planning targets',
+    'View planning percentages'
   );
   await expect(valuesDetails).not.toHaveAttribute('open', '');
-  await expect(page.getByTestId('engine-allocation-band-coreTargetPct')).not.toBeVisible();
-  await valuesDetails.getByText('View simulated planning targets').click();
-  await expect(page.getByTestId('engine-allocation-targets-intro')).toHaveText(
-    'These percentages describe a simulated planning structure for those roles. They are guidance, not current money.',
-  );
-  await expect(page.getByTestId('engine-allocation-band-coreTargetPct')).toBeVisible();
-  await expect(page.getByTestId('engine-allocation-band-coreTargetPct')).toContainText(
-    'Core stability target',
-  );
-  await expect(page.getByTestId('engine-allocation-band-coreTargetPct')).toContainText(
-    /Stability target\s*50%/,
-  );
+  await expect(
+    page.getByTestId('engine-allocation-band-coreTargetPct')
+  ).not.toBeVisible();
+  await valuesDetails.getByText('View planning percentages').click();
+  await expect(
+    page.getByTestId('engine-allocation-band-coreTargetPct')
+  ).toBeVisible();
+  await expect(
+    page.getByTestId('engine-allocation-band-coreTargetPct')
+  ).toContainText('Now');
+  await expect(
+    page.getByTestId('engine-allocation-band-coreTargetPct')
+  ).toContainText(/Now\s*50%/);
   const targetStructure = page.getByTestId('engine-allocation-structure');
   await expect(targetStructure.locator('[role="progressbar"]')).toHaveCount(0);
-  await expect(targetStructure).not.toContainText(/[$£€]|funded|account|holding|allocated/i);
-  await expect(page.getByTestId('engine-allocation-boundary')).toContainText(
-    'context, not an instruction',
+  await expect(targetStructure).not.toContainText(
+    /[$£€]|funded|account|holding|allocated/i
   );
   await expect(page.getByTestId('engine-allocation-boundary')).toContainText(
-    'does not show current money or prove that simulated money was divided or moved',
+    'not separate balances'
   );
-  await expect(page.getByTestId('engine-stability-review-snapshot')).toHaveCount(0);
+  await expect(page.getByTestId('engine-allocation-boundary')).toContainText(
+    'do not divide or move simulated money'
+  );
+  await expect(page.getByTestId('dashboard-optional-actions')).toContainText(
+    'Do nothing'
+  );
+  await expect(
+    page.getByTestId('engine-stability-review-snapshot')
+  ).toHaveCount(0);
   await expect(page.getByText('Simulation date')).toHaveCount(0);
   await expect(page.getByText('Last viewed locally')).toHaveCount(0);
   await expect(page.getByTestId('dashboard-education')).toHaveCount(0);
@@ -187,26 +213,28 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   await disclosureDetails.locator(':scope > summary').click();
   const policyDisclosures = page.getByTestId('policy-disclosures');
   await expect(policyDisclosures).toContainText(
-    'This research walkthrough creates no real financial exposure.',
+    'This research walkthrough creates no real financial exposure.'
   );
   await expect(policyDisclosures).toContainText(
-    'This research prototype is not a bank account and does not accept deposits.',
+    'This research prototype is not a bank account and does not accept deposits.'
   );
   await expect(policyDisclosures).not.toContainText(
-    /digital assets|afford to lose|insured by|government agency/i,
+    /digital assets|afford to lose|insured by|government agency/i
   );
 
-  await page.getByRole('link', { name: 'Start simulated deposit' }).click();
+  await page.getByRole('link', { name: /Start first simulated event/ }).click();
   await expect(page).toHaveURL(/\/deposit\?journey=class-a-val-002/);
-  await expect(page.getByTestId('synthetic-journey-current-step')).toHaveText('2Deposit');
+  await expect(page.getByTestId('synthetic-journey-current-step')).toHaveText(
+    '2First event'
+  );
   await expect(page.getByTestId('synthetic-journey-shell')).toContainText(
-    'See how the simulated position changes',
+    'Create the first comparison point'
   );
   await expect(page.getByTestId('deposit-synthetic-condition')).toContainText(
-    'see how the simulated position changes',
+    'see how the simulated position changes'
   );
   await expect(page.getByTestId('deposit-fx-block')).toContainText(
-    'Simulated example rate: 1 USD = 20.00 ZMW',
+    'Simulated example rate: 1 USD = 20.00 ZMW'
   );
 
   const depositAmount = page.getByTestId('deposit-amount');
@@ -214,34 +242,44 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   await depositAmount.fill('-100');
   await expect(depositAmount).toHaveValue('-100');
   await expect(depositAmount).toHaveAttribute('aria-invalid', 'true');
-  await expect(page.getByText('Enter a deposit amount greater than 0 ZMW.')).toBeVisible();
+  await expect(
+    page.getByText('Enter a deposit amount greater than 0 ZMW.')
+  ).toBeVisible();
   await expect(depositConfirm).toBeDisabled();
 
   await depositAmount.fill('100');
-  await expect(page.getByTestId('deposit-conversion-preview')).toContainText('$5.00');
+  await expect(page.getByTestId('deposit-conversion-preview')).toContainText(
+    '$5.00'
+  );
   await expect(page.getByTestId('deposit-balance-change')).toContainText(
-    'shows 100 ZMW as +$5.00',
+    'shows 100 ZMW as +$5.00'
   );
   await depositConfirm.click();
   await expect(page.getByTestId('deposit-confirmation-region')).toContainText(
     'The simulated balance increased by $5.00',
-    { timeout: 10_000 },
+    { timeout: 10_000 }
   );
   await expect(page.getByTestId('deposit-confirmation-region')).toContainText(
-    'No account was charged and no real money moved',
+    'No account was charged and no real money moved'
   );
   expect(depositContractRequests).toBe(0);
 
-  await page.getByRole('link', { name: 'Continue to simulated withdrawal' }).click();
+  await page
+    .getByRole('link', { name: 'Continue to simulated withdrawal' })
+    .click();
   await expect(page).toHaveURL(/\/withdraw\?journey=class-a-val-002/);
-  await expect(page.getByTestId('synthetic-journey-current-step')).toHaveText('3Withdraw');
+  await expect(page.getByTestId('synthetic-journey-current-step')).toHaveText(
+    '3Change'
+  );
   await expect(page.getByTestId('synthetic-journey-shell')).toContainText(
-    'See the position after a simulated withdrawal',
+    'See what changes and what remains'
   );
   await expect(page.getByTestId('withdraw-synthetic-condition')).toContainText(
-    'check the position after a simulated withdrawal',
+    'check the position after a simulated withdrawal'
   );
-  await expect(page.getByText('Simulated balance before this step:')).toContainText('$5.00');
+  await expect(
+    page.getByText('Simulated balance before this step:')
+  ).toContainText('$5.00');
 
   const withdrawAmount = page.getByTestId('withdraw-amount');
   const withdrawConfirm = page.getByRole('button', { name: 'Confirm' });
@@ -250,7 +288,9 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
 
   await withdrawAmount.fill('-2');
   await expect(withdrawAmount).toHaveAttribute('aria-invalid', 'true');
-  await expect(page.getByText('Enter a withdrawal amount greater than $0.')).toBeVisible();
+  await expect(
+    page.getByText('Enter a withdrawal amount greater than $0.')
+  ).toBeVisible();
   await expect(withdrawConfirm).toBeDisabled();
 
   await withdrawAmount.fill('');
@@ -258,7 +298,9 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   await withdrawAmount.press('1');
   await withdrawAmount.press('5');
   await expect(withdrawAmount).toHaveValue('15');
-  await expect(page.getByText('Amount exceeds available balance.')).toBeVisible();
+  await expect(
+    page.getByText('Amount exceeds available balance.')
+  ).toBeVisible();
   await expect(withdrawConfirm).toBeDisabled();
 
   await withdrawAmount.fill('2');
@@ -271,144 +313,191 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   await expect(page.getByTestId('withdraw-status-region')).toHaveAttribute(
     'data-status',
     'SUCCESS',
-    { timeout: 10_000 },
+    { timeout: 10_000 }
   );
   await expect(page.getByTestId('withdraw-status-description')).toContainText(
-    'No bank transfer or real payout occurred',
+    'No bank transfer or real payout occurred'
   );
-  await expect(page.getByTestId('withdraw-status-exception-clarification')).toHaveCount(0);
-  await expect(page.getByTestId('withdraw-status-next-step-guidance')).toHaveCount(0);
-  await expect(page.getByTestId('withdraw-balance-reconciliation')).toContainText(
-    '$3.00 remains',
-  );
+  await expect(
+    page.getByTestId('withdraw-status-exception-clarification')
+  ).toHaveCount(0);
+  await expect(
+    page.getByTestId('withdraw-status-next-step-guidance')
+  ).toHaveCount(0);
+  await expect(
+    page.getByTestId('withdraw-balance-reconciliation')
+  ).toContainText('$3.00 remains');
 
   await page.getByRole('link', { name: 'Review simulated activity' }).click();
   await expect(page).toHaveURL(/\/activity\?journey=class-a-val-002/);
-  await expect(page.getByTestId('synthetic-journey-current-step')).toHaveText('4Activity');
+  await expect(page.getByTestId('synthetic-journey-current-step')).toHaveText(
+    '4Evidence'
+  );
   await expect(page.getByTestId('synthetic-journey-shell')).toContainText(
-    'Review what changed and why',
+    'Review the record of each change'
   );
   await expect(page.getByTestId('activity-synthetic-condition')).toContainText(
-    'understand what changed and why',
+    'Evidence behind the current position'
   );
-  const activityReconciliation = page.getByTestId('activity-balance-reconciliation');
+  const activityReconciliation = page.getByTestId(
+    'activity-balance-reconciliation'
+  );
   await expect(activityReconciliation).toContainText('+$5.00 deposits');
   await expect(activityReconciliation).toContainText('$2.00 withdrawals');
   await expect(activityReconciliation).toContainText('$3.00 remaining');
-  await expect(page.getByTestId('activity-type-deposit')).toHaveText('Simulated deposit');
+  await expect(page.getByTestId('activity-type-deposit')).toHaveText(
+    'Simulated deposit'
+  );
   await expect(page.getByTestId('activity-type-withdraw')).toHaveText(
-    'Simulated withdrawal',
+    'Simulated withdrawal'
   );
   await expect(page.getByTestId('activity-delta-deposit')).toHaveText('+$5.00');
   await expect(page.getByTestId('activity-result-deposit')).toHaveText(
-    '→ $5.00 resulting',
+    '→ $5.00 resulting'
   );
-  await expect(page.getByTestId('activity-delta-withdraw')).toHaveText('-$2.00');
+  await expect(page.getByTestId('activity-delta-withdraw')).toHaveText(
+    '-$2.00'
+  );
   await expect(page.getByTestId('activity-result-withdraw')).toHaveText(
-    '→ $3.00 resulting',
+    '→ $3.00 resulting'
   );
   await expect(
-    page.getByTestId('activity-row-withdraw').getByText('0', { exact: true }),
+    page.getByTestId('activity-row-withdraw').getByText('0', { exact: true })
   ).toHaveCount(0);
-  await expect(page.locator('[data-testid="tx-status-pill"][data-status="SUCCESS"]')).toHaveCount(2);
+  await expect(
+    page.locator('[data-testid="tx-status-pill"][data-status="SUCCESS"]')
+  ).toHaveCount(2);
 
   await page.getByTestId('activity-row-withdraw').click();
-  await expect(page.getByTestId('tx-detail-type')).toHaveText('Simulated withdrawal');
+  await expect(page.getByTestId('tx-detail-type')).toHaveText(
+    'Simulated withdrawal'
+  );
   await expect(page.getByText('Simulation record ID')).toBeVisible();
   await expect(page.getByText('Simulated step status')).toBeVisible();
   await expect(page.getByTestId('tx-detail-simulation-note')).toContainText(
-    'not a bank or payment provider record',
+    'not a bank or payment provider record'
   );
   await expect(
-    page.getByTestId('tx-detail-modal').getByText('0', { exact: true }),
+    page.getByTestId('tx-detail-modal').getByText('0', { exact: true })
   ).toHaveCount(0);
   await page.getByTestId('tx-detail-close').click();
 
-  await page.getByRole('link', { name: 'Return to simulated stability view' }).click();
+  await page.getByRole('link', { name: 'Return to current position' }).click();
   await expect(page.getByTestId('usd-balance')).toHaveText('$3.00');
-  await expect(page.getByTestId('dashboard-balance-evidence')).toContainText(
-    'ending at $3.00',
+  await expect(page.getByTestId('dashboard-change-evidence')).toHaveAttribute(
+    'data-comparison-state',
+    'change'
   );
-  await expect(page.getByText('Simulated deposit').first()).toBeVisible();
-  await expect(page.getByText('Simulated withdrawal').first()).toBeVisible();
-  await expect(page.getByRole('link', { name: 'Review Activity' })).toHaveAttribute(
-    'href',
-    '/activity?journey=class-a-val-002',
+  await expect(page.getByTestId('dashboard-change-evidence')).toContainText(
+    '$5.00'
   );
+  await expect(page.getByTestId('dashboard-change-delta')).toHaveText('−$2.00');
+  await expect(page.getByTestId('dashboard-change-result')).toHaveText('$3.00');
+  await expect(page.getByTestId('engine-posture-context')).toHaveText(
+    'The simulated expense explains why the current position is $2.00 lower.'
+  );
+  await expect(
+    page.getByRole('link', { name: /Review what changed/ })
+  ).toHaveAttribute('href', '/activity?journey=class-a-val-002');
 
-  const restartJourney = page.getByRole('button', { name: 'Restart simulated journey' });
+  const restartJourney = page.getByRole('button', {
+    name: 'Restart simulated journey',
+  });
   await expect(restartJourney).toBeVisible();
   page.once('dialog', async (dialog) => {
     expect(dialog.message()).toContain(
-      'clears only the simulated balance and Activity stored on this device',
+      'clears only the simulated balance and Activity stored on this device'
     );
     await dialog.accept();
   });
   await restartJourney.click();
 
   await expect(page.getByTestId('usd-balance')).toHaveText('$0.00');
-  await expect(page.getByRole('link', { name: 'Start simulated deposit' })).toBeVisible();
-  await expect(page.getByRole('link', { name: 'Review Activity' })).toHaveCount(0);
+  await expect(
+    page.getByRole('link', { name: /Start first simulated event/ })
+  ).toBeVisible();
+  await expect(
+    page.getByRole('link', { name: /Review what changed/ })
+  ).toHaveCount(0);
 
-  await page.getByRole('link', { name: 'Start simulated deposit' }).click();
+  await page.getByRole('link', { name: /Start first simulated event/ }).click();
   await page.getByTestId('deposit-amount').fill('100');
   await page.getByRole('button', { name: 'Confirm' }).click();
   await expect(page.getByTestId('deposit-confirmation-region')).toBeVisible({
     timeout: 10_000,
   });
-  await page.getByRole('link', { name: 'Continue to simulated withdrawal' }).click();
+  await page
+    .getByRole('link', { name: 'Continue to simulated withdrawal' })
+    .click();
   await page.getByTestId('withdraw-amount').fill('2');
   await page.getByRole('button', { name: 'Confirm' }).click();
   await expect(page.getByTestId('withdraw-status-region')).toHaveAttribute(
     'data-status',
     'SUCCESS',
-    { timeout: 10_000 },
+    { timeout: 10_000 }
   );
   await page.getByRole('link', { name: 'Review simulated activity' }).click();
 
   await expect(page.getByTestId('activity-type-deposit')).toHaveCount(1);
   await expect(page.getByTestId('activity-type-withdraw')).toHaveCount(1);
-  await expect(page.locator('[data-testid="tx-status-pill"][data-status="SUCCESS"]')).toHaveCount(2);
-  await page.getByRole('link', { name: 'Return to simulated stability view' }).click();
+  await expect(
+    page.locator('[data-testid="tx-status-pill"][data-status="SUCCESS"]')
+  ).toHaveCount(2);
+  await page.getByRole('link', { name: 'Return to current position' }).click();
   await expect(page.getByTestId('usd-balance')).toHaveText('$3.00');
-  await expect(page.getByRole('button', { name: 'Restart simulated journey' })).toBeVisible();
+  await expect(
+    page.getByRole('button', { name: 'Restart simulated journey' })
+  ).toBeVisible();
 });
 
-test('unavailable data remains a blocked secondary trust scenario', async ({ page }) => {
+test('unavailable data remains a blocked secondary trust scenario', async ({
+  page,
+}) => {
   await clearStorage(page);
   await login(page);
   await page.goto('/deposit?journey=class-a-val-002&scenario=unavailable-data');
 
-  await expect(page.getByTestId('deposit-market-data-continuity')).toContainText(
-    'Exchange rate data is temporarily unavailable',
-  );
+  await expect(
+    page.getByTestId('deposit-market-data-continuity')
+  ).toContainText('Exchange rate data is temporarily unavailable');
   await expect(page.getByRole('button', { name: 'Confirm' })).toBeDisabled();
   await expect(
-    page.getByRole('link', { name: 'Return to the simulated deposit' }),
+    page.getByRole('link', { name: 'Return to the simulated deposit' })
   ).toBeVisible();
 });
 
-test('mobile keeps the persistent boundary and current research step visible', async ({ page }) => {
+test('mobile keeps the persistent boundary and current research step visible', async ({
+  page,
+}) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await clearStorage(page);
   await login(page);
 
   await expect(page.getByTestId('trust-disclosure-banner')).toBeVisible();
   await expect(page.getByTestId('synthetic-journey-shell')).toBeVisible();
-  await expect(page.getByTestId('synthetic-journey-current-step')).toHaveText('1Dashboard');
-  await expect(page.getByRole('link', { name: 'Start simulated deposit' })).toBeVisible();
+  await expect(page.getByTestId('synthetic-journey-current-step')).toHaveText(
+    '1Position'
+  );
+  await expect(
+    page.getByRole('link', { name: /Start first simulated event/ })
+  ).toBeVisible();
 
   await page.getByTestId('nav-toggle').click();
   const mobileNav = page.getByTestId('nav-links-mobile');
   await expect(mobileNav).toBeVisible();
   for (const [label, href] of [
-    ['Dashboard', '/dashboard-synthetic-journey'],
-    ['Deposit', '/deposit?journey=class-a-val-002'],
-    ['Withdraw', '/withdraw?journey=class-a-val-002'],
+    ['Home', '/dashboard-synthetic-journey'],
     ['Activity', '/activity?journey=class-a-val-002'],
+    ['Settings', '/settings'],
   ]) {
     const navLink = mobileNav.getByRole('link', { name: label, exact: true });
     await expect(navLink).toBeVisible();
     await expect(navLink).toHaveAttribute('href', href);
   }
+  await expect(
+    mobileNav.getByRole('link', { name: 'Deposit', exact: true })
+  ).toHaveCount(0);
+  await expect(
+    mobileNav.getByRole('link', { name: 'Withdraw', exact: true })
+  ).toHaveCount(0);
 });

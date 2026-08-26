@@ -76,10 +76,91 @@ const TARGET_ROLES: Array<{
   },
 ];
 
+const SYNTHETIC_PURPOSES: Array<{
+  key: LaneKey;
+  label: string;
+  description: string;
+}> = [
+  {
+    key: "coreTargetPct",
+    label: "Now",
+    description: "For what matters in the near term.",
+  },
+  {
+    key: "liquidityTargetPct",
+    label: "Reserve",
+    description: "A buffer for surprises and setbacks.",
+  },
+  {
+    key: "yieldCapPct",
+    label: "Growth",
+    description: "For future opportunities.",
+  },
+];
+
 export function EngineAllocationBands({
   engineState,
   collapsed = false,
 }: EngineAllocationBandsProps) {
+  const syntheticPlanning = (
+    <div className="space-y-5">
+      <dl
+        className="grid gap-3 sm:grid-cols-3"
+        data-testid="engine-allocation-target-roles"
+        aria-label="Planning purposes"
+      >
+        {SYNTHETIC_PURPOSES.map(({ key, label, description }) => (
+          <div
+            key={key}
+            className="rounded-2xl border border-hedgr-100 bg-hedgr-100/40 p-4"
+            data-testid={`engine-allocation-role-${key}`}
+          >
+            <dt className="text-sm font-semibold text-hedgr-800">{label}</dt>
+            <dd className="mt-1 text-sm leading-relaxed text-hedgr-dark">
+              {description}
+            </dd>
+          </div>
+        ))}
+      </dl>
+
+      <p
+        className="max-w-2xl border-l-2 border-hedgr-200 pl-3 text-sm leading-relaxed text-hedgr-dark"
+        data-testid="engine-allocation-boundary"
+      >
+        These are planning purposes, not separate balances. They do not divide
+        or move simulated money.
+      </p>
+
+      <details data-testid="engine-allocation-values-details">
+        <summary className="cursor-pointer text-sm font-medium text-hedgr-600 underline decoration-hedgr-200 underline-offset-4">
+          View planning percentages
+        </summary>
+        <dl
+          className="mt-4 divide-y divide-hedgr-100 border-y border-hedgr-100"
+          data-testid="engine-allocation-structure"
+        >
+          {SYNTHETIC_PURPOSES.map(({ key, label }) => (
+            <div
+              key={key}
+              className="flex items-center justify-between gap-4 py-3"
+              data-testid={`engine-allocation-band-${key}`}
+              data-guidance-row="true"
+            >
+              <dt className="text-sm font-medium text-hedgr-800">{label}</dt>
+              <dd className="text-sm font-semibold tabular-nums text-hedgr-800">
+                {formatPct(engineState[key])}
+              </dd>
+            </div>
+          ))}
+        </dl>
+        <p className="mt-3 text-xs leading-relaxed text-hedgr-500">
+          Percentages describe the simulated planning structure only. They do
+          not show where money is held.
+        </p>
+      </details>
+    </div>
+  );
+
   const priorities = (
     <p
       className="max-w-xl text-sm leading-relaxed text-hedgr-dark"
@@ -185,8 +266,8 @@ export function EngineAllocationBands({
         data-testid="engine-allocation-boundary"
         aria-label="Stability guidance boundary"
       >
-        <span className="font-semibold text-hedgr-800">Guidance only.</span> This
-        planning structure is context, not an instruction. It does not show
+        <span className="font-semibold text-hedgr-800">Guidance only.</span>{" "}
+        This planning structure is context, not an instruction. It does not show
         current money or prove that simulated money was divided or moved.
       </aside>
 
@@ -196,26 +277,27 @@ export function EngineAllocationBands({
         aria-label="Detailed stability target distinction"
       >
         <p>
-          <span className="font-semibold text-hedgr-800">
-            Planning targets
-          </span>
+          <span className="font-semibold text-hedgr-800">Planning targets</span>
           . The percentages show intended stability priorities in this
           simulation only.
         </p>
-        <details className="mt-3" data-testid="engine-allocation-target-details">
+        <details
+          className="mt-3"
+          data-testid="engine-allocation-target-details"
+        >
           <summary className="cursor-pointer font-medium text-hedgr-600 underline decoration-hedgr-200 underline-offset-4">
             Verify what stability targets mean
           </summary>
           <div className="mt-3 space-y-2 border-l border-hedgr-200 pl-3">
             <p>
-              <span className="font-semibold text-hedgr-800">
-                Target role
-              </span>
-              . A lower Conservative yield target limits the return opportunity
+              <span className="font-semibold text-hedgr-800">Target role</span>.
+              A lower Conservative yield target limits the return opportunity
               shown within the guidance.
             </p>
             <p>
-              <span className="font-semibold text-hedgr-800">Current state</span>
+              <span className="font-semibold text-hedgr-800">
+                Current state
+              </span>
               . The simulated balance shown above is separate from this
               guidance. The percentages do not divide it.
             </p>
@@ -232,39 +314,6 @@ export function EngineAllocationBands({
     </>
   );
 
-  const graduatedDetails = (
-    <details data-testid="engine-allocation-priorities-details">
-      <summary className="cursor-pointer list-none font-medium text-hedgr-800 marker:content-none select-none [&::-webkit-details-marker]:hidden">
-        <span className="flex items-center justify-between gap-4">
-          <span>See why these planning targets exist</span>
-        </span>
-      </summary>
-      <div className="mt-4 space-y-5 border-t border-hedgr-100 pt-4">
-        {priorities}
-        <details data-testid="engine-allocation-roles-details">
-          <summary className="cursor-pointer list-none font-medium text-hedgr-800 marker:content-none select-none [&::-webkit-details-marker]:hidden">
-            <span className="flex items-center justify-between gap-4">
-              <span>See what each target is for</span>
-            </span>
-          </summary>
-          <div className="mt-4 space-y-5 border-t border-hedgr-100 pt-4">
-            {targetRoles}
-            <details data-testid="engine-allocation-values-details">
-              <summary className="cursor-pointer list-none font-medium text-hedgr-800 marker:content-none select-none [&::-webkit-details-marker]:hidden">
-                <span className="flex items-center justify-between gap-4">
-                  <span>View simulated planning targets</span>
-                </span>
-              </summary>
-              <div className="mt-4 space-y-5 border-t border-hedgr-100 pt-4">
-                {targetValues}
-              </div>
-            </details>
-          </div>
-        </details>
-      </div>
-    </details>
-  );
-
   return (
     <section
       aria-labelledby="engine-allocation-bands-title"
@@ -277,19 +326,20 @@ export function EngineAllocationBands({
           id="engine-allocation-bands-title"
           className="text-base font-semibold tracking-tight text-hedgr-800"
         >
-          Stability guidance
+          {collapsed ? "What you are building toward" : "Stability guidance"}
         </h2>
         <p
           className="max-w-xl text-sm leading-relaxed text-hedgr-dark"
           data-testid="engine-allocation-bands-caption"
         >
-          See the planning position shown in this simulation and why it is
-          structured this way. These targets are guidance, not current money.
+          {collapsed
+            ? "Three purposes for planning ahead. They are guidance, not money set aside."
+            : "See the planning position shown in this simulation and why it is structured this way. These targets are guidance, not current money."}
         </p>
       </div>
 
       {collapsed ? (
-        graduatedDetails
+        syntheticPlanning
       ) : (
         <div className="space-y-5">
           {priorities}

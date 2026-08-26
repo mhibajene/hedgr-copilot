@@ -64,8 +64,9 @@ describe("EngineAllocationBands", () => {
     expect(targetDetails.tagName).toBe("DETAILS");
     expect(targetDetails.hasAttribute("open")).toBe(false);
 
-    const caption = screen.getByTestId("engine-allocation-bands-caption")
-      .textContent;
+    const caption = screen.getByTestId(
+      "engine-allocation-bands-caption"
+    ).textContent;
     expect(caption).toBe(
       "See the planning position shown in this simulation and why it is structured this way. These targets are guidance, not current money."
     );
@@ -77,8 +78,9 @@ describe("EngineAllocationBands", () => {
     expect(philosophy).toMatch(/keep access and risk visible/i);
     expect(philosophy).toMatch(/before action/i);
 
-    const boundary = screen.getByTestId("engine-allocation-boundary")
-      .textContent;
+    const boundary = screen.getByTestId(
+      "engine-allocation-boundary"
+    ).textContent;
     expect(boundary).toContain("Guidance only. This planning structure");
     expect(boundary).not.toContain("—");
     expect(boundary).toMatch(/context, not an instruction/i);
@@ -92,8 +94,9 @@ describe("EngineAllocationBands", () => {
     expect(targetsIntro).toMatch(/simulated planning structure/i);
     expect(targetsIntro).toMatch(/guidance, not current money/i);
 
-    const roles = screen.getByTestId("engine-allocation-target-roles")
-      .textContent;
+    const roles = screen.getByTestId(
+      "engine-allocation-target-roles"
+    ).textContent;
     expect(roles).toMatch(/three distinct target roles/i);
     expect(roles).toMatch(/primary stability role/i);
     expect(roles).toMatch(/supporting role/i);
@@ -126,8 +129,7 @@ describe("EngineAllocationBands", () => {
 
     const comesBefore = (first: HTMLElement, second: HTMLElement) =>
       Boolean(
-        first.compareDocumentPosition(second) &
-          Node.DOCUMENT_POSITION_FOLLOWING
+        first.compareDocumentPosition(second) & Node.DOCUMENT_POSITION_FOLLOWING
       );
 
     expect(comesBefore(purpose, philosophy)).toBe(true);
@@ -138,68 +140,49 @@ describe("EngineAllocationBands", () => {
     expect(comesBefore(boundary, distinction)).toBe(true);
   });
 
-  test("reveals priorities, roles, values, and verification through separate collapsed layers", () => {
-    render(
-      <EngineAllocationBands
-        engineState={makeEngineState()}
-        collapsed
-      />
-    );
+  test("leads with planning purposes and keeps percentages secondary in the collapsed journey", () => {
+    render(<EngineAllocationBands engineState={makeEngineState()} collapsed />);
 
     const panel = screen.getByTestId("engine-allocation-bands");
     expect(panel.getAttribute("data-presentation")).toBe("collapsed");
-    expect(screen.getByText("Stability guidance")).toBeDefined();
+    expect(screen.getByText("What you are building toward")).toBeDefined();
     expect(
       screen.getByTestId("engine-allocation-bands-caption").textContent
     ).toBe(
-      "See the planning position shown in this simulation and why it is structured this way. These targets are guidance, not current money."
+      "Three purposes for planning ahead. They are guidance, not money set aside."
     );
-    const prioritiesDetails = screen.getByTestId(
-      "engine-allocation-priorities-details"
-    );
-    const rolesDetails = screen.getByTestId("engine-allocation-roles-details");
-    const valuesDetails = screen.getByTestId("engine-allocation-values-details");
+    const roles = screen.getByTestId("engine-allocation-target-roles");
+    expect(roles.textContent).toContain("Now");
+    expect(roles.textContent).toContain("For what matters in the near term.");
+    expect(roles.textContent).toContain("Reserve");
+    expect(roles.textContent).toContain("A buffer for surprises and setbacks.");
+    expect(roles.textContent).toContain("Growth");
+    expect(roles.textContent).toContain("For future opportunities.");
+    expect(roles.textContent).not.toMatch(/\d+%/);
 
-    for (const details of [prioritiesDetails, rolesDetails, valuesDetails]) {
-      expect(details.tagName).toBe("DETAILS");
-      expect(details.hasAttribute("open")).toBe(false);
-    }
-
-    const prioritiesSummary = prioritiesDetails.querySelector(
-      ":scope > summary"
+    const valuesDetails = screen.getByTestId(
+      "engine-allocation-values-details"
     );
-    const rolesSummary = rolesDetails.querySelector(":scope > summary");
     const valuesSummary = valuesDetails.querySelector(":scope > summary");
-
-    expect(prioritiesSummary?.textContent).toContain(
-      "See why these planning targets exist"
-    );
-    expect(rolesSummary?.textContent).toContain(
-      "See what each target is for"
-    );
-    expect(valuesSummary?.textContent).toContain(
-      "View simulated planning targets"
-    );
-    expect(prioritiesSummary?.textContent?.trim()).toBe(
-      "See why these planning targets exist"
-    );
-    expect(rolesSummary?.textContent?.trim()).toBe(
-      "See what each target is for"
-    );
+    expect(valuesDetails.tagName).toBe("DETAILS");
+    expect(valuesDetails.hasAttribute("open")).toBe(false);
     expect(valuesSummary?.textContent?.trim()).toBe(
-      "View simulated planning targets"
+      "View planning percentages"
     );
-    for (const summary of [prioritiesSummary, rolesSummary, valuesSummary]) {
-      expect(summary?.textContent).not.toMatch(/optional/i);
-    }
-    expect(prioritiesSummary?.textContent).not.toMatch(/\d+%/);
-    expect(rolesSummary?.textContent).not.toMatch(/\d+%/);
     expect(
-      screen.getByTestId("engine-allocation-target-roles").textContent
-    ).not.toMatch(/\d+%/);
-    expect(screen.getByTestId("engine-allocation-boundary").textContent).toMatch(
-      /context, not an instruction/i
-    );
+      screen.getByTestId("engine-allocation-boundary").textContent
+    ).toMatch(/not separate balances/i);
+    expect(
+      screen.getByTestId("engine-allocation-boundary").textContent
+    ).toMatch(/do not divide or move simulated money/i);
+    expect(
+      screen.getByTestId("engine-allocation-structure").textContent
+    ).toMatch(/Now\s*50%.*Reserve\s*30%.*Growth\s*20%/s);
+    expect(
+      screen
+        .getByTestId("engine-allocation-structure")
+        .querySelector('[role="progressbar"]')
+    ).toBeNull();
   });
 
   test("keeps purpose, philosophy, boundary, and detail free of execution, accounting-as-truth, and hype drift", () => {
@@ -354,7 +337,9 @@ describe("EngineAllocationBands", () => {
     const structure = screen.getByTestId("engine-allocation-structure");
     expect(structure.tagName).toBe("DL");
     expect(structure.querySelector('[role="progressbar"]')).toBeNull();
-    expect(structure.textContent).not.toMatch(/[$£€]|funded|account|holding|allocated/i);
+    expect(structure.textContent).not.toMatch(
+      /[$£€]|funded|account|holding|allocated/i
+    );
     for (const lane of [primary, yieldLane, reserveLane]) {
       expect(lane.className).not.toMatch(/rounded|bg-hedgr-(?:100|200|800)/);
     }

@@ -5,7 +5,11 @@ import { useSearchParams } from 'next/navigation';
 import { useState, useMemo } from 'react';
 import { useLedgerStore } from '../../../lib/state/ledger';
 import { TxStatusPill, TxDetailModal } from '../../../components';
-import { PublicTxStatus, txToLifecycle, type TxLifecycle } from '../../../lib/tx';
+import {
+  PublicTxStatus,
+  txToLifecycle,
+  type TxLifecycle,
+} from '../../../lib/tx';
 import { EmptyState } from '@hedgr/ui';
 import {
   getSyntheticJourneyHref,
@@ -24,7 +28,11 @@ function formatDate(timestamp: number): string {
   if (date.toDateString() === yesterday.toDateString()) {
     return 'Yesterday';
   }
-  return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  return date.toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+  });
 }
 
 function formatTime(timestamp: number): string {
@@ -47,10 +55,10 @@ function groupByDay(transactions: TxLifecycle[]): Map<string, TxLifecycle[]> {
 }
 
 function getSyntheticResultingBalances(
-  transactions: TxLifecycle[],
+  transactions: TxLifecycle[]
 ): Map<string, number> {
   const chronological = [...transactions].sort(
-    (a, b) => a.createdAt - b.createdAt || a.id.localeCompare(b.id),
+    (a, b) => a.createdAt - b.createdAt || a.id.localeCompare(b.id)
   );
   const resultingById = new Map<string, number>();
   let runningBalance = 0;
@@ -140,12 +148,14 @@ function ActivityRow({
                 ? 'Simulated deposit'
                 : 'Simulated withdrawal'
               : tx.type === 'DEPOSIT'
-                ? 'Deposit'
-                : 'Withdrawal'}
+              ? 'Deposit'
+              : 'Withdrawal'}
           </span>
           <div className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1">
             <TxStatusPill status={tx.status} />
-            <span className="text-sm text-hedgr-500">{formatTime(tx.createdAt)}</span>
+            <span className="text-sm text-hedgr-500">
+              {formatTime(tx.createdAt)}
+            </span>
           </div>
         </div>
 
@@ -195,7 +205,7 @@ export default function ActivityPage() {
   const transactions = useLedgerStore((s) => s.transactions);
   const searchParams = useSearchParams();
   const syntheticJourneyActive = isSyntheticJourneyPrimaryCondition(
-    searchParams?.toString(),
+    searchParams?.toString()
   );
   const [selectedTx, setSelectedTx] = useState<TxLifecycle | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -208,7 +218,9 @@ export default function ActivityPage() {
   );
 
   const syntheticBalanceReconciliation = useMemo(() => {
-    const completed = lifecycleTxs.filter((tx) => tx.status === PublicTxStatus.SUCCESS);
+    const completed = lifecycleTxs.filter(
+      (tx) => tx.status === PublicTxStatus.SUCCESS
+    );
     const deposits = completed
       .filter((tx) => tx.type === 'DEPOSIT')
       .reduce((sum, tx) => sum + tx.amountUSD, 0);
@@ -227,13 +239,14 @@ export default function ActivityPage() {
   // or newest-first presentation. Pending and failed records never change it.
   const syntheticResultingBalances = useMemo(
     () => getSyntheticResultingBalances(lifecycleTxs),
-    [lifecycleTxs],
+    [lifecycleTxs]
   );
 
   // Apply filter
   const filteredTxs = useMemo(() => {
     if (filter === 'all') return lifecycleTxs;
-    if (filter === 'deposits') return lifecycleTxs.filter((tx) => tx.type === 'DEPOSIT');
+    if (filter === 'deposits')
+      return lifecycleTxs.filter((tx) => tx.type === 'DEPOSIT');
     return lifecycleTxs.filter((tx) => tx.type === 'WITHDRAW');
   }, [lifecycleTxs, filter]);
 
@@ -262,7 +275,11 @@ export default function ActivityPage() {
     if (transactions.length === 0) {
       return (
         <EmptyState
-          title={syntheticJourneyActive ? 'No simulated activity yet' : 'No transactions yet'}
+          title={
+            syntheticJourneyActive
+              ? 'No simulated activity yet'
+              : 'No transactions yet'
+          }
           description={
             syntheticJourneyActive
               ? 'Your simulated deposits and withdrawals will appear here after you record the first step.'
@@ -284,8 +301,12 @@ export default function ActivityPage() {
             </svg>
           }
           primaryAction={{
-            label: syntheticJourneyActive ? 'Start simulated deposit' : 'Make your first deposit',
-            href: syntheticJourneyActive ? getSyntheticJourneyHref('/deposit') : '/deposit',
+            label: syntheticJourneyActive
+              ? 'Start simulated deposit'
+              : 'Make your first deposit',
+            href: syntheticJourneyActive
+              ? getSyntheticJourneyHref('/deposit')
+              : '/deposit',
           }}
           data-testid="activity-empty-state"
         />
@@ -314,7 +335,10 @@ export default function ActivityPage() {
               />
             </svg>
           }
-          primaryAction={{ label: 'Show all transactions', onClick: () => setFilter('all') }}
+          primaryAction={{
+            label: 'Show all transactions',
+            onClick: () => setFilter('all'),
+          }}
           data-testid="activity-filter-empty-state"
         />
       );
@@ -324,7 +348,7 @@ export default function ActivityPage() {
   };
 
   return (
-    <main className="p-6 space-y-6 max-w-4xl">
+    <main className="mx-auto max-w-4xl space-y-6 p-4 sm:p-8">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-semibold text-hedgr-800">Activity</h1>
         {transactions.length > 0 && (
@@ -339,15 +363,20 @@ export default function ActivityPage() {
 
       {syntheticJourneyActive ? (
         <section
-          className="rounded-xl border border-hedgr-300 bg-hedgr-100 p-4 text-hedgr-800"
+          className="rounded-2xl border border-hedgr-200 bg-white p-5 text-hedgr-800"
           data-testid="activity-synthetic-condition"
           aria-label="Simulated activity condition"
         >
-          <p className="text-sm font-semibold">Step 4 · understand what changed and why</p>
+          <p className="text-xs font-semibold uppercase tracking-wide text-hedgr-500">
+            What happened
+          </p>
+          <h2 className="mt-1 text-base font-semibold text-hedgr-800">
+            Evidence behind the current position
+          </h2>
           <p className="mt-1 text-sm leading-relaxed text-hedgr-dark">
-            Use Activity to explain the simulated position: which changes happened
-            and what remains. “Completed” means this simulated step finished. It
-            does not mean a bank transfer or real payout occurred.
+            Activity records each simulated event and the resulting amount.
+            “Completed” means only that the simulated step finished. It does not
+            mean a bank transfer or real payout occurred.
           </p>
         </section>
       ) : null}
@@ -369,7 +398,13 @@ export default function ActivityPage() {
           </h2>
           <p
             className="mt-3 flex flex-wrap items-baseline gap-x-2 gap-y-1 text-sm text-hedgr-dark"
-            aria-label={`Completed simulated changes: plus $${syntheticBalanceReconciliation.deposits.toFixed(2)} deposits, minus $${syntheticBalanceReconciliation.withdrawals.toFixed(2)} withdrawals, equals $${syntheticBalanceReconciliation.remaining.toFixed(2)} remaining`}
+            aria-label={`Completed simulated changes: plus $${syntheticBalanceReconciliation.deposits.toFixed(
+              2
+            )} deposits, minus $${syntheticBalanceReconciliation.withdrawals.toFixed(
+              2
+            )} withdrawals, equals $${syntheticBalanceReconciliation.remaining.toFixed(
+              2
+            )} remaining`}
           >
             <span
               className="font-semibold tabular-nums text-hedgr-800"
@@ -377,14 +412,19 @@ export default function ActivityPage() {
             >
               +${syntheticBalanceReconciliation.deposits.toFixed(2)} deposits
             </span>
-            <span aria-hidden="true" className="text-hedgr-400">−</span>
+            <span aria-hidden="true" className="text-hedgr-400">
+              −
+            </span>
             <span
               className="font-semibold tabular-nums text-hedgr-800"
               data-testid="activity-reconciliation-withdrawals"
             >
-              ${syntheticBalanceReconciliation.withdrawals.toFixed(2)} withdrawals
+              ${syntheticBalanceReconciliation.withdrawals.toFixed(2)}{' '}
+              withdrawals
             </span>
-            <span aria-hidden="true" className="text-hedgr-400">=</span>
+            <span aria-hidden="true" className="text-hedgr-400">
+              =
+            </span>
             <span
               className="font-semibold tabular-nums text-hedgr-800"
               data-testid="activity-reconciliation-remaining"
@@ -412,7 +452,11 @@ export default function ActivityPage() {
               }`}
               data-testid={`filter-${f}`}
             >
-              {f === 'all' ? 'All' : f === 'deposits' ? 'Deposits' : 'Withdrawals'}
+              {f === 'all'
+                ? 'All'
+                : f === 'deposits'
+                ? 'Deposits'
+                : 'Withdrawals'}
             </button>
           ))}
         </div>
@@ -454,7 +498,7 @@ export default function ActivityPage() {
           href={getSyntheticJourneyHref('/dashboard')}
           className="inline-flex rounded-xl border border-hedgr-200 bg-white px-4 py-2 text-sm font-medium text-hedgr-primary transition-colors hover:border-hedgr-300 hover:text-hedgr-600 focus:outline-none focus:ring-2 focus:ring-hedgr-500 focus:ring-offset-2"
         >
-          Return to simulated stability view
+          Return to current position
         </Link>
       ) : null}
     </main>
