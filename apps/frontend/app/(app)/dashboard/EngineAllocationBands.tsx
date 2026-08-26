@@ -185,7 +185,7 @@ export function EngineAllocationBands({
         data-testid="engine-allocation-boundary"
         aria-label="Stability guidance boundary"
       >
-        <span className="font-semibold text-hedgr-800">Guidance only</span>—this
+        <span className="font-semibold text-hedgr-800">Guidance only.</span> This
         planning structure is context, not an instruction. It does not show
         current money or prove that simulated money was divided or moved.
       </aside>
@@ -283,7 +283,8 @@ export function EngineAllocationBands({
           className="max-w-xl text-sm leading-relaxed text-hedgr-dark"
           data-testid="engine-allocation-bands-caption"
         >
-          See the position Hedgr is guiding toward and why.
+          See the planning position shown in this simulation and why it is
+          structured this way. These targets are guidance, not current money.
         </p>
       </div>
 

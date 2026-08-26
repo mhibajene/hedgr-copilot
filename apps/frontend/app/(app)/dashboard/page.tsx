@@ -225,7 +225,9 @@ export default function DashboardPage() {
         </span>
       </summary>
       <div className="mt-4 border-t border-hedgr-100 pt-4">
-        <PolicyDisclosure />
+        <PolicyDisclosure
+          context={syntheticJourneyActive ? "synthetic-research" : "default"}
+        />
       </div>
     </details>
   );
@@ -258,6 +260,9 @@ export default function DashboardPage() {
   return (
     <main className="p-4 sm:p-8">
       <div className="mx-auto max-w-2xl space-y-6 sm:space-y-8">
+        {!syntheticJourneyActive ? (
+          <h1 className="sr-only">Dashboard</h1>
+        ) : null}
         {syntheticJourneyActive ? (
           <section
             aria-labelledby="dashboard-orientation-heading"
@@ -267,23 +272,27 @@ export default function DashboardPage() {
             <p className="text-xs font-semibold uppercase tracking-[0.12em] text-hedgr-500">
               Financial stability
             </p>
-            <h2
+            <h1
               id="dashboard-orientation-heading"
               className="text-2xl font-semibold tracking-tight text-hedgr-800 sm:text-3xl"
             >
               See where you stand as your money changes.
-            </h2>
+            </h1>
             <p className="max-w-xl text-sm leading-relaxed text-hedgr-dark">
-              Hedgr helps you understand and maintain financial stability by
-              showing where you stand, what changed, and what it means. This is
-              Hedgr&apos;s reading of a simulated position—context, not an
-              instruction and not proof that money moved. What happens next is
-              your decision.
+              Hedgr is designed around financial stability. This simulation
+              helps you understand where you stand, what changed, and what it
+              may mean. This is Hedgr&apos;s reading of a simulated position. It
+              provides context, not an instruction or proof that money moved.
+              What happens next is your decision.
             </p>
           </section>
         ) : null}
 
         {currentOverview}
+
+        {syntheticJourneyActive && isFirstTimeUser ? (
+          <EngineAllocationBands engineState={engineState} collapsed />
+        ) : null}
 
         {isFirstTimeUser && (
           <div
@@ -304,7 +313,7 @@ export default function DashboardPage() {
                 </h2>
                 <p className="mt-1 text-sm leading-relaxed text-hedgr-dark">
                   {syntheticJourneyActive
-                    ? "Continuing is optional. If you would like to see how the simulated position changes, you can run an example deposit — it is part of the research walkthrough, not financial advice or a suggestion to move money. No account is charged and no real money moves."
+                    ? "Continuing is optional. If you would like to see how the simulated position changes, you can run an example deposit. It is part of the research walkthrough, not financial advice or a suggestion to move money. No account is charged and no real money moves."
                     : "Start by exploring a deposit when you are ready. Your balance and activity will appear here once you begin."}
                 </p>
               </div>
@@ -358,10 +367,12 @@ export default function DashboardPage() {
           </section>
         )}
 
-        <EngineAllocationBands
-          engineState={engineState}
-          collapsed={syntheticJourneyActive}
-        />
+        {!(syntheticJourneyActive && isFirstTimeUser) ? (
+          <EngineAllocationBands
+            engineState={engineState}
+            collapsed={syntheticJourneyActive}
+          />
+        ) : null}
 
         {!syntheticJourneyActive ? (
           <EngineStabilityReviewSnapshot engineState={engineState} />

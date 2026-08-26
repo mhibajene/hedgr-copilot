@@ -72,7 +72,7 @@ describe("EngineAllocationBands panel copy contract", () => {
       expect(segment.trim().length).toBeGreaterThan(0);
     }
 
-    expect(caption).not.toMatch(/these targets/i);
+    expect(caption).toMatch(/these targets are guidance, not current money/i);
     expect(philosophy).toMatch(/preserve value/i);
     expect(boundary).toMatch(/context, not an instruction/i);
     expect(targetRoles).toMatch(/three distinct target roles/i);

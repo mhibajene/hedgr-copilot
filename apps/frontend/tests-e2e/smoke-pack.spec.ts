@@ -120,7 +120,7 @@ test("4 · dashboard shows human-readable stability context after login", async 
     allocationBands.getByRole("heading", { name: "Stability guidance" })
   ).toBeVisible();
   await expect(allocationBands).toContainText(
-    "See the position Hedgr is guiding toward and why"
+    "These targets are guidance, not current money"
   );
   const prioritiesDetails = page.getByTestId(
     "engine-allocation-priorities-details"

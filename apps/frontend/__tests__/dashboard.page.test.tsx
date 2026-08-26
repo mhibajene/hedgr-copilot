@@ -25,6 +25,7 @@ const dashboardStateMocks = vi.hoisted(() => ({
   }>,
   clearLedger: vi.fn(),
   resetWallet: vi.fn(),
+  policyContexts: [] as Array<string | undefined>,
 }));
 
 vi.mock("../lib/hooks/useBalance", () => ({
@@ -76,7 +77,10 @@ vi.mock("../components", () => ({
   }: {
     usdAmount: number;
   }) => <div {...props}>{usdAmount}</div>,
-  PolicyDisclosure: () => <div data-testid="policy-disclosure" />,
+  PolicyDisclosure: ({ context }: { context?: string }) => {
+    dashboardStateMocks.policyContexts.push(context);
+    return <div data-testid="policy-disclosure" />;
+  },
 }));
 
 vi.mock("@hedgr/ui", () => ({
@@ -156,6 +160,7 @@ afterEach(() => {
   dashboardStateMocks.transactions = [];
   dashboardStateMocks.clearLedger.mockClear();
   dashboardStateMocks.resetWallet.mockClear();
+  dashboardStateMocks.policyContexts = [];
   vi.mocked(useSearchParams).mockReturnValue(
     new URLSearchParams() as ReturnType<typeof useSearchParams>
   );
@@ -215,17 +220,26 @@ describe("DashboardPage engine trust surface", () => {
       screen.getByTestId("dashboard-current-overview").getAttribute("aria-label")
     ).toBe("Current simulation overview");
     const orientation = screen.getByTestId("dashboard-orientation");
+    expect(
+      screen.getByRole("heading", {
+        level: 1,
+        name: "See where you stand as your money changes.",
+      })
+    ).toBeDefined();
+    expect(screen.getAllByRole("heading", { level: 1 })).toHaveLength(1);
     expect(orientation.textContent).toContain("Financial stability");
     // Institution carries the first interpretive step (CLASS-A-VAL-002-WARMTH-001).
     expect(orientation.textContent).toContain(
       "See where you stand as your money changes."
     );
     expect(orientation.textContent).toContain(
-      "understand and maintain financial stability"
+      "designed around financial stability"
     );
     // Guidance-versus-instruction and no-money-moved boundary remain (semantic invariant).
     expect(orientation.textContent).toContain("not an instruction");
-    expect(orientation.textContent).toContain("not proof that money moved");
+    expect(orientation.textContent).toContain(
+      "not an instruction or proof that money moved"
+    );
     // Participant retains judgement (semantic invariant).
     expect(orientation.textContent).toContain("your decision");
     expect(orientation.textContent).not.toMatch(
@@ -258,8 +272,15 @@ describe("DashboardPage engine trust surface", () => {
     expect(allocation.getAttribute("data-presentation")).toBe("collapsed");
     expect(allocation.textContent).toContain("Stability guidance");
     expect(allocation.textContent).toContain(
-      "See the position Hedgr is guiding toward and why"
+      "These targets are guidance, not current money"
     );
+    const optionalAction = screen.getByTestId("dashboard-empty-state");
+    expect(
+      allocation.compareDocumentPosition(optionalAction) &
+        Node.DOCUMENT_POSITION_FOLLOWING
+    ).toBeTruthy();
+    expect(screen.getByRole("main").textContent).not.toContain("—");
+    expect(dashboardStateMocks.policyContexts).toContain("synthetic-research");
     const prioritiesDetails = screen.getByTestId(
       "engine-allocation-priorities-details"
     );
@@ -355,6 +376,7 @@ describe("DashboardPage engine trust surface", () => {
     render(<DashboardPage />);
 
     expect(screen.getByTestId("dashboard-current-overview")).toBeDefined();
+    expect(dashboardStateMocks.policyContexts).toContain("default");
     expect(screen.getByTestId("engine-posture-badge")).toBeDefined();
     expect(screen.getByTestId("engine-posture-badge").textContent).toBe(
       "TIGHTENING"
