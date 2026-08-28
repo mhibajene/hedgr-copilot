@@ -1,6 +1,6 @@
 # Hedgr Stability Engine Reasoning Research Brief
 
-**Status:** Active governing research frame; three research outputs remain non-authoritative proposals; `SE-REASON-001` remains active. Founder package disposition **ESCALATE** under Internal **D-081** / **§213**. Nested `SE-REASON-001-EVID-001` is **ACTIVE** under Internal **D-083** / **§215**; HedgrOps evidence review is at `docs/ops/stability-engine/research/HEDGR_STABILITY_REASONING_EVIDENCE_REVIEW.md`, revised 24 August 2026, and awaits Founder disposition. No model acceptance, product translation, engine/UX implementation, or execution-class change is authorised by artifact delivery, by this brief, or by nested evidence review.<br>
+**Status:** Active governing research frame; the retained research architecture remains non-authoritative; `SE-REASON-001` remains active. Internal **D-084** / **§216** closed nested `SE-REASON-001-EVID-001`, retained the four-function candidate as non-canonical research architecture, and identified independent interpretability / inter-rater consistency as the primary remaining uncertainty without activating work. Internal **D-098** / **§230** now activates nested `SE-REASON-001-RETEST-001` as one bounded Class A informational / Yellow research-only independent retest. No model acceptance, product translation, engine/UX implementation, participant-data collection, live-input use, or execution-class change is authorised.<br>
 **Ticket:** `SE-REASON-001` (Lane E)  
 **Decision:** Internal **D-076** / Controlled Parallelism v21  
 **Repo authority:** `docs/ops/HEDGR_STATUS.md` **§6f.21**, **§7**, **§7a**, **§204**  
@@ -20,7 +20,7 @@
 | Asset / provider / allocation authority | None |
 | Green Lane | No. Yellow classification does not authorise Green Lane execution. |
 
-This file records the Founder disposition of 14 August 2026 as the governing research contract. It does **not** produce the Stability Function Model, State Model, or Interpretation Tests. Those remain Lane E research outputs.
+This file records the Founder disposition of 14 August 2026 as the governing parent research contract. The three original research artifacts remain non-authoritative Lane E outputs. Internal **D-098** / **§230** adds only the separately named blinded instrument and convergence readout for the active independent retest; it does not convert any research artifact into product or engine truth.
 
 No research result creates product-refinement authority, engine execution authority, asset eligibility, portfolio construction, live recommendation, or permission to handle customer money.
 
@@ -70,6 +70,14 @@ Lane E may develop only these three research artifacts:
 
 3. **Interpretation Tests** — `docs/ops/stability-engine/research/HEDGR_STABILITY_INTERPRETATION_TESTS.md`  
    Construct bounded scenarios that test whether the proposed model can consistently explain changes in stability. Scenarios may include income disruption; FX deterioration; inflation shock; liquidity stress; disinflationary slowdown; inflationary slowdown; and systemic or geopolitical stress. The initial output should explain why stability has changed. It should not prescribe a portfolio.
+
+Internal **D-098** / **§230** additionally authorises exactly two nested-retest outputs, without widening the original parent artifact contract:
+
+4. **Independent Retest Instrument** — `docs/ops/stability-engine/research/HEDGR_STABILITY_REASONING_INDEPENDENT_RETEST_INSTRUMENT.md`
+   Present the named critical scenarios to independent reviewers without expected function vectors, expected directions, model-author conclusions, or package dispositions.
+
+5. **Independent Retest Readout** — `docs/ops/stability-engine/research/HEDGR_STABILITY_REASONING_INDEPENDENT_RETEST_READOUT.md`
+   Compare locked reviewer submissions, preserve material disagreement, and prepare one Founder-reviewable `RETAIN / REVISE / REMOVE / RETEST / ESCALATE` disposition. The readout does not self-approve the candidate or activate translation.
 
 ## 5. Research principles
 
@@ -178,18 +186,14 @@ Its expected outcome is a founder-reviewable determination of whether the emergi
 
 **retained, revised, removed, retested, or escalated** into formal product / architecture work.
 
-**Current Founder package disposition (Internal D-081 / §213):** **ESCALATE.** Artifact-level `RETEST` is not accepted from the weekly summary alone. The next bounded decision input is evidence review of:
+**Current Founder package disposition (Internal D-084 / §216):** **RETAIN AS NON-CANONICAL RESEARCH ARCHITECTURE / RETEST / DO NOT ACCEPT / DO NOT AUTHORISE / KEEP PARENT OPEN.** The completed evidence review identifies independent interpretability / inter-rater consistency as the primary remaining uncertainty.
 
-- `docs/ops/stability-engine/research/HEDGR_STABILITY_FUNCTION_MODEL.md`
-- `docs/ops/stability-engine/research/HEDGR_STABILITY_STATE_MODEL.md`
-- `docs/ops/stability-engine/research/HEDGR_STABILITY_INTERPRETATION_TESTS.md`
-
-The decision question for that evidence review is whether these models improve Hedgr’s ability to explain preserved-value posture, stability, material risk, liquidity/exit readiness, and appropriate abstention without creating false precision or implying unauthorised financial truth. The permitted resulting disposition remains RETAIN / REVISE / REMOVE / RETEST / ESCALATE. Until that review is complete, the models remain non-authoritative proposals.
+**Active nested retest (Internal D-098 / §230):** `SE-REASON-001-RETEST-001` is authorised only to determine whether independent reviewers can apply the retained candidate to the named critical edge cases and reach sufficiently coherent function-level, directional, causal, or abstention outcomes without hidden weighting, inconsistent materiality judgements, or collapsing usable liquidity / exit readiness into nominal capital integrity. The permitted resulting disposition remains `RETAIN / REVISE / REMOVE / RETEST / ESCALATE`. Retest completion does not accept the model, close the parent, or activate product / engine / UX translation.
 
 Asset eligibility, portfolio construction, optimisation, and execution remain downstream questions.
 
 ## 13. Non-authorisation
 
-D-076 / `SE-REASON-001` does not authorise product/runtime change; doctrine or ADR change; live capability implication; Evidence Register acceptance; Class B / Class C; provider, jurisdiction, custody, rail, conversion, settlement, payout, advice, recommendation, or customer-money activity. Kenya counsel remains **DEFER**. Green Lane classification does not activate or widen this lane.
+D-076 / `SE-REASON-001` and D-098 / `SE-REASON-001-RETEST-001` do not authorise product/runtime change; doctrine or ADR change; live capability implication; Evidence Register acceptance; Class B / Class C; provider, jurisdiction, custody, rail, conversion, settlement, payout, advice, recommendation, or customer-money activity. D-098 additionally prohibits participant-data collection, live macro / FX / provider inputs, scalar stability scores, hidden weights, and `SE-REASON-001-XLAT-001` activation. Kenya counsel remains **DEFER**. Green Lane classification does not activate or widen this lane.
 
 Cross-lane default: `NO CROSS-LANE IMPACT`. Material assumption or authority change: `AUTHORITY CHANGE REQUIRED — STOP`.
