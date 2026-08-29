@@ -1,6 +1,6 @@
 Status: Canonical hand-off file
 Purpose: Strategic continuity, merged implementation truth, and next-ticket authority for Cursor execution
-Last updated: 2026-08-28
+Last updated: 2026-08-29
 
 ---
 
@@ -14457,3 +14457,128 @@ The only verification files remain those named in the active **§7a** D-086 brie
 **Reversibility / stop condition:** Stop and return for Founder review if semantic parity fails, a canonical source command requires revision, automation becomes necessary, or any excluded boundary enters scope. Rollback is removal of the nine adapter files plus revert of D-100 / **§232**, **§6f.21a**, current **§7** / **§7a** support naming, `AGENTS.md` reconciliation, and generated RAP provenance. Closeout must remove the temporary support ticket from active naming and restore unamended Controlled Parallelism v21 wording without changing D-076, D-098, or D-099.
 
 **Next required action:** Commit the authority sources before deterministic RAP generation, then implement only the nine named adapter files and return for verified closeout. No generator, CI integration, command-source revision, or additional adapter ticket is authorized.
+
+---
+
+## 233. Founder acceptance — clarity-first, continuity-led Hedgr monetisation direction
+
+**Date:** 2026-08-29
+
+**Status:** **ACCEPTED — RETAIN WITH REVISIONS** as Founder-only strategic direction and institutional constraint; no implementation, pricing, entitlement, evidence-work, or ticket authority is created
+
+**Decision ID:** Founder Only **D-101**
+
+**Decision type:** Product; secondary implications for GTM, UX / Trust, and Architecture
+
+**Strategic horizon:** Medium-term — scale / optimisation phase. Immediate productisation implications are constraints and hypothesis inputs only.
+
+**Visibility:** **Founder Only** — commercially sensitive revenue mechanics and market positioning; not eligible for automatic or public ADR export
+
+**Problem / trigger:** Hedgr's earlier monetisation discussion was formed when Hedgr was understood primarily as a wallet. Hedgr is now a financial stability operating system whose Stability Engine is the system and interpretive centre, whose Wallet is the initial consumer surface, and whose future canonical surfaces include Hedgr Pro and Hedgr APIs. Monetisation therefore needs institution-level incentive constraints before pricing, entitlements, connected data, provider economics, or financial execution can become accidental product or Engine assumptions.
+
+**Authority basis:** Explicit Founder approval to retain the reconciled direction in the linked Hedgr Monetization discussion + the current Founder instruction to adopt the attached institutional-recording brief + the repo-native Decision Governance and ADR Export Standard + current doctrine and accepted ADR boundaries. The discussion and attached brief are decision inputs; this section is the repo-native institutional record.
+
+**Founder decision:** Adopt the following strategic direction:
+
+> **Materially sufficient, honest current-state financial clarity, based on available and freshness-disclosed inputs, remains accessible without payment. Paid value begins with continuity, increased capability, and coordination. Paid may add separately authorised, additive utility or automation, but it never gates custody safety, crisis information or actions, cancellation, portability, withdrawal, or access to the user's own funds.**
+
+Acceptance is deliberately bounded. The clarity-first monetisation principle and the invariants in this record are accepted strategic constraints. Hedgr Plus viability, feature composition, payer, price, connected-data model, execution dependency, and final revenue mix remain unvalidated hypotheses requiring separately authorised evidence and later decisions.
+
+**Canonical-surface preservation:** Hedgr Wallet remains the canonical consumer surface. Free and Plus are a working monetisation and entitlement hypothesis within that surface, not new canonical product surfaces. Partner funding is a payer or distribution channel, not a fourth product surface. Hedgr Pro and Hedgr APIs remain the other canonical surfaces. The Stability Engine remains the shared product and governance substrate rather than a tier-specific definition of stability.
+
+**Doctrine relationship:** D-101 does not amend or supersede the existing monetisation direction in `docs/doctrine/hedgr-mvp-project-specification.md` or `docs/doctrine/hedgr-whitepaper.md`, reprioritise MVP scope, or make Plus canonical product policy. It constrains how those potential revenue streams may be evaluated. Any doctrine reconciliation or change requires separate Founder authority and the normal repo-governed doctrine path.
+
+**Working monetisation and entitlement hypothesis:**
+
+1. **Hedgr Free — materially sufficient current-state clarity.** A free user must be able to complete the stability journey at a point in time — Entry → Orientation → Stability → Insight → Safe action — and understand where they stand, what deserves attention, what should be protected, what has room to grow, the material reasons and uncertainty behind the assessment, input freshness and limitations, liquidity and exit implications, applicable fees and conflicts, and an appropriate safe action including a valid do-nothing outcome. Free must retain all action and transaction receipts, material assessment provenance, disclosures, and history needed to verify current state, understand change material to the current decision, and exit responsibly.
+2. **Hedgr Plus — continuity and increased capability.** Plus is a first-class consumer monetisation hypothesis for continuous oversight and assistance. It may add longer-horizon retention, longitudinal synthesis and comparison, assisted or automatic information refresh, material change detection, dynamic reprioritisation, personal thresholds, broader scenario planning, persistent Copilot context, restrained personalised alerts, and decision or task coordination. It may not hide audit, proof, receipt, disclosure, risk, or exit history behind payment. Financial automation or execution may deepen Plus only after separate authority and is not required to define the initial hypothesis.
+3. **Payer flexibility without user-interest dilution.** Plus may eventually be paid for by the user or an authorised employer, platform, payroll provider, bank, fintech, mobile-money operator, or other distribution partner. Funding an entitlement gives a sponsor no user financial data, advisory content, control, recommendation influence, or product-state access by implication.
+4. **Separately authorised financial-activity economics.** When separately authorised, Hedgr may explore transparent economics associated with approved FX, remittance, payments, stablecoin conversion, treasury infrastructure, card economics, partner revenue share, or eligible yield infrastructure. These remain subordinate to user outcomes, jurisdiction-specific requirements, liquidity integrity, exit readiness, and commercial neutrality. Yield economics are supplementary and must never become load-bearing or influence allocation posture.
+5. **Institutional distribution and infrastructure.** Hedgr may later explore B2B2C distribution, per-active-user SaaS, enterprise licensing, Hedgr Pro, platform or API fees, and transparent partner arrangements. Pro remains a distinct future treasury-control, workflow, reporting, and governance product; APIs remain a distinct future infrastructure surface.
+6. **Diversified and evidence-led model.** Hedgr does not presently commit to subscription-only, transaction-only, yield-led, enterprise-only, or infrastructure-only economics. A later model may combine consumer subscription, authorised financial-activity revenue, and institutional distribution or infrastructure economics.
+
+**Monetisation invariants:**
+
+- **Free truth and verifiability:** Free may not identify a material financial problem and then require payment for the reasons, risks, uncertainty, freshness, fees, liquidity, conflicts, or exit information needed to understand it responsibly. Plus may add continuity, context, synthesis, scenario depth, and coordination, not previously withheld material truth.
+- **One canonical Stability Engine judgement:** For the same verified inputs and policy state, Free and Plus receive the same doctrine-constrained stability judgement. Payment may affect assessment frequency, collection method, longer-horizon synthesis, scenario breadth, personal threshold monitoring, or notification delivery; it may not change the meaning of stable or at risk, safety classification, risk disclosure, liquidity or withdrawal treatment, provider safety ranking, or crisis posture.
+- **Whole-system commercial neutrality:** Payer, revenue source, price, and entitlement status must not change risk framing, recommendation or option ordering, provider presentation or routing, alert severity, consent requirements, crisis messaging, or Copilot restraint. The Engine must not know or care who paid. Hedgr must be able to answer: **Would the same safety, allocation, explanation, and user-interest conclusion have been reached if Hedgr earned zero revenue from this option?**
+- **Entitlement separation:** Billing, sponsorship, partner funding, pricing, and feature entitlement logic remain outside Stability Engine safety and allocation logic and outside policy, accounting, ledger, consent, and execution truth.
+- **Commercial disclosure and auditability:** Provider rebates, spreads, commissions, revenue shares, and other commercial factors must be internally recorded and auditable. Material user-facing fees, spreads, commissions, rebates, and conflicts must be disclosed before commitment. Commercial factors must not improve safety ranking, weaken disclosure, or override preservation, liquidity, policy, or exit constraints.
+- **Connected-data and sponsor separation:** Any future connected source or automatic refresh requires explicit and revocable consent, purpose and retention minimisation, visible source and freshness, deletion and revocation controls, and no silent financial-state change. A sponsor receives no access or influence merely by funding an entitlement.
+- **Universal safety communication and access:** Material risk and uncertainty, input freshness, fees and conflicts, liquidity and exit information, platform incidents, custody or provider events affecting user assets, withdrawal degradation, material security notices, crisis communication, cancellation, portability, and access to the user's own funds may not be paywalled.
+- **Exit neutrality:** Withdrawal, cancellation, and portability must not become profit centres or retention mechanisms. Hedgr may recover transparent genuine external costs where separately authorised, but it must not create avoidable exit friction, preferred withdrawal tiers, artificial lock-in, or hidden exit margin.
+- **Quiet service:** Plus sells continuous oversight, not engagement, anxiety, deposit retention, transaction frequency, or dependency. A period in which no material alert is issued may be a successful service outcome. Plus must not manufacture urgency, excessive notifications, needless app opens, or unnecessary financial activity to demonstrate value.
+- **Stress survivability:** The business model must remain institutionally capable of suspending yield, increasing liquidity, reducing exposure, discouraging unnecessary movement, supporting withdrawal, or recommending inaction without violating its economics.
+- **Assessment / consent / execution separation:** Hedgr assesses; Hedgr explains or recommends; the user authorises where required; and only a separately authorised execution system acts. Plus may improve continuity between these states but must not collapse them into silent financial automation.
+
+**Product-language disposition:** Retain the meaning behind **“Free gives clarity. Paid gives leverage.”** but do not adopt “leverage” as canonical or public-facing language because of its established financial meaning and conflict with Hedgr's retail no-leverage posture. Preferred internal shorthand:
+
+> **Free gives clarity. Paid adds continuity and capability.**
+
+Preferred working-hypothesis formulation:
+
+> **Free completes the stability journey at a point in time. Plus keeps it current as conditions change.**
+
+**“Hedgr — Know what's safe”** and **“Hedgr Plus — Keep it that way”** remain working proposition hypotheses only. They are not approved brand, trust, or guarantee claims and require testing because they may imply binary safety or guaranteed preservation.
+
+**Rationale:** This direction protects the core promise from becoming a paywall; aligns recurring revenue with increased service rather than withheld understanding; makes consumer continuity a credible hypothesis before live money movement; permits direct and partner-funded distribution to share one entitlement model; preserves transparent financial-activity and institutional economics without making transaction volume the objective; keeps the Stability Engine and the wider trust system commercially neutral; supports temporal state, explainability, traceability, and commercial separation as future architectural constraints without authorising implementation; and allows Hedgr to obey preservation, liquidity, crisis, and exit doctrine even when those actions reduce revenue.
+
+**Alternatives not retained:**
+
+- Wallet transaction, retained-balance, or yield economics as the primary model — these could reward movement, lock-in, uninterrupted yield, or provider margin.
+- Hedgr Pro or APIs as the presumed sole economic centre — this would prematurely underweight the consumer Plus and partner-funded entitlement hypotheses.
+- Subscription-only economics — subscription is a first-class hypothesis, not the assumed whole model.
+- Paywalling deeper material reasoning — rejected because responsible current-state understanding, material risk, uncertainty, fees, liquidity, and exit cannot depend on payment.
+- Withdrawal margin, hidden spread, provider-biased routing, advertising, or financial-data monetisation as core models — not adopted because they create direct trust or incentive conflicts.
+
+**Assumptions:**
+
+- Free current-state assessment can be genuinely useful without becoming deliberately incomplete.
+- A meaningful subset of users may value continuous monitoring and change interpretation before Hedgr can execute financial actions.
+- Tier differentiation can arise through continuity and capability without different safety judgements or hidden material truth.
+- Partner-funded access may support lower-cost distribution without giving the payer data access or influence.
+- Financial-activity revenue can be disclosed, audited, and kept separate from safety, recommendation, and provider ranking.
+- A simple consumer proposition can coexist with complete material disclosure and visible limitations.
+- Region-aware pricing may ultimately be required.
+- Evidence, not internal preference, will determine the recurring job, payer, price, and final revenue mix.
+
+These market and behavioural assumptions remain unvalidated.
+
+**Risks / trade-offs:**
+
+- A genuinely useful free experience may be costly to serve and constrain conversion tactics.
+- Plus may still feel like a paywall if Free is stale, incomplete, or stripped of verification history.
+- Continuous monitoring may drift toward manufactured urgency, surveillance, or engagement optimisation.
+- Users may not pay until Hedgr can execute, delaying subscription viability and increasing pressure to widen authority.
+- Connected data creates consent, privacy, security, retention, deletion, provider, and jurisdictional exposure.
+- Partner-funded access may create payer-user conflicts or pressure for inappropriate data access.
+- Transaction, FX, card, partner, or yield economics may reward activity or provider preference unless separation and audit controls hold.
+- Simple language may overstate certainty; “safe” and “keep it that way” may be interpreted as guarantees.
+- Multiple optional revenue paths may produce premature parallel product expansion.
+- Region-aware pricing adds operational complexity.
+
+**Consequences:** Positive consequences are a coherent Free-to-Plus boundary, protected current-state understanding, consumer and partner-funded continuity optionality, explicit commercial-neutrality controls, universal safety and exit obligations, and architectural separation between Engine, entitlement, pricing, monitoring, consent, and execution. Negative consequences are no immediate revenue or approved pricing, a higher service obligation for Free, unresolved willingness to pay, possible future separation work, and tighter controls around connected data and financial-activity economics.
+
+**Highest-value uncertainty:**
+
+> **Is continuous monitoring and change interpretation a sufficiently valuable recurring job on its own, or does willingness to pay emerge only when Hedgr can execute financial actions?**
+
+**Near-term evidence direction:** Continue validating whether users can answer **“What deserves my attention right now?”** and observe spontaneous requests for monitoring, alerts, connections, scenarios, coordination, automation, or execution as possible Plus signals. Preserve one Free-to-Plus hypothesis until evidence supports more. This direction does not amend the current Lane V instrument, activate distribution, create a monetisation experiment, or authorise additional evidence collection. Any such work requires separate repo-native authority.
+
+**Reversibility:** Reversible while retained as strategic direction and an evidence-seeking constraint. Reversal becomes progressively harder after price publication, entitlement implementation, connected-data architecture, partner commitments, or live financial execution. Supersession requires a new Founder decision that references D-101 and preserves the historical record.
+
+**Revisit / kill criteria:** Return for Founder disposition if Free users cannot responsibly explain current position, material risks, uncertainty, fees, liquidity, or exit; Free is perceived as deliberately incomplete; Plus requires a different or less conservative safety or recommendation judgement; value depends on manufactured urgency, activity, lock-in, hidden spread, retained balances, withdrawal friction, or uninterrupted yield; continuous monitoring shows no recurring value without execution; commercial factors alter provider ranking, allocation posture, crisis behaviour, disclosure, recommendation, or exit; users interpret propositions as guaranteed safety or autonomous preservation; connected-data or sponsor exposure exceeds user value; payer incentives conflict with user interests; materially stronger evidence favours another recurring job, payer, segment, or revenue surface; or doctrine, law, provider posture, or accepted architecture changes feasibility.
+
+**Strategic pillar alignment:** Capital Preservation Above All — aligned through revenue neutrality; Liquidity Is Sacred — aligned through universal and non-profit-centred exit; Risk Must Be Visible — aligned through free material reasoning, limitations, fees, and conflicts; Governance Before Scale — aligned because this record creates constraints but no execution; Crisis-First Design — aligned because economics must survive protective action; Embedded Discipline — aligned because activity and anxiety are not product objectives; Integrity of Narrative — aligned with explicit caution around leverage, safety, and guarantees; Institutional Conduct — aligned by treating revenue as incentive design; UX Trust and Calm — aligned through quiet service; Simplicity and Risk Visibility — held in explicit tension and governed through outcome-first explanation without concealment.
+
+**Authority consequence:** Strategic direction and institutional constraints are recorded. Future separately authorised product reasoning may use them as hypothesis and evaluation inputs. No subscription, paywall, price, tier, entitlement, connected financial data, monitoring, real personal-information collection, provider or partner commitment, financial activity, custody, conversion, payments, remittance, yield, treasury routing, money movement, Class B / Class C execution, ticket, lane, experiment, doctrine change, ADR change, frozen-narrative change, public naming, participant distribution, participant comprehension, or Stability Engine implementation authority follows. Approved additional next ticket: **none**.
+
+**Current sequence consequence:** None. Controlled Parallelism v21 / Internal **D-076** remains unchanged. Lane V parent `CLASS-A-VAL-002` remains open with no active nested refinement and participant distribution paused pending live Form verification. Lane E parent `SE-REASON-001` and active nested `SE-REASON-001-RETEST-001` under Internal **D-098** remain unchanged. Temporary support ticket `AGENT-SKILL-PARITY-001` under Internal **D-100** remains unchanged. Lane N and Lane R remain idle. **§7** / **§7a** are not amended. `NO CROSS-LANE IMPACT`.
+
+**Related source basis:** `.cursorrules`; `docs/doctrine/HEDGR_ACTIVE_DOCTRINE_INDEX.md`; `docs/doctrine/hedgr-constitutional-charter.md`; `docs/doctrine/hedgr-ux-constitution.md`; `docs/doctrine/hedgr-familiar-financial-grammar-and-infrastructure-abstraction.md`; `docs/doctrine/hedgr-product-surfaces.md`; `docs/doctrine/hedgr-mvp-project-specification.md`; `docs/doctrine/hedgrops-decision-governance-and-adr-export-standard.md`; `docs/decisions/SPRINT-2-ADR-INDEX.md`; accepted ADRs **0013–0015**; and current `AGENTS.md` / **§7** / **§7a** authority.
+
+**ADR treatment:** No public ADR is created. Founder Only decisions are not exported under the Decision Governance and ADR Export Standard. Any later public decision or architecture change requires separate visibility confirmation and the normal ADR path.
+
+**RAP treatment:** `HEDGR_STATUS.md` is a mandatory authority source. Commit D-101 / **§233** before deterministic RAP generation. The eventual generated projection may rebind provenance to the committed source revision but must not add D-101 as an active ticket, change `active_ticket_ids`, or alter sequencing and execution flags. After any authority-bearing squash merge, permanent `main` requires the normal one-file provenance-only RAP rebind. Do not edit the generated RAP manually.
+
+**Rollback:** If the decision was recorded inaccurately, revert D-101 / **§233** and the status-file date change. Reversal of the accepted direction, activation of monetisation work, or publication of Founder-only content requires a new explicit Founder decision rather than silent historical editing.
