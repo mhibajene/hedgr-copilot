@@ -1,6 +1,6 @@
 # Hedgr Stability Engine Reasoning Research Brief
 
-**Status:** Active governing research frame; the retained research architecture remains non-authoritative; `SE-REASON-001` remains active. Internal **D-084** / **§216** closed nested `SE-REASON-001-EVID-001`, retained the four-function candidate as non-canonical research architecture, and identified independent interpretability / inter-rater consistency as the primary remaining uncertainty without activating work. Internal **D-098** / **§230** now activates nested `SE-REASON-001-RETEST-001` as one bounded Class A informational / Yellow research-only independent retest. No model acceptance, product translation, engine/UX implementation, participant-data collection, live-input use, or execution-class change is authorised.<br>
+**Status:** Active governing research frame; the retained research architecture remains non-authoritative; `SE-REASON-001` remains active. Internal **D-084** / **§216** closed nested `SE-REASON-001-EVID-001`, retained the four-function candidate as non-canonical research architecture, and identified independent interpretability / inter-rater consistency as the primary remaining uncertainty without activating work. Internal **D-098** / **§230** activates nested `SE-REASON-001-RETEST-001` as one bounded Class A informational / Yellow research-only independent retest. Internal **D-099** / **§231** records `RETAIN / REVISE / RETEST` as semantic research direction only and does not amend D-098, activate revised semantics or a successor, or authorize model acceptance, product translation, engine/UX implementation, participant-data collection, live-input use, or an execution-class change.<br>
 **Ticket:** `SE-REASON-001` (Lane E)  
 **Decision:** Internal **D-076** / Controlled Parallelism v21  
 **Repo authority:** `docs/ops/HEDGR_STATUS.md` **§6f.21**, **§7**, **§7a**, **§204**  
@@ -20,7 +20,7 @@
 | Asset / provider / allocation authority | None |
 | Green Lane | No. Yellow classification does not authorise Green Lane execution. |
 
-This file records the Founder disposition of 14 August 2026 as the governing parent research contract. The three original research artifacts remain non-authoritative Lane E outputs. Internal **D-098** / **§230** adds only the separately named blinded instrument and convergence readout for the active independent retest; it does not convert any research artifact into product or engine truth.
+This file records the Founder disposition of 14 August 2026 as the governing parent research contract. The three original research artifacts remain non-authoritative Lane E outputs. Internal **D-098** / **§230** adds only the separately named blinded instrument and convergence readout for the active independent retest; it does not convert any research artifact into product or engine truth. Internal **D-099** / **§231** records a possible semantic direction for a later, separately governed instrument but adds no artifact and changes no active D-098 wording or method.
 
 No research result creates product-refinement authority, engine execution authority, asset eligibility, portfolio construction, live recommendation, or permission to handle customer money.
 
@@ -78,6 +78,8 @@ Internal **D-098** / **§230** additionally authorises exactly two nested-retest
 
 5. **Independent Retest Readout** — `docs/ops/stability-engine/research/HEDGR_STABILITY_REASONING_INDEPENDENT_RETEST_READOUT.md`
    Compare locked reviewer submissions, preserve material disagreement, and prepare one Founder-reviewable `RETAIN / REVISE / REMOVE / RETEST / ESCALATE` disposition. The readout does not self-approve the candidate or activate translation.
+
+Internal **D-099** / **§231** authorises no additional output. In particular, it does not authorise a revised instrument, revised reviewer submission, or second convergence readout under the active D-098 brief.
 
 ## 5. Research principles
 
@@ -190,10 +192,26 @@ Its expected outcome is a founder-reviewable determination of whether the emergi
 
 **Active nested retest (Internal D-098 / §230):** `SE-REASON-001-RETEST-001` is authorised only to determine whether independent reviewers can apply the retained candidate to the named critical edge cases and reach sufficiently coherent function-level, directional, causal, or abstention outcomes without hidden weighting, inconsistent materiality judgements, or collapsing usable liquidity / exit readiness into nominal capital integrity. The permitted resulting disposition remains `RETAIN / REVISE / REMOVE / RETEST / ESCALATE`. Retest completion does not accept the model, close the parent, or activate product / engine / UX translation.
 
+**Recorded semantic direction (Internal D-099 / §231):** **RETAIN / REVISE / RETEST as direction only.** A later proposal may test a sharper distinction between position-level usable runway and instrument-level exit readiness; claim and valuation integrity with an explicit reference basis; and current condition versus directional change. Unknown, stale, conflicting, uncertainty, and abstention states remain explicit. This direction is not part of the fixed D-098 instrument and cannot be tested under D-098 by implication.
+
 Asset eligibility, portfolio construction, optimisation, and execution remain downstream questions.
 
 ## 13. Non-authorisation
 
-D-076 / `SE-REASON-001` and D-098 / `SE-REASON-001-RETEST-001` do not authorise product/runtime change; doctrine or ADR change; live capability implication; Evidence Register acceptance; Class B / Class C; provider, jurisdiction, custody, rail, conversion, settlement, payout, advice, recommendation, or customer-money activity. D-098 additionally prohibits participant-data collection, live macro / FX / provider inputs, scalar stability scores, hidden weights, and `SE-REASON-001-XLAT-001` activation. Kenya counsel remains **DEFER**. Green Lane classification does not activate or widen this lane.
+D-076 / `SE-REASON-001`, D-098 / `SE-REASON-001-RETEST-001`, and D-099 / **§231** do not authorise product/runtime change; doctrine or ADR change; live capability implication; Evidence Register acceptance; Class B / Class C; provider, jurisdiction, custody, rail, conversion, settlement, payout, advice, recommendation, or customer-money activity. D-098 additionally prohibits participant-data collection, live macro / FX / provider inputs, scalar stability scores, hidden weights, and `SE-REASON-001-XLAT-001` activation. D-099 does not amend those prohibitions, the active instrument, or the current stop conditions. Kenya counsel remains **DEFER**. Green Lane classification does not activate or widen this lane.
 
 Cross-lane default: `NO CROSS-LANE IMPACT`. Material assumption or authority change: `AUTHORITY CHANGE REQUIRED — STOP`.
+
+## 14. D-099 semantic direction and later governance envelope
+
+Internal **D-099** / **§231** records a deliberate narrowing of the Lane E option space while leaving the current D-098 instrument contract unchanged.
+
+If a later Founder decision separately names and activates a successor retest, its fixed pre-review model may test:
+
+- **F1 — usable liquidity and exit readiness:** distinguish position-level usable runway from instrument-level exit readiness;
+- **F2 — claim and valuation integrity:** expose the applicable par, NAV, market, contractual, or maturity reference basis rather than inferring it;
+- **output semantics:** represent current condition separately from directional change so improvement does not imply adequacy and deterioration does not imply total failure;
+- **evidence quality:** retain explicit unknown, stale, conflicting, provenance, freshness, uncertainty, and abstention states; and
+- **authority separation:** keep reasoning distinct from policy, recommendation, allocation, accounting, and execution.
+
+This section is a recorded research direction, not a revised model or instrument. No successor ticket is named. No D-098 artifact may be altered to incorporate these semantics. A later retest may begin only after a separate Founder decision and explicit repo-native **§7** / **§7a** activation with fixed surfaces, acceptance shape, stop conditions, and rollback.
