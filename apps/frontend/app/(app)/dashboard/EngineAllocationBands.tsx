@@ -103,20 +103,20 @@ export function EngineAllocationBands({
   collapsed = false,
 }: EngineAllocationBandsProps) {
   const syntheticPlanning = (
-    <div className="space-y-5">
+    <div className="space-y-4">
       <dl
-        className="grid gap-3 sm:grid-cols-3"
+        className="divide-y divide-hedgr-100 border-y border-hedgr-100 sm:grid sm:grid-cols-3 sm:divide-x sm:divide-y-0"
         data-testid="engine-allocation-target-roles"
         aria-label="Planning purposes"
       >
         {SYNTHETIC_PURPOSES.map(({ key, label, description }) => (
           <div
             key={key}
-            className="rounded-2xl border border-hedgr-100 bg-hedgr-100/40 p-4"
+            className="bg-white px-1 py-3 sm:px-4"
             data-testid={`engine-allocation-role-${key}`}
           >
             <dt className="text-sm font-semibold text-hedgr-800">{label}</dt>
-            <dd className="mt-1 text-sm leading-relaxed text-hedgr-dark">
+            <dd className="mt-1 text-xs leading-relaxed text-hedgr-500 sm:text-sm">
               {description}
             </dd>
           </div>
@@ -124,7 +124,7 @@ export function EngineAllocationBands({
       </dl>
 
       <p
-        className="max-w-2xl border-l-2 border-hedgr-200 pl-3 text-sm leading-relaxed text-hedgr-dark"
+        className="max-w-2xl rounded-r-xl border-l-2 border-hedgr-500 bg-hedgr-100/20 px-3 py-2.5 text-xs leading-relaxed text-hedgr-dark sm:text-sm"
         data-testid="engine-allocation-boundary"
       >
         These are planning purposes, not separate balances. They do not divide
@@ -132,7 +132,7 @@ export function EngineAllocationBands({
       </p>
 
       <details data-testid="engine-allocation-values-details">
-        <summary className="inline-flex min-h-11 cursor-pointer items-center text-sm font-medium text-hedgr-600 underline decoration-hedgr-200 underline-offset-4">
+        <summary className="inline-flex min-h-11 cursor-pointer items-center text-sm font-semibold text-hedgr-600 hover:text-hedgr-primary focus:outline-none focus:ring-2 focus:ring-hedgr-500 focus:ring-offset-2">
           View planning percentages
         </summary>
         <dl
@@ -317,19 +317,23 @@ export function EngineAllocationBands({
   return (
     <section
       aria-labelledby="engine-allocation-bands-title"
-      className="space-y-5 rounded-3xl border border-hedgr-200 bg-white p-5 sm:p-6"
+      className={
+        collapsed
+          ? "space-y-4 border-t border-hedgr-100 bg-white pt-5 sm:pt-6"
+          : "space-y-5 rounded-2xl border border-hedgr-100 bg-white p-5 shadow-sm sm:p-6"
+      }
       data-testid="engine-allocation-bands"
       data-presentation={collapsed ? "collapsed" : "expanded"}
     >
       <div className="space-y-2">
         <h2
           id="engine-allocation-bands-title"
-          className="text-base font-semibold tracking-tight text-hedgr-800"
+          className="text-lg font-semibold tracking-tight text-hedgr-800"
         >
           {collapsed ? "What you are building toward" : "Stability guidance"}
         </h2>
         <p
-          className="max-w-xl text-sm leading-relaxed text-hedgr-dark"
+          className="max-w-xl text-sm leading-relaxed text-hedgr-500"
           data-testid="engine-allocation-bands-caption"
         >
           {collapsed

@@ -78,7 +78,7 @@ type FilterType = 'all' | 'deposits' | 'withdrawals';
 function TransactionTypeIcon({ type }: { type: 'DEPOSIT' | 'WITHDRAW' }) {
   if (type === 'DEPOSIT') {
     return (
-      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-hedgr-100">
+      <div className="flex h-10 w-10 items-center justify-center rounded-full border border-hedgr-100 bg-hedgr-100/30 shadow-sm">
         <svg
           className="h-5 w-5 text-hedgr-600"
           fill="none"
@@ -97,7 +97,7 @@ function TransactionTypeIcon({ type }: { type: 'DEPOSIT' | 'WITHDRAW' }) {
   }
 
   return (
-    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-hedgr-200">
+    <div className="flex h-10 w-10 items-center justify-center rounded-full border border-hedgr-100 bg-white shadow-sm">
       <svg
         className="h-5 w-5 text-hedgr-800"
         fill="none"
@@ -133,14 +133,14 @@ function ActivityRow({
       data-testid={`activity-row-${tx.type.toLowerCase()}`}
       data-activity-type={tx.type}
       data-activity-status={tx.status}
-      className="w-full cursor-pointer px-1 py-4 text-left transition-colors hover:bg-hedgr-100/30 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-hedgr-500"
+      className="w-full cursor-pointer px-1 py-4 text-left transition-colors hover:bg-hedgr-100/20 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-hedgr-500"
     >
       <div className="flex items-center gap-3 sm:gap-4">
         <TransactionTypeIcon type={tx.type} />
 
         <div className="min-w-0 flex-1">
           <span
-            className="font-medium text-hedgr-800"
+            className="font-semibold text-hedgr-800"
             data-testid={`activity-type-${tx.type.toLowerCase()}`}
           >
             {syntheticJourneyActive
@@ -156,7 +156,7 @@ function ActivityRow({
             tx.status !== PublicTxStatus.SUCCESS ? (
               <TxStatusPill status={tx.status} />
             ) : null}
-            <span className="text-sm text-hedgr-500">
+            <span className="text-xs text-hedgr-500 sm:text-sm">
               {formatTime(tx.createdAt)}
             </span>
           </div>
@@ -164,7 +164,9 @@ function ActivityRow({
 
         <div className="shrink-0 text-right">
           <div
-            className="font-semibold tabular-nums text-hedgr-800"
+            className={`font-bold tabular-nums ${
+              tx.type === 'DEPOSIT' ? 'text-hedgr-600' : 'text-hedgr-800'
+            }`}
             data-testid={`activity-delta-${tx.type.toLowerCase()}`}
           >
             {tx.type === 'DEPOSIT' ? '+' : '-'}${tx.amountUSD.toFixed(2)}
@@ -351,11 +353,11 @@ export default function ActivityPage() {
   };
 
   return (
-    <main className="mx-auto max-w-4xl space-y-6 p-4 sm:p-8">
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-semibold text-hedgr-800">Activity</h1>
+    <main className="mx-auto max-w-2xl space-y-6 px-6 pb-28 pt-6 sm:p-8">
+      <div className="flex items-end justify-between gap-4">
+        <h1 className="text-3xl font-bold tracking-tight text-hedgr-800 sm:text-4xl">Activity</h1>
         {transactions.length > 0 && (
-          <span className="text-sm text-hedgr-500">
+          <span className="pb-1 text-xs font-medium text-hedgr-500 sm:text-sm">
             {transactions.length}{' '}
             {syntheticJourneyActive
               ? `simulated entr${transactions.length !== 1 ? 'ies' : 'y'}`
@@ -366,14 +368,14 @@ export default function ActivityPage() {
 
       {syntheticJourneyActive ? (
         <section
-          className="rounded-2xl border border-hedgr-200 bg-white p-5 text-hedgr-800"
+          className="border-b border-hedgr-100 pb-5 text-hedgr-800"
           data-testid="activity-synthetic-condition"
           aria-label="Simulated activity condition"
         >
-          <p className="text-xs font-semibold uppercase tracking-wide text-hedgr-500">
+          <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-hedgr-600">
             What happened
           </p>
-          <h2 className="mt-1 text-base font-semibold text-hedgr-800">
+          <h2 className="mt-1 text-lg font-semibold tracking-tight text-hedgr-800">
             Evidence behind the current position
           </h2>
           <p className="mt-1 text-sm leading-relaxed text-hedgr-dark">
@@ -384,16 +386,16 @@ export default function ActivityPage() {
 
       {syntheticJourneyActive && transactions.length > 0 ? (
         <section
-          className="rounded-xl border border-hedgr-200 bg-white p-4 text-hedgr-dark"
+          className="rounded-2xl border border-hedgr-100 bg-hedgr-100/20 p-4 text-hedgr-dark shadow-sm sm:p-5"
           data-testid="activity-balance-reconciliation"
           aria-labelledby="activity-balance-reconciliation-heading"
         >
-          <p className="text-xs font-semibold uppercase tracking-wide text-hedgr-500">
+          <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-hedgr-600">
             Activity evidence
           </p>
           <h2
             id="activity-balance-reconciliation-heading"
-            className="mt-1 text-base font-semibold text-hedgr-800"
+            className="mt-1 text-base font-semibold tracking-tight text-hedgr-800"
           >
             Completed simulated changes reconcile to what remains
           </h2>
@@ -441,15 +443,15 @@ export default function ActivityPage() {
 
       {/* Filter buttons - only show when there are transactions */}
       {transactions.length > 0 && (
-        <div className="flex gap-2">
+        <div className="flex gap-2 border-b border-hedgr-100 pb-4">
           {(['all', 'deposits', 'withdrawals'] as const).map((f) => (
             <button
               key={f}
               onClick={() => setFilter(f)}
-              className={`min-h-11 rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
+              className={`min-h-11 rounded-full border px-4 py-2 text-sm font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-hedgr-500 focus:ring-offset-2 ${
                 filter === f
-                  ? 'bg-hedgr-primary text-white'
-                  : 'bg-hedgr-100/50 text-hedgr-600 hover:bg-hedgr-100'
+                  ? 'border-hedgr-primary bg-hedgr-primary text-white shadow-sm'
+                  : 'border-hedgr-100 bg-white text-hedgr-600 hover:bg-hedgr-100/30'
               }`}
               data-testid={`filter-${f}`}
             >
@@ -468,8 +470,8 @@ export default function ActivityPage() {
       ) : (
         <div className="space-y-6" data-testid="activity-list">
           {Array.from(grouped.entries()).map(([day, txs]) => (
-            <div key={day} className="space-y-3">
-              <h2 className="text-xs font-semibold text-hedgr-500 uppercase tracking-wider">
+            <div key={day} className="space-y-2">
+              <h2 className="text-xs font-semibold text-hedgr-800">
                 {day}
               </h2>
               <div className="divide-y divide-hedgr-100 border-y border-hedgr-100">
@@ -502,7 +504,7 @@ export default function ActivityPage() {
       {syntheticJourneyActive && transactions.length > 0 ? (
         <Link
           href={getSyntheticJourneyHref('/dashboard')}
-          className="inline-flex rounded-xl border border-hedgr-200 bg-white px-4 py-2 text-sm font-medium text-hedgr-primary transition-colors hover:border-hedgr-300 hover:text-hedgr-600 focus:outline-none focus:ring-2 focus:ring-hedgr-500 focus:ring-offset-2"
+          className="inline-flex min-h-11 items-center rounded-full border border-hedgr-100 bg-white px-4 py-2 text-sm font-semibold text-hedgr-primary transition-colors hover:border-hedgr-300 hover:text-hedgr-600 focus:outline-none focus:ring-2 focus:ring-hedgr-500 focus:ring-offset-2"
         >
           Return to current position
         </Link>

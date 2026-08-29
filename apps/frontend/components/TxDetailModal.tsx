@@ -212,25 +212,25 @@ export function TxDetailModal({
     >
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-gray-900/60 backdrop-blur-sm transition-opacity"
+        className="fixed inset-0 bg-hedgr-800/40 transition-opacity"
         onClick={onClose}
         data-testid="tx-detail-backdrop"
       />
 
       {/* Modal */}
-      <div className="flex min-h-full items-center justify-center p-4">
+      <div className="flex min-h-full items-end justify-center sm:items-center sm:p-4">
         <div
           ref={dialogRef}
           tabIndex={-1}
           data-testid="tx-detail-modal"
-          className="relative transform overflow-hidden rounded-2xl bg-white shadow-2xl transition-all w-full max-w-md"
+          className="relative w-full max-w-md transform overflow-hidden rounded-t-3xl border border-hedgr-100 bg-white shadow-2xl transition-all sm:rounded-2xl"
         >
           {/* Header */}
-          <div className="border-b border-gray-100 px-6 py-4">
+          <div className="border-b border-hedgr-100 px-6 py-4">
             <div className="flex items-center justify-between">
               <h3
                 id="modal-title"
-                className="text-lg font-semibold text-gray-900"
+                className="text-base font-bold tracking-tight text-hedgr-800"
                 data-testid="tx-detail-type"
               >
                 {simulated
@@ -244,7 +244,7 @@ export function TxDetailModal({
               <button
                 ref={closeButtonRef}
                 type="button"
-                className="inline-flex h-11 w-11 items-center justify-center rounded-full text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-hedgr-500 focus:ring-offset-2"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-full text-hedgr-500 transition-colors hover:bg-hedgr-100/30 hover:text-hedgr-800 focus:outline-none focus:ring-2 focus:ring-hedgr-500 focus:ring-offset-2"
                 onClick={onClose}
                 data-testid="tx-detail-close"
                 aria-label="Close activity detail"
@@ -267,22 +267,22 @@ export function TxDetailModal({
           </div>
 
           {/* Content */}
-          <div className="px-6 py-5 space-y-6">
+          <div className="space-y-6 px-6 py-5">
             {/* Amount and Status */}
-            <div className="flex items-center justify-between gap-4">
-              <div data-testid="tx-detail-amount">
+            <div className={simulated ? "text-center" : "flex items-center justify-between gap-4"}>
+              <div data-testid="tx-detail-amount" className={simulated ? "w-full" : undefined}>
                 {simulated ? (
-                  <p className="mb-1 text-xs uppercase tracking-wide text-gray-500">
+                  <p className="mb-1 text-xs font-bold uppercase tracking-[0.14em] text-hedgr-500">
                     Simulated amount
                   </p>
                 ) : null}
-                <p className="text-3xl font-bold text-gray-900">
+                <p className={simulated ? "text-5xl font-bold tracking-tight text-hedgr-800" : "text-3xl font-bold text-hedgr-800"}>
                   {simulated
                     ? signedAmount
                     : `$${transaction.amountUSD.toFixed(2)}`}
                 </p>
                 {transaction.amountZMW !== undefined && transaction.amountZMW > 0 ? (
-                  <p className="text-sm text-gray-500 mt-1">
+                  <p className="mt-1 text-sm text-hedgr-500">
                     {transaction.amountZMW.toFixed(2)} ZMW
                   </p>
                 ) : null}
@@ -293,7 +293,7 @@ export function TxDetailModal({
             </div>
 
             {simulated ? (
-              <dl className="divide-y divide-hedgr-100 border-y border-hedgr-100 text-sm">
+              <dl className="divide-y divide-hedgr-100 rounded-2xl border border-hedgr-100 bg-white px-4 text-sm shadow-sm">
                 <div className="flex items-start justify-between gap-4 py-3">
                   <dt className="text-hedgr-500">Time</dt>
                   <dd className="text-right font-medium text-hedgr-800">
@@ -385,7 +385,7 @@ export function TxDetailModal({
             {simulated ? (
               <p
                 id="tx-detail-description"
-                className="rounded-lg border border-hedgr-200 bg-hedgr-100/50 px-4 py-3 text-sm leading-relaxed text-hedgr-dark"
+                className="rounded-2xl border border-hedgr-100 bg-hedgr-100/20 px-4 py-3 text-sm leading-relaxed text-hedgr-dark shadow-sm"
                 data-testid="tx-detail-simulation-note"
               >
                 Illustrative evidence only. No real money moved.
@@ -394,10 +394,10 @@ export function TxDetailModal({
           </div>
 
           {/* Footer */}
-          <div className="border-t border-gray-100 px-6 py-4">
+          <div className="border-t border-hedgr-100 px-6 py-4">
             <button
               type="button"
-              className="min-h-11 w-full rounded-xl bg-gray-900 px-4 py-3 text-sm font-medium text-white transition-colors hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-hedgr-500 focus:ring-offset-2"
+              className="min-h-11 w-full rounded-xl bg-hedgr-primary px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-hedgr-600 focus:outline-none focus:ring-2 focus:ring-hedgr-500 focus:ring-offset-2"
               onClick={onClose}
             >
               Close

@@ -61,12 +61,12 @@ export default function SettingsPage() {
   const isProfileIncomplete = profile && (!profile.name || !profile.kycVerified);
 
   return (
-    <main className="p-6 space-y-8 max-w-4xl mx-auto">
-      <h1 className="text-2xl font-semibold">Settings</h1>
+    <main className="mx-auto max-w-2xl space-y-8 px-6 pb-28 pt-6 sm:p-8">
+      <h1 className="text-3xl font-bold tracking-tight text-hedgr-800 sm:text-4xl">Settings</h1>
 
       {/* Trust & Risk Section */}
       <section className="space-y-4">
-        <h2 className="text-lg font-semibold text-gray-900 border-b pb-2">
+        <h2 className="border-b border-hedgr-100 pb-2 text-[11px] font-bold uppercase tracking-[0.14em] text-hedgr-600">
           Trust & Risk
         </h2>
         
@@ -75,51 +75,51 @@ export default function SettingsPage() {
           data-testid="settings-trust-disclosure"
         />
 
-        <div className="rounded-xl border border-gray-200 p-4 space-y-4">
-          <h3 className="font-medium text-gray-900">Environment Configuration</h3>
+        <div className="border-y border-hedgr-100 bg-white">
+          <h3 className="py-4 font-semibold tracking-tight text-hedgr-800">Environment Configuration</h3>
           
-          <div className="grid gap-3 sm:grid-cols-2">
-            <div className="p-3 bg-gray-50 rounded-lg">
-              <div className="text-xs text-gray-500 uppercase tracking-wide">App Environment</div>
-              <div className="font-medium mt-1">{appEnv}</div>
+          <div className="grid border-t border-hedgr-100 sm:grid-cols-2 sm:[&>*:nth-child(odd)]:border-r">
+            <div className="border-b border-hedgr-100 py-3 sm:px-3">
+              <div className="text-xs font-semibold uppercase tracking-wide text-hedgr-500">App Environment</div>
+              <div className="mt-1 font-medium text-hedgr-800">{appEnv}</div>
             </div>
             
-            <div className="p-3 bg-gray-50 rounded-lg">
-              <div className="text-xs text-gray-500 uppercase tracking-wide">Authentication</div>
-              <div className="font-medium mt-1 flex items-center gap-2">
+            <div className="border-b border-hedgr-100 py-3 sm:px-3">
+              <div className="text-xs font-semibold uppercase tracking-wide text-hedgr-500">Authentication</div>
+              <div className="mt-1 flex items-center gap-2 font-medium text-hedgr-800">
                 {authMode}
                 {authMode === 'mock' && (
-                  <span className="text-xs bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded">simulated</span>
+                  <span className="rounded-full border border-hedgr-100 bg-white px-2 py-0.5 text-xs text-hedgr-600">simulated</span>
                 )}
               </div>
             </div>
             
-            <div className="p-3 bg-gray-50 rounded-lg">
-              <div className="text-xs text-gray-500 uppercase tracking-wide">Yield source (simulated)</div>
-              <div className="font-medium mt-1 flex items-center gap-2">
+            <div className="border-b border-hedgr-100 py-3 sm:px-3 sm:border-b-0">
+              <div className="text-xs font-semibold uppercase tracking-wide text-hedgr-500">Yield source (simulated)</div>
+              <div className="mt-1 flex items-center gap-2 font-medium text-hedgr-800">
                 {defiMode}
                 {defiMode === 'mock' && (
-                  <span className="text-xs bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded">simulated</span>
+                  <span className="rounded-full border border-hedgr-100 bg-white px-2 py-0.5 text-xs text-hedgr-600">simulated</span>
                 )}
               </div>
             </div>
             
-            <div className="p-3 bg-gray-50 rounded-lg">
-              <div className="text-xs text-gray-500 uppercase tracking-wide">FX Rates</div>
-              <div className="font-medium mt-1 flex items-center gap-2">
+            <div className="py-3 sm:px-3">
+              <div className="text-xs font-semibold uppercase tracking-wide text-hedgr-500">FX Rates</div>
+              <div className="mt-1 flex items-center gap-2 font-medium text-hedgr-800">
                 {fxMode}
                 {fxMode === 'fixed' && (
-                  <span className="text-xs bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded">simulated</span>
+                  <span className="rounded-full border border-hedgr-100 bg-white px-2 py-0.5 text-xs text-hedgr-600">simulated</span>
                 )}
               </div>
             </div>
           </div>
 
-          <div className="text-sm text-gray-600 mt-4">
+          <div className="border-t border-hedgr-100 py-4 text-sm leading-relaxed text-hedgr-dark">
             <p>
               <strong>What does &quot;simulated&quot; mean?</strong>
             </p>
-            <ul className="list-disc list-inside mt-2 space-y-1 text-gray-500">
+            <ul className="mt-2 list-inside list-disc space-y-1 text-hedgr-500">
               <li><strong>Mock Auth:</strong> Login bypasses real identity verification</li>
               <li><strong>Mock yield source:</strong> Returns are calculated locally, not from live protocols</li>
               <li><strong>Fixed FX:</strong> Exchange rates use a fixed value, not live market data</li>
@@ -127,18 +127,18 @@ export default function SettingsPage() {
           </div>
         </div>
 
-        <div className="text-sm text-gray-500 space-y-2">
+        <div className="space-y-2 text-sm text-hedgr-500">
           <p>
             <a
               href="/settings/trust"
-              className="text-blue-600 hover:text-blue-800 underline"
+              className="font-semibold text-hedgr-600 underline decoration-hedgr-200 underline-offset-4 hover:text-hedgr-primary"
             >
               View full disclosure →
             </a>
           </p>
           <a
             href="/docs/trust"
-            className="text-blue-600 hover:text-blue-800 underline"
+            className="font-semibold text-hedgr-600 underline decoration-hedgr-200 underline-offset-4 hover:text-hedgr-primary"
           >
             Read our full Trust &amp; Environment documentation →
           </a>
@@ -147,13 +147,13 @@ export default function SettingsPage() {
 
       {/* Account Section with Profile */}
       <section className="space-y-4">
-        <h2 className="text-lg font-semibold text-gray-900 border-b pb-2">
+        <h2 className="border-b border-hedgr-100 pb-2 text-[11px] font-bold uppercase tracking-[0.14em] text-hedgr-600">
           Account
         </h2>
         
         {profileLoading ? (
           <div className="flex items-center justify-center py-8">
-            <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600" />
+            <div className="h-6 w-6 animate-spin rounded-full border-b-2 border-hedgr-600" />
           </div>
         ) : profileError ? (
           <ErrorState
@@ -164,34 +164,34 @@ export default function SettingsPage() {
             data-testid="settings-profile-error"
           />
         ) : profile ? (
-          <div className="rounded-xl border border-gray-200 p-4 space-y-4">
-            <div className="grid gap-3 sm:grid-cols-2">
-              <div className="p-3 bg-gray-50 rounded-lg">
-                <div className="text-xs text-gray-500 uppercase tracking-wide">Email</div>
-                <div className="font-medium mt-1">{profile.email || '—'}</div>
+          <div className="border-y border-hedgr-100 bg-white">
+            <div className="grid sm:grid-cols-2 sm:[&>*:nth-child(odd)]:border-r">
+              <div className="border-b border-hedgr-100 py-3 sm:px-3">
+                <div className="text-xs font-semibold uppercase tracking-wide text-hedgr-500">Email</div>
+                <div className="mt-1 font-medium text-hedgr-800">{profile.email || '—'}</div>
               </div>
               
-              <div className="p-3 bg-gray-50 rounded-lg">
-                <div className="text-xs text-gray-500 uppercase tracking-wide">Display Name</div>
-                <div className="font-medium mt-1 flex items-center gap-2">
+              <div className="border-b border-hedgr-100 py-3 sm:px-3">
+                <div className="text-xs font-semibold uppercase tracking-wide text-hedgr-500">Display Name</div>
+                <div className="mt-1 flex items-center gap-2 font-medium text-hedgr-800">
                   {profile.name || (
-                    <span className="text-gray-400 italic">Not set</span>
+                    <span className="italic text-hedgr-400">Not set</span>
                   )}
                 </div>
               </div>
               
-              <div className="p-3 bg-gray-50 rounded-lg">
-                <div className="text-xs text-gray-500 uppercase tracking-wide">KYC Status</div>
-                <div className="font-medium mt-1 flex items-center gap-2">
+              <div className="border-b border-hedgr-100 py-3 sm:border-b-0 sm:px-3">
+                <div className="text-xs font-semibold uppercase tracking-wide text-hedgr-500">KYC Status</div>
+                <div className="mt-1 flex items-center gap-2 font-medium text-hedgr-800">
                   {profile.kycVerified ? (
                     <>
-                      <span className="text-green-600">Verified</span>
-                      <span className="text-xs bg-green-100 text-green-800 px-1.5 py-0.5 rounded">complete</span>
+                      <span className="text-hedgr-600">Verified</span>
+                      <span className="rounded-full border border-hedgr-100 bg-white px-2 py-0.5 text-xs text-hedgr-600">complete</span>
                     </>
                   ) : (
                     <>
-                      <span className="text-amber-600">Not verified</span>
-                      <span className="text-xs bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded">pending</span>
+                      <span className="text-hedgr-600">Not verified</span>
+                      <span className="rounded-full border border-hedgr-100 bg-white px-2 py-0.5 text-xs text-hedgr-600">pending</span>
                     </>
                   )}
                 </div>
@@ -200,14 +200,14 @@ export default function SettingsPage() {
             
             {/* Incomplete profile notice */}
             {isProfileIncomplete && (
-              <div className="rounded-lg bg-amber-50 border border-amber-200 p-3">
+              <div className="border-t border-hedgr-100 bg-hedgr-100/20 p-4 sm:col-span-2">
                 <div className="flex items-start gap-2">
-                  <svg className="h-5 w-5 text-amber-600 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg className="mt-0.5 h-5 w-5 flex-shrink-0 text-hedgr-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                   </svg>
                   <div>
-                    <p className="text-sm font-medium text-amber-800">Profile incomplete</p>
-                    <p className="text-xs text-amber-700 mt-1">
+                    <p className="text-sm font-semibold text-hedgr-800">Profile incomplete</p>
+                    <p className="mt-1 text-xs leading-relaxed text-hedgr-500">
                       Complete your profile to unlock all features. Add your display name and verify your identity.
                     </p>
                   </div>
@@ -228,7 +228,7 @@ export default function SettingsPage() {
 
       {/* Preferences Section */}
       <section className="space-y-4">
-        <h2 className="text-lg font-semibold text-gray-900 border-b pb-2">
+        <h2 className="border-b border-hedgr-100 pb-2 text-[11px] font-bold uppercase tracking-[0.14em] text-hedgr-600">
           Preferences
         </h2>
         <EmptyState

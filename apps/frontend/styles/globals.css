@@ -20,10 +20,15 @@
 
 body {
   font-family: var(--font-sans);
+  background: var(--color-hedgr-white);
+  color: var(--color-hedgr-800);
+  font-synthesis: none;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 main {
-  @apply bg-white text-gray-900;
+  @apply bg-white text-hedgr-800;
 }
 
 .dark main {
