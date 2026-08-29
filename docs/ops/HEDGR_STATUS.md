@@ -14582,3 +14582,150 @@ These market and behavioural assumptions remain unvalidated.
 **RAP treatment:** `HEDGR_STATUS.md` is a mandatory authority source. Commit D-101 / **§233** before deterministic RAP generation. The eventual generated projection may rebind provenance to the committed source revision but must not add D-101 as an active ticket, change `active_ticket_ids`, or alter sequencing and execution flags. After any authority-bearing squash merge, permanent `main` requires the normal one-file provenance-only RAP rebind. Do not edit the generated RAP manually.
 
 **Rollback:** If the decision was recorded inaccurately, revert D-101 / **§233** and the status-file date change. Reversal of the accepted direction, activation of monetisation work, or publication of Founder-only content requires a new explicit Founder decision rather than silent historical editing.
+
+---
+
+## 234. Founder acceptance — Hedgr Pay shared ingress and Hedgr Pro organisational control direction
+
+**Date:** 2026-08-29
+
+**Status:** **ACCEPTED — RETAIN WITH REVISIONS** as Founder-only Phase 2 strategic direction; no implementation, evidence work, provider engagement, product naming, or ticket authority is created
+
+**Decision ID:** Founder Only **D-102**
+
+**Decision type:** Product; secondary implications for GTM, Architecture, UX / Trust, regulatory and operational posture, and Monetisation
+
+**Strategic horizon:** Medium-term — Phase 2 / surface expansion. Current MVP productisation and execution sequencing remain unchanged.
+
+**Visibility:** **Founder Only** — commercially sensitive market positioning, future revenue mechanics, regulatory sequencing, and product architecture; not eligible for automatic or public ADR export
+
+**Problem / trigger:** Hedgr Pay was initially framed as a thin payer interface through which someone could find and pay a Hedgr user. Founder deliberation identified a stronger recurring opportunity around the organisational work surrounding payment: preparing and approving disbursements, confirming recipients, applying policies, managing exceptions, preserving evidence, reconciling settlement, maintaining tax-aware records, supporting AML and fraud workflows, and introducing recipients to Hedgr through a meaningful income event. Existing bank, mobile-money, and payment systems can often already move money; a standalone payment link may therefore provide insufficient recurring payer value. This decision refines the retained Phase 2 direction without expanding the MVP or prematurely authorising payment infrastructure.
+
+**Authority basis:** Explicit Founder approval of the prepared **RETAIN WITH REVISIONS** disposition in the linked Hedgr Monetization discussion + the current Founder instruction to record that accepted direction repo-natively + Founder Only D-101 / **§233** + the Decision Governance and ADR Export Standard + current doctrine and accepted ADR boundaries. The external discussion is a decision input; this section is the canonical institutional record.
+
+**Founder decision:** Retain **Hedgr Pay** as a shared Phase 2 income-ingress capability rather than presuming it should become a standalone payment product. Explore **Hedgr Pro** as the preferred organisational and commercial control surface for recurring payers using that capability.
+
+The intended architecture is:
+
+> **Hedgr Pro controls and evidences the payment. Hedgr Pay provides the thin payer-to-recipient handoff. Approved partners provide the regulated rail. Hedgr interprets the settled income for the recipient.**
+
+The common downstream model is:
+
+> **Deposit / Hedgr Pay / platform integration → verified settled income event → Stability Engine → explanation → safe user-controlled action**
+
+How money enters Hedgr remains separate from why Hedgr exists. Hedgr's proprietary value begins when it interprets the income event through the Stability experience.
+
+**Relationship to D-101:** D-102 refines the future Hedgr Pro, institutional-distribution, payment, and partner-funded hypotheses retained under D-101. It does not supersede D-101, make payments the primary revenue model, make Pro the sole economic centre, weaken Free clarity, make Plus dependent on payments, or alter commercial-neutrality, sponsor-separation, universal-safety, or exit-neutrality constraints. Hedgr Pay is a working capability name and direction, not a fourth canonical product surface or approved public name.
+
+**Product-architecture direction:**
+
+1. **Hedgr Pro — organisational control, evidence, and reconciliation for paying people.** A future Pro payment module may support recipient invitation and verified-recipient status; payment preparation and purpose documentation; role-based preparation and approval; organisational policies and limits; provider and settlement visibility; failed-payment, return, reversal, and exception handling; reconciliation; fee and FX records; receipts and audit history; tax-aware payment records; compliance-supporting and fraud-control workflows; approved accounting, tax, payroll, provider, or compliance integrations; and optional payer-sponsored Hedgr or Hedgr Plus access. Its operating grammar is **Prepare → approve → pay → evidence → reconcile**.
+2. **Hedgr Pay — a thin payer-to-recipient handoff.** A future recipient-controlled invitation may allow a payer to confirm the intended recipient, enter or confirm an amount, complete payment through an approved third-party provider, and receive a precise outcome. A one-off payer may use the narrow handoff without becoming a Pro customer; recurring organisational payers may access the same capability through Pro. Pay does not need to contain the complete Pro workflow.
+3. **Hedgr consumer experience — recipient stability and control.** After income is appropriately verified, settled, and available, Hedgr may explain gross, fees, net, settlement and availability; update the Stability assessment; interpret Now / Reserve / Growth; explain material change; present a safe action or valid do-nothing outcome; and leave subsequent authorised action under recipient control.
+4. **Stability Engine — ingress-independent interpretation.** A future normalised income-event contract may accept appropriately validated context from a deposit, Hedgr Pay, Hedgr Pro, a payroll or freelancer-platform integration, a bank or mobile-money integration, or another separately authorised source. The Engine must not treat raw provider messages or marketing labels as financial truth, perform AML or fraud determinations, or automatically move, allocate, convert, or deploy money. Assessment, recommendation, consent, and execution remain distinct.
+5. **Third-party providers — authorised rails and specialist infrastructure.** Depending on a separately approved market and responsibility model, providers may perform KYC / KYB, payment authorisation, sanctions screening, transaction monitoring, bank or mobile-money processing, stablecoin settlement, reconciliation, regulated reporting, or specialist tax and accounting functions. Partnering for infrastructure does not transfer every legal, operational, fraud, disclosure, support, or trust responsibility by assumption; responsibilities must be mapped explicitly for each provider, market, and flow before external or live use.
+
+**Payment-state integrity:** Future Pro, Pay, consumer, provider, ledger, and Engine contracts must preserve precise distinctions among **prepared, approved, initiated, pending, settled, available, failed, reversed, disputed, and under review**. A payment must not become usable Stability context merely because it was prepared, approved, or initiated. Only appropriately verified, settled, and available value may enter usable recipient context.
+
+**Preferred initial Phase 2 wedge:** Explore SMEs and platforms paying known freelancers, contractors, and other variable-income workers through fragmented financial rails. The payer-recipient relationship already exists; the amount owed is determined outside Hedgr; the flow is one-to-one or otherwise operationally bounded; the payer needs control, status, evidence, and reconciliation; the recipient benefits from the settled income event entering Hedgr; and an authorised provider performs settlement.
+
+The retained boundary is:
+
+> **Hedgr Pro operates the payment and evidence handoff. It does not determine what a worker is owed.**
+
+Initial direction excludes payroll calculation, worker classification, employment contracts, time and attendance, leave, benefits, scheduling, general invoicing, merchant checkout, general accounting, tax filing, statutory payroll administration, and HR information systems.
+
+**AML, fraud, and compliance position:** Mandatory safeguards are shared platform obligations, not premium features. No one-off or non-Pro payment may receive weaker identity, sanctions, transaction-monitoring, beneficiary-validation, fraud, account-security, payment-transparency, legal, or regulatory safeguards because the payer did not subscribe to Pro. Paid Pro value may include configurable policies, role-based approvals, thresholds, exception queues, case ownership, evidence retention, audit exports, provider-status consolidation, fraud-event reporting, review workflows, and organisational governance.
+
+The governing monetisation principle is:
+
+> **Hedgr may charge for control, coordination, evidence, and operational efficiency. It must not paywall fundamental safeguards.**
+
+AML and fraud may share information and operating surfaces but remain distinct concerns rather than one vague risk score. AML-related workflows concern matters such as identity status, prohibited-party screening, transaction monitoring, payment purpose, required source evidence, review, retention, and jurisdiction-specific reporting. Fraud workflows concern matters such as recipient impersonation, account takeover, SIM-swap or changed-recipient risk, duplicate payment, unusual amount or frequency, altered instructions, unauthorised approval, payment-status manipulation, and loss investigation. Pro may expose an appropriate operational result such as verification required, payment under review, additional evidence required, or payment cannot proceed; it must not expose sensitive investigation information beyond the authorised organisation and legal context.
+
+**Tax position:** Do not initially position Hedgr Pro as providing generic **tax compliance**. The retained formulation is **tax-aware payment records and compliance-supporting workflows**. Subject to later jurisdiction-specific authority, Pro may record or expose lawful payer and recipient tax identifiers; jurisdiction and supplied classification; invoice, engagement, purpose, and date references; gross amount, fees, FX, authorised-source tax or withholding values, and net amount; settlement evidence; year-to-date records; recipient statements; and approved accounting, payroll, or tax exports or integrations. Any tax calculation, withholding, reporting, filing, classification, legal advice, or compliance guarantee requires separate jurisdiction, legal, provider, product, and repo-native authority. Hedgr must not make a blanket cross-market “tax compliant” claim.
+
+**Recipient privacy and data wall:** The payer's operational relationship must not weaken recipient privacy or control. A payer may receive only payment-administration information that is necessary and authorised, such as recipient payment identity, payment amount and purpose, rail or provider, relevant fee and FX information, payment status, settlement evidence, payment-specific compliance status, and payment-specific tax or accounting records. A payer must not receive the recipient's Stability assessment, total balance, Now / Reserve / Growth posture, other income, expenses, debts, goals, recommendations, Copilot interactions, subsequent allocation choices, or broader financial context. A payer must not infer whether a recipient is financially stable from Pro access. Sponsoring Hedgr Plus creates no access to the recipient's Plus activity or personal financial information.
+
+**Discovery and communication position:** A phone number may be explored as a low-friction discovery alias in an appropriate market but is not the recipient's underlying financial identity or sufficient payment authority. Prefer a recipient-created or recipient-controlled invitation opened by a known payer, followed by minimal recipient confirmation and provider-authorised payment. Payment links, QR codes, short codes, WhatsApp sharing, or phone-assisted resolution remain separate hypotheses. An open, enumerable phone-number directory is not retained as the default. Any future design must address consent to discoverability, number recycling, shared or changed phones, SIM replacement and SIM-swap risk, mistaken numbers, duplicate identities, pre-confirmation information leakage, revocation, and separation of contact possession from financial authority. A phone number must not silently create a financial account or custody relationship.
+
+WhatsApp remains a possible notification, minimal-explanation, support, onboarding, and secure-handoff surface, not a complete Hedgr interface. It is not retained as a baseline surface for unauthenticated balance disclosure, detailed financial previews, destination changes, transfers, conversion, reallocation, withdrawal, high-consequence approvals, account recovery, or conversational financial execution. Any real WhatsApp use involving personal or financial information requires separate privacy, security, data, jurisdictional, provider, and repo-native authority.
+
+**Working commercial hypotheses:** Future Pro economics may include an organisational subscription, per-active-recipient pricing, payment-operations usage pricing, enterprise licensing, platform-integration fees, compliance-workflow or reconciliation modules, or partner-funded Hedgr / Plus access. Separately authorised financial-activity economics may include transparent rail fees, provider revenue share, FX or conversion economics, or platform-payment fees. These are unvalidated hypotheses. They must not alter recipient safety assessment, influence Stability Engine reasoning, create volume targets that override user outcomes, make withdrawal harder, hide fees or spread, prefer a less suitable provider, expose recipient information, require retained funds, or weaken provider, fraud, or compliance controls.
+
+**Validation decomposition:** Do not treat the income-event, payer-workflow, payer-interface, phone-discovery, WhatsApp-handoff, provider, regulated-rail, and commercial hypotheses as one indivisible product bet. A later Founder-authorised Phase 2 evidence plan should test them separately and in bounded sequence:
+
+1. whether organisations paying variable-income workers have material pain around control, evidence, exceptions, and reconciliation without requiring Hedgr to become payroll, accounting, or a legal-compliance platform;
+2. whether a verified settled income event materially improves recipient activation, understanding, and recurring Stability use;
+3. whether the thin recipient-controlled Pay handoff adds value beyond existing rails;
+4. whether any phone or WhatsApp mechanism improves access without weakening identity, privacy, consent, or security;
+5. whether a viable provider and responsibility model exists for a named jurisdiction and flow; and
+6. whether the combined model supports transparent, commercially neutral economics.
+
+Payer-side value without recipient Stability value produces a generic payout product. Recipient value without payer-side value produces a consumer onboarding idea without a strong organisational buyer. The retained opportunity is the governed connection between them.
+
+**Rationale:** This direction is retained because it gives recurring payers an operational reason to adopt Hedgr; attaches recipient acquisition to a meaningful income event; creates a plausible B2B2C pathway; offers a clearer economic buyer than a standalone payment link; keeps Hedgr Pay narrow; preserves regulated rails as partner infrastructure; gives Hedgr Pro a coherent future control role without turning it into generic payroll software; treats tax, AML, fraud, reconciliation, and audit as bounded organisational workflows; protects mandatory safeguards from monetisation; and preserves the Stability Engine as the system and interpretive centre.
+
+**Alternatives not retained:**
+
+- Hedgr Pay as a standalone payment gateway or general payment product — insufficiently differentiated and likely to pull Hedgr toward rail ownership rather than Stability value.
+- Hedgr Pay entirely inside a Pro paywall — rejects the useful one-off recipient-controlled invitation and risks paywalling shared safeguards.
+- Hedgr Pro as payroll, tax, accounting, invoicing, or HR software — materially widens responsibility before the core payer and recipient hypotheses are proven.
+- Hedgr as the presumed regulated rail — conflicts with the retained partner-infrastructure direction and would prematurely assume jurisdiction, custody, settlement, support, and compliance responsibility.
+- Open phone-number discovery or WhatsApp money movement as baseline capability — creates identity, privacy, fraud, and authorisation risk before the value hypothesis is proven.
+- AML, fraud, identity, payment transparency, or legal safeguards as premium differentiation — rejected because minimum responsible safeguards cannot depend on payment.
+
+**Assumptions:**
+
+- Organisations in the preferred segment experience recurring operational pain beyond the act of moving money.
+- Income arrival is a meaningful and recurring moment for recipient Stability engagement.
+- Hedgr can keep Pay thin while Pro supplies enough organisational value to support a commercial relationship.
+- Payment amounts and worker obligations can initially remain determined outside Hedgr.
+- Approved providers can supply viable rails and specialist services without making responsibility allocation ambiguous.
+- Normalised, verified settlement context can remain separate from provider-specific messages and commercial incentives.
+- Payer operations can be separated technically, contractually, and experientially from recipient financial life.
+- Mandatory safeguards can remain universal while Pro monetises control, workflow, evidence, and coordination.
+- A named jurisdiction may support a bounded responsibility model without requiring Hedgr to become payroll, tax, accounting, or a general compliance platform.
+- Evidence, not strategic preference, will determine the viable payer, market, flow, provider, and commercial model.
+
+These market, legal, operational, provider, and behavioural assumptions remain unvalidated.
+
+**Risks / trade-offs:**
+
+- The concept may pull Hedgr toward a payment, payroll, accounting, tax, or compliance identity rather than a Stability identity.
+- Hedgr may retain material legal, regulatory, fraud, support, disclosure, or operational responsibility even when a provider supplies the rail.
+- Fragmented rails may make settlement truth, reversals, reconciliation, and support expensive or unreliable.
+- Phone discovery and messaging surfaces increase impersonation, SIM-swap, account-takeover, privacy, and mistaken-recipient risk.
+- Organisational demand may be too weak unless Hedgr assumes broader payroll or compliance work that is intentionally excluded.
+- Recipient acquisition may not translate into meaningful Stability use or Plus willingness to pay.
+- Payer sponsorship may create pressure for recipient data access, surveillance, product influence, or inappropriate entitlement visibility.
+- Tax-aware language may still be misunderstood as a legal or compliance guarantee.
+- Compliance workflows may expose sensitive status or create overreliance on provider determinations.
+- Payment-volume or provider revenue may create incentives that conflict with safe outcomes, commercial neutrality, liquidity, or exit.
+- Multi-sided product, provider, jurisdiction, support, and data boundaries may create premature architectural complexity.
+
+**Consequences:** Positive consequences are a clearer future relationship among Pro, Pay, Wallet, the Stability Engine, and providers; a bounded initial segment; a coherent payer job; a recipient-acquisition pathway tied to settled income; systemic safeguards; an explicit payer-recipient data wall; and decomposed Phase 2 hypotheses. Negative consequences are no current product or revenue authority, unresolved legal and provider responsibility, additional future identity and privacy controls, operational complexity, and a requirement to validate two-sided value before the combined flywheel is credible.
+
+**Highest-value uncertainty:**
+
+> **Do organisations paying variable-income workers experience enough pain around payment control, compliance evidence, exception handling, and reconciliation to adopt Hedgr Pro without requiring Hedgr to become payroll, accounting, or a legal-compliance platform — and does the resulting settled income event materially improve recipient Stability use?**
+
+**Reversibility:** Reversible while retained as strategic direction. Reversal becomes progressively harder after provider commitments, jurisdiction-specific architecture, payer contracts, personal-data collection, discoverability infrastructure, entitlement implementation, or live financial execution. Supersession requires a new Founder decision that references D-102 and preserves this historical record.
+
+**Revisit / kill criteria:** Return for Founder disposition if payer pain is already adequately solved by existing rails; adoption requires payroll calculation, worker classification, general accounting, tax filing, or unsupported compliance guarantees; recipient Stability engagement does not improve after income arrival; the thin Pay handoff adds no value beyond existing payment links; a viable named-jurisdiction provider and responsibility model cannot be established; safe identity resolution requires an open directory or unacceptable data exposure; payer access or sponsorship cannot be separated from recipient Stability and personal financial data; fundamental safeguards become commercially pressure-sensitive; accurate settlement, reversal, dispute, and availability state cannot be preserved; economics depend on hidden fees, retained balances, withdrawal friction, provider bias, unsafe volume, or Engine influence; support and fraud-loss exposure exceed the value of the model; or stronger evidence favours another ingress, payer, segment, or distribution strategy.
+
+**Strategic pillar alignment:** Capital Preservation Above All — aligned because payment ingress remains subordinate to Stability interpretation and user-controlled action; Liquidity Is Sacred — aligned through precise settlement / availability states and non-profit-centred exit; Risk Must Be Visible — aligned through fee, FX, status, provider, compliance, and exception evidence; Governance Before Scale — aligned because this record creates no execution and requires named-jurisdiction responsibility mapping; Crisis-First Design — aligned through explicit failure, reversal, dispute, and under-review states; Embedded Discipline — aligned because payment arrival is interpreted rather than exploited for activity; Integrity of Narrative — aligned through rejection of generic tax-compliance and standalone-payment claims; Institutional Conduct — aligned through partner accountability, auditability, and systemic safeguards; UX Trust and Calm — aligned through recipient control, precise states, and minimal handoff; Local Reality — aligned by treating fragmented rails and variable income as evidence questions rather than assumed permission.
+
+**Future authority classes:** A later synthetic Pro / Pay concept test would remain Class A and still requires explicit **§7** / **§7a** activation; no active Green Lane delegation exists. Jurisdiction, provider, tax, AML, fraud, identity, privacy, data, and responsibility mapping is Yellow and requires separate authority. Any prototype using real business or recipient information, KYC / KYB, or an external provider is Yellow with explicit data and security boundaries. Live payment, settlement, withholding, custody, conversion, or customer-money behavior is Red and Class B / Class C as applicable, requiring separately accepted legal, provider, operational, trust, architecture, and repo-native authority.
+
+**Authority consequence:** Strategic direction and institutional constraints are recorded. Future separately authorised product reasoning may use them as hypothesis and evaluation inputs. No Hedgr Pay or Hedgr Pro implementation, standalone surface, public name, route, interface, prototype, participant test, evidence collection, ticket, lane, concurrency, §7 / §7a change, doctrine change, ADR change, frozen-narrative change, product copy, marketing, publication, payer recruitment, provider or partner engagement, contract, spend, jurisdiction selection, phone or WhatsApp integration, identity resolution, discoverability, personal or regulated data collection, KYC / KYB, AML, sanctions, fraud, tax, accounting, payroll, entitlement, pricing, connected data, backend, Engine, ledger, policy, custody, rail, deposit, conversion, settlement, payment, payout, withholding, withdrawal, remittance, stablecoin, customer-money, Class B, or Class C authority follows. Approved additional next ticket: **none**.
+
+**Current sequence consequence:** None. Controlled Parallelism v21 / Internal **D-076** remains unchanged. Lane V parent `CLASS-A-VAL-002` remains open with no active nested refinement and participant distribution paused pending live Form verification. Lane E parent `SE-REASON-001` and active nested `SE-REASON-001-RETEST-001` under Internal **D-098** remain unchanged. Temporary support ticket `AGENT-SKILL-PARITY-001` under Internal **D-100** remains unchanged. Founder Only D-101 / **§233** remains the controlling broader monetisation direction. Lane N and Lane R remain idle. **§7** / **§7a** are not amended. `NO CROSS-LANE IMPACT`.
+
+**Related source basis:** `.cursorrules`; `docs/doctrine/HEDGR_ACTIVE_DOCTRINE_INDEX.md`; `docs/doctrine/hedgr-constitutional-charter.md`; `docs/doctrine/hedgr-ux-constitution.md`; `docs/doctrine/hedgr-familiar-financial-grammar-and-infrastructure-abstraction.md`; `docs/doctrine/hedgr-product-surfaces.md`; `docs/doctrine/hedgr-stability-engine.md`; `docs/doctrine/hedgr-mvp-project-specification.md`; `docs/doctrine/hedgrops-decision-governance-and-adr-export-standard.md`; `docs/decisions/SPRINT-2-ADR-INDEX.md`; accepted ADRs **0013–0015**; Founder Only **D-101** / **§233**; and current `AGENTS.md` / **§7** / **§7a** authority.
+
+**ADR treatment:** No public ADR is created. Founder Only decisions are not exported under the Decision Governance and ADR Export Standard. D-102 does not amend the canonical Hedgr Pro surface, Stability Engine, payment architecture, or compliance posture. Any later public or architectural decision requires separate visibility confirmation and the normal ADR path.
+
+**RAP treatment:** `HEDGR_STATUS.md` is a mandatory authority source. Commit D-102 / **§234** before deterministic RAP generation. The generated projection may rebind provenance to the committed source revision but must not add D-102 as an active ticket, change `active_ticket_ids`, or alter sequencing, mutation, execution, external-action, or financial-execution flags. After any authority-bearing squash merge, permanent `main` requires the normal one-file provenance-only RAP rebind. Do not edit the generated RAP manually.
+
+**Rollback:** If the decision was recorded inaccurately, revert D-102 / **§234**. Reversal of the accepted direction, activation of Phase 2 work, publication of Founder-only content, or alteration of D-101 requires a new explicit Founder decision rather than silent historical editing.
