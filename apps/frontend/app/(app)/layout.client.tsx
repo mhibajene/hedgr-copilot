@@ -155,19 +155,37 @@ export function AppLayoutClient({ children }: { children: React.ReactNode }) {
   });
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div
+      className={`min-h-screen bg-white ${
+        explicitSyntheticJourney ? 'pb-16 md:pb-0' : ''
+      }`}
+    >
       <TrustDisclosureBanner
         dismissible={!syntheticJourneyActive}
         consolidateTechnicalDetails={syntheticJourneyActive}
       />
       <nav
         data-testid="app-nav"
-        className="border-b border-hedgr-100 bg-white shadow-sm"
+        className={`relative z-30 bg-white ${
+          explicitSyntheticJourney
+            ? 'border-b-0 md:border-b md:border-hedgr-100'
+            : 'border-b border-hedgr-100'
+        }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-16">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div
+            className={`flex justify-between ${
+              explicitSyntheticJourney ? 'h-0 md:h-16' : 'h-16'
+            }`}
+          >
             {/* Mobile hamburger button */}
-            <div className="flex items-center md:hidden">
+            <div
+              className={`md:hidden ${
+                explicitSyntheticJourney
+                  ? 'absolute left-4 top-2 flex items-center'
+                  : 'flex items-center'
+              }`}
+            >
               <button
                 data-testid="nav-toggle"
                 onClick={() => setIsNavOpen(!isNavOpen)}
@@ -202,16 +220,19 @@ export function AppLayoutClient({ children }: { children: React.ReactNode }) {
 
             {/* Desktop nav links */}
             <div className="hidden md:flex">
-              <div data-testid="nav-links" className="flex space-x-8">
+              <div
+                data-testid="nav-links"
+                className="flex space-x-8"
+              >
                 {navLinks.map((link) => (
                   <Link
                     key={link.href}
                     href={navHref(link.href, explicitSyntheticJourney)}
                     data-testid={link.testId}
-                    className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${
+                    className={`relative inline-flex items-center justify-center px-3 text-sm font-medium transition-colors md:border-b-2 md:px-1 md:pt-1 ${
                       activePathname === link.href
-                        ? 'border-hedgr-primary text-hedgr-dark'
-                        : 'border-transparent text-hedgr-500 hover:border-hedgr-200 hover:text-hedgr-dark'
+                        ? 'text-hedgr-primary before:absolute before:top-1.5 before:h-1 before:w-6 before:rounded-full before:bg-hedgr-primary md:border-hedgr-primary md:text-hedgr-dark md:before:hidden'
+                        : 'text-hedgr-500 hover:text-hedgr-dark md:border-transparent md:hover:border-hedgr-200'
                     }`}
                   >
                     {link.label}
@@ -226,9 +247,11 @@ export function AppLayoutClient({ children }: { children: React.ReactNode }) {
         <div
           id="app-navigation-menu"
           data-testid="nav-links-mobile"
-          className={`${
-            isNavOpen ? 'block' : 'hidden'
-          } border-t border-hedgr-100 md:hidden`}
+          className={`${isNavOpen ? 'block' : 'hidden'} ${
+            explicitSyntheticJourney
+              ? 'absolute inset-x-0 top-14 z-50 border-y border-hedgr-100 bg-white shadow-sm'
+              : 'border-t border-hedgr-100'
+          } md:hidden`}
         >
           <div className="px-2 pt-2 pb-3 space-y-1">
             {navLinks.map((link) => (
@@ -249,21 +272,48 @@ export function AppLayoutClient({ children }: { children: React.ReactNode }) {
           </div>
         </div>
       </nav>
+      {explicitSyntheticJourney ? (
+        <nav
+          aria-label="Primary"
+          className="fixed inset-x-0 bottom-0 z-40 border-t border-hedgr-100 bg-white shadow-sm md:hidden"
+          data-testid="synthetic-bottom-nav"
+        >
+          <div className="grid h-16 grid-cols-2 px-4">
+            {syntheticNavLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={navHref(link.href, true)}
+                className={`relative inline-flex min-h-11 items-start justify-center px-3 pt-4 text-sm font-medium transition-colors ${
+                  activePathname === link.href
+                    ? 'text-hedgr-primary before:absolute before:top-1.5 before:h-1 before:w-6 before:rounded-full before:bg-hedgr-primary'
+                    : 'text-hedgr-500 hover:text-hedgr-dark'
+                }`}
+              >
+                {link.label}
+              </Link>
+            ))}
+          </div>
+        </nav>
+      ) : null}
       {syntheticJourneyActive ? (
         <section
           aria-labelledby="synthetic-journey-heading"
-          className="border-b border-hedgr-200 bg-white"
+          className="border-b border-hedgr-100 bg-white"
           data-testid="synthetic-journey-shell"
         >
-          <div className="mx-auto max-w-7xl px-4 py-3 sm:px-6 lg:px-8">
+          <div
+            className={`mx-auto max-w-7xl py-2 sm:px-6 lg:px-8 ${
+              explicitSyntheticJourney ? 'pl-20 pr-6' : 'px-6'
+            }`}
+          >
             <div className="flex items-center justify-between gap-3">
               <div>
-                <p className="text-xs font-semibold uppercase tracking-wide text-hedgr-500">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-hedgr-500">
                   {currentJourneyOrientation.context}
                 </p>
                 <p
                   id="synthetic-journey-heading"
-                  className="mt-1 text-sm font-semibold text-hedgr-800"
+                  className="mt-0.5 text-sm font-semibold tracking-tight text-hedgr-800"
                 >
                   {currentJourneyOrientation.heading}
                 </p>
@@ -272,7 +322,7 @@ export function AppLayoutClient({ children }: { children: React.ReactNode }) {
                 </p>
               </div>
               <p
-                className="inline-flex min-h-11 w-fit shrink-0 items-center gap-2 rounded-lg border border-hedgr-primary bg-hedgr-primary px-3 py-2 text-sm font-medium text-white"
+                className="inline-flex min-h-11 w-fit shrink-0 items-center gap-2 rounded-full border border-hedgr-100 bg-hedgr-100/30 px-3 py-2 text-xs font-semibold text-hedgr-600"
                 aria-label="Current journey step"
                 data-testid="synthetic-journey-current-step"
               >

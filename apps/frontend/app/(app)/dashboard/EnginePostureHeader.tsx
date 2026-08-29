@@ -98,7 +98,7 @@ export function EnginePostureHeader({
         <div className="space-y-1">
           <p
             id="dashboard-current-status-label"
-            className="text-xs font-semibold uppercase tracking-[0.12em] text-hedgr-500"
+            className="text-[11px] font-bold uppercase tracking-[0.14em] text-hedgr-600"
           >
             {syntheticJourneyActive ? "What Hedgr notices" : "Current status"}
           </p>
@@ -115,7 +115,7 @@ export function EnginePostureHeader({
       </div>
 
       <p
-        className="max-w-xl text-base leading-relaxed text-hedgr-dark"
+        className="max-w-xl text-sm leading-relaxed text-hedgr-dark"
         data-testid="engine-posture-context"
       >
         {syntheticJourneyActive
@@ -128,13 +128,13 @@ export function EnginePostureHeader({
       </p>
 
       {syntheticJourneyActive ? (
-        <div className="space-y-2 border-t border-hedgr-100 pt-4">
-          <h2 className="text-base font-semibold tracking-tight text-hedgr-800">
+        <div className="space-y-2 border-t border-hedgr-100 pt-3">
+          <h2 className="text-sm font-semibold tracking-tight text-hedgr-800">
             Does anything need attention?
           </h2>
           <p
             data-testid="engine-simulation-attention-answer"
-            className="border-l-2 border-hedgr-200 pl-3 text-sm font-semibold leading-relaxed text-hedgr-800"
+            className="text-sm font-semibold leading-relaxed text-hedgr-800"
           >
             {posture === "normal"
               ? SIMULATION_COMPARISON_ATTENTION[comparisonState]
@@ -159,7 +159,7 @@ export function EnginePostureHeader({
         <div
           data-testid="engine-posture-banner"
           role="status"
-          className="rounded-2xl border border-hedgr-300 bg-white px-5 py-3.5 text-sm leading-snug text-hedgr-800"
+          className="rounded-2xl border border-hedgr-100 bg-white px-4 py-3.5 text-sm leading-snug text-hedgr-800 shadow-sm"
         >
           <p className="font-semibold text-hedgr-800">{notice?.title}</p>
           <p className="mt-2 text-hedgr-dark">{notice?.body}</p>

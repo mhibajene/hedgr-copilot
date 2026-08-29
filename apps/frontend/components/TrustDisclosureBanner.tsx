@@ -85,25 +85,25 @@ export function TrustDisclosureBanner({
     return (
       <div
         data-testid={testId}
-        className="rounded-xl border border-[#8391C9] bg-[#CAD0E8] p-4 text-[#171D35]"
+        className="rounded-2xl border border-hedgr-100 bg-hedgr-100/20 p-4 text-hedgr-800 shadow-sm"
       >
         <div className="flex items-start gap-3">
           <span
-            className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#1F2747] text-xs font-semibold text-white"
+            className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-hedgr-primary text-xs font-semibold text-white"
             aria-hidden="true"
           >
             i
           </span>
           <div className="flex-1 min-w-0">
-            <h3 className="text-sm font-semibold text-[#171D35]">Simulation environment</h3>
-            <p className="mt-1 text-xs text-[#1F2937]">
+            <h3 className="text-sm font-semibold text-hedgr-800">Simulation environment</h3>
+            <p className="mt-1 text-xs leading-relaxed text-hedgr-dark">
               This app is running with simulated data. Balances, yields, and transactions are not real.
             </p>
             <div className="flex flex-wrap gap-2 mt-3">
               {envBadges.map((badge) => (
                 <span
                   key={badge.label}
-                  className="inline-flex items-center rounded border border-[#A6B0D8] bg-white px-2 py-0.5 text-xs font-medium text-[#1F2747]"
+                  className="inline-flex items-center rounded-full border border-hedgr-100 bg-white px-2 py-0.5 text-xs font-medium text-hedgr-600"
                 >
                   {badge.label}: {badge.value}
                 </span>
@@ -112,7 +112,7 @@ export function TrustDisclosureBanner({
             {learnMoreUrl && (
               <a
                 href={learnMoreUrl}
-                className="mt-3 inline-block text-xs font-medium text-[#1F2747] underline underline-offset-2 hover:text-[#36447C]"
+                className="mt-3 inline-block text-xs font-semibold text-hedgr-600 underline decoration-hedgr-200 underline-offset-4 hover:text-hedgr-primary"
               >
                 Learn more about environments →
               </a>
@@ -131,23 +131,23 @@ export function TrustDisclosureBanner({
       aria-label={
         consolidateTechnicalDetails ? 'Simulation disclosure' : undefined
       }
-      className="border-b border-hedgr-300 bg-hedgr-100 text-hedgr-800"
+      className="border-b border-hedgr-100 bg-hedgr-100/20 text-hedgr-800"
     >
       <div
         className={`mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 ${
-          consolidateTechnicalDetails ? 'py-2' : 'py-3'
+          consolidateTechnicalDetails ? 'py-1' : 'py-3'
         }`}
       >
-        <div className="flex flex-wrap items-center justify-between gap-3 sm:gap-4">
-          <div className="flex items-start gap-3 min-w-0">
+        <div className={`flex items-center justify-between gap-2 sm:gap-4 ${consolidateTechnicalDetails ? 'flex-nowrap' : 'flex-wrap'}`}>
+          <div className="flex min-w-0 items-center gap-2 sm:gap-3">
             <span
-              className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-hedgr-primary text-xs font-semibold text-white"
+              className="flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full border border-hedgr-200 bg-white text-[10px] font-bold text-hedgr-primary sm:h-6 sm:w-6 sm:text-xs"
               aria-hidden="true"
             >
               i
             </span>
             <div className="min-w-0">
-              <p className="font-semibold text-sm">
+              <p className="whitespace-nowrap text-[11px] font-semibold sm:text-sm">
                 {consolidateTechnicalDetails
                   ? 'Simulation · no real money'
                   : 'Simulation Mode. No Real Money'}
@@ -161,13 +161,13 @@ export function TrustDisclosureBanner({
               ) : null}
             </div>
           </div>
-          <div className={consolidateTechnicalDetails ? 'w-full sm:w-auto' : 'flex items-center gap-3 flex-shrink-0'}>
+          <div className={consolidateTechnicalDetails ? 'w-auto flex-shrink-0' : 'flex items-center gap-3 flex-shrink-0'}>
             {consolidateTechnicalDetails ? (
               <details data-testid="simulation-technical-details" className="group">
-                <summary className="inline-flex min-h-11 cursor-pointer list-none items-center text-sm font-semibold text-hedgr-600 underline decoration-hedgr-200 underline-offset-4 marker:content-none [&::-webkit-details-marker]:hidden">
+                <summary className="inline-flex min-h-11 cursor-pointer list-none items-center whitespace-nowrap text-xs font-semibold text-hedgr-600 underline decoration-hedgr-200 underline-offset-4 marker:content-none sm:text-sm [&::-webkit-details-marker]:hidden">
                   How this simulation works
                 </summary>
-                <div className="mt-3 space-y-3 rounded-xl border border-hedgr-200 bg-white p-3">
+                <div className="mt-3 space-y-3 rounded-2xl border border-hedgr-100 bg-white p-4 shadow-sm">
                   <p className="max-w-xl text-sm leading-relaxed text-hedgr-dark">
                     Rates are fixed for this walkthrough, and no live financial
                     service is connected. The selected country changes simulated

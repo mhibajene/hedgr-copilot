@@ -174,30 +174,30 @@ export default function DashboardPage() {
 
   const balanceHero = (
     <section
-      className="space-y-2"
+      className="space-y-1"
       aria-labelledby="dashboard-total-balance-label"
       data-testid="dashboard-balance"
     >
       <p
         id="dashboard-total-balance-label"
-        className="text-xs font-semibold uppercase tracking-[0.12em] text-hedgr-500"
+        className="text-xs font-semibold tracking-tight text-hedgr-800"
       >
         {syntheticJourneyActive ? "Your current position" : "Total balance"}
       </p>
       {isLoading ? (
-        <div className="text-4xl font-semibold tabular-nums tracking-tight text-hedgr-800 sm:text-[2.75rem] sm:leading-tight">
+        <div className="text-5xl font-bold tabular-nums tracking-tight text-hedgr-800 sm:text-6xl sm:leading-tight">
           …
         </div>
       ) : (
         <BalanceWithLocalEstimate
           usdAmount={ready && !cleanStartRequested ? total : 0}
           data-testid="usd-balance"
-          className="text-4xl font-semibold tabular-nums tracking-tight text-hedgr-800 sm:text-[2.75rem] sm:leading-tight"
+          className="text-5xl font-bold tabular-nums tracking-tight text-hedgr-800 sm:text-6xl sm:leading-tight"
         />
       )}
       {syntheticJourneyActive && ready && !isLoading ? (
         <p
-          className="max-w-md pt-1 text-sm leading-relaxed text-hedgr-dark"
+          className="max-w-md pt-1 text-xs leading-relaxed text-hedgr-500 sm:text-sm"
           data-testid="dashboard-synthetic-balance-explainer"
         >
           Illustrative position only.
@@ -223,18 +223,18 @@ export default function DashboardPage() {
 
   const syntheticChangeEvidence = (
     <section
-      className="space-y-3"
+      className="space-y-2"
       aria-labelledby="dashboard-change-evidence-heading"
       data-testid="dashboard-change-evidence"
       data-comparison-state={syntheticComparison.comparisonState}
     >
       <div className="space-y-1">
-        <p className="text-xs font-semibold uppercase tracking-[0.12em] text-hedgr-500">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-hedgr-500">
           What changed
         </p>
         <h2
           id="dashboard-change-evidence-heading"
-          className="text-base font-semibold tracking-tight text-hedgr-800"
+          className="text-lg font-semibold tracking-tight text-hedgr-800"
         >
           {syntheticComparison.comparisonState === "empty"
             ? "Nothing to compare yet"
@@ -250,34 +250,34 @@ export default function DashboardPage() {
         </p>
       ) : (
         <div
-          className="grid gap-2 sm:grid-cols-[1fr_auto_1fr_auto_1fr] sm:items-center"
+          className="grid divide-y divide-hedgr-100 border-y border-hedgr-100 sm:grid-cols-[1fr_auto_1fr_auto_1fr] sm:items-center sm:divide-x sm:divide-y-0"
           aria-label={`Position changed from $${syntheticComparison.previousPosition.toFixed(
             2
           )} by ${formatSignedUSD(
             signedAmount(syntheticComparison.lastEvent!)
           )} to $${syntheticComparison.currentPosition.toFixed(2)}`}
         >
-          <div className="rounded-2xl bg-hedgr-100/60 p-4">
+          <div className="bg-white px-1 py-2 sm:px-4 sm:py-3">
             <p className="text-[11px] font-semibold uppercase tracking-wide text-hedgr-500">
               {syntheticComparison.comparisonState === "first-event"
                 ? "Started at"
                 : "Before"}
             </p>
-            <p className="mt-1 text-xl font-semibold tabular-nums text-hedgr-800">
+            <p className="mt-0.5 text-lg font-semibold tabular-nums text-hedgr-800 sm:mt-1 sm:text-xl">
               ${syntheticComparison.previousPosition.toFixed(2)}
             </p>
           </div>
           <span className="hidden text-hedgr-400 sm:block" aria-hidden="true">
             →
           </span>
-          <div className="rounded-2xl border border-hedgr-200 bg-white p-4">
+          <div className="bg-white px-1 py-2 sm:px-4 sm:py-3">
             <p className="text-[11px] font-semibold uppercase tracking-wide text-hedgr-500">
               {syntheticComparison.lastEvent?.type === "DEPOSIT"
                 ? "Simulated deposit"
                 : "Simulated expense"}
             </p>
             <p
-              className="mt-1 text-xl font-semibold tabular-nums text-hedgr-800"
+              className="mt-0.5 text-lg font-semibold tabular-nums text-hedgr-800 sm:mt-1 sm:text-xl"
               data-testid="dashboard-change-delta"
             >
               {formatSignedUSD(signedAmount(syntheticComparison.lastEvent!))}
@@ -286,12 +286,12 @@ export default function DashboardPage() {
           <span className="hidden text-hedgr-400 sm:block" aria-hidden="true">
             →
           </span>
-          <div className="rounded-2xl border border-hedgr-primary bg-hedgr-100/40 p-4">
+          <div className="bg-hedgr-100/20 px-1 py-2 sm:px-4 sm:py-3">
             <p className="text-[11px] font-semibold uppercase tracking-wide text-hedgr-500">
               Now
             </p>
             <p
-              className="mt-1 text-xl font-semibold tabular-nums text-hedgr-800"
+              className="mt-0.5 text-lg font-semibold tabular-nums text-hedgr-800 sm:mt-1 sm:text-xl"
               data-testid="dashboard-change-result"
             >
               ${syntheticComparison.currentPosition.toFixed(2)}
@@ -303,7 +303,7 @@ export default function DashboardPage() {
       {syntheticComparison.comparisonState !== "empty" ? (
         <Link
           href={getSyntheticJourneyHref("/activity")}
-          className="inline-flex text-sm font-medium text-hedgr-600 underline decoration-hedgr-200 underline-offset-4 hover:text-hedgr-primary"
+          className="inline-flex min-h-11 items-center rounded-full px-1 text-sm font-semibold text-hedgr-600 hover:text-hedgr-primary focus:outline-none focus:ring-2 focus:ring-hedgr-500 focus:ring-offset-2"
           data-testid="dashboard-balance-evidence"
         >
           View the completed-event evidence
@@ -319,16 +319,20 @@ export default function DashboardPage() {
           ? "Current simulation overview"
           : "Current account overview"
       }
-      className="rounded-3xl border border-hedgr-200 bg-white p-5 sm:p-7"
+      className={
+        syntheticJourneyActive
+          ? "bg-white"
+          : "rounded-2xl border border-hedgr-100 bg-white p-5 shadow-sm sm:p-7"
+      }
       data-testid="dashboard-current-overview"
     >
       {syntheticJourneyActive ? (
-        <div className="space-y-6">
+        <div className="space-y-4">
           {balanceHero}
-          <div className="border-t border-hedgr-100 pt-6">
+          <div className="border-t border-hedgr-100 pt-4">
             {syntheticChangeEvidence}
           </div>
-          <div className="border-t border-hedgr-100 pt-6">
+          <div className="rounded-2xl border border-hedgr-100 bg-hedgr-100/20 p-3.5 shadow-sm sm:p-5">
             <EnginePostureHeader
               engineState={engineState}
               syntheticJourneyActive
@@ -380,7 +384,7 @@ export default function DashboardPage() {
 
   const syntheticActions = syntheticJourneyActive ? (
     <section
-      className="space-y-4 rounded-3xl border border-hedgr-200 bg-white p-5 sm:p-6"
+      className="space-y-4 border-t border-hedgr-100 bg-white pt-5 sm:pt-6"
       aria-labelledby="dashboard-optional-actions-heading"
       data-testid="dashboard-optional-actions"
     >
@@ -409,7 +413,7 @@ export default function DashboardPage() {
               ? getSyntheticJourneyHref("/deposit")
               : getSyntheticJourneyHref("/activity")
           }
-          className="rounded-2xl bg-hedgr-primary p-4 text-white transition-colors hover:bg-hedgr-600 focus:outline-none focus:ring-2 focus:ring-hedgr-500 focus:ring-offset-2"
+          className="rounded-2xl bg-hedgr-primary p-4 text-white shadow-sm transition-colors hover:bg-hedgr-600 focus:outline-none focus:ring-2 focus:ring-hedgr-500 focus:ring-offset-2"
         >
           <span className="block text-sm font-semibold">
             {syntheticComparison.comparisonState === "empty"
@@ -422,7 +426,7 @@ export default function DashboardPage() {
               : "See every completed event and its resulting position."}
           </span>
         </Link>
-        <div className="rounded-2xl border border-hedgr-200 bg-hedgr-100/40 p-4">
+        <div className="rounded-2xl border border-hedgr-100 bg-hedgr-100/20 p-4">
           <h3 className="text-sm font-semibold text-hedgr-800">Do nothing</h3>
           <p className="mt-1 text-sm leading-relaxed text-hedgr-dark">
             Stay with the current position. No action is required by this
@@ -435,7 +439,7 @@ export default function DashboardPage() {
 
   const disclosureSection = (
     <details
-      className="rounded-2xl border border-hedgr-200 bg-white p-5"
+      className="border-y border-hedgr-100 bg-white py-2"
       data-testid="dashboard-disclosures"
     >
       <summary className="flex min-h-11 cursor-pointer list-none items-center font-medium text-hedgr-800 marker:content-none select-none [&::-webkit-details-marker]:hidden">
@@ -456,7 +460,7 @@ export default function DashboardPage() {
 
   if (error) {
     return (
-      <main className="p-4 sm:p-8">
+      <main className="px-6 py-8 sm:p-8">
         <div
           className={`mx-auto space-y-6 sm:space-y-8 ${
             syntheticJourneyActive ? "max-w-5xl" : "max-w-2xl"
@@ -484,10 +488,10 @@ export default function DashboardPage() {
   }
 
   return (
-    <main className="p-4 sm:p-8">
+    <main className="px-6 pb-24 pt-5 sm:p-8">
       <div
         className={`mx-auto ${
-          syntheticJourneyActive ? "space-y-5 sm:space-y-8" : "space-y-6 sm:space-y-8"
+          syntheticJourneyActive ? "space-y-4 sm:space-y-8" : "space-y-6 sm:space-y-8"
         } ${
           syntheticJourneyActive ? "max-w-5xl" : "max-w-2xl"
         }`}
@@ -498,15 +502,15 @@ export default function DashboardPage() {
         {syntheticJourneyActive ? (
           <section
             aria-labelledby="dashboard-orientation-heading"
-            className="space-y-1 sm:space-y-2"
+            className="space-y-0.5 pb-1 sm:space-y-2"
             data-testid="dashboard-orientation"
           >
-            <p className="text-xs font-semibold uppercase tracking-[0.12em] text-hedgr-500">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-hedgr-500">
               Financial position
             </p>
             <h1
               id="dashboard-orientation-heading"
-              className="text-xl font-semibold tracking-tight text-hedgr-800 sm:text-3xl"
+              className="text-xl font-bold tracking-tight text-hedgr-800 sm:text-4xl"
             >
               See what you have and what changed.
             </h1>
@@ -558,7 +562,7 @@ export default function DashboardPage() {
 
         {syntheticJourneyActive && hasSyntheticFixtureState && (
           <section
-            className="rounded-2xl border border-hedgr-200 bg-hedgr-100/40 p-5 text-hedgr-800 sm:p-6"
+            className="rounded-2xl border border-hedgr-100 bg-hedgr-100/20 p-5 text-hedgr-800 shadow-sm sm:p-6"
             data-testid="dashboard-restart-journey"
             aria-labelledby="dashboard-restart-journey-heading"
           >
