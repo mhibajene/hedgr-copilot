@@ -223,25 +223,41 @@ export default function DashboardPage() {
 
   const syntheticChangeEvidence = (
     <section
-      className="space-y-2"
+      className="space-y-3"
       aria-labelledby="dashboard-change-evidence-heading"
       data-testid="dashboard-change-evidence"
       data-comparison-state={syntheticComparison.comparisonState}
     >
-      <div className="space-y-1">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-hedgr-500">
-          What changed
-        </p>
+      <div className="flex items-start justify-between gap-4">
+        <div>
         <h2
           id="dashboard-change-evidence-heading"
-          className="text-lg font-semibold tracking-tight text-hedgr-800"
+            className="text-sm font-semibold tracking-tight text-hedgr-800"
         >
-          {syntheticComparison.comparisonState === "empty"
-            ? "Nothing to compare yet"
-            : syntheticComparison.comparisonState === "first-event"
-            ? "Your first position is now visible"
-            : "The current position reconciles to the change"}
+            How your position changed
         </h2>
+          <p
+            className="mt-0.5 text-xs text-hedgr-500"
+            data-testid="dashboard-change-count"
+          >
+            {completedSyntheticActivity.length === 0
+              ? "No completed simulated changes yet"
+              : `${completedSyntheticActivity.length} completed simulated ${
+                  completedSyntheticActivity.length === 1 ? "change" : "changes"
+                }`}
+          </p>
+        </div>
+
+        {syntheticComparison.comparisonState !== "empty" ? (
+          <Link
+            href={getSyntheticJourneyHref("/activity")}
+            className="inline-flex min-h-11 shrink-0 items-center gap-1 rounded-full px-1 text-sm font-semibold text-hedgr-600 hover:text-hedgr-primary focus:outline-none focus:ring-2 focus:ring-hedgr-500 focus:ring-offset-2"
+            data-testid="dashboard-balance-evidence"
+          >
+            View Activity
+            <span aria-hidden="true">→</span>
+          </Link>
+        ) : null}
       </div>
 
       {syntheticComparison.comparisonState === "empty" ? (
@@ -250,65 +266,33 @@ export default function DashboardPage() {
         </p>
       ) : (
         <div
-          className="grid divide-y divide-hedgr-100 border-y border-hedgr-100 sm:grid-cols-[1fr_auto_1fr_auto_1fr] sm:items-center sm:divide-x sm:divide-y-0"
+          className="flex flex-wrap items-baseline gap-x-2 gap-y-1 border-y border-hedgr-100 py-3 text-sm text-hedgr-dark"
           aria-label={`Position changed from $${syntheticComparison.previousPosition.toFixed(
             2
           )} by ${formatSignedUSD(
             signedAmount(syntheticComparison.lastEvent!)
           )} to $${syntheticComparison.currentPosition.toFixed(2)}`}
         >
-          <div className="bg-white px-1 py-2 sm:px-4 sm:py-3">
-            <p className="text-[11px] font-semibold uppercase tracking-wide text-hedgr-500">
-              {syntheticComparison.comparisonState === "first-event"
-                ? "Started at"
-                : "Before"}
-            </p>
-            <p className="mt-0.5 text-lg font-semibold tabular-nums text-hedgr-800 sm:mt-1 sm:text-xl">
-              ${syntheticComparison.previousPosition.toFixed(2)}
-            </p>
-          </div>
-          <span className="hidden text-hedgr-400 sm:block" aria-hidden="true">
-            →
+          <span className="font-medium tabular-nums text-hedgr-800">
+            ${syntheticComparison.previousPosition.toFixed(2)} before
           </span>
-          <div className="bg-white px-1 py-2 sm:px-4 sm:py-3">
-            <p className="text-[11px] font-semibold uppercase tracking-wide text-hedgr-500">
-              {syntheticComparison.lastEvent?.type === "DEPOSIT"
-                ? "Simulated deposit"
-                : "Simulated expense"}
-            </p>
-            <p
-              className="mt-0.5 text-lg font-semibold tabular-nums text-hedgr-800 sm:mt-1 sm:text-xl"
-              data-testid="dashboard-change-delta"
-            >
-              {formatSignedUSD(signedAmount(syntheticComparison.lastEvent!))}
-            </p>
-          </div>
-          <span className="hidden text-hedgr-400 sm:block" aria-hidden="true">
-            →
+          <span
+            className="font-semibold tabular-nums text-hedgr-800"
+            data-testid="dashboard-change-delta"
+          >
+            {formatSignedUSD(signedAmount(syntheticComparison.lastEvent!))}
           </span>
-          <div className="bg-hedgr-100/20 px-1 py-2 sm:px-4 sm:py-3">
-            <p className="text-[11px] font-semibold uppercase tracking-wide text-hedgr-500">
-              Now
-            </p>
-            <p
-              className="mt-0.5 text-lg font-semibold tabular-nums text-hedgr-800 sm:mt-1 sm:text-xl"
-              data-testid="dashboard-change-result"
-            >
+          <span aria-hidden="true" className="text-hedgr-400">
+            =
+          </span>
+          <span className="font-semibold tabular-nums text-hedgr-800">
+            <span data-testid="dashboard-change-result">
               ${syntheticComparison.currentPosition.toFixed(2)}
-            </p>
-          </div>
+            </span>{" "}
+            now
+          </span>
         </div>
       )}
-
-      {syntheticComparison.comparisonState !== "empty" ? (
-        <Link
-          href={getSyntheticJourneyHref("/activity")}
-          className="inline-flex min-h-11 items-center rounded-full px-1 text-sm font-semibold text-hedgr-600 hover:text-hedgr-primary focus:outline-none focus:ring-2 focus:ring-hedgr-500 focus:ring-offset-2"
-          data-testid="dashboard-balance-evidence"
-        >
-          View the completed-event evidence
-        </Link>
-      ) : null}
     </section>
   );
 

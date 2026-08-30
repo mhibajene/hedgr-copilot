@@ -181,7 +181,9 @@ function ActivityRow({
               → ${resultingBalance.toFixed(2)} resulting
             </div>
           ) : null}
-          {tx.amountZMW !== undefined && tx.amountZMW > 0 ? (
+          {!syntheticJourneyActive &&
+          tx.amountZMW !== undefined &&
+          tx.amountZMW > 0 ? (
             <div className="text-sm tabular-nums text-hedgr-500">
               {tx.amountZMW.toFixed(2)} ZMW
             </div>
@@ -366,41 +368,28 @@ export default function ActivityPage() {
         )}
       </div>
 
-      {syntheticJourneyActive ? (
-        <section
-          className="border-b border-hedgr-100 pb-5 text-hedgr-800"
-          data-testid="activity-synthetic-condition"
-          aria-label="Simulated activity condition"
-        >
-          <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-hedgr-600">
-            What happened
-          </p>
-          <h2 className="mt-1 text-lg font-semibold tracking-tight text-hedgr-800">
-            Evidence behind the current position
-          </h2>
-          <p className="mt-1 text-sm leading-relaxed text-hedgr-dark">
-            Each event shows what changed and the resulting position.
-          </p>
-        </section>
-      ) : null}
-
       {syntheticJourneyActive && transactions.length > 0 ? (
         <section
-          className="rounded-2xl border border-hedgr-100 bg-hedgr-100/20 p-4 text-hedgr-dark shadow-sm sm:p-5"
+          className="space-y-2 border-y border-hedgr-100 py-3 text-hedgr-dark"
           data-testid="activity-balance-reconciliation"
           aria-labelledby="activity-balance-reconciliation-heading"
         >
-          <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-hedgr-600">
-            Activity evidence
-          </p>
-          <h2
-            id="activity-balance-reconciliation-heading"
-            className="mt-1 text-base font-semibold tracking-tight text-hedgr-800"
-          >
-            Completed simulated changes reconcile to what remains
-          </h2>
+          <div className="flex items-baseline justify-between gap-4 text-sm">
+            <h2
+              id="activity-balance-reconciliation-heading"
+              className="font-medium text-hedgr-600"
+            >
+              Current simulated position
+            </h2>
+            <span
+              className="font-semibold tabular-nums text-hedgr-800"
+              data-testid="activity-reconciliation-remaining"
+            >
+              ${syntheticBalanceReconciliation.remaining.toFixed(2)}
+            </span>
+          </div>
           <p
-            className="mt-3 flex flex-wrap items-baseline gap-x-2 gap-y-1 text-sm text-hedgr-dark"
+            className="flex flex-wrap items-baseline gap-x-1.5 gap-y-1 text-xs text-hedgr-500"
             aria-label={`Completed simulated changes: plus $${syntheticBalanceReconciliation.deposits.toFixed(
               2
             )} deposits, minus $${syntheticBalanceReconciliation.withdrawals.toFixed(
@@ -409,49 +398,37 @@ export default function ActivityPage() {
               2
             )} remaining`}
           >
+            <span>From completed entries:</span>
             <span
-              className="font-semibold tabular-nums text-hedgr-800"
+              className="font-medium tabular-nums text-hedgr-600"
               data-testid="activity-reconciliation-deposits"
             >
-              +${syntheticBalanceReconciliation.deposits.toFixed(2)} deposits
+              +${syntheticBalanceReconciliation.deposits.toFixed(2)}
             </span>
             <span aria-hidden="true" className="text-hedgr-400">
               −
             </span>
             <span
-              className="font-semibold tabular-nums text-hedgr-800"
+              className="font-medium tabular-nums text-hedgr-600"
               data-testid="activity-reconciliation-withdrawals"
             >
-              ${syntheticBalanceReconciliation.withdrawals.toFixed(2)}{' '}
-              withdrawals
+              ${syntheticBalanceReconciliation.withdrawals.toFixed(2)}
             </span>
-            <span aria-hidden="true" className="text-hedgr-400">
-              =
-            </span>
-            <span
-              className="font-semibold tabular-nums text-hedgr-800"
-              data-testid="activity-reconciliation-remaining"
-            >
-              ${syntheticBalanceReconciliation.remaining.toFixed(2)} remaining
-            </span>
-          </p>
-          <p className="mt-2 text-xs leading-relaxed text-hedgr-500">
-            Only completed simulated entries contribute to this evidence.
           </p>
         </section>
       ) : null}
 
       {/* Filter buttons - only show when there are transactions */}
       {transactions.length > 0 && (
-        <div className="flex gap-2 border-b border-hedgr-100 pb-4">
+        <div className="flex gap-1.5 border-b border-hedgr-100 pb-3">
           {(['all', 'deposits', 'withdrawals'] as const).map((f) => (
             <button
               key={f}
               onClick={() => setFilter(f)}
-              className={`min-h-11 rounded-full border px-4 py-2 text-sm font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-hedgr-500 focus:ring-offset-2 ${
+              className={`min-h-11 rounded-full border px-3 py-2 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-hedgr-500 focus:ring-offset-2 ${
                 filter === f
-                  ? 'border-hedgr-primary bg-hedgr-primary text-white shadow-sm'
-                  : 'border-hedgr-100 bg-white text-hedgr-600 hover:bg-hedgr-100/30'
+                  ? 'border-hedgr-200 bg-hedgr-100/30 text-hedgr-800'
+                  : 'border-transparent bg-white text-hedgr-500 hover:border-hedgr-100 hover:text-hedgr-700'
               }`}
               data-testid={`filter-${f}`}
             >

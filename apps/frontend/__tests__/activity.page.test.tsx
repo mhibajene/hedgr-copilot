@@ -129,12 +129,7 @@ describe('ActivityPage synthetic evidence grammar', () => {
 
     render(<ActivityPage />);
 
-    const condition = screen.getByTestId('activity-synthetic-condition');
-    expect(condition.textContent).toContain('What happened');
-    expect(condition.textContent).toContain(
-      'Each event shows what changed and the resulting position.'
-    );
-    expect(condition.textContent).not.toMatch(/interpret|what it means|why/i);
+    expect(screen.queryByTestId('activity-synthetic-condition')).toBeNull();
 
     expect(screen.getByTestId('activity-result-deposit').textContent).toBe(
       '→ $5.00 resulting'
@@ -144,13 +139,21 @@ describe('ActivityPage synthetic evidence grammar', () => {
     );
     expect(
       screen.getByTestId('activity-reconciliation-deposits').textContent
-    ).toBe('+$5.00 deposits');
+    ).toBe('+$5.00');
     expect(
       screen.getByTestId('activity-reconciliation-withdrawals').textContent
-    ).toBe('$2.00 withdrawals');
+    ).toBe('$2.00');
     expect(
       screen.getByTestId('activity-reconciliation-remaining').textContent
-    ).toBe('$3.00 remaining');
+    ).toBe('$3.00');
+    expect(screen.getByTestId('activity-balance-reconciliation').textContent).toContain(
+      'From completed entries:'
+    );
+    expect(
+      screen
+        .getAllByTestId('activity-row-deposit')
+        .every((row) => within(row).queryByText(/ZMW/) === null)
+    ).toBe(true);
     expect(
       screen
         .getByRole('link', { name: 'Return to current position' })
@@ -195,5 +198,10 @@ describe('ActivityPage synthetic evidence grammar', () => {
     expect(screen.queryByTestId('activity-balance-reconciliation')).toBeNull();
     expect(screen.queryByTestId('activity-result-deposit')).toBeNull();
     expect(screen.queryByTestId('activity-result-withdraw')).toBeNull();
+    expect(
+      screen
+        .getAllByTestId('activity-row-deposit')
+        .some((row) => within(row).queryByText(/ZMW/) !== null)
+    ).toBe(true);
   });
 });
