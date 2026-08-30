@@ -162,6 +162,20 @@ describe("EngineAllocationBands", () => {
     expect(roles.textContent).toContain("Growth");
     expect(roles.textContent).toContain("For future opportunities.");
     expect(roles.textContent).not.toMatch(/\d+%/);
+    expect(roles.className).toContain("rounded-2xl");
+    expect(roles.className).toContain("overflow-hidden");
+    expect(roles.querySelector("img")).toBeNull();
+    expect(roles.querySelector("svg")).toBeNull();
+
+    for (const purpose of [
+      "coreTargetPct",
+      "liquidityTargetPct",
+      "yieldCapPct",
+    ]) {
+      const role = screen.getByTestId(`engine-allocation-role-${purpose}`);
+      expect(role.className).toContain("px-5");
+      expect(role.className).toContain("py-5");
+    }
 
     const valuesDetails = screen.getByTestId(
       "engine-allocation-values-details"

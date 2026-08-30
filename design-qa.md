@@ -113,6 +113,71 @@ final result: passed
 
 ---
 
+# Design QA — Lane V no-icon grouped planning shelf
+
+## Comparison target
+
+- Source visual truth: `/Users/musalwa/.codex/generated_images/01a04306-bb36-71a0-bbdc-0112bf517b50/exec-72536737-f9aa-4978-a320-8c12af617c78.png` (Founder-retained no-icon grouped shelf).
+- Browser-rendered implementation: optimized local production build at `http://localhost:3000/dashboard-synthetic-journey`.
+- Implementation screenshot: `/Users/musalwa/.codex/generated_images/01a04306-bb36-71a0-bbdc-0112bf517b50/lane-v-planning-shelf-section.png`.
+- Same-input comparison: `/Users/musalwa/.codex/generated_images/01a04306-bb36-71a0-bbdc-0112bf517b50/lane-v-planning-shelf-comparison.png`.
+- Source pixels: 979 × 1607, normalized to 375 × 616 for comparison.
+- Browser viewport: 390 × 844 CSS px at device pixel ratio 1. The in-app browser capture excludes its 15 px scrollbar, producing a 375 px-wide content capture; the focused section is 375 × 510 pixels.
+- State: collapsed **View planning percentages** disclosure in the completed governed synthetic journey. No planning-focus selection, arithmetic, or category meaning changed.
+
+## Full-view comparison evidence
+
+- The retained source and production section were combined into one side-by-side comparison at the same 375 px content width.
+- Both show one rounded, cool-bordered shelf containing three equal, text-only rows in the approved order: **Now**, **Reserve**, **Growth**.
+- The separate planning-purpose boundary and understated **View planning percentages** continuation remain immediately beneath the shelf.
+- The implementation is intentionally denser than the isolated generated study because the active ticket freezes the existing Home typography hierarchy and full-page rhythm. This does not change the selected surface treatment or any semantic relationship.
+
+## Focused-region comparison evidence
+
+- The changed area is itself a focused component region, and all titles, descriptions, separators, border radii, and boundary copy are readable at original capture scale. No smaller asset or icon region required a separate crop.
+- Browser measurements at 390 × 844 confirm a 327 px-wide shelf with three equal rows of approximately 84 px each, a 16 px radius, a 1 px governed border, hidden overflow, and zero `img` or `svg` descendants.
+
+## Required fidelity surfaces
+
+- Fonts and typography: the existing Plus Jakarta Sans stack, heading levels, weights, sizes, line heights, and approved copy are unchanged. Typography remains the sole carrier of category meaning.
+- Spacing and layout rhythm: three equal rows now read as one coherent shelf. Mobile padding is 20 px per row; the outer section order and the gap to the boundary/disclosure remain unchanged.
+- Colors and visual tokens: only existing `hedgr-*` classes are used. The shelf uses white, `hedgr-100` dividers/border, `hedgr-800` titles, and `hedgr-500` descriptions. No gradients, glows, raw semantic colors, or token changes were introduced.
+- Image quality and asset fidelity: the selected direction contains no imagery or icons. The implementation adds no asset, dependency, inline SVG, handcrafted SVG, CSS drawing, emoji, or text-glyph substitute.
+- Copy and content: every user-facing string, test identifier, category order, percentage value, boundary statement, and disclosure sentence remains unchanged.
+
+## Accessibility and interaction checks
+
+- The shelf remains a labelled description list with `dt` / `dd` semantics and equal, legible rows.
+- **View planning percentages** opened and closed successfully in the in-app browser; the existing `50% / 30% / 20%` structure remained secondary and contained no progress bar.
+- Optimized-production browser diagnostics contained no warnings or errors.
+- No horizontal overflow was found at the 390 × 844 mobile viewport or at 1024 × 768.
+
+## Responsive evidence
+
+- 390 × 844: the shelf renders as three vertically stacked, equal-width rows with no icons and no clipping.
+- 1024 × 768: the existing responsive contract renders the same three purposes as equal columns inside one rounded shelf; each column is approximately 314 px wide and 79 px high, with no document overflow.
+
+## Comparison history
+
+### No-icon shelf pass 1 — passed
+
+- No actionable P0, P1, or P2 mismatch was found.
+- [P3] The production rows are more compact than the isolated generated reference. This is accepted because it preserves the governed Home type scale and page density while reproducing the selected grouped-shelf treatment.
+- No visual fix was made after comparison; the first implementation already met the retained presentation direction within the active semantic/copy/hierarchy freeze.
+
+## Verification
+
+- `pnpm --filter @hedgr/frontend exec vitest run __tests__/engine-allocation-bands.test.tsx` — 11 tests passed.
+- `pnpm --filter @hedgr/frontend typecheck` — passed.
+- `pnpm --filter @hedgr/frontend lint` — passed.
+- `pnpm --filter @hedgr/frontend build` — passed.
+- `pnpm run validate` — passed; 67 frontend test files / 771 tests passed, with repository typecheck and lint clean.
+- Optimized-production in-app browser checks — passed for mobile rendering, desktop responsive rendering, disclosure interaction, overflow, and console/page diagnostics.
+
+final result: passed
+
+---
+
 # Design QA — D-105 Home utility-row hierarchy amendment
 
 ## Comparison target
