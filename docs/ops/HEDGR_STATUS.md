@@ -4825,8 +4825,8 @@ Current active ticket status:
 - `apps/frontend/styles/globals.css` — existing approved design-token usage and reusable presentation utilities only; no token-value mutation
 - `apps/frontend/app/(app)/layout.client.tsx` — shared shell and navigation presentation only
 - `apps/frontend/app/(app)/dashboard/page.tsx` — Home presentation only
-- `apps/frontend/public/icons/add-simulated-deposit.svg` — one local line-icon asset for the authorized synthetic deposit utility only
-- `apps/frontend/public/icons/view-activity.svg` — one local line-icon asset for the authorized Activity utility only
+- `apps/frontend/public/icons/add-simulated-deposit.png` — one generated local line-icon asset for the authorized synthetic deposit utility only
+- `apps/frontend/public/icons/view-activity.png` — one generated local line-icon asset for the authorized Activity utility only
 - `apps/frontend/app/(app)/dashboard/EnginePostureHeader.tsx` — existing posture presentation only
 - `apps/frontend/app/(app)/dashboard/EngineAllocationBands.tsx` — existing planning-band presentation only
 - `apps/frontend/app/(app)/activity/page.tsx` — Activity overview presentation only
@@ -14888,8 +14888,8 @@ These market, legal, operational, provider, and behavioural assumptions remain u
 **Exact runtime scope:**
 
 - `apps/frontend/app/(app)/dashboard/page.tsx`
-- `apps/frontend/public/icons/add-simulated-deposit.svg`
-- `apps/frontend/public/icons/view-activity.svg`
+- `apps/frontend/public/icons/add-simulated-deposit.png`
+- `apps/frontend/public/icons/view-activity.png`
 
 **Exact verification scope:**
 
