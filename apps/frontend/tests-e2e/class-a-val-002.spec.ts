@@ -190,16 +190,17 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   await expect(
     page.getByTestId('dashboard-synthetic-balance-explainer')
   ).toHaveText('Illustrative position only.');
-  await expect(page.getByTestId('dashboard-change-evidence')).toHaveAttribute(
-    'data-comparison-state',
-    'empty'
+  await expect(page.getByTestId('dashboard-simulation-utilities')).toBeVisible();
+  await expect(page.getByTestId('dashboard-add-simulated-deposit')).toHaveAttribute(
+    'href',
+    '/deposit?journey=class-a-val-002'
   );
-  await expect(page.getByTestId('dashboard-change-evidence')).toContainText(
-    'How your position changed'
+  await expect(page.getByTestId('dashboard-view-activity')).toHaveAttribute(
+    'href',
+    '/activity?journey=class-a-val-002'
   );
-  await expect(page.getByTestId('dashboard-change-count')).toHaveText(
-    'No completed simulated changes yet'
-  );
+  await expect(page.getByTestId('dashboard-change-evidence')).toHaveCount(0);
+  await expect(page.getByText('How your position changed')).toHaveCount(0);
   await expect(page.getByText('Does anything need attention?')).toBeVisible();
   await expect(
     page.getByTestId('engine-simulation-attention-answer')
@@ -213,6 +214,9 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   await expect(page.getByTestId('dashboard-current-status')).toContainText(
     'What Hedgr notices'
   );
+  await expect(
+    page.getByTestId('dashboard-current-status').locator('img')
+  ).toHaveCount(0);
   await expect(page.getByTestId('dashboard-current-status')).not.toContainText(
     /score|gauge|safe|all clear/i
   );
@@ -485,18 +489,17 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
 
   await page.getByRole('link', { name: 'Return to current position' }).click();
   await expect(page.getByTestId('usd-balance')).toHaveText('$3.00');
-  await expect(page.getByTestId('dashboard-change-evidence')).toHaveAttribute(
-    'data-comparison-state',
-    'change'
+  await expect(page.getByTestId('dashboard-simulation-utilities')).toBeVisible();
+  await expect(page.getByTestId('dashboard-add-simulated-deposit')).toHaveAttribute(
+    'href',
+    '/deposit?journey=class-a-val-002'
   );
-  await expect(page.getByTestId('dashboard-change-evidence')).toContainText(
-    '$5.00'
+  await expect(page.getByTestId('dashboard-view-activity')).toHaveAttribute(
+    'href',
+    '/activity?journey=class-a-val-002'
   );
-  await expect(page.getByTestId('dashboard-change-count')).toHaveText(
-    '2 completed simulated changes'
-  );
-  await expect(page.getByTestId('dashboard-change-delta')).toHaveText('−$2.00');
-  await expect(page.getByTestId('dashboard-change-result')).toHaveText('$3.00');
+  await expect(page.getByTestId('dashboard-change-evidence')).toHaveCount(0);
+  await expect(page.getByText('How your position changed')).toHaveCount(0);
   await expect(page.getByTestId('engine-posture-context')).toHaveText(
     'The simulated expense explains why the current position is $2.00 lower.'
   );
