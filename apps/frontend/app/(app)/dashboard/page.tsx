@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { EngineAllocationBands } from "./EngineAllocationBands";
@@ -57,15 +58,6 @@ function activityTitle(
 }
 
 type SyntheticComparisonState = "empty" | "first-event" | "change";
-
-function signedAmount(tx: TxLifecycle): number {
-  return tx.type === "DEPOSIT" ? tx.amountUSD : -tx.amountUSD;
-}
-
-function formatSignedUSD(value: number): string {
-  const sign = value >= 0 ? "+" : "−";
-  return `${sign}$${Math.abs(value).toFixed(2)}`;
-}
 
 export default function DashboardPage() {
   const { total, available, pending, isLoading, error, currency, refresh } =
@@ -156,19 +148,10 @@ export default function DashboardPage() {
         ? "first-event"
         : "change";
     const lastEvent = completedSyntheticActivity.at(-1);
-    const currentPosition = completedSyntheticActivity.reduce(
-      (sum, tx) => sum + signedAmount(tx),
-      0
-    );
-    const previousPosition = lastEvent
-      ? currentPosition - signedAmount(lastEvent)
-      : 0;
 
     return {
       comparisonState,
       lastEvent,
-      previousPosition: +previousPosition.toFixed(2),
-      currentPosition: +currentPosition.toFixed(2),
     };
   }, [completedSyntheticActivity]);
 
@@ -221,79 +204,47 @@ export default function DashboardPage() {
     </section>
   );
 
-  const syntheticChangeEvidence = (
-    <section
-      className="space-y-3"
-      aria-labelledby="dashboard-change-evidence-heading"
-      data-testid="dashboard-change-evidence"
-      data-comparison-state={syntheticComparison.comparisonState}
+  const syntheticUtilities = (
+    <nav
+      aria-label="Simulation utilities"
+      className="grid grid-cols-2 gap-3"
+      data-testid="dashboard-simulation-utilities"
     >
-      <div className="flex items-start justify-between gap-4">
-        <div>
-        <h2
-          id="dashboard-change-evidence-heading"
-            className="text-sm font-semibold tracking-tight text-hedgr-800"
-        >
-            How your position changed
-        </h2>
-          <p
-            className="mt-0.5 text-xs text-hedgr-500"
-            data-testid="dashboard-change-count"
-          >
-            {completedSyntheticActivity.length === 0
-              ? "No completed simulated changes yet"
-              : `${completedSyntheticActivity.length} completed simulated ${
-                  completedSyntheticActivity.length === 1 ? "change" : "changes"
-                }`}
-          </p>
-        </div>
-
-        {syntheticComparison.comparisonState !== "empty" ? (
-          <Link
-            href={getSyntheticJourneyHref("/activity")}
-            className="inline-flex min-h-11 shrink-0 items-center gap-1 rounded-full px-1 text-sm font-semibold text-hedgr-600 hover:text-hedgr-primary focus:outline-none focus:ring-2 focus:ring-hedgr-500 focus:ring-offset-2"
-            data-testid="dashboard-balance-evidence"
-          >
-            View Activity
-            <span aria-hidden="true">→</span>
-          </Link>
-        ) : null}
-      </div>
-
-      {syntheticComparison.comparisonState === "empty" ? (
-        <p className="max-w-xl text-sm leading-relaxed text-hedgr-dark">
-          Complete the first simulated event to create a starting point.
-        </p>
-      ) : (
-        <div
-          className="flex flex-wrap items-baseline gap-x-2 gap-y-1 border-y border-hedgr-100 py-3 text-sm text-hedgr-dark"
-          aria-label={`Position changed from $${syntheticComparison.previousPosition.toFixed(
-            2
-          )} by ${formatSignedUSD(
-            signedAmount(syntheticComparison.lastEvent!)
-          )} to $${syntheticComparison.currentPosition.toFixed(2)}`}
-        >
-          <span className="font-medium tabular-nums text-hedgr-800">
-            ${syntheticComparison.previousPosition.toFixed(2)} before
-          </span>
-          <span
-            className="font-semibold tabular-nums text-hedgr-800"
-            data-testid="dashboard-change-delta"
-          >
-            {formatSignedUSD(signedAmount(syntheticComparison.lastEvent!))}
-          </span>
-          <span aria-hidden="true" className="text-hedgr-400">
-            =
-          </span>
-          <span className="font-semibold tabular-nums text-hedgr-800">
-            <span data-testid="dashboard-change-result">
-              ${syntheticComparison.currentPosition.toFixed(2)}
-            </span>{" "}
-            now
-          </span>
-        </div>
-      )}
-    </section>
+      <Link
+        href={getSyntheticJourneyHref("/deposit")}
+        className="flex min-h-24 items-center gap-2.5 rounded-2xl border border-hedgr-100 bg-white p-3 text-hedgr-800 shadow-sm transition-colors hover:border-hedgr-200 hover:bg-hedgr-100/20 focus:outline-none focus:ring-2 focus:ring-hedgr-500 focus:ring-offset-2 sm:min-h-28 sm:gap-3 sm:p-5"
+        data-testid="dashboard-add-simulated-deposit"
+      >
+        <Image
+          src="/icons/add-simulated-deposit.png"
+          alt=""
+          aria-hidden="true"
+          width={32}
+          height={32}
+          className="h-9 w-9 shrink-0 object-contain"
+        />
+        <span className="text-sm font-semibold leading-snug sm:text-base">
+          Add simulated deposit
+        </span>
+      </Link>
+      <Link
+        href={getSyntheticJourneyHref("/activity")}
+        className="flex min-h-24 items-center gap-2.5 rounded-2xl border border-hedgr-100 bg-white p-3 text-hedgr-800 shadow-sm transition-colors hover:border-hedgr-200 hover:bg-hedgr-100/20 focus:outline-none focus:ring-2 focus:ring-hedgr-500 focus:ring-offset-2 sm:min-h-28 sm:gap-3 sm:p-5"
+        data-testid="dashboard-view-activity"
+      >
+        <Image
+          src="/icons/view-activity.png"
+          alt=""
+          aria-hidden="true"
+          width={32}
+          height={32}
+          className="h-9 w-9 shrink-0 object-contain"
+        />
+        <span className="whitespace-nowrap text-sm font-semibold leading-snug sm:text-base">
+          View Activity
+        </span>
+      </Link>
+    </nav>
   );
 
   const currentOverview = (
@@ -313,9 +264,7 @@ export default function DashboardPage() {
       {syntheticJourneyActive ? (
         <div className="space-y-4">
           {balanceHero}
-          <div className="border-t border-hedgr-100 pt-4">
-            {syntheticChangeEvidence}
-          </div>
+          {syntheticUtilities}
           <div className="rounded-2xl border border-hedgr-100 bg-hedgr-100/20 p-3.5 shadow-sm sm:p-5">
             <EnginePostureHeader
               engineState={engineState}
