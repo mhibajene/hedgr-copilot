@@ -105,14 +105,14 @@ export function EngineAllocationBands({
   const syntheticPlanning = (
     <div className="space-y-4">
       <dl
-        className="divide-y divide-hedgr-100 border-y border-hedgr-100 sm:grid sm:grid-cols-3 sm:divide-x sm:divide-y-0"
+        className="overflow-hidden rounded-2xl border border-hedgr-100 bg-white divide-y divide-hedgr-100 sm:grid sm:grid-cols-3 sm:divide-x sm:divide-y-0"
         data-testid="engine-allocation-target-roles"
         aria-label="Planning purposes"
       >
         {SYNTHETIC_PURPOSES.map(({ key, label, description }) => (
           <div
             key={key}
-            className="bg-white px-1 py-3 sm:px-4"
+            className="bg-white px-5 py-5 sm:px-4 sm:py-4"
             data-testid={`engine-allocation-role-${key}`}
           >
             <dt className="text-sm font-semibold text-hedgr-800">{label}</dt>
