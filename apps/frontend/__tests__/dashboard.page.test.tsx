@@ -277,7 +277,10 @@ describe("DashboardPage engine trust surface", () => {
         .getByTestId("dashboard-change-evidence")
         .getAttribute("data-comparison-state")
     ).toBe("empty");
-    expect(screen.getByText("Nothing to compare yet")).toBeDefined();
+    expect(screen.getByText("How your position changed")).toBeDefined();
+    expect(screen.getByTestId("dashboard-change-count").textContent).toBe(
+      "No completed simulated changes yet"
+    );
 
     const allocation = screen.getByTestId("engine-allocation-bands");
     expect(allocation.getAttribute("data-presentation")).toBe("collapsed");
@@ -369,8 +372,9 @@ describe("DashboardPage engine trust surface", () => {
 
     const evidence = await screen.findByTestId("dashboard-change-evidence");
     expect(evidence.getAttribute("data-comparison-state")).toBe("first-event");
-    expect(evidence.textContent).toContain(
-      "Your first position is now visible"
+    expect(evidence.textContent).toContain("How your position changed");
+    expect(screen.getByTestId("dashboard-change-count").textContent).toBe(
+      "1 completed simulated change"
     );
     expect(evidence.textContent).toContain("$0.00");
     expect(screen.getByTestId("dashboard-change-delta").textContent).toBe(
@@ -414,9 +418,7 @@ describe("DashboardPage engine trust surface", () => {
       name: "Restart simulated journey",
     });
     const balanceEvidence = screen.getByTestId("dashboard-balance-evidence");
-    expect(balanceEvidence.textContent).toContain(
-      "View the completed-event evidence"
-    );
+    expect(balanceEvidence.textContent).toContain("View Activity");
     expect(balanceEvidence.getAttribute("href")).toBe(
       "/activity?journey=class-a-val-002"
     );
@@ -426,6 +428,9 @@ describe("DashboardPage engine trust surface", () => {
     const evidence = screen.getByTestId("dashboard-change-evidence");
     expect(evidence.getAttribute("data-comparison-state")).toBe("change");
     expect(evidence.textContent).toContain("$5.00");
+    expect(screen.getByTestId("dashboard-change-count").textContent).toBe(
+      "2 completed simulated changes"
+    );
     expect(screen.getByTestId("dashboard-change-delta").textContent).toBe(
       "−$2.00"
     );

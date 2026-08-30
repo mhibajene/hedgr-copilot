@@ -195,7 +195,10 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
     'empty'
   );
   await expect(page.getByTestId('dashboard-change-evidence')).toContainText(
-    'Nothing to compare yet'
+    'How your position changed'
+  );
+  await expect(page.getByTestId('dashboard-change-count')).toHaveText(
+    'No completed simulated changes yet'
   );
   await expect(page.getByText('Does anything need attention?')).toBeVisible();
   await expect(
@@ -405,15 +408,25 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   await expect(page.getByTestId('synthetic-journey-shell')).toContainText(
     'Review the record of each change'
   );
-  await expect(page.getByTestId('activity-synthetic-condition')).toContainText(
-    'Evidence behind the current position'
-  );
+  await expect(page.getByTestId('activity-synthetic-condition')).toHaveCount(0);
   const activityReconciliation = page.getByTestId(
     'activity-balance-reconciliation'
   );
-  await expect(activityReconciliation).toContainText('+$5.00 deposits');
-  await expect(activityReconciliation).toContainText('$2.00 withdrawals');
-  await expect(activityReconciliation).toContainText('$3.00 remaining');
+  await expect(activityReconciliation).toContainText(
+    'Current simulated position'
+  );
+  await expect(activityReconciliation).toContainText(
+    'From completed entries:'
+  );
+  await expect(page.getByTestId('activity-reconciliation-deposits')).toHaveText(
+    '+$5.00'
+  );
+  await expect(
+    page.getByTestId('activity-reconciliation-withdrawals')
+  ).toHaveText('$2.00');
+  await expect(page.getByTestId('activity-reconciliation-remaining')).toHaveText(
+    '$3.00'
+  );
   await expect(page.getByTestId('activity-type-deposit')).toHaveText(
     'Simulated deposit'
   );
@@ -423,6 +436,9 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   await expect(page.getByTestId('activity-delta-deposit')).toHaveText('+$5.00');
   await expect(page.getByTestId('activity-result-deposit')).toHaveText(
     '→ $5.00 resulting'
+  );
+  await expect(page.getByTestId('activity-row-deposit')).not.toContainText(
+    'ZMW'
   );
   await expect(page.getByTestId('activity-delta-withdraw')).toHaveText(
     '-$2.00'
@@ -475,6 +491,9 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   );
   await expect(page.getByTestId('dashboard-change-evidence')).toContainText(
     '$5.00'
+  );
+  await expect(page.getByTestId('dashboard-change-count')).toHaveText(
+    '2 completed simulated changes'
   );
   await expect(page.getByTestId('dashboard-change-delta')).toHaveText('−$2.00');
   await expect(page.getByTestId('dashboard-change-result')).toHaveText('$3.00');
