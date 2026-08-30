@@ -148,6 +148,8 @@ describe("EngineAllocationBands", () => {
 
     const panel = screen.getByTestId("engine-allocation-bands");
     expect(panel.getAttribute("data-presentation")).toBe("collapsed");
+    expect(panel.className).toContain("border-t");
+    expect(panel.className).toContain("bg-white");
     expect(screen.getByText("What you are building toward")).toBeDefined();
     expect(
       screen.getByTestId("engine-allocation-bands-caption").textContent
@@ -164,6 +166,9 @@ describe("EngineAllocationBands", () => {
     expect(roles.textContent).not.toMatch(/\d+%/);
     expect(roles.className).toContain("rounded-2xl");
     expect(roles.className).toContain("overflow-hidden");
+    expect(roles.className).toContain("border-hedgr-100");
+    expect(roles.className).toContain("bg-hedgr-100/20");
+    expect(roles.className).toContain("shadow-sm");
     expect(roles.querySelector("img")).toBeNull();
     expect(roles.querySelector("svg")).toBeNull();
 
@@ -175,6 +180,7 @@ describe("EngineAllocationBands", () => {
       const role = screen.getByTestId(`engine-allocation-role-${purpose}`);
       expect(role.className).toContain("px-5");
       expect(role.className).toContain("py-5");
+      expect(role.className).not.toContain("bg-white");
     }
 
     const valuesDetails = screen.getByTestId(

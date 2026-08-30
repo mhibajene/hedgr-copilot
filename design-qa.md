@@ -246,3 +246,72 @@ final result: passed
 - `apps/frontend/tests-e2e/class-a-val-002.spec.ts` assertions were reconciled to the D-105 state; protected hosted E2E remains the merge gate.
 
 final result: passed
+
+---
+
+# Design QA — Lane V planning-purpose shelf continuity
+
+## Comparison target
+
+- Source shell truth: `/tmp/codex-remote-attachments/01a04306-bb36-71a0-bbdc-0112bf517b50/813D5225-A7C2-4A05-B4D6-BD07F06664AF/1-Photo-1.jpg` (**What Hedgr notices** surface treatment).
+- Source placement truth: `/tmp/codex-remote-attachments/01a04306-bb36-71a0-bbdc-0112bf517b50/813D5225-A7C2-4A05-B4D6-BD07F06664AF/2-Photo-2.jpg` (heading, supporting sentence, grouped purposes, boundary, and continuation remain separate).
+- Browser-rendered implementation: optimized local production build at `http://localhost:3000/dashboard-synthetic-journey`.
+- Mobile implementation screenshot: `/Users/musalwa/.codex/generated_images/01a04306-bb36-71a0-bbdc-0112bf517b50/lane-v-planning-purpose-shelf-continuity-390x844.png`.
+- Desktop implementation screenshot: `/Users/musalwa/.codex/generated_images/01a04306-bb36-71a0-bbdc-0112bf517b50/lane-v-planning-purpose-shelf-continuity-1024x768.png`.
+- Same-input comparison: `/Users/musalwa/.codex/generated_images/01a04306-bb36-71a0-bbdc-0112bf517b50/lane-v-planning-purpose-shelf-continuity-comparison.png`.
+- Source pixels: 1280 × 679 for the shell reference and 1206 × 1280 for the placement reference. Implementation pixels: 375 × 812 from a 390 × 844 CSS viewport at device pixel ratio 1; the in-app browser excludes its 15 px scrollbar. The 1485 × 891 comparison preserves each artifact's aspect ratio and judges the focused surface treatment rather than false 1:1 screen geometry.
+- State: collapsed **View planning percentages** disclosure in the completed governed synthetic journey. No copy, category order, percentage, planning meaning, or interaction changed.
+
+## Full-view comparison evidence
+
+- The approved shell reference and final mobile implementation were combined into one side-by-side comparison input.
+- The pale `hedgr-100/20` surface, `hedgr-100` border, 16 px radius, and restrained `shadow-sm` now apply only to the grouped **Now / Reserve / Growth** shelf.
+- **What you are building toward**, its explanatory sentence, the post-Growth planning boundary, and **View planning percentages** remain on the existing white page treatment outside the shelf.
+- The desktop render preserves the existing three-column contract; mobile preserves the existing stacked three-row contract. Neither viewport shows horizontal overflow.
+
+## Focused-region comparison evidence
+
+- The changed shelf is the focused region. Titles, definitions, dividers, pale fill, border, radius, and shadow remain readable in the combined comparison without a smaller crop.
+- Browser-computed mobile styles confirm `bg-hedgr-100/20`, a `rgb(202, 208, 232)` border, 16 px radius, and the existing `shadow-sm`. The parent section remains white, square, shadow-free, and separated by its original top border.
+
+## Required fidelity surfaces
+
+- Fonts and typography: the existing Plus Jakarta Sans stack, weights, sizes, line heights, wrapping, and category hierarchy remain unchanged. No icon or additional semantic cue was introduced.
+- Spacing and layout rhythm: all heading, caption, row padding, post-shelf boundary spacing, and disclosure spacing remain unchanged. The only visual move is the selected card surface from the whole section to the grouped purpose shelf.
+- Colors and visual tokens: only existing Hedgr classes are used. The shelf now shares the interpretation card's pale indigo surface, cool border, radius, and restrained elevation; the surrounding page remains white.
+- Image quality and asset fidelity: no product image, icon, inline SVG, handcrafted SVG, CSS drawing, emoji, dependency, or generated asset was added.
+- Copy and content: **What you are building toward**, its explanatory sentence, all Now / Reserve / Growth definitions, the planning-purpose boundary, percentages, and disclosure copy are unchanged.
+
+## Accessibility and interaction checks
+
+- The shelf remains a labelled `dl` with `dt` / `dd` relationships and no icon-only meaning.
+- **View planning percentages** retains its native disclosure behavior and the existing 50% / 30% / 20% content.
+- Optimized-production browser diagnostics contained no warnings or errors.
+
+## Responsive evidence
+
+- 390 × 844: three stacked pale rows inside one bordered 16 px shelf; parent heading and boundary remain outside; no horizontal overflow.
+- 1024 × 768: three equal pale columns inside one shelf; parent heading and boundary remain outside; no horizontal overflow.
+
+## Comparison history
+
+### Shelf-continuity pass 1 — blocked
+
+- [P2] The first interpretation applied the pale card shell to the entire **What you are building toward** section, incorrectly pulling the heading, caption, boundary, and percentage control into the tile.
+  - Fix: restored the parent section's existing white divider-led treatment and moved the pale surface, border, radius, and shadow exclusively to the grouped Now / Reserve / Growth shelf.
+  - Earlier evidence: `/Users/musalwa/.codex/generated_images/01a04306-bb36-71a0-bbdc-0112bf517b50/lane-v-planning-card-continuity-comparison.png`.
+  - Post-fix evidence: `/Users/musalwa/.codex/generated_images/01a04306-bb36-71a0-bbdc-0112bf517b50/lane-v-planning-purpose-shelf-continuity-comparison.png`.
+
+### Shelf-continuity pass 2 — passed
+
+- No actionable P0, P1, or P2 visual, responsive, interaction, or accessibility findings remain.
+- No P3 follow-up is required for this bounded surface change.
+
+## Verification
+
+- `pnpm --filter @hedgr/frontend exec vitest run __tests__/engine-allocation-bands.test.tsx __tests__/dashboard.page.test.tsx --reporter=dot` — 19 tests passed.
+- `pnpm --filter @hedgr/frontend build` — passed.
+- `pnpm run validate` — passed; 67 frontend test files / 771 tests passed, with repository typecheck, lint, trust, snapshot, and RAP freshness checks clean.
+- Optimized-production in-app browser checks — passed for mobile rendering, desktop responsive rendering, overflow, and console/page diagnostics.
+
+final result: passed
