@@ -113,7 +113,9 @@ test.describe('Empty and Error States', () => {
       
       // Verify settings page content
       await expect(page.getByRole('heading', { name: 'Settings' })).toBeVisible({ timeout: 10000 });
-      await expect(page.getByText('Trust & Risk')).toBeVisible();
+      await expect(page.getByTestId('settings-trust-information')).toContainText(
+        'No real customer money is held or moved'
+      );
     } else {
       // Skip test if settings link is not in nav (might be dev mode issue)
       console.log('Settings link not visible in nav, skipping detailed checks');

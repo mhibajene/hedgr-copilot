@@ -145,6 +145,7 @@ final result: passed
 - `pnpm --filter @hedgr/frontend lint` — passed.
 - `pnpm --filter @hedgr/frontend build` — passed after the mobile spacing correction.
 - Focused Playwright assertions were updated in `class-a-val-002.spec.ts` and `smoke-pack.spec.ts`; the protected hosted E2E workflow remains the merge gate.
+- D-108 / §240 reconciles the single stale **Trust & Risk** assertion exposed by the first protected run (56 / 57 passed); the unchanged protected workflow must pass on the amended commit before merge.
 
 final result: passed
 
