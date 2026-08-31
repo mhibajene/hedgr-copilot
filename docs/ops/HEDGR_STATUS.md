@@ -70,11 +70,11 @@ Important active constraints:
 
 **Sprint 3** is framed here as **Transition Readiness** (named track above), not as Foundation continuation: governance defines the explicit standard for any later boundary widening; execution architecture remains out of scope until explicitly approved.
 
-**Sequencing authority:** Controlled Parallelism v21 / Internal **D-076** / **§6f.21** names active Lane V parent `CLASS-A-VAL-002` and active Lane E parent `SE-REASON-001`. Internal **D-107** / **§239** activates `CLASS-A-VAL-002-HOME-SETTINGS-001` as the sole active nested Lane V refinement for the bounded Founder-approved Home / Activity / Settings productisation cleanup. Internal **D-106** / **§238** keeps `CLASS-A-VAL-002-VISUAL-001` completed historical authority. Internal **D-098** / **§230** keeps `SE-REASON-001-RETEST-001` as the sole active nested Lane E ticket. Internal **D-100** / **§232** / **§6f.21a** temporarily adds only the execution-neutral support ticket `AGENT-SKILL-PARITY-001`. Participant distribution remains paused pending live-Form verification; existing responses remain directional baseline evidence. D-107 authorizes only the named Home duplicate-action removal, synthetic Home / Settings navigation bridge, consumer Settings cleanup, and corresponding verification. It does not authorize the wider narrative-compression brief, Customer One-Pager publication, Activity information-architecture revision, Now / Reserve / Growth change, engine, target-value, new deposit behaviour, transaction, arithmetic, policy, Form, participant distribution, comprehension claim, financial capability, or cross-lane change. This current statement supersedes later stale wording while preserving every deny-by-default boundary.
+**Sequencing authority:** Controlled Parallelism v21 / Internal **D-076** / **§6f.21** names active Lane V parent `CLASS-A-VAL-002` and active Lane E parent `SE-REASON-001`. Internal **D-107** / **§239** activates `CLASS-A-VAL-002-HOME-SETTINGS-001` as the sole active nested Lane V refinement for the bounded Founder-approved Home / Activity / Settings productisation cleanup; Internal **D-108** / **§240** amends that active ticket only to reconcile the stale Settings trust assertion in `apps/frontend/tests-e2e/empty-error-states.spec.ts`. Internal **D-106** / **§238** keeps `CLASS-A-VAL-002-VISUAL-001` completed historical authority. Internal **D-098** / **§230** keeps `SE-REASON-001-RETEST-001` as the sole active nested Lane E ticket. Internal **D-100** / **§232** / **§6f.21a** temporarily adds only the execution-neutral support ticket `AGENT-SKILL-PARITY-001`. Participant distribution remains paused pending live-Form verification; existing responses remain directional baseline evidence. D-107 authorizes only the named Home duplicate-action removal, synthetic Home / Settings navigation bridge, consumer Settings cleanup, and corresponding verification; D-108 supplies no runtime or product authority. Neither authorizes the wider narrative-compression brief, Customer One-Pager publication, Activity information-architecture revision, Now / Reserve / Growth change, engine, target-value, new deposit behaviour, transaction, arithmetic, policy, Form, participant distribution, comprehension claim, financial capability, or cross-lane change. This current statement supersedes later stale wording while preserving every deny-by-default boundary.
 
 **Current Lane V visual-baseline closeout:** Internal **D-106** / **§238** records verified technical closeout of `CLASS-A-VAL-002-VISUAL-001` and returns it to completed historical nested authority. The merged D-103 / D-104 / D-105 candidate retains the two compact Home utilities, icon-free **What Hedgr notices** treatment, Activity factual-record hierarchy, and grouped Now / Reserve / Growth visual shelf delivered through PRs **#440**, **#442**, **#444**, **#446**, and **#448**. Parent `CLASS-A-VAL-002` remains open with no active nested Lane V refinement. This is technical evidence only, not participant-comprehension evidence. Participant distribution remains paused pending live-Form verification against the canonical instrument. No successor, narrative compression, product-copy revision, new deposit behaviour, route, state, fixture, arithmetic, ledger, event-detail, engine, planning-selection, disclosure, transaction, Form, participant-distribution, or financial-capability change follows. Controlled Parallelism v21, active Lane E `SE-REASON-001-RETEST-001`, and temporary support ticket `AGENT-SKILL-PARITY-001` remain independent and unchanged. `NO CROSS-LANE IMPACT`.
 
-**Current Lane V Home / Settings refinement:** Internal **D-107** / **§239** records explicit Founder approval and activates `CLASS-A-VAL-002-HOME-SETTINGS-001` as one bounded Class A informational / synthetic nested Lane V refinement. Preserve the two compact Home utilities, remove the duplicated lower optional-action block without replacement, change the synthetic persistent destinations from **Home / Activity** to **Home / Settings**, retain Activity as the factual record reached from Home, and simplify Settings into **Account / Preferences / Trust & information** without internal environment diagnostics or invented controls. Parent `CLASS-A-VAL-002` remains open. Participant distribution remains paused. The ticket does not reopen Activity information architecture, Now / Reserve / Growth, the Stability Engine, the frozen narrative sources, the Customer One-Pager publication boundary, the Form, participant evidence, or financial execution. `NO CROSS-LANE IMPACT`.
+**Current Lane V Home / Settings refinement:** Internal **D-107** / **§239** records explicit Founder approval and activates `CLASS-A-VAL-002-HOME-SETTINGS-001` as one bounded Class A informational / synthetic nested Lane V refinement. Preserve the two compact Home utilities, remove the duplicated lower optional-action block without replacement, change the synthetic persistent destinations from **Home / Activity** to **Home / Settings**, retain Activity as the factual record reached from Home, and simplify Settings into **Account / Preferences / Trust & information** without internal environment diagnostics or invented controls. Internal **D-108** / **§240** adds only the existing `apps/frontend/tests-e2e/empty-error-states.spec.ts` to the verification list after the protected workflow exposed its stale **Trust & Risk** assertion; it creates no runtime or product authority. Parent `CLASS-A-VAL-002` remains open. Participant distribution remains paused. The ticket does not reopen Activity information architecture, Now / Reserve / Growth, the Stability Engine, the frozen narrative sources, the Customer One-Pager publication boundary, the Form, participant evidence, or financial execution. `NO CROSS-LANE IMPACT`.
 
 **Completed verification-only amendment:** Internal **D-096** / **§228** authorized only four existing legacy E2E assertion files for protected-workflow reconciliation with D-095; Internal **D-097** / **§229** records full protected-workflow verification and closes the amendment. It created no active nested Lane V refinement and no runtime, product, Form, participant-distribution, lane, concurrency, or financial-capability authority.
 
@@ -4784,7 +4784,7 @@ Current active ticket status:
 
 ---
 
-## 7a. Active execution tickets — Lanes V and E plus bounded adapter support (Controlled Parallelism v21; active Lane V Home / Settings refinement under D-107; temporarily amended by D-100; Lane N completed)
+## 7a. Active execution tickets — Lanes V and E plus bounded adapter support (Controlled Parallelism v21; active Lane V Home / Settings refinement under D-107 and verification-only D-108; temporarily amended by D-100; Lane N completed)
 
 ### Lane V — `CLASS-A-VAL-002`
 
@@ -4814,7 +4814,7 @@ Current active ticket status:
 
 #### Active nested refinement brief — `CLASS-A-VAL-002-HOME-SETTINGS-001`
 
-**Status:** **ACTIVE — FOUNDER-APPROVED BOUNDED NESTED REFINEMENT** (Internal **D-107** / **§239**, 2026-08-31). One Class A informational / synthetic productisation cleanup inside open `CLASS-A-VAL-002`. Parent remains open and participant distribution remains paused.
+**Status:** **ACTIVE — FOUNDER-APPROVED BOUNDED NESTED REFINEMENT** (Internal **D-107** / **§239**, 2026-08-31; verification-only amendment Internal **D-108** / **§240**). One Class A informational / synthetic productisation cleanup inside open `CLASS-A-VAL-002`. Parent remains open and participant distribution remains paused.
 
 **Objective:** Make the existing productised Home, Activity, and Settings surfaces read as one consumer product by removing duplicate Home actions, using persistent navigation for distinct destinations, and replacing internal Settings diagnostics with a small truthful customer hierarchy.
 
@@ -4831,6 +4831,7 @@ Current active ticket status:
 - `apps/frontend/__tests__/synthetic-journey-state.test.ts`
 - `apps/frontend/tests-e2e/class-a-val-002.spec.ts`
 - `apps/frontend/tests-e2e/smoke-pack.spec.ts`
+- `apps/frontend/tests-e2e/empty-error-states.spec.ts` — D-108 / §240 assertion reconciliation only; no coverage removal or runtime change
 - `design-qa.md`
 
 **Required changes:**
@@ -4852,7 +4853,7 @@ Current active ticket status:
 
 **Rollback:** Revert only the named runtime, verification, design-QA, authority-reconciliation, and generated-projection changes to restore the D-106 visual baseline. Preserve all unrelated `.agents/`, `output/`, and `tmp/` worktree drift.
 
-**RAP treatment:** `HEDGR_STATUS.md` and `AGENTS.md` are mandatory authority sources. Commit D-107 / **§239** before deterministic RAP generation. The generated projection must add only `CLASS-A-VAL-002-HOME-SETTINGS-001` beneath active Lane V while preserving active Lane E, temporary D-100 support, participant-distribution pause, and deny-by-default flags. After the authority-bearing squash merge, permanent `main` requires the normal one-file provenance-only RAP rebind. Do not edit the generated RAP manually.
+**RAP treatment:** `HEDGR_STATUS.md` and `AGENTS.md` are mandatory authority sources. Commit D-107 / **§239** and verification-only D-108 / **§240** before deterministic RAP generation. The generated projection must add only `CLASS-A-VAL-002-HOME-SETTINGS-001` beneath active Lane V while preserving active Lane E, temporary D-100 support, participant-distribution pause, and deny-by-default flags. D-108 must not add a ticket or runtime authority. After the authority-bearing squash merge, permanent `main` requires the normal one-file provenance-only RAP rebind. Do not edit the generated RAP manually.
 
 #### Completed nested refinement brief — `CLASS-A-VAL-002-VISUAL-001`
 
@@ -15019,3 +15020,23 @@ These market, legal, operational, provider, and behavioural assumptions remain u
 **RAP treatment:** Commit this D-107 / **§239** authority source and matching `AGENTS.md` override before deterministic RAP generation. Generated projection must remain deny-by-default and include only the new nested Lane V ticket. After squash merge, rebind RAP provenance to permanent `main` in the normal one-file projection PR.
 
 **Rollback:** Revert D-107 / **§239**, the matching **§7** / **§7a** and `AGENTS.md` reconciliation, named implementation / verification changes, and generated RAP projection to restore the D-106 baseline. Preserve unrelated worktree drift.
+
+---
+
+## 240. Verification-only protected-workflow amendment — `CLASS-A-VAL-002-HOME-SETTINGS-001`
+
+**Status:** **ACTIVE IN-PLACE AMENDMENT — ASSERTION RECONCILIATION ONLY**
+
+**Decision ID:** Internal **D-108**
+
+**Date:** 2026-08-31
+
+**Trigger evidence:** Protected E2E run `33393116150` on PR **#452** passed 56 of 57 tests and failed only because `apps/frontend/tests-e2e/empty-error-states.spec.ts` still required the superseded **Trust & Risk** Settings heading. The authorized D-107 Settings contract now requires **Account / Preferences / Trust & information** and explicitly removes the prior internal diagnostics surface.
+
+**Amendment:** Add only `apps/frontend/tests-e2e/empty-error-states.spec.ts` to the D-107 named verification files. Reconcile its stale Settings assertion to the approved customer-facing hierarchy and materially visible simulation boundary. Preserve the test's navigation and page-availability coverage.
+
+**No widened authority:** D-108 authorizes no runtime, product, copy, hierarchy, route, state, fixture, arithmetic, Activity, engine, Form, distribution, narrative, Customer One-Pager, `/orientation`, Lane E, Lane N, or financial-capability change. It does not add a ticket, lane, concurrency grant, or closeout authority. All D-107 exclusions and rollback conditions remain binding. `NO CROSS-LANE IMPACT`.
+
+**RAP treatment:** Commit D-108 / **§240** and the matching `AGENTS.md` reconciliation before deterministic RAP generation. The projection must remain the same active-ticket shape and reflect D-108 only as a verification boundary; do not edit it manually.
+
+**Rollback:** Revert the single legacy E2E assertion reconciliation plus D-108 / **§240**, its `AGENTS.md` reconciliation, and generated projection update. Preserve D-107 runtime and unrelated worktree drift.
