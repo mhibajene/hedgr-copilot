@@ -168,9 +168,7 @@ test("4 · dashboard shows human-readable stability context after login", async 
   await expect(
     page.getByTestId("engine-allocation-band-liquidityTargetPct")
   ).toContainText(/Reserve\s*30%/);
-  await expect(page.getByTestId("dashboard-optional-actions")).toContainText(
-    "Do nothing"
-  );
+  await expect(page.getByTestId("dashboard-optional-actions")).toHaveCount(0);
 
   const allocationExecutionDriftTerms = [
     /\bexecuted allocation\b/i,
@@ -185,15 +183,29 @@ test("4 · dashboard shows human-readable stability context after login", async 
   }
 });
 
-test("5 · settings page displays trust section", async ({ page }) => {
+test("5 · settings page keeps customer information and trust boundaries legible", async ({
+  page,
+}) => {
   await page.goto("/");
   await clearStorage(page);
   await loginMock(page);
 
   await page.goto("/settings");
   await expect(page.getByRole("heading", { name: "Settings" })).toBeVisible();
-  await expect(page.getByText("Trust & Risk")).toBeVisible();
-  await expect(page.getByText("Environment Configuration")).toBeVisible();
+  await expect(page.getByTestId("settings-account")).toContainText(
+    "Verification status"
+  );
+  await expect(page.getByTestId("settings-preferences")).toContainText(
+    "No preferences available yet"
+  );
+  await expect(page.getByTestId("settings-trust-information")).toContainText(
+    "No real customer money is held or moved"
+  );
+  await expect(page.getByText("Environment Configuration")).toHaveCount(0);
+  await expect(page.getByText(/Auth: mock|DeFi: mock|FX: fixed/)).toHaveCount(
+    0
+  );
+  await expect(page.getByText(/unlock all features/i)).toHaveCount(0);
 });
 
 test("6 · deposit page is functional", async ({ page }) => {
@@ -207,7 +219,7 @@ test("6 · deposit page is functional", async ({ page }) => {
   await expect(page.getByRole("button", { name: "Confirm" })).toBeVisible();
 });
 
-test("7 · synthetic primary nav stays bounded to position and evidence", async ({
+test("7 · synthetic primary nav stays bounded to Home and Settings", async ({
   page,
 }) => {
   await page.goto("/");
@@ -223,10 +235,10 @@ test("7 · synthetic primary nav stays bounded to position and evidence", async 
     primaryNav.getByRole("link", { name: "Home", exact: true })
   ).toHaveAttribute("href", "/dashboard-synthetic-journey");
   await expect(
-    primaryNav.getByRole("link", { name: "Activity", exact: true })
-  ).toHaveAttribute("href", "/activity?journey=class-a-val-002");
-  await expect(
     primaryNav.getByRole("link", { name: "Settings", exact: true })
+  ).toHaveAttribute("href", "/settings?journey=class-a-val-002");
+  await expect(
+    primaryNav.getByRole("link", { name: "Activity", exact: true })
   ).toHaveCount(0);
   await expect(
     primaryNav.getByRole("link", { name: "Copilot", exact: true })

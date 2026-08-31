@@ -315,61 +315,6 @@ export default function DashboardPage() {
     </section>
   );
 
-  const syntheticActions = syntheticJourneyActive ? (
-    <section
-      className="space-y-4 border-t border-hedgr-100 bg-white pt-5 sm:pt-6"
-      aria-labelledby="dashboard-optional-actions-heading"
-      data-testid="dashboard-optional-actions"
-    >
-      <div className="space-y-1">
-        <p className="text-xs font-semibold uppercase tracking-[0.12em] text-hedgr-500">
-          Optional next step
-        </p>
-        <h2
-          id="dashboard-optional-actions-heading"
-          className="text-base font-semibold tracking-tight text-hedgr-800"
-        >
-          What happens next is your decision
-        </h2>
-      </div>
-      <div
-        className="grid gap-3 sm:grid-cols-2"
-        data-testid={
-          syntheticComparison.comparisonState === "empty"
-            ? "dashboard-empty-state"
-            : undefined
-        }
-      >
-        <Link
-          href={
-            syntheticComparison.comparisonState === "empty"
-              ? getSyntheticJourneyHref("/deposit")
-              : getSyntheticJourneyHref("/activity")
-          }
-          className="rounded-2xl bg-hedgr-primary p-4 text-white shadow-sm transition-colors hover:bg-hedgr-600 focus:outline-none focus:ring-2 focus:ring-hedgr-500 focus:ring-offset-2"
-        >
-          <span className="block text-sm font-semibold">
-            {syntheticComparison.comparisonState === "empty"
-              ? "Start first simulated event"
-              : "Review what changed"}
-          </span>
-          <span className="mt-1 block text-sm leading-relaxed text-hedgr-100">
-            {syntheticComparison.comparisonState === "empty"
-              ? "Create a starting point when you are ready."
-              : "See every completed event and its resulting position."}
-          </span>
-        </Link>
-        <div className="rounded-2xl border border-hedgr-100 bg-hedgr-100/20 p-4">
-          <h3 className="text-sm font-semibold text-hedgr-800">Do nothing</h3>
-          <p className="mt-1 text-sm leading-relaxed text-hedgr-dark">
-            Stay with the current position. No action is required by this
-            simulation.
-          </p>
-        </div>
-      </div>
-    </section>
-  ) : null;
-
   const disclosureSection = (
     <details
       className="border-y border-hedgr-100 bg-white py-2"
@@ -490,8 +435,6 @@ export default function DashboardPage() {
             collapsed={syntheticJourneyActive}
           />
         ) : null}
-
-        {syntheticActions}
 
         {syntheticJourneyActive && hasSyntheticFixtureState && (
           <section

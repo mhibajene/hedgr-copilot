@@ -28,7 +28,12 @@ type NavLink = {
   shipped?: boolean;
 };
 
-type SyntheticJourneyPath = Parameters<typeof getSyntheticJourneyHref>[0];
+type SyntheticJourneyPath =
+  | '/dashboard'
+  | '/deposit'
+  | '/withdraw'
+  | '/activity';
+type SyntheticNavigationPath = SyntheticJourneyPath | '/settings';
 
 const SYNTHETIC_JOURNEY_ORIENTATION: Record<
   SyntheticJourneyPath,
@@ -60,12 +65,29 @@ const SYNTHETIC_JOURNEY_ORIENTATION: Record<
   },
 };
 
-function isSyntheticJourneyPath(href: string): href is SyntheticJourneyPath {
-  return ['/dashboard', '/deposit', '/withdraw', '/activity'].includes(href);
+function isSyntheticNavigationPath(
+  href: string
+): href is SyntheticNavigationPath {
+  return [
+    '/dashboard',
+    '/deposit',
+    '/withdraw',
+    '/activity',
+    '/settings',
+  ].includes(href);
+}
+
+function isSyntheticJourneyPath(
+  href: string | null
+): href is SyntheticJourneyPath {
+  return (
+    href !== null &&
+    ['/dashboard', '/deposit', '/withdraw', '/activity'].includes(href)
+  );
 }
 
 function navHref(href: string, syntheticJourneyActive: boolean): string {
-  return syntheticJourneyActive && isSyntheticJourneyPath(href)
+  return syntheticJourneyActive && isSyntheticNavigationPath(href)
     ? getSyntheticJourneyHref(href)
     : href;
 }
@@ -86,6 +108,9 @@ export function AppLayoutClient({ children }: { children: React.ReactNode }) {
         CLASS_A_VAL_002_JOURNEY_VALUE);
   const activePathname =
     pathname === CLASS_A_VAL_002_DASHBOARD_PATH ? '/dashboard' : pathname;
+  const settingsActive = activePathname === '/settings';
+  const collapsedSyntheticMobileNav =
+    explicitSyntheticJourney && !settingsActive;
 
   const journeySteps = [
     { href: '/dashboard' as const, label: 'Position' },
@@ -141,7 +166,7 @@ export function AppLayoutClient({ children }: { children: React.ReactNode }) {
 
   const syntheticNavLinks: NavLink[] = [
     { href: '/dashboard', label: 'Home' },
-    { href: '/activity', label: 'Activity' },
+    { href: '/settings', label: 'Settings' },
   ];
 
   // Hide unshipped links, and only show gated links once policy is ready.
@@ -161,13 +186,13 @@ export function AppLayoutClient({ children }: { children: React.ReactNode }) {
       }`}
     >
       <TrustDisclosureBanner
-        dismissible={!syntheticJourneyActive}
-        consolidateTechnicalDetails={syntheticJourneyActive}
+        dismissible={!syntheticJourneyActive && !settingsActive}
+        consolidateTechnicalDetails={syntheticJourneyActive || settingsActive}
       />
       <nav
         data-testid="app-nav"
         className={`relative z-30 bg-white ${
-          explicitSyntheticJourney
+          collapsedSyntheticMobileNav
             ? 'border-b-0 md:border-b md:border-hedgr-100'
             : 'border-b border-hedgr-100'
         }`}
@@ -175,13 +200,13 @@ export function AppLayoutClient({ children }: { children: React.ReactNode }) {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div
             className={`flex justify-between ${
-              explicitSyntheticJourney ? 'h-0 md:h-16' : 'h-16'
+              collapsedSyntheticMobileNav ? 'h-0 md:h-16' : 'h-16'
             }`}
           >
             {/* Mobile hamburger button */}
             <div
               className={`md:hidden ${
-                explicitSyntheticJourney
+                collapsedSyntheticMobileNav
                   ? 'absolute left-4 top-2 flex items-center'
                   : 'flex items-center'
               }`}
@@ -295,7 +320,7 @@ export function AppLayoutClient({ children }: { children: React.ReactNode }) {
           </div>
         </nav>
       ) : null}
-      {syntheticJourneyActive ? (
+      {syntheticJourneyActive && isSyntheticJourneyPath(activePathname) ? (
         <section
           aria-labelledby="synthetic-journey-heading"
           className="border-b border-hedgr-100 bg-white"
