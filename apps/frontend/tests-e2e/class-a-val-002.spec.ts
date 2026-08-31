@@ -146,10 +146,10 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
     primaryNav.getByRole('link', { name: 'Home', exact: true })
   ).toHaveAttribute('href', '/dashboard-synthetic-journey');
   await expect(
-    primaryNav.getByRole('link', { name: 'Activity', exact: true })
-  ).toHaveAttribute('href', '/activity?journey=class-a-val-002');
-  await expect(
     primaryNav.getByRole('link', { name: 'Settings', exact: true })
+  ).toHaveAttribute('href', '/settings?journey=class-a-val-002');
+  await expect(
+    primaryNav.getByRole('link', { name: 'Activity', exact: true })
   ).toHaveCount(0);
   await expect(
     primaryNav.getByRole('link', { name: 'Copilot', exact: true })
@@ -160,6 +160,30 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   await expect(
     primaryNav.getByRole('link', { name: 'Withdraw', exact: true })
   ).toHaveCount(0);
+  await primaryNav.getByRole('link', { name: 'Settings', exact: true }).click();
+  await expect(page).toHaveURL(/\/settings\?journey=class-a-val-002/);
+  await expect(page.getByTestId('settings-account')).toContainText(
+    'Verification status'
+  );
+  await expect(page.getByTestId('settings-preferences')).toContainText(
+    'No preferences available yet'
+  );
+  await expect(page.getByTestId('settings-trust-information')).toContainText(
+    'No real customer money is held or moved'
+  );
+  await expect(page.getByText('Environment Configuration')).toHaveCount(0);
+  await expect(page.getByText(/Auth: mock|DeFi: mock|FX: fixed/)).toHaveCount(
+    0
+  );
+  await expect(page.getByText(/unlock all features/i)).toHaveCount(0);
+  await expect(page.getByTestId('synthetic-journey-shell')).toHaveCount(0);
+  const settingsNav = page.getByTestId('nav-links');
+  await expect(
+    settingsNav.getByRole('link', { name: 'Home', exact: true })
+  ).toHaveAttribute('href', '/dashboard-synthetic-journey');
+  await settingsNav.getByRole('link', { name: 'Home', exact: true }).click();
+  await expect(page).toHaveURL(/\/dashboard-synthetic-journey/);
+  await expect(page.getByTestId('synthetic-journey-shell')).toBeVisible();
   const initialJourneyCopy = (await journeyShell.textContent()) ?? '';
   expect(initialJourneyCopy).not.toMatch(
     /Financial Stability Companion|Activity explains|fixture|informational posture|settlement/i
@@ -227,17 +251,8 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   );
   await expect(stabilityGuidance).toContainText('What you are building toward');
   await expect(stabilityGuidance).toContainText('not money set aside');
-  const initialDashboardOrder = await page
-    .locator(
-      '[data-testid="engine-allocation-bands"], [data-testid="dashboard-empty-state"]'
-    )
-    .evaluateAll((nodes) =>
-      nodes.map((node) => node.getAttribute('data-testid'))
-    );
-  expect(initialDashboardOrder).toEqual([
-    'engine-allocation-bands',
-    'dashboard-empty-state',
-  ]);
+  await expect(page.getByTestId('engine-allocation-bands')).toBeVisible();
+  await expect(page.getByTestId('dashboard-optional-actions')).toHaveCount(0);
   const valuesDetails = page.getByTestId('engine-allocation-values-details');
   const targetRoles = page.getByTestId('engine-allocation-target-roles');
   await expect(targetRoles).toBeVisible();
@@ -273,9 +288,7 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   await expect(page.getByTestId('engine-allocation-boundary')).toContainText(
     'do not divide or move simulated money'
   );
-  await expect(page.getByTestId('dashboard-optional-actions')).toContainText(
-    'Do nothing'
-  );
+  await expect(page.getByTestId('dashboard-optional-actions')).toHaveCount(0);
   await expect(
     page.getByTestId('engine-stability-review-snapshot')
   ).toHaveCount(0);
@@ -298,7 +311,7 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
     /digital assets|afford to lose|insured by|government agency/i
   );
 
-  await page.getByRole('link', { name: /Start first simulated event/ }).click();
+  await page.getByTestId('dashboard-add-simulated-deposit').click();
   await expect(page).toHaveURL(/\/deposit\?journey=class-a-val-002/);
   await expect(page.getByTestId('synthetic-journey-current-step')).toHaveText(
     '2First event'
@@ -503,9 +516,7 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   await expect(page.getByTestId('engine-posture-context')).toHaveText(
     'The simulated expense explains why the current position is $2.00 lower.'
   );
-  await expect(
-    page.getByRole('link', { name: /Review what changed/ })
-  ).toHaveAttribute('href', '/activity?journey=class-a-val-002');
+  await expect(page.getByTestId('dashboard-optional-actions')).toHaveCount(0);
 
   const restartJourney = page.getByRole('button', {
     name: 'Restart simulated journey',
@@ -521,13 +532,11 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
 
   await expect(page.getByTestId('usd-balance')).toHaveText('$0.00');
   await expect(
-    page.getByRole('link', { name: /Start first simulated event/ })
+    page.getByTestId('dashboard-add-simulated-deposit')
   ).toBeVisible();
-  await expect(
-    page.getByRole('link', { name: /Review what changed/ })
-  ).toHaveCount(0);
+  await expect(page.getByTestId('dashboard-optional-actions')).toHaveCount(0);
 
-  await page.getByRole('link', { name: /Start first simulated event/ }).click();
+  await page.getByTestId('dashboard-add-simulated-deposit').click();
   await page.getByTestId('deposit-amount').fill('100');
   await page.getByRole('button', { name: 'Confirm' }).click();
   await expect(page.getByTestId('deposit-confirmation-region')).toBeVisible({
@@ -586,7 +595,7 @@ test('mobile keeps the persistent boundary and current research step visible', a
     '1Position'
   );
   await expect(
-    page.getByRole('link', { name: /Start first simulated event/ })
+    page.getByTestId('dashboard-add-simulated-deposit')
   ).toBeVisible();
 
   const visiblePageMetrics = await page.evaluate(() => ({
@@ -614,7 +623,7 @@ test('mobile keeps the persistent boundary and current research step visible', a
   await expect(mobileNav).toBeVisible();
   for (const [label, href] of [
     ['Home', '/dashboard-synthetic-journey'],
-    ['Activity', '/activity?journey=class-a-val-002'],
+    ['Settings', '/settings?journey=class-a-val-002'],
   ]) {
     const navLink = mobileNav.getByRole('link', { name: label, exact: true });
     await expect(navLink).toBeVisible();
@@ -627,7 +636,7 @@ test('mobile keeps the persistent boundary and current research step visible', a
     mobileNav.getByRole('link', { name: 'Withdraw', exact: true })
   ).toHaveCount(0);
   await expect(
-    mobileNav.getByRole('link', { name: 'Settings', exact: true })
+    mobileNav.getByRole('link', { name: 'Activity', exact: true })
   ).toHaveCount(0);
   await expect(
     mobileNav.getByRole('link', { name: 'Copilot', exact: true })

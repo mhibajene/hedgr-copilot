@@ -196,7 +196,7 @@ describe("DashboardPage engine trust surface", () => {
     expect(
       (
         await screen.findByRole("link", {
-          name: /Start first simulated event/,
+          name: /Add simulated deposit/,
         })
       ).getAttribute("href")
     ).toBe("/deposit?journey=class-a-val-002");
@@ -226,7 +226,7 @@ describe("DashboardPage engine trust surface", () => {
     expect(
       (
         await screen.findByRole("link", {
-          name: /Start first simulated event/,
+          name: /Add simulated deposit/,
         })
       ).getAttribute("href")
     ).toBe("/deposit?journey=class-a-val-002");
@@ -294,15 +294,9 @@ describe("DashboardPage engine trust surface", () => {
     expect(allocation.textContent).toContain("Reserve");
     expect(allocation.textContent).toContain("Growth");
     expect(allocation.textContent).toContain("not separate balances");
-    const optionalAction = screen.getByTestId("dashboard-empty-state");
-    expect(
-      allocation.compareDocumentPosition(optionalAction) &
-        Node.DOCUMENT_POSITION_FOLLOWING
-    ).toBeTruthy();
-    expect(optionalAction.textContent).toContain("Do nothing");
-    expect(
-      screen.getByTestId("dashboard-optional-actions").textContent
-    ).toContain("What happens next is your decision");
+    expect(screen.queryByTestId("dashboard-optional-actions")).toBeNull();
+    expect(screen.queryByText("What happens next is your decision")).toBeNull();
+    expect(screen.queryByText("Do nothing")).toBeNull();
     expect(screen.getByRole("main").textContent).not.toContain("—");
     expect(dashboardStateMocks.policyContexts).toContain("synthetic-research");
     const valuesDetails = screen.getByTestId(
@@ -442,10 +436,8 @@ describe("DashboardPage engine trust surface", () => {
       screen.getByTestId("engine-simulation-attention-answer").textContent
     ).toBe("No other change stands out in the information shown.");
     expect(
-      screen
-        .getByRole("link", { name: /Review what changed/ })
-        .getAttribute("href")
-    ).toBe("/activity?journey=class-a-val-002");
+      screen.queryByRole("link", { name: /Review what changed/ })
+    ).toBeNull();
 
     fireEvent.click(restartButton);
     expect(dashboardStateMocks.clearLedger).not.toHaveBeenCalled();

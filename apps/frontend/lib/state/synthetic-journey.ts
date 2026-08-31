@@ -83,7 +83,7 @@ export function getSyntheticJourneyRate(quote: string): number {
 }
 
 export function getSyntheticJourneyHref(
-  pathname: '/dashboard' | '/deposit' | '/withdraw' | '/activity',
+  pathname: '/dashboard' | '/deposit' | '/withdraw' | '/activity' | '/settings',
   options: { unavailableData?: boolean } = {},
 ): string {
   if (pathname === '/dashboard' && !options.unavailableData) {

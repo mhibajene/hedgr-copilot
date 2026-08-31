@@ -113,6 +113,43 @@ final result: passed
 
 ---
 
+# Design QA — D-107 Home / Settings productisation refinement
+
+## Comparison target
+
+- Browser-rendered implementation: optimized local production build at `http://localhost:3001/dashboard-synthetic-journey`.
+- Mobile evidence: `/var/folders/sk/xwxpjmbj4cn155yxj_2gcbcc0000gn/T/hedgr-d107-qa-9Bsxdl/home-mobile.png`, `/var/folders/sk/xwxpjmbj4cn155yxj_2gcbcc0000gn/T/hedgr-d107-qa-9Bsxdl/settings-mobile-fixed.png`, and `/var/folders/sk/xwxpjmbj4cn155yxj_2gcbcc0000gn/T/hedgr-d107-qa-9Bsxdl/activity-mobile.png` at 390 × 844 CSS px.
+- Desktop evidence: `/var/folders/sk/xwxpjmbj4cn155yxj_2gcbcc0000gn/T/hedgr-d107-qa-9Bsxdl/home-desktop.png` and `/var/folders/sk/xwxpjmbj4cn155yxj_2gcbcc0000gn/T/hedgr-d107-qa-9Bsxdl/settings-desktop.png` at 1280 × 900 CSS px.
+- Comparative Mobbin references: N26 balance-adjacent actions (`https://mobbin.com/screens/52ecfd8a-5c0a-4a0d-bf1f-518ee3b88767`), Ubank lightweight Settings groups (`https://mobbin.com/screens/3eedfefa-9011-4fc4-872b-469e6856ea66`), and Airwallex Activity as a separate factual record (`https://mobbin.com/screens/c9f168e7-3387-457f-8720-db01db225722`). These informed hierarchy only; Hedgr's existing tokens and approved synthetic semantics remain controlling.
+
+## Findings
+
+- Home retains the two balance-adjacent utilities, **Add simulated deposit** and **View Activity**, and removes the duplicated **Optional next step** block without introducing a replacement CTA.
+- Persistent synthetic navigation now reads **Home / Settings**. Activity remains reachable from **View Activity** and its information architecture, filters, records, arithmetic, and detail behavior remain unchanged.
+- Settings now presents only **Account**, intentionally sparse **Preferences**, and **Trust & information**. Environment diagnostics, mock-mode explanations, and unsupported profile-gating language are absent.
+- The simulation boundary remains materially visible in the persistent disclosure and the Settings trust card. Settings does not inherit the journey-step shell or imply a live capability.
+
+## Responsive and interaction evidence
+
+- 390 × 844: Home utilities are equal 96 px touch targets; Home and Settings bottom-navigation links are equal 64 px touch targets; no horizontal overflow was found.
+- 1280 × 900: Home utilities are equal 112 px targets; Home / Settings remains the only primary navigation pair; no horizontal overflow was found.
+- Home → Settings preserves `?journey=class-a-val-002`; Settings → Home returns to the human-readable synthetic route; Home → View Activity opens the existing synthetic Activity record.
+- The initial mobile Settings render exposed a [P2] overlap between the collapsed synthetic menu control and the Settings heading. The route-specific navigation spacing was corrected and the post-fix mobile render passed.
+- No actionable P0, P1, or P2 visual, responsive, interaction, or accessibility findings remain within D-107 scope.
+
+## Verification
+
+- `pnpm run validate` — passed, including trust, RAP, Bridge snapshot, test, typecheck, and lint gates.
+- Frontend Vitest suite — 67 files / 771 tests passed.
+- `pnpm --filter @hedgr/frontend typecheck` — passed.
+- `pnpm --filter @hedgr/frontend lint` — passed.
+- `pnpm --filter @hedgr/frontend build` — passed after the mobile spacing correction.
+- Focused Playwright assertions were updated in `class-a-val-002.spec.ts` and `smoke-pack.spec.ts`; the protected hosted E2E workflow remains the merge gate.
+
+final result: passed
+
+---
+
 # Design QA — Lane V no-icon grouped planning shelf
 
 ## Comparison target

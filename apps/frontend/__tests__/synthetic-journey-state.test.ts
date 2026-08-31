@@ -76,6 +76,9 @@ describe('CLASS-A-VAL-002 synthetic journey state', () => {
     expect(getSyntheticJourneyHref('/withdraw')).toBe(
       '/withdraw?journey=class-a-val-002',
     );
+    expect(getSyntheticJourneyHref('/settings')).toBe(
+      '/settings?journey=class-a-val-002',
+    );
     expect(
       getSyntheticJourneyHref('/deposit', { unavailableData: true }),
     ).toBe('/deposit?journey=class-a-val-002&scenario=unavailable-data');
