@@ -62,7 +62,7 @@ test('synthetic Trust navigation keeps the research boundary intact', async ({
   ).toHaveCount(0);
 });
 
-test('retired prototype and DeFi API routes return not found', async ({
+test('retired prototype and API routes return not found', async ({
   request,
 }) => {
   const retiredPaths = [
@@ -70,6 +70,7 @@ test('retired prototype and DeFi API routes return not found', async ({
     '/prototype/retail-dashboard',
     '/prototype/synthetic-withdrawal',
     '/api/defi',
+    '/api/balance',
   ];
 
   for (const path of retiredPaths) {
