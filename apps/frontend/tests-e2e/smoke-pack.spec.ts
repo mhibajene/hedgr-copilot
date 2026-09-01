@@ -206,6 +206,37 @@ test("5 · settings page keeps customer information and trust boundaries legible
     0
   );
   await expect(page.getByText(/unlock all features/i)).toHaveCount(0);
+
+  const aboutHedgrLink = page.getByRole("link", {
+    name: "About Hedgr",
+    exact: true,
+  });
+  await expect(aboutHedgrLink).toHaveAttribute("href", "/settings/about");
+  await aboutHedgrLink.click();
+  await expect(page).toHaveURL(/\/settings\/about$/);
+
+  const aboutHedgr = page.getByTestId("about-hedgr");
+  await expect(
+    aboutHedgr.getByRole("heading", { level: 1, name: "About Hedgr" })
+  ).toBeVisible();
+  await expect(aboutHedgr.getByRole("heading", { level: 1 })).toHaveCount(1);
+  await expect(aboutHedgr.getByRole("heading", { level: 2 })).toHaveText([
+    "Why Hedgr exists",
+    "What we're building",
+    "Where we are today",
+  ]);
+  await expect(aboutHedgr.locator("section")).toHaveCount(3);
+  await expect(aboutHedgr).toContainText(
+    "When the currency you rely on is unpredictable, managing money gets harder."
+  );
+  await expect(aboutHedgr).toContainText(
+    "We're starting with the Stability Wallet — a simple place to understand your financial position and the things that may affect it."
+  );
+  await expect(aboutHedgr).toContainText(
+    "The experience available today uses simulated information. It does not move real money, open financial accounts or provide financial advice."
+  );
+  await expect(aboutHedgr.getByRole("button")).toHaveCount(0);
+  await expect(aboutHedgr.getByRole("link")).toHaveCount(0);
 });
 
 test("6 · deposit page is functional", async ({ page }) => {

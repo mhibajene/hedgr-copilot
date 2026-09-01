@@ -1,4 +1,9 @@
 import Link from 'next/link';
+import {
+  CLASS_A_VAL_002_JOURNEY_PARAM,
+  CLASS_A_VAL_002_JOURNEY_VALUE,
+} from '@/lib/state/synthetic-journey';
+import { ABOUT_HEDGR_PATH } from '@/lib/narrative/about-hedgr';
 
 const accountRows = [
   { label: 'Email', value: 'user@example.com' },
@@ -6,7 +11,17 @@ const accountRows = [
   { label: 'Verification status', value: 'Not verified' },
 ];
 
-export default function SettingsPage() {
+type SettingsPageProps = {
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+};
+
+export default async function SettingsPage({ searchParams }: SettingsPageProps) {
+  const resolvedSearchParams = await searchParams;
+  const journey = resolvedSearchParams[CLASS_A_VAL_002_JOURNEY_PARAM];
+  const syntheticResearchSettings = Array.isArray(journey)
+    ? journey.includes(CLASS_A_VAL_002_JOURNEY_VALUE)
+    : journey === CLASS_A_VAL_002_JOURNEY_VALUE;
+
   return (
     <main className="mx-auto max-w-2xl space-y-7 px-6 pb-28 pt-6 sm:p-8">
       <h1 className="text-3xl font-bold tracking-tight text-hedgr-800 sm:text-4xl">
@@ -71,6 +86,17 @@ export default function SettingsPage() {
             Learn more about this simulation
           </Link>
         </div>
+        {!syntheticResearchSettings ? (
+          <div className="border-y border-hedgr-100 py-2">
+            <Link
+              href={ABOUT_HEDGR_PATH}
+              data-testid="settings-about-hedgr"
+              className="inline-flex min-h-11 items-center text-sm font-semibold text-hedgr-600 underline decoration-hedgr-200 underline-offset-4 hover:text-hedgr-primary"
+            >
+              About Hedgr
+            </Link>
+          </div>
+        ) : null}
       </section>
     </main>
   );

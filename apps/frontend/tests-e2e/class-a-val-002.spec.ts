@@ -86,6 +86,21 @@ test.afterEach(async ({ page }) => {
   expect(browserErrors.get(page) ?? []).toEqual([]);
 });
 
+test('synthetic Settings withholds About Hedgr before unaided evidence', async ({
+  page,
+}) => {
+  await clearStorage(page);
+  await login(page);
+  await page.goto('/settings?journey=class-a-val-002');
+
+  await expect(
+    page.getByRole('link', { name: 'About Hedgr', exact: true })
+  ).toHaveCount(0);
+  await expect(page.getByText('Why Hedgr exists', { exact: true })).toHaveCount(
+    0
+  );
+});
+
 test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity with consistent simulated records', async ({
   page,
 }) => {
