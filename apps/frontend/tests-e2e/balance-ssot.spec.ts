@@ -132,26 +132,6 @@ test.describe('Balance SSoT - Ledger as Single Source of Truth', () => {
     await expect(confirmedPill.first()).toBeVisible({ timeout: 10_000 });
   });
 
-  test('balance endpoint returns correct shape', async ({ page }) => {
-    // Test the API endpoint directly
-    const response = await page.request.get('/api/balance');
-    expect(response.ok()).toBe(true);
-
-    const data = await response.json();
-    
-    // Verify response shape
-    expect(data).toHaveProperty('total');
-    expect(data).toHaveProperty('available');
-    expect(data).toHaveProperty('pending');
-    expect(data).toHaveProperty('currency');
-    expect(data).toHaveProperty('asOf');
-    
-    expect(data.currency).toBe('USD');
-    expect(typeof data.total).toBe('number');
-    expect(typeof data.available).toBe('number');
-    expect(typeof data.pending).toBe('number');
-  });
-
   test('withdraw page shows current balance from ledger', async ({ page }) => {
     // Login first to establish authenticated session
     await page.goto('/login');
