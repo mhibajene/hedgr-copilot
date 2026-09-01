@@ -22,6 +22,11 @@ describe('Trust information', () => {
     expect(screen.getByRole('link', { name: 'Learn more' }).getAttribute('href')).toBe(
       '/settings/trust'
     );
+    expect(screen.getByText('Simulation · no real money')).toBeTruthy();
+    expect(screen.getByText('How this simulation works')).toBeTruthy();
+    expect(screen.queryByText(/Auth:\s*mock/i)).toBeNull();
+    expect(screen.queryByText(/DeFi:\s*mock/i)).toBeNull();
+    expect(screen.queryByText(/FX:\s*fixed/i)).toBeNull();
   });
 
   test('renders only current simulation and safety truths', async () => {

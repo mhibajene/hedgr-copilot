@@ -112,11 +112,13 @@ test("4 · dashboard shows human-readable stability context after login", async 
   );
   await expect(page.getByTestId("engine-posture-badge")).toHaveCount(0);
 
+  const education = page.getByTestId("dashboard-education");
+  await expect(education).not.toHaveAttribute("open", "");
   await expect(
     page.getByTestId("engine-stability-review-snapshot")
-  ).toHaveCount(0);
-  await expect(page.getByText("Simulation date")).toHaveCount(0);
-  await expect(page.getByText("Last viewed locally")).toHaveCount(0);
+  ).toBeHidden();
+  await expect(page.getByText("Simulation date")).toBeHidden();
+  await expect(page.getByText("Last viewed locally")).toBeHidden();
 
   const allocationBands = page.getByTestId("engine-allocation-bands");
   await expect(allocationBands).toBeVisible({ timeout: 10_000 });

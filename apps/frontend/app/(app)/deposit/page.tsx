@@ -10,6 +10,7 @@ import { useBalance } from '../../../lib/hooks/useBalance';
 import { useLedgerStore } from '../../../lib/state/ledger';
 import { useWalletStore } from '../../../lib/state/wallet';
 import { getBalanceMode } from '../../../lib/state/balance.mode';
+import { getEnvironmentMode } from '../../../lib/env/mode';
 import { useLatestFx } from '../../../lib/hooks/useLatestFx';
 import { resolveMarket, resolveLocalCurrencyCode } from '../../../config/market';
 import { EmptyState, ErrorState } from '@hedgr/ui';
@@ -20,6 +21,8 @@ import {
   isTxReviewSeamActive,
 } from '../../../lib/tx';
 import {
+  CLASS_A_VAL_002_JOURNEY_PARAM,
+  CLASS_A_VAL_002_JOURNEY_VALUE,
   getSyntheticJourneyHref,
   getSyntheticJourneyRate,
   isSyntheticJourneyPrimaryCondition,
@@ -43,8 +46,13 @@ function DepositPageContent() {
 
   const txReviewFlags = useMemo(() => resolveTxReviewSimulatorFlags(search), [search]);
   const reviewSeamActive = isTxReviewSeamActive(txReviewFlags);
-  const syntheticJourneyActive = isSyntheticJourneyPrimaryCondition(search);
+  const syntheticJourneyActive =
+    isSyntheticJourneyPrimaryCondition(search) &&
+    searchParams?.get(CLASS_A_VAL_002_JOURNEY_PARAM) ===
+      CLASS_A_VAL_002_JOURNEY_VALUE;
   const unavailableDataScenario = isSyntheticJourneyUnavailableDataScenario(search);
+  const simulatedEnvironment = getEnvironmentMode() !== 'live';
+  const productSimulationActive = syntheticJourneyActive || simulatedEnvironment;
 
   const { refresh } = useBalance();
   const appendTx = useLedgerStore((s) => s.append);
@@ -52,9 +60,9 @@ function DepositPageContent() {
 
   const creditWallet = useWalletStore((s) => s.creditUSD);
 
-  const fx = useLatestFx('USDZMW');
   const market = resolveMarket();
   const quote = resolveLocalCurrencyCode(market);
+  const fx = useLatestFx(`USD${quote}`);
   const backendRate = fx.status === 'success' && fx.data ? fx.data.rate : null;
   const rate = syntheticJourneyActive
     ? getSyntheticJourneyRate(quote)
@@ -140,7 +148,7 @@ function DepositPageContent() {
     setUsdToCredit(usdForStub);
 
     const txn_ref = crypto.randomUUID();
-    if (!syntheticJourneyActive) {
+    if (!syntheticJourneyActive && !simulatedEnvironment) {
       try {
         await postDeposit({ txn_ref, amount_zmw: amountLocalNum });
       } catch {
@@ -187,7 +195,7 @@ function DepositPageContent() {
 
   if (methodsError) {
     return (
-      <main className="p-6 space-y-4 max-w-xl">
+      <main className="mx-auto max-w-xl space-y-4 p-6">
         <h1 className="text-2xl font-semibold">Deposit</h1>
         <ErrorState
           title="Unable to load payment methods"
@@ -202,7 +210,7 @@ function DepositPageContent() {
 
   if (methodsLoading) {
     return (
-      <main className="p-6 space-y-4 max-w-xl">
+      <main className="mx-auto max-w-xl space-y-4 p-6">
         <h1 className="text-2xl font-semibold">Deposit</h1>
         <div className="flex items-center justify-center py-12">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600" />
@@ -213,7 +221,7 @@ function DepositPageContent() {
 
   if (availableMethods.length === 0) {
     return (
-      <main className="p-6 space-y-4 max-w-xl">
+      <main className="mx-auto max-w-xl space-y-4 p-6">
         <h1 className="text-2xl font-semibold">Deposit</h1>
         <EmptyState
           title="No deposit methods available"
@@ -241,7 +249,7 @@ function DepositPageContent() {
   }
 
   return (
-    <main className="p-6 space-y-4 max-w-xl">
+    <main className="mx-auto max-w-xl space-y-4 p-6">
       <h1 className="text-2xl font-semibold">Deposit</h1>
       {reviewSeamActive ? (
         <TxReviewSimulatorBanner data-testid="deposit-tx-review-simulator-banner" />
@@ -280,9 +288,23 @@ function DepositPageContent() {
         <FxRateBlock fx={fx} quoteLabel={quote} data-testid="deposit-fx-block" />
       )}
 
+      {!syntheticJourneyActive && simulatedEnvironment ? (
+        <section
+          className="rounded-xl border border-hedgr-200 bg-hedgr-100/40 p-4 text-hedgr-800"
+          data-testid="deposit-simulation-context"
+          aria-label="Simulated deposit"
+        >
+          <p className="text-sm font-semibold">Add to the simulated position</p>
+          <p className="mt-1 text-sm leading-relaxed text-hedgr-dark">
+            Enter an amount to preview the change. Confirming records a local
+            simulated deposit only; no account is charged and no real money moves.
+          </p>
+        </section>
+      ) : null}
+
       <div className="block space-y-2">
         <label htmlFor="deposit-amount">
-          {syntheticJourneyActive ? 'Amount to simulate' : 'Amount'} ({quote})
+          {productSimulationActive ? 'Amount to simulate' : 'Amount'} ({quote})
         </label>
         <input
           id="deposit-amount"
@@ -299,7 +321,7 @@ function DepositPageContent() {
             setAmountLocalStr(String(parsed));
           }}
           data-testid="deposit-amount"
-          aria-label={syntheticJourneyActive ? 'Simulated deposit amount' : 'Deposit amount'}
+          aria-label={productSimulationActive ? 'Simulated deposit amount' : 'Deposit amount'}
           aria-invalid={amountIsInvalid}
           aria-describedby={amountIsInvalid ? 'deposit-amount-error' : undefined}
           className="border rounded-xl p-3 w-full"
@@ -315,7 +337,7 @@ function DepositPageContent() {
         data-testid="deposit-conversion-preview"
       >
         {rate !== null && usdPreview !== null && amountLocalNum !== null ? (
-          syntheticJourneyActive ? (
+          productSimulationActive ? (
             <div className="space-y-1" data-testid="deposit-balance-change">
               <p className="text-xs font-semibold uppercase tracking-wide text-hedgr-500">
                 Simulated balance change
@@ -353,9 +375,9 @@ function DepositPageContent() {
           data-testid="deposit-confirmation-region"
         >
           <p className="font-semibold" data-testid="deposit-confirmed">
-            {syntheticJourneyActive ? 'Simulated deposit recorded' : 'Deposit CONFIRMED'}
+            {productSimulationActive ? 'Simulated deposit recorded' : 'Deposit confirmed'}
           </p>
-          {syntheticJourneyActive ? (
+          {productSimulationActive ? (
             <>
               <p className="mt-1 text-sm leading-relaxed text-hedgr-dark">
                 The simulated balance increased by{' '}
@@ -364,7 +386,11 @@ function DepositPageContent() {
                 charged and no real money moved.
               </p>
               <Link
-                href={getSyntheticJourneyHref('/withdraw')}
+                href={
+                  syntheticJourneyActive
+                    ? getSyntheticJourneyHref('/withdraw')
+                    : '/withdraw'
+                }
                 className="mt-3 inline-flex rounded-xl bg-hedgr-primary px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-hedgr-600 focus:outline-none focus:ring-2 focus:ring-hedgr-500 focus:ring-offset-2"
               >
                 Continue to simulated withdrawal
@@ -423,7 +449,7 @@ function DepositPageContent() {
 
 function DepositPageFallback() {
   return (
-    <main className="p-6 space-y-4 max-w-xl">
+    <main className="mx-auto max-w-xl space-y-4 p-6">
       <h1 className="text-2xl font-semibold">Deposit</h1>
       <div className="flex items-center justify-center py-12">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600" />

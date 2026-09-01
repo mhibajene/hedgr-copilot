@@ -137,7 +137,7 @@ test('activity page shows confirmed transactions', async ({ page }) => {
   await expect(withdrawStatus).toHaveAttribute('data-status', 'SUCCESS', { timeout: 6000 });
 
   // Check the preserved non-synthetic Activity lifecycle surface. Without a
-  // journey marker, this query only disables the dev-only synthetic default.
+  // journey marker, this query only enables the technical lifecycle review seam.
   await page.goto('/activity?scenario=unavailable-data');
   await expect(page.getByRole('heading', { name: 'Activity', exact: true })).toBeVisible();
   

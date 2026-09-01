@@ -466,10 +466,17 @@ describe("DashboardPage engine trust surface", () => {
     expect(
       screen.queryByRole("button", { name: "Restart simulated journey" })
     ).toBeNull();
-    expect(screen.queryByTestId("dashboard-orientation")).toBeNull();
+    expect(screen.getByTestId("dashboard-orientation").textContent).toContain(
+      "This simulated experience provides context, not an instruction."
+    );
+    expect(
+      screen.getByTestId("dashboard-simulated-withdraw").getAttribute("href")
+    ).toBe("/withdraw");
   });
 
-  test("mounts the engine posture header in the primary dashboard path", () => {
+  test("converges the default simulated dashboard on the customer hierarchy", () => {
+    vi.stubEnv("NEXT_PUBLIC_AUTH_MODE", "mock");
+    vi.stubEnv("NEXT_PUBLIC_FX_MODE", "fixed");
     vi.mocked(useBalance).mockReturnValue(makeBalanceState());
     vi.mocked(useEngineState).mockReturnValue(
       getMockEngineState("tightening") as EngineState
@@ -477,17 +484,24 @@ describe("DashboardPage engine trust surface", () => {
 
     render(<DashboardPage />);
 
+    expect(screen.getByTestId("dashboard-orientation").textContent).toContain(
+      "Hedgr helps you understand and maintain your financial stability."
+    );
     expect(screen.getByTestId("dashboard-current-overview")).toBeDefined();
     expect(dashboardStateMocks.policyContexts).toContain("default");
-    expect(screen.getByTestId("engine-posture-badge")).toBeDefined();
-    expect(screen.getByTestId("engine-posture-badge").textContent).toBe(
-      "TIGHTENING"
-    );
+    expect(screen.queryByTestId("engine-posture-badge")).toBeNull();
+    expect(screen.getByText("What Hedgr notices")).toBeDefined();
+    expect(screen.getByText("Does anything need attention?")).toBeDefined();
     expect(screen.getByTestId("engine-posture-banner")).toBeDefined();
-    expect(
-      screen.getByTestId("engine-posture-action-guidance").textContent
-    ).toBe("There is nothing here you need to manage.");
+    expect(screen.queryByTestId("engine-posture-action-guidance")).toBeNull();
     expect(screen.getByTestId("engine-allocation-bands")).toBeDefined();
+    expect(
+      screen.getByTestId("engine-allocation-bands").getAttribute("data-presentation")
+    ).toBe("collapsed");
+    expect(screen.getByTestId("dashboard-simulation-utilities")).toBeDefined();
+    expect(
+      screen.getByTestId("dashboard-simulated-withdraw").getAttribute("href")
+    ).toBe("/withdraw");
     expect(screen.getByTestId("engine-protective-guidance")).toBeDefined();
     expect(screen.getByTestId("engine-stability-explainer")).toBeDefined();
     const snapshot = screen.getByTestId("engine-stability-review-snapshot");
@@ -500,10 +514,11 @@ describe("DashboardPage engine trust surface", () => {
     expect(screen.getByText(ENGINE_NOTICE_COPY.tightening.title)).toBeDefined();
 
     const orderedSections = [
+      screen.getByTestId("dashboard-orientation"),
       screen.getByTestId("dashboard-balance"),
       screen.getByTestId("dashboard-current-status"),
       screen.getByTestId("engine-allocation-bands"),
-      snapshot,
+      screen.getByTestId("dashboard-simulation-utilities"),
       screen.getByTestId("dashboard-education"),
       screen.getByTestId("dashboard-disclosures"),
     ];
@@ -520,6 +535,7 @@ describe("DashboardPage engine trust surface", () => {
       "engine-protective-guidance",
       "engine-stability-explainer",
       "engine-stability-review-details",
+      "dashboard-education",
       "dashboard-disclosures",
     ]) {
       const disclosure = screen.getByTestId(testId);
@@ -529,6 +545,8 @@ describe("DashboardPage engine trust surface", () => {
   });
 
   test("mounts the engine posture header in the balance error path", () => {
+    vi.stubEnv("NEXT_PUBLIC_AUTH_MODE", "mock");
+    vi.stubEnv("NEXT_PUBLIC_FX_MODE", "fixed");
     vi.mocked(useBalance).mockReturnValue(
       makeBalanceState({ error: "Unable to load balance" })
     );
@@ -538,9 +556,8 @@ describe("DashboardPage engine trust surface", () => {
 
     render(<DashboardPage />);
 
-    expect(screen.getByTestId("engine-posture-badge").textContent).toBe(
-      "TIGHTENED"
-    );
+    expect(screen.queryByTestId("engine-posture-badge")).toBeNull();
+    expect(screen.getByText("Does anything need attention?")).toBeDefined();
     expect(screen.getByTestId("engine-posture-banner")).toBeDefined();
     expect(screen.getByTestId("engine-allocation-bands")).toBeDefined();
     expect(screen.getByTestId("engine-protective-guidance")).toBeDefined();

@@ -130,7 +130,7 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   await expect(simulationDetails).not.toHaveAttribute('open', '');
   await simulationDetails.getByText('How this simulation works').click();
   await expect(simulationDetails).toContainText(
-    'Rates are fixed for this walkthrough, and no live financial service is connected.'
+    'Rates are fixed for this simulation, and no live financial service is connected.'
   );
   await expect(simulationDetails).toContainText(
     'The selected country changes simulated currency display only.'

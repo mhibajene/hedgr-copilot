@@ -184,6 +184,47 @@ describe('DepositPage market-data degraded state (MC-S2-020)', () => {
     expect(screen.queryByTestId('deposit-market-data-continuity')).toBeNull();
     expect(screen.getByTestId('deposit-conversion-preview').textContent).toMatch(/\$5\.00/);
   });
+
+  test('default mock mode records a local simulated deposit without the backend contract', async () => {
+    vi.stubEnv('NEXT_PUBLIC_AUTH_MODE', 'mock');
+    vi.stubEnv('NEXT_PUBLIC_FX_MODE', 'fixed');
+    vi.useFakeTimers();
+    vi.mocked(postDeposit).mockClear();
+    vi.mocked(useLatestFx).mockReturnValue({
+      status: 'success',
+      data: { pair: 'USDZMW', rate: 20, ts: 1 },
+      retry: vi.fn(),
+    });
+
+    render(<DepositPage />);
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(350);
+    });
+
+    expect(screen.getByTestId('deposit-simulation-context').textContent).toMatch(
+      /no real money moves/i,
+    );
+    expect(screen.queryByText(/Step 2/i)).toBeNull();
+    expect(screen.getByLabelText('Simulated deposit amount')).toBeTruthy();
+
+    await act(async () => {
+      fireEvent.click(screen.getByRole('button', { name: 'Confirm' }));
+      await Promise.resolve();
+    });
+    expect(postDeposit).not.toHaveBeenCalled();
+
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(1600);
+    });
+    expect(screen.getByTestId('deposit-confirmed').textContent).toBe(
+      'Simulated deposit recorded',
+    );
+    expect(
+      screen
+        .getByRole('link', { name: 'Continue to simulated withdrawal' })
+        .getAttribute('href'),
+    ).toBe('/withdraw');
+  });
 });
 
 describe('DepositPage tx review seam (MC-S2-021)', () => {
@@ -245,6 +286,8 @@ describe('DepositPage local stub deposit review hints (MC-S2-022)', () => {
     delete process.env.CI;
     process.env.NODE_ENV = 'development';
     process.env.NEXT_PUBLIC_APP_ENV = 'dev';
+    process.env.NEXT_PUBLIC_AUTH_MODE = 'magic';
+    process.env.NEXT_PUBLIC_FX_MODE = 'coingecko';
   }
 
   test('postDeposit failure shows dev-only hint block when local simulation seam enabled', async () => {
@@ -285,6 +328,8 @@ describe('DepositPage local stub deposit review hints (MC-S2-022)', () => {
     delete process.env.CI;
     process.env.NODE_ENV = 'test';
     process.env.NEXT_PUBLIC_APP_ENV = 'dev';
+    process.env.NEXT_PUBLIC_AUTH_MODE = 'magic';
+    process.env.NEXT_PUBLIC_FX_MODE = 'coingecko';
 
     vi.useRealTimers();
     vi.mocked(useLatestFx).mockReturnValue({

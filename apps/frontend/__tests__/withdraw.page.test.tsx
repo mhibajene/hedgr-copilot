@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 
 import React from 'react';
-import { afterEach, describe, expect, test, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 import { act, cleanup, fireEvent, render, screen } from '@testing-library/react';
 
 (globalThis as typeof globalThis & { React: typeof React }).React = React;
@@ -81,7 +81,24 @@ vi.mock('../components', async (importOriginal) => {
 });
 
 vi.mock('@hedgr/ui', () => ({
-  EmptyState: ({ title, ...props }: { title: string }) => <div {...props}>{title}</div>,
+  EmptyState: ({
+    title,
+    description,
+    primaryAction,
+    ...props
+  }: {
+    title: string;
+    description?: string;
+    primaryAction?: { label: string; href?: string };
+  }) => (
+    <div {...props}>
+      <p>{title}</p>
+      {description ? <p>{description}</p> : null}
+      {primaryAction?.href ? (
+        <a href={primaryAction.href}>{primaryAction.label}</a>
+      ) : null}
+    </div>
+  ),
   ErrorState: ({
     title,
     description,
@@ -139,6 +156,11 @@ afterEach(() => {
 });
 
 describe('WithdrawPage status surface', () => {
+  beforeEach(() => {
+    vi.stubEnv('NEXT_PUBLIC_AUTH_MODE', 'magic');
+    vi.stubEnv('NEXT_PUBLIC_FX_MODE', 'coingecko');
+  });
+
   test('starts blank, rejects negative amounts, and does not prefix new input with zero', async () => {
     vi.useFakeTimers();
     vi.mocked(withdrawMock.createWithdraw).mockClear();
@@ -382,6 +404,8 @@ describe('WithdrawPage tx review seam (MC-S2-021)', () => {
     delete process.env.CI;
     process.env.NODE_ENV = 'development';
     process.env.NEXT_PUBLIC_APP_ENV = 'dev';
+    process.env.NEXT_PUBLIC_AUTH_MODE = 'magic';
+    process.env.NEXT_PUBLIC_FX_MODE = 'coingecko';
   }
 
   test('FX error without review params: confirm disabled, no banner (no activation)', async () => {
@@ -490,6 +514,71 @@ describe('WithdrawPage tx review seam (MC-S2-021)', () => {
 });
 
 describe('WithdrawPage CLASS-A-VAL-002 primary condition', () => {
+  test('keeps a clean zero-balance journey inside the simulation', async () => {
+    vi.stubEnv('NEXT_PUBLIC_AUTH_MODE', 'mock');
+    vi.stubEnv('NEXT_PUBLIC_FX_MODE', 'stub');
+    vi.useFakeTimers();
+    vi.mocked(useSearchParams).mockReturnValue(
+      new URLSearchParams('journey=class-a-val-002') as ReturnType<typeof useSearchParams>,
+    );
+    vi.mocked(useBalance).mockReturnValue({
+      total: 0,
+      available: 0,
+      pending: 0,
+      currency: 'USD',
+      asOf: 1,
+      isLoading: false,
+      error: null,
+      refresh: vi.fn(),
+    });
+    vi.mocked(useLatestFx).mockReturnValue({ status: 'error', retry: vi.fn() });
+
+    render(<WithdrawPage />);
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(350);
+    });
+
+    const empty = screen.getByTestId('withdraw-no-funds');
+    expect(empty.textContent).toMatch(/No simulated funds to withdraw/i);
+    expect(empty.textContent).toMatch(/No account is funded and no real money moves/i);
+    expect(empty.textContent).not.toMatch(/fund your account/i);
+    expect(
+      screen.getByRole('link', { name: 'Add simulated deposit' }).getAttribute('href'),
+    ).toBe('/deposit?journey=class-a-val-002');
+  });
+
+  test('uses simulated task framing without research step labels on the default route', async () => {
+    vi.stubEnv('NEXT_PUBLIC_AUTH_MODE', 'mock');
+    vi.stubEnv('NEXT_PUBLIC_FX_MODE', 'fixed');
+    vi.useFakeTimers();
+    vi.mocked(useBalance).mockReturnValue({
+      total: 25,
+      available: 25,
+      pending: 0,
+      currency: 'USD',
+      asOf: 1,
+      isLoading: false,
+      error: null,
+      refresh: vi.fn(),
+    });
+    vi.mocked(useLatestFx).mockReturnValue({
+      status: 'success',
+      data: { pair: 'USDZMW', rate: 20, ts: 1 },
+      retry: vi.fn(),
+    });
+
+    render(<WithdrawPage />);
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(350);
+    });
+
+    expect(screen.getByTestId('withdraw-simulation-context').textContent).toMatch(
+      /no bank transfer or real payout occurs/i,
+    );
+    expect(screen.queryByText(/Step 3/i)).toBeNull();
+    expect(screen.getByLabelText('Amount to simulate (USD)')).toBeTruthy();
+  });
+
   test('debits wallet fallback exactly once when the withdrawal confirms', async () => {
     vi.stubEnv('NEXT_PUBLIC_AUTH_MODE', 'mock');
     vi.stubEnv('NEXT_PUBLIC_FX_MODE', 'stub');
