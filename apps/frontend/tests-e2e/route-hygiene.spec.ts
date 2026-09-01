@@ -82,12 +82,16 @@ test('governed synthetic journey entries remain available', async ({ page }) => 
   await page.goto('/dashboard-synthetic-journey');
   await expect(page).toHaveURL(/\/dashboard-synthetic-journey$/);
   await expect(
-    page.getByRole('heading', { name: 'Your current position' })
+    page
+      .getByTestId('dashboard-balance')
+      .getByText('Your current position', { exact: true })
   ).toBeVisible();
 
   await page.goto('/dashboard?journey=class-a-val-002');
   await expect(page).toHaveURL(/\/dashboard\?journey=class-a-val-002$/);
   await expect(
-    page.getByRole('heading', { name: 'Your current position' })
+    page
+      .getByTestId('dashboard-balance')
+      .getByText('Your current position', { exact: true })
   ).toBeVisible();
 });
