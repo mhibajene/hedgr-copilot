@@ -15,7 +15,7 @@ async function clearAppStorage(page: import('@playwright/test').Page) {
 
 // Helper to wait for loading to complete on a page
 async function waitForPageLoaded(page: import('@playwright/test').Page) {
-  await page.waitForLoadState('networkidle');
+  await page.waitForLoadState('domcontentloaded');
   await page.waitForTimeout(500);
 }
 
