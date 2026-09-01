@@ -8,6 +8,7 @@ const mockFetch = vi.fn();
 
 beforeEach(() => {
   vi.stubGlobal('fetch', mockFetch);
+  vi.stubEnv('NEXT_PUBLIC_AUTH_MODE', 'magic');
   vi.stubEnv('NEXT_PUBLIC_API_BASE_URL', 'http://localhost:5050');
   vi.stubEnv('NEXT_PUBLIC_FX_MODE', 'coingecko');
 });
