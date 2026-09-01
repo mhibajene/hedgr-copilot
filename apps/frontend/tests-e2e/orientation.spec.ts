@@ -1,8 +1,11 @@
 import { expect, test } from '@playwright/test';
-import { ORIENTATION_SURFACE } from '../lib/narrative/orientation-surface';
+import {
+  ORIENTATION_FORBIDDEN_PARTICIPANT_TERMS,
+  ORIENTATION_SURFACE,
+} from '../lib/narrative/orientation-surface';
 
-test.describe('CLASS-A-VAL-002-ORIENT-002 orientation surface', () => {
-  test('renders the informational orientation page without the product wallet shell', async ({
+test.describe('CLASS-A-VAL-002-ORIENT-003 orientation surface', () => {
+  test('renders only the approved research-entry boundary before the product', async ({
     page,
   }) => {
     await page.goto('/orientation');
@@ -13,44 +16,32 @@ test.describe('CLASS-A-VAL-002-ORIENT-002 orientation surface', () => {
     const surface = page.getByTestId('orientation-surface');
     await expect(surface).toBeVisible();
     await expect(surface.getByRole('img', { name: 'Hedgr' })).toBeVisible();
-    await expect(surface.getByTestId('orientation-disclosure')).toContainText(
-      'informational research experience',
-    );
+    await expect(surface).toContainText(ORIENTATION_SURFACE.eyebrow);
     await expect(surface.getByRole('heading', { level: 1 })).toHaveText(
       ORIENTATION_SURFACE.title,
     );
 
-    for (const block of ORIENTATION_SURFACE.blocks) {
-      await expect(
-        surface.getByTestId(`orientation-block-${block.id}`),
-      ).toContainText(block.heading);
-    }
+    const disclosure = surface.getByTestId('orientation-disclosure');
+    await expect(disclosure).toContainText(
+      ORIENTATION_SURFACE.disclosure.heading,
+    );
+    await expect(disclosure).toContainText(ORIENTATION_SURFACE.disclosure.body);
+    await expect(surface.getByTestId('orientation-data-boundary')).toHaveText(
+      ORIENTATION_SURFACE.dataBoundary,
+    );
 
     await expect(page.getByRole('navigation')).toHaveCount(0);
     await expect(page.getByTestId('synthetic-journey-shell')).toHaveCount(0);
     await expect(page.getByTestId('trust-disclosure-banner')).toHaveCount(0);
-    await expect(surface).not.toContainText('Financial Stability Companion');
-    await expect(surface).not.toContainText(
-      'Financial Stability Operating System',
-    );
-    await expect(surface).not.toContainText('FSOS');
-    await expect(surface).not.toContainText('crypto');
-    await expect(surface).not.toContainText('DeFi');
-    await expect(surface).toContainText('What Hedgr helps you understand');
-    await expect(surface).toContainText(
-      'Hedgr is building a calm digital experience',
-    );
-    await expect(surface).toContainText(
-      'The first customer experience Hedgr is building is the Stability Wallet',
-    );
-    await expect(surface).toContainText(
-      'does not hold or move real customer money',
-    );
-    await expect(surface).not.toContainText(
-      'Hedgr is building a financial stability system',
-    );
-    await expect(surface).not.toContainText('Act only after');
-    await expect(surface).not.toContainText('remain part of the product');
+    await expect(page.getByTestId(/^orientation-block-/)).toHaveCount(0);
+
+    for (const term of ORIENTATION_FORBIDDEN_PARTICIPANT_TERMS) {
+      await expect(surface).not.toContainText(new RegExp(term, 'i'));
+    }
+
+    await expect(surface).not.toContainText('Hedgr helps');
+    await expect(surface).not.toContainText('Why Hedgr exists');
+    await expect(surface).not.toContainText('bounded research invitation');
 
     const continueLink = surface.getByTestId('orientation-continue');
     await expect(continueLink).toHaveText(ORIENTATION_SURFACE.continue.label);
@@ -58,6 +49,8 @@ test.describe('CLASS-A-VAL-002-ORIENT-002 orientation surface', () => {
       'href',
       '/dashboard-synthetic-journey?reset=1',
     );
-    await expect(surface).toContainText('not a deposit prompt');
+
+    await page.keyboard.press('Tab');
+    await expect(continueLink).toBeFocused();
   });
 });
