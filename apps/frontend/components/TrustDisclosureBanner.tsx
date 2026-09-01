@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { getAuthMode } from '../lib/auth/mode';
 import { getDefiMode } from '../lib/defi/mode';
 import { getFxMode } from '../lib/fx';
@@ -38,7 +38,7 @@ export type TrustDisclosureBannerProps = {
  */
 export function TrustDisclosureBanner({
   variant = 'banner',
-  learnMoreUrl = '/docs/trust',
+  learnMoreUrl = '/settings/trust',
   dismissible = false,
   consolidateTechnicalDetails = false,
   'data-testid': testId = 'trust-disclosure-banner',
@@ -97,7 +97,9 @@ export function TrustDisclosureBanner({
           <div className="flex-1 min-w-0">
             <h3 className="text-sm font-semibold text-hedgr-800">Simulation environment</h3>
             <p className="mt-1 text-xs leading-relaxed text-hedgr-dark">
-              This app is running with simulated data. Balances, yields, and transactions are not real.
+              Hedgr is currently using simulated information. Balances,
+              transactions and returns shown here are not real. No real customer
+              money is held or moved.
             </p>
             <div className="flex flex-wrap gap-2 mt-3">
               {envBadges.map((badge) => (
@@ -114,7 +116,7 @@ export function TrustDisclosureBanner({
                 href={learnMoreUrl}
                 className="mt-3 inline-block text-xs font-semibold text-hedgr-600 underline decoration-hedgr-200 underline-offset-4 hover:text-hedgr-primary"
               >
-                Learn more about environments →
+                Learn more about this simulation →
               </a>
             )}
           </div>

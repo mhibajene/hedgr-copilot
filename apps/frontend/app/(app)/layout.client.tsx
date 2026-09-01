@@ -108,9 +108,14 @@ export function AppLayoutClient({ children }: { children: React.ReactNode }) {
         CLASS_A_VAL_002_JOURNEY_VALUE);
   const activePathname =
     pathname === CLASS_A_VAL_002_DASHBOARD_PATH ? '/dashboard' : pathname;
-  const settingsActive = activePathname === '/settings';
+  const settingsActive = activePathname?.startsWith('/settings') ?? false;
+  const isNavLinkActive = (href: string) =>
+    activePathname === href || (href === '/settings' && settingsActive);
   const collapsedSyntheticMobileNav =
     explicitSyntheticJourney && !settingsActive;
+  const trustInformationHref = explicitSyntheticJourney
+    ? `/settings/trust?${CLASS_A_VAL_002_JOURNEY_PARAM}=${CLASS_A_VAL_002_JOURNEY_VALUE}`
+    : '/settings/trust';
 
   const journeySteps = [
     { href: '/dashboard' as const, label: 'Position' },
@@ -188,6 +193,7 @@ export function AppLayoutClient({ children }: { children: React.ReactNode }) {
       <TrustDisclosureBanner
         dismissible={!syntheticJourneyActive && !settingsActive}
         consolidateTechnicalDetails={syntheticJourneyActive || settingsActive}
+        learnMoreUrl={trustInformationHref}
       />
       <nav
         data-testid="app-nav"
@@ -255,7 +261,7 @@ export function AppLayoutClient({ children }: { children: React.ReactNode }) {
                     href={navHref(link.href, explicitSyntheticJourney)}
                     data-testid={link.testId}
                     className={`relative inline-flex items-center justify-center px-3 text-sm font-medium transition-colors md:border-b-2 md:px-1 md:pt-1 ${
-                      activePathname === link.href
+                      isNavLinkActive(link.href)
                         ? 'text-hedgr-primary before:absolute before:top-1.5 before:h-1 before:w-6 before:rounded-full before:bg-hedgr-primary md:border-hedgr-primary md:text-hedgr-dark md:before:hidden'
                         : 'text-hedgr-500 hover:text-hedgr-dark md:border-transparent md:hover:border-hedgr-200'
                     }`}
@@ -286,7 +292,7 @@ export function AppLayoutClient({ children }: { children: React.ReactNode }) {
                 data-testid={link.testId}
                 onClick={() => setIsNavOpen(false)}
                 className={`flex min-h-11 items-center rounded-md px-3 py-2 text-base font-medium ${
-                  activePathname === link.href
+                  isNavLinkActive(link.href)
                     ? 'bg-hedgr-100 text-hedgr-primary'
                     : 'text-hedgr-500 hover:bg-gray-50 hover:text-hedgr-dark'
                 }`}
@@ -309,7 +315,7 @@ export function AppLayoutClient({ children }: { children: React.ReactNode }) {
                 key={link.href}
                 href={navHref(link.href, true)}
                 className={`relative inline-flex min-h-11 items-start justify-center px-3 pt-4 text-sm font-medium transition-colors ${
-                  activePathname === link.href
+                  isNavLinkActive(link.href)
                     ? 'text-hedgr-primary before:absolute before:top-1.5 before:h-1 before:w-6 before:rounded-full before:bg-hedgr-primary'
                     : 'text-hedgr-500 hover:text-hedgr-dark'
                 }`}

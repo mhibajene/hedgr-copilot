@@ -2,6 +2,20 @@
 const nextConfig = {
   reactStrictMode: true,
   transpilePackages: ['@hedgr/ui'],
+  async redirects() {
+    return [
+      {
+        source: '/',
+        destination: '/login',
+        permanent: false,
+      },
+      {
+        source: '/docs/trust',
+        destination: '/settings/trust',
+        permanent: false,
+      },
+    ];
+  },
   async rewrites() {
     return [
       {

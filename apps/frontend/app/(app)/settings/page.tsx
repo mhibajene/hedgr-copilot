@@ -21,6 +21,9 @@ export default async function SettingsPage({ searchParams }: SettingsPageProps) 
   const syntheticResearchSettings = Array.isArray(journey)
     ? journey.includes(CLASS_A_VAL_002_JOURNEY_VALUE)
     : journey === CLASS_A_VAL_002_JOURNEY_VALUE;
+  const trustInformationHref = syntheticResearchSettings
+    ? `/settings/trust?${CLASS_A_VAL_002_JOURNEY_PARAM}=${CLASS_A_VAL_002_JOURNEY_VALUE}`
+    : '/settings/trust';
 
   return (
     <main className="mx-auto max-w-2xl space-y-7 px-6 pb-28 pt-6 sm:p-8">
@@ -80,7 +83,7 @@ export default async function SettingsPage({ searchParams }: SettingsPageProps) 
             money is held or moved.
           </p>
           <Link
-            href="/settings/trust"
+            href={trustInformationHref}
             className="mt-3 inline-flex min-h-11 items-center text-sm font-semibold text-hedgr-600 underline decoration-hedgr-200 underline-offset-4 hover:text-hedgr-primary"
           >
             Learn more about this simulation
