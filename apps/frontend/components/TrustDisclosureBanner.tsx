@@ -171,9 +171,9 @@ export function TrustDisclosureBanner({
                 </summary>
                 <div className="mt-3 space-y-3 rounded-2xl border border-hedgr-100 bg-white p-4 shadow-sm">
                   <p className="max-w-xl text-sm leading-relaxed text-hedgr-dark">
-                    Rates are fixed for this walkthrough, and no live financial
-                    service is connected. The selected country changes simulated
-                    currency display only.
+                    {fxMode === 'fixed'
+                      ? 'Rates are fixed for this simulation, and no live financial service is connected. The selected country changes simulated currency display only.'
+                      : 'Displayed rates support this simulated experience. No real customer money is held or moved.'}
                   </p>
                   <div className="flex flex-wrap items-center gap-2">
                     {marketSwitcherEnabled && currentMarket && (

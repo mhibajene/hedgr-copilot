@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { useState, useMemo } from 'react';
 import { useLedgerStore } from '../../../lib/state/ledger';
+import { getEnvironmentMode } from '../../../lib/env/mode';
 import { TxStatusPill, TxDetailModal } from '../../../components';
 import {
   PublicTxStatus,
@@ -12,6 +13,10 @@ import {
 } from '../../../lib/tx';
 import { EmptyState } from '@hedgr/ui';
 import {
+  CLASS_A_VAL_002_JOURNEY_PARAM,
+  CLASS_A_VAL_002_JOURNEY_VALUE,
+  CLASS_A_VAL_002_SCENARIO_PARAM,
+  CLASS_A_VAL_002_UNAVAILABLE_DATA_SCENARIO,
   getSyntheticJourneyHref,
   isSyntheticJourneyPrimaryCondition,
 } from '../../../lib/state/synthetic-journey';
@@ -211,9 +216,16 @@ function ActivityRow({
 export default function ActivityPage() {
   const transactions = useLedgerStore((s) => s.transactions);
   const searchParams = useSearchParams();
-  const syntheticJourneyActive = isSyntheticJourneyPrimaryCondition(
-    searchParams?.toString()
-  );
+  const syntheticJourneyActive =
+    isSyntheticJourneyPrimaryCondition(searchParams?.toString()) &&
+    searchParams?.get(CLASS_A_VAL_002_JOURNEY_PARAM) ===
+      CLASS_A_VAL_002_JOURNEY_VALUE;
+  const lifecycleReviewRequested =
+    searchParams?.get(CLASS_A_VAL_002_SCENARIO_PARAM) ===
+    CLASS_A_VAL_002_UNAVAILABLE_DATA_SCENARIO;
+  const productSimulationActive =
+    syntheticJourneyActive ||
+    (getEnvironmentMode() !== 'live' && !lifecycleReviewRequested);
   const [selectedTx, setSelectedTx] = useState<TxLifecycle | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [filter, setFilter] = useState<FilterType>('all');
@@ -283,13 +295,13 @@ export default function ActivityPage() {
       return (
         <EmptyState
           title={
-            syntheticJourneyActive
+            productSimulationActive
               ? 'No simulated activity yet'
               : 'No transactions yet'
           }
           description={
-            syntheticJourneyActive
-              ? 'Your simulated deposits and withdrawals will appear here after you record the first step.'
+            productSimulationActive
+              ? 'Your simulated deposits and withdrawals will appear here after you record the first change.'
               : 'Your deposit and withdrawal history will appear here once you make your first transaction.'
           }
           icon={
@@ -308,7 +320,7 @@ export default function ActivityPage() {
             </svg>
           }
           primaryAction={{
-            label: syntheticJourneyActive
+            label: productSimulationActive
               ? 'Start simulated deposit'
               : 'Make your first deposit',
             href: syntheticJourneyActive
@@ -361,14 +373,24 @@ export default function ActivityPage() {
         {transactions.length > 0 && (
           <span className="pb-1 text-xs font-medium text-hedgr-500 sm:text-sm">
             {transactions.length}{' '}
-            {syntheticJourneyActive
+            {productSimulationActive
               ? `simulated entr${transactions.length !== 1 ? 'ies' : 'y'}`
               : `transaction${transactions.length !== 1 ? 's' : ''}`}
           </span>
         )}
       </div>
 
-      {syntheticJourneyActive && transactions.length > 0 ? (
+      {productSimulationActive ? (
+        <p
+          className="max-w-xl text-sm leading-relaxed text-hedgr-dark"
+          data-testid="activity-simulation-context"
+        >
+          This is the factual record of changes in the simulated position. No
+          entry represents real money moving.
+        </p>
+      ) : null}
+
+      {productSimulationActive && transactions.length > 0 ? (
         <section
           className="space-y-2 border-y border-hedgr-100 py-3 text-hedgr-dark"
           data-testid="activity-balance-reconciliation"
@@ -457,7 +479,7 @@ export default function ActivityPage() {
                     key={tx.id}
                     tx={tx}
                     onClick={() => handleRowClick(tx)}
-                    syntheticJourneyActive={syntheticJourneyActive}
+                    syntheticJourneyActive={productSimulationActive}
                     resultingBalance={syntheticResultingBalances.get(tx.id)}
                   />
                 ))}
@@ -471,16 +493,20 @@ export default function ActivityPage() {
         transaction={selectedTx}
         isOpen={isModalOpen}
         onClose={handleCloseModal}
-        simulated={syntheticJourneyActive}
+        simulated={productSimulationActive}
         resultingBalance={
           selectedTx
             ? syntheticResultingBalances.get(selectedTx.id)
             : undefined
         }
       />
-      {syntheticJourneyActive && transactions.length > 0 ? (
+      {productSimulationActive && transactions.length > 0 ? (
         <Link
-          href={getSyntheticJourneyHref('/dashboard')}
+          href={
+            syntheticJourneyActive
+              ? getSyntheticJourneyHref('/dashboard')
+              : '/dashboard'
+          }
           className="inline-flex min-h-11 items-center rounded-full border border-hedgr-100 bg-white px-4 py-2 text-sm font-semibold text-hedgr-primary transition-colors hover:border-hedgr-300 hover:text-hedgr-600 focus:outline-none focus:ring-2 focus:ring-hedgr-500 focus:ring-offset-2"
         >
           Return to current position

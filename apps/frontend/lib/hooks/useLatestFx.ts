@@ -12,7 +12,8 @@ export interface UseLatestFxResult {
 }
 
 /**
- * Fetches latest FX rate from backend contract. Shared by Deposit and Withdraw.
+ * Fetches the latest FX rate through the mode-aware contract. Mock, stub, and
+ * fixed environments stay same-origin; live mode remains backend-only and fail-closed.
  * Aborts in-flight fetch on unmount; exposes retry(); does not expose raw errors to UI.
  */
 export function useLatestFx(pair: string): UseLatestFxResult {

@@ -20,6 +20,7 @@ import {
 } from "../../../components";
 import { useEngineState } from "../../../lib/engine/useEngineState";
 import { usePolicy } from "../../../lib/policy/usePolicy";
+import { getEnvironmentMode } from "../../../lib/env/mode";
 import {
   PublicTxStatus,
   txToLifecycle,
@@ -72,15 +73,20 @@ export default function DashboardPage() {
   const [ready, setReady] = useState(false);
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const syntheticJourneyActive = isSyntheticJourneyPrimaryCondition(
+  const syntheticJourneyEligible = isSyntheticJourneyPrimaryCondition(
     searchParams?.toString(),
     pathname
   );
-  const explicitSyntheticJourney =
-    syntheticJourneyActive &&
+  const syntheticJourneyActive =
+    syntheticJourneyEligible &&
     (pathname === CLASS_A_VAL_002_DASHBOARD_PATH ||
       searchParams?.get(CLASS_A_VAL_002_JOURNEY_PARAM) ===
         CLASS_A_VAL_002_JOURNEY_VALUE);
+  const simulatedEnvironment = getEnvironmentMode() !== "live";
+  const productSimulationActive =
+    syntheticJourneyActive || simulatedEnvironment;
+  const explicitSyntheticJourney =
+    syntheticJourneyActive;
   const cleanStartRequested = isSyntheticJourneyResetRequested(
     searchParams?.toString()
   );
@@ -165,7 +171,7 @@ export default function DashboardPage() {
         id="dashboard-total-balance-label"
         className="text-xs font-semibold tracking-tight text-hedgr-800"
       >
-        {syntheticJourneyActive ? "Your current position" : "Total balance"}
+        Your current position
       </p>
       {isLoading ? (
         <div className="text-5xl font-bold tabular-nums tracking-tight text-hedgr-800 sm:text-6xl sm:leading-tight">
@@ -178,7 +184,7 @@ export default function DashboardPage() {
           className="text-5xl font-bold tabular-nums tracking-tight text-hedgr-800 sm:text-6xl sm:leading-tight"
         />
       )}
-      {syntheticJourneyActive && ready && !isLoading ? (
+      {productSimulationActive && ready && !isLoading ? (
         <p
           className="max-w-md pt-1 text-xs leading-relaxed text-hedgr-500 sm:text-sm"
           data-testid="dashboard-synthetic-balance-explainer"
@@ -204,14 +210,18 @@ export default function DashboardPage() {
     </section>
   );
 
-  const syntheticUtilities = (
+  const productRouteHref = (
+    route: "/deposit" | "/withdraw" | "/activity"
+  ) => (syntheticJourneyActive ? getSyntheticJourneyHref(route) : route);
+
+  const homeUtilities = (
     <nav
       aria-label="Simulation utilities"
       className="grid grid-cols-2 gap-3"
       data-testid="dashboard-simulation-utilities"
     >
       <Link
-        href={getSyntheticJourneyHref("/deposit")}
+        href={productRouteHref("/deposit")}
         className="flex min-h-24 items-center gap-2.5 rounded-2xl border border-hedgr-100 bg-white p-3 text-hedgr-800 shadow-sm transition-colors hover:border-hedgr-200 hover:bg-hedgr-100/20 focus:outline-none focus:ring-2 focus:ring-hedgr-500 focus:ring-offset-2 sm:min-h-28 sm:gap-3 sm:p-5"
         data-testid="dashboard-add-simulated-deposit"
       >
@@ -228,7 +238,7 @@ export default function DashboardPage() {
         </span>
       </Link>
       <Link
-        href={getSyntheticJourneyHref("/activity")}
+        href={productRouteHref("/activity")}
         className="flex min-h-24 items-center gap-2.5 rounded-2xl border border-hedgr-100 bg-white p-3 text-hedgr-800 shadow-sm transition-colors hover:border-hedgr-200 hover:bg-hedgr-100/20 focus:outline-none focus:ring-2 focus:ring-hedgr-500 focus:ring-offset-2 sm:min-h-28 sm:gap-3 sm:p-5"
         data-testid="dashboard-view-activity"
       >
@@ -244,27 +254,56 @@ export default function DashboardPage() {
           View Activity
         </span>
       </Link>
+      {!syntheticJourneyActive ? (
+        <Link
+          href={productRouteHref("/withdraw")}
+          className="col-span-2 inline-flex min-h-11 items-center justify-center rounded-xl border border-hedgr-100 bg-white px-4 py-2 text-sm font-semibold text-hedgr-700 shadow-sm transition-colors hover:border-hedgr-200 hover:bg-hedgr-100/20 focus:outline-none focus:ring-2 focus:ring-hedgr-500 focus:ring-offset-2"
+          data-testid="dashboard-simulated-withdraw"
+        >
+          Simulate a withdrawal
+        </Link>
+      ) : null}
     </nav>
   );
 
   const currentOverview = (
     <section
       aria-label={
-        syntheticJourneyActive
+        productSimulationActive
           ? "Current simulation overview"
           : "Current account overview"
       }
       className={
-        syntheticJourneyActive
+        productSimulationActive
           ? "bg-white"
           : "rounded-2xl border border-hedgr-100 bg-white p-5 shadow-sm sm:p-7"
       }
       data-testid="dashboard-current-overview"
     >
-      {syntheticJourneyActive ? (
+      {productSimulationActive ? (
         <div className="space-y-4">
           {balanceHero}
-          {syntheticUtilities}
+          {syntheticJourneyActive ? homeUtilities : null}
+          {!syntheticJourneyActive && recentActivity[0] ? (
+            <section
+              className="flex items-baseline justify-between gap-4 border-y border-hedgr-100 py-3"
+              aria-label="Latest simulated change"
+              data-testid="dashboard-change-evidence"
+            >
+              <div>
+                <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-hedgr-600">
+                  Latest change
+                </p>
+                <p className="mt-1 text-sm font-semibold text-hedgr-800">
+                  {activityTitle(recentActivity[0], true)}
+                </p>
+              </div>
+              <p className="shrink-0 text-sm font-semibold tabular-nums text-hedgr-800">
+                {recentActivity[0].type === "DEPOSIT" ? "+" : "-"}$
+                {recentActivity[0].amountUSD.toFixed(2)}
+              </p>
+            </section>
+          ) : null}
           <div className="rounded-2xl border border-hedgr-100 bg-hedgr-100/20 p-3.5 shadow-sm sm:p-5">
             <EnginePostureHeader
               engineState={engineState}
@@ -291,28 +330,22 @@ export default function DashboardPage() {
   );
 
   const educationSection = syntheticJourneyActive ? null : (
-    <section
-      className="space-y-4"
-      aria-labelledby="dashboard-education-heading"
+    <details
+      className="border-y border-hedgr-100 bg-white py-2"
       data-testid="dashboard-education"
     >
-      <div className="space-y-1">
-        <h2
-          id="dashboard-education-heading"
-          className="text-base font-semibold tracking-tight text-hedgr-800"
-        >
-          Educational content
-        </h2>
-        <p className="max-w-xl text-sm leading-relaxed text-hedgr-500">
-          Open these explanations when you want more context about the existing
-          stability structure.
-        </p>
-      </div>
-      <div className="space-y-3">
+      <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-4 font-medium text-hedgr-800 marker:content-none select-none [&::-webkit-details-marker]:hidden">
+        <span>How Hedgr interprets stability</span>
+        <span className="text-xs font-medium uppercase tracking-wide text-hedgr-500">
+          View
+        </span>
+      </summary>
+      <div className="mt-4 space-y-3 border-t border-hedgr-100 pt-4">
+        <EngineStabilityReviewSnapshot engineState={engineState} />
         <EngineProtectiveGuidance />
         <EngineStabilityExplainer />
       </div>
-    </section>
+    </details>
   );
 
   const disclosureSection = (
@@ -341,17 +374,14 @@ export default function DashboardPage() {
       <main className="px-6 py-8 sm:p-8">
         <div
           className={`mx-auto space-y-6 sm:space-y-8 ${
-            syntheticJourneyActive ? "max-w-5xl" : "max-w-2xl"
+            productSimulationActive ? "max-w-5xl" : "max-w-2xl"
           }`}
         >
           {currentOverview}
           <EngineAllocationBands
             engineState={engineState}
-            collapsed={syntheticJourneyActive}
+            collapsed={productSimulationActive}
           />
-          {!syntheticJourneyActive ? (
-            <EngineStabilityReviewSnapshot engineState={engineState} />
-          ) : null}
           <ErrorState
             title="Unable to load your balance"
             description="We couldn't fetch your account balance. Please try again."
@@ -369,39 +399,38 @@ export default function DashboardPage() {
     <main className="px-6 pb-24 pt-5 sm:p-8">
       <div
         className={`mx-auto ${
-          syntheticJourneyActive ? "space-y-4 sm:space-y-8" : "space-y-6 sm:space-y-8"
+          productSimulationActive ? "space-y-4 sm:space-y-8" : "space-y-6 sm:space-y-8"
         } ${
-          syntheticJourneyActive ? "max-w-5xl" : "max-w-2xl"
+          productSimulationActive ? "max-w-5xl" : "max-w-2xl"
         }`}
       >
-        {!syntheticJourneyActive ? (
-          <h1 className="sr-only">Dashboard</h1>
-        ) : null}
-        {syntheticJourneyActive ? (
-          <section
-            aria-labelledby="dashboard-orientation-heading"
-            className="space-y-0.5 pb-1 sm:space-y-2"
-            data-testid="dashboard-orientation"
+        <section
+          aria-labelledby="dashboard-orientation-heading"
+          className="space-y-0.5 pb-1 sm:space-y-2"
+          data-testid="dashboard-orientation"
+        >
+          <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-hedgr-500">
+            Financial position
+          </p>
+          <h1
+            id="dashboard-orientation-heading"
+            className="text-xl font-bold tracking-tight text-hedgr-800 sm:text-4xl"
           >
-            <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-hedgr-500">
-              Financial position
-            </p>
-            <h1
-              id="dashboard-orientation-heading"
-              className="text-xl font-bold tracking-tight text-hedgr-800 sm:text-4xl"
-            >
-              See what you have and what changed.
-            </h1>
-            <p className="hidden max-w-xl text-sm leading-relaxed text-hedgr-dark sm:block">
-              Hedgr helps you understand and maintain your financial stability.
-              This walkthrough provides context, not an instruction.
-            </p>
-          </section>
-        ) : null}
+            See what you have and what changed.
+          </h1>
+          <p className="hidden max-w-xl text-sm leading-relaxed text-hedgr-dark sm:block">
+            Hedgr helps you understand and maintain your financial stability.{' '}
+            {syntheticJourneyActive
+              ? 'This walkthrough provides context, not an instruction.'
+              : productSimulationActive
+                ? 'This simulated experience provides context, not an instruction.'
+                : 'This experience provides context, not an instruction.'}
+          </p>
+        </section>
 
         {currentOverview}
 
-        {isFirstTimeUser && !syntheticJourneyActive && (
+        {isFirstTimeUser && !productSimulationActive && (
           <div
             className="rounded-2xl border border-hedgr-200 bg-hedgr-100/60 p-5 text-hedgr-800 sm:p-6"
             data-testid="dashboard-empty-state"
@@ -429,12 +458,16 @@ export default function DashboardPage() {
           </div>
         )}
 
-        {syntheticJourneyActive || !isFirstTimeUser ? (
+        {productSimulationActive || !isFirstTimeUser ? (
           <EngineAllocationBands
             engineState={engineState}
-            collapsed={syntheticJourneyActive}
+            collapsed={productSimulationActive}
           />
         ) : null}
+
+        {!syntheticJourneyActive && productSimulationActive
+          ? homeUtilities
+          : null}
 
         {syntheticJourneyActive && hasSyntheticFixtureState && (
           <section
@@ -470,10 +503,6 @@ export default function DashboardPage() {
           </section>
         )}
 
-        {!syntheticJourneyActive ? (
-          <EngineStabilityReviewSnapshot engineState={engineState} />
-        ) : null}
-
         {!syntheticJourneyActive && !isFirstTimeUser && !hasNoTransactions && (
           <section
             className="border-t border-hedgr-200 pt-6"
@@ -501,7 +530,7 @@ export default function DashboardPage() {
                 >
                   <div className="min-w-0">
                     <p className="font-medium text-hedgr-800">
-                      {activityTitle(tx, false)}
+                      {activityTitle(tx, productSimulationActive)}
                     </p>
                     <p className="text-sm text-hedgr-500">
                       {formatActivityDayLabel(tx.createdAt)}
@@ -548,7 +577,7 @@ export default function DashboardPage() {
             </div>
           )}
 
-        {!syntheticJourneyActive && !isFirstTimeUser && hasNoTransactions && (
+        {!productSimulationActive && !isFirstTimeUser && hasNoTransactions && (
           <div className="rounded-2xl border border-hedgr-200 bg-white p-6">
             <h2 className="mb-4 text-lg font-semibold">Nothing needs action</h2>
             <EmptyState

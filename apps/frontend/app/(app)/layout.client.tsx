@@ -5,7 +5,6 @@ import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { TrustDisclosureBanner } from '../../components';
 import { isCopilotEnabled } from '../../config/env';
-import { usePolicy } from '@/lib/policy/usePolicy';
 import {
   CLASS_A_VAL_002_DASHBOARD_PATH,
   CLASS_A_VAL_002_JOURNEY_PARAM,
@@ -14,18 +13,10 @@ import {
   isSyntheticJourneyPrimaryCondition,
 } from '@/lib/state/synthetic-journey';
 
-// ---------------------------------------------------------------------------
-// Nav-link type: `feature` ties the link to a policy flag; `shipped` guards
-// links whose routes have not been built yet (deny-by-default).
-// ---------------------------------------------------------------------------
-
 type NavLink = {
   href: string;
   label: string;
-  feature?: 'earn' | 'payLinks' | 'stablecoinSend';
   testId?: string;
-  /** Set to `false` for gated links whose route does not exist yet. */
-  shipped?: boolean;
 };
 
 type SyntheticJourneyPath =
@@ -96,16 +87,16 @@ export function AppLayoutClient({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const [isNavOpen, setIsNavOpen] = useState(false);
-  const { status, isFeatureEnabled } = usePolicy();
-  const syntheticJourneyActive = isSyntheticJourneyPrimaryCondition(
+  const syntheticJourneyEligible = isSyntheticJourneyPrimaryCondition(
     searchParams?.toString(),
     pathname
   );
   const explicitSyntheticJourney =
-    syntheticJourneyActive &&
+    syntheticJourneyEligible &&
     (pathname === CLASS_A_VAL_002_DASHBOARD_PATH ||
       searchParams?.get(CLASS_A_VAL_002_JOURNEY_PARAM) ===
         CLASS_A_VAL_002_JOURNEY_VALUE);
+  const syntheticJourneyActive = explicitSyntheticJourney;
   const activePathname =
     pathname === CLASS_A_VAL_002_DASHBOARD_PATH ? '/dashboard' : pathname;
   const settingsActive = activePathname?.startsWith('/settings') ?? false;
@@ -137,52 +128,18 @@ export function AppLayoutClient({ children }: { children: React.ReactNode }) {
     ? [{ href: '/chat', label: 'Copilot', testId: 'nav-copilot-link' }]
     : [];
 
-  const allNavLinks: NavLink[] = [
-    { href: '/dashboard', label: 'Dashboard' },
-    { href: '/deposit', label: 'Deposit' },
-    { href: '/withdraw', label: 'Withdraw' },
-    { href: '/activity', label: 'Activity' },
-    { href: '/settings', label: 'Settings' },
-    // Policy-gated: flip shipped→true once each route is built
-    {
-      href: '/earn',
-      label: 'Allocate',
-      feature: 'earn',
-      testId: 'nav-earn-link',
-      shipped: false,
-    },
-    {
-      href: '/paylinks',
-      label: 'PayLinks',
-      feature: 'payLinks',
-      testId: 'nav-paylinks-link',
-      shipped: false,
-    },
-    {
-      href: '/send',
-      label: 'Send',
-      feature: 'stablecoinSend',
-      testId: 'nav-send-link',
-      shipped: false,
-    },
-    // Env-gated
-    ...copilotNavLinks,
-  ];
-
   const syntheticNavLinks: NavLink[] = [
     { href: '/dashboard', label: 'Home' },
     { href: '/settings', label: 'Settings' },
   ];
 
-  // Hide unshipped links, and only show gated links once policy is ready.
-  const navLinks = (
-    explicitSyntheticJourney ? syntheticNavLinks : allNavLinks
-  ).filter((link) => {
-    if (link.shipped === false) return false;
-    if (link.feature)
-      return status === 'ready' && isFeatureEnabled(link.feature);
-    return true;
-  });
+  const productNavLinks: NavLink[] = [
+    ...syntheticNavLinks,
+    ...copilotNavLinks,
+  ];
+  const navLinks = explicitSyntheticJourney
+    ? syntheticNavLinks
+    : productNavLinks;
 
   return (
     <div
@@ -191,8 +148,8 @@ export function AppLayoutClient({ children }: { children: React.ReactNode }) {
       }`}
     >
       <TrustDisclosureBanner
-        dismissible={!syntheticJourneyActive && !settingsActive}
-        consolidateTechnicalDetails={syntheticJourneyActive || settingsActive}
+        dismissible={false}
+        consolidateTechnicalDetails
         learnMoreUrl={trustInformationHref}
       />
       <nav

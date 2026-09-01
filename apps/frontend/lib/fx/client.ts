@@ -1,7 +1,10 @@
 /**
- * Backend FX contract client — SSoT for fetching latest FX rate.
- * Uses GET /v1/fx/latest?pair=...; does not call any external FX providers.
+ * Mode-aware FX contract client — SSoT for fetching the latest FX rate.
+ * Mock, stub, and fixed environments use the deterministic same-origin route.
+ * Live mode uses the backend contract and never falls back silently.
  */
+
+import { getEnvironmentMode } from '../env/mode';
 
 export interface LatestFxResponse {
   pair: string;
@@ -11,6 +14,13 @@ export interface LatestFxResponse {
 }
 
 const SANITIZED_ERROR = 'FX service unavailable';
+
+type SameOriginFxResponse = {
+  base: string;
+  quote: string;
+  rate: number;
+  ts: number;
+};
 
 function getBaseUrl(): string {
   const base = process.env.NEXT_PUBLIC_API_BASE_URL?.trim();
@@ -39,8 +49,16 @@ export async function fetchLatestFx(
   pair: string,
   signal?: AbortSignal
 ): Promise<LatestFxResponse> {
-  const baseUrl = getBaseUrl();
-  const url = `${baseUrl}/v1/fx/latest?pair=${encodeURIComponent(pair)}`;
+  const simulatedMode = getEnvironmentMode() !== 'live';
+  const pairMatch = /^USD([A-Z]{3})$/.exec(pair);
+  if (!pairMatch) {
+    throw new Error(SANITIZED_ERROR);
+  }
+
+  const quote = pairMatch[1];
+  const url = simulatedMode
+    ? `/api/fx?quote=${encodeURIComponent(quote)}`
+    : `${getBaseUrl()}/v1/fx/latest?pair=${encodeURIComponent(pair)}`;
 
   let res: Response;
   try {
@@ -60,17 +78,43 @@ export async function fetchLatestFx(
     throw new Error(SANITIZED_ERROR);
   }
 
+  if (data == null || typeof data !== 'object') {
+    throw new Error(SANITIZED_ERROR);
+  }
+
+  if (simulatedMode) {
+    const obj = data as Partial<SameOriginFxResponse>;
+    if (
+      obj.base !== 'USD' ||
+      obj.quote !== quote ||
+      typeof obj.rate !== 'number' ||
+      !Number.isFinite(obj.rate) ||
+      obj.rate <= 0 ||
+      typeof obj.ts !== 'number' ||
+      !Number.isFinite(obj.ts)
+    ) {
+      throw new Error(SANITIZED_ERROR);
+    }
+
+    return {
+      pair,
+      rate: obj.rate,
+      ts: Math.floor(obj.ts / 1000),
+    };
+  }
+
+  const obj = data as Partial<LatestFxResponse>;
   if (
-    data == null ||
-    typeof data !== 'object' ||
-    typeof (data as Record<string, unknown>).pair !== 'string' ||
-    typeof (data as Record<string, unknown>).rate !== 'number' ||
-    typeof (data as Record<string, unknown>).ts !== 'number'
+    obj.pair !== pair ||
+    typeof obj.rate !== 'number' ||
+    !Number.isFinite(obj.rate) ||
+    obj.rate <= 0 ||
+    typeof obj.ts !== 'number' ||
+    !Number.isFinite(obj.ts)
   ) {
     throw new Error(SANITIZED_ERROR);
   }
 
-  const obj = data as { pair: string; rate: number; ts: number };
   return {
     pair: obj.pair,
     rate: obj.rate,

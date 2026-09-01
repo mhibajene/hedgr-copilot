@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 
 import React from 'react';
-import { afterEach, describe, expect, test, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 import {
   cleanup,
   fireEvent,
@@ -113,6 +113,11 @@ function makeMixedTransactions(): typeof activityStateMocks.transactions {
   ];
 }
 
+beforeEach(() => {
+  vi.stubEnv('NEXT_PUBLIC_AUTH_MODE', 'mock');
+  vi.stubEnv('NEXT_PUBLIC_FX_MODE', 'fixed');
+});
+
 afterEach(() => {
   cleanup();
   activityStateMocks.transactions = [];
@@ -121,6 +126,7 @@ afterEach(() => {
       typeof useSearchParams
     >
   );
+  vi.unstubAllEnvs();
 });
 
 describe('ActivityPage synthetic evidence grammar', () => {
@@ -187,7 +193,7 @@ describe('ActivityPage synthetic evidence grammar', () => {
     expect(screen.queryByTestId('activity-result-deposit')).toBeNull();
   });
 
-  test('does not add resulting-balance treatment outside the governed synthetic journey', () => {
+  test('shares simulated evidence treatment on the default route without research query state', () => {
     activityStateMocks.transactions = makeMixedTransactions();
     vi.mocked(useSearchParams).mockReturnValue(
       new URLSearchParams() as ReturnType<typeof useSearchParams>
@@ -195,13 +201,25 @@ describe('ActivityPage synthetic evidence grammar', () => {
 
     render(<ActivityPage />);
 
-    expect(screen.queryByTestId('activity-balance-reconciliation')).toBeNull();
-    expect(screen.queryByTestId('activity-result-deposit')).toBeNull();
-    expect(screen.queryByTestId('activity-result-withdraw')).toBeNull();
+    expect(screen.getByTestId('activity-balance-reconciliation')).toBeTruthy();
+    expect(screen.getByTestId('activity-result-deposit').textContent).toBe(
+      '→ $5.00 resulting'
+    );
+    expect(screen.getByTestId('activity-result-withdraw').textContent).toBe(
+      '→ $3.00 resulting'
+    );
+    expect(screen.getByTestId('activity-simulation-context').textContent).toMatch(
+      /No entry represents real money moving/i
+    );
     expect(
       screen
         .getAllByTestId('activity-row-deposit')
-        .some((row) => within(row).queryByText(/ZMW/) !== null)
+        .every((row) => within(row).queryByText(/ZMW/) === null)
     ).toBe(true);
+    expect(
+      screen
+        .getByRole('link', { name: 'Return to current position' })
+        .getAttribute('href')
+    ).toBe('/dashboard');
   });
 });

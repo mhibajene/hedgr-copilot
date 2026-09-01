@@ -8,6 +8,7 @@ import { useBalance } from '../../../lib/hooks/useBalance';
 import { useLedgerStore } from '../../../lib/state/ledger';
 import { useWalletStore } from '../../../lib/state/wallet';
 import { getBalanceMode } from '../../../lib/state/balance.mode';
+import { getEnvironmentMode } from '../../../lib/env/mode';
 import { EmptyState, ErrorState } from '@hedgr/ui';
 import {
   BalanceWithLocalEstimate,
@@ -29,6 +30,8 @@ import {
   isTxReviewSeamActive,
 } from '../../../lib/tx';
 import {
+  CLASS_A_VAL_002_JOURNEY_PARAM,
+  CLASS_A_VAL_002_JOURNEY_VALUE,
   getSyntheticJourneyHref,
   getSyntheticJourneyRate,
   isSyntheticJourneyPrimaryCondition,
@@ -87,11 +90,16 @@ function WithdrawPageContent() {
 
   const txReviewFlags = useMemo(() => resolveTxReviewSimulatorFlags(search), [search]);
   const reviewSeamActive = isTxReviewSeamActive(txReviewFlags);
-  const syntheticJourneyActive = isSyntheticJourneyPrimaryCondition(search);
+  const syntheticJourneyActive =
+    isSyntheticJourneyPrimaryCondition(search) &&
+    searchParams?.get(CLASS_A_VAL_002_JOURNEY_PARAM) ===
+      CLASS_A_VAL_002_JOURNEY_VALUE;
+  const simulatedEnvironment = getEnvironmentMode() !== 'live';
+  const productSimulationActive = syntheticJourneyActive || simulatedEnvironment;
 
   const { available, refresh, isLoading: balanceLoading, error: balanceError } = useBalance();
-  const fx = useLatestFx('USDZMW');
   const quote = resolveLocalCurrencyCode(resolveMarket());
+  const fx = useLatestFx(`USD${quote}`);
   const backendRate = fx.status === 'success' && fx.data ? fx.data.rate : null;
   const rate = syntheticJourneyActive ? getSyntheticJourneyRate(quote) : backendRate;
   const confirmTx = useLedgerStore((s) => s.confirm);
@@ -204,7 +212,7 @@ function WithdrawPageContent() {
   const availableMethods = withdrawMethods.filter((m) => m.available);
   const activeStatus =
     status === 'PENDING' || status === 'CONFIRMED'
-      ? syntheticJourneyActive
+      ? productSimulationActive
         ? SYNTHETIC_WITHDRAW_STATUS_CONTENT[status]
         : WITHDRAW_STATUS_CONTENT[status]
       : null;
@@ -229,7 +237,7 @@ function WithdrawPageContent() {
 
   if (balanceError) {
     return (
-      <main className="p-6 space-y-4 max-w-xl">
+      <main className="mx-auto max-w-xl space-y-4 p-6">
         <h1 className="text-2xl font-semibold">Withdraw</h1>
         <ErrorState
           title="Unable to load your balance"
@@ -244,7 +252,7 @@ function WithdrawPageContent() {
 
   if (methodsError) {
     return (
-      <main className="p-6 space-y-4 max-w-xl">
+      <main className="mx-auto max-w-xl space-y-4 p-6">
         <h1 className="text-2xl font-semibold">Withdraw</h1>
         <ErrorState
           title="Unable to load withdrawal methods"
@@ -259,7 +267,7 @@ function WithdrawPageContent() {
 
   if (methodsLoading || balanceLoading) {
     return (
-      <main className="p-6 space-y-4 max-w-xl">
+      <main className="mx-auto max-w-xl space-y-4 p-6">
         <h1 className="text-2xl font-semibold">Withdraw</h1>
         <div className="flex items-center justify-center py-12">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600" />
@@ -270,7 +278,7 @@ function WithdrawPageContent() {
 
   if (availableMethods.length === 0) {
     return (
-      <main className="p-6 space-y-4 max-w-xl">
+      <main className="mx-auto max-w-xl space-y-4 p-6">
         <h1 className="text-2xl font-semibold">Withdraw</h1>
         <EmptyState
           title="No withdrawal methods available"
@@ -299,11 +307,19 @@ function WithdrawPageContent() {
 
   if (available === 0) {
     return (
-      <main className="p-6 space-y-4 max-w-xl">
+      <main className="mx-auto max-w-xl space-y-4 p-6">
         <h1 className="text-2xl font-semibold">Withdraw</h1>
         <EmptyState
-          title="No funds to withdraw"
-          description="You don't have any balance available for withdrawal. Make a deposit first to fund your account."
+          title={
+            productSimulationActive
+              ? 'No simulated funds to withdraw'
+              : 'No funds to withdraw'
+          }
+          description={
+            productSimulationActive
+              ? 'Add a simulated deposit first. No account is funded and no real money moves.'
+              : "You don't have any balance available for withdrawal. Make a deposit first to fund your account."
+          }
           icon={
             <svg
               className="h-12 w-12 text-gray-300"
@@ -319,7 +335,14 @@ function WithdrawPageContent() {
               />
             </svg>
           }
-          primaryAction={{ label: 'Make a deposit', href: '/deposit' }}
+          primaryAction={{
+            label: productSimulationActive
+              ? 'Add simulated deposit'
+              : 'Make a deposit',
+            href: syntheticJourneyActive
+              ? getSyntheticJourneyHref('/deposit')
+              : '/deposit',
+          }}
           data-testid="withdraw-no-funds"
         />
       </main>
@@ -327,7 +350,7 @@ function WithdrawPageContent() {
   }
 
   return (
-    <main className="p-6 space-y-4 max-w-xl">
+    <main className="mx-auto max-w-xl space-y-4 p-6">
       <h1 className="text-2xl font-semibold">Withdraw</h1>
       {reviewSeamActive ? (
         <TxReviewSimulatorBanner data-testid="withdraw-tx-review-simulator-banner" />
@@ -363,12 +386,29 @@ function WithdrawPageContent() {
       ) : (
         <FxRateBlock fx={fx} quoteLabel={quote} data-testid="withdraw-fx-block" />
       )}
+      {!syntheticJourneyActive && simulatedEnvironment ? (
+        <section
+          className="rounded-xl border border-hedgr-200 bg-hedgr-100/40 p-4 text-hedgr-800"
+          data-testid="withdraw-simulation-context"
+          aria-label="Simulated withdrawal"
+        >
+          <p className="text-sm font-semibold">Preview a simulated withdrawal</p>
+          <p className="mt-1 text-sm leading-relaxed text-hedgr-dark">
+            Enter an amount to see what would remain. Confirming records a local
+            simulated change only; no bank transfer or real payout occurs.
+          </p>
+        </section>
+      ) : null}
       <div className="rounded-xl border border-hedgr-100 bg-hedgr-100/40 p-3 text-hedgr-dark">
-        {syntheticJourneyActive ? 'Simulated balance before this step: ' : 'Current balance: '}
+        {syntheticJourneyActive
+          ? 'Simulated balance before this step: '
+          : productSimulationActive
+            ? 'Simulated balance: '
+            : 'Current balance: '}
         <BalanceWithLocalEstimate usdAmount={displayedBalanceBefore} inline />
       </div>
       <label htmlFor="amount-usd" className="block space-y-2">
-        {syntheticJourneyActive ? 'Amount to simulate' : 'Amount'} (USD)
+        {productSimulationActive ? 'Amount to simulate' : 'Amount'} (USD)
       </label>
       <input
         id="amount-usd"
@@ -397,7 +437,7 @@ function WithdrawPageContent() {
           Amount exceeds available balance.
         </p>
       ) : null}
-      {syntheticJourneyActive && remainingAfterWithdrawal !== null ? (
+      {productSimulationActive && remainingAfterWithdrawal !== null ? (
         <section
           className="rounded-xl border border-hedgr-200 bg-white p-4 text-hedgr-dark"
           data-testid="withdraw-balance-preview"
@@ -455,7 +495,7 @@ function WithdrawPageContent() {
               {activeStatusPresentation.label}
             </span>
           </div>
-          {!syntheticJourneyActive &&
+          {!productSimulationActive &&
             exceptionClarificationLines && exceptionClarificationLines.length > 0 && (
             <div
               className="mt-3 border-t border-gray-100 pt-3 space-y-2"
@@ -468,7 +508,7 @@ function WithdrawPageContent() {
               ))}
             </div>
           )}
-          {!syntheticJourneyActive &&
+          {!productSimulationActive &&
             reconciliationClarificationLines && reconciliationClarificationLines.length > 0 && (
             <div
               className="mt-3 border-t border-gray-100 pt-3 space-y-2"
@@ -481,7 +521,7 @@ function WithdrawPageContent() {
               ))}
             </div>
           )}
-          {!syntheticJourneyActive &&
+          {!productSimulationActive &&
             unresolvedPathClarificationLines && unresolvedPathClarificationLines.length > 0 && (
             <div
               className="mt-3 border-t border-gray-100 pt-2 space-y-1"
@@ -494,7 +534,7 @@ function WithdrawPageContent() {
               ))}
             </div>
           )}
-          {!syntheticJourneyActive &&
+          {!productSimulationActive &&
             nextStepGuidanceLines && nextStepGuidanceLines.length > 0 && (
             <div
               className="mt-3 border-t border-gray-100 pt-2 space-y-1"
@@ -507,7 +547,7 @@ function WithdrawPageContent() {
               ))}
             </div>
           )}
-          {!syntheticJourneyActive &&
+          {!productSimulationActive &&
             fallbackPathClarificationLines && fallbackPathClarificationLines.length > 0 && (
             <div
               className="mt-2 border-t border-gray-100/80 pt-1.5 space-y-1"
@@ -520,7 +560,7 @@ function WithdrawPageContent() {
               ))}
             </div>
           )}
-          {status === 'CONFIRMED' && syntheticJourneyActive ? (
+          {status === 'CONFIRMED' && productSimulationActive ? (
             <div className="mt-4 border-t border-hedgr-200 pt-4">
               {remainingAfterWithdrawal !== null ? (
                 <p
@@ -535,7 +575,11 @@ function WithdrawPageContent() {
                 </p>
               ) : null}
               <Link
-                href={getSyntheticJourneyHref('/activity')}
+                href={
+                  syntheticJourneyActive
+                    ? getSyntheticJourneyHref('/activity')
+                    : '/activity'
+                }
                 className="inline-flex rounded-xl bg-hedgr-primary px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-hedgr-600 focus:outline-none focus:ring-2 focus:ring-hedgr-500 focus:ring-offset-2"
               >
                 Review simulated activity
@@ -559,7 +603,7 @@ function WithdrawPageContent() {
 
 function WithdrawPageFallback() {
   return (
-    <main className="p-6 space-y-4 max-w-xl">
+    <main className="mx-auto max-w-xl space-y-4 p-6">
       <h1 className="text-2xl font-semibold">Withdraw</h1>
       <div className="flex items-center justify-center py-12">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600" />

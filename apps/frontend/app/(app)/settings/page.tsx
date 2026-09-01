@@ -65,7 +65,7 @@ export default async function SettingsPage({ searchParams }: SettingsPageProps) 
             No preferences available yet
           </h3>
           <p className="mt-1 max-w-lg text-sm leading-relaxed text-hedgr-500">
-            This prototype does not currently offer customer-controlled
+            This simulated product does not currently offer customer-controlled
             settings.
           </p>
         </div>

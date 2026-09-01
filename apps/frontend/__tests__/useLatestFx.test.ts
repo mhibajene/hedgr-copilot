@@ -8,15 +8,49 @@ const mockFetch = vi.fn();
 
 beforeEach(() => {
   vi.stubGlobal('fetch', mockFetch);
-  process.env.NEXT_PUBLIC_API_BASE_URL = 'http://localhost:5050';
+  vi.stubEnv('NEXT_PUBLIC_AUTH_MODE', 'magic');
+  vi.stubEnv('NEXT_PUBLIC_API_BASE_URL', 'http://localhost:5050');
+  vi.stubEnv('NEXT_PUBLIC_FX_MODE', 'coingecko');
 });
 
 afterEach(() => {
   vi.unstubAllGlobals();
+  vi.unstubAllEnvs();
   vi.clearAllMocks();
 });
 
 describe('useLatestFx', () => {
+  test('fixed mode adapts the deterministic same-origin response without a backend base URL', async () => {
+    vi.stubEnv('NEXT_PUBLIC_FX_MODE', 'fixed');
+    vi.stubEnv('NEXT_PUBLIC_API_BASE_URL', '');
+    mockFetch.mockResolvedValue({
+      ok: true,
+      json: async () => ({
+        base: 'USD',
+        quote: 'ZMW',
+        rate: 20,
+        ts: 1700000000123,
+        provider: 'fixed',
+      }),
+    });
+
+    const { result } = renderHook(() => useLatestFx('USDZMW'));
+
+    await waitFor(() => {
+      expect(result.current.status).toBe('success');
+    });
+
+    expect(result.current.data).toEqual({
+      pair: 'USDZMW',
+      rate: 20,
+      ts: 1700000000,
+    });
+    expect(mockFetch).toHaveBeenCalledWith(
+      '/api/fx?quote=ZMW',
+      expect.objectContaining({})
+    );
+  });
+
   test('success: fetch returns { pair, rate, ts } and status becomes success', async () => {
     mockFetch.mockResolvedValue({
       ok: true,
@@ -93,5 +127,18 @@ describe('useLatestFx', () => {
     });
 
     expect(mockFetch).toHaveBeenCalledTimes(2);
+  });
+
+  test('live mode fails closed when the backend base URL is absent', async () => {
+    vi.stubEnv('NEXT_PUBLIC_FX_MODE', 'live');
+    vi.stubEnv('NEXT_PUBLIC_API_BASE_URL', '');
+
+    const { result } = renderHook(() => useLatestFx('USDZMW'));
+
+    await waitFor(() => {
+      expect(result.current.status).toBe('error');
+    });
+
+    expect(mockFetch).not.toHaveBeenCalled();
   });
 });

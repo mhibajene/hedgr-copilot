@@ -50,11 +50,8 @@ test.describe('Balance SSoT - Ledger as Single Source of Truth', () => {
     // Verify initial balance is 0
     await expect(balanceEl).toHaveText('$0.00');
 
-    // Navigate to deposit page using nav link (explicit selector to avoid CTA ambiguity)
-    await page
-      .getByTestId('nav-links')
-      .getByRole('link', { name: 'Deposit', exact: true })
-      .click();
+    // Navigate to deposit through the approved Home utility.
+    await page.getByTestId('dashboard-add-simulated-deposit').click();
     await expect(page).toHaveURL(/\/deposit/);
 
     // Enter deposit amount (100 ZMW)
@@ -78,7 +75,7 @@ test.describe('Balance SSoT - Ledger as Single Source of Truth', () => {
     // Navigate to dashboard using nav link
     await page
       .getByTestId('nav-links')
-      .getByRole('link', { name: 'Dashboard', exact: true })
+      .getByRole('link', { name: 'Home', exact: true })
       .click();
     await expect(page).toHaveURL(/\/dashboard/);
 
@@ -150,15 +147,17 @@ test.describe('Balance SSoT - Ledger as Single Source of Truth', () => {
     await page.getByRole('button', { name: 'Confirm' }).click();
     await expect(page.getByTestId('deposit-confirmed')).toBeVisible({ timeout: 10000 });
 
-    // Navigate to withdraw page using nav link
+    // Return Home, then use the approved Withdraw utility.
     await page
       .getByTestId('nav-links')
-      .getByRole('link', { name: 'Withdraw', exact: true })
+      .getByRole('link', { name: 'Home', exact: true })
       .click();
+    await expect(page).toHaveURL(/\/dashboard/);
+    await page.getByTestId('dashboard-simulated-withdraw').click();
     await expect(page).toHaveURL(/\/withdraw/);
 
     // Should show the same synthetic balance carried forward from deposit.
-    const balanceText = page.getByText('Simulated balance before this step:', {
+    const balanceText = page.getByText('Simulated balance', {
       exact: false,
     });
     await expect(balanceText).toBeVisible();
