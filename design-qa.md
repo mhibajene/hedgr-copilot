@@ -113,6 +113,37 @@ final result: passed
 
 ---
 
+# Design QA — D-114 frontend route hygiene
+
+## Comparison target
+
+- Optimized local production build at `http://localhost:3001`.
+- Desktop Trust information capture at 1440 × 1000: `/tmp/hedgr-route-hygiene-desktop.png`.
+- Final mobile synthetic Trust information capture at 390 × 844: `/tmp/hedgr-route-hygiene-mobile-fixed.png`.
+- Current governed Settings hierarchy, Hedgr tokens, and compact simulation disclosure remain the controlling visual grammar; no new design direction is introduced.
+
+## Findings and correction
+
+- The customer-facing **About this simulation** page uses one H1, three short information sections, the existing pale trust surface, divider-led supporting sections, and a 44 px **Back to Settings** link. No obsolete environment badge or internal Trust & Risk diagnostics remain.
+- Desktop inspection found no overflow, obscured content, console error, or navigation ambiguity.
+- [P2] The first 390 × 844 synthetic Trust render collapsed the mobile navigation row because `/settings/trust` was not recognized as Settings context. The 44 px hamburger occupied the same vertical region as **Back to Settings**.
+  - Fix: treat Settings subpaths as Settings navigation context, reserve the full mobile navigation row, and retain the active Settings treatment in the bottom navigation.
+  - Post-fix measurement: hamburger bounds `y=63..107`; **Back to Settings** bounds `y=142..186`; no overlap and no horizontal overflow.
+- Final mobile inspection found no actionable P0, P1, or P2 visual, responsive, interaction, or accessibility issue.
+
+## Verification
+
+- Root and legacy Trust redirects resolve to `/login` and `/settings/trust` respectively.
+- Synthetic Trust and return navigation preserve `journey=class-a-val-002`; **About Hedgr** remains withheld.
+- Retired `/prototype/**` and `/api/defi` paths return 404; both governed synthetic journey entries return 200.
+- Desktop and 390 × 844 overflow checks passed; browser diagnostics contained no console errors.
+- `pnpm --filter @hedgr/frontend build` — passed after the mobile navigation correction.
+- Focused Trust Vitest — 3 / 3 passed.
+
+final result: passed
+
+---
+
 # Design QA — D-107 Home / Settings productisation refinement
 
 ## Comparison target

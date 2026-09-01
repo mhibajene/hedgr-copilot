@@ -40,9 +40,11 @@ async function loginMock(page: import("@playwright/test").Page) {
 // Tests
 // ---------------------------------------------------------------------------
 
-test("1 · landing page renders title and main landmark", async ({ page }) => {
+test("1 · root redirects to the login entry", async ({ page }) => {
   await page.goto("/");
+  await expect(page).toHaveURL(/\/login$/);
   await expect(page).toHaveTitle(/hedgr/i);
+  await expect(page.getByRole("heading", { name: /log in/i })).toBeVisible();
   await expect(page.getByRole("main")).toBeVisible();
 });
 
