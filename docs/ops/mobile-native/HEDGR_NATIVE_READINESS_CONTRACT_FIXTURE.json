@@ -1,0 +1,96 @@
+{
+  "schema_version": 1,
+  "fixture_id": "mobile-native-readiness-v1",
+  "authority": "MOBILE-NATIVE-READINESS-001 / Internal D-122 / section 254",
+  "classification": "synthetic characterization only; no real money",
+  "balance_scenario": {
+    "name": "zero-to-five-to-minus-two-to-three",
+    "opening_usd": 0,
+    "transactions": [
+      {
+        "txn_ref": "native-readiness-deposit-001",
+        "type": "deposit",
+        "status": "settled",
+        "amount_zmw": 120,
+        "amount_usd": 5,
+        "fx_rate": 24,
+        "created_at": 1772928000000,
+        "updated_at": 1772928000000
+      },
+      {
+        "txn_ref": "native-readiness-withdrawal-001",
+        "type": "withdrawal",
+        "status": "settled",
+        "amount_zmw": 48,
+        "amount_usd": 2,
+        "fx_rate": 24,
+        "created_at": 1772928060000,
+        "updated_at": 1772928060000
+      }
+    ],
+    "expected_projection": {
+      "total": 3,
+      "available": 3,
+      "pending": 0,
+      "currency": "USD"
+    }
+  },
+  "ledger_public_statuses": {
+    "pending": "PENDING_INIT",
+    "settled": "SUCCESS",
+    "failed": "FAILED"
+  },
+  "internal_public_statuses": {
+    "PENDING": "PENDING_INIT",
+    "PENDING_INIT": "PENDING_INIT",
+    "INITIATED": "PENDING_INIT",
+    "CREATED": "PENDING_INIT",
+    "IN_PROGRESS": "IN_PROGRESS",
+    "PROCESSING": "IN_PROGRESS",
+    "L2_PENDING": "IN_PROGRESS",
+    "BRIDGE_INIT": "IN_PROGRESS",
+    "AWAITING_CONFIRMATION": "IN_PROGRESS",
+    "SUCCESS": "SUCCESS",
+    "CONFIRMED": "SUCCESS",
+    "COMPLETED": "SUCCESS",
+    "SETTLED": "SUCCESS",
+    "FAILED": "FAILED",
+    "REJECTED": "FAILED",
+    "ERROR": "FAILED",
+    "REVERSED": "REVERSED",
+    "REFUNDED": "REVERSED",
+    "CANCELLED": "REVERSED",
+    "EXPIRED": "EXPIRED",
+    "TIMED_OUT": "EXPIRED"
+  },
+  "engine_states": {
+    "normal": {
+      "posture": "normal",
+      "liquidityTargetPct": 30,
+      "coreTargetPct": 50,
+      "yieldCapPct": 20,
+      "updatedAt": "2026-03-08T00:00:00.000Z"
+    },
+    "tightening": {
+      "posture": "tightening",
+      "liquidityTargetPct": 40,
+      "coreTargetPct": 45,
+      "yieldCapPct": 15,
+      "updatedAt": "2026-03-08T00:00:00.000Z"
+    },
+    "tightened": {
+      "posture": "tightened",
+      "liquidityTargetPct": 55,
+      "coreTargetPct": 35,
+      "yieldCapPct": 10,
+      "updatedAt": "2026-03-08T00:00:00.000Z"
+    },
+    "recovery": {
+      "posture": "recovery",
+      "liquidityTargetPct": 35,
+      "coreTargetPct": 50,
+      "yieldCapPct": 15,
+      "updatedAt": "2026-03-08T00:00:00.000Z"
+    }
+  }
+}
