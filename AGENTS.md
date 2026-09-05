@@ -1,3 +1,6 @@
+<!-- Current bounded override; preceding numbered closeouts remain historical. -->
+**Current external About activation (2026-09-05):** Internal **D-124** / `HEDGR_STATUS.md` **§256**, explicitly named by **§7** / **§7a**, activates `CLASS-A-VAL-002-ABOUT-EXTERNAL-001` as the sole nested Lane V implementation under parent `CLASS-A-VAL-002`. Codex is Repo Steward then sole Implementer for the exact files recorded there. Direct Founder approval authorizes activation and bounded implementation; the retired Green Lane envelope remains retired. The external v0.3 surface is localhost review-only at `/about-hedgr-review`, denied in production, with no product/Form/external links. Publication is not authorized; content is frozen. This override supersedes earlier current no-nested-Lane-V wording only for this ticket. Existing orientation, in-product About, product journey, frozen narrative, research protocol, Form, paused participant distribution and financial boundaries remain unchanged. Lane E remains independent with no active nested ticket. `NO CROSS-LANE IMPACT`.
+
 # AGENTS.md — Hedgr Repo Execution Standard (v1)
 
 Status: Binding (Repo conventions + Cursor execution rules)
