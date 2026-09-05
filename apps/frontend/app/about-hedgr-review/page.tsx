@@ -49,15 +49,28 @@ export default function AboutHedgrReviewPage() {
               {section.title}
             </h2>
             <div className={styles.copy}>
-              {section.blocks.map((block, index) => block.kind === 'heading' ? (
-                <h3 key={index} className={section.number === '01' ? styles.headline : styles.subheading}>
-                  {block.text}
-                </h3>
-              ) : (
-                <p key={index} className={section.number === '01' && index === section.blocks.length - 1 ? styles.simulation : undefined}>
-                  <ApprovedText text={block.text} />
-                </p>
-              ))}
+              {section.blocks.map((block, index) => {
+                if (section.number === '03' && block.text.startsWith('**')) {
+                  const questions = section.blocks.filter(item => item.text.startsWith('**'));
+                  if (block !== questions[0]) return null;
+                  return (
+                    <ul key={index} className={styles.questions}>
+                      {questions.map(question => (
+                        <li key={question.text}><p><ApprovedText text={question.text} /></p></li>
+                      ))}
+                    </ul>
+                  );
+                }
+                return block.kind === 'heading' ? (
+                  <h3 key={index} className={section.number === '01' ? styles.headline : styles.subheading}>
+                    {block.text}
+                  </h3>
+                ) : (
+                  <p key={index} className={section.number === '01' && index === section.blocks.length - 1 ? styles.simulation : undefined}>
+                    <ApprovedText text={block.text} />
+                  </p>
+                );
+              })}
             </div>
           </section>
         ))}

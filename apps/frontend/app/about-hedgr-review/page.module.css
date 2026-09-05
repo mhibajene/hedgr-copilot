@@ -14,6 +14,9 @@
 .number { margin-right: 0.5rem; }
 .copy { max-width: 40rem; font-size: 1.125rem; line-height: 1.8; }
 .copy p + p { margin-top: 1.25rem; }
+.questions { list-style: disc; padding-left: 1.5rem; margin: 1.5rem 0; }
+.questions li { padding-left: 0.25rem; }
+.questions li + li { margin-top: 1.25rem; }
 .headline { font-size: clamp(2rem, 4vw, 3rem); line-height: 1.15; letter-spacing: -0.025em; font-weight: 600; margin-bottom: 2rem; color: var(--color-hedgr-800); }
 .subheading { font-size: 1.5rem; line-height: 1.4; font-weight: 600; color: var(--color-hedgr-800); margin-bottom: 1rem; }
 .copy p + .subheading { margin-top: 2.5rem; }
