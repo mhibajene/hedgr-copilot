@@ -1,0 +1,262 @@
+[
+  {
+    "number": "01",
+    "title": "Hedgr, simply",
+    "blocks": [
+      {
+        "kind": "heading",
+        "text": "Build financial stability when your currency is unpredictable."
+      },
+      {
+        "kind": "paragraph",
+        "text": "When the money you rely on becomes less predictable, paying bills, saving and planning ahead become harder."
+      },
+      {
+        "kind": "paragraph",
+        "text": "Hedgr is being built to help people understand where they stand financially, what could affect that position, and what may limit their access to money."
+      },
+      {
+        "kind": "paragraph",
+        "text": "The aim is to make the financial picture clearer before someone decides what to do next."
+      },
+      {
+        "kind": "paragraph",
+        "text": "Today, Hedgr is in research and product testing. The experience uses simulated information and does not hold or move real customer money."
+      }
+    ]
+  },
+  {
+    "number": "02",
+    "title": "The problem",
+    "blocks": [
+      {
+        "kind": "heading",
+        "text": "The same balance may not buy the same things tomorrow."
+      },
+      {
+        "kind": "paragraph",
+        "text": "People can work hard, save consistently and plan carefully, yet still face uncertainty about what their money will mean for them later."
+      },
+      {
+        "kind": "paragraph",
+        "text": "A balance tells only part of that story. What it can buy may change. Access may be limited. Alternatives may introduce costs, risks or unfamiliar decisions."
+      },
+      {
+        "kind": "paragraph",
+        "text": "Understanding those choices can become another burden."
+      },
+      {
+        "kind": "paragraph",
+        "text": "Hedgr starts with the person trying to make sense of that situation. What do they have? What has changed? What matters for the position they are trying to build?"
+      },
+      {
+        "kind": "paragraph",
+        "text": "Those questions should be understandable without specialist financial knowledge."
+      }
+    ]
+  },
+  {
+    "number": "03",
+    "title": "What we mean by stability",
+    "blocks": [
+      {
+        "kind": "heading",
+        "text": "Stability means more than a balance."
+      },
+      {
+        "kind": "paragraph",
+        "text": "For Hedgr, financial stability concerns what money can buy over time, whether it remains accessible, and whether its risks and limitations are understood."
+      },
+      {
+        "kind": "paragraph",
+        "text": "These are qualities we are designing around. Hedgr does not guarantee purchasing-power preservation, access or outcomes."
+      },
+      {
+        "kind": "paragraph",
+        "text": "The experience is designed to help people work through four questions:"
+      },
+      {
+        "kind": "paragraph",
+        "text": "**Where do I stand?** Understand the financial position represented in the experience."
+      },
+      {
+        "kind": "paragraph",
+        "text": "**What could affect that position?** Understand relevant changes, risks and uncertainty."
+      },
+      {
+        "kind": "paragraph",
+        "text": "**What may limit access?** Understand the conditions that could affect when and how value becomes available."
+      },
+      {
+        "kind": "paragraph",
+        "text": "**What can I consider next?** Understand the available options after the financial picture is clear."
+      },
+      {
+        "kind": "paragraph",
+        "text": "Making these questions easier to understand is a contribution toward stability. Understanding a risk does not remove it."
+      }
+    ]
+  },
+  {
+    "number": "04",
+    "title": "The Hedgr approach",
+    "blocks": [
+      {
+        "kind": "heading",
+        "text": "Start with the financial picture."
+      },
+      {
+        "kind": "paragraph",
+        "text": "Hedgr is designed to bring position, change and explanation into a clear sequence."
+      },
+      {
+        "kind": "paragraph",
+        "text": "Someone should be able to see what they have, understand what changed, and consider what that means for them. Any next step should follow that understanding."
+      },
+      {
+        "kind": "paragraph",
+        "text": "The first experience we are building is the **Stability Wallet**. It provides a place to explore a financial position and the factors that may affect it."
+      },
+      {
+        "kind": "paragraph",
+        "text": "The wider system includes a **Stability Engine**, the framework at the centre of Hedgr’s approach to interpreting stability and risk."
+      },
+      {
+        "kind": "paragraph",
+        "text": "In the current experience, its information is explanatory. It does not move money or automatically allocate funds. Allocation illustrations do not represent money moved into separate accounts."
+      },
+      {
+        "kind": "paragraph",
+        "text": "The broader aim is to carry more of the complexity within the system while keeping the person’s choices and understanding central."
+      }
+    ]
+  },
+  {
+    "number": "05",
+    "title": "What guides Hedgr",
+    "blocks": [
+      {
+        "kind": "heading",
+        "text": "Preservation before growth"
+      },
+      {
+        "kind": "paragraph",
+        "text": "Protecting existing value comes before seeking growth. Potential returns must remain subordinate to risk and access."
+      },
+      {
+        "kind": "heading",
+        "text": "Access matters"
+      },
+      {
+        "kind": "paragraph",
+        "text": "Understanding a financial position includes understanding what may limit access to it. A number on a screen cannot answer that question alone."
+      },
+      {
+        "kind": "heading",
+        "text": "Risk stays visible"
+      },
+      {
+        "kind": "paragraph",
+        "text": "Simple language should help people understand uncertainty, costs and limitations. It should never make those things disappear."
+      },
+      {
+        "kind": "heading",
+        "text": "Calm supports judgement"
+      },
+      {
+        "kind": "paragraph",
+        "text": "Hedgr should give people room to understand their situation without pressure to act. Waiting or doing nothing can be a valid choice."
+      },
+      {
+        "kind": "heading",
+        "text": "Understanding comes before action"
+      },
+      {
+        "kind": "paragraph",
+        "text": "The experience should clarify the position and available options while leaving judgement with the person."
+      }
+    ]
+  },
+  {
+    "number": "06",
+    "title": "What simplicity must preserve",
+    "blocks": [
+      {
+        "kind": "heading",
+        "text": "A simple experience still needs to explain what matters."
+      },
+      {
+        "kind": "paragraph",
+        "text": "People should be able to understand what Hedgr can do, what it cannot do, and what remains uncertain."
+      },
+      {
+        "kind": "paragraph",
+        "text": "Where a financial capability is introduced, the explanation must address the questions that matter: where value is held, who controls it, what costs and risks apply, and what could affect access."
+      },
+      {
+        "kind": "paragraph",
+        "text": "Information needed for a decision must be available when that decision is made."
+      },
+      {
+        "kind": "paragraph",
+        "text": "Deeper technical explanations have a place when they help someone understand a mechanism or assess a limitation. The everyday experience should make the financial meaning clear first."
+      },
+      {
+        "kind": "paragraph",
+        "text": "Simplicity is a responsibility to explain clearly."
+      }
+    ]
+  },
+  {
+    "number": "07",
+    "title": "Where Hedgr is today",
+    "blocks": [
+      {
+        "kind": "heading",
+        "text": "A working experience, still in research and product testing."
+      },
+      {
+        "kind": "paragraph",
+        "text": "Hedgr has progressed from an initial thesis into a working MVP that makes the proposed experience tangible."
+      },
+      {
+        "kind": "paragraph",
+        "text": "It uses simulated information. It does not hold or move real customer money, open financial accounts, or provide financial advice."
+      },
+      {
+        "kind": "paragraph",
+        "text": "It does not provide live custody, real deposits or withdrawals, live currency conversion, automated allocation, investment management or live yield routing."
+      },
+      {
+        "kind": "paragraph",
+        "text": "The work makes it possible to examine how the experience presents financial position, change, risk and available next steps."
+      },
+      {
+        "kind": "paragraph",
+        "text": "Technical progress does not establish that people understand Hedgr as intended. That remains a question for research."
+      },
+      {
+        "kind": "paragraph",
+        "text": "Future capabilities remain separate from what the current experience provides."
+      }
+    ]
+  },
+  {
+    "number": "08",
+    "title": "The purpose",
+    "blocks": [
+      {
+        "kind": "paragraph",
+        "text": "Hedgr is being built to help people navigate financial uncertainty with a clearer understanding of their position, the risks they face and the factors that may affect access to their money."
+      },
+      {
+        "kind": "paragraph",
+        "text": "Financial stability remains the aim."
+      },
+      {
+        "kind": "paragraph",
+        "text": "Understanding comes before the next decision."
+      }
+    ]
+  }
+]
