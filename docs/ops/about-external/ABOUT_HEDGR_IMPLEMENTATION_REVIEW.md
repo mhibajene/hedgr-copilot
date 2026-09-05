@@ -51,6 +51,16 @@ Hosted check results belong to the exact implementation PR head. They must be re
 
 ## Remaining review and boundaries
 
+### Founder-approved presentation refinement
+
+After reviewing the rendered page, the Founder requested dot points for the four questions and approved a premium, sleek and calm presentation refinement with the option to restore the preceding format. The bullet-point baseline is commit `687c298`; the subsequent presentation refinement is isolated in a separate commit so it can be reverted without removing those bullets.
+
+The refinement compacts the masthead, enlarges the opening headline, quietens the section rules, varies section spacing, pairs the first four principles in an unboxed desktop grid with the fifth spanning the row, and gives both disclosure passages consistent framing. Mobile retains the original single-column content order. The final two lines receive stronger visual emphasis. Copy, approved inline bold phrases, assets, environment guards and page exposure are unchanged.
+
+Operator before/after review favors retaining the refinement: the opening and closing hierarchy is clearer and the principles interrupt the long-page rhythm without adding controls or obscuring limits. This is a visual judgement, not reader-comprehension evidence or Human Narrative Lead sign-off. Before/after desktop and mobile screenshots are retained outside the repository at `/Users/musalwa/.codex/visualizations/2026/09/05/01a06f90-40ed-7ec1-b4cf-a4fdc2199628/polish-refinement/`.
+
+Refinement verification: all six page unit tests, both dedicated desktop/mobile browser tests (including 320px reflow, contrast, source-order fidelity and no external requests), and the full `pnpm run validate` passed. The production-build and 63-test production-suite evidence in the table above belongs to the initial implementation; subsequent hosted results must be checked against the refinement commit. The refinement does not change D-124 scope or RAP authority sources.
+
 Human Narrative Lead rendered fidelity/readability review remains pending. Automated exact-copy evidence and operator visual checks do not impersonate that review or accept reader comprehension. Next sequence: technical verification → narrative-fidelity review → current-state reconciliation → Founder publication disposition. No reader recruitment or new research is required merely to finish implementation review.
 
 Participant distribution remains paused pending separately governed live-Form verification. Both parent tickets remain open, Lane E is unchanged, and no successor is inferred. `NO CROSS-LANE IMPACT`.

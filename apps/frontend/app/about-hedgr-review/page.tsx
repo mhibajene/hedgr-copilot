@@ -35,13 +35,14 @@ export default function AboutHedgrReviewPage() {
       <a className={styles.skip} href="#about-hedgr">Skip to content</a>
       <header className={styles.header}>
         <Image src="/brand/hedgr_logo.svg" alt="Hedgr" width={142} height={35.286} priority />
+        <h1 className={styles.title}>About Hedgr</h1>
       </header>
       <main id="about-hedgr" tabIndex={-1} className={styles.main}>
-        <h1 className={styles.title}>About Hedgr</h1>
         {sections.map((section) => (
           <section
             className={styles.section}
             key={section.number}
+            data-section={section.number}
             aria-labelledby={`section-${section.number}`}
           >
             <h2 id={`section-${section.number}`} className={styles.sectionTitle}>
@@ -49,7 +50,16 @@ export default function AboutHedgrReviewPage() {
               {section.title}
             </h2>
             <div className={styles.copy}>
-              {section.blocks.map((block, index) => {
+              {section.number === '05' ? (
+                <div className={styles.principles}>
+                  {section.blocks.map((block, index) => block.kind === 'heading' ? (
+                    <div className={styles.principle} key={block.text}>
+                      <h3 className={styles.subheading}>{block.text}</h3>
+                      <p><ApprovedText text={section.blocks[index + 1].text} /></p>
+                    </div>
+                  ) : null)}
+                </div>
+              ) : section.blocks.map((block, index) => {
                 if (section.number === '03' && block.text.startsWith('**')) {
                   const questions = section.blocks.filter(item => item.text.startsWith('**'));
                   if (block !== questions[0]) return null;
