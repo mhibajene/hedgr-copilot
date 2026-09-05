@@ -1,17 +1,11 @@
 import type { Metadata } from 'next';
 import React from 'react';
 import Image from 'next/image';
-import { notFound } from 'next/navigation';
 import sections from '../../lib/narrative/about-hedgr-external.json';
 import styles from './page.module.css';
 
-// D-124 authorizes local rendered review only. Publication requires a new disposition.
-function requireLocalReview() {
-  if (process.env.NODE_ENV !== 'development' || process.env.VERCEL) notFound();
-}
-
+// D-125 authorizes direct-link publication of this accepted informational surface.
 export function generateMetadata(): Metadata {
-  requireLocalReview();
   const description = sections[0].blocks.at(-1)!.text;
   return {
     title: 'About Hedgr',
@@ -29,7 +23,6 @@ function ApprovedText({ text }: { text: string }) {
 }
 
 export default function AboutHedgrReviewPage() {
-  requireLocalReview();
   return (
     <div className={styles.page}>
       <a className={styles.skip} href="#about-hedgr">Skip to content</a>

@@ -1,7 +1,5 @@
 import { defineConfig, devices } from '@playwright/test';
 
-process.env.ABOUT_EXTERNAL_REVIEW_TEST = 'true';
-
 export default defineConfig({
   testDir: './tests-e2e',
   testMatch: 'about-hedgr-external.spec.ts',
