@@ -3,7 +3,7 @@
 Date: 2026-09-05
 Ticket: `CLASS-A-VAL-002-ABOUT-EXTERNAL-001`
 Authority: Internal D-124 / §256, amended by Founder publication decision D-125 / §257
-Status: Founder-accepted publication candidate; production verification and technical closeout pending.
+Status: Published and technically verified under D-126 / §258; PR #491 merged at `58f97c6`.
 
 ## Accepted outcome and provenance
 
@@ -36,7 +36,7 @@ Immediately before publication implementation, `origin/main` remained `5a8ddff` 
 - Full `pnpm run validate`: passed, including 775 frontend tests, typecheck, lint, trust, RAP, Bridge and snapshot checks.
 - Optimized production build: passed.
 - Full hermetic production Playwright suite: 64/64 passed; the former denial test is replaced by production access/fidelity checks, and the full rendered-page checks now run in the protected suite.
-- Hosted validation/build/E2E and deployed-route checks must be read against the final PR head and deployment. No pre-merge evidence is represented as a completed production release.
+- All hosted checks passed on publication head `1768caa`. PR #491 merged at `58f97c6`; Vercel Production deployment `6279069006` reported success. Live About and both query variants returned HTTP 200 with all 61 rendered blocks matching the approved brief, faithful metadata and noindex/nofollow. The synthetic entry returned HTTP 200. Live browser inspection was unavailable because the Mac was locked; visual/interaction evidence is the accepted review and local/hosted hermetic browser suites.
 
 Reproduce the dedicated development checks with `pnpm --filter @hedgr/frontend exec playwright test --config playwright.about-external.config.ts`. The default configuration runs the same page checks against the production build alongside the existing product suite.
 
