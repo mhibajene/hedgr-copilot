@@ -140,7 +140,7 @@ export function TrustDisclosureBanner({
           consolidateTechnicalDetails ? 'py-1' : 'py-3'
         }`}
       >
-        <div className={`flex items-center justify-between gap-2 sm:gap-4 ${consolidateTechnicalDetails ? 'flex-nowrap' : 'flex-wrap'}`}>
+        <div className="flex flex-wrap items-center justify-between gap-2 sm:gap-4">
           <div className="flex min-w-0 items-center gap-2 sm:gap-3">
             <span
               className="flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full border border-hedgr-200 bg-white text-[10px] font-bold text-hedgr-primary sm:h-6 sm:w-6 sm:text-xs"
@@ -149,7 +149,7 @@ export function TrustDisclosureBanner({
               i
             </span>
             <div className="min-w-0">
-              <p className="whitespace-nowrap text-[11px] font-semibold sm:text-sm">
+              <p className={`${consolidateTechnicalDetails ? 'whitespace-normal' : 'whitespace-nowrap'} text-[11px] font-semibold sm:text-sm`}>
                 {consolidateTechnicalDetails
                   ? 'Simulation · no real money'
                   : 'Simulation Mode. No Real Money'}
@@ -163,10 +163,10 @@ export function TrustDisclosureBanner({
               ) : null}
             </div>
           </div>
-          <div className={consolidateTechnicalDetails ? 'w-auto flex-shrink-0' : 'flex items-center gap-3 flex-shrink-0'}>
+          <div className={consolidateTechnicalDetails ? 'min-w-0 max-w-full' : 'flex items-center gap-3 flex-shrink-0'}>
             {consolidateTechnicalDetails ? (
               <details data-testid="simulation-technical-details" className="group">
-                <summary className="inline-flex min-h-11 cursor-pointer list-none items-center whitespace-nowrap text-xs font-semibold text-hedgr-600 underline decoration-hedgr-200 underline-offset-4 marker:content-none sm:text-sm [&::-webkit-details-marker]:hidden">
+                <summary className="inline-flex min-h-11 max-w-full cursor-pointer list-none items-center whitespace-normal text-xs font-semibold text-hedgr-600 underline decoration-hedgr-200 underline-offset-4 marker:content-none sm:text-sm [&::-webkit-details-marker]:hidden">
                   How this simulation works
                 </summary>
                 <div className="mt-3 space-y-3 rounded-2xl border border-hedgr-100 bg-white p-4 shadow-sm">
@@ -180,7 +180,7 @@ export function TrustDisclosureBanner({
                       <select
                         value={currentMarket}
                         onChange={(e) => handleMarketChange(e.target.value as MarketCode)}
-                        className="min-h-11 rounded border border-hedgr-200 bg-white px-2 py-1 text-sm font-medium text-hedgr-primary transition-colors hover:border-hedgr-300"
+                        className="min-h-11 min-w-0 max-w-full rounded border border-hedgr-200 bg-white px-2 py-1 text-sm font-medium text-hedgr-primary transition-colors hover:border-hedgr-300"
                         title="Simulation currency display"
                         aria-label="Simulation currency display"
                         data-testid="market-switcher"

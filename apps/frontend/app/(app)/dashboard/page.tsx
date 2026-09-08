@@ -288,7 +288,7 @@ export default function DashboardPage() {
           {syntheticJourneyActive ? homeUtilities : null}
           {!syntheticJourneyActive && recentActivity[0] ? (
             <section
-              className="flex items-baseline justify-between gap-4 border-y border-hedgr-100 py-3"
+              className="flex flex-wrap items-baseline justify-between gap-4 border-y border-hedgr-100 py-3"
               aria-label="Latest simulated change"
               data-testid="dashboard-change-evidence"
             >
@@ -336,7 +336,7 @@ export default function DashboardPage() {
       className="border-y border-hedgr-100 bg-white py-2"
       data-testid="dashboard-education"
     >
-      <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-4 font-medium text-hedgr-800 marker:content-none select-none [&::-webkit-details-marker]:hidden">
+      <summary className="flex min-h-11 flex-wrap cursor-pointer list-none items-center justify-between gap-4 font-medium text-hedgr-800 marker:content-none select-none [&::-webkit-details-marker]:hidden">
         <span>How Hedgr interprets stability</span>
         <span className="text-xs font-medium uppercase tracking-wide text-hedgr-500">
           View
@@ -356,7 +356,7 @@ export default function DashboardPage() {
       data-testid="dashboard-disclosures"
     >
       <summary className="flex min-h-11 cursor-pointer list-none items-center font-medium text-hedgr-800 marker:content-none select-none [&::-webkit-details-marker]:hidden">
-        <span className="flex items-center justify-between gap-4">
+        <span className="flex flex-wrap items-center justify-between gap-4">
           <span>Important disclosures</span>
           <span className="text-xs font-medium uppercase tracking-wide text-hedgr-500">
             View
@@ -420,7 +420,7 @@ export default function DashboardPage() {
           >
             See what you have and what changed.
           </h1>
-          <p className="hidden max-w-xl text-sm leading-relaxed text-hedgr-dark sm:block">
+          <p className="max-w-xl text-sm leading-relaxed text-hedgr-dark">
             Hedgr helps you understand and maintain your financial stability.{' '}
             {syntheticJourneyActive
               ? 'This walkthrough provides context, not an instruction.'
@@ -510,7 +510,7 @@ export default function DashboardPage() {
             className="border-t border-hedgr-200 pt-6"
             aria-labelledby="dashboard-recent-activity-heading"
           >
-            <div className="flex items-baseline justify-between gap-3">
+            <div className="flex flex-wrap items-baseline justify-between gap-3">
               <h2
                 id="dashboard-recent-activity-heading"
                 className="text-base font-semibold tracking-tight text-hedgr-800"
@@ -528,7 +528,7 @@ export default function DashboardPage() {
               {recentActivity.map((tx) => (
                 <li
                   key={tx.id}
-                  className="flex items-baseline justify-between gap-4 py-3"
+                  className="flex flex-wrap items-baseline justify-between gap-4 py-3"
                 >
                   <div className="min-w-0">
                     <p className="font-medium text-hedgr-800">

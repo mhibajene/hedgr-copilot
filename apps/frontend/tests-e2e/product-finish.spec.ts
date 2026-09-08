@@ -33,6 +33,56 @@ for (const synthetic of [true, false]) {
   const home = synthetic ? '/dashboard-synthetic-journey' : '/dashboard';
   const route = (path: string) => path + (synthetic ? '?journey=class-a-val-002' : '');
 
+  test(`${family}: mobile framing and enlarged simulation disclosure stay readable`, async ({ page }, testInfo) => {
+    await seedPosition(page);
+    for (const width of [320, 390, 1280]) {
+      await page.setViewportSize({ width, height: 900 });
+      for (const textSize of [100, 200]) {
+        await page.goto(home);
+        await page.addStyleTag({ content: `html { font-size: ${textSize}%; }` });
+        const framing = page.getByTestId('dashboard-orientation').getByText('Hedgr helps you understand', { exact: false });
+        await expect.soft(framing).toBeVisible();
+        await expect(framing).toContainText('provides context, not an instruction.');
+        const banner = page.getByRole('region', { name: 'Simulation disclosure' });
+        const title = banner.getByText('Simulation · no real money', { exact: true });
+        const details = page.getByTestId('simulation-technical-details');
+        const summary = details.locator('summary');
+        const assertReflow = async () => {
+          await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)).toBeLessThanOrEqual(1);
+          for (const element of [title, summary, details]) {
+            await expect.poll(() => element.evaluate(el => el.scrollWidth - el.clientWidth)).toBeLessThanOrEqual(1);
+          }
+          const titleBox = (await title.boundingBox())!;
+          const summaryBox = (await summary.boundingBox())!;
+          const overlapX = Math.min(titleBox.x + titleBox.width, summaryBox.x + summaryBox.width) - Math.max(titleBox.x, summaryBox.x);
+          const overlapY = Math.min(titleBox.y + titleBox.height, summaryBox.y + summaryBox.height) - Math.max(titleBox.y, summaryBox.y);
+          expect(overlapX <= 1 || overlapY <= 1).toBe(true);
+          expect(summaryBox.height).toBeGreaterThanOrEqual(44);
+          const bannerBox = (await banner.boundingBox())!;
+          expect((await page.getByTestId('app-nav').boundingBox())!.y).toBeGreaterThanOrEqual(bannerBox.y + bannerBox.height);
+        };
+        await assertReflow();
+        if (!synthetic) {
+          for (const row of await page.getByRole('region', { name: 'Recent activity' }).getByRole('listitem').all()) {
+            const description = row.locator('div');
+            await expect.poll(() => description.evaluate(el => el.scrollWidth - el.clientWidth)).toBeLessThanOrEqual(1);
+            const left = (await description.boundingBox())!;
+            const amount = (await row.locator(':scope > p').boundingBox())!;
+            expect(amount.x >= left.x + left.width - 1 || amount.y >= left.y + left.height - 1).toBe(true);
+          }
+        }
+        await summary.focus();
+        await page.keyboard.press('Enter');
+        await expect(details).toHaveAttribute('open', '');
+        await expect(details.getByRole('link', { name: 'Learn more' })).toHaveAttribute('href', route('/settings/trust'));
+        await assertReflow();
+        await page.screenshot({ path: testInfo.outputPath(`${family}-${width}-${textSize}-disclosure.png`), fullPage: true });
+        await page.keyboard.press('Enter');
+        await expect(details).not.toHaveAttribute('open', '');
+      }
+    }
+  });
+
   test(`${family}: B2 preserves equal action weight and the factual journey`, async ({ page }, testInfo) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await seedPosition(page);
