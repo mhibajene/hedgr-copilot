@@ -1,5 +1,7 @@
 "use client";
 
+import finish from '../product-finish.module.css';
+
 import React from "react";
 import type { EngineState } from "../../../lib/engine/types";
 
@@ -105,14 +107,14 @@ export function EngineAllocationBands({
   const syntheticPlanning = (
     <div className="space-y-4">
       <dl
-        className="overflow-hidden rounded-2xl border border-hedgr-100 bg-hedgr-100/20 shadow-sm divide-y divide-hedgr-100 sm:grid sm:grid-cols-3 sm:divide-x sm:divide-y-0"
+        className={`overflow-hidden ${finish.purposes}`}
         data-testid="engine-allocation-target-roles"
         aria-label="Planning purposes"
       >
         {SYNTHETIC_PURPOSES.map(({ key, label, description }) => (
           <div
             key={key}
-            className="px-5 py-5 sm:px-4 sm:py-4"
+            className={finish.purpose}
             data-testid={`engine-allocation-role-${key}`}
           >
             <dt className="text-sm font-semibold text-hedgr-800">{label}</dt>
@@ -124,7 +126,7 @@ export function EngineAllocationBands({
       </dl>
 
       <p
-        className="max-w-2xl rounded-r-xl border-l-2 border-hedgr-500 bg-hedgr-100/20 px-3 py-2.5 text-xs leading-relaxed text-hedgr-dark sm:text-sm"
+        className={`max-w-2xl text-hedgr-dark ${finish.planningBoundary}`}
         data-testid="engine-allocation-boundary"
       >
         These are planning purposes, not separate balances. They do not divide

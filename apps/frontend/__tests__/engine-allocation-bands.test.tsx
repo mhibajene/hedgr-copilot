@@ -164,11 +164,8 @@ describe("EngineAllocationBands", () => {
     expect(roles.textContent).toContain("Growth");
     expect(roles.textContent).toContain("For future opportunities.");
     expect(roles.textContent).not.toMatch(/\d+%/);
-    expect(roles.className).toContain("rounded-2xl");
     expect(roles.className).toContain("overflow-hidden");
-    expect(roles.className).toContain("border-hedgr-100");
-    expect(roles.className).toContain("bg-hedgr-100/20");
-    expect(roles.className).toContain("shadow-sm");
+    expect(roles.querySelectorAll(":scope > div")).toHaveLength(3);
     expect(roles.querySelector("img")).toBeNull();
     expect(roles.querySelector("svg")).toBeNull();
 
@@ -178,8 +175,6 @@ describe("EngineAllocationBands", () => {
       "yieldCapPct",
     ]) {
       const role = screen.getByTestId(`engine-allocation-role-${purpose}`);
-      expect(role.className).toContain("px-5");
-      expect(role.className).toContain("py-5");
       expect(role.className).not.toContain("bg-white");
     }
 

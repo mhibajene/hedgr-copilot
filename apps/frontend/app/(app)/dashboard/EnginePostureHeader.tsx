@@ -1,5 +1,7 @@
 "use client";
 
+import finish from '../product-finish.module.css';
+
 import React from "react";
 import { ENGINE_POSTURE_CONTEXT } from "../../../lib/engine/posture-context";
 import type { EnginePosture, EngineState } from "../../../lib/engine/types";
@@ -90,7 +92,7 @@ export function EnginePostureHeader({
 
   return (
     <header
-      className="space-y-3"
+      className={`space-y-3 ${finish.observationHeader}`}
       aria-labelledby="dashboard-current-status-label"
       data-testid="dashboard-current-status"
     >
@@ -128,7 +130,7 @@ export function EnginePostureHeader({
       </p>
 
       {syntheticJourneyActive ? (
-        <div className="space-y-2 border-t border-hedgr-100 pt-3">
+        <div className={`space-y-2 ${finish.attention}`}>
           <h2 className="text-sm font-semibold tracking-tight text-hedgr-800">
             Does anything need attention?
           </h2>

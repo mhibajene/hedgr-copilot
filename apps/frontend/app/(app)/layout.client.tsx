@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import finish from './product-finish.module.css';
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { TrustDisclosureBanner } from '../../components';
@@ -266,14 +267,14 @@ export function AppLayoutClient({ children }: { children: React.ReactNode }) {
           className="fixed inset-x-0 bottom-0 z-40 border-t border-hedgr-100 bg-white shadow-sm md:hidden"
           data-testid="synthetic-bottom-nav"
         >
-          <div className="grid h-16 grid-cols-2 px-4">
+          <div className={`grid grid-cols-2 ${finish.bottomLinks}`}>
             {syntheticNavLinks.map((link) => (
               <Link
                 key={link.href}
                 href={navHref(link.href, true)}
-                className={`relative inline-flex min-h-11 items-start justify-center px-3 pt-4 text-sm font-medium transition-colors ${
+                className={`${finish.bottomLink} relative inline-flex items-start justify-center px-3 pt-4 text-sm font-medium motion-safe:transition-colors ${
                   isNavLinkActive(link.href)
-                    ? 'text-hedgr-primary before:absolute before:top-1.5 before:h-1 before:w-6 before:rounded-full before:bg-hedgr-primary'
+                    ? `${finish.bottomSelected} text-hedgr-primary before:absolute before:top-1.5 before:h-1 before:w-6 before:rounded-full before:bg-hedgr-primary`
                     : 'text-hedgr-500 hover:text-hedgr-dark'
                 }`}
               >

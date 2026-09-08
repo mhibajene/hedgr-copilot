@@ -1,5 +1,7 @@
 'use client';
 
+import finish from '../product-finish.module.css';
+
 import Link from 'next/link';
 import { Suspense, useState, useEffect, useMemo } from 'react';
 import { useSearchParams } from 'next/navigation';
@@ -237,7 +239,7 @@ function WithdrawPageContent() {
 
   if (balanceError) {
     return (
-      <main className="mx-auto max-w-xl space-y-4 p-6">
+      <main className={`mx-auto max-w-xl p-6 ${finish.choice}`}>
         <h1 className="text-2xl font-semibold">Withdraw</h1>
         <ErrorState
           title="Unable to load your balance"
@@ -252,7 +254,7 @@ function WithdrawPageContent() {
 
   if (methodsError) {
     return (
-      <main className="mx-auto max-w-xl space-y-4 p-6">
+      <main className={`mx-auto max-w-xl p-6 ${finish.choice}`}>
         <h1 className="text-2xl font-semibold">Withdraw</h1>
         <ErrorState
           title="Unable to load withdrawal methods"
@@ -267,7 +269,7 @@ function WithdrawPageContent() {
 
   if (methodsLoading || balanceLoading) {
     return (
-      <main className="mx-auto max-w-xl space-y-4 p-6">
+      <main className={`mx-auto max-w-xl p-6 ${finish.choice}`}>
         <h1 className="text-2xl font-semibold">Withdraw</h1>
         <div className="flex items-center justify-center py-12">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600" />
@@ -278,7 +280,7 @@ function WithdrawPageContent() {
 
   if (availableMethods.length === 0) {
     return (
-      <main className="mx-auto max-w-xl space-y-4 p-6">
+      <main className={`mx-auto max-w-xl p-6 ${finish.choice}`}>
         <h1 className="text-2xl font-semibold">Withdraw</h1>
         <EmptyState
           title="No withdrawal methods available"
@@ -307,7 +309,7 @@ function WithdrawPageContent() {
 
   if (available === 0) {
     return (
-      <main className="mx-auto max-w-xl space-y-4 p-6">
+      <main className={`mx-auto max-w-xl p-6 ${finish.choice}`}>
         <h1 className="text-2xl font-semibold">Withdraw</h1>
         <EmptyState
           title={
@@ -350,14 +352,14 @@ function WithdrawPageContent() {
   }
 
   return (
-    <main className="mx-auto max-w-xl space-y-4 p-6">
+    <main className={`mx-auto max-w-xl p-6 ${finish.choice}`}>
       <h1 className="text-2xl font-semibold">Withdraw</h1>
       {reviewSeamActive ? (
         <TxReviewSimulatorBanner data-testid="withdraw-tx-review-simulator-banner" />
       ) : null}
       {syntheticJourneyActive ? (
         <section
-          className="rounded-xl border border-hedgr-300 bg-hedgr-100 p-4 text-hedgr-800"
+          className={`text-hedgr-800 ${finish.condition}`}
           data-testid="withdraw-synthetic-condition"
           aria-label="Simulated withdrawal condition"
         >
@@ -372,7 +374,7 @@ function WithdrawPageContent() {
       ) : null}
       {syntheticJourneyActive ? (
         <div
-          className="rounded-xl border border-hedgr-200 bg-white p-3 text-sm text-hedgr-dark"
+          className={`text-sm text-hedgr-dark ${finish.rate}`}
           data-testid="withdraw-fx-block"
         >
           Simulated example rate: 1 USD = {rate?.toFixed(2)} {quote}
@@ -388,7 +390,7 @@ function WithdrawPageContent() {
       )}
       {!syntheticJourneyActive && simulatedEnvironment ? (
         <section
-          className="rounded-xl border border-hedgr-200 bg-hedgr-100/40 p-4 text-hedgr-800"
+          className={`text-hedgr-800 ${finish.condition}`}
           data-testid="withdraw-simulation-context"
           aria-label="Simulated withdrawal"
         >
@@ -399,7 +401,7 @@ function WithdrawPageContent() {
           </p>
         </section>
       ) : null}
-      <div className="rounded-xl border border-hedgr-100 bg-hedgr-100/40 p-3 text-hedgr-dark">
+      <div className={`text-hedgr-dark ${finish.balanceBefore}`}>
         {syntheticJourneyActive
           ? 'Simulated balance before this step: '
           : productSimulationActive
@@ -425,7 +427,7 @@ function WithdrawPageContent() {
           amountIsInvalid || amountExceedsBalance ? 'withdraw-amount-error' : undefined
         }
         data-testid="withdraw-amount"
-        className="border rounded-xl p-3 w-full"
+        className={`w-full ${finish.amountInput}`}
         max={available}
       />
       {amountIsInvalid ? (
@@ -439,7 +441,7 @@ function WithdrawPageContent() {
       ) : null}
       {productSimulationActive && remainingAfterWithdrawal !== null ? (
         <section
-          className="rounded-xl border border-hedgr-200 bg-white p-4 text-hedgr-dark"
+          className={`text-hedgr-dark ${finish.preview}`}
           data-testid="withdraw-balance-preview"
           aria-label="Simulated balance preview"
         >
@@ -464,7 +466,7 @@ function WithdrawPageContent() {
           amountExceedsBalance ||
           !rateAllowsConfirm
         }
-        className="w-full rounded-xl bg-[#1F2747] p-3 text-white transition-colors hover:bg-[#36447C] focus:outline-none focus:ring-2 focus:ring-[#4658A0] focus:ring-offset-2 disabled:cursor-not-allowed disabled:border disabled:border-[#A6B0D8] disabled:bg-[#CAD0E8] disabled:text-[#1F2747]"
+        className={`w-full bg-hedgr-primary p-3 text-white motion-safe:transition-colors hover:bg-hedgr-600 focus:outline-none focus:ring-2 focus:ring-hedgr-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:border disabled:border-hedgr-200 disabled:bg-hedgr-100 disabled:text-hedgr-primary ${finish.confirm}`}
       >
         {status === 'PENDING' ? 'Processing…' : 'Confirm'}
       </button>
@@ -603,7 +605,7 @@ function WithdrawPageContent() {
 
 function WithdrawPageFallback() {
   return (
-    <main className="mx-auto max-w-xl space-y-4 p-6">
+    <main className={`mx-auto max-w-xl p-6 ${finish.choice}`}>
       <h1 className="text-2xl font-semibold">Withdraw</h1>
       <div className="flex items-center justify-center py-12">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600" />

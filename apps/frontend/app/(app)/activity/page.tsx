@@ -1,5 +1,7 @@
 'use client';
 
+import finish from '../product-finish.module.css';
+
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { useState, useMemo } from 'react';
@@ -83,7 +85,7 @@ type FilterType = 'all' | 'deposits' | 'withdrawals';
 function TransactionTypeIcon({ type }: { type: 'DEPOSIT' | 'WITHDRAW' }) {
   if (type === 'DEPOSIT') {
     return (
-      <div className="flex h-10 w-10 items-center justify-center rounded-full border border-hedgr-100 bg-hedgr-100/30 shadow-sm">
+      <div className={finish.eventMarker}>
         <svg
           className="h-5 w-5 text-hedgr-600"
           fill="none"
@@ -102,7 +104,7 @@ function TransactionTypeIcon({ type }: { type: 'DEPOSIT' | 'WITHDRAW' }) {
   }
 
   return (
-    <div className="flex h-10 w-10 items-center justify-center rounded-full border border-hedgr-100 bg-white shadow-sm">
+    <div className={finish.eventMarker}>
       <svg
         className="h-5 w-5 text-hedgr-800"
         fill="none"
@@ -138,14 +140,14 @@ function ActivityRow({
       data-testid={`activity-row-${tx.type.toLowerCase()}`}
       data-activity-type={tx.type}
       data-activity-status={tx.status}
-      className="w-full cursor-pointer px-1 py-4 text-left transition-colors hover:bg-hedgr-100/20 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-hedgr-500"
+      className={`w-full cursor-pointer py-4 text-left motion-safe:transition-colors hover:bg-hedgr-100/20 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-hedgr-500 ${finish.eventRow}`}
     >
       <div className="flex items-center gap-3 sm:gap-4">
         <TransactionTypeIcon type={tx.type} />
 
         <div className="min-w-0 flex-1">
           <span
-            className="font-semibold text-hedgr-800"
+            className={`font-semibold text-hedgr-800 ${finish.eventTitle}`}
             data-testid={`activity-type-${tx.type.toLowerCase()}`}
           >
             {syntheticJourneyActive
@@ -167,11 +169,9 @@ function ActivityRow({
           </div>
         </div>
 
-        <div className="shrink-0 text-right">
+        <div className={`shrink-0 text-right ${finish.eventAmounts}`}>
           <div
-            className={`font-bold tabular-nums ${
-              tx.type === 'DEPOSIT' ? 'text-hedgr-600' : 'text-hedgr-800'
-            }`}
+            className={`tabular-nums ${finish.eventDelta}`}
             data-testid={`activity-delta-${tx.type.toLowerCase()}`}
           >
             {tx.type === 'DEPOSIT' ? '+' : '-'}${tx.amountUSD.toFixed(2)}
@@ -367,8 +367,8 @@ export default function ActivityPage() {
   };
 
   return (
-    <main className="mx-auto max-w-2xl space-y-6 px-6 pb-28 pt-6 sm:p-8">
-      <div className="flex items-end justify-between gap-4">
+    <main className={`mx-auto max-w-2xl px-6 pb-28 pt-6 sm:p-8 ${finish.activity}`}>
+      <div className="flex flex-wrap items-end justify-between gap-4">
         <h1 className="text-3xl font-bold tracking-tight text-hedgr-800 sm:text-4xl">Activity</h1>
         {transactions.length > 0 && (
           <span className="pb-1 text-xs font-medium text-hedgr-500 sm:text-sm">
@@ -392,7 +392,7 @@ export default function ActivityPage() {
 
       {productSimulationActive && transactions.length > 0 ? (
         <section
-          className="space-y-2 border-y border-hedgr-100 py-3 text-hedgr-dark"
+          className={`space-y-2 text-hedgr-dark ${finish.reconciliation}`}
           data-testid="activity-balance-reconciliation"
           aria-labelledby="activity-balance-reconciliation-heading"
         >
@@ -404,7 +404,7 @@ export default function ActivityPage() {
               Current simulated position
             </h2>
             <span
-              className="font-semibold tabular-nums text-hedgr-800"
+              className={`tabular-nums text-hedgr-800 ${finish.reconciliationAmount}`}
               data-testid="activity-reconciliation-remaining"
             >
               ${syntheticBalanceReconciliation.remaining.toFixed(2)}
@@ -442,12 +442,13 @@ export default function ActivityPage() {
 
       {/* Filter buttons - only show when there are transactions */}
       {transactions.length > 0 && (
-        <div className="flex gap-1.5 border-b border-hedgr-100 pb-3">
+        <div className={finish.filters}>
           {(['all', 'deposits', 'withdrawals'] as const).map((f) => (
             <button
               key={f}
               onClick={() => setFilter(f)}
-              className={`min-h-11 rounded-full border px-3 py-2 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-hedgr-500 focus:ring-offset-2 ${
+              aria-pressed={filter === f}
+              className={`min-h-11 rounded-full border px-3 py-2 text-xs font-semibold motion-safe:transition-colors focus:outline-none focus:ring-2 focus:ring-hedgr-500 focus:ring-offset-2 ${
                 filter === f
                   ? 'border-hedgr-200 bg-hedgr-100/30 text-hedgr-800'
                   : 'border-transparent bg-white text-hedgr-500 hover:border-hedgr-100 hover:text-hedgr-700'
@@ -507,7 +508,7 @@ export default function ActivityPage() {
               ? getSyntheticJourneyHref('/dashboard')
               : '/dashboard'
           }
-          className="inline-flex min-h-11 items-center rounded-full border border-hedgr-100 bg-white px-4 py-2 text-sm font-semibold text-hedgr-primary transition-colors hover:border-hedgr-300 hover:text-hedgr-600 focus:outline-none focus:ring-2 focus:ring-hedgr-500 focus:ring-offset-2"
+          className={`inline-flex min-h-11 items-center border border-hedgr-100 bg-white px-4 py-2 text-sm font-semibold text-hedgr-primary motion-safe:transition-colors hover:border-hedgr-300 hover:text-hedgr-600 focus:outline-none focus:ring-2 focus:ring-hedgr-500 focus:ring-offset-2 ${finish.returnToPosition}`}
         >
           Return to current position
         </Link>
