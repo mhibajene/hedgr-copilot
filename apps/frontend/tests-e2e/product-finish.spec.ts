@@ -35,7 +35,7 @@ for (const synthetic of [true, false]) {
 
   test(`${family}: mobile framing and enlarged simulation disclosure stay readable`, async ({ page }, testInfo) => {
     await seedPosition(page);
-    for (const width of [320, 390, 1280]) {
+    for (const width of [320, 390, 700, 1280]) {
       await page.setViewportSize({ width, height: 900 });
       for (const textSize of [100, 200]) {
         await page.goto(home);
@@ -62,6 +62,11 @@ for (const synthetic of [true, false]) {
           expect((await page.getByTestId('app-nav').boundingBox())!.y).toBeGreaterThanOrEqual(bannerBox.y + bannerBox.height);
         };
         await assertReflow();
+        if (synthetic && width < 768) {
+          const toggle = (await page.getByTestId('nav-toggle').boundingBox())!;
+          const heading = (await page.locator('#synthetic-journey-heading').boundingBox())!;
+          expect(heading.x).toBeGreaterThanOrEqual(toggle.x + toggle.width);
+        }
         if (!synthetic) {
           for (const row of await page.getByRole('region', { name: 'Recent activity' }).getByRole('listitem').all()) {
             const description = row.locator('div');
