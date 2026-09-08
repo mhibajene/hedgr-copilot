@@ -4848,7 +4848,7 @@ Current active ticket status:
 
 **Objective:** Restore the existing financial-stability/context framing at mobile widths and keep the simulation disclosure readable without overlap at enlarged text sizes on synthetic and default product routes.
 
-**Named implementation files:** `apps/frontend/app/(app)/dashboard/page.tsx`; `apps/frontend/components/TrustDisclosureBanner.tsx`.
+**Named implementation files:** `apps/frontend/app/(app)/dashboard/page.tsx`; `apps/frontend/components/TrustDisclosureBanner.tsx`; `apps/frontend/app/(app)/layout.client.tsx` (journey-step row reflow only).
 
 **Named verification file:** `apps/frontend/tests-e2e/product-finish.spec.ts`. Existing test suites may run unchanged. Check mobile framing visibility, full-page and disclosure reflow at 320/390/1280 px and 200% root text, closed/open disclosure geometry, keyboard access, and preserved route context. Run full validate, production build and hermetic E2E plus required hosted checks; inspect deployed routes before closeout.
 
@@ -4856,7 +4856,7 @@ Current active ticket status:
 
 **Boundaries:** Preserve wording, DOM meaning, approved typography/colors, disclosure presence, B + B2 finish, route families, navigation, engine, planning targets, balances/arithmetic, simulated transaction semantics, About and orientation. No Form edits, response deletion, protocol amendment, participant distribution, inference of comprehension, parent closeout, Lane E change, backend, provider, financial capability, dependency, CI or global theme changes. Historical feedback may be closed as developmental learning only; parent validation stays open with the instrument/methods discrepancy recorded for future authorized reconciliation.
 
-**Rollback / stop:** Revert the two runtime edits and their regression additions. Stop and surface any need to widen named files or alter meaning. Commit authority before RAP generation; after merged closeout, rebind RAP to permanent main in a separate projection-only PR. `NO CROSS-LANE IMPACT`.
+**Rollback / stop:** Revert the scoped runtime edits and their regression additions. Stop and surface any need to widen named files or alter meaning. Commit authority before RAP generation; after merged closeout, rebind RAP to permanent main in a separate projection-only PR. `NO CROSS-LANE IMPACT`.
 
 ### Lane V — `CLASS-A-VAL-002`
 
@@ -15984,3 +15984,5 @@ The Founder selected B for its cognitively lighter packaging, then B2 for equal-
 **Authority:** Following adversarial, synthesis and repo-steward review of the current wallet against retained live-Form learning, the Founder explicitly requested: “Let’s look to address the mobile framing and enlarged text issues. Post remediation approved to formally closeout.” This records approval for the exact §7a repair, normal gated delivery, verification and subsequent historical development-cycle closeout. The earlier review alone supplied no implementation authority.
 
 **Disposition:** Activate only the two presentation repairs and named regression/governance files. Preserve the existing product wording and financial boundaries. After successful delivery, record technical completion and retain the three observed responses as chronological directional development evidence, with the probable familiar follow-up kept distinct from independently verified unaided evidence. Do not close parent validation as a comprehension success. The live instrument and current-protocol mismatch remains a future reconciliation gate; this approval does not authorize Form or protocol editing or participant distribution. No successor or cross-lane authority follows. `NO CROSS-LANE IMPACT`.
+
+**D-130 in-place scope clarification (same Founder approval, 2026-09-08):** The new 320 px / 200% root-text check reproduced additional overflow in the synthetic journey-step row and default Home latest-change / disclosure rows. These are part of the approved enlarged-text issue. Add only `apps/frontend/app/(app)/layout.client.tsx` for journey-step row wrapping; permit wrapping the three affected rows in the already-named Dashboard. All wording, values, order and boundaries remain unchanged. No broader shell redesign follows.
