@@ -15936,3 +15936,23 @@ The Founder selected B for its cognitively lighter packaging, then B2 for equal-
 **Current authority consequence:** Both parent lanes remain open with no active nested ticket. Controlled Parallelism v21 and the absence of a Green Lane envelope remain. Participant distribution is paused pending live-Form verification. Technical success is not participant-comprehension evidence; no successor, Form/protocol, frozen-narrative, Lane E, public-naming or cross-lane authority follows. `NO CROSS-LANE IMPACT`.
 
 **RAP / rollback:** Commit closeout authority before regenerating RAP, then rebind the generated projection in a separate one-file PR to the permanent-main closeout merge. Rollback is the scoped implementation revert without migration. Unrelated `output/` and `tmp/` remain preserved.
+
+---
+
+## 261. Founder acceptance — bounded strategic disposition
+
+**Date:** 2026-09-08
+
+**Decision ID:** **D-129** — public acceptance metadata only; detailed disposition remains Founder Only
+
+**Status:** Founder accepted with the reviewed corrections. This public record is limited to acceptance metadata and execution boundaries. Detailed content remains Founder Only and is not published here.
+
+**Authority basis:** Explicit Founder acceptance on 2026-09-08. The Founder separately approved publication of this exact limited acceptance entry; the detailed disposition remains excluded from publication.
+
+**Execution consequence:** None. No implementation or research ticket, market selection, provider engagement, prototype, monitoring automation, participant distribution, financial capability, doctrine amendment, accepted-ADR amendment or public-narrative change is authorised.
+
+**Sequencing consequence:** None. Current HEDGR_STATUS.md §7 / §7a remain controlling. Existing lane boundaries and participant-distribution gates remain unchanged. NO CROSS-LANE IMPACT.
+
+**Evidence consequence:** Acceptance records a strategic decision; it establishes no customer demand, participant comprehension, model validity, cross-market transferability or operating readiness.
+
+**Recording boundary:** The local detailed record is not a replacement institutional authority source. Any later operational consequence requires the necessary repo-native authority and source material.
