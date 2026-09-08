@@ -1,0 +1,38 @@
+# Product finish B + B2
+
+Date: 2026-09-08
+Ticket: `CLASS-A-VAL-002-FINISH-001`
+Authority: Founder approval, Internal D-127 / HEDGR_STATUS.md §259 and §7 / §7a.
+Status: Approved for bounded implementation; technical verification pending.
+
+## Founder disposition
+
+The Founder selected B because its grouping reduces cognitive density, then selected B2's equal-weight soft capsule dashboard utilities. B3 was rejected because it overemphasises making a deposit. The Founder explicitly approved ticket activation and implementation for both the synthetic journey and default production product routes on 2026-09-08.
+
+## Selected design inputs
+
+- [B Home, Activity, Deposit and Withdraw](https://app.paper.design/file/01KJJ92DP1PB7A5SDSDWQKZ33S/G-1).
+- [Selected B2 dashboard](https://app.paper.design/file/01KJJ92DP1PB7A5SDSDWQKZ33S/H-4), artboard `9WM-4`.
+- Source values obtained with Paper `get_computed_styles` / `get_jsx`; screenshots are review evidence, not measurement authority.
+
+| Element | Selected finish |
+| --- | --- |
+| Position | 20 px radius, 16 px padding, white; color-100 border at 45%; primary shadow at 7%, 0 4 18 px |
+| USD figure | Plus Jakarta Sans, 600, 52/60 px, -0.05 em tracking; local estimate subordinate at 13/20 px |
+| Dashboard utilities | Equal 64 px minimum height, 32 px radius, 12 px gap, 10/14 px padding; white, color-100 border at 60%; primary shadow at 10%, 0 3 10 px; existing 24 px icons, 13/19 px labels |
+| Observation | 16 px radius and padding; color-100 at 20%; no shadow or internal divider |
+| Planning | One pale group, color-100 at 14%, 14 px radius, equal aligned rows; boundary remains visible |
+| Activity | Pale reconciliation group, clearer amount/result hierarchy, compact chronological rows and grouped filters |
+| Choice | Quiet rate, pale condition and preview groups, resolved amount input and confirmation control |
+
+## Translation contract
+
+Preserve current copy, DOM reading order, disclosure availability, routes, state, arithmetic, financial conditions, default/synthetic distinctions and all meaningful loading/error/pending/confirmed states. Do not copy fixed Paper example values into runtime. Retain default-only withdrawal, education, latest/recent activity and Copilot navigation where currently present. The two dashboard utilities remain equally weighted. Fixed navigation stays fixed; Paper's end-position navigation was only a scrolling comparison convention. Do not add a default bottom navigation or a new confirmation step.
+
+Use the current approved palette, typography and existing utility icon assets without asset transformation. Responsive geometry may expand for larger text, long amounts and wider screens. All text remains available, controls at least 44 px, keyboard focus visible, reduced motion complete. Add only restrained control colour/shadow transitions; do not add financial number animation or asynchronous timing. No new dependencies, global theme changes, or new motion state machine.
+
+## Validation and rollback
+
+Run full repo validation and protected hermetic E2E. Check synthetic and default Home/Activity/Deposit/Withdraw at mobile and desktop widths, empty and completed journeys, filters, record detail, before/event/after arithmetic, invalid/disabled input, focus and enlarged text. Screenshot selected states locally and verify production after the normal merge gate. Record outcomes here at closeout.
+
+Rollback is one scoped implementation revert; it requires no data migration. Technical completion is not comprehension evidence. Formal participant distribution remains paused pending live-Form verification. About, orientation, Settings exposure, Form/protocol, Lane E, frozen narrative, engine, providers and live financial capabilities are excluded. `NO CROSS-LANE IMPACT`.

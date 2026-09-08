@@ -1,5 +1,7 @@
 "use client";
 
+import finish from '../product-finish.module.css';
+
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useSearchParams } from "next/navigation";
@@ -163,7 +165,7 @@ export default function DashboardPage() {
 
   const balanceHero = (
     <section
-      className="space-y-1"
+      className={`space-y-1 ${finish.position}`}
       aria-labelledby="dashboard-total-balance-label"
       data-testid="dashboard-balance"
     >
@@ -174,14 +176,14 @@ export default function DashboardPage() {
         Your current position
       </p>
       {isLoading ? (
-        <div className="text-5xl font-bold tabular-nums tracking-tight text-hedgr-800 sm:text-6xl sm:leading-tight">
+        <div className={`${finish.positionLoading} tabular-nums`}>
           …
         </div>
       ) : (
         <BalanceWithLocalEstimate
           usdAmount={ready && !cleanStartRequested ? total : 0}
           data-testid="usd-balance"
-          className="text-5xl font-bold tabular-nums tracking-tight text-hedgr-800 sm:text-6xl sm:leading-tight"
+          className={`${finish.positionLoading} tabular-nums`}
         />
       )}
       {productSimulationActive && ready && !isLoading ? (
@@ -217,12 +219,12 @@ export default function DashboardPage() {
   const homeUtilities = (
     <nav
       aria-label="Simulation utilities"
-      className="grid grid-cols-2 gap-3"
+      className={`grid gap-3 ${finish.utilityGroup}`}
       data-testid="dashboard-simulation-utilities"
     >
       <Link
         href={productRouteHref("/deposit")}
-        className="flex min-h-24 items-center gap-2.5 rounded-2xl border border-hedgr-100 bg-white p-3 text-hedgr-800 shadow-sm transition-colors hover:border-hedgr-200 hover:bg-hedgr-100/20 focus:outline-none focus:ring-2 focus:ring-hedgr-500 focus:ring-offset-2 sm:min-h-28 sm:gap-3 sm:p-5"
+        className={finish.utility}
         data-testid="dashboard-add-simulated-deposit"
       >
         <Image
@@ -239,7 +241,7 @@ export default function DashboardPage() {
       </Link>
       <Link
         href={productRouteHref("/activity")}
-        className="flex min-h-24 items-center gap-2.5 rounded-2xl border border-hedgr-100 bg-white p-3 text-hedgr-800 shadow-sm transition-colors hover:border-hedgr-200 hover:bg-hedgr-100/20 focus:outline-none focus:ring-2 focus:ring-hedgr-500 focus:ring-offset-2 sm:min-h-28 sm:gap-3 sm:p-5"
+        className={finish.utility}
         data-testid="dashboard-view-activity"
       >
         <Image
@@ -257,7 +259,7 @@ export default function DashboardPage() {
       {!syntheticJourneyActive ? (
         <Link
           href={productRouteHref("/withdraw")}
-          className="col-span-2 inline-flex min-h-11 items-center justify-center rounded-xl border border-hedgr-100 bg-white px-4 py-2 text-sm font-semibold text-hedgr-700 shadow-sm transition-colors hover:border-hedgr-200 hover:bg-hedgr-100/20 focus:outline-none focus:ring-2 focus:ring-hedgr-500 focus:ring-offset-2"
+          className="col-span-full inline-flex min-h-11 items-center justify-center rounded-xl border border-hedgr-100 bg-white px-4 py-2 text-sm font-semibold text-hedgr-700 shadow-sm transition-colors hover:border-hedgr-200 hover:bg-hedgr-100/20 focus:outline-none focus:ring-2 focus:ring-hedgr-500 focus:ring-offset-2"
           data-testid="dashboard-simulated-withdraw"
         >
           Simulate a withdrawal
@@ -304,7 +306,7 @@ export default function DashboardPage() {
               </p>
             </section>
           ) : null}
-          <div className="rounded-2xl border border-hedgr-100 bg-hedgr-100/20 p-3.5 shadow-sm sm:p-5">
+          <div className={finish.observation}>
             <EnginePostureHeader
               engineState={engineState}
               syntheticJourneyActive
@@ -471,7 +473,7 @@ export default function DashboardPage() {
 
         {syntheticJourneyActive && hasSyntheticFixtureState && (
           <section
-            className="rounded-2xl border border-hedgr-100 bg-hedgr-100/20 p-5 text-hedgr-800 shadow-sm sm:p-6"
+            className={`${finish.replay} text-hedgr-800`}
             data-testid="dashboard-restart-journey"
             aria-labelledby="dashboard-restart-journey-heading"
           >
