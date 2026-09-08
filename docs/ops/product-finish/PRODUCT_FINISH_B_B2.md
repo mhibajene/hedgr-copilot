@@ -3,7 +3,7 @@
 Date: 2026-09-08
 Ticket: `CLASS-A-VAL-002-FINISH-001`
 Authority: Founder approval, Internal D-127 / HEDGR_STATUS.md §259 and §7 / §7a.
-Status: Approved for bounded implementation; technical verification pending.
+Status: Implemented and verified; technical closeout under D-128 / §260. D-127 activation is completed historical authority.
 
 ## Founder disposition
 
@@ -36,3 +36,13 @@ Use the current approved palette, typography and existing utility icon assets wi
 Run full repo validation and protected hermetic E2E. Check synthetic and default Home/Activity/Deposit/Withdraw at mobile and desktop widths, empty and completed journeys, filters, record detail, before/event/after arithmetic, invalid/disabled input, focus and enlarged text. Screenshot selected states locally and verify production after the normal merge gate. Record outcomes here at closeout.
 
 Rollback is one scoped implementation revert; it requires no data migration. Technical completion is not comprehension evidence. Formal participant distribution remains paused pending live-Form verification. About, orientation, Settings exposure, Form/protocol, Lane E, frozen narrative, engine, providers and live financial capabilities are excluded. `NO CROSS-LANE IMPACT`.
+
+
+## Verified outcome — 2026-09-08
+
+- Implementation: [PR #494](https://github.com/mhibajene/hedgr-copilot/pull/494), permanent main `1288427b12d8c209bd85aa5d75e5131b9fc700cd`.
+- Local: 775 unit tests, typechecking, lint, RAP/snapshot checks, production build and all 68 Playwright tests passed. All required hosted checks passed.
+- Visual: reviewed mobile Home/Activity/Deposit/Withdraw, desktop Home and enlarged main content. Main content fits 320/390/1280 px and 200% root text; controls and planning stack when constrained, preserving readable labels. Focus, reduced motion, equal utility weight, filters and invalid/disabled amounts were verified.
+- Deployed: fresh synthetic and default browser contexts completed `$0 → +$5 → −$2 → $3`, with matching Home and Activity results, correct route context, default-only withdrawal access and selected B/B2 geometry.
+- Known unchanged limitation: the global disclosure banner can overlap at 200% root text. Enlarged-text acceptance here covers the changed main content; the shared disclosure component was outside this ticket and remains unchanged.
+- Parent Lane V and Lane E remain open with no active nested ticket. Participant distribution remains paused; technical completion supplies no comprehension or further-refinement authority.
