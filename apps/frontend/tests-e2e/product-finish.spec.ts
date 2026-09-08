@@ -102,7 +102,13 @@ for (const synthetic of [true, false]) {
       await expectMainFits(page);
       if (path === home) {
         await expect(page.getByTestId('usd-balance')).toHaveText('$300.00');
-        await expect(page.getByTestId('dashboard-add-simulated-deposit')).toHaveCSS('transition-duration', '0s');
+        const deposit = page.getByTestId('dashboard-add-simulated-deposit');
+        await expect(deposit).toHaveCSS('transition-duration', '0s');
+        const lines = await deposit.locator('span').evaluate(el => el.getBoundingClientRect().height / parseFloat(getComputedStyle(el).lineHeight));
+        expect(lines).toBeLessThanOrEqual(3);
+        const depositBox = (await deposit.boundingBox())!;
+        const activityBox = (await page.getByTestId('dashboard-view-activity').boundingBox())!;
+        expect(activityBox.y).toBeGreaterThanOrEqual(depositBox.y + depositBox.height);
       }
     }
   });

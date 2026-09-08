@@ -219,7 +219,7 @@ export default function DashboardPage() {
   const homeUtilities = (
     <nav
       aria-label="Simulation utilities"
-      className="grid grid-cols-2 gap-3"
+      className={`grid gap-3 ${finish.utilityGroup}`}
       data-testid="dashboard-simulation-utilities"
     >
       <Link
@@ -259,7 +259,7 @@ export default function DashboardPage() {
       {!syntheticJourneyActive ? (
         <Link
           href={productRouteHref("/withdraw")}
-          className="col-span-2 inline-flex min-h-11 items-center justify-center rounded-xl border border-hedgr-100 bg-white px-4 py-2 text-sm font-semibold text-hedgr-700 shadow-sm transition-colors hover:border-hedgr-200 hover:bg-hedgr-100/20 focus:outline-none focus:ring-2 focus:ring-hedgr-500 focus:ring-offset-2"
+          className="col-span-full inline-flex min-h-11 items-center justify-center rounded-xl border border-hedgr-100 bg-white px-4 py-2 text-sm font-semibold text-hedgr-700 shadow-sm transition-colors hover:border-hedgr-200 hover:bg-hedgr-100/20 focus:outline-none focus:ring-2 focus:ring-hedgr-500 focus:ring-offset-2"
           data-testid="dashboard-simulated-withdraw"
         >
           Simulate a withdrawal
