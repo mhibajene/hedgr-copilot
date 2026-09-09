@@ -263,14 +263,13 @@ describe("DashboardPage engine trust surface", () => {
       /fixture|informational posture|settlement/i
     );
 
-    expect(screen.getByText("Does anything need attention?")).toBeDefined();
-    expect(
-      screen.getByTestId("engine-simulation-attention-answer").textContent
-    ).toBe("There is not enough information to compare yet.");
+    expect(screen.queryByText("Does anything need attention?")).toBeNull();
+    expect(screen.queryByTestId("engine-simulation-attention-answer")).toBeNull();
+    expect(screen.getByText("This is an observation from the simulation, not a guarantee.")).toBeDefined();
     expect(screen.queryByTestId("engine-posture-badge")).toBeNull();
     expect(screen.queryByText("NORMAL")).toBeNull();
     expect(screen.getByTestId("engine-posture-context").textContent).toBe(
-      "Nothing to compare yet. A first completed simulated event will create a starting point."
+      "Nothing to compare yet. Your first completed simulated event will establish a starting point."
     );
     expect(screen.getByTestId("dashboard-simulation-utilities")).toBeDefined();
     expect(
@@ -381,11 +380,10 @@ describe("DashboardPage engine trust surface", () => {
     expect(screen.queryByText("How your position changed")).toBeNull();
     expect(screen.queryByTestId("dashboard-change-delta")).toBeNull();
     expect(screen.getByTestId("engine-posture-context").textContent).toBe(
-      "A first simulated position is now visible. There is no earlier position to compare yet."
+      "Your first simulated position is now visible. This is your starting point."
     );
-    expect(
-      screen.getByTestId("engine-simulation-attention-answer").textContent
-    ).toBe("There is no earlier position to compare yet.");
+    expect(screen.queryByTestId("engine-simulation-attention-answer")).toBeNull();
+    expect(screen.getByText("This is an observation from the simulation, not a guarantee.")).toBeDefined();
   });
 
   test("restarts a completed explicit synthetic journey only after confirmation", async () => {

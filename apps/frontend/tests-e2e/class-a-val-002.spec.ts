@@ -234,15 +234,16 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   );
   await expect(page.getByTestId('dashboard-change-evidence')).toHaveCount(0);
   await expect(page.getByText('How your position changed')).toHaveCount(0);
-  await expect(page.getByText('Does anything need attention?')).toBeVisible();
+  await expect(page.getByText('Does anything need attention?')).toHaveCount(0);
   await expect(
     page.getByTestId('engine-simulation-attention-answer')
-  ).toHaveText('There is not enough information to compare yet.');
+  ).toHaveCount(0);
+  await expect(page.getByText('This is an observation from the simulation, not a guarantee.')).toBeVisible();
   await expect(page.getByTestId('dashboard-current-status')).not.toContainText(
     'NORMAL'
   );
   await expect(page.getByTestId('engine-posture-context')).toHaveText(
-    'Nothing to compare yet. A first completed simulated event will create a starting point.'
+    'Nothing to compare yet. Your first completed simulated event will establish a starting point.'
   );
   await expect(page.getByTestId('dashboard-current-status')).toContainText(
     'What Hedgr notices'
@@ -361,6 +362,19 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
     'No account was charged and no real money moved'
   );
   expect(depositContractRequests).toBe(0);
+
+  const firstEventHome = await page.context().newPage();
+  await firstEventHome.goto('/dashboard-synthetic-journey');
+  await expect(firstEventHome.getByTestId('usd-balance')).toHaveText('$5.00');
+  await expect(firstEventHome.getByTestId('engine-posture-context')).toHaveText(
+    'Your first simulated position is now visible. This is your starting point.'
+  );
+  await expect(firstEventHome.getByText('Does anything need attention?')).toHaveCount(0);
+  await expect(firstEventHome.getByTestId('engine-simulation-attention-answer')).toHaveCount(0);
+  await expect(firstEventHome.getByText(
+    'This is an observation from the simulation, not a guarantee.'
+  )).toBeVisible();
+  await firstEventHome.close();
 
   await page
     .getByRole('link', { name: 'Continue to simulated withdrawal' })
