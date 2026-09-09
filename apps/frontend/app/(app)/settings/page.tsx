@@ -1,5 +1,7 @@
 import Link from 'next/link';
+import { SimulationDisplayCurrencySelector } from '@/components/SimulationDisplayCurrencySelector';
 import {
+  isSyntheticJourneyEnvironment,
   CLASS_A_VAL_002_JOURNEY_PARAM,
   CLASS_A_VAL_002_JOURNEY_VALUE,
 } from '@/lib/state/synthetic-journey';
@@ -21,6 +23,12 @@ export default async function SettingsPage({ searchParams }: SettingsPageProps) 
   const syntheticResearchSettings = Array.isArray(journey)
     ? journey.includes(CLASS_A_VAL_002_JOURNEY_VALUE)
     : journey === CLASS_A_VAL_002_JOURNEY_VALUE;
+  const scenario = resolvedSearchParams.scenario;
+  const firstJourney = Array.isArray(journey) ? journey[0] : journey;
+  const firstScenario = Array.isArray(scenario) ? scenario[0] : scenario;
+  const displayPreferenceEnabled =
+    firstJourney === CLASS_A_VAL_002_JOURNEY_VALUE &&
+    isSyntheticJourneyEnvironment() && firstScenario !== 'unavailable-data';
   const trustInformationHref = syntheticResearchSettings
     ? `/settings/trust?${CLASS_A_VAL_002_JOURNEY_PARAM}=${CLASS_A_VAL_002_JOURNEY_VALUE}`
     : '/settings/trust';
@@ -39,13 +47,13 @@ export default async function SettingsPage({ searchParams }: SettingsPageProps) 
           {accountRows.map((row) => (
             <div
               key={row.label}
-              className="flex min-h-16 items-center justify-between gap-6 border-b border-hedgr-100 py-3 last:border-b-0"
+              className={`flex min-h-16 items-center justify-between gap-6 border-b border-hedgr-100 py-3 last:border-b-0 ${displayPreferenceEnabled ? 'flex-wrap gap-y-2' : ''}`}
             >
               <dt className="text-sm font-medium text-hedgr-500">
                 {row.label}
               </dt>
               <dd
-                className={`text-right text-sm font-semibold ${
+                className={`text-right text-sm font-semibold ${displayPreferenceEnabled ? 'min-w-0 max-w-full break-words' : ''} ${
                   row.muted ? 'italic text-hedgr-400' : 'text-hedgr-800'
                 }`}
               >
@@ -60,15 +68,19 @@ export default async function SettingsPage({ searchParams }: SettingsPageProps) 
         <h2 className="border-b border-hedgr-100 pb-2 text-[11px] font-bold uppercase tracking-[0.14em] text-hedgr-600">
           Preferences
         </h2>
-        <div className="border-y border-hedgr-100 py-4">
-          <h3 className="text-sm font-semibold text-hedgr-800">
-            No preferences available yet
-          </h3>
-          <p className="mt-1 max-w-lg text-sm leading-relaxed text-hedgr-500">
-            This simulated product does not currently offer customer-controlled
-            settings.
-          </p>
-        </div>
+        {displayPreferenceEnabled ? (
+          <SimulationDisplayCurrencySelector placement="settings" />
+        ) : (
+          <div className="border-y border-hedgr-100 py-4">
+            <h3 className="text-sm font-semibold text-hedgr-800">
+              No preferences available yet
+            </h3>
+            <p className="mt-1 max-w-lg text-sm leading-relaxed text-hedgr-500">
+              This simulated product does not currently offer customer-controlled
+              settings.
+            </p>
+          </div>
+        )}
       </section>
 
       <section className="space-y-3" data-testid="settings-trust-information">

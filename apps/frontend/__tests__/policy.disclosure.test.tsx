@@ -224,3 +224,9 @@ describe('PolicyDisclosure', () => {
     );
   });
 });
+
+test('keeps the synthetic display preference informational without country support copy', () => {
+  expect(SYNTHETIC_RESEARCH_DISCLOSURE_COPY['unsupported-region']).toBe(
+    'This research prototype is not a live service. The display currency preference changes illustrative simulation estimates only.'
+  );
+});

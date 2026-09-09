@@ -258,7 +258,7 @@ describe("DashboardPage engine trust surface", () => {
     const explainer = screen.getByTestId(
       "dashboard-synthetic-balance-explainer"
     );
-    expect(explainer.textContent).toBe("Illustrative position only.");
+    expect(explainer.textContent).toBe("Illustrative simulation value only.");
     expect(explainer.textContent).not.toMatch(
       /fixture|informational posture|settlement/i
     );

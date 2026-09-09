@@ -14,6 +14,7 @@ import {
 
 export type TrustDisclosureBannerProps = {
   /** Compact variant for inline/settings use */
+  syntheticResearch?: boolean;
   variant?: 'banner' | 'compact';
   /** Optional "Learn more" link URL */
   learnMoreUrl?: string;
@@ -37,6 +38,7 @@ export type TrustDisclosureBannerProps = {
  * for production use via config/env.
  */
 export function TrustDisclosureBanner({
+  syntheticResearch = false,
   variant = 'banner',
   learnMoreUrl = '/settings/trust',
   dismissible = false,
@@ -72,7 +74,7 @@ export function TrustDisclosureBanner({
   ];
 
   // Market switcher state (only if enabled)
-  const marketSwitcherEnabled = isMarketSwitcherEnabled();
+  const marketSwitcherEnabled = !syntheticResearch && isMarketSwitcherEnabled();
   const selectedMarket = useSelectedMarket();
   const currentMarket = marketSwitcherEnabled ? selectedMarket : null;
 
@@ -172,7 +174,7 @@ export function TrustDisclosureBanner({
                 <div className="mt-3 space-y-3 rounded-2xl border border-hedgr-100 bg-white p-4 shadow-sm">
                   <p className="max-w-xl text-sm leading-relaxed text-hedgr-dark">
                     {fxMode === 'fixed'
-                      ? 'Rates are fixed for this simulation, and no live financial service is connected. The selected country changes simulated currency display only.'
+                      ? `Rates are fixed for this simulation, and no live financial service is connected. ${syntheticResearch ? 'The display currency preference changes illustrative simulation estimates only.' : 'The selected country changes simulated currency display only.'}`
                       : 'Displayed rates support this simulated experience. No real customer money is held or moved.'}
                   </p>
                   <div className="flex flex-wrap items-center gap-2">

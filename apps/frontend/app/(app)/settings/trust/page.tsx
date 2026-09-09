@@ -55,8 +55,10 @@ export default async function TrustPage({ searchParams }: TrustPageProps) {
         </h2>
         <p className="mt-2 text-sm leading-relaxed text-hedgr-dark">
           Rates are fixed for this walkthrough, and no live financial service
-          is connected. The selected country changes simulated currency display
-          only.
+          is connected.{' '}
+          {syntheticResearchJourney
+            ? 'The display currency preference changes illustrative simulation estimates only.'
+            : 'The selected country changes simulated currency display only.'}
         </p>
       </section>
 

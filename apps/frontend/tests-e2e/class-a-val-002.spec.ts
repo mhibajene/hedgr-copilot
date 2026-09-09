@@ -133,17 +133,11 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
     'Rates are fixed for this simulation, and no live financial service is connected.'
   );
   await expect(simulationDetails).toContainText(
-    'The selected country changes simulated currency display only.'
+    'The display currency preference changes illustrative simulation estimates only.'
   );
   await expect(simulationDetails).not.toContainText(/Auth:|DeFi:|FX:/);
   const currencyDisplay = page.getByLabel('Simulation currency display');
-  if ((await currencyDisplay.count()) === 1) {
-    await expect(currencyDisplay).toContainText(
-      'Currency display: Zambia (ZMW)'
-    );
-  } else {
-    await expect(currencyDisplay).toHaveCount(0);
-  }
+  await expect(currencyDisplay).toHaveCount(0);
   await expect(
     page.getByRole('button', { name: 'Dismiss trust disclosure' })
   ).toHaveCount(0);
@@ -181,7 +175,7 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
     'Verification status'
   );
   await expect(page.getByTestId('settings-preferences')).toContainText(
-    'No preferences available yet'
+    'Used for simulation estimates'
   );
   await expect(page.getByTestId('settings-trust-information')).toContainText(
     'No real customer money is held or moved'
@@ -228,7 +222,7 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   ).toBeVisible();
   await expect(
     page.getByTestId('dashboard-synthetic-balance-explainer')
-  ).toHaveText('Illustrative position only.');
+  ).toHaveText('Illustrative simulation value only.');
   await expect(page.getByTestId('dashboard-simulation-utilities')).toBeVisible();
   await expect(page.getByTestId('dashboard-add-simulated-deposit')).toHaveAttribute(
     'href',
