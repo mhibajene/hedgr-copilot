@@ -3,8 +3,15 @@
 import finish from '../product-finish.module.css';
 
 import React from "react";
+import { usePathname, useSearchParams } from "next/navigation";
 import { ENGINE_POSTURE_CONTEXT } from "../../../lib/engine/posture-context";
 import type { EnginePosture, EngineState } from "../../../lib/engine/types";
+import {
+  CLASS_A_VAL_002_DASHBOARD_PATH,
+  CLASS_A_VAL_002_JOURNEY_PARAM,
+  CLASS_A_VAL_002_JOURNEY_VALUE,
+  isSyntheticJourneyPrimaryCondition,
+} from "../../../lib/state/synthetic-journey";
 
 const BADGE_LABELS: Record<EnginePosture, string> = {
   normal: "NORMAL",
@@ -48,6 +55,11 @@ const SIMULATION_COMPARISON_CONTEXT: Record<ComparisonState, string> = {
   change: SIMULATION_STATUS_CONTEXT.normal,
 };
 
+const RESEARCH_STARTING_POINT_CONTEXT = {
+  empty: "Nothing to compare yet. Your first completed simulated event will establish a starting point.",
+  "first-event": "Your first simulated position is now visible. This is your starting point.",
+};
+
 const SIMULATION_COMPARISON_ATTENTION: Record<ComparisonState, string> = {
   empty: "There is not enough information to compare yet.",
   "first-event": "There is no earlier position to compare yet.",
@@ -70,6 +82,16 @@ export function EnginePostureHeader({
   latestChangeAmountUSD,
 }: EnginePostureHeaderProps) {
   const { posture, notice } = engineState;
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  // The presentation prop also serves default Home; simplify only explicit research.
+  const researchStartingPoint =
+    syntheticJourneyActive &&
+    posture === "normal" &&
+    comparisonState !== "change" &&
+    isSyntheticJourneyPrimaryCondition(searchParams?.toString(), pathname) &&
+    (pathname === CLASS_A_VAL_002_DASHBOARD_PATH ||
+      searchParams?.get(CLASS_A_VAL_002_JOURNEY_PARAM) === CLASS_A_VAL_002_JOURNEY_VALUE);
   const showNotice = posture !== "normal" && Boolean(notice);
   const changeObservation =
     latestChangeType && latestChangeAmountUSD !== undefined
@@ -124,24 +146,30 @@ export function EnginePostureHeader({
           ? posture === "normal"
             ? comparisonState === "change"
               ? changeObservation
-              : SIMULATION_COMPARISON_CONTEXT[comparisonState]
+              : researchStartingPoint
+                ? RESEARCH_STARTING_POINT_CONTEXT[comparisonState]
+                : SIMULATION_COMPARISON_CONTEXT[comparisonState]
             : SIMULATION_STATUS_CONTEXT[posture]
           : ENGINE_POSTURE_CONTEXT[posture]}
       </p>
 
       {syntheticJourneyActive ? (
         <div className={`space-y-2 ${finish.attention}`}>
-          <h2 className="text-sm font-semibold tracking-tight text-hedgr-800">
-            Does anything need attention?
-          </h2>
-          <p
-            data-testid="engine-simulation-attention-answer"
-            className="text-sm font-semibold leading-relaxed text-hedgr-800"
-          >
-            {posture === "normal"
-              ? SIMULATION_COMPARISON_ATTENTION[comparisonState]
-              : SIMULATION_ATTENTION_ANSWERS[posture]}
-          </p>
+          {!researchStartingPoint ? (
+            <>
+              <h2 className="text-sm font-semibold tracking-tight text-hedgr-800">
+                Does anything need attention?
+              </h2>
+              <p
+                data-testid="engine-simulation-attention-answer"
+                className="text-sm font-semibold leading-relaxed text-hedgr-800"
+              >
+                {posture === "normal"
+                  ? SIMULATION_COMPARISON_ATTENTION[comparisonState]
+                  : SIMULATION_ATTENTION_ANSWERS[posture]}
+              </p>
+            </>
+          ) : null}
           <p className="text-xs leading-relaxed text-hedgr-500">
             This is an observation from the simulation, not a guarantee.
           </p>

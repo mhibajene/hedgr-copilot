@@ -1,15 +1,31 @@
 // @vitest-environment jsdom
 
 import React from "react";
-import { afterEach, describe, expect, test, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
 import { cleanup, render, screen } from "@testing-library/react";
+import { usePathname, useSearchParams } from "next/navigation";
 import { EnginePostureHeader } from "../app/(app)/dashboard/EnginePostureHeader";
 import { ENGINE_POSTURE_CONTEXT } from "../lib/engine/posture-context";
 import { getMockEngineState } from "../lib/engine/mock";
 
+vi.mock("next/navigation", () => ({
+  usePathname: vi.fn(() => "/dashboard-synthetic-journey"),
+  useSearchParams: vi.fn(() => new URLSearchParams()),
+}));
+
+beforeEach(() => {
+  vi.stubEnv("NEXT_PUBLIC_AUTH_MODE", "mock");
+  vi.stubEnv("NEXT_PUBLIC_FX_MODE", "stub");
+  vi.mocked(usePathname).mockReturnValue("/dashboard-synthetic-journey");
+  vi.mocked(useSearchParams).mockReturnValue(
+    new URLSearchParams() as ReturnType<typeof useSearchParams>
+  );
+});
+
 afterEach(() => {
   cleanup();
   vi.restoreAllMocks();
+  vi.unstubAllEnvs();
 });
 
 describe("EnginePostureHeader", () => {
@@ -68,17 +84,15 @@ describe("EnginePostureHeader", () => {
   test.each([
     [
       "empty",
-      "Nothing to compare yet. A first completed simulated event will create a starting point.",
-      "There is not enough information to compare yet.",
+      "Nothing to compare yet. Your first completed simulated event will establish a starting point.",
     ],
     [
       "first-event",
-      "A first simulated position is now visible. There is no earlier position to compare yet.",
-      "There is no earlier position to compare yet.",
+      "Your first simulated position is now visible. This is your starting point.",
     ],
   ] as const)(
     "does not invent reassurance for the %s comparison state",
-    (comparisonState, observation, attention) => {
+    (comparisonState, observation) => {
       render(
         <EnginePostureHeader
           engineState={getMockEngineState("normal")}
@@ -91,13 +105,58 @@ describe("EnginePostureHeader", () => {
         observation
       );
       expect(
-        screen.getByTestId("engine-simulation-attention-answer").textContent
-      ).toBe(attention);
+        screen.queryByTestId("engine-simulation-attention-answer")
+      ).toBeNull();
+      expect(screen.queryByText("Does anything need attention?")).toBeNull();
+      expect(screen.getByText(
+        "This is an observation from the simulation, not a guarantee."
+      )).toBeDefined();
       expect(
         screen.getByTestId("dashboard-current-status").textContent
       ).not.toMatch(/all clear|safe|stable|protected|guaranteed/i);
     }
   );
+
+  describe.each(["empty", "first-event"] as const)(
+    "%s retains genuine caution",
+    (comparisonState) => {
+      test.each(["tightening", "tightened", "recovery"] as const)(
+        "keeps the attention answer and notice for %s posture",
+        (posture) => {
+          const engineState = getMockEngineState(posture);
+          render(
+            <EnginePostureHeader
+              engineState={engineState}
+              syntheticJourneyActive
+              comparisonState={comparisonState}
+            />
+          );
+
+          expect(screen.getByText("Does anything need attention?")).toBeDefined();
+          expect(screen.getByTestId("engine-simulation-attention-answer").textContent)
+            .toBe("A change in the guidance needs review.");
+          expect(screen.getByTestId("engine-posture-banner").getAttribute("role"))
+            .toBe("status");
+          expect(screen.getByText(engineState.notice!.title)).toBeDefined();
+          expect(screen.getByText(engineState.notice!.body)).toBeDefined();
+          expect(screen.getByText(
+            "This is an observation from the simulation, not a guarantee."
+          )).toBeDefined();
+        }
+      );
+    }
+  );
+
+  test.each([
+    ["empty", "Nothing to compare yet. A first completed simulated event will create a starting point.", "There is not enough information to compare yet."],
+    ["first-event", "A first simulated position is now visible. There is no earlier position to compare yet.", "There is no earlier position to compare yet."],
+  ] as const)("preserves default Home's %s presentation", (comparisonState, observation, attention) => {
+    vi.mocked(usePathname).mockReturnValue("/dashboard");
+    render(<EnginePostureHeader engineState={getMockEngineState("normal")} syntheticJourneyActive comparisonState={comparisonState} />);
+    expect(screen.getByTestId("engine-posture-context").textContent).toBe(observation);
+    expect(screen.getByText("Does anything need attention?")).toBeDefined();
+    expect(screen.getByTestId("engine-simulation-attention-answer").textContent).toBe(attention);
+  });
 
   test("explains the supported direction of a completed change", () => {
     render(
