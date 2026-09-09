@@ -38,7 +38,7 @@ export const SYNTHETIC_RESEARCH_DISCLOSURE_COPY: Record<DisclosureKey, string> =
   'pilot-program-terms':
     'This research walkthrough may change as the prototype is revised.',
   'unsupported-region':
-    'This research prototype is not a live service in the selected country. The country control changes simulated currency display only.',
+    'This research prototype is not a live service. The display currency preference changes illustrative simulation estimates only.',
 };
 
 /**

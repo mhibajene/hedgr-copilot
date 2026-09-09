@@ -2,6 +2,7 @@ import { expect, test } from '@playwright/test';
 import {
   ORIENTATION_FORBIDDEN_PARTICIPANT_TERMS,
   ORIENTATION_SURFACE,
+  SIMULATION_DISPLAY_CURRENCY_COPY,
 } from '../lib/narrative/orientation-surface';
 
 test.describe('CLASS-A-VAL-002-ORIENT-003 orientation surface', () => {
@@ -36,7 +37,13 @@ test.describe('CLASS-A-VAL-002-ORIENT-003 orientation surface', () => {
     await expect(page.getByTestId(/^orientation-block-/)).toHaveCount(0);
 
     for (const term of ORIENTATION_FORBIDDEN_PARTICIPANT_TERMS) {
-      await expect(surface).not.toContainText(new RegExp(term, 'i'));
+      if (term === 'currency') {
+        for (const narrative of await surface.locator(':scope > header, :scope > section:not([data-testid="simulation-display-currency-entry"]), :scope > footer').all()) {
+          await expect(narrative).not.toContainText(/currency/i);
+        }
+      } else {
+        await expect(surface).not.toContainText(new RegExp(term, 'i'));
+      }
     }
 
     await expect(surface).not.toContainText('Hedgr helps');
@@ -50,6 +57,11 @@ test.describe('CLASS-A-VAL-002-ORIENT-003 orientation surface', () => {
       '/dashboard-synthetic-journey?reset=1',
     );
 
+    const selector = surface.getByRole('combobox', { name: SIMULATION_DISPLAY_CURRENCY_COPY.label });
+    await expect(selector).toHaveValue('ZMW');
+    await expect(surface).toContainText(SIMULATION_DISPLAY_CURRENCY_COPY.helper);
+    await page.keyboard.press('Tab');
+    await expect(selector).toBeFocused();
     await page.keyboard.press('Tab');
     await expect(continueLink).toBeFocused();
   });

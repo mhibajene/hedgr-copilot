@@ -7,6 +7,8 @@ import { formatLocalCurrency } from '../lib/utils/money';
 
 export interface BalanceWithLocalEstimateProps {
   usdAmount: number;
+  /** Explicit display-only text for the eligible synthetic Position. */
+  displayEstimate?: string;
   /**
    * If true, renders in a compact inline format suitable for text flows.
    * If false (default), renders with block-level styling for cards.
@@ -39,6 +41,7 @@ export interface BalanceWithLocalEstimateProps {
  */
 export function BalanceWithLocalEstimate({
   usdAmount,
+  displayEstimate,
   inline = false,
   className = '',
   'data-testid': dataTestId,
@@ -56,9 +59,11 @@ export function BalanceWithLocalEstimate({
   const formattedUsd = `$${usdAmount.toFixed(2)}`;
   
   // Format local amount with currency code (not symbol)
-  const formattedLocal = hasFxRate 
-    ? `≈ ${formatLocalCurrency(localAmount, marketConfig.localCurrency)}`
-    : null;
+  const formattedLocal = displayEstimate ?? (
+    hasFxRate
+      ? `≈ ${formatLocalCurrency(localAmount, marketConfig.localCurrency)}`
+      : null
+  );
 
   if (inline) {
     // Inline mode: compact rendering for text flows

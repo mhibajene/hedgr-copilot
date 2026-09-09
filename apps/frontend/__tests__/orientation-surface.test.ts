@@ -4,6 +4,7 @@ import {
   ORIENTATION_LEGACY_FALLBACK_HREF,
   ORIENTATION_PATH,
   ORIENTATION_SURFACE,
+  SIMULATION_DISPLAY_CURRENCY_COPY,
   ORIENTATION_UNSUPPLIED_BRAND_ASSETS,
   collectOrientationText,
   orientationContainsForbiddenTerms,
@@ -74,4 +75,15 @@ describe('CLASS-A-VAL-002-ORIENT-003 orientation surface', () => {
     expect(ORIENTATION_UNSUPPLIED_BRAND_ASSETS.length).toBeGreaterThan(0);
     expect(ORIENTATION_SURFACE.continue.href).not.toMatch(/social-cover/i);
   });
+});
+
+ test('D-132 limits the currency exception to exact selector copy', () => {
+  expect(SIMULATION_DISPLAY_CURRENCY_COPY).toEqual({
+    label: 'Display currency for this simulation',
+    helper: 'Choose how local estimates are shown. This does not mean Hedgr supports deposits, withdrawals, conversion, or local accounts in this currency.',
+    settingsLabel: 'Display currency',
+    settingsHelper: 'Used for simulation estimates',
+  });
+  expect(orientationContainsForbiddenTerms('currency')).toEqual(['currency']);
+  expect(orientationContainsForbiddenTerms(collectOrientationText())).toEqual([]);
 });

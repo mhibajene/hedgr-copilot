@@ -88,3 +88,11 @@ export function orientationContainsForbiddenTerms(
     text.toLowerCase().includes(term.toLowerCase()),
   );
 }
+
+/** D-132 allows currency wording only in this separate selector contract. */
+export const SIMULATION_DISPLAY_CURRENCY_COPY = {
+  label: 'Display currency for this simulation',
+  helper: 'Choose how local estimates are shown. This does not mean Hedgr supports deposits, withdrawals, conversion, or local accounts in this currency.',
+  settingsLabel: 'Display currency',
+  settingsHelper: 'Used for simulation estimates',
+} as const;

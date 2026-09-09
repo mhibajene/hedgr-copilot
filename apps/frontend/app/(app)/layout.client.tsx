@@ -149,6 +149,7 @@ export function AppLayoutClient({ children }: { children: React.ReactNode }) {
       }`}
     >
       <TrustDisclosureBanner
+        syntheticResearch={explicitSyntheticJourney}
         dismissible={false}
         consolidateTechnicalDetails
         learnMoreUrl={trustInformationHref}

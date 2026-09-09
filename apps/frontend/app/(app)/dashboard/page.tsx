@@ -1,5 +1,6 @@
 "use client";
 
+import { formatSimulationDisplayEstimate, useSimulationDisplayCurrency } from "../../../lib/state/simulation-display-currency";
 import finish from '../product-finish.module.css';
 
 import Link from "next/link";
@@ -84,6 +85,7 @@ export default function DashboardPage() {
     (pathname === CLASS_A_VAL_002_DASHBOARD_PATH ||
       searchParams?.get(CLASS_A_VAL_002_JOURNEY_PARAM) ===
         CLASS_A_VAL_002_JOURNEY_VALUE);
+  const displayCurrency = useSimulationDisplayCurrency(syntheticJourneyActive);
   const simulatedEnvironment = getEnvironmentMode() !== "live";
   const productSimulationActive =
     syntheticJourneyActive || simulatedEnvironment;
@@ -182,6 +184,7 @@ export default function DashboardPage() {
       ) : (
         <BalanceWithLocalEstimate
           usdAmount={ready && !cleanStartRequested ? total : 0}
+          displayEstimate={syntheticJourneyActive ? formatSimulationDisplayEstimate(ready && !cleanStartRequested ? total : 0, displayCurrency) : undefined}
           data-testid="usd-balance"
           className={`${finish.positionLoading} tabular-nums`}
         />
@@ -191,7 +194,7 @@ export default function DashboardPage() {
           className="max-w-md pt-1 text-xs leading-relaxed text-hedgr-500 sm:text-sm"
           data-testid="dashboard-synthetic-balance-explainer"
         >
-          Illustrative position only.
+          {syntheticJourneyActive ? "Illustrative simulation value only." : "Illustrative position only."}
         </p>
       ) : null}
       {ready && !isLoading && total !== available ? (

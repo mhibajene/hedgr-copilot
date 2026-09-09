@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import { Plus_Jakarta_Sans } from 'next/font/google';
 import Link from 'next/link';
+import { SimulationDisplayCurrencySelector } from '../../components/SimulationDisplayCurrencySelector';
+import { isSyntheticJourneyEnvironment } from '../../lib/state/synthetic-journey';
 import {
   ORIENTATION_LOGO_SRC,
   ORIENTATION_SURFACE,
@@ -40,6 +42,9 @@ export default function OrientationPage() {
           <h1 className="text-3xl font-semibold leading-tight text-hedgr-800">
             {surface.title}
           </h1>
+          {isSyntheticJourneyEnvironment() ? (
+            <p className="text-sm font-medium text-hedgr-600">Simulation · no real money</p>
+          ) : null}
         </header>
 
         <section
@@ -60,6 +65,10 @@ export default function OrientationPage() {
             {surface.dataBoundary}
           </p>
         </section>
+
+        {isSyntheticJourneyEnvironment() ? (
+          <SimulationDisplayCurrencySelector placement="entry" />
+        ) : null}
 
         <footer className="border-t border-hedgr-200 pt-8">
           <Link
