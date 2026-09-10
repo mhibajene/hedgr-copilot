@@ -214,3 +214,23 @@ describe("EnginePostureHeader", () => {
     );
   });
 });
+
+
+test.each([
+  ["/dashboard-synthetic-journey", "", true, "simulated activity"],
+  ["/dashboard", "journey=class-a-val-002", true, "simulated activity"],
+  ["/dashboard", "", true, "information shown"],
+  ["/dashboard-synthetic-journey", "scenario=unavailable-data", true, "information shown"],
+  ["/dashboard-synthetic-journey", "", false, "information shown"],
+])("currency opt-in respects route eligibility: %s?%s / %s", (path, query, optIn, words) => {
+  vi.mocked(usePathname).mockReturnValue(path);
+  vi.mocked(useSearchParams).mockReturnValue(new URLSearchParams(query) as ReturnType<typeof useSearchParams>);
+  render(<EnginePostureHeader engineState={getMockEngineState("normal")} syntheticJourneyActive currencyContextVisible={optIn} />);
+  expect(screen.getByTestId("engine-simulation-attention-answer").textContent).toBe(`No other change stands out in the ${words}.`);
+});
+
+test.each(["tightening", "tightened", "recovery"] as const)("currency opt-in preserves %s attention and notices", posture => {
+  render(<EnginePostureHeader engineState={getMockEngineState(posture)} syntheticJourneyActive currencyContextVisible />);
+  expect(screen.getByTestId("engine-simulation-attention-answer").textContent).toBe("A change in the guidance needs review.");
+  expect(screen.getByTestId("engine-posture-banner").textContent).toContain(getMockEngineState(posture).notice!.title);
+});
