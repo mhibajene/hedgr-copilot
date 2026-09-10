@@ -3,7 +3,7 @@
 Date: 2026-09-10  
 Ticket: `CLASS-A-VAL-002-CURRENCY-INSIGHT-001`  
 Authority: Internal D-133 / `HEDGR_STATUS.md` §7 / §7a / §265  
-Status: Implemented; Founder-approved trust-disclaimer amendment applied; full local validate and supplemental reviewer QA passed. Final production-build/E2E rerun and hosted delivery remain pending. No merge or participant-comprehension success is asserted.
+Status: COMPLETED — verified technical delivery under D-134 / §266. PR #510 merged at `30ae69aea5e214f6036f1728acc3182c057210fa`; full local and hosted gates passed, reviewer QA is clear and production was inspected. Participant comprehension remains unproven.
 
 ## Candidate and retained contract
 
@@ -27,9 +27,9 @@ Only explicit eligible research Home and its retained compatibility route render
 
 ## Technical verification
 
-- Four targeted unit files initially passed 75 tests. Full workspace tests then passed, including 857 frontend tests. A final additional legacy-wallet/invalid-input integration test passed with the full 17-test Dashboard file; the latest frontend suite therefore contains 858 tests, but that final addition has only targeted verification at this record.
-- Frontend production build passed with mock auth, stub FX, mock DeFi and local stub API on port 5050. Workspace typecheck, lint, trust environment check, RAP and Bridge snapshot checks passed. No dependency, CI or environment file changed.
-- The full protected-parity hermetic Playwright suite passed all 92 then-present tests. One subsequently added blocked-preference-storage test passed separately, making 93 covered browser tests. Existing tests outside the five named files ran unchanged.
+- Final full `pnpm run validate` passed, including all 858 frontend unit tests, trust checks, RAP/snapshots, workspace typecheck and lint.
+- Final `e2e:ci` passed the production build and all 93 hermetic Playwright tests together with mock auth, stub FX, mock DeFi and the local stub API. Existing tests outside the five named files ran unchanged.
+- Required hosted validate, E2E smoke/e2e, build, fork-safe checks, Bridge snapshots, evidence-pack and Vercel checks passed on PR #510 before merge. No dependency, CI or environment file changed.
 - Every currency completed the equivalent `$0 → +$5 → −$2 → $3` journey. Assertions retain selected-currency Deposit preview, USD withdrawal arithmetic, latest Home estimate, two factual ledger records, Activity continuity, market/storage invariance and unchanged default/unavailable routes. Opening/closing the new disclosure generated no network request or storage change.
 - Unit and browser checks cover positive, zero, pending (including numerically cancelling pending entries), unavailable sample metadata, invalid values, stale samples, mismatch with the independent display rate, large numbers, half-cent rounding, hydration, reset, preference fallback, blocked storage, route opt-in and all non-normal cautions. No missing data is silently treated as an unchanged rate.
 - Browser MutationObserver evidence checks that persisted KES hydration does not expose a ZMW comparison or a mismatch with the current display estimate. Clean start and restart end with “No position to compare yet.” and no direction.
@@ -40,13 +40,13 @@ The first browser run exposed suppression after clean start because the existing
 
 **Resolved trust-copy gate:** The initial `pnpm run validate` stopped at `trust:phrases` because “guaranteed” appeared in the exact approved denial. The Founder then approved the proposed one-file, exact-sentence allowlist amendment. That authority was committed at `74fcf46dbcc646cee71a43063019083f2a0b2ff0` before RAP generation and before applying the entry. Only the full denial sentence was added to `scripts/trust-phrases.allowlist.txt`; no runtime copy, file-wide exemption, scanner logic or banned phrase changed. Full `pnpm run validate` now passes, including all 858 frontend unit tests, typecheck, lint, trust and projection/snapshot checks. Five direct scanner assertions confirm the exact denial passes while positive guarantees, a positive claim on another line, a changed disclaimer and urgency copy remain rejected.
 
-**Hosted diagnostic:** The earlier draft also exposed a React `Suspense` type-resolution failure at unchanged Deposit code in the build/E2E build stages. No Deposit or dependency file was changed to address it. Fresh hosted checks on the amended head remain required; the previous failures are not accepted as passing evidence.
+**Hosted diagnostic:** The earlier draft also exposed a React `Suspense` type-resolution failure at unchanged Deposit code in the build/E2E build stages. No Deposit or dependency file was changed to address it. Fresh hosted build and E2E checks passed on the amended head; the previous failures remain historical failed runs, not accepted evidence.
 
 # Adversarial Review Result
 
 ## Decision Posture
 
-Proceed — supplemental reviewer QA confirms the exact approved scanner exception resolves the release hold. Merge still requires the normal final local and hosted gates.
+Proceed — supplemental reviewer QA confirms the exact approved scanner exception resolves the release hold. The final local and hosted gates passed before the implementation merge.
 
 ## Highest-Risk Finding
 
@@ -58,7 +58,7 @@ The initial trust-copy conflict is resolved through explicit Founder approval an
 - Severity: Resolved delivery blocker; no misleading positive financial claim was found in the scoped implementation.
 - Evidence: `CurrencyInsight.tsx` visible limit and `pnpm run validate` trust-phrase failure. The documented checker supports intentional negative-disclaimer exceptions.
 - Why it matters: Hiding the phrase from the scanner or skipping the gate would weaken the trust workflow; modifying an unnamed file without approval would exceed D-133.
-- Required action: Amendment, authority recording, scanner assertions and full validate are complete. Finish hosted checks and normal merge/provenance closeout; preserve the approved copy.
+- Required action: Amendment, authority recording, scanner assertions and full validate are complete. Hosted checks and implementation merge are complete. Finish the closeout authority and permanent-main projection rebind; preserve the approved copy.
 
 No additional blocking runtime defect was found in the post-implementation review. The clean-start defect found during browser QA was corrected and retested. This is a separate Codex verifier pass over the immutable implementation, not an independent human review or participant study.
 
@@ -79,7 +79,7 @@ An upward local estimate can look like earnings or safety even with technically 
 
 ## Recommended Next Step
 
-Merge acceptable — after the final local production-build/E2E rerun and required hosted gates pass. The exact one-file amendment is approved; no new product scope is proposed.
+Merge acceptable — all final local and hosted gates passed and PR #510 is merged. Record technical closeout and complete the projection-only permanent-main rebind; no new product scope is proposed.
 
 ## Proposed research checks — preparation only
 
@@ -92,3 +92,9 @@ No participant was contacted or exposed through this implementation. No Form, pr
 ## Rollback
 
 Revert the D-133 runtime/test composition and observation opt-in to restore the retained D-132 experience. No schema change, migration, financial record repair, preference reset or live action is needed. Preserve unrelated local `output/` and `tmp/` content. Any experiment withdrawal or later successor still requires the normal authority record.
+
+## Production and closeout
+
+Production deployment `6372831000` reported success for permanent-main implementation `30ae69aea5e214f6036f1728acc3182c057210fa`. Browser inspection of the production alias verified USD 300, ZMW 300 higher, the visible denial, the native expanded calculation at 19/20 units per USD and 5,700/6,000 local units, and the narrowly scoped simulated-activity observation. The compatibility route matches; default Home retains its old observation and omits the component, and unavailable-data also omits it. Existing simulation records/preferences were not changed by this inspection. The successful preview separately showed the correct zero-position state.
+
+D-134 / §266 closes only this nested technical refinement, leaving both parent lanes open, with no active nested ticket and participant distribution paused. After the closeout squash, the separate projection-only rebind identifies the final permanent-main authority. There is no new implementation or participant-research activation.
