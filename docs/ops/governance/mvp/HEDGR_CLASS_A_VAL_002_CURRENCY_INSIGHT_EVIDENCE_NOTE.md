@@ -3,7 +3,7 @@
 Date: 2026-09-10  
 Ticket: `CLASS-A-VAL-002-CURRENCY-INSIGHT-001`  
 Authority: Internal D-133 / `HEDGR_STATUS.md` §7 / §7a / §265  
-Status: Implemented locally; reviewer QA performed; delivery held by the trust-copy gate pending a separately approved one-file amendment. No merge or participant-comprehension success is asserted.
+Status: Implemented; Founder-approved trust-disclaimer amendment applied; full local validate and supplemental reviewer QA passed. Final production-build/E2E rerun and hosted delivery remain pending. No merge or participant-comprehension success is asserted.
 
 ## Candidate and retained contract
 
@@ -38,36 +38,38 @@ Only explicit eligible research Home and its retained compatibility route render
 
 The first browser run exposed suppression after clean start because the existing route hook can retain the consumed reset query. The correction waits for the cleared position and permits the empty comparison once settled. The reset and hydration regressions passed in the full browser run. The implementation also preserves the existing legacy-wallet source mode while suppressing a transient stale positive ledger projection after reset.
 
-**Blocking check:** `pnpm run validate` currently stops at `trust:phrases`: the checker flags “guaranteed” in the exact Founder-approved denial, “FX comparison only—not earnings, purchasing power, guaranteed protection or a conversion quote.” The supported remediation is an exact-sentence substring exception in `scripts/trust-phrases.allowlist.txt`. That file is outside the approved §7a list; approval was requested. The allowlist has not been changed, the scanner has not been bypassed, and full validate is not reported as passing. Hosted checks, delivery and permanent-main provenance remain outstanding.
+**Resolved trust-copy gate:** The initial `pnpm run validate` stopped at `trust:phrases` because “guaranteed” appeared in the exact approved denial. The Founder then approved the proposed one-file, exact-sentence allowlist amendment. That authority was committed at `74fcf46dbcc646cee71a43063019083f2a0b2ff0` before RAP generation and before applying the entry. Only the full denial sentence was added to `scripts/trust-phrases.allowlist.txt`; no runtime copy, file-wide exemption, scanner logic or banned phrase changed. Full `pnpm run validate` now passes, including all 858 frontend unit tests, typecheck, lint, trust and projection/snapshot checks. Five direct scanner assertions confirm the exact denial passes while positive guarantees, a positive claim on another line, a changed disclaimer and urgency copy remain rejected.
+
+**Hosted diagnostic:** The earlier draft also exposed a React `Suspense` type-resolution failure at unchanged Deposit code in the build/E2E build stages. No Deposit or dependency file was changed to address it. Fresh hosted checks on the amended head remain required; the previous failures are not accepted as passing evidence.
 
 # Adversarial Review Result
 
 ## Decision Posture
 
-Hold — release gate only. The implementation is complete within its named runtime/test scope, but the approved negative disclosure fails the existing trust-copy scanner.
+Proceed — supplemental reviewer QA confirms the exact approved scanner exception resolves the release hold. Merge still requires the normal final local and hosted gates.
 
 ## Highest-Risk Finding
 
-Do not equate a correct negative disclosure with permission to bypass the trust check or widen the allowlist file scope. Keep release held until the exact amendment is accepted and the normal validation/hosted gates pass.
+The initial trust-copy conflict is resolved through explicit Founder approval and the supported exact-sentence exception. The main remaining semantic risk is users interpreting a higher local estimate as earnings or safety; visible limits and proposed comprehension checks remain necessary.
 
 ## Findings
 
 - Finding: Trust-copy scanner rejects the approved denial of guaranteed protection.
-- Severity: Delivery blocker; no misleading positive financial claim was found in the scoped implementation.
+- Severity: Resolved delivery blocker; no misleading positive financial claim was found in the scoped implementation.
 - Evidence: `CurrencyInsight.tsx` visible limit and `pnpm run validate` trust-phrase failure. The documented checker supports intentional negative-disclaimer exceptions.
 - Why it matters: Hiding the phrase from the scanner or skipping the gate would weaken the trust workflow; modifying an unnamed file without approval would exceed D-133.
-- Required action: Accept the exact-sentence allowlist amendment, record it in §7a/AGENTS/D-133, rerun full validate and hosted checks, then complete normal merge and provenance closeout. If wording is revised instead, separately record the accepted copy.
+- Required action: Amendment, authority recording, scanner assertions and full validate are complete. Finish hosted checks and normal merge/provenance closeout; preserve the approved copy.
 
 No additional blocking runtime defect was found in the post-implementation review. The clean-start defect found during browser QA was corrected and retested. This is a separate Codex verifier pass over the immutable implementation, not an independent human review or participant study.
 
 ## Module Results
 
-- Authority Stress Test: D-133 is committed before runtime and sequentially disposes D-132. Proposed allowlist expansion remains unexecuted and blocks delivery.
+- Authority Stress Test: D-133 is committed before runtime and sequentially disposes D-132. The one-file allowlist amendment was explicitly approved and committed before application.
 - Semantic Drift Test: Higher/lower refers to a local estimate under two invented rates; the unchanged current USD input, scenario dates and excluded earnings/purchasing-power/protection/conversion meaning are explicit. The observation amendment is opt-in and activity-scoped.
 - Financial Boundary Test: No accounting, provider, conversion, deposit/withdrawal, financial-state or event-writing surface changed. Expanded totals reconcile to the visible difference.
 - Implementation Risk Test: Decimal-safe calculations, explicit unavailable states, route isolation, hydration/reset gating, zero/pending behaviour, caution preservation and browser reflow are tested. The initial reset defect is resolved.
 - Governance Consistency Test: Only one nested Lane V ticket is active. Controlled Parallelism v21, Lane E, paused distribution and frozen About are preserved. Technical closeout of D-132 does not accept comprehension or parent validation.
-- Doctrine & Founder Intent Test: The retained compressed B placement and calm neutral arrows express interpretation without advice, urgency, allocation authority or a financial guarantee. The exact approved disclaimer is preserved pending the supported scanner exception.
+- Doctrine & Founder Intent Test: The retained compressed B placement and calm neutral arrows express interpretation without advice, urgency, allocation authority or a financial guarantee. The exact approved disclaimer is preserved through the supported, explicitly approved scanner exception.
 - False Consensus Test: Founder visual approval and passing technical tests do not demonstrate reduced cognitive load, relevance, demand or superiority to a currency calculator.
 - Shadow Authority Test: Mockups, this review and proposed research prompts do not activate a successor, participant distribution, Form/protocol changes, live FX or additional financial capability.
 
@@ -77,7 +79,7 @@ An upward local estimate can look like earnings or safety even with technically 
 
 ## Recommended Next Step
 
-Founder review required — exact one-file trust-disclaimer amendment only. Then full gates and normal delivery; no new product scope is proposed.
+Merge acceptable — after the final local production-build/E2E rerun and required hosted gates pass. The exact one-file amendment is approved; no new product scope is proposed.
 
 ## Proposed research checks — preparation only
 
