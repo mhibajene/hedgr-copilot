@@ -4954,6 +4954,8 @@ Authority/evidence files for this activated delivery:
 
 Read existing `simulation-display-currency.ts`, `BalanceWithLocalEstimate.tsx`, Deposit, Withdraw, Activity, ledger, wallet and engine modules; do not modify them. Existing tests outside the five named files run unchanged. A newly discovered required file change must be surfaced as a concrete scope delta.
 
+**Approved D-133 trust-disclaimer amendment (2026-09-10):** After the trust-copy check rejected the word “guaranteed” in the approved denial, the Founder approved the proposed exact-sentence exception. Add only `scripts/trust-phrases.allowlist.txt` to the named scope, containing the single substring **FX comparison only—not earnings, purchasing power, guaranteed protection or a conversion quote.** Keep all runtime copy unchanged; no file-wide exemption, scanner logic, banned-phrase, CI, dependency or additional product change is authorised. Commit this authority before RAP generation and rerun full validate, reviewer QA and required hosted checks. This supersedes the file-list exclusion only for that exact allowlist entry. No distribution, financial capability or cross-lane authority follows. `NO CROSS-LANE IMPACT`.
+
 #### 7. Verification and research evidence
 
 Technical acceptance:
@@ -16256,3 +16258,6 @@ The Founder selected B for its cognitively lighter packaging, then B2 for equal-
 **Consequences:** Sequential replacement of the completed D-132 scope, not concurrent nested work. Controlled Parallelism v21 and independent parent Lane E remain unchanged. Parent Lane V stays open. Participant distribution remains paused pending live-Form and protocol reconciliation. About stays frozen and published. Implementation and reviewer QA must be evidenced separately from participant comprehension, cognitive-load improvement, personal relevance, demand or MVP acceptance. No successor or cross-lane authority follows. `NO CROSS-LANE IMPACT`.
 
 **Delivery:** Commit authority before RAP generation; normal gated PR and required hosted checks, technical closeout after verified merge, then permanent-main RAP rebind. Rollback restores D-132 with no migration or data repair.
+
+**Approved D-133 trust-disclaimer amendment (2026-09-10):** After the trust-copy check rejected the word “guaranteed” in the approved denial, the Founder approved the proposed exact-sentence exception. Add only `scripts/trust-phrases.allowlist.txt` to the named scope, containing the single substring **FX comparison only—not earnings, purchasing power, guaranteed protection or a conversion quote.** Keep all runtime copy unchanged; no file-wide exemption, scanner logic, banned-phrase, CI, dependency or additional product change is authorised. Commit this authority before RAP generation and rerun full validate, reviewer QA and required hosted checks. This supersedes the file-list exclusion only for that exact allowlist entry. No distribution, financial capability or cross-lane authority follows. `NO CROSS-LANE IMPACT`.
+
