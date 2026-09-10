@@ -87,6 +87,7 @@ const ORIGINAL_APP_ENV = process.env.NEXT_PUBLIC_APP_ENV;
 
 afterEach(() => {
   cleanup();
+  localStorage.removeItem('hedgr.simulation.display-currency');
   vi.restoreAllMocks();
   depositStateMocks.append.mockClear();
   depositStateMocks.confirm.mockClear();
@@ -520,5 +521,62 @@ describe('DepositPage CLASS-A-VAL-002 primary and exception conditions', () => {
     expect(
       screen.getByRole('link', { name: 'Return to the simulated deposit' }),
     ).toBeTruthy();
+  });
+});
+
+
+describe('D-132 selected simulation deposit currency', () => {
+  test.each([
+    ['ZMW', 20, '100', 5, 100],
+    ['KES', 130, '650', 5, 100],
+    ['NGN', 1500, '7500', 5, 100],
+    ['GHS', 15, '75', 5, 100],
+    ['PHP', 56, '280', 5, 100],
+    ['KES', 130, '100', 0.77, 15.4],
+    ['NGN', 1500, '100', 0.07, 1.4],
+    ['PHP', 56, '100', 1.79, 35.8],
+    ['invalid', 20, '100', 5, 100],
+  ])('%s input %s: preview and confirmation share rounded USD and valid ZMW ledger fields', async (currency, rate, input, usd, zmw) => {
+    vi.stubEnv('NEXT_PUBLIC_AUTH_MODE', 'mock');
+    vi.stubEnv('NEXT_PUBLIC_FX_MODE', 'stub');
+    vi.useFakeTimers();
+    vi.mocked(postDeposit).mockClear();
+    localStorage.setItem('hedgr.simulation.display-currency', currency);
+    vi.mocked(useSearchParams).mockReturnValue(
+      new URLSearchParams('journey=class-a-val-002') as ReturnType<typeof useSearchParams>,
+    );
+    vi.mocked(useLatestFx).mockReturnValue({ status: 'error', retry: vi.fn() });
+    render(<DepositPage />);
+    await act(async () => { await vi.advanceTimersByTimeAsync(350); });
+    const code = currency === 'invalid' ? 'ZMW' : currency;
+    expect(screen.getByTestId('deposit-fx-block').textContent).toContain(`1 USD = ${rate.toFixed(2)} ${code}`);
+    fireEvent.change(screen.getByTestId('deposit-amount'), { target: { value: input } });
+    expect(screen.getByTestId('deposit-balance-change').textContent).toContain(`shows ${input} ${code} as +$${usd.toFixed(2)}`);
+    expect(depositStateMocks.append).not.toHaveBeenCalled();
+    await act(async () => { fireEvent.click(screen.getByRole('button', { name: 'Confirm' })); });
+    expect(postDeposit).not.toHaveBeenCalled();
+    expect(depositStateMocks.append).toHaveBeenCalledTimes(1);
+    expect(depositStateMocks.append).toHaveBeenCalledWith(expect.objectContaining({
+      type: 'deposit', amount_usd: usd, amount_zmw: zmw, fx_rate: 20,
+    }));
+    await act(async () => { await vi.advanceTimersByTimeAsync(1600); });
+    expect(screen.getByTestId('deposit-confirmation-region').textContent).toContain(`simulated balance increased by $${usd.toFixed(2)}`);
+  });
+
+  test.each([
+    ['', 'mock', 'stub'],
+    ['journey=class-a-val-002', 'magic', 'live'],
+  ])('does not localise an ineligible route (%s, %s, %s)', async (query, auth, fxMode) => {
+    vi.stubEnv('NEXT_PUBLIC_AUTH_MODE', auth);
+    vi.stubEnv('NEXT_PUBLIC_FX_MODE', fxMode);
+    vi.useFakeTimers();
+    localStorage.setItem('hedgr.simulation.display-currency', 'KES');
+    vi.mocked(useSearchParams).mockReturnValue(new URLSearchParams(query) as ReturnType<typeof useSearchParams>);
+    vi.mocked(useLatestFx).mockReturnValue({ status: 'success', data: { pair: 'USDZMW', rate: 20, ts: 1 }, retry: vi.fn() });
+    render(<DepositPage />);
+    await act(async () => { await vi.advanceTimersByTimeAsync(350); });
+    expect(screen.queryByTestId('deposit-synthetic-condition')).toBeNull();
+    expect(screen.getByLabelText(/Amount.*\(ZMW\)/)).toBeTruthy();
+    expect(screen.getByTestId('deposit-conversion-preview').textContent).toContain('$5.00');
   });
 });

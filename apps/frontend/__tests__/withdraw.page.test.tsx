@@ -70,9 +70,9 @@ vi.mock('../components', async (importOriginal) => {
   const actual = await importOriginal<typeof import('../components')>();
   return {
     ...actual,
-    BalanceWithLocalEstimate: ({ usdAmount, inline, ...props }: { usdAmount: number; inline?: boolean }) => {
+    BalanceWithLocalEstimate: ({ usdAmount, inline, displayEstimate, ...props }: { usdAmount: number; inline?: boolean; displayEstimate?: string }) => {
       void inline;
-      return <div {...props}>{usdAmount}</div>;
+      return <div {...props}>{usdAmount}<span data-testid="withdraw-local-estimate">{displayEstimate}</span></div>;
     },
     FxRateBlock: ({ 'data-testid': dataTestId }: { 'data-testid'?: string }) => (
       <div data-testid={dataTestId}>FX</div>
@@ -135,6 +135,7 @@ const ORIGINAL_APP_ENV = process.env.NEXT_PUBLIC_APP_ENV;
 
 afterEach(() => {
   cleanup();
+  localStorage.removeItem('hedgr.simulation.display-currency');
   vi.restoreAllMocks();
   withdrawStateMocks.confirm.mockClear();
   withdrawStateMocks.fail.mockClear();
@@ -702,5 +703,34 @@ describe('WithdrawPage CLASS-A-VAL-002 primary condition', () => {
     expect(withdrawMock.createWithdraw).toHaveBeenCalledWith(1, {
       skipAutoConfirm: false,
     });
+  });
+});
+
+
+describe('D-132 selected simulation withdrawal estimate', () => {
+  test.each([
+    ['ZMW', 20, '100.00'], ['KES', 130, '650.00'], ['NGN', 1500, '7,500.00'],
+    ['GHS', 15, '75.00'], ['PHP', 56, '280.00'],
+  ])('%s estimate retains USD input, balance limit and withdrawal amount', async (currency, rate, estimate) => {
+    vi.stubEnv('NEXT_PUBLIC_AUTH_MODE', 'mock');
+    vi.stubEnv('NEXT_PUBLIC_FX_MODE', 'stub');
+    vi.useFakeTimers();
+    vi.mocked(withdrawMock.createWithdraw).mockClear();
+    localStorage.setItem('hedgr.simulation.display-currency', currency);
+    vi.mocked(useSearchParams).mockReturnValue(new URLSearchParams('journey=class-a-val-002') as ReturnType<typeof useSearchParams>);
+    vi.mocked(useBalance).mockReturnValue({ total: 5, available: 5, pending: 0, currency: 'USD', asOf: 1, isLoading: false, error: null, refresh: vi.fn() });
+    vi.mocked(useLatestFx).mockReturnValue({ status: 'error', retry: vi.fn() });
+    render(<WithdrawPage />);
+    await act(async () => { await vi.advanceTimersByTimeAsync(350); });
+    expect(screen.getByTestId('withdraw-fx-block').textContent).toContain(`1 USD = ${rate.toFixed(2)} ${currency}`);
+    expect(screen.getByTestId('withdraw-local-estimate').textContent).toBe(`≈ ${currency} ${estimate} display estimate`);
+    const amount = screen.getByLabelText('Amount to simulate (USD)');
+    fireEvent.change(amount, { target: { value: '6' } });
+    expect((screen.getByRole('button', { name: 'Confirm' }) as HTMLButtonElement).disabled).toBe(true);
+    fireEvent.change(amount, { target: { value: '2' } });
+    expect(screen.getByTestId('withdraw-balance-preview').textContent).toContain('$5.00 − $2.00 = $3.00');
+    expect(withdrawMock.createWithdraw).not.toHaveBeenCalled();
+    await act(async () => { fireEvent.click(screen.getByRole('button', { name: 'Confirm' })); });
+    expect(withdrawMock.createWithdraw).toHaveBeenCalledWith(2, { skipAutoConfirm: false });
   });
 });

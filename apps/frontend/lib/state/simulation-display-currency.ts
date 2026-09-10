@@ -5,7 +5,7 @@ import { useSyncExternalStore } from 'react';
 export const SIMULATION_DISPLAY_CURRENCY_KEY = 'hedgr.simulation.display-currency';
 export const DEFAULT_SIMULATION_DISPLAY_CURRENCY = 'ZMW';
 
-/** D-132 fixed numerical fixtures; these are neither live rates nor transaction currencies. */
+/** D-132 fixed simulation fixtures, also used by the bounded synthetic Deposit adapter; never live rates. */
 export const SIMULATION_DISPLAY_CURRENCIES = [
   { code: 'ZMW', name: 'Zambian kwacha', unitsPerUsd: 20 },
   { code: 'KES', name: 'Kenyan shilling', unitsPerUsd: 130 },
@@ -20,9 +20,12 @@ export function isSimulationDisplayCurrency(value: unknown): value is Simulation
   return SIMULATION_DISPLAY_CURRENCIES.some(({ code }) => code === value);
 }
 
+export function getSimulationDisplayRate(currency: SimulationDisplayCurrency): number {
+  return SIMULATION_DISPLAY_CURRENCIES.find(({ code }) => code === currency)!.unitsPerUsd;
+}
+
 export function formatSimulationDisplayEstimate(usd: number, currency: SimulationDisplayCurrency): string {
-  const fixture = SIMULATION_DISPLAY_CURRENCIES.find(({ code }) => code === currency)!;
-  const amount = (usd * fixture.unitsPerUsd).toLocaleString('en-US', {
+  const amount = (usd * getSimulationDisplayRate(currency)).toLocaleString('en-US', {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   });

@@ -20,6 +20,7 @@ import {
 } from '../../../components';
 import { useLatestFx } from '../../../lib/hooks/useLatestFx';
 import { resolveMarket, resolveLocalCurrencyCode } from '../../../config/market';
+import { formatSimulationDisplayEstimate, getSimulationDisplayRate, useSimulationDisplayCurrency } from '../../../lib/state/simulation-display-currency';
 import {
   PublicTxStatus,
   getExceptionPathClarificationLines,
@@ -35,7 +36,6 @@ import {
   CLASS_A_VAL_002_JOURNEY_PARAM,
   CLASS_A_VAL_002_JOURNEY_VALUE,
   getSyntheticJourneyHref,
-  getSyntheticJourneyRate,
   isSyntheticJourneyPrimaryCondition,
 } from '../../../lib/state/synthetic-journey';
 
@@ -100,10 +100,12 @@ function WithdrawPageContent() {
   const productSimulationActive = syntheticJourneyActive || simulatedEnvironment;
 
   const { available, refresh, isLoading: balanceLoading, error: balanceError } = useBalance();
-  const quote = resolveLocalCurrencyCode(resolveMarket());
-  const fx = useLatestFx(`USD${quote}`);
+  const marketQuote = resolveLocalCurrencyCode(resolveMarket());
+  const displayCurrency = useSimulationDisplayCurrency(syntheticJourneyActive);
+  const quote = syntheticJourneyActive ? displayCurrency : marketQuote;
+  const fx = useLatestFx(`USD${marketQuote}`);
   const backendRate = fx.status === 'success' && fx.data ? fx.data.rate : null;
-  const rate = syntheticJourneyActive ? getSyntheticJourneyRate(quote) : backendRate;
+  const rate = syntheticJourneyActive ? getSimulationDisplayRate(displayCurrency) : backendRate;
   const confirmTx = useLedgerStore((s) => s.confirm);
   const failTx = useLedgerStore((s) => s.fail);
 
@@ -407,7 +409,13 @@ function WithdrawPageContent() {
           : productSimulationActive
             ? 'Simulated balance: '
             : 'Current balance: '}
-        <BalanceWithLocalEstimate usdAmount={displayedBalanceBefore} inline />
+        <BalanceWithLocalEstimate
+          usdAmount={displayedBalanceBefore}
+          displayEstimate={syntheticJourneyActive
+            ? formatSimulationDisplayEstimate(displayedBalanceBefore, displayCurrency)
+            : undefined}
+          inline
+        />
       </div>
       <label htmlFor="amount-usd" className="block space-y-2">
         {productSimulationActive ? 'Amount to simulate' : 'Amount'} (USD)

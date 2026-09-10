@@ -15,6 +15,7 @@ import { getBalanceMode } from '../../../lib/state/balance.mode';
 import { getEnvironmentMode } from '../../../lib/env/mode';
 import { useLatestFx } from '../../../lib/hooks/useLatestFx';
 import { resolveMarket, resolveLocalCurrencyCode } from '../../../config/market';
+import { getSimulationDisplayRate, useSimulationDisplayCurrency } from '../../../lib/state/simulation-display-currency';
 import { EmptyState, ErrorState } from '@hedgr/ui';
 import { FxRateBlock, MarketDataContinuityPanel, TxReviewSimulatorBanner } from '../../../components';
 import { CONVERSION_PREVIEW_UNAVAILABLE_PLACEHOLDER } from '../../../lib/fx/market-data-continuity-copy';
@@ -63,11 +64,14 @@ function DepositPageContent() {
   const creditWallet = useWalletStore((s) => s.creditUSD);
 
   const market = resolveMarket();
-  const quote = resolveLocalCurrencyCode(market);
-  const fx = useLatestFx(`USD${quote}`);
+  const marketQuote = resolveLocalCurrencyCode(market);
+  const displayCurrency = useSimulationDisplayCurrency(syntheticJourneyActive);
+  const quote = syntheticJourneyActive ? displayCurrency : marketQuote;
+  // Keep the existing provider pair independent of the simulation preference.
+  const fx = useLatestFx(`USD${marketQuote}`);
   const backendRate = fx.status === 'success' && fx.data ? fx.data.rate : null;
   const rate = syntheticJourneyActive
-    ? getSyntheticJourneyRate(quote)
+    ? getSimulationDisplayRate(displayCurrency)
     : unavailableDataScenario
       ? null
       : backendRate;
@@ -163,12 +167,19 @@ function DepositPageContent() {
     // When rate is missing, zeros are technical simulation placeholders only (MC-S2-021);
     // UI must keep conversion preview unavailable — not economic truth.
     const amountUsdLedger = rate !== null && usdPreview !== null ? usdPreview : 0;
-    const fxRateLedger = rate !== null ? rate : 0;
+    // The legacy ledger field is explicitly ZMW. Normalize the confirmed USD
+    // reference rather than persisting a selected-currency input under that name.
+    const fxRateLedger = syntheticJourneyActive
+      ? getSyntheticJourneyRate('ZMW')
+      : rate !== null ? rate : 0;
+    const amountZmwLedger = syntheticJourneyActive
+      ? +(amountUsdLedger * fxRateLedger).toFixed(2)
+      : amountLocalNum;
     appendTx({
       txn_ref,
       type: 'deposit',
       status: 'pending',
-      amount_zmw: amountLocalNum,
+      amount_zmw: amountZmwLedger,
       amount_usd: amountUsdLedger,
       fx_rate: fxRateLedger,
       created_at: now,
