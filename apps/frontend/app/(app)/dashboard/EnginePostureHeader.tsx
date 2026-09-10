@@ -72,6 +72,7 @@ type EnginePostureHeaderProps = {
   comparisonState?: ComparisonState;
   latestChangeType?: "DEPOSIT" | "WITHDRAW";
   latestChangeAmountUSD?: number;
+  currencyContextVisible?: boolean;
 };
 
 export function EnginePostureHeader({
@@ -80,6 +81,7 @@ export function EnginePostureHeader({
   comparisonState = "change",
   latestChangeType,
   latestChangeAmountUSD,
+  currencyContextVisible = false,
 }: EnginePostureHeaderProps) {
   const { posture, notice } = engineState;
   const pathname = usePathname();
@@ -93,6 +95,11 @@ export function EnginePostureHeader({
     (pathname === CLASS_A_VAL_002_DASHBOARD_PATH ||
       searchParams?.get(CLASS_A_VAL_002_JOURNEY_PARAM) === CLASS_A_VAL_002_JOURNEY_VALUE);
   const showNotice = posture !== "normal" && Boolean(notice);
+  const scopeAttentionToActivity = currencyContextVisible && syntheticJourneyActive &&
+    posture === "normal" && comparisonState === "change" &&
+    isSyntheticJourneyPrimaryCondition(searchParams?.toString(), pathname) &&
+    (pathname === CLASS_A_VAL_002_DASHBOARD_PATH ||
+      searchParams?.get(CLASS_A_VAL_002_JOURNEY_PARAM) === CLASS_A_VAL_002_JOURNEY_VALUE);
   const changeObservation =
     latestChangeType && latestChangeAmountUSD !== undefined
       ? `The simulated ${
@@ -165,7 +172,9 @@ export function EnginePostureHeader({
                 className="text-sm font-semibold leading-relaxed text-hedgr-800"
               >
                 {posture === "normal"
-                  ? SIMULATION_COMPARISON_ATTENTION[comparisonState]
+                  ? scopeAttentionToActivity
+                    ? "No other change stands out in the simulated activity."
+                    : SIMULATION_COMPARISON_ATTENTION[comparisonState]
                   : SIMULATION_ATTENTION_ANSWERS[posture]}
               </p>
             </>

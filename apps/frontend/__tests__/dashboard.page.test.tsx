@@ -131,6 +131,7 @@ function makeBalanceState(
     total: 100,
     available: 100,
     pending: 0,
+    asOf: 1000,
     isLoading: false,
     error: null,
     currency: "USD",
@@ -432,7 +433,7 @@ describe("DashboardPage engine trust surface", () => {
     );
     expect(
       screen.getByTestId("engine-simulation-attention-answer").textContent
-    ).toBe("No other change stands out in the information shown.");
+    ).toBe("No other change stands out in the simulated activity.");
     expect(
       screen.queryByRole("link", { name: /Review what changed/ })
     ).toBeNull();
@@ -568,5 +569,85 @@ describe("DashboardPage engine trust surface", () => {
       ENGINE_STABILITY_REVIEW_AVAILABLE_CONTINUITY
     );
     expect(screen.getByTestId("dashboard-error-state")).toBeDefined();
+  });
+});
+
+
+describe("Currency context integration", () => {
+  function setup() {
+    vi.stubEnv("NEXT_PUBLIC_AUTH_MODE", "mock");
+    vi.stubEnv("NEXT_PUBLIC_FX_MODE", "stub");
+    vi.mocked(usePathname).mockReturnValue("/dashboard-synthetic-journey");
+    vi.mocked(useEngineState).mockReturnValue(getMockEngineState("normal"));
+    dashboardStateMocks.transactions = makeCompletedJourneyTransactions();
+    vi.mocked(useBalance).mockReturnValue(makeBalanceState({ total: 3, available: 3 }));
+  }
+
+  test("renders inside position with bounded observation, preserving available and pending meaning", () => {
+    setup();
+    const { rerender } = render(<DashboardPage />);
+    expect(screen.getByTestId("dashboard-balance").contains(screen.getByTestId("currency-insight"))).toBe(true);
+    expect(screen.getByTestId("currency-insight-headline").textContent).toContain("ZMW 3 higher");
+    expect(screen.getByTestId("engine-simulation-attention-answer").textContent).toBe("No other change stands out in the simulated activity.");
+    // Pending entries must withhold direction even when their numeric net cancels.
+    dashboardStateMocks.transactions = dashboardStateMocks.transactions.map(tx => ({ ...tx, status: "pending" }));
+    rerender(<DashboardPage />);
+    expect(screen.getByText("Waiting for the simulated position to settle.")).toBeDefined();
+    expect(screen.queryByTestId("currency-insight-direction")).toBeNull();
+    expect(dashboardStateMocks.clearLedger).not.toHaveBeenCalled();
+    expect(dashboardStateMocks.resetWallet).not.toHaveBeenCalled();
+  });
+
+  test("suppresses hydration/loading and stale reset data before rendering the zero-position state", () => {
+    setup();
+    vi.mocked(useSearchParams).mockReturnValue(new URLSearchParams("reset=1") as ReturnType<typeof useSearchParams>);
+    vi.mocked(useBalance).mockReturnValue(makeBalanceState({ asOf: 0 }));
+    const { rerender } = render(<DashboardPage />);
+    expect(screen.queryByTestId("currency-insight")).toBeNull();
+    vi.mocked(useBalance).mockReturnValue(makeBalanceState({ isLoading: true }));
+    rerender(<DashboardPage />);
+    expect(screen.queryByTestId("currency-insight")).toBeNull();
+    dashboardStateMocks.transactions = [];
+    vi.mocked(useBalance).mockReturnValue(makeBalanceState({ total: 3, available: 3 }));
+    rerender(<DashboardPage />);
+    expect(screen.queryByTestId("currency-insight")).toBeNull();
+    vi.mocked(useBalance).mockReturnValue(makeBalanceState({ total: 0, available: 0 }));
+    rerender(<DashboardPage />);
+    expect(screen.getByText("No position to compare yet.")).toBeDefined();
+    expect(screen.queryByTestId("currency-insight-direction")).toBeNull();
+  });
+
+  test("preserves a valid legacy wallet position and reports invalid input instead of inventing zero", () => {
+    setup();
+    vi.stubEnv("NEXT_PUBLIC_BALANCE_FROM_LEDGER", "false");
+    dashboardStateMocks.transactions = [];
+    const { rerender } = render(<DashboardPage />);
+    expect(screen.getByTestId("currency-insight-headline").textContent).toContain("ZMW 3 higher");
+    vi.mocked(useBalance).mockReturnValue(makeBalanceState({ total: NaN, available: NaN }));
+    rerender(<DashboardPage />);
+    expect(screen.getByText("The simulated position is unavailable.")).toBeDefined();
+    expect(screen.queryByTestId("currency-insight-direction")).toBeNull();
+  });
+
+  test.each([
+    ["/dashboard", "", false],
+    ["/dashboard", "journey=class-a-val-002", true],
+    ["/dashboard-synthetic-journey", "scenario=unavailable-data", false],
+  ])("isolates %s?%s", (path, query, visible) => {
+    setup();
+    vi.mocked(usePathname).mockReturnValue(path);
+    vi.mocked(useSearchParams).mockReturnValue(new URLSearchParams(query) as ReturnType<typeof useSearchParams>);
+    render(<DashboardPage />);
+    expect(Boolean(screen.queryByTestId("currency-insight"))).toBe(visible);
+    if (!visible) expect(screen.queryByText("No other change stands out in the simulated activity.")).toBeNull();
+  });
+
+  test.each(["tightening", "tightened", "recovery"] as const)("retains the %s notice beside currency context", posture => {
+    setup();
+    vi.mocked(useEngineState).mockReturnValue(getMockEngineState(posture));
+    render(<DashboardPage />);
+    expect(screen.getByTestId("currency-insight")).toBeDefined();
+    expect(screen.getByTestId("engine-posture-banner").textContent).toContain(getMockEngineState(posture).notice!.title);
+    expect(screen.getByTestId("engine-simulation-attention-answer").textContent).toBe("A change in the guidance needs review.");
   });
 });

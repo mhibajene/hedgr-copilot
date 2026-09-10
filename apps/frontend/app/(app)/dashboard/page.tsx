@@ -1,6 +1,6 @@
 "use client";
 
-import { formatSimulationDisplayEstimate, useSimulationDisplayCurrency } from "../../../lib/state/simulation-display-currency";
+import { formatSimulationDisplayEstimate, getSimulationDisplayRate, useSimulationDisplayCurrency } from "../../../lib/state/simulation-display-currency";
 import finish from '../product-finish.module.css';
 
 import Link from "next/link";
@@ -9,10 +9,12 @@ import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { EngineAllocationBands } from "./EngineAllocationBands";
 import { EnginePostureHeader } from "./EnginePostureHeader";
+import { CurrencyInsight } from "./CurrencyInsight";
 import { EngineProtectiveGuidance } from "./EngineProtectiveGuidance";
 import { EngineStabilityExplainer } from "./EngineStabilityExplainer";
 import { EngineStabilityReviewSnapshot } from "./EngineStabilityReviewSnapshot";
 import { useBalance } from "../../../lib/hooks/useBalance";
+import { getBalanceMode } from "../../../lib/state/balance.mode";
 import { defiAdapter } from "../../../lib/defi";
 import { useLedgerStore } from "../../../lib/state/ledger";
 import { useWalletStore } from "../../../lib/state/wallet";
@@ -64,7 +66,7 @@ function activityTitle(
 type SyntheticComparisonState = "empty" | "first-event" | "change";
 
 export default function DashboardPage() {
-  const { total, available, pending, isLoading, error, currency, refresh } =
+  const { total, available, pending, asOf, isLoading, error, currency, refresh } =
     useBalance();
   const engineState = useEngineState();
   const { isFeatureEnabled } = usePolicy();
@@ -165,6 +167,15 @@ export default function DashboardPage() {
     };
   }, [completedSyntheticActivity]);
 
+  // Wait for the existing balance projection and preference hydration. After reset,
+  // the ledger can be empty one render before useBalance publishes the cleared total.
+  const currencyContextVisible = syntheticJourneyActive && ready && asOf > 0 &&
+    !isLoading && !error &&
+    (!cleanStartRequested || (hasNoTransactions && total === 0)) &&
+    !(getBalanceMode() === "ledger" && hasNoTransactions && Number.isFinite(total) && total > 0);
+  const currencyComparisonPending = pending !== 0 || total !== available ||
+    transactions.some((tx) => tx.status === "pending");
+
   const balanceHero = (
     <section
       className={`space-y-1 ${finish.position}`}
@@ -211,6 +222,15 @@ export default function DashboardPage() {
             </span>
           ) : null}
         </p>
+      ) : null}
+      {currencyContextVisible ? (
+        <CurrencyInsight
+          usdAmount={total}
+          currency={displayCurrency}
+          latestDisplayRate={getSimulationDisplayRate(displayCurrency)}
+          ready={currencyContextVisible}
+          pending={currencyComparisonPending}
+        />
       ) : null}
     </section>
   );
@@ -312,6 +332,7 @@ export default function DashboardPage() {
           <div className={finish.observation}>
             <EnginePostureHeader
               engineState={engineState}
+              currencyContextVisible={currencyContextVisible}
               syntheticJourneyActive
               comparisonState={syntheticComparison.comparisonState}
               latestChangeType={syntheticComparison.lastEvent?.type}

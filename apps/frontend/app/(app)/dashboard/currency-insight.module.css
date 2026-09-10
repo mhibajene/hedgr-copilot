@@ -1,0 +1,78 @@
+.context {
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--color-hedgr-100);
+  color: var(--color-hedgr-600);
+  font-size: 0.875rem;
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+}
+
+.heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.25rem 1rem;
+  margin-bottom: 0.65rem;
+}
+
+.heading h2 {
+  font-weight: 600;
+  color: var(--color-hedgr-800);
+}
+
+.heading p { font-size: 0.75rem; }
+
+.headline {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  margin-bottom: 0.35rem;
+  color: var(--color-hedgr-800);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.5;
+  font-variant-numeric: tabular-nums;
+}
+
+.direction {
+  flex: none;
+  color: var(--color-hedgr-600);
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.limit { margin-top: 0.65rem; }
+
+.calculation { margin-top: 0.65rem; }
+
+.calculation summary {
+  width: fit-content;
+  max-width: 100%;
+  min-height: 2.75rem;
+  padding-block: 0.625rem;
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--color-hedgr-600);
+  border-radius: 0.25rem;
+}
+
+.calculation summary:focus-visible {
+  outline: 2px solid var(--color-hedgr-500);
+  outline-offset: 4px;
+}
+
+.explanation { display: grid; gap: 0.85rem; padding-top: 0.5rem; }
+
+.values { display: grid; gap: 0.75rem; }
+
+.values > div {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.25rem 1rem;
+}
+
+.values dt span { display: block; font-size: 0.75rem; }
+.values dd { font-variant-numeric: tabular-nums; color: var(--color-hedgr-800); font-weight: 600; }
