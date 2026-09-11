@@ -1,6 +1,6 @@
 Status: Canonical hand-off file
 Purpose: Strategic continuity, merged implementation truth, and next-ticket authority for Cursor execution
-Last updated: 2026-09-11
+Last updated: 2026-09-12
 
 ---
 
@@ -4594,7 +4594,7 @@ This section does **not** authorize provider-specific implementation, legal reli
 
 ## 7. Current sequence and active status
 
-**Approved next implementation ticket:** `CLASS-A-VAL-002-ACTIVITY-DETAIL-001`. Internal **D-139** / **§271** activates this nested Lane V remediation inside open parent `CLASS-A-VAL-002` for PA-JOURNEY-001 only. D-138 / §270 Form-refine closeout is completed historical authority. Parent Lane E `SE-REASON-001` remains open with no active nested ticket. Controlled Parallelism v21 unchanged. Participant distribution stays paused pending human protocol rehearsal/timing and explicit Founder disposition. About frozen/published. No financial capability, Form, participant, successor or cross-lane authority. NO CROSS-LANE IMPACT.
+**Approved next implementation ticket:** `CLASS-A-VAL-002-ACTIVITY-DETAIL-001`. Internal **D-139** / **§271**, amended by **D-140** / **§272**, authorizes this one nested Lane V remediation inside open parent `CLASS-A-VAL-002`: PA-JOURNEY-001 and the confirmed zero-value simulated deposit defect PA-JOURNEY-002-A. Positive-credit USD rounding and the fixed currency-insight fixture remain accepted and unchanged. D-138 / §270 Form-refine closeout is completed historical authority. Parent Lane E `SE-REASON-001` remains open with no active nested ticket. Controlled Parallelism v21 unchanged. Participant distribution stays paused pending human protocol rehearsal/timing and explicit Founder disposition. About frozen/published. No financial capability, Form, participant, successor or cross-lane authority. NO CROSS-LANE IMPACT.
 
 Completed and merged:
 
@@ -4848,6 +4848,14 @@ Current active ticket status:
 ## 7a. Active execution tickets — Lanes V and E (Controlled Parallelism v21; nested Lane V `CLASS-A-VAL-002-ACTIVITY-DETAIL-001`)
 
 ### Active nested Lane V ticket — CLASS-A-VAL-002-ACTIVITY-DETAIL-001
+
+**Current D-140 amendment (2026-09-12):** Following independent QA at `38c6d3a05ed9776e70fbe8127f5cc555943a90ed`, the Founder instructed “Approved to remediate concrete medium defects.” This activates only the confirmed PA-JOURNEY-002-A zero-value deposit defect in addition to D-139. The original PA-JOURNEY-002 positive-credit rounding discontinuity remains an experience concern and PA-JOURNEY-003 remains a fixed-stimulus interpretation hypothesis; neither authorizes changing arithmetic or the fixture. This same-ticket amendment supersedes the Deposit / PA-JOURNEY-002 exclusion below only for the zero-value guard. It does not establish a second active ticket or concurrent lane. PR #521 remains the separate D-139 delivery; prepare the amendment as a stacked change without modifying that branch, with independent verification and separate merge sequencing.
+
+**Added exact scope:** `apps/frontend/app/(app)/deposit/page.tsx`; `apps/frontend/__tests__/deposit.page.test.tsx`; `apps/frontend/tests-e2e/display-currency.spec.ts`; `docs/ops/governance/mvp/HEDGR_CLASS_A_VAL_002_ZERO_VALUE_DEPOSIT_EVIDENCE_NOTE.md`; plus existing `AGENTS.md`, this file (§7 / §7a / §272), and generated `docs/ops/bridge/repo-authority-projection.json`.
+
+**Accepted behavior / copy:** On research and default simulated Deposit, when an available rate and positive local input produce a USD preview of 0.00, disable Confirm and guard its handler before transaction creation, pending state, timers, ledger append or wallet credit. Associate an amount error with the input: “Enter an amount that rounds to at least $0.01 in this simulation.” Keep the numeric preview truthful and withhold the promise that confirming adds this amount while invalid. Correcting to a positive rounded USD credit clears the error and restores confirmation. Preserve existing whole-unit input, two-decimal USD rounding, rates and ledger normalization for positive credits; existing stored records, non-simulated behavior, unavailable-rate scenarios and explicit review-only bypass retain their existing behavior. No minimum real-money amount or new financial capability is implied.
+
+**Added verification / rollback:** Reproduce NGN 1 and 7 rejection and NGN 8 recovery; assert no ledger/wallet/client effects or success state for rejected inputs. Cover default simulation and preserve non-simulated/degraded behavior. Retain positive-credit controls across all five currencies and existing default-100 expectations. Hermetic browser coverage must preserve the existing position and Activity count through invalid input/refresh, then verify exactly one accepted event after correction. Run full validate, production build, local E2E, distinct reviewer QA and required hosted gates. Inspect the shipped route after merge and rebind RAP to permanent-main authority. Rollback is a scoped revert of this guard/copy and its tests, without record migration. No Form, protocol, distribution, engine, fixture, original rounding-policy, parent acceptance or cross-lane change. Commit this authority before projection generation or implementation. NO CROSS-LANE IMPACT.
 
 **Status / authority:** ACTIVE under Internal **D-139** / **§271**, 2026-09-11. Founder Musalwa Hibajene approved this nested Lane V remediation in the Hedgr Product Assurance Project chat on 2026-09-11, based on the first assurance review. This is authorization to update repo governance and then implement only the named High finding. It is not a Product Assurance self-dispatch. One nested Lane V ticket; no Green Lane delegation or Lane E change.
 
@@ -16459,3 +16467,12 @@ The Founder selected B for its cognitively lighter packaging, then B2 for equal-
 **Delivery / limits:** Commit this authority and matching `AGENTS.md` before RAP generation and implementation. Nested tickets do not join RAP `active_ticket_ids`; parents remain `CLASS-A-VAL-002` and `SE-REASON-001`. Distinct reviewer QA, required hosted gates, and permanent-main RAP rebind apply after merge. Technical completion is not comprehension or distribution authority.
 
 **Consequences:** One nested Lane V ticket only; parent Lane E independent with no nested ticket; Controlled Parallelism v21 unchanged. About frozen/published; participant distribution paused. No financial capability, Form, participant, successor or cross-lane authority. NO CROSS-LANE IMPACT.
+
+
+## 272. Founder-approved zero-value simulated deposit amendment — D-140
+
+**Date:** 2026-09-12. **Authority:** Direct Founder instruction after independent QA: “Approved to remediate concrete medium defects.”
+
+**Decision:** Amend the existing `CLASS-A-VAL-002-ACTIVITY-DETAIL-001` ticket in place for PA-JOURNEY-002-A only, under the exact added §7a scope. QA reproduced 1 NGN rounding to USD 0.00, receiving a completed simulated deposit and “increased by $0.00” copy, and adding a zero-value Activity entry. Reject that positive-input/zero-credit case before any event or balance effect, with an accessible correction message. Positive-credit rounding and the fixed invented FX comparison are retained; the original two Medium observations are not promoted into arithmetic or fixture remediation.
+
+**Delivery:** Commit authority first; generate RAP; implement and verify the narrow guard. Keep D-139 PR #521 separate and sequence its merge before this stacked amendment. Distinct reviewer QA, full validation/build/E2E, required hosted checks, shipped-route inspection and permanent-main RAP rebind apply. No second active ticket, cross-lane concurrency, historical-record migration, non-simulated or unavailable-rate behavior change, financial capability, Form/protocol/distribution or parent acceptance. NO CROSS-LANE IMPACT.
