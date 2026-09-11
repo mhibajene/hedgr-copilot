@@ -88,6 +88,7 @@ const ORIGINAL_APP_ENV = process.env.NEXT_PUBLIC_APP_ENV;
 afterEach(() => {
   cleanup();
   localStorage.removeItem('hedgr.simulation.display-currency');
+  localStorage.removeItem('hedgr.market');
   vi.restoreAllMocks();
   depositStateMocks.append.mockClear();
   depositStateMocks.confirm.mockClear();
@@ -527,11 +528,79 @@ describe('DepositPage CLASS-A-VAL-002 primary and exception conditions', () => {
 
 describe('D-132 selected simulation deposit currency', () => {
   test.each([
+    ['journey=class-a-val-002', '1'],
+    ['journey=class-a-val-002', '7'],
+    ['', '1'],
+  ])('rejects a zero-USD simulated deposit (%s, %s NGN) and recovers after correction', async (query, input) => {
+    vi.stubEnv('NEXT_PUBLIC_AUTH_MODE', 'mock');
+    vi.stubEnv('NEXT_PUBLIC_FX_MODE', 'stub');
+    vi.useFakeTimers();
+    vi.mocked(postDeposit).mockClear();
+    localStorage.setItem('hedgr.simulation.display-currency', 'NGN');
+    localStorage.setItem('hedgr.market', 'NG');
+    vi.mocked(useSearchParams).mockReturnValue(new URLSearchParams(query) as ReturnType<typeof useSearchParams>);
+    vi.mocked(useLatestFx).mockReturnValue({ status: 'success', data: { pair: 'USDNGN', rate: 1500, ts: 1 }, retry: vi.fn() });
+    render(<DepositPage />);
+    await act(async () => { await vi.advanceTimersByTimeAsync(350); });
+    const amount = screen.getByLabelText('Simulated deposit amount');
+    expect(screen.getByText('Amount to simulate (NGN)')).toBeTruthy();
+    fireEvent.change(amount, { target: { value: input } });
+    const button = screen.getByRole('button', { name: 'Confirm' }) as HTMLButtonElement;
+    expect(button.disabled).toBe(true);
+    expect(amount.getAttribute('aria-invalid')).toBe('true');
+    expect(amount.getAttribute('aria-describedby')).toBe(screen.getByRole('alert').id);
+    expect(screen.getByRole('alert').textContent).toBe('Enter an amount that rounds to at least $0.01 in this simulation.');
+    expect(screen.getByTestId('deposit-conversion-preview').textContent).toContain('+$0.00');
+    expect(screen.queryByText('Confirming adds this amount to the simulated balance.')).toBeNull();
+    await act(async () => {
+      fireEvent.click(button);
+      await vi.advanceTimersByTimeAsync(1600);
+    });
+    expect(depositStateMocks.append).not.toHaveBeenCalled();
+    expect(depositStateMocks.confirm).not.toHaveBeenCalled();
+    expect(depositStateMocks.creditUSD).not.toHaveBeenCalled();
+    expect(postDeposit).not.toHaveBeenCalled();
+    expect(screen.queryByTestId('deposit-confirmation-region')).toBeNull();
+
+    fireEvent.change(amount, { target: { value: '8' } });
+    expect(button.disabled).toBe(false);
+    expect(amount.getAttribute('aria-invalid')).toBe('false');
+    expect(screen.queryByRole('alert')).toBeNull();
+    expect(screen.getByTestId('deposit-conversion-preview').textContent).toContain('+$0.01');
+    await act(async () => {
+      fireEvent.click(button);
+      await vi.advanceTimersByTimeAsync(1600);
+    });
+    expect(depositStateMocks.append).toHaveBeenCalledTimes(1);
+    expect(depositStateMocks.append).toHaveBeenCalledWith(expect.objectContaining({ amount_usd: 0.01 }));
+    expect(depositStateMocks.confirm).toHaveBeenCalledTimes(1);
+    expect(screen.getByTestId('deposit-confirmation-region').textContent).toContain('increased by $0.01');
+  });
+
+  test('does not apply the simulated zero-USD guard to a non-simulated route', async () => {
+    vi.stubEnv('NEXT_PUBLIC_AUTH_MODE', 'magic');
+    vi.stubEnv('NEXT_PUBLIC_FX_MODE', 'live');
+    vi.useFakeTimers();
+    localStorage.setItem('hedgr.market', 'NG');
+    vi.mocked(useLatestFx).mockReturnValue({ status: 'success', data: { pair: 'USDNGN', rate: 1500, ts: 1 }, retry: vi.fn() });
+    render(<DepositPage />);
+    await act(async () => { await vi.advanceTimersByTimeAsync(350); });
+    fireEvent.change(screen.getByLabelText('Deposit amount'), { target: { value: '1' } });
+    expect(screen.queryByRole('alert')).toBeNull();
+    expect((screen.getByRole('button', { name: 'Confirm' }) as HTMLButtonElement).disabled).toBe(false);
+    expect(screen.getByTestId('deposit-conversion-preview').textContent).toContain('$0.00');
+  });
+
+  test.each([
     ['ZMW', 20, '100', 5, 100],
     ['KES', 130, '650', 5, 100],
     ['NGN', 1500, '7500', 5, 100],
     ['GHS', 15, '75', 5, 100],
     ['PHP', 56, '280', 5, 100],
+    ['ZMW', 20, '1', 0.05, 1],
+    ['KES', 130, '1', 0.01, 0.2],
+    ['GHS', 15, '1', 0.07, 1.4],
+    ['PHP', 56, '1', 0.02, 0.4],
     ['KES', 130, '100', 0.77, 15.4],
     ['NGN', 1500, '100', 0.07, 1.4],
     ['PHP', 56, '100', 1.79, 35.8],

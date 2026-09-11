@@ -43,6 +43,51 @@ test.beforeEach(async ({ context }) => {
   });
 });
 
+test('zero-USD simulated deposit preserves the position and Activity until a valid correction', async ({ page }) => {
+  await seedPosition(page);
+  await page.goto('/orientation');
+  await page.getByRole('combobox', { name: copy.label }).selectOption('NGN');
+  await page.goto('/deposit?journey=class-a-val-002');
+  await page.waitForLoadState('networkidle');
+  const before = await financialStorage(page);
+  const amount = page.getByRole('textbox', { name: 'Simulated deposit amount', exact: true });
+  const confirm = page.getByRole('button', { name: 'Confirm', exact: true });
+  for (const input of ['1', '7']) {
+    await amount.fill(input);
+    await expect(confirm).toBeDisabled();
+    await expect(amount).toHaveAttribute('aria-invalid', 'true');
+    await expect(amount).toHaveAccessibleDescription('Enter an amount that rounds to at least $0.01 in this simulation.');
+    await expect(page.getByTestId('deposit-conversion-preview')).toContainText('+$0.00');
+    await expect(page.getByTestId('deposit-confirmation-region')).toHaveCount(0);
+    expect(await financialStorage(page)).toEqual(before);
+  }
+  await page.reload();
+  await page.waitForLoadState('networkidle');
+  expect(await financialStorage(page)).toEqual(before);
+  await page.getByRole('link', { name: 'Home', exact: true }).first().click();
+  await expect(page.getByTestId('usd-balance')).toHaveText('$3.00');
+  await page.getByRole('link', { name: 'View Activity', exact: true }).click();
+  await expect(page.getByText('2 simulated entries', { exact: true })).toBeVisible();
+
+  await page.goto('/deposit?journey=class-a-val-002');
+  await amount.fill('7');
+  await expect(confirm).toBeDisabled();
+  await amount.fill('8');
+  await expect(confirm).toBeEnabled();
+  await expect(amount).toHaveAttribute('aria-invalid', 'false');
+  await expect(page.locator('#deposit-amount-error')).toHaveCount(0);
+  await expect(page.getByTestId('deposit-conversion-preview')).toContainText('+$0.01');
+  await confirm.click();
+  await expect(page.getByTestId('deposit-confirmation-region')).toContainText('increased by $0.01');
+  await page.getByRole('link', { name: 'Home', exact: true }).first().click();
+  await expect(page.getByTestId('usd-balance')).toHaveText('$3.01');
+  await page.getByRole('link', { name: 'View Activity', exact: true }).click();
+  await expect(page.getByText('3 simulated entries', { exact: true })).toBeVisible();
+  const records = JSON.parse((await financialStorage(page))['hedgr:ledger']!).transactions;
+  expect(records).toHaveLength(3);
+  expect(records[2]).toMatchObject({ type: 'deposit', amount_usd: 0.01, amount_zmw: 0.2, fx_rate: 20 });
+});
+
 test('entry selection persists through navigation, reload and clean journey restart', async ({ page }) => {
   await login(page);
   await page.goto('/orientation');
