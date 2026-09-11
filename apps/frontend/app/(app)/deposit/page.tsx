@@ -91,9 +91,10 @@ function DepositPageContent() {
       ? parsedAmountLocal
       : null;
   const hasPositiveAmount = amountLocalNum !== null && amountLocalNum > 0;
-  const amountIsInvalid = amountLocalStr !== '' && !hasPositiveAmount;
   const usdPreview =
     hasPositiveAmount && rate !== null ? +(amountLocalNum / rate).toFixed(2) : null;
+  const roundsToZero = productSimulationActive && usdPreview === 0;
+  const amountIsInvalid = (amountLocalStr !== '' && !hasPositiveAmount) || roundsToZero;
 
   const stubConfirmTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -147,6 +148,7 @@ function DepositPageContent() {
 
   const confirm = async () => {
     if (amountLocalNum === null || amountLocalNum <= 0) return;
+    if (roundsToZero) return;
     if (!rateAllowsConfirm) return;
 
     const usdForStub = rate !== null && usdPreview !== null ? usdPreview : 0;
@@ -204,6 +206,7 @@ function DepositPageContent() {
   const isConfirmDisabled =
     status === 'PENDING' ||
     !hasPositiveAmount ||
+    roundsToZero ||
     !rateAllowsConfirm;
 
   if (methodsError) {
@@ -341,7 +344,9 @@ function DepositPageContent() {
         />
         {amountIsInvalid ? (
           <p id="deposit-amount-error" className="text-sm text-hedgr-800" role="alert">
-            Enter a deposit amount greater than 0 {quote}.
+            {roundsToZero
+              ? 'Enter an amount that rounds to at least $0.01 in this simulation.'
+              : `Enter a deposit amount greater than 0 ${quote}.`}
           </p>
         ) : null}
       </div>
@@ -362,9 +367,11 @@ function DepositPageContent() {
                 </strong>
                 .
               </p>
-              <p className="text-hedgr-500">
-                Confirming adds this amount to the simulated balance.
-              </p>
+              {!roundsToZero ? (
+                <p className="text-hedgr-500">
+                  Confirming adds this amount to the simulated balance.
+                </p>
+              ) : null}
             </div>
           ) : (
             <>
