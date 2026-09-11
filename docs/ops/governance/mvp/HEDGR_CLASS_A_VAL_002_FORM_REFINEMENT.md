@@ -41,3 +41,7 @@ Historical five-stage graduated-fidelity and relative-priority-ranking criteria 
 Automated respondent traversal is complete technical QA. A human non-participant protocol rehearsal, actual currency-exposure verification and separate walkthrough/Form timings remain outstanding distribution prerequisites. No participant-facing duration claim is supplied. The Founder must separately dispose participant distribution; this preparation does not resume it.
 
 Rollback: keep the draft unpublished and restore the retained 41-question content if explicitly directed; never reopen the original intake automatically. About remains frozen/published, parent Lane V and Lane E remain open, and financial/runtime boundaries remain unchanged. NO CROSS-LANE IMPACT.
+
+## Technical closeout provenance
+
+PR #516 merged at `90d727d25c578a5228b941fe81e988329885dc0a` with required hosted checks passed. D-138 / HEDGR_STATUS.md §270 closes only technical preparation. The human rehearsal/timing and explicit distribution disposition remain outstanding. Permanent-main RAP rebind follows the closeout merge.
