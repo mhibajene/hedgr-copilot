@@ -25,3 +25,9 @@ This does not change the accepted positive-credit rounding policy. For example, 
 Authority was committed before implementation and projection generation. Work began stacked on D-139 PR #521 without altering its branch; #521 subsequently merged at `80e769046a85c50a013e04b1dc13edad6c8f77c3`, allowing this bounded amendment to target main separately.
 
 Hosted gates, merge, shipped-route inspection and permanent-main projection provenance are recorded at closeout rather than inferred from local results. This evidence does not establish participant comprehension, demand, parent acceptance or distribution readiness. Form/protocol, About, Lane E, financial capability and other work remain unchanged. NO CROSS-LANE IMPACT.
+
+## Verified delivery
+
+PR #522 merged at `b912d4318794353bf2e5f1aef02d0d295fd7b525` after required hosted checks passed. Deployed-browser inspection confirmed NGN 1 cannot confirm and NGN 8 records USD 0.01. D-141 / §273 records technical closeout; permanent-main RAP provenance follows the closeout merge. No additional implementation or participant authority follows.
+
+Production inspection used deployment `6397922838`, bound by GitHub to the #522 merge SHA, at `https://hedgr-copilot-frontend-5whfot9xd-hedgr.vercel.app`. Rejected NGN 1 left USD 0.00; corrected NGN 8 produced exactly one USD 0.01 Activity entry with no ZMW in its simulated detail. The PR preview was also inspected at 390px: the new error wrapped without horizontal overflow (content and viewport both 390px), and correction restored Confirm.
