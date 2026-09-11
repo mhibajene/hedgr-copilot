@@ -494,6 +494,8 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   await page.keyboard.press('Escape');
   await expect(page.getByTestId('tx-detail-modal')).toHaveCount(0);
   await expect(depositRow).toBeFocused();
+  // Activity delays clearing the selected record by 150ms after close.
+  await page.waitForTimeout(200);
   await expect(page.getByTestId('activity-delta-withdraw')).toHaveText(
     '-$2.00'
   );
