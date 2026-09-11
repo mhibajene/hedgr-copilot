@@ -16462,7 +16462,7 @@ The Founder selected B for its cognitively lighter packaging, then B2 for equal-
 
 **Decision ID:** Internal **D-139**
 
-**Status:** ACTIVE — BOUNDED NESTED LANE V REMEDIATION. Parent `CLASS-A-VAL-002` remains open. Participant distribution remains paused.
+**Status:** COMPLETED — HISTORICAL ACTIVATION under D-141 / §273. The dated D-139 decision below is retained as history only. Parent `CLASS-A-VAL-002` remains open. Participant distribution remains paused.
 
 **Authority:** Founder Musalwa Hibajene approved, in the Hedgr Product Assurance Project chat on 2026-09-11, activating a nested Lane V remediation ticket in `docs/ops/HEDGR_STATUS.md` based on the first assurance review. This authorizes repo-governance update and then implementation of only High finding PA-JOURNEY-001. It is not a Product Assurance self-dispatch. D-138 / §270 Form-refine closeout remains completed historical authority.
 
@@ -16476,6 +16476,8 @@ The Founder selected B for its cognitively lighter packaging, then B2 for equal-
 ## 272. Founder-approved zero-value simulated deposit amendment — D-140
 
 **Date:** 2026-09-12. **Authority:** Direct Founder instruction after independent QA: “Approved to remediate concrete medium defects.”
+
+**Status:** COMPLETED — HISTORICAL AMENDMENT under D-141 / §273. The dated amendment below supplies no standing implementation authority.
 
 **Decision:** Amend the existing `CLASS-A-VAL-002-ACTIVITY-DETAIL-001` ticket in place for PA-JOURNEY-002-A only, under the exact added §7a scope. QA reproduced 1 NGN rounding to USD 0.00, receiving a completed simulated deposit and “increased by $0.00” copy, and adding a zero-value Activity entry. Reject that positive-input/zero-credit case before any event or balance effect, with an accessible correction message. Positive-credit rounding and the fixed invented FX comparison are retained; the original two Medium observations are not promoted into arithmetic or fixture remediation.
 
