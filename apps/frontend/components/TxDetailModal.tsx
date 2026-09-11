@@ -281,7 +281,9 @@ export function TxDetailModal({
                     ? signedAmount
                     : `$${transaction.amountUSD.toFixed(2)}`}
                 </p>
-                {transaction.amountZMW !== undefined && transaction.amountZMW > 0 ? (
+                {!simulated &&
+                transaction.amountZMW !== undefined &&
+                transaction.amountZMW > 0 ? (
                   <p className="mt-1 text-sm text-hedgr-500">
                     {transaction.amountZMW.toFixed(2)} ZMW
                   </p>
