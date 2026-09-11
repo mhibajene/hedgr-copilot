@@ -480,6 +480,22 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   await expect(page.getByTestId('activity-row-deposit')).not.toContainText(
     'ZMW'
   );
+  const depositRow = page.getByTestId('activity-row-deposit');
+  await depositRow.click();
+  await expect(page.getByTestId('tx-detail-type')).toHaveText(
+    'Simulated deposit'
+  );
+  await expect(page.getByTestId('tx-detail-amount')).toContainText('+$5.00');
+  await expect(page.getByTestId('tx-detail-amount')).not.toContainText('ZMW');
+  await expect(page.getByTestId('tx-detail-modal')).not.toContainText('ZMW');
+  await expect(page.getByTestId('tx-detail-resulting-position')).toHaveText(
+    '$5.00'
+  );
+  await page.keyboard.press('Escape');
+  await expect(page.getByTestId('tx-detail-modal')).toHaveCount(0);
+  await expect(depositRow).toBeFocused();
+  // Activity delays clearing the selected record by 150ms after close.
+  await page.waitForTimeout(200);
   await expect(page.getByTestId('activity-delta-withdraw')).toHaveText(
     '-$2.00'
   );

@@ -23,6 +23,17 @@ const settledWithdrawal: TxLifecycle = {
   completedAt: Date.UTC(2026, 7, 26, 9, 31),
 };
 
+const settledDeposit: TxLifecycle = {
+  id: 'deposit-1',
+  type: 'DEPOSIT',
+  amountUSD: 5,
+  amountZMW: 100,
+  status: PublicTxStatus.SUCCESS,
+  createdAt: Date.UTC(2026, 7, 26, 9, 15),
+  updatedAt: Date.UTC(2026, 7, 26, 9, 16),
+  completedAt: Date.UTC(2026, 7, 26, 9, 16),
+};
+
 function ModalHarness() {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -113,5 +124,51 @@ describe('TxDetailModal', () => {
     expect(screen.getByTestId('tx-detail-timeline')).toBeDefined();
     expect(screen.getByTestId('tx-status-pill').textContent).toBe('Completed');
     expect(screen.getByTestId('tx-detail-amount').textContent).toContain('$2.00');
+  });
+
+  test('hides ledger ZMW on simulated deposit detail when the Activity row already hides it', () => {
+    render(
+      <TxDetailModal
+        transaction={settledDeposit}
+        isOpen
+        onClose={vi.fn()}
+        simulated
+        resultingBalance={5}
+      />,
+    );
+
+    expect(screen.getByTestId('tx-detail-type').textContent).toBe(
+      'Simulated deposit',
+    );
+    expect(screen.getByTestId('tx-detail-amount').textContent).toContain(
+      '+$5.00',
+    );
+    expect(screen.getByTestId('tx-detail-amount').textContent).not.toMatch(
+      /ZMW/,
+    );
+    expect(screen.getByTestId('tx-detail-modal').textContent).not.toMatch(
+      /ZMW/,
+    );
+    expect(screen.getByTestId('tx-detail-resulting-position').textContent).toBe(
+      '$5.00',
+    );
+  });
+
+  test('retains ledger ZMW on non-simulated deposit detail', () => {
+    render(
+      <TxDetailModal
+        transaction={settledDeposit}
+        isOpen
+        onClose={vi.fn()}
+      />,
+    );
+
+    expect(screen.getByTestId('tx-detail-type').textContent).toBe('Deposit');
+    expect(screen.getByTestId('tx-detail-amount').textContent).toContain(
+      '$5.00',
+    );
+    expect(screen.getByTestId('tx-detail-amount').textContent).toContain(
+      '100.00 ZMW',
+    );
   });
 });
