@@ -1,6 +1,6 @@
 Status: Canonical hand-off file
 Purpose: Strategic continuity, merged implementation truth, and next-ticket authority for Cursor execution
-Last updated: 2026-09-09
+Last updated: 2026-09-11
 
 ---
 
@@ -4594,7 +4594,7 @@ This section does **not** authorize provider-specific implementation, legal reli
 
 ## 7. Current sequence and active status
 
-**Approved next implementation ticket:** None. Internal **D-134** / **§266** records verified technical closeout of `CLASS-A-VAL-002-CURRENCY-INSIGHT-001`. D-133 / §265 is completed historical activation and amendment authority. Parent Lane V `CLASS-A-VAL-002` remains open with no active nested refinement. Parent Lane E `SE-REASON-001` remains open with no active nested ticket. Controlled Parallelism v21 is unchanged. Participant distribution stays paused pending live-Form and protocol reconciliation; About stays frozen and published. Technical completion is not participant comprehension, demand or parent-validation acceptance. No successor, financial capability or cross-lane authority follows. `NO CROSS-LANE IMPACT`.
+**Approved next implementation ticket:** `CLASS-A-VAL-002-FORM-RECON-001` — new-version Form and current-build participant-protocol reconciliation, activated by direct Founder approval under Internal **D-135** / **§267**. One bounded Class A informational nested ticket inside parent Lane V. The exact approved 41-question baseline and methods package control; later redundancy refinements remain proposed until separately accepted. Close only the original Form's future response intake, preserving its questions and all three historical responses; build a separate unpublished Form. Parent Lane E remains open with no active nested ticket. Controlled Parallelism v21 is unchanged. Participant distribution remains paused; About stays frozen and published. No runtime, financial capability, evidence acceptance, parent closeout, successor or cross-lane authority follows. `NO CROSS-LANE IMPACT`.
 
 Completed and merged:
 
@@ -4842,7 +4842,35 @@ Current active ticket status:
 
 ---
 
-## 7a. Active execution tickets — Lanes V and E (Controlled Parallelism v21; no active nested ticket after D-134 closeout)
+## 7a. Active execution tickets — Lanes V and E (Controlled Parallelism v21; D-135 nested Form reconciliation)
+
+### Active nested Lane V ticket — CLASS-A-VAL-002-FORM-RECON-001
+
+**Status / authority:** ACTIVE — Internal **D-135** / **§267**, 2026-09-11. The Founder approved the complete reviewed reconciliation package, bounded activation, new unpublished Form, and closing the original to future responses while preserving existing data. The accompanying request to review redundancy authorizes proposal-only current-product question review, not unreviewed cuts to this approved baseline.
+
+**Objective:** Prepare a versioned, current-build moderated research instrument and protocol whose question meaning, synthetic arithmetic, exposure records and visible controls agree, preserving historical evidence and the participant-distribution pause.
+
+**Type / boundary:** Class A informational research-methods reconciliation; non-executing for customer money. One nested Lane V ticket, no Green Lane delegation or Lane E change. DRI: Founder @mhibajene. Codex: Repo Steward / Implementer, then a distinct Verifier pass; ACT_WITH_CONFIRMATION under the approval already given in this conversation.
+
+**Approved content baseline:** The four Founder-reviewed files in `output/form-protocol-recon-2026-09-11/` (`reconciliation-review.md`, `questionnaire-v2-proposed.md`, `question-change-register.md`, `protocol-amendment-proposed.md`) are the accepted input package for this activation only. Capture the questionnaire and protocol contract in the named repo files below; local drafts do not become a standing authority surface. Preserve 41 questions / 38 required; only Q8/Q29/Q38 optional; original stable numbering/order/types; the 18 reviewed question amendments; Q28/Q29 and Q37/Q38 branch/rejoin; Q35 at most 3; true Other fields; no-quiz/privacy controls; no unverified duration claim. Q4/Q6/Q11 measurement changes are explicit, not cross-version equivalents.
+
+**Exact repository scope:**
+- `AGENTS.md`
+- `docs/ops/HEDGR_STATUS.md`
+- `docs/ops/governance/mvp/HEDGR_CLASS_A_VAL_002_PARTICIPANT_PROTOCOL.md`
+- `docs/ops/governance/mvp/HEDGR_CLASS_A_VAL_002_QUESTIONNAIRE_V2.md` (new canonical approved baseline)
+- `docs/ops/governance/mvp/HEDGR_CLASS_A_VAL_002_FORM_PROTOCOL_RECONCILIATION.md` (new redacted evidence / reviewed contract)
+- generated `docs/ops/bridge/repo-authority-projection.json`
+
+**External scope:** Original Form `10LfCVV908DpoRcyiArexlOOAwa_n4RARjslIo6AyQpo`: disable Accepting responses only, preserving publication/access settings, all questions and all existing responses. Create one separate unpublished Form titled for editors `Hedgr Product Experience Study — v2 draft — 2026-09-11`, retaining participant-facing title `Hedgr Product Experience Study`; implement the approved questionnaire without the extra untitled item and without copying responses. No response spreadsheet or new recipient/access grant. A copy may be used only as a draft construction aid after confirming it has no responses and remains unpublished; preserve the original.
+
+**Protocol / evidence scope:** Use the existing orientation/reset route in an isolated synthetic context; verify USD 0 and empty Activity; record persistent selected currency. Equivalent USD 5 inputs: ZMW 100, KES 650, NGN 7500, GHS 75, PHP 280; Withdraw input USD 2 leaves USD 3. Current planning purposes Now/Reserve/Growth and percentages 50/30/20 replace obsolete labels/stages without rewriting historical findings. Uniform orientation stimulus; no added About exposure. Capture open entry/exit/delayed evidence before Form Q4 onward; later recognition-exposed answers cannot be U. Preserve U/D/N/M, with directed disclosure recorded as N and recognition exposure separately flagged. The three approved moderator-only currency follow-ups remain after open recall and the 41-question Form, are prompted evidence, and create no new acceptance threshold. Current-build study only; no causal improvement or unexposed-baseline claim. No runtime falling-rate stimulus. Timing requires separate walkthrough/Form rehearsal; no false 10–12 minute combined-session promise.
+
+**Acceptance / verification:** Current-source and rendered-form comparison; exact question/option/order/type/required states and all conditional routes; Q35 maximum three; settings and autosave; new Form unpublished with zero participant responses; old intake closed with original response count and contents preserved. Preserve all historical evidence; do not pool changed constructs across versions. Distinct post-implementation reviewer QA for wording and exposure handling. Non-participant rehearsal/test records, if generated, must be segregated and cannot count as evidence. Normal full validate and required hosted checks apply; external browser checks are separate from hermetic CI. Any unperformed rehearsal or methods prerequisite remains an explicit distribution gate, not a fabricated pass.
+
+**Exclusions / stop:** No runtime/product/UX/engine/ledger/transaction arithmetic, About/frozen narrative/public positioning, threshold, recruitment/contact/distribution, response deletion/export, sensitive-data field, provider/rail/custody/live capability, Lane E, or cross-lane change. Stop for a material unapproved wording/method change, a required setting or external action outside scope, risk to historical responses, or inability to verify unpublished/zero-response state. Proposed redundancy review may be drafted locally but cannot change the approved 41-question count by inference.
+
+**Delivery / rollback:** Commit activation sources before RAP generation and external/canonical implementation. Required gated PR delivery, then permanent-main RAP rebind. Roll back by keeping the new Form unpublished and reverting the scoped repo patch; retain the original Form/data. Do not automatically reopen old response intake or resume distribution on rollback. Technical preparation is not comprehension, demand, parent acceptance or permission to recruit. `NO CROSS-LANE IMPACT`.
 
 ### Completed nested Lane V ticket — CLASS-A-VAL-002-CURRENCY-INSIGHT-001
 
@@ -5081,12 +5109,12 @@ This is presentation simplification under the existing ticket, not engine reason
 
 - **Lane A / B / C / M / N / R:** idle
 - **Active Lane V ticket:** `CLASS-A-VAL-002`
-- **Active nested ticket inside Lane V:** None after D-134 / §266. Parent validation remains open; participant distribution is paused.
+- **Active nested ticket inside Lane V:** `CLASS-A-VAL-002-FORM-RECON-001` under D-135 / §267 and the exact active brief above. Parent validation remains open; participant distribution is paused.
 - **Active Lane N ticket:** none (`NARRATIVE-007` completed under Internal **D-080** / **§212**)
 - **Active Lane E ticket:** `SE-REASON-001`
 - **Active nested ticket inside Lane E:** none. `SE-REASON-001-RETEST-001` is completed historical authority under Internal **D-121** / **§253**; `SE-REASON-001-EVID-001` remains completed historical authority under Internal **D-084** / **§216**
 
-**Sequencing posture:** Internal **D-134** / **§266** records verified technical closeout of `CLASS-A-VAL-002-CURRENCY-INSIGHT-001`. D-133 / §265 is completed historical activation and amendment authority. Parent Lane V `CLASS-A-VAL-002` remains open with no active nested refinement. This closeout creates no new activation or Green Lane delegation. Controlled Parallelism v21 remains unchanged; parent Lane E `SE-REASON-001` remains open with no active nested ticket. D-131 / §263 remains completed historical readability and developmental-cycle closeout. Participant distribution remains paused pending live-Form and protocol reconciliation. About stays frozen and published. No successor, comprehension success, market availability, financial capability or cross-lane authority follows. `NO CROSS-LANE IMPACT`.
+**Sequencing posture:** D-135 / §267 activates only the bounded Form/protocol reconciliation above. D-134 and prior product closeouts remain completed historical authority. Participant distribution is paused. Parent Lane E remains open with no nested ticket; Controlled Parallelism v21 is unchanged. About remains frozen and published. No runtime, financial capability, comprehension acceptance, parent closeout, successor or cross-lane authority follows. `NO CROSS-LANE IMPACT`.
 
 **Historical closeout posture:** Internal **D-126** / **§258** records verified publication and technical closeout of `CLASS-A-VAL-002-ABOUT-EXTERNAL-001`, activated by D-124 / §256 and published under Founder decision D-125 / §257. PR #491 merged at `58f97c6`; the accepted v0.3 About is live at `https://hedgr-copilot-frontend.vercel.app/about-hedgr-review`. Parent `CLASS-A-VAL-002` remains open with no active nested Lane V refinement. Formal participant distribution remains paused pending live-Form verification. No successor, further refinement, research exposure change or financial authority follows. No Green Lane delegation envelope is activated. `NO CROSS-LANE IMPACT`. Controlled Parallelism **v21** / Internal **D-076** / **§6f.21** is again the unamended Lane V / Lane E parent pass. Internal **D-123** / **§255** closes temporary Internal **D-122** / **§254** / **§6f.21b** mobile-native readiness support. Internal **D-120** / **§252** closes temporary Internal **D-100** / **§232** / **§6f.21a** repository support. Internal **D-119** / **§251** returns `CLASS-A-VAL-002-PROD-CONVERGENCE-001` and its D-117 / D-118 verification-only amendments to completed historical authority, preceding the bounded D-124 external About activation. Internal **D-121** / **§253** returns `SE-REASON-001-RETEST-001` to completed historical authority, leaving parent Lane E open with no active nested ticket and D-099 unchanged. Internal **D-113** / **§245** keeps `CLASS-A-VAL-002-ABOUT-001` and its D-112 verification-only amendment completed historical. Internal **D-111** / **§243** keeps `CLASS-A-VAL-002-ORIENT-003` completed historical; Internal **D-109** / **§241** keeps `CLASS-A-VAL-002-HOME-SETTINGS-001` completed historical; Internal **D-106** / **§238** keeps `CLASS-A-VAL-002-VISUAL-001` completed historical. Participant distribution remains paused. The canonical approved Form and participant protocol remain unchanged. Before distribution resumes, verify the live Form against the canonical instrument; a live mismatch must stop for separately authorized reconciliation. D-119, D-120, D-121, D-122, and D-123 cannot intervene in the Form, distribution, frozen narrative, public positioning, balance arithmetic, or financial execution. Kenya counsel: **DEFER**. Class B convergence gate: unsatisfied. No active Green Lane delegation exists under Internal **D-085** / **§217**.
 
@@ -16284,3 +16312,22 @@ The Founder selected B for its cognitively lighter packaging, then B2 for equal-
 **Current consequence:** Parent Lane V and Lane E remain open with no active nested ticket. Controlled Parallelism v21 and the retired Green Lane posture remain unchanged. Participant distribution stays paused pending live-Form/protocol reconciliation. About stays frozen and published. No comprehension success, cognitive-load improvement, demand, financial capability, parent closeout, successor or cross-lane authority follows. `NO CROSS-LANE IMPACT`.
 
 **Provenance / rollback:** Commit closeout sources before RAP generation, deliver through required gates, then bind the projection separately to the permanent-main closeout merge. The final projection-only rebind covers the merged implementation and closeout authority. Revert the scoped runtime/test/allowlist change to restore D-132 without migration or record/preference repair. Unrelated `output/` and `tmp/` remain preserved.
+
+
+## 267. Founder activation — current-build Form and protocol reconciliation
+
+**Date:** 2026-09-11
+
+**Decision ID:** Internal **D-135**
+
+**Status:** ACTIVE — `CLASS-A-VAL-002-FORM-RECON-001`, bounded nested Class A informational work inside parent Lane V.
+
+**Authority:** After reviewing the complete reconciliation package, the Founder selected a new Form and replied “Approved” to bounded activation, new unpublished Form creation, and closing the original to future responses while preserving existing data. The Founder also requested current-product question/redundancy review as refinements to the new Form. This latter direction permits proposal-only refinement review; the approved baseline remains 41 questions until an exact amendment is accepted.
+
+**Why now / decision:** The old live Form contains an extra required untitled item, while its historical canonical questionnaire and protocol test retired labels/stages and assume ZMW 100 for every Deposit. Activate the exact §7a scope to preserve the historical Form and its three responses, close its future intake, and prepare a separately versioned unpublished current-build instrument. Commit the accepted question/method boundaries repo-natively before external edits.
+
+**Evidence meaning:** Preserve six separate evidence domains and five parent evidence layers; modified Q4/Q6/Q11 are not equivalent measures across versions. Current-build exposure, selected-currency task arithmetic, independent versus directed disclosure, open versus recognition-exposed answers, and prior familiarity must remain explicit. Optional approved currency probes are prompted follow-up evidence only. No causal comparison, demand, parent acceptance or timing-success claim follows.
+
+**Consequences:** One nested Lane V ticket; parent Lane E independent with no nested ticket; Controlled Parallelism v21 unchanged; Green Lane retired. Participant distribution remains paused even when the new Form is technically ready. About stays frozen and published. No runtime, product, financial capability, parent closeout, successor or cross-lane authority. `NO CROSS-LANE IMPACT`.
+
+**Delivery / rollback:** Exact files/actions/verification in §7a. Commit sources before RAP generation; required local/hosted gates and distinct reviewer QA; permanent-main provenance rebind after merge. New Form remains unpublished on rollback, original responses remain preserved, and old intake is not reopened by inference.
