@@ -1,5 +1,145 @@
 # CLASS-A-VAL-002 Participant Protocol and Evidence Capture
 
+**Version:** D-137 / v2.1 current-product refinement, 2026-09-11.
+
+**Status:** APPROVED PREPARATION CONTRACT; participant distribution remains PAUSED. This amendment controls current preparation. Both earlier protocols below are dated historical records, including their former active-state statements.
+
+**Authority:** HEDGR_STATUS.md §7 / §7a / §269; Internal D-137; CLASS-A-VAL-002-FORM-REFINE-001. Class A informational only. NO CROSS-LANE IMPACT.
+
+**Canonical Form:** [Questionnaire v2.1](HEDGR_CLASS_A_VAL_002_QUESTIONNAIRE_V2_1.md). [Refinement evidence](HEDGR_CLASS_A_VAL_002_FORM_REFINEMENT.md). The 41-question v2 remains a frozen historical baseline.
+
+## 1. Current status and evidence boundary
+
+Prepare the accepted 19-question Form and its matching moderated protocol. Preserve the five parent evidence layers: problem recognition, journey comprehension, product identity, decision relevance and behavioural value. The explicit outcome map below supplies capture locations without creating a new domain taxonomy or threshold. Consent, synthetic-data/redaction boundaries, U/D/N/M support coding and the Founder disposition chain remain unchanged.
+
+The Form is a companion to a moderated session, not a self-guided study. The response-free draft remains unpublished. Human protocol rehearsal/timing and explicit Founder disposition are still prerequisites to any participant distribution. Technical QA cannot establish participant comprehension, demand, parent acceptance or a successor.
+
+## 2. Current session setup and checkpoints
+
+Use the exact verified research build with mock authentication and fixed illustrative FX. Record the immutable build commit and deployment, not just a mutable alias. Baseline review reference: D-136 permanent main `797769c3ad8829b72832eec7c016dacb44284f9b`; currency-insight runtime delivery `30ae69aea5e214f6036f1728acc3182c057210fa`. Verify the intended deployment again before any later session.
+
+Use a dedicated research browser context containing only synthetic session state. Start at `/orientation`, then use its existing continuation to `/dashboard-synthetic-journey?reset=1`. Verify that the consumed reset leaves the human-readable journey route at USD 0 with empty Activity. Do not instruct participants to clear named storage keys manually. The existing display-currency preference survives restart: explicitly verify and record the selected currency for every session. Do not clear the Founder's ordinary browser state.
+
+The legacy `?journey=class-a-val-002` route remains a compatibility fallback, with its use recorded. Preserve the visible `Simulation · no real money` caption and available `How this simulation works` disclosure. Do not weaken disclosures to create an artificial baseline.
+
+Keep `/orientation` as the uniform entry stimulus. Do not add About, the one-pager, a pitch, or an intended category explanation before primary evidence. Record any prior About, product, or research exposure as known/none reported/unknown; do not infer it from an anonymous response. This study is orientation-exposed and, after a positive position, currency-context-exposed. It is not an unexposed or comparative study.
+
+Record the selected display currency before Deposit. Use the corresponding synthetic input to preserve the same USD journey:
+
+| Selected currency | Fixed units per USD | Deposit input | USD deposit | USD withdrawal | USD remaining |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| ZMW | 20 | 100 | 5.00 | 2.00 | 3.00 |
+| KES | 130 | 650 | 5.00 | 2.00 | 3.00 |
+| NGN | 1,500 | 7,500 | 5.00 | 2.00 | 3.00 |
+| GHS | 15 | 75 | 5.00 | 2.00 | 3.00 |
+| PHP | 56 | 280 | 5.00 | 2.00 | 3.00 |
+
+The values are invented fixtures. They are not current quotes or evidence of country support. Do not treat nationality as currency familiarity. Keep currency fixed during the primary journey; any later selector exploration is separate exposure.
+
+| Checkpoint | Required observation |
+| --- | --- |
+| Orientation | Approved entry stimulus; record completion and any prior exposure. |
+| Home start | USD 0; no events; selected currency recorded; no position to compare. The empty observation describes insufficient comparison history, not guaranteed safety. |
+| Planning purposes | Now / Reserve / Growth visible with meanings and balance boundary. Percentage disclosure remains closed until its observation stage. |
+| Planning percentages | Now 50%, Reserve 30%, Growth 20%; simulated structure, not holdings or balance partitions. Record whether opened independently or on request. |
+| Deposit preview | Selected-currency input from the table yields simulated USD 5; rate and simulation limits visible. Stop on a mismatch. |
+| Deposit result | Completed simulated event; USD 5; corresponding Activity record. Currency context may already be visible: record its first exposure. |
+| Withdrawal | USD input remains 2; calculation 5 − 2 = 3. Use the existing Withdraw affordance in the journey/Activity; do not assume a primary-navigation Withdraw link. |
+| Activity | One settled simulated deposit +5 and one withdrawal −2 explain USD 3. Use `View Activity` from Home. |
+| Home return | USD 3; current local estimate uses the same fixed rate; simulated-activity observation and currency comparison have distinct meanings. |
+| Secondary exception | Existing `/deposit?journey=class-a-val-002&scenario=unavailable-data`; unavailable preview and disabled confirmation. No new scenario or runtime control. |
+
+## 3. Exact capture sequence
+
+Read the opening boundary exactly:
+
+> This is a research simulation. Every balance, rate, deposit, withdrawal, and Activity entry you see is simulated. Do not enter real financial or personal information. No real money can move in this session.
+
+Ask the participant to think aloud. Do not explain the proposition beyond visible product copy before open evidence is captured. Do not introduce a proposed category label, About or a pitch. Record every actual probe and exposure.
+
+1. **Before Home:** after orientation, complete only Form R01–R02 (Before the journey). R01 is general app/financial-language comfort, not infrastructure familiarity. R02 supplies the initial identity answer once, qualified as post-orientation. Keep the Form on this section until the moderator sequence and delayed record are complete; do not expose R03 onward early.
+2. **Initial Home:** at USD 0 ask: “What does this page tell you about the position? What can and cannot be understood yet?” Record the first answer, insufficient-history/false-safety interpretation, uncertainty, attention and readiness before a probe. Ask: “Without opening anything else, what problem do you think Hedgr is trying to help with?” Then: “What decision or next step, if any, could this view help you think about?” Observe whether they locate the primary action. These capture problem and possible behaviour; omit the old separate identity and use-situation questions here because R02/R03/R04 supply those capture points.
+3. **Planning:** at What you are building toward ask: “What is this section for?” Then: “What do Now, Reserve and Growth mean to you?” The purpose descriptions and no-balance-split boundary are already visible. Record the first explanation before percentages are opened. Observe the next information sought and any hesitation. Record independent opening of View planning percentages separately from moderator-directed opening. If not independently opened, ask the participant to open that existing control and mark the result N, not independent disclosure evidence.
+4. **Percentage interpretation and transfer:** record the initial open answer to “What do these percentages represent?” before the targeted questions: “Does the simulated balance get divided by these percentages?”; “Would a different simulated balance automatically be split in this way?”; “Is Hedgr telling you what to do?”; “Has any money been allocated, held, or moved?” Keep roles, balance boundaries, instructions and money movement distinct. Do not request retired five-stage controls or recreate their sequence through teaching. Record disclosure benefit and navigation friction as observations, not duplicate Form ratings.
+5. **Deposit:** ask the participant to start the simulated deposit and use the selected-currency input in §2. Before confirmation ask: “What balance do you expect after this step, and why?” Preserve the prediction before any correction. Let them confirm when comfortable. Ask: “What actually happened here? What did not happen?” Then: “Where can you now find the simulated deposit that explains this change?” Record whether Activity is found independently or with help. Record the first currency-context exposure.
+6. **Withdraw:** use USD 2. Before confirming ask: “What balance do you expect afterward?” Record that prediction before asking: “Where would the remaining $3.00 stay in this simulation?” Confirm and capture the result, then the targeted boundary probe: “Does this screen prove that a bank transfer or real payout happened?” A supplied amount or probe is recorded exposure, not an independent arithmetic answer.
+7. **Activity and Home return:** ask for both records and an open reconciliation of the balance without restating the route model. Preserve the answer before a probe. Ask: “What does ‘Completed’ mean in this screen?” Return to Home and verify USD 3. Omit the old repeated identity/use-situation recapture here; R03/R04 follow the distinct delayed task below. Capture reasoning with: “What is Hedgr saying about your situation?”; “Why do you think Hedgr is saying that?”; “What information is Hedgr using to reach that view?”; “What still seems uncertain?”; “What remains your decision?” Ask once: “At what point did Hedgr begin to feel credible to you, if at all? What specifically caused that?” Do not treat missing trust as automatic failure or repeat R05 as an additional unresolved-understanding prompt.
+8. **Secondary exception:** use the existing unavailable-data route in §2. Ask: “What can you still understand, what action is unavailable, and why?” Then: “What would you do next?” No new scenario or runtime control.
+9. **Delayed record:** conduct a consistent five-minute unrelated discussion without financial/category instruction. Record actual duration and hide the journey screens. Ask the five questions below before any post-journey Form answer list is shown. Preserve these separately from initial answers; earlier product and moderator exposure still applies.
+10. **Open Form group:** show Your experience and capture R03–R07 exactly once in the Form. Do not ask these verbatim again in moderator notes. A moderator may reference the recorded answer by R ID without collecting a second primary response. Accept “none” or uncertainty at R04; do not suggest a use case. R06 precedes targeted R14; R07 precedes availability/holdings suggestions.
+11. **Recognition and targeted group:** only after R03–R07 are saved in the session flow, proceed to Understanding the experience (R08–R18). R14 is explicitly prompted boundary evidence. At R18, Yes opens optional R19; No / I was not sure skip it and finish. No final identity/category/recall section follows.
+
+Delayed questions, with the interface hidden:
+
+1. “Without looking at the interface, what problem do you think Hedgr is intended to help with, and what kind of product is it?”
+2. “When might it matter, and what decision or behaviour could it affect?”
+3. “How did the simulated balance change from start to finish, and which entries explained the result?”
+4. “What were the planning purposes for, what did Now, Reserve and Growth mean, what did the planning percentages represent, and did they divide the simulated balance or tell you what to do?”
+5. “If a simulated deposit added $8 and a simulated withdrawal subtracted $3, what would remain, and where would you check why?”
+
+This delayed task is intentionally distinct from immediate/form capture. It is not evidence of long-term retention, and its prompts are part of the exposure history preceding R03–R07.
+
+## 4. Optional diagnostic after the complete Form
+
+Only after the entire Form, the moderator may ask:
+
+> What, if anything, does selecting a currency tell you about where Hedgr is available or what money it holds?
+
+Record the exact prompt and first answer as a targeted diagnostic, not a second primary R07 response. The other two D-135 optional currency prompts are now R06 and R14 and must not also be collected in the moderator channel. Do not add a falling-rate scenario or collect real balances, income, invoices or transactions.
+
+## 5. Outcome map and evidence capture
+
+Retain the historical evidence templates below as field references only where this current map makes the outcome observable. Record every initial, disclosure-supported, prompted/corrected and delayed answer separately. Preserve the five parent layers and these distinct outcomes; a Form answer does not replace observed navigation or an earlier explanation.
+
+| Retained outcome | Primary current capture | Corroboration / limit |
+| --- | --- | --- |
+| General familiarity | R01 | Context only; no blockchain/technical segment inference. |
+| Initial state, attention, uncertainty and readiness | Stage 2 first Home answer and observed behaviour | No separate clarity or false-safety recognition items; no safety assurance. |
+| Problem recognition | Stage 2 open problem question | Delayed question 1; not supplied category selection. |
+| Product identity | R02 initial; delayed question 1; R03 post-journey | Distinct exposure/time points; R03 precedes recognition but follows delayed prompts. |
+| Decision relevance / possible use situation | R04 | Delayed question 2; stated relevance is not demand or use intent. |
+| Behavioural value / possible next step | Stage 2 decision/next-step answer | Delayed question 2 and observed choices; no changed acceptance threshold. |
+| Planning-section purpose and Now / Reserve / Growth roles | Stage 3 open explanation before percentages | R10/R11 recognition; false earnings/investment reading of Growth remains distinct. |
+| Percentages versus balance / holdings / instruction | Stage 4 initial explanation and separate transfer/probes | R12/R13 and delayed question 4; no relative-priority-ranking pass. |
+| USD journey, prediction and reconciliation | Stages 5–7 predictions, actual outputs and open Activity reconciliation | R08 and delayed questions 3/5; +8 −3 transfer retained. |
+| Navigation, disclosure and continuity | Observed primary action, disclosure opening and Activity finding, with all help recorded | R09 recognition cannot establish successful navigation. |
+| Simulation, real money, custody and investment limits | Stage 4/5/6/7 open answers followed by recorded targeted probes | R13 separates each misconception; Completed is synthetic completion only. |
+| Currency comparison / unchanged USD reference | R06 | R14 separately codes earnings, purchasing power, protection and conversion inferences. |
+| Display-currency meaning | R07 plus selected currency/exposure metadata | Optional post-Form availability/holdings diagnostic; never country support inferred from selection. |
+| Reasoning, evidence, uncertainty and agency | Stage 7 open reasoning/decision questions and observed actions | R15 recognition; independent judgment is not advice authority. |
+| Unresolved understanding, credibility and confidence | R05; stage 7 credibility moment/cause; R16/R17 | Confidence remains distinct from explanation accuracy; Other and maximum 3 preserved. |
+| Overcertainty | R18 and conditional optional R19 | Specific example, not endorsement of an internal caution standard. |
+| Delayed recall / transfer | Stage 9 five questions | Pre-recognition but exposure-qualified; no pooling with initial answers. |
+
+Moderator-only session metadata: protocol/Form version and ID; immutable build/deployment; selected currency, participant-reported familiarity if known and inherited preference; actual inputs/outputs; known/none-reported/unknown prior product/research/About exposure; orientation completion; first currency-context exposure; independent/directed disclosure timing; all probes used; first visibility of R03 and R08; delay procedure/actual duration; deviations; separate walkthrough/Form timing during human rehearsal. Do not infer familiarity from nationality. Keep recruitment/contact identifiers outside the repo; no new personal or real financial data fields.
+
+Preserve support coding, always alongside prior stimulus:
+
+- U: open answer from the currently visible interface without moderator prompting beyond the open question; includes actual stimulus already seen.
+- D: first adequate explanation after an independently opened disclosure.
+- N: after a neutral probe or moderator-directed inspection; identify which.
+- M: after moderator explanation; rescue, not demonstrated comprehension.
+
+Record `recognition options seen: yes/no; first exposure` separately. Open wording alone does not make an answer unaided. R14 names the boundary concepts and is targeted. Never silently code recognition exposure as U or overwrite the first answer with a corrected one.
+
+Mark retired five-stage graduated-fidelity and relative-priority-ranking outcomes `not observable in this build`. Preserve the historical 0/1/2 retrieval aid as descriptive only; do not carry retired scores into current aggregates, pool old/new versions, change parent success thresholds or calculate acceptance from this shortened instrument. Any remaining conflict with an old mandatory criterion requires explicit Founder disposition before distribution. No claim of causal improvement, reduced participant burden, repeat use, willingness to pay, demand or settled public category naming follows.
+
+## 6. Verification and distribution gate
+
+Check the exact 19-question wording/options/order/types; 17 required, R05/R19 optional; four section boundaries; R18 Yes/No/uncertain paths; R17 true Other and maximum three; unchanged settings, intro and completion message. Traverse the unpublished respondent preview using synthetic QA entries without submitting. Confirm saving/reload, unpublished state and zero responses. The original historical Form and all three responses remain untouched.
+
+Reviewer QA is a distinct post-implementation pass covering method, exposure order, retained outcomes, branching and version separation. Automated traversal is technical preparation only. A human non-participant rehearsal must still run the entire moderator sequence, separately measure walkthrough/Form time, and verify actual currency exposure before an explicit Founder distribution disposition. Do not publish a duration claim or treat automation wall time as participant burden.
+
+Participant distribution remains paused. About, runtime, product, engine, Lane E and financial capability are unchanged. NO CROSS-LANE IMPACT.
+
+---
+
+# Historical D-135 protocol — retained verbatim for provenance only
+
+The following is the full D-135 protocol as retained at D-136 permanent main 797769c3ad8829b72832eec7c016dacb44284f9b. Its 41-question instructions and optional currency capture points are superseded for current preparation by D-137 above. The nested pre-D-135 historical record also remains verbatim. Neither historical block activates distribution.
+
+# CLASS-A-VAL-002 Participant Protocol and Evidence Capture
+
 **Version:** D-135 current-build reconciliation, 2026-09-11.
 
 **Status:** APPROVED PREPARATION CONTRACT; participant distribution remains PAUSED. This current-build amendment controls every future preparation/session reference. The historical protocol reproduced below is a dated preservation record only and does not activate testing or require retired controls.
