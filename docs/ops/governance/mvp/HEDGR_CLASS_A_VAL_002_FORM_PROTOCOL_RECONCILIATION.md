@@ -3,7 +3,7 @@
 Date: 2026-09-11
 Ticket: CLASS-A-VAL-002-FORM-RECON-001
 Authority: Internal D-135 / HEDGR_STATUS.md §7 / §7a / §267
-Status: PREPARED — approved baseline implemented; distinct reviewer-stage QA completed below. Repository delivery gates remain pending. Distribution paused.
+Status: COMPLETED TECHNICAL PREPARATION under D-136 / §268 after PR #513. Distinct reviewer-stage QA and required delivery checks passed; respondent traversal, rehearsal/timing and distribution remain separately gated.
 
 ## Approved input and boundaries
 
@@ -37,7 +37,7 @@ Reviewer found one stale no-active-nested phrase in the status summary; it was r
 
 ### Repository delivery gates
 
-Local `pnpm run validate` passed with trust checks, deterministic RAP/snapshot checks, test suites, typecheck and lint; frontend result was 71 test files / 858 tests passed (Turbo cache reused). The structural review confirmed 41 sequential IDs / 38 required / 3 optional, all five equivalent USD fixtures, and byte-for-byte preservation of the historical protocol suffix. Required hosted checks, merge evidence and permanent-main RAP provenance are recorded at closeout.
+Local `pnpm run validate` passed with trust checks, deterministic RAP/snapshot checks, test suites, typecheck and lint; frontend result was 71 test files / 858 tests passed (Turbo cache reused). The structural review confirmed 41 sequential IDs / 38 required / 3 optional, all five equivalent USD fixtures, and byte-for-byte preservation of the historical protocol suffix. PR #513 merged at `02398797fb09da5d6616cb0fea3063f275841e2a`. Hosted validate [34564804405](https://github.com/mhibajene/hedgr-copilot/actions/runs/34564804405), CI/build/fork-safe [34564804386](https://github.com/mhibajene/hedgr-copilot/actions/runs/34564804386), E2E smoke [34564804391](https://github.com/mhibajene/hedgr-copilot/actions/runs/34564804391), Bridge freshness and evidence-pack checks passed. D-136 / §268 records technical preparation only. The separate permanent-main RAP rebind follows the closeout authority merge.
 - Participant rehearsal/timing, collection and comprehension are not inferred from builder QA.
 
 ## Founder-requested refinement review
