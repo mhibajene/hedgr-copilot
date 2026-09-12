@@ -1,6 +1,6 @@
 # Hedgr Stability Engine Reasoning Research Brief
 
-**Status:** Active governing research frame; the retained research architecture remains non-authoritative; parent `SE-REASON-001` remains active. Internal **D-084** / **§216** closed nested `SE-REASON-001-EVID-001`, retained the four-function candidate as non-canonical research architecture, and identified independent interpretability / inter-rater consistency as the primary remaining uncertainty without activating work. Internal **D-098** / **§230** later activated nested `SE-REASON-001-RETEST-001`; Internal **D-121** / **§253** accepts its qualifying context-isolated evidence, retains the result as non-canonical research architecture reproducible only within the fixed D-098 synthetic instrument, and closes only that nested retest. Internal **D-099** / **§231** remains `RETAIN / REVISE / RETEST` semantic research direction only and is not amended, activated, or tested by D-121. No successor, model acceptance, product translation, engine/UX implementation, participant-data collection, live-input use, or execution-class change follows.<br>
+**Status:** Active governing research frame; the retained research architecture remains non-authoritative; parent `SE-REASON-001` remains active. Internal **D-084** / **§216** closed nested `SE-REASON-001-EVID-001`, retained the four-function candidate as non-canonical research architecture, and identified independent interpretability / inter-rater consistency as the primary remaining uncertainty without activating work. Internal **D-098** / **§230** later activated nested `SE-REASON-001-RETEST-001`; Internal **D-121** / **§253** accepts its qualifying context-isolated evidence, retains the result as non-canonical research architecture reproducible only within the fixed D-098 synthetic instrument, and closes only that nested retest. Internal **D-099** / **§231** remains `RETAIN / REVISE / RETEST` semantic research direction only and is not amended, activated, or tested by D-121. Internal **D-142** / **§274** now separately activates only `SE-REASON-001-EVID-INTERP-001` under **§7** / **§7a**. It adds the three named research outputs in §15 below; no further successor, model acceptance, product translation, engine/UX implementation, participant-data collection, live-input use, or execution-class change follows.<br>
 **Ticket:** `SE-REASON-001` (Lane E)  
 **Decision:** Internal **D-076** / Controlled Parallelism v21  
 **Repo authority:** `docs/ops/HEDGR_STATUS.md` **§6f.21**, **§7**, **§7a**, **§204**  
@@ -215,3 +215,22 @@ If a later Founder decision separately names and activates a successor retest, i
 - **authority separation:** keep reasoning distinct from policy, recommendation, allocation, accounting, and execution.
 
 This section is a recorded research direction, not a revised model or instrument. No successor ticket is named. No D-098 artifact may be altered to incorporate these semantics. A later retest may begin only after a separate Founder decision and explicit repo-native **§7** / **§7a** activation with fixed surfaces, acceptance shape, stop conditions, and rollback.
+
+
+## 15. D-142 bounded evidence-interpretation activation
+
+**Status:** ACTIVE — Founder approved 12 September 2026. Sole nested Lane E ticket: `SE-REASON-001-EVID-INTERP-001`. Current §7 / §7a / §274 are the exact execution authority. D-098 / D-121 remain completed historical evidence/authority; D-099 remains unchanged direction only.
+
+**Objective:** Test interpretation or justified abstention from synthetic facts without supplied target-observation materiality/evidence-quality labels, holding retained definitions and decision rules fixed. This methods variation applies only to the new instrument.
+
+**Additional named outputs:**
+
+1. `docs/ops/stability-engine/research/HEDGR_STABILITY_EVIDENCE_INTERPRETATION_PROTOCOL.md` — preregistration, source digests, factual dependencies, adjudication reference, methods preflight and procedural manifest; withheld from evaluation reviewers.
+2. `docs/ops/stability-engine/research/HEDGR_STABILITY_EVIDENCE_INTERPRETATION_INSTRUMENT.md` — fixed reviewer-facing model/rules and eight opaque synthetic cases in four matched pairs, response schema and attestation.
+3. `docs/ops/stability-engine/research/HEDGR_STABILITY_EVIDENCE_INTERPRETATION_READOUT.md` — verbatim locked submissions/hashes, item-level comparison, disagreements, limits and one Founder-reviewable disposition.
+
+**Controls:** Exactly one fixed run with three fresh isolated agent evaluations after distinct methods preflight and preregistration. Withhold prior conclusions, D-099, pair mapping and expected answers; lock all responses before comparison. No automatic rerun, replacement cohort, extra case, invented materiality/freshness threshold, model revision or score. Preserve the F1/F4 caveat and distinguish supported interpretation from agreement, delivery from evidence acceptance, and agent-process independence from human/population generalisability. The §7a case/control and isolation requirements govern in full.
+
+**Current preparation state:** Protocol, instrument, reviewer submissions and readout are not yet produced. Commit authority before research preparation. Existing models, interpretation tests and D-098 artifacts remain unchanged. No runtime, UX, Copilot, participant data, live input, allocation, recommendation, execution or financial authority. Lane V, distribution gate and About posture remain unchanged. `NO CROSS-LANE IMPACT`.
+
+**Completion boundary:** Deliver one bounded readout for separate Founder disposition. No parent closeout, model acceptance, translation or successor follows automatically. Rollback and permanent-main RAP provenance follow the exact §7a contract.
