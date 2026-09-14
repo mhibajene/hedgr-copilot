@@ -2,7 +2,7 @@
 
 **14 September 2026 · SE-REASON-001-EVID-INTERP-001 · Internal D-143 / HEDGR_STATUS.md §275**
 
-**Disposition: RETAIN — bounded, non-canonical synthetic research evidence with explicit qualifications.** The Founder has accepted the bounded disposition and HedgrOps final recommendation. Only this nested exercise is closed; parent `SE-REASON-001` stays open. Governed delivery QA/checks and permanent-main RAP rebind remain required before verified technical delivery can be claimed. No successor or further retest is authorized. **NO CROSS-LANE IMPACT**.
+**Disposition: RETAIN — bounded, non-canonical synthetic research evidence with explicit qualifications.** The Founder has accepted the bounded disposition and HedgrOps final recommendation. Only this nested exercise is closed; parent `SE-REASON-001` stays open. Verified technical delivery is gated by required checks and merge of [PR #529](https://github.com/mhibajene/hedgr-copilot/pull/529), followed by permanent-main RAP rebind. No successor or further retest is authorized. **NO CROSS-LANE IMPACT**.
 
 ## Accepted finding and scope
 
@@ -71,7 +71,7 @@ The preregistered protocol and instrument remain byte-identical to released main
 
 ## Governed delivery record
 
-Authority committed before readout creation: `3b9c1b9`. Distinct delivery QA, local validation, hosted required checks and permanent-main RAP rebind are pending. Closeout stops after these gates; no experiment, model change or successor follows.
+Authority committed before readout creation: `3b9c1b9`; current activation-tail and release-gate reconciliation: `e84bd04`. Full local `pnpm run validate` passed (868 frontend tests, bridge checks/tests, typecheck and lint); hermetic `e2e:ci` passed all 94 tests. The local backend was stopped afterward. Reconciled RAP and Bridge snapshot checks passed. Distinct delivery QA completed on 14 September 2026 in separate agent `/root/delivery_qa`: no remaining blocking findings after correction of two stale D-142 current-activation tails. The reviewer independently verified exact five-file scope, all 47 checksum entries, all 38 ZIP/extracted-file matches, verbatim source/submission preservation, released input equality, transmitted context/session/tool controls, recorded chronology and primary approval/disposition messages. This was delivery QA, not another research evaluation; provider/internal-isolation and local-record limitations remain. Hosted required checks and merge of [PR #529](https://github.com/mhibajene/hedgr-copilot/pull/529), followed by permanent-main RAP rebind, are release conditions; their results and commit identities are inspectable in the delivery PR and linked projection-only follow-up. Closeout stops after these gates; no experiment, model change or successor follows.
 
 ## Archived coordinator readout — verbatim historical source
 
