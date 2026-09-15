@@ -1,0 +1,70 @@
+.page { max-width: 30rem; margin: 0 auto; padding: 1rem 1.125rem 2rem; color: var(--color-hedgr-800); overflow-wrap: anywhere; }
+.page > * + * { margin-top: 1.25rem; }
+.page h1 { font-size: 1.625rem; line-height: 1.25; font-weight: 700; letter-spacing: -.04em; }
+.page h2 { font-size: .9375rem; font-weight: 600; }
+.brand { max-width: 30rem; margin: auto; padding: 1rem 1.125rem .5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.brand img { width: 5.75rem; height: auto; }
+.brand a { min-height: 2.75rem; display: inline-flex; align-items: center; color: var(--color-hedgr-600); font-size: .8125rem; }
+.position { background: color-mix(in srgb, var(--color-hedgr-100) 12%, white); border: 1px solid color-mix(in srgb, var(--color-hedgr-100) 45%, transparent); border-radius: 1.25rem; box-shadow: 0 4px 18px color-mix(in srgb, var(--color-hedgr-primary) 7%, transparent); padding: 1.125rem; }
+.position > * + * { margin-top: .4rem; }
+.position [aria-label="USD Balance amount"] { font-size: clamp(1.5rem, 12vw, 3.25rem); font-weight: 600; line-height: 1.15; letter-spacing: -.05em; }
+.position [aria-label="USD Balance amount"]::after { content: 'USD'; margin-left: .35rem; font-size: .9375rem; font-weight: 400; letter-spacing: normal; }
+.position [data-testid="local-balance"] { font-size: .8125rem; font-weight: 400; line-height: 1.5; color: var(--color-hedgr-500); letter-spacing: normal; }
+.currencyRow { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .5rem; font-size: .75rem; color: var(--color-hedgr-500); }
+.currencyPicker { width: auto; max-width: 100%; min-height: 2.75rem; padding: .375rem .625rem; border-radius: .75rem; border: 1px solid var(--color-hedgr-100); color: var(--color-hedgr-700); background: white; font-size: .8125rem; }
+.utilities { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 8rem),1fr)); gap: .625rem; }
+.utility { display: flex; align-items: center; justify-content: center; gap: .5rem; min-height: 2.875rem; padding: .625rem; border-radius: .75rem; border: 1px solid color-mix(in srgb, var(--color-hedgr-100) 60%, transparent); background: white; color: var(--color-hedgr-800); box-shadow: inset 0 1px 0 #fff, 0 3px 10px color-mix(in srgb, var(--color-hedgr-primary) 10%, transparent); font-size: .75rem; font-weight: 600; line-height: 1.4; }
+.utility img { width: 1.25rem; height: 1.25rem; object-fit: contain; }
+.utility span { font: inherit; white-space: normal; }
+.utility:hover { background: color-mix(in srgb, var(--color-hedgr-100) 14%, white); }
+.observation { padding: 1rem; border-radius: 1rem; background: color-mix(in srgb, var(--color-hedgr-100) 20%, white); }
+.observation p { font-size: .8125rem; line-height: 1.5; }
+.link { display: inline-flex; align-items: center; min-height: 2.75rem; text-align: left; color: var(--color-hedgr-600); font-size: .8125rem; font-weight: 500; }
+.context { border-top: 1px solid var(--color-hedgr-100); padding-top: 1rem; font-size: .8125rem; line-height: 1.55; color: var(--color-hedgr-600); }
+.context p + p { margin-top: .4rem; }
+.headline { font-weight: 600; color: var(--color-hedgr-800); display: flex; gap: .6rem; align-items: baseline; }
+.limit { font-size: .75rem; line-height: 1.5; }
+.planning { padding: .875rem 1rem; border-radius: .875rem; background: color-mix(in srgb, var(--color-hedgr-100) 14%, white); }
+.planning summary { min-height: 2.75rem; cursor: pointer; font-size: .875rem; font-weight: 600; }
+.planning summary span { display: block; font-size: .75rem; font-weight: 400; color: var(--color-hedgr-500); margin-top: .25rem; }
+.planning > div { padding-top: 1rem; }
+.dialog { position: fixed; inset: 0; margin: auto; width: min(100%, 30rem); max-width: 100%; max-height: 100dvh; height: 100dvh; padding: 0; border: 1px solid var(--color-hedgr-100); background: white; color: var(--color-hedgr-800); overflow-y: auto; }
+.dialog::backdrop { background: color-mix(in srgb, var(--color-hedgr-800) 35%, transparent); }
+.dialogStrip { padding: .75rem 1rem; text-align: center; background: color-mix(in srgb, var(--color-hedgr-100) 35%, white); font-size: .75rem; }
+.dialogHeader { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
+.dialogHeader button { min-height: 2.75rem; color: var(--color-hedgr-600); font-size: .8125rem; }
+.dialogTitle { font-size: 1.625rem !important; font-weight: 700; line-height: 1.25; letter-spacing: -.035em; }
+.comparison { border-radius: 1rem; padding: 1rem; background: color-mix(in srgb, var(--color-hedgr-100) 20%, white); }
+.comparisonRow { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .5rem; padding: .75rem 0; }
+.comparisonRow + .comparisonRow { border-top: 1px solid var(--color-hedgr-100); }
+.comparisonRow dt { font-size: .9375rem; font-weight: 600; }
+.comparisonRow dt span { display: block; font-size: .8125rem; color: var(--color-hedgr-500); font-weight: 400; }
+.comparisonRow dd { font-size: 1.25rem; font-weight: 600; font-variant-numeric: tabular-nums; }
+.dialog p { font-size: .875rem; line-height: 1.55; }
+.dialog details { border-top: 1px solid var(--color-hedgr-100); padding-top: .75rem; }
+.dialog summary { cursor: pointer; min-height: 2.75rem; font-size: .875rem; font-weight: 600; }
+.activityBalance { background: white; }
+.activityBalance strong { display: block; font-size: clamp(1.5rem, 12vw, 3.25rem); letter-spacing: -.05em; font-weight: 600; line-height: 1.2; }
+.activityBalance small { font-size: .9375rem; letter-spacing: normal; font-weight: 400; }
+.filters { display: flex; flex-wrap: wrap; gap: .5rem; }
+.filters button { flex: 1; min-width: 0; min-height: 2.75rem; padding: .5rem; border: 1px solid var(--color-hedgr-100); border-radius: 2rem; font-size: .75rem; font-weight: 600; }
+.filters button[aria-pressed="true"] { background: color-mix(in srgb, var(--color-hedgr-100) 45%, white); }
+.events { display: grid; gap: .5rem; }
+.event { border-radius: 1rem; padding: .875rem; background: color-mix(in srgb, var(--color-hedgr-100) 20%, white); }
+.event summary { cursor: pointer; list-style: none; display: flex; flex-wrap: wrap; justify-content: space-between; gap: .75rem; min-height: 2.75rem; }
+.event summary::-webkit-details-marker { display: none; }
+.event summary > span { min-width: 0; }
+.event strong { display: block; font-size: .8125rem; font-weight: 600; }
+.event small { display: block; font-size: .75rem; color: var(--color-hedgr-500); margin-top: .3rem; }
+.eventAmount { text-align: right; }
+.eventAmount strong { font-size: .9375rem; }
+.event dl { margin-top: 1rem; padding-top: .75rem; border-top: 1px solid var(--color-hedgr-100); }
+.event dl div { display: flex; justify-content: space-between; gap: 1rem; margin-top: .5rem; font-size: .8125rem; }
+.event dd { font-variant-numeric: tabular-nums; }
+.event p { margin-top: .875rem; font-size: .75rem; color: var(--color-hedgr-500); }
+.bottomNav { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); max-width: 30rem; margin: auto; padding: .5rem 1.125rem; gap: .5rem; }
+.bottomNav a { min-height: 3.25rem; display: flex; align-items: center; justify-content: center; border-radius: .75rem; font-size: .8125rem; color: var(--color-hedgr-500); overflow-wrap: anywhere; }
+.bottomNav a[aria-current="page"] { background: color-mix(in srgb, var(--color-hedgr-100) 30%, white); color: var(--color-hedgr-800); font-weight: 600; }
+.page :is(a,button,summary,select):focus-visible, .brand a:focus-visible, .bottomNav a:focus-visible { outline: 2px solid var(--color-hedgr-500); outline-offset: 3px; }
+@media (min-width: 768px) { .dialog { height: auto; max-height: 90dvh; border-radius: 1.25rem; } .page { padding-top: 1.5rem; } }
+@media (prefers-reduced-motion: no-preference) { .utility { transition: background-color 140ms, box-shadow 140ms; } }

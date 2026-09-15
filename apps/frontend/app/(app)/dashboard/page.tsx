@@ -2,6 +2,8 @@
 
 import { formatSimulationDisplayEstimate, getSimulationDisplayRate, useSimulationDisplayCurrency } from "../../../lib/state/simulation-display-currency";
 import finish from '../product-finish.module.css';
+import wallet from '../research-wallet.module.css';
+import { SimulationDisplayCurrencySelector } from '../../../components/SimulationDisplayCurrencySelector';
 
 import Link from "next/link";
 import Image from "next/image";
@@ -178,7 +180,7 @@ export default function DashboardPage() {
 
   const balanceHero = (
     <section
-      className={`space-y-1 ${finish.position}`}
+      className={`space-y-1 ${syntheticJourneyActive ? wallet.position : finish.position}`}
       aria-labelledby="dashboard-total-balance-label"
       data-testid="dashboard-balance"
     >
@@ -186,7 +188,7 @@ export default function DashboardPage() {
         id="dashboard-total-balance-label"
         className="text-xs font-semibold tracking-tight text-hedgr-800"
       >
-        Your current position
+        {syntheticJourneyActive ? "Simulated balance" : "Your current position"}
       </p>
       {isLoading ? (
         <div className={`${finish.positionLoading} tabular-nums`}>
@@ -200,12 +202,13 @@ export default function DashboardPage() {
           className={`${finish.positionLoading} tabular-nums`}
         />
       )}
-      {productSimulationActive && ready && !isLoading ? (
+      {syntheticJourneyActive ? <div className={wallet.currencyRow}><span data-testid="dashboard-synthetic-balance-explainer">Illustrative simulation value only.</span><SimulationDisplayCurrencySelector placement="position" /></div> : null}
+      {productSimulationActive && !syntheticJourneyActive && ready && !isLoading ? (
         <p
           className="max-w-md pt-1 text-xs leading-relaxed text-hedgr-500 sm:text-sm"
           data-testid="dashboard-synthetic-balance-explainer"
         >
-          {syntheticJourneyActive ? "Illustrative simulation value only." : "Illustrative position only."}
+          Illustrative position only.
         </p>
       ) : null}
       {ready && !isLoading && total !== available ? (
@@ -223,15 +226,6 @@ export default function DashboardPage() {
           ) : null}
         </p>
       ) : null}
-      {currencyContextVisible ? (
-        <CurrencyInsight
-          usdAmount={total}
-          currency={displayCurrency}
-          latestDisplayRate={getSimulationDisplayRate(displayCurrency)}
-          ready={currencyContextVisible}
-          pending={currencyComparisonPending}
-        />
-      ) : null}
     </section>
   );
 
@@ -242,12 +236,12 @@ export default function DashboardPage() {
   const homeUtilities = (
     <nav
       aria-label="Simulation utilities"
-      className={`grid gap-3 ${finish.utilityGroup}`}
+      className={syntheticJourneyActive ? wallet.utilities : `grid gap-3 ${finish.utilityGroup}`}
       data-testid="dashboard-simulation-utilities"
     >
       <Link
         href={productRouteHref("/deposit")}
-        className={finish.utility}
+        className={syntheticJourneyActive ? wallet.utility : finish.utility}
         data-testid="dashboard-add-simulated-deposit"
       >
         <Image
@@ -264,7 +258,7 @@ export default function DashboardPage() {
       </Link>
       <Link
         href={productRouteHref("/activity")}
-        className={finish.utility}
+        className={syntheticJourneyActive ? wallet.utility : finish.utility}
         data-testid="dashboard-view-activity"
       >
         <Image
@@ -329,8 +323,9 @@ export default function DashboardPage() {
               </p>
             </section>
           ) : null}
-          <div className={finish.observation}>
+          <div className={syntheticJourneyActive ? wallet.observation : finish.observation}>
             <EnginePostureHeader
+              redesigned={syntheticJourneyActive}
               engineState={engineState}
               currencyContextVisible={currencyContextVisible}
               syntheticJourneyActive
@@ -342,7 +337,9 @@ export default function DashboardPage() {
                   : undefined
               }
             />
+            {syntheticJourneyActive && syntheticComparison.lastEvent ? <Link href={getSyntheticJourneyHref('/activity')} className={wallet.link}>See the activity</Link> : null}
           </div>
+          {currencyContextVisible ? <CurrencyInsight redesigned usdAmount={total} currency={displayCurrency} latestDisplayRate={getSimulationDisplayRate(displayCurrency)} ready={currencyContextVisible} pending={currencyComparisonPending} /> : null}
         </div>
       ) : (
         <div className="grid gap-5 sm:grid-cols-[minmax(0,1.2fr)_minmax(13rem,0.8fr)] sm:gap-6">
@@ -422,7 +419,7 @@ export default function DashboardPage() {
   }
 
   return (
-    <main className="px-6 pb-24 pt-5 sm:p-8">
+    <main className={syntheticJourneyActive ? wallet.page : "px-6 pb-24 pt-5 sm:p-8"}>
       <div
         className={`mx-auto ${
           productSimulationActive ? "space-y-4 sm:space-y-8" : "space-y-6 sm:space-y-8"
@@ -435,23 +432,21 @@ export default function DashboardPage() {
           className="space-y-0.5 pb-1 sm:space-y-2"
           data-testid="dashboard-orientation"
         >
-          <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-hedgr-500">
-            Financial position
-          </p>
+          {!syntheticJourneyActive ? <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-hedgr-500">Financial position</p> : null}
           <h1
             id="dashboard-orientation-heading"
             className="text-xl font-bold tracking-tight text-hedgr-800 sm:text-4xl"
           >
-            See what you have and what changed.
+            {syntheticJourneyActive ? "Your position" : "See what you have and what changed."}
           </h1>
-          <p className="max-w-xl text-sm leading-relaxed text-hedgr-dark">
+          {!syntheticJourneyActive ? <p className="max-w-xl text-sm leading-relaxed text-hedgr-dark">
             Hedgr helps you understand and maintain your financial stability.{' '}
             {syntheticJourneyActive
               ? 'This walkthrough provides context, not an instruction.'
               : productSimulationActive
                 ? 'This simulated experience provides context, not an instruction.'
                 : 'This experience provides context, not an instruction.'}
-          </p>
+          </p> : null}
         </section>
 
         {currentOverview}
@@ -484,11 +479,10 @@ export default function DashboardPage() {
           </div>
         )}
 
-        {productSimulationActive || !isFirstTimeUser ? (
-          <EngineAllocationBands
-            engineState={engineState}
-            collapsed={productSimulationActive}
-          />
+        {syntheticJourneyActive ? (
+          <details className={wallet.planning} data-testid="research-planning-targets"><summary>Planning targets<span>Targets only · No money moved</span></summary><div><EngineAllocationBands engineState={engineState} collapsed /></div></details>
+        ) : productSimulationActive || !isFirstTimeUser ? (
+          <EngineAllocationBands engineState={engineState} collapsed={productSimulationActive} />
         ) : null}
 
         {!syntheticJourneyActive && productSimulationActive

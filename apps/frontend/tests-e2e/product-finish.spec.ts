@@ -40,9 +40,14 @@ for (const synthetic of [true, false]) {
       for (const textSize of [100, 200]) {
         await page.goto(home);
         await page.addStyleTag({ content: `html { font-size: ${textSize}%; }` });
-        const framing = page.getByTestId('dashboard-orientation').getByText('Hedgr helps you understand', { exact: false });
-        await expect.soft(framing).toBeVisible();
-        await expect(framing).toContainText('provides context, not an instruction.');
+        if (synthetic) {
+          await expect(page.getByRole('heading', { name: 'Your position', exact: true })).toBeVisible();
+          await expect(page.getByText('Illustrative simulation value only.', { exact: true })).toBeVisible();
+        } else {
+          const framing = page.getByTestId('dashboard-orientation').getByText('Hedgr helps you understand', { exact: false });
+          await expect(framing).toBeVisible();
+          await expect(framing).toContainText('provides context, not an instruction.');
+        }
         const banner = page.getByRole('region', { name: 'Simulation disclosure' });
         const title = banner.getByText('Simulation · no real money', { exact: true });
         const details = page.getByTestId('simulation-technical-details');
@@ -59,13 +64,12 @@ for (const synthetic of [true, false]) {
           expect(overlapX <= 1 || overlapY <= 1).toBe(true);
           expect(summaryBox.height).toBeGreaterThanOrEqual(44);
           const bannerBox = (await banner.boundingBox())!;
-          expect((await page.getByTestId('app-nav').boundingBox())!.y).toBeGreaterThanOrEqual(bannerBox.y + bannerBox.height);
+          expect((await page.getByTestId(synthetic ? 'synthetic-journey-shell' : 'app-nav').boundingBox())!.y).toBeGreaterThanOrEqual(bannerBox.y + bannerBox.height);
         };
         await assertReflow();
-        if (synthetic && width < 768) {
-          const toggle = (await page.getByTestId('nav-toggle').boundingBox())!;
-          const heading = (await page.locator('#synthetic-journey-heading').boundingBox())!;
-          expect(heading.x).toBeGreaterThanOrEqual(toggle.x + toggle.width);
+        if (synthetic) {
+          await expect(page.getByRole('link', { name: 'Hedgr Home', exact: true })).toBeVisible();
+          await expect(page.getByTestId('synthetic-bottom-nav')).toBeVisible();
         }
         if (!synthetic) {
           for (const row of await page.getByRole('region', { name: 'Recent activity' }).getByRole('listitem').all()) {
@@ -100,8 +104,8 @@ for (const synthetic of [true, false]) {
       return [s.backgroundColor, s.color, s.borderRadius, s.boxShadow];
     };
     expect(await deposit.evaluate(appearance)).toEqual(await activity.evaluate(appearance));
-    expect((await deposit.boundingBox())!.height).toBeGreaterThanOrEqual(64);
-    expect((await activity.boundingBox())!.height).toBeGreaterThanOrEqual(64);
+    expect((await deposit.boundingBox())!.height).toBeGreaterThanOrEqual(synthetic ? 44 : 64);
+    expect((await activity.boundingBox())!.height).toBeGreaterThanOrEqual(synthetic ? 44 : 64);
     await expect(deposit).toHaveAttribute('href', route('/deposit'));
     await expect(activity).toHaveAttribute('href', route('/activity'));
     await expect(page.getByTestId('dashboard-simulated-withdraw')).toHaveCount(synthetic ? 0 : 1);

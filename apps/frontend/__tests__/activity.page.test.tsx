@@ -138,22 +138,16 @@ describe('ActivityPage synthetic evidence grammar', () => {
     expect(screen.queryByTestId('activity-synthetic-condition')).toBeNull();
 
     expect(screen.getByTestId('activity-result-deposit').textContent).toBe(
-      '→ $5.00 resulting'
+      'Balance after · $5.00'
     );
     expect(screen.getByTestId('activity-result-withdraw').textContent).toBe(
-      '→ $3.00 resulting'
+      'Balance after · $3.00'
     );
-    expect(
-      screen.getByTestId('activity-reconciliation-deposits').textContent
-    ).toBe('+$5.00');
-    expect(
-      screen.getByTestId('activity-reconciliation-withdrawals').textContent
-    ).toBe('$2.00');
     expect(
       screen.getByTestId('activity-reconciliation-remaining').textContent
     ).toBe('$3.00');
     expect(screen.getByTestId('activity-balance-reconciliation').textContent).toContain(
-      'From completed entries:'
+      'From completed simulated entries only.'
     );
     expect(
       screen
@@ -185,10 +179,19 @@ describe('ActivityPage synthetic evidence grammar', () => {
         .map((pill) => pill.getAttribute('data-status'))
     ).not.toContain('SUCCESS');
 
+    const completedWithdrawal = screen.getAllByTestId('activity-row-withdraw').find(row => row.getAttribute('data-activity-status') === 'SUCCESS')!;
+    fireEvent.click(completedWithdrawal);
+    const detail = completedWithdrawal.closest('details')!;
+    expect(detail.open).toBe(true);
+    expect(within(detail).getByText('Before')).toBeDefined();
+    expect(within(detail).getByText('$5.00')).toBeDefined();
+    expect(within(detail).getByText('After')).toBeDefined();
+    expect(within(pendingDeposit!.closest('details')!).queryByText('After')).toBeNull();
+    expect(within(failedWithdrawal!.closest('details')!).queryByText('After')).toBeNull();
     fireEvent.click(screen.getByTestId('filter-withdrawals'));
 
     expect(screen.getByTestId('activity-result-withdraw').textContent).toBe(
-      '→ $3.00 resulting'
+      'Balance after · $3.00'
     );
     expect(screen.queryByTestId('activity-result-deposit')).toBeNull();
   });

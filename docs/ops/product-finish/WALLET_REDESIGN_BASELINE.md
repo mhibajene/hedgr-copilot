@@ -3,7 +3,7 @@
 Date: 2026-09-15
 Ticket: CLASS-A-VAL-002-WALLET-REDESIGN-001
 Authority: D-147 / HEDGR_STATUS.md §7 / §7a / §279.
-Status: Accepted visual target; implementation and verification pending.
+Status: Implemented and locally verified; repository review and hosted checks pending.
 
 ![Accepted final hybrid](wallet-redesign-baseline.png)
 
@@ -26,4 +26,13 @@ Founder accepted the final hybrid in Codex thread 01a0a3d4-b958-7472-afb3-e1e99b
 
 ## Verification
 
-Pending. Technical and visual QA are not participant comprehension, demand or parent acceptance. NO CROSS-LANE IMPACT.
+- Authority and baseline committed first at `e64f5b58b2cded327eefddfdb4213e1df9f1b568`; deterministic RAP generated from that committed authority.
+- Full validate passed: 72 test files / 876 tests, TypeScript, ESLint and repository checks.
+- Production build and complete hermetic browser suite passed: 96 tests.
+- All five currencies preserve `$0 → +$5 → −$2 → $3`, existing financial storage, transaction rounding and fixed illustrative rates.
+- Dialog keyboard containment/Escape/focus return, Activity filters and completed before/after values, 320px/390px/desktop and enlarged text passed.
+- Default and unavailable-data routes retain their previous presentation; non-normal posture notices and pending/failed Activity details have direct coverage.
+- Matched production captures and comparison history: [design QA](../../../design-qa.md). Local screenshot artifacts are reproducible through `wallet-redesign.spec.ts`.
+- Distinct verifier disposition: PASS for the final implementation diff and all three clean production reference captures, with no open P0/P1/P2 findings; final 96-test log and diff check also verified. Hosted checks and preview inspection are separate from these local results.
+
+No dependencies, financial state, engine computations, rate fixtures, Form/protocol or About changes. Technical and visual QA are not participant comprehension, demand or parent acceptance. NO CROSS-LANE IMPACT.

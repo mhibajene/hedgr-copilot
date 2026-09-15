@@ -1,6 +1,7 @@
 'use client';
 
 import finish from '../product-finish.module.css';
+import wallet from '../research-wallet.module.css';
 
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
@@ -365,6 +366,48 @@ export default function ActivityPage() {
 
     return null;
   };
+
+  if (syntheticJourneyActive) {
+    return <main className={wallet.page}>
+      <header><h1>Activity</h1><p className="mt-1 text-sm text-hedgr-600" data-testid="activity-simulation-context">Follow the balance</p></header>
+      <section className={`${wallet.position} ${wallet.activityBalance}`} data-testid="activity-balance-reconciliation" aria-labelledby="activity-balance-reconciliation-heading">
+        <h2 id="activity-balance-reconciliation-heading">Simulated balance</h2>
+        <strong><span data-testid="activity-reconciliation-remaining">${syntheticBalanceReconciliation.remaining.toFixed(2)}</span> <small>USD</small></strong>
+        <p className="text-xs text-hedgr-500">From completed simulated entries only.</p>
+      </section>
+      {transactions.length > 0 ? <div className={wallet.filters} aria-label="Activity filters">
+        {(['all', 'deposits', 'withdrawals'] as const).map(f => <button key={f} type="button" aria-pressed={filter === f} onClick={() => setFilter(f)} data-testid={`filter-${f}`}>{f === 'all' ? 'All' : f === 'deposits' ? 'Deposits' : 'Withdrawals'}</button>)}
+      </div> : null}
+      {sorted.length === 0 ? renderEmptyState() : <div className="space-y-5" data-testid="activity-list">
+        {Array.from(grouped.entries()).map(([day, txs]) => <section key={day}><h2 className="mb-3">{day}</h2><div className={wallet.events}>
+          {txs.map(tx => {
+            const after = syntheticResultingBalances.get(tx.id);
+            const completed = tx.status === PublicTxStatus.SUCCESS && after !== undefined;
+            const before = completed ? +(after + (tx.type === 'DEPOSIT' ? -tx.amountUSD : tx.amountUSD)).toFixed(2) : undefined;
+            const label = tx.type === 'DEPOSIT' ? 'Simulated deposit' : 'Simulated withdrawal';
+            return <details key={tx.id} className={wallet.event}>
+              <summary data-testid={`activity-row-${tx.type.toLowerCase()}`} data-activity-type={tx.type} data-activity-status={tx.status}>
+                <span><strong data-testid={`activity-type-${tx.type.toLowerCase()}`}>{label}</strong><small>{completed ? 'Completed' : <TxStatusPill status={tx.status} />}</small></span>
+                <span className={wallet.eventAmount}><strong data-testid={`activity-delta-${tx.type.toLowerCase()}`}>{tx.type === 'DEPOSIT' ? '+' : '−'}${tx.amountUSD.toFixed(2)}</strong>{completed ? <small data-testid={`activity-result-${tx.type.toLowerCase()}`}>Balance after · ${after.toFixed(2)}</small> : null}</span>
+              </summary>
+              <div data-testid="research-activity-detail">
+                <p>{label} detail · {formatTime(tx.createdAt)}</p>
+                {completed ? <dl>
+                  <div><dt>Before</dt><dd>${before!.toFixed(2)}</dd></div>
+                  <div><dt>{tx.type === 'DEPOSIT' ? 'Deposit' : 'Withdrawal'}</dt><dd>{tx.type === 'DEPOSIT' ? '+' : '−'}${tx.amountUSD.toFixed(2)}</dd></div>
+                  <div><dt>After</dt><dd>${after.toFixed(2)}</dd></div>
+                </dl> : <p>This event has no completed balance effect.</p>}
+                {tx.failureReason ? <p data-testid="research-activity-failure">{tx.failureReason}</p> : null}
+                {tx.note ? <p data-testid="research-activity-note">{tx.note}</p> : null}
+                <p>Simulation only. No real money moved.</p>
+              </div>
+            </details>;
+          })}
+        </div></section>)}
+      </div>}
+      <Link href={getSyntheticJourneyHref('/dashboard')} className={wallet.link}>Return to current position</Link>
+    </main>;
+  }
 
   return (
     <main className={`mx-auto max-w-2xl px-6 pb-28 pt-6 sm:p-8 ${finish.activity}`}>

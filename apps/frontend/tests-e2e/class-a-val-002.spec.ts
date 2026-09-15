@@ -144,13 +144,8 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   const journeyShell = page.getByTestId('synthetic-journey-shell');
   await expect(journeyShell).not.toContainText('Simulation · no real money');
   await expect(journeyShell).not.toContainText('CLASS-A-VAL-002');
-  await expect(journeyShell).toContainText('your position');
-  await expect(journeyShell).toContainText('See where you stand');
-  await expect(journeyShell).toContainText('current position and its evidence');
-  await expect(page.getByTestId('synthetic-journey-current-step')).toHaveText(
-    '1Position'
-  );
-  const primaryNav = page.getByTestId('nav-links');
+  await expect(journeyShell.getByRole('link', { name: 'Hedgr Home' })).toBeVisible();
+  const primaryNav = page.getByTestId('synthetic-bottom-nav');
   await expect(
     primaryNav.getByRole('link', { name: 'Home', exact: true })
   ).toHaveAttribute('href', '/dashboard-synthetic-journey');
@@ -159,7 +154,7 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   ).toHaveAttribute('href', '/settings?journey=class-a-val-002');
   await expect(
     primaryNav.getByRole('link', { name: 'Activity', exact: true })
-  ).toHaveCount(0);
+  ).toHaveAttribute('href', '/activity?journey=class-a-val-002');
   await expect(
     primaryNav.getByRole('link', { name: 'Copilot', exact: true })
   ).toHaveCount(0);
@@ -201,24 +196,17 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   await expect(
     page.getByRole('heading', {
       level: 1,
-      name: 'See what you have and what changed.',
+      name: 'Your position',
     })
   ).toBeVisible();
   await expect(page.getByRole('heading', { level: 1 })).toHaveCount(1);
-  await expect(dashboardOrientation).toContainText('Financial position');
-  await expect(dashboardOrientation).toContainText(
-    'Hedgr helps you understand and maintain your financial stability.'
-  );
-  await expect(dashboardOrientation).toContainText('not an instruction');
-  await expect(dashboardOrientation).toContainText(
-    'This walkthrough provides context, not an instruction.'
-  );
+  await expect(dashboardOrientation).toContainText('Your position');
   await expect(dashboardOrientation).not.toContainText(
     /crypto|blockchain|stablecoin|DeFi|trading|yield routing/i
   );
   await expect(page.getByTestId('usd-balance')).toHaveText('$0.00');
   await expect(
-    page.getByText('Your current position', { exact: true })
+    page.getByText('Simulated balance', { exact: true })
   ).toBeVisible();
   await expect(
     page.getByTestId('dashboard-synthetic-balance-explainer')
@@ -254,6 +242,7 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   await expect(page.getByTestId('dashboard-current-status')).not.toContainText(
     /score|gauge|safe|all clear/i
   );
+  await page.getByTestId('research-planning-targets').locator(':scope > summary').click();
   const stabilityGuidance = page.getByTestId('engine-allocation-bands');
   await expect(stabilityGuidance).toHaveAttribute(
     'data-presentation',
@@ -442,28 +431,17 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
 
   await page.getByRole('link', { name: 'Review simulated activity' }).click();
   await expect(page).toHaveURL(/\/activity\?journey=class-a-val-002/);
-  await expect(page.getByTestId('synthetic-journey-current-step')).toHaveText(
-    '4Evidence'
-  );
-  await expect(page.getByTestId('synthetic-journey-shell')).toContainText(
-    'Review the record of each change'
-  );
+  await expect(page.getByRole('heading', { name: 'Activity', exact: true })).toBeVisible();
   await expect(page.getByTestId('activity-synthetic-condition')).toHaveCount(0);
   const activityReconciliation = page.getByTestId(
     'activity-balance-reconciliation'
   );
   await expect(activityReconciliation).toContainText(
-    'Current simulated position'
+    'Simulated balance'
   );
   await expect(activityReconciliation).toContainText(
-    'From completed entries:'
+    'From completed simulated entries only.'
   );
-  await expect(page.getByTestId('activity-reconciliation-deposits')).toHaveText(
-    '+$5.00'
-  );
-  await expect(
-    page.getByTestId('activity-reconciliation-withdrawals')
-  ).toHaveText('$2.00');
   await expect(page.getByTestId('activity-reconciliation-remaining')).toHaveText(
     '$3.00'
   );
@@ -475,68 +453,31 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   );
   await expect(page.getByTestId('activity-delta-deposit')).toHaveText('+$5.00');
   await expect(page.getByTestId('activity-result-deposit')).toHaveText(
-    '→ $5.00 resulting'
+    'Balance after · $5.00'
   );
   await expect(page.getByTestId('activity-row-deposit')).not.toContainText(
     'ZMW'
   );
   const depositRow = page.getByTestId('activity-row-deposit');
   await depositRow.click();
-  await expect(page.getByTestId('tx-detail-type')).toHaveText(
-    'Simulated deposit'
-  );
-  await expect(page.getByTestId('tx-detail-amount')).toContainText('+$5.00');
-  await expect(page.getByTestId('tx-detail-amount')).not.toContainText('ZMW');
-  await expect(page.getByTestId('tx-detail-modal')).not.toContainText('ZMW');
-  await expect(page.getByTestId('tx-detail-resulting-position')).toHaveText(
-    '$5.00'
-  );
-  await page.keyboard.press('Escape');
-  await expect(page.getByTestId('tx-detail-modal')).toHaveCount(0);
+  const depositDetail = page.locator('main details[open]');
+  await expect(depositDetail).toContainText('Before$0.00');
+  await expect(depositDetail).toContainText('After$5.00');
+  await expect(depositDetail).not.toContainText('ZMW');
+  await depositRow.press('Enter');
+  await expect(depositDetail).toHaveCount(0);
   await expect(depositRow).toBeFocused();
-  // Activity delays clearing the selected record by 150ms after close.
-  await page.waitForTimeout(200);
-  await expect(page.getByTestId('activity-delta-withdraw')).toHaveText(
-    '-$2.00'
-  );
-  await expect(page.getByTestId('activity-result-withdraw')).toHaveText(
-    '→ $3.00 resulting'
-  );
-  await expect(
-    page.getByTestId('activity-row-withdraw').getByText('0', { exact: true })
-  ).toHaveCount(0);
-  await expect(
-    page.locator('[data-testid="tx-status-pill"][data-status="SUCCESS"]')
-  ).toHaveCount(0);
-
+  await expect(page.getByTestId('activity-delta-withdraw')).toHaveText('−$2.00');
+  await expect(page.getByTestId('activity-result-withdraw')).toHaveText('Balance after · $3.00');
   const withdrawalRow = page.getByTestId('activity-row-withdraw');
   await withdrawalRow.click();
-  await expect(page.getByTestId('tx-detail-type')).toHaveText(
-    'Simulated withdrawal'
-  );
-  await expect(page.getByTestId('tx-detail-close')).toBeFocused();
-  await expect(page.getByTestId('tx-detail-amount')).toContainText('−$2.00');
-  await expect(page.getByText('Time')).toBeVisible();
-  await expect(page.getByText('Context')).toBeVisible();
-  await expect(page.getByTestId('tx-detail-resulting-position')).toHaveText(
-    '$3.00'
-  );
-  await expect(page.getByTestId('tx-detail-id')).toHaveCount(0);
-  await expect(page.getByTestId('tx-detail-timeline')).toHaveCount(0);
-  await expect(page.getByTestId('tx-detail-simulation-note')).toContainText(
-    'No real money moved'
-  );
-  await expect(
-    page.getByTestId('tx-detail-modal').getByText('0', { exact: true })
-  ).toHaveCount(0);
-  await page.keyboard.press('Shift+Tab');
-  await expect(
-    page.getByRole('button', { name: 'Close', exact: true })
-  ).toBeFocused();
-  await page.keyboard.press('Tab');
-  await expect(page.getByTestId('tx-detail-close')).toBeFocused();
-  await page.keyboard.press('Escape');
-  await expect(page.getByTestId('tx-detail-modal')).toHaveCount(0);
+  const withdrawalDetail = page.locator('main details[open]');
+  await expect(withdrawalDetail).toContainText('Before$5.00');
+  await expect(withdrawalDetail).toContainText('After$3.00');
+  await expect(withdrawalDetail).toContainText('No real money moved');
+  await expect(withdrawalDetail).not.toContainText('ZMW');
+  await withdrawalRow.press('Enter');
+  await expect(withdrawalDetail).toHaveCount(0);
   await expect(withdrawalRow).toBeFocused();
 
   await page.getByRole('link', { name: 'Return to current position' }).click();
@@ -553,7 +494,7 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   await expect(page.getByTestId('dashboard-change-evidence')).toHaveCount(0);
   await expect(page.getByText('How your position changed')).toHaveCount(0);
   await expect(page.getByTestId('engine-posture-context')).toHaveText(
-    'The simulated expense explains why the current position is $2.00 lower.'
+    'Your simulated withdrawal reduced the balance by $2.00.'
   );
   await expect(page.getByTestId('dashboard-optional-actions')).toHaveCount(0);
 
@@ -630,9 +571,7 @@ test('mobile keeps the persistent boundary and current research step visible', a
 
   await expect(page.getByTestId('trust-disclosure-banner')).toBeVisible();
   await expect(page.getByTestId('synthetic-journey-shell')).toBeVisible();
-  await expect(page.getByTestId('synthetic-journey-current-step')).toHaveText(
-    '1Position'
-  );
+  await expect(page.getByRole('heading', { name: 'Your position', exact: true })).toBeVisible();
   await expect(
     page.getByTestId('dashboard-add-simulated-deposit')
   ).toBeVisible();
@@ -648,24 +587,23 @@ test('mobile keeps the persistent boundary and current research step visible', a
     .getByTestId('dashboard-current-overview')
     .boundingBox();
   const planningBox = await page
-    .getByTestId('engine-allocation-bands')
+    .getByTestId('research-planning-targets')
     .boundingBox();
   expect(currentOverviewBox?.y).toBeLessThan(844);
   expect(planningBox?.y).toBeLessThan(844 * 2);
 
-  const navToggle = page.getByTestId('nav-toggle');
-  const navToggleBox = await navToggle.boundingBox();
-  expect(navToggleBox?.width).toBeGreaterThanOrEqual(44);
-  expect(navToggleBox?.height).toBeGreaterThanOrEqual(44);
-  await navToggle.click();
-  const mobileNav = page.getByTestId('nav-links-mobile');
+  const mobileNav = page.getByTestId('synthetic-bottom-nav');
   await expect(mobileNav).toBeVisible();
   for (const [label, href] of [
     ['Home', '/dashboard-synthetic-journey'],
     ['Settings', '/settings?journey=class-a-val-002'],
+    ['Activity', '/activity?journey=class-a-val-002'],
   ]) {
     const navLink = mobileNav.getByRole('link', { name: label, exact: true });
     await expect(navLink).toBeVisible();
+    const box = (await navLink.boundingBox())!;
+    expect(box.width).toBeGreaterThanOrEqual(44);
+    expect(box.height).toBeGreaterThanOrEqual(44);
     await expect(navLink).toHaveAttribute('href', href);
   }
   await expect(
@@ -673,9 +611,6 @@ test('mobile keeps the persistent boundary and current research step visible', a
   ).toHaveCount(0);
   await expect(
     mobileNav.getByRole('link', { name: 'Withdraw', exact: true })
-  ).toHaveCount(0);
-  await expect(
-    mobileNav.getByRole('link', { name: 'Activity', exact: true })
   ).toHaveCount(0);
   await expect(
     mobileNav.getByRole('link', { name: 'Copilot', exact: true })

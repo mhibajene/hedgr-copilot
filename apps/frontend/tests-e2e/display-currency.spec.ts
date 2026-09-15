@@ -67,7 +67,7 @@ test('zero-USD simulated deposit preserves the position and Activity until a val
   await page.getByRole('link', { name: 'Home', exact: true }).first().click();
   await expect(page.getByTestId('usd-balance')).toHaveText('$3.00');
   await page.getByRole('link', { name: 'View Activity', exact: true }).click();
-  await expect(page.getByText('2 simulated entries', { exact: true })).toBeVisible();
+  await expect(page.locator('[data-activity-type]')).toHaveCount(2);
 
   await page.goto('/deposit?journey=class-a-val-002');
   await amount.fill('7');
@@ -82,7 +82,7 @@ test('zero-USD simulated deposit preserves the position and Activity until a val
   await page.getByRole('link', { name: 'Home', exact: true }).first().click();
   await expect(page.getByTestId('usd-balance')).toHaveText('$3.01');
   await page.getByRole('link', { name: 'View Activity', exact: true }).click();
-  await expect(page.getByText('3 simulated entries', { exact: true })).toBeVisible();
+  await expect(page.locator('[data-activity-type]')).toHaveCount(3);
   const records = JSON.parse((await financialStorage(page))['hedgr:ledger']!).transactions;
   expect(records).toHaveLength(3);
   expect(records[2]).toMatchObject({ type: 'deposit', amount_usd: 0.01, amount_zmw: 0.2, fx_rate: 20 });
@@ -152,7 +152,7 @@ test('all five Settings estimates preserve USD, market, Activity and planning wi
     await expect(page.getByTestId('local-balance')).toHaveText(`≈ ${code} ${amount} display estimate`);
     await expect(page.getByTestId('dashboard-synthetic-balance-explainer')).toHaveText('Illustrative simulation value only.');
     expect(await page.getByTestId('engine-allocation-structure').textContent()).toBe(planning);
-    await expect(page.getByRole('combobox')).toHaveCount(0);
+    await expect(page.getByRole('combobox', { name: 'Display currency for this simulation' })).toHaveValue(code);
   }
   await page.goto('/dashboard?journey=class-a-val-002');
   await expect(page.getByTestId('local-balance')).toHaveText('≈ PHP 168.00 display estimate');

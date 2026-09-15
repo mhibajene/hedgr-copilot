@@ -234,3 +234,15 @@ test.each(["tightening", "tightened", "recovery"] as const)("currency opt-in pre
   expect(screen.getByTestId("engine-simulation-attention-answer").textContent).toBe("A change in the guidance needs review.");
   expect(screen.getByTestId("engine-posture-banner").textContent).toContain(getMockEngineState(posture).notice!.title);
 });
+
+
+test.each(["tightening", "tightened", "recovery"] as const)("redesigned research Home preserves %s attention and notices", posture => {
+  const engineState = getMockEngineState(posture);
+  render(<EnginePostureHeader engineState={engineState} syntheticJourneyActive redesigned comparisonState="change" latestChangeType="WITHDRAW" latestChangeAmountUSD={200} />);
+  expect(screen.getByTestId("engine-simulation-attention-answer").textContent).toBe("A change in the guidance needs review.");
+  expect(screen.getByTestId("engine-posture-banner").getAttribute("role")).toBe("status");
+  expect(screen.getByText(engineState.notice!.title)).toBeDefined();
+  expect(screen.getByText(engineState.notice!.body)).toBeDefined();
+  expect(screen.getByText("This is an observation from the simulation, not a guarantee.")).toBeDefined();
+  expect(screen.queryByText("What changed")).toBeNull();
+});
