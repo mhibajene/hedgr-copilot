@@ -3,7 +3,7 @@
 Date: 2026-09-15
 Ticket: CLASS-A-VAL-002-WALLET-REDESIGN-001
 Authority: D-147 / HEDGR_STATUS.md §7 / §7a / §279.
-Status: Implemented and locally verified; repository review and hosted checks pending.
+Status: Founder reviewed and approved; merged in PR #536 at `799fb95b5991c26bfa2588cf6c1a060033c1e1ef`; production verified. Technical closeout D-148 / §280.
 
 ![Accepted final hybrid](wallet-redesign-baseline.png)
 
@@ -33,6 +33,10 @@ Founder accepted the final hybrid in Codex thread 01a0a3d4-b958-7472-afb3-e1e99b
 - Dialog keyboard containment/Escape/focus return, Activity filters and completed before/after values, 320px/390px/desktop and enlarged text passed.
 - Default and unavailable-data routes retain their previous presentation; non-normal posture notices and pending/failed Activity details have direct coverage.
 - Matched production captures and comparison history: [design QA](../../../design-qa.md). Local screenshot artifacts are reproducible through `wallet-redesign.spec.ts`.
-- Distinct verifier disposition: PASS for the final implementation diff and all three clean production reference captures, with no open P0/P1/P2 findings; final 96-test log and diff check also verified. Hosted checks and preview inspection are separate from these local results.
+- Distinct verifier disposition: PASS for the final implementation diff and all three clean production reference captures, with no open P0/P1/P2 findings; final 96-test log and diff check also verified. Required hosted checks passed, the Founder approved the rendered Vercel preview, and production was inspected after merge.
 
 No dependencies, financial state, engine computations, rate fixtures, Form/protocol or About changes. Technical and visual QA are not participant comprehension, demand or parent acceptance. NO CROSS-LANE IMPACT.
+
+## Delivery
+
+Founder rendered disposition: “Reviewed and approved.” PR [#536](https://github.com/mhibajene/hedgr-copilot/pull/536) is merged. The [production research journey](https://hedgr-copilot-frontend.vercel.app/dashboard-synthetic-journey) was verified, including Currency Context dismissal/focus return, completed Activity reconciliation and the unchanged default-dashboard control. Production inspection preserved existing stored simulation records and did not create new transactions. D-148 / §280 closes only this nested ticket; both parents remain open without active nested tickets. Permanent-main projection rebind follows the closeout squash through the normal repo posture.
