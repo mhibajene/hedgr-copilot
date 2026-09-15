@@ -4596,6 +4596,8 @@ This section does **not** authorize provider-specific implementation, legal reli
 
 ## 7. Current sequence and active status
 
+**Current operating disposition:** Internal **D-146** / **§278** records **Protected Pace with Continuous Evidence — RETAIN + PROCEED + CONTINUOUS RETEST** as Founder operating/product-convergence direction. Proceed within verified authority, gather evidence continuously, and intervene proportionately for material consequences; ordinary uncertainty is not a universal delivery gate. Execution authority, explicit stop conditions, D-145 closeout, D-143 evidence, the participant-distribution pause and Controlled Parallelism v21 remain unchanged. Green classification does not restore the retired delegation envelope or activate work. No successor, model acceptance or financial capability follows. **NO CROSS-LANE IMPACT**.
+
 **Approved next implementation ticket:** None. Internal **D-145** / **§277** records verified technical closeout of nested Lane V `CLASS-A-VAL-002-REACT-TYPES-001` after PR #531 merged at `f85e1e07c57f44432df03917da3e431b9250e1b7`, required checks passed and the production deployment was verified. D-144 / §276 is completed historical activation authority. Both parent `CLASS-A-VAL-002` and parent `SE-REASON-001` remain open with no active nested ticket. D-143 / §275 bounded RETAIN evidence and Controlled Parallelism v21 remain unchanged. Participant distribution stays paused pending human protocol rehearsal/timing and explicit Founder disposition; About stays frozen/published. No successor, model acceptance, parent closeout, financial capability or cross-lane authority follows. `NO CROSS-LANE IMPACT`.
 
 Completed and merged:
@@ -4776,7 +4778,7 @@ Current active ticket status:
 - **Completed status hygiene:** `STATUS-HYGIENE-001` (**§173**) — reconciled stale **§7a** dual-ticket language; no product, narrative, Bridge, or Class B authority change.
 - **Completed operating-model hygiene:** `GOV-NOTION-RETIRE-001` (**§207** / D-078) — Notion retired as a governance, institutional-memory, and operating-system surface; staging file archived in place; no fourth lane; D-076 concurrency unchanged.
 - **Founder validation disposition:** Internal **D-060** / **§179** remains the parent disposition: dual-layer validation (journey comprehension + category convergence) under open `CLASS-A-VAL-002`. Internal **D-065** / **§188** supplies the Institutional Coherence evaluation principle; Internal **D-067** / **§191** extends it through Progressive Institutional Reasoning; Internal **D-068** / **§192** adds Orientation Before Explanation as the behavioural foundation; Internal **D-069** / **§193** adds Cognitive Stewardship as the enduring institutional learning that the institution carries interpretation while the participant retains judgement. Internal **D-066** / **§189**–**§190**, Internal **D-070** / **§194**–**§195**, and Internal **D-071** / **§196**–**§197** supplied and closed only their named nested implementations. Internal **D-057** / **§174** remains historical open-ticket continuity. No participant-comprehension, Class B, MVP, Evidence Register, public naming-adoption, or gate claim follows from these decisions or nested implementation.
-- **Sequencing posture:** Internal **D-145** / **§277** records verified technical closeout of nested Lane V `CLASS-A-VAL-002-REACT-TYPES-001` after PR #531 merged at `f85e1e07c57f44432df03917da3e431b9250e1b7`, required checks passed and the production deployment was verified. D-144 / §276 is completed historical activation authority. Both parent `CLASS-A-VAL-002` and parent `SE-REASON-001` remain open with no active nested ticket. D-143 / §275 bounded RETAIN evidence and Controlled Parallelism v21 remain unchanged. Participant distribution stays paused pending human protocol rehearsal/timing and explicit Founder disposition; About stays frozen/published. No successor, model acceptance, parent closeout, financial capability or cross-lane authority follows. `NO CROSS-LANE IMPACT`.
+- **Sequencing posture:** Internal **D-146** / **§278** records Protected Pace with Continuous Evidence as operating/product-convergence direction only: ordinary feedback is continuous, not a universal delivery gate; material consequences and existing explicit stop/gate conditions control. No ticket, retest, Green Lane delegation or execution authority is activated. Internal **D-145** / **§277** records verified technical closeout of nested Lane V `CLASS-A-VAL-002-REACT-TYPES-001` after PR #531 merged at `f85e1e07c57f44432df03917da3e431b9250e1b7`, required checks passed and the production deployment was verified. D-144 / §276 is completed historical activation authority. Both parent `CLASS-A-VAL-002` and parent `SE-REASON-001` remain open with no active nested ticket. D-143 / §275 bounded RETAIN evidence and Controlled Parallelism v21 remain unchanged. Participant distribution stays paused pending human protocol rehearsal/timing and explicit Founder disposition; About stays frozen/published. No successor, model acceptance, parent closeout, financial capability or cross-lane authority follows. `NO CROSS-LANE IMPACT`.
 
 **Historical closeout posture:** Internal **D-126** / **§258** records verified publication and technical closeout of `CLASS-A-VAL-002-ABOUT-EXTERNAL-001`, activated by D-124 / §256 and published under Founder decision D-125 / §257. PR #491 merged at `58f97c6`; the accepted v0.3 About is live at `https://hedgr-copilot-frontend.vercel.app/about-hedgr-review`. Parent `CLASS-A-VAL-002` remains open with no active nested Lane V refinement. Formal participant distribution remains paused pending live-Form verification. No successor, further refinement, research exposure change or financial authority follows. No Green Lane delegation envelope is activated. `NO CROSS-LANE IMPACT`. Controlled Parallelism v21 / Internal **D-076** / **§6f.21** is again the unamended active Lane V / Lane E parent pass. Internal **D-123** / **§255** closes temporary D-122 / **§254** / **§6f.21b** non-lane `MOBILE-NATIVE-READINESS-001` support. Internal **D-119** / **§251** closes nested Lane V `CLASS-A-VAL-002-PROD-CONVERGENCE-001` and its D-117 / D-118 verification-only amendments as completed historical authority, preceding the D-124 external About activation; Internal **D-113** / **§245** keeps `CLASS-A-VAL-002-ABOUT-001` and its D-112 verification-only amendment completed historical; Internal **D-109** / **§241** keeps `CLASS-A-VAL-002-HOME-SETTINGS-001` completed historical; Internal **D-121** / **§253** closes only nested Lane E `SE-REASON-001-RETEST-001`, leaving parent `SE-REASON-001` open with no active nested ticket and D-099 unchanged; Internal **D-120** / **§252** closes temporary repository support `AGENT-SKILL-PARITY-001`. Participant distribution remains paused; the canonical approved Form and participant protocol are unchanged and the Form must be verified live before distribution resumes. D-119, D-120, D-121, D-122, and D-123 cannot alter frozen narrative, Bridge routes, the Form, participant evidence, balance arithmetic, or financial execution posture. Prior Controlled Parallelism passes through v20 / D-074 are completed historical concurrency authority.
 - **Kenya counsel path:** **DEFER** (**§6f.1** / D-028).
@@ -4850,6 +4852,8 @@ Current active ticket status:
 ---
 
 ## 7a. Active execution tickets — Lanes V and E (Controlled Parallelism v21; no active nested ticket)
+
+**Operating direction only:** D-146 / §278 records Protected Pace with Continuous Evidence; no implementation or retest brief is activated. Existing explicit research, distribution and stop gates remain controlling.
 
 ### Completed historical nested Lane V build remediation — CLASS-A-VAL-002-REACT-TYPES-001
 
@@ -16710,3 +16714,202 @@ Internal **D-141** / **§273** records verified technical closeout of `CLASS-A-V
 **Disposition and sequencing:** D-144 is completed historical authority. Parent Lane V `CLASS-A-VAL-002` and parent Lane E `SE-REASON-001` remain open with no active nested ticket; §7 names no next implementation ticket. D-143 bounded research RETAIN evidence, D-099 direction-only posture and Controlled Parallelism v21 are unchanged. Participant distribution remains paused pending human protocol rehearsal/timing and explicit Founder disposition; About stays frozen/published. Technical build compatibility establishes no participant comprehension, model acceptance, research successor, parent acceptance or financial capability. **NO CROSS-LANE IMPACT**.
 
 **Record delivery and rollback:** Commit this closeout authority before deterministic RAP generation; apply distinct reviewer QA and required hosted checks, then separately rebind RAP to permanent-main authority after squash. These record-delivery steps do not activate another implementation ticket. Rollback remains a scoped revert of the D-144 dependency/test changes with reconciled authority and regenerated RAP, preserving all research evidence and unrelated `output/` / `tmp/`.
+
+---
+
+## 278. Founder disposition — Protected Pace with Continuous Evidence
+
+**Decision ID:** Internal **D-146**
+
+**Date:** 2026-09-15
+
+**Status:** ACCEPTED FOUNDER DIRECTION — repo-native operating/product-convergence disposition recorded; execution authority unchanged.
+
+**Decision type:** Ops / Product convergence. This is not an architectural Stability Engine decision or an ADR amendment.
+
+**Strategic horizon:** MVP / institution-enabled delivery.
+
+**Disposition:** **RETAIN + PROCEED + CONTINUOUS RETEST** within verified repo authority.
+
+**Visibility:** Internal decision-log classification; no separate public ADR export. This classification does not make the repository private.
+
+**Authority and provenance:** Founder Musalwa Hibajene directly instructed “Record the following Founder disposition” on 15 September 2026 and supplied the decision below. The supplied status was “Founder disposition expressed; repo-native recording required”; this entry fulfils that recording request. The Founder places the institutional change in the decision rule around evidence and pace, with the financial execution boundary untouched. The assessment of institutional maturity and product convergence is Founder judgement, not a new empirical validation finding.
+
+**Context:** The Founder describes the threshold as moving from feedback-before-motion to feedback-during-disciplined-motion, while retaining narrow stop conditions for material risk. Governance should enable reversible delivery and convergence rather than make uncertainty itself a reason to stop. This preserves the separation between evidence and authority and the Stability Engine's informational posture. The Founder cites `HEDGR_INSTITUTION_ENABLED_DELIVERY_CONTEXT.md` as context; that file was not located during recording, so its contents and authority are not asserted here. The verified repo-native related source is [Hedgr Governance Philosophy — Governed Progress Under Uncertainty](../doctrine/hedgr-governance-philosophy.md), especially §§2–4; it remains unchanged.
+
+### Decision
+
+Hedgr has reached a sufficient level of institutional maturity and product convergence to protect delivery momentum while continuing to gather evidence in parallel.
+
+The Wallet and Stability Engine should therefore continue to converge within existing repo-authorised boundaries without making ordinary feedback collection a universal precondition for forward movement.
+
+User, reviewer, and market feedback remain essential. Their role is to improve, challenge, and refine the product continuously—not to create an automatic delivery gate whenever uncertainty remains.
+
+The operating posture is:
+
+> Proceed responsibly within verified authority, gather evidence continuously, and intervene when evidence exposes a material reason to change course.
+
+### Rationale
+
+Hedgr has established governance, execution boundaries, product doctrine, evidence discipline, and explicit escalation mechanisms sufficient to support a more mature delivery posture.
+
+Commercial products do not achieve certainty before delivery. They improve through repeated contact with users, real interpretation, bounded experimentation, and explicit product dispositions.
+
+Requiring all uncertainty to be resolved before continuing would increasingly create a different risk: loss of learning velocity, delayed product exposure, unnecessary reopening of settled work, and reduced momentum toward a coherent MVP.
+
+Governance should therefore protect Hedgr from material mistakes without protecting the product from every reversible mistake.
+
+### Outcome
+
+Maintain the current pace of MVP convergence while progressively increasing Hedgr’s responsibility to:
+
+- engage target users throughout development;
+- test the Wallet experience and Stability interpretation continuously;
+- capture meaningful misunderstandings, trust effects, and behavioural evidence;
+- distinguish material findings from preference or noise;
+- convert significant evidence into retain, revise, remove, retest, or escalate decisions; and
+- avoid allowing research or review to become an indefinite substitute for product delivery.
+
+### Current uncertainty
+
+The remaining question is no longer whether Hedgr should wait for complete validation before proceeding.
+
+The continuing uncertainty is:
+
+> Which emerging evidence is significant enough to justify changing, slowing, or stopping an affected part of the product?
+
+That question should be answered by consequence, not by the mere existence of disagreement or incomplete evidence.
+
+### Decision lane
+
+Default: Green — reversible product learning within verified repo authority.
+
+Yellow or Red treatment applies only when new evidence materially affects trust, sensitive data, security, legal/provider posture, architecture, financial execution, custody, liquidity, withdrawal integrity, or customer-money exposure.
+
+Execution-class authority remains unchanged. This disposition does not authorise Class B or Class C behaviour or any wider financial capability.
+
+**Application to current repo controls:** “Default: Green” expresses consequence classification within verified authority. It does not reactivate the retired §6g Green Lane delegation envelope (D-085 / §217; ADR 0025), make Class A automatically Green, or reclassify existing Lane E Class A informational / Yellow research. Existing stricter classifications, explicit gates and stop conditions continue to apply. No standing retest, research, ticket or concurrency authority is created by “PROCEED” or “CONTINUOUS RETEST”.
+
+### Feedback posture
+
+Feedback will be gathered continuously from:
+
+- standard target users interacting with the Wallet and its core journey;
+- financially competent reviewers where Stability Engine reasoning requires independent challenge;
+- realistic product use and comprehension tests; and
+- other bounded evidence sources authorised by repo governance.
+
+Feedback should be interpreted according to what it can actually prove.
+
+Expert review does not substitute for user comprehension evidence.
+
+User preference does not substitute for financial, legal, liquidity, operational, or security evidence.
+
+Review evidence is evidence, not direction.
+
+### Material-change threshold
+
+Normal delivery should not be interrupted for:
+
+- isolated preferences;
+- cosmetic disagreement;
+- minor terminology issues;
+- alternative but coherent conceptual framings;
+- inconclusive feedback;
+- requests for additional features without evidence of material need; or
+- uncertainty that can safely remain explicit.
+
+The affected work should be reconsidered when evidence indicates:
+
+1. a repeated or systematic user misunderstanding of Hedgr’s core stability proposition;
+2. materially inconsistent Stability Engine interpretation;
+3. false reassurance about safety, stability, liquidity, withdrawal readiness, or risk;
+4. a requirement for materially broader or more sensitive data than currently intended;
+5. degradation of the Entry → Orientation → Stability → Insight → Safe action journey;
+6. conflict with constitutional preservation, liquidity, risk-visibility, or trust requirements;
+7. a material change in product scope, architecture, legal/provider posture, security, or execution class; or
+8. an explicit governance stop condition being met.
+
+Only the affected work should stop unless the evidence demonstrates a wider systemic issue.
+
+### Stability Engine posture
+
+The current Stability Engine reasoning should remain a provisional candidate, subject to ongoing falsification and refinement.
+
+It should continue to favour visible uncertainty and abstention over unsupported certainty.
+
+Its present reasoning work must not be silently converted into:
+
+- canonical architecture;
+- fixed scoring or weighting;
+- participant-facing financial truth;
+- accounting truth;
+- allocation execution;
+- automated financial behaviour; or
+- expanded authority.
+
+Future evidence may strengthen, simplify, revise, or remove parts of the candidate model without requiring unrelated MVP work to pause.
+
+### Success signals
+
+This disposition is working if:
+
+- product learning continues without recurring unnecessary delivery pauses;
+- feedback produces explicit dispositions rather than accumulating indefinitely;
+- users increasingly understand Hedgr’s core stability proposition and safe-action journey;
+- material trust misunderstandings are detected early;
+- weak ideas can be revised or removed without destabilising the wider MVP;
+- governance intervention becomes narrower and more consequence-based; and
+- delivery pace increases without erosion of trust, liquidity honesty, or execution boundaries.
+
+### Failure signals
+
+Revisit this posture if:
+
+- momentum begins to override material evidence;
+- repeated user misunderstanding is tolerated rather than resolved;
+- research is ignored merely because implementation has advanced;
+- provisional product assumptions become difficult to reverse before validation;
+- financial capability is implied ahead of authority;
+- governance stop conditions are routinely treated as optional; or
+- parallel work creates conflicting narratives or architectural commitments.
+
+### Rollback / stop condition
+
+If evidence exposes a material trust, liquidity, security, data, legal, architecture, or execution-class failure, pause the affected path, preserve unrelated authorised work, and escalate according to the applicable governance lane.
+
+If the broader operating posture itself begins producing repeated material failures, revisit this disposition.
+
+### Ownership
+
+**Founder:** owns product direction, accepted risk, material trust changes, and genuine strategic forks.
+
+**HedgrOps:** protects the boundary, distinguishes signal from noise, forces evidence toward disposition, and prevents either governance drag or momentum-driven risk drift.
+
+**Product delivery:** continues within verified repo authority and remains responsible for incorporating credible evidence throughout development.
+
+### Authority status
+
+This disposition expresses Founder direction regarding the desired operating posture.
+
+It does not itself widen financial execution authority, activate unauthorised tickets, amend accepted ADRs, or supersede HEDGR_STATUS.md, AGENTS.md, doctrine, or repo-native governance.
+
+Current repo authority remains controlling.
+
+**Current-state preservation:** D-145 / §277 remains the latest technical closeout. Parent Lane V `CLASS-A-VAL-002` and parent Lane E `SE-REASON-001` remain open with no active nested ticket; §7 / §7a name no next implementation ticket. D-143 / §275 bounded RETAIN evidence, D-099 direction-only posture and Controlled Parallelism v21 remain unchanged. Participant distribution stays paused pending human protocol rehearsal/timing and explicit Founder distribution disposition; this general operating disposition does not satisfy that specific gate. About remains frozen/published. No new participant contact, data intake, model revision, experiment, product change, parent acceptance or financial capability follows from this recording. **NO CROSS-LANE IMPACT**.
+
+### Closing disposition
+
+Hedgr will protect pace without protecting assumptions from evidence.
+
+We will move forward inside verified boundaries, continuously expose the product to users and competent challenge, and intervene proportionately when evidence demonstrates material risk or a better product direction.
+
+The institution’s maturity is demonstrated not by eliminating uncertainty before acting, but by moving responsibly while uncertainty is continuously tested.
+
+### Recording controls
+
+**Assumptions and trade-off:** The Founder judgement depends on credible reversibility, verified authority and timely evidence disposition. It accepts bounded, reversible mistakes and explicit uncertainty to preserve learning and delivery pace, while retaining intervention for material consequences. The success and failure signals above are revisit criteria, not claims of achieved outcomes.
+
+**Strategic alignment:** Supports constitutional capital preservation, liquidity honesty, risk visibility and governed progress through explicit uncertainty, narrow intervention and retained execution boundaries. It supplies no new financial mechanism or acceptance of the candidate model.
+
+**Recording scope and reversibility:** This documentation-only recording is limited to `docs/ops/HEDGR_STATUS.md`, its current operator pointer in `AGENTS.md`, and deterministic `docs/ops/bridge/repo-authority-projection.json`. Commit authority sources before RAP generation. Required local validation and hosted checks apply to delivery; a squash merge requires a separate permanent-main RAP rebind. A scoped recording correction/revert and regenerated RAP can remove erroneous wording without rewriting the original Founder direction or research evidence; a changed operating disposition must be recorded explicitly. No runtime, test, doctrine, ADR, research, Form or protocol changes are part of this recording.
