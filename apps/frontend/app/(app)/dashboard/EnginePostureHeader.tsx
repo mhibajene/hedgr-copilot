@@ -73,6 +73,7 @@ type EnginePostureHeaderProps = {
   latestChangeType?: "DEPOSIT" | "WITHDRAW";
   latestChangeAmountUSD?: number;
   currencyContextVisible?: boolean;
+  redesigned?: boolean;
 };
 
 export function EnginePostureHeader({
@@ -82,6 +83,7 @@ export function EnginePostureHeader({
   latestChangeType,
   latestChangeAmountUSD,
   currencyContextVisible = false,
+  redesigned = false,
 }: EnginePostureHeaderProps) {
   const { posture, notice } = engineState;
   const pathname = usePathname();
@@ -100,9 +102,10 @@ export function EnginePostureHeader({
     isSyntheticJourneyPrimaryCondition(searchParams?.toString(), pathname) &&
     (pathname === CLASS_A_VAL_002_DASHBOARD_PATH ||
       searchParams?.get(CLASS_A_VAL_002_JOURNEY_PARAM) === CLASS_A_VAL_002_JOURNEY_VALUE);
+  const researchRedesign = redesigned && syntheticJourneyActive && isSyntheticJourneyPrimaryCondition(searchParams?.toString(), pathname) && (pathname === CLASS_A_VAL_002_DASHBOARD_PATH || searchParams?.get(CLASS_A_VAL_002_JOURNEY_PARAM) === CLASS_A_VAL_002_JOURNEY_VALUE);
   const changeObservation =
     latestChangeType && latestChangeAmountUSD !== undefined
-      ? `The simulated ${
+      ? researchRedesign ? `Your simulated ${latestChangeType === "WITHDRAW" ? "withdrawal reduced" : "deposit increased"} the balance by $${latestChangeAmountUSD.toFixed(2)}.` : `The simulated ${
           latestChangeType === "WITHDRAW" ? "expense" : "deposit"
         } explains why the current position is $${latestChangeAmountUSD.toFixed(
           2
@@ -129,9 +132,9 @@ export function EnginePostureHeader({
         <div className="space-y-1">
           <p
             id="dashboard-current-status-label"
-            className="text-[11px] font-bold uppercase tracking-[0.14em] text-hedgr-600"
+            className={researchRedesign ? "text-sm font-semibold text-hedgr-800" : "text-[11px] font-bold uppercase tracking-[0.14em] text-hedgr-600"}
           >
-            {syntheticJourneyActive ? "What Hedgr notices" : "Current status"}
+            {researchRedesign && posture === "normal" && comparisonState === "change" ? "What changed" : syntheticJourneyActive ? "What Hedgr notices" : "Current status"}
           </p>
         </div>
         {!syntheticJourneyActive ? (
@@ -162,7 +165,7 @@ export function EnginePostureHeader({
 
       {syntheticJourneyActive ? (
         <div className={`space-y-2 ${finish.attention}`}>
-          {!researchStartingPoint ? (
+          {!researchStartingPoint && !(researchRedesign && posture === "normal") ? (
             <>
               <h2 className="text-sm font-semibold tracking-tight text-hedgr-800">
                 Does anything need attention?

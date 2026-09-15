@@ -66,7 +66,8 @@ for (const [currency, rate, deltaFive, deltaThree] of [
     const local = (rate * 3).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     await expect(page.getByTestId('local-balance')).toHaveText(`≈ ${currency} ${local} display estimate`);
     await expect(page.getByTestId('currency-insight-headline')).toContainText(`${currency} ${deltaThree} higher from the rate change`);
-    await expect(page.getByTestId('engine-simulation-attention-answer')).toHaveText('No other change stands out in the simulated activity.');
+    await expect(page.getByTestId('engine-simulation-attention-answer')).toHaveCount(0);
+    await expect(page.getByTestId('engine-posture-context')).toContainText('withdrawal reduced the balance');
     const before = await storedState(page);
     const records = JSON.parse(before['hedgr:ledger']!).transactions;
     expect(records).toHaveLength(2);
@@ -74,14 +75,22 @@ for (const [currency, rate, deltaFive, deltaThree] of [
     expect(records[1]).toMatchObject({ amount_usd: 2, type: 'withdrawal' });
     await page.waitForLoadState('networkidle');
     const requests: string[] = [];
-    const onRequest = (request: { url(): string }) => requests.push(request.url());
+    // Focus restoration can reveal links and trigger Next's local JavaScript prefetch.
+    // Keep every data/service request in the assertion, excluding only built route assets.
+    const onRequest = (request: { url(): string }) => {
+      const url = new URL(request.url());
+      if (url.origin === new URL(page.url()).origin && url.pathname.startsWith('/_next/static/')) return;
+      requests.push(request.url());
+    };
     page.on('request', onRequest);
+    await page.getByRole('button', { name: 'Understand the comparison' }).click();
     const summary = page.getByText('How this is calculated', { exact: true });
     await summary.focus();
     await page.keyboard.press('Enter');
     await expect(page.getByText('No money has moved.', { exact: false })).toBeVisible();
     await page.keyboard.press('Space');
     await expect(page.locator('[data-testid="currency-insight"] details')).not.toHaveAttribute('open', '');
+    await page.getByRole('button', { name: 'Back to Home' }).click();
     expect(await storedState(page)).toEqual(before);
     expect(requests).toEqual([]);
     page.off('request', onRequest);
@@ -171,7 +180,9 @@ for (const width of [320, 390, 700, 1280]) {
     for (const size of [100, 200]) {
       await page.addStyleTag({ content: `html { font-size: ${size}%; }` });
       const section = page.getByTestId('currency-insight');
-      const summary = section.locator('summary');
+      await page.getByRole('button', { name: 'Understand the comparison' }).click();
+      const dialog = page.getByRole('dialog', { name: 'Currency context', exact: true });
+      const summary = dialog.locator('summary');
       for (const expanded of [false, true]) {
         if (expanded) {
           await summary.focus();
@@ -181,7 +192,7 @@ for (const width of [320, 390, 700, 1280]) {
           expect(await summary.evaluate(el => getComputedStyle(el).outlineStyle)).not.toBe('none');
         }
         await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)).toBeLessThanOrEqual(1);
-        await expect(section.getByText('FX comparison only—not earnings, purchasing power, guaranteed protection or a conversion quote.')).toBeVisible();
+        await expect(dialog.getByText('FX comparison only—not earnings, purchasing power, guaranteed protection or a conversion quote.')).toBeVisible();
         const position = (await page.getByTestId('dashboard-balance').boundingBox())!;
         const utilities = (await page.getByTestId('dashboard-simulation-utilities').boundingBox())!;
         expect(utilities.y).toBeGreaterThanOrEqual(position.y + position.height);
@@ -191,6 +202,7 @@ for (const width of [320, 390, 700, 1280]) {
       }
       await page.keyboard.press('Space');
       await expect(section.locator('details')).not.toHaveAttribute('open', '');
+      await page.getByRole('button', { name: 'Back to Home' }).click();
     }
     expect(errors).toEqual([]);
   });

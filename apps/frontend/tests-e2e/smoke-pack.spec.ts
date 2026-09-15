@@ -253,7 +253,7 @@ test("6 · deposit page is functional", async ({ page }) => {
   await expect(page.getByRole("button", { name: "Confirm" })).toBeVisible();
 });
 
-test("7 · synthetic primary nav stays bounded to Home and Settings", async ({
+test("7 · synthetic primary nav stays bounded to Home, Activity and Settings", async ({
   page,
 }) => {
   await page.goto("/");
@@ -264,7 +264,7 @@ test("7 · synthetic primary nav stays bounded to Home and Settings", async ({
   await expect(nav).toBeVisible();
   await page.goto("/dashboard-synthetic-journey");
 
-  const primaryNav = page.getByTestId("nav-links");
+  const primaryNav = page.getByTestId("synthetic-bottom-nav");
   await expect(
     primaryNav.getByRole("link", { name: "Home", exact: true })
   ).toHaveAttribute("href", "/dashboard-synthetic-journey");
@@ -273,7 +273,7 @@ test("7 · synthetic primary nav stays bounded to Home and Settings", async ({
   ).toHaveAttribute("href", "/settings?journey=class-a-val-002");
   await expect(
     primaryNav.getByRole("link", { name: "Activity", exact: true })
-  ).toHaveCount(0);
+  ).toHaveAttribute("href", "/activity?journey=class-a-val-002");
   await expect(
     primaryNav.getByRole("link", { name: "Copilot", exact: true })
   ).toHaveCount(0);

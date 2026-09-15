@@ -202,7 +202,7 @@ describe("DashboardPage engine trust surface", () => {
       ).getAttribute("href")
     ).toBe("/deposit?journey=class-a-val-002");
     expect(screen.getByTestId("dashboard-orientation").textContent).toContain(
-      "See what you have and what changed."
+      "Your position"
     );
   });
 
@@ -240,22 +240,16 @@ describe("DashboardPage engine trust surface", () => {
     expect(
       screen.getByRole("heading", {
         level: 1,
-        name: "See what you have and what changed.",
+        name: "Your position",
       })
     ).toBeDefined();
     expect(screen.getAllByRole("heading", { level: 1 })).toHaveLength(1);
-    expect(orientation.textContent).toContain("Financial position");
-    expect(orientation.textContent).toContain(
-      "Hedgr helps you understand and maintain your financial stability."
-    );
-    expect(orientation.textContent).toContain("not an instruction");
-    expect(orientation.textContent).toContain(
-      "This walkthrough provides context, not an instruction."
-    );
+    expect(orientation.textContent).toContain("Your position");
+    expect(screen.getByRole("combobox", { name: "Display currency for this simulation" })).toBeDefined();
     expect(orientation.textContent).not.toMatch(
       /Financial Stability Companion|crypto|blockchain|stablecoin|DeFi|trading|yield routing/i
     );
-    expect(screen.getByText("Your current position")).toBeDefined();
+    expect(screen.getByText("Simulated balance")).toBeDefined();
     const explainer = screen.getByTestId(
       "dashboard-synthetic-balance-explainer"
     );
@@ -429,11 +423,9 @@ describe("DashboardPage engine trust surface", () => {
     expect(screen.queryByTestId("dashboard-change-evidence")).toBeNull();
     expect(screen.queryByText("How your position changed")).toBeNull();
     expect(screen.getByTestId("engine-posture-context").textContent).toBe(
-      "The simulated expense explains why the current position is $2.00 lower."
+      "Your simulated withdrawal reduced the balance by $2.00."
     );
-    expect(
-      screen.getByTestId("engine-simulation-attention-answer").textContent
-    ).toBe("No other change stands out in the simulated activity.");
+    expect(screen.queryByTestId("engine-simulation-attention-answer")).toBeNull();
     expect(
       screen.queryByRole("link", { name: /Review what changed/ })
     ).toBeNull();
@@ -583,12 +575,14 @@ describe("Currency context integration", () => {
     vi.mocked(useBalance).mockReturnValue(makeBalanceState({ total: 3, available: 3 }));
   }
 
-  test("renders inside position with bounded observation, preserving available and pending meaning", () => {
+  test("renders after the observation with bounded context, preserving available and pending meaning", () => {
     setup();
     const { rerender } = render(<DashboardPage />);
-    expect(screen.getByTestId("dashboard-balance").contains(screen.getByTestId("currency-insight"))).toBe(true);
+    expect(screen.getByTestId("dashboard-current-overview").contains(screen.getByTestId("currency-insight"))).toBe(true);
+    expect(screen.getByTestId("dashboard-balance").contains(screen.getByTestId("currency-insight"))).toBe(false);
     expect(screen.getByTestId("currency-insight-headline").textContent).toContain("ZMW 3 higher");
-    expect(screen.getByTestId("engine-simulation-attention-answer").textContent).toBe("No other change stands out in the simulated activity.");
+    expect(screen.queryByTestId("engine-simulation-attention-answer")).toBeNull();
+    expect(screen.getByTestId("engine-posture-context").textContent).toContain("withdrawal reduced the balance");
     // Pending entries must withhold direction even when their numeric net cancels.
     dashboardStateMocks.transactions = dashboardStateMocks.transactions.map(tx => ({ ...tx, status: "pending" }));
     rerender(<DashboardPage />);

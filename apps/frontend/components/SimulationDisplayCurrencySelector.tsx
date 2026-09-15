@@ -1,5 +1,7 @@
 'use client';
 
+import wallet from '../app/(app)/research-wallet.module.css';
+
 import React, { useRef } from 'react';
 import { SIMULATION_DISPLAY_CURRENCY_COPY as copy } from '../lib/narrative/orientation-surface';
 import {
@@ -10,10 +12,16 @@ import {
 
 const focusStyle = 'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-hedgr-500 focus-visible:ring-offset-2';
 
-export function SimulationDisplayCurrencySelector({ placement }: { placement: 'entry' | 'settings' }) {
+export function SimulationDisplayCurrencySelector({ placement }: { placement: 'entry' | 'settings' | 'position' }) {
   const currency = useSimulationDisplayCurrency();
   const dialogRef = useRef<HTMLDialogElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
+
+  if (placement === 'position') {
+    return <select className={wallet.currencyPicker} aria-label={copy.label} value={currency} onChange={event => setSimulationDisplayCurrency(event.target.value)}>
+      {SIMULATION_DISPLAY_CURRENCIES.map(({ code }) => <option key={code} value={code}>{code}</option>)}
+    </select>;
+  }
 
   if (placement === 'entry') {
     return (

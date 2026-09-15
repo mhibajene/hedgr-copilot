@@ -1,3 +1,57 @@
+# Research wallet redesign — design QA
+
+Date: 2026-09-15
+Ticket: CLASS-A-VAL-002-WALLET-REDESIGN-001 / D-147 / §279
+
+final result: passed
+
+## Source and comparison method
+
+Source: [accepted final hybrid](docs/ops/product-finish/wallet-redesign-baseline.png).
+Compared the source and production screenshots together in the same image-review input. The three 458 × 956 screenshots match the reference's panel dimensions and completed $500 deposit / $200 withdrawal / $300 remaining state. Currency is ZMW with the unchanged invented day-0/day-30 fixture. Home planning and calculation detail are collapsed; Activity withdrawal detail is expanded.
+
+Local review artifacts (untracked, reproducible through `wallet-redesign.spec.ts`):
+
+- `output/wallet-redesign-20260915/home-reference.png`
+- `output/wallet-redesign-20260915/currency-reference.png`
+- `output/wallet-redesign-20260915/activity-reference.png`
+- 390px full-page captures plus 320px/390px/1280px Home captures in the same directory.
+
+The test emits these captures under its Playwright output directory. Final captures use a production build, with no development overlay. Full-panel comparison was sufficient; no isolated region required a separate crop.
+
+## Outcome
+
+- Home keeps the subtly tinted bordered balance as the strongest element, equal white rectangular utility CTAs, then observation, currency context and collapsed planning.
+- Currency Context uses the existing comparison values and explicit limits. The same/rounded-zero cases have accurate headings. Native dialog plus bounded Tab cycling, Escape and focus return passed.
+- Activity preserves the completed-event reconciliation before filtering. Expanded withdrawal shows Before $500, Withdrawal −$200, After $300. Pending/failed events have no completed balance effect and keep their existing failure reason/note.
+- Main controls remain usable at 320px, 390px and desktop, with 100%/200% text. Existing currency/finish tests additionally cover 700px. Keyboard controls and default/unavailable-data negative controls passed.
+
+## Comparison history
+
+1. P2: inherited CTA typography/nowrap overflowed at 320px with 200% text. Scoped utility typography and responsive column sizing fixed it; new Home/Activity/dialog reflow checks and production captures passed.
+2. P2: USD suffix lacked visual separation. Added explicit spacing and reviewed the production card.
+3. P2: Currency Context heading was lighter than the reference. Applied the retained bold heading weight and recaptured/recompared the final dialog.
+4. P2: native dialog keyboard navigation could leave the control cycle. Explicit first/last Tab wrapping now passes both directions, Escape and focus return.
+5. P2: the initial dialog heading implied different estimates for equal or rounded-zero cases. Conditional headings and direct tests now preserve the comparison meaning.
+
+No open P0/P1/P2 findings. Independent reviewer reviewed source scope, trust boundaries and all three clean reference captures; final disposition is recorded in the implementation evidence.
+
+## Intentional adaptation and minor polish
+
+The governed logo, existing utility assets, font and color tokens replace image-generated approximations. Text-labeled navigation and native disclosure markers preserve available approved assets. The existing balance-estimate wording, observation caption, replay and trust disclosures remain, so Home is longer than the illustrative image. Activity detail opens inside its selected record. These are deliberate translation constraints, not omitted functionality. An approved icon-set pass could further match the mockup, but is outside this ticket.
+
+## Verification
+
+- Full `pnpm run validate`: 72 test files / 876 tests, TypeScript, ESLint and repository checks passed.
+- Production build and complete hermetic Playwright suite: 96 passed.
+- `$0 → +$5 → −$2 → $3` passed for all five currencies; selector, comparison and filters preserve stored financial state.
+- Research non-normal posture notices, empty/first-event states and failed/pending Activity details have direct unit coverage.
+
+Technical and visual QA do not establish participant comprehension, demand or parent acceptance. Participant distribution remains paused. NO CROSS-LANE IMPACT.
+
+<details>
+<summary>Historical design QA retained from earlier tickets</summary>
+
 # Design QA — CLASS-A-VAL-002-VISUAL-001 (D-103 + D-104)
 
 ## Comparison target
@@ -384,3 +438,5 @@ final result: passed
 - Optimized-production in-app browser checks — passed for mobile rendering, desktop responsive rendering, overflow, and console/page diagnostics.
 
 final result: passed
+
+</details>

@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 import finish from './product-finish.module.css';
+import wallet from './research-wallet.module.css';
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { TrustDisclosureBanner } from '../../components';
@@ -131,16 +133,31 @@ export function AppLayoutClient({ children }: { children: React.ReactNode }) {
 
   const syntheticNavLinks: NavLink[] = [
     { href: '/dashboard', label: 'Home' },
+    { href: '/activity', label: 'Activity' },
     { href: '/settings', label: 'Settings' },
   ];
 
   const productNavLinks: NavLink[] = [
-    ...syntheticNavLinks,
+    ...syntheticNavLinks.filter(link => link.href !== '/activity'),
     ...copilotNavLinks,
   ];
   const navLinks = explicitSyntheticJourney
     ? syntheticNavLinks
     : productNavLinks;
+
+  if (explicitSyntheticJourney && (activePathname === '/dashboard' || activePathname === '/activity')) {
+    return <div className="min-h-screen bg-white pb-20">
+      <TrustDisclosureBanner syntheticResearch dismissible={false} consolidateTechnicalDetails learnMoreUrl={trustInformationHref} />
+      <header className={wallet.brand} data-testid="synthetic-journey-shell">
+        <Link href={getSyntheticJourneyHref('/dashboard')} aria-label="Hedgr Home"><Image src="/brand/hedgr_logo.svg" alt="Hedgr" width={92} height={32} priority /></Link>
+        <Link href={getSyntheticJourneyHref('/settings')}>Settings</Link>
+      </header>
+      {children}
+      <nav aria-label="Primary" data-testid="synthetic-bottom-nav" className="fixed inset-x-0 bottom-0 z-40 border-t border-hedgr-100 bg-white">
+        <div className={wallet.bottomNav}>{syntheticNavLinks.map(link => <Link key={link.href} href={navHref(link.href, true)} aria-current={isNavLinkActive(link.href) ? 'page' : undefined}>{link.label}</Link>)}</div>
+      </nav>
+    </div>;
+  }
 
   return (
     <div
@@ -268,7 +285,7 @@ export function AppLayoutClient({ children }: { children: React.ReactNode }) {
           className="fixed inset-x-0 bottom-0 z-40 border-t border-hedgr-100 bg-white shadow-sm md:hidden"
           data-testid="synthetic-bottom-nav"
         >
-          <div className={`grid grid-cols-2 ${finish.bottomLinks}`}>
+          <div className={`grid grid-cols-3 ${finish.bottomLinks}`}>
             {syntheticNavLinks.map((link) => (
               <Link
                 key={link.href}
