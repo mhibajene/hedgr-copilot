@@ -337,7 +337,6 @@ export default function DashboardPage() {
                   : undefined
               }
             />
-            {syntheticJourneyActive && syntheticComparison.lastEvent ? <Link href={getSyntheticJourneyHref('/activity')} className={wallet.link}>See the activity</Link> : null}
           </div>
           {currencyContextVisible ? <CurrencyInsight redesigned usdAmount={total} currency={displayCurrency} latestDisplayRate={getSimulationDisplayRate(displayCurrency)} ready={currencyContextVisible} pending={currencyComparisonPending} /> : null}
         </div>
