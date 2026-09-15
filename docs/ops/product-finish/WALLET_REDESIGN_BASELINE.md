@@ -40,3 +40,7 @@ No dependencies, financial state, engine computations, rate fixtures, Form/proto
 ## Delivery
 
 Founder rendered disposition: “Reviewed and approved.” PR [#536](https://github.com/mhibajene/hedgr-copilot/pull/536) is merged. The [production research journey](https://hedgr-copilot-frontend.vercel.app/dashboard-synthetic-journey) was verified, including Currency Context dismissal/focus return, completed Activity reconciliation and the unchanged default-dashboard control. Production inspection preserved existing stored simulation records and did not create new transactions. D-148 / §280 closes only this nested ticket; both parents remain open without active nested tickets. Permanent-main projection rebind follows the closeout squash through the normal repo posture.
+
+## Approved Activity CTA refinement — D-149 / §281
+
+On 2026-09-15 the Founder approved the inline imagegen variant removing only “See the activity” from “What changed”. Both that link and View Activity led to the same research Activity list. Retain View Activity beside Add simulated deposit and the primary Activity navigation. The observation card contracts naturally; current CSS, tint, polish, observation/non-guarantee copy and all state/financial/default-route boundaries remain unchanged. Exact bounded implementation and verification scope: `CLASS-A-VAL-002-ACTIVITY-CTA-001`, §7a. Delivery verification is recorded at closeout; this approval is not participant evidence.

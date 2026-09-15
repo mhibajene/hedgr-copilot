@@ -31,6 +31,9 @@ test('research baseline: navigation, dialog focus, currency and event reconcilia
   const before = await financialState(page);
   await expect(page.getByRole('heading', { name: 'Your position', exact: true })).toBeVisible();
   await expect(page.getByTestId('engine-posture-context')).toHaveText('Your simulated withdrawal reduced the balance by $200.00.');
+  await expect(page.getByRole('link', { name: 'See the activity', exact: true })).toHaveCount(0);
+  await expect(page.getByRole('link', { name: 'View Activity', exact: true })).toHaveAttribute('href', '/activity?journey=class-a-val-002');
+  await expect(page.getByRole('navigation', { name: 'Primary' }).getByRole('link', { name: 'Activity', exact: true })).toBeVisible();
   await page.screenshot({ path: testInfo.outputPath('home-390.png'), fullPage: true });
   await page.setViewportSize({ width: 458, height: 956 });
   await page.screenshot({ path: testInfo.outputPath('home-reference.png') });
