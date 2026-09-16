@@ -79,6 +79,31 @@ pnpm bridge:rap:check
 
 `current-status.json` was **Deprecated** from the first deployed RAP serve and is now **retired** under Internal **D-082** / **§214** / `BRIDGE-LEGACY-RETIRE-001`. The live path is removed. The byte-identical archive is `archive/retired-legacy-current-status.json` (`generated_at: 2026-06-24T00:00:00.000Z`, SHA-256 `181dfa46feb0f25149b81cc17516cce0efc89eab95d3e30e9f2b82affcc1fc2a`). It is not regenerated, date-bumped, presented as a RAP, or mapped by authority routes. `/current-status` continues to serve the RAP.
 
+### Authority legibility diagnostics
+
+The invariant lives in the existing `AGENTS.md` Authority Model, implemented under `HEDGR_STATUS.md` §7 / §7a `AUTHORITY-LEGIBILITY-001` (dated authorisation, PR #542; permanent-main rebind, PR #543). Authority correctness and authority legibility are separate properties. **Permanent-main repo authority governs.** This README and command output are operator guidance and evidence only.
+
+The existing RAP commands emit attributable `Authority legibility WARN:` JSON records to **stderr**, after the existing validation and artifact checks succeed. The normal stdout and generated RAP format remain unchanged. Warnings do not change exit success, create or repair authority, rewrite sources, allocate decisions, or activate tickets. A genuine current-authority conflict still fails closed with `UNRESOLVED_AUTHORITY_CONFLICT`, before hygiene reporting. Missing/invalid mandatory sources and deterministic-artifact mismatches retain their existing failure behaviour.
+
+Each warning identifies its code, bound source revision, source path/section, reason, limitation, canonical authority to consult, `effect_on_authority: "none"`, and the action: surface to steward; consult permanent main; do not auto-repair.
+
+| Case | Diagnostic / result | Authority effect |
+| --- | --- | --- |
+| Clean within the checks' coverage; source revision verifiable in locally observed main history | No warning; successful command | None; existing authorised work proceeds |
+| Explicitly subordinate §2 narrative still names a Lane ticket active, while §7 lists that ticket completed and omits it from active Lane records | `SUPERSEDED_LANE_NARRATIVE`; successful command | None; steward-visible lag, no repair |
+| §7 and the current AGENTS active-ticket records disagree, even if lag also exists | Existing `UNRESOLVED_AUTHORITY_CONFLICT`; command fails, no hygiene downgrade | No inferred winner; existing stop/escalation applies |
+| Source revision not verifiable in locally observed `origin/main` history | `MAIN_HISTORY_UNVERIFIED`; successful command if otherwise valid | Draft/unmerged references cannot establish accepted history |
+
+For example, the retained §2 narrative names `NARRATIVE-007` in an active pass while §7 explicitly records it completed. §2 begins by assigning active-ticket naming exclusively to §7 / §7a, which is why this narrowly identified reference is reported as subordinate narrative lag. Its original text remains in both the source and `payload.fields.authority_boundaries`. That field retains its canonical `source_path`, `source_section`, immutable `source_commit`, source classification and freshness; the warning also names this projected field. `freshness: CURRENT` remains truthful about the governed source/projection checks and is **not** a claim that every narrative statement is current sequencing instruction. Likewise, `conflicts: []` is not a universal check for stale authority-shaped references.
+
+**Deterministic coverage:** The narrative check recognises only the §2 `Sequencing authority` field when it starts with the explicit §7 / §7a delegation sentence, its `is active and names` wording, and explicit `Completed Lane` / `Completed historical Lane` entries within §7's `Current active ticket status` block. The existing active-ticket conflict check runs first. Missing markers, unfamiliar wording, and other kinds of disagreement are not semantically interpreted as lag. An absent warning means only that no covered condition was detected; it is not a consistency certificate and never overrides an operator's duty to surface a genuine conflict.
+
+The main-history check performs read-only local Git ancestry checks against `refs/remotes/origin/main`. It makes no live remote request and reads no additional authority documents. A missing ref, shallow history, inaccessible ancestry or outdated tracking ref can produce `MAIN_HISTORY_UNVERIFIED`; the diagnostic does not claim the commit is definitely unmerged. Successful local ancestry is also not proof that the tracking ref is current, every decision in the revision is accepted, or a ticket is active. Operators still verify permanent main through the existing governance process. Proposed decision text is not parsed into accepted history, and no next D-number is computed or reserved.
+
+**Steward-review limits:** Arbitrary stale AGENTS prose, contradictory nested-ticket or participant-distribution wording, unmerged PR bodies, draft decision semantics and other support/review artefacts are not scanned or adjudicated. They remain explicit human/steward review concerns. The four-source allow-list, schema, validator, policy, Worker routes and financial execution classes are unchanged. Diagnostics are not stored in the RAP or served by Bridge endpoints; there is no new API, authority file, warning artefact or approval gate.
+
+**Verification:** `apps/bridge-worker/tests/rap-generator.test.mjs` contains fixed source fixtures and disposable Git repositories covering clean output, stale narrative without source rewriting, unchanged fresh projected evidence, conflict priority, draft decision isolation, missing main history and command exit behaviour. Run `pnpm --filter @hedgr/bridge-worker test` and the existing `pnpm run validate` gates. Revert the diagnostic/operator enhancement and regenerate RAP from the applicable committed authority to restore prior deterministic behaviour; retain historical records and explicitly record any ticket revocation or closeout through the existing governance process.
+
 ### Runtime boundary and rollback
 
 The Worker serves the generated RAP but does not import repo markdown, load source files dynamically, or run the generator at request time. Review-evidence routes remain unchanged.
