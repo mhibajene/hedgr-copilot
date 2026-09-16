@@ -504,6 +504,10 @@ Agents operate under strict authority hierarchy:
 
 Agents must not override higher authority for convenience.
 
+**Authority legibility invariant (AUTHORITY-LEGIBILITY-001):** Authority correctness and authority legibility are separate properties. Permanent-main repo authority governs. Authority-shaped lag is surfaced and escalated; it is never used to infer authority and is never silently repaired. `HEDGR_STATUS.md` §7 / §7a retain active-ticket naming authority; accepted ADRs, this Authority Model, active doctrine and applicable repo-native delegation retain their existing roles and precedence.
+
+Draft branches, unmerged PRs, review evidence, RAP projections and Bridge responses cannot independently activate work or establish accepted decision history. Projection `freshness: CURRENT` does not mean every narrative fragment is current sequencing instruction; `conflicts: []` does not mean no authority-shaped lag exists. Attributable, non-conflicting hygiene warnings are non-blocking: surface them to the steward without changing authority or freezing otherwise authorised work. Genuine current-authority disagreement retains the stop/escalation rule below. Unknown prose remains a review concern, not an inferred reconciliation. See `docs/ops/bridge/README.md` for the bounded diagnostic coverage and limitations; it remains operator guidance, not authority.
+
 If conflict is detected:
 - stop
 - surface the conflict explicitly

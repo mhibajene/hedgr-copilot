@@ -34,6 +34,9 @@ const SOURCE_DEFINITIONS = Object.freeze([
 const OUTPUT_PATH = "docs/ops/bridge/repo-authority-projection.json";
 const NON_RESOLUTION_DESCRIPTION =
   "HEDGR_STATUS.md and AGENTS.md record different active-ticket sets.";
+const MAIN_REFERENCE = "refs/remotes/origin/main";
+const CANONICAL_AUTHORITY =
+  "Permanent-main docs/ops/HEDGR_STATUS.md §7 / §7a, AGENTS.md, accepted ADRs, active doctrine and applicable repo-native delegation.";
 
 class ProjectionGenerationError extends Error {
   constructor(message) {
@@ -185,6 +188,50 @@ function provenance(value, sourceSection, sourceCommit, freshness) {
   };
 }
 
+// Diagnostics are separate from the RAP and never feed authority extraction or validation.
+function hygieneWarning(code, sourceCommit, detail) {
+  return {
+    code,
+    source_commit: sourceCommit,
+    ...detail,
+    canonical_authority: CANONICAL_AUTHORITY,
+    effect_on_authority: "none",
+    required_action: "Surface to steward; consult permanent main; do not auto-repair."
+  };
+}
+
+function narrativeWarnings(statusSource, statusProjection, sourceCommit) {
+  const narrative = statusProjection.authorityBoundaries;
+  // Only this explicitly subordinate field and explicit completed-Lane records qualify.
+  // Other disagreements must not be guessed into the non-blocking category.
+  if (!narrative.startsWith("Only **§7** / **§7a** name approved active ticket(s).")) {
+    return [];
+  }
+  const activeStatus = extractSection(
+    statusSource, "Current active ticket status:", "\n---", "current-active-ticket"
+  );
+  const completed = new Set(
+    [...activeStatus.matchAll(/^- \*\*Completed(?: historical)? Lane [^*]+:\*\* ([^\n]+)/gm)]
+      .flatMap((record) => [...record[1].matchAll(/`([A-Z][A-Z0-9-]+)`/g)])
+      .map((match) => match[1])
+  );
+  const namedActive = unique(
+    [...narrative.matchAll(/\bis active and names (.+?)\.(?=\s|$)/g)]
+      .flatMap((statement) => [...statement[1].matchAll(/`([A-Z][A-Z0-9-]+)`/g)])
+      .map((match) => match[1])
+  );
+  return namedActive
+    .filter((ticket) => completed.has(ticket) && !statusProjection.activeTicketIds.includes(ticket))
+    .map((ticket) => hygieneWarning("SUPERSEDED_LANE_NARRATIVE", sourceCommit, {
+      source_path: "docs/ops/HEDGR_STATUS.md",
+      source_section: "§2 Sequencing authority",
+      projected_field: "payload.fields.authority_boundaries",
+      ticket_reference: ticket,
+      reason: `This subordinate narrative names ${ticket} as active; §7 explicitly records it in a completed Lane entry and omits it from active Lane records. §2 itself delegates active-ticket naming to §7 / §7a.`,
+      limitation: "CURRENT checks source/projection freshness, not every narrative statement; conflicts: [] is not a universal lag check."
+    }));
+}
+
 function buildProjection({ sourceCommit, generatedAt, sourceDocuments }) {
   assertFullGitSha(sourceCommit);
   const generatedAtDate = new Date(generatedAt);
@@ -297,9 +344,13 @@ function buildProjection({ sourceCommit, generatedAt, sourceDocuments }) {
     }
   };
 
+  const validation = validateResponseEnvelope(projection);
   return {
     projection,
-    validation: validateResponseEnvelope(projection)
+    validation,
+    hygieneWarnings: validation.ok
+      ? narrativeWarnings(sourceDocuments["docs/ops/HEDGR_STATUS.md"], statusProjection, sourceCommit)
+      : []
   };
 }
 
@@ -344,6 +395,24 @@ async function assertWorkingTreeMatchesSources(repoRoot, sourceDocuments) {
   }
 }
 
+async function mainHistoryWarnings(repoRoot, sourceCommit) {
+  let observedMainCommit;
+  try {
+    observedMainCommit = (await git(repoRoot, ["rev-parse", "--verify", MAIN_REFERENCE])).trim();
+    await git(repoRoot, ["merge-base", "--is-ancestor", sourceCommit, observedMainCommit]);
+    return [];
+  } catch {
+    // Missing refs, shallow history and unavailable ancestry are warnings, not authority decisions.
+    return [hygieneWarning("MAIN_HISTORY_UNVERIFIED", sourceCommit, {
+      source_path: "git metadata",
+      source_section: MAIN_REFERENCE,
+      observed_main_commit: observedMainCommit ?? null,
+      reason: "The bound source revision is not verified as an ancestor of the locally observed origin/main. It may be draft/unmerged, or local history may be incomplete or outdated. Do not treat draft decision references as accepted history.",
+      limitation: "Local ancestry is not a live remote check, acceptance of each statement, or ticket activation. No decision identifiers are discovered, allocated or reserved."
+    })];
+  }
+}
+
 async function generateFromGit({ repoRoot, requestedCommit }) {
   const sourceCommit = await resolveSourceCommit(repoRoot, requestedCommit);
   const sourceDocuments = await loadSourceDocuments(repoRoot, sourceCommit);
@@ -351,7 +420,11 @@ async function generateFromGit({ repoRoot, requestedCommit }) {
   const commitTimestamp = (
     await git(repoRoot, ["show", "-s", "--format=%cI", sourceCommit])
   ).trim();
-  return buildProjection({ sourceCommit, generatedAt: commitTimestamp, sourceDocuments });
+  const result = buildProjection({ sourceCommit, generatedAt: commitTimestamp, sourceDocuments });
+  if (result.validation.ok) {
+    result.hygieneWarnings.push(...await mainHistoryWarnings(repoRoot, sourceCommit));
+  }
+  return result;
 }
 
 function parseArgs(args) {
@@ -400,9 +473,15 @@ async function main() {
     );
   }
   const serialized = serializeProjection(result.projection);
+  const reportWarnings = () => {
+    for (const warning of result.hygieneWarnings) {
+      process.stderr.write(`Authority legibility WARN: ${JSON.stringify(warning)}\n`);
+    }
+  };
 
   if (options.mode === "write") {
     await writeFile(outputPath, serialized, "utf8");
+    reportWarnings();
     process.stdout.write(`Wrote ${OUTPUT_PATH} bound to ${result.projection.source_commit}.\n`);
     return;
   }
@@ -413,11 +492,13 @@ async function main() {
         `${OUTPUT_PATH} does not match deterministic generation for its bound revision.`
       );
     }
+    reportWarnings();
     process.stdout.write(
       `${OUTPUT_PATH} matches deterministic generation for ${result.projection.source_commit}.\n`
     );
     return;
   }
+  reportWarnings();
   process.stdout.write(serialized);
 }
 
