@@ -104,6 +104,8 @@ The main-history check performs read-only local Git ancestry checks against `ref
 
 **Verification:** `apps/bridge-worker/tests/rap-generator.test.mjs` contains fixed source fixtures and disposable Git repositories covering clean output, stale narrative without source rewriting, unchanged fresh projected evidence, conflict priority, draft decision isolation, missing main history and command exit behaviour. Run `pnpm --filter @hedgr/bridge-worker test` and the existing `pnpm run validate` gates. Revert the diagnostic/operator enhancement and regenerate RAP from the applicable committed authority to restore prior deterministic behaviour; retain historical records and explicitly record any ticket revocation or closeout through the existing governance process.
 
+**Verified delivery (2026-09-16):** PR #544 merged at `b3f08f753da671ecc7deafcd15d3fa0491b5eb3c`. All 41 Bridge tests (seven added), full repo validation, production build and 96 browser tests passed, as did required hosted checks and the automatic convergence review. The command and 41 Bridge tests were rechecked on merged main. Comparing old/new generators at the same source revision produced byte-identical RAP JSON. The retained §2 `NARRATIVE-007` warning remains intentionally visible. This is bounded technical evidence, not a claim that governance is fully consistent. Ticket closeout and the separate permanent-main rebind follow the dated record in `HEDGR_STATUS.md` §6f.21 / §7a.
+
 ### Runtime boundary and rollback
 
 The Worker serves the generated RAP but does not import repo markdown, load source files dynamically, or run the generator at request time. Review-evidence routes remain unchanged.
