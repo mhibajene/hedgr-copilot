@@ -32,7 +32,7 @@ Do not prepend About, an intended category, a pitch or a product explanation. Pr
 | --- | ---: |
 | ZMW | 100 |
 | KES | 650 |
-| NGN | 7,500 |
+| NGN | 7500 |
 | GHS | 75 |
 | PHP | 280 |
 
@@ -40,7 +40,7 @@ The card supplies input amounts but no resulting or ending balance. Before distr
 
 Opening Activity is task-directed; its successful location cannot be described as independent discovery. Do not require opening Planning targets to manufacture exposure. W05 explicitly records non-exposure. Currency-context exposure is also not guaranteed merely because a participant reached Home.
 
-## Exact candidate questions and implementable sections
+## Approved questions and implementable sections
 
 Five physical sections. No quiz, correctness feedback or answer keys. Keep order fixed. A neutral stage/access question comes first; all exposed respondents then see two open questions before any recognition options. “Not sure” is an acceptable response to required text; no minimum length. Do not collect contact details or real financial information.
 
@@ -53,7 +53,7 @@ Google Forms branching is set on W01, the last and only single-choice question i
 **W01 — Required; single choice; last question in section.**
 “How far did you get in the experience?”
 
-- I completed the deposit, withdrawal and Activity steps → Section 2
+- I completed the deposit, withdrawal and Activity steps and returned Home → Section 2
 - I tried, but could not complete the deposit → Section 3
 - I completed the deposit, but could not complete the withdrawal → Section 3
 - I completed both, but could not review Activity or return Home → Section 3
@@ -224,7 +224,7 @@ Report denominators per question and per exposure; no pooled score or pass perce
 
 ## Revision note — independent technical reviewer corrections
 
-The revision places stage/access classification first, gives no-access a direct priority/comment route, separates failed steps from voluntary stopping, and uses five Google Forms sections with mutually exclusive duplicated open groups. All participant paths and physical-item counts are explicit. W09 is reduced from ten to seven options. Start and resume links are distinct so returning from the Form does not intentionally reset the journey. Exact input tasks omit the ending balance. This remains a draft-only methods candidate; no live edits or distribution occurred.
+The revision places stage/access classification first, gives no-access a direct priority/comment route, separates failed steps from voluntary stopping, and uses five Google Forms sections with mutually exclusive duplicated open groups. All participant paths and physical-item counts are explicit. W09 is reduced from ten to seven options. Start and resume links are distinct so returning from the Form does not intentionally reset the journey. Exact input tasks omit the ending balance. Approved for unpublished technical preparation; no live edits or distribution have occurred. Preflight clarifies the completed W01 option includes returning Home and renders the NGN input as 7500 for direct entry into the existing field; numerical fixture and evidence constructs are unchanged.
 
 ## Implementation evidence
 
