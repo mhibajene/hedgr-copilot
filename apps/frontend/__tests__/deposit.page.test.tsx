@@ -23,15 +23,16 @@ vi.mock('../lib/hooks/useLatestFx', () => ({
   useLatestFx: vi.fn(),
 }));
 
-vi.mock('../lib/state/ledger', () => ({
-  useLedgerStore: vi.fn(
-    (selector: (state: { append: () => void; confirm: () => void }) => unknown) =>
-      selector({
-        append: depositStateMocks.append,
-        confirm: depositStateMocks.confirm,
-      }),
-  ),
-}));
+vi.mock('../lib/state/ledger', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('../lib/state/ledger')>();
+  depositStateMocks.append = vi.fn(actual.useLedgerStore.getState().append);
+  depositStateMocks.confirm = vi.fn(actual.useLedgerStore.getState().confirm);
+  actual.useLedgerStore.setState({
+    append: depositStateMocks.append,
+    confirm: depositStateMocks.confirm,
+  });
+  return actual;
+});
 
 vi.mock('../lib/state/wallet', () => {
   const useWalletStore = Object.assign(
@@ -41,7 +42,7 @@ vi.mock('../lib/state/wallet', () => {
           creditUSD: depositStateMocks.creditUSD,
         }),
     ),
-    { getState: depositStateMocks.getWalletState },
+    { getState: () => ({ ...depositStateMocks.getWalletState(), creditUSD: depositStateMocks.creditUSD }) },
   );
   return { useWalletStore };
 });
@@ -80,6 +81,7 @@ import { CONVERSION_PREVIEW_UNAVAILABLE_PLACEHOLDER } from '../lib/fx/market-dat
 import { useSearchParams } from 'next/navigation';
 import { TX_REVIEW_BYPASS_FX_PARAM } from '../lib/tx';
 import { getBalanceMode } from '../lib/state/balance.mode';
+import { useLedgerStore } from '../lib/state/ledger';
 
 const ORIGINAL_CI = process.env.CI;
 const ORIGINAL_NODE_ENV = process.env.NODE_ENV;
@@ -87,6 +89,7 @@ const ORIGINAL_APP_ENV = process.env.NEXT_PUBLIC_APP_ENV;
 
 afterEach(() => {
   cleanup();
+  useLedgerStore.getState().clear();
   localStorage.removeItem('hedgr.simulation.display-currency');
   localStorage.removeItem('hedgr.market');
   vi.restoreAllMocks();
@@ -109,6 +112,25 @@ afterEach(() => {
 });
 
 describe('DepositPage market-data degraded state (MC-S2-020)', () => {
+  test('preserves the non-simulated backend call and mounted confirmation path', async () => {
+    vi.stubEnv('NEXT_PUBLIC_AUTH_MODE', 'magic');
+    vi.stubEnv('NEXT_PUBLIC_FX_MODE', 'live');
+    vi.useFakeTimers();
+    vi.mocked(postDeposit).mockClear();
+    vi.mocked(postDeposit).mockImplementation(async ({ txn_ref }) => ({ depositId: 'contract-test', txn_ref }));
+    vi.mocked(useLatestFx).mockReturnValue({
+      status: 'success', data: { pair: 'USDZMW', rate: 20, ts: 1 }, retry: vi.fn(),
+    });
+    render(<DepositPage />);
+    await act(async () => { await vi.advanceTimersByTimeAsync(350); });
+    await act(async () => { fireEvent.click(screen.getByRole('button', { name: 'Confirm' })); });
+    expect(postDeposit).toHaveBeenCalledWith({ txn_ref: expect.any(String), amount_zmw: 100 });
+    await act(async () => { await vi.advanceTimersByTimeAsync(1600); });
+    expect(depositStateMocks.confirm).toHaveBeenCalledTimes(1);
+    expect(useLedgerStore.getState().transactions[0].status).toBe('settled');
+    expect(screen.queryByTestId('deposit-simulation-context')).toBeNull();
+  });
+
   test('rejects a negative amount without retaining or submitting the previous value', async () => {
     vi.useFakeTimers();
     vi.mocked(postDeposit).mockClear();

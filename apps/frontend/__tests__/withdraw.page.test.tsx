@@ -708,6 +708,22 @@ describe('WithdrawPage CLASS-A-VAL-002 primary condition', () => {
 
 
 describe('D-132 selected simulation withdrawal estimate', () => {
+  test('does not apply the new simulation-only precision policy to the non-simulated branch', async () => {
+    vi.stubEnv('NEXT_PUBLIC_AUTH_MODE', 'magic');
+    vi.stubEnv('NEXT_PUBLIC_FX_MODE', 'live');
+    vi.useFakeTimers();
+    vi.mocked(withdrawMock.createWithdraw).mockClear();
+    vi.mocked(useBalance).mockReturnValue({ total: 5, available: 5, pending: 0, currency: 'USD', asOf: 1, isLoading: false, error: null, refresh: vi.fn() });
+    vi.mocked(useLatestFx).mockReturnValue({ status: 'success', data: { pair: 'USDZMW', rate: 20, ts: 1 }, retry: vi.fn() });
+    render(<WithdrawPage />);
+    await act(async () => { await vi.advanceTimersByTimeAsync(350); });
+    fireEvent.change(screen.getByLabelText('Amount (USD)'), { target: { value: '0.001' } });
+    expect((screen.getByRole('button', { name: 'Confirm' }) as HTMLButtonElement).disabled).toBe(false);
+    await act(async () => { fireEvent.click(screen.getByRole('button', { name: 'Confirm' })); });
+    expect(withdrawMock.createWithdraw).toHaveBeenCalledWith(0.001, { skipAutoConfirm: false });
+    expect(screen.getByTestId('withdraw-status-title').textContent).toBe('Withdrawal request submitted');
+  });
+
   test.each([
     ['ZMW', 20, '100.00'], ['KES', 130, '650.00'], ['NGN', 1500, '7,500.00'],
     ['GHS', 15, '75.00'], ['PHP', 56, '280.00'],
