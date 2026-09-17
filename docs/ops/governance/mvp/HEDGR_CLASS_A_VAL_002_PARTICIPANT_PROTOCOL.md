@@ -1,3 +1,81 @@
+# CLASS-A-VAL-002 Digital Feedback v1 — self-guided protocol amendment
+
+**Date / authority:** 2026-09-18; dated Founder approval under `CLASS-A-VAL-002-WEEKEND-PREP-001`, [HEDGR_STATUS.md §7 / §7a](../../HEDGR_STATUS.md). No D-number assigned. **Status: unpublished technical preparation; publication and participant distribution remain PAUSED.**
+
+This amendment governs only the separately versioned directional digital feedback pulse. Exact participant wording, options and routing are in [Digital Feedback v1](HEDGR_CLASS_A_VAL_002_DIGITAL_FEEDBACK.md); [implementation evidence](HEDGR_CLASS_A_VAL_002_DIGITAL_FEEDBACK.md#implementation-evidence) records verified delivery. The moderated v2.1 protocol below, its questionnaire and all historical Forms/data remain preserved. Its acceptance method is not replaced by this shorter pulse. Both parents stay open; no threshold, financial capability or cross-lane change follows. **NO CROSS-LANE IMPACT.**
+
+## 1. Participant entry and tasks
+
+Participant title: **Hedgr — quick experience feedback**.
+
+> Please try the Hedgr experience, then tell us what you understood. This is a research simulation. No real money is used or moved. Do not enter personal or real financial information. You can stop at any point; feedback about getting stuck is useful too.
+
+- **Start once:** https://hedgr-copilot-frontend.vercel.app/orientation
+- **Return to your visit:** https://hedgr-copilot-frontend.vercel.app/dashboard-synthetic-journey
+- **Feedback:** [VERIFIED RESPONDER LINK PENDING — do not circulate].
+
+**Approved participant task card:**
+
+> 1. Open **Start once**, then select **Enter Hedgr**. Explore the Home screen.
+> 2. Try a simulated deposit using the amount below for the display currency shown. Keep that currency for this visit.
+> 3. Try a simulated withdrawal of **USD 2**.
+> 4. Look at the **Activity** record, then return **Home**. Explore any other sections you want.
+> 5. Open the feedback link. If something stops you, leave it there and tell us. If you switch back to the experience, use **Return to your visit** above.
+
+| Display currency shown | Simulated deposit amount to enter |
+| --- | ---: |
+| ZMW | 100 |
+| KES | 650 |
+| NGN | 7500 |
+| GHS | 75 |
+| PHP | 280 |
+
+Do not supply an ending balance, About, a pitch or an intended category explanation. Keep normal simulation disclosures visible. Do not direct opening of Planning targets merely to manufacture exposure. The feedback link must remain reachable when the journey fails.
+
+**Operator check:** Start enters through the existing `?reset=1` continuation; verify USD 0 and empty Activity before the test. Display-currency preference survives reset: match the actual currency to the card. Resume omits reset and must use the same browser/context. Do not route return visits through Start/Enter Hedgr. Messaging-browser handoff or cleared storage can lose continuity. The bounded runtime remediation covers in-app navigation; full reload/tab-termination recovery and historical pending-record repair are not promised.
+
+## 2. Form capture and routing
+
+Use the exact canonical five-section instrument: 12 physical cards, 11 required flags, W10 optional. No quiz, answer keys, shuffled questions/options or minimum text length. “Not sure” is acceptable. Do not collect personal/financial information or contact details.
+
+| W01 classification | Section route | Required answers |
+| --- | --- | ---: |
+| Completed Deposit, Withdraw and Activity, and returned Home | 1 → 2 → 4 → 5 | 9 |
+| Could not complete Deposit; could not complete Withdraw; could not review Activity/return Home; or voluntarily stopped/browsed | 1 → 3 → 5 | 4 |
+| Could not open or enter | 1 → 5 | 2 |
+
+Every path also offers optional W10. Preserve the six distinct W01 answer values. W01 is Section 1's only question and controls branching. Section 2 contains W02-C/W03-C and jumps to Section 4; Section 3 contains W02-P/W03-P and jumps to Section 5. Section 4 continues to Section 5; Section 5 submits. Each participant sees the two open questions once before any recognition options, or skips them on the no-access route.
+
+For analysis, map W02-C/W02-P to semantic W02 and W03-C/W03-P to W03 using the actual W01 branch. Preserve raw columns and unexpected branch conflicts; do not silently concatenate or replace answers. Forms Back/editing can revise earlier responses, so these are not locked unaided records.
+
+## 3. Evidence interpretation
+
+Retain batch instrument version, immutable build/deployment, actual entry/resume links and any known prior exposure or assistance. Where exposure/help is unknown, say so; do not assign moderated U/D/N/M from self-guided answers.
+
+Report partial, no-access, not-seen, uncertain and different-result responses separately. Unopened planning/currency sections are missing exposure, not comprehension failures. Activity was task-directed, so completion is not independent navigation. Preserve inconsistent W08 “None”/“not sure” combinations as ambiguous. Do not pool versions or count hidden questions as unanswered participant items.
+
+Summarise purpose/usefulness language, reported blocking stages, improvement priorities and examples. Use explicit question/exposure denominators; no composite pass score. Submitted responses omit silent abandoners, so do not claim a completion rate without a defensible denominator. This pulse does not establish parent acceptance, delayed recall, transfer, demand, repeat behaviour or actual financial capability.
+
+## 4. Verification and release record
+
+Verify saved wording/options/types, required flags, all six W01 choices and three path shapes, optional submission, privacy settings and zero participant responses while unpublished. Check signed-out access without unintended sign-in/email capture, quiz feedback or public response summaries. Segregate any separately authorised synthetic QA submissions from research evidence. Preserve both older Forms and all historical responses.
+
+A human must rehearse on a phone, separately time journey and Form, and check same-browser start/resume, messaging-browser handoff, tab switching, return after interruption, enlarged text and required-error recovery. Record actual conditions/results; automation is not human timing. Approximately three minutes Form / five–eight minutes total remain unmeasured design targets and must not appear as participant promises before measurement.
+
+Before publication/distribution, record verified fixes and instrument, the human rehearsal, and explicit Founder release disposition under §7a. **Agents are not authorised to send participant invitations or messages.**
+
+| Implementation / release evidence | Current record |
+| --- | --- |
+| New Form ID and editor/preview/responder links | Partial unpublished draft `1nIqYfCEnltude714mJgrCM_b5LKtWM2ybcaIFPhPGgc`; see canonical implementation evidence. No verified preview/responder link; do not circulate. |
+| Immutable shipped build and deployment | Runtime PR #549, `56bde5e4faa4ca256e717f37f2a035a726493e4f`; production deployment `6513896843` succeeded at `https://hedgr-copilot-frontend-rdtdw45ok-hedgr.vercel.app`. Rendered production traversal outstanding. |
+| Distinct technical reviewer and branch/privacy readback | PENDING |
+| Human phone rehearsal and separate timings | OUTSTANDING |
+| Founder release disposition | NOT RECORDED; publication/distribution PAUSED |
+
+---
+
+<!-- Preserved moderated v2.1 protocol follows verbatim. Its method/status statements remain specific to that separate moderated instrument and do not authorise digital publication or distribution. -->
+
 # CLASS-A-VAL-002 Participant Protocol and Evidence Capture
 
 **Version:** D-137 / v2.1 current-product refinement, 2026-09-11.

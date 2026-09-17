@@ -2,7 +2,7 @@
 
 **Date:** 2026-09-18 (Australia/Perth). **Ticket:** `CLASS-A-VAL-002-WEEKEND-PREP-001`.
 
-**Status:** Runtime implementation and local/distinct verification complete; hosted delivery and instrument preparation pending. No participant publication/distribution or parent acceptance follows from this record.
+**Status:** Runtime remediation merged and production deployment succeeded; rendered production verification and external instrument completion remain pending. No participant publication/distribution or parent acceptance follows from this record.
 
 ## Authority and baseline
 
@@ -43,7 +43,9 @@ The initial full browser run passed all 96 existing tests and failed the three n
 
 Local logs: `/tmp/hedgr-weekend-runtime-validate-final.log`, `/tmp/hedgr-weekend-runtime-build.log`, `/tmp/hedgr-weekend-runtime-e2e-final.log`; separate verifier harness `/private/tmp/hedgr-weekend-qa-20260917/verification.test.tsx`. Local rendered evidence: `verified-2026-09-18/` beneath the original QA directory, including `05-full-withdrawal-completion-viewport.png`. Browser-width emulation is not an actual iPhone/Android human rehearsal.
 
-Hosted checks, runtime delivery PR/commit and immutable deployment remain pending. Inspect the shipped mobile standard USD 0→5→3 journey, affected edges and default-route controls before technical closeout.
+PR [#549](https://github.com/mhibajene/hedgr-copilot/pull/549) merged the runtime patch at `56bde5e4faa4ca256e717f37f2a035a726493e4f` after hosted validate, E2E smoke/e2e, build, typecheck/lint, evidence and convergence review passed. GitHub production deployment `6513896843` reports success at `https://hedgr-copilot-frontend-rdtdw45ok-hedgr.vercel.app` (2026-09-17 23:07:41 UTC). This deployment record is distinct from rendered production interaction QA, which remains outstanding while browser controls are stalled. Inspect the shipped mobile standard USD 0→5→3 journey, affected edges and default-route controls before technical closeout.
+
+Local test services on ports 3000/5050 were stopped after verification. The exact external Form continuation state and browser blocker are recorded in [Digital Feedback implementation evidence](HEDGR_CLASS_A_VAL_002_DIGITAL_FEEDBACK.md#implementation-evidence). The nested ticket remains active; no closeout authority has been recorded.
 
 ## Instrument and release boundary
 
