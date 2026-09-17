@@ -124,11 +124,16 @@ function WithdrawPageContent() {
   const rateAllowsConfirm = rate !== null || canConfirmWithoutRate;
   const usd = usdInput === '' ? 0 : Number(usdInput);
   const hasPositiveAmount = Number.isFinite(usd) && usd > 0;
-  const amountIsInvalid = usdInput !== '' && !hasPositiveAmount;
-  const amountExceedsBalance = hasPositiveAmount && usd > available;
+  // Validate decimal input itself: multiplication by 100 can misclassify 0.29.
+  const hasCentPrecision = /^(?:\d+(?:\.\d{0,2})?|\.\d{1,2})$/.test(usdInput);
+  const invalidSimulatedPrecision = productSimulationActive && hasPositiveAmount &&
+    (usd < 0.01 || !hasCentPrecision);
+  const amountIsInvalid = usdInput !== '' && (!hasPositiveAmount || invalidSimulatedPrecision);
+  const simulatedResultActive = productSimulationActive && status !== 'IDLE';
+  const amountExceedsBalance = !simulatedResultActive && hasPositiveAmount && usd > available;
   const displayedBalanceBefore = balanceBeforeWithdrawal ?? available;
   const remainingAfterWithdrawal =
-    hasPositiveAmount && usd <= displayedBalanceBefore
+    hasPositiveAmount && !amountIsInvalid && usd <= displayedBalanceBefore
       ? +(displayedBalanceBefore - usd).toFixed(2)
       : null;
 
@@ -191,7 +196,8 @@ function WithdrawPageContent() {
   }, [txnRef, status, debitWallet, usd, confirmTx, failTx, refresh]);
 
   const confirm = async () => {
-    if (!hasPositiveAmount || amountExceedsBalance || !rateAllowsConfirm) return;
+    if (status === 'PENDING' || simulatedResultActive || !hasPositiveAmount ||
+        amountIsInvalid || amountExceedsBalance || !rateAllowsConfirm) return;
 
     setBalanceBeforeWithdrawal(available);
     setStatus('PENDING');
@@ -309,7 +315,7 @@ function WithdrawPageContent() {
     );
   }
 
-  if (available === 0) {
+  if (available === 0 && !simulatedResultActive) {
     return (
       <main className={`mx-auto max-w-xl p-6 ${finish.choice}`}>
         <h1 className="text-2xl font-semibold">Withdraw</h1>
@@ -428,7 +434,14 @@ function WithdrawPageContent() {
         step="0.01"
         placeholder="0.00"
         value={usdInput}
-        onChange={(e) => setUsdInput(e.target.value)}
+        onChange={(e) => {
+          setUsdInput(e.target.value);
+          if (productSimulationActive && (status === 'CONFIRMED' || status === 'FAILED')) {
+            setStatus('IDLE');
+            setTxnRef(null);
+            setBalanceBeforeWithdrawal(null);
+          }
+        }}
         disabled={status === 'PENDING'}
         aria-invalid={amountIsInvalid || amountExceedsBalance}
         aria-describedby={
@@ -436,11 +449,13 @@ function WithdrawPageContent() {
         }
         data-testid="withdraw-amount"
         className={`w-full ${finish.amountInput}`}
-        max={available}
+        max={simulatedResultActive ? displayedBalanceBefore : available}
       />
       {amountIsInvalid ? (
         <p id="withdraw-amount-error" className="text-sm text-hedgr-800" role="alert">
-          Enter a withdrawal amount greater than $0.
+          {invalidSimulatedPrecision
+            ? 'Enter at least $0.01 using no more than two decimal places.'
+            : 'Enter a withdrawal amount greater than $0.'}
         </p>
       ) : amountExceedsBalance ? (
         <p id="withdraw-amount-error" className="text-sm text-hedgr-800" role="alert">
@@ -470,7 +485,9 @@ function WithdrawPageContent() {
         onClick={confirm}
         disabled={
           status === 'PENDING' ||
+          simulatedResultActive ||
           !hasPositiveAmount ||
+          amountIsInvalid ||
           amountExceedsBalance ||
           !rateAllowsConfirm
         }

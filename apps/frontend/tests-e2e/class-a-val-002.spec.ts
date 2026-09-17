@@ -86,6 +86,94 @@ test.afterEach(async ({ page }) => {
   expect(browserErrors.get(page) ?? []).toEqual([]);
 });
 
+test('pending simulated Deposit completes once after in-app navigation and remount', async ({ page }) => {
+  await page.clock.install({ time: new Date('2026-09-18T00:00:00Z') });
+  await clearStorage(page);
+  await login(page);
+  await page.getByTestId('dashboard-add-simulated-deposit').click();
+  await expect(page.getByTestId('deposit-amount')).toBeVisible();
+  await page.clock.pauseAt(new Date('2026-09-18T01:00:00Z'));
+  await page.getByRole('button', { name: 'Confirm', exact: true }).click();
+  await expect(page.getByRole('button', { name: 'Processing…' })).toBeVisible();
+  await page.getByTestId('nav-links').getByRole('link', { name: 'Activity', exact: true }).click();
+  await expect(page).toHaveURL(/\/activity\?journey=class-a-val-002/);
+  expect(await page.evaluate(() => JSON.parse(window.localStorage.getItem('hedgr:ledger') ?? '{}').transactions[0].status)).toBe('pending');
+  await page.clock.fastForward(2000);
+  await expect(page.getByTestId('activity-row-deposit')).toContainText('Completed');
+  await page.clock.resume();
+  await page.getByRole('link', { name: 'Return to current position' }).click();
+  await expect(page.getByTestId('usd-balance')).toHaveText('$5.00');
+  await page.getByTestId('dashboard-add-simulated-deposit').click();
+  await expect(page.getByTestId('deposit-amount')).toBeVisible();
+  await page.clock.fastForward(2000);
+  const records = await page.evaluate(() => JSON.parse(window.localStorage.getItem('hedgr:ledger') ?? '{}').transactions);
+  expect(records).toHaveLength(1);
+  expect(records[0]).toMatchObject({ type: 'deposit', amount_usd: 5, status: 'settled' });
+});
+
+test('restart during a pending simulated Deposit prevents the old timer restoring funds', async ({ page }) => {
+  await page.clock.install({ time: new Date('2026-09-18T00:00:00Z') });
+  await clearStorage(page);
+  await login(page);
+  await page.getByTestId('dashboard-add-simulated-deposit').click();
+  await expect(page.getByTestId('deposit-amount')).toBeVisible();
+  await page.clock.pauseAt(new Date('2026-09-18T01:00:00Z'));
+  await page.getByRole('button', { name: 'Confirm', exact: true }).click();
+  await expect(page.getByRole('button', { name: 'Processing…' })).toBeVisible();
+  await page.getByTestId('nav-links').getByRole('link', { name: 'Home', exact: true }).click();
+  expect(await page.evaluate(() => JSON.parse(window.localStorage.getItem('hedgr:ledger') ?? '{}').transactions[0].status)).toBe('pending');
+  page.once('dialog', async (dialog) => {
+    expect(dialog.message()).toContain('clears only the simulated balance and Activity stored on this device');
+    await dialog.accept();
+  });
+  await page.getByRole('button', { name: 'Restart simulated journey' }).click();
+  await page.clock.fastForward(2000);
+  await expect(page.getByTestId('usd-balance')).toHaveText('$0.00');
+  const records = await page.evaluate(() => JSON.parse(window.localStorage.getItem('hedgr:ledger') ?? '{}').transactions);
+  expect(records).toEqual([]);
+});
+
+test('simulated withdrawal rejects fractional cents, refreshes the next draft and retains a full withdrawal result', async ({ page }) => {
+  await clearStorage(page);
+  await login(page);
+  await page.getByTestId('dashboard-add-simulated-deposit').click();
+  await page.getByRole('button', { name: 'Confirm', exact: true }).click();
+  await expect(page.getByTestId('deposit-confirmation-region')).toBeVisible();
+  await page.getByRole('link', { name: 'Continue to simulated withdrawal' }).click();
+  const amount = page.getByTestId('withdraw-amount');
+  const confirm = page.getByRole('button', { name: 'Confirm', exact: true });
+  for (const invalid of ['0.001', '1.001']) {
+    await amount.fill(invalid);
+    await expect(amount).toHaveAttribute('aria-invalid', 'true');
+    await expect(page.locator('#withdraw-amount-error')).toHaveText('Enter at least $0.01 using no more than two decimal places.');
+    await expect(confirm).toBeDisabled();
+    await expect(page.getByTestId('withdraw-balance-preview')).toHaveCount(0);
+  }
+  expect(await page.evaluate(() => JSON.parse(window.localStorage.getItem('hedgr:ledger') ?? '{}').transactions.length)).toBe(1);
+  await amount.fill('1');
+  await confirm.click();
+  await expect(page.getByTestId('withdraw-status-title')).toHaveText('Simulated withdrawal recorded');
+  await expect(confirm).toBeDisabled();
+  await amount.fill('2');
+  await expect(page.getByTestId('withdraw-status-region')).toHaveCount(0);
+  await expect(page.getByTestId('withdraw-balance-preview')).toContainText('$4.00 − $2.00 = $2.00');
+  await confirm.click();
+  await expect(page.getByTestId('withdraw-status-title')).toHaveText('Simulated withdrawal recorded');
+  // Editing the completed value creates a fresh draft even when the intended amount is identical.
+  await amount.fill('');
+  await amount.fill('2');
+  await confirm.click();
+  await expect(page.getByTestId('withdraw-status-title')).toHaveText('Simulated withdrawal in progress');
+  await expect(page.getByTestId('withdraw-no-funds')).toHaveCount(0);
+  await expect(page.locator('#withdraw-amount-error')).toHaveCount(0);
+  await expect(page.getByTestId('withdraw-status-title')).toHaveText('Simulated withdrawal recorded');
+  await expect(page.getByTestId('withdraw-balance-reconciliation')).toContainText('$0.00 remains');
+  await page.getByRole('link', { name: 'Review simulated activity' }).click();
+  await expect(page.getByTestId('activity-row-withdraw')).toHaveCount(3);
+  await page.getByRole('link', { name: 'Return to current position' }).click();
+  await expect(page.getByTestId('usd-balance')).toHaveText('$0.00');
+});
+
 test('synthetic Settings withholds About Hedgr before unaided evidence', async ({
   page,
 }) => {

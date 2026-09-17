@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { Suspense, useState, useEffect, useRef, useMemo } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { postDeposit } from '../../../lib/deposits/client';
+import { scheduleSyntheticDeposit } from '../../../lib/deposits/synthetic-deposit-lifecycle';
 import { LOCAL_STUB_DEPOSIT_FAILURE_REVIEW_HINTS } from '../../../lib/deposits/local-stub-deposit-review-hints';
 import { isLocalDevSimulationSeamEnabled } from '../../../lib/dev/local-simulation-guard';
 import { useBalance } from '../../../lib/hooks/useBalance';
@@ -79,7 +80,15 @@ function DepositPageContent() {
   const [amountLocalStr, setAmountLocalStr] = useState<string>('100');
   const [txnRef, setTxnRef] = useState<string | null>(null);
   const [usdToCredit, setUsdToCredit] = useState(0);
-  const [status, setStatus] = useState<'IDLE' | 'PENDING' | 'CONFIRMED' | 'FAILED'>('IDLE');
+  const [requestStatus, setStatus] = useState<'IDLE' | 'PENDING' | 'CONFIRMED' | 'FAILED'>('IDLE');
+  const simulatedTxStatus = useLedgerStore((s) =>
+    txnRef ? s.getByTxnRef(txnRef)?.status : undefined,
+  );
+  const status = productSimulationActive && requestStatus === 'PENDING'
+    ? simulatedTxStatus === 'settled'
+      ? 'CONFIRMED'
+      : simulatedTxStatus === 'failed' ? 'FAILED' : requestStatus
+    : requestStatus;
 
   const [paymentMethods, setPaymentMethods] = useState<PaymentMethod[]>([]);
   const [methodsLoading, setMethodsLoading] = useState(true);
@@ -120,7 +129,7 @@ function DepositPageContent() {
   }, []);
 
   useEffect(() => {
-    if (!txnRef || status !== 'PENDING') return;
+    if (productSimulationActive || !txnRef || status !== 'PENDING') return;
     stubConfirmTimerRef.current = setTimeout(() => {
       const mode = getBalanceMode();
       confirmTx(txnRef);
@@ -144,7 +153,7 @@ function DepositPageContent() {
     return () => {
       if (stubConfirmTimerRef.current) clearTimeout(stubConfirmTimerRef.current);
     };
-  }, [txnRef, status, usdToCredit, creditWallet, confirmTx, refresh]);
+  }, [productSimulationActive, txnRef, status, usdToCredit, creditWallet, confirmTx, refresh]);
 
   const confirm = async () => {
     if (amountLocalNum === null || amountLocalNum <= 0) return;
@@ -187,6 +196,10 @@ function DepositPageContent() {
       created_at: now,
       updated_at: now,
     });
+
+    if (productSimulationActive) {
+      scheduleSyntheticDeposit(txn_ref, STUB_CONFIRM_DELAY_MS);
+    }
 
     setTxnRef(txn_ref);
   };
