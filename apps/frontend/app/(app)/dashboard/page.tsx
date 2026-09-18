@@ -2,7 +2,7 @@
 
 import { formatSimulationDisplayEstimate, getSimulationDisplayRate, useSimulationDisplayCurrency } from "../../../lib/state/simulation-display-currency";
 import finish from '../product-finish.module.css';
-import wallet from '../research-wallet.module.css';
+import home from './synthetic-home.module.css';
 import { SimulationDisplayCurrencySelector } from '../../../components/SimulationDisplayCurrencySelector';
 
 import Link from "next/link";
@@ -180,18 +180,21 @@ export default function DashboardPage() {
 
   const balanceHero = (
     <section
-      className={`space-y-1 ${syntheticJourneyActive ? wallet.position : finish.position}`}
+      className={`space-y-1 ${syntheticJourneyActive ? home.position : finish.position}`}
       aria-labelledby="dashboard-total-balance-label"
       data-testid="dashboard-balance"
     >
-      <p
-        id="dashboard-total-balance-label"
-        className="text-xs font-semibold tracking-tight text-hedgr-800"
-      >
-        {syntheticJourneyActive ? "Simulated balance" : "Your current position"}
-      </p>
+      <div className={syntheticJourneyActive ? home.balanceHeading : undefined}>
+        <p
+          id="dashboard-total-balance-label"
+          className="text-xs font-semibold tracking-tight text-hedgr-800"
+        >
+          {syntheticJourneyActive ? "Simulated balance" : "Your current position"}
+        </p>
+        {syntheticJourneyActive ? <SimulationDisplayCurrencySelector placement="position" /> : null}
+      </div>
       {isLoading ? (
-        <div className={`${finish.positionLoading} tabular-nums`}>
+        <div className={`${syntheticJourneyActive ? home.amount : finish.positionLoading} tabular-nums`}>
           …
         </div>
       ) : (
@@ -199,10 +202,10 @@ export default function DashboardPage() {
           usdAmount={ready && !cleanStartRequested ? total : 0}
           displayEstimate={syntheticJourneyActive ? formatSimulationDisplayEstimate(ready && !cleanStartRequested ? total : 0, displayCurrency) : undefined}
           data-testid="usd-balance"
-          className={`${finish.positionLoading} tabular-nums`}
+          className={`${syntheticJourneyActive ? home.amount : finish.positionLoading} tabular-nums`}
         />
       )}
-      {syntheticJourneyActive ? <div className={wallet.currencyRow}><span data-testid="dashboard-synthetic-balance-explainer">Illustrative simulation value only.</span><SimulationDisplayCurrencySelector placement="position" /></div> : null}
+      {syntheticJourneyActive ? <p className={home.balanceCaption} data-testid="dashboard-synthetic-balance-explainer">Illustrative simulation value only.</p> : null}
       {productSimulationActive && !syntheticJourneyActive && ready && !isLoading ? (
         <p
           className="max-w-md pt-1 text-xs leading-relaxed text-hedgr-500 sm:text-sm"
@@ -212,7 +215,7 @@ export default function DashboardPage() {
         </p>
       ) : null}
       {ready && !isLoading && total !== available ? (
-        <p className="pt-1 text-sm text-hedgr-500">
+        <p className={syntheticJourneyActive ? home.available : "pt-1 text-sm text-hedgr-500"}>
           Available now:{" "}
           <span className="font-medium text-hedgr-dark tabular-nums">
             ${available.toFixed(2)}
@@ -236,12 +239,12 @@ export default function DashboardPage() {
   const homeUtilities = (
     <nav
       aria-label="Simulation utilities"
-      className={syntheticJourneyActive ? wallet.utilities : `grid gap-3 ${finish.utilityGroup}`}
+      className={syntheticJourneyActive ? home.utilities : `grid gap-3 ${finish.utilityGroup}`}
       data-testid="dashboard-simulation-utilities"
     >
       <Link
         href={productRouteHref("/deposit")}
-        className={syntheticJourneyActive ? wallet.utility : finish.utility}
+        className={syntheticJourneyActive ? home.utility : finish.utility}
         data-testid="dashboard-add-simulated-deposit"
       >
         <Image
@@ -258,7 +261,7 @@ export default function DashboardPage() {
       </Link>
       <Link
         href={productRouteHref("/activity")}
-        className={syntheticJourneyActive ? wallet.utility : finish.utility}
+        className={syntheticJourneyActive ? home.utility : finish.utility}
         data-testid="dashboard-view-activity"
       >
         <Image
@@ -285,6 +288,31 @@ export default function DashboardPage() {
     </nav>
   );
 
+  const observation = (
+    <div className={syntheticJourneyActive ? home.observation : finish.observation}>
+      <EnginePostureHeader
+        redesigned={syntheticJourneyActive}
+        engineState={engineState}
+        currencyContextVisible={currencyContextVisible}
+        syntheticJourneyActive
+        comparisonState={syntheticComparison.comparisonState}
+        latestChangeType={syntheticComparison.lastEvent?.type}
+        latestChangeAmountUSD={syntheticComparison.lastEvent?.amountUSD}
+      />
+    </div>
+  );
+
+  const currencyContext = currencyContextVisible ? (
+    <CurrencyInsight
+      redesigned
+      usdAmount={total}
+      currency={displayCurrency}
+      latestDisplayRate={getSimulationDisplayRate(displayCurrency)}
+      ready={currencyContextVisible}
+      pending={currencyComparisonPending}
+    />
+  ) : null;
+
   const currentOverview = (
     <section
       aria-label={
@@ -293,17 +321,29 @@ export default function DashboardPage() {
           : "Current account overview"
       }
       className={
-        productSimulationActive
+        syntheticJourneyActive
+          ? home.overview
+          : productSimulationActive
           ? "bg-white"
           : "rounded-2xl border border-hedgr-100 bg-white p-5 shadow-sm sm:p-7"
       }
       data-testid="dashboard-current-overview"
     >
-      {productSimulationActive ? (
+      {syntheticJourneyActive ? (
+        <div className={home.overviewGrid}>
+          <div className={home.positionPanel}>
+            {balanceHero}
+            {homeUtilities}
+          </div>
+          <div className={home.insights}>
+            {observation}
+            {currencyContext}
+          </div>
+        </div>
+      ) : productSimulationActive ? (
         <div className="space-y-4">
           {balanceHero}
-          {syntheticJourneyActive ? homeUtilities : null}
-          {!syntheticJourneyActive && recentActivity[0] ? (
+          {recentActivity[0] ? (
             <section
               className="flex flex-wrap items-baseline justify-between gap-4 border-y border-hedgr-100 py-3"
               aria-label="Latest simulated change"
@@ -323,22 +363,8 @@ export default function DashboardPage() {
               </p>
             </section>
           ) : null}
-          <div className={syntheticJourneyActive ? wallet.observation : finish.observation}>
-            <EnginePostureHeader
-              redesigned={syntheticJourneyActive}
-              engineState={engineState}
-              currencyContextVisible={currencyContextVisible}
-              syntheticJourneyActive
-              comparisonState={syntheticComparison.comparisonState}
-              latestChangeType={syntheticComparison.lastEvent?.type}
-              latestChangeAmountUSD={
-                syntheticComparison.lastEvent
-                  ? syntheticComparison.lastEvent.amountUSD
-                  : undefined
-              }
-            />
-          </div>
-          {currencyContextVisible ? <CurrencyInsight redesigned usdAmount={total} currency={displayCurrency} latestDisplayRate={getSimulationDisplayRate(displayCurrency)} ready={currencyContextVisible} pending={currencyComparisonPending} /> : null}
+          {observation}
+          {currencyContext}
         </div>
       ) : (
         <div className="grid gap-5 sm:grid-cols-[minmax(0,1.2fr)_minmax(13rem,0.8fr)] sm:gap-6">
@@ -370,20 +396,28 @@ export default function DashboardPage() {
     </details>
   );
 
+  const accordionChevron = (
+    <span className={home.chevron} aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" focusable="false">
+        <path d="m7 10 5 5 5-5" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    </span>
+  );
+
   const disclosureSection = (
     <details
-      className="border-y border-hedgr-100 bg-white py-2"
+      className={syntheticJourneyActive ? home.accordion : "border-y border-hedgr-100 bg-white py-2"}
       data-testid="dashboard-disclosures"
     >
-      <summary className="flex min-h-11 cursor-pointer list-none items-center font-medium text-hedgr-800 marker:content-none select-none [&::-webkit-details-marker]:hidden">
-        <span className="flex flex-wrap items-center justify-between gap-4">
+      <summary className={syntheticJourneyActive ? home.accordionSummary : "flex min-h-11 cursor-pointer list-none items-center font-medium text-hedgr-800 marker:content-none select-none [&::-webkit-details-marker]:hidden"}>
+        {syntheticJourneyActive ? <><span>Important disclosures</span>{accordionChevron}</> : <span className="flex flex-wrap items-center justify-between gap-4">
           <span>Important disclosures</span>
           <span className="text-xs font-medium uppercase tracking-wide text-hedgr-500">
             View
           </span>
-        </span>
+        </span>}
       </summary>
-      <div className="mt-4 border-t border-hedgr-100 pt-4">
+      <div className={syntheticJourneyActive ? home.accordionContent : "mt-4 border-t border-hedgr-100 pt-4"}>
         <PolicyDisclosure
           context={syntheticJourneyActive ? "synthetic-research" : "default"}
         />
@@ -393,7 +427,7 @@ export default function DashboardPage() {
 
   if (error) {
     return (
-      <main className="px-6 py-8 sm:p-8">
+      <main className={syntheticJourneyActive ? home.page : "px-6 py-8 sm:p-8"}>
         <div
           className={`mx-auto space-y-6 sm:space-y-8 ${
             productSimulationActive ? "max-w-5xl" : "max-w-2xl"
@@ -418,9 +452,9 @@ export default function DashboardPage() {
   }
 
   return (
-    <main className={syntheticJourneyActive ? wallet.page : "px-6 pb-24 pt-5 sm:p-8"}>
+    <main className={syntheticJourneyActive ? home.page : "px-6 pb-24 pt-5 sm:p-8"}>
       <div
-        className={`mx-auto ${
+        className={syntheticJourneyActive ? home.content : `mx-auto ${
           productSimulationActive ? "space-y-4 sm:space-y-8" : "space-y-6 sm:space-y-8"
         } ${
           productSimulationActive ? "max-w-5xl" : "max-w-2xl"
@@ -479,7 +513,16 @@ export default function DashboardPage() {
         )}
 
         {syntheticJourneyActive ? (
-          <details className={wallet.planning} data-testid="research-planning-targets"><summary>Planning targets<span>Targets only · No money moved</span></summary><div><EngineAllocationBands engineState={engineState} collapsed /></div></details>
+          <div className={home.support}>
+            <details className={home.accordion} data-testid="research-planning-targets">
+              <summary className={home.accordionSummary}>
+                <span>Planning targets<span className={home.accordionSubtitle}>Targets only · No money moved</span></span>
+                {accordionChevron}
+              </summary>
+              <div className={home.accordionContent}><EngineAllocationBands engineState={engineState} collapsed /></div>
+            </details>
+            {disclosureSection}
+          </div>
         ) : productSimulationActive || !isFirstTimeUser ? (
           <EngineAllocationBands engineState={engineState} collapsed={productSimulationActive} />
         ) : null}
@@ -608,7 +651,7 @@ export default function DashboardPage() {
           </div>
         )}
 
-        {disclosureSection}
+        {!syntheticJourneyActive ? disclosureSection : null}
       </div>
     </main>
   );
