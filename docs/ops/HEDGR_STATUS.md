@@ -1,4 +1,4 @@
-> **LOCAL ONLY — Founder Only (2026-09-18).** The Founder explicitly directed that this GTM record remain local. Do not push this branch or its commits, open a PR, publish these contents, or distribute its generated RAP to a hosted Bridge. This local instruction supersedes the publication/merge steps in the retained draft below. The strategic approval is preserved, but the proposed Lane G activation and v22 concurrency are not effective on permanent main; discovery remains unstarted. Any future publication or activation path requires a separate explicit Founder instruction.
+> **Founder restriction lifted (2026-09-18).** The Founder explicitly instructed: “lift the restricition and complete main activation before researching”. This supersedes the earlier local-only restriction and authorizes governed push, PR, permanent-main activation and the separate verified RAP rebind for `GTM-MARKET-DISCOVERY-001`. Discovery begins only after that sequence completes. Founder Only remains the decision-governance classification; it is not a repository access-control claim. No public ADR export, market-specific marketing, outreach or financial capability is authorized.
 
 Status: Canonical hand-off file
 Purpose: Strategic continuity, merged implementation truth, and next-ticket authority for Cursor execution
@@ -17230,11 +17230,11 @@ D-150 / §282 records verified technical closeout of nested Lane V `CLASS-A-VAL-
 | --- | --- |
 | Decision ID | Unnumbered Founder record; no D-number assigned or reserved |
 | Title | Bounded GTM market discovery alongside current product convergence |
-| Status | Founder-supported strategic approval, retained locally only by explicit Founder instruction; repo activation pending and discovery unstarted |
+| Status | Founder-approved activation; earlier local-only restriction explicitly lifted on 2026-09-18; effective on permanent-main merge, with discovery gated on separate verified RAP rebind |
 | Decision type / horizon | GTM / short-term MVP |
-| Visibility | Founder Only / LOCAL ONLY; no push, PR, public repository publication or hosted Bridge distribution |
+| Visibility | Founder Only decision classification; governed repository delivery and RAP permitted by explicit later instruction; no public ADR export or market-specific public messaging |
 | Owner | Founder — Musalwa Hibajene |
-| Source | Founder statement in [Review GTM Implications](https://chatgpt.com/c/6aad2147-269c-83ec-a706-79985f877502) on 2026-09-18, followed by direct instruction to “record the GTM authority as per chat with HedgrOps” |
+| Source | Founder statement in [Review GTM Implications](https://chatgpt.com/c/6aad2147-269c-83ec-a706-79985f877502) on 2026-09-18, followed by direct instruction to “record the GTM authority as per chat with HedgrOps”; the subsequent local-only hold was explicitly lifted by “lift the restricition and complete main activation before researching” |
 | Problem / trigger | Stability Engine work is becoming clearer while the wallet is being productised and tested; discover where, with whom and around which recurring financial decision the proposition could become behaviour |
 | Decision | Authorize only Lane G `GTM-MARKET-DISCOVERY-001`, Ghana / Kenya / Philippines, under §6f.22 and §7 / §7a; one comparative evidence cycle and one Founder disposition |
 | Rationale | Consume product learning alongside existing work and expose local trust, infrastructure and distribution constraints without creating an independent roadmap or committing to launch |
