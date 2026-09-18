@@ -92,7 +92,7 @@ for (const synthetic of [true, false]) {
     }
   });
 
-  test(`${family}: B2 preserves equal action weight and the factual journey`, async ({ page }, testInfo) => {
+  test(`${family}: approved action styling preserves the factual journey`, async ({ page }, testInfo) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await seedPosition(page);
     await page.goto(home);
@@ -103,7 +103,16 @@ for (const synthetic of [true, false]) {
       const s = getComputedStyle(el);
       return [s.backgroundColor, s.color, s.borderRadius, s.boxShadow];
     };
-    expect(await deposit.evaluate(appearance)).toEqual(await activity.evaluate(appearance));
+    if (synthetic) {
+      // HOME-POLISH-001 replaces synthetic B2 equality with approved primary/secondary actions.
+      await expect(deposit).toHaveCSS('background-color', 'rgb(250, 248, 245)');
+      await expect(deposit).toHaveCSS('color', 'rgb(31, 39, 71)');
+      await expect(activity).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
+      await expect(activity).toHaveCSS('color', 'rgb(255, 255, 255)');
+      expect((await deposit.evaluate(appearance)).slice(2)).toEqual((await activity.evaluate(appearance)).slice(2));
+    } else {
+      expect(await deposit.evaluate(appearance)).toEqual(await activity.evaluate(appearance));
+    }
     expect((await deposit.boundingBox())!.height).toBeGreaterThanOrEqual(synthetic ? 44 : 64);
     expect((await activity.boundingBox())!.height).toBeGreaterThanOrEqual(synthetic ? 44 : 64);
     await expect(deposit).toHaveAttribute('href', route('/deposit'));
