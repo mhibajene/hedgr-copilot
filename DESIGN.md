@@ -173,3 +173,8 @@ We pick shades that hit WCAG AA contrast (4.5:1) against their paired text or ba
 ## Synthetic Home presentation tokens
 
 Founder-approved option 3 translation, 2026-09-18, `CLASS-A-VAL-002-HOME-POLISH-001` under HEDGR_STATUS.md §7 / §7a. The additive `syntheticHome` tokens apply only to eligible synthetic Home and its Home shell. They represent canvas, observation hierarchy and neutral separators, not warning, success, safety or financial state. Existing color and semanticStatus tokens retain their values and meaning. These tokens do not authorize a global theme migration or use on other routes. Use existing dark text for legibility, preserve non-normal notices, and verify final contrast. Runtime remains subject to the ticket brief.
+
+
+### Bounded Home card edge tint
+
+Founder-approved live polish, 2026-09-18, under the finite tint amendment to `CLASS-A-VAL-002-WEEKEND-PREP-001` (§7 / §7a). Retain the current navy balance and warm observation fills. Only these two Home cards may use a static, non-blurred outer tint perimeter up to 4 CSS px: existing `colors.primary` at up to 8% opacity for balance and `syntheticHome.observation-emphasis` at up to 10% for observation, composed with transparent. This introduces no new palette value or semantic role. A zero-offset, zero-blur spread-only box-shadow is permitted solely to paint the perimeter without changing layout; no gradient, glow system, elevation, animation or logo/icon effect. Existing text/background contrast, focus indicators and all other component treatments remain unchanged. This is one bounded implementation pass, not general shadow or theme authority.
