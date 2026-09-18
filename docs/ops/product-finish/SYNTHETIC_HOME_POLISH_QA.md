@@ -4,7 +4,7 @@ Date: 2026-09-18. Ticket: `CLASS-A-VAL-002-HOME-POLISH-001` under HEDGR_STATUS.m
 
 ## Candidate and separation
 
-Runtime commit: `9185e7501e4cae90947e954e0233f263dee7afd1`. Activation PR #551 and separate projection-only rebind PR #552 precede implementation. QA additions and this evidence are subsequent working-tree changes for a separate QA commit; the implementer will record that commit and final delivery evidence below.
+Runtime commit: `9185e7501e4cae90947e954e0233f263dee7afd1`. Activation PR #551 and separate projection-only rebind PR #552 precede implementation. QA additions and this evidence were subsequently committed separately as `642bb9c`; final permanent-main commit mapping and delivery evidence are recorded below.
 
 ## Independent review
 
@@ -43,6 +43,24 @@ The next unchanged-runtime full run again passed 100/101, with the stale synthet
 
 This is consistent with a readiness timing race; resource contention is a hypothesis, not an established cause. There was no runtime change after `9185e75`. Three isolated repeats passed unchanged in 6.7s (log independently read: `/tmp/hedgr-polish-withdraw-timing-check.log`). The subsequent unchanged full suite passed 101/101 in 1.3 minutes using the usual four workers, without simultaneous validation (log independently read: `/tmp/hedgr-polish-accepted-e2e.log`). This supports a transient test readiness failure but does not prove the precise cause or fix the existing test race. The existing test, loading logic, timeout and assertion are unchanged. Subsequent results must be recorded without erasing this failed run.
 
-## Remaining delivery evidence
+## Local acceptance before delivery
 
-Local acceptance is satisfied: unchanged runtime production build passed; full validate passed (900 frontend unit tests, 41 Bridge tests, typecheck and lint); final full hermetic browser suite passed 101/101 after the documented synthetic assertion reconciliation; independent source and rendered review found no blocking issue. All QA additions remain separate from the runtime commit. The QA commit, hosted checks, merge and shipped verification are still pending and must be recorded after execution. Technical completion does not establish participant comprehension or release the Form/distribution pause; weekend preparation remains unfinished under its sequencing record.
+Local acceptance is satisfied: unchanged runtime production build passed; full validate passed (900 frontend unit tests, 41 Bridge tests, typecheck and lint); final full hermetic browser suite passed 101/101 after the documented synthetic assertion reconciliation; independent source and rendered review found no blocking issue. At that local-acceptance checkpoint the QA commit, hosted checks, merge and shipped verification were pending; they are now recorded below. QA remains separate from runtime. Technical completion does not establish participant comprehension or release the Form/distribution pause; weekend preparation remains unfinished under its sequencing record.
+
+
+## Hosted and shipped delivery — 2026-09-18
+
+PR [#553](https://github.com/mhibajene/hedgr-copilot/pull/553) merged by rebase at `9e05078752d648a6bb1022a967ec7bc6948d4b2e` on 2026-09-18 11:38 UTC, preserving the Founder-requested separation:
+
+- Runtime: branch `9185e7501e4cae90947e954e0233f263dee7afd1` → permanent main `81d853267aaa2d3114de64065a5c78f00bee8684`.
+- Verification-only authority clarification: `ae32b861e8f71c5f808098f92432786801ccb7c1` → `55c6ad04223ac2c7f5ea542641c003ef4312a680`.
+- Clarification RAP: `7a972eb` → `1064198ce27fb2561440b2e54747b28dd2cb55ad`.
+- Independent QA/tests/evidence: `642bb9c` → permanent main `9e05078752d648a6bb1022a967ec7bc6948d4b2e`.
+
+All hosted checks passed: validate, E2E smoke/e2e, build, typecheck/lint, evidence pack, Bridge snapshot freshness, Vercel and Cursor convergence review. [Hosted E2E run](https://github.com/mhibajene/hedgr-copilot/actions/runs/35340090715) reports 101/101 passed in 2.6 minutes, with 900 frontend tests also passing. Earlier local failures remain documented above.
+
+The production Vercel status for merged head was successful at [deployment 3TQsQZFQaeiNrkEFqwaTZS6uBU8J](https://vercel.com/hedgr/hedgr-copilot-frontend/3TQsQZFQaeiNrkEFqwaTZS6uBU8J). The implementer inspected `https://hedgr-copilot-frontend.vercel.app/dashboard-synthetic-journey` after rollout at mobile and 1280px desktop widths: new balance/actions, warm observation, circled-chevron icon-free rows and replay access rendered correctly. Existing browser state remained USD 3, NGN 4,500 estimate, withdrawal USD 2. Both accordions opened with all planning purposes and three research disclosures visible; Enter/Space closed them with focus retained. Currency comparison opened and Back to Home returned; View Activity retained the completed USD 5 deposit and USD 2 withdrawal. Default `/dashboard` retained its previous presentation and USD 3/ZMW 60 after loading. No production simulation records were added, deleted or reset.
+
+Shipped screenshot artifacts in the local review bundle: `/Users/musalwa/.codex/visualizations/2026/09/18/01a0b2aa-818e-7751-bf08-2a0a6cbb0da2/hedgr-home-polish/` (`mobile.png`, `accordions.png`, `desktop.png`). Browser viewport override was reset; stub backend stopped and port 5050 confirmed clear. These are responsive browser checks, not physical phone/Safari testing or human participant rehearsal.
+
+Technical acceptance is satisfied. The closeout source transition restores only remaining previously approved weekend preparation after permanent-main merge and separate RAP rebind; PR #550 and its unfinished Form are preserved. No Form work or participant publication/distribution occurred in this ticket. Parent validation, comprehension/demand, release and financial capability remain unclaimed.
