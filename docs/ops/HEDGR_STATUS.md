@@ -4906,6 +4906,7 @@ Current active ticket status:
 **Working set / cohort:** Ghana, Kenya and the Philippines. Zambia remains strategically relevant but is outside this immediate comparison unless a later Founder disposition changes the set. Focus on digitally paid professionals / freelancers with recurring cross-currency income or store-of-value decisions who already decide where received money should sit. Mobile-first / web-accessible proof remains a hypothesis consistent with current product work; no native-mobile, PWA implementation or platform commitment follows.
 
 **Five questions:**
+
 1. User: is the intended cohort identifiable and demonstrably reachable?
 2. Behaviour: what recurring event causes people to reconsider where money should sit (the research prompt is “I check Hedgr before I ______”)?
 3. Product fit: can the current stability proposition help that decision within the canonical Entry → Orientation → Stability → Insight → Safe action journey?
@@ -4915,10 +4916,12 @@ Current active ticket status:
 **Permitted method:** Read-only public-source desk research and bounded reuse of existing authorized, appropriately de-identified product learning. Separate observed facts, provider claims, legal interpretation, hypotheses and unresolved questions. No synthetic test, interview, respondent contact, recruitment, provider inquiry, counsel engagement, sensitive-data intake or external message is newly authorized by this record; any such need is an explicit gap for separate scoped authorization. Existing synthetic tests remain under their own lane and controls. No requirement to invent evidence to complete the comparison.
 
 **Exact file scope:**
+
 - `AGENTS.md` — current lane/operator authority and eventual bounded closeout.
 - `docs/ops/HEDGR_STATUS.md` — pass, active brief, decision record and later actual Founder disposition / closeout.
 - `docs/ops/bridge/repo-authority-projection.json` — generated only from committed authority, followed by separate permanent-main rebind.
 - `docs/ops/governance/gtm/HEDGR_GTM_MARKET_DISCOVERY_EVIDENCE_BRIEF.md` — the one comparative research output; create only during subsequent authorized discovery, not as part of authority recording.
+- `apps/bridge-worker/tests/rap-generator.test.mjs` — activation verification only: add the explicitly authorized Lane G ticket to the existing exact active-ticket assertion; retain determinism, fail-closed and non-authorizing checks, with no generator/schema/runtime change.
 
 No runtime, doctrine, ADR, Form, historical response, frozen narrative, protocol, dependency, CI, Bridge generator or other file is in scope. The required Founder disposition is recorded in this status file; agents must not fabricate it or treat a recommendation as a decision.
 
