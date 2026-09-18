@@ -1,3 +1,5 @@
+> **LOCAL ONLY — Founder Only (2026-09-18).** The Founder explicitly directed that this GTM record remain local. Do not push this branch or its commits, open a PR, publish these contents, or distribute its generated RAP to a hosted Bridge. This local instruction supersedes the publication/merge steps in the retained draft below. The strategic approval is preserved, but the proposed Lane G activation and v22 concurrency are not effective on permanent main; discovery remains unstarted. Any future publication or activation path requires a separate explicit Founder instruction.
+
 Status: Canonical hand-off file
 Purpose: Strategic continuity, merged implementation truth, and next-ticket authority for Cursor execution
 Last updated: 2026-09-18
@@ -17228,9 +17230,9 @@ D-150 / §282 records verified technical closeout of nested Lane V `CLASS-A-VAL-
 | --- | --- |
 | Decision ID | Unnumbered Founder record; no D-number assigned or reserved |
 | Title | Bounded GTM market discovery alongside current product convergence |
-| Status | Accepted for the bounded research authority; effective on permanent-main merge, with discovery start gated on separate verified RAP rebind |
+| Status | Founder-supported strategic approval, retained locally only by explicit Founder instruction; repo activation pending and discovery unstarted |
 | Decision type / horizon | GTM / short-term MVP |
-| Visibility | Founder Only; no public ADR export or public market claim |
+| Visibility | Founder Only / LOCAL ONLY; no push, PR, public repository publication or hosted Bridge distribution |
 | Owner | Founder — Musalwa Hibajene |
 | Source | Founder statement in [Review GTM Implications](https://chatgpt.com/c/6aad2147-269c-83ec-a706-79985f877502) on 2026-09-18, followed by direct instruction to “record the GTM authority as per chat with HedgrOps” |
 | Problem / trigger | Stability Engine work is becoming clearer while the wallet is being productised and tested; discover where, with whom and around which recurring financial decision the proposition could become behaviour |
