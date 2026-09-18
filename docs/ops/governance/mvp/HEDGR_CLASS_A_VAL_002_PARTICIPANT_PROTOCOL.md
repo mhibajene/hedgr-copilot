@@ -66,9 +66,9 @@ Before publication/distribution, record verified fixes and instrument, the human
 
 | Implementation / release evidence | Current record |
 | --- | --- |
-| New Form ID and editor/preview/responder links | Partial unpublished draft `1nIqYfCEnltude714mJgrCM_b5LKtWM2ybcaIFPhPGgc`; see canonical implementation evidence. No verified preview/responder link; do not circulate. |
-| Immutable shipped build and deployment | Runtime PR #549, `56bde5e4faa4ca256e717f37f2a035a726493e4f`; production deployment `6513896843` succeeded at `https://hedgr-copilot-frontend-rdtdw45ok-hedgr.vercel.app`. Rendered production traversal outstanding. |
-| Distinct technical reviewer and branch/privacy readback | PENDING |
+| New Form ID and editor/preview/responder links | Saved unpublished Form `1nIqYfCEnltude714mJgrCM_b5LKtWM2ybcaIFPhPGgc`; [internal preview](https://docs.google.com/forms/d/1nIqYfCEnltude714mJgrCM_b5LKtWM2ybcaIFPhPGgc/preview). Exact editor/readback evidence in Digital Feedback v1. Zero responses; public responder link/access not release-verified. Do not circulate. |
+| Immutable shipped build and deployment | Runtime PR #549, `56bde5e4faa4ca256e717f37f2a035a726493e4f`; production deployment `6513896843` succeeded at `https://hedgr-copilot-frontend-rdtdw45ok-hedgr.vercel.app`. Production alias mobile standard journey, affected edges, five task inputs and default dashboard inspected; see weekend QA ledger. |
+| Distinct technical reviewer and branch/privacy readback | Qualified PASS by `/root/weekend_verifier`: exact cards/types/flags, 9/4/2 routes, settings, zero responses and phone-width layouts. Preview-only; Submit disabled. Final submission/confirmation and anonymous responder access remain untested. |
 | Human phone rehearsal and separate timings | OUTSTANDING |
 | Founder release disposition | NOT RECORDED; publication/distribution PAUSED |
 

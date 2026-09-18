@@ -2,7 +2,7 @@
 
 **Date:** 2026-09-18 (Australia/Perth). **Ticket:** `CLASS-A-VAL-002-WEEKEND-PREP-001`.
 
-**Status:** Runtime remediation merged and production deployment succeeded; rendered production verification and external instrument completion remain pending. No participant publication/distribution or parent acceptance follows from this record.
+**Status:** Runtime remediation merged; shipped interaction checks and the separate unpublished digital Form are verified. Technical delivery closeout follows the instrument PR and required checks. Human phone rehearsal/timing and explicit release disposition remain outstanding. No participant publication/distribution or parent acceptance follows from this record.
 
 ## Authority and baseline
 
@@ -45,7 +45,23 @@ Local logs: `/tmp/hedgr-weekend-runtime-validate-final.log`, `/tmp/hedgr-weekend
 
 PR [#549](https://github.com/mhibajene/hedgr-copilot/pull/549) merged the runtime patch at `56bde5e4faa4ca256e717f37f2a035a726493e4f` after hosted validate, E2E smoke/e2e, build, typecheck/lint, evidence and convergence review passed. GitHub production deployment `6513896843` reports success at `https://hedgr-copilot-frontend-rdtdw45ok-hedgr.vercel.app` (2026-09-17 23:07:41 UTC). This deployment record is distinct from rendered production interaction QA, which remains outstanding while browser controls are stalled. Inspect the shipped mobile standard USD 0→5→3 journey, affected edges and default-route controls before technical closeout.
 
-Local test services on ports 3000/5050 were stopped after verification. The exact external Form continuation state and browser blocker are recorded in [Digital Feedback implementation evidence](HEDGR_CLASS_A_VAL_002_DIGITAL_FEEDBACK.md#implementation-evidence). The nested ticket remains active; no closeout authority has been recorded.
+Local test services on ports 3000/5050 were stopped after verification. The earlier browser interruption was recovered; the dated follow-up below supersedes its pending rendered/Form status. The nested ticket remains active until verified closeout authority is delivered.
+
+### Shipped follow-up and Form verification — 2026-09-18
+
+The production alias was inspected after PR #549. The initial new-tab captures did not inherit the viewport override and two Activity captures preceded navigation settlement; the verifier rejected those as mobile/Activity evidence. The standard journey was rerun after applying the 390 × 844 override to the existing tab and measuring a 375px document client width (scrollbar excluded). Settled `production-narrow-*` captures below provide the corrected phone-width evidence. Orientation's `Enter Hedgr` starts with USD 0 and empty Activity while preserving the selected display currency. NGN 7500 previews/records USD 5; USD 2 withdrawal completes at USD 3, and settled Activity/Home reconcile the two completed events. The no-reset Home route retains the visit. All five approved task-card inputs were separately checked against the shipped Deposit preview and show +USD 5: ZMW 100, KES 650, NGN 7500, GHS 75, PHP 280.
+
+| Affected shipped interaction | Observed result |
+| --- | --- |
+| Deposit pending then in-app Home navigation | Pending screenshot followed by completed USD 5 at Home/Activity. Strict navigation-before-delay ordering and exactly-once/reset guards remain established by the deterministic regression suite, not inferred from manual wall-clock timing. |
+| Fractional-cent correction | USD 0.001 shows accessible amount error and disabled Confirm; USD 0.29 has a valid preview before the standard USD 2 transaction. |
+| Repeated withdrawal draft | After USD 1 from USD 5, entering USD 2 previews **4 − 2 = 2** and clears the prior completed presentation. |
+| Full remaining withdrawal | USD 2 from remaining USD 2 preserves Processing, then Completed, **USD 0 remains** and Review simulated activity. |
+| Default `/dashboard` control | Retains default position/observation/planning presentation and default Deposit/Withdraw/Activity links; no research currency selector or research navigation is introduced. |
+
+Rendered and DOM evidence is in the existing `verified-2026-09-18/` directory: `production-narrow-{zero,deposit-complete,standard-activity,three,default}.png`, `production-narrow-{empty-activity,standard-activity,three}.txt`, `production-narrow-viewport.json`, `production-*-withdrawal-*.txt`, `production-invalid-cent.txt`, `production-valid-cent-preview.txt`, `production-fixture-{ZMW,KES,NGN,GHS,PHP}.txt`, and `production-default-dashboard.txt`. Earlier `production-mobile-*` filenames do not establish mobile dimensions; the two earlier `production-*-activity.txt` captures show Withdraw before navigation settled and are not Activity evidence. These are simulation-only observations; no real transaction occurred. A browser automation timeout during the five-input loop was recovered and each input's result was then saved individually.
+
+The existing separate Form is now saved with exact approved cards, all six stage branches, 9/4/2 required paths and an optional comment. Settings, question-level menus, zero responses, unpublished state and phone-width layouts were read back. Independent verifier review passed the saved content/routing/settings evidence with explicit preview-only limits. [Digital Feedback implementation evidence](HEDGR_CLASS_A_VAL_002_DIGITAL_FEEDBACK.md#implementation-evidence) contains its editor/preview links, full checks and remaining limits. No QA submissions, publication or participant messages occurred; both older Forms/data remain preserved.
 
 ## Instrument and release boundary
 
