@@ -4872,7 +4872,7 @@ Current active ticket status:
 
 ## 7a. Active execution tickets — Lanes V and E (Controlled Parallelism v21)
 
-**Current nested posture:** `CLASS-A-VAL-002-HOME-POLISH-001` is the sole active nested Lane V ticket under the direct Founder activation below. `CLASS-A-VAL-002-WEEKEND-PREP-001` is temporarily deferred, not completed. Both parents remain open; Lane E has no active nested ticket. Participant publication/distribution and all retained release conditions remain paused. NO CROSS-LANE IMPACT.
+**Current nested posture:** `CLASS-A-VAL-002-HOME-POLISH-001` is the sole active nested Lane V ticket under the direct Founder activation below. `CLASS-A-VAL-002-WEEKEND-PREP-001` is temporarily deferred, not completed. Both parents remain open; Lane E has no active nested ticket. Participant publication/distribution remains paused; all retained release conditions remain in force. NO CROSS-LANE IMPACT.
 
 ### Active nested Lane V — CLASS-A-VAL-002-HOME-POLISH-001
 
