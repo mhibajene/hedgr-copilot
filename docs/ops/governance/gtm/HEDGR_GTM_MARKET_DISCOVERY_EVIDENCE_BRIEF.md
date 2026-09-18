@@ -1,9 +1,13 @@
 # Lane G — comparative market discovery evidence brief
 
-**Ticket:** `GTM-MARKET-DISCOVERY-001`  
-**Evidence cut-off:** 2026-09-18 (Australia/Perth); one public-source desk-research cycle  
-**Owner:** Founder — Musalwa Hibajene  
-**Status:** First comparative brief delivered for Founder review; further discovery paused under §7a. Terminal Founder disposition is pending.  
+**Ticket:** `GTM-MARKET-DISCOVERY-001`
+
+**Evidence cut-off:** 2026-09-18 (Australia/Perth); one public-source desk-research cycle
+
+**Owner:** Founder — Musalwa Hibajene
+
+**Status:** First comparative brief delivered for Founder review; further discovery paused under §7a. Terminal Founder disposition is pending.
+
 **Classification:** Yellow, documentation-only, decision support; no operational or Class B/C acceptance. Founder Only decision-governance classification, not a repository access-control claim.
 
 ## 1. Decision in view
