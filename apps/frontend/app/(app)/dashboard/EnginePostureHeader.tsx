@@ -105,7 +105,7 @@ export function EnginePostureHeader({
   const researchRedesign = redesigned && syntheticJourneyActive && isSyntheticJourneyPrimaryCondition(searchParams?.toString(), pathname) && (pathname === CLASS_A_VAL_002_DASHBOARD_PATH || searchParams?.get(CLASS_A_VAL_002_JOURNEY_PARAM) === CLASS_A_VAL_002_JOURNEY_VALUE);
   const changeObservation =
     latestChangeType && latestChangeAmountUSD !== undefined
-      ? researchRedesign ? `Your simulated ${latestChangeType === "WITHDRAW" ? "withdrawal reduced" : "deposit increased"} the balance by $${latestChangeAmountUSD.toFixed(2)}.` : `The simulated ${
+      ? researchRedesign ? <>Your simulated {latestChangeType === "WITHDRAW" ? "withdrawal reduced" : "deposit increased"} the balance by <span data-observation-amount>${latestChangeAmountUSD.toFixed(2)}</span>.</> : `The simulated ${
           latestChangeType === "WITHDRAW" ? "expense" : "deposit"
         } explains why the current position is $${latestChangeAmountUSD.toFixed(
           2

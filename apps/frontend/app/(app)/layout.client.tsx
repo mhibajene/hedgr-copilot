@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import finish from './product-finish.module.css';
 import wallet from './research-wallet.module.css';
+import home from './dashboard/synthetic-home.module.css';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
@@ -146,9 +147,9 @@ export function AppLayoutClient({ children }: { children: React.ReactNode }) {
     : productNavLinks;
 
   if (explicitSyntheticJourney && (activePathname === '/dashboard' || activePathname === '/activity')) {
-    return <div className="min-h-screen bg-white pb-20">
+    return <div className={activePathname === '/dashboard' ? home.shell : "min-h-screen bg-white pb-20"}>
       <TrustDisclosureBanner syntheticResearch dismissible={false} consolidateTechnicalDetails learnMoreUrl={trustInformationHref} />
-      <header className={wallet.brand} data-testid="synthetic-journey-shell">
+      <header className={activePathname === '/dashboard' ? home.brand : wallet.brand} data-testid="synthetic-journey-shell">
         <Link href={getSyntheticJourneyHref('/dashboard')} aria-label="Hedgr Home"><Image src="/brand/hedgr_logo.svg" alt="Hedgr" width={92} height={32} priority /></Link>
         <Link href={getSyntheticJourneyHref('/settings')}>Settings</Link>
       </header>
