@@ -35,3 +35,30 @@ The unchanged browser suite covers 320/390/1280px and 100%/200% text, expanded a
 No blocking source, visual or local functional finding. Local QA accepts the candidate for the governed implementation PR. Hosted checks, merge, deployment and shipped verification remain pending at this evidence checkpoint; their exact commit mapping and outcomes must be recorded in that implementation PR's delivery record before claiming verified delivery.
 
 Verified delivery consumes this one-pass tint permission only. It does not close the weekend ticket or reopen HOME-POLISH-001 or runtime PR #549. Draft #550, its unfinished Form, remaining instrument/rehearsal/release duties, Lane G/E scope, frozen About and financial boundaries remain unchanged. No Form work, participant publication/distribution, comprehension claim or new financial capability follows.
+
+## Founder-requested softening correction — 2026-09-18
+
+This section appends a new verification checkpoint without changing the first-pass history above. After PR #561 delivered the first tint, the Founder explicitly requested “make it more subtle like the Activity card”. The fresh, finite correction was recorded through authority PR #562 (`c319e54`) and separate projection-only permanent-main rebind PR #563 (`e47e75f`) before runtime. It remains inside `CLASS-A-VAL-002-WEEKEND-PREP-001`; Activity is a visual reference only.
+
+### Candidate and independent findings
+
+Reviewed runtime commit `cf23d7263525525c899d20c659c82c2b1aa7c401`. Its only runtime changes are the two existing Home card shadow declarations: spread 4px→1px, balance primary opacity 8%→4%, observation emphasis opacity 10%→5%. Zero offset/blur, existing tokens and both named selectors are retained. No card fill, geometry, typography, focus rule, asset, Activity styling, behavior or financial state code changed. Smaller outside perimeters increase clearance and leave the existing text/background contrast pairs unchanged.
+
+The distinct Verifier inspected `/Users/musalwa/.codex/visualizations/2026/09/18/01a0b2aa-818e-7751-bf08-2a0a6cbb0da2/hedgr-home-soft-tint/local-mobile.png` and `local-desktop.png`. The edge is visibly quieter than the first-pass 4px ring; navy/warm interiors and balance/observation hierarchy remain. No new clipping or visual defect was apparent. The displayed zero balance and completed-withdrawal observation are the local simulation state, not prescribed design copy or a replacement fixture. These viewport captures do not establish physical-phone/Safari behavior.
+
+The implementer separately checked computed styles at exactly 1px / 4% / 5%, with no nested-header shadow; both accordions opened with retained planning/disclosure content, then Enter/Space closed them with focus retained. At a 320px viewport, the measured document scrollWidth and clientWidth were both 305px. These are attributed implementer checks, distinct from the independent source, image and log inspection here.
+
+### Checks and retained failure evidence
+
+- `/tmp/hedgr-soft-runtime-validate.log`: independently confirmed 900 frontend tests, 41 Bridge tests, typecheck and lint passed.
+- `/tmp/hedgr-soft-runtime-e2e.log`: the production build compiled successfully and completed route generation. The first browser run passed 100/101; the sole failure was the existing default-route `empty-error-states.spec.ts:97` immediate no-funds/form visibility assertion.
+- The Verifier independently opened that first error-context: the main region contained only the Withdraw heading. The unchanged helper waits DOMContentLoaded plus a fixed 500ms before taking non-retrying visibility snapshots; unchanged Withdraw has a heading-only loading branch. This is consistent with the previously observed readiness race. Resource contention is not a proven cause, and no claim is made that this existing test race was repaired. The implementer preserved the snapshot at `/tmp/hedgr-soft-withdraw-first-failure.md`.
+- `/tmp/hedgr-soft-runtime-e2e-confirm.log`: independently confirmed the unchanged full suite passed 101/101 in 1.3 minutes with the usual four workers and without simultaneous validation. No test relaxation, timeout increase, assertion change or runtime change occurred between these runs.
+
+The unchanged browser suite retains narrow/enlarged-text, native accordion/focus/content, modal return, route-isolation, currency, financial-state, transaction and reset coverage. No new tests were needed for reducing the decorative perimeter. No blocking source, visual or local functional finding remains for this candidate; the initial transient failure remains recorded above.
+
+### Correction delivery boundary
+
+This append is committed separately from runtime as independent QA evidence. Hosted checks, implementation merge, deployment and shipped verification are pending at this checkpoint and must be recorded with exact commit mapping in the implementation PR delivery record. This section does not claim those future results.
+
+Verified delivery consumes this fresh softening permission only. It does not supply standing refinement authority, close remaining weekend preparation, reopen HOME-POLISH-001 or PR #549, change draft #550 or its unfinished Form, or release participant publication/distribution. Lane G/E, frozen About, rehearsal/release requirements and financial boundaries remain unchanged.
