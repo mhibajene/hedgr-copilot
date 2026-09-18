@@ -13,6 +13,11 @@ colors:
   color-300: "#8391C9"
   color-200: "#A6B0D8"
   color-100: "#CAD0E8"
+syntheticHome:
+  canvas: "#FAF8F5"
+  observation-surface: "#F8EDE7"
+  observation-emphasis: "#963F22"
+  divider: "#CEC2B5"
 components:
   button-primary:
     backgroundColor: "{colors.primary}"
@@ -164,3 +169,7 @@ We pick shades that hit WCAG AA contrast (4.5:1) against their paired text or ba
 - Don't place the logo on low-contrast or visually cluttered backgrounds.
 - Don't swap horizontal for vertical layout, or remove the icon.
 - Don't use the primary color decoratively. Treat it as a functional accent.
+
+## Synthetic Home presentation tokens
+
+Founder-approved option 3 translation, 2026-09-18, `CLASS-A-VAL-002-HOME-POLISH-001` under HEDGR_STATUS.md §7 / §7a. The additive `syntheticHome` tokens apply only to eligible synthetic Home and its Home shell. They represent canvas, observation hierarchy and neutral separators, not warning, success, safety or financial state. Existing color and semanticStatus tokens retain their values and meaning. These tokens do not authorize a global theme migration or use on other routes. Use existing dark text for legibility, preserve non-normal notices, and verify final contrast. Runtime remains subject to the ticket brief.
