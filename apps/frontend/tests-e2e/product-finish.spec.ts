@@ -103,6 +103,8 @@ for (const synthetic of [true, false]) {
       const s = getComputedStyle(el);
       return [s.backgroundColor, s.color, s.borderRadius, s.boxShadow];
     };
+    // Move the login pointer away so these assertions measure the resting state.
+    await page.mouse.move(0, 0);
     // The approved shared baseline uses the same primary/secondary hierarchy in both journeys.
     await expect(deposit).toHaveCSS('background-color', 'rgb(250, 248, 245)');
     await expect(deposit).toHaveCSS('color', 'rgb(31, 39, 71)');
