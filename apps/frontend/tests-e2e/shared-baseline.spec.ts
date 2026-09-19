@@ -65,6 +65,15 @@ for (const synthetic of [false, true]) {
         await page.screenshot({ path: testInfo.outputPath(`${family}-${path.slice(1)}-${width}.png`), fullPage: true });
         await page.addStyleTag({ content: 'html { font-size: 200%; }' });
         await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(1);
+        if (path === '/activity') {
+          for (const title of await page.locator('[data-testid^="activity-type-"]').all()) {
+            const textLayout = await title.evaluate(el => ({ width: el.getBoundingClientRect().width, font: parseFloat(getComputedStyle(el).fontSize) }));
+            expect(textLayout.width).toBeGreaterThanOrEqual(textLayout.font * 5);
+          }
+        }
+        for (const link of await nav.getByRole('link').all()) {
+          await expect.poll(() => link.evaluate(el => el.scrollWidth - el.clientWidth)).toBeLessThanOrEqual(1);
+        }
         await page.screenshot({ path: testInfo.outputPath(`${family}-${path.slice(1)}-${width}-enlarged.png`), fullPage: true });
       }
     }
