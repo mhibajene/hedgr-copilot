@@ -95,3 +95,24 @@ for (const synthetic of [false, true]) {
     expect(await unchangedState(page)).toEqual(before);
   });
 }
+
+
+test('large amounts reflow at 320px and enlarged text in both journeys', async ({ page }) => {
+  await seed(page);
+  await page.evaluate(() => {
+    const ledger = JSON.parse(localStorage.getItem('hedgr:ledger')!);
+    ledger.transactions[0].amount_usd = 123456789.12;
+    ledger.transactions[0].amount_zmw = 2469135782.4;
+    localStorage.setItem('hedgr:ledger', JSON.stringify(ledger));
+    localStorage.setItem('hedgr:wallet', JSON.stringify({ state: { usdBalance: 123456787.12 }, version: 0 }));
+  });
+  await page.setViewportSize({ width: 320, height: 900 });
+  for (const route of ['/dashboard', '/dashboard-synthetic-journey', '/activity', '/activity?journey=class-a-val-002']) {
+    await page.goto(route);
+    await page.addStyleTag({ content: 'html { font-size: 200%; }' });
+    await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(1);
+    for (const element of await page.locator('[data-testid^="activity-row-"]').all()) {
+      await expect.poll(() => element.evaluate(el => el.scrollWidth - el.clientWidth)).toBeLessThanOrEqual(1);
+    }
+  }
+});

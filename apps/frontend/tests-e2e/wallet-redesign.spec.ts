@@ -127,7 +127,7 @@ test('polished Home accordions preserve keyboard operation, planning and researc
   expect(await financialState(page)).toEqual(before);
 });
 
-test('Home presentation supports the query route and stays isolated during navigation', async ({ page }) => {
+test('Shared baseline supports both journeys while preserving query-route eligibility', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await seed(page);
   const before = await financialState(page);
