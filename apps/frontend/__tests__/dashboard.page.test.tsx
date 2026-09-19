@@ -507,9 +507,9 @@ describe("DashboardPage engine trust surface", () => {
     const orderedSections = [
       screen.getByTestId("dashboard-orientation"),
       screen.getByTestId("dashboard-balance"),
+      screen.getByTestId("dashboard-simulation-utilities"),
       screen.getByTestId("dashboard-current-status"),
       screen.getByTestId("engine-allocation-bands"),
-      screen.getByTestId("dashboard-simulation-utilities"),
       screen.getByTestId("dashboard-education"),
       screen.getByTestId("dashboard-disclosures"),
     ];

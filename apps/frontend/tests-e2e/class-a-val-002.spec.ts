@@ -268,7 +268,8 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
     0
   );
   await expect(page.getByText(/unlock all features/i)).toHaveCount(0);
-  await expect(page.getByTestId('synthetic-journey-shell')).toHaveCount(0);
+  // Settings now shares the approved brand header without exposing research internals.
+  await expect(page.getByTestId('synthetic-journey-shell')).toBeVisible();
   const settingsNav = page.getByTestId('nav-links');
   await expect(
     settingsNav.getByRole('link', { name: 'Home', exact: true })
@@ -541,7 +542,7 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   );
   await expect(page.getByTestId('activity-delta-deposit')).toHaveText('+$5.00');
   await expect(page.getByTestId('activity-result-deposit')).toHaveText(
-    'Balance after · $5.00'
+    'Balance after $5.00'
   );
   await expect(page.getByTestId('activity-row-deposit')).not.toContainText(
     'ZMW'
@@ -556,7 +557,7 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   await expect(depositDetail).toHaveCount(0);
   await expect(depositRow).toBeFocused();
   await expect(page.getByTestId('activity-delta-withdraw')).toHaveText('−$2.00');
-  await expect(page.getByTestId('activity-result-withdraw')).toHaveText('Balance after · $3.00');
+  await expect(page.getByTestId('activity-result-withdraw')).toHaveText('Balance after $3.00');
   const withdrawalRow = page.getByTestId('activity-row-withdraw');
   await withdrawalRow.click();
   const withdrawalDetail = page.locator('main details[open]');
