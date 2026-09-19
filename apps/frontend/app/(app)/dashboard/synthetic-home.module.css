@@ -1,4 +1,4 @@
-/* CLASS-A-VAL-002-HOME-POLISH-001: DESIGN.md syntheticHome roles, scoped to Home. */
+/* DESIGN.md: shared Home / Activity / Settings baseline; historical token names retained. */
 .shell {
   --home-canvas: #FAF8F5;
   --home-observation: #F8EDE7;
@@ -46,7 +46,7 @@
 .observation [data-testid="engine-posture-context"] { font-size: 1.125rem; line-height: 1.5; font-weight: 500; color: var(--color-hedgr-800); }
 .observation [data-observation-amount] { color: var(--home-emphasis); }
 .observation p { font-size: .875rem; line-height: 1.5; }
-.insights > [data-testid="currency-insight"] { border-color: var(--home-divider); font-size: .875rem; }
+.insights > [data-testid="currency-insight"] { border-color: var(--home-divider); font-size: 1rem; }
 .support { border-top: 1px solid var(--home-divider); }
 .accordion { border-bottom: 1px solid var(--home-divider); }
 .accordionSummary { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 4.25rem; padding-block: .875rem; list-style: none; cursor: pointer; font-size: .9375rem; font-weight: 600; line-height: 1.5; }
@@ -74,3 +74,9 @@
   .observation { padding: 1.5rem; }
   .observation [data-testid="engine-posture-context"] { font-size: 1.375rem; }
 }
+
+/* Default planning disclosure retains its existing content and visibility. */
+.page > div > [data-testid="engine-allocation-bands"] { background: transparent; border-color: var(--home-divider); }
+.positionPanel .position p { color: var(--color-hedgr-100); }
+.positionPanel .balanceHeading p { color: var(--color-hedgr-white); }
+.insights > [data-testid="dashboard-change-evidence"] { border-color: var(--home-divider); }

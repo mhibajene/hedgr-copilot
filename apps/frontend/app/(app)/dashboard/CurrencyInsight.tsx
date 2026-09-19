@@ -38,12 +38,18 @@ export function CurrencyInsight({
   if (redesigned) {
     const limit = 'FX comparison only—not earnings, purchasing power, guaranteed protection or a conversion quote.';
     return (
-      <section className={wallet.context} aria-label="Currency context" data-testid="currency-insight">
-        <p className={wallet.headline} data-testid="currency-insight-headline">
-          {comparison ? <span className={styles.direction} aria-hidden="true" data-testid="currency-insight-direction">{comparison.direction === 'higher' ? '↑' : comparison.direction === 'lower' ? '↓' : '—'}</span> : null}
+      <section className={`${wallet.context} ${styles.refined}`} aria-label="Currency context" data-testid="currency-insight">
+        <p className={styles.period}>30-day example · Simulated</p>
+        {comparison && (comparison.direction === 'higher' || comparison.direction === 'lower') ? <>
+          <p className={styles.estimateLabel}>Change in {currency} estimate</p>
+          <p className={styles.summary} data-testid="currency-insight-headline">
+            <span className={styles.difference} data-testid="currency-insight-difference">{currency} {formatComparisonCents(comparison.deltaCents, true)}</span>{' '}
+            <span className={styles.cause}><span className={styles.direction} aria-hidden="true" data-testid="currency-insight-direction" data-direction={comparison.direction} />{comparison.direction} from the rate change</span>
+          </p>
+        </> : <p className={wallet.headline} data-testid="currency-insight-headline">
+          {comparison ? <span className={styles.direction} aria-hidden="true" data-testid="currency-insight-direction">—</span> : null}
           <span>{headline}</span>
-        </p>
-        <p>30-day example · Simulated</p>
+        </p>}
         {comparison ? <>
           <p>Your USD amount is held constant in this comparison.</p>
           <button ref={triggerRef} type="button" className={wallet.link} aria-haspopup="dialog" onClick={() => dialogRef.current?.showModal()}>Understand the comparison</button>

@@ -180,11 +180,11 @@ export default function DashboardPage() {
 
   const balanceHero = (
     <section
-      className={`space-y-1 ${syntheticJourneyActive ? home.position : finish.position}`}
+      className={`space-y-1 ${home.position}`}
       aria-labelledby="dashboard-total-balance-label"
       data-testid="dashboard-balance"
     >
-      <div className={syntheticJourneyActive ? home.balanceHeading : undefined}>
+      <div className={home.balanceHeading}>
         <p
           id="dashboard-total-balance-label"
           className="text-xs font-semibold tracking-tight text-hedgr-800"
@@ -194,7 +194,7 @@ export default function DashboardPage() {
         {syntheticJourneyActive ? <SimulationDisplayCurrencySelector placement="position" /> : null}
       </div>
       {isLoading ? (
-        <div className={`${syntheticJourneyActive ? home.amount : finish.positionLoading} tabular-nums`}>
+        <div className={`${home.amount} tabular-nums`}>
           …
         </div>
       ) : (
@@ -202,20 +202,20 @@ export default function DashboardPage() {
           usdAmount={ready && !cleanStartRequested ? total : 0}
           displayEstimate={syntheticJourneyActive ? formatSimulationDisplayEstimate(ready && !cleanStartRequested ? total : 0, displayCurrency) : undefined}
           data-testid="usd-balance"
-          className={`${syntheticJourneyActive ? home.amount : finish.positionLoading} tabular-nums`}
+          className={`${home.amount} tabular-nums`}
         />
       )}
       {syntheticJourneyActive ? <p className={home.balanceCaption} data-testid="dashboard-synthetic-balance-explainer">Illustrative simulation value only.</p> : null}
       {productSimulationActive && !syntheticJourneyActive && ready && !isLoading ? (
         <p
-          className="max-w-md pt-1 text-xs leading-relaxed text-hedgr-500 sm:text-sm"
+          className={home.balanceCaption}
           data-testid="dashboard-synthetic-balance-explainer"
         >
           Illustrative position only.
         </p>
       ) : null}
       {ready && !isLoading && total !== available ? (
-        <p className={syntheticJourneyActive ? home.available : "pt-1 text-sm text-hedgr-500"}>
+        <p className={home.available}>
           Available now:{" "}
           <span className="font-medium text-hedgr-dark tabular-nums">
             ${available.toFixed(2)}
@@ -239,12 +239,12 @@ export default function DashboardPage() {
   const homeUtilities = (
     <nav
       aria-label="Simulation utilities"
-      className={syntheticJourneyActive ? home.utilities : `grid gap-3 ${finish.utilityGroup}`}
+      className={home.utilities}
       data-testid="dashboard-simulation-utilities"
     >
       <Link
         href={productRouteHref("/deposit")}
-        className={syntheticJourneyActive ? home.utility : finish.utility}
+        className={home.utility}
         data-testid="dashboard-add-simulated-deposit"
       >
         <Image
@@ -261,7 +261,7 @@ export default function DashboardPage() {
       </Link>
       <Link
         href={productRouteHref("/activity")}
-        className={syntheticJourneyActive ? home.utility : finish.utility}
+        className={home.utility}
         data-testid="dashboard-view-activity"
       >
         <Image
@@ -279,7 +279,7 @@ export default function DashboardPage() {
       {!syntheticJourneyActive ? (
         <Link
           href={productRouteHref("/withdraw")}
-          className="col-span-full inline-flex min-h-11 items-center justify-center rounded-xl border border-hedgr-100 bg-white px-4 py-2 text-sm font-semibold text-hedgr-700 shadow-sm transition-colors hover:border-hedgr-200 hover:bg-hedgr-100/20 focus:outline-none focus:ring-2 focus:ring-hedgr-500 focus:ring-offset-2"
+          className={`${home.utility} col-span-full`}
           data-testid="dashboard-simulated-withdraw"
         >
           Simulate a withdrawal
@@ -289,7 +289,7 @@ export default function DashboardPage() {
   );
 
   const observation = (
-    <div className={syntheticJourneyActive ? home.observation : finish.observation}>
+    <div className={home.observation}>
       <EnginePostureHeader
         redesigned={syntheticJourneyActive}
         engineState={engineState}
@@ -320,13 +320,7 @@ export default function DashboardPage() {
           ? "Current simulation overview"
           : "Current account overview"
       }
-      className={
-        syntheticJourneyActive
-          ? home.overview
-          : productSimulationActive
-          ? "bg-white"
-          : "rounded-2xl border border-hedgr-100 bg-white p-5 shadow-sm sm:p-7"
-      }
+      className={home.overview}
       data-testid="dashboard-current-overview"
     >
       {syntheticJourneyActive ? (
@@ -341,8 +335,9 @@ export default function DashboardPage() {
           </div>
         </div>
       ) : productSimulationActive ? (
-        <div className="space-y-4">
-          {balanceHero}
+        <div className={home.overviewGrid}>
+          <div className={home.positionPanel}>{balanceHero}{homeUtilities}</div>
+          <div className={home.insights}>
           {recentActivity[0] ? (
             <section
               className="flex flex-wrap items-baseline justify-between gap-4 border-y border-hedgr-100 py-3"
@@ -365,11 +360,12 @@ export default function DashboardPage() {
           ) : null}
           {observation}
           {currencyContext}
+          </div>
         </div>
       ) : (
-        <div className="grid gap-5 sm:grid-cols-[minmax(0,1.2fr)_minmax(13rem,0.8fr)] sm:gap-6">
-          <div>{balanceHero}</div>
-          <div className="border-t border-hedgr-100 pt-5 sm:border-l sm:border-t-0 sm:pl-6 sm:pt-0">
+        <div className={home.overviewGrid}>
+          <div className={home.positionPanel}>{balanceHero}</div>
+          <div className={home.observation}>
             <EnginePostureHeader engineState={engineState} />
           </div>
         </div>
@@ -406,18 +402,11 @@ export default function DashboardPage() {
 
   const disclosureSection = (
     <details
-      className={syntheticJourneyActive ? home.accordion : "border-y border-hedgr-100 bg-white py-2"}
+      className={home.accordion}
       data-testid="dashboard-disclosures"
     >
-      <summary className={syntheticJourneyActive ? home.accordionSummary : "flex min-h-11 cursor-pointer list-none items-center font-medium text-hedgr-800 marker:content-none select-none [&::-webkit-details-marker]:hidden"}>
-        {syntheticJourneyActive ? <><span>Important disclosures</span>{accordionChevron}</> : <span className="flex flex-wrap items-center justify-between gap-4">
-          <span>Important disclosures</span>
-          <span className="text-xs font-medium uppercase tracking-wide text-hedgr-500">
-            View
-          </span>
-        </span>}
-      </summary>
-      <div className={syntheticJourneyActive ? home.accordionContent : "mt-4 border-t border-hedgr-100 pt-4"}>
+      <summary className={home.accordionSummary}><span>Important disclosures</span>{accordionChevron}</summary>
+      <div className={home.accordionContent}>
         <PolicyDisclosure
           context={syntheticJourneyActive ? "synthetic-research" : "default"}
         />
@@ -427,7 +416,7 @@ export default function DashboardPage() {
 
   if (error) {
     return (
-      <main className={syntheticJourneyActive ? home.page : "px-6 py-8 sm:p-8"}>
+      <main className={home.page}>
         <div
           className={`mx-auto space-y-6 sm:space-y-8 ${
             productSimulationActive ? "max-w-5xl" : "max-w-2xl"
@@ -452,13 +441,9 @@ export default function DashboardPage() {
   }
 
   return (
-    <main className={syntheticJourneyActive ? home.page : "px-6 pb-24 pt-5 sm:p-8"}>
+    <main className={home.page}>
       <div
-        className={syntheticJourneyActive ? home.content : `mx-auto ${
-          productSimulationActive ? "space-y-4 sm:space-y-8" : "space-y-6 sm:space-y-8"
-        } ${
-          productSimulationActive ? "max-w-5xl" : "max-w-2xl"
-        }`}
+        className={home.content}
       >
         <section
           aria-labelledby="dashboard-orientation-heading"
@@ -527,9 +512,7 @@ export default function DashboardPage() {
           <EngineAllocationBands engineState={engineState} collapsed={productSimulationActive} />
         ) : null}
 
-        {!syntheticJourneyActive && productSimulationActive
-          ? homeUtilities
-          : null}
+
 
         {syntheticJourneyActive && hasSyntheticFixtureState && (
           <section

@@ -76,3 +76,17 @@
 
 .values dt span { display: block; font-size: 0.75rem; }
 .values dd { font-variant-numeric: tabular-nums; color: var(--color-hedgr-800); font-weight: 600; }
+
+/* Shared baseline: context remains secondary to the balance. */
+.refined { color: var(--color-hedgr-800); font-size: 1rem; line-height: 1.55; }
+.refined .period { display: inline-block; margin: 0 0 .75rem; padding: .2rem .6rem; border-radius: 2rem; background: color-mix(in srgb, var(--color-hedgr-primary) 5%, transparent); font-size: .8125rem; font-weight: 600; }
+.refined .estimateLabel { margin: 0 0 .375rem; color: var(--color-hedgr-600); font-size: .875rem; font-weight: 600; }
+.refined .summary { margin: 0 0 1rem; font-weight: 600; }
+.difference { display: block; font-size: 1.75rem; line-height: 1.2; letter-spacing: -.025em; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.cause { display: flex; align-items: baseline; gap: .5rem; margin-top: .375rem; font-size: 1rem; }
+.cause .direction { color: var(--color-hedgr-600); }
+.refined > button { font-size: 1rem; font-weight: 600; text-decoration: underline; text-underline-offset: .2em; margin-block: .5rem; }
+.refined > p:last-of-type { font-size: .875rem; line-height: 1.55; }
+
+.cause .direction[data-direction="higher"]::before { content: '↑'; }
+.cause .direction[data-direction="lower"]::before { content: '↓'; }
