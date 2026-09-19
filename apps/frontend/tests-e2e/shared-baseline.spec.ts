@@ -66,9 +66,23 @@ for (const synthetic of [false, true]) {
         await page.addStyleTag({ content: 'html { font-size: 200%; }' });
         await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(1);
         if (path === '/activity') {
-          for (const title of await page.locator('[data-testid^="activity-type-"]').all()) {
-            const textLayout = await title.evaluate(el => ({ width: el.getBoundingClientRect().width, font: parseFloat(getComputedStyle(el).fontSize) }));
-            expect(textLayout.width).toBeGreaterThanOrEqual(textLayout.font * 5);
+          for (const label of await page.locator('[data-testid^="activity-type-"], [aria-label="Activity filters"] button').all()) {
+            // Check actual word wrapping, not the intrinsic width of an inline span.
+            const brokenWords = await label.evaluate(el => {
+              const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+              const broken: string[] = [];
+              let node;
+              while ((node = walker.nextNode())) {
+                for (const match of (node.textContent ?? '').matchAll(/\S+/g)) {
+                  const range = document.createRange();
+                  range.setStart(node, match.index!);
+                  range.setEnd(node, match.index! + match[0].length);
+                  if (range.getClientRects().length > 1) broken.push(match[0]);
+                }
+              }
+              return broken;
+            });
+            expect(brokenWords).toEqual([]);
           }
         }
         for (const link of await nav.getByRole('link').all()) {
