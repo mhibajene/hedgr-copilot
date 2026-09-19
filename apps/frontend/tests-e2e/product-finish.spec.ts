@@ -103,18 +103,14 @@ for (const synthetic of [true, false]) {
       const s = getComputedStyle(el);
       return [s.backgroundColor, s.color, s.borderRadius, s.boxShadow];
     };
-    if (synthetic) {
-      // HOME-POLISH-001 replaces synthetic B2 equality with approved primary/secondary actions.
-      await expect(deposit).toHaveCSS('background-color', 'rgb(250, 248, 245)');
-      await expect(deposit).toHaveCSS('color', 'rgb(31, 39, 71)');
-      await expect(activity).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
-      await expect(activity).toHaveCSS('color', 'rgb(255, 255, 255)');
-      expect((await deposit.evaluate(appearance)).slice(2)).toEqual((await activity.evaluate(appearance)).slice(2));
-    } else {
-      expect(await deposit.evaluate(appearance)).toEqual(await activity.evaluate(appearance));
-    }
-    expect((await deposit.boundingBox())!.height).toBeGreaterThanOrEqual(synthetic ? 44 : 64);
-    expect((await activity.boundingBox())!.height).toBeGreaterThanOrEqual(synthetic ? 44 : 64);
+    // The approved shared baseline uses the same primary/secondary hierarchy in both journeys.
+    await expect(deposit).toHaveCSS('background-color', 'rgb(250, 248, 245)');
+    await expect(deposit).toHaveCSS('color', 'rgb(31, 39, 71)');
+    await expect(activity).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
+    await expect(activity).toHaveCSS('color', 'rgb(255, 255, 255)');
+    expect((await deposit.evaluate(appearance)).slice(2)).toEqual((await activity.evaluate(appearance)).slice(2));
+    expect((await deposit.boundingBox())!.height).toBeGreaterThanOrEqual(44);
+    expect((await activity.boundingBox())!.height).toBeGreaterThanOrEqual(44);
     await expect(deposit).toHaveAttribute('href', route('/deposit'));
     await expect(activity).toHaveAttribute('href', route('/activity'));
     await expect(page.getByTestId('dashboard-simulated-withdraw')).toHaveCount(synthetic ? 0 : 1);

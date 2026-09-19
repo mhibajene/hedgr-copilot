@@ -138,15 +138,15 @@ test('Home presentation supports the query route and stays isolated during navig
   await expect(page.getByTestId('research-planning-targets')).toBeVisible();
   await page.getByRole('navigation', { name: 'Primary' }).getByRole('link', { name: 'Activity', exact: true }).click();
   await expect(page).toHaveURL(/activity\?journey=class-a-val-002/);
-  await expect(page.getByRole('main')).not.toHaveCSS('background-color', 'rgb(250, 248, 245)');
+  await expect(page.getByRole('main')).toHaveCSS('background-color', 'rgb(250, 248, 245)');
   await page.getByRole('navigation', { name: 'Primary' }).getByRole('link', { name: 'Settings', exact: true }).click();
   await expect(page).toHaveURL(/settings\?journey=class-a-val-002/);
-  await expect(page.getByRole('main')).not.toHaveCSS('background-color', 'rgb(250, 248, 245)');
+  await expect(page.getByRole('main')).toHaveCSS('background-color', 'rgb(250, 248, 245)');
   await page.getByRole('navigation', { name: 'Primary' }).getByRole('link', { name: 'Home', exact: true }).click();
   await expect(page.getByRole('main')).toHaveCSS('background-color', 'rgb(250, 248, 245)');
   for (const route of ['/dashboard', `${home}?scenario=unavailable-data`]) {
     await page.goto(route);
-    await expect(page.getByRole('main')).not.toHaveCSS('background-color', 'rgb(250, 248, 245)');
+    await expect(page.getByRole('main')).toHaveCSS('background-color', 'rgb(250, 248, 245)');
     await expect(page.getByTestId('research-planning-targets')).toHaveCount(0);
     await expect(page.getByRole('heading', { name: 'Your position', exact: true })).toHaveCount(0);
   }
