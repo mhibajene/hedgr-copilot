@@ -1,3 +1,5 @@
+> **DEFERRED, NOT CANCELLED — Founder disposition, 2026-09-19, HEDGR_STATUS.md §285.** This D-151 artifact is preserved as historical preparation. It no longer authorizes Google Forms intake, research or analysis. The former 12-response / 21-day plan and 10 October collection date are inactive. The broader working audience is a reversible strategic hypothesis; no behavioural proof, permanent target definition, MVP gate or live financial authority follows. Further Lane G research requires separate repo-native activation. The content below is retained verbatim as the prior record/protocol, including preparation-time status and readiness entries; those are not current permissions. See [current disposition](HEDGR_WORKING_MVP_AUDIENCE_HYPOTHESIS.md).
+
 # Decision Record — Lane G Behavioural-Market Retest
 
 **Decision ID:** Internal D-151
