@@ -1,7 +1,7 @@
 # Stability Engine Functional Contract — Partial-Capital Productisation
 
 **Date:** 2026-09-19  
-**Status:** Accepted strategic target contract on permanent-main reconciliation under HEDGR_STATUS.md §286; not an implemented or empirically validated model  
+**Status:** Accepted strategic target contract on permanent-main reconciliation under HEDGR_STATUS.md §286, refined by §288; not an implemented or empirically validated model<br>
 **Classification:** Founder Only / Internal Product Strategy; no public ADR export  
 **Source:** [Partial-Capital Stability Engine decision](../governance/product/HEDGR_PARTIAL_CAPITAL_DECISION.md)  
 **Authority impact:** None for implementation, financial execution, doctrine, research activation or release
@@ -63,6 +63,31 @@ The existing journey remains **Entry → Orientation → Stability → Insight �
 | Safe action | What might the user responsibly consider next, within current capability and authority? |
 
 This mapping deepens the journey; it does not authorise UI, copy, route, Copilot, data, engine or transaction changes. Informational allocation bands remain targets rather than balances or accounting truth. The ledger remains the financial-state authority under ADR 0013; Sprint 2 Engine surfaces remain read-only under ADR 0014.
+
+## Architectural implications retained from the worked cases
+
+**Adoption:** Founder-approved §288 disposition refines this existing target contract following [four paired fictional worked cases](research/HEDGR_PARTIAL_CAPITAL_WORKED_CASES.md). The cases are retained as bounded documentary translation with repeated controls and conditional access/coverage assumptions. They illustrate distinctions; they do not empirically validate the architecture, user value or real-world routes. The distinct review assessed consistency and boundaries, not behavioural/model reliability. No executable schema, current-runtime claim, immediate refactor or F1–F4 acceptance follows.
+
+| Target design constraint | Required distinction |
+| --- | --- |
+| Resources have conditions | Keep amount, ownership, location and accessibility separately expressible; prevent overlapping resource counts |
+| Envelope defines reasoning scope | Do not equate it with total wealth, custody, a physical account or accounting partition |
+| Liquidity is purpose-, time- and route-relative | Consider usability at the relevant endpoint by the required deadline under stated conditions |
+| Commitments are relevant context | One named requirement may support a bounded question without a complete budget or financial profile; do not treat missing commitments as zero |
+| Uncertainty attaches to affected claims | Limit dependent conclusions while preserving unaffected known facts; retain provenance and freshness limits |
+| Events, state and interpretation remain distinct | Describe what happened, what is now known and why it matters separately; transfer direction alone supplies no stability direction |
+| Engine outputs carry their limits | Trace conclusions to reasons, scope, conditions, unknowns and evidence provenance |
+| Wallet consumes Engine reasoning | Simplify or progressively disclose without losing material qualifications; do not independently derive coverage, capacity, risk, sufficiency or other financial judgments |
+| Arithmetic remainder differs from stability capacity | Subtraction does not establish spendable surplus, adequate reserves, investable capital or yield capacity |
+| Broader posture must remain explainable | Do not infer overall stability from balance alone; future synthesis from scoped claims requires separately defined semantics |
+
+Coverage of a named obligation is considered on its own, before unassessed competing claims. It assigns no priority or exclusive earmarking and does not establish availability after those claims. Engine ownership of interpretation does not supersede the ledger's financial-state authority.
+
+**DEFER:** General stability-capacity formulas and buffer/reserve policy; F1–F4 posture mapping, scalar scoring and aggregation into overall judgment; yield-capacity logic; multiple/competing obligations and prioritisation; live-input ingestion, authentication, freshness and consent/privacy design; execution semantics, actual route feasibility, settlement, custody, conversion and financial actions. These remain unresolved matters requiring relevant evidence and separate authority. They are not a committed backlog or universal prerequisites for every bounded informational increment. D-099 and D-143 remain unchanged.
+
+**CONSIDER LATER:** One scenario-local commitment timing explanation using a fictional envelope, one external resource, one named commitment, explicit access timing and known/unknown evidence. The next architectural question is **Financial State → Scoped Engine Interpretation → Wallet Presentation**: how conclusions, reasons, scope, conditions and missing information survive the informational interface. A later bounded proposal may address that question. Neither a canonical interface/schema nor its design or implementation is approved here; the proposed slice is not activated, and no second programme follows.
+
+**Revisit:** Reassess the affected interpretation if evidence reveals double counting, competing claims, inaccessible resources, stale/conflicting inputs, misleading presentation or unsupported capacity. Local usefulness and common audience decision grammar remain hypotheses. Retention closes only the completed nested worked-case exercise, with its parent open and no successor; no additional cases are required by this disposition.
 
 ## Productisation and evidence use
 

@@ -1,5 +1,8 @@
 # Partial-capital Stability Engine — bounded worked cases
 
+> **Founder disposition — RETAIN (2026-09-19, §288):** Founder approved retention as bounded documentary translation and reconciliation of architectural implications into the existing functional contract. Close only `SE-REASON-001-PARTIAL-CAPITAL-001`; parent remains open with no active nested ticket. Preserve fictional/repeated-control, conditional-coverage and visible-review limitations; no empirical/model acceptance, further cases or successor. Architectural implications are target constraints, with unresolved semantics deferred and the informational interface/commitment-timing slice for later separate consideration. Effective repository recording on permanent-main merge with separate verified RAP rebind. [Disposition and boundaries](../../HEDGR_STATUS.md#288-founder-retain--partial-capital-worked-cases-and-architectural-implications-2026-09-19). The original delivery-era status, recommendation and review body below are preserved as historical provenance; their pending-disposition wording is superseded only by this notice.
+
+
 **Date:** 2026-09-19<br>
 **Ticket:** SE-REASON-001-PARTIAL-CAPITAL-001, nested within SE-REASON-001<br>
 **Status:** Authored pass and bounded distinct review/correction completed; delivery subject to governed merge; Founder disposition not supplied<br>
