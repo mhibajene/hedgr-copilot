@@ -1,5 +1,7 @@
 'use client';
 
+import baseline from '../shared-baseline.module.css';
+
 import finish from '../product-finish.module.css';
 import wallet from '../research-wallet.module.css';
 
@@ -141,7 +143,7 @@ function ActivityRow({
       data-testid={`activity-row-${tx.type.toLowerCase()}`}
       data-activity-type={tx.type}
       data-activity-status={tx.status}
-      className={`w-full cursor-pointer py-4 text-left motion-safe:transition-colors hover:bg-hedgr-100/20 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-hedgr-500 ${finish.eventRow}`}
+      className={`w-full cursor-pointer py-4 text-left motion-safe:transition-colors hover:bg-hedgr-100/20 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-hedgr-500 ${finish.eventRow} ${baseline.defaultEvent}`}
     >
       <div className="flex items-center gap-3 sm:gap-4">
         <TransactionTypeIcon type={tx.type} />
@@ -163,7 +165,7 @@ function ActivityRow({
             {!syntheticJourneyActive ||
             tx.status !== PublicTxStatus.SUCCESS ? (
               <TxStatusPill status={tx.status} />
-            ) : null}
+            ) : <span className="text-sm text-hedgr-600">Completed</span>}
             <span className="text-xs text-hedgr-500 sm:text-sm">
               {formatTime(tx.createdAt)}
             </span>
@@ -177,16 +179,6 @@ function ActivityRow({
           >
             {tx.type === 'DEPOSIT' ? '+' : '-'}${tx.amountUSD.toFixed(2)}
           </div>
-          {syntheticJourneyActive &&
-          tx.status === PublicTxStatus.SUCCESS &&
-          resultingBalance !== undefined ? (
-            <div
-              className="mt-0.5 text-xs font-medium tabular-nums text-hedgr-500"
-              data-testid={`activity-result-${tx.type.toLowerCase()}`}
-            >
-              → ${resultingBalance.toFixed(2)} resulting
-            </div>
-          ) : null}
           {!syntheticJourneyActive &&
           tx.amountZMW !== undefined &&
           tx.amountZMW > 0 ? (
@@ -210,6 +202,16 @@ function ActivityRow({
           />
         </svg>
       </div>
+          {syntheticJourneyActive &&
+          tx.status === PublicTxStatus.SUCCESS &&
+          resultingBalance !== undefined ? (
+            <div
+              className={baseline.balanceAfter}
+              data-testid={`activity-result-${tx.type.toLowerCase()}`}
+            >
+              <span>Balance after</span>{' '}<span>${resultingBalance.toFixed(2)}</span>
+            </div>
+          ) : null}
     </button>
   );
 }
@@ -368,9 +370,9 @@ export default function ActivityPage() {
   };
 
   if (syntheticJourneyActive) {
-    return <main className={wallet.page}>
+    return <main className={`${wallet.page} ${baseline.activity}`}>
       <header><h1>Activity</h1><p className="mt-1 text-sm text-hedgr-600" data-testid="activity-simulation-context">Follow the balance</p></header>
-      <section className={`${wallet.position} ${wallet.activityBalance}`} data-testid="activity-balance-reconciliation" aria-labelledby="activity-balance-reconciliation-heading">
+      <section className={`${wallet.position} ${wallet.activityBalance} ${baseline.balance}`} data-testid="activity-balance-reconciliation" aria-labelledby="activity-balance-reconciliation-heading">
         <h2 id="activity-balance-reconciliation-heading">Simulated balance</h2>
         <strong><span data-testid="activity-reconciliation-remaining">${syntheticBalanceReconciliation.remaining.toFixed(2)}</span> <small>USD</small></strong>
         <p className="text-xs text-hedgr-500">From completed simulated entries only.</p>
@@ -385,10 +387,11 @@ export default function ActivityPage() {
             const completed = tx.status === PublicTxStatus.SUCCESS && after !== undefined;
             const before = completed ? +(after + (tx.type === 'DEPOSIT' ? -tx.amountUSD : tx.amountUSD)).toFixed(2) : undefined;
             const label = tx.type === 'DEPOSIT' ? 'Simulated deposit' : 'Simulated withdrawal';
-            return <details key={tx.id} className={wallet.event}>
-              <summary data-testid={`activity-row-${tx.type.toLowerCase()}`} data-activity-type={tx.type} data-activity-status={tx.status}>
+            return <details key={tx.id} className={`${wallet.event} ${baseline.event}`}>
+              <summary className={baseline.eventSummary} data-testid={`activity-row-${tx.type.toLowerCase()}`} data-activity-type={tx.type} data-activity-status={tx.status}>
                 <span><strong data-testid={`activity-type-${tx.type.toLowerCase()}`}>{label}</strong><small>{completed ? 'Completed' : <TxStatusPill status={tx.status} />}</small></span>
-                <span className={wallet.eventAmount}><strong data-testid={`activity-delta-${tx.type.toLowerCase()}`}>{tx.type === 'DEPOSIT' ? '+' : '−'}${tx.amountUSD.toFixed(2)}</strong>{completed ? <small data-testid={`activity-result-${tx.type.toLowerCase()}`}>Balance after · ${after.toFixed(2)}</small> : null}</span>
+                <span className={`${wallet.eventAmount} ${baseline.delta}`}><strong data-testid={`activity-delta-${tx.type.toLowerCase()}`}>{tx.type === 'DEPOSIT' ? '+' : '−'}${tx.amountUSD.toFixed(2)}</strong><span className={baseline.rowChevron} aria-hidden="true">›</span></span>
+                {completed ? <span className={baseline.balanceAfter} data-testid={`activity-result-${tx.type.toLowerCase()}`}><span>Balance after</span>{' '}<span>${after.toFixed(2)}</span></span> : null}
               </summary>
               <div data-testid="research-activity-detail">
                 <p>{label} detail · {formatTime(tx.createdAt)}</p>
@@ -410,7 +413,7 @@ export default function ActivityPage() {
   }
 
   return (
-    <main className={`mx-auto max-w-2xl px-6 pb-28 pt-6 sm:p-8 ${finish.activity}`}>
+    <main className={`${baseline.activity} ${finish.activity}`}>
       <div className="flex flex-wrap items-end justify-between gap-4">
         <h1 className="text-3xl font-bold tracking-tight text-hedgr-800 sm:text-4xl">Activity</h1>
         {transactions.length > 0 && (
@@ -435,7 +438,7 @@ export default function ActivityPage() {
 
       {productSimulationActive && transactions.length > 0 ? (
         <section
-          className={`space-y-2 text-hedgr-dark ${finish.reconciliation}`}
+          className={`space-y-2 ${finish.reconciliation} ${baseline.balance}`}
           data-testid="activity-balance-reconciliation"
           aria-labelledby="activity-balance-reconciliation-heading"
         >
@@ -485,7 +488,7 @@ export default function ActivityPage() {
 
       {/* Filter buttons - only show when there are transactions */}
       {transactions.length > 0 && (
-        <div className={finish.filters}>
+        <div className={wallet.filters} aria-label="Activity filters">
           {(['all', 'deposits', 'withdrawals'] as const).map((f) => (
             <button
               key={f}
@@ -517,7 +520,7 @@ export default function ActivityPage() {
               <h2 className="text-xs font-semibold text-hedgr-800">
                 {day}
               </h2>
-              <div className="divide-y divide-hedgr-100 border-y border-hedgr-100">
+              <div className={baseline.events}>
                 {txs.map((tx) => (
                   <ActivityRow
                     key={tx.id}
