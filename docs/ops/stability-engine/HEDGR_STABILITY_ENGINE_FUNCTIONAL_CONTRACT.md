@@ -1,7 +1,7 @@
 # Stability Engine Functional Contract — Partial-Capital Productisation
 
 **Date:** 2026-09-19  
-**Status:** Accepted strategic target contract on permanent-main reconciliation under HEDGR_STATUS.md §286, refined by §288; not an implemented or empirically validated model<br>
+**Status:** Accepted strategic target contract on permanent-main reconciliation under HEDGR_STATUS.md §286, refined by §288 and §290; not an implemented or empirically validated model<br>
 **Classification:** Founder Only / Internal Product Strategy; no public ADR export  
 **Source:** [Partial-Capital Stability Engine decision](../governance/product/HEDGR_PARTIAL_CAPITAL_DECISION.md)  
 **Authority impact:** None for implementation, financial execution, doctrine, research activation or release
@@ -88,6 +88,36 @@ Coverage of a named obligation is considered on its own, before unassessed compe
 **CONSIDER LATER:** One scenario-local commitment timing explanation using a fictional envelope, one external resource, one named commitment, explicit access timing and known/unknown evidence. The next architectural question is **Financial State → Scoped Engine Interpretation → Wallet Presentation**: how conclusions, reasons, scope, conditions and missing information survive the informational interface. A later bounded proposal may address that question. Neither a canonical interface/schema nor its design or implementation is approved here; the proposed slice is not activated, and no second programme follows.
 
 **Revisit:** Reassess the affected interpretation if evidence reveals double counting, competing claims, inaccessible resources, stale/conflicting inputs, misleading presentation or unsupported capacity. Local usefulness and common audience decision grammar remain hypotheses. Retention closes only the completed nested worked-case exercise, with its parent open and no successor; no additional cases are required by this disposition.
+
+## Scoped semantic interface disposition
+
+**Founder adoption (§290, 2026-09-19):** RETAIN the [scoped interface candidate](research/HEDGR_SCOPED_ENGINE_INTERPRETATION_INTERFACE_CANDIDATE.md) as bounded architectural translation; ADOPT **Financial State → Scoped Engine Interpretation → Wallet Presentation** as the target semantic responsibility model. The retained artifact remains non-canonical as a production/executable specification. Close only `SE-REASON-001-INTERFACE-001`, with its parent open and no active nested successor. This changes target responsibilities, not code, data or financial authority.
+
+| Responsibility | Adopted meaning |
+| --- | --- |
+| Financial facts and context | Supply relevant resource/ownership/envelope/commitment/access/time/evidence information. Supplied facts do not establish authentication, custody, total wealth or a complete profile. Ledger accounting authority remains unchanged |
+| Scoped Engine interpretation | Own the financial meaning of a declared question, supporting reasoning, explanatory arithmetic and limits |
+| Wallet presentation | Own hierarchy, wording, formatting, progressive disclosure and interaction while faithfully preserving Engine meaning; do not independently derive or strengthen financial judgments |
+
+Preserve **question/scope + conclusion + reason/supporting facts + material conditions + relevant unknowns + withheld conclusions + evidence/timing basis** as one coherent explanation. This establishes semantic responsibilities without prescribing an object, service, schema or provenance graph.
+
+**Claim-integrity principles:**
+- Facts and interpretations remain distinct. A supplied amount/access date is an input; coverage depends on relevant inputs and remains Engine-owned.
+- Scope stays explicit. One-obligation coverage is not overall stability, adequate reserves, free capital or yield capacity, and establishes no priority, earmarking or availability after competing claims.
+- Amount, ownership, location and access remain distinguishable. Nominal value and completed movement do not establish timely usability or stability direction.
+- Uncertainty limits dependent claims while preserving unaffected facts. Missing is neither zero nor deterioration.
+- Arithmetic remainder stays qualified and does not become spendable, investable or uncommitted capital.
+- Distinguish observation time, usable time, deadline, interpretation generation and evidence validity where material. Existing updatedAt is not all of these; no freshness/TTL policy follows.
+- Necessary scope and material conditions must accompany the rendered conclusion. Progressive disclosure may move supporting detail; if the qualification cannot be preserved, do not display the stronger claim.
+- Future semantics must not depend on Wallet parsing notice prose or inferring meaning from wording. Existing notices remain intact; no replacement implementation is prescribed.
+
+**Current posture preserved:** Keep EngineState, posture values, informational targets, notices, mock provider and update semantics unchanged. Scoped interpretations answer local questions; a future broader posture may communicate wider context. That is a working architectural hypothesis, not evidence that today's predefined informational posture computes a synthesis of user facts. No mapping, aggregation, mutation, priority or override between posture and scoped interpretations is accepted, including by presentation inference.
+
+**Bounded coexistence question:** Before participant-facing introduction of this candidate, separately resolve how existing Stability Posture and scoped interpretations can coexist without conflicting or unsupported meaning: respective meaning, whether both appear, explanation of apparent tensions, Wallet implications and any influence/override. Working default is no automatic influence or override. This is not an activated ticket, aggregation formula, additional worked-case programme or new gate on unrelated Lane V work.
+
+**Explicit deferral:** Field names/types/identifiers/versioning/serialization/transport/persistence/module ownership/API placement; source ranking/authentication/freshness/expiry/conflicting evidence/consent/live ingestion; competing obligations/partial fulfilment/claim valuation/resilience thresholds/buffer policy/capacity/F1–F4/scoring/yield capacity/automatic posture aggregation. Resolve only when material to a separately authorised outcome. These deferrals do not prevent adoption of the semantic responsibility boundary.
+
+**Evidence and change control:** Retained visible-artifact review supports consistency, eight-state traceability and current-code compatibility limits, not empirical validity, real-data sufficiency, route feasibility, comprehension, demand or implementation readiness. Revisit affected interpretations when qualifications are lost, evidence misrepresented, Wallet adds inference or posture/local claims appear contradictory without explanation. Explicit refinement/supersession must preserve provenance. §288, D-143/D-099, V/G/N, frozen narrative and participant release conditions remain unchanged; no successor or execution authority follows.
 
 ## Productisation and evidence use
 

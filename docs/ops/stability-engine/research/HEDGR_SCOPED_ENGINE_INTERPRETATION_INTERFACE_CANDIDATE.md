@@ -1,5 +1,8 @@
 # Scoped Engine interpretation interface — documentary candidate
 
+> **Founder disposition — RETAIN (§290, 2026-09-19):** Founder approved recording the disposition: retain this bounded candidate and adopt its semantic responsibility/claim-integrity boundary in the existing functional contract. Close only `SE-REASON-001-INTERFACE-001`; parent remains open with no active nested successor. This artifact remains non-canonical as a production/executable specification; current EngineState/posture and all financial authority remain unchanged. Coexistence requires a separate bounded decision before participant-facing introduction; no design ticket, runtime work or exposure is activated. Effective repository reconciliation on permanent-main merge with separate verified RAP rebind. [Full disposition](../../HEDGR_STATUS.md#290-founder-retain--scoped-semantic-interface-and-responsibility-boundary-2026-09-19). The original authored/review body and its delivery-era pending-disposition wording below are preserved as historical provenance and superseded only by this notice.
+
+
 **Date:** 2026-09-19<br>
 **Ticket:** SE-REASON-001-INTERFACE-001, nested within SE-REASON-001<br>
 **Status:** Authored pass and distinct review completed; delivery subject to governed merge; Founder disposition outstanding; non-canonical<br>
