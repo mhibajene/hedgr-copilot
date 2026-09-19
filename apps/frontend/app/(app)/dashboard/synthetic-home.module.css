@@ -88,5 +88,5 @@
   .utility span { flex-basis: 100%; }
 }
 /* Keep navigation words intact when the root text size is enlarged. */
-.shell nav [data-testid="nav-links"] { gap: .25rem; padding-inline: .25rem; }
+.shell nav [data-testid="nav-links"] { gap: .125rem; padding-inline: .125rem; }
 .shell nav [data-testid="nav-links"] a { overflow-wrap: normal; letter-spacing: -.02em; }
