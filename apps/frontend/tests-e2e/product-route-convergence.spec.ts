@@ -72,7 +72,7 @@ test('default routes share the simulated customer model without research framing
   await expect(
     primaryNav.getByRole('link', { name: 'Settings', exact: true })
   ).toHaveAttribute('href', '/settings');
-  for (const label of ['Dashboard', 'Deposit', 'Withdraw', 'Activity']) {
+  for (const label of ['Dashboard', 'Deposit', 'Withdraw']) {
     await expect(
       primaryNav.getByRole('link', { name: label, exact: true })
     ).toHaveCount(0);
@@ -210,15 +210,14 @@ test('default customer hierarchy remains usable at 390 by 844', async ({ page })
   }));
   expect(metrics.documentWidth).toBeLessThanOrEqual(metrics.viewportWidth);
 
-  const navToggle = page.getByTestId('nav-toggle');
-  await expect(navToggle).toBeVisible();
-  await navToggle.click();
-  const mobileNav = page.getByTestId('nav-links-mobile');
+  const mobileNav = page.getByRole('navigation', { name: 'Primary' });
+  await expect(mobileNav).toBeVisible();
+  await expect(mobileNav.getByRole('link', { name: 'Activity', exact: true })).toHaveAttribute('href', '/activity');
   await expect(mobileNav.getByRole('link', { name: 'Home', exact: true })).toBeVisible();
   await expect(
     mobileNav.getByRole('link', { name: 'Settings', exact: true })
   ).toBeVisible();
-  for (const label of ['Deposit', 'Withdraw', 'Activity']) {
+  for (const label of ['Deposit', 'Withdraw']) {
     await expect(
       mobileNav.getByRole('link', { name: label, exact: true })
     ).toHaveCount(0);

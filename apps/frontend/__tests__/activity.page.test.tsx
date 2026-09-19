@@ -138,10 +138,10 @@ describe('ActivityPage synthetic evidence grammar', () => {
     expect(screen.queryByTestId('activity-synthetic-condition')).toBeNull();
 
     expect(screen.getByTestId('activity-result-deposit').textContent).toBe(
-      'Balance after · $5.00'
+      'Balance after $5.00'
     );
     expect(screen.getByTestId('activity-result-withdraw').textContent).toBe(
-      'Balance after · $3.00'
+      'Balance after $3.00'
     );
     expect(
       screen.getByTestId('activity-reconciliation-remaining').textContent
@@ -171,8 +171,8 @@ describe('ActivityPage synthetic evidence grammar', () => {
 
     expect(pendingDeposit).toBeDefined();
     expect(failedWithdrawal).toBeDefined();
-    expect(within(pendingDeposit!).queryByText(/resulting/i)).toBeNull();
-    expect(within(failedWithdrawal!).queryByText(/resulting/i)).toBeNull();
+    expect(within(pendingDeposit!).queryByText(/Balance after/i)).toBeNull();
+    expect(within(failedWithdrawal!).queryByText(/Balance after/i)).toBeNull();
     expect(
       screen
         .queryAllByTestId('tx-status-pill')
@@ -191,7 +191,7 @@ describe('ActivityPage synthetic evidence grammar', () => {
     fireEvent.click(screen.getByTestId('filter-withdrawals'));
 
     expect(screen.getByTestId('activity-result-withdraw').textContent).toBe(
-      'Balance after · $3.00'
+      'Balance after $3.00'
     );
     expect(screen.queryByTestId('activity-result-deposit')).toBeNull();
   });
@@ -206,10 +206,10 @@ describe('ActivityPage synthetic evidence grammar', () => {
 
     expect(screen.getByTestId('activity-balance-reconciliation')).toBeTruthy();
     expect(screen.getByTestId('activity-result-deposit').textContent).toBe(
-      '→ $5.00 resulting'
+      'Balance after $5.00'
     );
     expect(screen.getByTestId('activity-result-withdraw').textContent).toBe(
-      '→ $3.00 resulting'
+      'Balance after $3.00'
     );
     expect(screen.getByTestId('activity-simulation-context').textContent).toMatch(
       /No entry represents real money moving/i
