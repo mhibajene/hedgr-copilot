@@ -51,3 +51,11 @@
 .eventSummary .delta { min-width: 0; max-width: 12rem; overflow-wrap: anywhere; }
 .defaultEvent > div { flex-wrap: wrap; }
 .defaultEvent [data-testid^="activity-delta-"] { max-width: 12rem; overflow-wrap: anywhere; }
+
+.event, .defaultEvent { container-type: inline-size; }
+@container (max-width: 18rem) {
+  .activity .eventSummary { grid-template-columns: minmax(0, 1fr); }
+  .activity .eventSummary .delta { justify-content: space-between; padding-top: 0; max-width: none; }
+  .defaultEvent .eventDescription { flex-basis: 100%; }
+  .defaultEvent .deltaAmount { min-width: 0; flex: 1; text-align: left; }
+}

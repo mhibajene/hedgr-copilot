@@ -148,7 +148,7 @@ function ActivityRow({
       <div className="flex items-center gap-3 sm:gap-4">
         <TransactionTypeIcon type={tx.type} />
 
-        <div className="min-w-0 flex-1">
+        <div className={`min-w-0 flex-1 ${baseline.eventDescription}`}>
           <span
             className={`font-semibold text-hedgr-800 ${finish.eventTitle}`}
             data-testid={`activity-type-${tx.type.toLowerCase()}`}
@@ -172,7 +172,7 @@ function ActivityRow({
           </div>
         </div>
 
-        <div className={`shrink-0 text-right ${finish.eventAmounts}`}>
+        <div className={`shrink-0 text-right ${finish.eventAmounts} ${baseline.deltaAmount}`}>
           <div
             className={`tabular-nums ${finish.eventDelta}`}
             data-testid={`activity-delta-${tx.type.toLowerCase()}`}
