@@ -66,7 +66,7 @@ for (const synthetic of [false, true]) {
         await page.addStyleTag({ content: 'html { font-size: 200%; }' });
         await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(1);
         if (path === '/activity') {
-          for (const label of await page.locator('[data-testid^="activity-type-"], [aria-label="Activity filters"] button').all()) {
+          for (const label of await page.locator('[data-testid^="activity-type-"], [data-testid^="activity-delta-"], [aria-label="Activity filters"] button').all()) {
             // Check actual word wrapping, not the intrinsic width of an inline span.
             const brokenWords = await label.evaluate(el => {
               const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
