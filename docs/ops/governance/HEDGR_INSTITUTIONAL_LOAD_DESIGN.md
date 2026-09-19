@@ -1,9 +1,13 @@
 # Institutional Load Design — 2026-09-19
 
-**Status:** Proposed / not in force  
-**Authority effect:** None until accepted into `HEDGR_STATUS.md` and, where RAP operational cadence is adopted, into ADR **0026** operational wording (or a superseding ADR). This file does not name, activate, amend, or close a ticket.  
-**Parking authority:** Founder Musalwa Hibajene, Hedgr Product Assurance Project chat, 2026-09-19 — “we can proceed” after being told a Hedgr PR was blocked because nested Lane V `CLASS-A-VAL-002-WEEKEND-PREP-001` occupies **§7**. That instruction is Founder-named governance acceptance to **land this Proposed artefact in the repo**. It is not implementation of the three Path B models, not Green revival, not a change to **§7** approved-next, and not an amendment, steal, or close of occupying WEEKEND-PREP product scope.  
-**Basis:** Founder Musalwa Hibajene, Hedgr Product Assurance Project chat, 2026-09-19 — Path B on three Institutional Load forks; instruction to proceed with **design-only repo-native translation**. Recorded in Hedgr Product Assurance Project Context: *Founder Return Brief — Institutional Load (2026-09-19)* and *Institutional Load Recon (2026-09-19)*.  
+**Status:** Proposed / not in force
+
+**Authority effect:** None until accepted into `HEDGR_STATUS.md` and, where RAP operational cadence is adopted, into ADR **0026** operational wording (or a superseding ADR). This file does not name, activate, amend, or close a ticket.
+
+**Parking authority:** Founder Musalwa Hibajene, Hedgr Product Assurance Project chat, 2026-09-19 — “we can proceed” after being told a Hedgr PR was blocked because nested Lane V `CLASS-A-VAL-002-WEEKEND-PREP-001` occupies **§7**. That instruction is Founder-named governance acceptance to **land this Proposed artefact in the repo**. It is not implementation of the three Path B models, not Green revival, not a change to **§7** approved-next, and not an amendment, steal, or close of occupying WEEKEND-PREP product scope.
+
+**Basis:** Founder Musalwa Hibajene, Hedgr Product Assurance Project chat, 2026-09-19 — Path B on three Institutional Load forks; instruction to proceed with **design-only repo-native translation**. Recorded in Hedgr Product Assurance Project Context: *Founder Return Brief — Institutional Load (2026-09-19)* and *Institutional Load Recon (2026-09-19)*.
+
 **Inspected Hedgr HEAD at design:** `bb1b200ceeb1b92af96b53018990e9e30a0c9354` (`main`) — `docs: bind scoped interface delivery to permanent main (#584)`. This parking commit adds only this file.
 
 This is the minimum repo-native translation of the three Path B dispositions. It is written in Hedgr governance grammar so a later governed acceptance can copy from it. It is **not** operating behaviour, **not** implementation, **not** Green revival, and **not** a second product ticket.
