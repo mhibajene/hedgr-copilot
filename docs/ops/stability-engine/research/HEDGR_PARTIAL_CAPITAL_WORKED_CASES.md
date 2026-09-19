@@ -1,0 +1,107 @@
+# Partial-capital Stability Engine — bounded worked cases
+
+**Date:** 2026-09-19  
+**Ticket:** SE-REASON-001-PARTIAL-CAPITAL-001, nested within SE-REASON-001  
+**Status:** Authored research draft; distinct review pending; Founder disposition not supplied  
+**Classification:** Founder Only / internal research; Class A informational / Yellow  
+**Execution effect:** None for product, models, financial operations or other lanes
+
+## 1. Authority, provenance and method
+
+The Founder approved the proposal with “approved to activate and implement”. [HEDGR_STATUS.md §287 / §7a](../../HEDGR_STATUS.md#287-founder-activation--partial-capital-worked-case-translation-2026-09-19) records the four-pair/eight-state, one-artifact and one-review/correction boundary. Activation [PR #575](https://github.com/mhibajene/hedgr-copilot/pull/575) merged at `13a40aafe6963b25f4245e04f76f5f74fbee6ff1`; separate projection rebind [PR #576](https://github.com/mhibajene/hedgr-copilot/pull/576) merged at `419276cd839e3d38f49b54e8f6d9675ad6515ea7`. Before authoring, deterministic RAP check passed with CURRENT freshness, no conflicts, verified source ancestry, V/E parent IDs and disabled execution/mutation/activation/sequencing permissions.
+
+Read-only inputs:
+
+- [Accepted partial-capital strategic decision](../../governance/product/HEDGR_PARTIAL_CAPITAL_DECISION.md) and [functional contract](../HEDGR_STABILITY_ENGINE_FUNCTIONAL_CONTRACT.md).
+- [Retained function model](HEDGR_STABILITY_FUNCTION_MODEL.md), [state model](HEDGR_STABILITY_STATE_MODEL.md) and [interpretation tests](HEDGR_STABILITY_INTERPRETATION_TESTS.md), as non-canonical research inputs, not approved runtime semantics.
+- [D-143 retained interpretation readout](HEDGR_STABILITY_EVIDENCE_INTERPRETATION_READOUT.md), particularly structured-input, simpler-rule, F1/F4 and repeatability qualifications; [D-121 retained retest](HEDGR_STABILITY_REASONING_INDEPENDENT_RETEST_READOUT.md), including BR-05 overlap.
+- [ADR 0013](../../../decisions/0013-allocation-bands-informational-not-accounting.md), [ADR 0014](../../../decisions/0014-stability-engine-read-only-in-sprint-2.md), [ADR 0015](../../../decisions/0015-stability-engine-is-the-system-center.md).
+
+The Implementer constructed four illustrative pairs, not observations of people or assets. All facts below are author-supplied fictional stipulations, not authenticated financial records. There are exactly eight evaluated states: PC-01A/B through PC-04A/B. Each pair contrasts stated conditions; it is not a blinded experiment, statistical comparison, inter-rater validation or extension of earlier instruments. A distinct Verifier reviews this visible artifact for consistency and boundaries, not as an isolated case evaluator.
+
+**Common frame:** `U` is an invented unit, with no FX conversion, real asset, provider or jurisdiction. Day 0 is the comparison date; the horizon ends at the Day 2 payment deadline. The same fictional person owns the stated stocks; no stock is counted both inside and outside the envelope. Amounts represent stipulated case facts, not doctrine about claim valuation. Explicit stock/access/obligation facts are current at Day 0 for this exercise. Unknown wider circumstances remain unknown. No income after Day 0, yield, price change or asset impairment is modelled. This does not prove those factors absent in a real situation.
+
+**Interpretation limit:** “Covers the named obligation” means only that the stated usable resources can meet that stated payment by its deadline under the stipulated access/payment conditions. It does not mean safe-to-spend capacity, adequate reserves, whole-person resilience or an instruction to pay, deposit or withdraw. Any remainder is arithmetic after one specified payment, never uncommitted or investable capital. General capacity and yield capacity are not calculated.
+
+## 2. Pair PC-01 — same envelope, different commitment
+
+**Controlled facts and assumptions:** The intentional envelope is 600 U in both states. None of it can be used before Day 5. External operating liquidity is 400 U, available on Day 0 in the payment medium needed for the named obligation, with no payment fee in this fiction. No other resources or payment route are supplied for this obligation. Its deadline is Day 2. Other commitments and later requirements are not supplied. The single changed fact is this obligation's amount.
+
+| State | Supplied context and liquidity | Supported interpretation and reason | Unknowns / withheld claims / evidence needed | Illustrative Wallet wording — research-only, not approved product copy |
+| --- | --- | --- | --- | --- |
+| **PC-01A** | Envelope 600 U; envelope usable by Day 2: 0 U. Outside: 400 U usable. Named obligation: 300 U on Day 2. | The 400 U outside can cover this 300 U obligation by Day 2; arithmetic after that payment is 100 U. The envelope is not required for this particular payment and its delayed access remains unchanged. Scope: one supplied obligation and access horizon. | Other commitments and future needs are unknown. Do not call 100 U free, a sufficient buffer or yield capacity; do not label overall stability. Additional commitments/timing would be needed for a broader assessment, with separate data authority. | “In this example, the 400 U available outside the envelope covers the stated 300 U payment due on Day 2. The envelope is unavailable until Day 5. Other commitments are not assessed.” |
+| **PC-01B** | Identical, except named obligation: 500 U on Day 2. | The supplied usable resources fall 100 U short for this obligation: 500 minus 400. The unchanged 600 U envelope cannot resolve the Day 2 gap because access begins Day 5. Scope: mismatch in supplied payment resources, not total wealth or insolvency. | Another resource/extension could change the conclusion, but neither is supplied. Establish any such fact before expanding the claim. No recommendation to move capital or diagnosis of overall stability follows. | “In this example, the stated Day 2 payment exceeds the 400 U available outside the envelope by 100 U. The 600 U envelope is unavailable until Day 5. No other way to meet this payment is included.” |
+
+**Pair finding:** Equal envelope balances do not establish equal ability to meet a specified obligation. This is an input/interpretation distinction, not a new numerical reserve threshold or accepted F1 score. D-099 valuation semantics and future-income reliability are unnecessary for this narrow stipulated comparison and remain unresolved.
+
+## 3. Pair PC-02 — inward versus outward movement
+
+**Controlled baseline and assumptions:** Before either hypothetical completed transfer, the person owns 600 U in the envelope and 400 U outside. The named payment remains 300 U on Day 2. A 200 U transfer is complete at Day 0 in each alternative; there is no transfer loss, fee, lock, value change or change of owner. Both stocks remain available immediately. For this pair only, the fiction explicitly supplies a usable route from the envelope to the external payment endpoint before Day 2, with no delay or fee. The person intentionally adjusts the reasoning envelope with the transfer. This is not a claim that Hedgr offers such a route or guarantees future access. There are no duplicate pending/source balances after transfer. Other commitments are unknown.
+
+| State | Supplied context and liquidity | Supported interpretation and reason | Unknowns / withheld claims / evidence needed | Illustrative Wallet wording — research-only, not approved product copy |
+| --- | --- | --- | --- | --- |
+| **PC-02A** | 200 U moved inward. Envelope: 800 U, all stipulated usable by Day 2; outside: 200 U. Total supplied usable resources: 1,000 U. Named obligation: 300 U. | The envelope rose 200 U and external operating funds fell 200 U; ownership total is unchanged. Outside stock alone is 100 U below the payment. The stipulated timely route makes other owned resources accessible for it. This establishes coverage within the fiction, not execution of a future payment. | Without the explicitly supplied return/payment route, external payment coverage would not follow from the total alone. Broader commitments, risks and desired reserves are unknown. Do not call the inward transfer a stability improvement or advise reversing it. | “The envelope increased by 200 U, while outside funds fell by the same amount. Outside funds alone are below the stated payment; this example assumes timely access from the envelope. The larger envelope does not establish greater overall stability.” |
+| **PC-02B** | 200 U moved outward. Envelope: 400 U, all stipulated usable by Day 2; outside: 600 U. Total supplied usable resources: 1,000 U. Same obligation: 300 U. | The envelope fell 200 U and outside funds rose 200 U; ownership total is unchanged. Outside stock alone covers this payment. The envelope decline does not demonstrate loss of owned capital or deterioration in this specified payment coverage. | Wider stability and comparative benefit remain unassessed. No claim that withdrawal is always helpful or that the remaining 300 U outside is free capacity. Real access, costs and ownership would require evidence in any separately authorised context. | “The envelope decreased by 200 U, while outside funds increased by the same amount. The outside funds cover the stated payment in this example. The smaller envelope does not establish lower overall stability.” |
+
+**Pair finding:** Record location, accessibility and payment conditions separately from transfer direction. The pair holds total owned/usable resources constant, but does not claim identical convenience, route dependence or overall stability. Transfer completion alone is insufficient without the separate access stipulations. This reflects a retained evidence distinction without validating an execution mechanism or mapping into EngineState.
+
+## 4. Pair PC-03 — external timing changes, envelope unchanged
+
+**Controlled facts and assumptions:** Envelope 600 U, unusable until Day 5 in both states. External stock 400 U, amount and owner unchanged. Named obligation 300 U on Day 2, paid through the external endpoint without a fee once funds become usable. No earlier partial external access, alternative source, extension or bridge is supplied. The only changed fact is the first usable time of the external stock. A displayed amount is not itself access evidence. Other commitments and longer-term conditions are unknown.
+
+| State | Supplied context and liquidity | Supported interpretation and reason | Unknowns / withheld claims / evidence needed | Illustrative Wallet wording — research-only, not approved product copy |
+| --- | --- | --- | --- | --- |
+| **PC-03A** | External 400 U first usable on Day 1; envelope 600 U first usable Day 5. | Under the stipulated timing, 400 U is available before the Day 2 deadline and covers the named 300 U payment. No use of the envelope is required for that payment. | This is conditional on supplied access timing, not a prediction or authentication of real availability. Other needs remain unknown; no overall stability or future cashflow conclusion. | “This example makes the outside funds available on Day 1, before the stated Day 2 payment. The envelope balance is unchanged and remains unavailable until Day 5.” |
+| **PC-03B** | External 400 U first usable on Day 3; envelope unchanged, usable Day 5. | None of the supplied stock is usable by Day 2. The named 300 U payment is therefore not covered by the supplied resources at its deadline, despite the unchanged displayed 1,000 U total. Scope: this timing mismatch only. | An earlier release or another timely source could change coverage but is not supplied. Do not declare insolvency, nominal loss, an overall F1–F4 direction or a recommended bridge. | “The outside funds in this example become usable on Day 3, after the stated Day 2 payment. The unchanged envelope is unavailable until Day 5. No timely source for this payment is included.” |
+
+**Pair finding:** A contextual consequence can change without a Wallet/envelope amount change. The decisive input here is usable-funds time relative to a named deadline, not headline balance or a transfer-status label. No dynamic liquidity buffer, forecast or policy threshold is derived.
+
+## 5. Pair PC-04 — one relevant amount becomes unknown
+
+**Controlled facts and assumptions:** Envelope 600 U, first usable Day 5; external operating liquidity 400 U, usable Day 0 at the required payment endpoint with no fee. A named obligation exists and is due Day 2. No other payment source is supplied. Other commitments remain unknown in both states. The only changed information is whether the amount of this named obligation is supplied. Unknown means missing evidence, not a financial event or an amount of zero.
+
+| State | Supplied context and liquidity | Supported interpretation and reason | Unknowns / withheld claims / evidence needed | Illustrative Wallet wording — research-only, not approved product copy |
+| --- | --- | --- | --- | --- |
+| **PC-04A** | Named obligation amount known: 300 U. Other stated facts unchanged. | The 400 U outside covers the specified payment; 100 U is the arithmetic remainder after that payment only. The envelope access limitation remains visible. | Unknown other commitments prevent a conclusion about uncommitted capital or overall resilience. No reserve or yield sufficiency finding. | “The supplied 400 U outside the envelope covers this stated 300 U payment. Other commitments are not assessed, and the envelope is unavailable until Day 5.” |
+| **PC-04B** | Named obligation amount not supplied; existence and Day 2 deadline remain known. | Preserve the known 600 U envelope, 400 U outside and access dates. Whether the named obligation is covered cannot be determined because its amount is missing. Do not calculate a gap or remainder or infer financial deterioration from lost information. | The minimum missing fact for this local comparison is the named obligation's amount. Do not request complete transaction history, a full financial profile or a forecast merely to answer this question. Broader conclusions would need their own relevant evidence and authority. | “The example shows 400 U available outside the envelope before Day 2. The amount due that day is missing, so coverage of that payment cannot be determined. The known balances and access dates have not changed.” |
+
+**Pair finding:** Uncertainty should attach to the affected claim. Missing commitment evidence blocks coverage of that commitment; it does not erase established balances or justify “nothing is known”. This does not resolve historical F1/F4 overlap or validate general evidence collection.
+
+## 6. Minimum input/output responsibilities
+
+This is a conceptual responsibilities table, not an executable schema, ingestion permission or final product data model. “Minimum” is relative to the demonstrated named-obligation question, not every functional primitive in the adopted contract.
+
+| Input or control | Why this local question needs it | Justified output / limitation |
+| --- | --- | --- |
+| Explicit scope and intentional envelope | Distinguishes the position under consideration from all money owned | Identify the envelope; never relabel it as total wealth or verified custody |
+| Stated stocks, units, owner and non-overlap | Prevents duplicate counting and invalid amount comparisons | Report supplied amounts with provenance; amount comparison requires a compatible unit, not an invented FX assumption |
+| First usable time and payment usability for relevant resources | Nominal amount and transfer completion do not establish usable access | Describe resources usable by the named deadline; retain route dependence and uncertainty |
+| Named commitment amount and deadline | Determines the specific question and comparator | A qualified coverage/mismatch description, or an explicit missing-fact statement |
+| Relevant timing, cost and routing assumptions | A resource may not reach the required endpoint in time or in full | State conditionality; do not silently add a bridge, zero fees or guaranteed availability |
+| Comparison event / changed fact | Separates location changes, access changes and missing information | Explain what changed and what stayed the same without turning every event into a stability direction |
+| Evidence status, date and completeness boundary | Limits the scope of interpretation | State “given these supplied facts” and distinguish local coverage from wider unknown commitments |
+| Other commitments, desired resilience and uncertain future flows | These are not supplied sufficiently for general capacity | Withhold safe-to-spend, reserve sufficiency, yield capacity and whole-person stability conclusions |
+
+The narrow output is a reasoned statement about one obligation and its horizon, with known facts, conditional assumptions and missing information visible. It is not a total stability score, a new posture category, a ledger entry or an action instruction. Supporting Wallet language must consume that bounded interpretation rather than generate financial logic independently.
+
+## 7. Synthesis and one candidate product question
+
+The eight constructed states illustrate four separations under supplied assumptions: envelope size versus obligation coverage; money location versus owned resources and actual access; amount change versus timing consequence; and missing evidence versus worsening financial facts. This is logical illustration, not proof of user value or model validity. A simple obligation/access comparison explains these cases; they do not demonstrate that the full retained architecture is necessary.
+
+**Minimum candidate slice — scenario-local commitment timing explanation:** If separately authorised, demonstrate one fictional envelope, one external resource and one named commitment, with explicit access dates and a known/unknown commitment amount. A bounded Engine-owned interpretation would explain whether the supplied resources cover that named obligation by its deadline, or which fact is missing; a read-only Wallet presentation would express that explanation with scope and uncertainty visible. No real inputs, fund movements, allocation percentages, F1–F4-to-posture mapping, free-capacity output or existing-route change is implied. This is the single candidate slice, not an implementation brief, schema or permission to build it.
+
+**Why this slice:** It would expose a contextual consequence that the current transaction-delta observation does not explain, while retaining useful known facts under uncertainty. It makes one part of the adopted model tangible without requiring full aggregation, income prediction, literal pots or yield execution.
+
+**What remains unresolved:** Input authenticity, freshness under change, privacy/consent, conflicting records, partial fulfilment or multiple competing obligations, route feasibility outside a fiction, valuation references, future-income reliability, buffer policy and useful user comprehension. Some would require separate design or policy decisions. They are not answered by these cases and are not all made universal prerequisites for unrelated authorised product work. No D-099 semantics, F1–F4 revision, general capacity formula or model acceptance is supplied.
+
+**Implementer recommendation for Founder consideration:** RETAIN this artifact as bounded documentary translation, with its qualifications, and consider the single candidate slice through a later proposal if useful. RETAIN here is a recommendation, not a recorded Founder disposition. Delivery does not activate that slice, close the parent, reopen Lane G, validate market fit or release participant exposure. Founder retains the full retain / revise / remove / retest / escalate choice.
+
+## 8. Distinct review and correction record
+
+Pending one bounded review/correction round. Findings, scope of independence and any corrections will be retained here in a separate commit from authored content. No model-reliability or behavioural-validation claim follows from review.
+
+## 9. Boundaries and delivery record
+
+No existing research, accepted decision/contract, runtime, UI, Form, participant record, doctrine, ADR, dependency or workflow was modified in authoring these cases. Lane V remains independent; Lane G deferred, Lane N idle; D-143 qualifications, D-099 direction only, frozen narrative, participant publication/distribution pause and human rehearsal/release duties remain unchanged. **NO CROSS-LANE EXECUTION IMPACT**.
+
+Authored after the verified activation/rebind gate. Technical verification, distinct review and delivery commit references will be recorded here before delivery. After the bounded round, further case authoring requires separate Founder disposition; no automatic extension or successor.
