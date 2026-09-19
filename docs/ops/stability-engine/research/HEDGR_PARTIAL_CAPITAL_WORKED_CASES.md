@@ -1,9 +1,9 @@
 # Partial-capital Stability Engine — bounded worked cases
 
-**Date:** 2026-09-19  
-**Ticket:** SE-REASON-001-PARTIAL-CAPITAL-001, nested within SE-REASON-001  
-**Status:** Authored pass and bounded distinct review/correction completed; delivery subject to governed merge; Founder disposition not supplied  
-**Classification:** Founder Only / internal research; Class A informational / Yellow  
+**Date:** 2026-09-19<br>
+**Ticket:** SE-REASON-001-PARTIAL-CAPITAL-001, nested within SE-REASON-001<br>
+**Status:** Authored pass and bounded distinct review/correction completed; delivery subject to governed merge; Founder disposition not supplied<br>
+**Classification:** Founder Only / internal research; Class A informational / Yellow<br>
 **Execution effect:** None for product, models, financial operations or other lanes
 
 ## 1. Authority, provenance and method
