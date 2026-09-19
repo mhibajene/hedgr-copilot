@@ -268,7 +268,8 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
     0
   );
   await expect(page.getByText(/unlock all features/i)).toHaveCount(0);
-  await expect(page.getByTestId('synthetic-journey-shell')).toHaveCount(0);
+  // Settings now shares the approved brand header without exposing research internals.
+  await expect(page.getByTestId('synthetic-journey-shell')).toBeVisible();
   const settingsNav = page.getByTestId('nav-links');
   await expect(
     settingsNav.getByRole('link', { name: 'Home', exact: true })
