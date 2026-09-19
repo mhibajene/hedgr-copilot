@@ -11,7 +11,7 @@
 .balance small { font-size: 1rem; color: var(--color-hedgr-100); }
 .balance > div { display: flex; flex-direction: column; align-items: flex-start; }
 .balance p, .balance p span { font-size: .875rem; color: var(--color-hedgr-100); }
-.activity [aria-label="Activity filters"] button { font-size: .875rem; }
+.activity [aria-label="Activity filters"] button { flex: 1 1 auto; min-width: max-content; font-size: .875rem; white-space: nowrap; }
 .events { display: grid; gap: .875rem; }
 .activity .event, .activity .defaultEvent { padding: 0; border: 1px solid var(--home-divider); border-radius: 1rem; background: var(--color-hedgr-white); }
 .activity .eventSummary { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0; padding: 0; }
@@ -53,6 +53,8 @@
 .defaultEvent [data-testid^="activity-delta-"] { max-width: 12rem; overflow-wrap: anywhere; }
 
 .event, .defaultEvent { container-type: inline-size; }
+.balance { container-type: inline-size; }
+.balance > strong, .balance [data-testid="activity-reconciliation-remaining"] { font-size: clamp(1.5rem, 20cqi, 3.5rem); }
 @container (max-width: 18rem) {
   .activity .eventSummary { grid-template-columns: minmax(0, 1fr); }
   .activity .eventSummary .delta { justify-content: space-between; padding-top: 0; max-width: none; }

@@ -10,9 +10,9 @@
   color: var(--color-hedgr-800);
 }
 .brand, .page { width: 100%; max-width: 30rem; margin-inline: auto; padding-inline: 1.125rem; overflow-wrap: anywhere; }
-.brand { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-top: 1rem; padding-bottom: .5rem; }
+.brand { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; padding-top: 1rem; padding-bottom: .5rem; }
 .brand img { width: 5.75rem; height: auto; }
-.brand a { display: inline-flex; align-items: center; min-height: 2.75rem; color: var(--color-hedgr-600); font-size: .875rem; }
+.brand a { display: inline-flex; align-items: center; min-height: 2.75rem; color: var(--color-hedgr-600); font-size: .875rem; overflow-wrap: normal; }
 .shell .page { padding-top: 1rem; padding-bottom: 2rem; background: var(--home-canvas); color: var(--color-hedgr-800); }
 .content { display: grid; gap: 1.25rem; min-width: 0; }
 .page h1 { font-size: 1.75rem; line-height: 1.2; letter-spacing: -.04em; }
