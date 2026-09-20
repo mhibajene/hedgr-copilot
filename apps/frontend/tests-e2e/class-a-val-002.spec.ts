@@ -526,7 +526,7 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
     'activity-balance-reconciliation'
   );
   await expect(activityReconciliation).toContainText(
-    'Simulated Hedgr balance'
+    'Simulated balance'
   );
   await expect(activityReconciliation).toContainText(
     'From completed simulated entries only.'
