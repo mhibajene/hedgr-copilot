@@ -150,7 +150,7 @@ test('all five Settings estimates preserve USD, market, Activity and planning wi
     await page.goto(home);
     await expect(page.getByTestId('usd-balance')).toHaveText('$3.00');
     await expect(page.getByTestId('local-balance')).toHaveText(`≈ ${code} ${amount} display estimate`);
-    await expect(page.getByTestId('dashboard-synthetic-balance-explainer')).toHaveText('Illustrative simulation value only.');
+    await expect(page.getByTestId('dashboard-synthetic-balance-explainer')).toHaveText('Includes your simulated activity.');
     expect(await page.getByTestId('engine-allocation-structure').textContent()).toBe(planning);
     await expect(page.getByRole('combobox', { name: 'Display currency for this simulation' })).toHaveValue(code);
   }

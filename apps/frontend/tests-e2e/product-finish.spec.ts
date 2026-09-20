@@ -42,7 +42,8 @@ for (const synthetic of [true, false]) {
         await page.addStyleTag({ content: `html { font-size: ${textSize}%; }` });
         if (synthetic) {
           await expect(page.getByRole('heading', { name: 'Your position', exact: true })).toBeVisible();
-          await expect(page.getByText('Illustrative simulation value only.', { exact: true })).toBeVisible();
+          await expect(page.getByText('Includes your simulated activity.', { exact: true })).toBeVisible();
+          await expect(page.getByTestId('dashboard-balance-scope')).toHaveCount(0);
         } else {
           const framing = page.getByTestId('dashboard-orientation').getByText('Hedgr helps you understand', { exact: false });
           await expect(framing).toBeVisible();

@@ -250,16 +250,14 @@ describe("DashboardPage engine trust surface", () => {
       /Financial Stability Companion|crypto|blockchain|stablecoin|DeFi|trading|yield routing/i
     );
     expect(screen.getByText("Simulated Hedgr balance")).toBeDefined();
-    const scope = screen.getByTestId("dashboard-balance-scope");
-    expect(Array.from(scope.querySelectorAll("dt, dd")).map(node => node.textContent)).toEqual([
-      "This balance shows", "Your simulated Hedgr balance and activity",
-      "This balance doesn’t tell you", "When funds would be available to withdraw",
-    ]);
-    expect(scope.textContent).not.toMatch(/outside money|commitments|access timing/i);
+    expect(screen.queryByTestId("dashboard-balance-scope")).toBeNull();
     const explainer = screen.getByTestId(
       "dashboard-synthetic-balance-explainer"
     );
-    expect(explainer.textContent).toBe("Illustrative simulation value only.");
+    expect(explainer.textContent).toBe("Includes your simulated activity.");
+    expect(screen.getByTestId("dashboard-balance").textContent).not.toMatch(
+      /Illustrative simulation value only|This balance shows|This balance doesn’t tell you|When funds would be available to withdraw/i
+    );
     expect(explainer.textContent).not.toMatch(
       /fixture|informational posture|settlement/i
     );
@@ -643,7 +641,8 @@ describe("Currency context integration", () => {
     vi.mocked(useSearchParams).mockReturnValue(new URLSearchParams(query) as ReturnType<typeof useSearchParams>);
     render(<DashboardPage />);
     expect(Boolean(screen.queryByTestId("currency-insight"))).toBe(visible);
-    expect(Boolean(screen.queryByTestId("dashboard-balance-scope"))).toBe(visible);
+    expect(Boolean(screen.queryByText("Includes your simulated activity.", { exact: true }))).toBe(visible);
+    expect(screen.queryByTestId("dashboard-balance-scope")).toBeNull();
     if (!visible) expect(screen.queryByText("No other change stands out in the simulated activity.")).toBeNull();
   });
 
