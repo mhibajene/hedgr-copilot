@@ -44,7 +44,7 @@ The draft RAP check emits `MAIN_HISTORY_UNVERIFIED` because its immutable source
 
 ## Visual comparison and resolved findings
 
-The Verifier compared both accepted references with captured runtime at matched logical viewport sizes. Final mobile shows the balance, both scope rows, observation, both actions and Currency context above bottom navigation. Desktop preserves balance/scope beside observation/actions, with header navigation and the full-width currency entry. No clipping or unresolved material hierarchy deviation was found in the inspected final images.
+The Verifier compared both accepted references with captured runtime at matched logical viewport sizes. Source image metadata was independently verified: mobile 853 × 1844, normalized to 390 × 844; desktop 1487 × 1058, normalized to 1440 × 1024. Comparison composites place the normalized source at left and runtime at right. Five fidelity surfaces were checked: shell/navigation and disclosure, balance/estimate/selector, scope rows, observation/actions, and currency-context entry. Final mobile shows the balance, both scope rows, observation, both actions and Currency context above bottom navigation. Desktop preserves balance/scope beside observation/actions, with header navigation and the full-width currency entry. No clipping or unresolved material hierarchy deviation was found in the inspected final images.
 
 Initial mobile spacing pushed the secondary action and currency entry below the reference's initial view. Scoped responsive refinements corrected that density issue without hiding content, reducing the caption below 12px or controls below 44px. The final screenshot test moves the pointer off controls so the primary action is captured in its resting navy state.
 
@@ -60,7 +60,7 @@ The subsequent complete 110-test run passed. Governance preflight also caught an
 
 ## Local evidence references
 
-These paths identify local artifacts; their presence is not a claim of hosted or durable artifact publication. Repository test source reproduces screenshots through `testInfo.outputPath`.
+Local artifacts are retained at `/Users/musalwa/.codex/visualizations/2026/09/20/01a0be24-62e3-73e3-b04f-c5272d6bfae0/scope-first-qa/`: final and initial comparison composites, both full/viewport captures, and build/validation/browser logs. The Verifier confirmed the retained viewport image hashes match the inspected originals. This local retention is not hosted publication. Repository test source reproduces screenshots through `testInfo.outputPath`. The original run paths and hashes are recorded below.
 
 - `/tmp/hedgr-scope-e2e-final.log` — SHA-256 `7d4cb19423b84166ea062c37e35b4b234b4705278a47e9ce8e348cb987c31a20`.
 - `/tmp/hedgr-scope-validate-final.log` — SHA-256 `036e2af615f7ec074f985ecde05ad7c313bfd28605e4edd0aba5cab31fe7873c`.
