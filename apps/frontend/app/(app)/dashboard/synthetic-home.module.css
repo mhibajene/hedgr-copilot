@@ -97,7 +97,7 @@
 .scopeShell .page { padding-top: .5rem; }
 .scopeFirst .content { gap: 1rem; }
 .scopeFirst .position { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: .5rem; }
-.scopeFirst .position > * { margin-top: 0; }
+.scopeFirst .position > * { margin-block: 0; }
 .scopeFirst .balanceHeading { display: contents; }
 .scopeFirst .balanceHeading p { grid-column: 1 / -1; }
 .scopeFirst .balanceHeading select { grid-column: 2; grid-row: 2; align-self: start; margin-top: .5rem; }
@@ -109,26 +109,27 @@
 .scopeFirst .amount [aria-label="USD Balance amount"]::after { color: var(--color-hedgr-600); }
 .scopeFirst .position p, .scopeFirst .amount [data-testid="local-balance"], .scopeFirst .available span { color: var(--color-hedgr-600); }
 .scopeFirst .amount [data-testid="local-balance"] { font-size: 1rem; }
-.scopeFirst .position .balanceCaption { margin-top: .75rem; font-size: .875rem; }
+.scopeFirst .position .balanceCaption { margin-top: 0; font-size: .875rem; }
 .scopeFirst .positionPanel :is(a, select):focus-visible { outline-color: var(--color-hedgr-500); }
-.balanceScope { border-top: 1px solid var(--home-divider); font-size: .9375rem; line-height: 1.4; }
-.balanceScope > div { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.8fr); gap: 1rem; padding-block: .75rem; }
+.balanceScope { border-top: 1px solid var(--home-divider); font-size: .875rem; line-height: 1.4; }
+.balanceScope > div { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.8fr); gap: 1rem; padding-block: .625rem; }
 .balanceScope > div + div { border-top: 1px solid var(--home-divider); }
 .balanceScope dt { font-weight: 600; }
 .balanceScope dd { margin: 0; border-left: 1px solid var(--home-divider); padding-left: 1rem; }
 .scopeFirst .insights { gap: 1rem; }
 .scopeFirst .observation { padding: 1rem; }
-.scopeFirst .observation [data-testid="engine-posture-context"] { line-height: 1.35; }
+.scopeFirst .observation [data-testid="engine-posture-context"] { font-size: 1.0625rem; line-height: 1.35; }
+.scopeFirst .observation p[class~="text-xs"] { font-size: .75rem; line-height: 1.4; }
 .scopeFirst .observation [data-testid="dashboard-current-status"] > * + * { margin-top: .5rem; }
-.scopeFirst .utilities { grid-template-columns: minmax(0, 1fr); gap: .5rem; margin-top: 0; }
+.scopeFirst .utilities { grid-template-columns: minmax(0, 1fr); gap: .25rem; margin-top: 0; }
 .scopeFirst .utility { background: var(--color-hedgr-primary); color: var(--color-hedgr-white); border-color: transparent; min-height: 3rem; border-radius: .625rem; }
 .scopeFirst .utility span { font-size: 1rem; }
-.scopeFirst .utility + .utility { background: transparent; color: var(--color-hedgr-500); }
+.scopeFirst .utility + .utility { min-height: 2.75rem; background: transparent; color: var(--color-hedgr-500); }
 .scopeFirst .utility:hover { background: var(--color-hedgr-600); }
 .scopeFirst .utility + .utility:hover { background: color-mix(in srgb, var(--color-hedgr-primary) 5%, transparent); }
 .scopeFirst .overview > [data-testid="currency-insight"] { margin-top: 1.25rem; }
 .scopeNavigation { position: fixed; inset: auto 0 0; z-index: 40; border-top: 1px solid var(--home-divider); background: var(--home-canvas); }
-.scopeNavigation [data-testid="nav-links"] a { color: var(--color-hedgr-600); border-radius: 0; font-size: .8125rem; }
+.scopeNavigation [data-testid="nav-links"] a { min-height: 2.75rem; color: var(--color-hedgr-600); border-radius: 0; font-size: .8125rem; }
 .scopeNavigation [data-testid="nav-links"] a[aria-current="page"] { background: transparent; color: var(--color-hedgr-800); box-shadow: inset 0 -2px var(--color-hedgr-primary); }
 @container (max-width: 17rem) {
   .balanceScope > div { grid-template-columns: minmax(0, 1fr); gap: .5rem; }
@@ -154,7 +155,7 @@
   .scopeFirst .observation { padding: 2rem; }
   .scopeFirst .observation [data-testid="engine-posture-context"] { font-size: 1.75rem; }
   .scopeFirst .observation [id="dashboard-current-status-label"] { font-size: 1.125rem; }
-  .scopeFirst .observation p { font-size: 1rem; }
+  .scopeFirst .observation p, .scopeFirst .observation p[class~="text-xs"] { font-size: 1rem; }
   .scopeFirst .observation [data-testid="dashboard-current-status"] > * + * { margin-top: 1rem; }
   .scopeFirst .utility { min-height: 4rem; }
   .scopeFirst .utility span { font-size: 1.25rem; }
