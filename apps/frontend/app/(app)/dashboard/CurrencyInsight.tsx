@@ -55,8 +55,18 @@ export function CurrencyInsight({
         {(!compact || !comparison) ? summary : null}
         {comparison ? <>
           {!compact ? <p>Your USD amount is held constant in this comparison.</p> : null}
-          <button ref={triggerRef} type="button" className={compact ? styles.launcher : wallet.link} aria-label={compact ? 'Currency context' : undefined} aria-haspopup="dialog" onClick={() => dialogRef.current?.showModal()}>
-            {compact ? <><span>Currency context<span className={styles.launcherSubtitle}>30-day example · Simulated</span></span><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" focusable="false"><path d="m7 10 5 5 5-5" strokeLinecap="round" strokeLinejoin="round" /></svg></> : 'Understand the comparison'}
+          <button ref={triggerRef} type="button" className={compact ? styles.launcher : wallet.link} aria-label={compact ? 'Currency context' : undefined} aria-describedby={compact ? 'currency-context-inline-insight' : undefined} aria-haspopup="dialog" onClick={() => dialogRef.current?.showModal()}>
+            {compact ? <span className={styles.launcherContent}>
+              <span>Currency context</span>
+              <span className={styles.launcherSubtitle}>30-day example · Simulated</span>
+              <span id="currency-context-inline-insight" className={styles.launcherInsight} data-testid="currency-insight-inline">
+                {comparison.direction === 'higher' || comparison.direction === 'lower' ? <>
+                  <span className={styles.launcherDelta}>{currency} {formatComparisonCents(comparison.deltaCents, true)} {comparison.direction}</span>{' '}
+                  <span className={styles.launcherCause}>from the rate change</span>
+                </> : headline}
+              </span>
+              <span className={styles.launcherAffordance}>Understand the comparison <span aria-hidden="true">→</span></span>
+            </span> : 'Understand the comparison'}
           </button>
           {!compact ? <p className={wallet.limit}>{limit}</p> : null}
           <dialog ref={dialogRef} className={wallet.dialog} aria-labelledby="currency-context-title" onClose={() => triggerRef.current?.focus()} onKeyDown={event => {

@@ -93,13 +93,18 @@
 
 /* Scope-first Home launcher: the fixed-fixture explanation stays in the dialog. */
 .refined.compact { border-color: var(--home-divider); padding-block: 0; }
-.refined.compact > .launcher { display: flex; align-items: center; justify-content: space-between; gap: 1rem; width: 100%; min-height: 5rem; padding: 1rem .25rem; margin: 0; color: var(--color-hedgr-800); text-align: left; font-size: 1rem; line-height: 1.5; text-decoration: none; }
+.refined.compact > .launcher { display: block; width: 100%; min-height: 5rem; padding: 1rem .25rem; margin: 0; color: var(--color-hedgr-800); text-align: left; font-size: 1rem; line-height: 1.5; text-decoration: none; }
+.launcherContent { display: block; min-width: 0; }
 .launcherSubtitle { display: block; font-size: .875rem; font-weight: 400; color: var(--color-hedgr-600); }
-.launcher svg { width: 1.25rem; height: 1.25rem; flex-shrink: 0; transform: rotate(-90deg); color: var(--color-hedgr-600); }
+.launcherInsight { display: block; margin-top: .625rem; color: var(--color-hedgr-800); font-size: .9375rem; font-weight: 400; overflow-wrap: anywhere; }
+.launcherDelta { font-size: 1.125rem; font-weight: 600; font-variant-numeric: tabular-nums; }
+.launcherCause { display: block; color: var(--color-hedgr-600); }
+.launcherAffordance { display: block; width: fit-content; margin-top: .625rem; color: var(--color-hedgr-600); font-size: .875rem; font-weight: 600; text-decoration: underline; text-underline-offset: .2em; }
+.launcher:focus-visible { outline: 2px solid var(--color-hedgr-500); outline-offset: 3px; }
 .compact:has(> .period) { padding-block: 1rem; }
 .compact > .launcher:hover { background: color-mix(in srgb, var(--color-hedgr-primary) 3%, transparent); }
 
 @media (min-width: 64rem) {
-  .refined.compact > .launcher { min-height: 6rem; font-size: 1.25rem; }
-  .launcherSubtitle { font-size: 1.125rem; }
+  .refined.compact > .launcher { min-height: 6rem; font-size: 1.125rem; }
+  .launcherSubtitle { font-size: 1rem; }
 }
