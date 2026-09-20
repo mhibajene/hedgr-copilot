@@ -90,3 +90,11 @@
 
 .cause .direction[data-direction="higher"]::before { content: '↑'; }
 .cause .direction[data-direction="lower"]::before { content: '↓'; }
+
+/* Scope-first Home launcher: the fixed-fixture explanation stays in the dialog. */
+.refined.compact { border-color: var(--home-divider); padding-block: 0; }
+.refined.compact > .launcher { display: flex; align-items: center; justify-content: space-between; gap: 1rem; width: 100%; min-height: 5rem; padding: 1rem .25rem; margin: 0; color: var(--color-hedgr-800); text-align: left; font-size: 1rem; line-height: 1.5; text-decoration: none; }
+.launcherSubtitle { display: block; font-size: .875rem; font-weight: 400; color: var(--color-hedgr-600); }
+.launcher svg { width: 1.25rem; height: 1.25rem; flex-shrink: 0; transform: rotate(-90deg); color: var(--color-hedgr-600); }
+.compact:has(> .period) { padding-block: 1rem; }
+.compact > .launcher:hover { background: color-mix(in srgb, var(--color-hedgr-primary) 3%, transparent); }
