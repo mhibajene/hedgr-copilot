@@ -8,6 +8,8 @@ Last updated: 2026-09-20
 
 **Fork 1 delivery:** §292 records verified governance-surface delivery and explicit activation on permanent-main merge, with a separate verified RAP rebind before operating use. The finite refactor permission is consumed by that delivery. Fork 2 provenance changes and Fork 3 amendment envelopes remain inactive; existing source-first, separate permanent-main rebind, amendment, QA and release procedures remain controlling. No standing delegation follows.
 
+**Fork 2 implementation authorisation:** §293 records the Founder's bounded implementation disposition and §7a names the exact governance/tooling scope. Implementation may start only after its source authority merges to permanent main and the current separate RAP rebind is verified. Fork 2 operating behaviour remains **INACTIVE** until independently verified and explicitly activated in repo-native authority; existing RAP generation, governed PR, and separate permanent-main rebind procedures continue to control. No product ticket, lane, Green delegation or Fork 3 pilot follows.
+
 Repeated earlier standards and dated overrides are retained in the [historical AGENTS snapshot](docs/ops/governance/AGENTS_PRE_FORK_1.md). That snapshot is evidence, not a second execution contract. Numbered STATUS records preserve accepted decisions and technical history.
 
 ## 1) Purpose
