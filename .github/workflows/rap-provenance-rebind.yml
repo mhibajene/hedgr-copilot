@@ -100,7 +100,7 @@ jobs:
           git diff --exit-code -- AGENTS.md docs/ops/HEDGR_STATUS.md docs/decisions/SPRINT-2-ADR-INDEX.md docs/doctrine/HEDGR_ACTIVE_DOCTRINE_INDEX.md
           test "$(git diff --name-only)" = 'docs/ops/bridge/repo-authority-projection.json'
           echo "artifact_sha256=$(jq -r .artifact_sha256 /tmp/rap-written.json)" >> "$GITHUB_OUTPUT"
-          existing=$(gh pr list --state open --head "$RAP_BRANCH" --json number --jq '.[0].number // empty')
+          existing=$(gh pr list --state open --base main --head "$RAP_BRANCH" --json number --jq '.[0].number // empty')
           if [ -n "$existing" ]; then
             echo "Existing mechanical PR #$existing; no duplicate created." >> "$GITHUB_STEP_SUMMARY"
             echo "existing=$existing" >> "$GITHUB_OUTPUT"
@@ -144,6 +144,7 @@ jobs:
           set -euo pipefail
           pr_number=${EXISTING_PR:-$CREATED_PR}
           test -n "$pr_number"
+          test "$(gh pr view "$pr_number" --json baseRefName --jq .baseRefName)" = 'main'
           required='["validate","e2e","E2E smoke (@hedgr/frontend)","Fork-safe checks (typecheck/lint)","build","evidence-pack","Cursor Automation: Hedgr — PR Convergence Review","Vercel"]'
           ready=false
           for attempt in {1..90}; do
