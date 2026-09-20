@@ -180,7 +180,8 @@ for (const synthetic of [true, false]) {
         expect(lines).toBeLessThanOrEqual(3);
         const depositBox = (await deposit.boundingBox())!;
         const activityBox = (await page.getByTestId('dashboard-view-activity').boundingBox())!;
-        expect(activityBox.y).toBeGreaterThanOrEqual(depositBox.y + depositBox.height);
+        if (synthetic) expect(depositBox.y).toBeGreaterThanOrEqual(activityBox.y + activityBox.height);
+        else expect(activityBox.y).toBeGreaterThanOrEqual(depositBox.y + depositBox.height);
       }
     }
   });
