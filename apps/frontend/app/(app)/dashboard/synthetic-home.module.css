@@ -120,7 +120,6 @@
 .scopeFirst .observation { padding: 1rem; }
 .scopeFirst .observation [data-testid="engine-posture-context"] { line-height: 1.35; }
 .scopeFirst .observation [data-testid="dashboard-current-status"] > * + * { margin-top: .5rem; }
-.scopeFirst .observation [data-testid="engine-simulation-boundary"] { font-size: .8125rem; }
 .scopeFirst .utilities { grid-template-columns: minmax(0, 1fr); gap: .5rem; margin-top: 0; }
 .scopeFirst .utility { background: var(--color-hedgr-primary); color: var(--color-hedgr-white); border-color: transparent; min-height: 3rem; border-radius: .625rem; }
 .scopeFirst .utility span { font-size: 1rem; }
