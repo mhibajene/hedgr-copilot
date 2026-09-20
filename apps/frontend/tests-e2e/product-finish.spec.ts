@@ -106,10 +106,10 @@ for (const synthetic of [true, false]) {
     // Move the login pointer away so these assertions measure the resting state.
     await page.mouse.move(0, 0);
     if (synthetic) {
-      await expect(activity).toHaveCSS('background-color', 'rgb(31, 39, 71)');
-      await expect(activity).toHaveCSS('color', 'rgb(255, 255, 255)');
-      await expect(deposit).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
-      await expect(deposit).toHaveCSS('color', 'rgb(70, 88, 160)');
+      await expect(deposit).toHaveCSS('background-color', 'rgb(31, 39, 71)');
+      await expect(deposit).toHaveCSS('color', 'rgb(255, 255, 255)');
+      await expect(activity).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
+      await expect(activity).toHaveCSS('color', 'rgb(70, 88, 160)');
     } else {
       await expect(deposit).toHaveCSS('background-color', 'rgb(250, 248, 245)');
       await expect(deposit).toHaveCSS('color', 'rgb(31, 39, 71)');
@@ -126,7 +126,7 @@ for (const synthetic of [true, false]) {
     await expectMainFits(page);
     await page.screenshot({ path: testInfo.outputPath(`${family}-home.png`), fullPage: true });
     await deposit.focus();
-    await page.keyboard.press(synthetic ? 'Shift+Tab' : 'Tab');
+    await page.keyboard.press('Tab');
     await expect(activity).toBeFocused();
     await expect(activity).toHaveCSS('outline-style', 'solid');
     await page.keyboard.press('Enter');
@@ -180,8 +180,7 @@ for (const synthetic of [true, false]) {
         expect(lines).toBeLessThanOrEqual(3);
         const depositBox = (await deposit.boundingBox())!;
         const activityBox = (await page.getByTestId('dashboard-view-activity').boundingBox())!;
-        if (synthetic) expect(depositBox.y).toBeGreaterThanOrEqual(activityBox.y + activityBox.height);
-        else expect(activityBox.y).toBeGreaterThanOrEqual(depositBox.y + depositBox.height);
+        expect(activityBox.y).toBeGreaterThanOrEqual(depositBox.y + depositBox.height);
       }
     }
   });
