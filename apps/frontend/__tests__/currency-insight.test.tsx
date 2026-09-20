@@ -119,3 +119,41 @@ test.each([
   expect(screen.getByText(meaning)).toBeDefined();
   expect(screen.queryByText('Different local estimate.', { exact: false })).toBeNull();
 });
+
+test('compact Home opens the complete comparison and returns focus without changing stored state', () => {
+  const writes = vi.spyOn(Storage.prototype, 'setItem');
+  Object.defineProperty(HTMLDialogElement.prototype, 'showModal', { configurable: true, value: function (this: HTMLDialogElement) { this.open = true; } });
+  Object.defineProperty(HTMLDialogElement.prototype, 'close', { configurable: true, value: function (this: HTMLDialogElement) { this.open = false; this.dispatchEvent(new Event('close')); } });
+  render(<CurrencyInsight {...props} redesigned compact />);
+  const trigger = screen.getByRole('button', { name: 'Currency context', exact: true });
+  expect(trigger.textContent).toContain('30-day example · Simulated');
+  expect(screen.queryByRole('dialog')).toBeNull();
+  expect(screen.getByTestId('currency-insight-headline').closest('dialog')?.open).toBe(false);
+  fireEvent.click(trigger);
+  const dialog = screen.getByRole('dialog', { name: 'Currency context' });
+  for (const text of ['ZMW 5,700.00', 'ZMW 6,000.00', 'same $300.00', 'not earnings, purchasing power, guaranteed protection or a conversion quote', 'It does not mean you held this amount for 30 days.', 'fees and spreads', 'No money has moved.']) {
+    expect(dialog.textContent).toContain(text);
+  }
+  fireEvent.click(screen.getByRole('button', { name: 'Back to Home' }));
+  expect(screen.queryByRole('dialog')).toBeNull();
+  expect(document.activeElement).toBe(trigger);
+  expect(writes).not.toHaveBeenCalled();
+});
+
+test('compact Home keeps empty, pending and missing data visible without a launchable comparison', () => {
+  const { rerender } = render(<CurrencyInsight {...props} redesigned compact ready={false} />);
+  expect(screen.queryByTestId('currency-insight')).toBeNull();
+  const missing = makeCurrencyExample(20);
+  missing.earlier.status = 'missing';
+  for (const [state, message] of [
+    [{ usdAmount: 0 }, 'No position to compare yet.'],
+    [{ pending: true }, 'Waiting for the simulated position to settle.'],
+    [{ usdAmount: NaN }, 'The simulated position is unavailable.'],
+    [{ example: missing }, 'The earlier example rate is unavailable.'],
+  ] as const) {
+    rerender(<CurrencyInsight {...props} {...state} redesigned compact />);
+    expect(screen.getByText(message)).toBeDefined();
+    expect(screen.queryByRole('button', { name: 'Currency context' })).toBeNull();
+    expect(screen.queryByTestId('currency-insight-direction')).toBeNull();
+  }
+});

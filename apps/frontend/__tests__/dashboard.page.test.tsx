@@ -249,7 +249,13 @@ describe("DashboardPage engine trust surface", () => {
     expect(orientation.textContent).not.toMatch(
       /Financial Stability Companion|crypto|blockchain|stablecoin|DeFi|trading|yield routing/i
     );
-    expect(screen.getByText("Simulated balance")).toBeDefined();
+    expect(screen.getByText("Simulated Hedgr balance")).toBeDefined();
+    const scope = screen.getByTestId("dashboard-balance-scope");
+    expect(Array.from(scope.querySelectorAll("dt, dd")).map(node => node.textContent)).toEqual([
+      "This balance shows", "Your simulated Hedgr balance and activity",
+      "This balance doesn’t tell you", "When funds would be available to withdraw",
+    ]);
+    expect(scope.textContent).not.toMatch(/outside money|commitments|access timing/i);
     const explainer = screen.getByTestId(
       "dashboard-synthetic-balance-explainer"
     );
@@ -633,6 +639,7 @@ describe("Currency context integration", () => {
     vi.mocked(useSearchParams).mockReturnValue(new URLSearchParams(query) as ReturnType<typeof useSearchParams>);
     render(<DashboardPage />);
     expect(Boolean(screen.queryByTestId("currency-insight"))).toBe(visible);
+    expect(Boolean(screen.queryByTestId("dashboard-balance-scope"))).toBe(visible);
     if (!visible) expect(screen.queryByText("No other change stands out in the simulated activity.")).toBeNull();
   });
 
