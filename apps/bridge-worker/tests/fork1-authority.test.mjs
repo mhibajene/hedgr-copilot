@@ -80,8 +80,17 @@ test("Fork 1 preserves projected occupancy, sequencing and all non-authorising f
   const after = project(current);
   assert.equal(before.validation.ok, true);
   assert.equal(after.validation.ok, true);
-  // Only the bounded §2 narrative representation changes; its source locator and
-  // every other projected field/permission/provenance contract remain identical.
+  // Fork 1 changed only the bounded §2 narrative. The later Founder-approved
+  // scope-first Home amendment supersedes exactly two sequencing phrases (§294).
+  // Keep the archive immutable and compare every other field without exception.
+  const sequencing = before.projection.payload.fields.sequencing_posture;
+  assert.equal((sequencing.value.match(/shared-baseline amendment/g) ?? []).length, 2);
+  sequencing.value = sequencing.value.replaceAll(
+    "shared-baseline amendment", "synthetic Home scope-first amendment"
+  );
+  assert.equal((after.projection.payload.fields.sequencing_posture.value.match(
+    /synthetic Home scope-first amendment/g
+  ) ?? []).length, 2);
   const normalized = structuredClone(after.projection);
   normalized.payload.fields.authority_boundaries.value = before.projection.payload.fields.authority_boundaries.value;
   assert.deepEqual(normalized, before.projection);
