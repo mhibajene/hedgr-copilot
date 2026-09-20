@@ -1,5 +1,7 @@
 # Synthetic Home compact FX insight — independent design QA
 
+**Implementer shipped inspection (separate from the Verifier's local QA below):** PR #620 merged at `af41cec939dcbe3ceebff90255c3878b0aed048a`. Vercel deployment `dpl_AVp1GUT5yy4XsJVsfBU66Kf3vDrz` reported `READY`, `target: production`, `githubCommitRef: main`, and that exact SHA before inspection. In a fresh, isolated browser context on `https://hedgr-copilot-frontend.vercel.app`, a local-only settled synthetic $266.67 fixture displayed `ZMW 266.67 higher from the rate change` at 390 and 1440 CSS px. The detailed shelf retained its limits/calculation, Escape returned focus, no document overflow or page errors occurred, and `/dashboard` had no new inline insight. Production screenshots were inspected locally at `/tmp/hedgr-fx-production-390.png` and `/tmp/hedgr-fx-production-1440.png`; their first capture occurred before the logo image finished loading, and a follow-up confirmed the governed logo loaded with natural width 109. This was a synthetic browser-local fixture, not a production transaction, participant session or alteration of the user's browser storage. It does not establish comprehension or release readiness.
+
 Date: 2026-09-20
 
 Ticket: `CLASS-A-VAL-002-WEEKEND-PREP-001`, finite §7a/§297 compact Currency Context amendment
