@@ -10,6 +10,8 @@ Last updated: 2026-09-20
 
 **Fork 2 implementation authorisation:** §293 records the Founder's bounded implementation disposition and §7a names the exact governance/tooling scope. Implementation may start only after its source authority merges to permanent main and the current separate RAP rebind is verified. Fork 2 operating behaviour remains **INACTIVE** until independently verified and explicitly activated in repo-native authority; existing RAP generation, governed PR, and separate permanent-main rebind procedures continue to control. No product ticket, lane, Green delegation or Fork 3 pilot follows.
 
+**Synthetic Home scope-first amendment (2026-09-20):** Direct Founder approval activates and authorises implementation of the accepted mobile/desktop mockups only through the finite §7a amendment inside `CLASS-A-VAL-002-WEEKEND-PREP-001`. Commit source and DESIGN usage before RAP, merge to permanent main and verify a separate projection-only rebind before runtime. Distinct governance/runtime verification and separate runtime/QA commits apply. Default routes, other synthetic screens, the existing Form, paused participant distribution, open parents and Fork 2/3 posture are preserved. Live §7/§7a controls exact scope; no standing refinement or Green delegation follows.
+
 Repeated earlier standards and dated overrides are retained in the [historical AGENTS snapshot](docs/ops/governance/AGENTS_PRE_FORK_1.md). That snapshot is evidence, not a second execution contract. Numbered STATUS records preserve accepted decisions and technical history.
 
 ## 1) Purpose
