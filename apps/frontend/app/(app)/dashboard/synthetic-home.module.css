@@ -164,3 +164,17 @@
   .scopeNavigation [data-testid="nav-links"] { display: flex; gap: 1.5rem; max-width: none; padding: 0; }
   .scopeNavigation [data-testid="nav-links"] a { padding-inline: .5rem; font-size: 1rem; }
 }
+@media (max-width: 63.999rem) {
+  .scopeShell > [data-testid="trust-disclosure-banner"] > div { padding-block: 0; }
+  .scopeFirst .content { gap: .5rem; }
+  .scopeFirst .amount { line-height: 1.05; }
+  .scopeFirst .amount [data-testid="local-balance"] { margin-top: .25rem; }
+  .scopeFirst .positionPanel { gap: 1rem; }
+  .scopeFirst .overviewGrid, .scopeFirst .insights { gap: .75rem; }
+  .scopeFirst .observation { padding: .75rem; }
+  .scopeFirst .observation [id="dashboard-current-status-label"] { font-size: .875rem; line-height: 1.4; }
+  .scopeFirst .observation [data-testid="dashboard-current-status"] > * + * { margin-top: .25rem; }
+  .scopeFirst .utilities { gap: 0; }
+  .scopeFirst .utility { min-height: 2.75rem; }
+  .scopeFirst .overview > [data-testid="currency-insight"] { margin-top: .75rem; }
+}
