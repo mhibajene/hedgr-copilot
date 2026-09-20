@@ -189,7 +189,7 @@ export default function DashboardPage() {
           id="dashboard-total-balance-label"
           className="text-xs font-semibold tracking-tight text-hedgr-800"
         >
-          {syntheticJourneyActive ? "Simulated balance" : "Your current position"}
+          {syntheticJourneyActive ? "Simulated Hedgr balance" : "Your current position"}
         </p>
         {syntheticJourneyActive ? <SimulationDisplayCurrencySelector placement="position" /> : null}
       </div>
@@ -216,7 +216,7 @@ export default function DashboardPage() {
       ) : null}
       {ready && !isLoading && total !== available ? (
         <p className={home.available}>
-          Available now:{" "}
+          {syntheticJourneyActive ? "Available in simulation:" : "Available now:"}{" "}
           <span className="font-medium text-hedgr-dark tabular-nums">
             ${available.toFixed(2)}
           </span>
@@ -236,7 +236,16 @@ export default function DashboardPage() {
     route: "/deposit" | "/withdraw" | "/activity"
   ) => (syntheticJourneyActive ? getSyntheticJourneyHref(route) : route);
 
-  const homeUtilities = (
+  const homeUtilities = syntheticJourneyActive ? (
+    <nav aria-label="Simulation utilities" className={home.utilities} data-testid="dashboard-simulation-utilities">
+      <Link href={productRouteHref("/activity")} className={home.utility} data-testid="dashboard-view-activity">
+        <span>View Activity</span>
+      </Link>
+      <Link href={productRouteHref("/deposit")} className={home.utility} data-testid="dashboard-add-simulated-deposit">
+        <span>Add simulated deposit</span>
+      </Link>
+    </nav>
+  ) : (
     <nav
       aria-label="Simulation utilities"
       className={home.utilities}
@@ -305,6 +314,7 @@ export default function DashboardPage() {
   const currencyContext = currencyContextVisible ? (
     <CurrencyInsight
       redesigned
+      compact={syntheticJourneyActive}
       usdAmount={total}
       currency={displayCurrency}
       latestDisplayRate={getSimulationDisplayRate(displayCurrency)}
@@ -324,16 +334,22 @@ export default function DashboardPage() {
       data-testid="dashboard-current-overview"
     >
       {syntheticJourneyActive ? (
-        <div className={home.overviewGrid}>
-          <div className={home.positionPanel}>
-            {balanceHero}
-            {homeUtilities}
+        <>
+          <div className={home.overviewGrid}>
+            <div className={home.positionPanel}>
+              {balanceHero}
+              <dl className={home.balanceScope} data-testid="dashboard-balance-scope">
+                <div><dt>This balance shows</dt><dd>Your simulated Hedgr balance and activity</dd></div>
+                <div><dt>This balance doesn’t tell you</dt><dd>When funds would be available to withdraw</dd></div>
+              </dl>
+            </div>
+            <div className={home.insights}>
+              {observation}
+              {homeUtilities}
+            </div>
           </div>
-          <div className={home.insights}>
-            {observation}
-            {currencyContext}
-          </div>
-        </div>
+          {currencyContext}
+        </>
       ) : productSimulationActive ? (
         <div className={home.overviewGrid}>
           <div className={home.positionPanel}>{balanceHero}{homeUtilities}</div>
@@ -416,7 +432,7 @@ export default function DashboardPage() {
 
   if (error) {
     return (
-      <main className={home.page}>
+      <main className={`${home.page} ${syntheticJourneyActive ? home.scopeFirst : ""}`}>
         <div
           className={`mx-auto space-y-6 sm:space-y-8 ${
             productSimulationActive ? "max-w-5xl" : "max-w-2xl"
@@ -441,7 +457,7 @@ export default function DashboardPage() {
   }
 
   return (
-    <main className={home.page}>
+    <main className={`${home.page} ${syntheticJourneyActive ? home.scopeFirst : ""}`}>
       <div
         className={home.content}
       >
