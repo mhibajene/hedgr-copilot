@@ -23,16 +23,19 @@ test.beforeEach(async ({ context }) => {
 });
 
 for (const viewport of [{ width: 390, height: 844 }, { width: 1440, height: 1024 }]) {
-  test(`approved scope-first reference at ${viewport.width}px`, async ({ page }, testInfo) => {
+  test(`approved open-balance copy at ${viewport.width}px`, async ({ page }, testInfo) => {
     await page.setViewportSize(viewport);
     await seed(page);
-    const scope = page.getByTestId('dashboard-balance-scope');
-    await expect(scope.locator('dt, dd')).toHaveText([
-      'This balance shows', 'Your simulated Hedgr balance and activity',
-      'This balance doesn’t tell you', 'When funds would be available to withdraw',
-    ]);
+    await expect(page.getByTestId('dashboard-balance-scope')).toHaveCount(0);
     await expect(page.getByTestId('dashboard-balance')).toContainText('Simulated Hedgr balance');
     await expect(page.getByTestId('local-balance')).toHaveText('≈ GHS 45.00 display estimate');
+    const context = page.getByTestId('dashboard-synthetic-balance-explainer');
+    await expect(context).toHaveText('Includes your simulated activity.');
+    await expect(page.getByTestId('dashboard-balance')).not.toContainText('Illustrative simulation value only.');
+    await expect(page.getByText('When funds would be available to withdraw', { exact: true })).toHaveCount(0);
+    expect((await page.getByTestId('local-balance').boundingBox())!.y).toBeGreaterThan((await page.getByTestId('usd-balance').boundingBox())!.y);
+    expect((await context.boundingBox())!.y).toBeGreaterThan((await page.getByTestId('local-balance').boundingBox())!.y);
+    await expect(context).toHaveCSS('font-weight', '600');
     await expect(page.getByTestId('engine-posture-context')).toHaveText('Your simulated withdrawal reduced the balance by $2.00.');
     await expect(page.getByText('This is an observation from the simulation, not a guarantee.')).toBeVisible();
     const utilities = page.getByTestId('dashboard-simulation-utilities');
@@ -64,8 +67,10 @@ for (const viewport of [{ width: 390, height: 844 }, { width: 1440, height: 1024
     else expect(navBox.y).toBeLessThan((await page.getByRole('main').boundingBox())!.y);
     const observation = (await page.getByTestId('dashboard-current-status').boundingBox())!;
     const balance = (await page.getByTestId('dashboard-balance').boundingBox())!;
-    if (viewport.width < 1024) expect(observation.y).toBeGreaterThan((await scope.boundingBox())!.y);
-    else expect(observation.x).toBeGreaterThan(balance.x + balance.width);
+    if (viewport.width < 1024) {
+      expect(observation.y).toBeGreaterThan((await context.boundingBox())!.y);
+      await expect(page.getByTestId('dashboard-balance').locator('..')).toHaveCSS('border-bottom-width', '1px');
+    } else expect(observation.x).toBeGreaterThan(balance.x + balance.width);
     await expect(page.getByTestId('currency-insight-headline')).not.toBeVisible();
     await expect(page.getByRole('button', { name: 'Currency context', exact: true })).toBeVisible();
     // Keep the login pointer off actions when capturing their resting appearance.
@@ -75,14 +80,15 @@ for (const viewport of [{ width: 390, height: 844 }, { width: 1440, height: 1024
   });
 }
 
-test('scope and responsive navigation are isolated to explicit eligible Home', async ({ page }) => {
+test('activity context and responsive navigation are isolated to explicit eligible Home', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1024 });
   await seed(page);
   await page.goto('/dashboard?journey=class-a-val-002');
-  await expect(page.getByTestId('dashboard-balance-scope')).toBeVisible();
+  await expect(page.getByTestId('dashboard-synthetic-balance-explainer')).toHaveText('Includes your simulated activity.');
   for (const path of ['/dashboard', `${home}?scenario=unavailable-data`, '/activity?journey=class-a-val-002', '/settings?journey=class-a-val-002']) {
     await page.goto(path);
     await expect(page.getByTestId('dashboard-balance-scope')).toHaveCount(0);
+    await expect(page.getByText('Includes your simulated activity.', { exact: true })).toHaveCount(0);
     await expect(page.getByRole('navigation', { name: 'Primary', exact: true })).toHaveCSS('position', 'fixed');
     if (path === '/dashboard') {
       await expect(page.getByTestId('dashboard-balance')).toContainText('Your current position');
@@ -91,15 +97,16 @@ test('scope and responsive navigation are isolated to explicit eligible Home', a
   }
 });
 
-test('scope, actions and retained disclosures reflow at 320px and enlarged text', async ({ page }) => {
+test('activity context, actions and retained disclosures reflow at 320px and enlarged text', async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 844 });
   await seed(page);
   await page.addStyleTag({ content: 'html { font-size: 200%; }' });
   await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(1);
-  for (const id of ['dashboard-balance-scope', 'dashboard-simulation-utilities']) {
+  for (const id of ['dashboard-balance', 'dashboard-simulation-utilities']) {
     const region = page.getByTestId(id);
     expect(await region.evaluate(el => el.scrollWidth - el.clientWidth)).toBeLessThanOrEqual(1);
   }
+  await expect(page.getByTestId('dashboard-synthetic-balance-explainer')).toHaveText('Includes your simulated activity.');
   for (const id of ['dashboard-add-simulated-deposit', 'dashboard-view-activity']) {
     expect((await page.getByTestId(id).boundingBox())!.height).toBeGreaterThanOrEqual(44);
   }

@@ -1,4 +1,53 @@
-# Research wallet redesign — design QA
+# Synthetic Home balance-copy amendment — design QA
+
+Date: 2026-09-20
+
+Ticket: `CLASS-A-VAL-002-WEEKEND-PREP-001`, finite §7a balance-copy amendment
+
+Role: distinct Verifier; this is visual/test evidence, not participant or release acceptance.
+
+final result: passed
+
+## Source, render and comparison method
+
+- Source visual truth: `/Users/musalwa/.codex/generated_images/01a0be96-02b7-7612-8ffb-d449ea8f67e9/exec-4bf2404f-4d6b-4b68-be51-583677bd1482.png` (1030 × 1527 pixels). This generated mobile concept has no defined CSS viewport or device scale; it is a hierarchy/copy target, not a 1:1 pixel specification.
+- Rendered implementation: local synthetic Home at `http://127.0.0.1:3000/dashboard-synthetic-journey`, seeded to a completed `$5` simulated deposit and `$2` simulated withdrawal, yielding dynamic `$3.00 USD` and `≈ GHS 45.00 display estimate`. The full-page screenshot is `apps/frontend/test-results/scope-first-approved-open-balance-copy-at-390px-chromium/scope-first-GHS3-390.png` (390 × 1136 pixels); its viewport capture is the adjacent `scope-first-GHS3-390-viewport.png` (390 × 844 pixels). CSS viewport was 390 × 844 at device scale factor 1. These are ignored, reproducible Playwright output files, not new governed assets.
+- Desktop control: `apps/frontend/test-results/scope-first-approved-open-balance-copy-at-1440px-chromium/scope-first-GHS3-1440.png` (1440 × 1147 pixels), CSS viewport 1440 × 1024 at device scale factor 1.
+- I opened the source and seeded 390px render together in one image-review input, then inspected the desktop render and a live in-app-browser 390px/320px view. I did not force pixel alignment: the source is a stylized, larger-density image and its example `$253.00`/`GHS 3,795.00` intentionally differs from the test fixture. The source's View Activity-first CTA and approximate brand mark are superseded by permanent-main §7a/§295 and governed assets.
+- Focused-region comparison: the original-resolution paired images make the balance label, USD/local figures, new sentence, mobile divider, observation title/caption and actions readable. No smaller crop was needed; the desktop screenshot separately confirms the two-column composition.
+
+## Findings
+
+No actionable P0/P1/P2 mismatch in the authorised balance-copy region. The open balance remains the focal point; the exact semibold “Includes your simulated activity.” follows the local estimate; a quiet existing-token mobile divider separates it from the peach “What changed” card. The removed illustrative caption and both old scope rows do not appear. The observation remains separate, and deposit remains the filled first CTA with Activity secondary.
+
+The source uses a larger `$253` example and different observation amount, which are dynamic fixture differences, not implementation drift. At 320px the USD suffix can occupy its own line and the local estimate can wrap; the pre-existing amount/selector geometry remains legible, unclipped and horizontally contained at normal and 200% root text. This is an accepted narrow-width adaptation, not a new balance-copy regression; no geometry change is authorised here.
+
+## Required fidelity surfaces
+
+- Fonts and typography: rendered activity context uses the existing Plus Jakarta Sans / Inter / Geist fallback stack, 600 weight and muted navy `rgb(54, 68, 124)`. Its 16px live desktop size and responsive mobile size are restrained relative to the dynamic amount. Text wraps without truncation at 320px and 200% root text.
+- Spacing and layout: source and render preserve label → amount → estimate → context → divider → observation → actions. Mobile is single-column; desktop places the open balance beside the separate observation/actions. The 1px mobile separator restores the mock's quiet break without another card.
+- Colors and tokens: ivory canvas, navy focal balance/primary action, peach observation, muted navy context and divider remain governed Hedgr values. No new palette, glow, gradient or decorative elevation is introduced.
+- Image quality and assets: the implementation retains the governed Hedgr mark rather than the mockup-generated approximation. No raster, logo, icon or image asset was added or replaced.
+- Copy and content: the new sentence is exact. Existing simulation/no-real-money disclosure, observation non-guarantee, selected-currency estimate, planning/disclosures, replay and default-route copy remain. The mock's stale CTA order is intentionally not translated.
+
+## Accessibility, interactions and comparison history
+
+- The 390px and 1440px render assertions cover exact copy, dynamic amounts, reading order, absent superseded wording, semibold context, mobile divider, observation, deposit-first CTA styles/targets/routes, navigation and disclosure continuity.
+- The 320px/200% test found no horizontal overflow, clipped balance or action, lost 44px target, or inaccessible planning/disclosure control. The broader finish test passed at 320/390/700/1280px and 100%/200% text. Default Home and unavailable-data controls remain separate.
+- In-app-browser error logs for the local Home were empty. Local development screenshots can show the Next.js development indicator; it is not product UI.
+- Before my independent comparison, the Implementer identified the mock's missing mobile separator and added a scoped 1px existing-token border in separate runtime commit `951e97d`. My first independent comparison used the post-fix 390px screenshot above; its E2E assertion also verifies the border. No P0/P1/P2 issue or further visual iteration followed.
+
+Verification: dashboard unit test **17/17 passed**; targeted hermetic browser suite **29/29 passed**; final amended scope-first browser spec **4/4 passed**. Full repository validation, production build, hosted checks and exact-revision shipped inspection remain separate delivery gates, not claims of this local design QA. Participant comprehension of whether the activity has *already changed* the balance remains untested; publication/distribution stays paused.
+
+**Open questions:** none for this finite UI/copy amendment. A later Founder-owned comprehension test may evaluate the new sentence without altering it by inference.
+
+**Implementation checklist:** retain the exact new line, removed scope/caption, existing-token mobile divider, dynamic estimates, separate observation and deposit-first actions; run the governed delivery gates before closeout.
+
+**Follow-up polish:** none authorised under this amendment.
+
+---
+
+# Research wallet redesign — historical design QA
 
 Date: 2026-09-15
 Ticket: CLASS-A-VAL-002-WALLET-REDESIGN-001 / D-147 / §279

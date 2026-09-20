@@ -299,7 +299,7 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   ).toBeVisible();
   await expect(
     page.getByTestId('dashboard-synthetic-balance-explainer')
-  ).toHaveText('Illustrative simulation value only.');
+  ).toHaveText('Includes your simulated activity.');
   await expect(page.getByTestId('dashboard-simulation-utilities')).toBeVisible();
   await expect(page.getByTestId('dashboard-add-simulated-deposit')).toHaveAttribute(
     'href',
