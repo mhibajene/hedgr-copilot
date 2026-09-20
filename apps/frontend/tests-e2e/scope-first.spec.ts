@@ -1,21 +1,21 @@
 import { expect, test, type Page } from '@playwright/test';
 
 const home = '/dashboard-synthetic-journey';
-async function seed(page: Page) {
+async function seed(page: Page, mockupAmount = false) {
   await page.goto('/login');
   await page.getByPlaceholder('you@example.com').fill('scope-first@hedgr.test');
   await page.getByRole('button', { name: 'Continue', exact: true }).click();
   await expect(page).toHaveURL(/\/dashboard$/);
-  await page.evaluate(() => {
+  await page.evaluate(({ depositUsd, withdrawUsd }) => {
     localStorage.setItem('hedgr:ledger', JSON.stringify({ version: 2, transactions: [
-      { txn_ref: 'scope-deposit', type: 'deposit', status: 'settled', amount_zmw: 100, amount_usd: 5, fx_rate: 20, created_at: 1000, updated_at: 1000 },
-      { txn_ref: 'scope-withdraw', type: 'withdrawal', status: 'settled', amount_zmw: 0, amount_usd: 2, fx_rate: 0, created_at: 2000, updated_at: 2000 },
+      { txn_ref: 'scope-deposit', type: 'deposit', status: 'settled', amount_zmw: depositUsd * 20, amount_usd: depositUsd, fx_rate: 20, created_at: 1000, updated_at: 1000 },
+      { txn_ref: 'scope-withdraw', type: 'withdrawal', status: 'settled', amount_zmw: 0, amount_usd: withdrawUsd, fx_rate: 0, created_at: 2000, updated_at: 2000 },
     ] }));
-    localStorage.setItem('hedgr:wallet', JSON.stringify({ state: { usdBalance: 3 }, version: 0 }));
+    localStorage.setItem('hedgr:wallet', JSON.stringify({ state: { usdBalance: depositUsd - withdrawUsd }, version: 0 }));
     localStorage.setItem('hedgr.simulation.display-currency', 'GHS');
-  });
+  }, { depositUsd: mockupAmount ? 503 : 5, withdrawUsd: mockupAmount ? 250 : 2 });
   await page.goto(home);
-  await expect(page.getByTestId('usd-balance')).toHaveText('$3.00');
+  await expect(page.getByTestId('usd-balance')).toHaveText(mockupAmount ? '$253.00' : '$3.00');
 }
 
 test.beforeEach(async ({ context }) => {
@@ -119,3 +119,52 @@ test('activity context, actions and retained disclosures reflow at 320px and enl
   await expect(page.getByTestId('engine-allocation-boundary')).toBeVisible();
   await expect(page.getByRole('button', { name: 'Restart simulated journey' })).toBeVisible();
 });
+
+for (const width of [320, 390, 1280, 1440]) {
+  for (const textSize of [100, 200]) {
+    test(`mockup amount stays legible at ${width}px and ${textSize}% text`, async ({ page }, testInfo) => {
+      await page.setViewportSize({ width, height: width < 1024 ? 844 : 1024 });
+      await seed(page, true);
+      await page.addStyleTag({ content: `html { font-size: ${textSize}%; }` });
+      const balance = page.getByTestId('dashboard-balance');
+      const amount = page.getByTestId('usd-balance');
+      const estimate = page.getByTestId('local-balance');
+      await expect(amount).toHaveText('$253.00');
+      await expect(estimate).toHaveText('≈ GHS 3,795.00 display estimate');
+      await expect(page.getByRole('combobox', { name: 'Display currency for this simulation' })).toHaveValue('GHS');
+      await expect(page.getByTestId('dashboard-synthetic-balance-explainer')).toHaveText('Includes your simulated activity.');
+      await expect(page.getByTestId('engine-posture-context')).toHaveText('Your simulated withdrawal reduced the balance by $250.00.');
+      await expect(page.getByText('This is an observation from the simulation, not a guarantee.')).toBeVisible();
+      await expect(page.getByTestId('dashboard-simulation-utilities').locator(':scope > a').first()).toHaveAttribute('data-testid', 'dashboard-add-simulated-deposit');
+      await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(1);
+      for (const region of [balance, amount, estimate]) {
+        expect(await region.evaluate(el => el.scrollWidth - el.clientWidth)).toBeLessThanOrEqual(1);
+      }
+      const numericLineCount = await amount.evaluate(el => {
+        const range = document.createRange();
+        range.selectNodeContents(el.firstChild!);
+        return range.getClientRects().length;
+      });
+      expect(numericLineCount).toBe(1);
+      const splitLabelWords = await balance.getByText('Simulated Hedgr balance', { exact: true }).evaluate(el => {
+        const node = el.firstChild!;
+        const words = Array.from(node.textContent!.matchAll(/\S+/g));
+        return words.filter(word => {
+          const range = document.createRange();
+          range.setStart(node, word.index);
+          range.setEnd(node, word.index + word[0].length);
+          return range.getClientRects().length > 1;
+        }).map(word => word[0]);
+      });
+      expect(splitLabelWords).toEqual([]);
+      if (width === 390 && textSize === 100) {
+        const metrics = await amount.evaluate(el => {
+          const style = getComputedStyle(el);
+          return { height: el.getBoundingClientRect().height, lineHeight: Number.parseFloat(style.lineHeight) };
+        });
+        expect(metrics.height).toBeLessThanOrEqual(metrics.lineHeight + 1);
+      }
+      await page.screenshot({ path: testInfo.outputPath(`balance-fit-GHS253-${width}-${textSize}.png`), fullPage: true });
+    });
+  }
+}
