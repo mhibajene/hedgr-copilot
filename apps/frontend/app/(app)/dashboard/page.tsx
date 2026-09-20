@@ -238,11 +238,11 @@ export default function DashboardPage() {
 
   const homeUtilities = syntheticJourneyActive ? (
     <nav aria-label="Simulation utilities" className={home.utilities} data-testid="dashboard-simulation-utilities">
-      <Link href={productRouteHref("/activity")} className={home.utility} data-testid="dashboard-view-activity">
-        <span>View Activity</span>
-      </Link>
       <Link href={productRouteHref("/deposit")} className={home.utility} data-testid="dashboard-add-simulated-deposit">
         <span>Add simulated deposit</span>
+      </Link>
+      <Link href={productRouteHref("/activity")} className={home.utility} data-testid="dashboard-view-activity">
+        <span>View Activity</span>
       </Link>
     </nav>
   ) : (
