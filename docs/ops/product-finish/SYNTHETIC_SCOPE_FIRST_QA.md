@@ -74,3 +74,41 @@ The Implementer's additional CUA traversal on the final local build reported GHS
 Required hosted checks, governed runtime delivery, shipped mobile/desktop/control inspection, completion source recording and the separate permanent-main RAP rebind still apply. A supported rebase merge may retain separate runtime and independent-QA commits on permanent main; no checks or branch protection may be bypassed.
 
 This evidence does not establish participant comprehension, demand, withdrawal readiness, live accounting, release permission or parent closure. Existing Form/#550, human rehearsal/timing duties, paused publication/distribution, open V/E parents and deferred Lane G remain unchanged. Verified delivery consumes only this finite presentation amendment.
+
+## Hosted delivery and shipped follow-up — 2026-09-20
+
+This follow-up supersedes the earlier pending hosted/runtime/deployment statements while retaining the original local verification record. **Runtime is merged and deployed; completion-source delivery and its separate permanent-main RAP rebind remain pending.**
+
+The Verifier independently queried GitHub PR and deployment records. [PR #602](https://github.com/mhibajene/hedgr-copilot/pull/602) merged by rebase at `2026-09-20T10:58:35Z`, final permanent-main revision `e548dd02c80e7d9eb97c646514685343d2155c05`. The checked PR head was `4bc4490596883d8b560686cee175147cdc92e25b`. Git tree comparison between that head and merged revision is empty; runtime and independent verification commits remain separate in permanent-main history.
+
+All reported hosted checks completed successfully, including [validate](https://github.com/mhibajene/hedgr-copilot/actions/runs/35506252561/job/106066459506), [E2E](https://github.com/mhibajene/hedgr-copilot/actions/runs/35506252546/job/106066459529), [build](https://github.com/mhibajene/hedgr-copilot/actions/runs/35506252552/job/106066459484), [typecheck/lint](https://github.com/mhibajene/hedgr-copilot/actions/runs/35506252552/job/106066459391), snapshots, evidence-pack and PR Convergence Review. No check or protection bypass is evidenced or claimed.
+
+GitHub deployment `6551983976` records environment **Production**, exact SHA `e548dd02c80e7d9eb97c646514685343d2155c05`, and successful status at `2026-09-20T10:59:35Z`, with [deployment environment URL](https://hedgr-copilot-frontend-egkb0xyxo-hedgr.vercel.app). The Verifier checked the SHA/environment/status association; this does not itself prove visual or participant acceptance.
+
+### Rebase provenance mapping
+
+| Original reviewed commit | Permanent-main commit | Role |
+| --- | --- | --- |
+| `63580c5` | `0d6cf838aa370430dd2c2b1826e56978b3128fd0` | Initial runtime |
+| `5b58a3e` | `ebf3b57a6eda99e2c87bf2c5ad2b3d4d5d61f42c` | Independent tests |
+| `e45f95a` | `adf46fc68a6d61ca8a0e85f6b16d27498b6b1c78` | Responsive runtime |
+| `15efaf7` | `8960bc66f1103a85bb0c9faf41493acf699c3e1e` | Runtime selector cleanup |
+| `234daed` | `84b364265dfcf20482533436dd31887d8064a83e` | Activity assertion correction |
+| `d569fbd` | `2f4eb1fb01b43e064caf0891b4f26057f154e53a` | Mobile density runtime |
+| `d966272` | `47a36d154118e943f21fb4bfee40b1ec97b550b8` | Independent action-order check |
+| `0822670` | `b730aaefa8dd9d75aab3a7b14c967cfc50784a94` | Verification scope source |
+| `bc4d50a` | `ec90d10111489b208212d5bd0c3f283921472e62` | Exact route-caption checks |
+| `2dab4ce` | `b1937a87f5333b64d44b3d0c78b9c4cb1c519f69` | Balance label scale |
+| `29d94cb` | `741995b590ac5b6344e9e470eb47caf812ca5d00` | Committed-source projection |
+| `b138617` | `0f7cbff6d3ade4af69bef2fa2a204ede38787d96` | Final responsive runtime |
+| `d4b1e17` | `d8a6823071ce032cde910a7459dfd57c4b9e0d36` | Final independent screenshot check |
+| `21b3b00` | `b006aface0def68ac35385bb17554404af603b1d` | Independent QA record |
+| `4bc4490` | `e548dd02c80e7d9eb97c646514685343d2155c05` | Matched-reference artifact record |
+
+### Attributed shipped inspection
+
+The Implementer reports direct CUA inspection of the shipped synthetic Home and default control, separately from the Verifier's local rendered-image review and GitHub verification. Effective browser dimensions were DOM-confirmed at approximately 390 × 843 mobile and 1440 × 1023 desktop. The browser's 80% scale required viewport overrides of 312 × 675 and 1152 × 819. Initial viewport captures were clipped by the tool; full-page captures corrected the inspection evidence. These one-pixel-height differences are recorded rather than claimed as exact local-reference viewport equality.
+
+Observed shipped checks: exact scope copy and USD 3 / GHS 45 estimate; mobile bottom navigation and desktop header navigation; complete currency dialog with GHS 42.75 / 45, rates 14.25 / 15, difference 2.25 and expanded fixture/calculation limits; Escape returning focus to its launcher; retained planning and disclosures; unchanged Activity with completed USD 5 deposit, USD 2 withdrawal and USD 3 remainder; default dashboard's existing navy card and previous copy; empty browser warning/error logs. No new production transaction or reset was performed; existing synthetic state was retained. The viewport override was reset afterward.
+
+This completes recorded technical deployment inspection only. Remaining weekend duties, explicit release conditions, participant distribution pause, open parents and all financial boundaries are unchanged. Completion-source approval/checks/merge and separate permanent-main projection rebind still control final governance closeout.
