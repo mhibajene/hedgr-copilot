@@ -52,6 +52,9 @@ for (const [currency, rate, deltaFive, deltaThree] of [
     await page.getByRole('button', { name: 'Confirm', exact: true }).click();
     await expect(page.getByTestId('deposit-confirmation-region')).toContainText('simulated balance increased by $5.00');
     await page.goto(home);
+    await expect(page.getByTestId('currency-insight-inline')).toContainText(`${currency} ${deltaFive} higher`);
+    await expect(page.getByTestId('currency-insight-inline')).toContainText('from the rate change');
+    await expect(page.getByRole('button', { name: 'Currency context', exact: true })).toHaveAttribute('aria-describedby', 'currency-context-inline-insight');
     await page.getByRole('button', { name: 'Currency context', exact: true }).click();
     await expect(page.getByTestId('currency-insight-headline')).toContainText(`${currency} ${deltaFive} higher from the rate change`);
     await page.getByRole('button', { name: 'Back to Home' }).click();
@@ -67,6 +70,7 @@ for (const [currency, rate, deltaFive, deltaThree] of [
     await expect(page.getByTestId('usd-balance')).toHaveText('$3.00');
     const local = (rate * 3).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     await expect(page.getByTestId('local-balance')).toHaveText(`≈ ${currency} ${local} display estimate`);
+    await expect(page.getByTestId('currency-insight-inline')).toContainText(`${currency} ${deltaThree} higher`);
     await page.getByRole('button', { name: 'Currency context', exact: true }).click();
     await expect(page.getByTestId('currency-insight-headline')).toContainText(`${currency} ${deltaThree} higher from the rate change`);
     await page.getByRole('button', { name: 'Back to Home' }).click();
@@ -104,6 +108,7 @@ for (const [currency, rate, deltaFive, deltaThree] of [
     await page.getByRole('button', { name: 'Back to Home' }).click();
     await page.goto('/dashboard');
     await expect(page.getByTestId('currency-insight')).toHaveCount(0);
+    await expect(page.getByTestId('currency-insight-inline')).toHaveCount(0);
     await expect(page.getByTestId('engine-simulation-attention-answer')).toHaveText('No other change stands out in the information shown.');
     await page.goto(`${home}?scenario=unavailable-data`);
     await expect(page.getByTestId('currency-insight')).toHaveCount(0);
@@ -114,6 +119,7 @@ for (const [currency, rate, deltaFive, deltaThree] of [
     await expect(page.getByTestId('usd-balance')).toHaveText('$0.00');
     await expect(page.getByText('No position to compare yet.')).toBeVisible();
     await expect(page.getByTestId('currency-insight-direction')).toHaveCount(0);
+    await expect(page.getByTestId('currency-insight-inline')).toHaveCount(0);
     expect((await storedState(page))[key]).toBe(currency);
   });
 }
@@ -122,6 +128,7 @@ test('pending position withholds direction and preserves the existing available/
   await seedPosition(page, true);
   await expect(page.getByText('Waiting for the simulated position to settle.')).toBeVisible();
   await expect(page.getByTestId('currency-insight-direction')).toHaveCount(0);
+  await expect(page.getByTestId('currency-insight-inline')).toHaveCount(0);
   await expect(page.getByTestId('dashboard-balance')).toContainText('Available in simulation: $0.00');
   await expect(page.getByTestId('dashboard-balance')).toContainText('Pending +300.00 USD');
 });
@@ -185,7 +192,47 @@ test('blocked preference storage preserves a usable in-session comparison', asyn
   await expect(page.getByTestId('usd-balance')).toHaveText('$300.00');
 });
 
-for (const width of [320, 390, 700, 1280]) {
+test('inline insight is one keyboard launcher with a complete unchanged shelf and focus return', async ({ page }) => {
+  await seedPosition(page);
+  const before = await storedState(page);
+  const launcher = page.getByRole('button', { name: 'Currency context', exact: true });
+  await expect(launcher).toHaveAccessibleDescription('ZMW 300 higher from the rate change');
+  await expect(launcher).toContainText('Understand the comparison');
+  await expect(page.getByTestId('currency-insight-inline')).toHaveText('ZMW 300 higher from the rate change');
+  await launcher.focus();
+  await page.keyboard.press('Enter');
+  const dialog = page.getByRole('dialog', { name: 'Currency context', exact: true });
+  await expect(dialog).toBeVisible();
+  await expect(dialog).toContainText('Same USD amount.');
+  await expect(dialog).toContainText('Different local estimate.');
+  await expect(dialog).toContainText('ZMW 5,700.00');
+  await expect(dialog).toContainText('ZMW 6,000.00');
+  await expect(dialog).toContainText('FX comparison only—not earnings, purchasing power, guaranteed protection or a conversion quote.');
+  await expect(dialog).toContainText('Invented research example. Not your account history or live market data.');
+  await page.keyboard.press('Escape');
+  await expect(dialog).not.toBeVisible();
+  await expect(launcher).toBeFocused();
+  expect(await storedState(page)).toEqual(before);
+});
+
+test('compact KES result retains the reference signal without restoring its full inline component', async ({ page }, testInfo) => {
+  await page.setViewportSize({ width: 390, height: 900 });
+  await seedPosition(page);
+  await page.evaluate(key => localStorage.setItem(key, 'KES'), key);
+  await page.reload();
+  const section = page.getByTestId('currency-insight');
+  const launcher = page.getByRole('button', { name: 'Currency context', exact: true });
+  await expect(page.getByTestId('local-balance')).toHaveText('≈ KES 39,000.00 display estimate');
+  await expect(page.getByTestId('currency-insight-inline')).toHaveText('KES 1,950 higher from the rate change');
+  await expect(launcher).toHaveAccessibleDescription('KES 1,950 higher from the rate change');
+  await expect(launcher).toContainText('Understand the comparison');
+  await expect(launcher).not.toContainText('Your USD amount is held constant in this comparison.');
+  await expect(section.locator('button [data-testid="currency-insight-direction"]')).toHaveCount(0);
+  await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(1);
+  await page.screenshot({ path: testInfo.outputPath('currency-inline-KES300-390.png'), fullPage: true });
+});
+
+for (const width of [320, 390, 700, 1280, 1440]) {
   test(`currency context reflows at ${width}px and 200% text with keyboard disclosure`, async ({ page }, testInfo) => {
     await page.setViewportSize({ width, height: 900 });
     const errors: string[] = [];
@@ -194,6 +241,14 @@ for (const width of [320, 390, 700, 1280]) {
     for (const size of [100, 200]) {
       await page.addStyleTag({ content: `html { font-size: ${size}%; }` });
       const section = page.getByTestId('currency-insight');
+      const launcher = page.getByRole('button', { name: 'Currency context', exact: true });
+      await expect(page.getByTestId('currency-insight-inline')).toContainText('ZMW 300 higher');
+      await expect(page.getByTestId('currency-insight-inline')).toContainText('from the rate change');
+      await expect(launcher).toHaveAccessibleDescription('ZMW 300 higher from the rate change');
+      expect((await launcher.boundingBox())!.height).toBeGreaterThanOrEqual(44);
+      await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)).toBeLessThanOrEqual(1);
+      expect(await launcher.evaluate(el => el.scrollWidth - el.clientWidth)).toBeLessThanOrEqual(1);
+      await page.screenshot({ path: testInfo.outputPath(`currency-inline-${width}-${size}.png`), fullPage: true });
       await page.getByRole('button', { name: 'Currency context', exact: true }).click();
       const dialog = page.getByRole('dialog', { name: 'Currency context', exact: true });
       const summary = dialog.locator('summary');
