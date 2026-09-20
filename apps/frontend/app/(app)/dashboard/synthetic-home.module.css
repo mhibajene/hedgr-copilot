@@ -103,13 +103,13 @@
 .scopeFirst .balanceHeading select { grid-column: 2; grid-row: 2; align-self: start; margin-top: .5rem; }
 .scopeFirst .amount { grid-column: 1; grid-row: 2; min-width: 0; }
 .scopeFirst .balanceCaption, .scopeFirst .available { grid-column: 1 / -1; }
-.scopeFirst .position .balanceHeading p { color: var(--color-hedgr-600); font-size: 1rem; font-weight: 400; }
+.scopeFirst .position .balanceHeading p { color: var(--color-hedgr-600); font-size: .875rem; font-weight: 400; }
 .scopeFirst .balanceHeading select { background: transparent; color: var(--color-hedgr-800); border-color: var(--color-hedgr-300); }
 .scopeFirst .amount { color: var(--color-hedgr-800); font-size: clamp(1.5rem, 22cqi, 4.5rem); }
 .scopeFirst .amount [aria-label="USD Balance amount"]::after { color: var(--color-hedgr-600); }
 .scopeFirst .position p, .scopeFirst .amount [data-testid="local-balance"], .scopeFirst .available span { color: var(--color-hedgr-600); }
 .scopeFirst .amount [data-testid="local-balance"] { font-size: 1rem; }
-.scopeFirst .position .balanceCaption { margin-top: 0; font-size: .875rem; }
+.scopeFirst .position .balanceCaption { margin-top: 0; font-size: .8125rem; }
 .scopeFirst .positionPanel :is(a, select):focus-visible { outline-color: var(--color-hedgr-500); }
 .balanceScope { border-top: 1px solid var(--home-divider); font-size: .875rem; line-height: 1.4; }
 .balanceScope > div { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.8fr); gap: 1rem; padding-block: .625rem; }
