@@ -35,6 +35,23 @@ for (const viewport of [{ width: 390, height: 844 }, { width: 1440, height: 1024
     await expect(page.getByTestId('local-balance')).toHaveText('≈ GHS 45.00 display estimate');
     await expect(page.getByTestId('engine-posture-context')).toHaveText('Your simulated withdrawal reduced the balance by $2.00.');
     await expect(page.getByText('This is an observation from the simulation, not a guarantee.')).toBeVisible();
+    const utilities = page.getByTestId('dashboard-simulation-utilities');
+    const deposit = page.getByTestId('dashboard-add-simulated-deposit');
+    const activity = page.getByTestId('dashboard-view-activity');
+    await expect(utilities.locator(':scope > a').first()).toHaveAttribute('data-testid', 'dashboard-add-simulated-deposit');
+    await expect(utilities.locator(':scope > a').last()).toHaveAttribute('data-testid', 'dashboard-view-activity');
+    await expect(deposit).toHaveAttribute('href', '/deposit?journey=class-a-val-002');
+    await expect(activity).toHaveAttribute('href', '/activity?journey=class-a-val-002');
+    await page.mouse.move(0, 0);
+    await expect(deposit).toHaveCSS('background-color', 'rgb(31, 39, 71)');
+    await expect(deposit).toHaveCSS('color', 'rgb(255, 255, 255)');
+    await expect(activity).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
+    await expect(activity).toHaveCSS('color', 'rgb(70, 88, 160)');
+    const depositBox = (await deposit.boundingBox())!;
+    const activityBox = (await activity.boundingBox())!;
+    expect(depositBox.height).toBeGreaterThanOrEqual(44);
+    expect(activityBox.height).toBeGreaterThanOrEqual(44);
+    expect(depositBox.y + depositBox.height).toBeLessThanOrEqual(activityBox.y + 1);
     const nav = page.getByRole('navigation', { name: 'Primary', exact: true });
     await expect(nav).toHaveCount(1);
     await expect(nav).toBeVisible();
@@ -82,6 +99,9 @@ test('scope, actions and retained disclosures reflow at 320px and enlarged text'
   for (const id of ['dashboard-balance-scope', 'dashboard-simulation-utilities']) {
     const region = page.getByTestId(id);
     expect(await region.evaluate(el => el.scrollWidth - el.clientWidth)).toBeLessThanOrEqual(1);
+  }
+  for (const id of ['dashboard-add-simulated-deposit', 'dashboard-view-activity']) {
+    expect((await page.getByTestId(id).boundingBox())!.height).toBeGreaterThanOrEqual(44);
   }
   for (const id of ['research-planning-targets', 'dashboard-disclosures']) {
     const details = page.getByTestId(id);

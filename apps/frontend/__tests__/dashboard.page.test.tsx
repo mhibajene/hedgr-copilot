@@ -272,7 +272,11 @@ describe("DashboardPage engine trust surface", () => {
     expect(screen.getByTestId("engine-posture-context").textContent).toBe(
       "Nothing to compare yet. Your first completed simulated event will establish a starting point."
     );
-    expect(screen.getByTestId("dashboard-simulation-utilities")).toBeDefined();
+    const utilities = screen.getByTestId("dashboard-simulation-utilities");
+    expect(Array.from(utilities.children).map((node) => node.getAttribute("data-testid"))).toEqual([
+      "dashboard-add-simulated-deposit",
+      "dashboard-view-activity",
+    ]);
     expect(
       screen
         .getByTestId("dashboard-add-simulated-deposit")
