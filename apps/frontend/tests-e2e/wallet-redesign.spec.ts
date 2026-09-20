@@ -38,7 +38,7 @@ test('research baseline: navigation, dialog focus, currency and event reconcilia
   await page.setViewportSize({ width: 458, height: 956 });
   await page.screenshot({ path: testInfo.outputPath('home-reference.png') });
   await page.setViewportSize({ width: 390, height: 844 });
-  const trigger = page.getByRole('button', { name: 'Understand the comparison' });
+  const trigger = page.getByRole('button', { name: 'Currency context', exact: true });
   await trigger.click();
   const dialog = page.getByRole('dialog', { name: 'Currency context', exact: true });
   await expect(dialog).toBeVisible();
@@ -78,7 +78,7 @@ test('research baseline: navigation, dialog focus, currency and event reconcilia
   expect(await financialState(page)).toEqual(before);
   await page.goto('/dashboard');
   await expect(page.getByRole('heading', { name: 'See what you have and what changed.' })).toBeVisible();
-  await expect(page.getByRole('button', { name: 'Understand the comparison' })).toHaveCount(0);
+  await expect(page.getByRole('button', { name: 'Currency context', exact: true })).toHaveCount(0);
   await page.goto(`${home}?scenario=unavailable-data`);
   await expect(page.getByRole('heading', { name: 'Your position', exact: true })).toHaveCount(0);
 });
@@ -180,7 +180,7 @@ test('research Home, Activity and dialog reflow at narrow/enlarged and desktop w
         return rect.width > 0 && (rect.right > window.innerWidth + 1 || rect.left < -1);
       }).map(el => ({ tag: el.tagName, class: el.className, text: el.textContent?.slice(0, 80) })));
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), `${width}px at ${size}: ${JSON.stringify(overflow)}`).toBe(true);
-      await page.getByRole('button', { name: 'Understand the comparison' }).click();
+      await page.getByRole('button', { name: 'Currency context', exact: true }).click();
       expect(await page.getByRole('dialog').evaluate(el => el.scrollWidth <= el.clientWidth + 1)).toBe(true);
       await page.getByRole('button', { name: 'Back to Home' }).click();
       await page.getByRole('navigation', { name: 'Primary' }).getByRole('link', { name: 'Activity', exact: true }).click();

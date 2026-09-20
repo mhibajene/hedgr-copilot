@@ -105,12 +105,18 @@ for (const synthetic of [true, false]) {
     };
     // Move the login pointer away so these assertions measure the resting state.
     await page.mouse.move(0, 0);
-    // The approved shared baseline uses the same primary/secondary hierarchy in both journeys.
-    await expect(deposit).toHaveCSS('background-color', 'rgb(250, 248, 245)');
-    await expect(deposit).toHaveCSS('color', 'rgb(31, 39, 71)');
-    await expect(activity).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
-    await expect(activity).toHaveCSS('color', 'rgb(255, 255, 255)');
-    expect((await deposit.evaluate(appearance)).slice(2)).toEqual((await activity.evaluate(appearance)).slice(2));
+    if (synthetic) {
+      await expect(activity).toHaveCSS('background-color', 'rgb(31, 39, 71)');
+      await expect(activity).toHaveCSS('color', 'rgb(255, 255, 255)');
+      await expect(deposit).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
+      await expect(deposit).toHaveCSS('color', 'rgb(70, 88, 160)');
+    } else {
+      await expect(deposit).toHaveCSS('background-color', 'rgb(250, 248, 245)');
+      await expect(deposit).toHaveCSS('color', 'rgb(31, 39, 71)');
+      await expect(activity).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
+      await expect(activity).toHaveCSS('color', 'rgb(255, 255, 255)');
+      expect((await deposit.evaluate(appearance)).slice(2)).toEqual((await activity.evaluate(appearance)).slice(2));
+    }
     expect((await deposit.boundingBox())!.height).toBeGreaterThanOrEqual(44);
     expect((await activity.boundingBox())!.height).toBeGreaterThanOrEqual(44);
     await expect(deposit).toHaveAttribute('href', route('/deposit'));
@@ -120,7 +126,7 @@ for (const synthetic of [true, false]) {
     await expectMainFits(page);
     await page.screenshot({ path: testInfo.outputPath(`${family}-home.png`), fullPage: true });
     await deposit.focus();
-    await page.keyboard.press('Tab');
+    await page.keyboard.press(synthetic ? 'Shift+Tab' : 'Tab');
     await expect(activity).toBeFocused();
     await expect(activity).toHaveCSS('outline-style', 'solid');
     await page.keyboard.press('Enter');

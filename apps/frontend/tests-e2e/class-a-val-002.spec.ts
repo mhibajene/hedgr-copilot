@@ -295,7 +295,7 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   );
   await expect(page.getByTestId('usd-balance')).toHaveText('$0.00');
   await expect(
-    page.getByText('Simulated balance', { exact: true })
+    page.getByText('Simulated Hedgr balance', { exact: true })
   ).toBeVisible();
   await expect(
     page.getByTestId('dashboard-synthetic-balance-explainer')
@@ -526,7 +526,7 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
     'activity-balance-reconciliation'
   );
   await expect(activityReconciliation).toContainText(
-    'Simulated balance'
+    'Simulated Hedgr balance'
   );
   await expect(activityReconciliation).toContainText(
     'From completed simulated entries only.'
