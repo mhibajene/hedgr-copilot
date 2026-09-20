@@ -1,6 +1,6 @@
 # Fork 1 — retained implementation verification
 
-**Status:** Local verification retained; hosted review and explicit §292 effective recording required before operating activation. Evidence only, not a second live authority surface.
+**Status:** Local and hosted implementation verification passed; §292 records the explicit effective disposition and permanent-main/rebind conditions. Evidence only, not a second live authority surface.
 
 ## Baseline and boundary
 
@@ -45,9 +45,16 @@ The known `SUPERSEDED_LANE_NARRATIVE` for §2 NARRATIVE-007 was explicitly reloc
 ## Checks and limits
 
 - Eight added regressions cover archive integrity/source exclusion, exact active-brief preservation, standing execution-contract equivalence, projected permission/occupancy equivalence, current-source conflict and historical/missing/duplicate locator cases.
-- The 22 targeted migration/generator tests and full `pnpm run validate` passed (900 frontend tests, 49 Bridge tests, 11 snapshot tests, trust checks, typecheck and lint). Deterministic RAP generation/check passed. Required hosted checks and convergence review still gate delivery.
+- The 22 targeted migration/generator tests and full `pnpm run validate` passed (900 frontend tests, 49 Bridge tests, 11 snapshot tests, trust checks, typecheck and lint). Deterministic RAP generation/check passed. Hosted checks and convergence review passed at `40ac37ce7e31cbb592bdd7311b9d954e5d666481` before the §292 effective record. Final-head checks still gate merge.
 - Existing RAP tests retain immutable-source binding, dirty-source rejection, branch/main ancestry diagnostics, stale/mismatch/conflict behavior, exact allow-list and non-authorising flags. No validator/schema/Worker behavior changed.
 - Implementation and local verification were performed by the same bounded operator, with separate commits. This is not blinded or independent empirical assurance. The repository's hosted convergence review and required CI remain additional delivery gates.
 - Existing source-first recording, separate permanent-main RAP rebind and amendment/release procedures remain in force. A pre-merge `MAIN_HISTORY_UNVERIFIED` diagnostic is expected for a source commit not yet on main; the post-merge rebind must clear it.
 
 Rollback is the scoped presentation/locator revert and regenerated RAP described in §292. Archives and unrelated lane work remain preserved. Only explicit verified repo-effective recording can activate Fork 1; no automatic successor follows.
+
+
+## Hosted verification and effective handoff
+
+At implementation/QA head `40ac37ce7e31cbb592bdd7311b9d954e5d666481`, [hosted validate](https://github.com/mhibajene/hedgr-copilot/actions/runs/35492546105), [CI build/typecheck/lint](https://github.com/mhibajene/hedgr-copilot/actions/runs/35492544718), [browser/E2E](https://github.com/mhibajene/hedgr-copilot/actions/runs/35492544739), bridge-snapshots, evidence-pack, Vercel and [Cursor convergence review](https://cursor.com/agents/bc-57b67b39-6c49-4124-a946-951519467583) passed. No inline findings were returned. These results precede the separate §292 effective recording; final-head review and checks remain required. This review is visible-artifact assurance, not blinded research evidence or a measurement of human operator comprehension.
+
+The final §292 source record authorises only Fork 1's effective transition on permanent-main merge, with the existing separate main RAP rebind before operating use. Its conditions, not this verification note, control activation. PR #594 retains final-head results; the separate projection follow-up retains actual merge provenance. Fork 2/3 and all existing lane, release, financial and amendment controls remain unchanged.

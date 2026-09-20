@@ -6,7 +6,7 @@ Last updated: 2026-09-20
 
 **Start with live authority:** [HEDGR_STATUS.md §7 / §7a](docs/ops/HEDGR_STATUS.md#7-current-sequence-and-active-status) is the canonical present-state surface for occupancy, permissions, exclusions, operative controls and stop conditions. Read the named live brief before acting. Historical closeouts cannot supply current sequencing or occupancy. Accepted ADRs, active doctrine, this execution contract and other current higher-precedence sources remain controlling under repo precedence; genuine current-source disagreement requires stop/escalation, not synthesis.
 
-**Fork 1 delivery:** §292 supplies the finite governance-surface refactor authority and its verification/effective conditions. Fork 2 provenance changes and Fork 3 amendment envelopes remain inactive; existing source-first, separate permanent-main rebind, amendment, QA and release procedures remain controlling. No standing delegation follows.
+**Fork 1 delivery:** §292 records verified governance-surface delivery and explicit activation on permanent-main merge, with a separate verified RAP rebind before operating use. The finite refactor permission is consumed by that delivery. Fork 2 provenance changes and Fork 3 amendment envelopes remain inactive; existing source-first, separate permanent-main rebind, amendment, QA and release procedures remain controlling. No standing delegation follows.
 
 Repeated earlier standards and dated overrides are retained in the [historical AGENTS snapshot](docs/ops/governance/AGENTS_PRE_FORK_1.md). That snapshot is evidence, not a second execution contract. Numbered STATUS records preserve accepted decisions and technical history.
 
