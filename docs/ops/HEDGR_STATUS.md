@@ -6,7 +6,7 @@
 
 Status: Canonical hand-off file
 Purpose: Strategic continuity, merged implementation truth, and next-ticket authority for Cursor execution
-Last updated: 2026-09-19
+Last updated: 2026-09-20
 
 ---
 
@@ -4639,6 +4639,8 @@ This section does **not** authorize provider-specific implementation, legal reli
 
 ## 7. Current sequence and active status
 
+**Named governance implementation — Fork 1:** §292 authorises the finite governance-surface refactor only, after source merge and separate permanent-main RAP rebind. This is the separately named implementation of the existing Fork 1 design, not a new product ticket, nested occupancy or lane. Current active work and all substantive authority remain unchanged. Fork 1 operating change remains inactive until equivalence/legibility verification and explicit effective recording; Forks 2/3 remain inactive.
+
 **Institutional-load design (accepted, non-activating):** §291 adopts all three forks of [HEDGR_INSTITUTIONAL_LOAD_DESIGN.md](governance/HEDGR_INSTITUTIONAL_LOAD_DESIGN.md) as design intent and records the implementation order Fork 1 → Fork 2 → Fork 3 pilot. All three operating changes remain inactive. Current authority layout, RAP cadence and in-ticket amendment procedures remain in force until separately reconciled with explicit effective conditions. No new ticket, live-source thinning, tooling change or amendment envelope is activated.
 
 **Strategic product direction (non-activating):** §286 adopts the partial-capital Stability Engine frame and bounded functional contract. Wider financial context is distinct from the intentional Hedgr allocation envelope; preservation and liquidity precede yield. This creates no implementation ticket or new MVP gate, does not accept retained research models, and preserves §285 audience/deferral and all current §7 / §7a scopes and release conditions.
@@ -4906,6 +4908,14 @@ Current active ticket status:
 ---
 
 ## 7a. Active execution tickets — Lanes V and E; Lane G deferred (Controlled Parallelism v22)
+
+### Bounded governance implementation — Fork 1 (not a product ticket)
+
+**Authority / objective:** Direct Founder authorisation, 2026-09-20, §292. Make current authority readable from live §7/§7a without reconstructing chronology. Change representation/location only; do not change substantive authority or current product/research occupancy. This narrowly supplies the finite governance refactor previously deferred by §291, without broadening Controlled Parallelism or creating a standing support lane.
+
+**Exact scope / delivery:** The ten named files and verification in §292 control. Read existing active briefs and all current higher-precedence sources; preserve their permissions, exclusions, stop/rollback/verification obligations and precedence. Commit source first, merge with required checks, separately rebind RAP to permanent main, then implement. Preserve history in clearly non-operative archives and completed records; keep current active-brief controls available on the live surface. Locator-only RAP reconciliation is permitted, but cadence, binding, schema, allow-list, conflict/freshness behaviour and financial flags are unchanged. Distinguish implementation from verification and operating activation. Retain implementation and verification evidence in separate commits; only verified delivery plus explicit repo-effective recording may mark Fork 1 active. Current procedures apply until then.
+
+**Stop / rollback:** Stop affected work for changed authority answers, missing active controls, genuine current-source disagreement or any required expansion into Fork 2/3. Restore the prior presentation/locators through a scoped revert and regenerate RAP under current binding rules; preserve history and unrelated lane work. Completion consumes only this finite refactor permission, never creating a ticket, successor or standing refinement authority.
 
 **Governance design adoption only (§291):** The accepted institutional-load design and adopted Fork 1 → Fork 2 → Fork 3 pilot sequence supply no execution brief or new amendment envelope. Existing lane briefs, file lists, source-first/rebind gates, verification and release conditions remain controlling. Any later operational adoption must identify the fork, exact scope, prerequisites and effective conditions here and in §7 as applicable; this recording does not perform that transition.
 
@@ -17496,7 +17506,7 @@ D-150 / §282 records verified technical closeout of nested Lane V `CLASS-A-VAL-
 
 **Sequence amendment / authority:** Founder supplied the HedgrOps disposition “ACCEPT §291 AMENDMENT → RECORD SEQUENCE → KEEP OPERATING CHANGES INACTIVE UNTIL FORK-SPECIFIC ACTIVATION CONDITIONS ARE MET.” This adopts **Fork 1 → Fork 2 → Fork 3 pilot** as implementation order. The corrected activation table and explicit preservation of repo precedence below incorporate the two final drafting fixes. No further design review is required before separately authorising Fork 1 implementation; required implementation verification and governed delivery checks remain.
 
-**Resulting state:** Institutional Load Design — **ACCEPTED**; implementation sequence — **ADOPTED**; Fork 1 — **INACTIVE pending separate implementation/verification**; Fork 2 — **INACTIVE pending Fork 1 activation + separate implementation**; Fork 3 — **INACTIVE pending Fork 2 activation + bounded pilot**; existing procedures — **CONTROLLING**.
+**Resulting state:** Institutional Load Design — **ACCEPTED**; implementation sequence — **ADOPTED**; Fork 1 — **INACTIVE; bounded implementation authorised under §292, verification/effective recording pending**; Fork 2 — **INACTIVE pending Fork 1 activation + separate implementation**; Fork 3 — **INACTIVE pending Fork 2 activation + bounded pilot**; existing procedures — **CONTROLLING**.
 
 **Implementation authority:** This sequence does not activate work, create tickets or displace existing work. Each implementation must be separately named in §7 and bounded in §7a, including exact scope, exclusions, verification, rollback and effective conditions. Existing authority, source-first recording, permanent-main RAP rebind, amendment, QA and release procedures remain controlling until explicitly superseded through verified repo-native activation.
 
@@ -17515,3 +17525,30 @@ D-150 / §282 records verified technical closeout of nested Lane V `CLASS-A-VAL-
 **Exact recording scope / verification:** `docs/ops/governance/HEDGR_INSTITUTIONAL_LOAD_DESIGN.md`; `AGENTS.md`; `docs/ops/HEDGR_STATUS.md`; deterministic `docs/ops/bridge/repo-authority-projection.json`. Commit source before RAP generation; verify final-review fidelity, links, accepted-design/operating-state separation and unchanged active-ticket/financial flags; full validate and required hosted/convergence checks before governed merge, then separate projection-only permanent-main rebind. No live-history thinning, ADR/doctrine, runtime, tests, generator/schema, CI, dependency or other-lane artifact change.
 
 **Preservation:** Current Lane V weekend scope, existing amendments, Form/#550 and release/rehearsal requirements; open Lane E parent with no active nested ticket after §290; deferred G; idle N; D-146; retained research limitations; frozen narrative; participant publication/distribution pause; Green retirement; all financial/execution boundaries remain unchanged. No implementation ticket, finite amendment envelope, parent closeout, model acceptance or standing delegation follows. **NO CROSS-LANE EXECUTION IMPACT**.
+
+
+---
+
+## 292. Founder authorisation — Fork 1 governance-surface refactor (2026-09-20)
+
+**Authority / classification:** Founder Musalwa Hibajene explicitly instructed “I authorise Fork 1 based on HedgrOps guidance”. Adopt the *HedgrOps Fork 1 authorisation boundary* as governance-only / no execution widening / reversible authority-legibility refactor. §7 names this finite implementation as Fork 1; §7a bounds it. No new product ticket, nested occupancy, D-number, standing support lane or concurrency change is created. This narrowly supersedes §291's not-yet-authorised implementation state for Fork 1 only; operating activation remains conditional. Owner: Founder; bounded Repo Steward / Implementer: Codex, ACT_WITH_CONFIRMATION supplied by this instruction.
+
+**Objective / preservation:** Make current occupancy, permissions, exclusions, operative flags, parallelism and stop conditions legible from canonical live §7/§7a. Clearly label completed material as historical/non-operative; move/reduce duplicated chronology while retaining traceability in archives, numbered records, ADRs and git. AGENTS points to canonical current authority and retains its standing execution contract. Historical material cannot supply current sequencing/occupancy; accepted ADRs, active doctrine, AGENTS and other current higher-precedence sources remain controlling under repo precedence. Do not resolve genuine current-source disagreement by presentation changes. Operator answers before/after must be substantively identical.
+
+**Exact files (only as needed):**
+- `AGENTS.md`
+- `docs/ops/HEDGR_STATUS.md` — §2/§7/§7a presentation, current pointers and this finite delivery/effect record; numbered historical decisions otherwise preserved
+- `docs/ops/governance/HEDGR_INSTITUTIONAL_LOAD_DESIGN.md` — status/effect pointers only
+- `docs/ops/bridge/repo-authority-projection.json` — deterministic generation from committed sources
+- `docs/ops/HEDGR_AUTHORITY_HISTORY_PRE_FORK_1.md` — historical STATUS presentation archive, not authority
+- `docs/ops/governance/AGENTS_PRE_FORK_1.md` — historical AGENTS archive, not authority
+- `apps/bridge-worker/scripts/generate-repo-authority-projection.mjs` — source-locator reconciliation only if needed; preserve all binding/freshness/conflict/schema/allow-list semantics
+- `apps/bridge-worker/tests/rap-generator.test.mjs` — corresponding locator/history regressions only
+- `apps/bridge-worker/tests/fork1-authority.test.mjs` — retained-brief, history/non-activation and equivalence verification
+- `docs/ops/governance/HEDGR_FORK_1_VERIFICATION.md` — baseline, semantic-equivalence mapping, retained verification and limits
+
+**Exclusions:** No naming/activation/closeout/reprioritisation of product or research tickets; no §7/§7a occupancy or active file/surface, exclusion, stop, rollback or verification-obligation change. No Controlled Parallelism, Class A/B/C, Green, participant release, trust/data/security, financial, architecture, doctrine or accepted-ADR meaning change. No runtime, UI, Form/data, provider, dependency, CI, RAP cadence/binding change (Fork 2), or finite amendment envelope (Fork 3). Existing Lane V work, open Lane E with no nested ticket, deferred G, idle N, release controls and frozen narrative remain unchanged. The known subordinate §2 historical lag may be explicitly relocated/labelled through this authorised presentation pass; no current conflict is silently reconciled.
+
+**Verification / effective conditions:** Commit this source authority before RAP; full validate and required hosted/convergence checks precede permanent-main merge and separate projection-only rebind, then refactor. Retain baseline source revision and unchanged active-brief controls; verify identical active tickets, permissions, exclusions, flags, concurrency, stop/rollback and verification duties. Test that historical material cannot activate sequencing, missing live locators fail closed, current-source conflicts remain unresolved failures, and unchanged RAP binding/freshness rules hold. Review live-surface legibility with explicit answers to what is active, allowed, excluded and stopping work. Full validate, required hosted checks and retained implementation/verification evidence precede explicit Fork 1 effective recording and separate permanent-main rebind. Only Fork 1 may then become active; Fork 2/3 and any pilot remain inactive. No automatic successor.
+
+**Rollback / kill:** Stop affected work if equivalence is lost, an active control is omitted, history becomes current authority, or current-source disagreement requires a substantive decision. Revert only this scoped presentation/locator change and regenerate/rebind under current procedure. Historical evidence and unrelated work remain intact. This permission is consumed by one verified refactor; no standing hygiene authority follows. **NO CROSS-LANE EXECUTION IMPACT**.
