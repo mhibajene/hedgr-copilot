@@ -12,6 +12,18 @@ The Founder directed **Add simulated deposit** first as the filled primary CTA a
 - Separate projection-only activation rebind [PR #608](https://github.com/mhibajene/hedgr-copilot/pull/608) merged at `820b3dc`. The Verifier checked its one-file diff, all four mandatory source bytes against permanent main, read-only/false execution flags, clean ancestry and deterministic `pnpm bridge:rap:check` with no draft warning before runtime.
 - Implementer runtime commit `6612eb2` changes only `apps/frontend/app/(app)/dashboard/page.tsx`, swapping the two existing synthetic Home links. Distinct Verifier commit `00193bf` changes only the three authorised unit/browser test files. Existing CSS assigns the filled navy treatment to the first link and secondary text treatment to the second; no CSS, token, route or financial-state code changed.
 
+### Main movement during runtime review
+
+Unrelated Fork 2 [PR #604](https://github.com/mhibajene/hedgr-copilot/pull/604) merged as `e2ce6b3` while the CTA runtime PR was under review. Its five changed files are the dormant provenance workflow, its script/test, Bridge README and Fork 2 verification record. It changed no mandatory RAP source or frontend file; Fork 2 operating behaviour remains inactive. The CTA branch was rebased onto that permanent-main revision without changing its tested runtime, test or QA file bytes. Git blob identities for all five scoped CTA files match before and after the rebase.
+
+| Original reviewed commit | Rebased commit | Role |
+| --- | --- | --- |
+| `6612eb2` | `b818421` | Runtime link order |
+| `00193bf` | `098f2db` | Independent tests |
+| `cdbcb98` | `16b6607` | Independent local QA record |
+
+Required hosted checks and convergence review must pass on the final rebased PR head before merge; the earlier local PASS does not substitute for them.
+
 ## Local checks and rendered review
 
 | Check | Observed result |
