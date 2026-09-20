@@ -1,0 +1,149 @@
+name: RAP mechanical provenance rebind (dormant)
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Fork 2 is inactive. Both the repo variable and an explicit live §7 ACTIVE
+# marker are required, and the separately approved token must be present.
+permissions:
+  contents: read
+
+concurrency:
+  group: rap-mechanical-provenance-main
+  cancel-in-progress: false
+
+jobs:
+  rebind:
+    if: ${{ vars.HEDGR_RAP_FORK2_ENABLED == 'true' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      GH_TOKEN: ${{ secrets.HEDGR_RAP_AUTOMATION_TOKEN }}
+    steps:
+      - name: Require separately approved automation identity
+        run: |
+          if [ -z "$GH_TOKEN" ]; then
+            echo 'Fork 2 credential absent; no mechanical binding. Use the existing governed RAP procedure.' >&2
+            exit 1
+          fi
+
+      - name: Checkout permanent main with approved identity
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+          token: ${{ secrets.HEDGR_RAP_AUTOMATION_TOKEN }}
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Classify exact main-bound source change
+        id: plan
+        run: |
+          set -euo pipefail
+          git fetch origin main
+          node scripts/bridge/rap-provenance-rebind.mjs --plan --require-active > /tmp/rap-plan.json
+          cat /tmp/rap-plan.json
+          echo "kind=$(jq -r .kind /tmp/rap-plan.json)" >> "$GITHUB_OUTPUT"
+          echo "target=$(jq -r .target_commit /tmp/rap-plan.json)" >> "$GITHUB_OUTPUT"
+          echo "branch=$(jq -r .branch /tmp/rap-plan.json)" >> "$GITHUB_OUTPUT"
+
+      - name: Return material or ambiguous changes to existing governance
+        if: ${{ steps.plan.outputs.kind == 'review_required' }}
+        run: |
+          cat /tmp/rap-plan.json >> "$GITHUB_STEP_SUMMARY"
+          echo 'No automated RAP change: materiality requires current governed review and binding.' >&2
+          exit 1
+
+      - name: Record no RAP event for unchanged mandatory sources
+        if: ${{ steps.plan.outputs.kind == 'no_event' }}
+        run: cat /tmp/rap-plan.json >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Prepare exact artifact-only PR
+        if: ${{ steps.plan.outputs.kind == 'mechanical' }}
+        id: prepare
+        env:
+          RAP_BRANCH: ${{ steps.plan.outputs.branch }}
+          RAP_TARGET: ${{ steps.plan.outputs.target }}
+        run: |
+          set -euo pipefail
+          existing=$(gh pr list --state open --head "$RAP_BRANCH" --json number --jq '.[0].number // empty')
+          if [ -n "$existing" ]; then
+            echo "Existing mechanical PR #$existing; no duplicate created." >> "$GITHUB_STEP_SUMMARY"
+            echo "existing=$existing" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          if git ls-remote --exit-code --heads origin "$RAP_BRANCH" >/dev/null 2>&1; then
+            echo 'Deterministic branch exists without an open PR; stop for governed inspection.' >&2
+            exit 1
+          fi
+          node scripts/bridge/rap-provenance-rebind.mjs --write --require-active > /tmp/rap-written.json
+          git diff --exit-code -- AGENTS.md docs/ops/HEDGR_STATUS.md docs/decisions/SPRINT-2-ADR-INDEX.md docs/doctrine/HEDGR_ACTIVE_DOCTRINE_INDEX.md
+          test "$(git diff --name-only)" = 'docs/ops/bridge/repo-authority-projection.json'
+          git switch -c "$RAP_BRANCH"
+          git config user.name 'Hedgr RAP provenance'
+          git config user.email 'rap-provenance@users.noreply.github.com'
+          git add docs/ops/bridge/repo-authority-projection.json
+          git commit -m "docs: mechanically bind RAP to ${RAP_TARGET:0:12}"
+          git push origin "$RAP_BRANCH"
+          cat > /tmp/rap-pr-body.md <<EOF
+          ## Mechanical provenance only
+
+          Exact metadata-only mandatory-source change at permanent-main revision \`$RAP_TARGET\`.
+          Classification: \`$(jq -r .kind /tmp/rap-written.json)\`.
+          Previous bound source: \`$(jq -r .source_commit /tmp/rap-written.json)\`.
+          Artifact SHA-256: \`$(jq -r .artifact_sha256 /tmp/rap-written.json)\`.
+
+          This PR changes only the deterministic read-only RAP artifact. It grants no authority and follows the separately activated Fork 2 procedure. Required CI and convergence checks must pass before merge; failure returns to the existing governed procedure.
+          EOF
+          pr_url=$(gh pr create --base main --head "$RAP_BRANCH" --title "docs: mechanically bind RAP to ${RAP_TARGET:0:12}" --body-file /tmp/rap-pr-body.md)
+          pr_number=${pr_url##*/}
+          gh pr edit "$pr_number" --add-label 'product:approved,qa:approved,area:docs,risk:low'
+          echo "created=$pr_number" >> "$GITHUB_OUTPUT"
+          echo "Prepared $pr_url for protected CI." >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Await required protected checks, then merge artifact only
+        if: ${{ steps.plan.outputs.kind == 'mechanical' }}
+        env:
+          RAP_BRANCH: ${{ steps.plan.outputs.branch }}
+          RAP_TARGET: ${{ steps.plan.outputs.target }}
+          EXISTING_PR: ${{ steps.prepare.outputs.existing }}
+          CREATED_PR: ${{ steps.prepare.outputs.created }}
+        run: |
+          set -euo pipefail
+          pr_number=${EXISTING_PR:-$CREATED_PR}
+          test -n "$pr_number"
+          required='["validate","e2e","E2E smoke (@hedgr/frontend)","Fork-safe checks (typecheck/lint)","build","evidence-pack","Cursor Automation: Hedgr — PR Convergence Review","Vercel"]'
+          ready=false
+          for attempt in {1..90}; do
+            checks=$(gh pr checks "$pr_number" --json name,state 2>/dev/null || true)
+            if [ -n "$checks" ] && echo "$checks" | jq -e 'any(.[]; .state == "FAILURE" or .state == "ERROR" or .state == "CANCELLED" or .state == "ACTION_REQUIRED")' >/dev/null; then
+              echo 'A hosted check failed or needs human action; no merge.' >&2
+              exit 1
+            fi
+            if [ -n "$checks" ] && echo "$checks" | jq --argjson required "$required" -e '. as $checks | all($required[]; . as $name | any($checks[]; .name == $name and .state == "SUCCESS"))' >/dev/null; then
+              ready=true
+              break
+            fi
+            sleep 20
+          done
+          if [ "$ready" != true ]; then
+            echo 'Protected checks did not all complete; leave PR open for existing governed fallback.' >&2
+            exit 1
+          fi
+          test "$(git ls-remote origin refs/heads/main | cut -f1)" = "$RAP_TARGET"
+          pr_head=$(gh pr view "$pr_number" --json headRefOid --jq .headRefOid)
+          git fetch origin "$RAP_BRANCH"
+          test "$(git rev-parse FETCH_HEAD)" = "$pr_head"
+          test "$(git rev-parse "${pr_head}^")" = "$RAP_TARGET"
+          test "$(git diff --name-only "$RAP_TARGET" "$pr_head")" = 'docs/ops/bridge/repo-authority-projection.json'
+          test "$(git show "${pr_head}:docs/ops/bridge/repo-authority-projection.json" | jq -r .source_commit)" = "$RAP_TARGET"
+          gh pr merge "$pr_number" --squash --match-head-commit "$pr_head"
+          git fetch origin main
+          merged=$(git rev-parse origin/main)
+          test "$(git show "${merged}:docs/ops/bridge/repo-authority-projection.json" | jq -r .source_commit)" = "$RAP_TARGET"
+          test -z "$(git diff --name-only "$RAP_TARGET" "$merged" -- AGENTS.md docs/ops/HEDGR_STATUS.md docs/decisions/SPRINT-2-ADR-INDEX.md docs/doctrine/HEDGR_ACTIVE_DOCTRINE_INDEX.md)"
+          echo "Verified mechanical RAP merge at $merged, bound to $RAP_TARGET." >> "$GITHUB_STEP_SUMMARY"
