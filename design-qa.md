@@ -1,3 +1,46 @@
+# Synthetic Home compact FX insight — independent design QA
+
+Date: 2026-09-20
+
+Ticket: `CLASS-A-VAL-002-WEEKEND-PREP-001`, finite §7a/§297 compact Currency Context amendment
+
+Role: distinct Verifier; this is local presentation/test evidence, not participant comprehension or release acceptance.
+
+final result: passed
+
+## Source, render and comparison method
+
+- Controlling source: live `HEDGR_STATUS.md` §7a/§297. The earlier full-inline KES screenshot at `/var/folders/sk/xwxpjmbj4cn155yxj_2gcbcc0000gn/T/codex-clipboard-949315df-1094-4339-8ef8-2a663d77c34e.png` is a 1290 × 1881-pixel signal reference only, **not** an approved compact-layout mock. It shows `KES 1,950 higher from the rate change`, the same-USD explanation and the comparison link; §7a expressly supersedes its arrow, full inline details and Home disclaimer placement. Its CSS viewport/device density and exact crop are unknown, so no pixel alignment or typography-size equivalence is claimed.
+- Final browser-rendered implementation: `apps/frontend/test-results/currency-insight-compact-K-22a3f-g-its-full-inline-component-chromium/currency-inline-KES300-390.png` (390 × 1235 pixels), a full-page optimized-production screenshot at a 390 × 900 CSS-px viewport and device scale factor 1. It uses the same dynamic `$300`/KES 1,950 comparison signal as the old reference. This test-generated image is ignored local evidence, reproducible from `currency-insight.spec.ts`.
+- Additional rendered captures: `apps/frontend/test-results/currency-insight-currency--8800c-xt-with-keyboard-disclosure-chromium/currency-inline-320-200.png` (320 × 4248 pixels, 320 × 900 CSS viewport, 200% root text) and `apps/frontend/test-results/currency-insight-currency--da854-xt-with-keyboard-disclosure-chromium/currency-inline-1440-100.png` (1440 × 1224 pixels, 1440 × 900 CSS viewport, 100% root text). The same browser suite captures 320/390/700/1280/1440 at 100% and 200% root text. All captures use device scale factor 1.
+- I opened the older source and final same-value KES render together in one image-review input. I also inspected the 320px/200% and 1440px captures. The source is an old full-inline production crop while the implementation is a full compact Home, so the comparison is of signal, hierarchy, legibility, tokens and retained continuation—not 1:1 frame geometry. In the full-page mobile screenshots the fixed bottom navigation overlays its original viewport position; document content remains scrollable and the browser assertions check access/overflow. The source and final renders make the relevant copy legible, so no additional focused crop was needed.
+
+## Findings
+
+No actionable P0/P1/P2 mismatch remains in this bounded compact insight. The same-value KES render keeps the high-signal `KES 1,950 higher` and `from the rate change` under `Currency context` and `30-day example · Simulated`, followed by the quiet `Understand the comparison →` affordance. It is one button, subordinate to the open balance and separate observation. It does **not** restore the old large inline panel, upward performance arrow, repeated Home disclaimer or held-USD explanation; the latter details remain in the existing dialog. Dynamic unit/browser tests cover lower, equal, rounded-zero, zero, pending and unavailable states as well as all five selected display currencies. No investment-return language or directional color was observed in the inline result.
+
+### Required fidelity surfaces
+
+- Fonts/typography: the final render uses the governed Plus Jakarta Sans/Inter/Geist fallback stack and restrained navy hierarchy. The compact result is more prominent than its subtitle/cause but materially smaller than the `$300.00` balance. At 320px/200% the result and cause wrap at word boundaries rather than clipping. No exact font-size match is asserted against the old density-unknown crop.
+- Spacing/layout: the Home order remains balance → observation/actions → compact Currency Context → planning/disclosure/replay. Mobile is single column and desktop keeps the full-width, divider-led context row beneath the two-column balance/observation composition. The source's much taller component is deliberately superseded, not missing content.
+- Colors/tokens: navy, ivory and peach follow existing Hedgr surfaces; no green/red gain cue, new palette or elevated card effect appears. The subtle context background and divider preserve a subordinate treatment.
+- Image/asset fidelity: the implementation retains the governed Hedgr mark and existing UI primitives. The old screenshot's arrow is intentionally absent under §7a; no generated logo, decorative asset or replacement illustration was introduced.
+- Copy/content: exact dynamic currency/amount/direction and `from the rate change` are visible, with the exact simulation subtitle and a clear continuation. The full dialog retains same USD amount, both day/rate/estimate figures, invented-example and non-market boundaries, calculation detail and unchanged FX limitation. Default Home has no new inline insight.
+
+## Accessibility, interaction and comparison history
+
+- The launcher has a stable `Currency context` accessible name, its dynamic result is the accessible description, and Enter opens the existing native dialog. Escape closes it and returns focus. The result remains one button and exceeds a 44px target; tests verify no document/launcher horizontal overflow at 320/390/700/1280/1440px and 100%/200% root text. The separate dialog test retains its keyboard disclosure, trust limit and no storage mutation; existing E2E retains route/default isolation, the `$0 → $5 → $3` journey and selected-currency state.
+- Initial runtime review found a potential accessibility/textContent join between `higher` and `from` in the inline description [P2]. The Implementer added an explicit whitespace node inside the already-authorised TSX and amended the runtime commit to `cb7862c`; no verifier runtime edit was made. The final KES/ZMW captures and accessible-description assertions show the spaced phrase, and this final comparison found no remaining actionable P0/P1/P2 issue. This is the single material QA iteration.
+- The first local browser run used an incomplete build environment and was invalid as product evidence; a subsequent interrupted run left a stale `next start` process serving the prior build. Both setup issues were corrected before the final result. The final optimized build used AGENTS §6 CI-safe flags and a local stub backend. Focused unit tests passed **18/18**; the final consolidated relevant browser suite passed **45/45**, including the same-value KES capture; frontend typecheck and lint passed. Full repository validation, full hermetic browser suite, hosted checks and exact-revision shipped inspection remain separate delivery gates.
+
+**Open questions:** there is no approved compact image for literal pixel-fidelity judgment, and participant comprehension of FX versus investment performance has not been measured. Neither gap authorizes further UI changes or release.
+
+**Implementation checklist:** retain the dynamic neutral inline result, one accessible launcher, complete unchanged dialog, default isolation and the current simulation/disclosure boundaries; complete governed hosted/shipped verification before technical closeout.
+
+**Follow-up polish:** none authorised by this finite amendment.
+
+---
+
 # Synthetic Home balance-copy amendment — design QA
 
 Date: 2026-09-20
