@@ -158,7 +158,7 @@
   .scopeFirst .content { gap: .5rem; }
   .scopeFirst .amount { line-height: 1.05; }
   .scopeFirst .amount [data-testid="local-balance"] { margin-top: .25rem; }
-  .scopeFirst .positionPanel { gap: 1rem; }
+  .scopeFirst .positionPanel { gap: 1rem; padding-bottom: .75rem; border-bottom: 1px solid var(--home-divider); }
   .scopeFirst .overviewGrid, .scopeFirst .insights { gap: .75rem; }
   .scopeFirst .observation { padding: .75rem; }
   .scopeFirst .observation [id="dashboard-current-status-label"] { font-size: .875rem; line-height: 1.4; }
