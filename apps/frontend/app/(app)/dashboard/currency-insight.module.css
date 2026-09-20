@@ -98,3 +98,8 @@
 .launcher svg { width: 1.25rem; height: 1.25rem; flex-shrink: 0; transform: rotate(-90deg); color: var(--color-hedgr-600); }
 .compact:has(> .period) { padding-block: 1rem; }
 .compact > .launcher:hover { background: color-mix(in srgb, var(--color-hedgr-primary) 3%, transparent); }
+
+@media (min-width: 64rem) {
+  .refined.compact > .launcher { min-height: 6rem; font-size: 1.25rem; }
+  .launcherSubtitle { font-size: 1.125rem; }
+}
