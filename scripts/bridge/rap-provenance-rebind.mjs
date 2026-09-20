@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-// Dormant Fork 2 preparation. A later explicit §7 activation and separately
-// configured automation identity are both required before the workflow may run.
+// Dormant Fork 2 preparation. Operating use requires explicit §7 activation.
+// One separately controlled, SHA-pinned verification run may precede activation.
 import { createHash } from "node:crypto";
 import { execFileSync } from "node:child_process";
 import { readFileSync, writeFileSync } from "node:fs";
@@ -20,6 +20,8 @@ const DATE_LINE = /^Last updated: \d{4}-\d{2}-\d{2}$/gm;
 const METADATA_ONLY_PATHS = new Set(["AGENTS.md", "docs/ops/HEDGR_STATUS.md"]);
 const SOURCE_PATHS = SOURCE_DEFINITIONS.map(({ source_path }) => source_path);
 const ACTIVE_MARKER = "**Fork 2 operating status: ACTIVE**";
+const INACTIVE_MARKER = "Fork 2 operating behaviour remains **INACTIVE**";
+const IMPLEMENTATION_MARKER = "**Fork 2 implementation boundary:**";
 
 export class RebindError extends Error {
   constructor(message) {
@@ -121,17 +123,34 @@ function validatedProjection(revision, documents, timestamp) {
   return projection;
 }
 
-function assertLiveActivation(statusSource) {
+function liveSection(statusSource) {
   const start = statusSource.indexOf("## 7. Current sequence and active status");
   const end = statusSource.indexOf("\n## 7a.", start);
   requireCondition(start !== -1 && end > start, "Live §7 authority surface is missing.");
+  return statusSource.slice(start, end);
+}
+
+function assertLiveActivation(statusSource) {
   requireCondition(
-    statusSource.slice(start, end).split(ACTIVE_MARKER).length === 2,
+    liveSection(statusSource).split(ACTIVE_MARKER).length === 2,
     "Fork 2 lacks the single explicit ACTIVE marker in live §7; workflow remains dormant."
   );
 }
 
-export function planRebind(root = REPO_ROOT, { requireActive = false } = {}) {
+function assertBoundedTest(statusSource, head, testTarget) {
+  const live = liveSection(statusSource);
+  requireCondition(FULL_SHA.test(testTarget) && testTarget === head,
+    "Protected test target must equal the exact permanent-main HEAD.");
+  requireCondition(
+    live.includes(IMPLEMENTATION_MARKER) &&
+      live.includes(INACTIVE_MARKER) &&
+      !live.includes(ACTIVE_MARKER),
+    "Protected test requires the authorised §7 implementation boundary and inactive operating state."
+  );
+}
+
+export function planRebind(root = REPO_ROOT, { requireActive = false, testTarget } = {}) {
+  requireCondition(!(requireActive && testTarget), "Choose operating or bounded test mode.");
   const head = git(root, "rev-parse", "HEAD");
   const observedMain = git(root, "rev-parse", "refs/remotes/origin/main");
   requireCondition(FULL_SHA.test(head) && head === observedMain, "HEAD is not the observed permanent-main revision.");
@@ -172,6 +191,9 @@ export function planRebind(root = REPO_ROOT, { requireActive = false } = {}) {
     "RAP artifact does not match deterministic generation for its bound sources."
   );
   if (requireActive) assertLiveActivation(after["docs/ops/HEDGR_STATUS.md"]);
+  if (testTarget !== undefined) {
+    assertBoundedTest(after["docs/ops/HEDGR_STATUS.md"], head, testTarget);
+  }
 
   const classification = classifyDocuments(before, after);
   if (classification.kind !== "no_event") {
@@ -185,8 +207,8 @@ export function planRebind(root = REPO_ROOT, { requireActive = false } = {}) {
   };
 }
 
-export function writeRebind(root = REPO_ROOT, { requireActive = false } = {}) {
-  const plan = planRebind(root, { requireActive });
+export function writeRebind(root = REPO_ROOT, { requireActive = false, testTarget } = {}) {
+  const plan = planRebind(root, { requireActive, testTarget });
   requireCondition(plan.kind === "mechanical", "Only a proven metadata-only change may be mechanically rebound.");
   const currentSources = readSources(root, plan.target_commit);
   const projection = validatedProjection(
@@ -205,9 +227,14 @@ export function writeRebind(root = REPO_ROOT, { requireActive = false } = {}) {
 function main() {
   const args = process.argv.slice(2);
   const mode = args.includes("--write") ? "write" : "plan";
-  requireCondition(args.every((arg) => ["--plan", "--write", "--require-active"].includes(arg)), "Unsupported argument.");
+  requireCondition(args.every((arg) => ["--plan", "--write", "--require-active"].includes(arg) || arg.startsWith("--test-target=")), "Unsupported argument.");
   requireCondition(!(args.includes("--plan") && args.includes("--write")), "Choose plan or write.");
-  const options = { requireActive: args.includes("--require-active") };
+  const testArgs = args.filter((arg) => arg.startsWith("--test-target="));
+  requireCondition(testArgs.length <= 1, "Only one protected test target is allowed.");
+  const options = {
+    requireActive: args.includes("--require-active"),
+    testTarget: testArgs.length ? testArgs[0].slice("--test-target=".length) : undefined
+  };
   const result = mode === "write"
     ? writeRebind(REPO_ROOT, options)
     : planRebind(REPO_ROOT, options);

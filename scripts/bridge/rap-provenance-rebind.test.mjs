@@ -159,3 +159,26 @@ test("the dormant workflow rejects an unrecorded ACTIVE state", (t) => {
     (error) => error instanceof RebindError && /remains dormant/.test(error.message)
   );
 });
+
+test("a bounded protected test accepts only the exact main SHA while Fork 2 is inactive", (t) => {
+  const { root } = fixture(t);
+  amend(root, "AGENTS.md", (content) => content.replace(
+    "Last updated: 2026-09-20", "Last updated: 2026-09-21"
+  ));
+  const target = git(root, "rev-parse", "HEAD");
+  assert.equal(planRebind(root, { testTarget: target }).kind, "mechanical");
+  assert.throws(() => planRebind(root, { testTarget: "a".repeat(40) }), /exact permanent-main HEAD/);
+  assert.throws(() => planRebind(root, { requireActive: true, testTarget: target }), /Choose operating or bounded test mode/);
+  assert.equal(writeRebind(root, { testTarget: target }).target_commit, target);
+});
+
+test("bounded test fails closed if its inactive implementation marker is missing", (t) => {
+  const { root } = fixture(t);
+  amend(root, "docs/ops/HEDGR_STATUS.md", (content) => content.replace(
+    "**Fork 2 implementation boundary:**", "**Other implementation boundary:**"
+  ));
+  assert.throws(
+    () => planRebind(root, { testTarget: git(root, "rev-parse", "HEAD") }),
+    (error) => error instanceof RebindError && /inactive operating state/.test(error.message)
+  );
+});

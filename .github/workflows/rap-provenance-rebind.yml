@@ -4,8 +4,9 @@ on:
     branches: [main]
   workflow_dispatch:
 
-# Fork 2 is inactive. Both the repo variable and an explicit live §7 ACTIVE
-# marker are required, and the separately approved token must be present.
+# Fork 2 is inactive. Operating use requires the enable variable and a live
+# §7 ACTIVE marker. A manual, exact-SHA test gate may run before activation;
+# both paths require a separately approved identity.
 permissions:
   contents: read
 
@@ -15,7 +16,7 @@ concurrency:
 
 jobs:
   rebind:
-    if: ${{ vars.HEDGR_RAP_FORK2_ENABLED == 'true' }}
+    if: ${{ vars.HEDGR_RAP_FORK2_ENABLED == 'true' || (github.event_name == 'workflow_dispatch' && vars.HEDGR_RAP_FORK2_TEST_TARGET != '') }}
     runs-on: ubuntu-latest
     timeout-minutes: 45
     env:
@@ -40,13 +41,37 @@ jobs:
         with:
           node-version: '20'
 
+      - name: Select operating or single-source verification gate
+        id: gate
+        env:
+          ACTIVE_ENABLED: ${{ vars.HEDGR_RAP_FORK2_ENABLED }}
+          TEST_TARGET: ${{ vars.HEDGR_RAP_FORK2_TEST_TARGET }}
+        run: |
+          set -euo pipefail
+          if [ "$ACTIVE_ENABLED" = 'true' ]; then
+            echo 'argument=--require-active' >> "$GITHUB_OUTPUT"
+            echo 'mode=operating' >> "$GITHUB_OUTPUT"
+          else
+            test "$GITHUB_EVENT_NAME" = 'workflow_dispatch'
+            test "$TEST_TARGET" = "$(git rev-parse HEAD)"
+            echo "argument=--test-target=$TEST_TARGET" >> "$GITHUB_OUTPUT"
+            echo 'mode=bounded-test' >> "$GITHUB_OUTPUT"
+            echo "Bounded protected-branch test for permanent-main $TEST_TARGET; Fork 2 remains inactive." >> "$GITHUB_STEP_SUMMARY"
+          fi
+
       - name: Classify exact main-bound source change
         id: plan
+        env:
+          RAP_GATE: ${{ steps.gate.outputs.argument }}
+          RAP_MODE: ${{ steps.gate.outputs.mode }}
         run: |
           set -euo pipefail
           git fetch origin main
-          node scripts/bridge/rap-provenance-rebind.mjs --plan --require-active > /tmp/rap-plan.json
+          node scripts/bridge/rap-provenance-rebind.mjs --plan "$RAP_GATE" > /tmp/rap-plan.json
           cat /tmp/rap-plan.json
+          if [ "$RAP_MODE" = 'bounded-test' ]; then
+            test "$(jq -r .kind /tmp/rap-plan.json)" = 'mechanical'
+          fi
           echo "kind=$(jq -r .kind /tmp/rap-plan.json)" >> "$GITHUB_OUTPUT"
           echo "target=$(jq -r .target_commit /tmp/rap-plan.json)" >> "$GITHUB_OUTPUT"
           echo "branch=$(jq -r .branch /tmp/rap-plan.json)" >> "$GITHUB_OUTPUT"
@@ -68,6 +93,7 @@ jobs:
         env:
           RAP_BRANCH: ${{ steps.plan.outputs.branch }}
           RAP_TARGET: ${{ steps.plan.outputs.target }}
+          RAP_GATE: ${{ steps.gate.outputs.argument }}
         run: |
           set -euo pipefail
           existing=$(gh pr list --state open --head "$RAP_BRANCH" --json number --jq '.[0].number // empty')
@@ -80,7 +106,7 @@ jobs:
             echo 'Deterministic branch exists without an open PR; stop for governed inspection.' >&2
             exit 1
           fi
-          node scripts/bridge/rap-provenance-rebind.mjs --write --require-active > /tmp/rap-written.json
+          node scripts/bridge/rap-provenance-rebind.mjs --write "$RAP_GATE" > /tmp/rap-written.json
           git diff --exit-code -- AGENTS.md docs/ops/HEDGR_STATUS.md docs/decisions/SPRINT-2-ADR-INDEX.md docs/doctrine/HEDGR_ACTIVE_DOCTRINE_INDEX.md
           test "$(git diff --name-only)" = 'docs/ops/bridge/repo-authority-projection.json'
           git switch -c "$RAP_BRANCH"
