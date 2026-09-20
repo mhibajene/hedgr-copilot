@@ -205,7 +205,7 @@ export default function DashboardPage() {
           className={`${home.amount} tabular-nums`}
         />
       )}
-      {syntheticJourneyActive ? <p className={home.balanceCaption} data-testid="dashboard-synthetic-balance-explainer">Illustrative simulation value only.</p> : null}
+      {syntheticJourneyActive ? <p className={home.balanceCaption} data-testid="dashboard-synthetic-balance-explainer">Includes your simulated activity.</p> : null}
       {productSimulationActive && !syntheticJourneyActive && ready && !isLoading ? (
         <p
           className={home.balanceCaption}
@@ -338,10 +338,6 @@ export default function DashboardPage() {
           <div className={home.overviewGrid}>
             <div className={home.positionPanel}>
               {balanceHero}
-              <dl className={home.balanceScope} data-testid="dashboard-balance-scope">
-                <div><dt>This balance shows</dt><dd>Your simulated Hedgr balance and activity</dd></div>
-                <div><dt>This balance doesn’t tell you</dt><dd>When funds would be available to withdraw</dd></div>
-              </dl>
             </div>
             <div className={home.insights}>
               {observation}
