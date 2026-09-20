@@ -353,3 +353,29 @@ test("conflict and deterministic-artifact failures retain command exit failure a
     return true;
   });
 });
+
+test("historical active-ticket markers outside live §7 cannot supply sequencing", () => {
+  const sources = legibilityFixture();
+  const historical = "\nCurrent active ticket status:\n- **Lane X:** `HISTORICAL-001`\n- **Sequencing posture:** Resume historical work.\n\n---\n";
+  const expected = projectFixture(sources).projection;
+  sources["docs/ops/HEDGR_STATUS.md"] = historical + sources["docs/ops/HEDGR_STATUS.md"] + historical;
+  assert.deepEqual(projectFixture(sources).projection, expected);
+});
+
+test("a historical marker cannot replace a missing live §7 marker", () => {
+  const sources = legibilityFixture();
+  sources["docs/ops/HEDGR_STATUS.md"] = sources["docs/ops/HEDGR_STATUS.md"].replace(
+    "Current active ticket status:", "Historical active ticket status:"
+  ) + "\nCurrent active ticket status:\n- **Lane V:** `CLASS-A-VAL-002`\n- **Sequencing posture:** Historical only.\n\n---\n";
+  assert.throws(() => projectFixture(sources), /Missing explicit HEDGR_STATUS.md current-active-ticket start marker/);
+});
+
+test("missing or duplicate live §7 headings fail closed without a history fallback", () => {
+  for (const replacement of ["## Historical sequence", "## 7. Current sequence and active status\n## 7. Current sequence and active status"]) {
+    const sources = legibilityFixture();
+    sources["docs/ops/HEDGR_STATUS.md"] = sources["docs/ops/HEDGR_STATUS.md"].replace(
+      "## 7. Current sequence and active status", replacement
+    );
+    assert.throws(() => projectFixture(sources), /exactly one explicit live §7 heading/);
+  }
+});

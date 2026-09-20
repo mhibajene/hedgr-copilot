@@ -1,6 +1,6 @@
 # Institutional Load Design
 
-**Status:** Accepted design / operating changes not in force — `HEDGR_STATUS.md` §291
+**Status:** Accepted design — `HEDGR_STATUS.md` §291. Fork 1 verified delivery and effective conditions are recorded in §292; Forks 2/3 remain inactive.
 
 **Authority effect:** All three forks are adopted as design intent through `HEDGR_STATUS.md` §291. Adoption does not change operating behaviour or name, activate, amend or close a ticket. Current authority remains in `HEDGR_STATUS.md` §7 / §7a, `AGENTS.md`, accepted ADRs and active doctrine.
 
