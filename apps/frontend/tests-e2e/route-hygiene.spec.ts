@@ -85,7 +85,7 @@ test('governed synthetic journey entries remain available', async ({ page }) => 
   await expect(
     page
       .getByTestId('dashboard-balance')
-      .getByText('Simulated balance', { exact: true })
+      .getByText('Simulated Hedgr balance', { exact: true })
   ).toBeVisible();
 
   await page.goto('/dashboard?journey=class-a-val-002');
@@ -93,6 +93,6 @@ test('governed synthetic journey entries remain available', async ({ page }) => 
   await expect(
     page
       .getByTestId('dashboard-balance')
-      .getByText('Simulated balance', { exact: true })
+      .getByText('Simulated Hedgr balance', { exact: true })
   ).toBeVisible();
 });
