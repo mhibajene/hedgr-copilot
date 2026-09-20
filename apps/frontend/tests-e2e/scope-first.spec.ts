@@ -51,6 +51,8 @@ for (const viewport of [{ width: 390, height: 844 }, { width: 1440, height: 1024
     else expect(observation.x).toBeGreaterThan(balance.x + balance.width);
     await expect(page.getByTestId('currency-insight-headline')).not.toBeVisible();
     await expect(page.getByRole('button', { name: 'Currency context', exact: true })).toBeVisible();
+    // Keep the login pointer off actions when capturing their resting appearance.
+    await page.mouse.move(0, 0);
     await page.screenshot({ path: testInfo.outputPath(`scope-first-GHS3-${viewport.width}.png`), fullPage: true });
     await page.screenshot({ path: testInfo.outputPath(`scope-first-GHS3-${viewport.width}-viewport.png`) });
   });
