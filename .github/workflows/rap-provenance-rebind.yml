@@ -96,6 +96,10 @@ jobs:
           RAP_GATE: ${{ steps.gate.outputs.argument }}
         run: |
           set -euo pipefail
+          node scripts/bridge/rap-provenance-rebind.mjs --write "$RAP_GATE" > /tmp/rap-written.json
+          git diff --exit-code -- AGENTS.md docs/ops/HEDGR_STATUS.md docs/decisions/SPRINT-2-ADR-INDEX.md docs/doctrine/HEDGR_ACTIVE_DOCTRINE_INDEX.md
+          test "$(git diff --name-only)" = 'docs/ops/bridge/repo-authority-projection.json'
+          echo "artifact_sha256=$(jq -r .artifact_sha256 /tmp/rap-written.json)" >> "$GITHUB_OUTPUT"
           existing=$(gh pr list --state open --head "$RAP_BRANCH" --json number --jq '.[0].number // empty')
           if [ -n "$existing" ]; then
             echo "Existing mechanical PR #$existing; no duplicate created." >> "$GITHUB_STEP_SUMMARY"
@@ -106,9 +110,6 @@ jobs:
             echo 'Deterministic branch exists without an open PR; stop for governed inspection.' >&2
             exit 1
           fi
-          node scripts/bridge/rap-provenance-rebind.mjs --write "$RAP_GATE" > /tmp/rap-written.json
-          git diff --exit-code -- AGENTS.md docs/ops/HEDGR_STATUS.md docs/decisions/SPRINT-2-ADR-INDEX.md docs/doctrine/HEDGR_ACTIVE_DOCTRINE_INDEX.md
-          test "$(git diff --name-only)" = 'docs/ops/bridge/repo-authority-projection.json'
           git switch -c "$RAP_BRANCH"
           git config user.name 'Hedgr RAP provenance'
           git config user.email 'rap-provenance@users.noreply.github.com'
@@ -136,6 +137,7 @@ jobs:
         env:
           RAP_BRANCH: ${{ steps.plan.outputs.branch }}
           RAP_TARGET: ${{ steps.plan.outputs.target }}
+          RAP_ARTIFACT_SHA: ${{ steps.prepare.outputs.artifact_sha256 }}
           EXISTING_PR: ${{ steps.prepare.outputs.existing }}
           CREATED_PR: ${{ steps.prepare.outputs.created }}
         run: |
@@ -167,9 +169,11 @@ jobs:
           test "$(git rev-parse "${pr_head}^")" = "$RAP_TARGET"
           test "$(git diff --name-only "$RAP_TARGET" "$pr_head")" = 'docs/ops/bridge/repo-authority-projection.json'
           test "$(git show "${pr_head}:docs/ops/bridge/repo-authority-projection.json" | jq -r .source_commit)" = "$RAP_TARGET"
+          test "$(git show "${pr_head}:docs/ops/bridge/repo-authority-projection.json" | sha256sum | cut -d' ' -f1)" = "$RAP_ARTIFACT_SHA"
           gh pr merge "$pr_number" --squash --match-head-commit "$pr_head"
           git fetch origin main
           merged=$(git rev-parse origin/main)
           test "$(git show "${merged}:docs/ops/bridge/repo-authority-projection.json" | jq -r .source_commit)" = "$RAP_TARGET"
+          test "$(git show "${merged}:docs/ops/bridge/repo-authority-projection.json" | sha256sum | cut -d' ' -f1)" = "$RAP_ARTIFACT_SHA"
           test -z "$(git diff --name-only "$RAP_TARGET" "$merged" -- AGENTS.md docs/ops/HEDGR_STATUS.md docs/decisions/SPRINT-2-ADR-INDEX.md docs/doctrine/HEDGR_ACTIVE_DOCTRINE_INDEX.md)"
           echo "Verified mechanical RAP merge at $merged, bound to $RAP_TARGET." >> "$GITHUB_STEP_SUMMARY"

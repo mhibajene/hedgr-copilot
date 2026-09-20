@@ -8,6 +8,7 @@
 - The implementation adds one dormant workflow, one bounded helper and its Git fixtures, and Bridge operator guidance. It does not alter the RAP generator, validator, schema, Bridge route, CI/E2E workflow, branch protection, accepted ADR, doctrine, product, or financial behavior. No automation identity, secret, or repository variable was created.
 - Operating use needs three independent conditions: a separately controlled enable variable, a separately approved least-privilege automation token, and an explicit live §7 `**Fork 2 operating status: ACTIVE**` marker. None is supplied by this implementation. Missing credentials fail before checkout; an absent live marker fails before any operating PR mutation.
 - The pre-activation test has its own dormant gate: manual dispatch, a separately controlled test-target variable equal to the exact permanent-main SHA, the same approved token, live §7 bounded implementation authority with Fork 2 still **INACTIVE**, and an exact metadata-only classification. This removes the circular requirement to activate Fork 2 before proving the protected path. It authorises no general-use binding or classifier expansion. No test variable or credential is configured here.
+- Before creating or reusing a deterministic PR, the workflow generates the expected artifact and retains its digest. It compares the PR-head RAP bytes and the merged RAP bytes with that exact digest; matching path and `source_commit` alone are insufficient. Mismatch stops without reliance on the PR.
 
 ## Bounded classifier and retained checks
 
