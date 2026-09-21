@@ -1,8 +1,8 @@
 # CLASS-A-VAL-002 Digital Feedback v1 — approved self-guided preparation
 
-**Status:** APPROVED CONTENT, dated Founder approval 2026-09-18 under `CLASS-A-VAL-002-WEEKEND-PREP-001`, HEDGR_STATUS.md §7 / §7a. Separate unpublished Form preparation only. No D-number assigned. The moderated v2.1 and historical Forms/data remain preserved.
+**Status:** APPROVED CONTENT under `CLASS-A-VAL-002-WEEKEND-PREP-001`. The separate Form is published and accepting responses. On 2026-09-21 the Founder reported completed human phone rehearsal and explicitly released this digital pulse for Founder-owned circulation; see the release record below. No D-number is assigned. The moderated v2.1 and historical Forms/data remain preserved.
 
-**Timing:** approximately 3 minutes Form / 5–8 minutes total are unmeasured design targets, not participant-facing promises.
+**Timing:** The Founder reports a rehearsal Form time under five minutes. No journey time or total has been supplied to the repository. The earlier approximately 3-minute Form / 5–8-minute total targets are design targets, not participant-facing promises.
 
 ## Participant flow
 
@@ -14,7 +14,7 @@ Use separate start and resume links, on the exact verified deployment:
 
 - **Start once:** `https://hedgr-copilot-frontend.vercel.app/orientation`. Its existing `Enter Hedgr` continuation is `/dashboard-synthetic-journey?reset=1`, verified in `apps/frontend/lib/narrative/orientation-surface.ts`. Use this for initial entry only.
 - **Return to your visit:** `https://hedgr-copilot-frontend.vercel.app/dashboard-synthetic-journey`. It omits reset. Put this distinct link with the feedback Form for anyone switching tabs. Do not send them through orientation/Enter Hedgr again to resume.
-- **Feedback:** separately reachable Form link, including for someone unable to load or finish the journey. The separate draft is built and preview-verified but unpublished; see implementation evidence below. Do not circulate its editor/preview or an unverified responder link.
+- **Feedback:** [published responder Form](https://docs.google.com/forms/d/e/1FAIpQLSfkmopt1Trv3sY3ptO38i_vP8cjALsJxpREmlzahFD1o5ChzA/viewform?usp=header), separately reachable even when someone cannot load or finish the journey. Do not circulate its editor or owner preview link.
 
 Verify both exact URLs and same-browser storage behaviour on the intended production build before circulation. A messaging in-app browser and the system browser may hold different state; resume in the same browser. A resume link cannot restore state that the participant cleared or opened in a different browser. Do not promise otherwise.
 
@@ -242,7 +242,13 @@ The existing Form was completed in place; no duplicate was created. [Editor](htt
 
 Evidence is retained in `/Users/musalwa/Documents/Codex/2026-09-17/hedgr-weekend-qa/verified-2026-09-18/`: `form-editor-cards.json`, `form-editor-routing.txt`, `form-question-menus.json`, `form-settings.txt`, `form-final-response-state.txt`, `form-preview-*.txt`, `form-partial-branch-results.json`, `form-contradictory-checkboxes.txt`, `form-contradiction-final.txt` and `form-mobile-*.png`. Unsubmitted test answers were cleared after QA. The moderated v2.1 Form and historical Forms/data were not edited.
 
-Technical preparation does not authorise publication/distribution. Human phone rehearsal/timing, signed-out responder access at release and explicit Founder release disposition remain outstanding. The earlier interrupted construction record below is retained as history and no longer describes the saved draft.
+The dated evidence above describes the unpublished 2026-09-18 preflight. The later publication and Founder release disposition are recorded below; this older preflight does not describe current Form state. The earlier interrupted construction record remains history.
+
+### Publication and Founder release disposition — 2026-09-21
+
+Founder Musalwa Hibajene reports that the human phone rehearsal is complete and expressly states that “ready for circulation” is the release disposition for this separate Digital Feedback v1 pulse. The Founder retains participant selection, invitations, circulation and response custody; agents are not authorised to contact participants, submit QA responses or handle raw participant responses. This disposition does not release the separate moderated v2.1 study or close parent `CLASS-A-VAL-002`.
+
+The Form editor was inspected on 2026-09-21 and visibly showed **Published**, **Accepting responses** enabled and **Anyone with the link** as the responder audience. Its Copy responder link control supplied the [live responder URL](https://docs.google.com/forms/d/e/1FAIpQLSfkmopt1Trv3sY3ptO38i_vP8cjALsJxpREmlzahFD1o5ChzA/viewform?usp=header); that page opened to W01 and the approved research-simulation opening in the owner session. The same responder URL then opened in a fresh Chrome Guest window with W01 available and only an optional sign-in prompt to save progress. The temporary Guest window was closed without entering or submitting an answer. A submitted confirmation was not independently exercised. The Founder reports a Form rehearsal time under five minutes and a passed same-browser resume. A journey time and messaging-browser handoff result have not been supplied to this record; do not substitute the earlier design targets for observed timings or participant promises. The 2026-09-18 zero-response observation is historical; no current response count is claimed. Preserve the approved 9/4/2 routing and content for the circulation version.
 
 ### Earlier interrupted construction — historical
 

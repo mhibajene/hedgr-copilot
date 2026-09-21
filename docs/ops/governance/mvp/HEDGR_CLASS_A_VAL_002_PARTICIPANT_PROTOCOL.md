@@ -1,6 +1,6 @@
 # CLASS-A-VAL-002 Digital Feedback v1 — self-guided protocol amendment
 
-**Date / authority:** 2026-09-18; dated Founder approval under `CLASS-A-VAL-002-WEEKEND-PREP-001`, [HEDGR_STATUS.md §7 / §7a](../../HEDGR_STATUS.md). No D-number assigned. **Status: unpublished technical preparation; publication and participant distribution remain PAUSED.**
+**Date / authority:** 2026-09-18 preparation approval and 2026-09-21 Founder release disposition under `CLASS-A-VAL-002-WEEKEND-PREP-001`, [HEDGR_STATUS.md §7 / §7a](../../HEDGR_STATUS.md). No D-number assigned. **Status: separate Digital Feedback v1 Form published; Founder-owned circulation authorised by the explicit release disposition, subject to the evidence limits below.** The moderated v2.1 study remains unreleased.
 
 This amendment governs only the separately versioned directional digital feedback pulse. Exact participant wording, options and routing are in [Digital Feedback v1](HEDGR_CLASS_A_VAL_002_DIGITAL_FEEDBACK.md); [implementation evidence](HEDGR_CLASS_A_VAL_002_DIGITAL_FEEDBACK.md#implementation-evidence) records verified delivery. The moderated v2.1 protocol below, its questionnaire and all historical Forms/data remain preserved. Its acceptance method is not replaced by this shorter pulse. Both parents stay open; no threshold, financial capability or cross-lane change follows. **NO CROSS-LANE IMPACT.**
 
@@ -12,7 +12,7 @@ Participant title: **Hedgr — quick experience feedback**.
 
 - **Start once:** https://hedgr-copilot-frontend.vercel.app/orientation
 - **Return to your visit:** https://hedgr-copilot-frontend.vercel.app/dashboard-synthetic-journey
-- **Feedback:** [VERIFIED RESPONDER LINK PENDING — do not circulate].
+- **Feedback:** https://docs.google.com/forms/d/e/1FAIpQLSfkmopt1Trv3sY3ptO38i_vP8cjALsJxpREmlzahFD1o5ChzA/viewform?usp=header
 
 **Approved participant task card:**
 
@@ -62,15 +62,15 @@ Verify saved wording/options/types, required flags, all six W01 choices and thre
 
 A human must rehearse on a phone, separately time journey and Form, and check same-browser start/resume, messaging-browser handoff, tab switching, return after interruption, enlarged text and required-error recovery. Record actual conditions/results; automation is not human timing. Approximately three minutes Form / five–eight minutes total remain unmeasured design targets and must not appear as participant promises before measurement.
 
-Before publication/distribution, record verified fixes and instrument, the human rehearsal, and explicit Founder release disposition under §7a. **Agents are not authorised to send participant invitations or messages.**
+The Founder reports completed phone rehearsal, a Form time under five minutes, passed same-browser resume and an explicit release disposition on 2026-09-21. Journey time and messaging-browser handoff outcome have not been supplied to this repository record. The exact live Form publication and responder-access observations are in the evidence below. **Agents are not authorised to send participant invitations or messages.**
 
 | Implementation / release evidence | Current record |
 | --- | --- |
-| New Form ID and editor/preview/responder links | Saved unpublished Form `1nIqYfCEnltude714mJgrCM_b5LKtWM2ybcaIFPhPGgc`; [internal preview](https://docs.google.com/forms/d/1nIqYfCEnltude714mJgrCM_b5LKtWM2ybcaIFPhPGgc/preview). Exact editor/readback evidence in Digital Feedback v1. Zero responses; public responder link/access not release-verified. Do not circulate. |
-| Immutable shipped build and deployment | Runtime PR #549, `56bde5e4faa4ca256e717f37f2a035a726493e4f`; production deployment `6513896843` succeeded at `https://hedgr-copilot-frontend-rdtdw45ok-hedgr.vercel.app`. Production alias mobile standard journey, affected edges, five task inputs and default dashboard inspected; see weekend QA ledger. |
+| New Form ID and editor/preview/responder links | Form `1nIqYfCEnltude714mJgrCM_b5LKtWM2ybcaIFPhPGgc` shows Published, accepting responses and Anyone with the link in the owner editor on 2026-09-21. [Live responder URL](https://docs.google.com/forms/d/e/1FAIpQLSfkmopt1Trv3sY3ptO38i_vP8cjALsJxpREmlzahFD1o5ChzA/viewform?usp=header) opened to W01 both in the owner session and a fresh signed-out Chrome Guest window; sign-in was optional for saving progress. No answer was entered or submitted. The earlier [internal preview](https://docs.google.com/forms/d/1nIqYfCEnltude714mJgrCM_b5LKtWM2ybcaIFPhPGgc/preview) and zero-response readback are dated 2026-09-18, not current response evidence. Submitted confirmation remains untested by the Repo Steward. |
+| Immutable shipped build and deployment | Runtime remediation PR #549 merged at `56bde5e4faa4ca256e717f37f2a035a726493e4f`; the subsequently verified compact synthetic Home FX insight shipped in PR #620 at `af41cec939dcbe3ceebff90255c3878b0aed048a` with production deployment `dpl_AVp1GUT5yy4XsJVsfBU66Kf3vDrz` READY. The 2026-09-18 journey evidence binds the earlier build; see the later shipped inspection in §297 for the updated Home. No new post-release journey rehearsal by the Repo Steward is claimed. |
 | Distinct technical reviewer and branch/privacy readback | Qualified PASS by `/root/weekend_verifier`: exact cards/types/flags, 9/4/2 routes, settings, zero responses and phone-width layouts. Preview-only; Submit disabled. Final submission/confirmation and anonymous responder access remain untested. |
-| Human phone rehearsal and separate timings | OUTSTANDING |
-| Founder release disposition | NOT RECORDED; publication/distribution PAUSED |
+| Human phone rehearsal and separate timings | Founder reports rehearsal complete, Form under five minutes and same-browser resume passed. Journey time and messaging-browser handoff result were not supplied to this record. |
+| Founder release disposition | Founder explicitly stated on 2026-09-21 that “ready for circulation” is the release disposition for this digital pulse. Founder owns participant distribution and raw-response custody; no agent outreach is authorised. |
 
 ---
 
