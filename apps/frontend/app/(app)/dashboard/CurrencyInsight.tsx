@@ -18,11 +18,13 @@ type CurrencyInsightProps = {
   /** Explicit synthetic samples for isolated review/tests, never a runtime selector. */
   example?: CurrencyExample;
   redesigned?: boolean;
+  /** Synthetic Home only: keep the complete comparison inside its dialog. */
+  compact?: boolean;
 };
 
 export function CurrencyInsight({
   usdAmount, currency, latestDisplayRate, ready, pending = false,
-  example = makeCurrencyExample(latestDisplayRate), redesigned = false,
+  example = makeCurrencyExample(latestDisplayRate), redesigned = false, compact = false,
 }: CurrencyInsightProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
@@ -37,17 +39,36 @@ export function CurrencyInsight({
 
   if (redesigned) {
     const limit = 'FX comparison only—not earnings, purchasing power, guaranteed protection or a conversion quote.';
-    return (
-      <section className={wallet.context} aria-label="Currency context" data-testid="currency-insight">
-        <p className={wallet.headline} data-testid="currency-insight-headline">
-          {comparison ? <span className={styles.direction} aria-hidden="true" data-testid="currency-insight-direction">{comparison.direction === 'higher' ? '↑' : comparison.direction === 'lower' ? '↓' : '—'}</span> : null}
+    const summary = (<>{comparison && (comparison.direction === 'higher' || comparison.direction === 'lower') ? <>
+          <p className={styles.estimateLabel}>Change in {currency} estimate</p>
+          <p className={styles.summary} data-testid="currency-insight-headline">
+            <span className={styles.difference} data-testid="currency-insight-difference">{currency} {formatComparisonCents(comparison.deltaCents, true)}</span>{' '}
+            <span className={styles.cause}><span className={styles.direction} aria-hidden="true" data-testid="currency-insight-direction" data-direction={comparison.direction} />{comparison.direction} from the rate change</span>
+          </p>
+        </> : <p className={wallet.headline} data-testid="currency-insight-headline">
+          {comparison ? <span className={styles.direction} aria-hidden="true" data-testid="currency-insight-direction">—</span> : null}
           <span>{headline}</span>
-        </p>
-        <p>30-day example · Simulated</p>
+        </p>}</>);
+    return (
+      <section className={`${wallet.context} ${styles.refined} ${compact ? styles.compact : ""}`} aria-label="Currency context" data-testid="currency-insight">
+        {!compact || !comparison ? <p className={styles.period}>30-day example · Simulated</p> : null}
+        {(!compact || !comparison) ? summary : null}
         {comparison ? <>
-          <p>Your USD amount is held constant in this comparison.</p>
-          <button ref={triggerRef} type="button" className={wallet.link} aria-haspopup="dialog" onClick={() => dialogRef.current?.showModal()}>Understand the comparison</button>
-          <p className={wallet.limit}>{limit}</p>
+          {!compact ? <p>Your USD amount is held constant in this comparison.</p> : null}
+          <button ref={triggerRef} type="button" className={compact ? styles.launcher : wallet.link} aria-label={compact ? 'Currency context' : undefined} aria-describedby={compact ? 'currency-context-inline-insight' : undefined} aria-haspopup="dialog" onClick={() => dialogRef.current?.showModal()}>
+            {compact ? <span className={styles.launcherContent}>
+              <span>Currency context</span>
+              <span className={styles.launcherSubtitle}>30-day example · Simulated</span>
+              <span id="currency-context-inline-insight" className={styles.launcherInsight} data-testid="currency-insight-inline">
+                {comparison.direction === 'higher' || comparison.direction === 'lower' ? <>
+                  <span className={styles.launcherDelta}>{currency} {formatComparisonCents(comparison.deltaCents, true)} {comparison.direction}</span>{' '}
+                  <span className={styles.launcherCause}>from the rate change</span>
+                </> : headline}
+              </span>
+              <span className={styles.launcherAffordance}>Understand the comparison <span aria-hidden="true">→</span></span>
+            </span> : 'Understand the comparison'}
+          </button>
+          {!compact ? <p className={wallet.limit}>{limit}</p> : null}
           <dialog ref={dialogRef} className={wallet.dialog} aria-labelledby="currency-context-title" onClose={() => triggerRef.current?.focus()} onKeyDown={event => {
             if (event.key !== 'Tab') return;
             const controls = event.currentTarget.querySelectorAll<HTMLElement>('button, summary');
@@ -75,7 +96,7 @@ export function CurrencyInsight({
                   <div className={wallet.comparisonRow}><dt>Day 0<span>1 USD = {comparison.earlierRate.toLocaleString('en-US', { maximumFractionDigits: 20 })} {currency}</span></dt><dd>{currency} {formatComparisonCents(comparison.earlierCents)}</dd></div>
                   <div className={wallet.comparisonRow}><dt>Day 30<span>1 USD = {comparison.latestRate.toLocaleString('en-US', { maximumFractionDigits: 20 })} {currency}</span></dt><dd>{currency} {formatComparisonCents(comparison.latestCents)}</dd></div>
                 </dl>
-                <p className={wallet.headline}>{headline}</p>
+                {compact ? summary : <p className={wallet.headline}>{headline}</p>}
               </div>
               <section><h2>What this means</h2><p>{comparison.direction === 'equal' ? 'The exchange rates are equal in this comparison.' : 'Only the exchange rate changes in this comparison.'}</p></section>
               <section><h2>What this does not show</h2><p>{limit}</p></section>

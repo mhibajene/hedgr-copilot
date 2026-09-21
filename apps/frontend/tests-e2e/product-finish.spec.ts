@@ -42,7 +42,8 @@ for (const synthetic of [true, false]) {
         await page.addStyleTag({ content: `html { font-size: ${textSize}%; }` });
         if (synthetic) {
           await expect(page.getByRole('heading', { name: 'Your position', exact: true })).toBeVisible();
-          await expect(page.getByText('Illustrative simulation value only.', { exact: true })).toBeVisible();
+          await expect(page.getByText('Includes your simulated activity.', { exact: true })).toBeVisible();
+          await expect(page.getByTestId('dashboard-balance-scope')).toHaveCount(0);
         } else {
           const framing = page.getByTestId('dashboard-orientation').getByText('Hedgr helps you understand', { exact: false });
           await expect(framing).toBeVisible();
@@ -92,7 +93,7 @@ for (const synthetic of [true, false]) {
     }
   });
 
-  test(`${family}: B2 preserves equal action weight and the factual journey`, async ({ page }, testInfo) => {
+  test(`${family}: approved action styling preserves the factual journey`, async ({ page }, testInfo) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await seedPosition(page);
     await page.goto(home);
@@ -103,9 +104,22 @@ for (const synthetic of [true, false]) {
       const s = getComputedStyle(el);
       return [s.backgroundColor, s.color, s.borderRadius, s.boxShadow];
     };
-    expect(await deposit.evaluate(appearance)).toEqual(await activity.evaluate(appearance));
-    expect((await deposit.boundingBox())!.height).toBeGreaterThanOrEqual(synthetic ? 44 : 64);
-    expect((await activity.boundingBox())!.height).toBeGreaterThanOrEqual(synthetic ? 44 : 64);
+    // Move the login pointer away so these assertions measure the resting state.
+    await page.mouse.move(0, 0);
+    if (synthetic) {
+      await expect(deposit).toHaveCSS('background-color', 'rgb(31, 39, 71)');
+      await expect(deposit).toHaveCSS('color', 'rgb(255, 255, 255)');
+      await expect(activity).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
+      await expect(activity).toHaveCSS('color', 'rgb(70, 88, 160)');
+    } else {
+      await expect(deposit).toHaveCSS('background-color', 'rgb(250, 248, 245)');
+      await expect(deposit).toHaveCSS('color', 'rgb(31, 39, 71)');
+      await expect(activity).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
+      await expect(activity).toHaveCSS('color', 'rgb(255, 255, 255)');
+      expect((await deposit.evaluate(appearance)).slice(2)).toEqual((await activity.evaluate(appearance)).slice(2));
+    }
+    expect((await deposit.boundingBox())!.height).toBeGreaterThanOrEqual(44);
+    expect((await activity.boundingBox())!.height).toBeGreaterThanOrEqual(44);
     await expect(deposit).toHaveAttribute('href', route('/deposit'));
     await expect(activity).toHaveAttribute('href', route('/activity'));
     await expect(page.getByTestId('dashboard-simulated-withdraw')).toHaveCount(synthetic ? 0 : 1);

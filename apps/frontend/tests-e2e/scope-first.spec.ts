@@ -1,0 +1,170 @@
+import { expect, test, type Page } from '@playwright/test';
+
+const home = '/dashboard-synthetic-journey';
+async function seed(page: Page, mockupAmount = false) {
+  await page.goto('/login');
+  await page.getByPlaceholder('you@example.com').fill('scope-first@hedgr.test');
+  await page.getByRole('button', { name: 'Continue', exact: true }).click();
+  await expect(page).toHaveURL(/\/dashboard$/);
+  await page.evaluate(({ depositUsd, withdrawUsd }) => {
+    localStorage.setItem('hedgr:ledger', JSON.stringify({ version: 2, transactions: [
+      { txn_ref: 'scope-deposit', type: 'deposit', status: 'settled', amount_zmw: depositUsd * 20, amount_usd: depositUsd, fx_rate: 20, created_at: 1000, updated_at: 1000 },
+      { txn_ref: 'scope-withdraw', type: 'withdrawal', status: 'settled', amount_zmw: 0, amount_usd: withdrawUsd, fx_rate: 0, created_at: 2000, updated_at: 2000 },
+    ] }));
+    localStorage.setItem('hedgr:wallet', JSON.stringify({ state: { usdBalance: depositUsd - withdrawUsd }, version: 0 }));
+    localStorage.setItem('hedgr.simulation.display-currency', 'GHS');
+  }, { depositUsd: mockupAmount ? 503 : 5, withdrawUsd: mockupAmount ? 250 : 2 });
+  await page.goto(home);
+  await expect(page.getByTestId('usd-balance')).toHaveText(mockupAmount ? '$253.00' : '$3.00');
+}
+
+test.beforeEach(async ({ context }) => {
+  await context.route('**/*', route => ['localhost', '127.0.0.1', '::1'].includes(new URL(route.request().url()).hostname) ? route.continue() : route.abort());
+});
+
+for (const viewport of [{ width: 390, height: 844 }, { width: 1440, height: 1024 }]) {
+  test(`approved open-balance copy at ${viewport.width}px`, async ({ page }, testInfo) => {
+    await page.setViewportSize(viewport);
+    await seed(page);
+    await expect(page.getByTestId('dashboard-balance-scope')).toHaveCount(0);
+    await expect(page.getByTestId('dashboard-balance')).toContainText('Simulated Hedgr balance');
+    await expect(page.getByTestId('local-balance')).toHaveText('≈ GHS 45.00 display estimate');
+    const context = page.getByTestId('dashboard-synthetic-balance-explainer');
+    await expect(context).toHaveText('Includes your simulated activity.');
+    await expect(page.getByTestId('dashboard-balance')).not.toContainText('Illustrative simulation value only.');
+    await expect(page.getByText('When funds would be available to withdraw', { exact: true })).toHaveCount(0);
+    expect((await page.getByTestId('local-balance').boundingBox())!.y).toBeGreaterThan((await page.getByTestId('usd-balance').boundingBox())!.y);
+    expect((await context.boundingBox())!.y).toBeGreaterThan((await page.getByTestId('local-balance').boundingBox())!.y);
+    await expect(context).toHaveCSS('font-weight', '600');
+    await expect(page.getByTestId('engine-posture-context')).toHaveText('Your simulated withdrawal reduced the balance by $2.00.');
+    await expect(page.getByText('This is an observation from the simulation, not a guarantee.')).toBeVisible();
+    const utilities = page.getByTestId('dashboard-simulation-utilities');
+    const deposit = page.getByTestId('dashboard-add-simulated-deposit');
+    const activity = page.getByTestId('dashboard-view-activity');
+    await expect(utilities.locator(':scope > a').first()).toHaveAttribute('data-testid', 'dashboard-add-simulated-deposit');
+    await expect(utilities.locator(':scope > a').last()).toHaveAttribute('data-testid', 'dashboard-view-activity');
+    await expect(deposit).toHaveAttribute('href', '/deposit?journey=class-a-val-002');
+    await expect(activity).toHaveAttribute('href', '/activity?journey=class-a-val-002');
+    await page.mouse.move(0, 0);
+    await expect(deposit).toHaveCSS('background-color', 'rgb(31, 39, 71)');
+    await expect(deposit).toHaveCSS('color', 'rgb(255, 255, 255)');
+    await expect(activity).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
+    await expect(activity).toHaveCSS('color', 'rgb(70, 88, 160)');
+    const depositBox = (await deposit.boundingBox())!;
+    const activityBox = (await activity.boundingBox())!;
+    expect(depositBox.height).toBeGreaterThanOrEqual(44);
+    expect(activityBox.height).toBeGreaterThanOrEqual(44);
+    expect(depositBox.y + depositBox.height).toBeLessThanOrEqual(activityBox.y + 1);
+    const nav = page.getByRole('navigation', { name: 'Primary', exact: true });
+    await expect(nav).toHaveCount(1);
+    await expect(nav).toBeVisible();
+    await expect(nav.getByRole('link', { name: 'Home', exact: true })).toHaveAttribute('href', home);
+    await expect(nav.getByRole('link', { name: 'Activity', exact: true })).toHaveAttribute('href', '/activity?journey=class-a-val-002');
+    await expect(nav.getByRole('link', { name: 'Settings', exact: true })).toHaveAttribute('href', '/settings?journey=class-a-val-002');
+    await expect(nav).toHaveCSS('position', viewport.width < 1024 ? 'fixed' : 'static');
+    const navBox = (await nav.boundingBox())!;
+    if (viewport.width < 1024) expect(navBox.y + navBox.height).toBeCloseTo(viewport.height, 0);
+    else expect(navBox.y).toBeLessThan((await page.getByRole('main').boundingBox())!.y);
+    const observation = (await page.getByTestId('dashboard-current-status').boundingBox())!;
+    const balance = (await page.getByTestId('dashboard-balance').boundingBox())!;
+    if (viewport.width < 1024) {
+      expect(observation.y).toBeGreaterThan((await context.boundingBox())!.y);
+      await expect(page.getByTestId('dashboard-balance').locator('..')).toHaveCSS('border-bottom-width', '1px');
+    } else expect(observation.x).toBeGreaterThan(balance.x + balance.width);
+    await expect(page.getByTestId('currency-insight-headline')).not.toBeVisible();
+    await expect(page.getByRole('button', { name: 'Currency context', exact: true })).toBeVisible();
+    // Keep the login pointer off actions when capturing their resting appearance.
+    await page.mouse.move(0, 0);
+    await page.screenshot({ path: testInfo.outputPath(`scope-first-GHS3-${viewport.width}.png`), fullPage: true });
+    await page.screenshot({ path: testInfo.outputPath(`scope-first-GHS3-${viewport.width}-viewport.png`) });
+  });
+}
+
+test('activity context and responsive navigation are isolated to explicit eligible Home', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1024 });
+  await seed(page);
+  await page.goto('/dashboard?journey=class-a-val-002');
+  await expect(page.getByTestId('dashboard-synthetic-balance-explainer')).toHaveText('Includes your simulated activity.');
+  for (const path of ['/dashboard', `${home}?scenario=unavailable-data`, '/activity?journey=class-a-val-002', '/settings?journey=class-a-val-002']) {
+    await page.goto(path);
+    await expect(page.getByTestId('dashboard-balance-scope')).toHaveCount(0);
+    await expect(page.getByText('Includes your simulated activity.', { exact: true })).toHaveCount(0);
+    await expect(page.getByRole('navigation', { name: 'Primary', exact: true })).toHaveCSS('position', 'fixed');
+    if (path === '/dashboard') {
+      await expect(page.getByTestId('dashboard-balance')).toContainText('Your current position');
+      await expect(page.getByTestId('dashboard-add-simulated-deposit')).toHaveCSS('background-color', 'rgb(250, 248, 245)');
+    }
+  }
+});
+
+test('activity context, actions and retained disclosures reflow at 320px and enlarged text', async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 844 });
+  await seed(page);
+  await page.addStyleTag({ content: 'html { font-size: 200%; }' });
+  await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(1);
+  for (const id of ['dashboard-balance', 'dashboard-simulation-utilities']) {
+    const region = page.getByTestId(id);
+    expect(await region.evaluate(el => el.scrollWidth - el.clientWidth)).toBeLessThanOrEqual(1);
+  }
+  await expect(page.getByTestId('dashboard-synthetic-balance-explainer')).toHaveText('Includes your simulated activity.');
+  for (const id of ['dashboard-add-simulated-deposit', 'dashboard-view-activity']) {
+    expect((await page.getByTestId(id).boundingBox())!.height).toBeGreaterThanOrEqual(44);
+  }
+  for (const id of ['research-planning-targets', 'dashboard-disclosures']) {
+    const details = page.getByTestId(id);
+    await details.locator(':scope > summary').focus();
+    await page.keyboard.press('Enter');
+    await expect(details).toHaveAttribute('open', '');
+  }
+  await expect(page.getByTestId('engine-allocation-boundary')).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Restart simulated journey' })).toBeVisible();
+});
+
+for (const width of [320, 390, 1280, 1440]) {
+  for (const textSize of [100, 200]) {
+    test(`mockup amount stays legible at ${width}px and ${textSize}% text`, async ({ page }, testInfo) => {
+      await page.setViewportSize({ width, height: width < 1024 ? 844 : 1024 });
+      await seed(page, true);
+      await page.addStyleTag({ content: `html { font-size: ${textSize}%; }` });
+      const balance = page.getByTestId('dashboard-balance');
+      const amount = page.getByTestId('usd-balance');
+      const estimate = page.getByTestId('local-balance');
+      await expect(amount).toHaveText('$253.00');
+      await expect(estimate).toHaveText('≈ GHS 3,795.00 display estimate');
+      await expect(page.getByRole('combobox', { name: 'Display currency for this simulation' })).toHaveValue('GHS');
+      await expect(page.getByTestId('dashboard-synthetic-balance-explainer')).toHaveText('Includes your simulated activity.');
+      await expect(page.getByTestId('engine-posture-context')).toHaveText('Your simulated withdrawal reduced the balance by $250.00.');
+      await expect(page.getByText('This is an observation from the simulation, not a guarantee.')).toBeVisible();
+      await expect(page.getByTestId('dashboard-simulation-utilities').locator(':scope > a').first()).toHaveAttribute('data-testid', 'dashboard-add-simulated-deposit');
+      await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(1);
+      for (const region of [balance, amount, estimate]) {
+        expect(await region.evaluate(el => el.scrollWidth - el.clientWidth)).toBeLessThanOrEqual(1);
+      }
+      const numericLineCount = await amount.evaluate(el => {
+        const range = document.createRange();
+        range.selectNodeContents(el.firstChild!);
+        return range.getClientRects().length;
+      });
+      expect(numericLineCount).toBe(1);
+      const splitLabelWords = await balance.getByText('Simulated Hedgr balance', { exact: true }).evaluate(el => {
+        const node = el.firstChild!;
+        const words = Array.from(node.textContent!.matchAll(/\S+/g));
+        return words.filter(word => {
+          const range = document.createRange();
+          range.setStart(node, word.index);
+          range.setEnd(node, word.index + word[0].length);
+          return range.getClientRects().length > 1;
+        }).map(word => word[0]);
+      });
+      expect(splitLabelWords).toEqual([]);
+      if (width === 390 && textSize === 100) {
+        const metrics = await amount.evaluate(el => {
+          const style = getComputedStyle(el);
+          return { height: el.getBoundingClientRect().height, lineHeight: Number.parseFloat(style.lineHeight) };
+        });
+        expect(metrics.height).toBeLessThanOrEqual(metrics.lineHeight + 1);
+      }
+      await page.screenshot({ path: testInfo.outputPath(`balance-fit-GHS253-${width}-${textSize}.png`), fullPage: true });
+    });
+  }
+}

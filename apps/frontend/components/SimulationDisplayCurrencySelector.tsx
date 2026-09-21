@@ -1,6 +1,7 @@
 'use client';
 
 import wallet from '../app/(app)/research-wallet.module.css';
+import baseline from '../app/(app)/shared-baseline.module.css';
 
 import React, { useRef } from 'react';
 import { SIMULATION_DISPLAY_CURRENCY_COPY as copy } from '../lib/narrative/orientation-surface';
@@ -63,7 +64,7 @@ export function SimulationDisplayCurrencySelector({ placement }: { placement: 'e
           <span className="block text-sm font-semibold text-hedgr-800">{copy.settingsLabel}</span>
           <span className="mt-1 block text-sm leading-relaxed text-hedgr-500">{copy.settingsHelper}</span>
         </span>
-        <span className="text-sm font-semibold text-hedgr-800">{currency} <span aria-hidden="true">›</span></span>
+        <span className={baseline.currencyPill}>{currency} <span aria-hidden="true">⌄</span></span>
       </button>
       <dialog
         ref={dialogRef}

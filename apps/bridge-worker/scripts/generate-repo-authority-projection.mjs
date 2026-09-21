@@ -76,13 +76,29 @@ function extractSection(source, startMarker, endMarker, label) {
   return source.slice(start, end);
 }
 
-function extractStatusProjection(statusSource) {
-  const activeStatus = extractSection(
+function extractLiveActiveStatus(statusSource) {
+  const heading = /^## 7\. Current sequence and active status$/gm;
+  if ([...statusSource.matchAll(heading)].length !== 1) {
+    throw new ProjectionGenerationError(
+      "HEDGR_STATUS.md must contain exactly one explicit live §7 heading."
+    );
+  }
+  const liveSection = extractSection(
     statusSource,
+    "## 7. Current sequence and active status",
+    "\n## 7a.",
+    "HEDGR_STATUS.md live §7"
+  );
+  return extractSection(
+    liveSection,
     "Current active ticket status:",
     "\n---",
     "HEDGR_STATUS.md current-active-ticket"
   );
+}
+
+function extractStatusProjection(statusSource) {
+  const activeStatus = extractLiveActiveStatus(statusSource);
   const activeTicketIds = unique(
     [...activeStatus.matchAll(/^\s*- \*\*Lane [^:]+:\*\* `([A-Z][A-Z0-9-]+)`/gm)].map(
       (match) => match[1]
@@ -207,9 +223,7 @@ function narrativeWarnings(statusSource, statusProjection, sourceCommit) {
   if (!narrative.startsWith("Only **§7** / **§7a** name approved active ticket(s).")) {
     return [];
   }
-  const activeStatus = extractSection(
-    statusSource, "Current active ticket status:", "\n---", "current-active-ticket"
-  );
+  const activeStatus = extractLiveActiveStatus(statusSource);
   const completed = new Set(
     [...activeStatus.matchAll(/^- \*\*Completed(?: historical)? Lane [^*]+:\*\* ([^\n]+)/gm)]
       .flatMap((record) => [...record[1].matchAll(/`([A-Z][A-Z0-9-]+)`/g)])

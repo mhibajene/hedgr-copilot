@@ -13,6 +13,11 @@ colors:
   color-300: "#8391C9"
   color-200: "#A6B0D8"
   color-100: "#CAD0E8"
+syntheticHome:
+  canvas: "#FAF8F5"
+  observation-surface: "#F8EDE7"
+  observation-emphasis: "#963F22"
+  divider: "#CEC2B5"
 components:
   button-primary:
     backgroundColor: "{colors.primary}"
@@ -164,3 +169,28 @@ We pick shades that hit WCAG AA contrast (4.5:1) against their paired text or ba
 - Don't place the logo on low-contrast or visually cluttered backgrounds.
 - Don't swap horizontal for vertical layout, or remove the icon.
 - Don't use the primary color decoratively. Treat it as a functional accent.
+
+## Synthetic Home presentation tokens
+
+Founder-approved option 3 translation, 2026-09-18, `CLASS-A-VAL-002-HOME-POLISH-001` under HEDGR_STATUS.md §7 / §7a. The additive `syntheticHome` tokens apply only to eligible synthetic Home and its Home shell. They represent canvas, observation hierarchy and neutral separators, not warning, success, safety or financial state. Existing color and semanticStatus tokens retain their values and meaning. These tokens do not authorize a global theme migration or use on other routes. Use existing dark text for legibility, preserve non-normal notices, and verify final contrast. Runtime remains subject to the ticket brief.
+
+
+### Bounded Home card edge tint
+
+Founder-approved live polish, 2026-09-18, under the finite tint amendment to `CLASS-A-VAL-002-WEEKEND-PREP-001` (§7 / §7a). Retain the current navy balance and warm observation fills. Only these two Home cards may use a static, non-blurred outer tint perimeter of 1 CSS px: existing `colors.primary` at 4% opacity for balance and `syntheticHome.observation-emphasis` at 5% for observation, composed with transparent. This introduces no new palette value or semantic role. A zero-offset, zero-blur spread-only box-shadow is permitted solely to paint the perimeter without changing layout; no gradient, glow system, elevation, animation or logo/icon effect. Existing text/background contrast, focus indicators and all other component treatments remain unchanged. This is one bounded implementation pass, not general shadow or theme authority.
+
+The Founder requested a quieter Activity-like edge after PR #561 on 2026-09-18. The 1px / 4% / 5% values above supersede its 4px / 8% / 10% treatment solely for the bounded correction recorded in §7a; Activity and all card fills remain unchanged.
+
+## Shared Home, Activity and Settings baseline (2026-09-19)
+
+Direct Founder approval and HEDGR_STATUS.md §7a extend the existing `syntheticHome` canvas, observation-surface, observation-emphasis and divider values to default and synthetic Home, Activity and Settings. The legacy token group name remains for compatibility. This supersedes the preceding Home-only restriction only on those surfaces. Navy identifies the primary balance; peach identifies explanatory context (Activity balance-after and Settings simulation information), not transaction direction, success, safety or warning. Keep ordinary rows ivory, amounts subordinate to the main balance, all disclosed state truthful and existing semantic status colors unchanged. Use existing governed logo/assets and typography. Other routes are not migrated.
+
+## Synthetic Home scope-first usage (2026-09-20)
+
+The finite §7a scope-first amendment to `CLASS-A-VAL-002-WEEKEND-PREP-001` authorises an open balance on `syntheticHome.canvas` for eligible synthetic Home only. Use `colors.color-800` / `colors.primary` for the dominant amount, existing muted text tokens for its estimate and caption, `syntheticHome.divider` for scope rows, and existing peach observation tokens. This supersedes the navy card and its decorative edge only on that surface. View Activity uses the existing primary-button color pairing; Add simulated deposit is a secondary text action. Keep default Home, Activity and Settings token usage unchanged. No palette values, typeface, status meaning or brand assets change. Responsive Home navigation and compact currency-context entry use existing UI primitives; all notices, focus visibility and disclosure access remain intact. Mockups are layout references, not sources for generated brand assets. No global theme or standing refinement authority follows.
+
+**Synthetic Home CTA correction (2026-09-20):** The fresh Founder instruction in HEDGR_STATUS.md §7a/§295 supersedes the completed scope-first choice of View Activity as primary only on eligible synthetic Home. Place **Add simulated deposit** first in the existing filled navy primary treatment, and **View Activity** second in the existing secondary text treatment. Reuse current colors, type, geometry, focus, and links. The attached older mockup is not authority for its superseded balance-scope copy or brand approximations. Default Home and all other visual tokens remain unchanged. This is one finite correction, not a general CTA rule.
+
+**Synthetic Home balance-copy amendment (2026-09-20):** The later Founder-authorised §7a amendment retains the open, uncarded balance and existing dynamic USD/local estimate on the ivory canvas. Replace the synthetic-only redundant illustrative caption and two-row scope divider with one short activity-context line, “Includes your simulated activity.”, directly below the estimate. Use the existing muted navy text token and a restrained semibold weight; no new color, component surface, logo, font or financial state. Keep the peach “What changed” observation and the deposit-first action hierarchy. The old scope-first images and copy are historical where superseded by this amendment; default Home is unchanged. This is finite usage authority, not a token change or standing refinement.
+
+**Balance-copy usage closeout:** §296 records verified runtime and responsive correction delivery. The finite balance-copy usage permission is consumed; the existing compact Currency Context entry and complete shelf remain as shipped. The later Home/shelf brief and previous inline screenshot are non-authoritative visual direction unless separately activated under §7/§7a. No new token, presentation pass or cross-surface migration follows.

@@ -249,11 +249,15 @@ describe("DashboardPage engine trust surface", () => {
     expect(orientation.textContent).not.toMatch(
       /Financial Stability Companion|crypto|blockchain|stablecoin|DeFi|trading|yield routing/i
     );
-    expect(screen.getByText("Simulated balance")).toBeDefined();
+    expect(screen.getByText("Simulated Hedgr balance")).toBeDefined();
+    expect(screen.queryByTestId("dashboard-balance-scope")).toBeNull();
     const explainer = screen.getByTestId(
       "dashboard-synthetic-balance-explainer"
     );
-    expect(explainer.textContent).toBe("Illustrative simulation value only.");
+    expect(explainer.textContent).toBe("Includes your simulated activity.");
+    expect(screen.getByTestId("dashboard-balance").textContent).not.toMatch(
+      /Illustrative simulation value only|This balance shows|This balance doesn’t tell you|When funds would be available to withdraw/i
+    );
     expect(explainer.textContent).not.toMatch(
       /fixture|informational posture|settlement/i
     );
@@ -266,7 +270,11 @@ describe("DashboardPage engine trust surface", () => {
     expect(screen.getByTestId("engine-posture-context").textContent).toBe(
       "Nothing to compare yet. Your first completed simulated event will establish a starting point."
     );
-    expect(screen.getByTestId("dashboard-simulation-utilities")).toBeDefined();
+    const utilities = screen.getByTestId("dashboard-simulation-utilities");
+    expect(Array.from(utilities.children).map((node) => node.getAttribute("data-testid"))).toEqual([
+      "dashboard-add-simulated-deposit",
+      "dashboard-view-activity",
+    ]);
     expect(
       screen
         .getByTestId("dashboard-add-simulated-deposit")
@@ -507,9 +515,9 @@ describe("DashboardPage engine trust surface", () => {
     const orderedSections = [
       screen.getByTestId("dashboard-orientation"),
       screen.getByTestId("dashboard-balance"),
+      screen.getByTestId("dashboard-simulation-utilities"),
       screen.getByTestId("dashboard-current-status"),
       screen.getByTestId("engine-allocation-bands"),
-      screen.getByTestId("dashboard-simulation-utilities"),
       screen.getByTestId("dashboard-education"),
       screen.getByTestId("dashboard-disclosures"),
     ];
@@ -633,6 +641,8 @@ describe("Currency context integration", () => {
     vi.mocked(useSearchParams).mockReturnValue(new URLSearchParams(query) as ReturnType<typeof useSearchParams>);
     render(<DashboardPage />);
     expect(Boolean(screen.queryByTestId("currency-insight"))).toBe(visible);
+    expect(Boolean(screen.queryByText("Includes your simulated activity.", { exact: true }))).toBe(visible);
+    expect(screen.queryByTestId("dashboard-balance-scope")).toBeNull();
     if (!visible) expect(screen.queryByText("No other change stands out in the simulated activity.")).toBeNull();
   });
 

@@ -119,3 +119,71 @@ test.each([
   expect(screen.getByText(meaning)).toBeDefined();
   expect(screen.queryByText('Different local estimate.', { exact: false })).toBeNull();
 });
+
+test('compact Home opens the complete comparison and returns focus without changing stored state', () => {
+  const writes = vi.spyOn(Storage.prototype, 'setItem');
+  Object.defineProperty(HTMLDialogElement.prototype, 'showModal', { configurable: true, value: function (this: HTMLDialogElement) { this.open = true; } });
+  Object.defineProperty(HTMLDialogElement.prototype, 'close', { configurable: true, value: function (this: HTMLDialogElement) { this.open = false; this.dispatchEvent(new Event('close')); } });
+  render(<CurrencyInsight {...props} redesigned compact />);
+  const trigger = screen.getByRole('button', { name: 'Currency context', exact: true });
+  expect(trigger.textContent).toContain('30-day example · Simulated');
+  expect(trigger.getAttribute('aria-haspopup')).toBe('dialog');
+  expect(trigger.getAttribute('aria-describedby')).toBe('currency-context-inline-insight');
+  expect(document.getElementById('currency-context-inline-insight')?.textContent).toBe('ZMW 300 higher from the rate change');
+  expect(screen.getByRole('button', { name: 'Currency context', description: 'ZMW 300 higher from the rate change' })).toBe(trigger);
+  expect(trigger.textContent).toContain('Understand the comparison');
+  expect(trigger.textContent).not.toContain('Your USD amount is held constant in this comparison.');
+  expect(trigger.textContent).not.toContain('FX comparison only—not earnings, purchasing power, guaranteed protection or a conversion quote.');
+  expect(screen.queryByRole('dialog')).toBeNull();
+  expect(screen.getByTestId('currency-insight-headline').closest('dialog')?.open).toBe(false);
+  fireEvent.click(trigger);
+  const dialog = screen.getByRole('dialog', { name: 'Currency context' });
+  for (const text of ['ZMW 5,700.00', 'ZMW 6,000.00', 'same $300.00', 'not earnings, purchasing power, guaranteed protection or a conversion quote', 'It does not mean you held this amount for 30 days.', 'fees and spreads', 'No money has moved.']) {
+    expect(dialog.textContent).toContain(text);
+  }
+  fireEvent.click(screen.getByRole('button', { name: 'Back to Home' }));
+  expect(screen.queryByRole('dialog')).toBeNull();
+  expect(document.activeElement).toBe(trigger);
+  expect(writes).not.toHaveBeenCalled();
+});
+
+test.each([
+  { currency: 'KES' as const, usdAmount: 300, latestDisplayRate: 130, earlierRate: 123.5, visible: 'KES 1,950 higher from the rate change' },
+  { currency: 'ZMW' as const, usdAmount: 300, latestDisplayRate: 20, earlierRate: 21, visible: 'ZMW 300 lower from the rate change' },
+  { currency: 'ZMW' as const, usdAmount: 300, latestDisplayRate: 20, earlierRate: 20, visible: 'No exchange-rate difference' },
+  { currency: 'ZMW' as const, usdAmount: 0.01, latestDisplayRate: 0.2, earlierRate: 0.19, visible: 'No difference at this display precision' },
+])('compact Home gives a neutral accessible $visible interpretation', ({ currency, usdAmount, latestDisplayRate, earlierRate, visible }) => {
+  const example = makeCurrencyExample(latestDisplayRate);
+  example.earlier.rate = earlierRate;
+  render(<CurrencyInsight {...props} currency={currency} usdAmount={usdAmount} latestDisplayRate={latestDisplayRate} example={example} redesigned compact />);
+  const trigger = screen.getByRole('button', { name: 'Currency context', exact: true });
+  const insight = screen.getByTestId('currency-insight-inline');
+  expect(insight.textContent).toBe(visible);
+  expect(trigger.getAttribute('aria-describedby')).toBe(insight.id);
+  expect(screen.getByRole('button', { name: 'Currency context', description: visible })).toBe(trigger);
+  expect(trigger.textContent).toContain('30-day example · Simulated');
+  expect(trigger.textContent).toContain('Understand the comparison');
+  expect(trigger.querySelector('[data-testid="currency-insight-direction"]')).toBeNull();
+  expect(trigger.textContent).not.toContain('Your USD amount is held constant in this comparison.');
+  expect(trigger.textContent).not.toContain('FX comparison only—not earnings, purchasing power, guaranteed protection or a conversion quote.');
+  expect(insight.textContent).not.toMatch(/[↑↓]|earnings|return|gain/i);
+});
+
+test('compact Home keeps empty, pending and missing data visible without a launchable comparison', () => {
+  const { rerender } = render(<CurrencyInsight {...props} redesigned compact ready={false} />);
+  expect(screen.queryByTestId('currency-insight')).toBeNull();
+  const missing = makeCurrencyExample(20);
+  missing.earlier.status = 'missing';
+  for (const [state, message] of [
+    [{ usdAmount: 0 }, 'No position to compare yet.'],
+    [{ pending: true }, 'Waiting for the simulated position to settle.'],
+    [{ usdAmount: NaN }, 'The simulated position is unavailable.'],
+    [{ example: missing }, 'The earlier example rate is unavailable.'],
+  ] as const) {
+    rerender(<CurrencyInsight {...props} {...state} redesigned compact />);
+    expect(screen.getByText(message)).toBeDefined();
+    expect(screen.queryByRole('button', { name: 'Currency context' })).toBeNull();
+    expect(screen.queryByTestId('currency-insight-direction')).toBeNull();
+    expect(screen.queryByTestId('currency-insight-inline')).toBeNull();
+  }
+});

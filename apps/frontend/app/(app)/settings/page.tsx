@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import baseline from '../shared-baseline.module.css';
 import { SimulationDisplayCurrencySelector } from '@/components/SimulationDisplayCurrencySelector';
 import {
   isSyntheticJourneyEnvironment,
@@ -34,7 +35,7 @@ export default async function SettingsPage({ searchParams }: SettingsPageProps) 
     : '/settings/trust';
 
   return (
-    <main className="mx-auto max-w-2xl space-y-7 px-6 pb-28 pt-6 sm:p-8">
+    <main className={baseline.settings}>
       <h1 className="text-3xl font-bold tracking-tight text-hedgr-800 sm:text-4xl">
         Settings
       </h1>
@@ -47,13 +48,13 @@ export default async function SettingsPage({ searchParams }: SettingsPageProps) 
           {accountRows.map((row) => (
             <div
               key={row.label}
-              className={`flex min-h-16 items-center justify-between gap-6 border-b border-hedgr-100 py-3 last:border-b-0 ${displayPreferenceEnabled ? 'flex-wrap gap-y-2' : ''}`}
+              className={`flex min-h-16 items-center justify-between gap-6 border-b border-hedgr-100 py-3 last:border-b-0 flex-wrap gap-y-2`}
             >
               <dt className="text-sm font-medium text-hedgr-500">
                 {row.label}
               </dt>
               <dd
-                className={`text-right text-sm font-semibold ${displayPreferenceEnabled ? 'min-w-0 max-w-full break-words' : ''} ${
+                className={`text-right text-sm font-semibold min-w-0 max-w-full break-words ${
                   row.muted ? 'italic text-hedgr-400' : 'text-hedgr-800'
                 }`}
               >
@@ -87,7 +88,7 @@ export default async function SettingsPage({ searchParams }: SettingsPageProps) 
         <h2 className="border-b border-hedgr-100 pb-2 text-[11px] font-bold uppercase tracking-[0.14em] text-hedgr-600">
           Trust &amp; information
         </h2>
-        <div className="rounded-2xl border border-hedgr-100 bg-hedgr-100/20 p-5 text-hedgr-800 shadow-sm">
+        <div className={baseline.trustCard}>
           <h3 className="text-sm font-semibold">About this simulation</h3>
           <p className="mt-2 text-sm leading-relaxed text-hedgr-dark">
             Hedgr is currently using simulated information. Balances,

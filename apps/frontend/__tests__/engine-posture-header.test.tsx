@@ -246,3 +246,14 @@ test.each(["tightening", "tightened", "recovery"] as const)("redesigned research
   expect(screen.getByText("This is an observation from the simulation, not a guarantee.")).toBeDefined();
   expect(screen.queryByText("What changed")).toBeNull();
 });
+
+
+test.each([
+  ["DEPOSIT", "deposit increased"],
+  ["WITHDRAW", "withdrawal reduced"],
+] as const)("polished %s observation retains readable amount and simulation boundary", (type, direction) => {
+  render(<EnginePostureHeader engineState={getMockEngineState("normal")} syntheticJourneyActive redesigned comparisonState="change" latestChangeType={type} latestChangeAmountUSD={2} />);
+  expect(screen.getByTestId("engine-posture-context").textContent).toBe(`Your simulated ${direction} the balance by $2.00.`);
+  expect(screen.getByText("This is an observation from the simulation, not a guarantee.")).toBeDefined();
+  expect(screen.queryByTestId("engine-posture-banner")).toBeNull();
+});

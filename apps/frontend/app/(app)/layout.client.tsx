@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import finish from './product-finish.module.css';
 import wallet from './research-wallet.module.css';
+import home from './dashboard/synthetic-home.module.css';
+import baseline from './shared-baseline.module.css';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
@@ -145,17 +147,25 @@ export function AppLayoutClient({ children }: { children: React.ReactNode }) {
     ? syntheticNavLinks
     : productNavLinks;
 
-  if (explicitSyntheticJourney && (activePathname === '/dashboard' || activePathname === '/activity')) {
-    return <div className="min-h-screen bg-white pb-20">
-      <TrustDisclosureBanner syntheticResearch dismissible={false} consolidateTechnicalDetails learnMoreUrl={trustInformationHref} />
-      <header className={wallet.brand} data-testid="synthetic-journey-shell">
-        <Link href={getSyntheticJourneyHref('/dashboard')} aria-label="Hedgr Home"><Image src="/brand/hedgr_logo.svg" alt="Hedgr" width={92} height={32} priority /></Link>
-        <Link href={getSyntheticJourneyHref('/settings')}>Settings</Link>
+  const sharedSurface = ['/dashboard', '/activity', '/settings'].includes(activePathname ?? '');
+  const scopeFirstHome = explicitSyntheticJourney && activePathname === '/dashboard';
+  const primaryNavigation = (
+    <nav aria-label="Primary" data-testid={explicitSyntheticJourney ? 'synthetic-bottom-nav' : 'product-bottom-nav'} className={scopeFirstHome ? home.scopeNavigation : "fixed inset-x-0 bottom-0 z-40 border-t border-hedgr-100 bg-white"}>
+      <div className={wallet.bottomNav} data-testid="nav-links">{syntheticNavLinks.map(link => <Link key={link.href} href={navHref(link.href, explicitSyntheticJourney)} aria-current={isNavLinkActive(link.href) ? 'page' : undefined}>{link.label}</Link>)}</div>
+    </nav>
+  );
+  if (sharedSurface) {
+    return <div className={`${home.shell} ${scopeFirstHome ? home.scopeShell : ''} ${activePathname === '/dashboard' ? '' : baseline.narrowShell}`} data-testid="shared-baseline-shell">
+      <TrustDisclosureBanner syntheticResearch={explicitSyntheticJourney} dismissible={false} consolidateTechnicalDetails learnMoreUrl={trustInformationHref} />
+      <header className={home.brand} data-testid={explicitSyntheticJourney ? 'synthetic-journey-shell' : 'app-nav'}>
+        <Link href={navHref('/dashboard', explicitSyntheticJourney)} aria-label="Hedgr Home"><Image src="/brand/hedgr_logo.svg" alt="Hedgr" width={92} height={32} priority /></Link>
+        {scopeFirstHome ? primaryNavigation : <div className={baseline.headerLinks}>
+          {!explicitSyntheticJourney ? copilotNavLinks.map(link => <Link key={link.href} href={link.href} data-testid={link.testId}>{link.label}</Link>) : null}
+          {!settingsActive ? <Link href={navHref('/settings', explicitSyntheticJourney)}>Settings</Link> : null}
+        </div>}
       </header>
       {children}
-      <nav aria-label="Primary" data-testid="synthetic-bottom-nav" className="fixed inset-x-0 bottom-0 z-40 border-t border-hedgr-100 bg-white">
-        <div className={wallet.bottomNav}>{syntheticNavLinks.map(link => <Link key={link.href} href={navHref(link.href, true)} aria-current={isNavLinkActive(link.href) ? 'page' : undefined}>{link.label}</Link>)}</div>
-      </nav>
+      {!scopeFirstHome ? primaryNavigation : null}
     </div>;
   }
 

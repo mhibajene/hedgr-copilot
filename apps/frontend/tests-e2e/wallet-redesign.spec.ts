@@ -38,7 +38,7 @@ test('research baseline: navigation, dialog focus, currency and event reconcilia
   await page.setViewportSize({ width: 458, height: 956 });
   await page.screenshot({ path: testInfo.outputPath('home-reference.png') });
   await page.setViewportSize({ width: 390, height: 844 });
-  const trigger = page.getByRole('button', { name: 'Understand the comparison' });
+  const trigger = page.getByRole('button', { name: 'Currency context', exact: true });
   await trigger.click();
   const dialog = page.getByRole('dialog', { name: 'Currency context', exact: true });
   await expect(dialog).toBeVisible();
@@ -78,9 +78,79 @@ test('research baseline: navigation, dialog focus, currency and event reconcilia
   expect(await financialState(page)).toEqual(before);
   await page.goto('/dashboard');
   await expect(page.getByRole('heading', { name: 'See what you have and what changed.' })).toBeVisible();
-  await expect(page.getByRole('button', { name: 'Understand the comparison' })).toHaveCount(0);
+  await expect(page.getByRole('button', { name: 'Currency context', exact: true })).toHaveCount(0);
   await page.goto(`${home}?scenario=unavailable-data`);
   await expect(page.getByRole('heading', { name: 'Your position', exact: true })).toHaveCount(0);
+});
+
+test('polished Home accordions preserve keyboard operation, planning and research disclosures', async ({ page }, testInfo) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await seed(page);
+  const before = await financialState(page);
+  const planning = page.getByTestId('research-planning-targets');
+  const planningSummary = planning.locator(':scope > summary');
+  const disclosures = page.getByTestId('dashboard-disclosures');
+  await expect(planningSummary).toContainText('Targets only · No money moved');
+  for (const accordion of [planning, disclosures]) {
+    await expect(accordion).not.toHaveAttribute('open');
+    const summary = accordion.locator(':scope > summary');
+    await summary.focus();
+    await page.keyboard.press('Enter');
+    await expect(accordion).toHaveAttribute('open', '');
+    await expect(summary).toBeFocused();
+  }
+  for (const label of ['Now', 'Reserve', 'Growth']) {
+    await expect(planning.getByText(label, { exact: true }).first()).toBeVisible();
+  }
+  await expect(planning.getByTestId('engine-allocation-boundary')).toHaveText('These are planning purposes, not separate balances. They do not divide or move simulated money.');
+  const values = planning.getByTestId('engine-allocation-values-details');
+  await values.locator(':scope > summary').focus();
+  await page.keyboard.press('Space');
+  await expect(values).toHaveAttribute('open', '');
+  await expect(values).toContainText('Percentages describe the simulated planning structure only. They do not show where money is held.');
+  for (const key of ['coreTargetPct', 'liquidityTargetPct', 'yieldCapPct']) {
+    await expect(values.getByTestId(`engine-allocation-band-${key}`)).toBeVisible();
+  }
+  await expect(disclosures).toContainText('This research prototype is not a live service. The display currency preference changes illustrative simulation estimates only.');
+  await expect(disclosures).toContainText('This research walkthrough creates no real financial exposure. It does not hold assets, accept real deposits, or move money.');
+  await expect(disclosures).toContainText('This research prototype is not a bank account and does not accept deposits. No real money is held or moved.');
+  await page.screenshot({ path: testInfo.outputPath('home-accordions-open-390.png'), fullPage: true });
+  for (const accordion of [planning, disclosures]) {
+    const summary = accordion.locator(':scope > summary');
+    await summary.focus();
+    await page.keyboard.press('Space');
+    await expect(accordion).not.toHaveAttribute('open');
+    await expect(summary).toBeFocused();
+  }
+  await expect(planning.getByTestId('engine-allocation-boundary')).not.toBeVisible();
+  await expect(disclosures.locator('[data-disclosure-key="risk-warning"]')).not.toBeVisible();
+  expect(await financialState(page)).toEqual(before);
+});
+
+test('Shared baseline supports both journeys while preserving query-route eligibility', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await seed(page);
+  const before = await financialState(page);
+  await page.goto('/dashboard?journey=class-a-val-002');
+  await expect(page.getByRole('heading', { name: 'Your position', exact: true })).toBeVisible();
+  await expect(page.getByRole('main')).toHaveCSS('background-color', 'rgb(250, 248, 245)');
+  await expect(page.getByTestId('usd-balance')).toHaveText('$300.00');
+  await expect(page.getByTestId('research-planning-targets')).toBeVisible();
+  await page.getByRole('navigation', { name: 'Primary' }).getByRole('link', { name: 'Activity', exact: true }).click();
+  await expect(page).toHaveURL(/activity\?journey=class-a-val-002/);
+  await expect(page.getByRole('main')).toHaveCSS('background-color', 'rgb(250, 248, 245)');
+  await page.getByRole('navigation', { name: 'Primary' }).getByRole('link', { name: 'Settings', exact: true }).click();
+  await expect(page).toHaveURL(/settings\?journey=class-a-val-002/);
+  await expect(page.getByRole('main')).toHaveCSS('background-color', 'rgb(250, 248, 245)');
+  await page.getByRole('navigation', { name: 'Primary' }).getByRole('link', { name: 'Home', exact: true }).click();
+  await expect(page.getByRole('main')).toHaveCSS('background-color', 'rgb(250, 248, 245)');
+  for (const route of ['/dashboard', `${home}?scenario=unavailable-data`]) {
+    await page.goto(route);
+    await expect(page.getByRole('main')).toHaveCSS('background-color', 'rgb(250, 248, 245)');
+    await expect(page.getByTestId('research-planning-targets')).toHaveCount(0);
+    await expect(page.getByRole('heading', { name: 'Your position', exact: true })).toHaveCount(0);
+  }
+  expect(await financialState(page)).toEqual(before);
 });
 
 test('research Home, Activity and dialog reflow at narrow/enlarged and desktop widths', async ({ page }, testInfo) => {
@@ -89,12 +159,28 @@ test('research Home, Activity and dialog reflow at narrow/enlarged and desktop w
     await page.setViewportSize({ width, height: 900 });
     for (const size of ['100%', '200%']) {
       await page.evaluate(size => { document.documentElement.style.fontSize = size; }, size);
+      for (const id of ['research-planning-targets', 'dashboard-disclosures']) {
+        const details = page.getByTestId(id);
+        if (!(await details.evaluate(el => (el as HTMLDetailsElement).open))) {
+          await details.locator(':scope > summary').click();
+        }
+        await expect(details).toHaveAttribute('open', '');
+      }
+      const balance = await page.getByTestId('dashboard-balance').boundingBox();
+      const observation = await page.getByTestId('dashboard-current-status').boundingBox();
+      expect(balance).not.toBeNull();
+      expect(observation).not.toBeNull();
+      if (width < 1024) {
+        expect(observation!.y).toBeGreaterThan(balance!.y + balance!.height);
+      } else {
+        expect(observation!.x).toBeGreaterThan(balance!.x + balance!.width);
+      }
       const overflow = await page.evaluate(() => Array.from(document.querySelectorAll('body *')).filter(el => {
         const rect = el.getBoundingClientRect();
         return rect.width > 0 && (rect.right > window.innerWidth + 1 || rect.left < -1);
       }).map(el => ({ tag: el.tagName, class: el.className, text: el.textContent?.slice(0, 80) })));
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), `${width}px at ${size}: ${JSON.stringify(overflow)}`).toBe(true);
-      await page.getByRole('button', { name: 'Understand the comparison' }).click();
+      await page.getByRole('button', { name: 'Currency context', exact: true }).click();
       expect(await page.getByRole('dialog').evaluate(el => el.scrollWidth <= el.clientWidth + 1)).toBe(true);
       await page.getByRole('button', { name: 'Back to Home' }).click();
       await page.getByRole('navigation', { name: 'Primary' }).getByRole('link', { name: 'Activity', exact: true }).click();

@@ -1,0 +1,63 @@
+/* DESIGN.md shared-baseline usage: values inherited from the Home shell. */
+.narrowShell > header { max-width: 44rem; }
+.headerLinks { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 1rem; }
+.activity, .settings { width: 100%; max-width: 44rem; margin-inline: auto; padding: 1rem 1.125rem 2rem; background: var(--home-canvas); color: var(--color-hedgr-800); overflow-wrap: anywhere; }
+.activity > * + *, .settings > * + * { margin-top: 1.5rem; }
+.activity h1, .settings h1 { font-size: 1.75rem; line-height: 1.2; font-weight: 700; letter-spacing: -.04em; }
+.activity .balance { padding: 1.25rem; border: 0; border-radius: 1rem; background: var(--color-hedgr-primary); color: var(--color-hedgr-white); box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-hedgr-primary) 4%, transparent); }
+.balance h2 { font-size: 1rem; color: inherit; }
+.balance > strong, .balance [data-testid="activity-reconciliation-remaining"] { font-size: clamp(2rem, 12vw, 3.5rem); line-height: 1.2; font-weight: 600; color: inherit; overflow-wrap: anywhere; }
+.balance > strong { margin-block: .75rem; }
+.balance small { font-size: 1rem; color: var(--color-hedgr-100); }
+.balance > div { display: flex; flex-direction: column; align-items: flex-start; }
+.balance p, .balance p span { font-size: .875rem; color: var(--color-hedgr-100); }
+.activity [aria-label="Activity filters"] button { flex: 1 1 auto; min-width: max-content; font-size: .875rem; white-space: nowrap; }
+.events { display: grid; gap: .875rem; }
+.activity .event, .activity .defaultEvent { padding: 0; border: 1px solid var(--home-divider); border-radius: 1rem; background: var(--color-hedgr-white); }
+.activity .eventSummary { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0; padding: 0; }
+.eventSummary > span:not(.balanceAfter) { padding: 1rem .875rem; }
+.activity .eventSummary strong { font-size: 1rem; }
+.activity .eventSummary small { font-size: .875rem; }
+.activity .eventSummary .delta { display: flex; align-items: center; gap: .75rem; }
+.activity .delta strong, .defaultEvent [data-testid^="activity-delta-"] { font-size: 1.125rem; font-weight: 600; }
+.rowChevron { font-size: 1.5rem; line-height: 1; color: var(--color-hedgr-600); }
+.event[open] .rowChevron { transform: rotate(90deg); }
+.activity .balanceAfter { grid-column: 1 / -1; display: flex; justify-content: space-between; flex-wrap: wrap; gap: .5rem; margin: 0; padding: .625rem .875rem; border-radius: 0 0 1rem 1rem; background: var(--home-observation); font-size: .875rem; line-height: 1.5; color: var(--color-hedgr-800); }
+.balanceAfter span:last-child { font-weight: 600; font-variant-numeric: tabular-nums; }
+.event > div { padding: 0 .875rem 1rem; }
+.activity .event p, .activity .event dl div { font-size: .875rem; }
+.defaultEvent > div { padding: 1rem .875rem; }
+.defaultEvent > div > div:first-child { display: none; }
+.defaultEvent [data-testid^="activity-type-"] { font-size: 1rem; }
+.defaultEvent svg { display: block; }
+.activity a[href*="dashboard"] { text-decoration: underline; text-underline-offset: .2em; font-size: .9375rem; background: transparent; box-shadow: none; }
+.activity :is(a, button, summary):focus-visible { outline: 2px solid var(--color-hedgr-500); outline-offset: 3px; }
+.settings section h2 { font-size: .75rem; border-color: var(--home-divider); }
+.settings dl { background: transparent; }
+.settings dl, .settings dl > div, .settings section > div { border-color: var(--home-divider); }
+.settings dt, .settings dd { font-size: 1rem; }
+.settings dd { overflow-wrap: anywhere; }
+.settings dd[class*="italic"] { color: var(--color-hedgr-600); }
+.settings .trustCard { padding: 1.125rem; border-radius: 1rem; background: var(--home-observation); }
+.trustCard h3 { display: flex; align-items: center; gap: .75rem; font-size: 1rem; color: var(--home-emphasis); }
+.trustCard h3::before { content: ''; flex: 0 0 1.5rem; border-top: 2px solid currentColor; }
+.trustCard p, .trustCard a { font-size: 1rem; line-height: 1.55; }
+.currencyPill { display: inline-flex; align-items: center; justify-content: center; gap: .75rem; min-height: 2.75rem; padding: .375rem .875rem; border: 1px solid var(--color-hedgr-600); border-radius: 2rem; color: var(--color-hedgr-800); font-size: .875rem; font-weight: 600; }
+@media (min-width: 64rem) { .activity, .settings { padding-inline: 2rem; padding-top: 1.5rem; } .activity h1, .settings h1 { font-size: 2.25rem; } }
+
+.activity a[href*="dashboard"] { border: 0; padding-inline: 0; }
+.settings section h2 { border-bottom: 0; padding-bottom: 0; }
+/* A long delta must wrap within the row instead of pushing the disclosure offscreen. */
+.eventSummary .delta { min-width: 0; max-width: 12rem; overflow-wrap: anywhere; }
+.defaultEvent > div { flex-wrap: wrap; }
+.defaultEvent [data-testid^="activity-delta-"] { max-width: 12rem; overflow-wrap: anywhere; }
+
+.event, .defaultEvent { container-type: inline-size; }
+.balance { container-type: inline-size; }
+.balance > strong, .balance [data-testid="activity-reconciliation-remaining"] { font-size: clamp(1.5rem, 20cqi, 3.5rem); }
+@container (max-width: 18rem) {
+  .activity .eventSummary { grid-template-columns: minmax(0, 1fr); }
+  .activity .eventSummary .delta { justify-content: space-between; padding-top: 0; max-width: none; }
+  .defaultEvent .eventDescription { flex-basis: 100%; }
+  .defaultEvent .deltaAmount { min-width: 0; max-width: none; flex: 1; padding-left: 0; text-align: left; }
+}
