@@ -1,6 +1,6 @@
 Status: Canonical hand-off file
 Purpose: Strategic continuity, merged implementation truth, and next-ticket authority for Cursor execution
-Last updated: 2026-09-21
+Last updated: 2026-09-20
 
 **Current authority:** Start at [§7 / §7a](#7-current-sequence-and-active-status). Historical records preserve decisions and evidence; they do not supply current sequencing or occupancy. Repo precedence, accepted ADRs, active doctrine and AGENTS remain controlling. Fork 1 delivery/effect is recorded in §292; bounded, inactive Fork 2 implementation authority is recorded in §293.
 

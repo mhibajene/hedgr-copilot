@@ -2,7 +2,7 @@
 
 Status: Binding (repo workflow, engineering conventions, CI posture, agent operating rules)
 Scope: apps/, packages/, scripts/, .github/, docs/
-Last updated: 2026-09-21
+Last updated: 2026-09-20
 
 **Start with live authority:** [HEDGR_STATUS.md §7 / §7a](docs/ops/HEDGR_STATUS.md#7-current-sequence-and-active-status) is the canonical present-state surface for occupancy, permissions, exclusions, operative controls and stop conditions. Read the named live brief before acting. Historical closeouts cannot supply current sequencing or occupancy. Accepted ADRs, active doctrine, this execution contract and other current higher-precedence sources remain controlling under repo precedence; genuine current-source disagreement requires stop/escalation, not synthesis.
 
