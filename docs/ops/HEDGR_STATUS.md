@@ -4637,7 +4637,7 @@ Current active ticket status:
 
 ## 7a. Active execution tickets — Lanes V and E; Lane G deferred (Controlled Parallelism v22)
 
-**Read order:** Current occupancy and operative controls are in §7. The active Lane V preflight below is the sole current nested work. The retained weekend brief and completed Home amendments below preserve history and deferred obligations, not concurrent permission. Parent validation obligations and the separate digital-pulse release remain binding. Lane E is open with no further authoring permission. Historical “current” language is not a restart instruction.
+**Read order:** Current occupancy and operative controls are in §7. The retained Lane V preflight below closes only on the effective §298 correction merge and separate verified RAP rebind; no nested successor is active after those conditions. The retained weekend brief and completed Home amendments below preserve history and deferred obligations, not concurrent permission. Parent validation obligations and the separate digital-pulse release remain binding. Lane E is open with no further authoring permission. Historical “current” language is not a restart instruction.
 
 ### Retained Lane V preflight — `CLASS-A-VAL-002-STABILITY-SCENARIOS-001` (completed on effective §298 correction)
 
