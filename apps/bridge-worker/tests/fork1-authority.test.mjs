@@ -45,11 +45,13 @@ test("Fork 1 retains current nested scope, amendment and release controls verbat
   for (const [start, end] of [
     ["### Lane G — no active research", "### Completed nested Lane V"],
     ["### Shared Home / Activity / Settings baseline amendment", "### Active remaining nested Lane V"],
-    ["### Active remaining nested Lane V", "### Completed temporary repository support"],
     ["**Required participant outcomes:**", "### Archived Lane N brief"]
   ]) {
     assert.ok(live.includes(section(history, start, end).trim()), `Changed protected block: ${start}`);
   }
+  const oldWeekend = section(history, "### Active remaining nested Lane V", "### Completed temporary repository support");
+  assert.ok(live.includes(oldWeekend.slice(oldWeekend.indexOf("\n") + 1).trim()), "Changed retained weekend scope");
+  assert.match(live, /### Deferred nested Lane V — CLASS-A-VAL-002-WEEKEND-PREP-001 \(retained brief\)/);
   const oldE = section(history, "### Lane E — `SE-REASON-001`", "#### Completed nested research brief");
   const newE = section(live, "### Lane E — `SE-REASON-001`", "**Historical briefs:**");
   assert.ok(newE.includes(oldE.slice(oldE.indexOf("**Current nested posture (§290):**")).trim()));
@@ -80,22 +82,19 @@ test("Fork 1 preserves projected occupancy, sequencing and all non-authorising f
   const after = project(current);
   assert.equal(before.validation.ok, true);
   assert.equal(after.validation.ok, true);
-  // Later Founder-approved Home and digital-pulse amendments supersede only
-  // the named sequencing phrases. Keep the archive immutable and compare
-  // every other field without exception.
+  // The Founder-approved Lane V preflight supersedes the archived sequencing
+  // sentence. Keep the archive immutable, assert the exact replacement and
+  // compare every other projected field without exception.
   const sequencing = before.projection.payload.fields.sequencing_posture;
   assert.equal((sequencing.value.match(/shared-baseline amendment/g) ?? []).length, 2);
   sequencing.value = sequencing.value.replaceAll(
     "shared-baseline amendment", "synthetic Home compact FX insight amendment"
   );
   const oldRelease = "draft PR #550 and existing unfinished Form are preserved. Participant distribution remains paused; no runtime scope beyond the bounded synthetic Home compact FX insight amendment, Lane G change, standing delegation, parent closeout or financial capability.";
-  const currentRelease = "instrument PR #550 merged at `68a31397efd9cf2477c5c0aa1f77c712e4c9a5fa`, its separate RAP rebind PR #623 merged at `ee9358e4b2779dc3be5677c9d754bdefb75b1029`, and the published Digital Feedback v1 Form is preserved. Founder-owned circulation is released only for that digital pulse; the moderated v2.1 study and other parent participant distribution remain paused. No further runtime scope follows from the completed synthetic Home compact FX insight amendment, nor any Lane G change, standing delegation, parent closeout or financial capability.";
   assert.equal(sequencing.value.split(oldRelease).length - 1, 1);
-  sequencing.value = sequencing.value.replace(oldRelease, currentRelease);
-  assert.equal(after.projection.payload.fields.sequencing_posture.value.split(currentRelease).length - 1, 1);
-  assert.equal((after.projection.payload.fields.sequencing_posture.value.match(
-    /synthetic Home compact FX insight amendment/g
-  ) ?? []).length, 2);
+  const currentSequencing = "Controlled Parallelism v22 / §6f.22 retains V/E parents while §285 defers G. Under the Founder-approved §298 transition, the sole active nested Lane V ticket is `CLASS-A-VAL-002-STABILITY-SCENARIOS-001` for one documentation-only Phase A+B methods/semantic preflight; the former `CLASS-A-VAL-002-WEEKEND-PREP-001` remains deferred, not completed or cancelled. The separately released Digital Feedback v1 pulse and Founder-owned participant selection, invitations and raw-response custody continue under their existing conditions; moderated v2.1 and other parent distribution remain paused. No route, runtime, new Form, participant session, telemetry, personal-input collection, limited manipulation or “Use My Numbers” is activated. Lane E remains open with no nested ticket; §290 target responsibilities remain non-executable and the current EngineState/posture is preserved. No Lane G restart, Green delegation, financial capability or cross-lane authority follows. NO CROSS-LANE IMPACT.";
+  assert.equal(after.projection.payload.fields.sequencing_posture.value, currentSequencing);
+  sequencing.value = currentSequencing;
   const normalized = structuredClone(after.projection);
   normalized.payload.fields.authority_boundaries.value = before.projection.payload.fields.authority_boundaries.value;
   assert.deepEqual(normalized, before.projection);
