@@ -40,12 +40,12 @@ export default function ScenarioStimulus() {
     <main data-testid="stability-stimulus" className="mx-auto min-h-screen max-w-3xl px-5 py-8 text-hedgr-dark sm:px-8 sm:py-12">
       <header className="space-y-3 border-b border-hedgr-200 pb-6">
         <p className="text-sm font-medium text-hedgr-600">Research prototype · fictional example</p>
-        <h1 className="text-3xl font-semibold text-hedgr-800">A stated payment, considered on its own</h1>
+        <h1 className="break-words text-xl font-semibold text-hedgr-800 sm:text-3xl">A stated payment, considered on its own</h1>
         <p className="leading-relaxed">These invented U amounts describe only the facts supplied for this question. Other resources, obligations and later needs are unknown. No real money moves, and nothing here is financial advice.</p>
       </header>
 
       <section aria-labelledby="reference-heading" className="mt-8 space-y-4 border border-hedgr-300 bg-hedgr-100 p-5">
-        <h2 id="reference-heading" className="text-xl font-semibold">S0 · Reference facts</h2>
+        <h2 id="reference-heading" className="break-words text-base font-semibold sm:text-xl">S0 · Reference facts</h2>
         <p>On Day 0, a fictional person has a 720 U envelope that cannot be used before Day 20, and a separate 360 U stock usable on Day 0. These stocks do not overlap. The named payment is 280 U due Day 10, at an endpoint usable by the outside stock without a fictional fee.</p>
         <p className="text-sm">Only this stated payment is considered. No other source, extension or transfer route is supplied. This is a partial inventory, not the person’s full finances.</p>
       </section>
@@ -53,7 +53,7 @@ export default function ScenarioStimulus() {
       <section aria-labelledby="case-heading" data-testid="scenario-case" className="mt-8 space-y-5">
         <div>
           <p className="text-sm font-medium text-hedgr-600">{caseId} of four · fictional example</p>
-          <h2 id="case-heading" className="mt-1 text-2xl font-semibold">{variant ? `${caseId} · ${variant.name}` : 'S0 · Stated payment'}</h2>
+          <h2 id="case-heading" className="mt-1 break-words text-lg font-semibold sm:text-2xl">{variant ? `${caseId} · ${variant.name}` : 'S0 · Stated payment'}</h2>
         </div>
         {variant ? (
           <div data-testid="scenario-change" className="border-l-4 border-hedgr-500 pl-4">
