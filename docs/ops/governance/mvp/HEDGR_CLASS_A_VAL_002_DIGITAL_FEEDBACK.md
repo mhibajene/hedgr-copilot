@@ -1,8 +1,8 @@
 # CLASS-A-VAL-002 Digital Feedback v1 — approved self-guided preparation
 
-**Status:** APPROVED CONTENT, dated Founder approval 2026-09-18 under `CLASS-A-VAL-002-WEEKEND-PREP-001`, HEDGR_STATUS.md §7 / §7a. Separate unpublished Form preparation only. No D-number assigned. The moderated v2.1 and historical Forms/data remain preserved.
+**Status:** APPROVED CONTENT under `CLASS-A-VAL-002-WEEKEND-PREP-001`. The separate Form is published and accepting responses. On 2026-09-21 the Founder reported completed human phone rehearsal and explicitly released this digital pulse for Founder-owned circulation; see the release record below. No D-number is assigned. The moderated v2.1 and historical Forms/data remain preserved.
 
-**Timing:** approximately 3 minutes Form / 5–8 minutes total are unmeasured design targets, not participant-facing promises.
+**Timing:** The Founder reports a 3-minute-15-second journey and a Form time under five minutes in the rehearsal. No combined total was measured or supplied. The earlier approximately 3-minute Form / 5–8-minute total targets are design targets, not participant-facing promises.
 
 ## Participant flow
 
@@ -14,7 +14,7 @@ Use separate start and resume links, on the exact verified deployment:
 
 - **Start once:** `https://hedgr-copilot-frontend.vercel.app/orientation`. Its existing `Enter Hedgr` continuation is `/dashboard-synthetic-journey?reset=1`, verified in `apps/frontend/lib/narrative/orientation-surface.ts`. Use this for initial entry only.
 - **Return to your visit:** `https://hedgr-copilot-frontend.vercel.app/dashboard-synthetic-journey`. It omits reset. Put this distinct link with the feedback Form for anyone switching tabs. Do not send them through orientation/Enter Hedgr again to resume.
-- **Feedback:** separately reachable Form link, including for someone unable to load or finish the journey. The new Form is not yet built or published; record its verified links in the implementation evidence below.
+- **Feedback:** [published responder Form](https://docs.google.com/forms/d/e/1FAIpQLSfkmopt1Trv3sY3ptO38i_vP8cjALsJxpREmlzahFD1o5ChzA/viewform?usp=header), separately reachable even when someone cannot load or finish the journey. Do not circulate its editor or owner preview link.
 
 Verify both exact URLs and same-browser storage behaviour on the intended production build before circulation. A messaging in-app browser and the system browser may hold different state; resume in the same browser. A resume link cannot restore state that the participant cleared or opened in a different browser. Do not promise otherwise.
 
@@ -224,8 +224,38 @@ Report denominators per question and per exposure; no pooled score or pass perce
 
 ## Revision note — independent technical reviewer corrections
 
-The revision places stage/access classification first, gives no-access a direct priority/comment route, separates failed steps from voluntary stopping, and uses five Google Forms sections with mutually exclusive duplicated open groups. All participant paths and physical-item counts are explicit. W09 is reduced from ten to seven options. Start and resume links are distinct so returning from the Form does not intentionally reset the journey. Exact input tasks omit the ending balance. Approved for unpublished technical preparation; no live edits or distribution have occurred. Preflight clarifies the completed W01 option includes returning Home and renders the NGN input as 7500 for direct entry into the existing field; numerical fixture and evidence constructs are unchanged.
+The revision places stage/access classification first, gives no-access a direct priority/comment route, separates failed steps from voluntary stopping, and uses five Google Forms sections with mutually exclusive duplicated open groups. All participant paths and physical-item counts are explicit. W09 is reduced from ten to seven options. Start and resume links are distinct so returning from the Form does not intentionally reset the journey. Exact input tasks omit the ending balance. Approved for unpublished technical preparation. At preflight, no live edits or distribution had occurred; the earlier interrupted construction is retained below as history. Preflight clarifies the completed W01 option includes returning Home and renders the NGN input as 7500 for direct entry into the existing field; numerical fixture and evidence constructs are unchanged.
 
 ## Implementation evidence
 
-Not yet implemented. Live Form ID, verified settings/branch traversal, preview links and technical closeout will be recorded here after completion. Human timing and distribution disposition remain outstanding.
+### Saved draft and preview verification — 2026-09-18
+
+The existing Form was completed in place; no duplicate was created. [Editor](https://docs.google.com/forms/d/1nIqYfCEnltude714mJgrCM_b5LKtWM2ybcaIFPhPGgc/edit); [owner preview](https://docs.google.com/forms/d/1nIqYfCEnltude714mJgrCM_b5LKtWM2ybcaIFPhPGgc/preview). Form ID: `1nIqYfCEnltude714mJgrCM_b5LKtWM2ybcaIFPhPGgc`. This preview is for internal rehearsal, not a verified public responder link.
+
+- Saved DOM readback matches all 12 approved titles, option sets/order, types and help text: 11 required flags plus optional paragraph W10. The Form opening also includes the separate no-reset return URL and same-browser/do-not-re-enter guidance. The task card above accompanies the future invitation; it does not disclose the ending balance.
+- W01 maps to sections 2/3/3/3/3/5. Section 2 goes to 4, section 3 to 5, and section 4 continues to 5. Preview traversed every stage choice; required totals are 9/4/2. An initially unsaved no-access destination was caught, corrected and retested to reach section 5 directly.
+- Required-error recovery was checked at the stage, open-response and recognition pages. Both open-response branches accept “Not sure”/“None”; non-exposure and uncertainty choices remain selectable. Contradictory W08 selections remain possible and proceed to the final page, as the analysis protocol requires. W10 stays empty and optional on the final page.
+- Quiz, email collection, limit-one/sign-in requirement, response editing/copies, public summary, submit-another link and all question/option shuffling are off. Progress is on; default autosave remains. All per-card response-validation menus are off, including text-length/numeric limits. No spreadsheet is linked. The exact approved confirmation message is saved.
+- Drive reports all changes saved; the Responses tab reports **0 responses** and the preview reports **Not Published / not accepting responses**. No QA or participant response was submitted. Preview disables Submit, so final W09 error behaviour, actual submission and displayed completion text were not exercised. Signed-out responder access remains a release-stage check; no access claim is inferred from this owner preview.
+- All four distinct page layouts were inspected at a requested 390 × 844 browser viewport and captured; labels/options wrap without horizontal clipping. This is browser emulation, not a human phone/keyboard or messaging-browser rehearsal. Timing remains unmeasured.
+- Distinct verifier `/root/weekend_verifier` independently compared the saved card/routing readback against canon and reviewed settings, zero-response state and mobile screenshots: qualified technical QA PASS. The qualification preserves the preview/submission/access and human-rehearsal limits above.
+
+Evidence is retained in `/Users/musalwa/Documents/Codex/2026-09-17/hedgr-weekend-qa/verified-2026-09-18/`: `form-editor-cards.json`, `form-editor-routing.txt`, `form-question-menus.json`, `form-settings.txt`, `form-final-response-state.txt`, `form-preview-*.txt`, `form-partial-branch-results.json`, `form-contradictory-checkboxes.txt`, `form-contradiction-final.txt` and `form-mobile-*.png`. Unsubmitted test answers were cleared after QA. The moderated v2.1 Form and historical Forms/data were not edited.
+
+The dated evidence above describes the unpublished 2026-09-18 preflight. The later publication and Founder release disposition are recorded below; this older preflight does not describe current Form state. The earlier interrupted construction record remains history.
+
+### Publication and Founder release disposition — 2026-09-21
+
+Founder Musalwa Hibajene reports that the human phone rehearsal is complete and expressly states that “ready for circulation” is the release disposition for this separate Digital Feedback v1 pulse. The Founder retains participant selection, invitations, circulation and response custody; agents are not authorised to contact participants, submit QA responses or handle raw participant responses. This disposition does not release the separate moderated v2.1 study or close parent `CLASS-A-VAL-002`.
+
+The Form editor was inspected on 2026-09-21 and visibly showed **Published**, **Accepting responses** enabled and **Anyone with the link** as the responder audience. Its Copy responder link control supplied the [live responder URL](https://docs.google.com/forms/d/e/1FAIpQLSfkmopt1Trv3sY3ptO38i_vP8cjALsJxpREmlzahFD1o5ChzA/viewform?usp=header); that page opened to W01 and the approved research-simulation opening in the owner session. The same responder URL then opened in a fresh Chrome Guest window with W01 available and only an optional sign-in prompt to save progress. The temporary Guest window was closed without entering or submitting an answer. A submitted confirmation was not independently exercised. The Founder reports a 3-minute-15-second journey, a Form time under five minutes, passed same-browser resume and successful WhatsApp messaging-browser handoff. A supplied iPhone screenshot independently shows the Form opened from WhatsApp with the approved opening, return guidance and W01; it does not show return-journey state. No combined total is claimed. Do not substitute the earlier design targets for observed timings or participant promises. The 2026-09-18 zero-response observation is historical; no current response count is claimed. Preserve the approved 9/4/2 routing and content for the circulation version.
+
+### Earlier interrupted construction — historical
+
+**2026-09-18: partial external construction, NOT READY.** One separate draft was created at [the new Form editor](https://docs.google.com/forms/d/1nIqYfCEnltude714mJgrCM_b5LKtWM2ybcaIFPhPGgc/edit), ID `1nIqYfCEnltude714mJgrCM_b5LKtWM2ybcaIFPhPGgc`. Its title and approved opening were entered; W01's title was entered, but Forms automatically selected a linear scale. W01 must be changed to the approved single-choice type and supplied its six options. The remaining cards, five sections, required flags, branches, settings and preview traversal are not implemented or verified. Do not treat the partial draft as this instrument.
+
+The editor reload retained the draft and displayed **Publish**, confirming it remains unpublished. No QA response was submitted. Existing v2.1 and historical Forms/data were not changed. The browser became unresponsive to click/keyboard actions after a local synthetic restart confirmation; text entry and read-only page inspection still worked. Documented browser recovery did not restore the controls. The Founder has been asked to dismiss/close the stalled local QA tabs. Native Codex app control was unavailable under the tool safety restriction. Do not create a replacement Form when resuming; continue the existing ID above.
+
+Canonical question wording/routing and the matching digital protocol are ready. Local construction aids `/tmp/hedgr-self-guided-form-spec.json` and `/tmp/hedgr-digital-protocol-amendment.md` were independently checked against this approved content. They do not prove the external Form matches it.
+
+Form completion, settings/branch readback, preview links, rendered shipped-build QA and technical closeout remain outstanding. Human phone timing and explicit distribution disposition remain separate release conditions. Publication/distribution stays paused.

@@ -80,14 +80,19 @@ test("Fork 1 preserves projected occupancy, sequencing and all non-authorising f
   const after = project(current);
   assert.equal(before.validation.ok, true);
   assert.equal(after.validation.ok, true);
-  // Fork 1 changed only the bounded §2 narrative. Later Founder-approved
-  // Later Founder-approved Home amendments supersede the same two phrases.
-  // Keep the archive immutable and compare every other field without exception.
+  // Later Founder-approved Home and digital-pulse amendments supersede only
+  // the named sequencing phrases. Keep the archive immutable and compare
+  // every other field without exception.
   const sequencing = before.projection.payload.fields.sequencing_posture;
   assert.equal((sequencing.value.match(/shared-baseline amendment/g) ?? []).length, 2);
   sequencing.value = sequencing.value.replaceAll(
     "shared-baseline amendment", "synthetic Home compact FX insight amendment"
   );
+  const oldRelease = "draft PR #550 and existing unfinished Form are preserved. Participant distribution remains paused; no runtime scope beyond the bounded synthetic Home compact FX insight amendment, Lane G change, standing delegation, parent closeout or financial capability.";
+  const currentRelease = "draft PR #550 and the published Digital Feedback v1 Form are preserved. Founder-owned circulation is released only for that digital pulse; the moderated v2.1 study and other parent participant distribution remain paused. No further runtime scope follows from the completed synthetic Home compact FX insight amendment, nor any Lane G change, standing delegation, parent closeout or financial capability.";
+  assert.equal(sequencing.value.split(oldRelease).length - 1, 1);
+  sequencing.value = sequencing.value.replace(oldRelease, currentRelease);
+  assert.equal(after.projection.payload.fields.sequencing_posture.value.split(currentRelease).length - 1, 1);
   assert.equal((after.projection.payload.fields.sequencing_posture.value.match(
     /synthetic Home compact FX insight amendment/g
   ) ?? []).length, 2);
