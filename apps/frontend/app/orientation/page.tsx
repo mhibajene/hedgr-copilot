@@ -77,6 +77,12 @@ export default async function OrientationPage({
           <SimulationDisplayCurrencySelector placement="entry" />
         ) : null}
 
+        {studyEntry ? (
+          <p data-testid="stability-study-currency-note" className="text-sm leading-relaxed text-hedgr-700">
+            The fictional Sarah examples will use the currency selected above. Their amounts are made up, not converted estimates. Do not enter real financial information.
+          </p>
+        ) : null}
+
         <footer className="border-t border-hedgr-200 pt-8">
           <Link
             href={studyEntry ? '/research/stability-scenarios' : surface.continue.href}
