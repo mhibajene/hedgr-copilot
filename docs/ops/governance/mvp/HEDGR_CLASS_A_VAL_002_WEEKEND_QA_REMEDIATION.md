@@ -2,7 +2,7 @@
 
 **Date:** 2026-09-18 (Australia/Perth). **Ticket:** `CLASS-A-VAL-002-WEEKEND-PREP-001`.
 
-**Status:** Runtime remediation merged; shipped interaction checks and the separate Digital Feedback v1 Form preparation were verified. The Form is now published and the Founder gave an explicit digital-pulse circulation disposition on 2026-09-21 after reporting completed phone rehearsal. The Founder reports a 3-minute-15-second journey, a Form time under five minutes, passed same-browser resume and successful WhatsApp messaging-browser handoff. A supplied iPhone screenshot shows the Form opened from WhatsApp; return-journey state is Founder-reported, not visible in the screenshot. Instrument PR #550 and its governed technical closeout remain pending. The moderated v2.1 study and parent acceptance remain separate.
+**Status:** Runtime remediation merged; shipped interaction checks and the separate Digital Feedback v1 Form preparation were verified. The Form is now published and the Founder gave an explicit digital-pulse circulation disposition on 2026-09-21 after reporting completed phone rehearsal. The Founder reports a 3-minute-15-second journey, a Form time under five minutes, passed same-browser resume and successful WhatsApp messaging-browser handoff. A supplied iPhone screenshot shows the Form opened from WhatsApp; return-journey state is Founder-reported, not visible in the screenshot. Instrument PR #550 merged at `68a31397efd9cf2477c5c0aa1f77c712e4c9a5fa`; separate projection-only RAP rebind PR #623 merged at `ee9358e4b2779dc3be5677c9d754bdefb75b1029` and passed main-bound `bridge:rap:check`. Nested-ticket technical closeout remains pending. The moderated v2.1 study and parent acceptance remain separate.
 
 ## Authority and baseline
 
