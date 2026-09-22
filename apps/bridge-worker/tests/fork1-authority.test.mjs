@@ -89,7 +89,7 @@ test("Fork 1 preserves projected occupancy, sequencing and all non-authorising f
     "shared-baseline amendment", "synthetic Home compact FX insight amendment"
   );
   const oldRelease = "draft PR #550 and existing unfinished Form are preserved. Participant distribution remains paused; no runtime scope beyond the bounded synthetic Home compact FX insight amendment, Lane G change, standing delegation, parent closeout or financial capability.";
-  const currentRelease = "draft PR #550 and the published Digital Feedback v1 Form are preserved. Founder-owned circulation is released only for that digital pulse; the moderated v2.1 study and other parent participant distribution remain paused. No further runtime scope follows from the completed synthetic Home compact FX insight amendment, nor any Lane G change, standing delegation, parent closeout or financial capability.";
+  const currentRelease = "instrument PR #550 merged at `68a31397efd9cf2477c5c0aa1f77c712e4c9a5fa`, its separate RAP rebind PR #623 merged at `ee9358e4b2779dc3be5677c9d754bdefb75b1029`, and the published Digital Feedback v1 Form is preserved. Founder-owned circulation is released only for that digital pulse; the moderated v2.1 study and other parent participant distribution remain paused. No further runtime scope follows from the completed synthetic Home compact FX insight amendment, nor any Lane G change, standing delegation, parent closeout or financial capability.";
   assert.equal(sequencing.value.split(oldRelease).length - 1, 1);
   sequencing.value = sequencing.value.replace(oldRelease, currentRelease);
   assert.equal(after.projection.payload.fields.sequencing_posture.value.split(currentRelease).length - 1, 1);
