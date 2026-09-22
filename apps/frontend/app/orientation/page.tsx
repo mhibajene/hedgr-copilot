@@ -18,8 +18,15 @@ export const metadata: Metadata = {
   description: ORIENTATION_SURFACE.disclosure.heading,
 };
 
-export default function OrientationPage() {
+export default async function OrientationPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ study?: string }>;
+}) {
   const surface = ORIENTATION_SURFACE;
+  const studyEntry =
+    isSyntheticJourneyEnvironment() &&
+    (await searchParams).study === 'stability-scenarios';
 
   return (
     <div className={`${plusJakartaSans.className} min-h-screen bg-hedgr-white text-hedgr-dark`}>
@@ -72,7 +79,7 @@ export default function OrientationPage() {
 
         <footer className="border-t border-hedgr-200 pt-8">
           <Link
-            href={surface.continue.href}
+            href={studyEntry ? '/research/stability-scenarios' : surface.continue.href}
             data-testid="orientation-continue"
             className="inline-flex min-h-11 items-center justify-center bg-hedgr-primary px-5 py-3 font-medium text-hedgr-white hover:bg-hedgr-600 focus:outline-none focus:ring-2 focus:ring-hedgr-500 focus:ring-offset-2"
           >
