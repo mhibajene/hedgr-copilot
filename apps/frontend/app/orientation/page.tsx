@@ -79,7 +79,7 @@ export default async function OrientationPage({
 
         {studyEntry ? (
           <p data-testid="stability-study-currency-note" className="text-sm leading-relaxed text-hedgr-700">
-            The fictional Sarah examples will use the currency selected above. Their amounts are made up, not converted estimates. Do not enter real financial information.
+            The next page uses your selected currency for Sarah&apos;s fictional savings. These are made-up amounts, not converted estimates. Do not enter real financial information.
           </p>
         ) : null}
 

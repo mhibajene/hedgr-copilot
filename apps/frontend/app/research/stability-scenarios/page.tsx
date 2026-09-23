@@ -4,7 +4,7 @@ import { isSyntheticJourneyEnvironment } from '../../../lib/state/synthetic-jour
 import ScenarioStimulus from './ScenarioStimulus';
 
 export const metadata: Metadata = {
-  title: 'Fictional stability examples · Hedgr research',
+  title: 'Sarah’s course savings · Hedgr research',
   robots: { index: false, follow: false },
 };
 
