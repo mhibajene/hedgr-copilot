@@ -13,7 +13,7 @@ import {
 
 const focusStyle = 'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-hedgr-500 focus-visible:ring-offset-2';
 
-export function SimulationDisplayCurrencySelector({ placement }: { placement: 'entry' | 'settings' | 'position' }) {
+export function SimulationDisplayCurrencySelector({ placement, entryHelper }: { placement: 'entry' | 'settings' | 'position'; entryHelper?: string }) {
   const currency = useSimulationDisplayCurrency();
   const dialogRef = useRef<HTMLDialogElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
@@ -42,7 +42,7 @@ export function SimulationDisplayCurrencySelector({ placement }: { placement: 'e
           ))}
         </select>
         <p id="simulation-display-currency-helper" className="text-sm leading-relaxed text-hedgr-600">
-          {copy.helper}
+          {entryHelper ?? copy.helper}
         </p>
       </section>
     );
