@@ -2,7 +2,10 @@
 
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
-import { useSimulationDisplayCurrency } from '../../../lib/state/simulation-display-currency';
+import {
+  getSimulationDisplayCurrency,
+  type SimulationDisplayCurrency,
+} from '../../../lib/state/simulation-display-currency';
 
 type Stage = 'landing' | 'baseline' | 'interpretation' | 'transfer';
 
@@ -17,11 +20,20 @@ const savingsCurrencyNames = {
 export default function ScenarioStimulus() {
   const [stage, setStage] = useState<Stage>('landing');
   const stageHeading = useRef<HTMLHeadingElement>(null);
-  const currency = useSimulationDisplayCurrency();
+  const [currency, setCurrency] = useState<SimulationDisplayCurrency | null>(null);
+
+  useEffect(() => {
+    // Keep one fictional denomination for the entire traversal, even if another tab changes the preference.
+    setCurrency(getSimulationDisplayCurrency());
+  }, []);
 
   useEffect(() => {
     if (stage !== 'landing') stageHeading.current?.focus();
   }, [stage]);
+
+  if (currency === null) {
+    return <main data-testid="stability-stimulus" className="mx-auto min-h-screen max-w-3xl px-5 py-8 text-hedgr-dark sm:px-8 sm:py-12"><p role="status">Preparing the fictional example…</p></main>;
+  }
 
   const transfer = stage === 'transfer';
   const savingsCurrencyName = savingsCurrencyNames[currency];
