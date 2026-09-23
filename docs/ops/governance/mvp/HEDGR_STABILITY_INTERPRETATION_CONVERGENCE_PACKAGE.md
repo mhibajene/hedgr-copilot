@@ -9,6 +9,8 @@
 **Activation:** PR #641, permanent-main source `c435287a40902c70618e218939f6e50cd439dde6`
 **Activation RAP rebind:** PR #642, permanent-main merge `c84c3285bd17262038560be258ae5dbb5855de2e`, projection bound to the activation source
 
+> **Current stimulus amendment (2026-09-23):** Section 17 records the Founder's later instruction to retain the existing five local-currency choices for Sarah's savings. It supersedes the fixed-ZMW presentation only for the active `CLASS-A-VAL-002-STABILITY-INTERPRETATION-001` stimulus. Sections 1–16 remain the completed version 1 convergence and semantic-review record.
+
 ## 1. Purpose and authority boundary
 
 This package records the smallest falsifiable Stability Interpretation contract approved by the Founder after the Codex and Human Narrative refinements. It defines the proposed first-study claim, the fictional Sarah facts, the exact authored interpretation and the evidence sequence needed to distinguish understanding from repetition.
@@ -403,6 +405,16 @@ This convergence package is complete only when:
 - source-first closeout and a final permanent-main RAP rebind are complete.
 
 Completion records conceptual convergence only. Participant exposure and any runtime successor require separate repo-native decisions.
+
+## 17. Additive Founder amendment — selected savings currency (2026-09-23)
+
+The Founder directed retention of the existing local-currency selection because a fixed ZMW case can limit relevance to a participant unfamiliar with it. This is a bounded amendment to the active stimulus ticket under [`HEDGR_STATUS.md` §7/§7a/§302](../../HEDGR_STATUS.md#302-founder-activation--stability-interpretation-stimulus-2026-09-23), not a new study, Engine contract or participant-release decision. The original ZMW record and semantic review above remain historical evidence; the runtime may not silently claim that their exact ZMW wording applies to other denominations.
+
+For the active stimulus, Sarah's existing 6,000 and twelve planned 2,000 contributions are denominated in the **one local currency selected at orientation** from ZMW, KES, NGN, GHS or PHP. The same selection persists through the matched baseline, authored interpretation and transfer within a traversal. The baseline obligation remains fixed at **USD 1,000 payable in US dollars on 1 October 2027**. The transfer changes only that obligation to **29,500 payable in the selected local currency on the same date**. The observation and contribution dates, current-versus-planned distinction, no future FX rate, fixed context, excluded Access dimension and all other supplied or withheld facts remain as in Outputs A–E. The same numeric amounts across variants are fictional fixtures, not conversions or equal-purchasing-power cases.
+
+Output D retains its exact four-part causal meaning and order, with only denomination-dependent words substituted: Sarah saves in the selected local currency for a USD-priced course; growth of that local balance alone does not establish future USD coverage; the relationship between the currencies at payment matters; and no future exchange rate, completed planned contribution or full funding can be inferred. The original kwacha text in §7 remains exact for the ZMW variant. The Step 0, baseline, post-reveal and transfer **questions stay word-for-word unchanged**. The existing five-option selector is retained before the study, with neutral explanation of its fictional-denomination role and without teaching the cross-currency relationship before baseline.
+
+Within a participant's traversal, the factual presentation, chrome, terminology, hierarchy and selected currency must be identical before and after reveal; the authored interpretation remains the only treatment addition. A later governed research protocol must attribute evidence to the selected currency variant and may compare within-participant baseline and reveal. It must not pool different variants as equivalent in purchasing power or treat variant familiarity, nominal totals or positive sentiment as proof of incremental utility. No answer capture, telemetry, new preference storage, FX calculation, market-support claim, participant exposure, Engine ownership or financial capability follows from this amendment.
 
 ## Closing principles
 
