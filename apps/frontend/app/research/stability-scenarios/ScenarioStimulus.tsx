@@ -44,7 +44,7 @@ export default function ScenarioStimulus() {
       <header className="space-y-3 border-b border-hedgr-200 pb-6">
         <p className="text-sm font-medium text-hedgr-600">Fictional research example · no real money</p>
         <h1 className="break-words text-xl font-semibold text-hedgr-800 sm:text-3xl">Sarah’s course savings</h1>
-        <p className="text-sm leading-relaxed text-hedgr-700">Only the information shown here is being considered. No response is entered or saved on this page.</p>
+        <p data-testid="study-common-boundary" className="text-sm leading-relaxed text-hedgr-700">Only the information shown here is being considered. Any interpretation is authored for this fictional example, not a live financial assessment. No response is entered or saved on this page.</p>
       </header>
 
       <section aria-labelledby="sarah-facts-heading" data-testid="sarah-facts" className="mt-8 space-y-4 border border-hedgr-300 bg-hedgr-100 p-5">
@@ -83,7 +83,6 @@ export default function ScenarioStimulus() {
               <p>The relationship between the two currencies at that time also matters.</p>
               <p>This example cannot predict the future exchange rate, assume Sarah&apos;s planned contributions will happen, or establish that the course will be fully funded.</p>
             </div>
-            <p className="text-sm text-hedgr-700">This interpretation was written for this fictional research example. It is not a live financial assessment.</p>
             <p className="font-medium">Does this change anything about how you understand Sarah&apos;s situation? If so, what?</p>
             <button type="button" data-testid="study-transfer" onClick={() => setStage('transfer')} className="min-h-11 w-full bg-hedgr-primary px-5 py-3 font-medium text-white focus:outline-none focus:ring-2 focus:ring-hedgr-500 focus:ring-offset-2 sm:w-auto">Continue to the changed course fee</button>
           </>
