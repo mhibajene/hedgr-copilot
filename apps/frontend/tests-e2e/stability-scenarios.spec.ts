@@ -13,12 +13,16 @@ test.describe('authored Sarah interpretation stimulus', () => {
     await page.goto('/orientation');
     await expect(page.getByTestId('orientation-continue')).toHaveAttribute('href', '/dashboard-synthetic-journey?reset=1');
     await expect(page.getByRole('combobox')).toBeVisible();
+    await expect(page.locator('#simulation-display-currency-helper')).toContainText('Choose how local estimates are shown.');
 
     await page.goto(studyEntry);
     await expect(page.getByTestId('orientation-disclosure')).toContainText('No real money moves');
     await expect(page.getByTestId('orientation-data-boundary')).toContainText('Do not enter real personal or financial information.');
     await expect(page.getByRole('combobox')).toBeVisible();
-    await expect(page.getByTestId('stability-study-currency-note')).toContainText('selected currency for Sarah');
+    await expect(page.locator('#simulation-display-currency-helper')).toContainText('Choose the currency used for Sarah’s fictional savings amounts.');
+    await expect(page.locator('#simulation-display-currency-helper')).toContainText('not converted estimates');
+    await expect(page.locator('#simulation-display-currency-helper')).not.toContainText(/local estimates|US dollars|currency mismatch|exposure/i);
+    await expect(page.getByTestId('stability-study-currency-note')).toContainText('fictional course-savings situation');
     await expect(page.getByTestId('stability-study-currency-note')).not.toContainText(/kwacha|dollars|currency mismatch|exposure/i);
     await page.getByTestId('orientation-continue').click();
 
@@ -38,6 +42,8 @@ test.describe('authored Sarah interpretation stimulus', () => {
     await enterStudy(page);
     const facts = page.getByTestId('sarah-facts');
     const baselineFacts = await facts.innerText();
+    const commonBoundary = await page.getByTestId('study-common-boundary').innerText();
+    expect(commonBoundary).toContain('not a live financial assessment');
 
     await page.getByTestId('study-continue').click();
     await expect(page.getByRole('heading', { name: 'Sarah’s course savings', level: 2 })).toBeFocused();
@@ -55,6 +61,8 @@ test.describe('authored Sarah interpretation stimulus', () => {
       'The relationship between the two currencies at that time also matters.',
       'This example cannot predict the future exchange rate, assume Sarah\'s planned contributions will happen, or establish that the course will be fully funded.',
     ]);
+    expect(await page.getByTestId('study-common-boundary').innerText()).toBe(commonBoundary);
+    await expect(page.getByTestId('study-question')).not.toContainText('not a live financial assessment');
     await expect(page.getByTestId('study-question')).toContainText('Does this change anything about how you understand Sarah\'s situation? If so, what?');
 
     await page.getByTestId('study-transfer').click();
