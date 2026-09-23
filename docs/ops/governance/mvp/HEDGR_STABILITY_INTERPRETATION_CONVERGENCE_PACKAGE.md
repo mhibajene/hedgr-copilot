@@ -1,12 +1,12 @@
 # Hedgr Stability Interpretation convergence package
 
-**Version:** 1.0  
-**Status:** Founder-authorised convergence record; authored research contract; no runtime or participant release  
-**Date:** 2026-09-23  
-**Ticket:** `CLASS-A-VAL-002-STABILITY-CONVERGENCE-001`, nested in Lane V  
-**Execution class:** Class A — synthetic / informational / read-only  
-**Authority:** [`HEDGR_STATUS.md` §7, §7a and §301](../../HEDGR_STATUS.md#301-founder-activation--stability-interpretation-convergence-package-2026-09-23)  
-**Activation:** PR #641, permanent-main source `c435287a40902c70618e218939f6e50cd439dde6`  
+**Version:** 1.0
+**Status:** Founder-authorised convergence record; authored research contract; no runtime or participant release
+**Date:** 2026-09-23
+**Ticket:** `CLASS-A-VAL-002-STABILITY-CONVERGENCE-001`, nested in Lane V
+**Execution class:** Class A — synthetic / informational / read-only
+**Authority:** [`HEDGR_STATUS.md` §7, §7a and §301](../../HEDGR_STATUS.md#301-founder-activation--stability-interpretation-convergence-package-2026-09-23)
+**Activation:** PR #641, permanent-main source `c435287a40902c70618e218939f6e50cd439dde6`
 **Activation RAP rebind:** PR #642, permanent-main merge `c84c3285bd17262038560be258ae5dbb5855de2e`, projection bound to the activation source
 
 ## 1. Purpose and authority boundary
@@ -324,7 +324,74 @@ The review must determine whether the package can coexist with the adopted **Fin
 
 The review may confirm compatibility, identify limitations or stop on a material conflict. It may not select fields, types, APIs, storage, mapping, aggregation, override, co-display or Wallet-created financial meaning.
 
-## 15. Completion standard
+## 15. Distinct semantic compatibility review
+
+**Review role:** Verifier, separate from the authored pass
+**Author commit reviewed:** `9f5edaccd0db316d55b2c7bd7e6fb31882f83911`
+**Review date:** 2026-09-23
+**Disposition:** **PASS WITH EXPLICIT LIMITATIONS** — compatible as an authored research interpretation; no executable compatibility or runtime readiness is claimed
+**Corrections required to Outputs A–E:** None
+
+### 15.1 Immutable inputs reviewed
+
+| Read-only input | SHA-256 at review |
+| --- | --- |
+| §290 scoped interface candidate | `5c0f71c4a000c7ac576bb1b534d1261842fa90a8cd991cbd4bec318754e84619` |
+| Stability Engine functional contract | `50007cc5a53ebfa475fb43f6e6bf2bb0b4fa449aaec1f09406db07dcbb094824` |
+| Corrected scenario preflight | `f17a0089cfc6448cbd1d449b0855a6857c87d5dce53b79113de714a7e742a696` |
+| Completed stimulus protocol | `7a6ac50f8832dfdfc8fdb57928d4a2fbca507d6b8db2937dd2d1bab9852f2079` |
+| `apps/frontend/lib/engine/types.ts` | `3f5118c8369cda1032586ea5242794ef6debebe01f54d5f9b80e9cd1dfcd8f43` |
+| `apps/frontend/lib/engine/mock.ts` | `41ccb54fb7d3f57c97bb077fb7de479e5c6597747db80f3ff9d01425f8ddb2a6` |
+| `apps/frontend/lib/engine/useEngineState.ts` | `7a0136e81ac09967d0ef40e2312f0c45786c99bb88cb67debc586bd3afd1ddae` |
+
+### 15.2 Sentence-to-contract trace
+
+| Authored interpretation sentence | Supplied support | Permitted meaning | Preserved block |
+| --- | --- | --- | --- |
+| Sarah is saving in kwacha for a course priced in US dollars. | K6,000 existing ZMW capital; planned ZMW contributions; fixed USD 1,000 obligation payable in USD. | Identifies the scoped cross-currency relationship. | Does not establish total wealth, wider priorities, custody, access or a complete profile. |
+| Her kwacha savings can grow without that alone telling her how much of the USD course fee they will cover when payment is due. | Existing and planned ZMW amounts, USD obligation and payment date; no future FX rate. | Explains why nominal ZMW growth alone cannot establish future USD coverage. | Does not predict FX, depreciation, adequacy, preservation or conversion need. |
+| The relationship between the two currencies at that time also matters. | Different saving/payment denominations and the future payment date. | Identifies a material condition affecting the local coverage question. | Does not select a rate, direction, instrument, route or action. |
+| This example cannot predict the future exchange rate, assume Sarah's planned contributions will happen, or establish that the course will be fully funded. | No future rate; future contributions have not occurred and are not guaranteed. | Withholds the affected conclusions while preserving known facts. | Does not collapse uncertainty into zero, deterioration or a complete Stability Position. |
+
+Every sentence remains within **required fact → permitted inference → blocked conclusion**. The interpretation communicates question-local financial meaning and its limit; it does not turn arithmetic into free capital or a financial instruction.
+
+### 15.3 Responsibility-boundary review
+
+| Responsibility | Compatibility finding |
+| --- | --- |
+| Financial facts and context | The fictional Sarah record supplies denomination, existing capital, planned contributions, obligation and dates. These are stipulated research facts, not authenticated data, ledger truth, custody or a complete financial profile. |
+| Scoped Engine interpretation | The relationship, consequence and uncertainty boundary match the semantic shape retained by §290. For this package they remain author-written research content; the current Engine does not produce them. |
+| Wallet presentation | A later separately authorised surface could faithfully present the package without strengthening it. This package assigns no current Wallet work and no calculation, inference or prose-parsing responsibility. |
+
+The A–E contract therefore preserves the adopted **Financial State → Scoped Engine Interpretation → Wallet Presentation** separation at the level of research semantics.
+
+### 15.4 Current implementation compatibility limits
+
+Current `EngineState` contains only `posture`, three target percentages, an optional notice and `updatedAt`. The mock selects one predefined state through the simulator posture resolved by `useEngineState`. It has no representation for:
+
+- Sarah's facts, scoped question or goal obligation;
+- conclusion, reasons, conditions, unknowns or withheld claims;
+- evidence provenance or the observation/payment/contribution time distinctions; or
+- any relation between a scoped interpretation and the current posture.
+
+Accordingly:
+
+- the authored interpretation is **not** current Engine output;
+- `updatedAt` must not be treated as the scenario observation date, evidence validity or payment horizon;
+- posture values, target percentages, notices and mock/hook selection remain unchanged;
+- no posture mapping, aggregation, mutation, priority or override is implied;
+- no Wallet code may calculate the interpretation or infer semantics by parsing prose; and
+- no field, type, identifier, API, module, storage, serialization or transport design is selected.
+
+The §290 coexistence question also remains unresolved. This package does not decide whether a future scoped interpretation and current Stability Posture should appear together or how apparent tension would be explained. The working boundary remains no automatic influence or override. Any co-display requires separate authority and semantic resolution.
+
+### 15.5 Review conclusion
+
+No material conflict was found between the authored A–E package, §290 responsibilities, the retained functional contract and the current read-only Engine implementation **because the package explicitly remains authored research content outside the executable EngineState**.
+
+This conclusion supports retaining the convergence artifact. It does not establish empirical validity, participant comprehension, real-data sufficiency, route feasibility, executable schema compatibility, implementation readiness or participant-release readiness. A runtime successor would need its own named authority, exact semantics, presentation decision, verification and release gates.
+
+## 16. Completion standard
 
 This convergence package is complete only when:
 
