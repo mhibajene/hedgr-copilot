@@ -17,7 +17,7 @@ ZMW renders as K/kwacha, preserving the original Output D wording. KES, NGN, GHS
 
 | Boundary | Verification |
 | --- | --- |
-| Common baseline and treatment | Browser test compares the complete facts block before and after reveal for each of the five selections. |
+| Common baseline and treatment | Browser test compares the complete facts block before and after reveal for each of the five selections, and confirms another tab changing the preference cannot alter an active traversal. |
 | Neutral pre-reveal | Browser test checks Step 0 and baseline prompts, absent interpretation, no answer-bearing headings and no relationship cue in the study orientation note. |
 | Authored interpretation | Browser test checks all four sentences, ZMW exact text and parameterised wording in each other selected currency; page states the example is written, not a live financial assessment. |
 | Controlled transfer | Browser test checks the 29,500 selected-denomination obligation and retained 6,000/2,000 facts and USD prior obligation. |
@@ -35,8 +35,8 @@ These checks establish deterministic rendering and route separation, not partici
 | Scoped implementation diff | Only the study route component and metadata plus the explicit study orientation branch changed in the runtime commit. |
 | Typecheck and lint | Passed for the frontend. |
 | Production build | `pnpm -w build` passed with synthetic mock/stub environment. |
-| Focused browser run | `stability-scenarios.spec.ts`: 4/4 passed, including all five selected denominations. |
-| Complete hermetic browser run | `pnpm --filter @hedgr/frontend e2e:ci`: 125/125 passed with local backend stub, then backend stopped. |
+| Focused browser run | `stability-scenarios.spec.ts`: 5/5 passed, including all five selected denominations and a second-tab preference change. |
+| Complete hermetic browser run | Final `pnpm --filter @hedgr/frontend e2e:ci`: 126/126 passed with local backend stub after the per-traversal pin; backend then stopped. |
 | Full workspace validation | `pnpm run validate` passed: 906 frontend unit tests, 49 Bridge tests, projection/snapshot checks, typecheck and lint. |
 | Hosted and shipped revision | Required PR checks, independent convergence and exact deployed-revision inspection remain release-blocking verification for technical closeout. |
 

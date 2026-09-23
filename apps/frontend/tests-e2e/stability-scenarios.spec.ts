@@ -102,6 +102,25 @@ test.describe('authored Sarah interpretation stimulus', () => {
     }
   });
 
+  test('pins the selected denomination if another tab changes the browser preference', async ({ page, context }) => {
+    await page.goto(studyEntry);
+    await page.getByRole('combobox').selectOption('KES');
+    await page.getByTestId('orientation-continue').click();
+    await page.getByTestId('study-continue').click();
+
+    const otherTab = await context.newPage();
+    await otherTab.goto('/orientation');
+    await otherTab.getByRole('combobox').selectOption('NGN');
+    await expect(otherTab.getByRole('combobox')).toHaveValue('NGN');
+
+    await expect(page.getByTestId('sarah-facts')).toContainText('KES 6,000');
+    await page.getByTestId('study-reveal').click();
+    await expect(page.getByTestId('study-interpretation')).toContainText('Kenyan shillings');
+    await page.getByTestId('study-transfer').click();
+    await expect(page.getByTestId('course-fee')).toContainText('KES 29,500');
+    await otherTab.close();
+  });
+
   test('keeps the sequence readable and operable at small width and enlarged text', async ({ page }) => {
     await page.setViewportSize({ width: 320, height: 720 });
     await enterStudy(page);
