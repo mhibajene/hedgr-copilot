@@ -2,9 +2,11 @@
 
 Status: Binding (repo workflow, engineering conventions, CI posture, agent operating rules)
 Scope: apps/, packages/, scripts/, .github/, docs/
-Last updated: 2026-09-23
+Last updated: 2026-09-24
 
 **Start with live authority:** [HEDGR_STATUS.md §7 / §7a](docs/ops/HEDGR_STATUS.md#7-current-sequence-and-active-status) is the canonical present-state surface for occupancy, permissions, exclusions, operative controls and stop conditions. Read the named live brief before acting. Historical closeouts cannot supply current sequencing or occupancy. Accepted ADRs, active doctrine, this execution contract and other current higher-precedence sources remain controlling under repo precedence; genuine current-source disagreement requires stop/escalation, not synthesis.
+
+**Founder Bridge MCP authentication continuation (2026-09-24):** §304 continues the same local-only `BRIDGE-MCP-001` item after checkpoint `6baa0fd`. The Founder authorises local implementation and mocked verification of the real Cloudflare Access for SaaS OIDC exchange, Worker-side OAuth provider, token validation and discovery metadata, preceded by an exact owner setup sheet. The former §303 local authentication hold is superseded only for this local work. The four fixed evidence tools, legacy HTTP service, restricted server-side GitHub credential, evidence contracts and read-only boundary remain fixed. No paid commitment, cloud resource creation, live Worker configuration or credential change, push, PR, merge, deployment, protected production call or plugin edit/registration is authorised. The branch is not permanent-main activation; a separate connection gate remains required. **NO CROSS-LANE IMPACT.**
 
 **Founder Bridge MCP local-work disposition (2026-09-24):** The Founder approves one local-only `BRIDGE-MCP-001` implementation and fixture-test exercise under `HEDGR_STATUS.md` §7 / §7a / §303. Its source record precedes code work. It may add four fixed, read-only evidence tools inside the existing Worker and preserve legacy HTTP clients. Cloudflare Access for SaaS is the selected authentication design for later integration; the account has no configured Zero Trust organization or authentication domain, so live OAuth wiring and all connection/deployment steps remain held. Local MCP handling must fail closed without verified authentication. This branch is not permanent-main activation and grants no deployment, push, merge, provider configuration, credential change, plugin edit, generic browsing, ticket sequencing, or financial authority. **NO CROSS-LANE IMPACT.**
 
