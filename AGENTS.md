@@ -12,7 +12,7 @@ Last updated: 2026-09-24
 
 **Founder Bridge MCP local-work disposition (2026-09-24):** The Founder approves one local-only `BRIDGE-MCP-001` implementation and fixture-test exercise under `HEDGR_STATUS.md` §7 / §7a / §304. Its source record precedes code work. It may add four fixed, read-only evidence tools inside the existing Worker and preserve legacy HTTP clients. Cloudflare Access for SaaS is the selected authentication design for later integration; the account has no configured Zero Trust organization or authentication domain, so live OAuth wiring and all connection/deployment steps remain held. Local MCP handling must fail closed without verified authentication. This branch is not permanent-main activation and grants no deployment, push, merge, provider configuration, credential change, plugin edit, generic browsing, ticket sequencing, or financial authority. **NO CROSS-LANE IMPACT.**
 
-**Product Experience Lead adoption (2026-09-24):** The Founder directs the bounded institutional codification recorded in live §7 / §7a / §303. After this source record reaches permanent main and receives a separate verified RAP rebind, create only the canonical `PROPOSE_ONLY` role skill and reconcile its entry in §9. This source transition does not itself register the role. Keep the existing Human Narrative Lead §9 discrepancy explicit and unchanged. No first Product Experience task, product/research/participant work, Green delegation or implementation authority follows. **NO CROSS-LANE IMPACT.**
+**Product Experience Lead institutional registration (2026-09-24):** §303 records Founder-directed, bounded role codification. Canonical `PROPOSE_ONLY` skill and §9.8 registration merged in PR #657 at `16b5405f77890db72104b9932dcb771b4da41227`; separate projection-only RAP rebind #661 merged at `01d5fe4ac4c2728494a3af7a4e5e5c98f82d7f24`. The finite repository support task closes only when this source closeout and its own separate permanent-main RAP rebind are verified. The existing Human Narrative Lead §9 discrepancy remains explicit and unchanged. Registration grants no first Product Experience task, product/research/participant work, Green delegation or implementation authority. **NO CROSS-LANE IMPACT.**
 
 **Stability Interpretation stimulus technical closeout (2026-09-23):** §302 records source activation #646, separate permanent-main RAP rebind #647, Founder currency-optionality amendment #648 and rebind #649, selector-helper correction #651 and rebind #652, then runtime/Verifier delivery #650 at `5cc641310316eb21ebcde3b4becc86a3b6e8b82a`. Distinct Verifier commit `645168f` records PASS after the study helper and common-disclosure corrections. Full local validation, build and 126 browser tests, all hosted checks including independent convergence, exact-SHA production deployment and a live route inspection passed. Close only the nested `CLASS-A-VAL-002-STABILITY-INTERPRETATION-001` ticket when this source closeout merges to permanent main and receives a final separate verified RAP rebind. Parent Lane V remains open without a nested successor; the research route remains unreleased for participant use. No comprehension, incremental utility, Engine adoption, participant release, response custody, financial capability or cross-lane authority follows. **NO CROSS-LANE IMPACT.**
 
@@ -328,6 +328,23 @@ Must not:
 - infer approval
 - invent requirements
 - reconcile conflicts by synthesis
+
+### 9.8 Product Experience Lead
+Canonical role: `docs/agents/skills/codex-product-experience-lead.md`. Execution mode: `PROPOSE_ONLY`.
+
+Use for:
+- bounded, separately authorised end-to-end experience proposals for a named audience
+- journey structure, hierarchy, interaction, progression, state, feedback, completion and recovery
+
+Must:
+- classify current repo authority, accepted contracts, rendered evidence, participant/review evidence and its own interpretation separately
+- propose the smallest coherent preferred experience and candidate checks for Founder / HedgrOps review
+- hand material participant-facing wording to Human Narrative Lead; preserve independent Verifier / Product Assurance and Repo Steward remits
+
+Must not:
+- activate a task through role registration, approve its own proposal, implement, publish or lift participant/release holds
+- alter accepted meaning, research method, data posture, financial capability, Green delegation or another role's mandate
+- treat browser evidence as participant evidence or proposed checks as verification
 
 ## 10) Execution modes and action controls
 All meaningful agent work must operate under a declared action control:
