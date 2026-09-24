@@ -83,7 +83,7 @@ test("Fork 1 preserves projected occupancy, sequencing and all non-authorising f
   const after = project(current);
   assert.equal(before.validation.ok, true);
   assert.equal(after.validation.ok, true);
-  // The verified interpretation stimulus closeout supersedes the archived
+  // The Founder-authorised Research Two-Beat ticket supersedes the archived
   // sequencing sentence. Keep the archive immutable, assert the exact replacement and
   // compare every other projected field without exception.
   const sequencing = before.projection.payload.fields.sequencing_posture;
@@ -93,7 +93,7 @@ test("Fork 1 preserves projected occupancy, sequencing and all non-authorising f
   );
   const oldRelease = "draft PR #550 and existing unfinished Form are preserved. Participant distribution remains paused; no runtime scope beyond the bounded synthetic Home compact FX insight amendment, Lane G change, standing delegation, parent closeout or financial capability.";
   assert.equal(sequencing.value.split(oldRelease).length - 1, 1);
-  const currentSequencing = "Controlled Parallelism v22 / §6f.22 retains V/E parents while §285 defers G. §301 convergence is completed; §302 stimulus technical work closes only after effective source merge and separate verified RAP rebind. No Lane V successor is activated. The weekend ticket remains deferred, not completed or cancelled. The separately released Digital Feedback v1 pulse and Founder-owned participant selection, invitations and raw-response custody continue under their existing conditions; moderated v2.1 and other parent distribution remain paused. The Stability research route is not released for participant use. No participant session, new Form, response collection, telemetry, personal-input collection, limited manipulation or “Use My Numbers” is activated. Lane E remains open without a nested ticket; §290 responsibilities remain non-executable and current EngineState/posture is preserved. No Lane G restart, Green delegation, financial capability or cross-lane authority follows. NO CROSS-LANE IMPACT.";
+  const currentSequencing = "Controlled Parallelism v22 / §6f.22 retains V/E parents while §285 defers G. §301–§302 nested Lane V work is completed history; §303 Product Experience Lead registration is closed. §309 activates only `CLASS-A-VAL-002-RESEARCH-TWO-BEAT-001` after effective source merge and separate verified RAP rebind. The weekend ticket remains deferred, not completed or cancelled. The separately released Digital Feedback v1 pulse and Founder-owned participant selection, invitations and raw-response custody continue under their existing conditions; moderated v2.1 and other parent distribution remain paused. The Stability research route is not released for participant use. No participant session, new Form, response collection, telemetry, personal-input collection, limited manipulation or “Use My Numbers” is activated. Lane E remains open without a nested ticket; §290 responsibilities remain non-executable and current EngineState/posture is preserved. No Lane G restart, Green delegation, financial capability or cross-lane authority follows. NO CROSS-LANE IMPACT.";
   assert.equal(after.projection.payload.fields.sequencing_posture.value, currentSequencing);
   sequencing.value = currentSequencing;
   const normalized = structuredClone(after.projection);
