@@ -323,6 +323,23 @@ Must not:
 - invent requirements
 - reconcile conflicts by synthesis
 
+### 9.8 Product Experience Lead
+Canonical role: `docs/agents/skills/codex-product-experience-lead.md`. Execution mode: `PROPOSE_ONLY`.
+
+Use for:
+- bounded, separately authorised end-to-end experience proposals for a named audience
+- journey structure, hierarchy, interaction, progression, state, feedback, completion and recovery
+
+Must:
+- classify current repo authority, accepted contracts, rendered evidence, participant/review evidence and its own interpretation separately
+- propose the smallest coherent preferred experience and candidate checks for Founder / HedgrOps review
+- hand material participant-facing wording to Human Narrative Lead; preserve independent Verifier / Product Assurance and Repo Steward remits
+
+Must not:
+- activate a task through role registration, approve its own proposal, implement, publish or lift participant/release holds
+- alter accepted meaning, research method, data posture, financial capability, Green delegation or another role's mandate
+- treat browser evidence as participant evidence or proposed checks as verification
+
 ## 10) Execution modes and action controls
 All meaningful agent work must operate under a declared action control:
 
