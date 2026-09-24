@@ -2,9 +2,11 @@
 
 Status: Binding (repo workflow, engineering conventions, CI posture, agent operating rules)
 Scope: apps/, packages/, scripts/, .github/, docs/
-Last updated: 2026-09-23
+Last updated: 2026-09-24
 
 **Start with live authority:** [HEDGR_STATUS.md §7 / §7a](docs/ops/HEDGR_STATUS.md#7-current-sequence-and-active-status) is the canonical present-state surface for occupancy, permissions, exclusions, operative controls and stop conditions. Read the named live brief before acting. Historical closeouts cannot supply current sequencing or occupancy. Accepted ADRs, active doctrine, this execution contract and other current higher-precedence sources remain controlling under repo precedence; genuine current-source disagreement requires stop/escalation, not synthesis.
+
+**Product Experience Lead adoption (2026-09-24):** The Founder directs the bounded institutional codification recorded in live §7 / §7a / §303. After this source record reaches permanent main and receives a separate verified RAP rebind, create only the canonical `PROPOSE_ONLY` role skill and reconcile its entry in §9. This source transition does not itself register the role. Keep the existing Human Narrative Lead §9 discrepancy explicit and unchanged. No first Product Experience task, product/research/participant work, Green delegation or implementation authority follows. **NO CROSS-LANE IMPACT.**
 
 **Stability Interpretation stimulus technical closeout (2026-09-23):** §302 records source activation #646, separate permanent-main RAP rebind #647, Founder currency-optionality amendment #648 and rebind #649, selector-helper correction #651 and rebind #652, then runtime/Verifier delivery #650 at `5cc641310316eb21ebcde3b4becc86a3b6e8b82a`. Distinct Verifier commit `645168f` records PASS after the study helper and common-disclosure corrections. Full local validation, build and 126 browser tests, all hosted checks including independent convergence, exact-SHA production deployment and a live route inspection passed. Close only the nested `CLASS-A-VAL-002-STABILITY-INTERPRETATION-001` ticket when this source closeout merges to permanent main and receives a final separate verified RAP rebind. Parent Lane V remains open without a nested successor; the research route remains unreleased for participant use. No comprehension, incremental utility, Engine adoption, participant release, response custody, financial capability or cross-lane authority follows. **NO CROSS-LANE IMPACT.**
 
