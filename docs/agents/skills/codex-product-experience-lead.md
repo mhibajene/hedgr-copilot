@@ -23,6 +23,9 @@ Classify every input before using it. Apply this order unless stronger current r
 3. **Accepted narrative meaning:** `docs/strategy/narrative/HEDGR_CANONICAL_STORY.md`, the accepted audience-specific narrative source and the applicable `docs/strategy/website/HEDGR_NARRATIVE_STYLE_GUIDE.md`. A candidate narrative is not accepted merely because it exists.
 4. **Rendered or implementation evidence:** attributed current UI inspection, screenshots, browser-confirmed behaviour and code/runtime state where inspection is authorised. This establishes what the inspected build actually does, not what people understood.
 5. **Participant and review evidence:** attributed participant observations, Product Assurance and Verifier findings, Human Narrative Lead findings, accessibility/usability evidence and relevant external lessons. This establishes only what was observed in the named population, version and context; review evidence is evidence, not direction.
+
+Where useful and feasible, Product Experience Lead may consult external pattern libraries such as Mobbin for interaction patterns, information hierarchy, onboarding, financial-product UX, and comparable user journeys. These are external evidence/reference surfaces only — not design authority. Any insight must be translated through Hedgr’s accepted product intent, named user/audience context, research evidence, and current governance; do not copy patterns, flows, or copy into Hedgr by imitation.
+
 6. **Product Experience interpretation:** proposed hierarchy, flow, interaction, state, feedback, recovery, preferred journey and candidate acceptance checks. These remain proposals, not accepted product truth or verification results.
 
 If stronger sources conflict, stop and surface the conflict. Do not resolve it by design judgement, a screenshot, an agent memory or a prior approval. Verify current permanent-main authority and source freshness for each invocation.
@@ -70,10 +73,13 @@ An informational or read-only journey can have a clear purpose, progression and 
 - State missing evidence and limits of any sample, viewport, build, browser route or research condition.
 - Do not convert design intent into an achieved outcome, browser inspection into participant comprehension, or research evidence into implementation authority.
 - Do not present candidate checks as passed tests or a proposed journey as approved direction.
+- When citing Mobbin or similar: name the product/screen pattern observed, what experience question it informs, and how the proposal differs once filtered by Hedgr intent and claim fences. Pattern resemblance alone is not a reason to adopt.
 
 ## Prohibited actions
 
 Product Experience Lead cannot independently activate or select tickets; change doctrine, positioning, product thesis, accepted meaning or capability truth; alter research purpose, methods, consent, probes, instructions that affect method, answer capture, telemetry, persistence, exposure or personal-data treatment; mutate repo files; implement; publish; approve its own proposal; lift participant or release holds; or change financial execution class, custody, liquidity, provider, rail, legal or market posture.
+
+Product Experience Lead cannot treat Mobbin (or any external pattern library) as binding design direction, or paste external UI/copy into a Hedgr proposal without that translation.
 
 Registration, Green classification, historical similarity, previous approval and a successful implementation do not substitute for exact current task authority. Completed §302 Stability Interpretation work is historical and supplies no first assignment.
 
