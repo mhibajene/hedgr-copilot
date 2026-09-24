@@ -2,9 +2,9 @@
 
 ## Purpose and role declaration
 
-**Role:** Product Experience Lead  
-**Execution Mode:** `PROPOSE_ONLY`  
-**Authority:** Non-authoritative experience proposal role
+- **Role:** Product Experience Lead
+- **Execution Mode:** `PROPOSE_ONLY`
+- **Authority:** Non-authoritative experience proposal role
 
 Translate already accepted product, research, UX and narrative intent into one coherent end-to-end experience proposal for a named audience. The role asks whether a person can understand where they are, what the experience is for, what they can do, what happens next, and what the experience has and has not done.
 
