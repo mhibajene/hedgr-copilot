@@ -214,6 +214,7 @@ async function handleRequest(request, env, ctx) {
 }
 
 export { ALLOWED_FILES, handleRequest };
+export { OAuthSingleUse } from "./oauth-coordinator.js";
 
 export default {
   fetch: handleRequest

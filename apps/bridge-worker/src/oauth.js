@@ -1,7 +1,8 @@
-import { AuthorizationError, OAuthProvider } from "@cloudflare/workers-oauth-provider";
+import { AuthorizationError, OAuthError, OAuthProvider } from "@cloudflare/workers-oauth-provider";
 import { createLocalJWKSet, jwtVerify } from "jose";
 
 import { createBridgeMcpHandler } from "./mcp.js";
+import { callCoordinator, coordinatorStub } from "./oauth-coordinator.js";
 
 const SCOPE = "evidence:read";
 const CALLBACK_PATH = "/callback";
@@ -49,6 +50,7 @@ function configFor(request, env) {
   ];
   if (names.some((name) => typeof env?.[name] !== "string" || env[name].length === 0)) return null;
   if (!["get", "put", "delete"].every((method) => typeof env?.OAUTH_KV?.[method] === "function")) return null;
+  if (!coordinatorStub(env)) return null;
   if (!validHttps(env.MCP_RESOURCE) || !validHttps(env.ACCESS_ISSUER)) return null;
   const resource = new URL(env.MCP_RESOURCE);
   const accessOrigin = new URL(env.ACCESS_ISSUER).origin;
@@ -89,8 +91,16 @@ function authError(error) {
   return Response.redirect(url, 302);
 }
 
-function consentPage(ticket) {
-  const html = `<!doctype html><html lang="en"><meta charset="utf-8"><title>HedgrOps evidence access</title><h1>HedgrOps evidence access</h1><p>Approve read-only access to the four fixed Bridge evidence tools for this ChatGPT connection.</p><form method="post" action="/authorize"><input type="hidden" name="ticket" value="${ticket}"><button type="submit">Approve evidence access</button></form></html>`;
+function escapeHtml(value) {
+  return String(value).replace(/[&<>"']/g, (character) => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+  })[character]);
+}
+
+function consentPage(ticket, client, authRequest) {
+  const name = typeof client.clientName === "string" && client.clientName.trim()
+    ? client.clientName : "Unnamed registered client";
+  const html = `<!doctype html><html lang="en"><meta charset="utf-8"><title>HedgrOps evidence access</title><h1>HedgrOps evidence access</h1><p>Requesting registered client: <strong>${escapeHtml(name)}</strong></p><p>Client ID: <code>${escapeHtml(authRequest.clientId)}</code></p><p>Exact return address: <code>${escapeHtml(authRequest.redirectUri)}</code></p><p>Requested access: read-only retrieval of the four fixed Bridge evidence tools (<code>evidence:read</code>).</p><p>Confirm this client and return address before approving. A Founder login alone does not approve a client.</p><form method="post" action="/authorize"><input type="hidden" name="ticket" value="${ticket}"><button type="submit">Approve this client</button></form></html>`;
   return new Response(html, {
     status: 200,
     headers: {
@@ -108,11 +118,16 @@ async function beginAuthorization(request, env) {
   } catch (error) { return authError(error); }
   if (authRequest.scope.length !== 1 || authRequest.scope[0] !== SCOPE) return fail(403);
   const client = await env.OAUTH_PROVIDER.lookupClient(authRequest.clientId);
-  if (!client || !redirectAllowed(authRequest.redirectUri)) return fail(403);
+  if (!client || client.clientId !== authRequest.clientId ||
+    !Array.isArray(client.redirectUris) || !client.redirectUris.includes(authRequest.redirectUri) ||
+    !redirectAllowed(authRequest.redirectUri)) return fail(403);
   const ticket = randomToken();
   const browserNonce = randomToken();
-  await env.OAUTH_KV.put(`hedgrops:consent:${ticket}`, JSON.stringify({ authRequest, browserNonce }), { expirationTtl: STATE_TTL });
-  const response = consentPage(ticket);
+  const created = await callCoordinator(env, "/put-flow", {
+    kind: "consent", id: ticket, value: { authRequest, browserNonce }
+  });
+  if (created.status !== 201) return fail(503);
+  const response = consentPage(ticket, client, authRequest);
   response.headers.set("set-cookie", setCookie("hbo_consent", browserNonce));
   return response;
 }
@@ -121,20 +136,21 @@ async function approveAuthorization(request, env, config) {
   let ticket;
   try { ticket = (await request.formData()).get("ticket"); } catch { return fail(400); }
   if (typeof ticket !== "string" || !/^[a-f0-9]{64}$/.test(ticket)) return fail(400);
-  const key = `hedgrops:consent:${ticket}`;
-  const raw = await env.OAUTH_KV.get(key);
-  if (!raw) return fail(403);
-  const stored = JSON.parse(raw);
-  if (stored.browserNonce !== cookie(request, "hbo_consent")) return fail(403);
-  await env.OAUTH_KV.delete(key);
+  const consumed = await callCoordinator(env, "/consume-flow", {
+    kind: "consent", id: ticket, browserNonce: cookie(request, "hbo_consent")
+  });
+  if (consumed.status !== 200) return fail(403);
+  const stored = consumed.body.value;
 
   const state = randomToken();
   const verifier = randomToken();
   const nonce = randomToken();
   const browserNonce = randomToken();
-  await env.OAUTH_KV.put(`hedgrops:access:${state}`, JSON.stringify({
-    authRequest: stored.authRequest, verifier, nonce, browserNonce
-  }), { expirationTtl: STATE_TTL });
+  const created = await callCoordinator(env, "/put-flow", {
+    kind: "access", id: state,
+    value: { authRequest: stored.authRequest, verifier, nonce, browserNonce }
+  });
+  if (created.status !== 201) return fail(503);
   const upstream = new URL(env.ACCESS_AUTHORIZATION_URL);
   upstream.searchParams.set("response_type", "code");
   upstream.searchParams.set("client_id", env.ACCESS_CLIENT_ID);
@@ -175,12 +191,11 @@ async function finishAuthorization(request, env, config) {
   const state = url.searchParams.get("state");
   const code = url.searchParams.get("code");
   if (!state || !/^[a-f0-9]{64}$/.test(state) || !code || url.searchParams.has("error")) return fail(401);
-  const key = `hedgrops:access:${state}`;
-  const raw = await env.OAUTH_KV.get(key);
-  if (!raw) return fail(401);
-  const stored = JSON.parse(raw);
-  if (stored.browserNonce !== cookie(request, "hbo_access")) return fail(401);
-  await env.OAUTH_KV.delete(key);
+  const consumed = await callCoordinator(env, "/consume-flow", {
+    kind: "access", id: state, browserNonce: cookie(request, "hbo_access")
+  });
+  if (consumed.status !== 200) return fail(401);
+  const stored = consumed.body.value;
 
   const body = new URLSearchParams({
     grant_type: "authorization_code", code, client_id: env.ACCESS_CLIENT_ID,
@@ -200,6 +215,10 @@ async function finishAuthorization(request, env, config) {
   catch (error) { return error instanceof AccessKeysUnavailable
     ? fail(503, "MCP_AUTH_UPSTREAM_UNAVAILABLE") : fail(401); }
   if (subject !== env.MCP_ALLOWED_SUBJECT) return fail(403);
+  const client = await env.OAUTH_PROVIDER.lookupClient(stored.authRequest.clientId);
+  if (!client || client.clientId !== stored.authRequest.clientId ||
+    !Array.isArray(client.redirectUris) || !client.redirectUris.includes(stored.authRequest.redirectUri) ||
+    !redirectAllowed(stored.authRequest.redirectUri)) return fail(403);
   const { redirectTo } = await env.OAUTH_PROVIDER.completeAuthorization({
     request: stored.authRequest, userId: subject,
     metadata: { bridge: "hedgrops-evidence" }, scope: [SCOPE], props: { sub: subject }
@@ -234,6 +253,29 @@ async function handleOAuthRequest(request, env, ctx, { readEvidence, sourcePaths
     tokenEndpoint: "/oauth/token",
     clientRegistrationEndpoint: "/oauth/register",
     clientRegistrationCallback: registrationPolicy,
+    tokenExchangeCallback: async (exchange) => {
+      if (exchange.grantType !== "authorization_code" ||
+        exchange.userId !== env.MCP_ALLOWED_SUBJECT ||
+        exchange.clientId !== exchange.subjectClientId ||
+        exchange.resource !== config.resource ||
+        exchange.scope.length !== 1 || exchange.scope[0] !== SCOPE ||
+        exchange.requestedScope.length !== 1 || exchange.requestedScope[0] !== SCOPE) {
+        throw new OAuthError("invalid_grant", { description: "Authorization is outside the Bridge evidence grant." });
+      }
+      let claim;
+      try {
+        claim = await callCoordinator(env, "/claim-code", {
+          userId: exchange.userId, grantId: exchange.grantId
+        });
+      } catch {
+        throw new OAuthError("temporarily_unavailable", {
+          description: "Single-use authorization storage is unavailable.", statusCode: 503
+        });
+      }
+      if (claim.status !== 200) throw new OAuthError("invalid_grant", {
+        description: "Authorization code already consumed. Start a new authorization."
+      });
+    },
     scopesSupported: [SCOPE],
     accessTokenTTL: 900,
     refreshTokenTTL: 0,

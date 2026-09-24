@@ -15,6 +15,7 @@
     "zod": "4.6.5"
   },
   "devDependencies": {
+    "miniflare": "5.20260921.1-alpha",
     "wrangler": "4.138.0"
   }
 }
