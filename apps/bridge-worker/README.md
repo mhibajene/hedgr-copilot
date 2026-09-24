@@ -6,7 +6,24 @@ Runtime: Cloudflare Worker
 
 ## Purpose
 
-This Worker exposes the allowlisted Repo Authority Projection and Hedgr review evidence snapshots for HedgrOps Custom GPT Actions.
+This Worker exposes the allowlisted Repo Authority Projection and Hedgr review evidence snapshots for existing HTTP clients. The local `BRIDGE-MCP-001` branch also contains a held, fail-closed MCP transport for the migrated plugin.
+
+## Local MCP compatibility work (`BRIDGE-MCP-001`)
+
+`POST /mcp` has a stateless Streamable HTTP handler with exactly four no-argument tools: `authority_projection`, `latest_weekly_review`, `latest_mvp_process_review`, and `review_index`. Each uses the corresponding canonical route in the existing `ALLOWED_FILES` mapping. The MCP result carries the entire Bridge envelope and original snapshot; error results carry `authorizing: false`, `freshness: UNKNOWN`, and `coverage: INSUFFICIENT`.
+
+The RAP generator remains the source-integrity enforcement point. At MCP retrieval time, `validateResponseEnvelope` rechecks the retrieved RAP's source revisions, mandatory coverage, freshness, conflicts, provenance and read-only fields. Review snapshots have their existing evidence-only qualifiers checked. No MCP call regenerates evidence. The review snapshots do not declare a TTL, so their `generated_at` values remain visible and are not relabeled as current authority.
+
+**Authentication hold:** The deployable `/mcp` path returns `MCP_AUTH_NOT_CONFIGURED` for a bearer token. It does not accept the legacy `x-hedgrops-api-key`. Local tests inject a mock token verifier to exercise transport and authorization behavior. The live Worker has no OAuth provider, protected-resource metadata, token validator, or OAuth state binding in this branch, so this route is not ready for connection or deployment. The existing GET routes and their API-key behavior are unchanged.
+
+The selected later design is Cloudflare Access for SaaS OIDC upstream of a Worker-side OAuth 2.1 provider, limited to the explicitly approved Founder identity and the `evidence:read` scope. The observed Worker Access page says a Zero Trust organization and authentication domain must be set up first. At the separate connection gate, the owner must:
+
+1. Authorize a Zero Trust organization/domain, the chosen sign-in identity provider, and a Founder-only Access policy; create the OIDC SaaS application with a Worker `/callback` redirect and record its client ID, client secret, authorization endpoint, token endpoint and key/JWKS endpoint securely.
+2. Authorize OAuth state storage such as the documented `OAUTH_KV` binding, a cookie-encryption secret, and Worker-side OAuth provider integration. The owner must assess the service and cost implications before creating these resources. Provider secrets and GitHub credentials must be stored only as Worker secrets, never in this repository, plugin files, logs or test output.
+3. Publish and verify `/.well-known/oauth-protected-resource`, authorization-server discovery, `/authorize`, `/token`, `/callback`, and the selected client identification/registration endpoint. Support authorization code with PKCE S256, exact `resource` binding, bearer challenge, issuer/audience/expiry/scope validation, and Founder subject enforcement. Define the plugin's OAuth client registration method and per-tool security schemes before registration.
+4. Re-run mocked auth and evidence tests, Worker dry run, then obtain separate permission for governed merge/rebind, deploy, protected live verification and ChatGPT plugin connection. Keep the existing restricted, read-only GitHub token server-side.
+
+The documented Access example uses `ACCESS_CLIENT_ID`, `ACCESS_CLIENT_SECRET`, `ACCESS_AUTHORIZATION_URL`, `ACCESS_TOKEN_URL`, `ACCESS_JWKS_URL`, `COOKIE_ENCRYPTION_KEY` and `OAUTH_KV`; names and exact URLs must be verified against the chosen provider before wiring them. No values or binding IDs are committed here. Relevant guidance: [Cloudflare Access for SaaS MCP](https://developers.cloudflare.com/cloudflare-one/access-controls/ai-controls/secure-mcp-servers/), [Cloudflare MCP authorization](https://developers.cloudflare.com/agents/model-context-protocol/protocol/authorization/), and [OpenAI plugin authentication](https://developers.openai.com/plugins/build/auth).
 
 ## Phase 0 contract foundation
 
@@ -87,7 +104,10 @@ The token must be read-only and scoped to exact repository contents access. The 
 ```bash
 pnpm --filter @hedgr/bridge-worker test
 pnpm bridge:rap:check
+pnpm --filter @hedgr/bridge-worker exec wrangler deploy --dry-run
 ```
+
+The pinned Wrangler version requires Node.js 22 or later for the dry run. A dry run bundles locally and does not deploy. At the later connection gate, roll back by reverting the MCP handler, route branch, dependencies and operator notes together; if a live deployment has then been separately approved, restore the last verified Worker version and remove only the MCP-specific OAuth configuration under owner control. Keep the legacy routes and their existing credentials intact.
 
 ## Deployment Notes
 

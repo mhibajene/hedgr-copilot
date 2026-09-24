@@ -1,3 +1,5 @@
+import { createBridgeMcpHandler } from "./mcp.js";
+
 const BRIDGE_NAME = "HedgrOps Read-Only Institutional Evidence Bridge";
 
 const NON_AUTHORIZATION_STATEMENT =
@@ -160,12 +162,24 @@ function envelope(sourcePath, data) {
   };
 }
 
-async function handleRequest(request, env) {
+async function handleRequest(request, env, ctx) {
+  const { pathname } = new URL(request.url);
+
+  if (pathname === "/mcp") {
+    return createBridgeMcpHandler({
+      sourcePaths: ALLOWED_FILES,
+      readEvidence: async (route) => {
+        const sourcePath = ALLOWED_FILES[route];
+        if (!sourcePath) return null;
+        const snapshot = await retrieveSnapshot(env, sourcePath);
+        return snapshot ? envelope(sourcePath, snapshot) : null;
+      }
+    })(request, env, ctx);
+  }
+
   if (request.method !== "GET") {
     return methodNotAllowed();
   }
-
-  const { pathname } = new URL(request.url);
 
   if (pathname === "/") {
     return routeIndex();
