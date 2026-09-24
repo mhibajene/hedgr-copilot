@@ -81,41 +81,50 @@ describe("EnginePostureHeader", () => {
     expect(screen.queryByTestId("engine-posture-action-guidance")).toBeNull();
   });
 
-  test.each([
-    [
-      "empty",
-      "Nothing to compare yet. Your first completed simulated event will establish a starting point.",
-    ],
-    [
-      "first-event",
-      "Your first simulated position is now visible. This is your starting point.",
-    ],
-  ] as const)(
-    "does not invent reassurance for the %s comparison state",
-    (comparisonState, observation) => {
-      render(
-        <EnginePostureHeader
-          engineState={getMockEngineState("normal")}
-          syntheticJourneyActive
-          comparisonState={comparisonState}
-        />
-      );
+  test("shows a first step instead of a Hedgr notice before any completed event", () => {
+    render(
+      <EnginePostureHeader
+        engineState={getMockEngineState("normal")}
+        syntheticJourneyActive
+        redesigned
+        comparisonState="empty"
+      />
+    );
 
-      expect(screen.getByTestId("engine-posture-context").textContent).toBe(
-        observation
-      );
-      expect(
-        screen.queryByTestId("engine-simulation-attention-answer")
-      ).toBeNull();
-      expect(screen.queryByText("Does anything need attention?")).toBeNull();
-      expect(screen.getByText(
-        "This is an observation from the simulation, not a guarantee."
-      )).toBeDefined();
-      expect(
-        screen.getByTestId("dashboard-current-status").textContent
-      ).not.toMatch(/all clear|safe|stable|protected|guaranteed/i);
-    }
-  );
+    expect(screen.getByText("Start with a simulated deposit")).toBeDefined();
+    expect(screen.getByTestId("engine-posture-context").textContent).toBe(
+      "Nothing to compare yet. Add a simulated deposit when you’re ready — this is practice money only."
+    );
+    expect(screen.queryByText("What Hedgr notices")).toBeNull();
+    expect(screen.queryByText("This is an observation from the simulation, not a guarantee.")).toBeNull();
+    expect(screen.queryByTestId("engine-simulation-attention-answer")).toBeNull();
+  });
+
+  test("shows a bounded observation after the first completed event", () => {
+    render(
+      <EnginePostureHeader
+        engineState={getMockEngineState("normal")}
+        syntheticJourneyActive
+        redesigned
+        comparisonState="first-event"
+      />
+    );
+
+    expect(screen.getByTestId("engine-posture-context").textContent).toBe(
+      "Your first simulated position is now visible. This is your starting point."
+    );
+    expect(screen.getByText("What Hedgr notices")).toBeDefined();
+    expect(
+      screen.queryByTestId("engine-simulation-attention-answer")
+    ).toBeNull();
+    expect(screen.queryByText("Does anything need attention?")).toBeNull();
+    expect(screen.getByText(
+      "This is an observation from the simulation, not a guarantee."
+    )).toBeDefined();
+    expect(
+      screen.getByTestId("dashboard-current-status").textContent
+    ).not.toMatch(/all clear|safe|stable|protected|guaranteed/i);
+  });
 
   describe.each(["empty", "first-event"] as const)(
     "%s retains genuine caution",
@@ -144,6 +153,24 @@ describe("EnginePostureHeader", () => {
           )).toBeDefined();
         }
       );
+    }
+  );
+
+  test.each(["tightening", "tightened", "recovery"] as const)(
+    "preserves %s caution without an early Hedgr-notices label",
+    (posture) => {
+      const engineState = getMockEngineState(posture);
+      render(
+        <EnginePostureHeader
+          engineState={engineState}
+          syntheticJourneyActive
+          redesigned
+          comparisonState="empty"
+        />
+      );
+      expect(screen.getByText("Current status")).toBeDefined();
+      expect(screen.queryByText("What Hedgr notices")).toBeNull();
+      expect(screen.getByText(engineState.notice!.title)).toBeDefined();
     }
   );
 

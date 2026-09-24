@@ -103,6 +103,8 @@ export function EnginePostureHeader({
     (pathname === CLASS_A_VAL_002_DASHBOARD_PATH ||
       searchParams?.get(CLASS_A_VAL_002_JOURNEY_PARAM) === CLASS_A_VAL_002_JOURNEY_VALUE);
   const researchRedesign = redesigned && syntheticJourneyActive && isSyntheticJourneyPrimaryCondition(searchParams?.toString(), pathname) && (pathname === CLASS_A_VAL_002_DASHBOARD_PATH || searchParams?.get(CLASS_A_VAL_002_JOURNEY_PARAM) === CLASS_A_VAL_002_JOURNEY_VALUE);
+  const waitingForFirstEvent = researchRedesign && posture === "normal" && comparisonState === "empty";
+  const preEventCaution = researchRedesign && posture !== "normal" && comparisonState === "empty";
   const changeObservation =
     latestChangeType && latestChangeAmountUSD !== undefined
       ? researchRedesign ? <>Your simulated {latestChangeType === "WITHDRAW" ? "withdrawal reduced" : "deposit increased"} the balance by <span data-observation-amount>${latestChangeAmountUSD.toFixed(2)}</span>.</> : `The simulated ${
@@ -134,7 +136,13 @@ export function EnginePostureHeader({
             id="dashboard-current-status-label"
             className={researchRedesign ? "text-sm font-semibold text-hedgr-800" : "text-[11px] font-bold uppercase tracking-[0.14em] text-hedgr-600"}
           >
-            {researchRedesign && posture === "normal" && comparisonState === "change" ? "What changed" : syntheticJourneyActive ? "What Hedgr notices" : "Current status"}
+            {waitingForFirstEvent
+              ? "Start with a simulated deposit"
+              : preEventCaution
+                ? "Current status"
+                : researchRedesign && posture === "normal" && comparisonState === "change"
+                  ? "What changed"
+                  : syntheticJourneyActive ? "What Hedgr notices" : "Current status"}
           </p>
         </div>
         {!syntheticJourneyActive ? (
@@ -152,7 +160,9 @@ export function EnginePostureHeader({
         className="max-w-xl text-sm leading-relaxed text-hedgr-dark"
         data-testid="engine-posture-context"
       >
-        {syntheticJourneyActive
+        {waitingForFirstEvent
+          ? "Nothing to compare yet. Add a simulated deposit when you’re ready — this is practice money only."
+          : syntheticJourneyActive
           ? posture === "normal"
             ? comparisonState === "change"
               ? changeObservation
@@ -163,7 +173,7 @@ export function EnginePostureHeader({
           : ENGINE_POSTURE_CONTEXT[posture]}
       </p>
 
-      {syntheticJourneyActive ? (
+      {syntheticJourneyActive && !waitingForFirstEvent ? (
         <div className={`space-y-2 ${finish.attention}`}>
           {!researchStartingPoint && !(researchRedesign && posture === "normal") ? (
             <>

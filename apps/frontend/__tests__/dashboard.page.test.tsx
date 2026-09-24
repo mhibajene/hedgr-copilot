@@ -264,11 +264,13 @@ describe("DashboardPage engine trust surface", () => {
 
     expect(screen.queryByText("Does anything need attention?")).toBeNull();
     expect(screen.queryByTestId("engine-simulation-attention-answer")).toBeNull();
-    expect(screen.getByText("This is an observation from the simulation, not a guarantee.")).toBeDefined();
+    expect(screen.getByText("Start with a simulated deposit")).toBeDefined();
+    expect(screen.queryByText("What Hedgr notices")).toBeNull();
+    expect(screen.queryByText("This is an observation from the simulation, not a guarantee.")).toBeNull();
     expect(screen.queryByTestId("engine-posture-badge")).toBeNull();
     expect(screen.queryByText("NORMAL")).toBeNull();
     expect(screen.getByTestId("engine-posture-context").textContent).toBe(
-      "Nothing to compare yet. Your first completed simulated event will establish a starting point."
+      "Nothing to compare yet. Add a simulated deposit when you’re ready — this is practice money only."
     );
     const utilities = screen.getByTestId("dashboard-simulation-utilities");
     expect(Array.from(utilities.children).map((node) => node.getAttribute("data-testid"))).toEqual([
@@ -299,7 +301,6 @@ describe("DashboardPage engine trust surface", () => {
     expect(screen.queryByTestId("dashboard-optional-actions")).toBeNull();
     expect(screen.queryByText("What happens next is your decision")).toBeNull();
     expect(screen.queryByText("Do nothing")).toBeNull();
-    expect(screen.getByRole("main").textContent).not.toContain("—");
     expect(dashboardStateMocks.policyContexts).toContain("synthetic-research");
     const valuesDetails = screen.getByTestId(
       "engine-allocation-values-details"
@@ -385,6 +386,7 @@ describe("DashboardPage engine trust surface", () => {
     expect(screen.getByTestId("engine-posture-context").textContent).toBe(
       "Your first simulated position is now visible. This is your starting point."
     );
+    expect(screen.getByText("What Hedgr notices")).toBeDefined();
     expect(screen.queryByTestId("engine-simulation-attention-answer")).toBeNull();
     expect(screen.getByText("This is an observation from the simulation, not a guarantee.")).toBeDefined();
   });

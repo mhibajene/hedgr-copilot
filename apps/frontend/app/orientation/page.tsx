@@ -94,7 +94,7 @@ export default async function OrientationPage({
             data-testid="orientation-continue"
             className="inline-flex min-h-11 items-center justify-center bg-hedgr-primary px-5 py-3 font-medium text-hedgr-white hover:bg-hedgr-600 focus:outline-none focus:ring-2 focus:ring-hedgr-500 focus:ring-offset-2"
           >
-            {surface.continue.label}
+            {studyEntry ? 'Continue to Sarah’s example' : surface.continue.label}
           </Link>
         </footer>
       </main>
