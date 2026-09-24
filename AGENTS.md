@@ -338,6 +338,7 @@ Must not:
 
 ### 9.8 Product Experience Lead
 Canonical role: `docs/agents/skills/codex-product-experience-lead.md`. Execution mode: `PROPOSE_ONLY`.
+Mobbin and similar external pattern libraries are optional reference surfaces under the skill, not design authority.
 
 Use for:
 - bounded, separately authorised end-to-end experience proposals for a named audience
