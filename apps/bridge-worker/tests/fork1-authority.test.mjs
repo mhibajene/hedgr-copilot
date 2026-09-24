@@ -66,7 +66,7 @@ test("Fork 1 retains the standing AGENTS execution contract without dated overri
     .replace(/Current parallelism posture:[\s\S]*?(?=### Green Lane operator rules)/, "")
     .replace(" — `magic` is local-only", "")
     .replace(" — `live` is local-only, never CI", "")
-    .replace(/### 9\.8 Product Experience Lead[\s\S]*?(?=## 10\) Execution modes and action controls)/, "");
+    .replace(/### 9\.8 Product Experience Lead[\s\S]*?(?=### 9\.\d+ |## 10\) Execution modes and action controls)/, "");
   assert.equal(normalize(after), normalize(before));
   assert.equal((after.match(/^# AGENTS.md/gm) ?? []).length, 1);
   assert.equal((after.match(/^Current parallelism posture:/gm) ?? []).length, 1);
