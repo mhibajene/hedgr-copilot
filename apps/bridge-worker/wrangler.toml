@@ -1,4 +1,4 @@
-name = "hedgrops-read-only-review-evidence-bridge"
+name = "hedgrops-bridge"
 main = "src/index.js"
 compatibility_date = "2026-06-24"
 
@@ -6,3 +6,11 @@ compatibility_date = "2026-06-24"
 GITHUB_OWNER = "mhibajene"
 GITHUB_REPO = "hedgr-copilot"
 GITHUB_BRANCH = "main"
+
+[[durable_objects.bindings]]
+name = "OAUTH_SINGLE_USE"
+class_name = "OAuthSingleUse"
+
+[[migrations]]
+tag = "bridge-mcp-oauth-single-use-v1"
+new_sqlite_classes = ["OAuthSingleUse"]

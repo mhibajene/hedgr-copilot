@@ -1,3 +1,4 @@
+
 const BRIDGE_NAME = "HedgrOps Read-Only Institutional Evidence Bridge";
 
 const NON_AUTHORIZATION_STATEMENT =
@@ -28,6 +29,11 @@ const ROUTES = Object.freeze([
   "/hedgr/reviews/latest-mvp-process",
   "/hedgr/reviews/index"
 ]);
+
+function isOAuthPath(pathname) {
+  return ["/mcp", "/authorize", "/callback", "/oauth/token", "/oauth/register"].includes(pathname) ||
+    pathname.startsWith("/.well-known/") || pathname.startsWith("/oauth/");
+}
 
 function jsonResponse(status, body) {
   return new Response(JSON.stringify(body), {
@@ -160,12 +166,25 @@ function envelope(sourcePath, data) {
   };
 }
 
-async function handleRequest(request, env) {
+async function handleRequest(request, env, ctx) {
+  const { pathname } = new URL(request.url);
+
+  if (isOAuthPath(pathname)) {
+    const { handleOAuthRequest } = await import("./oauth.js");
+    return handleOAuthRequest(request, env, ctx, {
+      sourcePaths: ALLOWED_FILES,
+      readEvidence: async (route) => {
+        const sourcePath = ALLOWED_FILES[route];
+        if (!sourcePath) return null;
+        const snapshot = await retrieveSnapshot(env, sourcePath);
+        return snapshot ? envelope(sourcePath, snapshot) : null;
+      }
+    });
+  }
+
   if (request.method !== "GET") {
     return methodNotAllowed();
   }
-
-  const { pathname } = new URL(request.url);
 
   if (pathname === "/") {
     return routeIndex();
@@ -195,6 +214,7 @@ async function handleRequest(request, env) {
 }
 
 export { ALLOWED_FILES, handleRequest };
+export { OAuthSingleUse } from "./oauth-coordinator.js";
 
 export default {
   fetch: handleRequest
