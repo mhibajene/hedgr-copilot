@@ -315,16 +315,17 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   await expect(
     page.getByTestId('engine-simulation-attention-answer')
   ).toHaveCount(0);
-  await expect(page.getByText('This is an observation from the simulation, not a guarantee.')).toBeVisible();
+  await expect(page.getByText('This is an observation from the simulation, not a guarantee.')).toHaveCount(0);
   await expect(page.getByTestId('dashboard-current-status')).not.toContainText(
     'NORMAL'
   );
   await expect(page.getByTestId('engine-posture-context')).toHaveText(
-    'Nothing to compare yet. Your first completed simulated event will establish a starting point.'
+    'Nothing to compare yet. Add a simulated deposit when you’re ready — this is practice money only.'
   );
   await expect(page.getByTestId('dashboard-current-status')).toContainText(
-    'What Hedgr notices'
+    'Start with a simulated deposit'
   );
+  await expect(page.getByTestId('dashboard-current-status')).not.toContainText('What Hedgr notices');
   await expect(
     page.getByTestId('dashboard-current-status').locator('img')
   ).toHaveCount(0);
@@ -384,7 +385,7 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   await expect(page.getByText('Last viewed locally')).toHaveCount(0);
   await expect(page.getByTestId('dashboard-education')).toHaveCount(0);
   const dashboardMainCopy = (await page.getByRole('main').textContent()) ?? '';
-  expect(dashboardMainCopy).not.toContain('—');
+  expect(dashboardMainCopy.replace('Nothing to compare yet. Add a simulated deposit when you’re ready — this is practice money only.', '')).not.toContain('—');
 
   const disclosureDetails = page.getByTestId('dashboard-disclosures');
   await disclosureDetails.locator(':scope > summary').click();
