@@ -1,4 +1,4 @@
-name = "hedgrops-read-only-review-evidence-bridge"
+name = "hedgrops-bridge"
 main = "src/index.js"
 compatibility_date = "2026-06-24"
 

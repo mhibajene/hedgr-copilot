@@ -82,7 +82,7 @@ test("no mandatory-source change creates no RAP event, including after delivery"
 test("a committed metadata-only mandatory-source change plans a main-bound mechanical rebind", (t) => {
   const { root, sourceCommit } = fixture(t);
   amend(root, "AGENTS.md", (content) => content.replace(
-    "Last updated: 2026-09-23", "Last updated: 2026-09-24"
+    "Last updated: 2026-09-24", "Last updated: 2026-09-25"
   ));
   const result = planRebind(root);
   assert.equal(result.kind, "mechanical");
@@ -163,7 +163,7 @@ test("the dormant workflow rejects an unrecorded ACTIVE state", (t) => {
 test("a bounded protected test accepts only the exact main SHA while Fork 2 is inactive", (t) => {
   const { root } = fixture(t);
   amend(root, "AGENTS.md", (content) => content.replace(
-    "Last updated: 2026-09-23", "Last updated: 2026-09-24"
+    "Last updated: 2026-09-24", "Last updated: 2026-09-25"
   ));
   const target = git(root, "rev-parse", "HEAD");
   assert.equal(planRebind(root, { testTarget: target }).kind, "mechanical");

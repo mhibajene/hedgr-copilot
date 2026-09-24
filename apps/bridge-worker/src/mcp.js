@@ -4,6 +4,7 @@ import { z } from "zod";
 import { validateResponseEnvelope } from "../contracts/phase0/validate.mjs";
 
 const REQUIRED_SCOPE = "evidence:read";
+const TOOL_SECURITY = Object.freeze([{ type: "oauth2", scopes: [REQUIRED_SCOPE] }]);
 const TOOL_ROUTES = Object.freeze({
   authority_projection: "/hedgr/status/authority-summary",
   latest_weekly_review: "/hedgr/reviews/latest-weekly",
@@ -169,42 +170,55 @@ function createServer(readEvidence, sourcePaths) {
   return server;
 }
 
-// The verifier is intentionally absent in the deployed entry point until the
-// Founder-only OAuth provider and token validation are configured at the next gate.
-// An injected verifier is used only by local fixture tests.
-function createBridgeMcpHandler({ readEvidence, sourcePaths, verifyToken } = {}) {
-  return async (request, env, ctx) => {
-    const header = request.headers.get("authorization");
-    const match = /^Bearer ([^\s]+)$/.exec(header ?? "");
-    if (!match) return deny(401, "MCP_BEARER_REQUIRED");
-    if (
-      typeof verifyToken !== "function" ||
-      !env?.MCP_ALLOWED_SUBJECT ||
-      !env?.MCP_ISSUER ||
-      !env?.MCP_RESOURCE
-    ) return deny(503, "MCP_AUTH_NOT_CONFIGURED");
-
-    let claims;
-    try {
-      claims = await verifyToken(match[1], env);
-    } catch {
-      return deny(401, "MCP_INVALID_TOKEN");
+// SDK 2.0 emits the MCP tool descriptor without securitySchemes. Add the
+// required OAuth declaration to the four fixed descriptors after serialization.
+async function addToolSecurity(method, response) {
+  if (method !== "tools/list" || response.status !== 200) return response;
+  const decorate = (payload) => {
+    if (!Array.isArray(payload?.result?.tools) ||
+      payload.result.tools.length !== Object.keys(TOOL_ROUTES).length ||
+      new Set(payload.result.tools.map((tool) => tool.name)).size !== Object.keys(TOOL_ROUTES).length ||
+      payload.result.tools.some((tool) => !Object.hasOwn(TOOL_ROUTES, tool.name))) {
+      throw new Error("Unexpected tool discovery");
     }
-    if (!isRecord(claims)) return deny(401, "MCP_INVALID_TOKEN");
-    if (!Number.isFinite(claims.exp) || claims.exp <= Date.now() / 1000) {
+    for (const tool of payload.result.tools) tool.securitySchemes = TOOL_SECURITY;
+    return JSON.stringify(payload);
+  };
+  try {
+    const raw = await response.text();
+    const contentType = response.headers.get("content-type") ?? "";
+    const body = contentType.includes("text/event-stream")
+      ? raw.split("\n").map((line) => line.startsWith("data: ") ? `data: ${decorate(JSON.parse(line.slice(6)))}` : line).join("\n")
+      : decorate(JSON.parse(raw));
+    const headers = new Headers(response.headers);
+    headers.delete("content-length");
+    return new Response(body, { status: response.status, headers });
+  } catch { return deny(502, "MCP_TOOL_DISCOVERY_FAILED"); }
+}
+
+// The OAuth provider validates the opaque bearer token before this handler runs.
+// Enforce the Bridge's narrower Founder and evidence scope on every request.
+function createBridgeMcpHandler({ readEvidence, sourcePaths } = {}) {
+  return async (request, env, ctx) => {
+    if (!env?.MCP_ALLOWED_SUBJECT || !env?.MCP_RESOURCE) return deny(503, "MCP_AUTH_NOT_CONFIGURED");
+    if (!isRecord(ctx?.auth) || !isRecord(ctx?.props)) return deny(503, "MCP_AUTH_NOT_CONFIGURED");
+    if (!Number.isFinite(ctx.auth.expiresAt) || ctx.auth.expiresAt <= Date.now() / 1000) {
       return deny(401, "MCP_EXPIRED_TOKEN");
     }
-    if (claims.iss !== env.MCP_ISSUER || claims.aud !== env.MCP_RESOURCE) {
+    if (ctx.auth.audience !== env.MCP_RESOURCE) {
       return deny(401, "MCP_INVALID_TOKEN");
     }
-    const scopes = typeof claims.scope === "string" ? claims.scope.split(/\s+/) : [];
-    if (claims.sub !== env.MCP_ALLOWED_SUBJECT || !scopes.includes(REQUIRED_SCOPE)) {
+    if (ctx.props.sub !== env.MCP_ALLOWED_SUBJECT || ctx.auth.userId !== env.MCP_ALLOWED_SUBJECT ||
+      !Array.isArray(ctx.auth.scope) || !ctx.auth.scope.includes(REQUIRED_SCOPE)) {
       return deny(403, "MCP_INSUFFICIENT_AUTHORIZATION");
     }
     if (typeof readEvidence !== "function" || !isRecord(sourcePaths)) {
       return deny(503, "MCP_EVIDENCE_NOT_CONFIGURED");
     }
-    return createMcpHandler(() => createServer(readEvidence, sourcePaths)).fetch(request);
+    let method;
+    try { method = (await request.clone().json()).method; } catch { /* Let MCP handle malformed requests. */ }
+    const response = await createMcpHandler(() => createServer(readEvidence, sourcePaths)).fetch(request);
+    return addToolSecurity(method, response);
   };
 }
 

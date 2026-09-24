@@ -1,4 +1,3 @@
-import { createBridgeMcpHandler } from "./mcp.js";
 
 const BRIDGE_NAME = "HedgrOps Read-Only Institutional Evidence Bridge";
 
@@ -30,6 +29,11 @@ const ROUTES = Object.freeze([
   "/hedgr/reviews/latest-mvp-process",
   "/hedgr/reviews/index"
 ]);
+
+function isOAuthPath(pathname) {
+  return ["/mcp", "/authorize", "/callback", "/oauth/token", "/oauth/register"].includes(pathname) ||
+    pathname.startsWith("/.well-known/") || pathname.startsWith("/oauth/");
+}
 
 function jsonResponse(status, body) {
   return new Response(JSON.stringify(body), {
@@ -165,8 +169,9 @@ function envelope(sourcePath, data) {
 async function handleRequest(request, env, ctx) {
   const { pathname } = new URL(request.url);
 
-  if (pathname === "/mcp") {
-    return createBridgeMcpHandler({
+  if (isOAuthPath(pathname)) {
+    const { handleOAuthRequest } = await import("./oauth.js");
+    return handleOAuthRequest(request, env, ctx, {
       sourcePaths: ALLOWED_FILES,
       readEvidence: async (route) => {
         const sourcePath = ALLOWED_FILES[route];
@@ -174,7 +179,7 @@ async function handleRequest(request, env, ctx) {
         const snapshot = await retrieveSnapshot(env, sourcePath);
         return snapshot ? envelope(sourcePath, snapshot) : null;
       }
-    })(request, env, ctx);
+    });
   }
 
   if (request.method !== "GET") {

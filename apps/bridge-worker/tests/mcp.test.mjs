@@ -7,15 +7,13 @@ import { createBridgeMcpHandler, TOOL_ROUTES } from "../src/mcp.js";
 
 const env = {
   MCP_ALLOWED_SUBJECT: "founder-fixture",
-  MCP_ISSUER: "https://issuer.example.test",
   MCP_RESOURCE: "https://bridge.example.test/mcp"
 };
-const claims = () => ({
-  sub: env.MCP_ALLOWED_SUBJECT,
-  iss: env.MCP_ISSUER,
-  aud: env.MCP_RESOURCE,
-  exp: Math.floor(Date.now() / 1000) + 3600,
-  scope: "evidence:read"
+const authContext = () => ({
+  props: { sub: env.MCP_ALLOWED_SUBJECT },
+  auth: { userId: env.MCP_ALLOWED_SUBJECT, audience: env.MCP_RESOURCE,
+    expiresAt: Math.floor(Date.now() / 1000) + 3600, scope: ["evidence:read"] },
+  waitUntil() {}
 });
 const fixturePaths = {
   authority_projection: "../../../docs/ops/bridge/repo-authority-projection.json",
@@ -41,7 +39,6 @@ const envelope = (toolName, data = fixture(toolName)) => ({
 const toolForRoute = (route) => Object.entries(TOOL_ROUTES).find(([, value]) => value === route)?.[0];
 const handler = (overrides = {}) => createBridgeMcpHandler({
   sourcePaths: ALLOWED_FILES,
-  verifyToken: async () => claims(),
   readEvidence: async (route) => envelope(toolForRoute(route)),
   ...overrides
 });
@@ -57,7 +54,7 @@ async function rpc(mcpHandler, method, params = {}, options = {}) {
     },
     body: JSON.stringify({ jsonrpc: "2.0", id: 1, method, params })
   });
-  const response = await mcpHandler(request, options.env ?? env, { waitUntil() {} });
+  const response = await mcpHandler(request, options.env ?? env, options.ctx ?? authContext());
   const body = await response.text();
   const dataLine = body.split("\n").find((line) => line.startsWith("data: "));
   return { response, payload: dataLine ? JSON.parse(dataLine.slice(6)) : JSON.parse(body) };
@@ -81,6 +78,7 @@ test("stateless Streamable HTTP initializes and discovers exactly four no-argume
     assert.equal(tool.inputSchema.additionalProperties, false);
     assert.deepEqual(tool.inputSchema.properties, {});
     assert.equal(tool.annotations.readOnlyHint, true);
+    assert.deepEqual(tool.securitySchemes, [{ type: "oauth2", scopes: ["evidence:read"] }]);
   }
 });
 
@@ -99,28 +97,13 @@ test("all tools use the existing fixed mappings and retain complete evidence qua
   assert.deepEqual(routes, Object.values(TOOL_ROUTES));
 });
 
-test("production entry point denies MCP access until a verified OAuth provider is configured", async () => {
-  const request = new Request("https://bridge.example.test/mcp", {
-    method: "POST",
-    headers: { authorization: "Bearer fixture-token" }
-  });
-  const response = await worker.fetch(request, env);
-  assert.equal(response.status, 503);
-  assert.equal((await response.json()).error, "MCP_AUTH_NOT_CONFIGURED");
-  const legacyKey = await worker.fetch(new Request("https://bridge.example.test/mcp", {
-    method: "POST",
-    headers: { "x-hedgrops-api-key": "fixture-legacy-key" }
-  }), { ...env, HEDGROPS_BRIDGE_API_KEY: "fixture-legacy-key" });
-  assert.equal(legacyKey.status, 401);
-});
-
 test("MCP session methods remain stateless and legacy GET route methods are unchanged", async () => {
   const mcp = handler();
   for (const method of ["GET", "DELETE"]) {
     const response = await mcp(new Request("https://bridge.example.test/mcp", {
       method,
       headers: { authorization: "Bearer fixture-token" }
-    }), env, { waitUntil() {} });
+    }), env, authContext());
     assert.equal(response.status, 405);
   }
   const legacy = await worker.fetch(new Request("https://bridge.example.test/authority", {
@@ -130,24 +113,20 @@ test("MCP session methods remain stateless and legacy GET route methods are unch
   assert.equal(legacy.status, 405);
 });
 
-test("missing, invalid, expired, wrong issuer or audience, wrong identity, and missing scope fail closed", async () => {
+test("protected handler enforces expiry, audience, Founder identity, and evidence scope", async () => {
   const mcp = handler();
-  const missing = await rpc(mcp, "tools/list", {}, { headers: { authorization: "" } });
-  assert.equal(missing.response.status, 401);
-  assert.equal(missing.payload.error, "MCP_BEARER_REQUIRED");
-
-  const invalid = await rpc(handler({ verifyToken: async () => { throw new Error("bad signature"); } }), "tools/list");
-  assert.equal(invalid.response.status, 401);
-  assert.equal(invalid.payload.error, "MCP_INVALID_TOKEN");
+  const unverified = await rpc(mcp, "tools/list", {}, { ctx: { waitUntil() {} } });
+  assert.equal(unverified.response.status, 503);
 
   for (const [update, status, code] of [
-    [{ exp: Math.floor(Date.now() / 1000) - 1 }, 401, "MCP_EXPIRED_TOKEN"],
-    [{ iss: "https://other.example.test" }, 401, "MCP_INVALID_TOKEN"],
-    [{ aud: "https://other.example.test/mcp" }, 401, "MCP_INVALID_TOKEN"],
-    [{ sub: "other-identity" }, 403, "MCP_INSUFFICIENT_AUTHORIZATION"],
-    [{ scope: "other:read" }, 403, "MCP_INSUFFICIENT_AUTHORIZATION"]
+    [{ auth: { expiresAt: Math.floor(Date.now() / 1000) - 1 } }, 401, "MCP_EXPIRED_TOKEN"],
+    [{ auth: { audience: "https://other.example.test/mcp" } }, 401, "MCP_INVALID_TOKEN"],
+    [{ props: { sub: "other-identity" } }, 403, "MCP_INSUFFICIENT_AUTHORIZATION"],
+    [{ auth: { scope: ["other:read"] } }, 403, "MCP_INSUFFICIENT_AUTHORIZATION"]
   ]) {
-    const result = await rpc(handler({ verifyToken: async () => ({ ...claims(), ...update }) }), "tools/list");
+    const base = authContext();
+    const ctx = { ...base, props: { ...base.props, ...update.props }, auth: { ...base.auth, ...update.auth } };
+    const result = await rpc(handler(), "tools/list", {}, { ctx });
     assert.equal(result.response.status, status);
     assert.equal(result.payload.error, code);
     assert.equal(result.payload.authorizing, false);
