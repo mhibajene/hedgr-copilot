@@ -62,10 +62,41 @@ test("Fork 1 retains current nested scope, amendment and release controls verbat
 test("Fork 1 retains the standing AGENTS execution contract without dated overrides", async () => {
   const before = original(await read("docs/ops/governance/AGENTS_PRE_FORK_1.md"), "AGENTS");
   const after = await read("AGENTS.md");
+  const registered = section(after, "## 9) Registered agent roles", "## 10) Execution modes and action controls");
+  for (const [number, role, file, mode] of [
+    ["9.1", "Implementer", "codex-implementer.md", "`PROPOSE_ONLY` by default; `ACT_WITH_CONFIRMATION` only when explicitly authorised"],
+    ["9.2", "Verifier", "codex-verifier.md", "`READ_ONLY`"],
+    ["9.3", "Repo Steward", "codex-repo-steward.md", "`PROPOSE_ONLY` by default; `ACT_WITH_CONFIRMATION` only when explicitly authorised"],
+    ["9.4", "Synthesizer", "codex-synthesizer.md", "`READ_ONLY`"],
+    ["9.8", "Product Experience Lead", "codex-product-experience-lead.md", "`PROPOSE_ONLY`"],
+    ["9.9", "Human Narrative Lead", "codex-human-narrative-lead.md", "`PROPOSE_ONLY`"],
+    ["9.10", "Narrative Steward", "codex-narrative-steward.md", "`PROPOSE_ONLY`"]
+  ]) {
+    const pointer = number === "9.8"
+      ? `Canonical role: \`docs/agents/skills/${file}\`.`
+      : `Canonical contract: \`docs/agents/skills/${file}\`.`;
+    const contract = `${pointer} Execution mode: ${mode}.`;
+    assert.ok(registered.includes(`### ${number} ${role}\n${contract}`), `${role} has the expected canonical contract and mode`);
+    assert.equal(registered.split(`### ${number} ${role}`).length - 1, 1, `${role} must be registered once`);
+  }
+  assert.match(registered, /### 9\.8 Product Experience Lead/);
+  assert.match(registered, /### 9\.9 Human Narrative Lead[\s\S]*?Governing principle: \*\*Humanise the meaning\. Never strengthen the claim\.\*\*/);
+  assert.match(registered, /### 9\.10 Narrative Steward[\s\S]*?treat founder cognition \/ Vault material as context rather than repo truth/);
+  for (const [number, role] of [["9.5", "Explorer"], ["9.6", "Tester"], ["9.7", "Reconstructor"]]) {
+    assert.ok(registered.includes(`### ${number} ${role}\nCanonical contract: \`AGENTS.md inline\`.`));
+  }
+  assert.match(registered, /This topology describes functional separation only\. It creates no sequencing, approval, handoff, task-activation or execution authority\./);
+  assert.match(after, /All agent outputs are non-authoritative by default unless and until absorbed into the governed repo chain under the applicable authority\./);
   const normalize = (text) => text.slice(text.lastIndexOf("## 1) Purpose"))
     .replace(/Current parallelism posture:[\s\S]*?(?=### Green Lane operator rules)/, "")
     .replace(" — `magic` is local-only", "")
     .replace(" — `live` is local-only, never CI", "")
+    .replace("## 9) Registered agent roles", "## 9) Approved agent roles")
+    .replace(/### Role Registration Contract\n[\s\S]*?(?=### 9\.1 Implementer)/, "")
+    .replace(/Canonical contract: `(?:docs\/agents\/skills\/codex-[^`]+|AGENTS\.md inline)`\.(?: Execution mode: [^\n]+)?\n\n/g, "")
+    .replace(/### 9\.9 Human Narrative Lead[\s\S]*?(?=### Role topology — descriptive only)/, "")
+    .replace(/### Role topology — descriptive only[\s\S]*?(?=\n## 10\) Execution modes and action controls)/, "")
+    .replace("All agent outputs are non-authoritative by default unless and until absorbed into the governed repo chain under the applicable authority. Role-specific contracts may impose stricter limits.", "Verifier, Tester, Explorer, and Reconstructor outputs remain non-authoritative unless absorbed into the governed repo chain.")
     .replace(/### 9\.8 Product Experience Lead[\s\S]*?(?=### 9\.\d+ |## 10\) Execution modes and action controls)/, "");
   assert.equal(normalize(after), normalize(before));
   assert.equal((after.match(/^# AGENTS.md/gm) ?? []).length, 1);
