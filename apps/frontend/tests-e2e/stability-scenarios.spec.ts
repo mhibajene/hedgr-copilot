@@ -2,10 +2,21 @@ import { expect, test } from '@playwright/test';
 
 const studyEntry = '/orientation?study=stability-scenarios';
 
+const holdPatterns = /30,000|if every planned contribution|anchored|relative to the obligation|keep visible|fewer surprises|Hedgr shows|Hedgr tracks/;
+
 async function enterStudy(page: import('@playwright/test').Page) {
   await page.goto(studyEntry);
   await page.getByTestId('orientation-continue').click();
   await expect(page).toHaveURL(/\/research\/stability-scenarios$/);
+}
+
+async function expectNoHolds(page: import('@playwright/test').Page) {
+  const stimulus = page.getByTestId('stability-stimulus');
+  await expect(stimulus).not.toContainText(holdPatterns);
+  await expect(stimulus).not.toContainText(/position|judgement|interprets|Stability Status|posture|score/i);
+  await expect(stimulus.locator('input, textarea, form')).toHaveCount(0);
+  await expect(stimulus.getByRole('progressbar')).toHaveCount(0);
+  await expect(stimulus.locator('meter')).toHaveCount(0);
 }
 
 test.describe('Research Two-Beat Sarah example', () => {
@@ -35,7 +46,7 @@ test.describe('Research Two-Beat Sarah example', () => {
     await expect(stimulus.locator('input, textarea, form')).toHaveCount(0);
   });
 
-  test('moves from Sarah’s fee change to attributed Hedgr explanation and a simulation bridge', async ({ page }) => {
+  test('moves from Sarah’s fee change to the value panel and a simulation bridge', async ({ page }) => {
     await enterStudy(page);
     const commonBoundary = await page.getByTestId('study-common-boundary').innerText();
     await page.getByTestId('study-continue').click();
@@ -43,26 +54,62 @@ test.describe('Research Two-Beat Sarah example', () => {
     await expect(page.getByTestId('sarah-facts')).toContainText('Sarah already has K6,000 set aside');
     await expect(page.getByTestId('sarah-facts')).toContainText('Those contributions have not happened yet');
     await expect(page.getByTestId('course-fee')).toHaveText('The provider now fixes the course fee at K29,500 payable in Zambian kwacha on 1 October 2027, instead of USD 1,000 payable in US dollars.');
-    await expect(page.getByTestId('sarah-lived-caution')).toContainText('that currency mismatch no longer applies');
-    await expect(page.getByTestId('sarah-lived-caution')).toContainText('remain open');
+    await expect(page.getByTestId('sarah-facts')).toContainText('All other facts remain the same.');
+    await expect(page.getByTestId('sarah-lived-caution')).toHaveCount(0);
+    await expect(page.getByTestId('stability-stimulus')).not.toContainText('Before this change');
+    await expect(page.getByTestId('stability-stimulus')).not.toContainText('currency mismatch no longer applies');
+    await expect(page.getByTestId('study-to-hedgr')).toHaveText('Continue to what Hedgr helps Sarah see');
     await expect(page.getByTestId('study-hedgr-explanation')).toHaveCount(0);
+    await expectNoHolds(page);
 
     await page.getByTestId('study-to-hedgr').click();
     const explanation = page.getByTestId('study-hedgr-explanation');
-    await expect(explanation.getByRole('heading', { name: 'How Hedgr would put this' })).toBeFocused();
+    await expect(explanation.getByRole('heading', { name: 'What Hedgr helps Sarah see' })).toBeFocused();
+    await expect(page.getByTestId('stability-stimulus')).not.toContainText('How Hedgr would put this');
+    await expect(page.getByTestId('stability-stimulus')).not.toContainText('Still Sarah’s course-savings example.');
+    await expect(page.getByTestId('study-authored-label')).toHaveText('Authored research example · not a live assessment of anyone’s money');
+    await expect(page.getByTestId('study-value-panel').getByRole('heading', { name: 'Before the change' })).toBeVisible();
+    await expect(page.getByTestId('study-value-panel').getByRole('heading', { name: 'After the change' })).toBeVisible();
+    await expect(page.getByTestId('study-value-panel').getByRole('tablist')).toHaveCount(0);
+    await expect(explanation.getByText('What Hedgr would add')).toHaveCount(2);
+    await expect(page.getByTestId('study-value-panel')).toContainText('Available now:');
+    await expect(page.getByTestId('study-value-panel')).toContainText('K6,000');
+    await expect(page.getByTestId('study-value-panel')).toContainText('Planned:');
+    await expect(page.getByTestId('study-value-panel')).toContainText('K24,000 over 12 months. Not available yet.');
+    await expect(page.getByTestId('study-value-panel')).toContainText('What she needs:');
+    await expect(page.getByTestId('study-value-panel')).toContainText('USD 1,000 on 1 October 2027.');
+    await expect(page.getByTestId('study-value-panel')).toContainText('K29,500 on 1 October 2027.');
+    await expect(page.getByTestId('study-value-panel')).toContainText('Same as before');
+    await expect(page.getByTestId('study-value-panel')).toContainText('New');
+    await expect(page.getByTestId('study-value-panel')).toContainText('What Hedgr would point out:');
+    await expect(page.getByTestId('study-value-panel')).toContainText('Her savings are in kwacha, but the fee is in US dollars. A growing kwacha balance does not by itself show how much of the fee it will cover.');
+    await expect(page.getByTestId('study-value-panel')).toContainText('What changed:');
+    await expect(page.getByTestId('study-value-panel')).toContainText('Her savings and the fee are now in the same currency, so the exchange rate no longer changes what the fee costs her.');
+    await expect(page.getByTestId('study-value-panel')).toContainText('What is still open:');
+    await expect(page.getByTestId('study-value-panel')).toContainText('whether the planned K24,000 arrives on time.');
+    await expect(page.getByTestId('study-panel-close')).toHaveText('Same savings, same due date. A different fee currency changes what Sarah needs to watch.');
     await expect(explanation.getByTestId('study-attribution')).toHaveText('This is an authored research example for Sarah’s fictional situation. It is not Hedgr reading your money, not Stability Engine output, and not a live financial assessment.');
     await expect(explanation.getByTestId('study-limits')).toHaveText('This example cannot predict the future exchange rate, assume Sarah’s planned contributions will happen, or establish that the course will be fully funded. It is not financial advice.');
-    await expect(explanation).toContainText('When the fee is later stated in kwacha instead, that particular currency mismatch no longer applies');
+    const panelBox = await page.getByTestId('study-value-panel').boundingBox();
+    const attributionBox = await page.getByTestId('study-attribution').boundingBox();
+    const limitsBox = await page.getByTestId('study-limits').boundingBox();
+    expect(panelBox).toBeTruthy();
+    expect(attributionBox).toBeTruthy();
+    expect(limitsBox).toBeTruthy();
+    expect(attributionBox!.y).toBeGreaterThan(panelBox!.y);
+    expect(limitsBox!.y).toBeGreaterThan(attributionBox!.y);
     expect(await page.getByTestId('study-common-boundary').innerText()).toBe(commonBoundary);
     await expect(page.getByTestId('course-fee')).toHaveCount(0);
+    await expectNoHolds(page);
 
     await page.getByTestId('study-to-bridge').click();
     await expect(page.getByRole('heading', { name: 'You’ve reached the end of this research example.' })).toBeFocused();
+    await expect(page.getByTestId('study-bridge')).toContainText('Next, try Hedgr with made-up money. Make a practice deposit, then see what changes and what remains.');
     await expect(page.getByTestId('study-bridge')).toContainText('No real money moves, no account is opened');
     await expect(page.getByTestId('study-simulation-link')).toHaveAttribute('href', '/dashboard-synthetic-journey');
     await expect(page.getByText('Review the introduction')).toBeVisible();
     await expect(page.getByTestId('stability-stimulus')).not.toContainText(/in your own words|what can you conclude|what would you still need to know|does this change|what changes in your interpretation/i);
-    await expect(page.getByTestId('stability-stimulus').locator('input, textarea, form')).toHaveCount(0);
+    await expectNoHolds(page);
 
     await page.getByTestId('study-simulation-link').click();
     await expect(page).toHaveURL(/\/dashboard-synthetic-journey$/);
@@ -87,11 +134,17 @@ test.describe('Research Two-Beat Sarah example', () => {
       await expect(page.getByTestId('course-fee')).toContainText('USD 1,000');
       await page.getByTestId('study-continue').click();
       await expect(page.getByTestId('course-fee')).toContainText(`${prefix}29,500 payable in`);
-      await expect(page.getByTestId('sarah-lived-caution')).toContainText(`fee now fixed in ${name}`);
+      await expect(page.getByTestId('sarah-lived-caution')).toHaveCount(0);
       await page.getByTestId('study-to-hedgr').click();
-      await expect(page.getByTestId('study-hedgr-explanation')).toContainText(`Sarah is saving in ${name}`);
-      await expect(page.getByTestId('study-hedgr-explanation')).toContainText(`fee is later stated in ${name} instead`);
+      const panel = page.getByTestId('study-value-panel');
+      await expect(panel).toContainText(`${prefix}6,000`);
+      await expect(panel).toContainText(`${prefix}24,000 over 12 months. Not available yet.`);
+      await expect(panel).toContainText(`${prefix}29,500 on 1 October 2027.`);
+      await expect(panel).toContainText(`Her savings are in ${name}, but the fee is in US dollars.`);
+      await expect(panel).toContainText(`A growing ${name} balance does not by itself show how much of the fee it will cover.`);
+      await expect(panel).toContainText(`whether the planned ${prefix}24,000 arrives on time.`);
       await expect(page.getByTestId('study-attribution')).toContainText('not Stability Engine output');
+      await expectNoHolds(page);
     }
   });
 
@@ -106,7 +159,8 @@ test.describe('Research Two-Beat Sarah example', () => {
     await page.getByTestId('study-continue').click();
     await expect(page.getByTestId('course-fee')).toContainText('KES 29,500');
     await page.getByTestId('study-to-hedgr').click();
-    await expect(page.getByTestId('study-hedgr-explanation')).toContainText('Kenyan shillings');
+    await expect(page.getByTestId('study-value-panel')).toContainText('Kenyan shillings');
+    await expect(page.getByTestId('study-value-panel')).toContainText('KES 24,000');
     await otherTab.close();
   });
 
@@ -125,5 +179,43 @@ test.describe('Research Two-Beat Sarah example', () => {
       await page.setViewportSize({ width, height: 800 });
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
     }
+  });
+
+  test('shows the top label and panel start together at 390px and stacks Before first', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await enterStudy(page);
+    await page.getByTestId('study-continue').click();
+    await page.getByTestId('study-to-hedgr').click();
+
+    const label = page.getByTestId('study-authored-label');
+    const panel = page.getByTestId('study-value-panel');
+    await expect(label).toBeVisible();
+    await expect(panel).toBeVisible();
+    const labelBox = await label.boundingBox();
+    const panelBox = await panel.boundingBox();
+    expect(labelBox).toBeTruthy();
+    expect(panelBox).toBeTruthy();
+    expect(labelBox!.y).toBeGreaterThanOrEqual(0);
+    expect(labelBox!.y + labelBox!.height).toBeLessThanOrEqual(844);
+    expect(panelBox!.y).toBeGreaterThanOrEqual(0);
+    expect(panelBox!.y).toBeLessThan(844);
+    const overflow = await label.evaluate((el) => {
+      const styles = getComputedStyle(el);
+      return styles.textOverflow === 'ellipsis' || el.scrollWidth > el.clientWidth + 1;
+    });
+    expect(overflow).toBe(false);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+
+    const beforeY = await page.getByRole('heading', { name: 'Before the change' }).evaluate((el) => el.getBoundingClientRect().y);
+    const afterY = await page.getByRole('heading', { name: 'After the change' }).evaluate((el) => el.getBoundingClientRect().y);
+    expect(afterY).toBeGreaterThan(beforeY);
+
+    await page.setViewportSize({ width: 1280, height: 900 });
+    const before = await page.getByRole('heading', { name: 'Before the change' }).boundingBox();
+    const after = await page.getByRole('heading', { name: 'After the change' }).boundingBox();
+    expect(before).toBeTruthy();
+    expect(after).toBeTruthy();
+    expect(after!.x).toBeGreaterThan(before!.x);
+    expect(Math.abs(after!.y - before!.y)).toBeLessThan(24);
   });
 });
