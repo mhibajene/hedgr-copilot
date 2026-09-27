@@ -275,6 +275,84 @@ test("Access identity verification rejects wrong subject, issuer, audience, nonc
   }
 });
 
+test("callback 503 diagnostics expose only fixed stages and no sensitive values", async () => {
+  const { privateKey, publicKey } = await generateKeyPair("RS256");
+  const publicJwk = { ...await exportJWK(publicKey), kid: "fixture-key", alg: "RS256", use: "sig" };
+  const variants = [
+    "access_token_fetch_unavailable",
+    "access_jwks_unavailable",
+    "provider_client_lookup_unavailable",
+    "provider_authorization_completion_unavailable",
+    "callback_unexpected_failure"
+  ];
+  for (const variant of variants) {
+    const env = environment();
+    const originalFetch = globalThis.fetch;
+    const originalError = console.error;
+    const logs = [];
+    let nonce;
+    console.error = (...values) => logs.push(values.join(" "));
+    globalThis.fetch = async (input) => {
+      const url = typeof input === "string" ? input : input.url;
+      if (url === `${ACCESS}/token`) {
+        if (variant === "access_token_fetch_unavailable") throw new Error("sensitive-token-fetch-detail");
+        return Response.json({ id_token: await new SignJWT({ nonce })
+          .setProtectedHeader({ alg: "RS256", kid: "fixture-key" })
+          .setIssuer(ACCESS).setAudience(env.ACCESS_CLIENT_ID)
+          .setSubject(env.MCP_ALLOWED_SUBJECT).setIssuedAt().setExpirationTime("5m")
+          .sign(privateKey) });
+      }
+      if (url === `${ACCESS}/jwks`) {
+        if (variant === "access_jwks_unavailable") throw new Error("sensitive-jwks-detail");
+        return Response.json({ keys: [publicJwk] });
+      }
+      throw new Error("Unexpected external fetch");
+    };
+    try {
+      const { body: client } = await registerClient(env);
+      const consent = await send(oauthQuery(client.client_id, await sha256("h".repeat(43))), env);
+      const upstream = await send("/authorize", env, { method: "POST", headers: {
+        cookie: cookieFrom(consent), "content-type": "application/x-www-form-urlencoded"
+      }, body: new URLSearchParams({ ticket: ticketFrom(await consent.text()) }) });
+      assert.equal(upstream.status, 302, variant);
+      const upstreamUrl = new URL(upstream.headers.get("location"));
+      nonce = upstreamUrl.searchParams.get("nonce");
+      const state = upstreamUrl.searchParams.get("state");
+      if (variant === "provider_client_lookup_unavailable") {
+        env.OAUTH_KV.get = async () => { throw new Error("sensitive-client-lookup-detail"); };
+      }
+      if (variant === "provider_authorization_completion_unavailable") {
+        env.OAUTH_KV.put = async () => { throw new Error("sensitive-authorization-completion-detail"); };
+      }
+      if (variant === "callback_unexpected_failure") {
+        env.OAUTH_SINGLE_USE.get = () => ({ fetch: async () => {
+          throw new Error("sensitive-coordinator-detail");
+        } });
+      }
+      const callback = await send(`/callback?code=sensitive-access-code&state=${state}`, env,
+        { headers: { cookie: cookieFrom(upstream) } });
+      assert.equal(callback.status, 503, variant);
+      assert.deepEqual(await callback.json(), {
+        error: variant === "access_jwks_unavailable"
+          ? "MCP_AUTH_UPSTREAM_UNAVAILABLE" : "MCP_AUTH_UNAVAILABLE",
+        authorizing: false
+      }, variant);
+      assert.deepEqual(logs, [JSON.stringify({
+        event: "hedgrops_oauth_callback_failure", stage: variant
+      })], variant);
+      const emitted = logs.join("\n");
+      for (const forbidden of [
+        "sensitive-access-code", state, nonce, env.ACCESS_CLIENT_SECRET, env.MCP_ALLOWED_SUBJECT,
+        "sensitive-token-fetch-detail", "sensitive-jwks-detail", "sensitive-client-lookup-detail",
+        "sensitive-authorization-completion-detail", "sensitive-coordinator-detail"
+      ]) assert.ok(!emitted.includes(forbidden), `${variant} leaked ${forbidden}`);
+    } finally {
+      globalThis.fetch = originalFetch;
+      console.error = originalError;
+    }
+  }
+});
+
 test("authorization rejects missing browser proof and unsupported scopes", async () => {
   const env = environment();
   const { body: client } = await registerClient(env);
