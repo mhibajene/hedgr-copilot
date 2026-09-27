@@ -22,6 +22,7 @@ const ORIGIN = "https://bridge.example.test";
 const ACCESS = "https://access.example.test";
 const CALLBACK = `${ORIGIN}/callback`;
 const CHATGPT_CALLBACK = "https://chatgpt.com/connector_platform_oauth_redirect";
+const CODEX_CALLBACK = "http://127.0.0.1:60894/callback";
 const kv = () => {
   const values = new Map();
   return {
@@ -78,7 +79,8 @@ async function send(path, env, { method = "GET", headers = {}, body } = {}) {
 async function registerClient(env, redirect = CHATGPT_CALLBACK, name = "fixture") {
   const response = await send("/oauth/register", env, {
     method: "POST", headers: { "content-type": "application/json" },
-    body: JSON.stringify({ client_name: name, redirect_uris: [redirect], token_endpoint_auth_method: "none" })
+    body: JSON.stringify({ client_name: name,
+      redirect_uris: Array.isArray(redirect) ? redirect : [redirect], token_endpoint_auth_method: "none" })
   });
   return { response, body: await response.json() };
 }
@@ -95,9 +97,9 @@ async function actualCoordinator() {
   }));
   return { mf, binding: await mf.getDurableObjectNamespace("OAUTH_SINGLE_USE", "oauth-coordinator-test") };
 }
-function oauthQuery(clientId, challenge) {
+function oauthQuery(clientId, challenge, redirect = CHATGPT_CALLBACK) {
   const query = new URLSearchParams({ response_type: "code", client_id: clientId,
-    redirect_uri: CHATGPT_CALLBACK, scope: "evidence:read", state: "chatgpt-state",
+    redirect_uri: redirect, scope: "evidence:read", state: "chatgpt-state",
     resource: `${ORIGIN}/mcp`, code_challenge: challenge, code_challenge_method: "S256" });
   return `/authorize?${query}`;
 }
@@ -137,6 +139,49 @@ test("OAuth discovery, resource metadata, DCR policy, and missing configuration"
   assert.ok(allowed.body.client_id);
 });
 
+test("DCR permits only the approved ChatGPT redirects and exact Codex IPv4 loopback callback", async () => {
+  const env = environment();
+  for (const redirect of [
+    CHATGPT_CALLBACK,
+    "https://chatgpt.com/connector/oauth/callback_123",
+    CODEX_CALLBACK,
+    "http://127.0.0.1:1/callback",
+    "http://127.0.0.1:65535/callback"
+  ]) {
+    const result = await registerClient(env, redirect);
+    assert.equal(result.response.status, 201, redirect);
+  }
+  for (const redirect of [
+    "http://localhost:60894/callback",
+    "http://[::1]:60894/callback",
+    "http://127.0.0.2:60894/callback",
+    "http://2130706433:60894/callback",
+    "http://127.0.0.1/callback",
+    "http://127.0.0.1:0/callback",
+    "http://127.0.0.1:65536/callback",
+    "http://127.0.0.1:60894/callback/",
+    "http://127.0.0.1:60894/other",
+    "http://127.0.0.1:60894/callback?next=1",
+    "http://127.0.0.1:60894/callback#fragment",
+    "http://user@127.0.0.1:60894/callback",
+    "https://127.0.0.1:60894/callback"
+  ]) {
+    const result = await registerClient(env, redirect);
+    assert.notEqual(result.response.status, 201, redirect);
+  }
+  const mixed = await registerClient(env, [CODEX_CALLBACK, "http://localhost:60894/callback"]);
+  assert.notEqual(mixed.response.status, 201);
+
+  const { body: client } = await registerClient(env, CODEX_CALLBACK);
+  const verifier = "z".repeat(43);
+  const exact = await send(oauthQuery(client.client_id, await sha256(verifier), CODEX_CALLBACK), env);
+  assert.equal(exact.status, 200);
+  assert.ok((await exact.text()).includes(CODEX_CALLBACK));
+  const wrongPort = await send(oauthQuery(client.client_id, await sha256(verifier),
+    "http://127.0.0.1:60895/callback"), env);
+  assert.notEqual(wrongPort.status, 200);
+});
+
 test("Founder Access OIDC flow issues a scoped MCP token with PKCE and no legacy-key fallback", async () => {
   const env = environment();
   const { privateKey, publicKey } = await generateKeyPair("RS256");
@@ -159,9 +204,9 @@ test("Founder Access OIDC flow issues a scoped MCP token with PKCE and no legacy
     throw new Error("Unexpected external fetch");
   };
   try {
-    const { body: client } = await registerClient(env);
+    const { body: client } = await registerClient(env, CODEX_CALLBACK, "Codex");
     const verifier = "a".repeat(43);
-    const consent = await send(oauthQuery(client.client_id, await sha256(verifier)), env);
+    const consent = await send(oauthQuery(client.client_id, await sha256(verifier), CODEX_CALLBACK), env);
     assert.equal(consent.status, 200);
     const ticket = ticketFrom(await consent.text());
     assert.ok(ticket);
@@ -181,12 +226,12 @@ test("Founder Access OIDC flow issues a scoped MCP token with PKCE and no legacy
     assert.equal(seenTokenRequest.get("redirect_uri"), CALLBACK);
     assert.ok(seenTokenRequest.get("code_verifier"));
     const returned = new URL(callback.headers.get("location"));
-    assert.equal(returned.origin, "https://chatgpt.com");
+    assert.equal(`${returned.origin}${returned.pathname}`, CODEX_CALLBACK);
     const code = returned.searchParams.get("code");
     assert.ok(code);
     const tokenResponse = await send("/oauth/token", env, {
       method: "POST", headers: { "content-type": "application/x-www-form-urlencoded" },
-      body: new URLSearchParams({ grant_type: "authorization_code", code, redirect_uri: CHATGPT_CALLBACK,
+      body: new URLSearchParams({ grant_type: "authorization_code", code, redirect_uri: CODEX_CALLBACK,
         client_id: client.client_id, code_verifier: verifier, resource: `${ORIGIN}/mcp` })
     });
     assert.equal(tokenResponse.status, 200);
