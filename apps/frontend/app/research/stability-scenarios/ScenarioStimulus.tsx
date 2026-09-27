@@ -31,14 +31,11 @@ function PanelRow({
   marker?: string;
 }) {
   const isWatch = rowKey === 'watch';
+  // Every row stacks its heading above its value at all widths, so a marker never shares a line with a value.
   return (
     <div
       data-row={rowKey}
-      className={
-        isWatch
-          ? 'flex min-w-0 flex-col gap-1 border-t border-hedgr-300 pt-3'
-          : 'flex min-w-0 flex-col gap-1 sm:flex-row sm:flex-wrap sm:items-baseline sm:gap-x-3'
-      }
+      className={`flex min-w-0 flex-col gap-1${isWatch ? ' border-t border-hedgr-300 pt-3' : ''}`}
     >
       <dt className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm font-medium text-hedgr-800">
         <span data-testid="study-row-label">{label}</span>
