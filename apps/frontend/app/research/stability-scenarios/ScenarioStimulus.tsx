@@ -40,15 +40,15 @@ function PanelRow({
           : 'flex min-w-0 flex-col gap-1 sm:flex-row sm:flex-wrap sm:items-baseline sm:gap-x-3'
       }
     >
-      <dt className="text-sm font-medium text-hedgr-800">{label}</dt>
+      <dt className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm font-medium text-hedgr-800">
+        <span data-testid="study-row-label">{label}</span>
+        {/* Secondary status tied to the row heading; never part of the value. */}
+        {marker ? (
+          <span data-testid="study-row-marker" className="inline-flex items-center rounded-full bg-hedgr-100 px-2 py-0.5 text-xs font-medium leading-none text-hedgr-800">{marker}</span>
+        ) : null}
+      </dt>
       <dd className="m-0 min-w-0 break-words text-left font-normal">
         <span className={isWatch ? 'font-medium text-hedgr-800' : undefined}>{value}</span>
-        {marker ? (
-          <>
-            {' '}
-            <span data-testid="study-row-marker" className="font-medium text-hedgr-600">{marker}</span>
-          </>
-        ) : null}
       </dd>
     </div>
   );
