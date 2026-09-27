@@ -8,6 +8,7 @@ const SCOPE = "evidence:read";
 const CALLBACK_PATH = "/callback";
 const STATE_TTL = 300;
 const CALLBACK_DIAGNOSTIC_EVENT = "hedgrops_oauth_callback_failure";
+const AUTHORIZATION_DIAGNOSTIC_EVENT = "hedgrops_oauth_authorization_failure";
 class AccessKeysUnavailable extends Error {}
 
 function fail(status = 503, code = status === 503 ? "MCP_AUTH_UNAVAILABLE" : "MCP_AUTH_FAILED") {
@@ -20,6 +21,25 @@ function fail(status = 503, code = status === 503 ? "MCP_AUTH_UNAVAILABLE" : "MC
 function callbackUnavailable(stage, code = "MCP_AUTH_UNAVAILABLE") {
   console.error(JSON.stringify({ event: CALLBACK_DIAGNOSTIC_EVENT, stage }));
   return fail(503, code);
+}
+
+function authorizationFailure(stage, category, status = 503, restart = false) {
+  console.error(JSON.stringify({ event: AUTHORIZATION_DIAGNOSTIC_EVENT, stage, category }));
+  if (!restart) return fail(status);
+  return new Response(JSON.stringify({
+    error: status === 503 ? "MCP_AUTH_UNAVAILABLE" : "MCP_AUTH_FAILED",
+    authorizing: false,
+    recovery: "restart_authorization"
+  }), { status, headers: { "content-type": "application/json", "cache-control": "no-store" } });
+}
+
+function consentFailureCategory(reason) {
+  return ({
+    absent: "consent_absent",
+    expired: "consent_expired",
+    already_consumed: "consent_already_consumed",
+    browser_proof_mismatch: "consent_browser_proof_mismatch"
+  })[reason] ?? "consent_state_rejected";
 }
 
 function randomToken() {
@@ -123,7 +143,11 @@ async function beginAuthorization(request, env) {
   let authRequest;
   try {
     authRequest = await env.OAUTH_PROVIDER.parseAuthRequest(request);
-  } catch (error) { return authError(error); }
+  } catch (error) {
+    return error instanceof AuthorizationError
+      ? authError(error)
+      : authorizationFailure("begin_authorization", "authorization_unexpected_failure", 503, true);
+  }
   if (authRequest.scope.length !== 1 || authRequest.scope[0] !== SCOPE) return fail(403);
   const client = await env.OAUTH_PROVIDER.lookupClient(authRequest.clientId);
   if (!client || client.clientId !== authRequest.clientId ||
@@ -131,10 +155,17 @@ async function beginAuthorization(request, env) {
     !redirectAllowed(authRequest.redirectUri)) return fail(403);
   const ticket = randomToken();
   const browserNonce = randomToken();
-  const created = await callCoordinator(env, "/put-flow", {
-    kind: "consent", id: ticket, value: { authRequest, browserNonce }
-  });
-  if (created.status !== 201) return fail(503);
+  let created;
+  try {
+    created = await callCoordinator(env, "/put-flow", {
+      kind: "consent", id: ticket, value: { authRequest, browserNonce }
+    });
+  } catch {
+    return authorizationFailure("consent_state_create", "coordinator_unavailable", 503, true);
+  }
+  if (created.status !== 201) {
+    return authorizationFailure("consent_state_create", "consent_state_conflict", 503, true);
+  }
   const response = consentPage(ticket, client, authRequest);
   response.headers.set("set-cookie", setCookie("hbo_consent", browserNonce));
   return response;
@@ -144,21 +175,44 @@ async function approveAuthorization(request, env, config) {
   let ticket;
   try { ticket = (await request.formData()).get("ticket"); } catch { return fail(400); }
   if (typeof ticket !== "string" || !/^[a-f0-9]{64}$/.test(ticket)) return fail(400);
-  const consumed = await callCoordinator(env, "/consume-flow", {
-    kind: "consent", id: ticket, browserNonce: cookie(request, "hbo_consent")
-  });
-  if (consumed.status !== 200) return fail(403);
+  const consentBrowserNonce = cookie(request, "hbo_consent");
+  if (!consentBrowserNonce) {
+    return authorizationFailure("consent_validate_and_consume", "consent_browser_proof_missing", 403, true);
+  }
+  let consumed;
+  try {
+    consumed = await callCoordinator(env, "/consume-flow", {
+      kind: "consent", id: ticket, browserNonce: consentBrowserNonce
+    });
+  } catch {
+    return authorizationFailure("consent_validate_and_consume", "coordinator_unavailable", 503, true);
+  }
+  if (consumed.status !== 200) {
+    return authorizationFailure(
+      "consent_validate_and_consume",
+      consentFailureCategory(consumed.body?.reason),
+      403,
+      true
+    );
+  }
   const stored = consumed.body.value;
 
   const state = randomToken();
   const verifier = randomToken();
   const nonce = randomToken();
   const browserNonce = randomToken();
-  const created = await callCoordinator(env, "/put-flow", {
-    kind: "access", id: state,
-    value: { authRequest: stored.authRequest, verifier, nonce, browserNonce }
-  });
-  if (created.status !== 201) return fail(503);
+  let created;
+  try {
+    created = await callCoordinator(env, "/put-flow", {
+      kind: "access", id: state,
+      value: { authRequest: stored.authRequest, verifier, nonce, browserNonce }
+    });
+  } catch {
+    return authorizationFailure("access_state_create", "access_state_storage_unavailable", 503, true);
+  }
+  if (created.status !== 201) {
+    return authorizationFailure("access_state_create", "access_state_conflict", 503, true);
+  }
   const upstream = new URL(env.ACCESS_AUTHORIZATION_URL);
   upstream.searchParams.set("response_type", "code");
   upstream.searchParams.set("client_id", env.ACCESS_CLIENT_ID);
@@ -258,9 +312,16 @@ async function interaction(request, env, config) {
     if (path === CALLBACK_PATH && request.method === "GET") return await finishAuthorization(request, env, config);
     return new Response("Not Found", { status: 404, headers: { "cache-control": "no-store" } });
   } catch {
-    return path === CALLBACK_PATH
-      ? callbackUnavailable("callback_unexpected_failure")
-      : fail(503);
+    if (path === CALLBACK_PATH) return callbackUnavailable("callback_unexpected_failure");
+    if (path === "/authorize") {
+      return authorizationFailure(
+        request.method === "POST" ? "approve_authorization" : "begin_authorization",
+        "authorization_unexpected_failure",
+        503,
+        true
+      );
+    }
+    return fail(503);
   }
 }
 

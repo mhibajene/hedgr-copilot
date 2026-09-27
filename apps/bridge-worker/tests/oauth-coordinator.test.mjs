@@ -45,9 +45,11 @@ test("old read/delete can let two observations pass, while DO transaction consum
     })));
     assert.equal(results.filter((result) => result.status === 200).length, 1);
     assert.equal(results.filter((result) => result.status === 409).length, 19);
-    assert.equal((await call(mf, "/consume-flow", {
+    const repeated = await call(mf, "/consume-flow", {
       kind: "consent", id, browserNonce: "browser"
-    })).status, 409);
+    });
+    assert.equal(repeated.status, 409);
+    assert.equal((await repeated.json()).reason, "already_consumed");
   } finally { await mf.dispose(); }
 });
 
@@ -57,9 +59,11 @@ test("callback browser proof and code claims use the same durable transaction af
     assert.equal((await call(mf, "/put-flow", {
       kind: "access", id, value: { browserNonce: "founder-browser", nonce: "oidc-nonce" }
     })).status, 201);
-    assert.equal((await call(mf, "/consume-flow", {
+    const mismatch = await call(mf, "/consume-flow", {
       kind: "access", id, browserNonce: "other-browser"
-    })).status, 409);
+    });
+    assert.equal(mismatch.status, 409);
+    assert.equal((await mismatch.json()).reason, "browser_proof_mismatch");
     const [a, b] = await Promise.all(["founder-browser", "founder-browser"].map((browserNonce) =>
       call(mf, "/consume-flow", { kind: "access", id, browserNonce })));
     assert.deepEqual([a.status, b.status].sort(), [200, 409]);
@@ -80,8 +84,15 @@ test("callback browser proof and code claims use the same durable transaction af
     assert.equal((await call(mf, "/test-expired-flow", {
       kind: "consent", id: "b".repeat(64), browserNonce: "old-browser"
     })).status, 200);
-    assert.equal((await call(mf, "/consume-flow", {
+    const expired = await call(mf, "/consume-flow", {
       kind: "consent", id: "b".repeat(64), browserNonce: "old-browser"
-    })).status, 409, "expired state cannot be consumed");
+    });
+    assert.equal(expired.status, 409, "expired state cannot be consumed");
+    assert.equal((await expired.json()).reason, "expired");
+    const absent = await call(mf, "/consume-flow", {
+      kind: "consent", id: "c".repeat(64), browserNonce: "missing-browser"
+    });
+    assert.equal(absent.status, 409);
+    assert.equal((await absent.json()).reason, "absent");
   } finally { await mf.dispose(); }
 });
