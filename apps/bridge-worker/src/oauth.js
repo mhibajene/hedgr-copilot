@@ -70,6 +70,8 @@ function configFor(request, env) {
 
 function redirectAllowed(uri) {
   if (typeof uri !== "string") return false;
+  const codexLoopback = /^http:\/\/127\.0\.0\.1:([1-9]\d{0,4})\/callback$/.exec(uri);
+  if (codexLoopback) return Number(codexLoopback[1]) <= 65535;
   try {
     const url = new URL(uri);
     return url.protocol === "https:" && url.origin === "https://chatgpt.com" &&
