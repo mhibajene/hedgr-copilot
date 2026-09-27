@@ -194,3 +194,15 @@ The finite §7a scope-first amendment to `CLASS-A-VAL-002-WEEKEND-PREP-001` auth
 **Synthetic Home balance-copy amendment (2026-09-20):** The later Founder-authorised §7a amendment retains the open, uncarded balance and existing dynamic USD/local estimate on the ivory canvas. Replace the synthetic-only redundant illustrative caption and two-row scope divider with one short activity-context line, “Includes your simulated activity.”, directly below the estimate. Use the existing muted navy text token and a restrained semibold weight; no new color, component surface, logo, font or financial state. Keep the peach “What changed” observation and the deposit-first action hierarchy. The old scope-first images and copy are historical where superseded by this amendment; default Home is unchanged. This is finite usage authority, not a token change or standing refinement.
 
 **Balance-copy usage closeout:** §296 records verified runtime and responsive correction delivery. The finite balance-copy usage permission is consumed; the existing compact Currency Context entry and complete shelf remain as shipped. The later Home/shelf brief and previous inline screenshot are non-authoritative visual direction unless separately activated under §7/§7a. No new token, presentation pass or cross-surface migration follows.
+
+## One Home experience usage (2026-09-27)
+
+Founder activation of `CLASS-A-VAL-002-HOME-EXPERIENCE-001` (HEDGR_STATUS.md §7 / §7a) takes effect only after its source merge and a separate verified RAP rebind. Within that ticket only:
+
+- Extend the scope-first Home usage (2026-09-20) to default `/dashboard`, with the mode rules in §7a.
+- Allow `syntheticHome.observation-emphasis` for the since-last-visit layer (change chip icon, position-line highlight and last-visit marker). It means explanatory context only, never gain, loss, success or warning.
+- Allow full-width, fully rounded primary actions using the existing `button-primary` pairing, a white bottom action panel, receipt detail cards, and the step and entry thread. These use existing colour and shadow values only.
+- Supersede the Activity peach balance-after strip with running balances on date headers.
+- Use the underlined current tab on every screen.
+
+No palette value, typeface, status meaning or brand asset changes. Accepted references are recorded in `docs/ops/product-finish/HOME_EXPERIENCE_BASELINE.md`. No standing refinement authority follows.
