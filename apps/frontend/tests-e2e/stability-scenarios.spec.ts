@@ -103,8 +103,8 @@ test.describe('Research Two-Beat Sarah example', () => {
     await expect(page.getByTestId('study-panel-close')).toHaveCount(0);
     await expectRetiredStringsAbsent(page);
 
-    const beforeLabels = await page.getByTestId('study-panel-before').locator('dt').allTextContents();
-    const afterLabels = await page.getByTestId('study-panel-after').locator('dt').allTextContents();
+    const beforeLabels = await page.getByTestId('study-panel-before').getByTestId('study-row-label').allTextContents();
+    const afterLabels = await page.getByTestId('study-panel-after').getByTestId('study-row-label').allTextContents();
     expect(beforeLabels).toEqual(expectedLabels);
     expect(afterLabels).toEqual(expectedLabels);
 
@@ -117,8 +117,11 @@ test.describe('Research Two-Beat Sarah example', () => {
 
     await expect(page.getByTestId('study-panel-before').getByTestId('study-row-marker')).toHaveCount(0);
     await expect(page.getByTestId('study-panel-after').getByTestId('study-row-marker')).toHaveCount(2);
-    await expect(page.getByTestId('study-panel-after').locator('[data-row="due"] [data-testid="study-row-marker"]')).toHaveText('New');
-    await expect(page.getByTestId('study-panel-after').locator('[data-row="watch"] [data-testid="study-row-marker"]')).toHaveText('New');
+    await expect(page.getByTestId('study-panel-after').locator('[data-row="due"] dt [data-testid="study-row-marker"]')).toHaveText('New');
+    await expect(page.getByTestId('study-panel-after').locator('[data-row="watch"] dt [data-testid="study-row-marker"]')).toHaveText('New');
+    await expect(page.getByTestId('study-value-panel').locator('dd [data-testid="study-row-marker"]')).toHaveCount(0);
+    await expect(page.getByTestId('study-panel-after').locator('[data-row="due"] dd')).toHaveText('K29,500 on 1 October 2027');
+    await expect(page.getByTestId('study-panel-after').locator('[data-row="watch"] dd')).toHaveText('Sarah’s savings and the fee are now both in kwacha, so the exchange rate no longer changes the amount she needs. What is still open is whether the planned K24,000 arrives on time.');
     await expect(page.getByTestId('study-value-panel').getByText('New', { exact: true })).toHaveCount(2);
 
     await expect(explanation.getByTestId('study-attribution')).toHaveText('This is an authored research example for Sarah’s fictional situation. It is not Hedgr reading your money, not Stability Engine output, and not a live financial assessment.');
@@ -283,6 +286,21 @@ test.describe('Research Two-Beat Sarah example', () => {
       expect(Math.abs(beforeRow!.y - afterRow!.y)).toBeLessThan(4);
     }
 
+    // New sits beside its row heading, not with the value, at mobile and desktop widths.
+    for (const width of [390, 1280]) {
+      await page.setViewportSize({ width, height: 900 });
+      for (const key of ['due', 'watch'] as const) {
+        const row = page.getByTestId('study-panel-after').locator(`[data-row="${key}"]`);
+        const labelBox = await row.getByTestId('study-row-label').boundingBox();
+        const markerBox = await row.getByTestId('study-row-marker').boundingBox();
+        expect(labelBox).toBeTruthy();
+        expect(markerBox).toBeTruthy();
+        expect(markerBox!.x).toBeGreaterThan(labelBox!.x + labelBox!.width - 1);
+        expect(Math.abs((markerBox!.y + markerBox!.height / 2) - (labelBox!.y + labelBox!.height / 2))).toBeLessThan(4);
+      }
+    }
+    await page.setViewportSize({ width: 1280, height: 900 });
+
     await page.setViewportSize({ width: 1280, height: 800 });
     await page.evaluate(() => document.querySelector('h2')?.focus({ preventScroll: true }));
     await page.getByRole('heading', { name: 'What Hedgr helps Sarah see' }).evaluate((el) => el.closest('main')?.scrollIntoView({ block: 'start' }));
@@ -305,6 +323,31 @@ test.describe('Research Two-Beat Sarah example', () => {
         description: `Desktop glance 1280×800: What to watch overflow ${JSON.stringify(glance)}`,
       });
     }
+
+    // Stacked-rows amendment: no row value shares a line with its heading or marker, and desktop rows stay aligned.
+    for (const [width, fontSize] of [[390, null], [640, null], [1024, null], [1280, null], [1440, null], [320, '200%']] as const) {
+      await page.setViewportSize({ width, height: 900 });
+      await page.evaluate((size) => { document.documentElement.style.fontSize = size ?? ''; }, fontSize);
+      for (const state of ['study-panel-before', 'study-panel-after'] as const) {
+        for (const key of rowKeys) {
+          const row = page.getByTestId(state).locator(`[data-row="${key}"]`);
+          const heading = await row.locator('dt').boundingBox();
+          const value = await row.locator('dd').boundingBox();
+          expect(heading).toBeTruthy();
+          expect(value).toBeTruthy();
+          expect(value!.y).toBeGreaterThanOrEqual(heading!.y + heading!.height - 1);
+        }
+      }
+      if (width >= 1024) {
+        for (const key of rowKeys) {
+          const beforeRow = await page.getByTestId('study-panel-before').locator(`[data-row="${key}"]`).boundingBox();
+          const afterRow = await page.getByTestId('study-panel-after').locator(`[data-row="${key}"]`).boundingBox();
+          expect(Math.abs(beforeRow!.y - afterRow!.y)).toBeLessThan(4);
+        }
+      }
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+    }
+    await page.evaluate(() => { document.documentElement.style.fontSize = ''; });
 
     await page.setViewportSize({ width: 320, height: 720 });
     await page.evaluate(() => { document.documentElement.style.fontSize = '200%'; });
