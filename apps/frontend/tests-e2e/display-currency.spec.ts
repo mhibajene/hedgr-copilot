@@ -173,7 +173,7 @@ test('all five Settings estimates preserve USD, market, Activity and planning wi
   await expect(page.getByTestId('trust-information')).toContainText('The display currency preference changes illustrative simulation estimates only.');
   await page.goto('/dashboard');
   await expect(page.getByTestId('local-balance')).toHaveText('≈ ZMW 60.00');
-  await expect(page.getByTestId('dashboard-synthetic-balance-explainer')).toHaveText('Illustrative position only.');
+  await expect(page.getByTestId('dashboard-synthetic-balance-explainer')).toHaveText('Includes your simulated activity.');
   await page.goto('/settings');
   await expect(page.getByTestId('settings-preferences')).toContainText('No preferences available yet');
   await page.goto('/deposit?journey=class-a-val-002&scenario=unavailable-data');

@@ -81,20 +81,19 @@ test('default routes share the simulated customer model without research framing
   await expect(
     page.getByRole('heading', {
       level: 1,
-      name: 'See what you have and what changed.',
+      name: 'Your position',
     })
   ).toBeVisible();
-  await expect(page.getByTestId('dashboard-orientation')).toContainText(
-    'Hedgr helps you understand and maintain your financial stability.'
-  );
   await expect(page.getByTestId('dashboard-orientation')).toContainText(
     'This simulated experience provides context, not an instruction.'
   );
   await expect(page.getByTestId('synthetic-journey-shell')).toHaveCount(0);
   await expect(page.getByText(/Step 1|Position$/)).toHaveCount(0);
-  await expect(page.getByText('Your current position', { exact: true })).toBeVisible();
+  // HOME-EXPERIENCE-001 T1 (decision 1): the default simulated environment uses the journey balance label.
+  await expect(page.getByText('Simulated Hedgr balance', { exact: true })).toBeVisible();
   await expect(page.getByText('What Hedgr notices', { exact: true })).toBeVisible();
   await expect(page.getByText('Does anything need attention?')).toBeVisible();
+  await page.getByTestId('dashboard-planning-targets').locator(':scope > summary').click();
   await expect(page.getByTestId('engine-allocation-bands')).toBeVisible();
   await expect(page.getByTestId('dashboard-add-simulated-deposit')).toHaveAttribute(
     'href',
@@ -202,6 +201,8 @@ test('default customer hierarchy remains usable at 390 by 844', async ({ page })
 
   await expect(page.getByTestId('dashboard-orientation')).toBeVisible();
   await expect(page.getByTestId('dashboard-current-overview')).toBeVisible();
+  // HOME-EXPERIENCE-001 T1: planning bands sit in the collapsed Planning targets row.
+  await page.getByTestId('dashboard-planning-targets').locator(':scope > summary').click();
   await expect(page.getByTestId('engine-allocation-bands')).toBeVisible();
 
   const metrics = await page.evaluate(() => ({

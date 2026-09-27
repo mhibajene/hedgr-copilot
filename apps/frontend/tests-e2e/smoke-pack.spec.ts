@@ -59,7 +59,7 @@ test("2 · login page renders and mock auth redirects to dashboard", async ({
 
   await loginMock(page);
   await expect(
-    page.getByText("Your current position", { exact: true })
+    page.getByText("Simulated Hedgr balance", { exact: true })
   ).toBeVisible();
 });
 
@@ -120,6 +120,8 @@ test("4 · dashboard shows human-readable stability context after login", async 
   await expect(page.getByText("Simulation date")).toBeHidden();
   await expect(page.getByText("Last viewed locally")).toBeHidden();
 
+  // HOME-EXPERIENCE-001 T1: planning bands sit in the collapsed Planning targets row.
+  await page.getByTestId("dashboard-planning-targets").locator(":scope > summary").click();
   const allocationBands = page.getByTestId("engine-allocation-bands");
   await expect(allocationBands).toBeVisible({ timeout: 10_000 });
   await expect(allocationBands).toHaveAttribute(

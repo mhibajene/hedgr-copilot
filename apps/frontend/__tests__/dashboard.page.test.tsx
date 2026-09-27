@@ -485,9 +485,14 @@ describe("DashboardPage engine trust surface", () => {
 
     render(<DashboardPage />);
 
-    expect(screen.getByTestId("dashboard-orientation").textContent).toContain(
-      "Hedgr helps you understand and maintain your financial stability."
+    // HOME-EXPERIENCE-001 T1: one "Your position" title; the default route keeps its
+    // context / non-instruction sentence verbatim (decision 2).
+    expect(screen.getByRole("heading", { level: 1 }).textContent).toBe("Your position");
+    expect(screen.getByTestId("dashboard-context-line").textContent).toBe(
+      "This simulated experience provides context, not an instruction."
     );
+    expect(screen.getByText("Simulated Hedgr balance")).toBeDefined();
+    expect(screen.getByText("Includes your simulated activity.")).toBeDefined();
     expect(screen.getByTestId("dashboard-current-overview")).toBeDefined();
     expect(dashboardStateMocks.policyContexts).toContain("default");
     expect(screen.queryByTestId("engine-posture-badge")).toBeNull();
@@ -517,8 +522,8 @@ describe("DashboardPage engine trust surface", () => {
     const orderedSections = [
       screen.getByTestId("dashboard-orientation"),
       screen.getByTestId("dashboard-balance"),
-      screen.getByTestId("dashboard-simulation-utilities"),
       screen.getByTestId("dashboard-current-status"),
+      screen.getByTestId("dashboard-simulation-utilities"),
       screen.getByTestId("engine-allocation-bands"),
       screen.getByTestId("dashboard-education"),
       screen.getByTestId("dashboard-disclosures"),
@@ -633,17 +638,19 @@ describe("Currency context integration", () => {
     expect(screen.queryByTestId("currency-insight-direction")).toBeNull();
   });
 
+  // HOME-EXPERIENCE-001 T1 (decision 1): the simulated-activity caption now shows in every
+  // simulated context; currency context stays journey-only.
   test.each([
-    ["/dashboard", "", false],
-    ["/dashboard", "journey=class-a-val-002", true],
-    ["/dashboard-synthetic-journey", "scenario=unavailable-data", false],
-  ])("isolates %s?%s", (path, query, visible) => {
+    ["/dashboard", "", false, true],
+    ["/dashboard", "journey=class-a-val-002", true, true],
+    ["/dashboard-synthetic-journey", "scenario=unavailable-data", false, true],
+  ])("isolates %s?%s", (path, query, visible, captionVisible) => {
     setup();
     vi.mocked(usePathname).mockReturnValue(path);
     vi.mocked(useSearchParams).mockReturnValue(new URLSearchParams(query) as ReturnType<typeof useSearchParams>);
     render(<DashboardPage />);
     expect(Boolean(screen.queryByTestId("currency-insight"))).toBe(visible);
-    expect(Boolean(screen.queryByText("Includes your simulated activity.", { exact: true }))).toBe(visible);
+    expect(Boolean(screen.queryByText("Includes your simulated activity.", { exact: true }))).toBe(captionVisible);
     expect(screen.queryByTestId("dashboard-balance-scope")).toBeNull();
     if (!visible) expect(screen.queryByText("No other change stands out in the simulated activity.")).toBeNull();
   });

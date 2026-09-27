@@ -85,15 +85,21 @@ test('activity context and responsive navigation are isolated to explicit eligib
   await seed(page);
   await page.goto('/dashboard?journey=class-a-val-002');
   await expect(page.getByTestId('dashboard-synthetic-balance-explainer')).toHaveText('Includes your simulated activity.');
-  for (const path of ['/dashboard', `${home}?scenario=unavailable-data`, '/activity?journey=class-a-val-002', '/settings?journey=class-a-val-002']) {
+  // HOME-EXPERIENCE-001 T1: every simulated Home now uses the canonical presentation;
+  // Activity and Settings keep the fixed bottom navigation and no Home caption.
+  for (const path of ['/dashboard', `${home}?scenario=unavailable-data`]) {
+    await page.goto(path);
+    await expect(page.getByTestId('dashboard-balance-scope')).toHaveCount(0);
+    await expect(page.getByTestId('dashboard-synthetic-balance-explainer')).toHaveText('Includes your simulated activity.');
+    await expect(page.getByRole('navigation', { name: 'Primary', exact: true })).not.toHaveCSS('position', 'fixed');
+    await expect(page.getByTestId('dashboard-balance')).toContainText('Simulated Hedgr balance');
+    await expect(page.getByTestId('dashboard-add-simulated-deposit')).toHaveCSS('background-color', 'rgb(31, 39, 71)');
+  }
+  for (const path of ['/activity?journey=class-a-val-002', '/settings?journey=class-a-val-002']) {
     await page.goto(path);
     await expect(page.getByTestId('dashboard-balance-scope')).toHaveCount(0);
     await expect(page.getByText('Includes your simulated activity.', { exact: true })).toHaveCount(0);
     await expect(page.getByRole('navigation', { name: 'Primary', exact: true })).toHaveCSS('position', 'fixed');
-    if (path === '/dashboard') {
-      await expect(page.getByTestId('dashboard-balance')).toContainText('Your current position');
-      await expect(page.getByTestId('dashboard-add-simulated-deposit')).toHaveCSS('background-color', 'rgb(250, 248, 245)');
-    }
   }
 });
 
