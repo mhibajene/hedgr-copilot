@@ -37,7 +37,7 @@ class OAuthSingleUse {
         await txn.put(key, { value: input.value, expiresAt });
         return true;
       });
-      if (!created) return response(409, { ok: false });
+      if (!created) return response(409, { ok: false, reason: "conflict" });
       const existingAlarm = await this.ctx.storage.getAlarm();
       if (existingAlarm === null || existingAlarm > expiresAt) await this.ctx.storage.setAlarm(expiresAt);
       return response(201, { ok: true });
@@ -49,16 +49,27 @@ class OAuthSingleUse {
       }
       const result = await this.ctx.storage.transaction(async (txn) => {
         const record = await txn.get(key);
-        if (!record) return null;
+        if (!record) return { ok: false, reason: "absent" };
         if (record.expiresAt <= Date.now()) {
           await txn.delete(key);
-          return null;
+          return { ok: false, reason: "expired" };
         }
-        if (record.value.browserNonce !== input.browserNonce) return null;
-        await txn.delete(key);
-        return record.value;
+        if (record.consumed === true) return { ok: false, reason: "already_consumed" };
+        if (record.value.browserNonce !== input.browserNonce) {
+          return { ok: false, reason: "browser_proof_mismatch" };
+        }
+        if (input.kind === "consent") {
+          // Keep a non-authorizing marker until the original deadline so a
+          // repeated approval is distinguishable without recreating consent.
+          await txn.put(key, { consumed: true, expiresAt: record.expiresAt });
+        } else {
+          await txn.delete(key);
+        }
+        return { ok: true, value: record.value };
       });
-      return result ? response(200, { ok: true, value: result }) : response(409, { ok: false });
+      return result.ok
+        ? response(200, result)
+        : response(409, result);
     }
     if (path === "/claim-code") {
       const key = codeKey(input?.userId, input?.grantId);
