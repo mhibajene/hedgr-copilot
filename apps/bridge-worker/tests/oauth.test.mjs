@@ -44,14 +44,19 @@ function coordinator() {
       ? `code:${JSON.stringify([input.userId, input.grantId])}`
       : `flow:${input.kind}:${input.id}`;
     if (path === "/put-flow") {
-      if (values.has(key)) return Response.json({ ok: false }, { status: 409 });
+      if (values.has(key)) return Response.json({ ok: false, reason: "conflict" }, { status: 409 });
       values.set(key, input.value);
       return Response.json({ ok: true }, { status: 201 });
     }
     if (path === "/consume-flow") {
       const value = values.get(key);
-      if (!value || value.browserNonce !== input.browserNonce) return Response.json({ ok: false }, { status: 409 });
-      values.delete(key);
+      if (!value) return Response.json({ ok: false, reason: "absent" }, { status: 409 });
+      if (value.consumed) return Response.json({ ok: false, reason: "already_consumed" }, { status: 409 });
+      if (value.browserNonce !== input.browserNonce) {
+        return Response.json({ ok: false, reason: "browser_proof_mismatch" }, { status: 409 });
+      }
+      if (input.kind === "consent") values.set(key, { consumed: true });
+      else values.delete(key);
       return Response.json({ ok: true, value });
     }
     if (path === "/claim-code") {
@@ -408,6 +413,240 @@ test("authorization rejects missing browser proof and unsupported scopes", async
   assert.equal(withoutCookie.status, 403);
   const wrongScope = await send(oauthQuery(client.client_id, await sha256("c".repeat(43))).replace("evidence%3Aread", "repository%3Awrite"), env);
   assert.equal(wrongScope.status, 403);
+});
+
+test("authorization consent failures are deterministic, recoverable, secret-safe, and single use", async () => {
+  const env = environment();
+  const { body: client } = await registerClient(env);
+  const consent = await send(oauthQuery(client.client_id, await sha256("i".repeat(43))), env);
+  const ticket = ticketFrom(await consent.text());
+  const browserCookie = cookieFrom(consent);
+  const logs = [];
+  const originalError = console.error;
+  console.error = (...values) => logs.push(values.join(" "));
+  try {
+    const missingProof = await send("/authorize", env, { method: "POST", headers: {
+      "content-type": "application/x-www-form-urlencoded", "x-hedgrops-api-key": "legacy-sensitive-key"
+    }, body: new URLSearchParams({ ticket }) });
+    assert.equal(missingProof.status, 403);
+    assert.equal((await missingProof.json()).recovery, "restart_authorization");
+
+    const wrongProof = await send("/authorize", env, { method: "POST", headers: {
+      cookie: "hbo_consent=wrong-sensitive-browser-proof", "content-type": "application/x-www-form-urlencoded"
+    }, body: new URLSearchParams({ ticket }) });
+    assert.equal(wrongProof.status, 403);
+    assert.equal((await wrongProof.json()).recovery, "restart_authorization");
+
+    const approved = await send("/authorize", env, { method: "POST", headers: {
+      cookie: browserCookie, "content-type": "application/x-www-form-urlencoded"
+    }, body: new URLSearchParams({ ticket }) });
+    assert.equal(approved.status, 302);
+    const accessCount = [...env.OAUTH_SINGLE_USE.values.keys()]
+      .filter((key) => key.startsWith("flow:access:")).length;
+    assert.equal(accessCount, 1);
+
+    const repeated = await send("/authorize", env, { method: "POST", headers: {
+      cookie: browserCookie, "content-type": "application/x-www-form-urlencoded"
+    }, body: new URLSearchParams({ ticket }) });
+    assert.equal(repeated.status, 403);
+    assert.equal((await repeated.json()).recovery, "restart_authorization");
+    assert.equal([...env.OAUTH_SINGLE_USE.values.keys()]
+      .filter((key) => key.startsWith("flow:access:")).length, accessCount,
+    "duplicate approval cannot create another Access flow");
+
+    const absentTicket = "d".repeat(64);
+    const absent = await send("/authorize", env, { method: "POST", headers: {
+      cookie: browserCookie, "content-type": "application/x-www-form-urlencoded"
+    }, body: new URLSearchParams({ ticket: absentTicket }) });
+    assert.equal(absent.status, 403);
+    assert.equal((await absent.json()).recovery, "restart_authorization");
+
+    assert.deepEqual(logs.map((line) => JSON.parse(line)), [
+      { event: "hedgrops_oauth_authorization_failure", stage: "consent_validate_and_consume",
+        category: "consent_browser_proof_missing" },
+      { event: "hedgrops_oauth_authorization_failure", stage: "consent_validate_and_consume",
+        category: "consent_browser_proof_mismatch" },
+      { event: "hedgrops_oauth_authorization_failure", stage: "consent_validate_and_consume",
+        category: "consent_already_consumed" },
+      { event: "hedgrops_oauth_authorization_failure", stage: "consent_validate_and_consume",
+        category: "consent_absent" }
+    ]);
+    const emitted = logs.join("\n");
+    for (const forbidden of [
+      ticket, absentTicket, browserCookie, "wrong-sensitive-browser-proof", "legacy-sensitive-key",
+      client.client_id, env.ACCESS_CLIENT_SECRET, env.MCP_ALLOWED_SUBJECT
+    ]) assert.ok(!emitted.includes(forbidden), `authorization log leaked ${forbidden}`);
+  } finally { console.error = originalError; }
+});
+
+test("expired consent is classified by the actual SQLite Durable Object", async () => {
+  const { mf, binding } = await actualCoordinator();
+  const env = { ...environment(), OAUTH_SINGLE_USE: binding };
+  const originalError = console.error;
+  const logs = [];
+  console.error = (...values) => logs.push(values.join(" "));
+  try {
+    const { body: client } = await registerClient(env);
+    const consent = await send(oauthQuery(client.client_id, await sha256("j".repeat(43))), env);
+    const ticket = ticketFrom(await consent.text());
+    const browserCookie = cookieFrom(consent);
+    await mf.dispatchFetch("http://localhost:8787/test-expired-flow", {
+      method: "POST", headers: { "content-type": "application/json" },
+      body: JSON.stringify({ kind: "consent", id: ticket, browserNonce: browserCookie.split("=")[1] })
+    });
+    const expired = await send("/authorize", env, { method: "POST", headers: {
+      cookie: browserCookie, "content-type": "application/x-www-form-urlencoded"
+    }, body: new URLSearchParams({ ticket }) });
+    assert.equal(expired.status, 403);
+    assert.equal((await expired.json()).recovery, "restart_authorization");
+    assert.deepEqual(logs.map((line) => JSON.parse(line)), [{
+      event: "hedgrops_oauth_authorization_failure",
+      stage: "consent_validate_and_consume",
+      category: "consent_expired"
+    }]);
+    assert.ok(!logs.join("\n").includes(ticket));
+  } finally {
+    console.error = originalError;
+    await mf.dispose();
+  }
+});
+
+test("authorization infrastructure failures have fixed secret-safe categories", async () => {
+  const variants = [
+    ["coordinator_unavailable", "consent_validate_and_consume", async (env) => {
+      env.OAUTH_SINGLE_USE.get = () => ({ fetch: async () => {
+        throw new Error("sensitive-consent-coordinator-detail");
+      } });
+    }],
+    ["access_state_conflict", "access_state_create", async (env) => {
+      const stub = env.OAUTH_SINGLE_USE.get();
+      env.OAUTH_SINGLE_USE.get = () => ({ fetch: async (request) => {
+        const copy = request.clone();
+        const input = await copy.json();
+        if (new URL(request.url).pathname === "/put-flow" && input.kind === "access") {
+          return Response.json({ ok: false, reason: "conflict" }, { status: 409 });
+        }
+        return stub.fetch(request);
+      } });
+    }],
+    ["access_state_storage_unavailable", "access_state_create", async (env) => {
+      const stub = env.OAUTH_SINGLE_USE.get();
+      env.OAUTH_SINGLE_USE.get = () => ({ fetch: async (request) => {
+        const copy = request.clone();
+        const input = await copy.json();
+        if (new URL(request.url).pathname === "/put-flow" && input.kind === "access") {
+          throw new Error("sensitive-access-storage-detail");
+        }
+        return stub.fetch(request);
+      } });
+    }]
+  ];
+  for (const [category, stage, arrange] of variants) {
+    const env = environment();
+    const { body: client } = await registerClient(env);
+    const consent = await send(oauthQuery(client.client_id, await sha256("k".repeat(43))), env);
+    const ticket = ticketFrom(await consent.text());
+    const browserCookie = cookieFrom(consent);
+    await arrange(env);
+    const logs = [];
+    const originalError = console.error;
+    console.error = (...values) => logs.push(values.join(" "));
+    try {
+      const result = await send("/authorize", env, { method: "POST", headers: {
+        cookie: browserCookie, "content-type": "application/x-www-form-urlencoded"
+      }, body: new URLSearchParams({ ticket }) });
+      assert.equal(result.status, 503, category);
+      assert.equal((await result.json()).recovery, "restart_authorization", category);
+      assert.deepEqual(logs.map((line) => JSON.parse(line)), [{
+        event: "hedgrops_oauth_authorization_failure", stage, category
+      }], category);
+      const emitted = logs.join("\n");
+      for (const forbidden of [
+        ticket, browserCookie, client.client_id, env.ACCESS_CLIENT_SECRET, env.MCP_ALLOWED_SUBJECT,
+        "sensitive-consent-coordinator-detail", "sensitive-access-storage-detail"
+      ]) assert.ok(!emitted.includes(forbidden), `${category} leaked ${forbidden}`);
+    } finally { console.error = originalError; }
+  }
+});
+
+test("begin authorization coordinator failures use fixed secret-safe categories", async () => {
+  for (const [category, fetch] of [
+    ["coordinator_unavailable", async () => { throw new Error("sensitive-begin-coordinator-detail"); }],
+    ["consent_state_conflict", async () => Response.json({ ok: false, reason: "conflict" }, { status: 409 })]
+  ]) {
+    const env = environment();
+    const { body: client } = await registerClient(env);
+    env.OAUTH_SINGLE_USE.get = () => ({ fetch });
+    const logs = [];
+    const originalError = console.error;
+    console.error = (...values) => logs.push(values.join(" "));
+    try {
+      const result = await send(oauthQuery(client.client_id, await sha256("m".repeat(43))), env);
+      assert.equal(result.status, 503, category);
+      assert.equal((await result.json()).recovery, "restart_authorization", category);
+      assert.deepEqual(logs.map((line) => JSON.parse(line)), [{
+        event: "hedgrops_oauth_authorization_failure",
+        stage: "consent_state_create",
+        category
+      }]);
+      const emitted = logs.join("\n");
+      assert.ok(!emitted.includes(client.client_id));
+      assert.ok(!emitted.includes("sensitive-begin-coordinator-detail"));
+    } finally { console.error = originalError; }
+  }
+});
+
+test("unexpected authorization exceptions expose only the fixed stage and category", async () => {
+  const env = environment();
+  const { body: client } = await registerClient(env);
+  const consent = await send(oauthQuery(client.client_id, await sha256("l".repeat(43))), env);
+  const ticket = ticketFrom(await consent.text());
+  const browserCookie = cookieFrom(consent);
+  let endpointReads = 0;
+  Object.defineProperty(env, "ACCESS_AUTHORIZATION_URL", { configurable: true, get() {
+    endpointReads += 1;
+    if (endpointReads > 4) throw new Error("sensitive-authorization-detail");
+    return `${ACCESS}/authorize`;
+  } });
+  const logs = [];
+  const originalError = console.error;
+  console.error = (...values) => logs.push(values.join(" "));
+  try {
+    const response = await send("/authorize", env, { method: "POST", headers: {
+      cookie: browserCookie, "content-type": "application/x-www-form-urlencoded"
+    }, body: new URLSearchParams({ ticket }) });
+    assert.equal(response.status, 503);
+    assert.equal((await response.json()).recovery, "restart_authorization");
+    assert.deepEqual(logs.map((line) => JSON.parse(line)), [{
+      event: "hedgrops_oauth_authorization_failure",
+      stage: "approve_authorization",
+      category: "authorization_unexpected_failure"
+    }]);
+    assert.ok(!logs.join("\n").includes("sensitive-authorization-detail"));
+    assert.ok(!logs.join("\n").includes(ticket));
+    assert.ok(!logs.join("\n").includes(client.client_id));
+  } finally { console.error = originalError; }
+});
+
+test("unexpected begin-authorization exceptions use the fixed category", async () => {
+  const env = environment();
+  const { body: client } = await registerClient(env);
+  env.OAUTH_KV.get = async () => { throw new Error("sensitive-provider-parse-detail"); };
+  const logs = [];
+  const originalError = console.error;
+  console.error = (...values) => logs.push(values.join(" "));
+  try {
+    const response = await send(oauthQuery(client.client_id, await sha256("n".repeat(43))), env);
+    assert.equal(response.status, 503);
+    assert.equal((await response.json()).recovery, "restart_authorization");
+    assert.deepEqual(logs.map((line) => JSON.parse(line)), [{
+      event: "hedgrops_oauth_authorization_failure",
+      stage: "begin_authorization",
+      category: "authorization_unexpected_failure"
+    }]);
+    assert.ok(!logs.join("\n").includes("sensitive-provider-parse-detail"));
+    assert.ok(!logs.join("\n").includes(client.client_id));
+  } finally { console.error = originalError; }
 });
 
 test("consent identifies the registered client and escapes display metadata without auto-approval", async () => {
