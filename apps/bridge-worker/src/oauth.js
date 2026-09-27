@@ -7,6 +7,7 @@ import { callCoordinator, coordinatorStub } from "./oauth-coordinator.js";
 const SCOPE = "evidence:read";
 const CALLBACK_PATH = "/callback";
 const STATE_TTL = 300;
+const CALLBACK_DIAGNOSTIC_EVENT = "hedgrops_oauth_callback_failure";
 class AccessKeysUnavailable extends Error {}
 
 function fail(status = 503, code = status === 503 ? "MCP_AUTH_UNAVAILABLE" : "MCP_AUTH_FAILED") {
@@ -14,6 +15,11 @@ function fail(status = 503, code = status === 503 ? "MCP_AUTH_UNAVAILABLE" : "MC
     error: code,
     authorizing: false
   }), { status, headers: { "content-type": "application/json", "cache-control": "no-store" } });
+}
+
+function callbackUnavailable(stage, code = "MCP_AUTH_UNAVAILABLE") {
+  console.error(JSON.stringify({ event: CALLBACK_DIAGNOSTIC_EVENT, stage }));
+  return fail(503, code);
 }
 
 function randomToken() {
@@ -202,10 +208,15 @@ async function finishAuthorization(request, env, config) {
     client_secret: env.ACCESS_CLIENT_SECRET, redirect_uri: config.callback,
     code_verifier: stored.verifier
   });
-  const response = await fetch(env.ACCESS_TOKEN_URL, {
-    method: "POST", redirect: "error", headers: { "content-type": "application/x-www-form-urlencoded", accept: "application/json" },
-    body
-  });
+  let response;
+  try {
+    response = await fetch(env.ACCESS_TOKEN_URL, {
+      method: "POST", redirect: "error", headers: { "content-type": "application/x-www-form-urlencoded", accept: "application/json" },
+      body
+    });
+  } catch {
+    return callbackUnavailable("access_token_fetch_unavailable");
+  }
   if (!response.ok) return fail(401);
   let tokenResponse;
   try { tokenResponse = await response.json(); } catch { return fail(401); }
@@ -213,16 +224,23 @@ async function finishAuthorization(request, env, config) {
   let subject;
   try { subject = await verifyAccessIdToken(env, tokenResponse.id_token, stored.nonce); }
   catch (error) { return error instanceof AccessKeysUnavailable
-    ? fail(503, "MCP_AUTH_UPSTREAM_UNAVAILABLE") : fail(401); }
+    ? callbackUnavailable("access_jwks_unavailable", "MCP_AUTH_UPSTREAM_UNAVAILABLE") : fail(401); }
   if (subject !== env.MCP_ALLOWED_SUBJECT) return fail(403);
-  const client = await env.OAUTH_PROVIDER.lookupClient(stored.authRequest.clientId);
+  let client;
+  try { client = await env.OAUTH_PROVIDER.lookupClient(stored.authRequest.clientId); }
+  catch { return callbackUnavailable("provider_client_lookup_unavailable"); }
   if (!client || client.clientId !== stored.authRequest.clientId ||
     !Array.isArray(client.redirectUris) || !client.redirectUris.includes(stored.authRequest.redirectUri) ||
     !redirectAllowed(stored.authRequest.redirectUri)) return fail(403);
-  const { redirectTo } = await env.OAUTH_PROVIDER.completeAuthorization({
-    request: stored.authRequest, userId: subject,
-    metadata: { bridge: "hedgrops-evidence" }, scope: [SCOPE], props: { sub: subject }
-  });
+  let redirectTo;
+  try {
+    ({ redirectTo } = await env.OAUTH_PROVIDER.completeAuthorization({
+      request: stored.authRequest, userId: subject,
+      metadata: { bridge: "hedgrops-evidence" }, scope: [SCOPE], props: { sub: subject }
+    }));
+  } catch {
+    return callbackUnavailable("provider_authorization_completion_unavailable");
+  }
   const redirect = new Response(null, { status: 302, headers: {
     location: redirectTo, "cache-control": "no-store",
     "set-cookie": setCookie("hbo_access", "", 0)
@@ -238,7 +256,9 @@ async function interaction(request, env, config) {
     if (path === CALLBACK_PATH && request.method === "GET") return await finishAuthorization(request, env, config);
     return new Response("Not Found", { status: 404, headers: { "cache-control": "no-store" } });
   } catch {
-    return fail(503);
+    return path === CALLBACK_PATH
+      ? callbackUnavailable("callback_unexpected_failure")
+      : fail(503);
   }
 }
 
