@@ -148,7 +148,7 @@ export function AppLayoutClient({ children }: { children: React.ReactNode }) {
     : productNavLinks;
 
   const sharedSurface = ['/dashboard', '/activity', '/settings'].includes(activePathname ?? '');
-  const scopeFirstHome = explicitSyntheticJourney && activePathname === '/dashboard';
+  const scopeFirstHome = activePathname === '/dashboard';
   const primaryNavigation = (
     <nav aria-label="Primary" data-testid={explicitSyntheticJourney ? 'synthetic-bottom-nav' : 'product-bottom-nav'} className={scopeFirstHome ? home.scopeNavigation : "fixed inset-x-0 bottom-0 z-40 border-t border-hedgr-100 bg-white"}>
       <div className={wallet.bottomNav} data-testid="nav-links">{syntheticNavLinks.map(link => <Link key={link.href} href={navHref(link.href, explicitSyntheticJourney)} aria-current={isNavLinkActive(link.href) ? 'page' : undefined}>{link.label}</Link>)}</div>
@@ -159,7 +159,7 @@ export function AppLayoutClient({ children }: { children: React.ReactNode }) {
       <TrustDisclosureBanner syntheticResearch={explicitSyntheticJourney} dismissible={false} consolidateTechnicalDetails learnMoreUrl={trustInformationHref} />
       <header className={home.brand} data-testid={explicitSyntheticJourney ? 'synthetic-journey-shell' : 'app-nav'}>
         <Link href={navHref('/dashboard', explicitSyntheticJourney)} aria-label="Hedgr Home"><Image src="/brand/hedgr_logo.svg" alt="Hedgr" width={92} height={32} priority /></Link>
-        {scopeFirstHome ? primaryNavigation : <div className={baseline.headerLinks}>
+        {scopeFirstHome ? (!explicitSyntheticJourney && copilotNavLinks.length ? <div className={baseline.headerLinks}>{copilotNavLinks.map(link => <Link key={link.href} href={link.href} data-testid={link.testId}>{link.label}</Link>)}{primaryNavigation}</div> : primaryNavigation) : <div className={baseline.headerLinks}>
           {!explicitSyntheticJourney ? copilotNavLinks.map(link => <Link key={link.href} href={link.href} data-testid={link.testId}>{link.label}</Link>) : null}
           {!settingsActive ? <Link href={navHref('/settings', explicitSyntheticJourney)}>Settings</Link> : null}
         </div>}
