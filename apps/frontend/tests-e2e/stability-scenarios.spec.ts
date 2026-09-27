@@ -324,6 +324,31 @@ test.describe('Research Two-Beat Sarah example', () => {
       });
     }
 
+    // Stacked-rows amendment: no row value shares a line with its heading or marker, and desktop rows stay aligned.
+    for (const [width, fontSize] of [[390, null], [640, null], [1024, null], [1280, null], [1440, null], [320, '200%']] as const) {
+      await page.setViewportSize({ width, height: 900 });
+      await page.evaluate((size) => { document.documentElement.style.fontSize = size ?? ''; }, fontSize);
+      for (const state of ['study-panel-before', 'study-panel-after'] as const) {
+        for (const key of rowKeys) {
+          const row = page.getByTestId(state).locator(`[data-row="${key}"]`);
+          const heading = await row.locator('dt').boundingBox();
+          const value = await row.locator('dd').boundingBox();
+          expect(heading).toBeTruthy();
+          expect(value).toBeTruthy();
+          expect(value!.y).toBeGreaterThanOrEqual(heading!.y + heading!.height - 1);
+        }
+      }
+      if (width >= 1024) {
+        for (const key of rowKeys) {
+          const beforeRow = await page.getByTestId('study-panel-before').locator(`[data-row="${key}"]`).boundingBox();
+          const afterRow = await page.getByTestId('study-panel-after').locator(`[data-row="${key}"]`).boundingBox();
+          expect(Math.abs(beforeRow!.y - afterRow!.y)).toBeLessThan(4);
+        }
+      }
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+    }
+    await page.evaluate(() => { document.documentElement.style.fontSize = ''; });
+
     await page.setViewportSize({ width: 320, height: 720 });
     await page.evaluate(() => { document.documentElement.style.fontSize = '200%'; });
     const stackedBefore = await page.getByRole('heading', { name: 'Before the fee changed' }).boundingBox();
