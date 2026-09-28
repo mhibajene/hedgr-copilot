@@ -57,7 +57,9 @@ for (const synthetic of [false, true]) {
           const amountSize = await page.getByTestId('activity-delta-withdraw').evaluate(el => parseFloat(getComputedStyle(el).fontSize));
           const balanceSize = await page.getByTestId('activity-reconciliation-remaining').evaluate(el => parseFloat(getComputedStyle(el).fontSize));
           expect(amountSize).toBeLessThan(balanceSize);
-          await expect(page.getByTestId('activity-result-withdraw')).toHaveCSS('background-color', 'rgb(248, 237, 231)');
+          // HOME-EXPERIENCE-001 T4: day balances replace the peach balance-after strip.
+          await expect(page.getByTestId('activity-result-withdraw')).toHaveCount(0);
+          await expect(page.getByTestId('activity-day-balance').first()).toBeVisible();
         }
         if (path === '/settings') {
           await expect(page.getByTestId('simulation-display-currency-settings')).toHaveCount(synthetic ? 1 : 0);
@@ -115,7 +117,7 @@ for (const synthetic of [false, true]) {
     }
     await page.getByTestId('filter-withdrawals').click();
     await expect(page.getByTestId('activity-row-deposit')).toHaveCount(0);
-    await expect(page.getByTestId('activity-result-withdraw')).toContainText('$3.00');
+    await expect(page.getByTestId('activity-day-balance').first()).toHaveText('Balance $3.00');
     await expect(page.getByTestId('activity-reconciliation-remaining')).toHaveText('$3.00');
     expect(await unchangedState(page)).toEqual(before);
   });

@@ -137,11 +137,16 @@ describe('ActivityPage synthetic evidence grammar', () => {
 
     expect(screen.queryByTestId('activity-synthetic-condition')).toBeNull();
 
-    expect(screen.getByTestId('activity-result-deposit').textContent).toBe(
-      'Balance after $5.00'
+    // HOME-EXPERIENCE-001 T4: the entry thread supersedes the balance-after strip.
+    expect(screen.queryByTestId('activity-result-deposit')).toBeNull();
+    expect(screen.queryByText(/Balance after/i)).toBeNull();
+    expect(screen.getAllByTestId('activity-day-header')).toHaveLength(1);
+    expect(screen.getByTestId('activity-day-header').textContent).toMatch(
+      /^(Sun|Mon|Tue|Wed|Thu|Fri|Sat) \d{1,2} (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)$/
     );
-    expect(screen.getByTestId('activity-result-withdraw').textContent).toBe(
-      'Balance after $3.00'
+    expect(screen.getByTestId('activity-day-balance').textContent).toBe('Balance $3.00');
+    expect(screen.getByTestId('activity-thread-start').textContent).toMatch(
+      /^Started at \$0\.00 · \d{1,2} (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)$/
     );
     expect(
       screen.getByTestId('activity-reconciliation-remaining').textContent
@@ -154,11 +159,16 @@ describe('ActivityPage synthetic evidence grammar', () => {
         .getAllByTestId('activity-row-deposit')
         .every((row) => within(row).queryByText(/ZMW/) === null)
     ).toBe(true);
+    const nextStep = screen.getByTestId('activity-next-step');
+    expect(within(nextStep).getByText('Next step')).toBeDefined();
+    expect(within(nextStep).getByText('See it on your position')).toBeDefined();
     expect(
-      screen
-        .getByRole('link', { name: 'Return to current position' })
-        .getAttribute('href')
+      within(nextStep).getByText('Hedgr explains what changed between these two entries.')
+    ).toBeDefined();
+    expect(
+      screen.getByRole('link', { name: 'Back to your position' }).getAttribute('href')
     ).toBe('/dashboard-synthetic-journey');
+    expect(screen.queryByRole('link', { name: 'Return to current position' })).toBeNull();
 
     const pendingDeposit = screen
       .getAllByTestId('activity-row-deposit')
@@ -171,8 +181,13 @@ describe('ActivityPage synthetic evidence grammar', () => {
 
     expect(pendingDeposit).toBeDefined();
     expect(failedWithdrawal).toBeDefined();
-    expect(within(pendingDeposit!).queryByText(/Balance after/i)).toBeNull();
-    expect(within(failedWithdrawal!).queryByText(/Balance after/i)).toBeNull();
+    expect(within(pendingDeposit!).queryByText(/Completed/)).toBeNull();
+    expect(within(failedWithdrawal!).queryByText(/Completed/)).toBeNull();
+    expect(within(pendingDeposit!).getByTestId('tx-status-pill')).toBeDefined();
+    expect(within(failedWithdrawal!).getByTestId('tx-status-pill')).toBeDefined();
+    for (const row of screen.getAllByTestId(/^activity-row-/).filter((r) => r.getAttribute('data-activity-status') === 'SUCCESS')) {
+      expect(within(row).getByTestId(/^activity-status-line-/).textContent).toMatch(/^Completed · \d{2}:\d{2}$/);
+    }
     expect(
       screen
         .queryAllByTestId('tx-status-pill')
@@ -190,10 +205,25 @@ describe('ActivityPage synthetic evidence grammar', () => {
     expect(within(failedWithdrawal!.closest('details')!).queryByText('After')).toBeNull();
     fireEvent.click(screen.getByTestId('filter-withdrawals'));
 
-    expect(screen.getByTestId('activity-result-withdraw').textContent).toBe(
-      'Balance after $3.00'
+    // Day balances still come from the full completed record.
+    expect(screen.getByTestId('activity-day-balance').textContent).toBe('Balance $3.00');
+    expect(screen.queryAllByTestId('activity-row-deposit')).toHaveLength(0);
+    expect(screen.queryByTestId('activity-thread-start')).toBeNull();
+  });
+
+  test('offers only the way back when the entries are not exactly two', () => {
+    activityStateMocks.transactions = makeMixedTransactions().filter(
+      (tx) => !(tx.type === 'withdrawal' && tx.status === 'settled')
     );
-    expect(screen.queryByTestId('activity-result-deposit')).toBeNull();
+
+    render(<ActivityPage />);
+
+    expect(screen.queryByTestId('activity-next-step')).toBeNull();
+    expect(screen.queryByText('Hedgr explains what changed between these two entries.')).toBeNull();
+    expect(
+      screen.getByRole('link', { name: 'Back to your position' }).getAttribute('href')
+    ).toBe('/dashboard-synthetic-journey');
+    expect(screen.getByTestId('activity-day-balance').textContent).toBe('Balance $5.00');
   });
 
   test('shares simulated evidence treatment on the default route without research query state', () => {
@@ -205,12 +235,9 @@ describe('ActivityPage synthetic evidence grammar', () => {
     render(<ActivityPage />);
 
     expect(screen.getByTestId('activity-balance-reconciliation')).toBeTruthy();
-    expect(screen.getByTestId('activity-result-deposit').textContent).toBe(
-      'Balance after $5.00'
-    );
-    expect(screen.getByTestId('activity-result-withdraw').textContent).toBe(
-      'Balance after $3.00'
-    );
+    expect(screen.queryByTestId('activity-result-deposit')).toBeNull();
+    expect(screen.getByTestId('activity-day-balance').textContent).toBe('Balance $3.00');
+    expect(screen.getByTestId('activity-thread-start')).toBeTruthy();
     expect(screen.getByTestId('activity-simulation-context').textContent).toMatch(
       /No entry represents real money moving/i
     );
@@ -220,9 +247,8 @@ describe('ActivityPage synthetic evidence grammar', () => {
         .every((row) => within(row).queryByText(/ZMW/) === null)
     ).toBe(true);
     expect(
-      screen
-        .getByRole('link', { name: 'Return to current position' })
-        .getAttribute('href')
+      screen.getByRole('link', { name: 'Back to your position' }).getAttribute('href')
     ).toBe('/dashboard');
+    expect(screen.getByTestId('activity-next-step')).toBeTruthy();
   });
 });

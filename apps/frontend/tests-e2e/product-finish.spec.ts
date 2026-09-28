@@ -131,7 +131,7 @@ for (const synthetic of [true, false]) {
     await page.getByTestId('filter-withdrawals').click();
     await expect(page.getByTestId('filter-withdrawals')).toHaveAttribute('aria-pressed', 'true');
     await expect(page.getByTestId('activity-row-deposit')).toHaveCount(0);
-    await expect(page.getByTestId('activity-result-withdraw')).toContainText('$300.00');
+    await expect(page.getByTestId('activity-day-balance').first()).toHaveText('Balance $300.00');
     await page.getByTestId('filter-all').click();
     await expectMainFits(page);
     await page.screenshot({ path: testInfo.outputPath(`${family}-activity.png`), fullPage: true });
