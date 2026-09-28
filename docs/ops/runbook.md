@@ -60,10 +60,11 @@ Hosted checks commonly seen on PRs include `validate` and `E2E smoke (@hedgr/fro
 
 1. Open the PR as draft. Fill the template (acceptance, tests, rollback).
 2. Implement on the PR. Head SHA is the only verification target.
-3. Distinct verifier posts an attestation line for that exact head SHA.
-4. `hedgr/verifier` becomes success only when that PASS matches the current head.
-5. Enable auto-merge only after that status and every other applicable gate.
-6. If the head changes, attestation is invalid until a new PASS on the new SHA.
+3. Immediately before a verifier is launched, the steward brings the PR branch up to date with `main` (GitHub **Update branch**, or a manual `workflow_dispatch` of `.github/workflows/pr-auto-update.yml`). The verifier reports PASS or FAIL against that exact current head SHA. `pr-auto-update` no longer runs on push to `main` or on a schedule. If `main` moves after a PASS and the branch must be updated again (required because `main` requires up-to-date branches), the new head invalidates the previous PASS and must be independently re-verified before merge.
+4. Distinct verifier posts an attestation line for that exact head SHA.
+5. `hedgr/verifier` becomes success only when that PASS matches the current head.
+6. Enable auto-merge only after that status and every other applicable gate.
+7. If the head changes, attestation is invalid until a new PASS on the new SHA.
 
 Descriptive labels may still be applied as metadata (`product:approved`, `qa:approved`, one `area:*`, one `risk:*`) via `.github/scripts/bootstrap-labels.sh` if missing. They do not substitute for ticket authority, independent verifier PASS, exact-SHA verification, or release/launch authority.
 

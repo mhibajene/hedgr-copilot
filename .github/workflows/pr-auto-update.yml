@@ -1,9 +1,8 @@
+# Manual-only under the 2026-09-28 verifier invariant (AGENTS.md standing PR
+# invariant; docs/ops/runbook.md PR Posture). Automatic updates would create
+# new commits and invalidate an independent verifier PASS on the current head SHA.
 name: PR auto-update (merge main -> PR heads)
 on:
-  push:
-    branches: [main]
-  schedule:
-    - cron: "0 */6 * * *"    # safety sweep every 6h (UTC)
   workflow_dispatch:
 
 permissions:
