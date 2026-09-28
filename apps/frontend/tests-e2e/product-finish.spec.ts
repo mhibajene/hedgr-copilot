@@ -45,7 +45,9 @@ for (const synthetic of [true, false]) {
           await expect(page.getByText('Includes your simulated activity.', { exact: true })).toBeVisible();
           await expect(page.getByTestId('dashboard-balance-scope')).toHaveCount(0);
         } else {
-          const framing = page.getByTestId('dashboard-orientation').getByText('Hedgr helps you understand', { exact: false });
+          // HOME-EXPERIENCE-001 T1: canonical title; the context / non-instruction line stays visible (D-130, decision 2).
+          await expect(page.getByRole('heading', { name: 'Your position', exact: true })).toBeVisible();
+          const framing = page.getByTestId('dashboard-context-line');
           await expect(framing).toBeVisible();
           await expect(framing).toContainText('provides context, not an instruction.');
         }
@@ -106,18 +108,12 @@ for (const synthetic of [true, false]) {
     };
     // Move the login pointer away so these assertions measure the resting state.
     await page.mouse.move(0, 0);
-    if (synthetic) {
-      await expect(deposit).toHaveCSS('background-color', 'rgb(31, 39, 71)');
-      await expect(deposit).toHaveCSS('color', 'rgb(255, 255, 255)');
-      await expect(activity).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
-      await expect(activity).toHaveCSS('color', 'rgb(70, 88, 160)');
-    } else {
-      await expect(deposit).toHaveCSS('background-color', 'rgb(250, 248, 245)');
-      await expect(deposit).toHaveCSS('color', 'rgb(31, 39, 71)');
-      await expect(activity).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
-      await expect(activity).toHaveCSS('color', 'rgb(255, 255, 255)');
-      expect((await deposit.evaluate(appearance)).slice(2)).toEqual((await activity.evaluate(appearance)).slice(2));
-    }
+    // HOME-EXPERIENCE-001 T1: both routes use the canonical filled primary and text secondary.
+    await expect(deposit).toHaveCSS('background-color', 'rgb(31, 39, 71)');
+    await expect(deposit).toHaveCSS('color', 'rgb(255, 255, 255)');
+    await expect(activity).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
+    await expect(activity).toHaveCSS('color', 'rgb(70, 88, 160)');
+    expect((await deposit.evaluate(appearance))[2]).toEqual((await activity.evaluate(appearance))[2]);
     expect((await deposit.boundingBox())!.height).toBeGreaterThanOrEqual(44);
     expect((await activity.boundingBox())!.height).toBeGreaterThanOrEqual(44);
     await expect(deposit).toHaveAttribute('href', route('/deposit'));

@@ -77,10 +77,11 @@ test('research baseline: navigation, dialog focus, currency and event reconcilia
   await expect(page.getByTestId('activity-result-withdraw')).toContainText('$300.00');
   expect(await financialState(page)).toEqual(before);
   await page.goto('/dashboard');
-  await expect(page.getByRole('heading', { name: 'See what you have and what changed.' })).toBeVisible();
+  // HOME-EXPERIENCE-001 T1: default Home shares the canonical title; currency context stays journey-only.
+  await expect(page.getByRole('heading', { name: 'Your position', exact: true })).toBeVisible();
   await expect(page.getByRole('button', { name: 'Currency context', exact: true })).toHaveCount(0);
   await page.goto(`${home}?scenario=unavailable-data`);
-  await expect(page.getByRole('heading', { name: 'Your position', exact: true })).toHaveCount(0);
+  await expect(page.getByRole('button', { name: 'Currency context', exact: true })).toHaveCount(0);
 });
 
 test('polished Home accordions preserve keyboard operation, planning and research disclosures', async ({ page }, testInfo) => {
@@ -148,7 +149,8 @@ test('Shared baseline supports both journeys while preserving query-route eligib
     await page.goto(route);
     await expect(page.getByRole('main')).toHaveCSS('background-color', 'rgb(250, 248, 245)');
     await expect(page.getByTestId('research-planning-targets')).toHaveCount(0);
-    await expect(page.getByRole('heading', { name: 'Your position', exact: true })).toHaveCount(0);
+    await expect(page.getByTestId('dashboard-planning-targets')).toHaveCount(1);
+    await expect(page.getByRole('heading', { name: 'Your position', exact: true })).toBeVisible();
   }
   expect(await financialState(page)).toEqual(before);
 });
