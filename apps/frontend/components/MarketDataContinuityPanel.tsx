@@ -35,14 +35,14 @@ export function MarketDataContinuityPanel({
       data-testid={dataTestId}
       className="rounded-[1.25rem] border border-hedgr-300 bg-white p-5 text-hedgr-800 shadow-sm"
     >
-      <div className="flex items-center gap-3">
+      <div className="flex flex-wrap items-center gap-3">
         <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-hedgr-100 text-hedgr-primary" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" className="h-5 w-5" focusable="false">
             <circle cx="12" cy="12" r="9" />
             <path d="M10 9v6M14 9v6" />
           </svg>
         </span>
-        <h2 className="text-base font-semibold text-hedgr-800">{headline}</h2>
+        <h2 className="min-w-0 flex-1 basis-40 break-words text-base font-semibold text-hedgr-800">{headline}</h2>
       </div>
       {labelled ? (
         <dl className="mt-3">
