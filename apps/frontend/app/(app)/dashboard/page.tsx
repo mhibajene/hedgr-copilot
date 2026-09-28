@@ -226,7 +226,8 @@ export default function DashboardPage() {
     transactions.some((tx) => tx.status === "pending");
 
   // T3 surfaces derive only from completed ledger entries (Activity order). They
-  // appear only when that derivation agrees with the displayed balance; otherwise
+  // appear only when that derivation agrees with the displayed balance, in either
+  // balance mode (in wallet mode the wallet and ledger must match); otherwise
   // Home keeps the existing observation.
   const positionEntries = useMemo(
     () => buildPositionEntries(transactions.map(txToLifecycle)),
@@ -237,7 +238,6 @@ export default function DashboardPage() {
   const positionDerivable =
     productSimulationActive && ready && visitRead && !positionLoading && !error &&
     (!cleanStartRequested || (hasNoTransactions && total === 0)) &&
-    getBalanceMode() === "ledger" &&
     !currencyComparisonPending && Math.abs(ledgerPosition - total) < 0.005;
   const normalPosture = engineState.posture === "normal";
   const firstUse = positionDerivable && transactions.length === 0;
