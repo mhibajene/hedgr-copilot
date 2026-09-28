@@ -30,7 +30,7 @@
 .defaultEvent > div > div:first-child { display: none; }
 .defaultEvent [data-testid^="activity-type-"] { font-size: 1rem; }
 .defaultEvent svg { display: block; }
-.activity a[href*="dashboard"] { text-decoration: underline; text-underline-offset: .2em; font-size: .9375rem; background: transparent; box-shadow: none; }
+.activity a[href*="dashboard"]:not([data-testid="activity-back-to-position"]) { text-decoration: underline; text-underline-offset: .2em; font-size: .9375rem; background: transparent; box-shadow: none; }
 .activity :is(a, button, summary):focus-visible { outline: 2px solid var(--color-hedgr-500); outline-offset: 3px; }
 .settings section h2 { font-size: .75rem; border-color: var(--home-divider); }
 .settings dl { background: transparent; }
@@ -45,7 +45,7 @@
 .currencyPill { display: inline-flex; align-items: center; justify-content: center; gap: .75rem; min-height: 2.75rem; padding: .375rem .875rem; border: 1px solid var(--color-hedgr-600); border-radius: 2rem; color: var(--color-hedgr-800); font-size: .875rem; font-weight: 600; }
 @media (min-width: 64rem) { .activity, .settings { padding-inline: 2rem; padding-top: 1.5rem; } .activity h1, .settings h1 { font-size: 2.25rem; } }
 
-.activity a[href*="dashboard"] { border: 0; padding-inline: 0; }
+.activity a[href*="dashboard"]:not([data-testid="activity-back-to-position"]) { border: 0; padding-inline: 0; }
 .settings section h2 { border-bottom: 0; padding-bottom: 0; }
 /* A long delta must wrap within the row instead of pushing the disclosure offscreen. */
 .eventSummary .delta { min-width: 0; max-width: 12rem; overflow-wrap: anywhere; }

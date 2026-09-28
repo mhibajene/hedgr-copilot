@@ -17,6 +17,8 @@ import {
   type TxLifecycle,
 } from '../../../lib/tx';
 import { EmptyState } from '@hedgr/ui';
+import { ActionDock } from '../ActionDock';
+import { formatShortDate } from '../../../lib/state/last-visit';
 import {
   CLASS_A_VAL_002_JOURNEY_PARAM,
   CLASS_A_VAL_002_JOURNEY_VALUE,
@@ -84,6 +86,73 @@ function getSyntheticResultingBalances(
 }
 
 type FilterType = 'all' | 'deposits' | 'withdrawals';
+
+// HOME-EXPERIENCE-001 T4: entry thread helpers (fixed names keep dates stable across browsers).
+const THREAD_WEEKDAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+const THREAD_MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+/** "Sat 26 Sep" (local time) */
+function formatThreadDay(timestamp: number): string {
+  const date = new Date(timestamp);
+  return `${THREAD_WEEKDAYS[date.getDay()]} ${date.getDate()} ${THREAD_MONTHS[date.getMonth()]}`;
+}
+
+/** "09:41" (local time, 24-hour) */
+function formatThreadTime(timestamp: number): string {
+  const date = new Date(timestamp);
+  return `${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
+}
+
+function threadDayKey(timestamp: number): string {
+  const date = new Date(timestamp);
+  return `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
+}
+
+function ThreadIcon({ type }: { type: 'DEPOSIT' | 'WITHDRAW' }) {
+  return (
+    <span className={finish.threadIcon} aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" focusable="false">
+        {type === 'DEPOSIT' ? (
+          <>
+            <path d="M12 4v11" />
+            <path d="m7.5 10.5 4.5 4.5 4.5-4.5" />
+          </>
+        ) : (
+          <>
+            <path d="M12 15V4" />
+            <path d="m7.5 8.5 4.5-4.5 4.5 4.5" />
+          </>
+        )}
+        <path d="M5 16v3h14v-3" />
+      </svg>
+    </span>
+  );
+}
+
+/** Title, status line and amount shared by both simulated thread cards. */
+function ThreadCardContent({ tx, completed }: { tx: TxLifecycle; completed: boolean }) {
+  return (
+    <>
+      <span className={finish.threadCardText}>
+        <strong data-testid={`activity-type-${tx.type.toLowerCase()}`}>
+          {tx.type === 'DEPOSIT' ? 'Simulated deposit' : 'Simulated withdrawal'}
+        </strong>
+        <small data-testid={`activity-status-line-${tx.type.toLowerCase()}`}>
+          {completed ? (
+            <>Completed · {formatThreadTime(tx.createdAt)}</>
+          ) : (
+            <>
+              <TxStatusPill status={tx.status} /> <span>{formatThreadTime(tx.createdAt)}</span>
+            </>
+          )}
+        </small>
+      </span>
+      <strong className={finish.threadCardAmount} data-testid={`activity-delta-${tx.type.toLowerCase()}`}>
+        {tx.type === 'DEPOSIT' ? '+' : '−'}${tx.amountUSD.toFixed(2)}
+      </strong>
+    </>
+  );
+}
 
 function TransactionTypeIcon({ type }: { type: 'DEPOSIT' | 'WITHDRAW' }) {
   if (type === 'DEPOSIT') {
@@ -280,6 +349,61 @@ export default function ActivityPage() {
 
   const grouped = useMemo(() => groupByDay(sorted), [sorted]);
 
+  // T4 thread: newest-first days of the filtered list; day balances and the
+  // starting point come from the full completed record in Activity order.
+  const completedChronological = useMemo(
+    () =>
+      lifecycleTxs
+        .filter((tx) => tx.status === PublicTxStatus.SUCCESS)
+        .sort((a, b) => a.createdAt - b.createdAt || a.id.localeCompare(b.id)),
+    [lifecycleTxs]
+  );
+  const threadDays = useMemo(() => {
+    const endOfDayBalance = new Map<string, number>();
+    for (const tx of completedChronological) {
+      const after = syntheticResultingBalances.get(tx.id);
+      if (after !== undefined) endOfDayBalance.set(threadDayKey(tx.createdAt), after);
+    }
+    const days: { key: string; label: string; balance?: number; txs: TxLifecycle[] }[] = [];
+    const newestFirst = [...filteredTxs].sort(
+      (a, b) => b.createdAt - a.createdAt || b.id.localeCompare(a.id)
+    );
+    for (const tx of newestFirst) {
+      const key = threadDayKey(tx.createdAt);
+      let day = days.at(-1);
+      if (!day || day.key !== key) {
+        day = { key, label: formatThreadDay(tx.createdAt), balance: endOfDayBalance.get(key), txs: [] };
+        days.push(day);
+      }
+      day.txs.push(tx);
+    }
+    return days;
+  }, [completedChronological, filteredTxs, syntheticResultingBalances]);
+  const threadStart = completedChronological[0];
+
+  const threadStartLine =
+    filter === 'all' && threadStart ? (
+      <li className={finish.threadStart} data-testid="activity-thread-start">
+        <span className={finish.threadStartMarker} aria-hidden="true" />
+        Started at $0.00 · {formatShortDate(threadStart.createdAt)}
+      </li>
+    ) : null;
+
+  const positionHref = syntheticJourneyActive ? getSyntheticJourneyHref('/dashboard') : '/dashboard';
+  const nextStep =
+    completedChronological.length === 2 ? (
+      <ActionDock
+        title="See it on your position"
+        why="Hedgr explains what changed between these two entries."
+        primary={{ label: 'Back to your position', href: positionHref, 'data-testid': 'activity-back-to-position' }}
+        data-testid="activity-next-step"
+      />
+    ) : (
+      <Link href={positionHref} className={finish.pill} data-testid="activity-back-to-position">
+        Back to your position
+      </Link>
+    );
+
   const handleRowClick = (tx: TxLifecycle) => {
     setSelectedTx(tx);
     setIsModalOpen(true);
@@ -380,18 +504,23 @@ export default function ActivityPage() {
       {transactions.length > 0 ? <div className={wallet.filters} aria-label="Activity filters">
         {(['all', 'deposits', 'withdrawals'] as const).map(f => <button key={f} type="button" aria-pressed={filter === f} onClick={() => setFilter(f)} data-testid={`filter-${f}`}>{f === 'all' ? 'All' : f === 'deposits' ? 'Deposits' : 'Withdrawals'}</button>)}
       </div> : null}
-      {sorted.length === 0 ? renderEmptyState() : <div className="space-y-5" data-testid="activity-list">
-        {Array.from(grouped.entries()).map(([day, txs]) => <section key={day}><h2 className="mb-3">{day}</h2><div className={wallet.events}>
-          {txs.map(tx => {
+      {sorted.length === 0 ? renderEmptyState() : <ol className={finish.thread} data-testid="activity-list">
+        {threadDays.map(day => <li key={day.key} className={finish.threadDay}>
+          <div className={finish.threadDayHeader}>
+            <h2 data-testid="activity-day-header">{day.label}</h2>
+            {day.balance !== undefined ? <span data-testid="activity-day-balance">Balance ${day.balance.toFixed(2)}</span> : null}
+          </div>
+          <ul className={finish.threadEntries}>
+          {day.txs.map(tx => {
             const after = syntheticResultingBalances.get(tx.id);
             const completed = tx.status === PublicTxStatus.SUCCESS && after !== undefined;
             const before = completed ? +(after + (tx.type === 'DEPOSIT' ? -tx.amountUSD : tx.amountUSD)).toFixed(2) : undefined;
             const label = tx.type === 'DEPOSIT' ? 'Simulated deposit' : 'Simulated withdrawal';
-            return <details key={tx.id} className={`${wallet.event} ${baseline.event}`}>
-              <summary className={baseline.eventSummary} data-testid={`activity-row-${tx.type.toLowerCase()}`} data-activity-type={tx.type} data-activity-status={tx.status}>
-                <span><strong data-testid={`activity-type-${tx.type.toLowerCase()}`}>{label}</strong><small>{completed ? 'Completed' : <TxStatusPill status={tx.status} />}</small></span>
-                <span className={`${wallet.eventAmount} ${baseline.delta}`}><strong data-testid={`activity-delta-${tx.type.toLowerCase()}`}>{tx.type === 'DEPOSIT' ? '+' : '−'}${tx.amountUSD.toFixed(2)}</strong><span className={baseline.rowChevron} aria-hidden="true">›</span></span>
-                {completed ? <span className={baseline.balanceAfter} data-testid={`activity-result-${tx.type.toLowerCase()}`}><span>Balance after</span>{' '}<span>${after.toFixed(2)}</span></span> : null}
+            return <li key={tx.id} className={finish.threadEntry}>
+              <ThreadIcon type={tx.type} />
+              <details className={finish.threadCard}>
+              <summary data-testid={`activity-row-${tx.type.toLowerCase()}`} data-activity-type={tx.type} data-activity-status={tx.status}>
+                <ThreadCardContent tx={tx} completed={completed} />
               </summary>
               <div data-testid="research-activity-detail">
                 <p>{label} detail · {formatTime(tx.createdAt)}</p>
@@ -404,11 +533,14 @@ export default function ActivityPage() {
                 {tx.note ? <p data-testid="research-activity-note">{tx.note}</p> : null}
                 <p>Simulation only. No real money moved.</p>
               </div>
-            </details>;
+            </details>
+            </li>;
           })}
-        </div></section>)}
-      </div>}
-      <Link href={getSyntheticJourneyHref('/dashboard')} className={wallet.link}>Return to current position</Link>
+          </ul>
+        </li>)}
+        {threadStartLine}
+      </ol>}
+      {transactions.length > 0 ? nextStep : <Link href={getSyntheticJourneyHref('/dashboard')} className={wallet.link}>Back to your position</Link>}
     </main>;
   }
 
@@ -513,6 +645,40 @@ export default function ActivityPage() {
 
       {sorted.length === 0 ? (
         renderEmptyState()
+      ) : productSimulationActive ? (
+        <ol className={finish.thread} data-testid="activity-list">
+          {threadDays.map((day) => (
+            <li key={day.key} className={finish.threadDay}>
+              <div className={finish.threadDayHeader}>
+                <h2 data-testid="activity-day-header">{day.label}</h2>
+                {day.balance !== undefined ? (
+                  <span data-testid="activity-day-balance">Balance ${day.balance.toFixed(2)}</span>
+                ) : null}
+              </div>
+              <ul className={finish.threadEntries}>
+                {day.txs.map((tx) => (
+                  <li key={tx.id} className={finish.threadEntry}>
+                    <ThreadIcon type={tx.type} />
+                    <button
+                      type="button"
+                      onClick={() => handleRowClick(tx)}
+                      className={finish.threadCard}
+                      data-testid={`activity-row-${tx.type.toLowerCase()}`}
+                      data-activity-type={tx.type}
+                      data-activity-status={tx.status}
+                    >
+                      <ThreadCardContent
+                        tx={tx}
+                        completed={tx.status === PublicTxStatus.SUCCESS && syntheticResultingBalances.has(tx.id)}
+                      />
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </li>
+          ))}
+          {threadStartLine}
+        </ol>
       ) : (
         <div className="space-y-6" data-testid="activity-list">
           {Array.from(grouped.entries()).map(([day, txs]) => (
@@ -547,18 +713,7 @@ export default function ActivityPage() {
             : undefined
         }
       />
-      {productSimulationActive && transactions.length > 0 ? (
-        <Link
-          href={
-            syntheticJourneyActive
-              ? getSyntheticJourneyHref('/dashboard')
-              : '/dashboard'
-          }
-          className={`inline-flex min-h-11 items-center border border-hedgr-100 bg-white px-4 py-2 text-sm font-semibold text-hedgr-primary motion-safe:transition-colors hover:border-hedgr-300 hover:text-hedgr-600 focus:outline-none focus:ring-2 focus:ring-hedgr-500 focus:ring-offset-2 ${finish.returnToPosition}`}
-        >
-          Return to current position
-        </Link>
-      ) : null}
+      {productSimulationActive && transactions.length > 0 ? nextStep : null}
     </main>
   );
 }
