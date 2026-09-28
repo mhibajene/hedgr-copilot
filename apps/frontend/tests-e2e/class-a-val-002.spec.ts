@@ -606,16 +606,16 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
     );
     await dialog.accept();
   });
-  const visitBeforeRestart = await page.evaluate(() => localStorage.getItem('hedgr:last-home-visit'));
+  expect(await page.evaluate(() => localStorage.getItem('hedgr:last-home-visit'))).not.toBeNull();
   await restartJourney.click();
 
   await expect(page.getByTestId('usd-balance')).toHaveText('$0.00');
-  // Restart clears the last-visit value and records this Home visit; first use returns.
+  // Restart clears the last-visit value (§7a decision 7); first use returns.
   await expect(page.getByTestId('dashboard-first-use-steps')).toBeVisible();
   await expect(page.getByTestId('dashboard-change-chip')).toHaveCount(0);
   await expect
-    .poll(() => page.evaluate(() => Number(localStorage.getItem('hedgr:last-home-visit'))))
-    .toBeGreaterThan(Number(visitBeforeRestart));
+    .poll(() => page.evaluate(() => localStorage.getItem('hedgr:last-home-visit')))
+    .toBeNull();
   await expect(
     page.getByTestId('dashboard-add-simulated-deposit')
   ).toBeVisible();
@@ -802,15 +802,19 @@ test('Home explains what changed since the last visit and clears it on reset', a
   await expect(page.getByTestId('dashboard-change-chip')).toHaveText(new RegExp(`^–No change since ${date}$`));
 
   // Journey reset clears the value; first use returns on both routes.
-  const beforeReset = await page.evaluate(() => Number(localStorage.getItem('hedgr:last-home-visit')));
+  expect(await page.evaluate(() => localStorage.getItem('hedgr:last-home-visit'))).not.toBeNull();
   await page.goto('/dashboard-synthetic-journey?reset=1');
   await expect(page.getByTestId('usd-balance')).toHaveText('$0.00');
   await expect(page.getByTestId('dashboard-first-use-steps')).toBeVisible();
   await expect(page.getByTestId('dashboard-change-chip')).toHaveCount(0);
   await expect
-    .poll(() => page.evaluate(() => Number(localStorage.getItem('hedgr:last-home-visit'))))
-    .toBeGreaterThan(beforeReset);
+    .poll(() => page.evaluate(() => localStorage.getItem('hedgr:last-home-visit')))
+    .toBeNull();
+  // The next ordinary Home visit records the value again.
   await page.goto('/dashboard');
+  await expect
+    .poll(() => page.evaluate(() => localStorage.getItem('hedgr:last-home-visit')))
+    .not.toBeNull();
   await expect(page.getByTestId('dashboard-first-use-steps').locator('li').first()).toHaveText(
     'You are here. It starts at $0.00.'
   );

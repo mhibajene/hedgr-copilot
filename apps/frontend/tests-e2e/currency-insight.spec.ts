@@ -58,7 +58,7 @@ for (const [currency, rate, deltaFive, deltaThree] of [
     await page.getByRole('button', { name: 'Currency context', exact: true }).click();
     await expect(page.getByTestId('currency-insight-headline')).toContainText(`${currency} ${deltaFive} higher from the rate change`);
     await page.getByRole('button', { name: 'Back to Home' }).click();
-    await expect(page.getByTestId('engine-posture-context')).toHaveText(/^One simulated deposit of \$5\.00 on \d{1,2} (?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) took your position from \$0\.00 to \$5\.00\.$/);
+    await expect(page.getByTestId('engine-posture-context')).toHaveText('Your first simulated position is now visible. This is your starting point.');
     await page.goto('/withdraw?journey=class-a-val-002');
     await expect(page.getByTestId('withdraw-fx-block')).toContainText(`${rate.toFixed(2)} ${currency}`);
     await page.getByTestId('withdraw-amount').fill('2');
