@@ -653,6 +653,38 @@ test('unavailable data remains a blocked secondary trust scenario', async ({
   ).toBeVisible();
 });
 
+test('unavailable data panel reflows at 320px and 200% text', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 320, height: 800 });
+  await clearStorage(page);
+  await login(page);
+  await page.goto('/deposit?journey=class-a-val-002&scenario=unavailable-data');
+  const panel = page.getByTestId('deposit-market-data-continuity');
+  await expect(panel).toContainText('What is paused');
+  await page.addStyleTag({ content: 'html { font-size: 200%; }' });
+
+  const metrics = await page.evaluate(() => ({
+    documentWidth: document.documentElement.scrollWidth,
+    viewportWidth: document.documentElement.clientWidth,
+  }));
+  expect(metrics.documentWidth).toBeLessThanOrEqual(metrics.viewportWidth);
+  const panelBox = (await panel.boundingBox())!;
+  const headline = panel.getByRole('heading');
+  const headlineBox = (await headline.boundingBox())!;
+  expect(headlineBox.x + headlineBox.width).toBeLessThanOrEqual(
+    panelBox.x + panelBox.width
+  );
+  const headlineFit = await headline.evaluate((el) => ({
+    scrollWidth: el.scrollWidth,
+    clientWidth: el.clientWidth,
+  }));
+  expect(headlineFit.scrollWidth).toBeLessThanOrEqual(headlineFit.clientWidth);
+  const retry = panel.getByRole('button', { name: 'Retry rate' });
+  await expect(retry).toBeVisible();
+  expect((await retry.boundingBox())!.height).toBeGreaterThanOrEqual(44);
+});
+
 test('mobile keeps the persistent boundary and current research step visible', async ({
   page,
 }) => {
