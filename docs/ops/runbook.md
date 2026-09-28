@@ -1,37 +1,91 @@
-## Solo QA Gate — Merge Ritual
+## PR Posture
 
-The Solo QA Gate enforces deliberate QA sign-off through label requirements in the validate workflow. This prevents accidental merges while maintaining solo workflow control.
+Repo-wide standing merge invariant (binding source: `AGENTS.md`). Target sequence:
+
+`DRAFT` → `IMPLEMENTED` → `VERIFYING` → `VERIFIED` → `AUTO-MERGE ELIGIBLE` → `MERGED`
+
+A change to the PR head after verification returns the PR to `VERIFYING`.
+
+### Independent verifier and exact-head-SHA binding
+
+No implementation PR may merge to `main` until an independent verifier, distinct from the authoring/implementing role, has reported PASS against the **current** PR head SHA. Verification applies only to the SHA reviewed. Any subsequent commit invalidates the previous PASS.
+
+Verifier attestations are PR comments whose first matching line is exactly:
+
+```text
+Hedgr-Verifier: PASS sha=<40-hex head sha> run=<verifier agent URL>
+```
+
+or
+
+```text
+Hedgr-Verifier: FAIL sha=<40-hex head sha> run=<verifier agent URL>
+```
+
+Anchored at line start. Strict form: `Hedgr-Verifier: ` then `PASS` or `FAIL`, then ` sha=` plus forty hexadecimal characters, then ` run=` plus a non-whitespace verifier URL. No other line is an attestation.
+
+### Mechanical gate (what actually exists)
+
+`.github/workflows/verifier-gate.yml` reads PR comments and sets commit status context **`hedgr/verifier`** on the current head SHA fetched from the GitHub API (never from an `issue_comment` payload SHA).
+
+Latest eligible attestation (by comment `updated_at`, then comment id; all pages):
+
+- **success** — latest is `PASS` and `sha` equals the current head.
+- **failure** — latest is `FAIL` and `sha` equals the current head.
+- **pending** — no eligible attestation; latest `PASS`/`FAIL` is for a different SHA (including `FAIL` on an older SHA); or the comment is ineligible.
+
+Labels are not consulted. `product:approved`, `qa:approved`, `area:*` and `risk:*` are descriptive metadata only. They are never merge authority, ticket authority, or release/launch authority.
+
+Trust model: only comments whose `author_association` is `OWNER`, `MEMBER`, or `COLLABORATOR` are eligible. Cloud agents typically post as the connected write-capable account. `CONTRIBUTOR` / `NONE` / first-timer comments and unverified bots are ignored.
+
+`issue_comment` workflows run from the default branch, so the comment path only evaluates this workflow after `verifier-gate.yml` is on `main`. Fork PRs receive a read-only `GITHUB_TOKEN` on `pull_request`; `statuses: write` may fail there. In-repo branches are the supported path.
+
+### Auto-merge
+
+Auto-merge may be enabled only after an independent verifier has reported PASS against the current PR head SHA and all other applicable repository and ticket gates are satisfied.
+
+Founder merge action is not required for normal bounded implementation PRs. Founder involvement stays upstream at judgement and authority boundaries.
+
+### Ticket gates and merge vs launch
+
+Ticket-specific gate sections may be stricter than this standing rule and may never be looser. Satisfying merge gates authorises **repository merge only**. It does not widen originating ticket authority and does not imply launch, participant release, customer exposure, financial capability, or production-configuration approval.
+
+### What CI actually enforces
+
+`.github/workflows/validate.yml` runs `trust:check`, `trust:phrases`, the route-conflict guard, typecheck, lint, and unit tests. It does **not** enforce labels. There is no `QA_GATE_BYPASS` implementation in `validate.yml`. Do not claim a Solo QA label gate in validate.
+
+Hosted checks commonly seen on PRs include `validate` and `E2E smoke (@hedgr/frontend)`. At this recording, classic branch protection on `main` requires status check `E2E smoke (@hedgr/frontend)` only (`enforcement_level: everyone`). There are no rulesets. **`hedgr/verifier` is not yet a required status check** — making it required is a Founder-only repository settings change, not ordinary PR execution. Do not treat the workflow file as already binding merge on GitHub.
 
 ### Process
-1) **Open PR** (template appears). Fill AC & tests sections.
-2) **Run local checks**: `pnpm -w typecheck | pnpm -w lint | pnpm -w test -- -- --run`, then `e2e:ci`.
-3) **Apply labels** (all required to keep Solo QA Gate green):
-   - `product:approved` (content matches CONTRACT)
-   - `qa:approved` (pre-merge QA checklist done)
-   - `area:*` (choose exactly one) — e.g. `area:frontend`, `area:backend`, `area:ci`, `area:docs`, `area:infra`, `area:tests`
-   - `risk:*` (choose exactly one) — `risk:low` | `risk:medium` | `risk:high`
-4) **Ensure required checks are green**:
-   - validate ✅ (includes QA label gate)
-   - E2E smoke (@hedgr/frontend) ✅
-5) **Auto-merge (squash) is enabled**.
 
-### Bypass Policy
-- **Draft PRs** and **Renovate/Dependabot** are exempt
-- **Emergency**: set `QA_GATE_BYPASS=1` on the workflow run (use sparingly)
+1. Open the PR as draft. Fill the template (acceptance, tests, rollback).
+2. Implement on the PR. Head SHA is the only verification target.
+3. Distinct verifier posts an attestation line for that exact head SHA.
+4. `hedgr/verifier` becomes success only when that PASS matches the current head.
+5. Enable auto-merge only after that status and every other applicable gate.
+6. If the head changes, attestation is invalid until a new PASS on the new SHA.
 
-### Label Management
-- **Bootstrap labels**: Run `.github/scripts/bootstrap-labels.sh` to create required labels
-- **Label colors**:
-  - product:approved (green), qa:approved (green), qa:blocked (red), qa:warning (purple)
-  - area:* (blue): frontend, backend, ci, docs, infra, tests
-  - risk:low (green), risk:medium (yellow), risk:high (red)
+Descriptive labels may still be applied as metadata (`product:approved`, `qa:approved`, one `area:*`, one `risk:*`) via `.github/scripts/bootstrap-labels.sh` if missing. They do not substitute for ticket authority, independent verifier PASS, exact-SHA verification, or release/launch authority.
 
-**CLI shortcut**
+**CLI shortcut (metadata only — not a merge gate)**
 ```bash
 gh pr edit $PR --add-label "product:approved,qa:approved,area:ci,risk:low"
 ```
 
-### Local E2E Parity
+### Deviation handling and after-the-fact verification
+
+If merge precedes independent verification of the merged revision (including #680, #685, #721):
+
+- Record the event in `docs/ops/HEDGR_STATUS.md` as a process deviation. Keep process compliance distinct from technical correctness.
+- Never reclassify the sequence as compliant because a later verification passes.
+- Run a retrospective independent verifier against the **merged** SHA.
+- Verifier PASS: process deviation remains; merged tree independently verified after merge.
+- Verifier FAIL: process deviation remains **and** a bounded corrective ticket/PR is required. Do not silently remediate defects discovered through the retrospective review.
+
+Administrative bypass is not part of ordinary workflow.
+
+### Local E2E parity
+
 - Local `e2e:ci` runs should mirror `.github/workflows/e2e-smoke.yml`, especially for deposit/withdraw and FX-backed flows.
 - **Backend stub required:** With `NEXT_PUBLIC_API_BASE_URL` pointing at the Flask app (typically `http://localhost:5050`), start the backend **before** `e2e:ci`. If the API is unreachable, the deposit **Confirm** control stays disabled and multiple specs will time out in `waitForDepositFxReady`.
 - If `/deposit` renders `Unable to load exchange rate` or Playwright cannot find `data-testid="deposit-amount"`, verify the local backend stub is running and `NEXT_PUBLIC_API_BASE_URL` is pointed at it.
