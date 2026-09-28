@@ -771,3 +771,50 @@ describe("default simulated Home shows the latest change once", () => {
     expect(recent.textContent).toContain("+$1.00");
   });
 });
+
+// CLASS-A-VAL-002-HOME-DEDUP-001 (§328 decision 3): Recent activity is hidden only while the
+// observation already explains one or several changes since the last visit.
+describe("default simulated Home Recent activity overlap", () => {
+  function renderDefaultHome(total: number, posture: "normal" | "tightening" = "normal") {
+    vi.stubEnv("NEXT_PUBLIC_AUTH_MODE", "mock");
+    vi.stubEnv("NEXT_PUBLIC_FX_MODE", "fixed");
+    vi.mocked(useBalance).mockReturnValue(makeBalanceState({ total, available: total }));
+    vi.mocked(useEngineState).mockReturnValue(getMockEngineState(posture) as EngineState);
+    render(<DashboardPage />);
+  }
+  const recentActivity = () => screen.queryByRole("region", { name: "Recent activity" });
+
+  test("hidden while one change since the last visit is explained", async () => {
+    dashboardStateMocks.transactions = makeCompletedJourneyTransactions();
+    window.localStorage.setItem("hedgr:last-home-visit", "2");
+    renderDefaultHome(3);
+    expect((await screen.findByTestId("engine-posture-context")).textContent).toMatch(/^One simulated withdrawal/);
+    expect(recentActivity()).toBeNull();
+  });
+
+  test("hidden while several changes since the last visit are listed", async () => {
+    dashboardStateMocks.transactions = makeCompletedJourneyTransactions();
+    window.localStorage.setItem("hedgr:last-home-visit", "0.5");
+    renderDefaultHome(3);
+    expect((await screen.findByTestId("engine-posture-context")).textContent).toMatch(/^Two things changed/);
+    expect(screen.getByTestId("dashboard-since-entries")).toBeDefined();
+    expect(recentActivity()).toBeNull();
+  });
+
+  test("shown when nothing changed since the last visit", async () => {
+    dashboardStateMocks.transactions = makeCompletedJourneyTransactions();
+    window.localStorage.setItem("hedgr:last-home-visit", "10");
+    renderDefaultHome(3);
+    expect((await screen.findByTestId("engine-posture-context")).textContent).toMatch(/^Nothing has changed/);
+    expect(recentActivity()).not.toBeNull();
+  });
+
+  test("shown under a non-normal posture, where the since view does not replace the observation", async () => {
+    dashboardStateMocks.transactions = makeCompletedJourneyTransactions();
+    window.localStorage.setItem("hedgr:last-home-visit", "2");
+    renderDefaultHome(3, "tightening");
+    await screen.findByTestId("engine-posture-banner");
+    expect(screen.queryByText("Since you were last here")).toBeNull();
+    expect(recentActivity()).not.toBeNull();
+  });
+});

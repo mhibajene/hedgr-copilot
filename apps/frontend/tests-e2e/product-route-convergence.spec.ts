@@ -166,6 +166,12 @@ test('default routes share the simulated customer model without research framing
   await expect(page.getByTestId('dashboard-current-status')).toContainText('Since you were last here');
   await expect(page.getByTestId('dashboard-change-evidence')).toHaveCount(0);
   await expect(page.getByText('Latest change', { exact: true })).toHaveCount(0);
+  // §328 decision 3: Recent activity is hidden while "Since you were last here" lists the changes,
+  // and returns once nothing has changed since the last visit.
+  await expect(page.getByTestId('dashboard-since-entries')).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Recent activity' })).toHaveCount(0);
+  await page.reload();
+  await expect(page.getByTestId('engine-posture-context')).toContainText('Nothing has changed since');
   await expect(page.getByRole('heading', { name: 'Recent activity' })).toBeVisible();
 
   await page.goto('/settings');
