@@ -1,11 +1,13 @@
 'use client';
 
 import home from './synthetic-home.module.css';
-import { formatShortDate, formatUsd, type PositionEntry } from '../../../lib/state/last-visit';
+import { balanceAt, formatShortDate, formatUsd, type PositionEntry } from '../../../lib/state/last-visit';
 
 type PositionLineProps = {
   entries: PositionEntry[];
   lastVisit: number | null;
+  /** T5: 0–1 progress of the arrival settle; entries after the last visit ease from the last-seen level. */
+  settle?: number;
 };
 
 const WIDTH = 1000;
@@ -28,7 +30,7 @@ type LineEvent = { kind: 'entry'; entry: PositionEntry } | { kind: 'visit'; at: 
  * the line after the last visit uses the emphasis colour. Decorative for
  * assistive technology: the Observation states the same facts in words.
  */
-export function PositionLine({ entries, lastVisit }: PositionLineProps) {
+export function PositionLine({ entries, lastVisit, settle = 1 }: PositionLineProps) {
   if (entries.length === 0) {
     return (
       <div className={home.positionLineEmpty} data-testid="dashboard-position-line" data-state="empty">
@@ -45,6 +47,9 @@ export function PositionLine({ entries, lastVisit }: PositionLineProps) {
   }
 
   const max = Math.max(...entries.map((entry) => entry.balanceAfter), 0);
+  const seen = lastVisit !== null ? balanceAt(entries, lastVisit) : 0;
+  const level = (entry: PositionEntry) =>
+    lastVisit !== null && entry.at > lastVisit ? seen + (entry.balanceAfter - seen) * settle : entry.balanceAfter;
   const y = (value: number) =>
     max === 0 ? HEIGHT - BOTTOM : TOP + (1 - value / max) * (HEIGHT - TOP - BOTTOM);
   const x = (index: number) => ((index + 1) / (events.length + 1)) * WIDTH;
@@ -65,8 +70,8 @@ export function PositionLine({ entries, lastVisit }: PositionLineProps) {
       target.push(`M ${ex} ${y(current)}`);
       return;
     }
-    target.push(`H ${ex}`, `V ${y(event.entry.balanceAfter)}`);
-    current = event.entry.balanceAfter;
+    target.push(`H ${ex}`, `V ${y(level(event.entry))}`);
+    current = level(event.entry);
     dots.push({ x: ex, y: y(current) });
   });
   target.push(`H ${WIDTH}`);

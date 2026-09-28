@@ -845,3 +845,56 @@ test('Activity thread reflows at 320px and 200% text on both routes', async ({ p
     expect((await back.boundingBox())!.height).toBeGreaterThanOrEqual(44);
   }
 });
+
+// HOME-EXPERIENCE-001 T5: one arrival motion after a confirmed change; reduced motion shows the end state.
+async function recordWithdrawalSinceLastHomeVisit(page: Page) {
+  await clearStorage(page);
+  await login(page);
+  await page.goto('/deposit?journey=class-a-val-002');
+  await page.getByTestId('deposit-amount').fill('100');
+  await page.getByRole('button', { name: 'Confirm' }).click();
+  await expect(page.getByTestId('deposit-confirmed')).toBeVisible();
+  await page.getByRole('link', { name: 'Back to your position' }).click();
+  await expect(page.getByTestId('usd-balance')).toHaveText('$5.00');
+  await page.goto('/withdraw?journey=class-a-val-002');
+  await page.getByTestId('withdraw-amount').fill('2');
+  await page.getByRole('button', { name: 'Confirm' }).click();
+  await expect(page.getByTestId('withdraw-balance-reconciliation')).toContainText('$5.00 → $3.00');
+}
+
+const arrivalSentence = 'Your position is now $3.00, $2.00 lower than on your last visit.';
+
+test('Home counts from the last figure seen after a confirmed change', async ({ page }) => {
+  await recordWithdrawalSinceLastHomeVisit(page);
+  await page.clock.pauseAt(new Date(Date.now() + 60_000));
+  await page.goto('/dashboard-synthetic-journey');
+  await expect(page.getByTestId('dashboard-change-chip')).toBeAttached();
+  await expect(page.getByTestId('usd-balance')).toHaveText('$5.00');
+  await expect(page.getByTestId('dashboard-change-chip')).toHaveCSS('opacity', '0');
+  await expect(page.getByTestId('dashboard-arrival-announcement')).toHaveText('');
+
+  await page.clock.runFor(700);
+  await expect(page.getByTestId('usd-balance')).toHaveText('$3.00');
+  await expect(page.getByTestId('dashboard-arrival-announcement')).toHaveText(arrivalSentence);
+  await expect(page.getByTestId('dashboard-change-chip')).toHaveCSS('opacity', '1');
+  await expect(page.getByTestId('dashboard-arrival-announcement')).toHaveAttribute('role', 'status');
+
+  // It runs once: a reload with no new change shows no motion and no sentence.
+  await page.clock.resume();
+  await page.reload();
+  await expect(page.getByTestId('usd-balance')).toHaveText('$3.00');
+  await expect(page.getByTestId('dashboard-change-chip')).toHaveText(/No change since/);
+  await expect(page.getByTestId('dashboard-arrival-announcement')).toHaveText('');
+});
+
+test('reduced motion shows the new figure, line and chip at once', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await recordWithdrawalSinceLastHomeVisit(page);
+  await page.clock.pauseAt(new Date(Date.now() + 60_000));
+  await page.goto('/dashboard-synthetic-journey');
+  await expect(page.getByTestId('dashboard-change-chip')).toBeAttached();
+  await expect(page.getByTestId('usd-balance')).toHaveText('$3.00');
+  await expect(page.getByTestId('dashboard-change-chip')).toHaveCSS('opacity', '1');
+  await expect(page.getByTestId('dashboard-change-chip')).toHaveCSS('animation-name', 'none');
+  await expect(page.getByTestId('dashboard-arrival-announcement')).toHaveText(arrivalSentence);
+});

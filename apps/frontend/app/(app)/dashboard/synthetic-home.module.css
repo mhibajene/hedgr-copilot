@@ -223,3 +223,9 @@
   .sinceList strong { font-size: 1.0625rem; }
   .sinceLink { font-size: 1.0625rem; }
 }
+/* HOME-EXPERIENCE-001 T5: the chip waits for the count, then fades in over 140ms. */
+.chipPending { opacity: 0; }
+@media (prefers-reduced-motion: no-preference) {
+  .chipEnter { animation: homeChipIn 140ms ease-out both; }
+}
+@keyframes homeChipIn { from { opacity: 0; } to { opacity: 1; } }
