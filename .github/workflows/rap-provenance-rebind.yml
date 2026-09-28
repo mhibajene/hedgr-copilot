@@ -128,6 +128,8 @@ jobs:
           EOF
           pr_url=$(gh pr create --base main --head "$RAP_BRANCH" --title "docs: mechanically bind RAP to ${RAP_TARGET:0:12}" --body-file /tmp/rap-pr-body.md)
           pr_number=${pr_url##*/}
+          # Labels are descriptive metadata only. They are not merge, ticket, or
+          # release/launch authority (AGENTS.md standing PR invariant; runbook PR Posture).
           gh pr edit "$pr_number" --add-label 'product:approved,qa:approved,area:docs,risk:low'
           echo "created=$pr_number" >> "$GITHUB_OUTPUT"
           echo "Prepared $pr_url for protected CI." >> "$GITHUB_STEP_SUMMARY"
