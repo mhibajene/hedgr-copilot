@@ -866,8 +866,9 @@ const arrivalSentence = 'Your position is now $3.00, $2.00 lower than on your la
 
 test('Home counts from the last figure seen after a confirmed change', async ({ page }) => {
   await recordWithdrawalSinceLastHomeVisit(page);
+  // Pause on the loaded receipt, then arrive client-side so no full load waits on frozen timers.
   await page.clock.pauseAt(new Date(Date.now() + 60_000));
-  await page.goto('/dashboard-synthetic-journey');
+  await page.getByTestId('withdraw-status-region').getByRole('link', { name: 'Back to your position' }).click();
   await expect(page.getByTestId('dashboard-change-chip')).toBeAttached();
   await expect(page.getByTestId('usd-balance')).toHaveText('$5.00');
   await expect(page.getByTestId('dashboard-change-chip')).toHaveCSS('opacity', '0');
@@ -890,10 +891,10 @@ test('Home counts from the last figure seen after a confirmed change', async ({ 
 test('reduced motion shows the new figure, line and chip at once', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await recordWithdrawalSinceLastHomeVisit(page);
-  await page.clock.pauseAt(new Date(Date.now() + 60_000));
   await page.goto('/dashboard-synthetic-journey');
   await expect(page.getByTestId('dashboard-change-chip')).toBeAttached();
-  await expect(page.getByTestId('usd-balance')).toHaveText('$3.00');
+  // The first frame with the chip already shows the final figure.
+  expect(await page.getByTestId('usd-balance').textContent()).toBe('$3.00');
   await expect(page.getByTestId('dashboard-change-chip')).toHaveCSS('opacity', '1');
   await expect(page.getByTestId('dashboard-change-chip')).toHaveCSS('animation-name', 'none');
   await expect(page.getByTestId('dashboard-arrival-announcement')).toHaveText(arrivalSentence);

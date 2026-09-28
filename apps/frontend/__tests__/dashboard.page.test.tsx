@@ -677,3 +677,43 @@ describe("Currency context integration", () => {
     expect(screen.getByTestId("engine-simulation-attention-answer").textContent).toBe("A change in the guidance needs review.");
   });
 });
+
+// HOME-EXPERIENCE-001 T3 correction: Production runs NEXT_PUBLIC_BALANCE_FROM_LEDGER=false.
+describe("Home since-last-visit surfaces in wallet balance mode", () => {
+  function renderJourneyHome(total: number) {
+    vi.stubEnv("NEXT_PUBLIC_BALANCE_FROM_LEDGER", "false");
+    vi.mocked(usePathname).mockReturnValue("/dashboard-synthetic-journey");
+    vi.mocked(useBalance).mockReturnValue(makeBalanceState({ total, available: total }));
+    vi.mocked(useEngineState).mockReturnValue(getMockEngineState("normal") as EngineState);
+    render(<DashboardPage />);
+  }
+
+  test("shows first use when the wallet and the empty ledger agree", async () => {
+    renderJourneyHome(0);
+    expect(await screen.findByTestId("dashboard-first-use-steps")).toBeDefined();
+    expect(screen.getByTestId("dashboard-synthetic-balance-explainer").textContent).toBe(
+      "No simulated activity yet."
+    );
+  });
+
+  test("explains the change since the last visit when the wallet matches the ledger", async () => {
+    dashboardStateMocks.transactions = makeCompletedJourneyTransactions();
+    window.localStorage.setItem("hedgr:last-home-visit", "2");
+    renderJourneyHome(3);
+    expect((await screen.findByTestId("engine-posture-context")).textContent).toMatch(
+      /^One simulated withdrawal of \$2\.00 on \d{1,2} \w{3} took your position from \$5\.00 to \$3\.00\.$/
+    );
+    expect(screen.getByTestId("dashboard-change-chip").textContent).toMatch(/^↓\$2\.00 since/);
+    expect(screen.getByTestId("dashboard-position-line")).toBeDefined();
+  });
+
+  test("keeps the existing observation when the wallet and ledger disagree", async () => {
+    dashboardStateMocks.transactions = makeCompletedJourneyTransactions();
+    window.localStorage.setItem("hedgr:last-home-visit", "2");
+    renderJourneyHome(7);
+    await screen.findByTestId("dashboard-current-status");
+    expect(screen.queryByTestId("dashboard-change-chip")).toBeNull();
+    expect(screen.queryByTestId("dashboard-position-line")).toBeNull();
+    expect(screen.queryByText("Since you were last here")).toBeNull();
+  });
+});
