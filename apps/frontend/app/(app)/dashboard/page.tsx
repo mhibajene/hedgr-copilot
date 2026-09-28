@@ -131,6 +131,7 @@ export default function DashboardPage() {
   }, [cleanStartRequested, clearTransactions, resetWallet]);
 
   // HOME-EXPERIENCE-001 T3: read the previous Home visit once, then record this one.
+  // A journey reset only clears the value; the next ordinary Home visit records it.
   const [previousVisit, setPreviousVisit] = useState<number | null>(null);
   const [visitRead, setVisitRead] = useState(false);
   const [today, setToday] = useState<number | null>(null);
@@ -138,10 +139,14 @@ export default function DashboardPage() {
   useEffect(() => {
     if (!productSimulationActive || visitRecorded.current) return;
     visitRecorded.current = true;
-    if (cleanStartRequested) clearLastVisit();
     const now = Date.now();
-    setPreviousVisit(cleanStartRequested ? null : readLastVisit());
-    writeLastVisit(now);
+    if (cleanStartRequested) {
+      clearLastVisit();
+      setPreviousVisit(null);
+    } else {
+      setPreviousVisit(readLastVisit());
+      writeLastVisit(now);
+    }
     setToday(now);
     setVisitRead(true);
   }, [productSimulationActive, cleanStartRequested]);
@@ -163,7 +168,6 @@ export default function DashboardPage() {
     clearTransactions();
     resetWallet();
     clearLastVisit();
-    writeLastVisit(Date.now());
     setPreviousVisit(null);
   };
 
