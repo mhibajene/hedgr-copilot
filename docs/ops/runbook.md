@@ -74,7 +74,7 @@ gh pr edit $PR --add-label "product:approved,qa:approved,area:ci,risk:low"
 
 ### Deviation handling and after-the-fact verification
 
-If merge precedes independent verification of the merged revision (including #680, #685, #721):
+If merge precedes independent verification of the merged revision (including #680, #685, #721, #722):
 
 - Record the event in `docs/ops/HEDGR_STATUS.md` as a process deviation. Keep process compliance distinct from technical correctness.
 - Never reclassify the sequence as compliant because a later verification passes.
