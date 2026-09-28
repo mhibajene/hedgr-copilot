@@ -5099,7 +5099,7 @@ Markers are text (`Same as before`, `New`). Colour or icon may reinforce a marke
 
 **Decision 2 — Home deduplication:** The Founder said “We need to clean that up lets go with our latest direction ‘Since you were last here’”. Finite nested Lane V ticket `CLASS-A-VAL-002-HOME-DEDUP-001` (brief in §7a) removes the default-route “Latest change” strip. It supersedes, for that strip only, the §7a HOME-EXPERIENCE-001 decision-4 retention of existing default Home elements; Recent activity and the empty states stay.
 
-**Sequence:** This source record, then a separate verified permanent-main RAP rebind (which also satisfies the §327 closeout rebind), then the runtime PR with an independent Verifier PASS on its exact head, Production inspection, a source-first completion record and a final RAP rebind. **NO CROSS-LANE IMPACT.**
+**Sequence:** The §327 closeout rebind completed in #736 (`72979e8`). This source record, then its own separate verified permanent-main RAP rebind, then the runtime PR with an independent Verifier PASS on its exact head, Production inspection, a source-first completion record and a final RAP rebind. **NO CROSS-LANE IMPACT.**
 
 ## 327. One Home experience technical closeout (2026-09-28)
 
