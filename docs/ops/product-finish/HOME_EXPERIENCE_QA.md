@@ -6,11 +6,11 @@ Ticket: `CLASS-A-VAL-002-HOME-EXPERIENCE-001` (HEDGR_STATUS.md §7 / §7a). Refe
 
 ## Status and evidence boundary
 
-This record supplies evidence, not authority. It covers T1 and T2 and the T2 reflow correction. T3–T5, the source-first completion and the final permanent-main RAP rebind remain open.
+This record supplies evidence, not authority. It covers all five tranches, the three corrections (#724, #728 amendment, #732) and the closeout inspection of Production at `39de4b6` (see [Closeout](#closeout-shipped-inspection-production-39de4b6)). The source-first completion (§327) and its separate permanent-main RAP rebind follow this record.
 
 **Process deviation (recorded, not backdated).** §7a requires distinct governance and runtime QA for each tranche. T1 (#721) and T2 (#722) were merged by squash auto-merge under the Founder's runbook instruction before any distinct Verifier review. The Verifier's first finding, after both merges, was that this record did not exist and that the T1 evidence screenshots lived only in an untracked local folder. This is the third merge-before-verifier deviation on record (see §312, §314). From the T2 correction onward, runtime PRs are held from auto-merge until the Verifier reports.
 
-The Implementer (Claude Code, Opus 5.5) authored the runtime, the test updates and this record. None of the checks below is an independent Verifier result.
+The Implementer (Claude Code, Opus 5.5) authored the runtime, the test updates and this record. The checks in this record are the Implementer's, not independent Verifier results. Verifier attestations are cited from the PR records. #721 and #722 have no attestation; their §326 retrospective verifications are outstanding and are not substituted by this record.
 
 ## Authority and immutable provenance
 
@@ -20,7 +20,13 @@ The Implementer (Claude Code, Opus 5.5) authored the runtime, the test updates a
 | Permanent-main RAP rebind | [#720](https://github.com/mhibajene/hedgr-copilot/pull/720) | `c253579262cc019c3bc0e45ca18625d5a67dc536` | 2026-09-27T15:37:02Z, before any runtime edit |
 | T1 — Home translation | [#721](https://github.com/mhibajene/hedgr-copilot/pull/721) | `1b1ca1e6f8b4d8f3544a9a48987b737603d0be48` | 2026-09-28T00:19:51Z, squash auto-merge. Runtime `303a0a5`, test `a748172` (head). Merged tree identical to head |
 | T2 — receipts, next step, step thread | [#722](https://github.com/mhibajene/hedgr-copilot/pull/722) | `4c99e0b95bdbb8a7a70573abca24cf625e1a8cba` | 2026-09-28T00:41:59Z, squash auto-merge. Runtime `dd1bc5a`, test `cd3dbf3` (head). Merged tree identical to head |
-| T2 correction | this PR | pending | Runtime `cb049e0`, test `b01a7f5`, then this record. Held for Verifier review |
+| §7a evidence allowlist amendment | [#725](https://github.com/mhibajene/hedgr-copilot/pull/725) | `9f71097bd924` | Adds `home-experience-qa/*.png`. Verifier PASS `f8026d2` |
+| T2 correction and this record | [#724](https://github.com/mhibajene/hedgr-copilot/pull/724) | `5ab40b419c4a` | Runtime `cb049e0`, test `b01a7f5`, record `4312271`. Verifier FAIL `4312271` (image folder not allowlisted, resolved by #725), then PASS `712028c` |
+| §7a verification amendment | [#728](https://github.com/mhibajene/hedgr-copilot/pull/728) | `82de5e7274e5` | Allows one superseded assertion in `stability-scenarios.spec.ts`. Verifier PASS `3cea37c` |
+| T3 — since last visit, position line, first use, loading, date line | [#729](https://github.com/mhibajene/hedgr-copilot/pull/729) | `e1c6789e922f946333c96d42c8210fa6fc4cc82b` | Runtime `1033cd7`, fix `2e7e599`; tests `c08a25b`, `00e6615`, `4a4a52a`. Verifier FAIL `c08a25b` (reset rewrote the last-visit value), PASS `00e6615` and `cb2640f` (head after Update branch) |
+| T4 — Activity entry thread | [#730](https://github.com/mhibajene/hedgr-copilot/pull/730) | `4dcc74f910d1aae179c3e6d638e82e389d7183f0` | Runtime `062a8ea`, tests `3a40254`. Verifier PASS `3a40254` |
+| T5 — arrival motion | [#731](https://github.com/mhibajene/hedgr-copilot/pull/731) | `3aa035ac3c2cc857879e9e01fb72d87a944ed619` | Runtime `f2b4d08`, tests `eb06b89`. Verifier PASS `eb06b89` |
+| T3/T5 wallet-mode correction | [#732](https://github.com/mhibajene/hedgr-copilot/pull/732) | `39de4b651db7c2fc92878da528bb2868b0d8e63a` | Runtime `2b0c3bb`, tests `b8509ac`. Verifier FAIL `b8509ac` (PR body named the wrong rollback commit; corrected), then PASS on the same head |
 
 ## Validation
 
@@ -67,9 +73,48 @@ T2 placed the new pause disc and the panel headline in a non-wrapping flex row. 
 
 Full-page captures render the fixed bottom navigation at its viewport position, overlapping content in the image only.
 
-## Not yet covered
+## Not yet covered (T1/T2 record, superseded)
 
-§7a's acceptance matrix is wider than the evidence above. Not yet inspected for T1/T2: live-mode wording in a browser (unit-covered only; production runs simulated); 1280px shipped (1280 was inspected locally for T1 only); keyboard order and focus through the receipts and next-step panel; long amounts on the receipts; the pending state; full withdrawal and reset on the default route; the simulated deposit failure in a browser. These should be completed by the distinct Verifier before the ticket's completion record.
+At T2 time the gaps were: live mode in a browser, shipped 1280px, keyboard order and focus, long amounts, the pending state, full withdrawal and reset on the default route, and the simulated deposit failure in a browser. The closeout inspection below covers all of them except live mode and the deposit failure state, which remain unit-covered only.
+
+## Closeout shipped inspection (Production `39de4b6`)
+
+Public alias `https://hedgr-copilot-frontend.vercel.app`, 2026-09-28T12:14Z, after GitHub Production deployment `6709548499` (success) of #732. Fresh isolated Chromium contexts, mock sign-in, simulated actions only. Production runs as a simulated environment with `NEXT_PUBLIC_BALANCE_FROM_LEDGER=false` (wallet balance mode), confirmed by probe. The same script also passed 120/120 against a local wallet-mode build before #732 merged.
+
+**Result: 120/120 checks passed, 0 page errors.**
+
+Local validation at closeout (`main` at `39de4b6`): typecheck and lint pass; 923/923 unit tests; production build plus 132/132 browser tests with `--retries=0`.
+
+| Area | Viewports / conditions | Checked |
+| --- | --- | --- |
+| Journey route, full flow | 390 × 844, 1280 × 900, 1440 × 1024, 320 × 800 at 200% root text | First use and caption; `?reset=1` clears `hedgr:last-home-visit`; deposit receipt `$0.00 → $5.00`; first-event Home without a prior visit; withdrawal receipt `$5.00 → $3.00`; Activity day balance `$3.00`, start line and two-entry next step; "One simulated withdrawal of $2.00 … from $5.00 to $3.00."; arrival sentence; settled balance; no change on reload with no sentence; full withdrawal `$3.00 → $0.00` on receipt, Home and Activity (no next step); "Restart simulated journey" clears the value; no horizontal overflow at every step |
+| Default route | 390 × 844, 1440 × 1024 | First use without journey step names; context line; "Two things changed … from $0.00 to $3.00."; no estimate sentence; Activity day balance; transaction dialog closes on Escape; no overflow |
+| Keyboard | 390 journey Home after a change | Tab order: simulation disclosure → logo → Home → Activity → Settings → display currency → See the entry → Add simulated deposit → View Activity → Currency context → Planning targets → Important disclosures; visible focus on every stop |
+| Dialog | Currency context | Escape closes and returns focus to the trigger |
+| Rate unavailable | Journey Deposit | Reason line; labelled rows; no overflow at 320 at 200% (finding T2-1 fixed) |
+| Pending | Seeded pending deposit | T3 surfaces fall back (no chip, no "since"); Activity shows the status pill. In wallet mode `total = available`, so no "Available in simulation" line; that is pre-existing wallet-mode behaviour |
+| Long amounts | `$123,456,789.12` at 320 at 200% | No overflow on both Homes and both Activity routes |
+| T5 motion | 390, fake clock, client-side arrival | 0 ms `$5.00` (chip opacity 0, no sentence) → 200 ms `$3.62` → 400 ms `$3.09` → 700 ms `$3.00`, chip opacity 1, "Your position is now $3.00, $2.00 lower than on your last visit." |
+| Reduced motion | `prefers-reduced-motion: reduce` | First frame shows `$3.00`; chip `animation-name: none` |
+
+### Comparison with the accepted references (closeout)
+
+| Reference | Production evidence | Assessment |
+| --- | --- | --- |
+| 01 First use | [390](home-experience-qa/closeout-m390-01-first-use.png) | Match: date line, "No simulated activity yet.", empty line, "Start here" with four steps, deposit plus "How this simulation works" |
+| 03 / 13 One change | [390](home-experience-qa/closeout-m390-04-home-one-change.png), [1440](home-experience-qa/closeout-d1440-04-home-one-change.png), [320 at 200%](home-experience-qa/closeout-m320x200-04-home-one-change.png) | Match: chip, line with last-visit marker and rust segment after it, "Since you were last here", "See the entry" |
+| 04 / 05 No change / several | [default 390, several](home-experience-qa/closeout-dm390-06-default-several.png) | Match, except the several-changes list omits the reference's exchange-rate row (not a ledger entry; §7a derives "since" from ledger entries only). On the default route the existing "Latest change" strip (decision 4) sits above the observation, so the latest entry appears twice |
+| 08 Activity thread | [390](home-experience-qa/closeout-m390-03-activity.png), [1440](home-experience-qa/closeout-d1440-03-activity.png), [default 1440](home-experience-qa/closeout-dd1440-07-default-activity.png), [320 at 200%](home-experience-qa/closeout-m320x200-03-activity.png), [long amount](home-experience-qa/closeout-m320x200-09-long-amount-activity.png) | Match. The reference's "Start again with a clean simulation" is not in the copy register and is omitted. Below a 20rem container the rail and icons drop so entries keep their width |
+| 11 / 12 Motion | [0 ms](home-experience-qa/closeout-motion-0ms.png), [200 ms](home-experience-qa/closeout-motion-200ms.png), [700 ms](home-experience-qa/closeout-motion-700ms.png) | Match the storyboard (reference `$3.59` at 200 ms; measured `$3.62`, frame granularity) |
+
+### Findings during delivery (all resolved in code, or recorded)
+
+- **T2-1:** rate-unavailable overflow at 320 at 200%. Fixed in #724.
+- **T3 Verifier FAIL:** reset rewrote the last-visit value. Fixed before #729 merged.
+- **T4 visual checks:** the legacy Activity link rule made the new pill invisible, and pills broke letter by letter at 320 at 200%. Both fixed in #730; the pill fix also cleared a 3px T2 overflow on "Continue to simulated withdrawal".
+- **T3/T5 in wallet mode:** did not render in Production until #732. CI and all local runs build the ledger default only; wallet-mode CI coverage needs a separate decision. A wallet-mode build also fails one pre-existing ledger-only assertion (`currency-insight.spec.ts` pending presentation).
+- **Scope:** #722 edited `critical.spec.ts` and `empty-error-states.spec.ts`, outside the §7a verification allowlist.
+- **Watch:** `empty-error-states.spec.ts` one-shot `isVisible()` flake under full-suite load; outside this ticket.
 
 ## T1 pre-merge local captures
 
@@ -94,6 +139,19 @@ Captured from the local production build of `a748172` before #721 merged, previo
 | `t1-local-desktop-journey.png` | 1280 × 1001 | `499a5fb3f01e1c2dc1e5cc36cb7af6873955a88361e3112a81528e080dcbb82f` |
 | `t1-local-mobile-default.png` | 390 × 1065 | `d149e9ec8137849f31556e15007463e335555d4205a363b188bbcedd2c53cfd8` |
 | `t1-local-mobile-journey.png` | 390 × 956 | `48bcabfb6c32209537b4e9498fc6fde8b230b24042260a3a33782a0b7e562f5e` |
+| `closeout-d1440-03-activity.png` | 1440 × 1079 | `dac52af5d966f0855d4a869903cbcb30f0c4d2e38b5d3d1f400c91665cbf3d9d` |
+| `closeout-d1440-04-home-one-change.png` | 1440 × 1430 | `137f8b075bda9540cf997ae75c2eb556726be873aa5f9fe4ed5ad34c49a2794c` |
+| `closeout-dd1440-07-default-activity.png` | 1440 × 1120 | `c7d891819e8084e355b0c765ac9f538be8c8e103fa4467ff5b2e0cfccd675398` |
+| `closeout-dm390-06-default-several.png` | 390 × 1734 | `3da53afb81e826e73cb7bc30b9ca1920ae1e5648cb54f7df2f3b87d3c81ebb09` |
+| `closeout-m320x200-03-activity.png` | 320 × 3088 | `3ca2fc93a41905f837659e8a5ada34f0c3d5b54cf503b07fd64c6c54fb6f4187` |
+| `closeout-m320x200-04-home-one-change.png` | 320 × 4992 | `ba4297383e8c4984ba6bce9c873a35e76d8959012472bfc4c4d0459ab80cf669` |
+| `closeout-m320x200-09-long-amount-activity.png` | 320 × 3715 | `ffe8fa953198b884801a3f42be4be93d2853e54e363d60d87a1107242eb7aa77` |
+| `closeout-m390-01-first-use.png` | 390 × 1249 | `388e513206d57c7d18eb742a37bc70b3284d2962b3cdd1864195a7d53af37a4f` |
+| `closeout-m390-03-activity.png` | 390 × 1068 | `fa992c911f6767e3311420dd381703e062fd21ed1726f60fe5de17a076b6a639` |
+| `closeout-m390-04-home-one-change.png` | 390 × 1575 | `7a7e5377ded19f61c4c6d1bca930911d6dcf6e711d07046e4272a28cf2e700c4` |
+| `closeout-motion-0ms.png` | 390 × 420 | `ba591ecccab1d78e44a109e840352ecc1b564b7bf99688150e93335d25385fae` |
+| `closeout-motion-200ms.png` | 390 × 420 | `a611fc083df4ed7b696cd1ca33bcd9a488587a9e8ba68546ecac55e33b2f616d` |
+| `closeout-motion-700ms.png` | 390 × 420 | `258868916656409fbdeb11d3e2ea0850c04e687496abeb42ef8d7ee000662847` |
 
 `shipped-m390-journey-home.png` and `t1-local-mobile-journey.png` are byte-identical: the shipped journey Home at $0 matches the pre-merge T1 capture.
 
