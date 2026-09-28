@@ -50,7 +50,7 @@ for (const [currency, rate, deltaFive, deltaThree] of [
     await page.getByTestId('deposit-amount').fill(String(rate * 5));
     await expect(page.getByTestId('deposit-balance-change')).toContainText('+$5.00');
     await page.getByRole('button', { name: 'Confirm', exact: true }).click();
-    await expect(page.getByTestId('deposit-confirmation-region')).toContainText('simulated balance increased by $5.00');
+    await expect(page.getByTestId('deposit-confirmation-region')).toContainText('You added $5.00 to your simulated balance');
     await page.goto(home);
     await expect(page.getByTestId('currency-insight-inline')).toContainText(`${currency} ${deltaFive} higher`);
     await expect(page.getByTestId('currency-insight-inline')).toContainText('from the rate change');
@@ -65,7 +65,7 @@ for (const [currency, rate, deltaFive, deltaThree] of [
     await expect(page.getByTestId('withdraw-balance-preview')).toContainText('$5.00 − $2.00 = $3.00');
     await page.getByRole('button', { name: 'Confirm', exact: true }).click();
     await expect(page.getByTestId('withdraw-status-region')).toHaveAttribute('data-status', 'SUCCESS');
-    await page.getByRole('link', { name: 'Review simulated activity' }).click();
+    await page.getByRole('link', { name: 'Review Activity' }).click();
     await page.getByRole('link', { name: 'Return to current position' }).click();
     await expect(page.getByTestId('usd-balance')).toHaveText('$3.00');
     const local = (rate * 3).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });

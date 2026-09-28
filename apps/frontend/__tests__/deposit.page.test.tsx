@@ -240,8 +240,9 @@ describe('DepositPage market-data degraded state (MC-S2-020)', () => {
     await act(async () => {
       await vi.advanceTimersByTimeAsync(1600);
     });
+    // HOME-EXPERIENCE-001 T2: the approved receipt headline replaces "Simulated deposit recorded".
     expect(screen.getByTestId('deposit-confirmed').textContent).toBe(
-      'Simulated deposit recorded',
+      'You added $5.00 to your simulated balance',
     );
     expect(
       screen
@@ -461,14 +462,15 @@ describe('DepositPage CLASS-A-VAL-002 primary and exception conditions', () => {
     await act(async () => {
       await vi.advanceTimersByTimeAsync(1600);
     });
+    // HOME-EXPERIENCE-001 T2: receipt rows carry the amount and the no-real-money boundary.
     expect(screen.getByTestId('deposit-confirmation-region').textContent).toMatch(
-      /no real money moved/i,
+      /Real money movedNone/,
     );
     expect(screen.getByTestId('deposit-confirmation-region').textContent).toMatch(
-      /simulated balance increased by \$5\.00/i,
+      /You added \$5\.00 to your simulated balance/,
     );
     expect(screen.getByTestId('deposit-confirmation-region').textContent).toMatch(
-      /matching simulated deposit/i,
+      /Shown as\+\$5\.00/,
     );
     expect(
       screen.getByRole('link', { name: 'Continue to simulated withdrawal' }),
@@ -596,7 +598,7 @@ describe('D-132 selected simulation deposit currency', () => {
     expect(depositStateMocks.append).toHaveBeenCalledTimes(1);
     expect(depositStateMocks.append).toHaveBeenCalledWith(expect.objectContaining({ amount_usd: 0.01 }));
     expect(depositStateMocks.confirm).toHaveBeenCalledTimes(1);
-    expect(screen.getByTestId('deposit-confirmation-region').textContent).toContain('increased by $0.01');
+    expect(screen.getByTestId('deposit-confirmation-region').textContent).toContain('You added $0.01 to your simulated balance');
   });
 
   test('does not apply the simulated zero-USD guard to a non-simulated route', async () => {
@@ -651,7 +653,7 @@ describe('D-132 selected simulation deposit currency', () => {
       type: 'deposit', amount_usd: usd, amount_zmw: zmw, fx_rate: 20,
     }));
     await act(async () => { await vi.advanceTimersByTimeAsync(1600); });
-    expect(screen.getByTestId('deposit-confirmation-region').textContent).toContain(`simulated balance increased by $${usd.toFixed(2)}`);
+    expect(screen.getByTestId('deposit-confirmation-region').textContent).toContain(`You added $${usd.toFixed(2)} to your simulated balance`);
   });
 
   test.each([

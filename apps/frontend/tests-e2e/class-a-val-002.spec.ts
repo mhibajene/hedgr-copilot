@@ -152,13 +152,13 @@ test('simulated withdrawal rejects fractional cents, refreshes the next draft an
   expect(await page.evaluate(() => JSON.parse(window.localStorage.getItem('hedgr:ledger') ?? '{}').transactions.length)).toBe(1);
   await amount.fill('1');
   await confirm.click();
-  await expect(page.getByTestId('withdraw-status-title')).toHaveText('Simulated withdrawal recorded');
+  await expect(page.getByTestId('withdraw-status-title')).toHaveText(/^You took \$\d+\.\d{2} out of your simulated balance$/);
   await expect(confirm).toBeDisabled();
   await amount.fill('2');
   await expect(page.getByTestId('withdraw-status-region')).toHaveCount(0);
   await expect(page.getByTestId('withdraw-balance-preview')).toContainText('$4.00 − $2.00 = $2.00');
   await confirm.click();
-  await expect(page.getByTestId('withdraw-status-title')).toHaveText('Simulated withdrawal recorded');
+  await expect(page.getByTestId('withdraw-status-title')).toHaveText(/^You took \$\d+\.\d{2} out of your simulated balance$/);
   // Editing the completed value creates a fresh draft even when the intended amount is identical.
   await amount.fill('');
   await amount.fill('2');
@@ -166,9 +166,9 @@ test('simulated withdrawal rejects fractional cents, refreshes the next draft an
   await expect(page.getByTestId('withdraw-status-title')).toHaveText('Simulated withdrawal in progress');
   await expect(page.getByTestId('withdraw-no-funds')).toHaveCount(0);
   await expect(page.locator('#withdraw-amount-error')).toHaveCount(0);
-  await expect(page.getByTestId('withdraw-status-title')).toHaveText('Simulated withdrawal recorded');
-  await expect(page.getByTestId('withdraw-balance-reconciliation')).toContainText('$0.00 remains');
-  await page.getByRole('link', { name: 'Review simulated activity' }).click();
+  await expect(page.getByTestId('withdraw-status-title')).toHaveText(/^You took \$\d+\.\d{2} out of your simulated balance$/);
+  await expect(page.getByTestId('withdraw-balance-reconciliation')).toContainText('→ $0.00');
+  await page.getByRole('link', { name: 'Review Activity' }).click();
   await expect(page.getByTestId('activity-row-withdraw')).toHaveCount(3);
   await page.getByRole('link', { name: 'Return to current position' }).click();
   await expect(page.getByTestId('usd-balance')).toHaveText('$0.00');
@@ -403,8 +403,9 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   await page.getByTestId('dashboard-add-simulated-deposit').click();
   await expect(page).toHaveURL(/\/deposit\?journey=class-a-val-002/);
   await expect(page.getByTestId('synthetic-journey-current-step')).toHaveText(
-    '2First event'
+    'First event'
   );
+  await expect(page.getByTestId('synthetic-journey-shell')).toContainText('Step 2 of 4 · First event');
   await expect(page.getByTestId('synthetic-journey-shell')).toContainText(
     'Create the first comparison point'
   );
@@ -434,11 +435,11 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   );
   await depositConfirm.click();
   await expect(page.getByTestId('deposit-confirmation-region')).toContainText(
-    'The simulated balance increased by $5.00',
+    'You added $5.00 to your simulated balance',
     { timeout: 10_000 }
   );
   await expect(page.getByTestId('deposit-confirmation-region')).toContainText(
-    'No account was charged and no real money moved'
+    'Real money movedNone'
   );
   expect(depositContractRequests).toBe(0);
 
@@ -460,8 +461,9 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
     .click();
   await expect(page).toHaveURL(/\/withdraw\?journey=class-a-val-002/);
   await expect(page.getByTestId('synthetic-journey-current-step')).toHaveText(
-    '3Change'
+    'Change'
   );
+  await expect(page.getByTestId('synthetic-journey-shell')).toContainText('Step 3 of 4 · Change');
   await expect(page.getByTestId('synthetic-journey-shell')).toContainText(
     'See what changes and what remains'
   );
@@ -506,9 +508,8 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
     'SUCCESS',
     { timeout: 10_000 }
   );
-  await expect(page.getByTestId('withdraw-status-description')).toContainText(
-    'No bank transfer or real payout occurred'
-  );
+  // HOME-EXPERIENCE-001 T2: the receipt carries the no-real-money boundary.
+  await expect(page.getByTestId('withdraw-status-region')).toContainText('Real money movedNone');
   await expect(
     page.getByTestId('withdraw-status-exception-clarification')
   ).toHaveCount(0);
@@ -517,9 +518,9 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   ).toHaveCount(0);
   await expect(
     page.getByTestId('withdraw-balance-reconciliation')
-  ).toContainText('$3.00 remains');
+  ).toContainText('→ $3.00');
 
-  await page.getByRole('link', { name: 'Review simulated activity' }).click();
+  await page.getByRole('link', { name: 'Review Activity' }).click();
   await expect(page).toHaveURL(/\/activity\?journey=class-a-val-002/);
   await expect(page.getByRole('heading', { name: 'Activity', exact: true })).toBeVisible();
   await expect(page.getByTestId('activity-synthetic-condition')).toHaveCount(0);
@@ -622,7 +623,7 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
     'SUCCESS',
     { timeout: 10_000 }
   );
-  await page.getByRole('link', { name: 'Review simulated activity' }).click();
+  await page.getByRole('link', { name: 'Review Activity' }).click();
 
   await expect(page.getByTestId('activity-type-deposit')).toHaveCount(1);
   await expect(page.getByTestId('activity-type-withdraw')).toHaveCount(1);

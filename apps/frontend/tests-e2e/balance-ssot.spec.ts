@@ -70,7 +70,7 @@ test.describe('Balance SSoT - Ledger as Single Source of Truth', () => {
     // Wait for confirmation (mock should confirm quickly)
     const confirmationMsg = page.getByTestId('deposit-confirmed');
     await expect(confirmationMsg).toBeVisible({ timeout: 10000 });
-    await expect(confirmationMsg).toHaveText('Simulated deposit recorded');
+    await expect(confirmationMsg).toHaveText(/^You added \$\d+\.\d{2} to your simulated balance$/);
 
     // Navigate to dashboard using nav link
     await page

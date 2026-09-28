@@ -160,9 +160,11 @@ describe('transaction pages with reactive balance and real simulation lifecycles
     expect(screen.queryByTestId('withdraw-no-funds')).toBeNull();
     expect(screen.queryByRole('alert')).toBeNull();
     await advance(2000);
-    expect(screen.getByTestId('withdraw-status-title').textContent).toBe('Simulated withdrawal recorded');
+    // HOME-EXPERIENCE-001 T2: approved receipt headline and next step.
+    expect(screen.getByTestId('withdraw-status-title').textContent).toBe('You took $5.00 out of your simulated balance');
+    expect(screen.getByTestId('withdraw-balance-reconciliation').textContent).toBe('$5.00 → $0.00');
     expect(screen.getByTestId('withdraw-balance-preview').textContent).toContain('$5.00 − $5.00 = $0.00');
-    expect(screen.getByRole('link', { name: 'Review simulated activity' }).getAttribute('href')).toBe(
+    expect(screen.getByRole('link', { name: 'Review Activity' }).getAttribute('href')).toBe(
       query ? '/activity?journey=class-a-val-002' : '/activity',
     );
     expect(screen.queryByTestId('withdraw-no-funds')).toBeNull();

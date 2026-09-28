@@ -324,7 +324,7 @@ export function AppLayoutClient({ children }: { children: React.ReactNode }) {
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div className={`min-w-0 [overflow-wrap:anywhere] ${explicitSyntheticJourney ? 'pl-14 md:pl-0' : ''}`}>
                 <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-hedgr-500">
-                  {currentJourneyOrientation.context}
+                  Step {currentJourneyStepNumber} of 4 · {currentJourneyStep.label}
                 </p>
                 <p
                   id="synthetic-journey-heading"
@@ -336,14 +336,23 @@ export function AppLayoutClient({ children }: { children: React.ReactNode }) {
                   {currentJourneyOrientation.description}
                 </p>
               </div>
-              <p
-                className="inline-flex min-h-11 w-fit shrink-0 items-center gap-2 rounded-full border border-hedgr-100 bg-hedgr-100/30 px-3 py-2 text-xs font-semibold text-hedgr-600"
-                aria-label="Current journey step"
-                data-testid="synthetic-journey-current-step"
-              >
-                <span aria-hidden="true">{currentJourneyStepNumber}</span>
-                {currentJourneyStep.label}
-              </p>
+              <ol className={`${finish.steps} w-full`} aria-label="Practice journey" data-testid="synthetic-journey-steps">
+                {journeySteps.map((step, index) => {
+                  const current = index === currentJourneyStepIndex;
+                  const done = index < currentJourneyStepIndex;
+                  return (
+                    <li
+                      key={step.href}
+                      className={`${done ? finish.stepDone : ''} ${current ? finish.stepCurrent : ''}`}
+                      aria-current={current ? 'step' : undefined}
+                      data-testid={current ? 'synthetic-journey-current-step' : undefined}
+                    >
+                      <i aria-hidden="true" />
+                      {step.label}
+                    </li>
+                  );
+                })}
+              </ol>
             </div>
           </div>
         </section>

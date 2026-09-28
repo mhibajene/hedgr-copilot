@@ -1,6 +1,8 @@
 'use client';
 
 import finish from '../product-finish.module.css';
+import { ReceiptCard, formatRecordedTime } from '../ReceiptCard';
+import { ActionDock } from '../ActionDock';
 
 import Link from 'next/link';
 import { Suspense, useState, useEffect, useRef, useMemo } from 'react';
@@ -58,7 +60,7 @@ function DepositPageContent() {
   const simulatedEnvironment = getEnvironmentMode() !== 'live';
   const productSimulationActive = syntheticJourneyActive || simulatedEnvironment;
 
-  const { refresh } = useBalance();
+  const { refresh, total } = useBalance();
   const appendTx = useLedgerStore((s) => s.append);
   const confirmTx = useLedgerStore((s) => s.confirm);
 
@@ -80,6 +82,8 @@ function DepositPageContent() {
   const [amountLocalStr, setAmountLocalStr] = useState<string>('100');
   const [txnRef, setTxnRef] = useState<string | null>(null);
   const [usdToCredit, setUsdToCredit] = useState(0);
+  const [balanceBefore, setBalanceBefore] = useState<number | null>(null);
+  const [recordedAt, setRecordedAt] = useState<number | null>(null);
   const [requestStatus, setStatus] = useState<'IDLE' | 'PENDING' | 'CONFIRMED' | 'FAILED'>('IDLE');
   const simulatedTxStatus = useLedgerStore((s) =>
     txnRef ? s.getByTxnRef(txnRef)?.status : undefined,
@@ -163,6 +167,7 @@ function DepositPageContent() {
     const usdForStub = rate !== null && usdPreview !== null ? usdPreview : 0;
     setStatus('PENDING');
     setUsdToCredit(usdForStub);
+    setBalanceBefore(typeof total === 'number' && Number.isFinite(total) ? total : null);
 
     const txn_ref = crypto.randomUUID();
     if (!syntheticJourneyActive && !simulatedEnvironment) {
@@ -175,6 +180,7 @@ function DepositPageContent() {
     }
 
     const now = Date.now();
+    setRecordedAt(now);
     // When rate is missing, zeros are technical simulation placeholders only (MC-S2-021);
     // UI must keep conversion preview unavailable — not economic truth.
     const amountUsdLedger = rate !== null && usdPreview !== null ? usdPreview : 0;
@@ -239,10 +245,12 @@ function DepositPageContent() {
 
   if (methodsLoading) {
     return (
-      <main className={`mx-auto max-w-xl p-6 ${finish.choice}`}>
+      <main className={`mx-auto max-w-xl p-6 ${finish.choice}`} aria-busy="true">
         <h1 className="text-2xl font-semibold">Deposit</h1>
-        <div className="flex items-center justify-center py-12">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600" />
+        <div className={finish.loading} aria-hidden="true">
+          <span style={{ height: '6rem' }} />
+          <span style={{ height: '3.5rem' }} />
+          <span style={{ height: '3rem' }} />
         </div>
       </main>
     );
@@ -311,6 +319,7 @@ function DepositPageContent() {
         <MarketDataContinuityPanel
           route="deposit"
           onRetryFx={fx.retry}
+          labelled={productSimulationActive}
           data-testid="deposit-market-data-continuity"
         />
       ) : (
@@ -402,37 +411,52 @@ function DepositPageContent() {
       >
         {status === 'PENDING' ? 'Processing…' : 'Confirm'}
       </button>
-      {status === 'CONFIRMED' && (
+      {productSimulationActive && !rateAllowsConfirm ? (
+        <p className={finish.reason} data-testid="deposit-confirm-reason">Confirm turns on when the rate is back.</p>
+      ) : null}
+      {status === 'CONFIRMED' && productSimulationActive ? (
+        <div className="space-y-4" data-testid="deposit-confirmation-region">
+          <ReceiptCard
+            headline={`You added $${usdToCredit.toFixed(2)} to your simulated balance`}
+            headlineTestId="deposit-confirmed"
+            time={formatRecordedTime(recordedAt ?? Date.now())}
+            rows={[
+              ...(amountLocalNum !== null ? [{ label: 'Amount', value: `${quote} ${amountLocalNum.toFixed(2)}` }] : []),
+              { label: 'Shown as', value: `+$${usdToCredit.toFixed(2)}` },
+              ...(syntheticJourneyActive && rate !== null ? [{ label: 'Example rate', value: `1 USD = ${rate.toFixed(2)} ${quote}` }] : []),
+              ...(balanceBefore !== null ? [{ label: 'Balance', value: <>${balanceBefore.toFixed(2)} → <b>${(balanceBefore + usdToCredit).toFixed(2)}</b></> }] : []),
+              { label: 'Real money moved', value: 'None' },
+            ]}
+          />
+          <ActionDock
+            title="Try a simulated withdrawal"
+            why="See what changes, and what stays, when money comes out."
+            primary={{ label: 'Continue to simulated withdrawal', href: syntheticJourneyActive ? getSyntheticJourneyHref('/withdraw') : '/withdraw' }}
+            secondary={{ label: 'Back to your position', href: syntheticJourneyActive ? getSyntheticJourneyHref('/dashboard') : '/dashboard' }}
+          />
+        </div>
+      ) : status === 'CONFIRMED' ? (
         <section
           className="rounded-xl border border-hedgr-200 bg-white p-4 text-hedgr-800"
           data-testid="deposit-confirmation-region"
         >
           <p className="font-semibold" data-testid="deposit-confirmed">
-            {productSimulationActive ? 'Simulated deposit recorded' : 'Deposit confirmed'}
+            Deposit confirmed
           </p>
-          {productSimulationActive ? (
-            <>
-              <p className="mt-1 text-sm leading-relaxed text-hedgr-dark">
-                The simulated balance increased by{' '}
-                <strong className="tabular-nums">${usdToCredit.toFixed(2)}</strong>.
-                Activity now shows the matching simulated deposit. No account was
-                charged and no real money moved.
-              </p>
-              <Link
-                href={
-                  syntheticJourneyActive
-                    ? getSyntheticJourneyHref('/withdraw')
-                    : '/withdraw'
-                }
-                className="mt-3 inline-flex rounded-xl bg-hedgr-primary px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-hedgr-600 focus:outline-none focus:ring-2 focus:ring-hedgr-500 focus:ring-offset-2"
-              >
-                Continue to simulated withdrawal
-              </Link>
-            </>
-          ) : null}
         </section>
-      )}
-      {status === 'FAILED' && (
+      ) : null}
+      {status === 'FAILED' && productSimulationActive ? (
+        <section className={finish.simFailure} role="alert" data-testid="deposit-failed-state">
+          <div>
+            <h2>We couldn’t record this simulated deposit</h2>
+            <p>Nothing was added to your simulated balance. Your amount is still here, so you can try again.</p>
+          </div>
+          <button type="button" className={`${finish.pill} bg-hedgr-dark`} onClick={() => setStatus('IDLE')}>
+            Try again
+          </button>
+        </section>
+      ) : null}
+      {status === 'FAILED' && !productSimulationActive && (
         <div className="space-y-3">
           <ErrorState
             title="Deposit failed"
@@ -482,10 +506,12 @@ function DepositPageContent() {
 
 function DepositPageFallback() {
   return (
-    <main className={`mx-auto max-w-xl p-6 ${finish.choice}`}>
+    <main className={`mx-auto max-w-xl p-6 ${finish.choice}`} aria-busy="true">
       <h1 className="text-2xl font-semibold">Deposit</h1>
-      <div className="flex items-center justify-center py-12">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600" />
+      <div className={finish.loading} aria-hidden="true">
+        <span style={{ height: '6rem' }} />
+        <span style={{ height: '3.5rem' }} />
+        <span style={{ height: '3rem' }} />
       </div>
     </main>
   );
