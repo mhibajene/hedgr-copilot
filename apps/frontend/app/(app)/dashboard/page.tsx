@@ -78,6 +78,19 @@ function activityTitle(
 
 type SyntheticComparisonState = "empty" | "first-event" | "change";
 
+// HOME-EXPERIENCE-001 T5: one restrained arrival motion after a confirmed change.
+const ARRIVAL_SETTLE_MS = 600;
+
+function motionAllowed(): boolean {
+  if (typeof window === "undefined" || typeof window.requestAnimationFrame !== "function") return false;
+  try {
+    return typeof window.matchMedia === "function" &&
+      !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  } catch {
+    return false;
+  }
+}
+
 export default function DashboardPage() {
   const { total, available, pending, asOf, isLoading, error, currency, refresh } =
     useBalance();
@@ -238,6 +251,55 @@ export default function DashboardPage() {
       : 0;
   // Only the journey names its display currency explicitly; default Home omits the line.
   const estimateCurrency = syntheticJourneyActive ? displayCurrency : null;
+
+  // T5 arrival: count from the last figure seen, settle the line, then fade the chip in.
+  // Runs once per Home arrival, only for a confirmed change; reduced motion shows the end state.
+  const arrivalChange =
+    sinceSummary && normalPosture && sinceSummary.kind !== "no-change" && sinceDelta !== 0
+      ? sinceSummary
+      : null;
+  const arrivalKey = arrivalChange ? `${arrivalChange.from}:${arrivalChange.to}` : "";
+  const [arrivalPhase, setArrivalPhase] = useState<"idle" | "running" | "done">("idle");
+  const [arrivalProgress, setArrivalProgress] = useState(0);
+  const [arrivalAnnouncement, setArrivalAnnouncement] = useState("");
+  const arrivalStarted = useRef(false);
+  useEffect(() => {
+    if (!arrivalKey || !arrivalChange || arrivalStarted.current) return;
+    arrivalStarted.current = true;
+    const change = +(arrivalChange.to - arrivalChange.from).toFixed(2);
+    const sentence = `Your position is now ${formatUsd(arrivalChange.to)}, ${formatUsd(change)} ${change > 0 ? "higher" : "lower"} than on your last visit.`;
+    const finish = () => {
+      setArrivalProgress(1);
+      setArrivalPhase("done");
+      setArrivalAnnouncement(sentence);
+    };
+    if (!motionAllowed()) {
+      finish();
+      return;
+    }
+    setArrivalPhase("running");
+    let frame = 0;
+    const start = performance.now();
+    const tick = (now: number) => {
+      const t = Math.min(1, (now - start) / ARRIVAL_SETTLE_MS);
+      setArrivalProgress(1 - Math.pow(1 - t, 3));
+      if (t < 1) frame = window.requestAnimationFrame(tick);
+      else finish();
+    };
+    frame = window.requestAnimationFrame(tick);
+    return () => {
+      window.cancelAnimationFrame(frame);
+      finish();
+    };
+    // arrivalKey captures the only inputs that matter; the summary object is rebuilt each render.
+  }, [arrivalKey]);
+  // Before the first frame, show the last-seen figure only when motion will actually run.
+  const arrivalAnimating =
+    arrivalChange !== null && arrivalPhase !== "done" && (arrivalPhase === "running" || motionAllowed());
+  const arrivalSettle = arrivalAnimating ? arrivalProgress : 1;
+  const displayedTotal = arrivalAnimating && arrivalChange
+    ? +(arrivalChange.from + (arrivalChange.to - arrivalChange.from) * arrivalProgress).toFixed(2)
+    : total;
   const trustHref = syntheticJourneyActive
     ? `/settings/trust?${CLASS_A_VAL_002_JOURNEY_PARAM}=${CLASS_A_VAL_002_JOURNEY_VALUE}`
     : "/settings/trust";
@@ -280,14 +342,19 @@ export default function DashboardPage() {
         </div>
       ) : (
         <BalanceWithLocalEstimate
-          usdAmount={ready && !cleanStartRequested ? total : 0}
-          displayEstimate={syntheticJourneyActive ? formatSimulationDisplayEstimate(ready && !cleanStartRequested ? total : 0, displayCurrency) : undefined}
+          usdAmount={ready && !cleanStartRequested ? displayedTotal : 0}
+          displayEstimate={syntheticJourneyActive ? formatSimulationDisplayEstimate(ready && !cleanStartRequested ? displayedTotal : 0, displayCurrency) : undefined}
           data-testid="usd-balance"
           className={`${home.amount} tabular-nums`}
         />
       )}
       {sinceSummary && normalPosture && (sinceSummary.kind === "no-change" || sinceDelta !== 0) ? (
-        <p className={home.changeChip} data-testid="dashboard-change-chip">
+        <p
+          className={`${home.changeChip} ${
+            arrivalAnimating ? home.chipPending : arrivalChange ? home.chipEnter : ""
+          }`}
+          data-testid="dashboard-change-chip"
+        >
           {sinceSummary.kind === "no-change" ? (
             <>
               <span aria-hidden="true">–</span>
@@ -299,6 +366,11 @@ export default function DashboardPage() {
               <span>{formatUsd(sinceDelta)} since {formatShortDate(sinceSummary.since)}</span>
             </>
           )}
+        </p>
+      ) : null}
+      {productSimulationActive ? (
+        <p className="sr-only" role="status" data-testid="dashboard-arrival-announcement">
+          {arrivalAnnouncement}
         </p>
       ) : null}
       {positionLoading ? (
@@ -381,7 +453,7 @@ export default function DashboardPage() {
   );
 
   const positionLine = positionDerivable ? (
-    <PositionLine entries={positionEntries} lastVisit={previousVisit} />
+    <PositionLine entries={positionEntries} lastVisit={previousVisit} settle={arrivalSettle} />
   ) : null;
 
   const observationLabel = (text: string) => (
