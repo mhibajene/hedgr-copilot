@@ -4,7 +4,7 @@
 # Do not use this workflow for pre-verification updates: runs create
 # github-actions[bot] (GITHUB_TOKEN) merges whose pull_request checks stay
 # action_required (0 jobs) and need manual approval of workflow runs.
-name: PR auto-update (merge main -> PR heads)
+name: PR auto-update (manual-only, workflow_dispatch)
 on:
   workflow_dispatch:
 

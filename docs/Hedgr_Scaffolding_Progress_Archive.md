@@ -600,7 +600,7 @@ HedgrOps Close-Out — Sprint 0.5: CI/CD Hardening, E2E Reliability & Dependency
 	•	.github/workflows/validate.yml :: Node→Corepack order, frozen installs, actionlint + guard steps.
 	•	.github/workflows/e2e-smoke.yml :: prod build, guard, pnpm store cache (post-Corepack), workflow_dispatch, canonical name.
 	•	.github/workflows/ci.yml :: fork-safe checks job; Node fallback + Corepack; fixed indentation.
-	•	.github/workflows/pr-auto-update.yml :: auto-update PR branches when main moves.
+	•	.github/workflows/pr-auto-update.yml :: auto-update PR branches when main moves. **Superseded by #726 (manual-only):** as of `eacaa44`, this workflow is `workflow_dispatch` only and is not used for pre-verification branch updates.
 	•	scripts/ci/guard-lock-drift.mjs :: fail on lock/manifest drift.
 	•	scripts/ci/guard-workflows.mjs :: invariants (YAML colon, pnpm cache misuse, E2E naming, .nvmrc).
 	•	apps/frontend/playwright.config.ts :: prod server bring-up, timeouts.
