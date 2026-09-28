@@ -78,7 +78,7 @@ test('zero-USD simulated deposit preserves the position and Activity until a val
   await expect(page.locator('#deposit-amount-error')).toHaveCount(0);
   await expect(page.getByTestId('deposit-conversion-preview')).toContainText('+$0.01');
   await confirm.click();
-  await expect(page.getByTestId('deposit-confirmation-region')).toContainText('increased by $0.01');
+  await expect(page.getByTestId('deposit-confirmation-region')).toContainText('You added $0.01 to your simulated balance');
   await page.getByRole('link', { name: 'Home', exact: true }).first().click();
   await expect(page.getByTestId('usd-balance')).toHaveText('$3.01');
   await page.getByRole('link', { name: 'View Activity', exact: true }).click();
@@ -286,7 +286,7 @@ for (const [currency, rate, localFive, localThree] of [
     await input.fill(String(rate * 5));
     await expect(page.getByTestId('deposit-balance-change')).toContainText(`shows ${rate * 5} ${currency} as +$5.00`);
     await page.getByRole('button', { name: 'Confirm', exact: true }).click();
-    await expect(page.getByTestId('deposit-confirmation-region')).toContainText('simulated balance increased by $5.00');
+    await expect(page.getByTestId('deposit-confirmation-region')).toContainText('You added $5.00 to your simulated balance');
     const deposits = await page.evaluate(() => JSON.parse(localStorage.getItem('hedgr:ledger')!).transactions);
     expect(deposits).toHaveLength(1);
     expect(deposits[0]).toMatchObject({ type: 'deposit', status: 'settled', amount_usd: 5, amount_zmw: 100, fx_rate: 20 });
@@ -298,7 +298,7 @@ for (const [currency, rate, localFive, localThree] of [
     await expect(page.getByTestId('withdraw-balance-preview')).toContainText('$5.00 − $2.00 = $3.00');
     await page.getByRole('button', { name: 'Confirm', exact: true }).click();
     await expect(page.getByTestId('withdraw-status-region')).toHaveAttribute('data-status', 'SUCCESS');
-    await page.getByRole('link', { name: 'Review simulated activity' }).click();
+    await page.getByRole('link', { name: 'Review Activity' }).click();
     await page.getByRole('link', { name: 'Return to current position' }).click();
     await expect(page.getByTestId('usd-balance')).toHaveText('$3.00');
     await expect(page.getByTestId('local-balance')).toHaveText(`≈ ${currency} ${localThree} display estimate`);

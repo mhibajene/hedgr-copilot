@@ -121,7 +121,7 @@ test('default routes share the simulated customer model without research framing
   await expect(page.getByLabel('Simulated deposit amount')).toBeVisible();
   await waitForDepositFxReady(page);
   await page.getByRole('button', { name: 'Confirm' }).click();
-  await expect(page.getByText('Simulated deposit recorded')).toBeVisible({
+  await expect(page.getByTestId('deposit-confirmed')).toBeVisible({
     timeout: 6_000,
   });
   expect(sameOriginFxRequests).toBeGreaterThan(0);
@@ -144,7 +144,7 @@ test('default routes share the simulated customer model without research framing
     'SUCCESS',
     { timeout: 6_000 }
   );
-  await page.getByRole('link', { name: 'Review simulated activity' }).click();
+  await page.getByRole('link', { name: 'Review Activity' }).click();
 
   await expect(page).toHaveURL(/\/activity$/);
   await expect(page.getByTestId('activity-simulation-context')).toContainText(
