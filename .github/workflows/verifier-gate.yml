@@ -104,15 +104,16 @@ jobs:
             }
 
             try {
-              await github.rest.repos.createCommitStatus({
+              const status = {
                 owner,
                 repo,
                 sha: headSha,
                 state,
                 context: 'hedgr/verifier',
                 description: description.slice(0, 140),
-                target_url: targetUrl,
-              });
+              };
+              if (targetUrl) status.target_url = targetUrl;
+              await github.rest.repos.createCommitStatus(status);
               core.info(
                 `hedgr/verifier ${state} on ${headSha} (PR #${prNumber})`
               );
