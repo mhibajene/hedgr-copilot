@@ -1,9 +1,11 @@
+# Manual-only under the 2026-09-28 verifier invariant (AGENTS.md standing PR
+# invariant; docs/ops/runbook.md PR Posture). Automatic updates would create
+# new commits and invalidate an independent verifier PASS on the current head SHA.
+# Do not use this workflow for pre-verification updates: runs create
+# github-actions[bot] (GITHUB_TOKEN) merges whose pull_request checks stay
+# action_required (0 jobs) and need manual approval of workflow runs.
 name: PR auto-update (merge main -> PR heads)
 on:
-  push:
-    branches: [main]
-  schedule:
-    - cron: "0 */6 * * *"    # safety sweep every 6h (UTC)
   workflow_dispatch:
 
 permissions:
