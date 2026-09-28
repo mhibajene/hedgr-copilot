@@ -1,8 +1,9 @@
 'use client';
 
 import finish from '../product-finish.module.css';
+import { ReceiptCard, formatRecordedTime } from '../ReceiptCard';
+import { ActionDock } from '../ActionDock';
 
-import Link from 'next/link';
 import { Suspense, useState, useEffect, useMemo } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { withdrawMock } from '../../../lib/payments/withdraw.mock';
@@ -115,6 +116,7 @@ function WithdrawPageContent() {
   const [txnRef, setTxnRef] = useState<string | null>(null);
   const [status, setStatus] = useState<WithdrawPageStatus>('IDLE');
   const [balanceBeforeWithdrawal, setBalanceBeforeWithdrawal] = useState<number | null>(null);
+  const [recordedAt, setRecordedAt] = useState<number | null>(null);
 
   const [withdrawMethods, setWithdrawMethods] = useState<WithdrawMethod[]>([]);
   const [methodsLoading, setMethodsLoading] = useState(true);
@@ -200,6 +202,7 @@ function WithdrawPageContent() {
         amountIsInvalid || amountExceedsBalance || !rateAllowsConfirm) return;
 
     setBalanceBeforeWithdrawal(available);
+    setRecordedAt(Date.now());
     setStatus('PENDING');
     const tx = await withdrawMock.createWithdraw(usd, {
       skipAutoConfirm: txReviewFlags.holdWithdrawPending,
@@ -277,10 +280,12 @@ function WithdrawPageContent() {
 
   if (methodsLoading || balanceLoading) {
     return (
-      <main className={`mx-auto max-w-xl p-6 ${finish.choice}`}>
+      <main className={`mx-auto max-w-xl p-6 ${finish.choice}`} aria-busy="true">
         <h1 className="text-2xl font-semibold">Withdraw</h1>
-        <div className="flex items-center justify-center py-12">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600" />
+        <div className={finish.loading} aria-hidden="true">
+          <span style={{ height: '6rem' }} />
+          <span style={{ height: '3.5rem' }} />
+          <span style={{ height: '3rem' }} />
         </div>
       </main>
     );
@@ -391,6 +396,7 @@ function WithdrawPageContent() {
         <MarketDataContinuityPanel
           route="withdraw"
           onRetryFx={fx.retry}
+          labelled={productSimulationActive}
           data-testid="withdraw-market-data-continuity"
         />
       ) : (
@@ -495,7 +501,28 @@ function WithdrawPageContent() {
       >
         {status === 'PENDING' ? 'Processing…' : 'Confirm'}
       </button>
-      {activeStatus && activeStatusPresentation && (
+      {status === 'CONFIRMED' && productSimulationActive ? (
+        <div className="space-y-4" data-testid="withdraw-status-region" data-status={activeStatus?.publicStatus}>
+          <ReceiptCard
+            headline={`You took $${usd.toFixed(2)} out of your simulated balance`}
+            headlineTestId="withdraw-status-title"
+            time={formatRecordedTime(recordedAt ?? Date.now())}
+            rows={[
+              ...(rate !== null ? [{ label: 'Amount', value: `${quote} ${(usd * rate).toFixed(2)}` }] : []),
+              { label: 'Shown as', value: `−$${usd.toFixed(2)}` },
+              ...(syntheticJourneyActive && rate !== null ? [{ label: 'Example rate', value: `1 USD = ${rate.toFixed(2)} ${quote}` }] : []),
+              ...(remainingAfterWithdrawal !== null ? [{ label: 'Balance', value: <span data-testid="withdraw-balance-reconciliation">${displayedBalanceBefore.toFixed(2)} → <b>${remainingAfterWithdrawal.toFixed(2)}</b></span> }] : []),
+              { label: 'Real money moved', value: 'None' },
+            ]}
+          />
+          <ActionDock
+            title="Check the evidence"
+            why="Activity lists both entries and the balance after each one."
+            primary={{ label: 'Review Activity', href: syntheticJourneyActive ? getSyntheticJourneyHref('/activity') : '/activity' }}
+            secondary={{ label: 'Back to your position', href: syntheticJourneyActive ? getSyntheticJourneyHref('/dashboard') : '/dashboard' }}
+          />
+        </div>
+      ) : activeStatus && activeStatusPresentation && (
         <section
           data-testid="withdraw-status-region"
           data-status={activeStatus.publicStatus}
@@ -587,32 +614,6 @@ function WithdrawPageContent() {
               ))}
             </div>
           )}
-          {status === 'CONFIRMED' && productSimulationActive ? (
-            <div className="mt-4 border-t border-hedgr-200 pt-4">
-              {remainingAfterWithdrawal !== null ? (
-                <p
-                  className="mb-3 text-sm leading-relaxed text-hedgr-dark"
-                  data-testid="withdraw-balance-reconciliation"
-                >
-                  <strong className="tabular-nums">
-                    ${remainingAfterWithdrawal.toFixed(2)} remains
-                  </strong>{' '}
-                  in the simulated balance. Activity now shows the simulated deposit
-                  and withdrawal that explain the result.
-                </p>
-              ) : null}
-              <Link
-                href={
-                  syntheticJourneyActive
-                    ? getSyntheticJourneyHref('/activity')
-                    : '/activity'
-                }
-                className="inline-flex rounded-xl bg-hedgr-primary px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-hedgr-600 focus:outline-none focus:ring-2 focus:ring-hedgr-500 focus:ring-offset-2"
-              >
-                Review simulated activity
-              </Link>
-            </div>
-          ) : null}
         </section>
       )}
       {status === 'FAILED' && (
@@ -630,10 +631,12 @@ function WithdrawPageContent() {
 
 function WithdrawPageFallback() {
   return (
-    <main className={`mx-auto max-w-xl p-6 ${finish.choice}`}>
+    <main className={`mx-auto max-w-xl p-6 ${finish.choice}`} aria-busy="true">
       <h1 className="text-2xl font-semibold">Withdraw</h1>
-      <div className="flex items-center justify-center py-12">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600" />
+      <div className={finish.loading} aria-hidden="true">
+        <span style={{ height: '6rem' }} />
+        <span style={{ height: '3.5rem' }} />
+        <span style={{ height: '3rem' }} />
       </div>
     </main>
   );
