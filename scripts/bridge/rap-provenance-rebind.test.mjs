@@ -71,6 +71,19 @@ function amend(root, sourcePath, change, message = "change source") {
   commit(root, message);
 }
 
+function bumpAgentsLastUpdated(content) {
+  const next = content.replace(
+    /Last updated: \d{4}-\d{2}-\d{2}/,
+    "Last updated: 1970-01-01"
+  );
+  assert.notEqual(
+    next,
+    content,
+    "AGENTS.md must contain a Last updated: YYYY-MM-DD line so the metadata-only edit actually changes the file"
+  );
+  return next;
+}
+
 test("no mandatory-source change creates no RAP event, including after delivery", (t) => {
   const { root } = fixture(t);
   assert.equal(planRebind(root).kind, "no_event");
@@ -81,9 +94,7 @@ test("no mandatory-source change creates no RAP event, including after delivery"
 
 test("a committed metadata-only mandatory-source change plans a main-bound mechanical rebind", (t) => {
   const { root, sourceCommit } = fixture(t);
-  amend(root, "AGENTS.md", (content) => content.replace(
-    "Last updated: 2026-09-25", "Last updated: 2026-09-26"
-  ));
+  amend(root, "AGENTS.md", bumpAgentsLastUpdated);
   const result = planRebind(root);
   assert.equal(result.kind, "mechanical");
   assert.deepEqual(result.changedPaths, ["AGENTS.md"]);
@@ -162,9 +173,7 @@ test("the dormant workflow rejects an unrecorded ACTIVE state", (t) => {
 
 test("a bounded protected test accepts only the exact main SHA while Fork 2 is inactive", (t) => {
   const { root } = fixture(t);
-  amend(root, "AGENTS.md", (content) => content.replace(
-    "Last updated: 2026-09-25", "Last updated: 2026-09-26"
-  ));
+  amend(root, "AGENTS.md", bumpAgentsLastUpdated);
   const target = git(root, "rev-parse", "HEAD");
   assert.equal(planRebind(root, { testTarget: target }).kind, "mechanical");
   assert.throws(() => planRebind(root, { testTarget: "a".repeat(40) }), /exact permanent-main HEAD/);

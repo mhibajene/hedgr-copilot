@@ -1,0 +1,129 @@
+# Binds independent verifier PASS/FAIL comments to commit status hedgr/verifier
+# on the current PR head SHA. Does not checkout PR code. Does not use
+# pull_request_target. Labels are not consulted.
+#
+# issues: read is required to paginate PR issue comments (attestations live
+# on the PR conversation, not review threads).
+name: Verifier gate
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+  issue_comment:
+    types: [created, edited]
+
+permissions:
+  contents: read
+  pull-requests: read
+  issues: read
+  statuses: write
+
+jobs:
+  bind-verifier-attestation:
+    name: Bind verifier attestation
+    if: github.event_name == 'pull_request' || github.event.issue.pull_request
+    runs-on: ubuntu-latest
+    steps:
+      - name: Bind hedgr/verifier to current head
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const ATTESTATION =
+              /^Hedgr-Verifier: (PASS|FAIL) sha=([0-9a-fA-F]{40}) run=(\S+)$/;
+            const TRUSTED = new Set(['OWNER', 'MEMBER', 'COLLABORATOR']);
+
+            let prNumber;
+            if (context.eventName === 'pull_request') {
+              prNumber = context.payload.pull_request.number;
+            } else {
+              prNumber = context.payload.issue.number;
+            }
+
+            const { data: pr } = await github.rest.pulls.get({
+              owner,
+              repo,
+              pull_number: prNumber,
+            });
+            const headSha = pr.head.sha;
+
+            const comments = await github.paginate(
+              github.rest.issues.listComments,
+              { owner, repo, issue_number: prNumber, per_page: 100 }
+            );
+
+            const attestations = [];
+            for (const comment of comments) {
+              if (!TRUSTED.has(comment.author_association)) continue;
+              const body = comment.body || '';
+              let lastMatch = null;
+              for (const line of body.split(/\r?\n/)) {
+                const match = ATTESTATION.exec(line);
+                if (match) lastMatch = match;
+              }
+              if (!lastMatch) continue;
+              attestations.push({
+                result: lastMatch[1],
+                sha: lastMatch[2].toLowerCase(),
+                run: lastMatch[3],
+                updatedAt: Date.parse(comment.updated_at || comment.created_at),
+                id: comment.id,
+              });
+            }
+
+            attestations.sort((a, b) => {
+              if (a.updatedAt !== b.updatedAt) return a.updatedAt - b.updatedAt;
+              return a.id - b.id;
+            });
+            const latest = attestations.length
+              ? attestations[attestations.length - 1]
+              : null;
+
+            const head = headSha.toLowerCase();
+            let state = 'pending';
+            let description = 'Verification required: no PASS on current head';
+            let targetUrl = undefined;
+
+            if (latest && latest.sha === head) {
+              if (latest.result === 'PASS') {
+                state = 'success';
+                description = 'Independent verifier PASS on current head';
+                targetUrl = latest.run.startsWith('http') ? latest.run : undefined;
+              } else {
+                state = 'failure';
+                description = 'Independent verifier FAIL on current head';
+                targetUrl = latest.run.startsWith('http') ? latest.run : undefined;
+              }
+            } else if (latest) {
+              state = 'pending';
+              description =
+                latest.result === 'FAIL'
+                  ? 'FAIL attestation is for another SHA; current head pending'
+                  : 'PASS attestation is for another SHA; current head pending';
+            }
+
+            try {
+              const status = {
+                owner,
+                repo,
+                sha: headSha,
+                state,
+                context: 'hedgr/verifier',
+                description: description.slice(0, 140),
+              };
+              if (targetUrl) status.target_url = targetUrl;
+              await github.rest.repos.createCommitStatus(status);
+              core.info(
+                `hedgr/verifier ${state} on ${headSha} (PR #${prNumber})`
+              );
+            } catch (error) {
+              core.warning(
+                `Could not write hedgr/verifier status: ${error.message}. ` +
+                  'Fork pull_request tokens are often read-only; comment path ' +
+                  'requires this workflow on the default branch.'
+              );
+              if (pr.head.repo && pr.head.repo.full_name === `${owner}/${repo}`) {
+                core.setFailed(error.message);
+              }
+            }
