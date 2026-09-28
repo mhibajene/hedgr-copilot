@@ -299,7 +299,7 @@ for (const [currency, rate, localFive, localThree] of [
     await page.getByRole('button', { name: 'Confirm', exact: true }).click();
     await expect(page.getByTestId('withdraw-status-region')).toHaveAttribute('data-status', 'SUCCESS');
     await page.getByRole('link', { name: 'Review Activity' }).click();
-    await page.getByRole('link', { name: 'Return to current position' }).click();
+    await page.getByRole('link', { name: 'Back to your position' }).click();
     await expect(page.getByTestId('usd-balance')).toHaveText('$3.00');
     await expect(page.getByTestId('local-balance')).toHaveText(`≈ ${currency} ${localThree} display estimate`);
     await page.reload();

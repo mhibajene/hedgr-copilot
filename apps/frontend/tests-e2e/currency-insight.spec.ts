@@ -66,7 +66,7 @@ for (const [currency, rate, deltaFive, deltaThree] of [
     await page.getByRole('button', { name: 'Confirm', exact: true }).click();
     await expect(page.getByTestId('withdraw-status-region')).toHaveAttribute('data-status', 'SUCCESS');
     await page.getByRole('link', { name: 'Review Activity' }).click();
-    await page.getByRole('link', { name: 'Return to current position' }).click();
+    await page.getByRole('link', { name: 'Back to your position' }).click();
     await expect(page.getByTestId('usd-balance')).toHaveText('$3.00');
     const local = (rate * 3).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     await expect(page.getByTestId('local-balance')).toHaveText(`≈ ${currency} ${local} display estimate`);

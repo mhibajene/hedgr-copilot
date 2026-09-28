@@ -101,7 +101,7 @@ test('pending simulated Deposit completes once after in-app navigation and remou
   await page.clock.fastForward(2000);
   await expect(page.getByTestId('activity-row-deposit')).toContainText('Completed');
   await page.clock.resume();
-  await page.getByRole('link', { name: 'Return to current position' }).click();
+  await page.getByRole('link', { name: 'Back to your position' }).click();
   await expect(page.getByTestId('usd-balance')).toHaveText('$5.00');
   await page.getByTestId('dashboard-add-simulated-deposit').click();
   await expect(page.getByTestId('deposit-amount')).toBeVisible();
@@ -170,7 +170,7 @@ test('simulated withdrawal rejects fractional cents, refreshes the next draft an
   await expect(page.getByTestId('withdraw-balance-reconciliation')).toContainText('→ $0.00');
   await page.getByRole('link', { name: 'Review Activity' }).click();
   await expect(page.getByTestId('activity-row-withdraw')).toHaveCount(3);
-  await page.getByRole('link', { name: 'Return to current position' }).click();
+  await page.getByRole('link', { name: 'Back to your position' }).click();
   await expect(page.getByTestId('usd-balance')).toHaveText('$0.00');
 });
 
@@ -547,9 +547,9 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
     'Simulated withdrawal'
   );
   await expect(page.getByTestId('activity-delta-deposit')).toHaveText('+$5.00');
-  await expect(page.getByTestId('activity-result-deposit')).toHaveText(
-    'Balance after $5.00'
-  );
+  // HOME-EXPERIENCE-001 T4: the entry thread replaces the balance-after strip.
+  await expect(page.getByTestId('activity-result-deposit')).toHaveCount(0);
+  await expect(page.getByTestId('activity-status-line-deposit')).toHaveText(/^Completed · \d{2}:\d{2}$/);
   await expect(page.getByTestId('activity-row-deposit')).not.toContainText(
     'ZMW'
   );
@@ -563,7 +563,10 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   await expect(depositDetail).toHaveCount(0);
   await expect(depositRow).toBeFocused();
   await expect(page.getByTestId('activity-delta-withdraw')).toHaveText('−$2.00');
-  await expect(page.getByTestId('activity-result-withdraw')).toHaveText('Balance after $3.00');
+  await expect(page.getByTestId('activity-day-balance').first()).toHaveText('Balance $3.00');
+  await expect(page.getByTestId('activity-thread-start')).toHaveText(/^Started at \$0\.00 · \d{1,2} (?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)$/);
+  await expect(page.getByTestId('activity-next-step')).toContainText('See it on your position');
+  await expect(page.getByTestId('activity-back-to-position')).toHaveCSS('background-color', 'rgb(31, 39, 71)');
   const withdrawalRow = page.getByTestId('activity-row-withdraw');
   await withdrawalRow.click();
   const withdrawalDetail = page.locator('main details[open]');
@@ -575,7 +578,7 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   await expect(withdrawalDetail).toHaveCount(0);
   await expect(withdrawalRow).toBeFocused();
 
-  await page.getByRole('link', { name: 'Return to current position' }).click();
+  await page.getByRole('link', { name: 'Back to your position' }).click();
   await expect(page.getByTestId('usd-balance')).toHaveText('$3.00');
   await expect(page.getByTestId('dashboard-simulation-utilities')).toBeVisible();
   await expect(page.getByTestId('dashboard-add-simulated-deposit')).toHaveAttribute(
@@ -644,7 +647,7 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   await expect(
     page.locator('[data-testid="tx-status-pill"][data-status="SUCCESS"]')
   ).toHaveCount(0);
-  await page.getByRole('link', { name: 'Return to current position' }).click();
+  await page.getByRole('link', { name: 'Back to your position' }).click();
   await expect(page.getByTestId('usd-balance')).toHaveText('$3.00');
   await expect(
     page.getByRole('button', { name: 'Restart simulated journey' })
@@ -819,4 +822,26 @@ test('Home explains what changed since the last visit and clears it on reset', a
     'You are here. It starts at $0.00.'
   );
   await expect(page.getByText(/Step 1|Position$/)).toHaveCount(0);
+});
+
+// HOME-EXPERIENCE-001 T4: the entry thread and its next step reflow at 320px and 200% text.
+test('Activity thread reflows at 320px and 200% text on both routes', async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 800 });
+  await login(page);
+  await seedCompletedJourneyStorage(page);
+  for (const route of ['/activity?journey=class-a-val-002', '/activity']) {
+    await page.goto(route);
+    await expect(page.getByTestId('activity-day-balance').first()).toHaveText('Balance $3.00');
+    await page.addStyleTag({ content: 'html { font-size: 200%; }' });
+    await expect
+      .poll(() => page.evaluate(() => document.documentElement.scrollWidth - innerWidth))
+      .toBeLessThanOrEqual(1);
+    for (const card of await page.locator('[data-testid^="activity-row-"]').all()) {
+      await expect.poll(() => card.evaluate((el) => el.scrollWidth - el.clientWidth)).toBeLessThanOrEqual(1);
+    }
+    const back = page.getByTestId('activity-back-to-position');
+    await expect(back).toHaveText('Back to your position');
+    await expect.poll(() => back.evaluate((el) => el.scrollWidth - el.clientWidth)).toBeLessThanOrEqual(1);
+    expect((await back.boundingBox())!.height).toBeGreaterThanOrEqual(44);
+  }
 });

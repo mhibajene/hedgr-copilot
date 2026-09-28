@@ -76,7 +76,7 @@ test('research baseline: navigation, dialog focus, currency and event reconcilia
   await page.setViewportSize({ width: 390, height: 844 });
   await page.getByTestId('filter-withdrawals').click();
   await expect(page.getByTestId('activity-row-deposit')).toHaveCount(0);
-  await expect(page.getByTestId('activity-result-withdraw')).toContainText('$300.00');
+  await expect(page.getByTestId('activity-day-balance').first()).toHaveText('Balance $300.00');
   expect(await financialState(page)).toEqual(before);
   await page.goto('/dashboard');
   // HOME-EXPERIENCE-001 T1: default Home shares the canonical title; currency context stays journey-only.
