@@ -717,3 +717,57 @@ describe("Home since-last-visit surfaces in wallet balance mode", () => {
     expect(screen.queryByText("Since you were last here")).toBeNull();
   });
 });
+
+// CLASS-A-VAL-002-HOME-DEDUP-001 (§328): "Since you were last here" is the single explanation
+// of change; the default route no longer repeats the latest entry in a "Latest change" strip.
+describe("default simulated Home shows the latest change once", () => {
+  function renderDefaultHome(total: number) {
+    vi.stubEnv("NEXT_PUBLIC_AUTH_MODE", "mock");
+    vi.stubEnv("NEXT_PUBLIC_FX_MODE", "fixed");
+    vi.mocked(useBalance).mockReturnValue(makeBalanceState({ total, available: total }));
+    vi.mocked(useEngineState).mockReturnValue(getMockEngineState("normal") as EngineState);
+    render(<DashboardPage />);
+  }
+
+  test("no strip when there is no previous visit", async () => {
+    dashboardStateMocks.transactions = makeCompletedJourneyTransactions();
+    renderDefaultHome(3);
+    await screen.findByTestId("dashboard-current-status");
+    expect(screen.queryByTestId("dashboard-change-evidence")).toBeNull();
+    expect(screen.queryByText("Latest change")).toBeNull();
+    expect(screen.getByText("Recent activity")).toBeDefined();
+  });
+
+  test("no strip beside 'Since you were last here'", async () => {
+    dashboardStateMocks.transactions = makeCompletedJourneyTransactions();
+    window.localStorage.setItem("hedgr:last-home-visit", "2");
+    renderDefaultHome(3);
+    expect((await screen.findByTestId("engine-posture-context")).textContent).toMatch(
+      /^One simulated withdrawal of \$2\.00/
+    );
+    expect(screen.getByText("Since you were last here")).toBeDefined();
+    expect(screen.queryByTestId("dashboard-change-evidence")).toBeNull();
+    expect(screen.queryByText("Latest change")).toBeNull();
+  });
+
+  test("no strip with a pending entry, which stays visible in Recent activity", async () => {
+    dashboardStateMocks.transactions = [
+      ...makeCompletedJourneyTransactions(),
+      {
+        txn_ref: "deposit-pending",
+        type: "deposit",
+        status: "pending",
+        amount_zmw: 20,
+        amount_usd: 1,
+        fx_rate: 20,
+        created_at: 5,
+        updated_at: 5,
+      },
+    ];
+    renderDefaultHome(3);
+    await screen.findByTestId("dashboard-current-status");
+    expect(screen.queryByTestId("dashboard-change-evidence")).toBeNull();
+    const recent = screen.getByRole("region", { name: "Recent activity" });
+    expect(recent.textContent).toContain("+$1.00");
+  });
+});

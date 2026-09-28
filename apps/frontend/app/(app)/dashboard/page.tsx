@@ -619,26 +619,6 @@ export default function DashboardPage() {
         <div className={home.overviewGrid}>
           <div className={home.positionPanel}>{balanceHero}{positionLine}</div>
           <div className={home.insights}>
-          {recentActivity[0] ? (
-            <section
-              className="flex flex-wrap items-baseline justify-between gap-4 border-y border-hedgr-100 py-3"
-              aria-label="Latest simulated change"
-              data-testid="dashboard-change-evidence"
-            >
-              <div>
-                <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-hedgr-600">
-                  Latest change
-                </p>
-                <p className="mt-1 text-sm font-semibold text-hedgr-800">
-                  {activityTitle(recentActivity[0], true)}
-                </p>
-              </div>
-              <p className="shrink-0 text-sm font-semibold tabular-nums text-hedgr-800">
-                {recentActivity[0].type === "DEPOSIT" ? "+" : "-"}$
-                {recentActivity[0].amountUSD.toFixed(2)}
-              </p>
-            </section>
-          ) : null}
           {homeObservation}
           {homeUtilities}
           {currencyContext}

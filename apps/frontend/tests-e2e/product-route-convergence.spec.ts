@@ -161,6 +161,13 @@ test('default routes share the simulated customer model without research framing
     'Simulated withdrawal'
   );
 
+  // CLASS-A-VAL-002-HOME-DEDUP-001 (§328): the latest change is explained once, not repeated in a strip.
+  await page.goto('/dashboard');
+  await expect(page.getByTestId('dashboard-current-status')).toContainText('Since you were last here');
+  await expect(page.getByTestId('dashboard-change-evidence')).toHaveCount(0);
+  await expect(page.getByText('Latest change', { exact: true })).toHaveCount(0);
+  await expect(page.getByRole('heading', { name: 'Recent activity' })).toBeVisible();
+
   await page.goto('/settings');
   await expect(page.getByTestId('settings-account')).toBeVisible();
   await expect(page.getByTestId('settings-preferences')).toContainText(

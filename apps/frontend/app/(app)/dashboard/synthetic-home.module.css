@@ -79,7 +79,6 @@
 .page > div > [data-testid="engine-allocation-bands"] { background: transparent; border-color: var(--home-divider); }
 .positionPanel .position p { color: var(--color-hedgr-100); }
 .positionPanel .balanceHeading p { color: var(--color-hedgr-white); }
-.insights > [data-testid="dashboard-change-evidence"] { border-color: var(--home-divider); }
 
 .utilities { container-type: inline-size; }
 .utility span { overflow-wrap: normal; }
