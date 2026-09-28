@@ -13,6 +13,8 @@ async function seed(page: Page, mockupAmount = false) {
     ] }));
     localStorage.setItem('hedgr:wallet', JSON.stringify({ state: { usdBalance: depositUsd - withdrawUsd }, version: 0 }));
     localStorage.setItem('hedgr.simulation.display-currency', 'GHS');
+    // HOME-EXPERIENCE-001 T3: a known last Home visit after the seeded entries.
+    localStorage.setItem('hedgr:last-home-visit', String(Date.now()));
   }, { depositUsd: mockupAmount ? 503 : 5, withdrawUsd: mockupAmount ? 250 : 2 });
   await page.goto(home);
   await expect(page.getByTestId('usd-balance')).toHaveText(mockupAmount ? '$253.00' : '$3.00');
@@ -36,7 +38,7 @@ for (const viewport of [{ width: 390, height: 844 }, { width: 1440, height: 1024
     expect((await page.getByTestId('local-balance').boundingBox())!.y).toBeGreaterThan((await page.getByTestId('usd-balance').boundingBox())!.y);
     expect((await context.boundingBox())!.y).toBeGreaterThan((await page.getByTestId('local-balance').boundingBox())!.y);
     await expect(context).toHaveCSS('font-weight', '600');
-    await expect(page.getByTestId('engine-posture-context')).toHaveText('Your simulated withdrawal reduced the balance by $2.00.');
+    await expect(page.getByTestId('engine-posture-context')).toHaveText(/^Nothing has changed since \d{1,2} (?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\. Your position is still \$3\.00\.$/);
     await expect(page.getByText('This is an observation from the simulation, not a guarantee.')).toBeVisible();
     const utilities = page.getByTestId('dashboard-simulation-utilities');
     const deposit = page.getByTestId('dashboard-add-simulated-deposit');
@@ -139,7 +141,7 @@ for (const width of [320, 390, 1280, 1440]) {
       await expect(estimate).toHaveText('≈ GHS 3,795.00 display estimate');
       await expect(page.getByRole('combobox', { name: 'Display currency for this simulation' })).toHaveValue('GHS');
       await expect(page.getByTestId('dashboard-synthetic-balance-explainer')).toHaveText('Includes your simulated activity.');
-      await expect(page.getByTestId('engine-posture-context')).toHaveText('Your simulated withdrawal reduced the balance by $250.00.');
+      await expect(page.getByTestId('engine-posture-context')).toHaveText(/^Nothing has changed since \d{1,2} (?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\. Your position is still \$253\.00\.$/);
       await expect(page.getByText('This is an observation from the simulation, not a guarantee.')).toBeVisible();
       await expect(page.getByTestId('dashboard-simulation-utilities').locator(':scope > a').first()).toHaveAttribute('data-testid', 'dashboard-add-simulated-deposit');
       await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(1);

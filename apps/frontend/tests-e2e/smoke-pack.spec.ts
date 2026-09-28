@@ -94,18 +94,16 @@ test("4 · dashboard shows human-readable stability context after login", async 
   const postureContextText = await postureContext.textContent();
   expect(postureContextText?.trim().length).toBeGreaterThan(0);
   expect(postureContextText).toBe(
-    "Nothing to compare yet. A first completed simulated event will create a starting point."
+    "Practise with pretend money first. Hedgr shows what changes, and why."
   );
   for (const forbidden of heldOrRejectedPrimaryTerms) {
     expect(postureContextText).not.toMatch(forbidden);
   }
 
-  await expect(page.getByText("Does anything need attention?")).toBeVisible();
-  await expect(
-    page.getByTestId("engine-simulation-attention-answer")
-  ).toHaveText("There is not enough information to compare yet.");
+  // HOME-EXPERIENCE-001 T3: first use replaces the empty comparison observation.
+  await expect(page.getByTestId("engine-simulation-attention-answer")).toHaveCount(0);
   await expect(page.getByTestId("dashboard-current-status")).toContainText(
-    "What Hedgr notices"
+    "Start here"
   );
   await expect(page.getByTestId("dashboard-current-status")).not.toContainText(
     /score|gauge|safe|all clear/i

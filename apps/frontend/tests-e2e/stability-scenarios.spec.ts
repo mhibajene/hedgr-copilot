@@ -169,7 +169,7 @@ test.describe('Research Two-Beat Sarah example', () => {
 
     await page.getByTestId('study-simulation-link').click();
     await expect(page).toHaveURL(/\/dashboard-synthetic-journey$/);
-    await expect(page.getByText('Start with a simulated deposit')).toBeVisible();
+    await expect(page.getByTestId('dashboard-current-status')).toContainText('Start here');
     await expect(page.getByText('What Hedgr notices')).toHaveCount(0);
     await expect(page.getByTestId('dashboard-add-simulated-deposit')).toBeVisible();
   });

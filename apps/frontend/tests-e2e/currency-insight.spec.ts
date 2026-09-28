@@ -75,7 +75,7 @@ for (const [currency, rate, deltaFive, deltaThree] of [
     await expect(page.getByTestId('currency-insight-headline')).toContainText(`${currency} ${deltaThree} higher from the rate change`);
     await page.getByRole('button', { name: 'Back to Home' }).click();
     await expect(page.getByTestId('engine-simulation-attention-answer')).toHaveCount(0);
-    await expect(page.getByTestId('engine-posture-context')).toContainText('withdrawal reduced the balance');
+    await expect(page.getByTestId('engine-posture-context')).toHaveText(/^One simulated withdrawal of \$2\.00 on \d{1,2} (?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) took your position from \$5\.00 to \$3\.00\.$/);
     const before = await storedState(page);
     const records = JSON.parse(before['hedgr:ledger']!).transactions;
     expect(records).toHaveLength(2);
@@ -109,7 +109,8 @@ for (const [currency, rate, deltaFive, deltaThree] of [
     await page.goto('/dashboard');
     await expect(page.getByTestId('currency-insight')).toHaveCount(0);
     await expect(page.getByTestId('currency-insight-inline')).toHaveCount(0);
-    await expect(page.getByTestId('engine-simulation-attention-answer')).toHaveText('No other change stands out in the information shown.');
+    await expect(page.getByTestId('engine-simulation-attention-answer')).toHaveCount(0);
+    await expect(page.getByTestId('engine-posture-context')).toHaveText(/^Nothing has changed since \d{1,2} (?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\. Your position is still \$3\.00\.$/);
     await page.goto(`${home}?scenario=unavailable-data`);
     await expect(page.getByTestId('currency-insight')).toHaveCount(0);
     expect(await storedState(page)).toEqual(before);
