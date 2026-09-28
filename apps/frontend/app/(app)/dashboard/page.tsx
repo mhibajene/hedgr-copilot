@@ -7,9 +7,10 @@ import { SimulationDisplayCurrencySelector } from '../../../components/Simulatio
 
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { EngineAllocationBands } from "./EngineAllocationBands";
 import { EnginePostureHeader } from "./EnginePostureHeader";
+import { PositionLine } from "./PositionLine";
 import { CurrencyInsight } from "./CurrencyInsight";
 import { EngineProtectiveGuidance } from "./EngineProtectiveGuidance";
 import { EngineStabilityExplainer } from "./EngineStabilityExplainer";
@@ -27,6 +28,17 @@ import {
 import { useEngineState } from "../../../lib/engine/useEngineState";
 import { usePolicy } from "../../../lib/policy/usePolicy";
 import { getEnvironmentMode } from "../../../lib/env/mode";
+import {
+  buildPositionEntries,
+  clearLastVisit,
+  formatChangeCount,
+  formatDateLine,
+  formatShortDate,
+  formatUsd,
+  readLastVisit,
+  summariseSinceLastVisit,
+  writeLastVisit,
+} from "../../../lib/state/last-visit";
 import {
   PublicTxStatus,
   txToLifecycle,
@@ -118,6 +130,22 @@ export default function DashboardPage() {
     setReady(true);
   }, [cleanStartRequested, clearTransactions, resetWallet]);
 
+  // HOME-EXPERIENCE-001 T3: read the previous Home visit once, then record this one.
+  const [previousVisit, setPreviousVisit] = useState<number | null>(null);
+  const [visitRead, setVisitRead] = useState(false);
+  const [today, setToday] = useState<number | null>(null);
+  const visitRecorded = useRef(false);
+  useEffect(() => {
+    if (!productSimulationActive || visitRecorded.current) return;
+    visitRecorded.current = true;
+    if (cleanStartRequested) clearLastVisit();
+    const now = Date.now();
+    setPreviousVisit(cleanStartRequested ? null : readLastVisit());
+    writeLastVisit(now);
+    setToday(now);
+    setVisitRead(true);
+  }, [productSimulationActive, cleanStartRequested]);
+
   const hasNoTransactions = transactions.length === 0;
   const isFirstTimeUser =
     ready && hasNoTransactions && available === 0 && !isLoading;
@@ -134,6 +162,9 @@ export default function DashboardPage() {
 
     clearTransactions();
     resetWallet();
+    clearLastVisit();
+    writeLastVisit(Date.now());
+    setPreviousVisit(null);
   };
 
   const recentActivity = useMemo(() => {
@@ -177,6 +208,48 @@ export default function DashboardPage() {
   const currencyComparisonPending = pending !== 0 || total !== available ||
     transactions.some((tx) => tx.status === "pending");
 
+  // T3 surfaces derive only from completed ledger entries (Activity order). They
+  // appear only when that derivation agrees with the displayed balance; otherwise
+  // Home keeps the existing observation.
+  const positionEntries = useMemo(
+    () => buildPositionEntries(transactions.map(txToLifecycle)),
+    [transactions]
+  );
+  const positionLoading = productSimulationActive && (!ready || asOf === 0 || isLoading);
+  const ledgerPosition = positionEntries.at(-1)?.balanceAfter ?? 0;
+  const positionDerivable =
+    productSimulationActive && ready && visitRead && !positionLoading && !error &&
+    (!cleanStartRequested || (hasNoTransactions && total === 0)) &&
+    getBalanceMode() === "ledger" &&
+    !currencyComparisonPending && Math.abs(ledgerPosition - total) < 0.005;
+  const normalPosture = engineState.posture === "normal";
+  const firstUse = positionDerivable && transactions.length === 0;
+  const sinceSummary =
+    positionDerivable && previousVisit !== null && positionEntries.length > 0
+      ? summariseSinceLastVisit(positionEntries, previousVisit)
+      : null;
+  const sinceDelta =
+    sinceSummary && sinceSummary.kind !== "no-change"
+      ? +(sinceSummary.to - sinceSummary.from).toFixed(2)
+      : 0;
+  // Only the journey names its display currency explicitly; default Home omits the line.
+  const estimateCurrency = syntheticJourneyActive ? displayCurrency : null;
+  const trustHref = syntheticJourneyActive
+    ? `/settings/trust?${CLASS_A_VAL_002_JOURNEY_PARAM}=${CLASS_A_VAL_002_JOURNEY_VALUE}`
+    : "/settings/trust";
+  const openSimulationExplainer = () => {
+    const details = document.querySelector<HTMLDetailsElement>(
+      '[data-testid="simulation-technical-details"]'
+    );
+    if (!details) {
+      window.location.assign(trustHref);
+      return;
+    }
+    details.open = true;
+    details.querySelector("summary")?.focus();
+    details.scrollIntoView({ block: "nearest" });
+  };
+
   const balanceHero = (
     <section
       className={`space-y-1 ${home.position}`}
@@ -192,7 +265,12 @@ export default function DashboardPage() {
         </p>
         {syntheticJourneyActive ? <SimulationDisplayCurrencySelector placement="position" /> : null}
       </div>
-      {isLoading ? (
+      {positionLoading ? (
+        <div className={home.amount} data-testid="dashboard-balance-loading" aria-busy="true">
+          <span className={`${home.skeleton} ${home.skeletonAmount}`} aria-hidden="true" />
+          <span className={`${home.skeleton} ${home.skeletonLine}`} aria-hidden="true" />
+        </div>
+      ) : isLoading ? (
         <div className={`${home.amount} tabular-nums`}>
           …
         </div>
@@ -204,8 +282,28 @@ export default function DashboardPage() {
           className={`${home.amount} tabular-nums`}
         />
       )}
-      {syntheticJourneyActive ? <p className={home.balanceCaption} data-testid="dashboard-synthetic-balance-explainer">Includes your simulated activity.</p> : null}
-      {productSimulationActive && !syntheticJourneyActive && ready && !isLoading ? (
+      {sinceSummary && normalPosture && (sinceSummary.kind === "no-change" || sinceDelta !== 0) ? (
+        <p className={home.changeChip} data-testid="dashboard-change-chip">
+          {sinceSummary.kind === "no-change" ? (
+            <>
+              <span aria-hidden="true">–</span>
+              <span>No change since {formatShortDate(sinceSummary.since)}</span>
+            </>
+          ) : (
+            <>
+              <span>{sinceDelta > 0 ? "↑" : "↓"}</span>
+              <span>{formatUsd(sinceDelta)} since {formatShortDate(sinceSummary.since)}</span>
+            </>
+          )}
+        </p>
+      ) : null}
+      {positionLoading ? (
+        <p className={home.balanceCaption} data-testid="dashboard-synthetic-balance-explainer">Loading your position…</p>
+      ) : firstUse ? (
+        <p className={home.balanceCaption} data-testid="dashboard-synthetic-balance-explainer">No simulated activity yet.</p>
+      ) : syntheticJourneyActive ? (
+        <p className={home.balanceCaption} data-testid="dashboard-synthetic-balance-explainer">Includes your simulated activity.</p>
+      ) : productSimulationActive && ready && !isLoading ? (
         <p
           className={home.balanceCaption}
           data-testid="dashboard-synthetic-balance-explainer"
@@ -240,9 +338,15 @@ export default function DashboardPage() {
       <Link href={productRouteHref("/deposit")} className={home.utility} data-testid="dashboard-add-simulated-deposit">
         <span>Add simulated deposit</span>
       </Link>
-      <Link href={productRouteHref("/activity")} className={home.utility} data-testid="dashboard-view-activity">
-        <span>View Activity</span>
-      </Link>
+      {firstUse && normalPosture ? (
+        <button type="button" onClick={openSimulationExplainer} className={home.utility} data-testid="dashboard-how-simulation-works">
+          <span>How this simulation works</span>
+        </button>
+      ) : (
+        <Link href={productRouteHref("/activity")} className={home.utility} data-testid="dashboard-view-activity">
+          <span>View Activity</span>
+        </Link>
+      )}
     </nav>
   ) : (
     <nav aria-label="Simulation utilities" className={home.utilities} data-testid="dashboard-simulation-utilities">
@@ -272,6 +376,133 @@ export default function DashboardPage() {
     </div>
   );
 
+  const positionLine = positionDerivable ? (
+    <PositionLine entries={positionEntries} lastVisit={previousVisit} />
+  ) : null;
+
+  const observationLabel = (text: string) => (
+    <p id="dashboard-current-status-label" className="text-sm font-semibold text-hedgr-800">
+      {text}
+    </p>
+  );
+  const guaranteeLine = (
+    <p className="text-xs leading-relaxed text-hedgr-500">
+      This is an observation from the simulation, not a guarantee.
+    </p>
+  );
+  const activityHref = productRouteHref("/activity");
+  const sinceLink = (label: string) => (
+    <Link href={activityHref} className={home.sinceLink} data-testid="dashboard-since-link">
+      <span>{label}</span>
+      <span aria-hidden="true">→</span>
+    </Link>
+  );
+
+  let homeObservation = observation;
+  if (normalPosture && positionLoading) {
+    homeObservation = (
+      <div className={home.observation} data-testid="dashboard-observation-loading" aria-hidden="true">
+        <span className={`${home.skeleton} ${home.skeletonLine}`} />
+        <span className={`${home.skeleton} ${home.skeletonLine}`} style={{ width: "90%" }} />
+        <span className={`${home.skeleton} ${home.skeletonLine}`} />
+      </div>
+    );
+  } else if (normalPosture && firstUse) {
+    homeObservation = (
+      <div className={home.observation}>
+        <section
+          className={`space-y-3 ${finish.observationHeader}`}
+          aria-labelledby="dashboard-current-status-label"
+          data-testid="dashboard-current-status"
+          data-home-state="first-use"
+        >
+          {observationLabel("Start here")}
+          <p className="max-w-xl text-sm leading-relaxed text-hedgr-dark" data-testid="engine-posture-context">
+            Practise with pretend money first. Hedgr shows what changes, and why.
+          </p>
+          <ol className={home.firstUseSteps} data-testid="dashboard-first-use-steps">
+            <li aria-current="step">
+              {syntheticJourneyActive ? <strong>Position</strong> : null}
+              <span>You are here. It starts at {formatUsd(total)}.</span>
+            </li>
+            <li>
+              {syntheticJourneyActive ? <strong>First event</strong> : null}
+              <span>Add a simulated deposit.</span>
+            </li>
+            <li>
+              {syntheticJourneyActive ? <strong>Change</strong> : null}
+              <span>Try a simulated withdrawal.</span>
+            </li>
+            <li>
+              {syntheticJourneyActive ? <strong>Evidence</strong> : null}
+              <span>Check both entries in Activity.</span>
+            </li>
+          </ol>
+        </section>
+      </div>
+    );
+  } else if (normalPosture && sinceSummary) {
+    homeObservation = (
+      <div className={home.observation}>
+        <section
+          className={`space-y-3 ${finish.observationHeader}`}
+          aria-labelledby="dashboard-current-status-label"
+          data-testid="dashboard-current-status"
+          data-home-state={`since-${sinceSummary.kind}`}
+        >
+          {observationLabel("Since you were last here")}
+          {sinceSummary.kind === "no-change" ? (
+            <>
+              <p className="max-w-xl text-sm leading-relaxed text-hedgr-dark" data-testid="engine-posture-context">
+                Nothing has changed since {formatShortDate(sinceSummary.since)}. Your position is still{" "}
+                <span data-observation-amount>{formatUsd(sinceSummary.balance)}</span>.
+              </p>
+              {estimateCurrency ? (
+                <p className="text-sm leading-relaxed text-hedgr-600">
+                  The {estimateCurrency} estimate can still move with the exchange rate.
+                </p>
+              ) : null}
+            </>
+          ) : sinceSummary.kind === "one" ? (
+            <>
+              <p className="max-w-xl text-sm leading-relaxed text-hedgr-dark" data-testid="engine-posture-context">
+                One simulated {sinceSummary.entry.type === "DEPOSIT" ? "deposit" : "withdrawal"} of{" "}
+                <span data-observation-amount>{formatUsd(sinceSummary.entry.amountUSD)}</span> on{" "}
+                {formatShortDate(sinceSummary.entry.at)} took your position from {formatUsd(sinceSummary.from)} to{" "}
+                {formatUsd(sinceSummary.to)}.
+              </p>
+              {sinceLink("See the entry")}
+            </>
+          ) : (
+            <>
+              <p className="max-w-xl text-sm leading-relaxed text-hedgr-dark" data-testid="engine-posture-context">
+                {formatChangeCount(sinceSummary.entries.length)} things changed since{" "}
+                {formatShortDate(sinceSummary.since)}. Your position went from {formatUsd(sinceSummary.from)} to{" "}
+                <span data-observation-amount>{formatUsd(sinceSummary.to)}</span>.
+              </p>
+              <ul className={home.sinceList} data-testid="dashboard-since-entries">
+                {sinceSummary.entries.map((entry) => (
+                  <li key={entry.id}>
+                    <span>
+                      <strong>{entry.type === "DEPOSIT" ? "Simulated deposit" : "Simulated withdrawal"}</strong>
+                      <small>{formatShortDate(entry.at)}</small>
+                    </span>
+                    <span>
+                      {entry.type === "DEPOSIT" ? "+" : "−"}
+                      {formatUsd(entry.amountUSD)}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+              {sinceLink("See all in Activity")}
+            </>
+          )}
+          {guaranteeLine}
+        </section>
+      </div>
+    );
+  }
+
   const currencyContext = currencyContextVisible ? (
     <CurrencyInsight
       redesigned
@@ -299,9 +530,10 @@ export default function DashboardPage() {
           <div className={home.overviewGrid}>
             <div className={home.positionPanel}>
               {balanceHero}
+              {positionLine}
             </div>
             <div className={home.insights}>
-              {observation}
+              {homeObservation}
               {homeUtilities}
             </div>
           </div>
@@ -309,7 +541,7 @@ export default function DashboardPage() {
         </>
       ) : productSimulationActive ? (
         <div className={home.overviewGrid}>
-          <div className={home.positionPanel}>{balanceHero}</div>
+          <div className={home.positionPanel}>{balanceHero}{positionLine}</div>
           <div className={home.insights}>
           {recentActivity[0] ? (
             <section
@@ -331,7 +563,7 @@ export default function DashboardPage() {
               </p>
             </section>
           ) : null}
-          {observation}
+          {homeObservation}
           {homeUtilities}
           {currencyContext}
           </div>
@@ -420,6 +652,11 @@ export default function DashboardPage() {
           className="space-y-0.5 pb-1 sm:space-y-2"
           data-testid="dashboard-orientation"
         >
+          {productSimulationActive && today !== null ? (
+            <p className={home.dateLine} data-testid="dashboard-date-line">
+              {formatDateLine(today)}
+            </p>
+          ) : null}
           <h1
             id="dashboard-orientation-heading"
             className="text-xl font-bold tracking-tight text-hedgr-800 sm:text-4xl"
