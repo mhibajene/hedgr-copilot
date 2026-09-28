@@ -299,16 +299,15 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   ).toBeVisible();
   await expect(
     page.getByTestId('dashboard-synthetic-balance-explainer')
-  ).toHaveText('Includes your simulated activity.');
+  ).toHaveText('No simulated activity yet.');
   await expect(page.getByTestId('dashboard-simulation-utilities')).toBeVisible();
   await expect(page.getByTestId('dashboard-add-simulated-deposit')).toHaveAttribute(
     'href',
     '/deposit?journey=class-a-val-002'
   );
-  await expect(page.getByTestId('dashboard-view-activity')).toHaveAttribute(
-    'href',
-    '/activity?journey=class-a-val-002'
-  );
+  // HOME-EXPERIENCE-001 T3: first use offers the simulation explainer instead of an empty Activity.
+  await expect(page.getByTestId('dashboard-view-activity')).toHaveCount(0);
+  await expect(page.getByTestId('dashboard-how-simulation-works')).toHaveText('How this simulation works');
   await expect(page.getByTestId('dashboard-change-evidence')).toHaveCount(0);
   await expect(page.getByText('How your position changed')).toHaveCount(0);
   await expect(page.getByText('Does anything need attention?')).toHaveCount(0);
@@ -319,12 +318,15 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   await expect(page.getByTestId('dashboard-current-status')).not.toContainText(
     'NORMAL'
   );
+  // HOME-EXPERIENCE-001 T3: the first-use card replaces the empty comparison.
   await expect(page.getByTestId('engine-posture-context')).toHaveText(
-    'Nothing to compare yet. Add a simulated deposit when you’re ready — this is practice money only.'
+    'Practise with pretend money first. Hedgr shows what changes, and why.'
   );
-  await expect(page.getByTestId('dashboard-current-status')).toContainText(
-    'Start with a simulated deposit'
+  await expect(page.getByTestId('dashboard-current-status')).toContainText('Start here');
+  await expect(page.getByTestId('dashboard-first-use-steps').locator('li[aria-current="step"]')).toHaveText(
+    'PositionYou are here. It starts at $0.00.'
   );
+  await expect(page.getByTestId('dashboard-position-line')).toHaveText('Your line starts with your first deposit');
   await expect(page.getByTestId('dashboard-current-status')).not.toContainText('What Hedgr notices');
   await expect(
     page.getByTestId('dashboard-current-status').locator('img')
@@ -446,9 +448,11 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   const firstEventHome = await page.context().newPage();
   await firstEventHome.goto('/dashboard-synthetic-journey');
   await expect(firstEventHome.getByTestId('usd-balance')).toHaveText('$5.00');
+  // HOME-EXPERIENCE-001 T3: the first deposit since the last Home visit.
   await expect(firstEventHome.getByTestId('engine-posture-context')).toHaveText(
-    'Your first simulated position is now visible. This is your starting point.'
+    /^One simulated deposit of \$5\.00 on \d{1,2} (?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) took your position from \$0\.00 to \$5\.00\.$/
   );
+  await expect(firstEventHome.getByTestId('dashboard-change-chip')).toHaveText(/^↑\$5\.00 since \d{1,2} (?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)$/);
   await expect(firstEventHome.getByText('Does anything need attention?')).toHaveCount(0);
   await expect(firstEventHome.getByTestId('engine-simulation-attention-answer')).toHaveCount(0);
   await expect(firstEventHome.getByText(
@@ -584,9 +588,12 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   );
   await expect(page.getByTestId('dashboard-change-evidence')).toHaveCount(0);
   await expect(page.getByText('How your position changed')).toHaveCount(0);
+  // HOME-EXPERIENCE-001 T3: one withdrawal since the first-event Home visit.
   await expect(page.getByTestId('engine-posture-context')).toHaveText(
-    'Your simulated withdrawal reduced the balance by $2.00.'
+    /^One simulated withdrawal of \$2\.00 on \d{1,2} (?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) took your position from \$5\.00 to \$3\.00\.$/
   );
+  await expect(page.getByTestId('dashboard-change-chip')).toHaveText(/^↓\$2\.00 since \d{1,2} (?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)$/);
+  await expect(page.getByTestId('dashboard-since-link')).toHaveAttribute('href', '/activity?journey=class-a-val-002');
   await expect(page.getByTestId('dashboard-optional-actions')).toHaveCount(0);
 
   const restartJourney = page.getByRole('button', {
@@ -599,9 +606,16 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
     );
     await dialog.accept();
   });
+  const visitBeforeRestart = await page.evaluate(() => localStorage.getItem('hedgr:last-home-visit'));
   await restartJourney.click();
 
   await expect(page.getByTestId('usd-balance')).toHaveText('$0.00');
+  // Restart clears the last-visit value and records this Home visit; first use returns.
+  await expect(page.getByTestId('dashboard-first-use-steps')).toBeVisible();
+  await expect(page.getByTestId('dashboard-change-chip')).toHaveCount(0);
+  await expect
+    .poll(() => page.evaluate(() => Number(localStorage.getItem('hedgr:last-home-visit'))))
+    .toBeGreaterThan(Number(visitBeforeRestart));
   await expect(
     page.getByTestId('dashboard-add-simulated-deposit')
   ).toBeVisible();
@@ -738,4 +752,67 @@ test('mobile keeps the persistent boundary and current research step visible', a
   await expect(
     mobileNav.getByRole('link', { name: 'Copilot', exact: true })
   ).toHaveCount(0);
+});
+
+// HOME-EXPERIENCE-001 T3: since-last-visit variants, position line and last-visit reset.
+test('Home explains what changed since the last visit and clears it on reset', async ({
+  page,
+}) => {
+  const date = String.raw`\d{1,2} (?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)`;
+  await clearStorage(page);
+  await login(page);
+  await page.goto('/dashboard-synthetic-journey');
+  await expect(page.getByTestId('dashboard-date-line')).toHaveText(
+    /^(?:Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday) \d{1,2} (?:January|February|March|April|May|June|July|August|September|October|November|December)$/
+  );
+  await expect(page.getByTestId('dashboard-first-use-steps')).toBeVisible();
+
+  // Two entries between Home visits.
+  await page.getByTestId('dashboard-add-simulated-deposit').click();
+  await page.getByTestId('deposit-amount').fill('100');
+  await page.getByRole('button', { name: 'Confirm' }).click();
+  await expect(page.getByTestId('deposit-confirmed')).toHaveText('You added $5.00 to your simulated balance');
+  await page.getByRole('link', { name: 'Continue to simulated withdrawal' }).click();
+  await page.getByTestId('withdraw-amount').fill('2');
+  await page.getByRole('button', { name: 'Confirm' }).click();
+  await expect(page.getByTestId('withdraw-balance-reconciliation')).toContainText('$5.00 → $3.00');
+  await page.getByRole('link', { name: 'Back to your position' }).click();
+
+  await expect(page.getByTestId('usd-balance')).toHaveText('$3.00');
+  await expect(page.getByTestId('dashboard-current-status')).toContainText('Since you were last here');
+  await expect(page.getByTestId('engine-posture-context')).toHaveText(
+    new RegExp(`^Two things changed since ${date}\\. Your position went from \\$0\\.00 to \\$3\\.00\\.$`)
+  );
+  const entries = page.getByTestId('dashboard-since-entries').locator('li');
+  await expect(entries).toHaveCount(2);
+  await expect(entries.nth(0)).toHaveText(new RegExp(`^Simulated deposit${date}\\+\\$5\\.00$`));
+  await expect(entries.nth(1)).toHaveText(new RegExp(`^Simulated withdrawal${date}−\\$2\\.00$`));
+  await expect(page.getByTestId('dashboard-since-link')).toHaveText('See all in Activity→');
+  await expect(page.getByTestId('dashboard-change-chip')).toHaveText(new RegExp(`^↑\\$3\\.00 since ${date}$`));
+  await expect(page.getByTestId('dashboard-position-line-visit')).toHaveText('Your last visit');
+  await expect(page.getByTestId('dashboard-position-line')).toContainText('Today');
+  await expect(page.getByText('This is an observation from the simulation, not a guarantee.')).toBeVisible();
+
+  // Nothing changed since that visit.
+  await page.reload();
+  await expect(page.getByTestId('engine-posture-context')).toHaveText(
+    new RegExp(`^Nothing has changed since ${date}\\. Your position is still \\$3\\.00\\.$`)
+  );
+  await expect(page.getByText('The ZMW estimate can still move with the exchange rate.')).toBeVisible();
+  await expect(page.getByTestId('dashboard-change-chip')).toHaveText(new RegExp(`^–No change since ${date}$`));
+
+  // Journey reset clears the value; first use returns on both routes.
+  const beforeReset = await page.evaluate(() => Number(localStorage.getItem('hedgr:last-home-visit')));
+  await page.goto('/dashboard-synthetic-journey?reset=1');
+  await expect(page.getByTestId('usd-balance')).toHaveText('$0.00');
+  await expect(page.getByTestId('dashboard-first-use-steps')).toBeVisible();
+  await expect(page.getByTestId('dashboard-change-chip')).toHaveCount(0);
+  await expect
+    .poll(() => page.evaluate(() => Number(localStorage.getItem('hedgr:last-home-visit'))))
+    .toBeGreaterThan(beforeReset);
+  await page.goto('/dashboard');
+  await expect(page.getByTestId('dashboard-first-use-steps').locator('li').first()).toHaveText(
+    'You are here. It starts at $0.00.'
+  );
+  await expect(page.getByText(/Step 1|Position$/)).toHaveCount(0);
 });

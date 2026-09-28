@@ -14,6 +14,8 @@ async function seed(page: Page) {
     ] }));
     localStorage.setItem('hedgr:wallet', JSON.stringify({ state: { usdBalance: 300 }, version: 0 }));
     localStorage.setItem('hedgr.simulation.display-currency', 'ZMW');
+    // HOME-EXPERIENCE-001 T3: a known last Home visit after the seeded entries.
+    localStorage.setItem('hedgr:last-home-visit', String(now));
   });
   await page.goto(home);
   await expect(page.getByTestId('usd-balance')).toHaveText('$300.00');
@@ -30,7 +32,7 @@ test('research baseline: navigation, dialog focus, currency and event reconcilia
   await seed(page);
   const before = await financialState(page);
   await expect(page.getByRole('heading', { name: 'Your position', exact: true })).toBeVisible();
-  await expect(page.getByTestId('engine-posture-context')).toHaveText('Your simulated withdrawal reduced the balance by $200.00.');
+  await expect(page.getByTestId('engine-posture-context')).toHaveText(/^Nothing has changed since \d{1,2} (?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\. Your position is still \$300\.00\.$/);
   await expect(page.getByRole('link', { name: 'See the activity', exact: true })).toHaveCount(0);
   await expect(page.getByRole('link', { name: 'View Activity', exact: true })).toHaveAttribute('href', '/activity?journey=class-a-val-002');
   await expect(page.getByRole('navigation', { name: 'Primary' }).getByRole('link', { name: 'Activity', exact: true })).toBeVisible();

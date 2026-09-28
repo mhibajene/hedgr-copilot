@@ -91,8 +91,9 @@ test('default routes share the simulated customer model without research framing
   await expect(page.getByText(/Step 1|Position$/)).toHaveCount(0);
   // HOME-EXPERIENCE-001 T1 (decision 1): the default simulated environment uses the journey balance label.
   await expect(page.getByText('Simulated Hedgr balance', { exact: true })).toBeVisible();
-  await expect(page.getByText('What Hedgr notices', { exact: true })).toBeVisible();
-  await expect(page.getByText('Does anything need attention?')).toBeVisible();
+  // HOME-EXPERIENCE-001 T3: first use replaces the empty comparison observation.
+  await expect(page.getByText('Start here', { exact: true })).toBeVisible();
+  await expect(page.getByText('What Hedgr notices', { exact: true })).toHaveCount(0);
   await page.getByTestId('dashboard-planning-targets').locator(':scope > summary').click();
   await expect(page.getByTestId('engine-allocation-bands')).toBeVisible();
   await expect(page.getByTestId('dashboard-add-simulated-deposit')).toHaveAttribute(

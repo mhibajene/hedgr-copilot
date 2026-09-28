@@ -168,6 +168,7 @@ function makeCompletedJourneyTransactions(): typeof dashboardStateMocks.transact
 afterEach(() => {
   cleanup();
   vi.restoreAllMocks();
+  window.localStorage.removeItem("hedgr:last-home-visit");
   dashboardStateMocks.transactions = [];
   dashboardStateMocks.clearLedger.mockClear();
   dashboardStateMocks.resetWallet.mockClear();
@@ -254,7 +255,7 @@ describe("DashboardPage engine trust surface", () => {
     const explainer = screen.getByTestId(
       "dashboard-synthetic-balance-explainer"
     );
-    expect(explainer.textContent).toBe("Includes your simulated activity.");
+    expect(explainer.textContent).toBe("No simulated activity yet.");
     expect(screen.getByTestId("dashboard-balance").textContent).not.toMatch(
       /Illustrative simulation value only|This balance shows|This balance doesn’t tell you|When funds would be available to withdraw/i
     );
@@ -264,27 +265,39 @@ describe("DashboardPage engine trust surface", () => {
 
     expect(screen.queryByText("Does anything need attention?")).toBeNull();
     expect(screen.queryByTestId("engine-simulation-attention-answer")).toBeNull();
-    expect(screen.getByText("Start with a simulated deposit")).toBeDefined();
+    expect(screen.getByText("Start here")).toBeDefined();
+    expect(screen.queryByText("Start with a simulated deposit")).toBeNull();
     expect(screen.queryByText("What Hedgr notices")).toBeNull();
     expect(screen.queryByText("This is an observation from the simulation, not a guarantee.")).toBeNull();
     expect(screen.queryByTestId("engine-posture-badge")).toBeNull();
     expect(screen.queryByText("NORMAL")).toBeNull();
     expect(screen.getByTestId("engine-posture-context").textContent).toBe(
-      "Nothing to compare yet. Add a simulated deposit when you’re ready — this is practice money only."
+      "Practise with pretend money first. Hedgr shows what changes, and why."
+    );
+    expect(
+      Array.from(screen.getByTestId("dashboard-first-use-steps").querySelectorAll("li")).map((step) => step.textContent)
+    ).toEqual([
+      "PositionYou are here. It starts at $0.00.",
+      "First eventAdd a simulated deposit.",
+      "ChangeTry a simulated withdrawal.",
+      "EvidenceCheck both entries in Activity.",
+    ]);
+    expect(screen.getByTestId("dashboard-position-line").textContent).toBe(
+      "Your line starts with your first deposit"
     );
     const utilities = screen.getByTestId("dashboard-simulation-utilities");
     expect(Array.from(utilities.children).map((node) => node.getAttribute("data-testid"))).toEqual([
       "dashboard-add-simulated-deposit",
-      "dashboard-view-activity",
+      "dashboard-how-simulation-works",
     ]);
     expect(
       screen
         .getByTestId("dashboard-add-simulated-deposit")
         .getAttribute("href")
     ).toBe("/deposit?journey=class-a-val-002");
-    expect(
-      screen.getByTestId("dashboard-view-activity").getAttribute("href")
-    ).toBe("/activity?journey=class-a-val-002");
+    expect(screen.getByTestId("dashboard-how-simulation-works").textContent).toBe(
+      "How this simulation works"
+    );
     expect(screen.queryByText("How your position changed")).toBeNull();
     expect(screen.queryByTestId("dashboard-change-evidence")).toBeNull();
     expect(
