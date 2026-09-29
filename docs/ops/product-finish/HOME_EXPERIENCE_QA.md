@@ -1,6 +1,6 @@
 # One Home experience — QA and delivery evidence
 
-Last updated: 2026-09-28
+Last updated: 2026-09-29
 
 Ticket: `CLASS-A-VAL-002-HOME-EXPERIENCE-001` (HEDGR_STATUS.md §7 / §7a). References: [HOME_EXPERIENCE_BASELINE.md](HOME_EXPERIENCE_BASELINE.md).
 
@@ -154,5 +154,45 @@ Captured from the local production build of `a748172` before #721 merged, previo
 | `closeout-motion-700ms.png` | 390 × 420 | `258868916656409fbdeb11d3e2ea0850c04e687496abeb42ef8d7ee000662847` |
 
 `shipped-m390-journey-home.png` and `t1-local-mobile-journey.png` are byte-identical: the shipped journey Home at $0 matches the pre-merge T1 capture.
+
+
+## HOME-DEDUP-001 (§328) — default Home deduplication
+
+Finite follow-up ticket `CLASS-A-VAL-002-HOME-DEDUP-001`, directed by the Founder after the §327 closeout. It was delivered in two runtime PRs; every PR merged after an independent Verifier PASS on its exact head.
+
+| Step | PR | Merge commit | Notes |
+| --- | --- | --- | --- |
+| Source (§328) | [#735](https://github.com/mhibajene/hedgr-copilot/pull/735) | `22d09a03eeff` | PASS `4001637`, then `7b47202` after a generated-RAP conflict with `main` was resolved |
+| RAP rebind | [#737](https://github.com/mhibajene/hedgr-copilot/pull/737) | `3e388b5c5736` | PASS `e22dcf2` |
+| Remove "Latest change" strip | [#738](https://github.com/mhibajene/hedgr-copilot/pull/738) | `cbfb05ce0716` | Runtime `af0f76f`, tests `fa49420`; PASS `fa49420`; Production `6713948792` success |
+| Amendment (§328 decision 3) | [#739](https://github.com/mhibajene/hedgr-copilot/pull/739) | `b07a4eb0dd39` | PASS `8e559e6` |
+| RAP rebind | [#740](https://github.com/mhibajene/hedgr-copilot/pull/740) | `23b4f81f1fb9` | PASS `34fb004` |
+| Hide overlapping Recent activity | [#741](https://github.com/mhibajene/hedgr-copilot/pull/741) | `d51277cefa7b` | Runtime `508af04`, tests `94196e5`; PASS `94196e5`; Production `6723529926` success |
+
+**Production inspection (`d51277c`, 2026-09-29):** 32/32 checks passed at 390 × 844 and 1440 × 1024, with no overflow and no page errors. Contexts used mock sign-in with seeded browser-local entries (deposit $5, withdrawal $2, plus a pending $1 in the pending case).
+
+| State | "Latest change" strip | Recent activity |
+| --- | --- | --- |
+| No previous visit | absent | shown |
+| One change since the last visit | absent | hidden |
+| Several changes since the last visit ([390](home-experience-qa/dedup-default-390-several-changes.png), [1440](home-experience-qa/dedup-default-1440-several-changes.png)) | absent | hidden |
+| No change since the last visit ([390](home-experience-qa/dedup-default-390-no-change.png), [1440](home-experience-qa/dedup-default-1440-no-change.png)) | absent | shown |
+| Pending entry ([390](home-experience-qa/dedup-default-390-pending.png), [1440](home-experience-qa/dedup-default-1440-pending.png)) | absent | shown, and the pending +$1.00 is listed |
+| Journey Home (control) | absent | not rendered (unchanged) |
+
+**Caveat:** at 1440px the "no previous visit" case rendered as "no change", because the harness's login step landed on `/dashboard` and recorded a visit. Recent activity was correctly shown in both states. The "no previous visit" state is covered at 390px and by unit tests.
+
+**Balance mode:** the probe (ledger $5, wallet $7) showed $7.00, so Production still runs wallet mode. The Founder-owned §328 ledger switch is outstanding, and this inspection exercised the #732 wallet-mode guard. Re-run the probe and this inspection after the switch.
+
+### Image integrity (HOME-DEDUP-001)
+
+| File | Pixels | SHA-256 |
+| --- | --- | --- |
+| `dedup-default-1440-no-change.png` | 1440 × 1409 | `489aa0dc2dc2b07c54ea52a46b14ce519676490321441a6232655a5695ae4a24` |
+| `dedup-default-1440-pending.png` | 1440 × 1412 | `b1e138fc176f6c643288bb3728e43a27a74da202a295a71be6d826eb8196058e` |
+| `dedup-default-1440-several-changes.png` | 1440 × 1281 | `f41d5103943664909a6be6ff52b6a74324bb00898283c4befeb82059c92bcfc8` |
+| `dedup-default-390-no-change.png` | 390 × 1449 | `a7cdc304485fddb6947e15447686d2a7115c016d86a1ad519d5e113d9a309809` |
+| `dedup-default-390-pending.png` | 390 × 1363 | `eef67fa0faa297f361a35f75ab648f41be283576e8ff4be8a35be0df75259c50` |
+| `dedup-default-390-several-changes.png` | 390 × 1441 | `6c0784181252a413bb4e777d5f03e05f1d8f079376e3ad7776152c1d5e972c11` |
 
 **NO CROSS-LANE IMPACT.**
