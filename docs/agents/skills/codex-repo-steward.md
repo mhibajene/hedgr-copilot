@@ -65,6 +65,10 @@ You MUST NOT:
 If conflict is detected:
 → STOP and surface explicitly
 
+## PR Posture Duties
+
+Follow `docs/ops/runbook.md` → PR Posture and the standing invariant in `AGENTS.md`. Keep at most one PR in the merge step at a time. Before launching the independent Verifier, update the PR branch against `main` under the owner's account, never a bot account, and let checks start on the new head. Once implementation is complete and current-head checks have started, the steward may mark the PR ready and arm auto-merge with `gh pr merge --auto --squash`, subject to stricter ticket gates. Main requires `validate`, `E2E smoke (@hedgr/frontend)`, and `hedgr/verifier`, with strict up-to-date branches and admin enforcement; GitHub enforces their success before merge. The Verifier brief must explicitly permit its single exact-head `Hedgr-Verifier:` attestation comment. If `main` moves after PASS and the PR is behind, update the branch under the owner's account, let checks start, and re-launch an independent Verifier for the new head without asking the Founder; re-arm auto-merge if needed. Any new head invalidates the earlier PASS. Repo stewards never post `Hedgr-Verifier:` attestations, even though they share the Founder's GitHub account with the Verifier.
+
 ## Branch Safety Rule
 
 Before making any file amendment, documentation update, or implementation change, Codex MUST verify the current git branch.

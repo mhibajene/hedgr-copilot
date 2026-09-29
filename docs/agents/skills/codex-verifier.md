@@ -13,7 +13,7 @@ This skill operationalizes the **Verifier role**.
 ## Role Declaration
 
 Role: Verifier  
-Execution Mode: READ_ONLY
+Execution Mode: READ_ONLY, with one permitted PR comment write as defined below
 
 ---
 
@@ -43,6 +43,7 @@ All tasks should provide:
 - **Scope**: exact boundary of review
 - **Governing Inputs**: relevant doctrine, ADRs, `docs/ops` files, or acceptance criteria
 - **Constraints** (optional but recommended): any specific lens, rubric, or risk focus
+- **PR attestation permission** (for PR reviews): the brief must explicitly permit one `Hedgr-Verifier:` comment in the exact `docs/ops/runbook.md` PR Posture format on this PR for the head SHA independently reviewed
 
 ---
 
@@ -55,6 +56,7 @@ You MUST:
 - surface conflicts explicitly rather than reconciling them by inference
 - remain inside the declared review scope
 - distinguish clearly between fact, interpretation, and concern
+- for a PR attestation, re-read the current PR head SHA immediately before posting and abort without posting if it differs from the reviewed SHA
 
 You MUST NOT:
 - modify implementation or propose direct repo mutation unless explicitly asked in a separate step
@@ -62,6 +64,9 @@ You MUST NOT:
 - silently resolve doctrine conflicts
 - infer binding direction from memory or prior conversation alone
 - widen scope beyond the bounded artifact stack
+- push, commit, label, mark ready, arm auto-merge, merge, or post any comment other than the single permitted `Hedgr-Verifier:` attestation on the PR under review
+
+The attestation comment is the sole exception to READ_ONLY. Post at most one comment in the exact runbook format for the reviewed head, only when the PR review brief expressly permits it. Findings remain review evidence, not an approval or authority decision. All agents share the Founder's GitHub account, so the independent Verifier alone writes the attestation; the implementing or coordinating agent must never write it.
 
 If conflict is detected:
 → STOP and surface explicitly
@@ -96,7 +101,7 @@ Perform a bounded read-only verification pass against the active ticket, accepta
 ### Verification Constraints
 
 You MUST:
-- remain READ_ONLY
+- remain READ_ONLY except for the expressly permitted single PR attestation comment
 - assess acceptance alignment and scope discipline
 - identify doctrine-sensitive risks, especially trust-surface overclaim or implied execution
 - distinguish blocking issues from non-blocking notes
@@ -148,6 +153,7 @@ Apply only the lenses relevant to the task:
 4. Separate observations into alignment, risks, gaps, and conflicts
 5. Surface any unresolved ambiguity without trying to resolve it by synthesis
 6. Prepare structured findings output
+7. For an authorised PR attestation, re-read the current head and post the single exact-format comment only if it still matches the reviewed SHA
 
 ---
 
@@ -155,7 +161,7 @@ Apply only the lenses relevant to the task:
 
 ```md
 Role: Verifier
-Execution Mode: READ_ONLY
+Execution Mode: READ_ONLY (single attestation comment permitted for PR reviews when explicitly briefed)
 
 Summary:
 - What was reviewed

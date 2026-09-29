@@ -2,7 +2,7 @@
 
 Repo-wide standing merge invariant (binding source: `AGENTS.md`). Target sequence:
 
-`DRAFT` → `IMPLEMENTED` → `VERIFYING` → `VERIFIED` → `AUTO-MERGE ELIGIBLE` → `MERGED`
+`DRAFT` → `IMPLEMENTED` → `READY / AUTO-MERGE ARMED` → `VERIFYING` → `VERIFIED` → `MERGED`
 
 A change to the PR head after verification returns the PR to `VERIFYING`.
 
@@ -24,6 +24,8 @@ Hedgr-Verifier: FAIL sha=<40-hex head sha> run=<verifier agent URL>
 
 Anchored at line start. Strict form: `Hedgr-Verifier: ` then `PASS` or `FAIL`, then ` sha=` plus forty hexadecimal characters, then ` run=` plus a non-whitespace verifier URL. No other line is an attestation.
 
+The independent Verifier remains READ_ONLY except for one permitted write: a single attestation comment in this exact format on the PR under review for the head SHA it reviewed. The Verifier brief must explicitly permit that post. Immediately before posting, the Verifier re-reads the current PR head SHA and aborts without posting if it differs from the reviewed SHA. Implementers and stewards never post `Hedgr-Verifier:` attestations, even though all agents share the Founder's GitHub account.
+
 ### Mechanical gate (what actually exists)
 
 `.github/workflows/verifier-gate.yml` reads PR comments and sets commit status context **`hedgr/verifier`** on the current head SHA fetched from the GitHub API (never from an `issue_comment` payload SHA).
@@ -42,7 +44,7 @@ Trust model: only comments whose `author_association` is `OWNER`, `MEMBER`, or `
 
 ### Auto-merge
 
-Auto-merge may be enabled only after an independent verifier has reported PASS against the current PR head SHA and all other applicable repository and ticket gates are satisfied.
+Once implementation is complete, the implementing or steward agent may mark the PR ready and arm auto-merge with `gh pr merge --auto --squash` after the branch is updated and current-head checks have started. Check any stricter ticket gate before arming. Arming auto-merge is not merging: required `hedgr/verifier` remains pending until an independent Verifier attests PASS on that exact up-to-date head. GitHub then enforces required `validate`, `E2E smoke (@hedgr/frontend)`, `hedgr/verifier`, the standing invariant, and other applicable merge gates before completing the merge. Keep at most one PR in the merge step at a time.
 
 Founder merge action is not required for normal bounded implementation PRs. Founder involvement stays upstream at judgement and authority boundaries.
 
@@ -54,17 +56,17 @@ Ticket-specific gate sections may be stricter than this standing rule and may ne
 
 `.github/workflows/validate.yml` runs `trust:check`, `trust:phrases`, the route-conflict guard, typecheck, lint, and unit tests. It does **not** enforce labels. There is no `QA_GATE_BYPASS` implementation in `validate.yml`. Do not claim a Solo QA label gate in validate.
 
-Hosted checks commonly seen on PRs include `validate` and `E2E smoke (@hedgr/frontend)`. At this recording, classic branch protection on `main` requires status check `E2E smoke (@hedgr/frontend)` only (`enforcement_level: everyone`). There are no rulesets. **`hedgr/verifier` is not yet a required status check** — making it required is a Founder-only repository settings change, not ordinary PR execution. Do not treat the workflow file as already binding merge on GitHub.
+Hosted checks on PRs include `validate` and `E2E smoke (@hedgr/frontend)`. The Founder added `validate` to main's required checks on 2026-09-29 as part of §331. Classic branch protection on `main` now requires `validate`, `E2E smoke (@hedgr/frontend)`, and `hedgr/verifier`, requires branches up to date with `main` (`strict=true`), and enforces for admins. The repository allows auto-merge and has no rulesets.
 
 ### Process
 
 1. Open the PR as draft. Fill the template (acceptance, tests, rollback).
 2. Implement on the PR. Head SHA is the only verification target.
-3. Immediately before a verifier is launched, the steward brings the PR branch up to date with `main` using GitHub **Update branch** under the owner's account (the GitHub UI **Update branch** control, or the pulls `update-branch` API authenticated as that person — not as a bot). Do not use `pr-auto-update`, `github-actions`, or any `GITHUB_TOKEN` actor for this step: bot-authored updates leave required checks in `action_required` and need manual approval of workflow runs. The verifier reports PASS or FAIL against that exact current head SHA. Since #726 (`eacaa440cf7076b0fe230d676cbd5048cdfaf501`), `pr-auto-update` is **manual (`workflow_dispatch`) only**; it does not run on push to `main` or on a schedule and must not be used for pre-verification updates. If `main` moves after a PASS and the branch must be updated again (required because `main` requires up-to-date branches), the new head invalidates the previous PASS and must be independently re-verified before merge.
-4. Distinct verifier posts an attestation line for that exact head SHA.
-5. `hedgr/verifier` becomes success only when that PASS matches the current head.
-6. Enable auto-merge only after that status and every other applicable gate.
-7. If the head changes, attestation is invalid until a new PASS on the new SHA.
+3. Before launching a Verifier, the steward brings the PR branch up to date with `main` using GitHub **Update branch** under the owner's account (the GitHub UI **Update branch** control, or the pulls `update-branch` API authenticated as that person — not as a bot), then lets checks start on the updated head. Do not use `pr-auto-update`, `github-actions`, or any `GITHUB_TOKEN` actor for this step: bot-authored updates leave required checks in `action_required` and need manual approval of workflow runs. Since #726 (`eacaa440cf7076b0fe230d676cbd5048cdfaf501`), `pr-auto-update` is **manual (`workflow_dispatch`) only**; it does not run on push to `main` or on a schedule and must not be used for pre-verification updates.
+4. Once current-head checks have started and stricter ticket gates permit, the implementing or steward agent marks the PR ready and arms auto-merge with `gh pr merge --auto --squash`. GitHub requires current-head `validate` success before merge. Keep at most one PR in the merge step at a time.
+5. Launch a distinct independent Verifier with a brief explicitly permitting its one `Hedgr-Verifier:` attestation comment. The Verifier reports PASS or FAIL against the reviewed head, re-reads the current PR head immediately before posting, and aborts without posting on any mismatch.
+6. The Verifier posts the single exact-head attestation. `hedgr/verifier` becomes success only when an eligible PASS matches the current head. GitHub completes auto-merge only after its required checks and applicable merge gates pass.
+7. If `main` moves after PASS and strict protection leaves the PR behind, the steward updates the branch under the owner's account, lets new-head checks start, and re-launches an independent Verifier on the new head without asking the Founder. Any new head invalidates the earlier PASS; re-arm auto-merge if the update cleared it. GitHub reruns required checks on the new head. Repeat the exact-head gate before merge while keeping only this PR in the merge step.
 
 Descriptive labels may still be applied as metadata (`product:approved`, `qa:approved`, one `area:*`, one `risk:*`) via `.github/scripts/bootstrap-labels.sh` if missing. They do not substitute for ticket authority, independent verifier PASS, exact-SHA verification, or release/launch authority.
 
