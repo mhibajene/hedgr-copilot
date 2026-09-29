@@ -206,3 +206,13 @@ Founder activation of `CLASS-A-VAL-002-HOME-EXPERIENCE-001` (HEDGR_STATUS.md §7
 - Use the underlined current tab on every screen.
 
 No palette value, typeface, status meaning or brand asset changes. Accepted references are recorded in `docs/ops/product-finish/HOME_EXPERIENCE_BASELINE.md`. No standing refinement authority follows.
+
+## Research and orientation refresh usage (2026-09-29)
+
+Founder activation of `CLASS-A-VAL-002-RESEARCH-REFRESH-001` (HEDGR_STATUS.md §7 / §7a / §332) takes effect only after its source merge and a separate verified RAP rebind. Within that ticket only:
+
+- Extend the `syntheticHome.canvas`, `syntheticHome.divider` and existing muted navy text usage to `/orientation` (ordinary and `?study=stability-scenarios` entries) and `/research/stability-scenarios`. This supersedes the "Other routes are not migrated" limit of the shared Home, Activity and Settings baseline for those two routes only.
+- Allow the shipped full-width, fully rounded primary action (existing `button-primary` pairing), rounded panels with `syntheticHome.divider` borders on white, and visible focus rings. These use existing colour and shadow values only.
+- Keep the research `New` marker as the existing tinted pill (`color-100` / `color-800`); it means "this row changed", never gain, loss, success or warning. `syntheticHome.observation-surface` and `observation-emphasis` are not used on the research route.
+
+No palette value, typeface, status meaning or brand asset changes. Deposit and Withdraw stay white. No standing refinement authority follows.
