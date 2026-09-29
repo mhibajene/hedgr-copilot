@@ -245,6 +245,10 @@ export default function DashboardPage() {
     positionDerivable && previousVisit !== null && positionEntries.length > 0
       ? summariseSinceLastVisit(positionEntries, previousVisit)
       : null;
+  // HOME-DEDUP-001 (§328 decision 3): while the observation explains one or several changes,
+  // default-route Recent activity would repeat those entries, so it is hidden.
+  const sinceChangesShown =
+    normalPosture && !positionLoading && sinceSummary !== null && sinceSummary.kind !== "no-change";
   const sinceDelta =
     sinceSummary && sinceSummary.kind !== "no-change"
       ? +(sinceSummary.to - sinceSummary.from).toFixed(2)
@@ -805,7 +809,7 @@ export default function DashboardPage() {
           </section>
         )}
 
-        {!syntheticJourneyActive && !isFirstTimeUser && !hasNoTransactions && (
+        {!syntheticJourneyActive && !isFirstTimeUser && !hasNoTransactions && !sinceChangesShown && (
           <section
             className="border-t border-hedgr-200 pt-6"
             aria-labelledby="dashboard-recent-activity-heading"
