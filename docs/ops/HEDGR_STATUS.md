@@ -4595,6 +4595,8 @@ This section does **not** authorize provider-specific implementation, legal reli
 
 **Research Compression technical completion (2026-09-25):** §314 records PR #685 squash-merged at `774df4c861307e418248a6ebef52f34edcce94fa` after source #683 / RAP rebind #684, distinct Implementer `7041b73` and verification `f571aa2` commits, hosted checks on head `f571aa2`, and independent S4 Verifier PASS WITH NOTES on both `f571aa2` and `774df4c` (whole-tree diff empty). This source-first closeout closes only the nested Lane V ticket after its permanent-main merge and a final separate verified RAP rebind. The Lane V parent remains open; no nested successor is active. The research route is not released, the weekend ticket remains deferred and the separately released Digital Feedback v1 pulse retains Founder custody. D1 remains held; D2 remains an undecided Founder strategy question and is not this ticket. No participant, Engine, financial or cross-lane authority follows. **NO CROSS-LANE IMPACT.**
 
+**Founder activation — Sarah research refresh (2026-09-29; §332):** After a read-only review of `/research/stability-scenarios`, the Founder approved `CLASS-A-VAL-002-RESEARCH-REFRESH-001` as the sole active nested Lane V ticket. It covers three changes: (1) the research bridge opens the simulation at a clean start (`/dashboard-synthetic-journey?reset=1`); (2) the bridge sentence aligns with the wording of the finished Home; (3) Sarah's research page and the orientation page (both the ordinary and the study entry) move to the newer productised look through one shared research chrome component. Every other participant string, value and behaviour is unchanged, and the route stays unreleased. Source merge and a separate verified RAP rebind precede runtime. The later Mulenga ticket (`CLASS-A-VAL-002-RESEARCH-RESERVE-001`) stays queued behind this one. **NO CROSS-LANE IMPACT.**
+
 **New Marker technical closeout (2026-09-29; §330):** §330 records delivery of `CLASS-A-VAL-002-RESEARCH-NEW-MARKER-001` in #710 (`fb25660`) after source #691 / rebind #693 and stacked-row amendment #707 / rebind #708. An earlier draft head had a distinct local Verifier PASS WITH NOTES, but the final #710 head merged without a fresh independent Verifier report; a later distinct Verifier returned PASS WITH NOTES on the exact merged SHA. This technical verdict does not cure the pre-merge process deviation. Close only this nested ticket after the §330 source-first completion merges and a separate verified permanent-main RAP rebind completes. Parent `CLASS-A-VAL-002` remains open with no active nested successor; the research route remains unreleased. No new runtime, participant, financial or cross-lane authority follows. **NO CROSS-LANE IMPACT.**
 
 **Home deduplication technical closeout (2026-09-29; §329):** §329 records delivery of `CLASS-A-VAL-002-HOME-DEDUP-001`. After source #735 and separate RAP rebind #737, #738 (`cbfb05c`) removed the default-route “Latest change” strip. After amendment #739 and separate RAP rebind #740, #741 (`d51277c`) hid default-route Recent activity while “Since you were last here” shows one or several changes. Every PR merged after an independent Verifier PASS on its exact head, and both runtime merges deployed to Production successfully. Production inspection of `d51277c` passed 32/32 checks. Production still runs wallet balance mode, so the Founder-owned §328 ledger switch remains outstanding. Close only this nested ticket after this source-first completion merges to permanent main and a separate verified projection-only RAP rebind completes. Parent `CLASS-A-VAL-002` stays open without an active nested successor. `CLASS-A-VAL-002-RESEARCH-NEW-MARKER-001` stays held; the `/research/stability-scenarios` review remains the named next step and is not activated here. **NO CROSS-LANE IMPACT.**
@@ -4685,13 +4687,13 @@ This section does **not** authorize provider-specific implementation, legal reli
 
 Current active ticket status:
 
-- **Lane V:** `CLASS-A-VAL-002` — open Class A informational / synthetic validation parent. `CLASS-A-VAL-002-HOME-EXPERIENCE-001` closed under §327 (RAP rebind #736). `CLASS-A-VAL-002-HOME-DEDUP-001` closed after §329 source #742 and separate verified RAP rebind #743. `CLASS-A-VAL-002-RESEARCH-NEW-MARKER-001` has delivered runtime #710 on main and closes after the §330 source completion merges and its separate verified RAP rebind. No nested Lane V successor is active. The research route remains unreleased; the `/research/stability-scenarios` review is not activated here. `CLASS-A-VAL-002-RESEARCH-COMPRESSION-001` closed under §314; Research Value Panel §311/§312 and Research Two-Beat §309/§310 are completed history. §302 stimulus and §§298–301 preparation/packages remain completed history. `CLASS-A-VAL-002-WEEKEND-PREP-001` remains deferred with duties intact; its separate Digital Feedback v1 release and Founder custody remain in force. No scenario participant distribution follows.
+- **Lane V:** `CLASS-A-VAL-002` — open Class A informational / synthetic validation parent. `CLASS-A-VAL-002-HOME-EXPERIENCE-001` closed under §327 (RAP rebind #736). `CLASS-A-VAL-002-HOME-DEDUP-001` closed after §329 source #742 and separate verified RAP rebind #743. `CLASS-A-VAL-002-RESEARCH-NEW-MARKER-001` has delivered runtime #710 on main and closes after the §330 source completion merges and its separate verified RAP rebind. `CLASS-A-VAL-002-RESEARCH-REFRESH-001` (§332) is the sole active nested Lane V ticket, effective only after its source merge and separate verified RAP rebind. `CLASS-A-VAL-002-RESEARCH-RESERVE-001` (Mulenga) stays queued behind it and is not activated. The research route remains unreleased. `CLASS-A-VAL-002-RESEARCH-COMPRESSION-001` closed under §314; Research Value Panel §311/§312 and Research Two-Beat §309/§310 are completed history. §302 stimulus and §§298–301 preparation/packages remain completed history. `CLASS-A-VAL-002-WEEKEND-PREP-001` remains deferred with duties intact; its separate Digital Feedback v1 release and Founder custody remain in force. No scenario participant distribution follows.
 - **Lane E:** `SE-REASON-001` — open Class A informational / Yellow parent; no active nested ticket after §290. No further authoring, model/executable-interface acceptance, coexistence work or product/runtime implementation. D-099 remains direction only; §288, D-121/D-143 retained evidence and limitations remain unchanged.
 - **Lane G:** none. `GTM-MARKET-DISCOVERY-001` / D-151 is deferred, not cancelled, under §285. No research, intake, analysis or automatic restart.
 - **Lane N:** none. `NARRATIVE-007` is completed under D-080 / §212; Customer One-Pager v2.0 is Accepted / Frozen and unpublished.
 - **Lane A / B / C / M / R:** none. Prior completed work supplies no successor or standing concurrency.
 - **Temporary repository support:** `PRODUCT-EXPERIENCE-LEAD-ADOPTION-001` is completed finite support after source closeout #662 and separate RAP rebind #663; the role remains registered `PROPOSE_ONLY`. `AGENT-ROLE-REGISTRY-RECONCILIATION-001` is completed finite support after source #666, rebind #667, amendment #671 / rebind #673, closeout #676 and separate permanent-main RAP rebind #677 at `2a1a8bf`. This finite activity creates no standing support authority and does not occupy or alter a product/research lane. Local `BRIDGE-MCP-001` remains separate under §§304–308 with no live Lane R occupancy.
-- **Sequencing posture:** Controlled Parallelism v22 / §6f.22 retains V/E parents while §285 defers G. §301–§302 nested Lane V work is completed history; §303 Product Experience Lead registration is closed. §309–§310 Research Two-Beat work is completed history. The role-registry reconciliation is completed finite non-lane support after source closeout #676 and separate RAP rebind #677. §311–§312 Research Value Panel and §313–§314 Research Compression work are completed history. §327, §329 and §330 record the Home experience, Home deduplication and New Marker technical closeouts. After the §330 source merge and separate verified RAP rebind, no nested Lane V ticket is active. NEW-MARKER-001 requires no further runtime work; its retrospective Verifier PASS does not erase the #710 merge-before-verifier deviation. The `/research/stability-scenarios` review is not activated by this record. The weekend ticket remains deferred, not completed or cancelled. The separately released Digital Feedback v1 pulse and Founder-owned participant selection, invitations and raw-response custody continue under their existing conditions; moderated v2.1 and other parent distribution remain paused. The Stability research route is not released for participant use. No participant session, new Form, response collection, telemetry, personal-input collection, limited manipulation or “Use My Numbers” is activated. Lane E remains open without a nested ticket; §290 responsibilities remain non-executable and current EngineState/posture is preserved. No Lane G restart, Green delegation, financial capability or cross-lane authority follows. NO CROSS-LANE IMPACT.
+- **Sequencing posture:** Controlled Parallelism v22 / §6f.22 retains V/E parents while §285 defers G. §301–§302 nested Lane V work is completed history; §303 Product Experience Lead registration is closed. §309–§310 Research Two-Beat work is completed history. The role-registry reconciliation is completed finite non-lane support after source closeout #676 and separate RAP rebind #677. §311–§312 Research Value Panel and §313–§314 Research Compression work are completed history. §327, §329 and §330 record the Home experience, Home deduplication and New Marker technical closeouts. NEW-MARKER-001 requires no further runtime work; its retrospective Verifier PASS does not erase the #710 merge-before-verifier deviation. §332 names `CLASS-A-VAL-002-RESEARCH-REFRESH-001` as the sole active nested Lane V ticket, effective after its source merge and separate verified RAP rebind; `CLASS-A-VAL-002-RESEARCH-RESERVE-001` stays queued behind it. The weekend ticket remains deferred, not completed or cancelled. The separately released Digital Feedback v1 pulse and Founder-owned participant selection, invitations and raw-response custody continue under their existing conditions; moderated v2.1 and other parent distribution remain paused. The Stability research route is not released for participant use. No participant session, new Form, response collection, telemetry, personal-input collection, limited manipulation or “Use My Numbers” is activated. Lane E remains open without a nested ticket; §290 responsibilities remain non-executable and current EngineState/posture is preserved. No Lane G restart, Green delegation, financial capability or cross-lane authority follows. NO CROSS-LANE IMPACT.
 
 **Scope-first completion / interpretation (2026-09-20):** Verified PR #602 delivery consumes the finite synthetic Home amendment (§294). References to that amendment in the retained sequencing statement identify its bounded scope and history only; they grant no further runtime or refinement permission. Only remaining approved weekend instrument/verification, human rehearsal/timing and release duties remain unfinished. This completion record takes effect on permanent-main merge with a separate verified RAP rebind; publication/distribution remains paused and both parents stay open.
 
@@ -4720,7 +4722,73 @@ Current active ticket status:
 
 ## 7a. Active execution tickets — Lanes V and E; Lane G deferred (Controlled Parallelism v22)
 
-**Read order:** Current occupancy and operative controls are in §7. After the §330 source closeout merges and its separate permanent-main RAP rebind is verified, no nested Lane V ticket is active. The `CLASS-A-VAL-002-HOME-DEDUP-001` brief (§329) and the `CLASS-A-VAL-002-HOME-EXPERIENCE-001` brief (§327) below are completed history, not continuing runtime permission. `CLASS-A-VAL-002-RESEARCH-NEW-MARKER-001` is delivered by #710 and closes under §330 after source merge and separate RAP rebind; its brief and amendment below remain historical and grant no further runtime permission. The `/research/stability-scenarios` review is not activated here. The §313 Research Compression, §311/§312 Research Value Panel, and §309/§310 Research Two-Beat tickets are completed history. The §302 stimulus, §301 convergence package, humanised stimulus, prior stimulus and retained preflight remain completed history; the retained weekend brief and completed Home amendments preserve history and deferred obligations, not concurrent permission. Parent validation obligations and the separate digital-pulse release remain binding. Lane E is open without a nested ticket; §290 is a read-only compatibility input only. Local `BRIDGE-MCP-001` has no live Lane R occupancy. Completed registry reconciliation is non-lane support, not occupancy. Historical “current” language is not a restart instruction.
+**Read order:** Current occupancy and operative controls are in §7. The §332 `CLASS-A-VAL-002-RESEARCH-REFRESH-001` brief below is the sole active nested Lane V ticket, effective only after its source merge and separate verified permanent-main RAP rebind; no runtime edit precedes those gates. The `CLASS-A-VAL-002-HOME-DEDUP-001` brief (§329) and the `CLASS-A-VAL-002-HOME-EXPERIENCE-001` brief (§327) below are completed history, not continuing runtime permission. `CLASS-A-VAL-002-RESEARCH-NEW-MARKER-001` is delivered by #710 and closes under §330 after source merge and separate RAP rebind; its brief and amendment below remain historical and grant no further runtime permission. The `/research/stability-scenarios` review was completed read-only on 2026-09-29 and produced the §332 dispositions. The §313 Research Compression, §311/§312 Research Value Panel, and §309/§310 Research Two-Beat tickets are completed history. The §302 stimulus, §301 convergence package, humanised stimulus, prior stimulus and retained preflight remain completed history; the retained weekend brief and completed Home amendments preserve history and deferred obligations, not concurrent permission. Parent validation obligations and the separate digital-pulse release remain binding. Lane E is open without a nested ticket; §290 is a read-only compatibility input only. Local `BRIDGE-MCP-001` has no live Lane R occupancy. Completed registry reconciliation is non-lane support, not occupancy. Historical “current” language is not a restart instruction.
+
+### Active nested Lane V — `CLASS-A-VAL-002-RESEARCH-REFRESH-001` (effective only after §332 source merge and separate RAP rebind)
+
+**Authority / start:** Direct Founder direction on 2026-09-29, after a read-only Product Experience review of `/research/stability-scenarios`:
+- “I agree with pointing the bridge at a clean start. For 4, wording has to align with what we have established in the finished UI update. For 5 will need to align the research route to the newer look.”
+- “NEW-MARKER-001 is closed, proceed with the Sarah refresh.”
+- Founder selections: bridge wording aligned to Home; the newer look on the research page **and all of orientation**; one shared research chrome component.
+
+This is Class A synthetic/informational presentation under open parent `CLASS-A-VAL-002` and is the sole active nested Lane V ticket. Source authority must merge to permanent main and receive a separate verified projection-only RAP rebind before runtime edits. A bounded Implementer and a distinct Verifier deliver it under the runbook PR Posture (§331). No D-number is assigned or reserved.
+
+**Objective:**
+1. **Clean-start bridge.** Sarah's final research screen links to `/dashboard-synthetic-journey?reset=1` instead of `/dashboard-synthetic-journey`, so a returning participant starts from the simulation's first-use state. It uses the existing reset path; no new reset logic.
+2. **Bridge wording.** Replace exactly one participant string:
+   - From: “Next, try Hedgr with made-up money. Make a practice deposit, then see what changes and what remains. No real money moves, no account is opened, and nothing here is financial advice.”
+   - To: “Next, try Hedgr with pretend money. Add a simulated deposit, then see what changes and what remains. No real money moves, no account is opened, and nothing here is financial advice.”
+
+   The heading “You’ve reached the end of this research example.” and the button “Continue to the Hedgr simulation” are unchanged.
+3. **Newer look.** Apply the productised treatment already shipped on Home, using existing token values only:
+   - the ivory canvas, divider and text tokens;
+   - rounded panels;
+   - the filled pill primary button, with pill secondary actions where a secondary action exists;
+   - visible focus rings.
+
+   It applies to `/research/stability-scenarios` (all four stages) and to `/orientation` (the ordinary entry and the `?study=stability-scenarios` entry). The `New` marker pill, the stacked rows and the Before/After row alignment from NEW-MARKER-001 are kept.
+4. **Shared research chrome.** A new shared component holds the research header (“Fictional research example · no real money”, the page title, and the boundary line), the research footer link and the primary button treatment. Sarah's page uses it. The later Mulenga ticket may reuse it; its frame rule “re-declare the chrome, don't extract it” is to be amended in that ticket's own source record.
+
+**Preserve exactly:**
+- Every other participant string on both routes, character for character, including:
+  - the orientation surface copy in `lib/narrative/orientation-surface.ts` (unchanged file);
+  - the study entry helper and note;
+  - Sarah's facts, fee change, panel rows, attribution, limits, labels and buttons.
+- Values, currency selection and its storage, stage order, focus movement, gating (`notFound()` outside the synthetic environment), `robots` noindex, the ordinary orientation continue target, and the absence of inputs, storage writes and telemetry on the research route.
+
+**Exact allowed files:**
+- **Authority/design:** `AGENTS.md`, `docs/ops/HEDGR_STATUS.md`, `DESIGN.md` (usage section only), `apps/bridge-worker/tests/fork1-authority.test.mjs` (only the exact current sequencing fixture), and generated `docs/ops/bridge/repo-authority-projection.json`.
+- **Runtime:**
+  - `apps/frontend/app/research/stability-scenarios/ScenarioStimulus.tsx`;
+  - `apps/frontend/app/research/stability-scenarios/page.tsx` (only if the shared chrome needs it);
+  - new `apps/frontend/app/research/ResearchChrome.tsx`;
+  - new `apps/frontend/app/research/research.module.css`;
+  - `apps/frontend/app/orientation/page.tsx`;
+  - `apps/frontend/components/SimulationDisplayCurrencySelector.tsx` (only the `entry` placement's classes; the `settings` and `position` placements are unchanged).
+- **Verification:** `apps/frontend/tests-e2e/stability-scenarios.spec.ts`, `apps/frontend/tests-e2e/orientation.spec.ts`, `apps/frontend/__tests__/orientation-surface.test.ts`, `apps/frontend/tests-e2e/class-a-val-002.spec.ts`, `apps/frontend/tests-e2e/currency-insight.spec.ts` and `apps/frontend/tests-e2e/display-currency.spec.ts`. Change only the expectations this brief supersedes (the bridge sentence, the bridge target, the landing state after the bridge, and styling assertions), and keep route, copy, currency, gating and reset assertions strict.
+- **Evidence:** new `docs/ops/governance/mvp/HEDGR_RESEARCH_REFRESH_QA.md`.
+- No other file.
+
+**Exclusions:**
+- No copy change beyond the one bridge sentence.
+- No change to `lib/narrative/orientation-surface.ts`, the Home, Activity, Deposit or Withdraw routes, the app shell or the synthetic-journey reset logic.
+- No Mulenga route or copy.
+- No participant release, recruitment, Form, response capture, telemetry or personal input.
+- No Engine, Wallet, ledger, FX or financial-state change.
+- No Lane E/G, Green delegation, financial capability or cross-lane authority.
+
+**Acceptance:**
+1. The bridge link's `href` is exactly `/dashboard-synthetic-journey?reset=1`.
+2. A participant with earlier simulation data on the device lands on the first-use Home after the bridge. A first-time participant also sees first use.
+3. The bridge sentence matches the new string exactly, and every other participant string on both routes is unchanged.
+4. NEW-MARKER-001 acceptance 1–9 still hold: exactly two `New` markers in the After `Due` and `What to watch` headings, every row stacked, and Before/After rows aligned at 1024px and wider.
+5. At 320px with 200% text, and at 390, 640, 1024, 1280 and 1440px, both routes have no horizontal overflow and every control is at least 44px tall.
+6. Keyboard order, visible focus and stage-heading focus are intact.
+7. The ordinary orientation path keeps its copy and continue target.
+8. Full validation, production build, the complete hermetic browser suite, required hosted checks, and an independent Verifier PASS on the exact head.
+9. Screenshots of both routes at 390 and 1440px are recorded in the QA document.
+
+**Stop / rollback:** Stop if any other string, route, reset behaviour, shared app component or financial state would need to change. Roll back by reverting the runtime commits; the source and design records remain as history. **NO CROSS-LANE IMPACT.**
 
 ### Completed nested Lane V — `CLASS-A-VAL-002-HOME-DEDUP-001` (effective only after §329 source merge and separate RAP rebind)
 
@@ -5100,6 +5168,32 @@ Markers are text (`Same as before`, `New`). Colour or icon may reinforce a marke
 **Normal-use disposition (§325):** The §324 source merged through PR #715 at `d20ac68c48a31bd2fc04d80e3038fe71468acc75`; separate permanent-main RAP rebind PR #716 merged at `8e6f9d8fd62543a1118ff4c6d0e291c66fb190d3`. Vercel Production deployments `6692003771` and `6692105282` succeeded, and main-bound RAP verification passed. In the one authorised fresh attempt, the consent page showed registered client `Codex`, exact loopback `http://127.0.0.1:53550/callback`, resource `https://hedgrops-bridge.hedgr.workers.dev/mcp`, scope `evidence:read` and PKCE S256. The Founder submitted approval once. Production events show the browser-bound consent was consumed and downstream Access state created without a fixed authorization-failure event. Chrome retained no onward Cloudflare Access navigation, the current Access-log window contained no matching decision, and no Worker `/callback`, provider token exchange, authenticated `/mcp`, four-tool discovery, evidence retrieval, token-expiry or reauthentication observation followed. Treat this as fail-closed between Access-state creation and observed provider navigation; do not infer an Access outage or identity failure.
 
 **Effect and remaining hold:** The Founder states `normal use disposition approved`. This removes the governance policy hold for private Founder-only normal use solely within the four existing fixed no-argument read-only evidence tools once an authenticated connection actually exists. It does not turn the failed diagnostic into an operational pass, assert a token or tool connection, suppress the unverified session/expiry/reauthentication qualifications, or authorise another submission from the consumed transaction. Because no authenticated connection exists, there is currently no normal-use action to perform. A fresh authorization retry, browser-redirect diagnosis, code or operator-documentation edit, Worker deployment/configuration, Cloudflare Access/identity/credential/storage/binding change, plugin registration/edit, new tool/parameter/user, repository browsing or mutation, ticket activation, participant/research release, financial capability or mandate change requires separate bounded authority. This source and separately generated branch RAP may be prepared locally for review; the branch remains non-authorising. Source push/merge, its automatic `hedgr-copilot-frontend` Vercel Production deployment, the required separate permanent-main RAP rebind and its deployment remain held pending express Founder approval. Stop at `NORMAL USE POLICY APPROVED — AUTHENTICATED CONNECTION STILL UNAVAILABLE`. **NO CROSS-LANE IMPACT.**
+
+## 332. Founder activation — nested Lane V Sarah research refresh (2026-09-29)
+
+**Basis:** After the NEW-MARKER-001 closeout (§330), a read-only Product Experience review of `/research/stability-scenarios` found:
+- a returning participant who follows the bridge lands on their earlier simulation state (“Nothing has changed since …”) instead of first use;
+- the bridge wording (“made-up money”, “practice deposit”) differs from the finished Home (“pretend money”, “Add simulated deposit”);
+- the research page and orientation keep the pre-productisation look, so participants cross a visible seam into the new Home.
+
+**Founder dispositions (2026-09-29):**
+- Point the bridge at a clean start.
+- Align the wording with the finished UI, choosing the Home-aligned sentence.
+- Align the research route with the newer look, extending it to all of orientation.
+- Create one shared research chrome component.
+- Ticket `CLASS-A-VAL-002-RESEARCH-REFRESH-001`, with the brief in §7a.
+
+**Relationship to other work:**
+- NEW-MARKER-001's delivered markers and stacked rows are preserved.
+- The Mulenga ticket frame (`CLASS-A-VAL-002-RESEARCH-RESERVE-001`, approved 2026-09-27, not activated) stays queued behind this ticket. Before its own activation it needs a Founder amendment covering:
+  - digital, unmoderated delivery through a shared build link and a Google Form;
+  - participants engaging with both Sarah and Mulenga;
+  - reuse of the shared research chrome.
+- Its fixed Zambian-kwacha setting, standalone entry and Sarah's retained currency selection are unchanged by this record.
+
+**Design usage:** The `DESIGN.md` usage addendum in this source extends the existing `syntheticHome` canvas, divider and text-token usage and the shipped pill and rounded-panel treatment to `/orientation` and `/research/stability-scenarios` for this ticket only. No token value, typeface, asset or status meaning changes.
+
+**Sequence:** This source record; a separate verified permanent-main RAP rebind; the runtime PR with distinct Implementer and verification commits under the §331 PR Posture; Production inspection; a source-first completion record; and a final RAP rebind. **NO CROSS-LANE IMPACT.**
 
 ## 331. Founder disposition — PR Posture execution refinement (2026-09-29)
 
