@@ -6,6 +6,7 @@ import {
   getSimulationDisplayCurrency,
   type SimulationDisplayCurrency,
 } from '../../../lib/state/simulation-display-currency';
+import { ResearchChrome, researchStyles as rs } from '../ResearchChrome';
 
 type Stage = 'a1' | 'a2' | 'hedgr' | 'bridge';
 
@@ -101,7 +102,7 @@ export default function ScenarioStimulus() {
   }, [stage]);
 
   if (currency === null) {
-    return <main data-testid="stability-stimulus" className="mx-auto min-h-screen max-w-3xl px-5 py-8 text-hedgr-dark sm:px-8 sm:py-12"><p role="status">Preparing the fictional example…</p></main>;
+    return <div className={rs.page}><main data-testid="stability-stimulus" className={rs.main}><p role="status">Preparing the fictional example…</p></main></div>;
   }
 
   const savingsCurrencyName = savingsCurrencyNames[currency];
@@ -120,7 +121,7 @@ export default function ScenarioStimulus() {
   if (stage === 'a1' || stage === 'a2') {
     stageBody = (
       <>
-        <section aria-labelledby="sarah-facts-heading" data-testid="sarah-facts" className="mt-8 space-y-4 border border-hedgr-300 bg-hedgr-100 p-5">
+        <section aria-labelledby="sarah-facts-heading" data-testid="sarah-facts" className={`${rs.panel} mt-8 space-y-4`}>
           <h2 id="sarah-facts-heading" ref={stageHeading} tabIndex={-1} className="break-words text-base font-semibold sm:text-xl">
             {stage === 'a1' ? 'Sarah is saving for a postgraduate course.' : 'Sarah’s changed course fee'}
           </h2>
@@ -138,9 +139,9 @@ export default function ScenarioStimulus() {
           ) : null}
         </section>
         {stage === 'a1' ? (
-          <button type="button" data-testid="study-continue" onClick={() => setStage('a2')} className="mt-8 min-h-11 w-full bg-hedgr-primary px-5 py-3 font-medium text-white focus:outline-none focus:ring-2 focus:ring-hedgr-500 focus:ring-offset-2 sm:w-auto">Continue to the changed course fee</button>
+          <button type="button" data-testid="study-continue" onClick={() => setStage('a2')} className={`${rs.primary} mt-8`}>Continue to the changed course fee</button>
         ) : (
-          <button type="button" data-testid="study-to-hedgr" onClick={() => setStage('hedgr')} className="mt-8 min-h-11 w-full bg-hedgr-primary px-5 py-3 font-medium text-white focus:outline-none focus:ring-2 focus:ring-hedgr-500 focus:ring-offset-2 sm:w-auto">Continue</button>
+          <button type="button" data-testid="study-to-hedgr" onClick={() => setStage('hedgr')} className={`${rs.primary} mt-8`}>Continue</button>
         )}
       </>
     );
@@ -149,7 +150,7 @@ export default function ScenarioStimulus() {
       <section data-testid="study-hedgr-explanation" className="mt-8 space-y-5">
         <p data-testid="study-authored-label" className="break-words text-sm font-medium text-hedgr-600">Authored research example · not a live assessment of anyone’s money</p>
         <h2 ref={stageHeading} tabIndex={-1} className="break-words text-lg font-semibold sm:text-xl">What Hedgr helps Sarah see</h2>
-        <div data-testid="study-value-panel" className="@container space-y-5 break-words border border-hedgr-300 p-5">
+        <div data-testid="study-value-panel" className={`@container space-y-5 break-words ${rs.panel}`}>
           <div className="grid grid-cols-1 gap-8 @lg:grid-cols-2 @lg:grid-rows-[auto_auto_auto_auto_auto] @lg:gap-x-6 @lg:gap-y-3">
             <PanelState
               testId="study-panel-before"
@@ -186,30 +187,27 @@ export default function ScenarioStimulus() {
         </div>
         <p data-testid="study-attribution" className="text-sm font-medium leading-relaxed text-hedgr-700">This is an authored research example for Sarah’s fictional situation. It is not Hedgr reading your money, not Stability Engine output, and not a live financial assessment.</p>
         <p data-testid="study-limits" className="text-sm leading-relaxed text-hedgr-700">This example cannot predict the future exchange rate, assume Sarah’s planned contributions will happen, or establish that the course will be fully funded. It is not financial advice.</p>
-        <button type="button" data-testid="study-to-bridge" onClick={() => setStage('bridge')} className="min-h-11 w-full bg-hedgr-primary px-5 py-3 font-medium text-white focus:outline-none focus:ring-2 focus:ring-hedgr-500 focus:ring-offset-2 sm:w-auto">Continue</button>
+        <button type="button" data-testid="study-to-bridge" onClick={() => setStage('bridge')} className={rs.primary}>Continue</button>
       </section>
     );
   } else {
     stageBody = (
       <section data-testid="study-bridge" className="mt-8 space-y-5">
         <h2 ref={stageHeading} tabIndex={-1} className="text-lg font-semibold sm:text-xl">You’ve reached the end of this research example.</h2>
-        <p>Next, try Hedgr with made-up money. Make a practice deposit, then see what changes and what remains. No real money moves, no account is opened, and nothing here is financial advice.</p>
-        <Link href="/dashboard-synthetic-journey" data-testid="study-simulation-link" className="inline-flex min-h-11 w-full items-center justify-center bg-hedgr-primary px-5 py-3 font-medium text-white focus:outline-none focus:ring-2 focus:ring-hedgr-500 focus:ring-offset-2 sm:w-auto">Continue to the Hedgr simulation</Link>
+        <p>Next, try Hedgr with pretend money. Add a simulated deposit, then see what changes and what remains. No real money moves, no account is opened, and nothing here is financial advice.</p>
+        {/* §332: open the simulation at a clean start so returning participants see first use. */}
+        <Link href="/dashboard-synthetic-journey?reset=1" data-testid="study-simulation-link" className={rs.primary}>Continue to the Hedgr simulation</Link>
       </section>
     );
   }
 
   return (
-    <main data-testid="stability-stimulus" className="mx-auto min-h-screen max-w-3xl px-5 py-8 text-hedgr-dark sm:px-8 sm:py-12">
-      <header className="space-y-3 border-b border-hedgr-200 pb-6">
-        <p className="text-sm font-medium text-hedgr-600">Fictional research example · no real money</p>
-        <h1 className="break-words text-xl font-semibold text-hedgr-800 sm:text-3xl">Sarah’s course savings</h1>
-        <p data-testid="study-common-boundary" className="text-sm leading-relaxed text-hedgr-700">This example uses only the facts on this page. Nothing you do here is saved.</p>
-      </header>
+    <ResearchChrome
+      title="Sarah’s course savings"
+      testId="stability-stimulus"
+      footer={{ href: '/orientation?study=stability-scenarios', label: 'Review the introduction' }}
+    >
       {stageBody}
-      <footer className="mt-12 text-sm text-hedgr-600">
-        <Link href="/orientation?study=stability-scenarios" className="underline focus:outline-none focus:ring-2 focus:ring-hedgr-500">Review the introduction</Link>
-      </footer>
-    </main>
+    </ResearchChrome>
   );
 }
