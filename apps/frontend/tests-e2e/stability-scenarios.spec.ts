@@ -159,15 +159,21 @@ test.describe('Research Two-Beat Sarah example', () => {
 
     await page.getByTestId('study-to-bridge').click();
     await expect(page.getByRole('heading', { name: 'You’ve reached the end of this research example.' })).toBeFocused();
-    await expect(page.getByTestId('study-bridge')).toContainText('Next, try Hedgr with made-up money. Make a practice deposit, then see what changes and what remains.');
+    // CLASS-A-VAL-002-RESEARCH-REFRESH-001 (§332): bridge wording aligned with the finished Home.
+    await expect(page.getByTestId('study-bridge')).toContainText('Next, try Hedgr with pretend money. Add a simulated deposit, then see what changes and what remains.');
+    await expect(page.getByTestId('study-bridge')).not.toContainText(/made-up money|practice deposit/);
     await expect(page.getByTestId('study-bridge')).toContainText('No real money moves, no account is opened');
-    await expect(page.getByTestId('study-simulation-link')).toHaveAttribute('href', '/dashboard-synthetic-journey');
+    await expect(page.getByTestId('study-simulation-link')).toHaveAttribute('href', '/dashboard-synthetic-journey?reset=1');
+    // §332 newer look: the research canvas shows through (no white <main> band) and the action is a pill.
+    await expect(page.getByTestId('stability-stimulus')).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
+    await expect(page.getByTestId('study-simulation-link')).toHaveCSS('border-radius', '9999px');
     await expect(page.getByText('Review the introduction')).toBeVisible();
     await expect(page.getByTestId('stability-stimulus')).not.toContainText(/in your own words|what can you conclude|what would you still need to know|does this change|what changes in your interpretation/i);
     await expectNoHolds(page);
     await expectRetiredStringsAbsent(page);
 
     await page.getByTestId('study-simulation-link').click();
+    // The reset marker is consumed and the address returns to the plain journey path.
     await expect(page).toHaveURL(/\/dashboard-synthetic-journey$/);
     await expect(page.getByTestId('dashboard-current-status')).toContainText('Start here');
     await expect(page.getByText('What Hedgr notices')).toHaveCount(0);
@@ -358,5 +364,28 @@ test.describe('Research Two-Beat Sarah example', () => {
     expect(stackedAfter!.y).toBeGreaterThan(stackedBefore!.y + stackedBefore!.height - 1);
     expect(stackedAfter!.x).toBeLessThan(stackedBefore!.x + 48);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+  });
+
+  // §332: a returning participant leaves the bridge at a clean start, not their earlier simulation.
+  test('the bridge opens the simulation at first use for a returning participant', async ({ page }) => {
+    await page.goto('/');
+    await page.evaluate(() => {
+      const now = Date.now();
+      localStorage.setItem('hedgr:ledger', JSON.stringify({ version: 2, transactions: [
+        { txn_ref: 'earlier-deposit', type: 'deposit', status: 'settled', amount_zmw: 100, amount_usd: 5, fx_rate: 20, created_at: now - 3 * 86400000, updated_at: now - 3 * 86400000 },
+        { txn_ref: 'earlier-withdrawal', type: 'withdrawal', status: 'settled', amount_zmw: 40, amount_usd: 2, fx_rate: 20, created_at: now - 2 * 86400000, updated_at: now - 2 * 86400000 },
+      ] }));
+      localStorage.setItem('hedgr:wallet', JSON.stringify({ state: { usdBalance: 3 }, version: 0 }));
+      localStorage.setItem('hedgr:last-home-visit', String(now - 86400000));
+    });
+    await enterStudy(page);
+    await page.getByTestId('study-continue').click();
+    await page.getByTestId('study-to-hedgr').click();
+    await page.getByTestId('study-to-bridge').click();
+    await page.getByTestId('study-simulation-link').click();
+    await expect(page).toHaveURL(/\/dashboard-synthetic-journey$/);
+    await expect(page.getByTestId('usd-balance')).toHaveText('$0.00');
+    await expect(page.getByTestId('dashboard-first-use-steps')).toBeVisible();
+    await expect(page.getByText('Since you were last here')).toHaveCount(0);
   });
 });

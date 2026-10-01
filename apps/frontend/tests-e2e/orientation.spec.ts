@@ -56,6 +56,9 @@ test.describe('CLASS-A-VAL-002-ORIENT-003 orientation surface', () => {
       'href',
       '/dashboard-synthetic-journey?reset=1',
     );
+    // CLASS-A-VAL-002-RESEARCH-REFRESH-001 (§332): newer look on the research canvas.
+    await expect(surface).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
+    await expect(continueLink).toHaveCSS('border-radius', '9999px');
 
     const selector = surface.getByRole('combobox', { name: SIMULATION_DISPLAY_CURRENCY_COPY.label });
     await expect(selector).toHaveValue('ZMW');
