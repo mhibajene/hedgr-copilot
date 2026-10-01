@@ -64,4 +64,19 @@ Captured from the production build of this branch. `00` is the ordinary orientat
 | `m390-4-bridge.png` | 390 × 844 | `056a4063dccbbcf82119aeca4b1116abb436fec72dc1687271ee217f075fed1a` |
 | `m390-5-home-after-bridge.png` | 390 × 1249 | `85298fc74013e3a13dc9f23dacb4fad803f2fa5a9ce4924f95afb2f731ba8b4a` |
 
+
+## Merge and Production inspection
+
+- **#750 merge:** at `1dad23e0b291e21f5fb2f46567463d004df17efd` (2026-10-01T03:51:23Z), after an independent Verifier PASS on exact head `ddcc109` ([attestation](https://github.com/mhibajene/hedgr-copilot/pull/750#issuecomment-5924331659)). GitHub Production deployment `6775738407` succeeded.
+- **Production inspection:** of `https://hedgr-copilot-frontend.vercel.app` at `1dad23e`, on 2026-10-01, in fresh isolated browsers. Coverage:
+  - both orientation entries, all four research stages and Home after the bridge;
+  - 390 × 844, 1440 × 1024, and 320 × 800 at 200% root text.
+
+  Results:
+  - no horizontal overflow, no control under 44px and no page errors;
+  - exactly two `New` markers (After `Due` and `What to watch`), every row stacked, and Before/After row tops identical at 1440 (355/427/499/571);
+  - Home after the bridge is first use.
+- **Live bridge:** `href` is `/dashboard-synthetic-journey?reset=1`, and the sentence is exactly the new string. Research `main` and the orientation surface are transparent over the `rgb(250, 248, 245)` canvas, and the bridge action has `border-radius: 9999px`.
+- **Returning participant:** an earlier $3.00 simulation and a last visit, followed through the bridge, land on first use at $0.00 with no “Since you were last here”.
+
 **NO CROSS-LANE IMPACT.**
