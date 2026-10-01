@@ -7,6 +7,7 @@ import {
   ORIENTATION_LOGO_SRC,
   ORIENTATION_SURFACE,
 } from '../../lib/narrative/orientation-surface';
+import { researchStyles as rs } from '../research/ResearchChrome';
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ['latin'],
@@ -29,7 +30,7 @@ export default async function OrientationPage({
     (await searchParams).study === 'stability-scenarios';
 
   return (
-    <div className={`${plusJakartaSans.className} min-h-screen bg-hedgr-white text-hedgr-dark`}>
+    <div className={`${plusJakartaSans.className} ${rs.page}`}>
       <main
         data-testid="orientation-surface"
         className="mx-auto flex min-h-screen max-w-xl flex-col justify-center gap-8 px-6 py-10 sm:py-16"
@@ -57,7 +58,7 @@ export default async function OrientationPage({
         <section
           data-testid="orientation-disclosure"
           aria-labelledby="orientation-disclosure-heading"
-          className="border border-hedgr-300 bg-hedgr-100 px-4 py-4 text-hedgr-800"
+          className={`${rs.panel} text-hedgr-800`}
         >
           <h2 id="orientation-disclosure-heading" className="font-medium">
             {surface.disclosure.heading}
@@ -88,11 +89,11 @@ export default async function OrientationPage({
           </p>
         ) : null}
 
-        <footer className="border-t border-hedgr-200 pt-8">
+        <footer className={`${rs.rule} pt-8`}>
           <Link
             href={studyEntry ? '/research/stability-scenarios' : surface.continue.href}
             data-testid="orientation-continue"
-            className="inline-flex min-h-11 items-center justify-center bg-hedgr-primary px-5 py-3 font-medium text-hedgr-white hover:bg-hedgr-600 focus:outline-none focus:ring-2 focus:ring-hedgr-500 focus:ring-offset-2"
+            className={rs.primary}
           >
             {studyEntry ? 'Continue to Sarah’s example' : surface.continue.label}
           </Link>
