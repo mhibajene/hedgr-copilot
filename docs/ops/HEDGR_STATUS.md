@@ -4595,6 +4595,8 @@ This section does **not** authorize provider-specific implementation, legal reli
 
 **Research Compression technical completion (2026-09-25):** §314 records PR #685 squash-merged at `774df4c861307e418248a6ebef52f34edcce94fa` after source #683 / RAP rebind #684, distinct Implementer `7041b73` and verification `f571aa2` commits, hosted checks on head `f571aa2`, and independent S4 Verifier PASS WITH NOTES on both `f571aa2` and `774df4c` (whole-tree diff empty). This source-first closeout closes only the nested Lane V ticket after its permanent-main merge and a final separate verified RAP rebind. The Lane V parent remains open; no nested successor is active. The research route is not released, the weekend ticket remains deferred and the separately released Digital Feedback v1 pulse retains Founder custody. D1 remains held; D2 remains an undecided Founder strategy question and is not this ticket. No participant, Engine, financial or cross-lane authority follows. **NO CROSS-LANE IMPACT.**
 
+**Founder activation — nested Lane V Daniel reserve + legibility pass (2026-10-02; §334):** On 2026-10-02 at 11:23 AWST the Founder approved source-first activation of nested Lane V `CLASS-A-VAL-002-RESEARCH-RESERVE-001` (Daniel reserve case + legibility pass) as the sole active nested ticket under open parent `CLASS-A-VAL-002`, reusing the queued ID with no D-number. The Founder locked the brief at 11:21 AWST: “Let's go with written in advance by Hedgr. More accurate. Other than that we can lock it in.” The reserve case sits after Sarah and before the existing bridge; both cases keep the five-currency picker with authored figures and no rate shown; locked strings, tokens and the figure table are in §7a. Source merge and a separate verified RAP rebind precede T1–T3 runtime. The research route remains unreleased. Two items remain open with the Founder and do not block this source record: cold-reader names; confirmation that an internal cold read is not participant exposure under §7. **NO CROSS-LANE IMPACT.**
+
 **Sarah research refresh technical closeout (2026-10-01; §333):** §333 records delivery of `CLASS-A-VAL-002-RESEARCH-REFRESH-001`. After source #748 (`4d97c74`) and separate RAP rebind #749 (`bad4b94`), #750 merged at `1dad23e` following an independent Verifier PASS on its exact head `ddcc109`. The research bridge now opens the simulation at a clean start (`?reset=1`) with the Home-aligned sentence, and Sarah's research page and both orientation entries use the newer look through the shared `ResearchChrome`. Production inspection of `1dad23e` passed at 320px (200% text), 390px and 1440px. Close only this nested ticket after this source-first completion merges to permanent main and a separate verified projection-only RAP rebind completes. Parent `CLASS-A-VAL-002` stays open without an active nested successor. `CLASS-A-VAL-002-RESEARCH-RESERVE-001` (Mulenga) stays queued and needs its own Founder amendment and source-first activation. The research route remains unreleased. **NO CROSS-LANE IMPACT.**
 
 **Founder activation — Sarah research refresh (2026-09-29; §332):** After a read-only review of `/research/stability-scenarios`, the Founder approved `CLASS-A-VAL-002-RESEARCH-REFRESH-001` as the sole active nested Lane V ticket. It covers three changes: (1) the research bridge opens the simulation at a clean start (`/dashboard-synthetic-journey?reset=1`); (2) the bridge sentence aligns with the wording of the finished Home; (3) Sarah's research page and the orientation page (both the ordinary and the study entry) move to the newer productised look through one shared research chrome component. Every other participant string, value and behaviour is unchanged, and the route stays unreleased. Source merge and a separate verified RAP rebind precede runtime. The later Mulenga ticket (`CLASS-A-VAL-002-RESEARCH-RESERVE-001`) stays queued behind this one. **NO CROSS-LANE IMPACT.**
@@ -4689,13 +4691,13 @@ This section does **not** authorize provider-specific implementation, legal reli
 
 Current active ticket status:
 
-- **Lane V:** `CLASS-A-VAL-002` — open Class A informational / synthetic validation parent. `CLASS-A-VAL-002-HOME-EXPERIENCE-001` closed under §327 (RAP rebind #736). `CLASS-A-VAL-002-HOME-DEDUP-001` closed after §329 source #742 and separate verified RAP rebind #743. `CLASS-A-VAL-002-RESEARCH-NEW-MARKER-001` closed under §330 (source #744, separate verified RAP rebind #745). `CLASS-A-VAL-002-RESEARCH-REFRESH-001` (§332) closes only after the §333 source completion merges to permanent main and a separate verified RAP rebind completes; no active nested successor follows. `CLASS-A-VAL-002-RESEARCH-RESERVE-001` (Mulenga) stays queued and is not activated. The research route remains unreleased. `CLASS-A-VAL-002-RESEARCH-COMPRESSION-001` closed under §314; Research Value Panel §311/§312 and Research Two-Beat §309/§310 are completed history. §302 stimulus and §§298–301 preparation/packages remain completed history. `CLASS-A-VAL-002-WEEKEND-PREP-001` remains deferred with duties intact; its separate Digital Feedback v1 release and Founder custody remain in force. No scenario participant distribution follows.
+- **Lane V:** `CLASS-A-VAL-002` — open Class A informational / synthetic validation parent. `CLASS-A-VAL-002-HOME-EXPERIENCE-001` closed under §327 (RAP rebind #736). `CLASS-A-VAL-002-HOME-DEDUP-001` closed after §329 source #742 and separate verified RAP rebind #743. `CLASS-A-VAL-002-RESEARCH-NEW-MARKER-001` closed under §330 (source #744, separate verified RAP rebind #745). `CLASS-A-VAL-002-RESEARCH-REFRESH-001` closed under §333 (source #751, separate verified RAP rebind #752). Sole active nested ticket: `CLASS-A-VAL-002-RESEARCH-RESERVE-001` (§334; Daniel reserve case + legibility pass); source merge and a separate verified RAP rebind precede T1–T3 runtime. The research route remains unreleased. `CLASS-A-VAL-002-RESEARCH-COMPRESSION-001` closed under §314; Research Value Panel §311/§312 and Research Two-Beat §309/§310 are completed history. §302 stimulus and §§298–301 preparation/packages remain completed history. `CLASS-A-VAL-002-WEEKEND-PREP-001` remains deferred with duties intact; its separate Digital Feedback v1 release and Founder custody remain in force. No scenario participant distribution follows.
 - **Lane E:** `SE-REASON-001` — open Class A informational / Yellow parent; no active nested ticket after §290. No further authoring, model/executable-interface acceptance, coexistence work or product/runtime implementation. D-099 remains direction only; §288, D-121/D-143 retained evidence and limitations remain unchanged.
 - **Lane G:** none. `GTM-MARKET-DISCOVERY-001` / D-151 is deferred, not cancelled, under §285. No research, intake, analysis or automatic restart.
 - **Lane N:** none. `NARRATIVE-007` is completed under D-080 / §212; Customer One-Pager v2.0 is Accepted / Frozen and unpublished.
 - **Lane A / B / C / M / R:** none. Prior completed work supplies no successor or standing concurrency.
 - **Temporary repository support:** `PRODUCT-EXPERIENCE-LEAD-ADOPTION-001` is completed finite support after source closeout #662 and separate RAP rebind #663; the role remains registered `PROPOSE_ONLY`. `AGENT-ROLE-REGISTRY-RECONCILIATION-001` is completed finite support after source #666, rebind #667, amendment #671 / rebind #673, closeout #676 and separate permanent-main RAP rebind #677 at `2a1a8bf`. This finite activity creates no standing support authority and does not occupy or alter a product/research lane. Local `BRIDGE-MCP-001` remains separate under §§304–308 with no live Lane R occupancy.
-- **Sequencing posture:** Controlled Parallelism v22 / §6f.22 retains V/E parents while §285 defers G. §301–§302 nested Lane V work is completed history; §303 Product Experience Lead registration is closed. §309–§310 Research Two-Beat work is completed history. The role-registry reconciliation is completed finite non-lane support after source closeout #676 and separate RAP rebind #677. §311–§312 Research Value Panel and §313–§314 Research Compression work are completed history. §327, §329 and §330 record the Home experience, Home deduplication and New Marker technical closeouts. NEW-MARKER-001 requires no further runtime work; its retrospective Verifier PASS does not erase the #710 merge-before-verifier deviation. §333 records the `CLASS-A-VAL-002-RESEARCH-REFRESH-001` technical closeout; after its source merge and separate verified RAP rebind, no nested Lane V ticket is active. `CLASS-A-VAL-002-RESEARCH-RESERVE-001` stays queued and requires its own Founder amendment and source-first activation. The weekend ticket remains deferred, not completed or cancelled. The separately released Digital Feedback v1 pulse and Founder-owned participant selection, invitations and raw-response custody continue under their existing conditions; moderated v2.1 and other parent distribution remain paused. The Stability research route is not released for participant use. No participant session, new Form, response collection, telemetry, personal-input collection, limited manipulation or “Use My Numbers” is activated. Lane E remains open without a nested ticket; §290 responsibilities remain non-executable and current EngineState/posture is preserved. No Lane G restart, Green delegation, financial capability or cross-lane authority follows. NO CROSS-LANE IMPACT.
+- **Sequencing posture:** Controlled Parallelism v22 / §6f.22 retains V/E parents while §285 defers G. §301–§302 nested Lane V work is completed history; §303 Product Experience Lead registration is closed. §309–§310 Research Two-Beat work is completed history. The role-registry reconciliation is completed finite non-lane support after source closeout #676 and separate RAP rebind #677. §311–§312 Research Value Panel and §313–§314 Research Compression work are completed history. §327, §329 and §330 record the Home experience, Home deduplication and New Marker technical closeouts. NEW-MARKER-001 requires no further runtime work; its retrospective Verifier PASS does not erase the #710 merge-before-verifier deviation. §333 records the `CLASS-A-VAL-002-RESEARCH-REFRESH-001` technical closeout. §334 activates nested Lane V `CLASS-A-VAL-002-RESEARCH-RESERVE-001` (Daniel reserve case + legibility pass) as the sole active nested ticket under open parent `CLASS-A-VAL-002`. The weekend ticket remains deferred, not completed or cancelled. The separately released Digital Feedback v1 pulse and Founder-owned participant selection, invitations and raw-response custody continue under their existing conditions; moderated v2.1 and other parent distribution remain paused. The Stability research route is not released for participant use. No participant session, new Form, response collection, telemetry, personal-input collection, limited manipulation or “Use My Numbers” is activated. Lane E remains open without a nested ticket; §290 responsibilities remain non-executable and current EngineState/posture is preserved. No Lane G restart, Green delegation, financial capability or cross-lane authority follows. NO CROSS-LANE IMPACT.
 
 **Scope-first completion / interpretation (2026-09-20):** Verified PR #602 delivery consumes the finite synthetic Home amendment (§294). References to that amendment in the retained sequencing statement identify its bounded scope and history only; they grant no further runtime or refinement permission. Only remaining approved weekend instrument/verification, human rehearsal/timing and release duties remain unfinished. This completion record takes effect on permanent-main merge with a separate verified RAP rebind; publication/distribution remains paused and both parents stay open.
 
@@ -4724,7 +4726,210 @@ Current active ticket status:
 
 ## 7a. Active execution tickets — Lanes V and E; Lane G deferred (Controlled Parallelism v22)
 
-**Read order:** Current occupancy and operative controls are in §7. After the §333 source closeout merges and its separate permanent-main RAP rebind is verified, no nested Lane V ticket is active. The §332 `CLASS-A-VAL-002-RESEARCH-REFRESH-001` brief below is completed history, not continuing runtime permission. The `CLASS-A-VAL-002-HOME-DEDUP-001` brief (§329) and the `CLASS-A-VAL-002-HOME-EXPERIENCE-001` brief (§327) below are completed history, not continuing runtime permission. `CLASS-A-VAL-002-RESEARCH-NEW-MARKER-001` is delivered by #710 and closes under §330 after source merge and separate RAP rebind; its brief and amendment below remain historical and grant no further runtime permission. The `/research/stability-scenarios` review was completed read-only on 2026-09-29 and produced the §332 dispositions. The §313 Research Compression, §311/§312 Research Value Panel, and §309/§310 Research Two-Beat tickets are completed history. The §302 stimulus, §301 convergence package, humanised stimulus, prior stimulus and retained preflight remain completed history; the retained weekend brief and completed Home amendments preserve history and deferred obligations, not concurrent permission. Parent validation obligations and the separate digital-pulse release remain binding. Lane E is open without a nested ticket; §290 is a read-only compatibility input only. Local `BRIDGE-MCP-001` has no live Lane R occupancy. Completed registry reconciliation is non-lane support, not occupancy. Historical “current” language is not a restart instruction.
+**Read order:** Current occupancy and operative controls are in §7. `CLASS-A-VAL-002-RESEARCH-RESERVE-001` is the sole active nested Lane V ticket under open parent `CLASS-A-VAL-002` after this §334 source merges and a separate verified permanent-main RAP rebind completes; T1–T3 runtime follows that gate. The §332 `CLASS-A-VAL-002-RESEARCH-REFRESH-001` brief below is completed history, not continuing runtime permission. The `CLASS-A-VAL-002-HOME-DEDUP-001` brief (§329) and the `CLASS-A-VAL-002-HOME-EXPERIENCE-001` brief (§327) below are completed history, not continuing runtime permission. `CLASS-A-VAL-002-RESEARCH-NEW-MARKER-001` is delivered by #710 and closes under §330 after source merge and separate RAP rebind; its brief and amendment below remain historical and grant no further runtime permission. The `/research/stability-scenarios` review was completed read-only on 2026-09-29 and produced the §332 dispositions. The §313 Research Compression, §311/§312 Research Value Panel, and §309/§310 Research Two-Beat tickets are completed history. The §302 stimulus, §301 convergence package, humanised stimulus, prior stimulus and retained preflight remain completed history; the retained weekend brief and completed Home amendments preserve history and deferred obligations, not concurrent permission. Parent validation obligations and the separate digital-pulse release remain binding. Lane E is open without a nested ticket; §290 is a read-only compatibility input only. Local `BRIDGE-MCP-001` has no live Lane R occupancy. Completed registry reconciliation is non-lane support, not occupancy. Historical “current” language is not a restart instruction.
+
+### Active nested Lane V — `CLASS-A-VAL-002-RESEARCH-RESERVE-001` (effective only after §334 source merge and a separate RAP rebind)
+
+**Authority / start:** Direct Founder launch approval on 2026-10-02 at 11:23 AWST, after Founder lock of this brief at 11:21 AWST. Founder direction on 2 Oct 2026:
+1. The reserve case sits after Sarah and before the existing bridge.
+2. Currency option B: both cases, and any future case, keep the five-currency picker, with credible per-currency authored figures and no rate shown, “to widen the tester pool beyond Zambia”. §302 optionality is kept. Sarah’s figures change under “fix Sarah currency”.
+3. The reserve case is renamed **Daniel**. The internal label Kwesi and the ticket ID are unchanged.
+4. All other recommendations are accepted: partial supersession of the LOCK COPY (top label, attribution); the Home copy-register amendment; the protocol doc deferred to the release ticket; the weakened-local-currency variant fixed in the flow; Sue proposes the transition label and the Founder locks it.
+
+Carried in from 1 Oct: Sue’s `SUE-HUMAN-VOICE-001` is the copy baseline. Participant release stays held.
+
+This is Class A synthetic/informational presentation under open parent `CLASS-A-VAL-002` and is the sole active nested Lane V ticket. It reuses the queued ID. No D-number is assigned or reserved. Source authority must merge to permanent main and receive a separate verified projection-only RAP rebind before T1–T3 runtime edits. A bounded Implementer and a distinct Verifier deliver each tranche under the runbook PR Posture (§331). Neither the Implementer nor the Verifier authors copy or figures. All strings and figures below are Founder-locked on 2026-10-02 at 11:21 AWST.
+
+**Outcome:** By the end of Sarah (a goal with a due date) and Daniel (a portion kept as a reserve), a cold reader can say what Hedgr helps with beyond moving money, before reaching “Add a simulated deposit”. Along the way:
+- no reading of live money, advice, a guarantee or “automatically split”;
+- in every currency, one credible story.
+
+**Uncertainty reduced:** Is the scope legible without a capability claim? This pass is a legibility gate only. It produces no participant evidence.
+
+**Objective:**
+
+### 1. Flow
+Orientation (study) → Sarah: facts → changed fee → value panel → “Next: Daniel’s reserve”. This button replaces Sarah’s final “Continue”. It links to `/research/reserve-scenario?v=1`. Sarah’s bridge stage moves to Daniel.
+
+Daniel then runs: intro → facts view → interpreted view → completion. The completion is **the existing bridge verbatim**, served by a new shared `ResearchBridge`:
+- “You’ve reached the end of this research example.”
+- “Next, try Hedgr with pretend money. Add a simulated deposit, then see what changes and what remains. No real money moves, no account is opened, and nothing here is financial advice.”
+- “Continue to the Hedgr simulation” → `/dashboard-synthetic-journey?reset=1`
+
+Variants and gating:
+- `v=2` (strengthened) is reachable by direct URL only.
+- A missing or invalid `v` → `notFound()`.
+- Both routes read the stored display currency once per traversal.
+
+### 2. Daniel strings
+Locked copy is kept, with these changes: Mulenga → Daniel; currency tokens; the superseded slots. `{localFull}` is used in Daniel’s Held now row and the After heading; bare `{localPlural}` is used elsewhere. The “Held in kwacha” replacement is dropped.
+
+**Tokens:**
+- `{localSingular}` = the kwacha / the naira / the shilling / the cedi / the peso
+- `{localPlural}` = kwacha / naira / shillings / cedis / pesos
+- `{localFull}` uses the same five renders already listed for Sarah’s `{localName}`: kwacha / Kenyan shillings / Ghanaian cedis / Philippine pesos / Nigerian naira. Example from the lock: “Kenyan shillings”.
+
+**Page metadata and framing:**
+- Tab: “Daniel’s reserve · Hedgr research”
+- Chrome (existing): “Fictional research example · no real money”; “This example uses only the facts on this page. Nothing you do here is saved.”
+- Top label: “Research example about a fictional person”
+
+**Intro:**
+- Title “Daniel’s reserve”
+- Body: “Here’s a second fictional example: Daniel, a salaried professional, and part of his savings. No real money is involved.”
+- Button “Continue”
+
+**Panel:**
+- Titles: “Daniel’s reserve” / “Daniel’s reserve, with Hedgr’s notes”
+- Scope: “This is the part of Daniel’s savings he keeps as a reserve. His other money isn’t shown.”
+- Condition: “In this example, the dollar-linked portion is USD 800 before and after. Only the exchange rate changes.”
+- Headings: “Before the exchange rate moved” / “After {localFull} weakened against the US dollar” (v=2: “strengthened”)
+
+**Rows:**
+- **Held now:** “{held} in {localFull}.” / “A dollar-linked portion of USD 800.” / “Shown as {display} in {localFull}, for illustration only. This is not a quote.”
+- **Adding later:** “He may add more from future salary when he can. No fixed amount or schedule. Nothing he adds later is included here.”
+- **Kept for:** “Something to fall back on if his circumstances change, or to use if an opportunity comes up. When and how he’ll use it isn’t known yet.”
+- **Using it locally:** “If he used the dollar-linked portion in {localPlural}, what he’d actually receive would depend on how he accessed it, any costs, and the rate at the time. This example doesn’t set any of those.”
+- **What to watch, Before:** “The dollar-linked portion is counted in US dollars, so its figure in {localPlural} can change when the exchange rate moves. Neither figure tells Daniel exactly what he would receive.”
+- **What to watch, After:** “In this example, the dollar-linked portion is still USD 800. Because {localSingular} weakened, it now shows as a larger amount in {localPlural}. Why he keeps the reserve, and how he may add to it, haven’t changed. Neither figure tells Daniel exactly what he would receive if he used it.” For v=2: “strengthened” / “smaller”.
+
+**Below the panel:**
+- Attribution: “This example was written in advance by Hedgr, using only the facts about Daniel on this page. It isn’t generated automatically, and it doesn’t look at anyone’s real money.”
+- Limits: “This example can’t predict the exchange rate, assume Daniel will add more, or say what he would receive if he used his reserve. The dollar-linked portion is part of Daniel’s fictional situation, and Hedgr plays no part in it in this example. This isn’t financial advice.”
+
+### 3. Sarah strings
+**Unchanged** except:
+- the transition button “Next: Daniel’s reserve”;
+- the top label “Research example about a fictional person”;
+- attribution: “This example was written in advance by Hedgr, using only the facts about Sarah on this page. It isn’t generated automatically, and it doesn’t look at anyone’s real money.”;
+- her figures (table below).
+
+`{localName}` already renders a plural noun in every currency (“Kenyan shillings”, “Ghanaian cedis”, “Philippine pesos”, “Nigerian naira”, “kwacha”), so Sue’s plural check passes.
+
+### 4. Home strings (simulated routes only; live mode unchanged)
+- Steps “Position / First event / Change / Evidence” → “Where things stand / What happens / What changed / How you can tell”. Applies to `page.tsx` and the step header in `layout.client.tsx`.
+- FX line → “This shows the same amount at two made-up exchange rates. No money is earned or exchanged, and it isn’t what you’d receive.”
+- “Invented research fixture…” → “A made-up example, shown today and 30 days later.”
+- “Percentages describe…” → “The percentages show how the plan is divided in this example. No real money is split or moved.”
+- “This is an observation from the simulation, not a guarantee.” → “This is what happened in the example. It doesn’t tell you what will happen next.”
+
+### 5. Term ban
+Assert the orientation ban list, plus its negations, over every new or changed string.
+
+**Locked figures:**
+Reference spot is mid-market, late September 2026:
+- Xe USD currency table: ZMW 19.50, NGN 1,326, KES 129.4, GHS 11.61;
+- Reuters via MarketScreener, 24 Sep: kwacha 19.78, cedi 11.57, naira ~1,328;
+- PHP from the BSP September average of 62.39 (Investing.com close on 30 Sep: 62.67).
+
+How the figures are built:
+- Sarah’s figures are built as **A : M : P : F = 6 : 2 : 24 : 29.5**, so available + planned exceeds the fee by 1.7%, against USD 1,000.
+- Daniel keeps USD 800 and the locked shape: held ≈ 0.81 × display, and equal ± moves.
+- The ZMW row is the locked set, unchanged.
+- Implied rates are never shown. They sit in a band the currency has plausibly traded at, at least 10% from spot. This is HedgrOps’s rough history check and is not verified.
+
+| Ccy | Sarah: set aside / monthly / planned / fee | Daniel: held / display Before → W / S | Implied rates (fee; D0, W, S) vs spot | Rule check |
+|---|---|---|---|---|
+| ZMW | K6,000 / K2,000 / K24,000 / K29,500 | K17,500 / K21,600 → K23,600 / K19,600 | 29.5; 27, 29.5, 24.5 (+26% to +51%) | Locked. Move ±2,000 (9.26%). No clash. No sum is a multiple of 1,000. Sarah’s monthly equals Daniel’s undisplayed move (already accepted). |
+| NGN | NGN 360,000 / 120,000 / 1,440,000 / 1,770,000 | NGN 1,063,000 / 1,312,000 → 1,425,000 / 1,199,000 | 1,770; 1,640, 1,781, 1,499 (+13% to +34%) | ±113,000 (8.61%). No clash. No sum is a multiple of 10,000. Band 1.19. |
+| KES | KES 31,800 / 10,600 / 127,200 / 156,350 | KES 99,300 / 122,300 → 129,100 / 115,500 | 156.4; 152.9, 161.4, 144.4 (+12% to +25%) | ±6,800 (5.56%). No clash. No sum is a multiple of 1,000. Band 1.12. |
+| GHS | GHS 3,000 / 1,000 / 12,000 / 14,750 | GHS 9,450 / 11,750 → 12,850 / 10,650 | 14.75; 14.69, 16.06, 13.31 (+15% to +38%) | ±1,100 (9.36%). No clash. No sum is a multiple of 1,000. Band 1.21. |
+| PHP | PHP 10,800 / 3,600 / 43,200 / 53,100 | PHP 32,800 / 40,400 → 44,100 / 36,700 | 53.1; 50.5, 55.1, 45.9 (−12% to −27%) | ±3,700 (9.16%). No clash. No sum is a multiple of 1,000. Band 1.20. The peso sits stronger than spot, because a weaker band would be implausible. |
+
+**Preserve exactly:**
+- Sarah’s structure, four-row panel, `New` markers, stacked rows, “What Hedgr helps Sarah see”, the limits line and every other string except the slots named above.
+- Daniel’s five-row grammar, facts → interpreted parity, no marker, no rate, percentage, difference or total.
+- Gating and `robots` noindex.
+- No inputs, storage writes or telemetry on research routes.
+- The bridge copy and target.
+- All other Home copy-register strings.
+
+**Exact allowed files:**
+- **Authority:** `AGENTS.md` (notice); `docs/ops/HEDGR_STATUS.md` (§7, §7a, §334, closeout); `docs/ops/product-finish/HOME_EXPERIENCE_BASELINE.md` (register rows only); `apps/bridge-worker/tests/fork1-authority.test.mjs` (sequencing fixture only); generated `docs/ops/bridge/repo-authority-projection.json`.
+- **Runtime:**
+  - new `apps/frontend/lib/research/scenario-fixtures.ts`: the single source for per-currency figures, tokens and Sarah’s existing name map, moved byte-identical;
+  - new `apps/frontend/app/research/ResearchBridge.tsx`;
+  - new `apps/frontend/app/research/reserve-scenario/{page.tsx, ReserveScenarioStimulus.tsx}`;
+  - `apps/frontend/app/research/stability-scenarios/ScenarioStimulus.tsx`;
+  - `apps/frontend/app/(app)/dashboard/{page.tsx, CurrencyInsight.tsx, EngineAllocationBands.tsx, EnginePostureHeader.tsx}`;
+  - `apps/frontend/app/(app)/layout.client.tsx` (step labels only);
+  - `apps/frontend/lib/narrative/orientation-surface.ts` (ban-list export only).
+- **Verification:**
+  - new `apps/frontend/__tests__/research-scenario-fixtures.test.ts` (paired guard);
+  - new `apps/frontend/tests-e2e/reserve-scenario.spec.ts`;
+  - expectation-only edits to:
+    - `apps/frontend/tests-e2e/stability-scenarios.spec.ts`, `orientation.spec.ts`, `class-a-val-002.spec.ts`, `currency-insight.spec.ts`, `wallet-redesign.spec.ts`, `display-currency.spec.ts`, `scope-first.spec.ts`;
+    - `apps/frontend/__tests__/{dashboard.page, engine-posture-header, currency-insight, engine-allocation-bands, engine-allocation-bands-panel-copy-contract, orientation-surface}`;
+  - `scripts/trust-phrases.allowlist.txt` (obsolete entries only).
+- **Evidence:** new `docs/ops/governance/mvp/HEDGR_LEGIBILITY_PASS_QA.md`.
+- No other file.
+
+**Exclusions:**
+- No participant release, recruitment or tester-pool widening (that is release-ticket scope).
+- No session, Form, response capture, telemetry, personal input or “Use My Numbers”.
+- No pooling of currency variants as equivalent evidence (§302).
+- No market-selection claim; Ghana, Kenya and the Philippines remain unselected (§285).
+- No customer money, conversion, custody, yield or earn framing.
+- No new Home sections. The education block stays hidden.
+- No “Before you act” check and no next-step cards.
+- No rendered “Hedgr helps me…” line.
+- No new agent roles.
+- No Engine, Wallet, ledger, FX-rate, storage or reset change.
+- No Lane E/G, Green delegation or cross-lane authority.
+
+**Legibility release bar (this ends the pass):**
+1. **Cold read.** At least 3 Founder-designated internal readers who haven’t seen drafts complete “Hedgr helps me…” after Daniel and before the deposit step. At least 2 of 3 name something beyond moving money. Notes are pass/fail only, with no personal data. Agent reads are supplementary.
+2. **No harmful reading.** Any single instance of live money, advice, guarantee, protection, Hedgr holding the money, or “automatically split” fails the bar.
+3. **Paired currency guard.** For each of the five currencies, Sarah and Daniel must read as one credible story:
+   - (a) the same currency and tokens in one traversal;
+   - (b) every implied rate (fee, D0, W, S) inside one band (max/min ≤ 1.25) and at least 10% from the recorded reference spot;
+   - (c) no displayed figure shared across the cases;
+   - (d) equal ± moves, not a round percentage;
+   - (e) no two displayed Daniel local figures sum to a round unit (1,000; NGN 10,000);
+   - (f) Sarah’s proportions hold;
+   - (g) no rate, percentage, difference or total is rendered;
+   - (h) the token renders are grammatical (screenshots per currency); `{localFull}` in Daniel’s Held now row and the After heading; bare `{localPlural}` elsewhere.
+4. **Exact strings and guards.** Strings match §7a byte-for-byte. The ban list (including negations) and trust-phrase CI pass.
+5. **Layout.** At 320px with 200% text, and at 390, 640, 1024, 1280 and 1440px: no overflow, controls ≥44px, heading focus works, and the clean-start bridge works from Daniel.
+
+**Verification / separation of duties:**
+Tranches:
+- **T1:** fixtures and Sarah figures/strings
+- **T2:** Daniel and the bridge move
+- **T3:** Home strings
+
+Each tranche is its own PR with distinct Implementer and verification commits (AGENTS §9.1). Each goes through full `pnpm validate`, the production build, the complete hermetic suite and required checks. Each needs a distinct READ_ONLY Verifier PASS on the exact head before merge; the Verifier may post one attestation comment (§331; AGENTS “Standing PR invariant”).
+
+After the tranches: Production inspection, then the release-bar read recorded in the QA doc.
+
+**Roles:**
+- Sue (§9.9) proposes the strings.
+- Kip (§9.8) proposes the flow.
+- The Founder locks.
+- Barry records the source and RAP.
+- Neither the Implementer nor the Verifier authors copy or figures.
+
+**Stop / rollback:** Stop if:
+- a string or figure is needed that isn’t in §7a;
+- any currency fails a rule or the paired guard;
+- a token render is ungrammatical;
+- Sarah and Daniel would render in different currencies;
+- reference spot moves to within 10% of a locked implied rate (re-check at S1);
+- a live-mode or shell string beyond the step labels would change;
+- bridge, reset, storage or Engine change is needed;
+- any render implies a rate, capability or market support;
+- main diverges;
+- a Verifier finding needs a source change. In that case: amendment → merge → rebind first.
+
+Rollback: revert each tranche. **NO CROSS-LANE IMPACT.**
+
+**Sequence:**
+1. Source PR (§7, §7a, §334, AGENTS, fixture, branch RAP).
+2. Separate main RAP rebind.
+3. T1–T3.
+4. Closeout §335.
+5. Final rebind.
+6. A separate release ticket, which carries the protocol doc and tester-pool scope.
 
 ### Completed nested Lane V — `CLASS-A-VAL-002-RESEARCH-REFRESH-001` (effective only after §333 source merge and separate RAP rebind)
 
@@ -5172,6 +5377,43 @@ Markers are text (`Same as before`, `New`). Colour or icon may reinforce a marke
 **Normal-use disposition (§325):** The §324 source merged through PR #715 at `d20ac68c48a31bd2fc04d80e3038fe71468acc75`; separate permanent-main RAP rebind PR #716 merged at `8e6f9d8fd62543a1118ff4c6d0e291c66fb190d3`. Vercel Production deployments `6692003771` and `6692105282` succeeded, and main-bound RAP verification passed. In the one authorised fresh attempt, the consent page showed registered client `Codex`, exact loopback `http://127.0.0.1:53550/callback`, resource `https://hedgrops-bridge.hedgr.workers.dev/mcp`, scope `evidence:read` and PKCE S256. The Founder submitted approval once. Production events show the browser-bound consent was consumed and downstream Access state created without a fixed authorization-failure event. Chrome retained no onward Cloudflare Access navigation, the current Access-log window contained no matching decision, and no Worker `/callback`, provider token exchange, authenticated `/mcp`, four-tool discovery, evidence retrieval, token-expiry or reauthentication observation followed. Treat this as fail-closed between Access-state creation and observed provider navigation; do not infer an Access outage or identity failure.
 
 **Effect and remaining hold:** The Founder states `normal use disposition approved`. This removes the governance policy hold for private Founder-only normal use solely within the four existing fixed no-argument read-only evidence tools once an authenticated connection actually exists. It does not turn the failed diagnostic into an operational pass, assert a token or tool connection, suppress the unverified session/expiry/reauthentication qualifications, or authorise another submission from the consumed transaction. Because no authenticated connection exists, there is currently no normal-use action to perform. A fresh authorization retry, browser-redirect diagnosis, code or operator-documentation edit, Worker deployment/configuration, Cloudflare Access/identity/credential/storage/binding change, plugin registration/edit, new tool/parameter/user, repository browsing or mutation, ticket activation, participant/research release, financial capability or mandate change requires separate bounded authority. This source and separately generated branch RAP may be prepared locally for review; the branch remains non-authorising. Source push/merge, its automatic `hedgr-copilot-frontend` Vercel Production deployment, the required separate permanent-main RAP rebind and its deployment remain held pending express Founder approval. Stop at `NORMAL USE POLICY APPROVED — AUTHENTICATED CONNECTION STILL UNAVAILABLE`. **NO CROSS-LANE IMPACT.**
+
+## 334. Founder activation — nested Lane V Daniel reserve + legibility pass (2026-10-02)
+
+**Launch approval:** Founder Musalwa Hibajene approved this source-first activation on 2026-10-02 at 11:23 AWST (source PR, then a later separate permanent-main RAP rebind). Runtime T1–T3 is not authorised until that rebind is verified.
+
+**Founder lock:** 2026-10-02 at 11:21 AWST. Quote, verbatim: “Let's go with written in advance by Hedgr. More accurate. Other than that we can lock it in.” All [Sue] and [HedgrOps] strings, the figure table, top label “Research example about a fictional person”, attribution “written in advance by Hedgr” (mirrored for Sarah), token `{localFull}` in Daniel’s Held now row and After heading with bare `{localPlural}` elsewhere, paired-guard (h), and the drop of the “Held in kwacha” replacement are LOCKED. This source records that lock; it does not author or alter copy or figures.
+
+**Founder direction, 2 Oct 2026 (verbatim record of the locked brief’s 2 Oct direction):**
+1. The reserve case sits after Sarah and before the existing bridge.
+2. Currency option B: both cases, and any future case, keep the five-currency picker, with credible per-currency authored figures and no rate shown, “to widen the tester pool beyond Zambia”. §302 optionality is kept. Sarah’s figures change under “fix Sarah currency”.
+3. The reserve case is renamed **Daniel**. The internal label Kwesi and the ticket ID are unchanged.
+4. All other recommendations are accepted: partial supersession of the LOCK COPY (top label, attribution); the Home copy-register amendment; the protocol doc deferred to the release ticket; the weakened-local-currency variant fixed in the flow; Sue proposes the transition label and the Founder locks it.
+
+**Carried in from 1 Oct:** Sue’s `SUE-HUMAN-VOICE-001` is the copy baseline. Participant release stays held.
+
+**Ticket:** `CLASS-A-VAL-002-RESEARCH-RESERVE-001` is the sole active nested Lane V ticket under open parent `CLASS-A-VAL-002`. It reuses the queued ID. No D-number.
+
+**Off-repo provenance (now recorded here; the Implementer needs no off-repo files because §7a holds the locked strings and figures):**
+- Frame approval 2026-09-27 at 15:02 AWST (carried in §333 “Notes carried forward”).
+- 27 Sep LOCK COPY of `KWESI-RECONCILED-COPY-002`.
+- `SUE-HUMAN-VOICE-001`.
+- `SUE-MULTI-CURRENCY-001`.
+
+**Supersedes (Founder-confirmed 1–2 Oct):**
+- (a) Frame and §332 “standalone route / entry, no Bridge, no link from Sarah”.
+- (b) Frame “Sarah untouched / re-declare chrome”.
+- (c) LOCK COPY: top label and attribution only.
+- (d) The 27 Sep “protocol doc in first PR”, which moves to the release ticket.
+- (e) Home copy register (2026-09-27): listed strings only.
+- (f) Frame and §332 “fixed Zambia/ZMW context”, replaced by five-currency figures.
+- (g) LOCK COPY “Mulenga LOCKED”, renamed to Daniel.
+
+**Still open with the Founder (do not block this source record):**
+1. Name the cold readers.
+2. Confirm that an internal cold read is not participant exposure under §7.
+
+**Sequence:** This source record; a separate verified permanent-main RAP rebind; T1–T3 under the §331 PR Posture; Production inspection; the release-bar read; a source-first completion record as §335; and a final RAP rebind. A separate release ticket carries the protocol doc and tester-pool scope. **NO CROSS-LANE IMPACT.**
 
 ## 333. Sarah research refresh technical closeout (2026-10-01)
 
