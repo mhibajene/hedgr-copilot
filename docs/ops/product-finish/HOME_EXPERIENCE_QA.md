@@ -10,7 +10,7 @@ This record supplies evidence, not authority. It covers all five tranches, the t
 
 **Process deviation (recorded, not backdated).** §7a requires distinct governance and runtime QA for each tranche. T1 (#721) and T2 (#722) were merged by squash auto-merge under the Founder's runbook instruction before any distinct Verifier review. The Verifier's first finding, after both merges, was that this record did not exist and that the T1 evidence screenshots lived only in an untracked local folder. This is the third and fourth merge-before-verifier deviations on record (#721 and #722; see §312, §314, §326). From the T2 correction onward, runtime PRs are held from auto-merge until the Verifier reports.
 
-The Implementer (Claude Code, Opus 5.5) authored the runtime, the test updates and this record. The checks in this record are the Implementer's, not independent Verifier results. Verifier attestations are cited from the PR records. #721 and #722 have no attestation; their §326 retrospective verifications are outstanding and are not substituted by this record.
+The Implementer (Claude Code, Opus 5.5) authored the runtime, the test updates and this record. The checks in this record are the Implementer's, not independent Verifier results. Verifier attestations are cited from the PR records. #721 and #722 have no pre-merge attestation; their §326 retrospective verifications are recorded (#721 PASS WITH NOTES on `1b1ca1e`; #722 FAIL on `4c99e0b`, with technical defects remediated by #724). The merge-before-verifier process deviations remain. This record does not substitute for those verdicts.
 
 ## Authority and immutable provenance
 
