@@ -5382,6 +5382,53 @@ Markers are text (`Same as before`, `New`). Colour or icon may reinforce a marke
 
 **Effect and remaining hold:** The Founder states `normal use disposition approved`. This removes the governance policy hold for private Founder-only normal use solely within the four existing fixed no-argument read-only evidence tools once an authenticated connection actually exists. It does not turn the failed diagnostic into an operational pass, assert a token or tool connection, suppress the unverified session/expiry/reauthentication qualifications, or authorise another submission from the consumed transaction. Because no authenticated connection exists, there is currently no normal-use action to perform. A fresh authorization retry, browser-redirect diagnosis, code or operator-documentation edit, Worker deployment/configuration, Cloudflare Access/identity/credential/storage/binding change, plugin registration/edit, new tool/parameter/user, repository browsing or mutation, ticket activation, participant/research release, financial capability or mandate change requires separate bounded authority. This source and separately generated branch RAP may be prepared locally for review; the branch remains non-authorising. Source push/merge, its automatic `hedgr-copilot-frontend` Vercel Production deployment, the required separate permanent-main RAP rebind and its deployment remain held pending express Founder approval. Stop at `NORMAL USE POLICY APPROVED — AUTHENTICATED CONNECTION STILL UNAVAILABLE`. **NO CROSS-LANE IMPACT.**
 
+## 336. Founder doctrine alignment — Stability Engine allocation-envelope scope; ADR 0027 Accepted (2026-10-05)
+
+**Date:** 2026-10-02 (amendment approved); 2026-10-05 (ADR acceptance and public-export confirmation, ~09:47 AWST, in conversation with HedgrOps)
+
+**Status:** **ACCEPTED** — minimum doctrine amendment and ADR 0027; effective on permanent-main merge, followed by a separate verified projection-only RAP rebind; no ticket or implementation activation
+
+**Decision ID:** Internal **D-152** ↔ ADR **0027**
+
+**Decision type:** Architecture / engine-authority boundary
+
+**Strategic horizon:** Short-term MVP doctrine alignment with long-term institutional relevance
+
+**Visibility:** ADR 0027 is Public; the Founder confirmed export of the engine-boundary decision only. The underlying §286 partial-capital strategy, audience and GTM content remain Founder Only.
+
+**Problem / trigger:** §286 / §288 / §290 adopted the partial-capital direction and the "Hedgr allocation envelope" ("The portion of capital the user intentionally places under Hedgr's stability reasoning") without amending doctrine. Active doctrine still permitted a whole-deposit / automatic-allocation reading: Stability Engine §1 "core capital management system", Invariant 5 "canonical allocator of user capital within the Hedgr system", Default Allocation Policy Art. I "All retail deposits are automatically allocated… mandatory", Internal Stability Model §II.A, and `.cursorrules` §IV. The Founder assessed the direction as ABSORBED BUT UNDER-SPECIFIED.
+
+**Founder decision:** ADOPT ADR 0027 and the minimum amendment:
+- `docs/doctrine/hedgr-stability-engine.md`: v1.1; §1; new §1.1; §4 preamble; Invariant 5.
+- `docs/doctrine/hedgr-default-allocation-policy.md`: Art. I.
+- `docs/doctrine/hedgr-stability-model™ (Internal).md`: §II.A.
+- `.cursorrules` §IV.
+
+Engine scope and Invariant 5 are limited to the user-selected allocation envelope. The default split applies within it. The envelope defines what Hedgr may reason about and grants no authority to move, rebalance or act on capital. "Allocation envelope" is distinguished from D05 constitutional risk envelopes. This supersedes only §286's "No public ADR export or doctrine amendment" clause, for this scope; §286 / §288 / §290 are otherwise unchanged.
+
+**Deliberate non-changes:**
+- Default Allocation Policy Art. II is unchanged: it is adjacent to the Art. VI buffer-minimum parameter, and Art. I scoping governs.
+- No D05 edit: the engine-doctrine disambiguation suffices.
+- Active Doctrine Index membership and `.cursorrules` §II precedence are unchanged.
+
+**Liquidity / Art. VI:** No buffer minimum, exposure cap, yield-deployment rule, withdrawal path or treasury behaviour changes. Liquidity impact: none.
+
+**Explicit non-authorisation:** No mandate primitive, delegation ladder, moat hypothesis, D05 narrative change, runtime / code / `EngineState` / test / copy / schema change, envelope capture or consent design, execution, custody, conversion, settlement, routing, rebalancing, Class B / Class C, customer-money, ticket or sequencing change. ADRs 0011 / 0013 / 0014 / 0015 unchanged. F1–F4, the scoped-interface candidate and §288 / §290 deferrals remain as recorded.
+
+**Current-ticket consequence:** None. Nested Lane V §334 and its reserved §335 closeout are unchanged. Lane E has no nested occupancy, Lane G is deferred and Lane N is idle. **NO CROSS-LANE IMPACT.**
+
+**Reversibility:** Supersede ADR 0027 and revert the paired doctrine and `.cursorrules` passages, preserving history. No financial unwind or customer commitment.
+
+**Revisit / kill criteria:** As in ADR 0027 — envelope not understood or misleading; envelope treated as authority to act; a later mandate / execution ADR; Founder revision of §286.
+
+**Strategic pillar alignment:** Capital Preservation Above All; Liquidity First; Stability Before Speculation; Security and Trust; Risk Visibility. No tension.
+
+**ADR treatment:** ADR 0027 Accepted and exported at `docs/decisions/0027-stability-engine-scope-is-the-user-selected-allocation-envelope.md`; indexed in `docs/decisions/SPRINT-2-ADR-INDEX.md`.
+
+**Exact recording scope:** the ADR; `docs/decisions/SPRINT-2-ADR-INDEX.md`; the three doctrine files above; `.cursorrules`; this section; deterministic `docs/ops/bridge/repo-authority-projection.json`. No other file.
+
+**RAP treatment:** Commit the authority-bearing sources before RAP generation. After squash merge, complete a separate projection-only permanent-main RAP rebind. Never project uncommitted doctrine as permanent-main authority.
+
 ## 335. Daniel reserve + legibility pass technical closeout (2026-10-05)
 
 **Founder approval:** 2026-10-05 at 09:40 AWST, for this source-first closeout and the later separate permanent-main RAP rebind.

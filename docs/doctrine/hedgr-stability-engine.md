@@ -2,14 +2,15 @@
 
 # Hedgr Stability Engine
 
-Version: 1.0
+Version: 1.1
 Status: Canonical Stability Engine Specification
+Amended: 2026-10-05 — ADR 0027 (scope is the user-selected Hedgr allocation envelope; §1, §1.1, §4, §10 Invariant 5)
 
 ---
 
 # 1. Purpose
 
-The Hedgr Stability Engine is the core capital management system of the Hedgr platform.
+The Hedgr Stability Engine is the core capital management system of the Hedgr platform for capital within the user's Hedgr allocation envelope (§1.1).
 
 It exists to help users preserve purchasing power in volatile currency environments by managing capital across a defined set of allocation bands.
 
@@ -17,13 +18,25 @@ The engine is designed around a stability-first principle:
 
 **protect capital first, generate yield second, preserve liquidity always.**
 
-The Stability Engine is the system center of Hedgr and governs how user capital is:
+The Stability Engine is the system center of Hedgr and governs how capital within the user's Hedgr allocation envelope is:
 
 - allocated
 - protected
 - routed
 - rebalanced
 - made available for withdrawal
+
+Where this specification describes the engine allocating, routing or rebalancing capital, it describes target-design reasoning and constraints, not a present execution entitlement (§1.1).
+
+## 1.1 Scope: the Hedgr Allocation Envelope
+
+The Hedgr allocation envelope is the portion of capital the user intentionally places under Hedgr's stability reasoning. It is selected by the user. It is not inferred from, and need not equal, the user's total income, deposits, balances or wider financial position.
+
+Relevant wider financial context may inform the engine's interpretation. The engine's allocation, liquidity, exposure and yield reasoning applies only to capital inside the envelope.
+
+The envelope defines the capital Hedgr may reason about. It grants no authority to move, convert, route, rebalance, commit or otherwise act on that capital, and it is not evidence of custody, settled balances, verified wealth or accounting truth. Any such action requires separate authority under accepted ADRs, `docs/ops/HEDGR_STATUS.md` §7 / §7a and the execution classes of the MVP specification.
+
+Terminology: "allocation envelope" in this specification means the user-selected reasoning scope above. It is distinct from the constitutional risk limits that `d05-hedgr-consitutional-calibration.md` (§3–§4) calls "allocation envelopes" and "tiered envelopes". Those constitutional limits bound all engine reasoning and are neither set nor widened by the user's allocation envelope.
 
 ---
 
@@ -77,7 +90,7 @@ This principle is foundational and should not be violated by downstream implemen
 
 # 4. Core Responsibilities
 
-The Stability Engine has five primary responsibilities.
+The Stability Engine has five primary responsibilities, each scoped to capital within the user's Hedgr allocation envelope (§1.1).
 
 ## 4.1 Allocation
 
@@ -270,7 +283,7 @@ No product surface may bypass engine allocation controls.
 
 ## Invariant 5
 
-The engine is the canonical allocator of user capital within the Hedgr system.
+The engine is the canonical allocator of capital within the user's Hedgr allocation envelope. No other component determines allocation for that capital, and the engine asserts no allocation over capital outside it. Canonical allocation is reasoning and target-posture authority; it confers no authority to move, rebalance or act on capital (§1.1).
 
 These invariants should be treated as architectural doctrine rather than optional implementation preferences.
 

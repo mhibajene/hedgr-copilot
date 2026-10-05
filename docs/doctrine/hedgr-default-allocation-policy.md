@@ -18,12 +18,12 @@ This policy encodes treasury discipline at the structural level.
 
 ## Article I — Structural Split (Option B Model)
 
-All retail deposits are automatically allocated into two components:
+Retail capital within the user's Hedgr allocation envelope (see `hedgr-stability-engine.md` §1.1) is allocated by default into two components:
 
 1. Stability Buffer
 2. Conservative Yield Allocation
 
-This split is mandatory and not optional at the base layer.
+This split is mandatory and not optional at the base layer: it is the required structure of Hedgr's stability reasoning and target posture for capital within the envelope. It does not extend to capital outside the envelope and does not by itself authorise any automatic conversion, movement or rebalancing of funds; any execution requires separate authority under accepted ADRs and `docs/ops/HEDGR_STATUS.md` §7 / §7a.
 
 ---
 

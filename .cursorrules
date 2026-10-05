@@ -86,7 +86,7 @@ All product surfaces are downstream interfaces into the shared system core:
 - payment rails
 - AI Copilot
 
-The **Hedgr Stability Engine** is the system center and canonical allocator of user capital.
+The **Hedgr Stability Engine** is the system center and canonical allocator of capital within the user's Hedgr allocation envelope (ADR 0027).
 
 Yield routing is subordinate to engine safety constraints.
 

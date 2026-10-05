@@ -263,6 +263,12 @@ Accepted principle for a read-only, source-bound institutional evidence transpor
 
 No endpoint, route, action schema, snapshot, runtime allow-list, deployed Worker behavior, evidence acceptance, mutation, activation, sequencing, financial, or customer-money authority is created by ADR 0026.
 
+### ADR 0027 — Stability Engine Scope Is the User-Selected Allocation Envelope
+
+Accepted engine-authority boundary (Internal **D-152** / `HEDGR_STATUS.md` **§336**). Stability Engine scope and Invariant 5 are limited to the user's Hedgr allocation envelope — the portion of capital the user intentionally places under Hedgr's stability reasoning. The Default Allocation Policy and Internal Stability Model split applies within that envelope. The envelope defines what Hedgr may reason about and grants no authority to move, rebalance or act on capital. "Allocation envelope" is distinct from D05 constitutional risk envelopes.
+
+ADRs 0011 / 0013 / 0014 / 0015 are unchanged. No runtime, `EngineState`, execution, custody, ticket or sequencing authority is created by ADR 0027.
+
 ---
 
 ## Usage Rule

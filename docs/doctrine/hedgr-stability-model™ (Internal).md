@@ -30,12 +30,12 @@ Risk is managed structurally, not reactively.
 
 ## A. Mandatory Dual Allocation (Core Offering)
 
-All retail capital is automatically allocated into:
+Retail capital within the user's Hedgr allocation envelope (see `hedgr-stability-engine.md` §1.1) is allocated by default into:
 
 1. Stability Buffer
 2. Conservative Yield Allocation
 
-This split is system-managed.
+This split is system-managed within the envelope; it does not extend to capital outside the envelope and does not by itself authorise any automatic conversion, movement or rebalancing of funds.
 
 User override is not permitted in the core offering.
 
