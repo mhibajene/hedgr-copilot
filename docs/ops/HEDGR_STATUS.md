@@ -5402,7 +5402,7 @@ Markers are text (`Same as before`, `New`). Colour or icon may reinforce a marke
 - `.github/workflows/ci.yml.bak` deleted after confirming no current workflow reference.
 - `scripts/bridge/rap-provenance-rebind.test.mjs`: metadata-only Last-updated fixture date updated so validate stays green after the STATUS header bump. No rebind-script behaviour change.
 
-**Skipped:** RAP `sequencing_posture` live-§7 sentence left unchanged so `apps/bridge-worker/tests/fork1-authority.test.mjs` did not require a test edit (O7). Doctrine files, ADR 0027, §5, and the §36 locked B2 sentence were not touched. Runtime, env, and workflows other than deleting `ci.yml.bak` were not touched. Open PR #761 was not edited.
+**Skipped:** RAP `sequencing_posture` live-§7 sentence left unchanged so `apps/bridge-worker/tests/fork1-authority.test.mjs` did not require a test edit (O7). Doctrine files, ADR 0027, §5, and the §336 locked B2 sentence (current-ticket consequence; already carries the §337 dated note) were not touched. Runtime, env, and workflows other than deleting `ci.yml.bak` were not touched. Open PR #761 was not edited.
 
 **Effect:** none on doctrine, ADRs, `.cursorrules`, D05, the doctrine index, occupancy or authority meaning. **NO CROSS-LANE IMPACT.**
 
