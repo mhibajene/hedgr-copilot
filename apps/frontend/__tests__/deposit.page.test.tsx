@@ -9,8 +9,6 @@ import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-libra
 const depositStateMocks = vi.hoisted(() => ({
   append: vi.fn(),
   confirm: vi.fn(),
-  creditUSD: vi.fn(),
-  getWalletState: vi.fn(() => ({ usdBalance: 5 })),
 }));
 
 vi.mock('../lib/hooks/useBalance', () => ({
@@ -33,23 +31,6 @@ vi.mock('../lib/state/ledger', async (importOriginal) => {
   });
   return actual;
 });
-
-vi.mock('../lib/state/wallet', () => {
-  const useWalletStore = Object.assign(
-    vi.fn(
-      (selector: (state: { creditUSD: () => void }) => unknown) =>
-        selector({
-          creditUSD: depositStateMocks.creditUSD,
-        }),
-    ),
-    { getState: () => ({ ...depositStateMocks.getWalletState(), creditUSD: depositStateMocks.creditUSD }) },
-  );
-  return { useWalletStore };
-});
-
-vi.mock('../lib/state/balance.mode', () => ({
-  getBalanceMode: vi.fn(() => 'ledger'),
-}));
 
 vi.mock('../lib/deposits/client', () => ({
   postDeposit: vi.fn(),
@@ -80,7 +61,6 @@ import { useLatestFx } from '../lib/hooks/useLatestFx';
 import { CONVERSION_PREVIEW_UNAVAILABLE_PLACEHOLDER } from '../lib/fx/market-data-continuity-copy';
 import { useSearchParams } from 'next/navigation';
 import { TX_REVIEW_BYPASS_FX_PARAM } from '../lib/tx';
-import { getBalanceMode } from '../lib/state/balance.mode';
 import { useLedgerStore } from '../lib/state/ledger';
 
 const ORIGINAL_CI = process.env.CI;
@@ -95,10 +75,6 @@ afterEach(() => {
   vi.restoreAllMocks();
   depositStateMocks.append.mockClear();
   depositStateMocks.confirm.mockClear();
-  depositStateMocks.creditUSD.mockClear();
-  depositStateMocks.getWalletState.mockClear();
-  depositStateMocks.getWalletState.mockReturnValue({ usdBalance: 5 });
-  vi.mocked(getBalanceMode).mockReturnValue('ledger');
   vi.useRealTimers();
   vi.mocked(useSearchParams).mockReturnValue(new URLSearchParams() as ReturnType<typeof useSearchParams>);
   vi.unstubAllEnvs();
@@ -477,48 +453,6 @@ describe('DepositPage CLASS-A-VAL-002 primary and exception conditions', () => {
     ).toBeTruthy();
   });
 
-  test('records and settles the deposit in Activity when wallet fallback drives balance', async () => {
-    stubSyntheticEnvironment();
-    vi.useFakeTimers();
-    vi.mocked(getBalanceMode).mockReturnValue('wallet');
-    vi.mocked(useSearchParams).mockReturnValue(
-      new URLSearchParams('journey=class-a-val-002') as ReturnType<typeof useSearchParams>,
-    );
-    vi.mocked(useLatestFx).mockReturnValue({
-      status: 'error',
-      retry: vi.fn(),
-    });
-
-    render(<DepositPage />);
-    await act(async () => {
-      await vi.advanceTimersByTimeAsync(350);
-    });
-
-    await act(async () => {
-      fireEvent.click(screen.getByRole('button', { name: 'Confirm' }));
-      await Promise.resolve();
-    });
-
-    expect(depositStateMocks.append).toHaveBeenCalledTimes(1);
-    const deposit = depositStateMocks.append.mock.calls[0][0];
-    expect(deposit).toMatchObject({
-      type: 'deposit',
-      status: 'pending',
-      amount_zmw: 100,
-      amount_usd: 5,
-      fx_rate: 20,
-    });
-
-    await act(async () => {
-      await vi.advanceTimersByTimeAsync(1600);
-    });
-
-    expect(depositStateMocks.confirm).toHaveBeenCalledTimes(1);
-    expect(depositStateMocks.confirm).toHaveBeenCalledWith(deposit.txn_ref);
-    expect(depositStateMocks.creditUSD).toHaveBeenCalledTimes(1);
-    expect(depositStateMocks.creditUSD).toHaveBeenCalledWith(5);
-  });
-
   test('forces unavailable data to remain blocked as the secondary scenario', async () => {
     stubSyntheticEnvironment();
     vi.useFakeTimers();
@@ -582,7 +516,6 @@ describe('D-132 selected simulation deposit currency', () => {
     });
     expect(depositStateMocks.append).not.toHaveBeenCalled();
     expect(depositStateMocks.confirm).not.toHaveBeenCalled();
-    expect(depositStateMocks.creditUSD).not.toHaveBeenCalled();
     expect(postDeposit).not.toHaveBeenCalled();
     expect(screen.queryByTestId('deposit-confirmation-region')).toBeNull();
 

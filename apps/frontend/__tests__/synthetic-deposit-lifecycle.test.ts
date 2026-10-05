@@ -21,7 +21,6 @@ import DepositPage from '../app/(app)/deposit/page';
 import WithdrawPage from '../app/(app)/withdraw/page';
 import { useSearchParams } from 'next/navigation';
 import { useLedgerStore, type Tx } from '../lib/state/ledger';
-import { useWalletStore } from '../lib/state/wallet';
 import { useBalance } from '../lib/hooks/useBalance';
 import { computeBalanceFromLedger } from '../lib/state/balance';
 import { scheduleSyntheticDeposit } from '../lib/deposits/synthetic-deposit-lifecycle';
@@ -57,44 +56,37 @@ async function confirm() {
 beforeEach(() => {
   vi.stubEnv('NEXT_PUBLIC_AUTH_MODE', 'mock');
   vi.stubEnv('NEXT_PUBLIC_FX_MODE', 'stub');
-  vi.stubEnv('NEXT_PUBLIC_BALANCE_FROM_LEDGER', 'true');
   vi.useFakeTimers();
   localStorage.clear();
   useLedgerStore.getState().clear();
-  useWalletStore.getState().reset();
   vi.mocked(useSearchParams).mockReturnValue(new URLSearchParams('journey=class-a-val-002') as ReturnType<typeof useSearchParams>);
 });
 afterEach(async () => {
   cleanup();
   useLedgerStore.getState().clear();
-  useWalletStore.getState().reset();
   await vi.runOnlyPendingTimersAsync();
   vi.useRealTimers();
   vi.unstubAllEnvs();
 });
 
-describe('new synthetic deposit lifecycle with actual ledger and wallet stores', () => {
-  test.each(['ledger', 'wallet'])('deduplicates scheduling and credits once in %s mode', async (mode) => {
-    vi.stubEnv('NEXT_PUBLIC_BALANCE_FROM_LEDGER', mode === 'ledger' ? 'true' : 'false');
+describe('new synthetic deposit lifecycle with the actual ledger store', () => {
+  test('deduplicates scheduling and credits once', async () => {
     const tx = deposit();
     useLedgerStore.getState().append(tx);
     scheduleSyntheticDeposit(tx.txn_ref, 1500);
     scheduleSyntheticDeposit(tx.txn_ref, 1500);
     await advance(1499);
     expect(useLedgerStore.getState().getByTxnRef(tx.txn_ref)?.status).toBe('pending');
-    expect(useWalletStore.getState().usdBalance).toBe(0);
     await advance(1);
     expect(useLedgerStore.getState().getByTxnRef(tx.txn_ref)?.status).toBe('settled');
     expect(computeBalanceFromLedger(useLedgerStore.getState().transactions).available).toBe(5);
-    expect(useWalletStore.getState().usdBalance).toBe(mode === 'wallet' ? 5 : 0);
     scheduleSyntheticDeposit(tx.txn_ref, 1500);
     await advance(2000);
     expect(useLedgerStore.getState().transactions).toHaveLength(1);
-    expect(useWalletStore.getState().usdBalance).toBe(mode === 'wallet' ? 5 : 0);
+    expect(computeBalanceFromLedger(useLedgerStore.getState().transactions).available).toBe(5);
   });
 
   test.each(['reset', 'failed', 'settled', 'replaced'] as const)('%s record cannot be resurrected or credited', async (condition) => {
-    vi.stubEnv('NEXT_PUBLIC_BALANCE_FROM_LEDGER', 'false');
     const tx = deposit();
     useLedgerStore.getState().append(tx);
     scheduleSyntheticDeposit(tx.txn_ref, 1500);
@@ -105,23 +97,11 @@ describe('new synthetic deposit lifecycle with actual ledger and wallet stores',
     const before = useLedgerStore.getState().transactions.map((record) => ({ ...record }));
     await advance(2000);
     expect(useLedgerStore.getState().transactions).toEqual(before);
-    expect(useWalletStore.getState().usdBalance).toBe(0);
-  });
-
-  test('uses the balance mode captured when scheduled', async () => {
-    vi.stubEnv('NEXT_PUBLIC_BALANCE_FROM_LEDGER', 'false');
-    const tx = deposit();
-    useLedgerStore.getState().append(tx);
-    scheduleSyntheticDeposit(tx.txn_ref, 1500);
-    vi.stubEnv('NEXT_PUBLIC_BALANCE_FROM_LEDGER', 'true');
-    await advance(1500);
-    expect(useWalletStore.getState().usdBalance).toBe(5);
   });
 });
 
 describe('transaction pages with reactive balance and real simulation lifecycles', () => {
-  test.each(['ledger', 'wallet'])('Deposit survives unmount/remount and updates balance once in %s mode', async (mode) => {
-    vi.stubEnv('NEXT_PUBLIC_BALANCE_FROM_LEDGER', mode === 'ledger' ? 'true' : 'false');
+  test('Deposit survives unmount/remount and updates balance once', async () => {
     const first = await ready(DepositPage);
     await confirm();
     const tx = useLedgerStore.getState().transactions[0];
@@ -137,16 +117,13 @@ describe('transaction pages with reactive balance and real simulation lifecycles
     expect(screen.getByTestId('reactive-balance').textContent).toBe('5.00');
   });
 
-  test('reset after navigating from pending Deposit leaves ledger and wallet empty', async () => {
-    vi.stubEnv('NEXT_PUBLIC_BALANCE_FROM_LEDGER', 'false');
+  test('reset after navigating from pending Deposit leaves the ledger empty', async () => {
     const view = await ready(DepositPage);
     await confirm();
     view.unmount();
     useLedgerStore.getState().clear();
-    useWalletStore.getState().reset();
     await advance(2000);
     expect(useLedgerStore.getState().transactions).toEqual([]);
-    expect(useWalletStore.getState().usdBalance).toBe(0);
   });
 
   test.each(['journey=class-a-val-002', ''])('full withdrawal keeps pending and completed feedback at zero (%s)', async (query) => {

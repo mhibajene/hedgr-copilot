@@ -1,8 +1,6 @@
 'use client';
 
 import { useLedgerStore, type Tx } from '../state/ledger';
-import { useWalletStore } from '../state/wallet';
-import { getBalanceMode } from '../state/balance.mode';
 
 const pendingTimers = new Map<string, ReturnType<typeof setTimeout>>();
 
@@ -26,7 +24,6 @@ export function scheduleSyntheticDeposit(txnRef: string, delayMs: number): void 
   if (transaction?.type !== 'deposit' || transaction.status !== 'pending') return;
 
   const original = { ...transaction };
-  const balanceMode = getBalanceMode();
   const timer = setTimeout(() => {
     try {
       const ledger = useLedgerStore.getState();
@@ -34,10 +31,6 @@ export function scheduleSyntheticDeposit(txnRef: string, delayMs: number): void 
       // Reset, failure, previous settlement or replacement cannot become a credit.
       if (!matchesDeposit(current, original) || current.status !== 'pending') return;
       ledger.confirm(txnRef);
-      const settled = useLedgerStore.getState().getByTxnRef(txnRef);
-      if (balanceMode === 'wallet' && matchesDeposit(settled, original) && settled.status === 'settled') {
-        useWalletStore.getState().creditUSD(original.amount_usd);
-      }
     } finally {
       pendingTimers.delete(txnRef);
     }

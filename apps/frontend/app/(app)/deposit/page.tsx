@@ -13,8 +13,6 @@ import { LOCAL_STUB_DEPOSIT_FAILURE_REVIEW_HINTS } from '../../../lib/deposits/l
 import { isLocalDevSimulationSeamEnabled } from '../../../lib/dev/local-simulation-guard';
 import { useBalance } from '../../../lib/hooks/useBalance';
 import { useLedgerStore } from '../../../lib/state/ledger';
-import { useWalletStore } from '../../../lib/state/wallet';
-import { getBalanceMode } from '../../../lib/state/balance.mode';
 import { getEnvironmentMode } from '../../../lib/env/mode';
 import { useLatestFx } from '../../../lib/hooks/useLatestFx';
 import { resolveMarket, resolveLocalCurrencyCode } from '../../../config/market';
@@ -63,8 +61,6 @@ function DepositPageContent() {
   const { refresh, total } = useBalance();
   const appendTx = useLedgerStore((s) => s.append);
   const confirmTx = useLedgerStore((s) => s.confirm);
-
-  const creditWallet = useWalletStore((s) => s.creditUSD);
 
   const market = resolveMarket();
   const marketQuote = resolveLocalCurrencyCode(market);
@@ -135,29 +131,14 @@ function DepositPageContent() {
   useEffect(() => {
     if (productSimulationActive || !txnRef || status !== 'PENDING') return;
     stubConfirmTimerRef.current = setTimeout(() => {
-      const mode = getBalanceMode();
       confirmTx(txnRef);
-      if (mode === 'wallet') {
-        creditWallet(usdToCredit);
-        try {
-          if (typeof window !== 'undefined') {
-            const next = useWalletStore.getState().usdBalance;
-            window.localStorage.setItem(
-              'hedgr:wallet',
-              JSON.stringify({ state: { usdBalance: +next.toFixed(2) }, version: 0 })
-            );
-          }
-        } catch {
-          void 0;
-        }
-      }
       refresh();
       setStatus('CONFIRMED');
     }, STUB_CONFIRM_DELAY_MS);
     return () => {
       if (stubConfirmTimerRef.current) clearTimeout(stubConfirmTimerRef.current);
     };
-  }, [productSimulationActive, txnRef, status, usdToCredit, creditWallet, confirmTx, refresh]);
+  }, [productSimulationActive, txnRef, status, confirmTx, refresh]);
 
   const confirm = async () => {
     if (amountLocalNum === null || amountLocalNum <= 0) return;

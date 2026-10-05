@@ -225,3 +225,13 @@ In every case there was no "Latest change" strip, no horizontal overflow and no 
 **Accepted side effect (§328):** a browser whose stored wallet balance has no matching ledger entries now shows the ledger figure. The flag remains the documented rollback (`NEXT_PUBLIC_BALANCE_FROM_LEDGER=false` and redeploy). No wallet-mode CI job is adopted.
 
 **NO CROSS-LANE IMPACT.**
+
+### Wallet balance mode retired (§344, 5 Oct 2026)
+
+`CLASS-A-VAL-002-STABILITY-LEDGER-ONLY-001` removes the wallet balance mode. The ledger is now the only balance source on every route. `getBalanceMode`, the wallet store and the `NEXT_PUBLIC_BALANCE_FROM_LEDGER` pass-through are gone, so the variable has no effect in any environment. A journey reset (clean start or Restart) also removes any stale `hedgr:wallet` key. Ledger maths, the ledger storage format, routes and copy are unchanged.
+
+**Regression:** `apps/frontend/tests-e2e/ledger-only-balance.spec.ts` seeds a settled $5 ledger deposit and a stale `hedgr:wallet` balance of $7, then expects Home to show **$5.00** on `/dashboard` and `/dashboard-synthetic-journey`. This is the §327 / §341 probe, now permanent and hermetic.
+
+**Supersedes the note above:** the flag is no longer the documented rollback. Rollback is a single revert of the runtime PR (AGENTS §4). The #732 wallet-mode unit tests were removed with the wallet branch. The Production probe result for this change is recorded in the §344 closeout.
+
+**NO CROSS-LANE IMPACT.**

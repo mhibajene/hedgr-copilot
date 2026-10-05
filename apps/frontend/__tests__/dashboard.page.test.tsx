@@ -30,7 +30,6 @@ const dashboardStateMocks = vi.hoisted(() => ({
     updated_at: number;
   }>,
   clearLedger: vi.fn(),
-  resetWallet: vi.fn(),
   policyContexts: [] as Array<string | undefined>,
 }));
 
@@ -56,12 +55,6 @@ vi.mock("../lib/state/ledger", () => ({
         transactions: dashboardStateMocks.transactions,
         clear: dashboardStateMocks.clearLedger,
       })
-  ),
-}));
-
-vi.mock("../lib/state/wallet", () => ({
-  useWalletStore: vi.fn((selector: (state: { reset: () => void }) => unknown) =>
-    selector({ reset: dashboardStateMocks.resetWallet })
   ),
 }));
 
@@ -169,9 +162,9 @@ afterEach(() => {
   cleanup();
   vi.restoreAllMocks();
   window.localStorage.removeItem("hedgr:last-home-visit");
+  window.localStorage.removeItem("hedgr:wallet");
   dashboardStateMocks.transactions = [];
   dashboardStateMocks.clearLedger.mockClear();
-  dashboardStateMocks.resetWallet.mockClear();
   dashboardStateMocks.policyContexts = [];
   vi.mocked(useSearchParams).mockReturnValue(
     new URLSearchParams() as ReturnType<typeof useSearchParams>
@@ -351,13 +344,14 @@ describe("DashboardPage engine trust surface", () => {
       getMockEngineState("normal") as EngineState
     );
     const replaceState = vi.spyOn(window.history, "replaceState");
+    window.localStorage.setItem("hedgr:wallet", JSON.stringify({ state: { usdBalance: 7 }, version: 0 }));
 
     render(<DashboardPage />);
 
     expect(screen.getByTestId("dashboard-balance").textContent).toContain("0");
     await waitFor(() => {
       expect(dashboardStateMocks.clearLedger).toHaveBeenCalledTimes(1);
-      expect(dashboardStateMocks.resetWallet).toHaveBeenCalledTimes(1);
+      expect(window.localStorage.getItem("hedgr:wallet")).toBeNull();
     });
     expect(replaceState).toHaveBeenCalledWith(
       window.history.state,
@@ -453,14 +447,15 @@ describe("DashboardPage engine trust surface", () => {
       screen.queryByRole("link", { name: /Review what changed/ })
     ).toBeNull();
 
+    window.localStorage.setItem("hedgr:wallet", JSON.stringify({ state: { usdBalance: 7 }, version: 0 }));
     fireEvent.click(restartButton);
     expect(dashboardStateMocks.clearLedger).not.toHaveBeenCalled();
-    expect(dashboardStateMocks.resetWallet).not.toHaveBeenCalled();
+    expect(window.localStorage.getItem("hedgr:wallet")).not.toBeNull();
 
     fireEvent.click(restartButton);
     expect(confirmRestart).toHaveBeenCalledTimes(2);
     expect(dashboardStateMocks.clearLedger).toHaveBeenCalledTimes(1);
-    expect(dashboardStateMocks.resetWallet).toHaveBeenCalledTimes(1);
+    expect(window.localStorage.getItem("hedgr:wallet")).toBeNull();
   });
 
   test("does not expose synthetic replay outside the explicit production journey", async () => {
@@ -617,7 +612,6 @@ describe("Currency context integration", () => {
     expect(screen.getByText("Waiting for the simulated position to settle.")).toBeDefined();
     expect(screen.queryByTestId("currency-insight-direction")).toBeNull();
     expect(dashboardStateMocks.clearLedger).not.toHaveBeenCalled();
-    expect(dashboardStateMocks.resetWallet).not.toHaveBeenCalled();
   });
 
   test("suppresses hydration/loading and stale reset data before rendering the zero-position state", () => {
@@ -639,14 +633,11 @@ describe("Currency context integration", () => {
     expect(screen.queryByTestId("currency-insight-direction")).toBeNull();
   });
 
-  test("preserves a valid legacy wallet position and reports invalid input instead of inventing zero", () => {
+  test("reports an invalid position instead of inventing zero", () => {
     setup();
-    vi.stubEnv("NEXT_PUBLIC_BALANCE_FROM_LEDGER", "false");
     dashboardStateMocks.transactions = [];
-    const { rerender } = render(<DashboardPage />);
-    expect(screen.getByTestId("currency-insight-headline").textContent).toContain("ZMW 3 higher");
     vi.mocked(useBalance).mockReturnValue(makeBalanceState({ total: NaN, available: NaN }));
-    rerender(<DashboardPage />);
+    render(<DashboardPage />);
     expect(screen.getByText("The simulated position is unavailable.")).toBeDefined();
     expect(screen.queryByTestId("currency-insight-direction")).toBeNull();
   });
@@ -678,39 +669,16 @@ describe("Currency context integration", () => {
   });
 });
 
-// HOME-EXPERIENCE-001 T3 correction: Production runs NEXT_PUBLIC_BALANCE_FROM_LEDGER=false.
-describe("Home since-last-visit surfaces in wallet balance mode", () => {
-  function renderJourneyHome(total: number) {
-    vi.stubEnv("NEXT_PUBLIC_BALANCE_FROM_LEDGER", "false");
+// T3 surfaces appear only when the ledger-derived position agrees with the displayed
+// balance (for example, not during the render before useBalance publishes a change).
+describe("Home since-last-visit surfaces", () => {
+  test("keeps the existing observation while the displayed balance and ledger position disagree", async () => {
+    dashboardStateMocks.transactions = makeCompletedJourneyTransactions();
+    window.localStorage.setItem("hedgr:last-home-visit", "2");
     vi.mocked(usePathname).mockReturnValue("/dashboard-synthetic-journey");
-    vi.mocked(useBalance).mockReturnValue(makeBalanceState({ total, available: total }));
+    vi.mocked(useBalance).mockReturnValue(makeBalanceState({ total: 7, available: 7 }));
     vi.mocked(useEngineState).mockReturnValue(getMockEngineState("normal") as EngineState);
     render(<DashboardPage />);
-  }
-
-  test("shows first use when the wallet and the empty ledger agree", async () => {
-    renderJourneyHome(0);
-    expect(await screen.findByTestId("dashboard-first-use-steps")).toBeDefined();
-    expect(screen.getByTestId("dashboard-synthetic-balance-explainer").textContent).toBe(
-      "No simulated activity yet."
-    );
-  });
-
-  test("explains the change since the last visit when the wallet matches the ledger", async () => {
-    dashboardStateMocks.transactions = makeCompletedJourneyTransactions();
-    window.localStorage.setItem("hedgr:last-home-visit", "2");
-    renderJourneyHome(3);
-    expect((await screen.findByTestId("engine-posture-context")).textContent).toMatch(
-      /^One simulated withdrawal of \$2\.00 on \d{1,2} \w{3} took your position from \$5\.00 to \$3\.00\.$/
-    );
-    expect(screen.getByTestId("dashboard-change-chip").textContent).toMatch(/^↓\$2\.00 since/);
-    expect(screen.getByTestId("dashboard-position-line")).toBeDefined();
-  });
-
-  test("keeps the existing observation when the wallet and ledger disagree", async () => {
-    dashboardStateMocks.transactions = makeCompletedJourneyTransactions();
-    window.localStorage.setItem("hedgr:last-home-visit", "2");
-    renderJourneyHome(7);
     await screen.findByTestId("dashboard-current-status");
     expect(screen.queryByTestId("dashboard-change-chip")).toBeNull();
     expect(screen.queryByTestId("dashboard-position-line")).toBeNull();

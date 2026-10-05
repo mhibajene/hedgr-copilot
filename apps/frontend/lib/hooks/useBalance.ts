@@ -2,9 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { useLedgerStore } from '../state/ledger';
-import { useWalletStore } from '../state/wallet';
 import { computeBalanceFromLedger, type BalanceProjection } from '../state/balance';
-import { getBalanceMode } from '../state/balance.mode';
 
 export type UseBalanceResult = BalanceProjection & {
   isLoading: boolean;
@@ -17,8 +15,7 @@ export type UseBalanceResult = BalanceProjection & {
  * useBalance Hook - Single Source of Truth for Balance Display
  * 
  * This hook provides the canonical way to access user balance in the frontend.
- * When BALANCE_FROM_LEDGER is enabled (default), it computes balance from
- * the ledger store. Otherwise, it falls back to the legacy wallet store.
+ * It computes balance from the ledger store, the only balance source.
  * 
  * Usage:
  * ```tsx
@@ -29,7 +26,6 @@ export type UseBalanceResult = BalanceProjection & {
  */
 export function useBalance(): UseBalanceResult {
   const transactions = useLedgerStore((s) => s.transactions);
-  const walletBalance = useWalletStore((s) => s.usdBalance);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [balance, setBalance] = useState<BalanceProjection>({
@@ -43,29 +39,13 @@ export function useBalance(): UseBalanceResult {
   const computeBalance = useCallback(() => {
     try {
       setError(null);
-
-      const mode = getBalanceMode();
-
-      if (mode === 'ledger') {
-        // SSoT: Compute balance from ledger transactions
-        const computed = computeBalanceFromLedger(transactions);
-        setBalance(computed);
-      } else {
-        // Legacy: Use wallet store balance
-        setBalance({
-          total: walletBalance,
-          available: walletBalance,
-          pending: 0,
-          currency: 'USD',
-          asOf: Date.now(),
-        });
-      }
+      setBalance(computeBalanceFromLedger(transactions));
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to compute balance');
     } finally {
       setIsLoading(false);
     }
-  }, [transactions, walletBalance]);
+  }, [transactions]);
 
   // Compute balance on mount and when transactions change
   useEffect(() => {
