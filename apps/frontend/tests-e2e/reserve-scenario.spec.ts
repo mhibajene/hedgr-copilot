@@ -4,6 +4,7 @@ import {
   SARAH_FIGURES,
   formatScenarioAmount,
   localFull,
+  localFullSingular,
   localPlural,
   localSingular,
   type ScenarioCurrency,
@@ -33,8 +34,9 @@ test.describe('Daniel reserve scenario', () => {
     await expect(page.getByTestId('reserve-stimulus')).toBeVisible();
     await expect(page).toHaveTitle('Daniel’s reserve · Hedgr research');
     await page.getByTestId('study-to-facts').click();
-    await expect(page.getByTestId('study-panel-after')).toContainText('After kwacha strengthened against the US dollar');
-    await expect(page.getByTestId('study-panel-after')).toContainText('Because the kwacha strengthened, it now shows as a smaller amount in kwacha.');
+    await expect(page.getByTestId('study-panel-after')).toContainText('After the kwacha strengthened against the US dollar');
+    await expect(page.getByTestId('study-panel-after')).not.toContainText('Because the kwacha strengthened, it now shows as a smaller amount in kwacha.');
+    await expect(page.getByTestId('study-row-label').filter({ hasText: 'What to watch' })).toHaveCount(0);
     await expect(page.getByTestId('study-panel-after')).toContainText('K19,600');
     await expect(page.getByTestId('study-panel-after')).not.toContainText('K23,600');
   });
@@ -56,9 +58,19 @@ test.describe('Daniel reserve scenario', () => {
     await expect(page.getByTestId('daniel-scope')).toHaveText('This is the part of Daniel’s savings he keeps as a reserve. His other money isn’t shown.');
     await expect(page.getByTestId('daniel-condition')).toHaveText('In this example, the dollar-linked portion is USD 800 before and after. Only the exchange rate changes.');
     await expect(page.getByTestId('study-panel-before').getByRole('heading', { name: 'Before the exchange rate moved' })).toBeVisible();
-    await expect(page.getByTestId('study-panel-after').getByRole('heading', { name: 'After kwacha weakened against the US dollar' })).toBeVisible();
+    await expect(page.getByTestId('study-panel-after').getByRole('heading', { name: 'After the kwacha weakened against the US dollar' })).toBeVisible();
     await expect(page.getByTestId('study-panel-before')).toContainText('K17,500 in kwacha. A dollar-linked portion of USD 800. Shown as K21,600 in kwacha, for illustration only. This is not a quote.');
     await expect(page.getByTestId('study-panel-after')).toContainText('Shown as K23,600 in kwacha, for illustration only. This is not a quote.');
+    await expect(page.getByTestId('study-panel-before')).toContainText('He may add more from future salary when he can. No fixed amount or schedule. Nothing he adds later is included here.');
+    await expect(page.getByTestId('study-panel-before')).toContainText('Something to fall back on if his circumstances change, or to use if an opportunity comes up. When and how he’ll use it isn’t known yet.');
+    await expect(page.getByTestId('study-panel-before')).toContainText('If he used the dollar-linked portion in kwacha, what he’d actually receive would depend on how he accessed it, any costs, and the rate at the time. This example doesn’t set any of those.');
+    await expect(page.getByTestId('study-row-label').filter({ hasText: 'What to watch' })).toHaveCount(0);
+    await expect(page.getByTestId('daniel-facts')).not.toContainText('The dollar-linked portion is counted in US dollars, so its figure in kwacha can change when the exchange rate moves.');
+    await expect(page.getByTestId('daniel-facts')).not.toContainText('Because the kwacha weakened, it now shows as a larger amount in kwacha.');
+    await expect(page.getByTestId('study-authored-label')).toHaveCount(0);
+    await expect(page.getByRole('heading', { name: 'Daniel’s reserve, with Hedgr’s notes' })).toHaveCount(0);
+    await expect(page.getByTestId('study-attribution')).toHaveText('This example was written in advance by Hedgr, using only the facts about Daniel on this page. It isn’t generated automatically, and it doesn’t look at anyone’s real money.');
+    await expect(page.getByTestId('study-limits')).toHaveText('This example can’t predict the exchange rate, assume Daniel will add more, or say what he would receive if he used his reserve. The dollar-linked portion is part of Daniel’s fictional situation, and Hedgr plays no part in it in this example. This isn’t financial advice.');
     await expect(page.getByTestId('study-row-marker')).toHaveCount(0);
     await expect(stimulus).not.toContainText(/%|1 USD =|implied|spot|automatically split/);
     await expect(stimulus.locator('input, textarea, form')).toHaveCount(0);
@@ -68,6 +80,8 @@ test.describe('Daniel reserve scenario', () => {
     await expect(page.getByTestId('study-authored-label')).toHaveText('Research example about a fictional person');
     await expect(page.getByTestId('study-attribution')).toHaveText('This example was written in advance by Hedgr, using only the facts about Daniel on this page. It isn’t generated automatically, and it doesn’t look at anyone’s real money.');
     await expect(page.getByTestId('study-limits')).toHaveText('This example can’t predict the exchange rate, assume Daniel will add more, or say what he would receive if he used his reserve. The dollar-linked portion is part of Daniel’s fictional situation, and Hedgr plays no part in it in this example. This isn’t financial advice.');
+    await expect(page.getByTestId('study-panel-after').getByRole('heading', { name: 'After the kwacha weakened against the US dollar' })).toBeVisible();
+    await expect(page.getByTestId('study-row-label').filter({ hasText: 'What to watch' })).toHaveCount(2);
     await expect(page.getByTestId('study-panel-after')).toContainText('Because the kwacha weakened, it now shows as a larger amount in kwacha.');
     await expect(page.getByTestId('study-panel-before')).toContainText('If he used the dollar-linked portion in kwacha, what he’d actually receive would depend on how he accessed it, any costs, and the rate at the time. This example doesn’t set any of those.');
     await expect(page.getByTestId('study-panel-before')).toContainText('He may add more from future salary when he can. No fixed amount or schedule. Nothing he adds later is included here.');
@@ -103,12 +117,16 @@ test.describe('Daniel reserve scenario', () => {
       const displayWeakened = formatScenarioAmount(currency, DANIEL_FIGURES[currency].displayWeakened);
       await expect(before).toContainText(`${held} in ${localFull[currency]}.`);
       await expect(before).toContainText(`Shown as ${displayBefore} in ${localFull[currency]}, for illustration only. This is not a quote.`);
-      await expect(after).toContainText(`After ${localFull[currency]} weakened against the US dollar`);
+      await expect(after).toContainText(`After ${localFullSingular[currency]} weakened against the US dollar`);
       await expect(after).toContainText(`Shown as ${displayWeakened} in ${localFull[currency]}, for illustration only. This is not a quote.`);
-      await expect(after).toContainText(`Because ${localSingular[currency]} weakened, it now shows as a larger amount in ${localPlural[currency]}.`);
+      await expect(after).not.toContainText(`Because ${localSingular[currency]} weakened, it now shows as a larger amount in ${localPlural[currency]}.`);
+      await expect(page.getByTestId('study-row-label').filter({ hasText: 'What to watch' })).toHaveCount(0);
       await expect(before).toContainText(`in ${localPlural[currency]}, what he’d actually receive`);
       await expect(page.getByTestId('reserve-stimulus')).not.toContainText(sarahFee);
       await expect(page.getByTestId('study-row-marker')).toHaveCount(0);
+      await page.getByTestId('study-to-interpreted').click();
+      await expect(page.getByTestId('study-panel-after')).toContainText(`Because ${localSingular[currency]} weakened, it now shows as a larger amount in ${localPlural[currency]}.`);
+      await expect(page.getByTestId('study-row-label').filter({ hasText: 'What to watch' })).toHaveCount(2);
     }
   });
 
