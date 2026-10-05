@@ -149,7 +149,7 @@ These labels are descriptive review language, not acceptance gates or maturity l
 
 ## 14. Decision pressure
 
-**Founder decision required.** `HEDGR_STATUS.md` records D2 as a separate, undecided Founder strategy question; the completed research tickets explicitly did not resolve or activate it. The review does not infer its answer or timing.
+**Founder decision recorded (outside this review window).** At the time of this review, repo authority still identified D2 as an undecided Founder strategy question. On 5 Oct 2026 the Founder disposed D2 as option B (hypothesis only) under §343 / `OPS-D2-DISPOSITION-001`: “obligation-anchored progress” is a research hypothesis, not product direction; the no-claim fence stays. This historical weekly review does not reopen that question.
 
 No additional decision pressure is manufactured from the absence of participant evidence. The unreleased route and open parent are current-state boundaries, not review-created requests.
 
