@@ -5,6 +5,7 @@ import {
   SARAH_FIGURES,
   formatScenarioAmount,
   localFull,
+  localFullSingular,
   localPlural,
   localSingular,
   savingsCurrencyNames,
@@ -15,7 +16,8 @@ import { ORIENTATION_FORBIDDEN_PARTICIPANT_TERMS } from '../lib/narrative/orient
 
 /** §7a locked copy that uses tokens; used to assert (h) slot placement. */
 const DANIEL_HELD_NOW = '{held} in {localFull}.';
-const DANIEL_AFTER_HEADING_V1 = 'After {localFull} weakened against the US dollar';
+const DANIEL_AFTER_HEADING_V1 = 'After {localFullSingular} weakened against the US dollar';
+const DANIEL_AFTER_HEADING_V2 = 'After {localFullSingular} strengthened against the US dollar';
 const DANIEL_USING_LOCALLY = 'If he used the dollar-linked portion in {localPlural}, what he’d actually receive would depend on how he accessed it, any costs, and the rate at the time. This example doesn’t set any of those.';
 const DANIEL_WATCH_BEFORE = 'The dollar-linked portion is counted in US dollars, so its figure in {localPlural} can change when the exchange rate moves. Neither figure tells Daniel exactly what he would receive.';
 const DANIEL_WATCH_AFTER_V1 = 'In this example, the dollar-linked portion is still USD 800. Because {localSingular} weakened, it now shows as a larger amount in {localPlural}. Why he keeps the reserve, and how he may add to it, haven’t changed. Neither figure tells Daniel exactly what he would receive if he used it.';
@@ -52,6 +54,7 @@ function parseFigure(value: string): number {
 function renderSlots(template: string, currency: ScenarioCurrency, extras: Record<string, string> = {}): string {
   const tokens = scenarioTokens(currency);
   return template
+    .replaceAll('{localFullSingular}', tokens.localFullSingular)
     .replaceAll('{localFull}', tokens.localFull)
     .replaceAll('{localPlural}', tokens.localPlural)
     .replaceAll('{localSingular}', tokens.localSingular)
@@ -96,6 +99,13 @@ describe('CLASS-A-VAL-002-RESEARCH-RESERVE-001 paired currency guard', () => {
       KES: 'shillings',
       GHS: 'cedis',
       PHP: 'pesos',
+    });
+    expect(localFullSingular).toEqual({
+      ZMW: 'the kwacha',
+      NGN: 'the Nigerian naira',
+      KES: 'the Kenyan shilling',
+      GHS: 'the Ghanaian cedi',
+      PHP: 'the Philippine peso',
     });
   });
 
@@ -158,11 +168,15 @@ describe('CLASS-A-VAL-002-RESEARCH-RESERVE-001 paired currency guard', () => {
     expect(f / m).toBeCloseTo(14.75, 10);
     expect((a + p) / f).toBeCloseTo(1.017, 3);
 
-    // (h) {localFull} in Held now and After heading; bare {localPlural} elsewhere
+    // (h) {localFull} in Held now; {localFullSingular} in After heading; bare {localPlural} elsewhere; {localSingular} in After Watch
     expect(DANIEL_HELD_NOW).toContain('{localFull}');
     expect(DANIEL_HELD_NOW).not.toContain('{localPlural}');
-    expect(DANIEL_AFTER_HEADING_V1).toContain('{localFull}');
+    expect(DANIEL_HELD_NOW).not.toContain('{localFullSingular}');
+    expect(DANIEL_AFTER_HEADING_V1).toContain('{localFullSingular}');
+    expect(DANIEL_AFTER_HEADING_V1.replaceAll('{localFullSingular}', '')).not.toContain('{localFull}');
     expect(DANIEL_AFTER_HEADING_V1).not.toContain('{localPlural}');
+    expect(DANIEL_AFTER_HEADING_V2).toContain('{localFullSingular}');
+    expect(DANIEL_AFTER_HEADING_V2.replaceAll('{localFullSingular}', '')).not.toContain('{localFull}');
     expect(DANIEL_USING_LOCALLY).toContain('{localPlural}');
     expect(DANIEL_USING_LOCALLY).not.toContain('{localFull}');
     expect(DANIEL_WATCH_BEFORE).toContain('{localPlural}');
@@ -177,13 +191,17 @@ describe('CLASS-A-VAL-002-RESEARCH-RESERVE-001 paired currency guard', () => {
       renderSlots(DANIEL_HELD_NOW, currency, { held }),
       renderSlots('Shown as {display} in {localFull}, for illustration only. This is not a quote.', currency, { display }),
       renderSlots(DANIEL_AFTER_HEADING_V1, currency),
+      renderSlots(DANIEL_AFTER_HEADING_V2, currency),
       renderSlots(DANIEL_USING_LOCALLY, currency),
       renderSlots(DANIEL_WATCH_BEFORE, currency),
       renderSlots(DANIEL_WATCH_AFTER_V1, currency),
     ].join('\n');
     expect(rendered).toContain(tokens.localFull);
+    expect(rendered).toContain(tokens.localFullSingular);
     expect(rendered).toContain(tokens.localPlural);
     expect(rendered).toContain(tokens.localSingular);
+    expect(renderSlots(DANIEL_AFTER_HEADING_V1, currency)).toBe(`After ${localFullSingular[currency]} weakened against the US dollar`);
+    expect(renderSlots(DANIEL_AFTER_HEADING_V2, currency)).toBe(`After ${localFullSingular[currency]} strengthened against the US dollar`);
   });
 
   test('new and changed locked strings stay off the orientation ban list and its negations', () => {
@@ -209,6 +227,7 @@ describe('CLASS-A-VAL-002-RESEARCH-RESERVE-001 paired currency guard', () => {
     ];
     for (const currency of RESEARCH_CURRENCIES) {
       strings.push(renderSlots(DANIEL_AFTER_HEADING_V1, currency));
+      strings.push(renderSlots(DANIEL_AFTER_HEADING_V2, currency));
       strings.push(renderSlots(DANIEL_USING_LOCALLY, currency));
       strings.push(renderSlots(DANIEL_WATCH_BEFORE, currency));
       strings.push(renderSlots(DANIEL_WATCH_AFTER_V1, currency));

@@ -52,17 +52,20 @@ function PanelState({
   headingId,
   heading,
   rows,
+  desktopRowSpan,
 }: {
   testId: string;
   headingId: string;
   heading: string;
   rows: Array<{ rowKey: PanelRowKey; label: string; value: string }>;
+  desktopRowSpan: 5 | 6;
 }) {
+  const rowSpanClass = desktopRowSpan === 6 ? '@lg:row-span-6' : '@lg:row-span-5';
   return (
     <section
       data-testid={testId}
       aria-labelledby={headingId}
-      className="min-w-0 space-y-4 @lg:row-span-6 @lg:grid @lg:grid-rows-subgrid @lg:space-y-0"
+      className={`min-w-0 space-y-4 ${rowSpanClass} @lg:grid @lg:grid-rows-subgrid @lg:space-y-0`}
     >
       <h3 id={headingId} className="text-base font-semibold text-hedgr-800">{heading}</h3>
       <dl className="space-y-3 @lg:contents">
@@ -73,6 +76,9 @@ function PanelState({
     </section>
   );
 }
+
+const DANIEL_ATTRIBUTION = 'This example was written in advance by Hedgr, using only the facts about Daniel on this page. It isn’t generated automatically, and it doesn’t look at anyone’s real money.';
+const DANIEL_LIMITS = 'This example can’t predict the exchange rate, assume Daniel will add more, or say what he would receive if he used his reserve. The dollar-linked portion is part of Daniel’s fictional situation, and Hedgr plays no part in it in this example. This isn’t financial advice.';
 
 export default function ReserveScenarioStimulus({ variant }: { variant: Variant }) {
   const [stage, setStage] = useState<Stage>('intro');
@@ -108,8 +114,8 @@ export default function ReserveScenarioStimulus({ variant }: { variant: Variant 
     variant === '2' ? figures.displayStrengthened : figures.displayWeakened,
   );
   const afterHeading = variant === '2'
-    ? `After ${tokens.localFull} strengthened against the US dollar`
-    : `After ${tokens.localFull} weakened against the US dollar`;
+    ? `After ${tokens.localFullSingular} strengthened against the US dollar`
+    : `After ${tokens.localFullSingular} weakened against the US dollar`;
   const heldNow = (display: string) =>
     `${held} in ${tokens.localFull}. A dollar-linked portion of USD 800. Shown as ${display} in ${tokens.localFull}, for illustration only. This is not a quote.`;
   const addingLater = 'He may add more from future salary when he can. No fixed amount or schedule. Nothing he adds later is included here.';
@@ -120,41 +126,65 @@ export default function ReserveScenarioStimulus({ variant }: { variant: Variant 
     ? `In this example, the dollar-linked portion is still USD 800. Because ${tokens.localSingular} strengthened, it now shows as a smaller amount in ${tokens.localPlural}. Why he keeps the reserve, and how he may add to it, haven’t changed. Neither figure tells Daniel exactly what he would receive if he used it.`
     : `In this example, the dollar-linked portion is still USD 800. Because ${tokens.localSingular} weakened, it now shows as a larger amount in ${tokens.localPlural}. Why he keeps the reserve, and how he may add to it, haven’t changed. Neither figure tells Daniel exactly what he would receive if he used it.`;
 
-  const beforeRows = [
+  const factBeforeRows = [
     { rowKey: 'held' as const, label: ROW_LABELS.held, value: heldNow(displayBefore) },
     { rowKey: 'adding' as const, label: ROW_LABELS.adding, value: addingLater },
     { rowKey: 'kept' as const, label: ROW_LABELS.kept, value: keptFor },
     { rowKey: 'using' as const, label: ROW_LABELS.using, value: usingLocally },
-    { rowKey: 'watch' as const, label: ROW_LABELS.watch, value: watchBefore },
   ];
-  const afterRows = [
+  const factAfterRows = [
     { rowKey: 'held' as const, label: ROW_LABELS.held, value: heldNow(displayAfter) },
     { rowKey: 'adding' as const, label: ROW_LABELS.adding, value: addingLater },
     { rowKey: 'kept' as const, label: ROW_LABELS.kept, value: keptFor },
     { rowKey: 'using' as const, label: ROW_LABELS.using, value: usingLocally },
+  ];
+  const interpretedBeforeRows = [
+    ...factBeforeRows,
+    { rowKey: 'watch' as const, label: ROW_LABELS.watch, value: watchBefore },
+  ];
+  const interpretedAfterRows = [
+    ...factAfterRows,
     { rowKey: 'watch' as const, label: ROW_LABELS.watch, value: watchAfter },
   ];
 
-  const comparisonPanel = (
-    <div data-testid="study-value-panel" className={`@container space-y-5 break-words ${rs.panel}`}>
-      <p data-testid="daniel-scope">This is the part of Daniel’s savings he keeps as a reserve. His other money isn’t shown.</p>
-      <p data-testid="daniel-condition">In this example, the dollar-linked portion is USD 800 before and after. Only the exchange rate changes.</p>
-      <div className="grid grid-cols-1 gap-8 @lg:grid-cols-2 @lg:grid-rows-[auto_auto_auto_auto_auto_auto] @lg:gap-x-6 @lg:gap-y-3">
-        <PanelState
-          testId="study-panel-before"
-          headingId="daniel-panel-before-heading"
-          heading="Before the exchange rate moved"
-          rows={beforeRows}
-        />
-        <PanelState
-          testId="study-panel-after"
-          headingId="daniel-panel-after-heading"
-          heading={afterHeading}
-          rows={afterRows}
-        />
-      </div>
-    </div>
+  const attributionAndLimits = (
+    <>
+      <p data-testid="study-attribution" className="text-sm font-medium leading-relaxed text-hedgr-700">{DANIEL_ATTRIBUTION}</p>
+      <p data-testid="study-limits" className="text-sm leading-relaxed text-hedgr-700">{DANIEL_LIMITS}</p>
+    </>
   );
+
+  const comparisonPanel = (
+    beforeRows: typeof factBeforeRows | typeof interpretedBeforeRows,
+    afterRows: typeof factAfterRows | typeof interpretedAfterRows,
+    desktopRowSpan: 5 | 6,
+  ) => {
+    const gridRowsClass = desktopRowSpan === 6
+      ? '@lg:grid-rows-[auto_auto_auto_auto_auto_auto]'
+      : '@lg:grid-rows-[auto_auto_auto_auto_auto]';
+    return (
+      <div data-testid="study-value-panel" className={`@container space-y-5 break-words ${rs.panel}`}>
+        <p data-testid="daniel-scope">This is the part of Daniel’s savings he keeps as a reserve. His other money isn’t shown.</p>
+        <p data-testid="daniel-condition">In this example, the dollar-linked portion is USD 800 before and after. Only the exchange rate changes.</p>
+        <div className={`grid grid-cols-1 gap-8 @lg:grid-cols-2 ${gridRowsClass} @lg:gap-x-6 @lg:gap-y-3`}>
+          <PanelState
+            testId="study-panel-before"
+            headingId="daniel-panel-before-heading"
+            heading="Before the exchange rate moved"
+            rows={beforeRows}
+            desktopRowSpan={desktopRowSpan}
+          />
+          <PanelState
+            testId="study-panel-after"
+            headingId="daniel-panel-after-heading"
+            heading={afterHeading}
+            rows={afterRows}
+            desktopRowSpan={desktopRowSpan}
+          />
+        </div>
+      </div>
+    );
+  };
 
   let stageBody: ReactNode = null;
   if (stage === 'intro') {
@@ -169,7 +199,8 @@ export default function ReserveScenarioStimulus({ variant }: { variant: Variant 
     stageBody = (
       <section data-testid="daniel-facts" className="mt-8 space-y-5">
         <h2 ref={stageHeading} tabIndex={-1} className="break-words text-lg font-semibold sm:text-xl">Daniel’s reserve</h2>
-        {comparisonPanel}
+        {comparisonPanel(factBeforeRows, factAfterRows, 5)}
+        {attributionAndLimits}
         <button type="button" data-testid="study-to-interpreted" onClick={() => setStage('interpreted')} className={rs.primary}>Continue</button>
       </section>
     );
@@ -178,9 +209,8 @@ export default function ReserveScenarioStimulus({ variant }: { variant: Variant 
       <section data-testid="daniel-interpreted" className="mt-8 space-y-5">
         <p data-testid="study-authored-label" className="break-words text-sm font-medium text-hedgr-600">Research example about a fictional person</p>
         <h2 ref={stageHeading} tabIndex={-1} className="break-words text-lg font-semibold sm:text-xl">Daniel’s reserve, with Hedgr’s notes</h2>
-        {comparisonPanel}
-        <p data-testid="study-attribution" className="text-sm font-medium leading-relaxed text-hedgr-700">This example was written in advance by Hedgr, using only the facts about Daniel on this page. It isn’t generated automatically, and it doesn’t look at anyone’s real money.</p>
-        <p data-testid="study-limits" className="text-sm leading-relaxed text-hedgr-700">This example can’t predict the exchange rate, assume Daniel will add more, or say what he would receive if he used his reserve. The dollar-linked portion is part of Daniel’s fictional situation, and Hedgr plays no part in it in this example. This isn’t financial advice.</p>
+        {comparisonPanel(interpretedBeforeRows, interpretedAfterRows, 6)}
+        {attributionAndLimits}
         <button type="button" data-testid="study-to-bridge" onClick={() => setStage('bridge')} className={rs.primary}>Continue</button>
       </section>
     );

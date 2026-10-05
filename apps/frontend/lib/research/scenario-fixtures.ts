@@ -28,6 +28,14 @@ export const localPlural = {
   PHP: 'pesos',
 } as const;
 
+export const localFullSingular = {
+  ZMW: 'the kwacha',
+  NGN: 'the Nigerian naira',
+  KES: 'the Kenyan shilling',
+  GHS: 'the Ghanaian cedi',
+  PHP: 'the Philippine peso',
+} as const;
+
 export const RESEARCH_CURRENCIES = ['ZMW', 'NGN', 'KES', 'GHS', 'PHP'] as const satisfies readonly SimulationDisplayCurrency[];
 
 export type ScenarioCurrency = (typeof RESEARCH_CURRENCIES)[number];
@@ -72,6 +80,7 @@ export function scenarioTokens(currency: ScenarioCurrency) {
     localSingular: localSingular[currency],
     localPlural: localPlural[currency],
     localFull: localFull[currency],
+    localFullSingular: localFullSingular[currency],
     localName: savingsCurrencyNames[currency],
   };
 }
