@@ -186,7 +186,7 @@ Finite follow-up ticket `CLASS-A-VAL-002-HOME-DEDUP-001`, directed by the Founde
 
 **Caveat:** at 1440px the "no previous visit" case rendered as "no change", because the harness's login step landed on `/dashboard` and recorded a visit. Recent activity was correctly shown in both states. The "no previous visit" state is covered at 390px and by unit tests.
 
-**Balance mode:** the probe (ledger $5, wallet $7) showed $7.00, so Production still runs wallet mode. The Founder-owned §328 ledger switch is outstanding, and this inspection exercised the #732 wallet-mode guard. Re-run the probe and this inspection after the switch.
+**Balance mode:** the probe (ledger $5, wallet $7) showed $7.00, so Production still runs wallet mode. The Founder-owned §328 ledger switch is outstanding, and this inspection exercised the #732 wallet-mode guard. Re-run the probe and this inspection after the switch. [Resolved 5 Oct 2026 (HEDGR_STATUS.md §341): the Founder completed the §328 switch; Production now runs ledger mode. The probe showed $5.00 and the re-run inspection passed 82/82. See "Ledger-mode Production verification" below.]
 
 ### Image integrity (HOME-DEDUP-001)
 
@@ -198,5 +198,30 @@ Finite follow-up ticket `CLASS-A-VAL-002-HOME-DEDUP-001`, directed by the Founde
 | `dedup-default-390-no-change.png` | 390 × 1449 | `a7cdc304485fddb6947e15447686d2a7115c016d86a1ad519d5e113d9a309809` |
 | `dedup-default-390-pending.png` | 390 × 1363 | `eef67fa0faa297f361a35f75ab648f41be283576e8ff4be8a35be0df75259c50` |
 | `dedup-default-390-several-changes.png` | 390 × 1441 | `6c0784181252a413bb4e777d5f03e05f1d8f079376e3ad7776152c1d5e972c11` |
+
+### Ledger-mode Production verification (§341, 5 Oct 2026)
+
+**Founder action (§328 decision 1):** the Founder changed `NEXT_PUBLIC_BALANCE_FROM_LEDGER` in Vercel Production and redeployed. The Founder did not say whether the variable was deleted or set to `true`. The shipped bundle reads it at runtime instead of inlining a value, which is consistent with removal. The redeploy is GitHub Production deployment `6856469933` (commit `82c5d3b`, #764, docs-only; Vercel URL `hedgr-copilot-frontend-f81zbwg0q-hedgr.vercel.app`), success status at 2026-10-05T10:42:22Z.
+
+**Bundle:** before the switch, the `/dashboard` client bundle folded `getBalanceMode` to `return "wallet"` with the value `"false"` inlined. After it, the bundle no longer inlines the variable; `getBalanceMode` evaluates at runtime and falls back to `ledger`.
+
+**Probe:** with ledger $5 and wallet $7, Home shows **$5.00** at 390 × 844 and 1440 × 1024 (previously $7.00, Balance mode note above).
+
+**Inspection:** public alias `https://hedgr-copilot-frontend.vercel.app`, 2026-10-05T10:48Z. **82/82 checks passed** at 390 × 844 and 1440 × 1024, in fresh Chromium contexts with mock sign-in and browser-local simulated entries only (deposit $5, withdrawal $2, plus a pending $1 deposit in the pending case; wallet $7 in every default-route case).
+
+| State | Home balance | Since-last-visit | Recent activity |
+| --- | --- | --- | --- |
+| No previous visit | $3.00 | absent | shown |
+| One change | $3.00 | one sentence: "One simulated withdrawal of $2.00 on 5 Oct took your position from $5.00 to $3.00." | hidden |
+| Several changes | $3.00 | list shown | hidden |
+| No change | $3.00 | "Nothing has changed since 5 Oct. Your position is still $3.00." | shown |
+| Pending | $4.00 (the ledger total includes the pending deposit) | — | shown; pending +$1.00 listed |
+| Journey Home (control) | $3.00 | — | not rendered |
+
+In every case there was no "Latest change" strip, no horizontal overflow and no page error.
+
+**Harness disclosure:** the first two runs scored 73/80 and 78/80. Every failure was a harness fault: a race in which the login Home's last-visit write overwrote the seed; a wrong pending expectation (the ledger total includes pending); and expecting a list where the one-change state renders a sentence. After the harness was fixed, the run passed 82/82. Evidence is kept locally and not committed (results `results.json` SHA-256 `2ca5f245ae037888e41006838e30f9a4b73ba61f69f5426b9a7c6fdd5be0bc1f`; harness `probe.mjs` SHA-256 `5333fc6ea7e789c4f039d381c54e8d12e907870fdc12ab60e2f60cb2fb46ac73`; ten screenshots).
+
+**Accepted side effect (§328):** a browser whose stored wallet balance has no matching ledger entries now shows the ledger figure. The flag remains the documented rollback (`NEXT_PUBLIC_BALANCE_FROM_LEDGER=false` and redeploy). No wallet-mode CI job is adopted.
 
 **NO CROSS-LANE IMPACT.**
