@@ -2,8 +2,8 @@
  * Balance Projection from Ledger (Single Source of Truth)
  *
  * This module provides the canonical way to compute user balances
- * from ledger transactions. All balance displays should use this
- * projection when BALANCE_FROM_LEDGER is enabled.
+ * from ledger transactions. All balance displays use this projection;
+ * the ledger is the only balance source.
  */
 
 import type { Tx } from './ledger';

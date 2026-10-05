@@ -9,8 +9,6 @@ import { useSearchParams } from 'next/navigation';
 import { withdrawMock } from '../../../lib/payments/withdraw.mock';
 import { useBalance } from '../../../lib/hooks/useBalance';
 import { useLedgerStore } from '../../../lib/state/ledger';
-import { useWalletStore } from '../../../lib/state/wallet';
-import { getBalanceMode } from '../../../lib/state/balance.mode';
 import { getEnvironmentMode } from '../../../lib/env/mode';
 import { EmptyState, ErrorState } from '@hedgr/ui';
 import {
@@ -110,8 +108,6 @@ function WithdrawPageContent() {
   const confirmTx = useLedgerStore((s) => s.confirm);
   const failTx = useLedgerStore((s) => s.fail);
 
-  const debitWallet = useWalletStore((s) => s.debitUSD);
-
   const [usdInput, setUsdInput] = useState('');
   const [txnRef, setTxnRef] = useState<string | null>(null);
   const [status, setStatus] = useState<WithdrawPageStatus>('IDLE');
@@ -165,37 +161,19 @@ function WithdrawPageContent() {
       const s = await withdrawMock.status(txnRef);
       if (s === 'CONFIRMED') {
         clearInterval(h);
-        const mode = getBalanceMode();
-        if (mode === 'ledger') {
-          confirmTx(txnRef);
-        } else {
-          debitWallet(usd);
-          try {
-            if (typeof window !== 'undefined') {
-              const next = useWalletStore.getState().usdBalance;
-              window.localStorage.setItem(
-                'hedgr:wallet',
-                JSON.stringify({ state: { usdBalance: +next.toFixed(2) }, version: 0 })
-              );
-            }
-          } catch {
-            void 0;
-          }
-        }
+        confirmTx(txnRef);
         refresh();
         setStatus('CONFIRMED');
       } else if (s === 'FAILED') {
         clearInterval(h);
-        if (getBalanceMode() === 'ledger') {
-          failTx(txnRef);
-        }
+        failTx(txnRef);
         refresh();
         setStatus('FAILED');
       }
     }, 500);
 
     return () => clearInterval(h);
-  }, [txnRef, status, debitWallet, usd, confirmTx, failTx, refresh]);
+  }, [txnRef, status, confirmTx, failTx, refresh]);
 
   const confirm = async () => {
     if (status === 'PENDING' || simulatedResultActive || !hasPositiveAmount ||

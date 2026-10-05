@@ -16,10 +16,8 @@ import { EngineProtectiveGuidance } from "./EngineProtectiveGuidance";
 import { EngineStabilityExplainer } from "./EngineStabilityExplainer";
 import { EngineStabilityReviewSnapshot } from "./EngineStabilityReviewSnapshot";
 import { useBalance } from "../../../lib/hooks/useBalance";
-import { getBalanceMode } from "../../../lib/state/balance.mode";
 import { defiAdapter } from "../../../lib/defi";
 import { useLedgerStore } from "../../../lib/state/ledger";
-import { useWalletStore } from "../../../lib/state/wallet";
 import { EmptyState, ErrorState } from "@hedgr/ui";
 import {
   BalanceWithLocalEstimate,
@@ -91,6 +89,16 @@ function motionAllowed(): boolean {
   }
 }
 
+// Retired wallet balance mode (§344) left this key in some browsers. Nothing reads
+// it; a journey reset removes it so no stale balance outlives the clean start.
+function removeRetiredWalletBalance(): void {
+  try {
+    window.localStorage.removeItem("hedgr:wallet");
+  } catch {
+    // no-op
+  }
+}
+
 export default function DashboardPage() {
   const { total, available, pending, asOf, isLoading, error, currency, refresh } =
     useBalance();
@@ -98,7 +106,6 @@ export default function DashboardPage() {
   const { isFeatureEnabled } = usePolicy();
   const transactions = useLedgerStore((s) => s.transactions);
   const clearTransactions = useLedgerStore((s) => s.clear);
-  const resetWallet = useWalletStore((s) => s.reset);
   const [apy, setApy] = useState<number | null>(null);
   const [apyError, setApyError] = useState<string | null>(null);
   const [ready, setReady] = useState(false);
@@ -133,7 +140,7 @@ export default function DashboardPage() {
   useEffect(() => {
     if (cleanStartRequested) {
       clearTransactions();
-      resetWallet();
+      removeRetiredWalletBalance();
       window.history.replaceState(
         window.history.state,
         "",
@@ -141,7 +148,7 @@ export default function DashboardPage() {
       );
     }
     setReady(true);
-  }, [cleanStartRequested, clearTransactions, resetWallet]);
+  }, [cleanStartRequested, clearTransactions]);
 
   // HOME-EXPERIENCE-001 T3: read the previous Home visit once, then record this one.
   // A journey reset only clears the value; the next ordinary Home visit records it.
@@ -179,7 +186,7 @@ export default function DashboardPage() {
     if (!confirmed) return;
 
     clearTransactions();
-    resetWallet();
+    removeRetiredWalletBalance();
     clearLastVisit();
     setPreviousVisit(null);
   };
@@ -221,13 +228,12 @@ export default function DashboardPage() {
   const currencyContextVisible = syntheticJourneyActive && ready && asOf > 0 &&
     !isLoading && !error &&
     (!cleanStartRequested || (hasNoTransactions && total === 0)) &&
-    !(getBalanceMode() === "ledger" && hasNoTransactions && Number.isFinite(total) && total > 0);
+    !(hasNoTransactions && Number.isFinite(total) && total > 0);
   const currencyComparisonPending = pending !== 0 || total !== available ||
     transactions.some((tx) => tx.status === "pending");
 
   // T3 surfaces derive only from completed ledger entries (Activity order). They
-  // appear only when that derivation agrees with the displayed balance, in either
-  // balance mode (in wallet mode the wallet and ledger must match); otherwise
+  // appear only when that derivation agrees with the displayed balance; otherwise
   // Home keeps the existing observation.
   const positionEntries = useMemo(
     () => buildPositionEntries(transactions.map(txToLifecycle)),

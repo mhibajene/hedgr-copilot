@@ -204,10 +204,11 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
 
   const persistedStart = await page.evaluate(() => ({
     ledger: JSON.parse(window.localStorage.getItem('hedgr:ledger') ?? '{}'),
-    wallet: JSON.parse(window.localStorage.getItem('hedgr:wallet') ?? '{}'),
+    wallet: window.localStorage.getItem('hedgr:wallet'),
   }));
   expect(persistedStart.ledger.transactions).toEqual([]);
-  expect(persistedStart.wallet.state.usdBalance).toBe(0);
+  // Wallet balance mode is retired (§344); the clean start removes its stale key.
+  expect(persistedStart.wallet).toBeNull();
   await expect(page.getByTestId('trust-disclosure-banner')).toContainText(
     'Simulation · no real money'
   );

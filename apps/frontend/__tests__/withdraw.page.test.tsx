@@ -9,8 +9,6 @@ import { act, cleanup, fireEvent, render, screen } from '@testing-library/react'
 const withdrawStateMocks = vi.hoisted(() => ({
   confirm: vi.fn(),
   fail: vi.fn(),
-  debitUSD: vi.fn(),
-  getWalletState: vi.fn(() => ({ usdBalance: 40 })),
 }));
 
 vi.mock('../lib/hooks/useBalance', () => ({
@@ -29,21 +27,6 @@ vi.mock('../lib/state/ledger', () => ({
         fail: withdrawStateMocks.fail,
       }),
   ),
-}));
-
-vi.mock('../lib/state/wallet', () => {
-  const useWalletStore = Object.assign(
-    vi.fn((selector: (state: { debitUSD: () => void }) => unknown) =>
-      selector({
-        debitUSD: withdrawStateMocks.debitUSD,
-      })),
-    { getState: withdrawStateMocks.getWalletState },
-  );
-  return { useWalletStore };
-});
-
-vi.mock('../lib/state/balance.mode', () => ({
-  getBalanceMode: vi.fn(() => 'ledger'),
 }));
 
 vi.mock('../lib/payments/withdraw.mock', () => ({
@@ -127,7 +110,6 @@ import { useLatestFx } from '../lib/hooks/useLatestFx';
 import { useSearchParams } from 'next/navigation';
 import { withdrawMock } from '../lib/payments/withdraw.mock';
 import { TX_REVIEW_BYPASS_FX_PARAM, TX_REVIEW_HOLD_PENDING_PARAM } from '../lib/tx';
-import { getBalanceMode } from '../lib/state/balance.mode';
 
 const ORIGINAL_CI = process.env.CI;
 const ORIGINAL_NODE_ENV = process.env.NODE_ENV;
@@ -139,10 +121,6 @@ afterEach(() => {
   vi.restoreAllMocks();
   withdrawStateMocks.confirm.mockClear();
   withdrawStateMocks.fail.mockClear();
-  withdrawStateMocks.debitUSD.mockClear();
-  withdrawStateMocks.getWalletState.mockClear();
-  withdrawStateMocks.getWalletState.mockReturnValue({ usdBalance: 40 });
-  vi.mocked(getBalanceMode).mockReturnValue('ledger');
   vi.mocked(withdrawMock.status).mockResolvedValue('PENDING');
   vi.useRealTimers();
   vi.mocked(useSearchParams).mockReturnValue(new URLSearchParams() as ReturnType<typeof useSearchParams>);
@@ -580,12 +558,11 @@ describe('WithdrawPage CLASS-A-VAL-002 primary condition', () => {
     expect(screen.getByLabelText('Amount to simulate (USD)')).toBeTruthy();
   });
 
-  test('debits wallet fallback exactly once when the withdrawal confirms', async () => {
+  test('confirms the ledger withdrawal exactly once when the simulation confirms', async () => {
     vi.stubEnv('NEXT_PUBLIC_AUTH_MODE', 'mock');
     vi.stubEnv('NEXT_PUBLIC_FX_MODE', 'stub');
     vi.stubEnv('NEXT_PUBLIC_APP_ENV', 'dev');
     vi.useFakeTimers();
-    vi.mocked(getBalanceMode).mockReturnValue('wallet');
     vi.mocked(withdrawMock.status).mockResolvedValue('CONFIRMED');
     vi.mocked(useSearchParams).mockReturnValue(
       new URLSearchParams('journey=class-a-val-002') as ReturnType<typeof useSearchParams>,
@@ -621,13 +598,13 @@ describe('WithdrawPage CLASS-A-VAL-002 primary condition', () => {
     await act(async () => {
       await vi.advanceTimersByTimeAsync(600);
     });
-    expect(withdrawStateMocks.debitUSD).toHaveBeenCalledTimes(1);
-    expect(withdrawStateMocks.debitUSD).toHaveBeenCalledWith(10);
+    expect(withdrawStateMocks.confirm).toHaveBeenCalledTimes(1);
 
     await act(async () => {
       await vi.advanceTimersByTimeAsync(600);
     });
-    expect(withdrawStateMocks.debitUSD).toHaveBeenCalledTimes(1);
+    expect(withdrawStateMocks.confirm).toHaveBeenCalledTimes(1);
+    expect(withdrawStateMocks.fail).not.toHaveBeenCalled();
   });
 
   test('uses plain simulated-money copy and explicitly denies real payout meaning', async () => {
