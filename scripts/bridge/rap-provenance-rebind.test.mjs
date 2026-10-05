@@ -105,9 +105,18 @@ test("a committed metadata-only mandatory-source change plans a main-bound mecha
 
 test("mechanical write is deterministic, read-only and becomes a no-event merge", (t) => {
   const { root } = fixture(t);
-  amend(root, "docs/ops/HEDGR_STATUS.md", (content) => content.replace(
-    "Last updated: 2026-09-20", "Last updated: 2026-09-21"
-  ));
+  amend(root, "docs/ops/HEDGR_STATUS.md", (content) => {
+    const next = content.replace(
+      "Last updated: 2026-10-05",
+      "Last updated: 2026-10-06"
+    );
+    assert.notEqual(
+      next,
+      content,
+      "HEDGR_STATUS.md must contain Last updated: 2026-10-05 so the metadata-only edit actually changes the file"
+    );
+    return next;
+  });
   const target = git(root, "rev-parse", "HEAD");
   const result = writeRebind(root);
   const rebound = readFileSync(path.join(root, OUTPUT_PATH), "utf8");
