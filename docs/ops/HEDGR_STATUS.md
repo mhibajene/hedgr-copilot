@@ -4591,7 +4591,7 @@ This section does **not** authorize provider-specific implementation, legal reli
 
 **Founder sequencing note (2026-10-05):** The phase path of travel is recorded in [`docs/strategy/PHASE-SEQUENCING-2026-10-05.md`](../strategy/PHASE-SEQUENCING-2026-10-05.md) (Stability → Home → Legibility). That note activates no ticket, changes no occupancy, and grants no Lane E/G, research-release, or implementation authority.
 
-**Founder disposition — TDD standing build posture (2026-10-06; §346):** On 6 Oct 2026 at ~06:34 AWST the Founder (Musalwa Hibajene, repo owner `mhibajene`) RETAINed TDD (red → green → refactor) as the standing build posture for every future Engine and Home runtime §7a brief. Finite docs-only record `OPS-TDD-POSTURE-001` / §346. Named failing-then-passing tests are Acceptance Criteria; the first runtime commit is the failing test unless waived. Docs/authority PRs stay docs-first. Dynamic Stability Testing and Lane E IT-* suites stay research-only. Activates no ticket; occupancy unchanged. Required checks and branch protection unchanged. Permanent-main RAP rebind follows separately. **NO CROSS-LANE IMPACT.**
+**Founder disposition — TDD standing build posture (2026-10-06; §346):** On 6 Oct 2026 at ~06:34 AWST the Founder (Musalwa Hibajene, repo owner `mhibajene`) RETAINed TDD (red → green → refactor) as the standing build posture for every future Engine and Home runtime §7a brief. Same-day amendment ~06:41 AWST adds the smallest-durable-change-then-prove-the-real-result principle to AGENTS §4 and `.cursor/rules.md`. Finite docs-only record `OPS-TDD-POSTURE-001` / §346. Named failing-then-passing tests are Acceptance Criteria; the first runtime commit is the failing test unless waived. Docs/authority PRs stay docs-first. Dynamic Stability Testing and Lane E IT-* suites stay research-only. Activates no ticket; occupancy unchanged. Required checks and branch protection unchanged. Permanent-main RAP rebind follows separately. **NO CROSS-LANE IMPACT.**
 
 **Wallet balance mode retirement technical closeout (2026-10-05; §345):** §345 records delivery of `CLASS-A-VAL-002-STABILITY-LEDGER-ONLY-001`. After source #777 (`0bba3d4`; PASS WITH NOTES `fc72f37`) and separate RAP rebind #778 (`1373e50`; PASS `7c8a55c`), #779 merged at `6b848e4` following an independent Verifier PASS WITH NOTES on its exact head `6adc1b6`. The ledger is now the only balance source: the wallet mode, the wallet store and the `NEXT_PUBLIC_BALANCE_FROM_LEDGER` pass-through are removed, and a journey reset removes a stale `hedgr:wallet` key. Ledger maths, storage, routes, copy and Engine are unchanged. Production deployment `6863008500` of `6b848e4` is READY. The §327 probe re-run on the public alias passed 82/82, and Home shows $5.00 with a stale wallet $7 at 390 and 1440 px. Close only this nested ticket after this source-first completion merges to permanent main and a separate verified RAP rebind completes. No nested Lane V successor is named. Parents `CLASS-A-VAL-002` and `SE-REASON-001` remain open. The research route remains unreleased. **NO CROSS-LANE IMPACT.**
 
@@ -5507,7 +5507,7 @@ Markers are text (`Same as before`, `New`). Colour or icon may reinforce a marke
 
 **Founder disposition:** RETAIN — TDD (red → green → refactor) is the standing build posture for every future Engine and Home runtime §7a brief.
 
-**Founder approval to record:** Musalwa Hibajene (repo owner `mhibajene`), 6 Oct 2026 at ~06:34 AWST.
+**Founder approval to record:** Musalwa Hibajene (repo owner `mhibajene`), 6 Oct 2026 at ~06:34 AWST. Same-source amendment: 6 Oct 2026 at ~06:41 AWST, fold the smallest-durable-change-then-prove-the-real-result principle into this same S1 record.
 
 **Status:** docs-only Founder-decision record. No ticket is activated. No D-number. Occupancy remains parent `CLASS-A-VAL-002` and parent `SE-REASON-001` with no nested Lane V ticket. The RAP permanent-main rebind for this source follows separately. Required checks and branch protection are unchanged.
 
@@ -5522,9 +5522,12 @@ Markers are text (`Same as before`, `New`). Colour or icon may reinforce a marke
 7. Dynamic Stability Testing and the Lane E interpretation suites (IT-*) stay research-only and out of product CI until separately opened by the Founder.
 8. This disposition activates no ticket, launches no Implementer for runtime work, changes no occupancy, and changes no required checks or branch protection.
 
+**Same-record addition (~06:41 AWST):** Record “smallest durable change, then prove the real result” as a standing non-negotiable (HedgrOps pstack: laziness / subtract-before-add / prove-it-works). Make the smallest change that meets the brief. Prefer removing or reusing over adding new files, abstractions or surfaces. Prove the change against the real behaviour or artifact (a test, a hermetic run, a production probe where the brief names one), not just that it compiles or that CI is green.
+
 **Knock-on:**
-- `AGENTS.md` §7 Testing Standards carries the binding rule. The existing "Behavior changes should ship with corresponding test updates unless explicitly waived" line remains; Engine/Home runtime briefs are tightened to named red→green tests.
-- Implementer and Verifier skills carry matching one-line duties.
+- `AGENTS.md` §7 Testing Standards carries the TDD binding rule. The existing "Behavior changes should ship with corresponding test updates unless explicitly waived" line remains; Engine/Home runtime briefs are tightened to named red→green tests.
+- `AGENTS.md` §4 Non-Negotiables and `.cursor/rules.md` carry the smallest-durable-change-then-prove principle.
+- Implementer and Verifier skills carry matching one-line TDD duties.
 - No nested successor is named.
 
 **Explicit non-authorisation:** This record does not open or activate any ticket, occupy a nested Lane V or Lane E ticket, assign a D-number, change parent occupancy, amend doctrine or ADRs, change required checks or branch protection, or launch runtime implementation. **NO CROSS-LANE IMPACT.**

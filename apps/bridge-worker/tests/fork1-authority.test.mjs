@@ -90,6 +90,7 @@ test("Fork 1 retains the standing AGENTS execution contract without dated overri
   const normalize = (text) => text.slice(text.lastIndexOf("## 1) Purpose"))
     .replace(/Current parallelism posture:[\s\S]*?(?=### Green Lane operator rules)/, "")
     .replace(/\n- \*\*TDD standing posture for Engine and Home runtime §7a briefs \(binding; §346\):[^\n]+/, "")
+    .replace(/\n- Smallest durable change, then prove the real result:[^\n]+/, "")
     .replace(" — `magic` is local-only", "")
     .replace(" — `live` is local-only, never CI", "")
     .replace("## 9) Registered agent roles", "## 9) Approved agent roles")
