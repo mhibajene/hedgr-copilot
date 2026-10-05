@@ -13,7 +13,8 @@ const retiredPanelStrings = [
   'All other facts remain the same.',
   'Continue to how Hedgr would put this',
   'Continue to what Hedgr helps Sarah see',
-  'Only the information shown here is being considered. No response is entered or saved on this page.',
+  'Authored research example · not a live assessment of anyone’s money',
+  'This is an authored research example for Sarah’s fictional situation. It is not Hedgr reading your money, not Stability Engine output, and not a live financial assessment.',
 ];
 
 const rowKeys = ['available', 'planned', 'due', 'watch'] as const;
@@ -157,27 +158,21 @@ test.describe('Research Two-Beat Sarah example', () => {
     const watchBorder = await page.getByTestId('study-panel-after').locator('[data-row="watch"]').evaluate((el) => getComputedStyle(el).borderTopWidth);
     expect(Number.parseFloat(watchBorder)).toBeGreaterThan(0);
 
-    await page.getByTestId('study-to-bridge').click();
-    await expect(page.getByRole('heading', { name: 'You’ve reached the end of this research example.' })).toBeFocused();
-    // CLASS-A-VAL-002-RESEARCH-REFRESH-001 (§332): bridge wording aligned with the finished Home.
-    await expect(page.getByTestId('study-bridge')).toContainText('Next, try Hedgr with pretend money. Add a simulated deposit, then see what changes and what remains.');
-    await expect(page.getByTestId('study-bridge')).not.toContainText(/made-up money|practice deposit/);
-    await expect(page.getByTestId('study-bridge')).toContainText('No real money moves, no account is opened');
-    await expect(page.getByTestId('study-simulation-link')).toHaveAttribute('href', '/dashboard-synthetic-journey?reset=1');
-    // §332 newer look: the research canvas shows through (no white <main> band) and the action is a pill.
+    await expect(page.getByTestId('study-to-reserve')).toHaveText('Next: Daniel’s reserve');
+    await expect(page.getByTestId('study-to-reserve')).toHaveAttribute('href', '/research/reserve-scenario?v=1');
+    await expect(page.getByTestId('study-bridge')).toHaveCount(0);
+    await expect(page.getByTestId('study-simulation-link')).toHaveCount(0);
     await expect(page.getByTestId('stability-stimulus')).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
-    await expect(page.getByTestId('study-simulation-link')).toHaveCSS('border-radius', '9999px');
+    await expect(page.getByTestId('study-to-reserve')).toHaveCSS('border-radius', '9999px');
     await expect(page.getByText('Review the introduction')).toBeVisible();
     await expect(page.getByTestId('stability-stimulus')).not.toContainText(/in your own words|what can you conclude|what would you still need to know|does this change|what changes in your interpretation/i);
     await expectNoHolds(page);
     await expectRetiredStringsAbsent(page);
 
-    await page.getByTestId('study-simulation-link').click();
-    // The reset marker is consumed and the address returns to the plain journey path.
-    await expect(page).toHaveURL(/\/dashboard-synthetic-journey$/);
-    await expect(page.getByTestId('dashboard-current-status')).toContainText('Start here');
-    await expect(page.getByText('What Hedgr notices')).toHaveCount(0);
-    await expect(page.getByTestId('dashboard-add-simulated-deposit')).toBeVisible();
+    await page.getByTestId('study-to-reserve').click();
+    await expect(page).toHaveURL(/\/research\/reserve-scenario\?v=1$/);
+    await expect(page.getByTestId('reserve-stimulus')).toBeVisible();
+    await expect(page.getByTestId('daniel-intro')).toContainText('Here’s a second fictional example: Daniel, a salaried professional, and part of his savings. No real money is involved.');
   });
 
   test('keeps each selected denomination consistent across both beats', async ({ page }) => {
@@ -234,13 +229,13 @@ test.describe('Research Two-Beat Sarah example', () => {
     await page.setViewportSize({ width: 320, height: 720 });
     await enterStudy(page);
     await page.evaluate(() => { document.documentElement.style.fontSize = '200%'; });
-    for (const button of ['study-continue', 'study-to-hedgr', 'study-to-bridge']) {
+    for (const button of ['study-continue', 'study-to-hedgr', 'study-to-reserve']) {
       await page.getByTestId(button).focus();
       await expect(page.getByTestId(button)).toBeFocused();
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
       await page.getByTestId(button).click();
     }
-    await expect(page.getByTestId('study-simulation-link')).toBeVisible();
+    await expect(page.getByTestId('reserve-stimulus')).toBeVisible();
     for (const width of [320, 390, 1280, 1440]) {
       await page.setViewportSize({ width, height: 800 });
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
@@ -381,6 +376,9 @@ test.describe('Research Two-Beat Sarah example', () => {
     await enterStudy(page);
     await page.getByTestId('study-continue').click();
     await page.getByTestId('study-to-hedgr').click();
+    await page.getByTestId('study-to-reserve').click();
+    await page.getByTestId('study-to-facts').click();
+    await page.getByTestId('study-to-interpreted').click();
     await page.getByTestId('study-to-bridge').click();
     await page.getByTestId('study-simulation-link').click();
     await expect(page).toHaveURL(/\/dashboard-synthetic-journey$/);

@@ -10,7 +10,7 @@ import {
 } from '../../../lib/research/scenario-fixtures';
 import { ResearchChrome, researchStyles as rs } from '../ResearchChrome';
 
-type Stage = 'a1' | 'a2' | 'hedgr' | 'bridge';
+type Stage = 'a1' | 'a2' | 'hedgr';
 
 type PanelRowKey = 'available' | 'planned' | 'due' | 'watch';
 
@@ -182,16 +182,7 @@ export default function ScenarioStimulus() {
         </div>
         <p data-testid="study-attribution" className="text-sm font-medium leading-relaxed text-hedgr-700">This example was written in advance by Hedgr, using only the facts about Sarah on this page. It isn’t generated automatically, and it doesn’t look at anyone’s real money.</p>
         <p data-testid="study-limits" className="text-sm leading-relaxed text-hedgr-700">This example cannot predict the future exchange rate, assume Sarah’s planned contributions will happen, or establish that the course will be fully funded. It is not financial advice.</p>
-        <button type="button" data-testid="study-to-bridge" onClick={() => setStage('bridge')} className={rs.primary}>Continue</button>
-      </section>
-    );
-  } else {
-    stageBody = (
-      <section data-testid="study-bridge" className="mt-8 space-y-5">
-        <h2 ref={stageHeading} tabIndex={-1} className="text-lg font-semibold sm:text-xl">You’ve reached the end of this research example.</h2>
-        <p>Next, try Hedgr with pretend money. Add a simulated deposit, then see what changes and what remains. No real money moves, no account is opened, and nothing here is financial advice.</p>
-        {/* §332: open the simulation at a clean start so returning participants see first use. */}
-        <Link href="/dashboard-synthetic-journey?reset=1" data-testid="study-simulation-link" className={rs.primary}>Continue to the Hedgr simulation</Link>
+        <Link href="/research/reserve-scenario?v=1" data-testid="study-to-reserve" className={rs.primary}>Next: Daniel’s reserve</Link>
       </section>
     );
   }
