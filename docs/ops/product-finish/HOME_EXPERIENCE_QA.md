@@ -1,6 +1,6 @@
 # One Home experience — QA and delivery evidence
 
-Last updated: 2026-09-29
+Last updated: 2026-10-05
 
 Ticket: `CLASS-A-VAL-002-HOME-EXPERIENCE-001` (HEDGR_STATUS.md §7 / §7a). References: [HOME_EXPERIENCE_BASELINE.md](HOME_EXPERIENCE_BASELINE.md).
 
@@ -30,6 +30,8 @@ The Implementer (Claude Code, Opus 5.5) authored the runtime, the test updates a
 
 ## Validation
 
+Archive note (2026-10-05): pending cells in this mid-delivery table are historical; the closeout records the final results.
+
 | Check | T1 (#721) | T2 (#722) | T2 correction |
 | --- | --- | --- | --- |
 | Lint, typecheck (local) | pass | pass | pass |
@@ -57,6 +59,8 @@ Receipt text observed (390, 1440 and 320@200% identical apart from time):
 - Withdrawal: "You took $2.00 out of your simulated balance · … · Amount ZMW 40.00 · Shown as −$2.00 · … · Balance $5.00 → $3.00 · Real money moved None", then "Check the evidence".
 
 ### Finding T2-1 — rate-unavailable headline overflow (corrected here)
+
+Archive note (2026-10-05): pending cells in this mid-delivery record are historical; the closeout records the final results.
 
 T2 placed the new pause disc and the panel headline in a non-wrapping flex row. At 320px with 200% text the headline could not shrink below "temporarily", so the document grew to 380px. Default (non-journey) Deposit did not overflow. The correction lets the row wrap, so the headline moves below the disc when it cannot fit, and wraps long words. At normal widths the layout is unchanged ([fix-rate-panel-390.png](home-experience-qa/fix-rate-panel-390.png)). At 320px with 200% text the panel content area is about 140px, so the heading breaks inside words ([fix-rate-panel-320x200.png](home-experience-qa/fix-rate-panel-320x200.png)); this is the reflow fallback, and no copy changes. Shipped re-inspection of the correction is pending its merge.
 

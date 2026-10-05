@@ -1,6 +1,6 @@
 <!--
 This PR template is a self-attestation.
-CI, branch protection, and Codex QA remain the final authority.
+Governing merge procedure: AGENTS.md (standing PR invariant) and docs/ops/runbook.md → PR Posture.
 Unchecked or inaccurate items may block merge.
 -->
 
@@ -28,15 +28,25 @@ Unchecked or inaccurate items may block merge.
 ---
 
 ## Merge Gates (system-enforced)
-**Required checks**
-- validate (unit, typecheck, lint)
-- E2E smoke (@hedgr/frontend)
+**Required checks** (`main`, including admins; see AGENTS.md and runbook PR Posture)
+- `validate`
+- `E2E smoke (@hedgr/frontend)`
+- `hedgr/verifier`
 
-**Required labels**
-- `product:approved` (HedgrOps)
-- `qa:approved` (Codex QA)
-- one `area:*`
-- one `risk:*`
+**Independent verifier**
+- [ ] Independent verifier PASS on the exact current head SHA (`Hedgr-Verifier:` attestation in runbook form)
+- Any subsequent commit invalidates the previous PASS and returns the PR to verification-required state.
+
+**Draft handling**
+- Implementers open the PR as draft.
+- Implementers never change draft state.
+
+Satisfying merge gates authorises repository merge only. It does not widen ticket authority or imply launch/release approval.
+
+---
+
+## Descriptive metadata only, not merge authority
+`product:approved`, `qa:approved`, one `area:*`, and one `risk:*` are descriptive metadata only. They are never merge authority, ticket authority, or release/launch authority. Labels are not consulted by the verifier gate.
 
 ---
 
@@ -97,3 +107,4 @@ Use for changes touching brand-facing UI, assets, visual tokens, typography, AI-
   pnpm -w build
   pnpm -w test
   pnpm --filter @hedgr/frontend run e2e:ci
+  ```
