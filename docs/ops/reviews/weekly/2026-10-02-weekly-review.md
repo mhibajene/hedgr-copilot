@@ -73,7 +73,12 @@ The week is assessed against capital preservation, liquidity and withdrawal hone
 - Exact-head verification, 930 unit tests, 133 browser tests, multi-width inspection, production deployment, and production inspection supported technical fidelity. The returning-participant test demonstrated the bridge reset behavior.
 - No other participant string changed. The route remained unreleased, the Lane V parent remained open, and no participant, telemetry, Engine, Wallet, ledger, or financial-capability evidence followed.
 
-No additional completed repo-native work was recorded for 2 October.
+### 2026-10-02 — Daniel reserve source activation
+
+- §334 separately activated `CLASS-A-VAL-002-RESEARCH-RESERVE-001` as the sole nested Lane V ticket for the Daniel reserve case and legibility pass. It reused the queued ticket ID while superseding the earlier Mulenga/Kwesi scenario; Mulenga/Kwesi was no longer queued.
+- This was a source-first authority record, not completed product capability. At the end of the bounded window, runtime delivery, participant release, comprehension evidence, and financial capability had not followed from §334.
+
+Current-authority note: §335 later records the Daniel ticket's technical closeout on 5 October 2026, outside this review window. Live §7 / §7a, not this historical weekly boundary, controls current occupancy.
 
 ## 7. Process assessment
 
@@ -114,10 +119,22 @@ These labels are descriptive review language, not acceptance gates or maturity l
 - High delivery and verification volume could be mistaken for product convergence; most evidence was technical, visual, governance, or provenance evidence.
 - Production deployment and inspection establish behavior of the reviewed synthetic surfaces, not participant acceptance or release authority.
 - The Bridge normal-use policy disposition is not evidence that authentication or the four-tool connection works.
-- The One Home and research-refresh nested closeouts do not close parent `CLASS-A-VAL-002`; the research route remained unreleased and no nested successor was active at the end-state recorded in §7.
+- The One Home and research-refresh nested closeouts do not close parent `CLASS-A-VAL-002`; the research route remained unreleased. The Sarah closeout did not itself activate a successor, but §334 separately activated the Daniel reserve ticket on 2 October; that later closed under §335 outside this review window.
 - The prior review artifacts and Bridge review snapshots are support evidence only and cannot establish authority, completion, readiness, acceptance, or sequencing.
 
-## 12. Status-language watchlist
+## 12. Authority treatment note
+
+| Included item | Authority treatment |
+| --- | --- |
+| One Home, Home deduplication, New Marker, and Sarah refresh | Recorded as bounded technical closeouts in `HEDGR_STATUS.md` §§327, 329, 330, and 333. Each closeout applies only to its named nested ticket and does not close the parent or release participants. |
+| Daniel reserve activation | Recorded as source-first authority in §334 within the review window, not as completed capability. The later §335 technical closeout is outside the bounded window and is mentioned only to prevent this historical review from being mistaken for current occupancy. |
+| PR-posture remediation and refinement | Recorded Founder governance dispositions in §§326 and 331. They govern repository merge control without creating product, participant, financial, or lane authority. |
+| Bridge connection work | Recorded Founder dispositions and bounded diagnostic evidence in §§318–325. The evidence remains fail-closed and does not establish a usable authenticated connection. |
+| Prior weekly/MVP reviews and static snapshots | Included as merged support evidence only. Reviews and snapshots are non-authoritative evidence surfaces and do not complete tickets or determine sequencing. |
+
+Draft, in-progress, unmerged, external-only, and unrecorded work is excluded as completed evidence. This treatment follows `HEDGR_STATUS.md`; the review does not upgrade support artifacts, activation records, or technical verification into broader authority.
+
+## 13. Status-language watchlist
 
 | Term | Location / artifact | Why it may be risky | Repo-authorized meaning | Action required? |
 | --- | --- | --- | --- | --- |
@@ -125,15 +142,15 @@ These labels are descriptive review language, not acceptance gates or maturity l
 | `verified` / `PASS` | PR posture, QA, and closeout records | Could imply product acceptance or operational safety beyond the reviewed SHA and scope | The named head, tree, checks, or inspection passed its recorded verification | No; retain the verification object, SHA, and limits |
 | `normal use disposition approved` | Bridge §325 | Could imply a usable authenticated connection | Policy permission for later private Founder-only use, conditional on authentication actually completing | No; preserve the recorded non-operational boundary |
 | `Production` / `deployed` | Home, research, and Bridge records | Could imply participant release or financial operation | The specified code revision reached the named environment and passed only the recorded checks | No; do not broaden deployment evidence |
-| `active` / `queued` | §7 / §7a Lane V records | Historical activation could be mistaken for current occupancy | Only live §7 / §7a establishes current occupancy; the Sarah nested ticket closed with no active successor and Mulenga remained queued | No; preserve current-source qualification |
+| `active` / `queued` | §7 / §7a Lane V records | Historical activation could be mistaken for current occupancy | §334 separately activated the Daniel reserve ticket on 2 October and superseded the queued Mulenga/Kwesi scenario; §335 later closed Daniel outside this review window. Only live §7 / §7a establishes current occupancy. | No; preserve bounded-window and current-source qualification |
 | `New` | Research comparison UI | Could imply a new financial state or capability | Secondary metadata marking changed authored rows in an unreleased synthetic comparison | No; preserve the authored comparison context |
 
-## 13. What changed vs what did not change
+## 14. What changed vs what did not change
 
 | Area / workstream | What changed | What did not change | Authority widened? | Trust surface affected? | Evidence basis |
 | --- | --- | --- | --- | --- | --- |
 | Synthetic Home and Activity | One Home presentation, receipts, state continuity, first-use/failure handling, motion, and deduplication shipped with QA evidence | No participant validation, live-money movement, Engine decision, or parent closure | No | Yes — synthetic state, status, and next-step legibility | §§327–329 |
-| Stability research route | Marker placement, stacked rows, clean-start bridge, aligned wording, and shared research chrome shipped | Route remained unreleased; no participant response, telemetry, Engine acceptance, or Mulenga activation | No | Yes — authored comparison and journey continuity | §§330, 332–333 |
+| Stability research route | Marker placement, stacked rows, clean-start bridge, aligned wording, and shared research chrome shipped; §334 separately activated the Daniel reserve source on 2 October | Route remained unreleased; §334 was not completed capability in-window and supplied no participant response, telemetry, Engine acceptance, or financial capability | No | Yes — authored comparison and journey continuity | §§330, 332–334 |
 | PR governance | Exact-head invariant, verifier gate, required `validate`, attestation format, and re-verification procedure became explicit | Deviations on #721, #722, and #710 were not cured by retrospective evidence; no product or lane authority followed | No | Indirectly — provenance and gate truth improved | §§326 and 331; `AGENTS.md`; `docs/ops/runbook.md` |
 | Bridge / read-only evidence support | OAuth compatibility and diagnostic categorisation improved; bounded normal-use policy was recorded | No verified authenticated connection, tool discovery, evidence retrieval, wider user/tool set, or operational acceptance | No | Yes — identity, consent, and fail-closed boundaries became clearer | §§318–325 |
 | Review support | Prior weekly and MVP reviews and their deterministic snapshots merged | Reviews did not become authority, acceptance, readiness, or sequencing surfaces | No | Indirectly — institutional memory and evidence provenance | #696; `docs/ops/reviews/README.md` |
@@ -141,12 +158,12 @@ These labels are descriptive review language, not acceptance gates or maturity l
 | Off-ramp / rails | No completed change | Provider, market, conversion, settlement, and withdrawal capability remained unestablished | No | No | §7 / §7a; accepted ADRs |
 | Custody / customer-money movement | No completed change | No custody, customer-money movement, Class B, or Class C authority | No | No | §7 / §7a; ADR-0013 / ADR-0014 |
 
-## 14. Decision pressure
+## 15. Decision pressure
 
 **Founder decision required.** Repo authority continues to identify D2 as a separate, undecided Founder strategy question. The completed Home and research presentation packages did not resolve it, and this review does not infer its answer or timing.
 
 No additional decision pressure is manufactured from the unauthenticated Bridge state, the unreleased research route, or the absence of participant evidence.
 
-## Completion statement
+## 16. Completion statement
 
 This review is a bounded evidence artifact subordinate to `docs/ops/HEDGR_STATUS.md`, `AGENTS.md`, accepted ADRs, and active doctrine. It creates no execution authority, activates no ticket, alters no sequencing or repository governance, and must not be treated as readiness evidence beyond what repo-native evidence explicitly establishes.
