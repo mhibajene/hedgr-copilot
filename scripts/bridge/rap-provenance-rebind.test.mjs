@@ -107,13 +107,13 @@ test("mechanical write is deterministic, read-only and becomes a no-event merge"
   const { root } = fixture(t);
   amend(root, "docs/ops/HEDGR_STATUS.md", (content) => {
     const next = content.replace(
-      "Last updated: 2026-10-05",
-      "Last updated: 2026-10-06"
+      "Last updated: 2026-10-06",
+      "Last updated: 2026-10-07"
     );
     assert.notEqual(
       next,
       content,
-      "HEDGR_STATUS.md must contain Last updated: 2026-10-05 so the metadata-only edit actually changes the file"
+      "HEDGR_STATUS.md must contain Last updated: 2026-10-06 so the metadata-only edit actually changes the file"
     );
     return next;
   });

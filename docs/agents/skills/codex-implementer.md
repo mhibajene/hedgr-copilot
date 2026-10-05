@@ -50,6 +50,7 @@ You MUST:
 - respect `.cursorrules`, ADRs, and `AGENTS.md`
 - keep changes minimal and localized
 - include or update tests when contract surfaces change
+- for Engine and Home runtime §7a briefs, treat a named red→green test as an Acceptance Criterion (path on the allowlist); the first commit on that runtime PR is the failing test unless the brief records an explicit Founder waiver (AGENTS §7 / §346)
 - maintain CI-safe behavior (no live external calls)
 - use reversible approaches (feature flags, stubs)
 
@@ -121,6 +122,7 @@ You MUST:
 - keep changes minimal, localized, reversible, and reviewable
 - follow existing codebase patterns
 - run or identify relevant lint/test/typecheck validation
+- for Engine and Home runtime §7a briefs, land the named failing test as the first runtime commit unless the brief records an explicit Founder waiver (AGENTS §7 / §346)
 - stop if the ticket requires architecture, policy, or execution-authority judgment
 
 You MUST NOT:
