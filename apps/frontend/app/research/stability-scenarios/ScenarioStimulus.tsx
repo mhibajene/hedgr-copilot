@@ -6,17 +6,14 @@ import {
   getSimulationDisplayCurrency,
   type SimulationDisplayCurrency,
 } from '../../../lib/state/simulation-display-currency';
+import {
+  SARAH_FIGURES,
+  formatScenarioAmount,
+  savingsCurrencyNames,
+} from '../../../lib/research/scenario-fixtures';
 import { ResearchChrome, researchStyles as rs } from '../ResearchChrome';
 
-type Stage = 'a1' | 'a2' | 'hedgr' | 'bridge';
-
-const savingsCurrencyNames = {
-  ZMW: 'kwacha',
-  KES: 'Kenyan shillings',
-  NGN: 'Nigerian naira',
-  GHS: 'Ghanaian cedis',
-  PHP: 'Philippine pesos',
-} as const;
+type Stage = 'a1' | 'a2' | 'hedgr';
 
 type PanelRowKey = 'available' | 'planned' | 'due' | 'watch';
 
@@ -106,10 +103,11 @@ export default function ScenarioStimulus() {
   }
 
   const savingsCurrencyName = savingsCurrencyNames[currency];
-  const amount = (value: string) => currency === 'ZMW' ? `K${value}` : `${currency} ${value}`;
-  const availableNow = amount('6,000');
-  const planned = `${amount('24,000')} over 12 months, not available yet`;
-  const localFeeNeed = `${amount('29,500')} on 1 October 2027`;
+  const figures = SARAH_FIGURES[currency];
+  const amount = (value: string) => formatScenarioAmount(currency, value);
+  const availableNow = amount(figures.setAside);
+  const planned = `${amount(figures.planned)} over 12 months, not available yet`;
+  const localFeeNeed = `${amount(figures.fee)} on 1 October 2027`;
   const rowLabels = {
     available: 'Available now',
     planned: 'Planned',
@@ -128,12 +126,12 @@ export default function ScenarioStimulus() {
           {stage === 'a1' ? (
             <>
               <p className="text-sm text-hedgr-700">Situation on 1 October 2026</p>
-              <p>Sarah already has {amount('6,000')} set aside. She plans to add {amount('2,000')} on the 15th of each month for the next 12 months, starting on 15 October 2026. Those contributions have not happened yet.</p>
+              <p>Sarah already has {amount(figures.setAside)} set aside. She plans to add {amount(figures.monthly)} on the 15th of each month for the next 12 months, starting on 15 October 2026. Those contributions have not happened yet.</p>
             </>
           ) : null}
           <p data-testid="course-fee">{stage === 'a1'
             ? 'The course costs USD 1,000. Payment is due in US dollars on 1 October 2027.'
-            : `The course provider has changed the fee to ${amount('29,500')}, payable in ${currency === 'ZMW' ? 'Zambian kwacha' : savingsCurrencyName} on 1 October 2027. It was USD 1,000, payable in US dollars.`}</p>
+            : `The course provider has changed the fee to ${amount(figures.fee)}, payable in ${currency === 'ZMW' ? 'Zambian kwacha' : savingsCurrencyName} on 1 October 2027. It was USD 1,000, payable in US dollars.`}</p>
           {stage === 'a2' ? (
             <p>Nothing else has changed.</p>
           ) : null}
@@ -148,7 +146,7 @@ export default function ScenarioStimulus() {
   } else if (stage === 'hedgr') {
     stageBody = (
       <section data-testid="study-hedgr-explanation" className="mt-8 space-y-5">
-        <p data-testid="study-authored-label" className="break-words text-sm font-medium text-hedgr-600">Authored research example · not a live assessment of anyone’s money</p>
+        <p data-testid="study-authored-label" className="break-words text-sm font-medium text-hedgr-600">Research example about a fictional person</p>
         <h2 ref={stageHeading} tabIndex={-1} className="break-words text-lg font-semibold sm:text-xl">What Hedgr helps Sarah see</h2>
         <div data-testid="study-value-panel" className={`@container space-y-5 break-words ${rs.panel}`}>
           <div className="grid grid-cols-1 gap-8 @lg:grid-cols-2 @lg:grid-rows-[auto_auto_auto_auto_auto] @lg:gap-x-6 @lg:gap-y-3">
@@ -178,25 +176,16 @@ export default function ScenarioStimulus() {
                 {
                   rowKey: 'watch',
                   label: rowLabels.watch,
-                  value: `Sarah’s savings and the fee are now both in ${savingsCurrencyName}, so the exchange rate no longer changes the amount she needs. What is still open is whether the planned ${amount('24,000')} arrives on time.`,
+                  value: `Sarah’s savings and the fee are now both in ${savingsCurrencyName}, so the exchange rate no longer changes the amount she needs. What is still open is whether the planned ${amount(figures.planned)} arrives on time.`,
                   marker: 'New',
                 },
               ]}
             />
           </div>
         </div>
-        <p data-testid="study-attribution" className="text-sm font-medium leading-relaxed text-hedgr-700">This is an authored research example for Sarah’s fictional situation. It is not Hedgr reading your money, not Stability Engine output, and not a live financial assessment.</p>
+        <p data-testid="study-attribution" className="text-sm font-medium leading-relaxed text-hedgr-700">This example was written in advance by Hedgr, using only the facts about Sarah on this page. It isn’t generated automatically, and it doesn’t look at anyone’s real money.</p>
         <p data-testid="study-limits" className="text-sm leading-relaxed text-hedgr-700">This example cannot predict the future exchange rate, assume Sarah’s planned contributions will happen, or establish that the course will be fully funded. It is not financial advice.</p>
-        <button type="button" data-testid="study-to-bridge" onClick={() => setStage('bridge')} className={rs.primary}>Continue</button>
-      </section>
-    );
-  } else {
-    stageBody = (
-      <section data-testid="study-bridge" className="mt-8 space-y-5">
-        <h2 ref={stageHeading} tabIndex={-1} className="text-lg font-semibold sm:text-xl">You’ve reached the end of this research example.</h2>
-        <p>Next, try Hedgr with pretend money. Add a simulated deposit, then see what changes and what remains. No real money moves, no account is opened, and nothing here is financial advice.</p>
-        {/* §332: open the simulation at a clean start so returning participants see first use. */}
-        <Link href="/dashboard-synthetic-journey?reset=1" data-testid="study-simulation-link" className={rs.primary}>Continue to the Hedgr simulation</Link>
+        <Link href="/research/reserve-scenario?v=1" data-testid="study-to-reserve" className={rs.primary}>Next: Daniel’s reserve</Link>
       </section>
     );
   }

@@ -156,8 +156,7 @@ export function EngineAllocationBands({
           ))}
         </dl>
         <p className="mt-3 text-xs leading-relaxed text-hedgr-500">
-          Percentages describe the simulated planning structure only. They do
-          not show where money is held.
+          The percentages show how the plan is divided in this example. No real money is split or moved.
         </p>
       </details>
     </div>

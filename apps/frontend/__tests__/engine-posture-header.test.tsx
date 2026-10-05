@@ -72,7 +72,7 @@ describe("EnginePostureHeader", () => {
     );
     expect(
       screen.getByTestId("dashboard-current-status").textContent
-    ).toContain("not a guarantee");
+    ).toContain("This is what happened in the example.");
     expect(
       screen.getByTestId("dashboard-current-status").textContent
     ).not.toMatch(/score|gauge|safe|all clear/i);
@@ -96,7 +96,7 @@ describe("EnginePostureHeader", () => {
       "Nothing to compare yet. Add a simulated deposit when you’re ready — this is practice money only."
     );
     expect(screen.queryByText("What Hedgr notices")).toBeNull();
-    expect(screen.queryByText("This is an observation from the simulation, not a guarantee.")).toBeNull();
+    expect(screen.queryByText("This is what happened in the example. It doesn’t tell you what will happen next.")).toBeNull();
     expect(screen.queryByTestId("engine-simulation-attention-answer")).toBeNull();
   });
 
@@ -119,7 +119,7 @@ describe("EnginePostureHeader", () => {
     ).toBeNull();
     expect(screen.queryByText("Does anything need attention?")).toBeNull();
     expect(screen.getByText(
-      "This is an observation from the simulation, not a guarantee."
+      "This is what happened in the example. It doesn’t tell you what will happen next."
     )).toBeDefined();
     expect(
       screen.getByTestId("dashboard-current-status").textContent
@@ -149,7 +149,7 @@ describe("EnginePostureHeader", () => {
           expect(screen.getByText(engineState.notice!.title)).toBeDefined();
           expect(screen.getByText(engineState.notice!.body)).toBeDefined();
           expect(screen.getByText(
-            "This is an observation from the simulation, not a guarantee."
+            "This is what happened in the example. It doesn’t tell you what will happen next."
           )).toBeDefined();
         }
       );
@@ -270,7 +270,7 @@ test.each(["tightening", "tightened", "recovery"] as const)("redesigned research
   expect(screen.getByTestId("engine-posture-banner").getAttribute("role")).toBe("status");
   expect(screen.getByText(engineState.notice!.title)).toBeDefined();
   expect(screen.getByText(engineState.notice!.body)).toBeDefined();
-  expect(screen.getByText("This is an observation from the simulation, not a guarantee.")).toBeDefined();
+  expect(screen.getByText("This is what happened in the example. It doesn’t tell you what will happen next.")).toBeDefined();
   expect(screen.queryByText("What changed")).toBeNull();
 });
 
@@ -281,6 +281,6 @@ test.each([
 ] as const)("polished %s observation retains readable amount and simulation boundary", (type, direction) => {
   render(<EnginePostureHeader engineState={getMockEngineState("normal")} syntheticJourneyActive redesigned comparisonState="change" latestChangeType={type} latestChangeAmountUSD={2} />);
   expect(screen.getByTestId("engine-posture-context").textContent).toBe(`Your simulated ${direction} the balance by $2.00.`);
-  expect(screen.getByText("This is an observation from the simulation, not a guarantee.")).toBeDefined();
+  expect(screen.getByText("This is what happened in the example. It doesn’t tell you what will happen next.")).toBeDefined();
   expect(screen.queryByTestId("engine-posture-banner")).toBeNull();
 });

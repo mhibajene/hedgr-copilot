@@ -467,7 +467,7 @@ export default function DashboardPage() {
   );
   const guaranteeLine = (
     <p className="text-xs leading-relaxed text-hedgr-500">
-      This is an observation from the simulation, not a guarantee.
+      This is what happened in the example. It doesn’t tell you what will happen next.
     </p>
   );
   const activityHref = productRouteHref("/activity");
@@ -502,19 +502,19 @@ export default function DashboardPage() {
           </p>
           <ol className={home.firstUseSteps} data-testid="dashboard-first-use-steps">
             <li aria-current="step">
-              {syntheticJourneyActive ? <strong>Position</strong> : null}
+              {syntheticJourneyActive ? <strong>Where things stand</strong> : null}
               <span>You are here. It starts at {formatUsd(total)}.</span>
             </li>
             <li>
-              {syntheticJourneyActive ? <strong>First event</strong> : null}
+              {syntheticJourneyActive ? <strong>What happens</strong> : null}
               <span>Add a simulated deposit.</span>
             </li>
             <li>
-              {syntheticJourneyActive ? <strong>Change</strong> : null}
+              {syntheticJourneyActive ? <strong>What changed</strong> : null}
               <span>Try a simulated withdrawal.</span>
             </li>
             <li>
-              {syntheticJourneyActive ? <strong>Evidence</strong> : null}
+              {syntheticJourneyActive ? <strong>How you can tell</strong> : null}
               <span>Check both entries in Activity.</span>
             </li>
           </ol>

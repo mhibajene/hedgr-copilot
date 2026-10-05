@@ -50,9 +50,9 @@ This register is exhaustive for new or changed strings. Values in brackets come 
 | Home Observation | "[N] things changed since [date]. Your position went from [a] to [b]." with an entry list | New |
 | Home Observation | "See the entry", "See all in Activity" | New links |
 | Home position line | "Your last visit", "Today", top-value label, empty "Your line starts with your first deposit" | New |
-| First use | "No simulated activity yet.", "Start here", "Practise with pretend money first. Hedgr shows what changes, and why.", step lines "You are here. It starts at $0.00." / "Add a simulated deposit." / "Try a simulated withdrawal." / "Check both entries in Activity.", "How this simulation works" | New; replaces "Start with a simulated deposit" / "Nothing to compare yet…" |
+| First use | "No simulated activity yet.", "Start here", "Practise with pretend money first. Hedgr shows what changes, and why.", step lines "You are here. It starts at $0.00." / "Add a simulated deposit." / "Try a simulated withdrawal." / "Check both entries in Activity.", step names "Where things stand" / "What happens" / "What changed" / "How you can tell", "How this simulation works" | New; step names superseded by CLASS-A-VAL-002-RESEARCH-RESERVE-001 (§334) |
 | Loading | "Loading your position…" | New; replaces "…" |
-| Step header | "Step [n] of 4 · [step]" | Restyles the existing eyebrow and chip |
+| Step header | "Step [n] of 4 · [step]" with steps "Where things stand" / "What happens" / "What changed" / "How you can tell" | Restyles the existing eyebrow and chip; step names superseded by CLASS-A-VAL-002-RESEARCH-RESERVE-001 (§334) |
 | Receipt | "You added [amount] to your simulated balance" / "You took [amount] out of your simulated balance", "Recorded", "Today, [time]" | New; replaces "Simulated deposit recorded" and its paragraph |
 | Receipt | Row labels "Amount", "Shown as", "Example rate", "Balance", "Real money moved" / "None" | New |
 | Bottom action panel | "Next step"; "Try a simulated withdrawal" / "See what changes, and what stays, when money comes out."; "Check the evidence" / "Activity lists both entries and the balance after each one."; "Review Activity"; "Back to your position" | New. The existing "Continue to simulated withdrawal" stays. |
@@ -62,6 +62,10 @@ This register is exhaustive for new or changed strings. Values in brackets come 
 | Activity | "[Weekday] [day] [Month]" date headers with "Balance [amount]", "Completed · [time]", "Started at $0.00 · [date]" | New; replaces the balance-after strip |
 | Activity panel | "See it on your position" / "Hedgr explains what changed between these two entries.", "Back to your position" | New; replaces "Return to current position" |
 | Motion | Screen-reader sentence "Your position is now [amount], [change] than on your last visit." | New |
+| Home Currency context | "This shows the same amount at two made-up exchange rates. No money is earned or exchanged, and it isn’t what you’d receive." | CLASS-A-VAL-002-RESEARCH-RESERVE-001 (§334); simulated routes only |
+| Home Currency context | "A made-up example, shown today and 30 days later." | CLASS-A-VAL-002-RESEARCH-RESERVE-001 (§334); simulated routes only; replaces "Invented research fixture…" |
+| Home planning percentages | "The percentages show how the plan is divided in this example. No real money is split or moved." | CLASS-A-VAL-002-RESEARCH-RESERVE-001 (§334); simulated collapsed panel only; replaces "Percentages describe…" |
+| Home Observation | "This is what happened in the example. It doesn’t tell you what will happen next." | CLASS-A-VAL-002-RESEARCH-RESERVE-001 (§334); simulated routes only; replaces "This is an observation from the simulation, not a guarantee." |
 
 ## Translation constraints
 

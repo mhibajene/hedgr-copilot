@@ -34,7 +34,7 @@ test('keeps one compact difference, visible limits and a native calculation disc
   expect(detail.textContent).toContain('ZMW 5,700.00');
   expect(detail.textContent).toContain('ZMW 6,000.00');
   expect(detail.textContent).toContain('No money has moved.');
-  expect(detail.textContent).toContain('not your account history');
+  expect(detail.textContent).toContain('A made-up example, shown today and 30 days later.');
   expect(detail.textContent).toContain('It does not mean you held this amount for 30 days.');
   expect(writes).not.toHaveBeenCalled();
   expect(document.querySelector('[aria-live], [role="alert"], [role="status"]')).toBeNull();
@@ -138,7 +138,7 @@ test('compact Home opens the complete comparison and returns focus without chang
   expect(screen.getByTestId('currency-insight-headline').closest('dialog')?.open).toBe(false);
   fireEvent.click(trigger);
   const dialog = screen.getByRole('dialog', { name: 'Currency context' });
-  for (const text of ['ZMW 5,700.00', 'ZMW 6,000.00', 'same $300.00', 'not earnings, purchasing power, guaranteed protection or a conversion quote', 'It does not mean you held this amount for 30 days.', 'fees and spreads', 'No money has moved.']) {
+  for (const text of ['ZMW 5,700.00', 'ZMW 6,000.00', 'This shows the same amount at two made-up exchange rates.', 'not earnings, purchasing power, guaranteed protection or a conversion quote', 'It does not mean you held this amount for 30 days.', 'fees and spreads', 'No money has moved.', 'A made-up example, shown today and 30 days later.']) {
     expect(dialog.textContent).toContain(text);
   }
   fireEvent.click(screen.getByRole('button', { name: 'Back to Home' }));

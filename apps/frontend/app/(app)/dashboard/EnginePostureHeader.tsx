@@ -193,7 +193,7 @@ export function EnginePostureHeader({
             </>
           ) : null}
           <p className="text-xs leading-relaxed text-hedgr-500">
-            This is an observation from the simulation, not a guarantee.
+            This is what happened in the example. It doesn’t tell you what will happen next.
           </p>
         </div>
       ) : null}
