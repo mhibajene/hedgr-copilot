@@ -160,7 +160,7 @@ Draft, in-progress, unmerged, external-only, and unrecorded work is excluded as 
 
 ## 15. Decision pressure
 
-**Founder decision required.** Repo authority continues to identify D2 as a separate, undecided Founder strategy question. The completed Home and research presentation packages did not resolve it, and this review does not infer its answer or timing.
+**Founder decision recorded (outside this review window).** At the time of this review, repo authority still identified D2 as an undecided Founder strategy question. On 5 Oct 2026 the Founder disposed D2 as option B (hypothesis only) under §343 / `OPS-D2-DISPOSITION-001`: “obligation-anchored progress” is a research hypothesis, not product direction; the no-claim fence stays. This historical weekly review does not reopen that question.
 
 No additional decision pressure is manufactured from the unauthenticated Bridge state, the unreleased research route, or the absence of participant evidence.
 
