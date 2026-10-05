@@ -105,6 +105,7 @@ You MUST:
 - assess acceptance alignment and scope discipline
 - identify doctrine-sensitive risks, especially trust-surface overclaim or implied execution
 - distinguish blocking issues from non-blocking notes
+- for Engine and Home runtime §7a briefs, confirm the named TDD tests exist, assert what the brief asks for, and pass in hosted CI on the exact head SHA; Verifier PASS remains an attestation gate and does not replace tests (AGENTS §7 / §346)
 - surface conflicts explicitly
 
 You MUST NOT:

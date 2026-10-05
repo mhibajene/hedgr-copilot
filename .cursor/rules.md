@@ -10,6 +10,7 @@
 - Touch **only** the files listed in the request. Do not rename or move files unless explicitly requested.
 - Keep diffs **small, surgical, and shippable**.
 - Prefer the **minimal compliant patch** over broad refactors.
+- Make the smallest durable change that meets the brief; prefer removing or reusing over adding new files, abstractions or surfaces.
 
 ## Doctrine and Scope Discipline
 - Before patching, check whether the requested change is constrained by relevant doctrine or ADRs.
@@ -36,6 +37,7 @@
 
 ## Quality Gates
 - New behavior requires **basic tests** unless explicitly waived.
+- Prove the change against the real behaviour or artifact (a test, a hermetic run, or a production probe the brief names), not only that it compiles or that CI is green (AGENTS §4 / §346).
 - If a patch changes policy, trust behavior, disclosure behavior, or user-facing product meaning, update relevant docs or tests accordingly.
 - Preserve consistency across implementation, tests, and doctrine-facing language.
 
