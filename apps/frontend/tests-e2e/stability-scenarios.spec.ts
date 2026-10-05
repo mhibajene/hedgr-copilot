@@ -96,7 +96,7 @@ test.describe('Research Two-Beat Sarah example', () => {
     await expect(explanation.getByRole('heading', { name: 'What Hedgr helps Sarah see' })).toBeFocused();
     await expect(page.getByTestId('stability-stimulus')).not.toContainText('How Hedgr would put this');
     await expect(page.getByTestId('stability-stimulus')).not.toContainText('Still Sarah’s course-savings example.');
-    await expect(page.getByTestId('study-authored-label')).toHaveText('Authored research example · not a live assessment of anyone’s money');
+    await expect(page.getByTestId('study-authored-label')).toHaveText('Research example about a fictional person');
     await expect(page.getByTestId('study-value-panel').getByRole('heading', { name: 'Before the fee changed' })).toBeVisible();
     await expect(page.getByTestId('study-value-panel').getByRole('heading', { name: 'After the fee changed' })).toBeVisible();
     await expect(page.getByTestId('study-value-panel').getByRole('tablist')).toHaveCount(0);
@@ -124,7 +124,7 @@ test.describe('Research Two-Beat Sarah example', () => {
     await expect(page.getByTestId('study-panel-after').locator('[data-row="watch"] dd')).toHaveText('Sarah’s savings and the fee are now both in kwacha, so the exchange rate no longer changes the amount she needs. What is still open is whether the planned K24,000 arrives on time.');
     await expect(page.getByTestId('study-value-panel').getByText('New', { exact: true })).toHaveCount(2);
 
-    await expect(explanation.getByTestId('study-attribution')).toHaveText('This is an authored research example for Sarah’s fictional situation. It is not Hedgr reading your money, not Stability Engine output, and not a live financial assessment.');
+    await expect(explanation.getByTestId('study-attribution')).toHaveText('This example was written in advance by Hedgr, using only the facts about Sarah on this page. It isn’t generated automatically, and it doesn’t look at anyone’s real money.');
     await expect(explanation.getByTestId('study-limits')).toHaveText('This example cannot predict the future exchange rate, assume Sarah’s planned contributions will happen, or establish that the course will be fully funded. It is not financial advice.');
     const panelBox = await page.getByTestId('study-value-panel').boundingBox();
     const attributionBox = await page.getByTestId('study-attribution').boundingBox();
@@ -181,21 +181,21 @@ test.describe('Research Two-Beat Sarah example', () => {
   });
 
   test('keeps each selected denomination consistent across both beats', async ({ page }) => {
-    for (const [currency, prefix, name] of [
-      ['ZMW', 'K', 'kwacha'],
-      ['KES', 'KES ', 'Kenyan shillings'],
-      ['NGN', 'NGN ', 'Nigerian naira'],
-      ['GHS', 'GHS ', 'Ghanaian cedis'],
-      ['PHP', 'PHP ', 'Philippine pesos'],
+    for (const [currency, prefix, name, setAside, monthly, planned, fee] of [
+      ['ZMW', 'K', 'kwacha', '6,000', '2,000', '24,000', '29,500'],
+      ['KES', 'KES ', 'Kenyan shillings', '31,800', '10,600', '127,200', '156,350'],
+      ['NGN', 'NGN ', 'Nigerian naira', '360,000', '120,000', '1,440,000', '1,770,000'],
+      ['GHS', 'GHS ', 'Ghanaian cedis', '3,000', '1,000', '12,000', '14,750'],
+      ['PHP', 'PHP ', 'Philippine pesos', '10,800', '3,600', '43,200', '53,100'],
     ] as const) {
       await page.goto(studyEntry);
       await page.getByRole('combobox').selectOption(currency);
       await page.getByTestId('orientation-continue').click();
-      await expect(page.getByTestId('sarah-facts')).toContainText(`${prefix}6,000`);
-      await expect(page.getByTestId('sarah-facts')).toContainText(`${prefix}2,000`);
+      await expect(page.getByTestId('sarah-facts')).toContainText(`${prefix}${setAside}`);
+      await expect(page.getByTestId('sarah-facts')).toContainText(`${prefix}${monthly}`);
       await expect(page.getByTestId('course-fee')).toContainText('USD 1,000');
       await page.getByTestId('study-continue').click();
-      await expect(page.getByTestId('course-fee')).toContainText(`${prefix}29,500, payable in`);
+      await expect(page.getByTestId('course-fee')).toContainText(`${prefix}${fee}, payable in`);
       if (currency === 'ZMW') {
         await expect(page.getByTestId('course-fee')).toContainText('Zambian kwacha');
       } else {
@@ -204,12 +204,12 @@ test.describe('Research Two-Beat Sarah example', () => {
       await expect(page.getByTestId('sarah-lived-caution')).toHaveCount(0);
       await page.getByTestId('study-to-hedgr').click();
       const panel = page.getByTestId('study-value-panel');
-      await expect(panel).toContainText(`${prefix}6,000`);
-      await expect(panel).toContainText(`${prefix}24,000 over 12 months, not available yet`);
-      await expect(panel).toContainText(`${prefix}29,500 on 1 October 2027`);
+      await expect(panel).toContainText(`${prefix}${setAside}`);
+      await expect(panel).toContainText(`${prefix}${planned} over 12 months, not available yet`);
+      await expect(panel).toContainText(`${prefix}${fee} on 1 October 2027`);
       await expect(panel).toContainText(`Sarah is saving in ${name}, but the fee is in US dollars. If the exchange rate moves, the amount of ${name} she needs can change.`);
-      await expect(panel).toContainText(`Sarah’s savings and the fee are now both in ${name}, so the exchange rate no longer changes the amount she needs. What is still open is whether the planned ${prefix}24,000 arrives on time.`);
-      await expect(page.getByTestId('study-attribution')).toContainText('not Stability Engine output');
+      await expect(panel).toContainText(`Sarah’s savings and the fee are now both in ${name}, so the exchange rate no longer changes the amount she needs. What is still open is whether the planned ${prefix}${planned} arrives on time.`);
+      await expect(page.getByTestId('study-attribution')).toHaveText('This example was written in advance by Hedgr, using only the facts about Sarah on this page. It isn’t generated automatically, and it doesn’t look at anyone’s real money.');
       await expectNoHolds(page);
     }
   });
@@ -221,12 +221,12 @@ test.describe('Research Two-Beat Sarah example', () => {
     const otherTab = await context.newPage();
     await otherTab.goto('/orientation');
     await otherTab.getByRole('combobox').selectOption('NGN');
-    await expect(page.getByTestId('sarah-facts')).toContainText('KES 6,000');
+    await expect(page.getByTestId('sarah-facts')).toContainText('KES 31,800');
     await page.getByTestId('study-continue').click();
-    await expect(page.getByTestId('course-fee')).toContainText('KES 29,500');
+    await expect(page.getByTestId('course-fee')).toContainText('KES 156,350');
     await page.getByTestId('study-to-hedgr').click();
     await expect(page.getByTestId('study-value-panel')).toContainText('Kenyan shillings');
-    await expect(page.getByTestId('study-value-panel')).toContainText('KES 24,000');
+    await expect(page.getByTestId('study-value-panel')).toContainText('KES 127,200');
     await otherTab.close();
   });
 
