@@ -110,7 +110,7 @@ test('polished Home accordions preserve keyboard operation, planning and researc
   await values.locator(':scope > summary').focus();
   await page.keyboard.press('Space');
   await expect(values).toHaveAttribute('open', '');
-  await expect(values).toContainText('Percentages describe the simulated planning structure only. They do not show where money is held.');
+  await expect(values).toContainText('The percentages show how the plan is divided in this example. No real money is split or moved.');
   for (const key of ['coreTargetPct', 'liquidityTargetPct', 'yieldCapPct']) {
     await expect(values.getByTestId(`engine-allocation-band-${key}`)).toBeVisible();
   }

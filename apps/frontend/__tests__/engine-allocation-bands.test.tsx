@@ -197,6 +197,9 @@ describe("EngineAllocationBands", () => {
     expect(
       screen.getByTestId("engine-allocation-structure").textContent
     ).toMatch(/Now\s*50%.*Reserve\s*30%.*Growth\s*20%/s);
+    expect(valuesDetails.textContent).toContain(
+      "The percentages show how the plan is divided in this example. No real money is split or moved."
+    );
     expect(
       screen
         .getByTestId("engine-allocation-structure")

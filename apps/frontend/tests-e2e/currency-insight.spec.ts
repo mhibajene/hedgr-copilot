@@ -209,6 +209,8 @@ test('inline insight is one keyboard launcher with a complete unchanged shelf an
   await expect(dialog).toContainText('ZMW 5,700.00');
   await expect(dialog).toContainText('ZMW 6,000.00');
   await expect(dialog).toContainText('FX comparison only—not earnings, purchasing power, guaranteed protection or a conversion quote.');
+  await expect(dialog).toContainText('This shows the same amount at two made-up exchange rates. No money is earned or exchanged, and it isn’t what you’d receive.');
+  await expect(dialog).toContainText('A made-up example, shown today and 30 days later.');
   await expect(dialog).toContainText('Invented research example. Not your account history or live market data.');
   await page.keyboard.press('Escape');
   await expect(dialog).not.toBeVisible();

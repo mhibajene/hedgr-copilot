@@ -90,7 +90,7 @@ export function CurrencyInsight({
               </div>
               <p>30-day example · Simulated</p>
               <h3 className={wallet.dialogTitle}>Same USD amount.<br />{comparison.direction === 'equal' ? 'Same local estimate.' : comparison.direction === 'rounded-zero' ? 'Same estimate at this display precision.' : 'Different local estimate.'}</h3>
-              <p>This example applies two exchange rates to the same ${usdAmount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 20 })}.</p>
+              <p>This shows the same amount at two made-up exchange rates. No money is earned or exchanged, and it isn’t what you’d receive.</p>
               <div className={wallet.comparison}>
                 <dl>
                   <div className={wallet.comparisonRow}><dt>Day 0<span>1 USD = {comparison.earlierRate.toLocaleString('en-US', { maximumFractionDigits: 20 })} {currency}</span></dt><dd>{currency} {formatComparisonCents(comparison.earlierCents)}</dd></div>
@@ -102,7 +102,7 @@ export function CurrencyInsight({
               <section><h2>What this does not show</h2><p>{limit}</p></section>
               <p className={wallet.comparison}>Invented research example. Not your account history or live market data.</p>
               <details><summary>How this is calculated</summary>
-                <p>Invented research fixture: scenario day 0 and scenario day 30. This is not your account history or live market data.</p>
+                <p>A made-up example, shown today and 30 days later.</p>
                 <p>The current USD {usdAmount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 20 })} is applied to both rates. It does not mean you held this amount for 30 days.</p>
                 <p>Both estimates are rounded to two decimals; the difference uses those rounded amounts. Deposits, withdrawals, yield and asset-price changes are excluded, as are fees and spreads. No money has moved.</p>
               </details>
@@ -134,7 +134,7 @@ export function CurrencyInsight({
           <details className={styles.calculation}>
             <summary>How this is calculated</summary>
             <div className={styles.explanation}>
-              <p>Invented research fixture: scenario day 0 and scenario day 30. This is not your account history or live market data.</p>
+              <p>A made-up example, shown today and 30 days later.</p>
               <p>The current USD {usdAmount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 20 })} is applied to both rates. It does not mean you held this amount for 30 days.</p>
               <dl className={styles.values}>
                 <div>

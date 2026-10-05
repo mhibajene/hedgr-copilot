@@ -268,7 +268,7 @@ describe("DashboardPage engine trust surface", () => {
     expect(screen.getByText("Start here")).toBeDefined();
     expect(screen.queryByText("Start with a simulated deposit")).toBeNull();
     expect(screen.queryByText("What Hedgr notices")).toBeNull();
-    expect(screen.queryByText("This is an observation from the simulation, not a guarantee.")).toBeNull();
+    expect(screen.queryByText("This is what happened in the example. It doesn’t tell you what will happen next.")).toBeNull();
     expect(screen.queryByTestId("engine-posture-badge")).toBeNull();
     expect(screen.queryByText("NORMAL")).toBeNull();
     expect(screen.getByTestId("engine-posture-context").textContent).toBe(
@@ -277,10 +277,10 @@ describe("DashboardPage engine trust surface", () => {
     expect(
       Array.from(screen.getByTestId("dashboard-first-use-steps").querySelectorAll("li")).map((step) => step.textContent)
     ).toEqual([
-      "PositionYou are here. It starts at $0.00.",
-      "First eventAdd a simulated deposit.",
-      "ChangeTry a simulated withdrawal.",
-      "EvidenceCheck both entries in Activity.",
+      "Where things standYou are here. It starts at $0.00.",
+      "What happensAdd a simulated deposit.",
+      "What changedTry a simulated withdrawal.",
+      "How you can tellCheck both entries in Activity.",
     ]);
     expect(screen.getByTestId("dashboard-position-line").textContent).toBe(
       "Your line starts with your first deposit"
@@ -401,7 +401,7 @@ describe("DashboardPage engine trust surface", () => {
     );
     expect(screen.getByText("What Hedgr notices")).toBeDefined();
     expect(screen.queryByTestId("engine-simulation-attention-answer")).toBeNull();
-    expect(screen.getByText("This is an observation from the simulation, not a guarantee.")).toBeDefined();
+    expect(screen.getByText("This is what happened in the example. It doesn’t tell you what will happen next.")).toBeDefined();
   });
 
   test("restarts a completed explicit synthetic journey only after confirmation", async () => {

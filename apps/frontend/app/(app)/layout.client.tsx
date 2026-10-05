@@ -114,10 +114,10 @@ export function AppLayoutClient({ children }: { children: React.ReactNode }) {
     : '/settings/trust';
 
   const journeySteps = [
-    { href: '/dashboard' as const, label: 'Position' },
-    { href: '/deposit' as const, label: 'First event' },
-    { href: '/withdraw' as const, label: 'Change' },
-    { href: '/activity' as const, label: 'Evidence' },
+    { href: '/dashboard' as const, label: 'Where things stand' },
+    { href: '/deposit' as const, label: 'What happens' },
+    { href: '/withdraw' as const, label: 'What changed' },
+    { href: '/activity' as const, label: 'How you can tell' },
   ];
   const currentJourneyStepIndex = journeySteps.findIndex(
     (step) => activePathname === step.href

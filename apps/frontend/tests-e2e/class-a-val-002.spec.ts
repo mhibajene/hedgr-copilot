@@ -314,7 +314,7 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   await expect(
     page.getByTestId('engine-simulation-attention-answer')
   ).toHaveCount(0);
-  await expect(page.getByText('This is an observation from the simulation, not a guarantee.')).toHaveCount(0);
+  await expect(page.getByText('This is what happened in the example. It doesn’t tell you what will happen next.')).toHaveCount(0);
   await expect(page.getByTestId('dashboard-current-status')).not.toContainText(
     'NORMAL'
   );
@@ -324,7 +324,7 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   );
   await expect(page.getByTestId('dashboard-current-status')).toContainText('Start here');
   await expect(page.getByTestId('dashboard-first-use-steps').locator('li[aria-current="step"]')).toHaveText(
-    'PositionYou are here. It starts at $0.00.'
+    'Where things standYou are here. It starts at $0.00.'
   );
   await expect(page.getByTestId('dashboard-position-line')).toHaveText('Your line starts with your first deposit');
   await expect(page.getByTestId('dashboard-current-status')).not.toContainText('What Hedgr notices');
@@ -405,9 +405,9 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   await page.getByTestId('dashboard-add-simulated-deposit').click();
   await expect(page).toHaveURL(/\/deposit\?journey=class-a-val-002/);
   await expect(page.getByTestId('synthetic-journey-current-step')).toHaveText(
-    'First event'
+    'What happens'
   );
-  await expect(page.getByTestId('synthetic-journey-shell')).toContainText('Step 2 of 4 · First event');
+  await expect(page.getByTestId('synthetic-journey-shell')).toContainText('Step 2 of 4 · What happens');
   await expect(page.getByTestId('synthetic-journey-shell')).toContainText(
     'Create the first comparison point'
   );
@@ -456,7 +456,7 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   await expect(firstEventHome.getByText('Does anything need attention?')).toHaveCount(0);
   await expect(firstEventHome.getByTestId('engine-simulation-attention-answer')).toHaveCount(0);
   await expect(firstEventHome.getByText(
-    'This is an observation from the simulation, not a guarantee.'
+    'This is what happened in the example. It doesn’t tell you what will happen next.'
   )).toBeVisible();
   await firstEventHome.close();
 
@@ -465,9 +465,9 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
     .click();
   await expect(page).toHaveURL(/\/withdraw\?journey=class-a-val-002/);
   await expect(page.getByTestId('synthetic-journey-current-step')).toHaveText(
-    'Change'
+    'What changed'
   );
-  await expect(page.getByTestId('synthetic-journey-shell')).toContainText('Step 3 of 4 · Change');
+  await expect(page.getByTestId('synthetic-journey-shell')).toContainText('Step 3 of 4 · What changed');
   await expect(page.getByTestId('synthetic-journey-shell')).toContainText(
     'See what changes and what remains'
   );
@@ -794,7 +794,7 @@ test('Home explains what changed since the last visit and clears it on reset', a
   await expect(page.getByTestId('dashboard-change-chip')).toHaveText(new RegExp(`^↑\\$3\\.00 since ${date}$`));
   await expect(page.getByTestId('dashboard-position-line-visit')).toHaveText('Your last visit');
   await expect(page.getByTestId('dashboard-position-line')).toContainText('Today');
-  await expect(page.getByText('This is an observation from the simulation, not a guarantee.')).toBeVisible();
+  await expect(page.getByText('This is what happened in the example. It doesn’t tell you what will happen next.')).toBeVisible();
 
   // Nothing changed since that visit.
   await page.reload();
