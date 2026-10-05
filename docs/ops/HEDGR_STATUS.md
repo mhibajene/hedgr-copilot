@@ -5388,7 +5388,7 @@ Markers are text (`Same as before`, `New`). Colour or icon may reinforce a marke
 
 **Founder approval:** Musalwa Hibajene, 5 Oct 2026 at 16:46 AWST (“run the second docs tidy and its rebind, each verified, then merge.”).
 
-**Status:** docs-only factual-currency tidy. No doctrine, authority, precedence, sequencing decision, ticket scope or occupancy changed. Occupancy remains parent `CLASS-A-VAL-002` and parent `SE-REASON-001` with no nested Lane V ticket. The RAP permanent-main rebind for this source follows separately. That later rebind also binds §337 to permanent main and supersedes open PR #761.
+**Status:** docs-only factual-currency tidy. No doctrine, authority, precedence, sequencing decision, ticket scope or occupancy changed. Occupancy remains parent `CLASS-A-VAL-002` and parent `SE-REASON-001` with no nested Lane V ticket. The RAP permanent-main rebind for this source follows separately. §337 was RAP-bound by #761.
 
 **Corrected lines (this source):**
 - `.github/pull_request_template.md`: Merge Gates now match AGENTS.md and runbook PR Posture (`validate`, `E2E smoke (@hedgr/frontend)`, `hedgr/verifier`; exact-head independent verifier PASS; implementers open as draft and never change draft state). Labels moved to descriptive metadata only.
@@ -5402,7 +5402,7 @@ Markers are text (`Same as before`, `New`). Colour or icon may reinforce a marke
 - `.github/workflows/ci.yml.bak` deleted after confirming no current workflow reference.
 - `scripts/bridge/rap-provenance-rebind.test.mjs`: metadata-only Last-updated fixture date updated so validate stays green after the STATUS header bump. No rebind-script behaviour change.
 
-**Skipped:** RAP `sequencing_posture` live-§7 sentence left unchanged so `apps/bridge-worker/tests/fork1-authority.test.mjs` did not require a test edit (O7). Doctrine files, ADR 0027, §5, and the §336 locked B2 sentence (current-ticket consequence; already carries the §337 dated note) were not touched. Runtime, env, and workflows other than deleting `ci.yml.bak` were not touched. Open PR #761 was not edited.
+**Skipped:** RAP `sequencing_posture` live-§7 sentence left unchanged so `apps/bridge-worker/tests/fork1-authority.test.mjs` did not require a test edit (O7). Doctrine files, ADR 0027, §5, and the §336 locked B2 sentence (current-ticket consequence; already carries the §337 dated note) were not touched. Runtime, env, and workflows other than deleting `ci.yml.bak` were not touched.
 
 **Effect:** none on doctrine, ADRs, `.cursorrules`, D05, the doctrine index, occupancy or authority meaning. **NO CROSS-LANE IMPACT.**
 
