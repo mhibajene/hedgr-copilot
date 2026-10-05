@@ -76,6 +76,7 @@ Related standing dispositions that still hold:
 ## 7. Pointers
 
 - Live status / tickets: `docs/ops/HEDGR_STATUS.md` §7 / §7a
+- Founder working pack (spec notes, inventory seeds, thin slice): `docs/strategy/stability-engine-pack.md`
 - Stability Engine doctrine: `docs/doctrine/hedgr-stability-engine.md`
 - Envelope scope (Accepted): ADR 0027 — `docs/decisions/0027-stability-engine-scope-is-the-user-selected-allocation-envelope.md`
 - D2 hypothesis-only: `docs/ops/HEDGR_STATUS.md` §343
