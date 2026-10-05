@@ -1,8 +1,8 @@
 # Daniel reserve + legibility pass — QA record
 
-Last updated: 2026-10-05 08:52 AWST
+Last updated: 2026-10-05 09:40 AWST
 
-Ticket: `CLASS-A-VAL-002-RESEARCH-RESERVE-001` (`HEDGR_STATUS.md` §7 / §7a / §334). Source #753 (`d04ab0e`) and the separate permanent-main RAP rebind #754 (`75e7f25`) preceded this T1–T3 runtime PR. Founder launch approval for T1–T3: 5 Oct 2026 08:22 AWST.
+Ticket: `CLASS-A-VAL-002-RESEARCH-RESERVE-001` (`HEDGR_STATUS.md` §7 / §7a / §334 / §335). Source #753 (`d04ab0e`) and the separate permanent-main RAP rebind #754 (`75e7f25`) preceded T1–T3 runtime #755 (`3c2efea`). Founder launch approval for T1–T3: 5 Oct 2026 08:22 AWST. Founder approval for this closeout and the later rebind: 5 Oct 2026 09:40 AWST.
 
 ## Status and evidence boundary
 
@@ -12,7 +12,7 @@ The two §334 items that remain open with the Founder **gate any cold read**:
 1. Name the cold readers.
 2. Confirm that an internal cold read is not participant exposure under §7.
 
-§335 closeout and the final RAP rebind follow merge and are not this PR.
+§335 is this source-first closeout. A separate verified permanent-main RAP rebind follows merge.
 
 ## What changed
 
@@ -96,4 +96,6 @@ Captured 2026-10-05 08:52 AWST from the production build of this branch. Stored 
 
 ## Merge and Production inspection
 
-Not yet. This nested ticket stays open until a later §335 source-first closeout merges and a separate verified permanent-main RAP rebind completes. The research route remains unreleased.
+- **#755 merge:** at `3c2efea82621c6949d296570f75f6cea331404af` (2026-10-05 09:15:34 AWST), after an independent Verifier PASS WITH NOTES on exact head `5d7271c5afdaa90f37d0c1252879dc9c46d1d63c` ([attestation](https://github.com/mhibajene/hedgr-copilot/pull/755#issuecomment-5986438540)). Vercel Production deployment `dpl_6LZo9n13LZTwUj718JX1qWuEcfKw` of that SHA is READY.
+- **Production browser inspection:** not recorded in this closeout. Layout evidence remains the T1–T3 Implementer screenshots and the #755 Verifier’s local Playwright 57/57 plus layout walk on `5d7271c`.
+- **Release-bar cold read:** not executed. The two §334 items remain open with the Founder and continue to gate it. The research route remains unreleased.
