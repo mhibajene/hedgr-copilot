@@ -2,7 +2,10 @@
 
 import Link from 'next/link';
 import { useEffect, useRef, useState, type ReactNode } from 'react';
-import { getSimulationDisplayCurrency } from '../../../lib/state/simulation-display-currency';
+import {
+  getSimulationDisplayCurrency,
+  type SimulationDisplayCurrency,
+} from '../../../lib/state/simulation-display-currency';
 import {
   SARAH_FIGURES,
   formatScenarioAmount,

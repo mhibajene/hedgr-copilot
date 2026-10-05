@@ -34,7 +34,7 @@ test('keeps one compact difference, visible limits and a native calculation disc
   expect(detail.textContent).toContain('ZMW 5,700.00');
   expect(detail.textContent).toContain('ZMW 6,000.00');
   expect(detail.textContent).toContain('No money has moved.');
-  expect(detail.textContent).toContain('not your account history');
+  expect(detail.textContent).toContain('A made-up example, shown today and 30 days later.');
   expect(detail.textContent).toContain('It does not mean you held this amount for 30 days.');
   expect(writes).not.toHaveBeenCalled();
   expect(document.querySelector('[aria-live], [role="alert"], [role="status"]')).toBeNull();
