@@ -36,6 +36,7 @@ function isMemoryEntry(value: unknown): value is ReviewSnapshotMemoryEntry {
   const o = value as Record<string, unknown>;
   return (
     typeof o.viewedAt === 'string' &&
+    Number.isFinite(Date.parse(o.viewedAt)) &&
     (o.changeVsPrior === 'unchanged' || o.changeVsPrior === 'changed') &&
     isEnginePosture(o.posture)
   );

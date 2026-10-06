@@ -372,4 +372,43 @@ describe("EngineStabilityReviewSnapshot", () => {
       expect(snapshotText.toLowerCase()).not.toContain(phrase);
     }
   });
+
+  for (const [name, raw] of [
+    ["an invalid saved date", JSON.stringify([{ viewedAt: "not-a-date", changeVsPrior: "changed", posture: "recovery" }])],
+    ["missing saved memory", null],
+    ["malformed saved entries", JSON.stringify([{ changeVsPrior: "unchanged", posture: "recovery" }])],
+    ["corrupt saved JSON", "{broken"],
+  ] as const) {
+    test(`renders the Home review with ${name} without rejected history`, async () => {
+      if (raw !== null) localStorage.setItem(REVIEW_SNAPSHOT_MEMORY_STORAGE_KEY, raw);
+      render(<EngineStabilityReviewSnapshot engineState={makeEngineState()} />);
+      await waitFor(() => {
+        expect(screen.getByTestId("engine-stability-review-snapshot")).toBeTruthy();
+      });
+      expect(screen.queryByTestId("engine-stability-review-memory-entry")).toBeNull();
+      expect(screen.queryByTestId("engine-stability-review-snapshot-change-signal")).toBeNull();
+      const text = screen.getByTestId("engine-stability-review-snapshot").textContent;
+      expect(text).not.toContain(ENGINE_STABILITY_REVIEW_MEMORY_TARGETS_CHANGED);
+      expect(text).not.toContain(ENGINE_STABILITY_REVIEW_MEMORY_TARGETS_UNCHANGED);
+      expect(text).not.toContain(getEngineStabilityReviewSnapshotStance("recovery"));
+    });
+  }
+
+  test("keeps a valid saved row while ignoring an invalid prior row after a comparison visit", async () => {
+    const state = makeEngineState();
+    localStorage.setItem(REVIEW_SNAPSHOT_FINGERPRINT_STORAGE_KEY, buildReviewSnapshotFingerprint(state));
+    const validAt = "2026-04-01T12:00:00.000Z";
+    localStorage.setItem(REVIEW_SNAPSHOT_MEMORY_STORAGE_KEY, JSON.stringify([
+      { viewedAt: "not-a-date", changeVsPrior: "changed", posture: "recovery" },
+      { viewedAt: validAt, changeVsPrior: "changed", posture: "tightened" },
+    ]));
+    render(<EngineStabilityReviewSnapshot engineState={state} />);
+    await waitFor(() => expect(screen.getAllByTestId("engine-stability-review-memory-entry")).toHaveLength(2));
+    const rows = screen.getAllByTestId("engine-stability-review-memory-entry");
+    expect(rows[0].textContent).toContain(ENGINE_STABILITY_REVIEW_MEMORY_TARGETS_UNCHANGED);
+    expect(rows[1].textContent).toContain(formatEngineSnapshotUpdatedAt(validAt));
+    expect(rows[1].textContent).toContain(getEngineStabilityReviewSnapshotStance("tightened"));
+    expect(screen.getByTestId("engine-stability-review-memory").textContent).not.toContain(getEngineStabilityReviewSnapshotStance("recovery"));
+  });
+
 });
