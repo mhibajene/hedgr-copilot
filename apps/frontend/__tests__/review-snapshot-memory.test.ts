@@ -91,3 +91,44 @@ describe('appendReviewSnapshotMemoryAfterVisit', () => {
     expect(rows[1].posture).toBe('recovery');
   });
 });
+
+
+describe('readReviewSnapshotMemory rejects corrupt saved memory', () => {
+  test('ignores an invalid saved date', () => {
+    localStorage.setItem(REVIEW_SNAPSHOT_MEMORY_STORAGE_KEY, JSON.stringify([
+      { viewedAt: 'not-a-date', changeVsPrior: 'changed', posture: 'recovery' },
+    ]));
+    expect(readReviewSnapshotMemory()).toEqual([]);
+  });
+
+  test('treats missing memory as no prior review', () => {
+    expect(readReviewSnapshotMemory()).toEqual([]);
+  });
+
+  test('ignores malformed saved entries', () => {
+    for (const raw of ['{broken', '{}', JSON.stringify([
+      null,
+      { changeVsPrior: 'changed', posture: 'recovery' },
+      { viewedAt: 123, changeVsPrior: 'changed', posture: 'recovery' },
+      { viewedAt: '2026-04-01T12:00:00.000Z', changeVsPrior: 'unknown', posture: 'normal' },
+    ])]) {
+      localStorage.setItem(REVIEW_SNAPSHOT_MEMORY_STORAGE_KEY, raw);
+      expect(readReviewSnapshotMemory()).toEqual([]);
+    }
+  });
+
+  test('preserves valid entries in stored order and caps after rejecting invalid dates', () => {
+    const valid = [
+      { viewedAt: '2026-04-01T12:00:00.000Z', changeVsPrior: 'changed', posture: 'recovery' },
+      { viewedAt: '2026-04-01T11:00:00.000Z', changeVsPrior: 'unchanged', posture: 'normal' },
+      { viewedAt: '2026-04-01T10:00:00.000Z', changeVsPrior: 'changed', posture: 'tightened' },
+    ];
+    localStorage.setItem(REVIEW_SNAPSHOT_MEMORY_STORAGE_KEY, JSON.stringify([
+      { viewedAt: '', changeVsPrior: 'changed', posture: 'recovery' },
+      valid[0],
+      { viewedAt: 'not-a-date', changeVsPrior: 'unchanged', posture: 'normal' },
+      ...valid.slice(1),
+    ]));
+    expect(readReviewSnapshotMemory()).toEqual(valid.slice(0, MAX_REVIEW_SNAPSHOT_MEMORY_ENTRIES));
+  });
+});
