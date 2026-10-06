@@ -127,6 +127,12 @@ describe('Daniel read (§350)', () => {
     expect(() => read(800, 0)).toThrow(RangeError);
   });
 
+  test('returns no read for an invalid or missing asOf', () => {
+    for (const asOf of [0, 1759708800000, null, undefined, '', 'not-a-date', new Date(DANIEL_GOLDEN_AS_OF)]) {
+      expect(() => computeDanielRead({ ...BASELINE, asOf } as unknown as DanielReadInput)).toThrow(RangeError);
+    }
+  });
+
   test('contains no prohibited language in slice strings', () => {
     const strings = DANIEL_GOLDEN_GRID.flatMap((row) => [
       row.name,
