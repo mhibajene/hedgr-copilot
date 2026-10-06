@@ -20,6 +20,12 @@ export type DanielRead = {
   asOf: string;
   pair: 'USD/ZMW';
   declaredHolding: { amount: number; currency: 'USD'; source: 'user-declared'; access: 'read-only' };
+  /**
+   * Canonical computed local amount in ZMW: declared USD × fixture rate, rounded to the
+   * nearest 0.01 ZMW with half a local cent rounded up (exact decimal BigInt cents).
+   */
+  localAmountZmw: number;
+  /** Presentation only: derived from `localAmountZmw` with fixed en-US formatting. */
   localDisplay: string;
   explanation: { rateAssumption: string; holding: string };
 };
@@ -40,6 +46,11 @@ function formatNumber(value: number): string {
   return value.toLocaleString('en-US', { maximumFractionDigits: 20 });
 }
 
+function formatLocalDisplay(amountZmw: number): string {
+  const digits = Number.isInteger(amountZmw) ? 0 : 2;
+  return `K${amountZmw.toLocaleString('en-US', { minimumFractionDigits: digits, maximumFractionDigits: digits })}`;
+}
+
 export function computeDanielRead({ declaredHoldingUsd, fixtureRateZmwPerUsd, asOf }: DanielReadInput): DanielRead {
   if (!Number.isFinite(declaredHoldingUsd) || declaredHoldingUsd < 0) {
     throw new RangeError('Declared USD amount must be a finite non-negative number.');
@@ -54,13 +65,17 @@ export function computeDanielRead({ declaredHoldingUsd, fixtureRateZmwPerUsd, as
   const [r, rScale] = decimalFraction(fixtureRateZmwPerUsd);
   const denominator = aScale * rScale;
   const cents = (a * r * 100n * 2n + denominator) / (denominator * 2n);
-  const fraction = (cents % 100n).toString().padStart(2, '0');
-  const localDisplay = `K${(cents / 100n).toLocaleString('en-US')}${fraction === '00' ? '' : `.${fraction}`}`;
+  if (cents > BigInt(Number.MAX_SAFE_INTEGER)) {
+    throw new RangeError('Local amount exceeds exact cent precision.');
+  }
+  const localAmountZmw = Number(cents) / 100;
+  const localDisplay = formatLocalDisplay(localAmountZmw);
   return {
     engineVersion: DANIEL_READ_ENGINE_VERSION,
     asOf,
     pair: 'USD/ZMW',
     declaredHolding: { amount: declaredHoldingUsd, currency: 'USD', source: 'user-declared', access: 'read-only' },
+    localAmountZmw,
     localDisplay,
     explanation: {
       rateAssumption: `Disclosed fixture rate: ZMW ${formatNumber(fixtureRateZmwPerUsd)} per USD. Not a live rate.`,
