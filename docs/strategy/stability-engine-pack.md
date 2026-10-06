@@ -1,6 +1,6 @@
 # Stability Engine — Sequencing and Spec Notes
 
-**Status:** Founder-owned working pack (5 Oct 2026). Durable notes for deliberation before implementation.
+**Status:** Founder-owned spec locked 6 Oct 2026 under `docs/ops/HEDGR_STATUS.md` §347 (`OPS-SE-SPEC-LOCK-001`).
 **Spec ownership:** Musalwa Hibajene owns the Stability Engine spec personally. Before implementation starts, that ownership is not delegated to an agent.
 **Related:** `docs/strategy/PHASE-SEQUENCING-2026-10-05.md`
 
@@ -47,7 +47,7 @@ Musalwa owns the Stability Engine spec personally — not an agent.
 
 The Daniel inventory question blends the two if read carelessly: when FX moves, Daniel's figures **should** change (USD 800 becomes more kwacha). What should hold is everything the FX move doesn't explain.
 
-**Sharper candidate (under test):**
+**Definition of stable (locked, §347):**
 
 > Same inputs, same read. When an input changes, only the parts of the read that input explains change. Nothing else changes unless the engine is deliberately changed.
 
@@ -56,7 +56,7 @@ The Daniel inventory question blends the two if read carelessly: when FX moves, 
 2. Vary one input at a time → only explained parts of the read change.
 3. Compare outputs before and after an engine change → nothing else moves unless that change was deliberate.
 
-Pressure-test and refine before locking into the spec.
+Locked under `docs/ops/HEDGR_STATUS.md` §347 (`OPS-SE-SPEC-LOCK-001`, 6 Oct 2026).
 
 ## Inventory seeds
 

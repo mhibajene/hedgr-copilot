@@ -34,7 +34,6 @@
 | `apps/frontend/lib/utils/money.ts` | Mixed / extraction candidate | USD and explicit ISO-code formatting intent | Verify `Intl` locale output on supported devices; keep visual text outside arithmetic truth |
 | `apps/frontend/lib/state/synthetic-journey.ts` | Web adapter | Explicitly synthetic route intent and deny-live guard | Uses `process.env`, pathname, query parameters, `URLSearchParams`, and Next route conventions |
 | `apps/frontend/lib/state/ledger.ts` | Web adapter | Ledger transaction shape, schema version, immutable-field policy | Zustand and `window.localStorage` own persistence; split contract, repository, and storage later |
-| `apps/frontend/lib/state/wallet.ts` | Web adapter | Bounded local simulation balance behavior | Zustand / localStorage implementation; wallet state is not accounting or customer-money truth |
 | `apps/frontend/lib/state/user.ts` | Web adapter | Minimal session shape | Browser persistence is not a native credential or secure-session design |
 | `apps/frontend/config/market.ts` | Web adapter | Market-to-currency configuration | Reads browser storage and emits browser events; market authority remains governed |
 | `apps/frontend/config/env.ts` | Web adapter | Fail-closed environment modes | Next public environment contract is not a native configuration channel |
