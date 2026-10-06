@@ -47,7 +47,7 @@ export function computeDanielRead({ declaredHoldingUsd, fixtureRateZmwPerUsd, as
   if (!Number.isFinite(fixtureRateZmwPerUsd) || fixtureRateZmwPerUsd <= 0) {
     throw new RangeError('Fixture rate must be a finite positive number.');
   }
-  if (!Number.isFinite(Date.parse(asOf))) {
+  if (typeof asOf !== 'string' || !Number.isFinite(Date.parse(asOf))) {
     throw new RangeError('asOf must be an explicit valid timestamp.');
   }
   const [a, aScale] = decimalFraction(declaredHoldingUsd);
