@@ -55,6 +55,8 @@ describe('Daniel read (§350)', () => {
     const first = computeDanielRead(input);
     const second = computeDanielRead(input);
     expect(second).toEqual(first);
+    expect(second.localAmountZmw).toBe(first.localAmountZmw);
+    expect(first.localAmountZmw).toBe(21600);
     expect(first.engineVersion).toBe(DANIEL_READ_ENGINE_VERSION);
     expect(input).toEqual(frozen);
   });
@@ -62,12 +64,12 @@ describe('Daniel read (§350)', () => {
   test('changes only the local display and rate explanation when the fixture rate changes', () => {
     expect(DANIEL_FIXTURE_RATE_ZMW_PER_USD).toBe(27);
     const base = computeDanielRead(BASELINE);
-    expect(base.localDisplay).toBe('K21,600');
-    for (const [rate, expected] of [[29.5, 'K23,600'], [24.5, 'K19,600']] as const) {
+    expect(base.localAmountZmw).toBe(21600);
+    for (const [rate, expected] of [[29.5, 23600], [24.5, 19600]] as const) {
       const moved = computeDanielRead({ ...BASELINE, fixtureRateZmwPerUsd: rate });
-      expect(moved.localDisplay).toBe(expected);
+      expect(moved.localAmountZmw).toBe(expected);
       expect(changedPaths(base, moved).sort()).toEqual(
-        ['explanation.holding', 'explanation.rateAssumption', 'localDisplay'],
+        ['explanation.holding', 'explanation.rateAssumption', 'localAmountZmw', 'localDisplay'],
       );
       expect(moved.explanation.rateAssumption).toContain(`ZMW ${rate} per USD`);
     }
@@ -77,10 +79,10 @@ describe('Daniel read (§350)', () => {
     const base = computeDanielRead(BASELINE);
     const moved = computeDanielRead({ ...BASELINE, declaredHoldingUsd: 1000 });
     expect(changedPaths(base, moved).sort()).toEqual(
-      ['declaredHolding.amount', 'explanation.holding', 'localDisplay'],
+      ['declaredHolding.amount', 'explanation.holding', 'localAmountZmw', 'localDisplay'],
     );
     expect(moved.declaredHolding.amount).toBe(1000);
-    expect(moved.localDisplay).toBe('K27,000');
+    expect(moved.localAmountZmw).toBe(27000);
     expect(moved.explanation.rateAssumption).toBe(base.explanation.rateAssumption);
   });
 
@@ -98,6 +100,7 @@ describe('Daniel read (§350)', () => {
     const after = computeDanielRead(BASELINE);
 
     expect(after).toEqual(before);
+    expect(after.localAmountZmw).toBe(before.localAmountZmw);
     expect(after.asOf).toBe(DANIEL_GOLDEN_AS_OF);
   });
 
@@ -116,15 +119,52 @@ describe('Daniel read (§350)', () => {
   test('reuses BigInt cents half-cent-up rounding with fixed en-US formatting', () => {
     window.localStorage.setItem(SIMULATION_DISPLAY_CURRENCY_KEY, 'PHP');
     const read = (declaredHoldingUsd: number, fixtureRateZmwPerUsd: number) =>
-      computeDanielRead({ declaredHoldingUsd, fixtureRateZmwPerUsd, asOf: DANIEL_GOLDEN_AS_OF }).localDisplay;
+      computeDanielRead({ declaredHoldingUsd, fixtureRateZmwPerUsd, asOf: DANIEL_GOLDEN_AS_OF });
     // 1.005 is below 1.005 in binary floating point; decimal cents still round half up.
-    expect(read(1.005, 1)).toBe('K1.01');
-    expect(read(0.05, 0.1)).toBe('K0.01');
-    expect(read(0.04, 0.1)).toBe('K0');
-    expect(read(1234567, 27)).toBe('K33,333,309');
-    expect(read(1000.5, 27)).toBe('K27,013.50');
-    expect(() => read(-1, 27)).toThrow(RangeError);
-    expect(() => read(800, 0)).toThrow(RangeError);
+    expect(read(1.005, 1).localAmountZmw).toBe(1.01);
+    expect(read(0.05, 0.1).localAmountZmw).toBe(0.01);
+    expect(read(0.04, 0.1).localAmountZmw).toBe(0);
+    expect(read(1234567, 27).localAmountZmw).toBe(33333309);
+    expect(read(1000.5, 27).localAmountZmw).toBe(27013.5);
+    expect(read(1.005, 1).localDisplay).toBe('K1.01');
+  });
+
+  test('formats localDisplay from the canonical local amount with fixed en-US', () => {
+    window.localStorage.setItem(SIMULATION_DISPLAY_CURRENCY_KEY, 'NGN');
+    const cases: [number, number, number, string][] = [
+      [800, 27, 21600, 'K21,600'],
+      [1234567, 27, 33333309, 'K33,333,309'],
+      [1000.5, 27, 27013.5, 'K27,013.50'],
+      [0.05, 0.1, 0.01, 'K0.01'],
+      [0.04, 0.1, 0, 'K0'],
+    ];
+    for (const [declaredHoldingUsd, fixtureRateZmwPerUsd, amount, display] of cases) {
+      const read = computeDanielRead({ declaredHoldingUsd, fixtureRateZmwPerUsd, asOf: DANIEL_GOLDEN_AS_OF });
+      expect(read.localAmountZmw).toBe(amount);
+      expect(read.localDisplay).toBe(display);
+      expect(read.explanation.holding).toContain(display);
+    }
+  });
+
+  test('returns no read for invalid or missing inputs', () => {
+    const invalid: unknown[] = [
+      { ...BASELINE, declaredHoldingUsd: -1 },
+      { ...BASELINE, declaredHoldingUsd: Number.NaN },
+      { ...BASELINE, declaredHoldingUsd: Number.POSITIVE_INFINITY },
+      { ...BASELINE, declaredHoldingUsd: undefined },
+      { ...BASELINE, fixtureRateZmwPerUsd: 0 },
+      { ...BASELINE, fixtureRateZmwPerUsd: -27 },
+      { ...BASELINE, fixtureRateZmwPerUsd: Number.NaN },
+      { ...BASELINE, fixtureRateZmwPerUsd: undefined },
+      { ...BASELINE, asOf: '' },
+      { ...BASELINE, asOf: 'not-a-date' },
+      { ...BASELINE, asOf: undefined },
+      // Beyond exact integer cents: no plausible rounded number is returned.
+      { ...BASELINE, declaredHoldingUsd: 1e15 },
+    ];
+    for (const input of invalid) {
+      expect(() => computeDanielRead(input as DanielReadInput)).toThrow(RangeError);
+    }
   });
 
   test('contains no prohibited language in slice strings', () => {
