@@ -20,7 +20,6 @@ export const DANIEL_GOLDEN_GRID: readonly {
       asOf: DANIEL_GOLDEN_AS_OF,
       pair: 'USD/ZMW',
       declaredHolding: { amount: 800, currency: 'USD', source: 'user-declared', access: 'read-only' },
-      localAmountZmw: 21600,
       localDisplay: 'K21,600',
       explanation: {
         rateAssumption: 'Disclosed fixture rate: ZMW 27 per USD. Not a live rate.',
@@ -36,7 +35,6 @@ export const DANIEL_GOLDEN_GRID: readonly {
       asOf: DANIEL_GOLDEN_AS_OF,
       pair: 'USD/ZMW',
       declaredHolding: { amount: 800, currency: 'USD', source: 'user-declared', access: 'read-only' },
-      localAmountZmw: 23600,
       localDisplay: 'K23,600',
       explanation: {
         rateAssumption: 'Disclosed fixture rate: ZMW 29.5 per USD. Not a live rate.',
@@ -52,7 +50,6 @@ export const DANIEL_GOLDEN_GRID: readonly {
       asOf: DANIEL_GOLDEN_AS_OF,
       pair: 'USD/ZMW',
       declaredHolding: { amount: 800, currency: 'USD', source: 'user-declared', access: 'read-only' },
-      localAmountZmw: 19600,
       localDisplay: 'K19,600',
       explanation: {
         rateAssumption: 'Disclosed fixture rate: ZMW 24.5 per USD. Not a live rate.',
@@ -68,7 +65,6 @@ export const DANIEL_GOLDEN_GRID: readonly {
       asOf: DANIEL_GOLDEN_AS_OF,
       pair: 'USD/ZMW',
       declaredHolding: { amount: 1000, currency: 'USD', source: 'user-declared', access: 'read-only' },
-      localAmountZmw: 27000,
       localDisplay: 'K27,000',
       explanation: {
         rateAssumption: 'Disclosed fixture rate: ZMW 27 per USD. Not a live rate.',
