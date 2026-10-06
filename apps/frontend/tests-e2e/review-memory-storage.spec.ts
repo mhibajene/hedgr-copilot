@@ -30,7 +30,7 @@ for (const [name, raw] of [
     await page.getByTestId('dashboard-education').locator(':scope > summary').click();
     const snapshot = page.getByTestId('engine-stability-review-snapshot');
     await expect(snapshot).toBeVisible();
-    await snapshot.locator(':scope > summary').click();
+    await snapshot.locator('details > summary').click();
     const rows = page.getByTestId('engine-stability-review-memory-entry');
     await expect(page.getByTestId('engine-stability-review-snapshot-change-signal')).toHaveCount(0);
     if (name === 'valid control') {
