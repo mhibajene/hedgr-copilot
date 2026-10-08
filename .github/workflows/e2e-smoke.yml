@@ -21,6 +21,8 @@ jobs:
       NEXT_PUBLIC_API_BASE_URL: http://localhost:5050
       OPENAI_MODE: stub
       CI: true
+      # Hermetic guard (OPS-E2E-FONT-LOCAL-001): any next/font/google call fails the build instead of fetching Google (vercel/next.js#99114).
+      NEXT_FONT_GOOGLE_MOCKED_RESPONSES: /nonexistent-hermetic-guard-no-google-fonts.js
     steps:
       - name: Checkout
         uses: actions/checkout@v4
