@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
-import { Plus_Jakarta_Sans } from 'next/font/google';
 import Link from 'next/link';
+import './plus-jakarta-sans.css';
 import { SimulationDisplayCurrencySelector } from '../../components/SimulationDisplayCurrencySelector';
 import { isSyntheticJourneyEnvironment } from '../../lib/state/synthetic-journey';
 import {
@@ -8,11 +8,6 @@ import {
   ORIENTATION_SURFACE,
 } from '../../lib/narrative/orientation-surface';
 import { researchStyles as rs } from '../research/ResearchChrome';
-
-const plusJakartaSans = Plus_Jakarta_Sans({
-  subsets: ['latin'],
-  weight: ['400', '500', '600'],
-});
 
 export const metadata: Metadata = {
   title: ORIENTATION_SURFACE.documentTitle,
@@ -30,7 +25,7 @@ export default async function OrientationPage({
     (await searchParams).study === 'stability-scenarios';
 
   return (
-    <div className={`${plusJakartaSans.className} ${rs.page}`}>
+    <div className={`hedgr-orientation-font ${rs.page}`}>
       <main
         data-testid="orientation-surface"
         className="mx-auto flex min-h-screen max-w-xl flex-col justify-center gap-8 px-6 py-10 sm:py-16"
