@@ -2,7 +2,7 @@
 
 Status: Binding (repo workflow, engineering conventions, CI posture, agent operating rules)
 Scope: apps/, packages/, scripts/, .github/, docs/
-Last updated: 2026-10-06
+Last updated: 2026-10-08
 
 **Start with live authority:** [HEDGR_STATUS.md §7 / §7a](docs/ops/HEDGR_STATUS.md#7-current-sequence-and-active-status) is the canonical present-state surface for occupancy, permissions, exclusions, operative controls and stop conditions. Read the named live brief before acting. Historical closeouts cannot supply current sequencing or occupancy. Accepted ADRs, active doctrine, this execution contract and other current higher-precedence sources remain controlling under repo precedence; genuine current-source disagreement requires stop/escalation, not synthesis.
 
@@ -17,6 +17,7 @@ Last updated: 2026-10-06
 
 **Founder disposition — PR Posture execution refinement (2026-09-29; §331):** The Founder approved ready-stage auto-merge arming, owner-account branch updates followed by fresh independent verification whenever the head changes, and one bounded exception to the §9.2 Verifier `READ_ONLY` mode: the independent Verifier may post exactly one `Hedgr-Verifier:` attestation comment, in the exact runbook format, on the PR under review for the head SHA it reviewed, only when its brief expressly permits it and only after re-reading the current head immediately before posting; it may not push, commit, label, mark ready, arm auto-merge, merge or post any other comment. Implementing and coordinating agents never post attestations. The Founder added `validate` to main's required checks on 2026-09-29, so `main` now requires `validate`, `E2E smoke (@hedgr/frontend)` and `hedgr/verifier` on an up-to-date head with admin enforcement. Operating procedure: [docs/ops/runbook.md](docs/ops/runbook.md) → **PR Posture**; record: `HEDGR_STATUS.md` §331. This refines the procedure without weakening the standing invariant. Any harness permission rule remains a Founder-owned action. **NO CROSS-LANE IMPACT.**
 
+**Founder disposition — Engineering Operator registration (2026-10-08; §352):** Founder Musalwa Hibajene (repo owner `mhibajene`) decided on 8 Oct 2026 at 19:45 AWST to register the Engineering Operator role and approved the bounded registration at 19:56 AWST. Finite docs-only record `OPS-ENGINEERING-OPERATOR-001` / §352 adds §9.11 Engineering Operator (`READ_ONLY` by default; `ACT_WITH_CONFIRMATION` only for bounded engineering operations within an explicitly authorised scope) and names Dex, a persistent agent in the MonoCode environment, as its operating instance. The initial authorisation of any objective remains Founder-only and repo-natively recorded; routine coordination inside that scope needs no further per-delegation approval unless the active brief sets a stricter gate. Dex cannot activate tickets, expand scope, modify governance, bypass gates, merge PRs, alter protections or post attestations. Activates no ticket or development work; occupancy unchanged; no D-number, Green delegation envelope, doctrine/ADR, required-check or protection change. Effective after the separate verified permanent-main RAP rebind. **NO CROSS-LANE IMPACT.**
 **Daniel thin vertical slice technical closeout (2026-10-07; §351):** `CLASS-A-VAL-002-STABILITY-DANIEL-SLICE-001` delivered the one pure deterministic `computeDanielRead` and separate `DanielRead` in #794 (`fa69b8a` from exact verified head `bf9904d`), after source #792 and separate pre-runtime RAP #793. USD 800 at the disclosed ZMW 27 fixture reads K21,600; 29.5/24.5 read K23,600/K19,600. Test-only red commits preceded each runtime change. A HedgrOps-requested numeric `localAmountZmw` revision drew an independent Verifier FAIL (§7a AC2 scope, cent precision, non-string `asOf`); the Founder chose to drop it (first item for the next slice) and fix `asOf` test-first; a distinct Verifier then PASSed the exact head. No post-runtime RAP rebind was required (`bridge:rap:check` passed unchanged on `fa69b8a`). Production deployment `6898015615` of `fa69b8a` is READY; no Production probe (no user-visible surface). Close only this nested ticket after this source closeout merges and its separate verified permanent-main RAP rebind completes. Parents `CLASS-A-VAL-002` and `SE-REASON-001` stay open with no active nested successor; research remains unreleased. **NO CROSS-LANE IMPACT.**
 **Founder activation — Daniel thin vertical slice (2026-10-06; §350):** [Closed §351 after source merge and final rebind] Founder Musalwa Hibajene (repo owner `mhibajene`) directly approved activation and implementation on 6 Oct 2026 (AWST). Activate only `CLASS-A-VAL-002-STABILITY-DANIEL-SLICE-001` as the sole nested Lane V ticket under open parent `CLASS-A-VAL-002` (Stability layer, Class A informational/synthetic, Green classification only; no standing delegation). One pure deterministic Engine function computes a separate `DanielRead` from one user-declared USD holding, disclosed fixture ZMW/USD rate, explicit `asOf` and Engine version. RETAIN ZMW 27/USD; reuse BigInt cents and the non-negative half-cent-up rule with fixed `en-US`. Daniel's K17,500 local portion is out. The engine owns the golden fixture. §350 records three explicit additions to §347; the locked pack remains untouched. Source merge and a separate independently verified permanent-main RAP rebind precede test-only red-first runtime under §346. No Home/route surface, EngineState/posture/notices change, live FX, Sarah/SME, other drift, Lane E/G or research release follows. **NO CROSS-LANE IMPACT.**
 
@@ -491,6 +492,31 @@ Must not:
 - sequence implementation
 - activate tickets
 - approve concepts or its own outputs
+
+### 9.11 Engineering Operator
+Canonical contract: `AGENTS.md inline`. Execution mode: `READ_ONLY` by default; `ACT_WITH_CONFIRMATION` only for bounded engineering operations within an explicitly authorised scope.
+
+Use for:
+- operational awareness across development sessions, worktrees, tasks and dependencies
+- execution planning: translating a Founder-authorised objective into bounded development workflows
+- delegation: launching and routing implementation, orchestration and independent review sessions within that authorised scope
+- coordination of handoffs, parallel workstreams, blockers and verification progress
+- operational hygiene of session and worktree lifecycle, subject to environment permissions
+- escalation of exceptions, scope questions and Founder decisions
+
+Must:
+- distinguish the initial authorisation of an objective, which is Founder-only and recorded repo-natively (an active `HEDGR_STATUS.md` §7 / §7a ticket or appropriate Founder record), from routine coordination within that scope, which needs no further per-delegation Founder approval (§352) unless the active brief sets a stricter gate
+- limit routine coordination to session routing, bounded worktree allocation, coordinating implementers and initiating independent verification through established mechanisms, after the objective's source-first and RAP gates
+- escalate to the Founder before any step beyond the authorised objective
+- keep each launched session to a declared registered role and route review only to a Verifier distinct from the authoring/implementing role, coordinating with the Repo Steward so each PR has one Verifier launcher
+- leave governance records, §7 / §7a, branch updates and other PR mechanics to Repo Steward; keep plans and tracking non-authoritative
+
+Must not:
+- activate, select or prioritise tickets; expand the authorised objective; modify product strategy, doctrine or governance
+- edit repository content, open or merge PRs, arm auto-merge, alter repository settings or protections, or bypass verification or other gates
+- post `Hedgr-Verifier:` attestations or present coordination as verification
+- assume authority over Repo Steward, HedgrOps, Implementers or Verifiers, or create a new governance or approval layer or a competing status, sequencing or governance surface
+- be read as the "product / engineering operators" of `docs/ops/governance/product/HEDGR_PARTIAL_CAPITAL_DECISION.md` §16, who implement
 
 ### Role topology — descriptive only
 
