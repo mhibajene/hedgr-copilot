@@ -5573,729 +5573,6 @@ Markers are text (`Same as before`, `New`). Colour or icon may reinforce a marke
 
 **Effect and remaining hold:** The Founder states `normal use disposition approved`. This removes the governance policy hold for private Founder-only normal use solely within the four existing fixed no-argument read-only evidence tools once an authenticated connection actually exists. It does not turn the failed diagnostic into an operational pass, assert a token or tool connection, suppress the unverified session/expiry/reauthentication qualifications, or authorise another submission from the consumed transaction. Because no authenticated connection exists, there is currently no normal-use action to perform. A fresh authorization retry, browser-redirect diagnosis, code or operator-documentation edit, Worker deployment/configuration, Cloudflare Access/identity/credential/storage/binding change, plugin registration/edit, new tool/parameter/user, repository browsing or mutation, ticket activation, participant/research release, financial capability or mandate change requires separate bounded authority. This source and separately generated branch RAP may be prepared locally for review; the branch remains non-authorising. Source push/merge, its automatic `hedgr-copilot-frontend` Vercel Production deployment, the required separate permanent-main RAP rebind and its deployment remain held pending express Founder approval. Stop at `NORMAL USE POLICY APPROVED — AUTHENTICATED CONNECTION STILL UNAVAILABLE`. **NO CROSS-LANE IMPACT.**
 
-## 352. Founder disposition — Engineering Operator registration (`OPS-ENGINEERING-OPERATOR-001`, 2026-10-08)
-
-**Date:** 2026-10-08 (AWST)
-
-**Founder decision:** Musalwa Hibajene (repo owner `mhibajene`), 8 Oct 2026 at 19:45 AWST: register Dex as **Engineering Operator** (not Coordinator, not Synthesizer), with scope covering operational awareness, execution planning, delegation, coordination, operational hygiene and escalation; `READ_ONLY` by default and `ACT_WITH_CONFIRMATION` for bounded engineering operations.
-
-**Founder approval to record:** Musalwa Hibajene, 8 Oct 2026 at 19:56 AWST: “Founder disposition: APPROVED — proceed with the bounded registration lifecycle.”
-
-**Status:** docs-only Founder-decision record, following the §346 / §347 finite-record pattern. No ticket is activated. No D-number. Occupancy is unchanged: parents `CLASS-A-VAL-002` and `SE-REASON-001` remain open with no nested ticket. The permanent-main RAP rebind for this source follows separately; the registration is effective only after that rebind is independently verified and merged.
-
-**Registration:** AGENTS §9.11 Engineering Operator is registered as an institutional capability with an `AGENTS.md inline` contract. Dex, a persistent agent in the MonoCode environment, is its operating instance (Dex (§9.11)). MonoCode is an operating environment, not an authority surface. Registration establishes identity and boundaries only (AGENTS §9 Role Registration Contract); the delegation below is granted by this Founder record, not by registration.
-
-**Initial authorisation vs routine coordination:** The initial authorisation of an objective is Founder-only and must be recorded repo-natively (an active §7 / §7a ticket or appropriate Founder record). Once an objective is so authorised, Dex may coordinate implementation and review sessions within that scope without repeated Founder approval for routine delegation, unless the active brief sets a stricter gate. Routine delegation includes session routing, bounded worktree allocation, coordinating implementers and initiating independent verification through established mechanisms. Dex cannot expand the authorised objective, activate new tickets or bypass existing gates; any step beyond the authorised scope escalates to the Founder.
-
-**Operating model:** Founder → Dex (Engineering Operator) → Implementers / Orchestrators → Independent Verification; Barry oversees stewardship. Dex is the Founder's primary Engineering Operator within MonoCode, especially in focused development sessions. The Founder retains strategy and activation. Barry remains Repo Steward for governance records and PR mechanics. HedgrOps retains its existing institutional responsibilities. Implementers deliver bounded implementation; independent Verifiers alone issue attestations. Dex complements these roles and creates no new governance or approval layer.
-
-**Boundaries:** Dex may not activate, select or prioritise tickets, expand approved scope, modify product strategy, doctrine or governance, edit repository content, open or merge PRs, arm auto-merge, alter repository settings or protections, bypass verification or other gates, post `Hedgr-Verifier:` attestations, or assume authority over Repo Steward, HedgrOps, Implementers or Verifiers.
-
-**Explicit non-authorisation:** This record activates no ticket or development work, changes no occupancy, assigns no D-number, creates no Green delegation envelope (§6g / ADR 0025), amends no doctrine, ADR or `.cursorrules`, changes no test fixtures, verifier requirements, ticket-activation rules, required checks or branch protection, and releases nothing. TDD §346 does not apply (docs/authority record). **NO CROSS-LANE IMPACT.**
-
-## 351. Daniel thin vertical slice technical closeout (`CLASS-A-VAL-002-STABILITY-DANIEL-SLICE-001`, 2026-10-07)
-
-**Founder authority:** Full bounded sequence approved on 6 Oct 2026 under §350, including ordinary automatic frontend deployments, this source-first closeout and its later separate verified permanent-main RAP rebind. On 7 Oct 2026 (AWST) the Founder relayed HedgrOps review, then chose option A after the independent Verifier FAIL described below. No routine repeat permission is needed.
-
-**Delivery / independent exact-head evidence:**
-- source: [#792](https://github.com/mhibajene/hedgr-copilot/pull/792), merged `026d89ea298abeece0813cc8ac8fe251327ebdd7` from independently reviewed head `0708d855d76edab7ff4b256683ca917d6087052e`; PASS and successful `hedgr/verifier` before merge.
-- pre-runtime-rebind: [#793](https://github.com/mhibajene/hedgr-copilot/pull/793), merged `cc09d92feebce0892f0200350acb40ef43b4bae2` from independently reviewed head `e058bc9acc24553653418a06d05779545cc865eb`; its own distinct PASS and successful `hedgr/verifier` before merge.
-- runtime: [#794](https://github.com/mhibajene/hedgr-copilot/pull/794), merged `fa69b8a823bec3049007ef6c3cc3a231c57b81f8` from independently reviewed head `bf9904d08681cc79f80bb3314158c50c569e88dd`; [PASS attestation](https://github.com/mhibajene/hedgr-copilot/pull/794#issuecomment-6027638601) posted 2026-10-06T23:49:28Z, `hedgr/verifier` success 23:49:35Z, before merge 23:49:44Z. Merged tree equals the reviewed head tree.
-
-Runtime started only after the source and separate permanent-main rebind merged and `bridge:rap:check` passed on `cc09d92`. Every PR merged after a distinct independent GPT-6.1 Sol high Verifier PASS on its exact head with required validate/E2E green. No author/coordinator attestation, protection bypass or merge-before-verifier deviation occurred.
-
-**Runtime / TDD:** First runtime commit `93653ca` contains only the eight named §7a tests and the literal engine-owned golden grid; red on unchanged runtime (module absent, suite cannot load). `425361e` adds only `apps/frontend/lib/engine/daniel-read.ts` (8/8 green). HedgrOps review then requested a numeric canonical `localAmountZmw`, with a stop instruction if §7a's named outputs did not allow it; it was built red-first (`e393d83`, 7 failed / 3 passed) and green (`d10e538`). An independent Verifier posted [FAIL](https://github.com/mhibajene/hedgr-copilot/pull/794#issuecomment-6027389096) on `d10e538`: B1 the extra numeric field widened §7a AC2 ("only the local display field and what-changed explanation move"); B2 `Number(cents)/100` could lose a cent within the guard; B3 a non-string `asOf` passed `Date.parse`. The Founder chose option A: `f6dbe4d` reverts both revision commits (tree equals `425361e`; B2 no longer applies), test-only `43a8b33` reproduces B3 (1 failed / 8 passed), and `bf9904d` adds only a `typeof asOf` check to the existing guard (9/9 green). A distinct second Verifier PASSed `bf9904d`. Final-head local `pnpm run validate` passed (946 frontend tests) and frontend `e2e:ci` 144/144; hosted validate and E2E passed on the exact head.
-
-**Read:** USD 800 at the disclosed ZMW 27/USD fixture → K21,600; 29.5 → K23,600; 24.5 → K19,600; USD 1,000 at 27 → K27,000 (golden holding control). Decimal BigInt cents with the non-negative half-cent-up rule and fixed `en-US`. Inputs are the declared USD holding, fixture rate and explicit `asOf`; the Engine version is a module constant carried in the read. Invalid inputs throw `RangeError` with no read. No clock, storage, display preference or display metadata input.
-
-**Deferred:** The numeric canonical local amount (HedgrOps revision) is the first item for the next slice and needs its own source authority covering §7a AC2-style named outputs and exact-cent numeric conversion.
-
-**Production evidence:** `bridge:rap:check` passed unchanged on `fa69b8a` (projection still bound to source `026d89e`), so no post-runtime RAP rebind was required. GitHub Production deployment `6898015615` of exact `fa69b8a823bec3049007ef6c3cc3a231c57b81f8` succeeded at 2026-10-06T23:50:32Z (https://hedgr-copilot-frontend-1oqkn9qfg-hedgr.vercel.app). No Production probe: the ticket adds no user-visible surface. Evidence is retained under `output/daniel-slice-20261006/` in the preserved original checkout.
-
-**Scope:** Only the three §7a runtime/test paths changed. No Home/route surface, `EngineState`, posture, notices, `scenario-fixtures.ts`, app FX table, live FX, local portion, dependency, locked-pack, doctrine or ADR change.
-
-**Effect / remaining gate:** On this source closeout's permanent-main merge and its separate independently verified projection-only RAP rebind, close only this nested ticket and restore no active nested Lane V. Both parents remain open; Lane E has no nested ticket, G is deferred, Green is classification only and research remains unreleased. No automatic successor, Sarah/SME, other drift fix, release, financial or cross-lane authority follows. Rollback remains one revert of runtime #794. **NO CROSS-LANE IMPACT.**
-
-## 350. Founder activation — Daniel thin vertical slice (`CLASS-A-VAL-002-STABILITY-DANIEL-SLICE-001`, 2026-10-06)
-
-**Founder activation — Daniel thin vertical slice (2026-10-06; §350):** Founder Musalwa Hibajene (repo owner `mhibajene`) directly approved activation and implementation on 6 Oct 2026 (AWST). Activate only `CLASS-A-VAL-002-STABILITY-DANIEL-SLICE-001` as the sole nested Lane V ticket under open parent `CLASS-A-VAL-002` (Stability layer, Class A informational/synthetic, Green classification only; no standing delegation). One pure deterministic Engine function computes a separate `DanielRead` from one user-declared USD holding, disclosed fixture ZMW/USD rate, explicit `asOf` and Engine version. RETAIN ZMW 27/USD; reuse BigInt cents and the non-negative half-cent-up rule with fixed `en-US`. Daniel's K17,500 local portion is out. The engine owns the golden fixture. §350 records three explicit additions to §347; the locked pack remains untouched. Source merge and a separate independently verified permanent-main RAP rebind precede test-only red-first runtime under §346. No Home/route surface, EngineState/posture/notices change, live FX, Sarah/SME, other drift, Lane E/G or research release follows. **NO CROSS-LANE IMPACT.**
-
-**Founder instruction / answers:** Musalwa Hibajene, 6 Oct 2026 (AWST), after the next-ticket recommendation: “spin up an gpt 6.1 high agent to activate the ticket and a opus 5.5 Medium agent to implement the ticket in a new worktree.” Direct activation and implementation approval, with source-first gates retained. The Founder accepted (1) reuse of BigInt cents plus the non-negative half-cent-up rule from `simulation-currency-insight.ts`, fixed `en-US`; (2) exactly one user-declared USD holding, excluding Daniel's local K17,500 portion; (3) an engine-owned golden fixture. The named disclosed ZMW 27/USD fixture rate is RETAINed, reproducing USD 800 → K21,600, 29.5 → K23,600 and 24.5 → K19,600; the app's existing ZMW 20 table is unchanged.
-
-**Explicit amendment to §347 — three additions (Founder-approved, recorded here only):** §347 locked only the pack at Founder-reviewed `9068f0f`. Preserve that locked pack unchanged; this record adds these controlling Daniel-slice requirements:
-1. **One authoritative computation path:** exactly one function computes the read; no caller recomputes any part.
-2. **Independence:** the read depends only on declared holding, fixture rate, explicit `asOf` and Engine version; not storage, clock, display preference, explanation/copy layer or display metadata.
-3. **Declared amount semantics:** user-declared, USD-denominated, read-only; not custody, balance, settled amount or verified wealth (ADR 0027 decision 3; ADR 0013).
-
-**Other explicit Founder decisions:** Canonical computed Engine fields define the read; Home is presentation with its own tests, with no Home/route surface in this ticket. Use a separate `DanielRead` type, not an `EngineState` extension; this supersedes the 5 Oct feed-EngineState direction for this slice only. `EngineState` may be read-only context. No new posture; existing `EnginePosture` may be read-only context or omitted, never given a second meaning. Storage and clock are not inputs; time (`asOf`) is explicit. Engineering determinism and capital stability remain separate meanings; §346's three-property test contract remains binding.
-
-**Predecessor / legibility:** §349 is complete after source closeout [#790](https://github.com/mhibajene/hedgr-copilot/pull/790) (`83764b68db823e6082bd05fa0ca4867e179a9513`) and final separate verified RAP [#791](https://github.com/mhibajene/hedgr-copilot/pull/791) (`a4355a79c736dbf4b4d9517375734a7c5159d8bf`). The §7a header's future-tense closeout lag is explicitly tidied. That closeout supplied no successor authority; this separate Founder activation names the sole new nested ticket.
-
-**Controlling brief / effect:** Live §7a contains the exact source/runtime/test file allowlists, named red→green tests, exclusions, stop/rollback and all gates. Source permanent-main merge plus its separate independently verified projection-only RAP rebind precede runtime. No D-number, locked-pack edit, doctrine/ADR amendment, broader Engine acceptance, Lane E/G work, research release, financial capability or standing delegation. Only this nested ticket may later close; both parents stay open. **NO CROSS-LANE IMPACT.**
-
-## 349. Home review-memory crash fix technical closeout (`CLASS-A-VAL-002-STABILITY-REVIEW-MEMORY-001`, 2026-10-06)
-
-**Founder authority:** Full bounded sequence approved on 6 Oct 2026 under §348, including ordinary automatic frontend Production deployments, the bounded Production probe, this source-first closeout and its later separate verified permanent-main RAP rebind. No routine repeat permission is needed.
-
-**Delivery / independent exact-head evidence:**
-- source: [#786](https://github.com/mhibajene/hedgr-copilot/pull/786), merged `cda4cce71ed948c4592a7c04ad70b99907228021` from independently reviewed head `f0c1f8b32dc633dd53b773da248ca3244f2d4d40`; [PASS attestation](https://github.com/mhibajene/hedgr-copilot/pull/786#issuecomment-6014800157) posted 2026-10-06T10:59:40Z, before merge 2026-10-06T11:00:14Z.
-- pre-runtime-rebind: [#787](https://github.com/mhibajene/hedgr-copilot/pull/787), merged `a770d5ed8893ed4808b0cd8cd272534b42e36c49` from independently reviewed head `b31e887d09ab42c3bc06cbb07e594dc7d48a20e7`; [PASS attestation](https://github.com/mhibajene/hedgr-copilot/pull/787#issuecomment-6014912112) posted 2026-10-06T11:07:05Z, before merge 2026-10-06T11:07:56Z.
-- runtime: [#788](https://github.com/mhibajene/hedgr-copilot/pull/788), merged `aab2cfdb6f8de0f5d717995588eca065510c28f6` from independently reviewed head `173ef6b1f3e6beff7ecb784fbd215059bf89b855`; [PASS attestation](https://github.com/mhibajene/hedgr-copilot/pull/788#issuecomment-6015152906) posted 2026-10-06T11:20:29Z, before merge 2026-10-06T11:20:53Z.
-- post-runtime-rebind: [#789](https://github.com/mhibajene/hedgr-copilot/pull/789), merged `0c28bae89b021094cd33cef842d2e6a8ac32d6c1` from independently reviewed head `63eb53f790f03afa8fc6b20a14b0e61fefc73441`; [PASS attestation](https://github.com/mhibajene/hedgr-copilot/pull/789#issuecomment-6015277124) posted 2026-10-06T11:28:08Z, before merge 2026-10-06T11:28:44Z.
-
-Every PR merged after a distinct independent GPT-6.1 Sol high Verifier PASS and successful exact-head `hedgr/verifier` readback with required validate/E2E green. No author/coordinator attestation, protection bypass or merge-before-verifier deviation occurred. Runtime started only after the source and separate permanent-main rebind merged and `bridge:rap:check` passed.
-
-**Runtime / TDD:** First runtime commit `6cff9cfb0559d69b4b7e7b299046644331281e90` contains only reproducing tests; focused red was 4 failed / 20 passed, with actual Home review component `RangeError: Invalid time value`. Test-only `cd62215e4e4902e75ddb70912d0536bad9783151` corrected a nested-summary browser selector before any runtime change; corrected browser red was 1 failed / 4 passed, the invalid-date case reaching Next's client-side exception page. The initial browser run's additional selector timeouts were test-harness errors, not extra product defects. Later `173ef6b1f3e6beff7ecb784fbd215059bf89b855` adds only `Number.isFinite(Date.parse(o.viewedAt))` to the existing memory entry guard. Focused green 53/53, full validate (937 frontend tests, Bridge/provenance, trust, RAP, typecheck/lint) and full local frontend `e2e:ci` 144/144 passed. The test-first commits remained separate for independent review; normal final PR squash retained the reviewed tree.
-
-**Production evidence:** GitHub deployment `6882739747` of exact post-runtime RAP merge `0c28bae89b021094cd33cef842d2e6a8ac32d6c1` succeeded at 2026-10-06T11:29:44Z; deployment URL https://hedgr-copilot-frontend-hbsd2rmlb-hedgr.vercel.app. Vercel read-only alias records before and after the probe bind the public alias to READY deployment `dpl_6tnL6Ha7ySdRPqrq4hpnJCFUBK6w` at this exact SHA. Public-alias `/dashboard` probe on 2026-10-06T11:30:37.082Z passed 12/12 in isolated browser contexts at 390/1440 px: invalid date, missing memory, malformed entry, corrupt JSON, valid saved control and invalid row with a prior fingerprint. No page errors. Rejected rows produce no plausible history/changed/unchanged memory; valid control remains visible. The prior-fingerprint case retains one valid current-visit row and removes rejected history. Only same-origin requests were allowed; no Production configuration was changed. Retained JSON, screenshots, logs, PR descriptions and verifier outputs are under `output/home-review-memory-crash-20261006/` in the preserved original checkout.
-
-**Scope:** Only the §348 four runtime/test paths changed. Valid parseable entry behaviour, stored ordering/cap, fingerprint comparison, visit/reset behaviour, Engine/EngineState, posture, notices, copy/routes and all other drift items are unchanged. No dependency, abstraction or storage/clock architecture. The locked pack and §347 are unchanged. The original checkout and all unrelated artifacts/worktrees were preserved.
-
-**Effect / remaining gate:** On this source closeout's permanent-main merge and its separate independently verified projection-only RAP rebind, close only this nested ticket and restore no active nested Lane V. Both parents remain open; Lane E has no nested ticket, G is deferred, Green is classification only and research remains unreleased. No automatic successor, Daniel activation/build/brief, other drift fix, release, financial or cross-lane authority follows. Rollback remains one revert of runtime #788. **NO CROSS-LANE IMPACT.**
-
-## 348. Founder activation — Home review-memory crash fix (`CLASS-A-VAL-002-STABILITY-REVIEW-MEMORY-001`, 2026-10-06)
-
-**Founder activation — Home review-memory crash fix (2026-10-06; §348):** Founder Musalwa Hibajene accepted the corrected inventory as evidence and approved crash fix first, then the later Daniel slice brief. Activate only `CLASS-A-VAL-002-STABILITY-REVIEW-MEMORY-001` as the sole nested Lane V ticket under open parent `CLASS-A-VAL-002` (Stability, Class A informational/synthetic, Green classification only; no standing delegation). Invalid, missing or corrupt saved review-memory entries are ignored at the read boundary, never rendered as prior changed/unchanged memory. Source merge and a separate verified permanent-main RAP rebind precede runtime. The first runtime commit contains only failing reproducing tests under §346; a later commit supplies the smallest fix. Runtime exact-head verification, post-runtime RAP rebind, exact-revision READY Production probe, source-first closeout and final separate verified RAP rebind are required. No Daniel activation/build, Engine logic, posture/notices, copy/routes, other drift items, Lane E/G or research release follows. **NO CROSS-LANE IMPACT.**
-
-**Controlling brief:** Live §7a above contains exact allowed files, named red-to-green acceptance, exclusions, stop/rollback and all source/RAP/runtime/Production/closeout gates. The Founder-approved inventory is evidence only. This record activates no Daniel slice or later brief and changes no locked pack, doctrine, ADR or standing delegation.
-
-## 347. Founder decision — Stability Engine spec lock (`OPS-SE-SPEC-LOCK-001`, 2026-10-06)
-
-**Date:** 2026-10-06 (AWST)
-
-**Founder approval to record:** Musalwa Hibajene (repo owner `mhibajene`), 6 Oct 2026 (AWST), in session: “lets work on 2 and then 1. I believe the work spec was already updated so happy to lock that in.” This answers the steward recommendation to record a docs-only lock of the spec already written in `docs/strategy/stability-engine-pack.md` (Founder-reviewed refresh `9068f0f`), with the ledger-only residual tidy, using the §343 / §346 source-first and separate permanent-main RAP rebind pattern.
-
-**Status:** docs-only Founder-decision record. No ticket is activated. No D-number. Occupancy remains parent `CLASS-A-VAL-002` and parent `SE-REASON-001` open with no nested ticket. The permanent-main RAP rebind for this source follows separately.
-
-**Foundation layer:** **Stability** under `docs/strategy/PHASE-SEQUENCING-2026-10-05.md`. Spec ownership remains with the Founder.
-
-**Decision:** Lock the following existing spec text faithfully from the pack; this records the lock, not new spec content.
-
-### Definition of stable — locked
-
-> Same inputs, same read. When an input changes, only the parts of the read that input explains change. Nothing else changes unless the engine is deliberately changed.
-
-**Test contract:** The pack's three testable properties are already the standing test contract in §346, decision 4, and AGENTS §7. That existing contract is cross-referenced here without creating a new rule.
-
-### Two meanings — kept separate
-
-**Two meanings must not be blended.**
-
-- **Engineering determinism:** the engine's behavior doesn't change unless someone intends it to.
-- **Hedgr "stability":** about the user's capital (what holds for them when the world moves).
-
-### Implementation order — locked
-
-1. **Daniel first**
-2. **Sarah second**
-3. **SME held**
-
-### First thin vertical slice (Daniel) — locked, not activated
-
-**One saver, one currency pair, one user-declared holding** — the full path from input to read, nothing more.
-
-The holding is fixture input with stubbed FX and hermetic CI. Hedgr only reads it. Per ADR 0027 and doctrine (advisory, never directive), Hedgr does not recommend or run a hedge. **"Hedge" stays out of anything a user sees.**
-
-As the Daniel inventory seed states: “Hedgr only reads it; it does not recommend or run FX strategies”.
-
-### Language guard — locked
-
-Do not use "hedge" / "hedging" in participant-facing or product copy for this slice. Prefer **user-declared holding**, **dollar-linked portion**, or **read-only FX display**. Matches shipped Daniel limits ("Hedgr plays no part in it") and ADR 0027 / doctrine: advisory, never directive.
-
-**Residual tidy (§345):** Remove the retired `NEXT_PUBLIC_BALANCE_FROM_LEDGER=true` line and its two comments from `env/templates/frontend.env.schema`, and remove the deleted `apps/frontend/lib/state/wallet.ts` row from the current platform-boundary register. Neither residual has runtime effect. Rollback remains a single revert of #779 under §344 / §345.
-
-**Live surfaces:** §7 and the AGENTS live echo point to this decision. The pack changes only its Status line, definition lock label and lock pointer. Authority-test fixtures and the separately committed generated branch RAP follow the §346 / #782 pattern; a separate verified projection-only permanent-main RAP rebind follows source merge.
-
-**Explicit non-authorisation:** This record does not open or activate any ticket (including the Daniel slice), launch runtime, change occupancy, assign a D-number, amend doctrine, ADRs or `.cursorrules`, change required checks or branch protection, release the research route, or occupy Lane E/G. The Daniel slice still needs its own Founder activation and source-first §7/§7a brief. **NO CROSS-LANE IMPACT.**
-
-## 346. Founder disposition — TDD standing build posture (`OPS-TDD-POSTURE-001`, 2026-10-06)
-
-**Date:** 2026-10-06
-
-**Founder disposition:** RETAIN — TDD (red → green → refactor) is the standing build posture for every future Engine and Home runtime §7a brief.
-
-**Founder approval to record:** Musalwa Hibajene (repo owner `mhibajene`), 6 Oct 2026 at ~06:34 AWST. Same-source amendment: 6 Oct 2026 at ~06:41 AWST, fold the smallest-durable-change-then-prove-the-real-result principle into this same S1 record.
-
-**Status:** docs-only Founder-decision record. No ticket is activated. No D-number. Occupancy remains parent `CLASS-A-VAL-002` and parent `SE-REASON-001` with no nested Lane V ticket. The RAP permanent-main rebind for this source follows separately. Required checks and branch protection are unchanged.
-
-**Decision:** Record the following as binding for every future Engine and Home runtime §7a brief:
-
-1. Every runtime §7a brief must name at least one test that fails before the change and passes after it. That test is an Acceptance Criterion, and its path is in the file allowlist. Use a Vitest contract for engine, balance and copy invariants. Use a hermetic Playwright case when the behaviour is user-visible on a route.
-2. The Implementer's first commit on a runtime PR is the failing test, unless the brief records an explicit Founder waiver.
-3. The independent Verifier confirms that the named tests exist, assert what the brief asks for, and pass in hosted CI on the exact head SHA. Verifier PASS remains an attestation gate and does not replace tests.
-4. Stability Engine slices use the three testable properties of "stable" in `docs/strategy/stability-engine-pack.md` as their test contract: same inputs give the same read; changing one input moves only the explained parts; an engine change moves nothing else unless deliberate.
-5. Any new Flask/backend surface in a ticket gets a pytest case in the same PR.
-6. Docs/authority PRs stay docs-first. Their checks are fixture/authority tests, not product TDD.
-7. Dynamic Stability Testing and the Lane E interpretation suites (IT-*) stay research-only and out of product CI until separately opened by the Founder.
-8. This disposition activates no ticket, launches no Implementer for runtime work, changes no occupancy, and changes no required checks or branch protection.
-
-**Same-record addition (~06:41 AWST):** Record “smallest durable change, then prove the real result” as a standing non-negotiable (HedgrOps pstack: laziness / subtract-before-add / prove-it-works). Make the smallest change that meets the brief. Prefer removing or reusing over adding new files, abstractions or surfaces. Prove the change against the real behaviour or artifact (a test, a hermetic run, a production probe where the brief names one), not just that it compiles or that CI is green.
-
-**Knock-on:**
-- `AGENTS.md` §7 Testing Standards carries the TDD binding rule. The existing "Behavior changes should ship with corresponding test updates unless explicitly waived" line remains; Engine/Home runtime briefs are tightened to named red→green tests.
-- `AGENTS.md` §4 Non-Negotiables and `.cursor/rules.md` carry the smallest-durable-change-then-prove principle.
-- Implementer and Verifier skills carry matching one-line TDD duties.
-- No nested successor is named.
-
-**Explicit non-authorisation:** This record does not open or activate any ticket, occupy a nested Lane V or Lane E ticket, assign a D-number, change parent occupancy, amend doctrine or ADRs, change required checks or branch protection, or launch runtime implementation. **NO CROSS-LANE IMPACT.**
-
-## 345. Wallet balance mode retirement technical closeout (`CLASS-A-VAL-002-STABILITY-LEDGER-ONLY-001`, 2026-10-05)
-
-**Founder approval:** Musalwa Hibajene, 5 Oct 2026 (AWST), “approved to proceed”. This covers the full sequence recorded in §344, including this source-first closeout and the later separate permanent-main RAP rebind.
-
-**Delivery and provenance:**
-
-| Step | PR | Merge SHA | Verified head | Verdict / attestation |
-| --- | --- | --- | --- | --- |
-| Source §344 | #777 | `0bba3d43991b3f7733998d0a48e2d6c7f1fe7670` | `fc72f378cca02a4ddb97f38a15ab240e5ce345b4` | PASS WITH NOTES; https://github.com/mhibajene/hedgr-copilot/pull/777#issuecomment-5996588507 |
-| RAP rebind | #778 | `1373e50bcb64fe3a47fdd138a33678afc528488b` | `7c8a55c6d357a3e12ee614f0ae7f1de301695a16` | PASS; https://github.com/mhibajene/hedgr-copilot/pull/778#issuecomment-5996807157 |
-| Runtime | #779 | `6b848e40537c902e8415f8a5fda4b9a963f38f4a` | `6adc1b696f74910adc39fd9a74d2ca1c8f9d8f1f` | PASS WITH NOTES; https://github.com/mhibajene/hedgr-copilot/pull/779#issuecomment-5997546750 |
-| Production | — | GitHub deployment `6863008500` of `6b848e4` | READY (success 2026-10-05T15:27:21Z) | Vercel URL `hedgr-copilot-frontend-knrow6v2q-hedgr.vercel.app` |
-
-Each Verifier was a distinct GPT-6.1 (`gpt-6.1-sol`) Codex session run with `codex exec`, separate from the Opus 5.5 orchestrator, and was briefed `READ_ONLY` except for one attestation. Every PR merged by auto-merge after an exact-head Verifier PASS and green required checks under the §331 posture; no merge-before-verifier deviation occurred. The visible MonoCode Verifier tab was not used because MonoCode app access was inactive in that thread; the brief's `codex exec` fallback was used instead.
-
-**Delivered (runtime #779):**
-- `balance.mode.ts` and the wallet store are deleted. Deletion was chosen over a ledger-only constant because every call site only branched on the mode.
-- `useBalance` always projects the ledger.
-- Deposit, Withdraw and the synthetic deposit lifecycle no longer credit or debit the wallet or write `hedgr:wallet`.
-- Home drops `resetWallet` and the wallet-only guard, keeping its ledger branch. The ledger agreement check predates #732 (from #729) and is retained.
-- A journey reset (clean start and Restart) removes any stale `hedgr:wallet` key.
-- `config/env.ts` drops the flag pass-through.
-- Tests: the #732 wallet-mode unit tests and wallet-store tests were removed. A new permanent hermetic e2e regression, `tests-e2e/ledger-only-balance.spec.ts`, checks that a settled $5 ledger entry plus a stale $7 wallet shows $5.00 on both Home routes.
-- Local validation: `validate` passed (928 frontend / 74 Bridge) and `e2e:ci` passed 139/139. Hosted `validate`, `E2E smoke (@hedgr/frontend)` and `hedgr/verifier` were green on the exact head.
-
-**Production probe (steward, public alias `https://hedgr-copilot-frontend.vercel.app`, 2026-10-05T15:28Z):**
-- **Bundle:** the deployed `/dashboard` chunk no longer contains the flag. Its only `hedgr:wallet` reference is the reset-time key removal.
-- **Method:** the §341 probe (`output/ledger-switch-20261005/probe.mjs`, local and untracked) was copied into `apps/frontend/.ledger-probe.mjs` with a local OUT path, run, and the copy deleted.
-- **Result: 82/82 passed.** The §327 probe (ledger $5, stale wallet $7) shows **$5.00** at 390 × 844 and 1440 × 1024. All closeout-inspection states match §341, with no “Latest change” strip, no overflow and no page error. Now that the wallet value is ignored by construction, this result no longer depends on Vercel configuration.
-- Evidence is kept locally and not committed (`results.json` SHA-256 `bc7d1e62a7f284f9c45c42448e134be455d8f0b85890eeaa631771f2e7d7d826`).
-
-**Verifier notes (recorded, not resolved by this closeout):**
-1. #777: the Verifier's local Bridge run hit missing-dependency module-load failures (49 pass, 3 load failures), so it did not reproduce the author's 74/74 locally. Hosted checks passed on the exact head.
-2. #779: the `HOME_EXPERIENCE_QA.md` §344 note points forward to the Production probe in this closeout. This record supplies that probe result.
-
-**Known residuals (unchanged, outside scope per §7a):** `env/templates/frontend.env.schema` still lists the flag with its rollback comment, and `docs/ops/mobile-native/HEDGR_PLATFORM_BOUNDARY_REGISTER.md` still lists `wallet.ts`. Neither has any runtime effect. The Founder-owned Vercel Preview check is not part of this record.
-
-**Effect:** On permanent-main merge of this source-first completion record and a final separate verified projection-only RAP rebind, close only nested `CLASS-A-VAL-002-STABILITY-LEDGER-ONLY-001`. Parent `CLASS-A-VAL-002` stays open without an active nested successor. Rollback remains a single revert of #779. No participant release, Engine change, legibility fix, Lane E/G occupancy, Green delegation or financial capability follows. **NO CROSS-LANE IMPACT.**
-
-## 344. Founder activation — nested Lane V wallet balance mode retirement (`CLASS-A-VAL-002-STABILITY-LEDGER-ONLY-001`, 2026-10-05)
-
-**Date:** 2026-10-05
-
-**Founder direction:** Musalwa Hibajene, 5 Oct 2026 (AWST), in session: “lets also fix the wallet vs ledgr configuration. I would recommend retiring the wallet configuration from production paths.”
-
-**Founder approval:** Musalwa Hibajene, 5 Oct 2026 (AWST), later in the same session: “approved to proceed”. This answers the steward proposal, which asked for approval of (a) the scope in the live §7a brief, (b) both §328 supersessions below, and (c) the full sequence: source-first activation → separate RAP rebind → runtime PR → exact-head independent Verifier → merge → Production probe → source-first closeout → separate RAP rebind.
-
-**Status:** source-first nested Lane V activation under open parent `CLASS-A-VAL-002`. Class A, synthetic. No D-number. Source merge and a separate verified permanent-main RAP rebind precede any runtime.
-
-**Foundation layer:** **Stability** under `docs/strategy/PHASE-SEQUENCING-2026-10-05.md`. Ledger becomes the only balance source, so the balance a user sees no longer depends on a build-time flag. This is not research polish and not Stability Engine spec work (which the Founder owns personally). It changes no Engine / `EngineState` and respects the dissemination hold.
-
-**Why:** Production has run ledger mode since §341 (82/82). The wallet branch is now dead code, and the configuration split (Production wallet mode, CI ledger only) let the §327 T3/T5 defect reach Production until #732. Retiring the branch removes that drift class.
-
-**Supersessions of §328 (Founder-approved):**
-1. §328 Decision 1 kept the flag as “a documented rollback”. Superseded: rollback is a **single revert** of the runtime PR, which meets AGENTS §4 (“flag or single revert”). §341's “The flag remains the documented rollback” is superseded on the same basis.
-2. §328 retained the #732 wallet-mode unit tests. Superseded: they are removed with the wallet branch.
-
-**Scope:** exactly the live §7a brief for this ticket (runtime allowlist, must-not-change list, known residuals, verification, stop/rollback).
-
-**Explicit non-authorisation:** No runtime in this source. No Vercel or other environment change (the Founder owns the Preview check). No ledger-maths, ledger storage, route or copy change. No Engine or Daniel-slice work, no legibility fixes, no participant release, no Lane E/G, Green delegation, doctrine/ADR/`.cursorrules` change, or financial capability. **NO CROSS-LANE IMPACT.**
-
-## 343. Founder decision — D2 obligation-anchored progress as hypothesis only (`OPS-D2-DISPOSITION-001`, 2026-10-05)
-
-**Date:** 2026-10-05
-
-**Founder decision:** 21:00 AWST — option B (hypothesis only).
-
-**Founder approval to record:** Musalwa Hibajene, 5 Oct 2026 at 21:01 AWST (“you can record the D2 disposition”).
-
-**Status:** docs-only Founder-decision record. No ticket is activated. No D-number. Nothing is released. Occupancy remains parent `CLASS-A-VAL-002` and parent `SE-REASON-001` with no nested Lane V ticket. The RAP permanent-main rebind for this source follows separately.
-
-**Decision:** Record “obligation-anchored progress” (tracking savings against a specific future payment and keeping that relationship visible) as a research hypothesis / product-thesis candidate only. It is not product direction, not accepted capability, and not a claim Hedgr currently makes or builds.
-
-**No-claim fence (retained):** Participant-facing surfaces must not use “anchored to the obligation”, “progress relative to the USD obligation”, “what your money means relative to the obligation”, or paraphrase. Existing Holds that keep D2 out of research copy remain in force.
-
-**Evidence path (not activated):** Dynamic Stability Testing is the natural later evidence path; any such work must keep the no-claim fence. This record does not open that ticket, activate Lane E, amend the canonical story, or authorise Engine/Wallet/ledger work.
-
-**Knock-on:**
-- The open “Founder decision required” D2 lines in weekly reviews (and their AGENTS echoes of live §7) close by pointing to this §343 disposition.
-- D2 remains held out of copy; the research route stays unreleased.
-- No nested successor is named.
-
-**Explicit non-authorisation:** This record does not open or activate any ticket, occupy a nested Lane V or Lane E ticket, assign a D-number, change parent occupancy, amend doctrine or ADRs, revise the canonical story, or release the research route. **NO CROSS-LANE IMPACT.**
-
-## 342. Daniel research-route fix technical closeout (`CLASS-A-VAL-002-RESEARCH-DANIEL-FIX-001`, 2026-10-05)
-
-**Founder approval:** 2026-10-05 at 18:46 AWST (“you can proceed with the Daniel fix ticket”), covering in-ticket sequence step 4 (this source-first closeout and the later separate permanent-main RAP rebind).
-
-**Delivery and provenance:**
-
-| Step | PR | Merge SHA | Verified head | Notes |
-| --- | --- | --- | --- | --- |
-| Source §340 | #767 | `bed0c96c6e9fa12cb367f255148f7b85b85d89be` | `2120db7…` (PASS WITH NOTES) | Activation + heading-lock amendment |
-| RAP rebind | #768 | `78d2049b967d714657937a6bc2b31f19ad3e2f5f` | `8e50076…` | Permanent-main rebind after §340 |
-| Runtime | #770 | `67cd46ff80a7d5127617b55d42489194f9e3b326` | `6e8ae07a75157ba085f6f1941feb93a70dbc92e2` | PASS WITH NOTES (OWNER `mhibajene`); attestation https://github.com/mhibajene/hedgr-copilot/pull/770#issuecomment-5994037879 |
-| Production | — | deploy `dpl_AttUa2EYcXDU4Dz5Mgz4XVxwS75x` of `67cd46f` | READY | Confirmed 2026-10-05 ~20:08 AWST |
-
-Every PR after an exact-head Verifier PASS under the §331 posture; no merge-before-verifier deviation occurred.
-
-**Intervening unrelated main (do not claim as this ticket):** #769 §341 ledger-mode record `1b8ba6f`; #771 RAP rebind `da100f1`. Runtime #770 was updated onto those before final verification.
-
-**Delivered (Founder-locked items (1)–(3)):**
-- **Facts-only split.** “What to watch” is on the interpreted view only; locked Watch strings were moved, not rewritten.
-- **Attribution + limits on facts.** The locked attribution + limits pair renders directly under the panel on the facts stage too.
-- **Heading grammar.** After heading uses `{localFullSingular}`; Held-now `{localFull}` is unchanged.
-
-**#770 Verifier notes (PASS WITH NOTES; recorded, not resolved by this closeout):**
-1. PR body still named pre-rebind head `c34789f` / base `#768` after branch updates — packaging/docs staleness only.
-2. `v=2` E2E asserts Watch absence on facts / strengthened After heading but does not click through to interpreted Watch for the strengthened twin (unit tests cover v2 heading tokens).
-3. Screenshot SHA-256s live in the PR body only (no QA markdown authorised under §7a for this ticket).
-
-Cold-reader / internal-cold-read items remain closed under §339 and are not reopened. The research route remains unreleased. No participant release follows. No nested Lane V successor is named.
-
-**Effect:** On permanent-main merge of this source-first completion record and a final separate verified projection-only RAP rebind, close only nested `CLASS-A-VAL-002-RESEARCH-DANIEL-FIX-001`. Parent `CLASS-A-VAL-002` stays open without an active nested successor. No participant release, Form, telemetry, financial capability, Lane E/G occupancy or Green delegation follows. **NO CROSS-LANE IMPACT.**
-
-## 341. Production ledger balance mode verified (§328 decision 1, 2026-10-05)
-
-**Date:** 2026-10-05
-
-**Founder action:** In the 5 Oct 2026 steward session, the Founder (Musalwa Hibajene) performed the §328 decision 1 action. The Founder changed `NEXT_PUBLIC_BALANCE_FROM_LEDGER` in the Vercel Production environment and redeployed, then reported “Production deployment has been done”. The Founder did not state whether the variable was removed or set to `true`; both satisfy §328. The shipped bundle reads the variable at runtime rather than inlining a value, which is consistent with removal.
-
-**Founder approval to record:** Musalwa Hibajene, 5 Oct 2026 (AWST), in the same session: “spin up a opus 5.5 orchestrator who will action the docs only record. The orchestrator should spin up a gpt 6.1 agent for verification review of the PR once the commit is done”.
-
-**Status:** docs-only record of a completed Founder-owned Production configuration action. No ticket is activated, closed or amended. This record does not change occupancy; live §7 / §7a remain the occupancy surface. The RAP permanent-main rebind for this source follows separately.
-
-**Deployment:** GitHub Production deployment `6856469933` for commit `82c5d3bf6cc8483bbc820217b240e006f243fc76` (#764, docs-only) received a second success status at 2026-10-05T10:42:22Z (Vercel URL `hedgr-copilot-frontend-f81zbwg0q-hedgr.vercel.app`). This matches the Founder's redeploy; the frontend runtime is unchanged from the prior Production build. The later automatic Production build of `bed0c96` (#767) also reads the variable at runtime (alias bundle checked 5 Oct 2026).
-
-**Verification (steward, public alias `https://hedgr-copilot-frontend.vercel.app`):**
-- **Bundle, before:** the `/dashboard` client bundle folded `getBalanceMode` to `return "wallet"` with `"false"` inlined.
-- **Bundle, after (~10:45 UTC):** the variable is no longer inlined; `getBalanceMode` evaluates at runtime and falls back to `ledger`.
-- **§327 probe (ledger $5, wallet $7):** Home shows **$5.00** at 390 × 844 and 1440 × 1024 (previously $7.00; `HOME_EXPERIENCE_QA.md` and §329).
-- **Closeout inspection re-run in ledger mode (10:48 UTC):** **82/82 checks passed** at 390 and 1440 px in fresh Chromium contexts, with mock sign-in and browser-local simulated entries only. No previous visit: Recent activity shown. One change: the one-sentence “One simulated withdrawal of $2.00 on 5 Oct took your position from $5.00 to $3.00.”, with Recent activity hidden. Several changes: the since list shown and Recent activity hidden. No change: “Nothing has changed since …” with Recent activity shown. Pending: ledger total $4.00 includes the pending deposit, and +$1.00 is listed. Journey Home control: $3.00, no Recent activity. Every case had no “Latest change” strip, no horizontal overflow and no page error.
-- **Harness disclosure:** the first two runs scored 73/80 and 78/80. Every failure was a harness fault: a last-visit seed race after login; a wrong pending expectation (the ledger total includes pending); and expecting a list where the one-change state renders a sentence. After the harness was fixed, the run passed 82/82. Evidence is kept locally and not committed; `HOME_EXPERIENCE_QA.md` records the table and file hashes.
-
-**Accepted side effect (§328):** a browser whose stored wallet balance lacks matching ledger entries now shows the ledger figure. The research route is unreleased, so exposure is limited. The flag remains the documented rollback. [Superseded §344, 5 Oct 2026: the flag is retired by `CLASS-A-VAL-002-STABILITY-LEDGER-ONLY-001`; rollback is a single revert of its runtime PR.] No wallet-mode CI job is adopted.
-
-**Limitations:** The exact Vercel change (deleted or set to `true`) was not stated by the Founder. No Vercel CLI or dashboard read was used; deployment identity comes from GitHub deployment statuses.
-
-**Effect:** none on doctrine, ADRs, `.cursorrules`, occupancy, sequencing or ticket scope. This record closes the §328 / §329 “ledger switch outstanding” note. It grants no participant release, financial capability or cross-lane authority. **NO CROSS-LANE IMPACT.**
-
-## 340. Founder activation — nested Lane V Daniel research-route fix (`CLASS-A-VAL-002-RESEARCH-DANIEL-FIX-001`, 2026-10-05)
-
-**Date:** 2026-10-05
-
-**Founder approval to proceed:** Musalwa Hibajene, 5 Oct 2026 at 18:46 AWST — “you can proceed with the Daniel fix ticket”.
-
-**Scope chosen:** 5 Oct 2026 at 18:42 AWST via HedgrOps — three items only:
-1. **Facts-only split.** “What to watch” moves to the interpreted view only; locked Watch strings are **moved, not rewritten**.
-2. **Attribution + limits on facts.** The locked attribution + limits pair renders directly under the panel on the **facts** stage too (27 Sep LOCK COPY §4 / line 67).
-3. **Heading grammar.** Amend the §334 `{localFull}` After-heading lock to `{localFullSingular}` (singular with article), e.g. “After the kwacha weakened…”.
-
-**Status:** source-first nested Lane V activation under open parent `CLASS-A-VAL-002`. No D-number. `CLASS-A-VAL-002-RESEARCH-RESERVE-001` remains closed under §335; this is a **new** nested ticket (RESERVE-001 granted no standing refinement). Source merge and a separate verified permanent-main RAP rebind precede any runtime. The research route remains unreleased. No participant release, tester-pool or protocol work.
-
-**Heading-lock amendment (After heading only):** `{localFull}` remains in Daniel’s Held now row. `{localFullSingular}` = the kwacha / the Nigerian naira / the Kenyan shilling / the Ghanaian cedi / the Philippine peso is used in the After heading. Bare `{localPlural}` is used elsewhere. `{localSingular}` remains in After What to watch. Heading: “After {localFullSingular} weakened against the US dollar” (v=2: “strengthened”). Example renders: ZMW `After the kwacha weakened against the US dollar`; NGN `After the Nigerian naira weakened against the US dollar`; KES `After the Kenyan shilling weakened against the US dollar`; GHS `After the Ghanaian cedi weakened against the US dollar`; PHP `After the Philippine peso weakened against the US dollar`. This amendment is the disposition that resolves the release-bar 3(h) contradiction.
-
-**Structure restatement:** 27 Sep LOCK COPY §4 (facts view vs interpreted view) is now restated in-repo under the live §7a brief for this ticket. “facts → interpreted parity” means the same underlying scenario facts in both views; it does **not** mean the same panel including What to watch.
-
-**Explicit non-authorisation:** No runtime in this source. No participant release. No tester pool. No protocol doc. No cold-read revival. No Lane E/G, Green delegation, doctrine/ADR/`.cursorrules` change, or financial capability. **NO CROSS-LANE IMPACT.**
-
-## 339. Founder decision — cold-read supersession (`OPS-COLD-READ-SUPERSESSION-001`, 2026-10-05)
-
-**Date:** 2026-10-05
-
-**Founder decision:** ~18:31–18:32 AWST.
-
-**Founder approval to record:** Musalwa Hibajene, 5 Oct 2026 at 18:34 AWST (“Yes, record the cold-read supersession: docs PR and its rebind, each verified, then merge.”).
-
-**Status:** docs-only Founder-decision record. No ticket is activated. Nothing is released. Occupancy remains parent `CLASS-A-VAL-002` and parent `SE-REASON-001` with no nested Lane V ticket. The RAP permanent-main rebind for this source follows separately.
-
-**Decision:** There is no separate internal cold read for the Sarah/Daniel research route.
-
-**Rationale:** The Founder's reviewers are a scarce, trusted feedback pool; several would be both cold readers and participants; the Founder does not want them seeing every micro-change. The route is interrogated rigorously in-house, then released for participant feedback.
-
-**Release gate that replaces the cold read:**
-1. An internal hostile read of Sarah and Daniel in every currency, checking for anything that reads as live money, advice, an automatic split or a promised outcome, and that the limits line holds. The zero-harmful-readings guard is kept and moves before exposure. Agent reads are now the gate rather than being excluded.
-2. A comprehension check by Sue (Human Narrative Lead) and a flow check by Kip (Product Experience Lead), consolidated by HedgrOps with the hostile read into one release verdict sorted into blocking and fix-later.
-3. A separate release ticket (not opened by this record) with the tester pool and a short protocol; the first question to participants is "what does Hedgr help with?", so the cold-read signal is still captured from the first fresh readers.
-
-**Knock-on:**
-- Both open cold-reader items are closed (no cold-reader list; the question of whether an internal cold read counts as participant exposure is moot).
-- Participant exposure starts at release under the release ticket.
-- In the Dynamic Stability Testing sequence, the Sarah/Daniel participant release replaces the Daniel cold read as the static-comprehension baseline; everything else in that sequence holds (the §302 review, then the ticket, then Lane E activation, then the build).
-- Release still waits on the gate verdict.
-- The research route stays unreleased.
-
-**Explicit non-authorisation:** This record does not open or activate a release ticket, occupy a nested Lane V ticket, change parent occupancy, amend doctrine or ADRs, or release the research route. **NO CROSS-LANE IMPACT.**
-
-## 338. Ops docs tidy — PR template and remaining stale wording (`OPS-DOCS-TIDY-002`, 2026-10-05)
-
-**Date:** 2026-10-05
-
-**Founder approval:** Musalwa Hibajene, 5 Oct 2026 at 16:46 AWST (“run the second docs tidy and its rebind, each verified, then merge.”).
-
-**Status:** docs-only factual-currency tidy. No doctrine, authority, precedence, sequencing decision, ticket scope or occupancy changed. Occupancy remains parent `CLASS-A-VAL-002` and parent `SE-REASON-001` with no nested Lane V ticket. The RAP permanent-main rebind for this source follows separately. §337 was RAP-bound by #761.
-
-**Corrected lines (this source):**
-- `.github/pull_request_template.md`: Merge Gates now match AGENTS.md and runbook PR Posture (`validate`, `E2E smoke (@hedgr/frontend)`, `hedgr/verifier`; exact-head independent verifier PASS; implementers open as draft and never change draft state). Labels moved to descriptive metadata only.
-- `docs/ops/HEDGR_STATUS.md` live §7 §334 and §332 activation paragraphs: `[Closed §335 …]` / `[Closed §333 …]` prefixes; history retained.
-- Completed closeout future-tense lines in `AGENTS.md`, live §7, §7a verified-completion blocks, and numbered Effect paragraphs for §335 / §333 / §330 / §329 / §327: dated past-tense closed brackets with verified PRs and merge SHAs.
-- Stale “held” / “named next step” lines for NEW-MARKER and `/research/stability-scenarios`: bracketed as historical; pointed to §330 closeout, §332 review (2026-09-29), and §335 / current occupancy (no nested Lane V).
-- Numbered §332 Mulenga relationship bullets: `[Superseded §334, historical only]` lead; numbered record retained.
-- Last-updated headers: `HEDGR_STATUS.md`, `AGENTS.md`, and `docs/ops/product-finish/HOME_EXPERIENCE_QA.md` set to 2026-10-05. Doctrine index and doctrine files untouched.
-- `HOME_EXPERIENCE_QA.md` T1/T2 mid-delivery tables: one-line archive notes; table data unchanged.
-- Numbered §326 mechanical-gate sentence: dated note that current protection is §331 / runbook PR Posture.
-- `.github/workflows/ci.yml.bak` deleted after confirming no current workflow reference.
-- `scripts/bridge/rap-provenance-rebind.test.mjs`: metadata-only Last-updated fixture date updated so validate stays green after the STATUS header bump. No rebind-script behaviour change.
-
-**Skipped:** RAP `sequencing_posture` live-§7 sentence left unchanged so `apps/bridge-worker/tests/fork1-authority.test.mjs` did not require a test edit (O7). Doctrine files, ADR 0027, §5, and the §336 locked B2 sentence (current-ticket consequence; already carries the §337 dated note) were not touched. Runtime, env, and workflows other than deleting `ci.yml.bak` were not touched.
-
-**Effect:** none on doctrine, ADRs, `.cursorrules`, D05, the doctrine index, occupancy or authority meaning. **NO CROSS-LANE IMPACT.**
-
-## 337. Ops docs tidy — stale wording after §335/§336 (`OPS-DOCS-TIDY-001`, 2026-10-05)
-
-**Date:** 2026-10-05
-
-**Founder approval:** Musalwa Hibajene, 5 Oct 2026 at 14:29 AWST (“Please tidy up”).
-
-**Status:** docs-only factual-currency tidy. No doctrine, authority, precedence, sequencing decision, ticket scope or occupancy changed. Occupancy already closed by §335 source #756 (`fc3ff0b`) and RAP rebind #757 (`e6e07ad`); this record only aligns stale descriptive wording.
-
-**Corrected lines (this source):**
-- `docs/ops/product-finish/HOME_EXPERIENCE_QA.md` evidence-boundary paragraph: §326 #721/#722 retrospectives from “outstanding” to recorded.
-- `docs/ops/HEDGR_STATUS.md` live §7 §327 summary and numbered §327 process-deviation bullet: same retrospectives from “not recorded” to recorded in §326.
-- `docs/ops/HEDGR_STATUS.md` live §7 §335 occupancy paragraph and Lane V bullet: nested `CLASS-A-VAL-002-RESEARCH-RESERVE-001` technically closed; no nested Lane V ticket active; parents `CLASS-A-VAL-002` and `SE-REASON-001` remain open.
-- `docs/ops/HEDGR_STATUS.md` §7a read-order sentence, RESERVE-001 completed-brief heading, and historical “sole active nested Lane V ticket” sentences (RESERVE-001 and REFRESH-001 briefs, plus numbered §334 ticket line): current occupancy or bracketed `[Closed …]` notes.
-- `AGENTS.md` live §335 closeout sentence made current; historical §334/§332 “sole active nested” lines given bracketed closed notes.
-- `docs/ops/HEDGR_STATUS.md` live §7 §333 summary, live §7 §332 Mulenga sentence, numbered §333 notes, numbered §332 relationship bullet, and `AGENTS.md` §333/§332 lines: Mulenga/Kwesi reserve scenario superseded by the Daniel reserve case (§334), not queued.
-- `docs/ops/HEDGR_STATUS.md` numbered §336 current-ticket sentence: one dated currency note only; Founder-locked verbatim record otherwise unchanged.
-
-**Skipped:** `docs/ops/runbook.md` PR Posture “What CI actually enforces” already states that classic branch protection on `main` requires `validate`, `E2E smoke (@hedgr/frontend)`, and `hedgr/verifier`, with admin enforcement. The §7 sequencing-posture RAP field was left unchanged so the Fork 1 current-sequencing fixture did not require a test edit.
-
-**Effect:** none on doctrine, ADRs, `.cursorrules`, D05, the doctrine index, runtime, tests, CI or workflows. **NO CROSS-LANE IMPACT.**
-
-## 336. Founder doctrine alignment — Stability Engine allocation-envelope scope; ADR 0027 Accepted (2026-10-05)
-
-**Date:** 2026-10-02 (amendment approved); 2026-10-05 (ADR acceptance and public-export confirmation, ~09:47 AWST, in conversation with HedgrOps)
-
-**Status:** **ACCEPTED** — minimum doctrine amendment and ADR 0027; effective on permanent-main merge, followed by a separate verified projection-only RAP rebind; no ticket or implementation activation
-
-**Decision ID:** Internal **D-152** ↔ ADR **0027**
-
-**Decision type:** Architecture / engine-authority boundary
-
-**Strategic horizon:** Short-term MVP doctrine alignment with long-term institutional relevance
-
-**Visibility:** ADR 0027 is Public; the Founder confirmed export of the engine-boundary decision only. The underlying §286 partial-capital strategy, audience and GTM content remain Founder Only.
-
-**Problem / trigger:** §286 / §288 / §290 adopted the partial-capital direction and the "Hedgr allocation envelope" ("The portion of capital the user intentionally places under Hedgr's stability reasoning") without amending doctrine. Active doctrine still permitted a whole-deposit / automatic-allocation reading: Stability Engine §1 "core capital management system", Invariant 5 "canonical allocator of user capital within the Hedgr system", Default Allocation Policy Art. I "All retail deposits are automatically allocated… mandatory", Internal Stability Model §II.A, and `.cursorrules` §IV. The Founder assessed the direction as ABSORBED BUT UNDER-SPECIFIED.
-
-**Founder decision:** ADOPT ADR 0027 and the minimum amendment:
-- `docs/doctrine/hedgr-stability-engine.md`: v1.1; §1; new §1.1; §4 preamble; Invariant 5.
-- `docs/doctrine/hedgr-default-allocation-policy.md`: Art. I.
-- `docs/doctrine/hedgr-stability-model™ (Internal).md`: §II.A.
-- `.cursorrules` §IV.
-
-Engine scope and Invariant 5 are limited to the user-selected allocation envelope. The default split applies within it. The envelope defines what Hedgr may reason about and grants no authority to move, rebalance or act on capital. "Allocation envelope" is distinguished from D05 constitutional risk envelopes. This supersedes only §286's "No public ADR export or doctrine amendment" clause, for this scope; §286 / §288 / §290 are otherwise unchanged.
-
-**Deliberate non-changes:**
-- Default Allocation Policy Art. II is unchanged: it is adjacent to the Art. VI buffer-minimum parameter, and Art. I scoping governs.
-- No D05 edit: the engine-doctrine disambiguation suffices.
-- Active Doctrine Index membership and `.cursorrules` §II precedence are unchanged.
-
-**Liquidity / Art. VI:** No buffer minimum, exposure cap, yield-deployment rule, withdrawal path or treasury behaviour changes. Liquidity impact: none.
-
-**Explicit non-authorisation:** No mandate primitive, delegation ladder, moat hypothesis, D05 narrative change, runtime / code / `EngineState` / test / copy / schema change, envelope capture or consent design, execution, custody, conversion, settlement, routing, rebalancing, Class B / Class C, customer-money, ticket or sequencing change. ADRs 0011 / 0013 / 0014 / 0015 unchanged. F1–F4, the scoped-interface candidate and §288 / §290 deferrals remain as recorded.
-
-**Current-ticket consequence:** None. Nested Lane V §334 and its reserved §335 closeout are unchanged. [Note 5 Oct 2026: §335 closeout merged as #756 before this record merged.] Lane E has no nested occupancy, Lane G is deferred and Lane N is idle. **NO CROSS-LANE IMPACT.**
-
-**Reversibility:** Supersede ADR 0027 and revert the paired doctrine and `.cursorrules` passages, preserving history. No financial unwind or customer commitment.
-
-**Revisit / kill criteria:** As in ADR 0027 — envelope not understood or misleading; envelope treated as authority to act; a later mandate / execution ADR; Founder revision of §286.
-
-**Strategic pillar alignment:** Capital Preservation Above All; Liquidity First; Stability Before Speculation; Security and Trust; Risk Visibility. No tension.
-
-**ADR treatment:** ADR 0027 Accepted and exported at `docs/decisions/0027-stability-engine-scope-is-the-user-selected-allocation-envelope.md`; indexed in `docs/decisions/SPRINT-2-ADR-INDEX.md`.
-
-**Exact recording scope:** the ADR; `docs/decisions/SPRINT-2-ADR-INDEX.md`; the three doctrine files above; `.cursorrules`; this section; deterministic `docs/ops/bridge/repo-authority-projection.json`. No other file.
-
-**RAP treatment:** Commit the authority-bearing sources before RAP generation. After squash merge, complete a separate projection-only permanent-main RAP rebind. Never project uncommitted doctrine as permanent-main authority.
-
-## 335. Daniel reserve + legibility pass technical closeout (2026-10-05)
-
-**Founder approval:** 2026-10-05 at 09:40 AWST, for this source-first closeout and the later separate permanent-main RAP rebind.
-
-**Delivery and provenance:**
-- **Source #753:** at `d04ab0ecaa25e680c8abc3c726204422cfcfb296`; Verifier PASS on `e7661669bd500dcfe097bccc698efb38425bae08` ([attestation](https://github.com/mhibajene/hedgr-copilot/pull/753#issuecomment-5945307941)).
-- **Separate permanent-main RAP rebind #754:** at `75e7f251f352d251d3568ee88a7d68373540fedd`; Verifier PASS on `0ef6a3aef8441c620ea7a1de130d55cb3ba2c915` ([attestation](https://github.com/mhibajene/hedgr-copilot/pull/754#issuecomment-5945418864)).
-- **Runtime T1–T3 #755:** squash-merged at `3c2efea82621c6949d296570f75f6cea331404af` from verified head `5d7271c5afdaa90f37d0c1252879dc9c46d1d63c`. Per-tranche commits on that PR:
-  - T1 `06f93d86deb9b5522ccc541ce2aa868059fb6ac7` — fixtures and Sarah figures/strings;
-  - T2 `a247d2ca3b28534f4b876b44c9ae383595ffc87a` — Daniel and the shared bridge;
-  - T3 `c1555dad46ccdd69dc902dc4990e87ab9a307969` — simulated Home copy-register strings;
-  - follow-up `f423b39616ca6bf9e4148f8fe0a202767d0b1388` — type import and compact insight assertion;
-  - evidence `5d7271c5afdaa90f37d0c1252879dc9c46d1d63c` — `HEDGR_LEGIBILITY_PASS_QA.md`.
-
-  Independent Verifier PASS WITH NOTES on the exact head `5d7271c` ([attestation](https://github.com/mhibajene/hedgr-copilot/pull/755#issuecomment-5986438540); run `bc-bc845cca`). Production deployment `dpl_6LZo9n13LZTwUj718JX1qWuEcfKw` of `3c2efea` is READY.
-
-Every PR merged after an exact-head Verifier PASS under the §331 posture; no merge-before-verifier deviation occurred.
-
-**Delivered:**
-- Daniel’s reserve case sits after Sarah and before the existing bridge.
-- Five-currency authored figures with no rate shown; locked strings, tokens and the figure table.
-- Simulated-route Home copy-register amendment; live mode unchanged outside the existing step labels.
-- Shared `ResearchBridge`; `/research/reserve-scenario` with `v=1` in-flow and `v=2` by direct URL.
-
-**#755 Verifier notes (PASS WITH NOTES; recorded, not resolved by this closeout):**
-1. §7a said each tranche is its own PR; Founder-approved launch used one PR with per-tranche commits — acceptable packaging difference.
-2. `HEDGR_LEGIBILITY_PASS_QA.md` is permitted evidence.
-3. ZMW After heading uses the locked `{localFull}` render “After kwacha weakened against the US dollar” — ungrammatical-token stop approached, not fired.
-4. Paired guard (h) coverage is split between unit and e2e.
-
-**Still open with the Founder (carried forward; not resolved by this closeout):**
-1. Name the cold readers.
-2. Confirm that an internal cold read is not participant exposure under §7.
-
-The research route remains unreleased. No participant release follows. The release-bar cold read was not executed; those two items continue to gate it. A separate later release ticket still carries the protocol doc and tester-pool scope; it is not occupancy and is not activated here.
-
-**Effect:** [Closed 2026-10-05 via #756 `fc3ff0b` and RAP rebind #757 `e6e07ad`.] On permanent-main merge of this source-first completion record and a final separate verified projection-only RAP rebind, close only nested `CLASS-A-VAL-002-RESEARCH-RESERVE-001`. Parent `CLASS-A-VAL-002` stays open without an active nested successor. No participant release, Form, telemetry, financial capability, Lane E/G occupancy or Green delegation follows. **NO CROSS-LANE IMPACT.**
-
-## 334. Founder activation — nested Lane V Daniel reserve + legibility pass (2026-10-02)
-
-**Launch approval:** Founder Musalwa Hibajene approved this source-first activation on 2026-10-02 at 11:23 AWST (source PR, then a later separate permanent-main RAP rebind). Runtime T1–T3 is not authorised until that rebind is verified.
-
-**Founder lock:** 2026-10-02 at 11:21 AWST. Quote, verbatim: “Let's go with written in advance by Hedgr. More accurate. Other than that we can lock it in.” All [Sue] and [HedgrOps] strings, the figure table, top label “Research example about a fictional person”, attribution “written in advance by Hedgr” (mirrored for Sarah), token `{localFull}` in Daniel’s Held now row and After heading with bare `{localPlural}` elsewhere, paired-guard (h), and the drop of the “Held in kwacha” replacement are LOCKED. This source records that lock; it does not author or alter copy or figures. [Amendment §340, 5 Oct 2026:] §340 supersedes **only** the After-heading token slot: `{localFull}` remains in Daniel’s Held now row; `{localFullSingular}` is used in the After heading; bare `{localPlural}` remains elsewhere. All other 2 Oct locks remain.
-
-**Founder direction, 2 Oct 2026 (verbatim record of the locked brief’s 2 Oct direction):**
-1. The reserve case sits after Sarah and before the existing bridge.
-2. Currency option B: both cases, and any future case, keep the five-currency picker, with credible per-currency authored figures and no rate shown, “to widen the tester pool beyond Zambia”. §302 optionality is kept. Sarah’s figures change under “fix Sarah currency”.
-3. The reserve case is renamed **Daniel**. The internal label Kwesi and the ticket ID are unchanged.
-4. All other recommendations are accepted: partial supersession of the LOCK COPY (top label, attribution); the Home copy-register amendment; the protocol doc deferred to the release ticket; the weakened-local-currency variant fixed in the flow; Sue proposes the transition label and the Founder locks it.
-
-**Carried in from 1 Oct:** Sue’s `SUE-HUMAN-VOICE-001` is the copy baseline. Participant release stays held.
-
-**Ticket:** `CLASS-A-VAL-002-RESEARCH-RESERVE-001` is the sole active nested Lane V ticket under open parent `CLASS-A-VAL-002`. [Closed §335, 5 Oct 2026] It reuses the queued ID. No D-number.
-
-**Off-repo provenance (now recorded here; the Implementer needs no off-repo files because §7a holds the locked strings and figures):**
-- Frame approval 2026-09-27 at 15:02 AWST (carried in §333 “Notes carried forward”).
-- 27 Sep LOCK COPY of `KWESI-RECONCILED-COPY-002`.
-- `SUE-HUMAN-VOICE-001`.
-- `SUE-MULTI-CURRENCY-001`.
-
-**Supersedes (Founder-confirmed 1–2 Oct):**
-- (a) Frame and §332 “standalone route / entry, no Bridge, no link from Sarah”.
-- (b) Frame “Sarah untouched / re-declare chrome”.
-- (c) LOCK COPY: top label and attribution only.
-- (d) The 27 Sep “protocol doc in first PR”, which moves to the release ticket.
-- (e) Home copy register (2026-09-27): listed strings only.
-- (f) Frame and §332 “fixed Zambia/ZMW context”, replaced by five-currency figures.
-- (g) LOCK COPY “Mulenga LOCKED”, renamed to Daniel.
-
-**Still open with the Founder (do not block this source record):**
-1. Name the cold readers.
-2. Confirm that an internal cold read is not participant exposure under §7.
-
-**Sequence:** This source record; a separate verified permanent-main RAP rebind; T1–T3 under the §331 PR Posture; Production inspection; the release-bar read; a source-first completion record as §335; and a final RAP rebind. A separate release ticket carries the protocol doc and tester-pool scope. **NO CROSS-LANE IMPACT.**
-
-## 333. Sarah research refresh technical closeout (2026-10-01)
-
-**Delivery and provenance:**
-- **Source #748:** at `4d97c748d203613d0ceb368cca13f6ea865fa683`; Verifier PASS on `1ead441`.
-- **Separate permanent-main RAP rebind #749:** at `bad4b94a6cc4077ac206221b438803e245afa3cc`; Verifier PASS on `ef23fd8`.
-- **Runtime #750:** at `1dad23e0b291e21f5fb2f46567463d004df17efd`. Runtime commit `8c09105`:
-  - new `ResearchChrome.tsx` and `research.module.css`;
-  - `ScenarioStimulus.tsx`;
-  - `orientation/page.tsx`.
-
-  Verification commit `ddcc109`:
-  - `stability-scenarios.spec.ts`;
-  - `orientation.spec.ts`;
-  - the QA record.
-
-  Independent Verifier PASS on the exact head `ddcc109`. Production deployment `6775738407` succeeded.
-
-Every PR merged after an exact-head Verifier PASS under the §331 posture; no merge-before-verifier deviation occurred.
-
-**Delivered:**
-- The bridge links to `/dashboard-synthetic-journey?reset=1`.
-- Exactly one sentence changed, to the Home-aligned wording.
-- The newer look on all four research stages and both orientation entries uses existing token values only.
-- A shared `ResearchChrome` exists for the research header, boundary line and footer.
-
-No other participant string changed; the Verifier compared every literal before and after. `SimulationDisplayCurrencySelector.tsx`, `lib/narrative/orientation-surface.ts` and `styles/globals.css` were not changed. The global white `main` rule is neutralised only inside the research canvas.
-
-**Validation:** Local and Verifier runs both passed:
-- typecheck and lint;
-- 930 unit tests;
-- 133 browser tests with retries off.
-
-A new returning-participant test fails on the unmodified page ($3.00 instead of $0.00). The Verifier independently walked 320px at 200% text, and 390, 640, 1024, 1280 and 1440px:
-- no overflow;
-- no control under 44px;
-- exactly two `New` markers;
-- every row stacked;
-- Before/After rows aligned at 640px and wider.
-
-**Production inspection (2026-10-01, `1dad23e`):** At 390px, 1440px, and 320px with 200% text, across both orientation entries, all four stages and Home after the bridge:
-- no overflow, no control under 44px and no page errors;
-- NEW-MARKER-001 geometry preserved;
-- the bridge `href` and sentence exact;
-- the canvas showing through `main`.
-
-A returning participant with an earlier $3.00 simulation who follows the bridge lands on first use at $0.00.
-
-**Notes carried forward:**
-- **Mulenga/Kwesi reserve scenario:** superseded by the Daniel reserve case (§334); nested `CLASS-A-VAL-002-RESEARCH-RESERVE-001` is not queued. See §335 for technical closeout.
-- **#748 Verifier notes:**
-  - The NEW-MARKER-001 tense lag in the §7 Lane V bullet is corrected here.
-  - Older dated §7 paragraphs remain as history.
-
-**Effect:** [Closed 2026-10-01 via #751 `cca7514` and RAP rebind #752 `58de687`.] On permanent-main merge of this source-first completion record and a final separate verified projection-only RAP rebind, close only nested `CLASS-A-VAL-002-RESEARCH-REFRESH-001`. Parent `CLASS-A-VAL-002` stays open without an active nested successor. The research route remains unreleased. No participant release, Form, telemetry, financial capability, Lane E/G occupancy or Green delegation follows. **NO CROSS-LANE IMPACT.**
-
-## 332. Founder activation — nested Lane V Sarah research refresh (2026-09-29)
-
-**Basis:** After the NEW-MARKER-001 closeout (§330), a read-only Product Experience review of `/research/stability-scenarios` found:
-- a returning participant who follows the bridge lands on their earlier simulation state (“Nothing has changed since …”) instead of first use;
-- the bridge wording (“made-up money”, “practice deposit”) differs from the finished Home (“pretend money”, “Add simulated deposit”);
-- the research page and orientation keep the pre-productisation look, so participants cross a visible seam into the new Home.
-
-**Founder dispositions (2026-09-29):**
-- Point the bridge at a clean start.
-- Align the wording with the finished UI, choosing the Home-aligned sentence.
-- Align the research route with the newer look, extending it to all of orientation.
-- Create one shared research chrome component.
-- Ticket `CLASS-A-VAL-002-RESEARCH-REFRESH-001`, with the brief in §7a.
-
-**Relationship to other work:**
-- NEW-MARKER-001's delivered markers and stacked rows are preserved.
-- [Superseded §334, historical only] The Mulenga ticket frame (`CLASS-A-VAL-002-RESEARCH-RESERVE-001`, approved 2026-09-27, not activated) stays queued behind this ticket. [Superseded §334: the Mulenga/Kwesi reserve scenario is not queued.] Before its own activation it needs a Founder amendment covering:
-  - digital, unmoderated delivery through a shared build link and a Google Form;
-  - participants engaging with both Sarah and Mulenga;
-  - reuse of the shared research chrome.
-- Its fixed Zambian-kwacha setting, standalone entry and Sarah's retained currency selection are unchanged by this record.
-
-**Design usage:** The `DESIGN.md` usage addendum in this source extends the existing `syntheticHome` canvas, divider and text-token usage and the shipped pill and rounded-panel treatment to `/orientation` and `/research/stability-scenarios` for this ticket only. No token value, typeface, asset or status meaning changes.
-
-**Sequence:** This source record; a separate verified permanent-main RAP rebind; the runtime PR with distinct Implementer and verification commits under the §331 PR Posture; Production inspection; a source-first completion record; and a final RAP rebind. **NO CROSS-LANE IMPACT.**
-
-## 331. Founder disposition — PR Posture execution refinement (2026-09-29)
-
-**Decision and observed gap:** Founder Musalwa Hibajene approved this source-first repository-process refinement after the New Marker closeout source #744 and separate RAP rebind #745. The Verifier's PASS comment on #745 was blocked when its READ_ONLY brief was interpreted to prohibit every PR write; #741–#745 were each marked ready and merged manually; and #710 merged a head changed about 15 seconds after ready without fresh verification. At the time this gap was found, classic `main` branch protection required `E2E smoke (@hedgr/frontend)` and `hedgr/verifier`, required an up-to-date branch (`strict=true`), and enforced for admins. Auto-merge was available and no rulesets applied. `validate` ran but was not a required status check.
-
-**Approved procedure:** Once implementation is complete, the implementing or steward agent updates the branch under the owner's account, lets current-head checks start, and may mark the PR ready and arm auto-merge when applicable ticket gates permit. The independent Verifier remains READ_ONLY except for one `Hedgr-Verifier:` attestation comment in the exact runbook format on the PR and reviewed head. Its brief must expressly allow that write; it re-reads the current PR head immediately before posting and aborts on a mismatch. Implementers and stewards never post attestations despite the shared Founder GitHub account. Required `validate`, `E2E smoke (@hedgr/frontend)`, exact-head `hedgr/verifier`, and strict branch protection prevent merge until the current up-to-date head receives an eligible independent PASS and all applicable gates pass. Admin enforcement applies. If `main` moves after PASS and the PR is behind, the steward updates under the owner's account and re-launches an independent Verifier on the new head without Founder intervention. A new head invalidates the earlier PASS. Keep at most one PR in the merge step at a time. This refines procedure and does not weaken the six-point standing PR invariant.
-
-**Boundary and sequence:** Recommendation 4, the Fork 2 mechanical RAP rebind and mechanical attestation for projection-only PRs, remains deferred and inactive. The Founder added `validate` to main's required checks on 2026-09-29 as part of this disposition. Any harness permission rule remains a Founder-owned action. This is repository process only. It creates no lane or ticket occupancy, participant, financial or cross-lane authority. Merge this authority source first, then complete a separate verified permanent-main projection-only RAP rebind. **NO CROSS-LANE IMPACT.**
-
-## 330. New Marker technical closeout (2026-09-29)
-
-**Delivery and provenance:** Founder source #691 merged at `c2124b79b53743067512b0edeea7bb43718e3cf3`, followed by separate permanent-main RAP rebind #693 at `4e31918858fd6b46603b38387f6fd7e111e5dbf7`. The stacked-row amendment #707 merged at `762bd1bf5a2908f8e22cf76649a1e7afabc5c366`, followed by separate rebind #708 at `95c9471d0fd14153997e9e3f1a56c23ec46fd7ab`. Runtime #710 squash-merged at `fb25660f57b2c70d34d13acf6c3199a4c9f7d95d` on 2026-09-27 at 11:53:40 UTC. Its diff is limited to `ScenarioStimulus.tsx` and `stability-scenarios.spec.ts`; it places only the After `Due` and `What to watch` markers in their headings and stacks every row heading above its value in both states.
-
-**Independent retrospective verification:** A distinct local Verifier had returned PASS WITH NOTES on earlier draft head `b6cc84ae1a97f4e0e8b4fe6267dcc4519e951c4c`; the subsequent merge-main commit changed the head. A new distinct read-only Verifier reviewed the exact merged SHA `fb25660f57b2c70d34d13acf6c3199a4c9f7d95d` and returned **PASS WITH NOTES**. The final PR head `21d5aa811c7580463cc6debd4ef6a029035c6b0e` and merge commit have the same tree. The Verifier independently passed frontend typecheck, scoped lint of both changed files, a Production Next build and the focused Chromium Stability scenarios suite (6/6). The hosted #710 head checks, including its 127-test E2E job, passed; that broader suite was observed in GitHub, not rerun by this Verifier. #710's PR body and the earlier local Verifier report record 390px and 1440px screenshots supplied by the Implementer; the retrospective Verifier did not capture them or claim a new Production browser inspection. At 320px with 200% text, the `What to watch` pill wraps inside its heading while its value remains below. The Production deployment for the merged SHA (`6691852052`) recorded success.
-
-**Missing final-head pre-merge verification:** #710 has no submitted PR review or independent Verifier report/comment on its final head `21d5aa811c7580463cc6debd4ef6a029035c6b0e`. The earlier local PASS applied only to `b6cc84a`, before the merge-main commit. Its PR body explicitly said that the final head needed a fresh distinct review before merge. The merge therefore preceded independent verification, a process deviation under the standing PR invariant and runbook. The later PASS WITH NOTES establishes retrospective technical confidence only; it does not make the original merge sequence compliant. No code correction is indicated by the retrospective findings.
-
-**Effect:** [Closed 2026-09-29 via #744 `a5e035c` and RAP rebind #745 `afb3dc0`.] On permanent-main merge of this source-first completion record and a final separate verified projection-only RAP rebind, close only nested `CLASS-A-VAL-002-RESEARCH-NEW-MARKER-001` without new runtime code. Parent `CLASS-A-VAL-002` stays open without an active nested successor. [Historical: the `/research/stability-scenarios` route remains unreleased and its review is not activated here — review completed 2026-09-29 (§332); current occupancy is §335 / no nested Lane V.] The weekend ticket remains deferred; the separate Digital Feedback v1 Founder custody is unaffected. No participant release, response capture, telemetry, Engine/Wallet/ledger, financial capability, Lane E/G occupancy or Green delegation follows. **NO CROSS-LANE IMPACT.**
-
-## 329. Home deduplication technical closeout (2026-09-29)
-
-**Delivery and provenance:**
-
-- **Source #735:** at `22d09a03eeff70469e63fb0a8c943b65c40d8d85`. Verifier PASS on `4001637`, then on `7b47202`, the head after merging `main` to resolve a generated-RAP conflict.
-- **Separate permanent-main RAP rebind #737:** at `3e388b5c573628bfab62ca6008accea987ddae1e`. Verifier PASS `e22dcf2`.
-- **Strip removal #738:** at `cbfb05ce071692c01a573ba999b1686334fc767e`, with runtime `af0f76f` and verification `fa49420`. Verifier PASS `fa49420`. Production deployment `6713948792` succeeded.
-- **Amendment #739 (§328 decision 3):** at `b07a4eb0dd39af715c59f89e23bfb95843217e28`. Verifier PASS `8e559e6`.
-- **Separate permanent-main RAP rebind #740:** at `23b4f81f1fb91904abb6387e17e245522b131ac2`. Verifier PASS `34fb004`.
-- **Recent activity overlap #741:** at `d51277cefa7b556155e9251e4f8b93452e2eba7b`, with runtime `508af04` and verification `94196e5`. Verifier PASS `94196e5`. Production deployment `6723529926` succeeded.
-
-Every PR merged after an independent Verifier PASS on its exact head; no merge-before-verifier deviation occurred.
-
-**Validation:** Local validation for #741 passed typecheck, lint, 930 unit tests and 132 browser tests with retries off. The new unit tests failed on the unmodified runtime and passed with each change.
-
-**Production inspection:** On 2026-09-29, Production at `d51277c` passed 32/32 checks at 390 and 1440px, with no overflow and no page errors:
-
-- The strip is absent in every state.
-- Recent activity is hidden with one or several changes since the last visit.
-- Recent activity is shown with no previous visit, no change and a pending entry; the pending entry is listed.
-- The journey control has neither the strip nor Recent activity.
-
-At 1440px the "no previous visit" case rendered as "no change" because the harness's login step recorded a Home visit. That state is covered at 390px and by unit tests.
-
-**Balance mode:** The probe (ledger $5, wallet $7) showed $7.00, so Production still runs wallet mode. The Founder-owned §328 ledger switch in Vercel remains outstanding. This inspection therefore exercised the #732 wallet-mode guard. [Resolved 5 Oct 2026 (§341): the Founder completed the §328 switch; Production now runs ledger mode, verified 82/82.]
-
-**Effect:** [Closed 2026-09-29 via #742 `35891e2` and RAP rebind #743 `1e5bf51`.] On permanent-main merge of this source-first completion record and a final separate verified projection-only RAP rebind, close only nested `CLASS-A-VAL-002-HOME-DEDUP-001`. Parent `CLASS-A-VAL-002` stays open without an active nested successor. [Historical: `CLASS-A-VAL-002-RESEARCH-NEW-MARKER-001` remains held and resumes only on Founder resumption after a `/research/stability-scenarios` review, which is not activated here — NEW-MARKER closed under §330; review completed 2026-09-29 (§332); current occupancy is §335 / no nested Lane V.] `CLASS-A-VAL-002-WEEKEND-PREP-001` remains deferred with its duties intact. No participant release, financial capability, Lane E/G occupancy or Green delegation follows. **NO CROSS-LANE IMPACT.**
-
-## 328. Founder amendment — Home deduplication and Production balance mode (2026-09-28)
-
-**Findings addressed:** §327 recorded that Production builds with `NEXT_PUBLIC_BALANCE_FROM_LEDGER=false` (wallet mode) while CI builds the ledger default, which let the T3/T5 defect reach Production until #732. It also recorded that default simulated Home showed the latest entry twice.
-
-**Decision 1 — Production balance mode:** The Founder said “ledger is intended so we can work downstream from that”. Ledger mode, the documented default and source of truth in `lib/state/balance.mode.ts`, is Production's intended configuration. The Founder-owned action is to remove `NEXT_PUBLIC_BALANCE_FROM_LEDGER=false` from the Vercel Production environment (or set it to `true`) and redeploy. No repository change is required; the flag remains a documented rollback. After the change, the steward verifies with the §327 probe (ledger $5 and wallet $7 on Home shows $5) and re-runs the closeout inspection on Production. [Done 5 Oct 2026 (§341): probe $5.00; inspection 82/82.] Browsers whose stored wallet balance has no matching ledger entries will show the ledger figure after the switch. The research route is unreleased, so exposure is limited. A wallet-mode CI job is not adopted. The wallet-mode unit tests from #732 are retained. [Superseded §344, 5 Oct 2026: the flag stops being the documented rollback (rollback is a single revert of the runtime PR), and the #732 wallet-mode unit tests are removed with the wallet branch.]
-
-**Decision 3 — Recent activity overlap (amendment, 2026-09-28):** After #738 merged, the Founder chose to also clean up the remaining overlap: in the several-changes case, Recent activity repeated the entries listed under “Since you were last here”. The Founder said “merge is done - we can perform the cleanup” and selected “Recent activity overlap” and “Hide when ‘since’ lists”. Under the same ticket and allowed files, default-route Recent activity is hidden while the one-change or several-changes variant shows, and kept in every other state. The §7a brief records the exact states. This source amendment and its own separate verified RAP rebind precede the runtime edit.
-
-**Decision 2 — Home deduplication:** The Founder said “We need to clean that up lets go with our latest direction ‘Since you were last here’”. Finite nested Lane V ticket `CLASS-A-VAL-002-HOME-DEDUP-001` (brief in §7a) removes the default-route “Latest change” strip. It supersedes, for that strip only, the §7a HOME-EXPERIENCE-001 decision-4 retention of existing default Home elements; Recent activity and the empty states stay.
-
-**Sequence:** The §327 closeout rebind completed in #736 (`72979e8`). This source record, then its own separate verified permanent-main RAP rebind, then the runtime PR with an independent Verifier PASS on its exact head, Production inspection, a source-first completion record and a final RAP rebind. **NO CROSS-LANE IMPACT.**
-
-## 327. One Home experience technical closeout (2026-09-28)
-
-**Delivery and provenance:** Source activation #719 merged at `040683e4e309f20f97869cafeed756d2891e849d` and separate permanent-main RAP rebind #720 at `c253579262cc019c3bc0e45ca18625d5a67dc536` preceded runtime. Tranches, each with separate runtime and verification commits:
-
-- **T1 Home translation:** #721 at `1b1ca1e6f8b4d8f3544a9a48987b737603d0be48` (runtime `303a0a5`, verification `a748172`).
-- **T2 receipts, next step, step thread, rate-unavailable and failure states:** #722 at `4c99e0b95bdbb8a7a70573abca24cf625e1a8cba` (`dd1bc5a`, `cd3dbf3`). Correction #724 at `5ab40b419c4a` fixed a 320px/200% reflow overflow on the rate-unavailable panel and added `HOME_EXPERIENCE_QA.md`; the §7a evidence allowlist amendment #725 at `9f71097` preceded its merge.
-- **T3 since-last-visit Home, position line, first use, loading, date line and the one last-visit value:** #729 at `e1c6789e922f946333c96d42c8210fa6fc4cc82b`, after the §7a verification amendment #728 at `82de5e7` allowed one superseded assertion in `stability-scenarios.spec.ts`. The first Verifier FAIL on `c08a25b` (reset rewrote the last-visit value) was corrected before PASS.
-- **T4 Activity entry thread:** #730 at `4dcc74f910d1aae179c3e6d638e82e389d7183f0`.
-- **T5 arrival motion:** #731 at `3aa035ac3c2cc857879e9e01fb72d87a944ed619`.
-- **Wallet-balance-mode correction:** #732 at `39de4b651db7c2fc92878da528bb2868b0d8e63a`. Production builds with `NEXT_PUBLIC_BALANCE_FROM_LEDGER=false`; the T3 guard also required ledger mode, so no T3 surface and no T5 motion rendered in Production between #729/#731 and #732. The first Verifier FAIL on `b8509ac` (the PR body named the wrong rollback commit) was corrected in the description before PASS on the same head.
-
-**Verification:** Independent Verifier PASS on the exact merged head for #724 (`712028c`), #725 (`f8026d2`), #728 (`3cea37c`), #729 (`cb2640f`), #730 (`3a40254`), #731 (`eb06b89`) and #732 (`b8509ac`). Hosted checks passed on each merged head. GitHub Production deployments succeeded for every merge commit, most recently `6709548499` for `39de4b6`. Full local validation at closeout: typecheck, lint, 923 unit tests and 132 browser tests. A wallet-mode build passed the same 120-check inspection as Production.
-
-**Process deviations and findings (recorded, not reclassified):**
-
-- #721 and #722 merged before any independent verification (§326). Their authorised retrospective verifications on `1b1ca1e` and `4c99e0b` are recorded in §326 (#721 PASS WITH NOTES; #722 FAIL, remediated by #724); this record does not substitute for them. For information only: every later verified head (#724 onward) contained the T1 and T2 trees.
-- #722 edited `tests-e2e/critical.spec.ts` and `tests-e2e/empty-error-states.spec.ts` (superseded copy only), which were outside the §7a verification allowlist.
-- The T3 wallet-mode defect reached Production and was corrected by #732. CI, local runs and Verifier reviews build only the default ledger configuration, while Production uses wallet mode. A wallet-mode build also shows one pre-existing ledger-only assertion in `currency-insight.spec.ts`. Any wallet-mode CI coverage requires a separate decision.
-- `empty-error-states.spec.ts` has a pre-existing one-shot `isVisible()` flake under full-suite load. It is outside this ticket's allowlist and was left unchanged.
-
-**Limitations:** Live mode could not be inspected in a browser (it requires non-mock sign-in) and is covered by unit tests. The simulated deposit failure state is covered by unit tests only. This is technical delivery, not participant comprehension or release evidence.
-
-**Effect:** [Closed 2026-09-28 via #733 `38cf6b2` and RAP rebind #736 `72979e8`.] On permanent-main merge of this source-first completion record and a final separate verified projection-only RAP rebind, close only nested `CLASS-A-VAL-002-HOME-EXPERIENCE-001`. Parent `CLASS-A-VAL-002` stays open without an active nested successor. [Historical: `CLASS-A-VAL-002-RESEARCH-NEW-MARKER-001` remains held (runtime #710 retained, route unreleased) and resumes only on Founder resumption after a `/research/stability-scenarios` review; that review is not activated here — NEW-MARKER closed under §330; review completed 2026-09-29 (§332); current occupancy is §335 / no nested Lane V.] `CLASS-A-VAL-002-WEEKEND-PREP-001` remains deferred with its duties intact. No participant release, financial capability, Lane E/G occupancy or Green delegation follows. **NO CROSS-LANE IMPACT.**
-
-## 326. Founder disposition — PR Posture Remediation (2026-09-28)
-
-**Decision:** On 28 September 2026 the Founder issued APPROVE WITH AMENDMENTS on the Repo Steward finding that Hedgr's delivery architecture had outgrown the earlier PR posture. Recurring merge-before-verifier events on PRs #680, #685, #721 and #722 are accepted as a material repo-governance gap, not primarily as an implementation-agent failure. The Founder should not become the routine human merge gate. Ordinary bounded implementation, verification and merge completion should proceed through the governed agent/repository system after upstream Founder judgement. At 08:53 AWST the Founder amended this source record to include #722 as the fourth known deviation.
-
-**Standing rule:** Binding invariant in `AGENTS.md`. Procedure in `docs/ops/runbook.md` → PR Posture. External Codex operator skill `hedgr-pr-posture` remains the richer execution procedure and is not copied into repo authority. Sequence: DRAFT → IMPLEMENTED → VERIFYING → VERIFIED → AUTO-MERGE ELIGIBLE → MERGED; a head change returns the PR to VERIFYING. Auto-merge is retained and may be enabled only after an independent verifier has reported PASS against the current PR head SHA and all other applicable repository and ticket gates are satisfied. Merge eligibility is repository merge only; it does not widen ticket authority or imply launch/release approval. Ticket gates may be stricter, never looser. `product:approved` / `qa:approved` (and area/risk labels) are descriptive metadata only.
-
-**Mechanical gate:** `.github/workflows/verifier-gate.yml` sets commit status `hedgr/verifier` from exact-SHA comment attestations. Labels are not the merge token. At this recording, classic branch protection on `main` requires `E2E smoke (@hedgr/frontend)` only; `hedgr/verifier` is not yet a required check (Founder-only settings change, surfaced separately). [Note 2026-10-05: superseded for current protection by §331 / runbook PR Posture (`validate`, `E2E smoke (@hedgr/frontend)`, `hedgr/verifier`).] RAP rebind after this source merges is a separate authority-binding sequence.
-
-**#721 sequencing note (third known merge-before-verifier deviation):** PR #721 was squash-merged at `1b1ca1e6f8b4d8f3544a9a48987b737603d0be48` at 08:19:51 AWST on 28 September 2026 from the `mhibajene` account. Labels were applied and draft status lifted about six seconds before merge. The merged tree is identical to head `a748172`. Production deploy Ready 08:20:39 AWST. Ticket `CLASS-A-VAL-002-HOME-EXPERIENCE-001`. Process compliance is kept distinct from technical correctness; this sequence is not reclassified as compliant because a later verification passed. Prior deviations: #680 / §312; #685 / §314. Later the same morning: #722 (fourth).
-
-**#721 retrospective verifier verdict (technical correctness only):** Independent retrospective verification of merged SHA `1b1ca1e6f8b4d8f3544a9a48987b737603d0be48` is **PASS WITH NOTES**. Notes recorded at the time of review: `HOME_EXPERIENCE_QA.md` was missing; live mode was untested; live-copy tension was observed. The merge-before-verifier process deviation remains in force.
-
-**#722 sequencing note (fourth known merge-before-verifier deviation):** PR #722 (`CLASS-A-VAL-002-HOME-EXPERIENCE-001` T2) squash-merged as `4c99e0b95bdbb8a7a70573abca24cf625e1a8cba` (16 files; 2 commits). Opened 08:35:23 AWST and auto-merged 08:41:59 AWST on 28 September 2026. Auto-merge was enabled from the `mhibajene` account. The PR carried `product:approved` and `qa:approved`. No verifier report appears in the PR record before merge (the only PR comment is Vercel’s). At the time, the only required status check on `main` was `E2E smoke (@hedgr/frontend)`, so auto-merge completed once that passed; the approval labels therefore functioned as de facto merge authority, which is the gap the disposition closes (§6). GitHub Production deployment `6700071345` for this SHA recorded success at 08:42:53 AWST (`Deployment has completed`). Process compliance is kept distinct from technical correctness; this sequence is not reclassified as compliant because later remediation or verification occurred.
-
-**#722 retrospective verifier verdict (technical correctness only):** Independent retrospective verification of merged SHA `4c99e0b95bdbb8a7a70573abca24cf625e1a8cba` is **FAIL**. The merge-before-verifier process deviation remains in force. Technical defects were remediated by #724 (merged `5ab40b419c4ae027721c78ef7eb4d78f39a7bce0` from verified head `712028c`). That remediation does not reclassify the #722 merge sequence as compliant.
-
-**Preservation:** Do not change Home ticket scope or open findings in live §7a. Do not widen into unrelated CI redesign, product implementation, release decisions or agent-role restructuring. **NO CROSS-LANE IMPACT.**
-
-## 325. Founder disposition — `BRIDGE-MCP-001` normal use policy (2026-09-27)
-
-**Decision:** The Founder states `normal use disposition approved` after reviewing the §324 single fresh authorization outcome. Record that approval as permission for later private Founder-only normal use within the existing four fixed read-only evidence tools. Preserve the observed failure: the single consent submission consumed consent and created downstream Access state, but no onward Cloudflare Access navigation, matching Access decision, Worker callback, token exchange, authenticated MCP request, tool discovery or evidence retrieval was verified. Governance approval is not evidence of technical operation, so normal use cannot start from the current unauthenticated connection.
-
-**Scope and stop:** Continue the same non-lane `BRIDGE-MCP-001`; do not create a replacement workstream or alter HedgrOps' mandate. This permission covers local source-first recording and a separately committed deterministic branch RAP only. It does not authorise a second submission from the consumed transaction, a fresh OAuth attempt, redirect diagnosis/remediation, runtime or documentation implementation, push/merge, automatic Vercel Production deployment, permanent-main RAP rebind, Worker/Cloudflare/plugin configuration or deployment, protected evidence calls, broader users/tools/parameters, arbitrary repository access, mutation, ticket activation, research/participant action or financial capability. Retain the four-tool, Founder-only, evidence-qualification, legacy-client and fail-closed boundaries. Return for the minimum separately scoped successor needed to establish an authenticated connection. **NO CROSS-LANE IMPACT.**
-
-## 324. Founder continuation — `BRIDGE-MCP-001` fresh-authorization preparation (2026-09-27)
-
-**Decision:** Accept the §323 fail-closed diagnostic as establishing deterministic rejection of a duplicate consent submission. One approval consumed the one-time consent ticket and created downstream Access state; a later duplicate authorization submission returned `403 MCP_AUTH_FAILED`, and secret-safe telemetry identified `consent_validate_and_consume` / `consent_already_consumed`. No callback, provider token exchange, authenticated MCP request, four-tool discovery or evidence retrieval completed. The Founder approved preparing the recommended narrow successor under the same `BRIDGE-MCP-001` item: one completely fresh Founder-supervised authorization with a single approval submission, without weakening or changing the deployed implementation.
-
-**Effect and holds:** Record this source first and generate a separately committed deterministic branch RAP for validation. This permission covers local source and branch-projection preparation only. No runtime file, Worker/Access configuration, credential, storage, binding, policy, client registration, plugin, skill, tool, identity, mandate or evidence contract change is authorised. Source merge and its automatic Vercel Production deployment, the required separate permanent-main RAP rebind and its deployment, and the live retry remain held pending express Founder approval. A later authorised diagnostic must start a new transaction, verify the expected client/redirect/resource/scope/PKCE and consent, submit approval exactly once, and stop after the single outcome. Normal-use acceptance and session, token-expiry and reauthentication questions remain unresolved. **NO CROSS-LANE IMPACT.**
-
-## 323. Founder continuation — `BRIDGE-MCP-001` authorization-diagnostic release (2026-09-27)
-
-**Decision:** Adopt the bounded integration, deployment and single-diagnostic sequence proposed after §322 local completion. The §322 source merged through PR #709 at `34b66c438f78b8dffd4651462cc3be05eb707b9d`; separate permanent-main RAP rebind PR #711 merged at `4c67a377f6d0b36c82b3fb62b6f3bd3fbc8adcc9`. Local implementation commit `6794d61d4e01d91c81d22445ec3d444051544035` passed 17/17 focused OAuth tests, full `pnpm validate`, a Node 24 Wrangler dry run and distinct Codex Verifier PASS. This accepts the candidate for governed repository review; it does not assert deployed behavior or resolve the earlier generic `503` root cause.
-
-**Effective sequence:** Record this source first and separately generate the deterministic branch RAP. Merge through ordinary checks and review, then complete the separate permanent-main projection-only RAP rebind before runtime integration. Preserve the exact reviewed runtime tree while reconciling intervening permanent-main work; material runtime changes require affected tests and distinct review. The Founder authorises the automatic `hedgr-copilot-frontend` Vercel Production deployments caused only by this source merge, its separate rebind and the reviewed runtime merge. No workflow/protection bypass, force merge or unrelated deployment is permitted.
-
-**Worker deployment and verification:** After the recording gate and governed runtime merge, deploy the exact merged revision to the existing `hedgrops-bridge` service with configuration, credentials, policy, storage, bindings and migration unchanged. Retain active version `bbddcb00-93f8-4083-aeac-9edb1b6c7606` as the migration-compatible rollback anchor. Confirm deployed revision, `/health`, OAuth/protected-resource metadata, unauthenticated `/mcp`, legacy no-key and method behavior before any protected request. Stop and contain through the recorded rollback procedure for a regression or any unapproved side effect.
-
-**Single Founder diagnostic:** One fresh Founder-supervised Codex desktop authorization is authorised. Verify expected client identity, exact loopback redirect, resource, scope and PKCE before consent; then verify Founder sign-in/callback, Worker token, exactly four fixed tools and at most one qualified evidence retrieval. If it fails, inspect only the fixed secret-safe stage/category and stop without retry or configuration change. Record Cloudflare sign-in/session behavior, the observed configured five-minute OIDC token lifetime and the Worker's fifteen-minute MCP token expiry separately only when actually observed. Success remains diagnostic evidence; normal-use acceptance and any unresolved session/reauthentication question return for disposition. No broader user, tool, permission, repository access, mutation, activation, financial authority, plugin/skill/mandate edit or paid commitment follows. **NO CROSS-LANE IMPACT.**
-
 ### Completed Lane V Stability Interpretation stimulus — `CLASS-A-VAL-002-STABILITY-INTERPRETATION-001` (after effective §302 closeout and final rebind)
 
 **Authority / objective:** Direct Founder approval on 2026-09-23 of the recommended next ticket. Implement the smallest unreleased Class A synthetic/read-only research stimulus that renders the completed [A–E convergence package](governance/mvp/HEDGR_STABILITY_INTERPRETATION_CONVERGENCE_PACKAGE.md) as authored content. The ticket is the sole nested Lane V occupancy; no Green delegation is created. Source authority must merge to permanent main, then receive a separately verified projection-only RAP rebind before any runtime edit. Implementer and distinct Verifier work must be separate commits.
@@ -16140,3 +15417,742 @@ On permanent-main merge of this source-first completion record and a final separ
 **Decision:** Accept the §321 diagnostic as a valid fail-closed result. Registration, the strict loopback redirect and consent were reached; production evidence shows a consent ticket was consumed and downstream Access state created, but a later `POST /authorize` returned generic `503 MCP_AUTH_UNAVAILABLE`. No callback, token exchange, authenticated MCP request, tool discovery or evidence retrieval completed. Current expected missing, expired, browser-mismatched and consumed consent results map to `403`, so the exact pre-callback failure remains unresolved and neither consent expiry nor Cloudflare Access outage is established. Continue the same `BRIDGE-MCP-001` item only to make that path observable without weakening single use.
 
 **Effect and holds:** Record source first, generate a separately committed deterministic branch RAP, run focused validation and obtain distinct review. After the source merge and separate permanent-main projection-only rebind, permit only the fixed, secret-safe authorization categories, deterministic stale/duplicate handling, actual local Durable Object regression coverage and operator notes specified in live §7a. Preserve all identity, client, redirect, resource, scope, PKCE, code-replay, evidence, tool and legacy boundaries. The Founder subsequently expressly confirmed the two bounded automatic `hedgr-copilot-frontend` Vercel Production deployments caused by those two main merges; no other deployment effect follows. Worker deployment, live retry, configuration/credential/policy/storage/binding changes, plugin work and normal-use acceptance remain held. **NO CROSS-LANE IMPACT.**
+
+## 323. Founder continuation — `BRIDGE-MCP-001` authorization-diagnostic release (2026-09-27)
+
+**Decision:** Adopt the bounded integration, deployment and single-diagnostic sequence proposed after §322 local completion. The §322 source merged through PR #709 at `34b66c438f78b8dffd4651462cc3be05eb707b9d`; separate permanent-main RAP rebind PR #711 merged at `4c67a377f6d0b36c82b3fb62b6f3bd3fbc8adcc9`. Local implementation commit `6794d61d4e01d91c81d22445ec3d444051544035` passed 17/17 focused OAuth tests, full `pnpm validate`, a Node 24 Wrangler dry run and distinct Codex Verifier PASS. This accepts the candidate for governed repository review; it does not assert deployed behavior or resolve the earlier generic `503` root cause.
+
+**Effective sequence:** Record this source first and separately generate the deterministic branch RAP. Merge through ordinary checks and review, then complete the separate permanent-main projection-only RAP rebind before runtime integration. Preserve the exact reviewed runtime tree while reconciling intervening permanent-main work; material runtime changes require affected tests and distinct review. The Founder authorises the automatic `hedgr-copilot-frontend` Vercel Production deployments caused only by this source merge, its separate rebind and the reviewed runtime merge. No workflow/protection bypass, force merge or unrelated deployment is permitted.
+
+**Worker deployment and verification:** After the recording gate and governed runtime merge, deploy the exact merged revision to the existing `hedgrops-bridge` service with configuration, credentials, policy, storage, bindings and migration unchanged. Retain active version `bbddcb00-93f8-4083-aeac-9edb1b6c7606` as the migration-compatible rollback anchor. Confirm deployed revision, `/health`, OAuth/protected-resource metadata, unauthenticated `/mcp`, legacy no-key and method behavior before any protected request. Stop and contain through the recorded rollback procedure for a regression or any unapproved side effect.
+
+**Single Founder diagnostic:** One fresh Founder-supervised Codex desktop authorization is authorised. Verify expected client identity, exact loopback redirect, resource, scope and PKCE before consent; then verify Founder sign-in/callback, Worker token, exactly four fixed tools and at most one qualified evidence retrieval. If it fails, inspect only the fixed secret-safe stage/category and stop without retry or configuration change. Record Cloudflare sign-in/session behavior, the observed configured five-minute OIDC token lifetime and the Worker's fifteen-minute MCP token expiry separately only when actually observed. Success remains diagnostic evidence; normal-use acceptance and any unresolved session/reauthentication question return for disposition. No broader user, tool, permission, repository access, mutation, activation, financial authority, plugin/skill/mandate edit or paid commitment follows. **NO CROSS-LANE IMPACT.**
+
+## 324. Founder continuation — `BRIDGE-MCP-001` fresh-authorization preparation (2026-09-27)
+
+**Decision:** Accept the §323 fail-closed diagnostic as establishing deterministic rejection of a duplicate consent submission. One approval consumed the one-time consent ticket and created downstream Access state; a later duplicate authorization submission returned `403 MCP_AUTH_FAILED`, and secret-safe telemetry identified `consent_validate_and_consume` / `consent_already_consumed`. No callback, provider token exchange, authenticated MCP request, four-tool discovery or evidence retrieval completed. The Founder approved preparing the recommended narrow successor under the same `BRIDGE-MCP-001` item: one completely fresh Founder-supervised authorization with a single approval submission, without weakening or changing the deployed implementation.
+
+**Effect and holds:** Record this source first and generate a separately committed deterministic branch RAP for validation. This permission covers local source and branch-projection preparation only. No runtime file, Worker/Access configuration, credential, storage, binding, policy, client registration, plugin, skill, tool, identity, mandate or evidence contract change is authorised. Source merge and its automatic Vercel Production deployment, the required separate permanent-main RAP rebind and its deployment, and the live retry remain held pending express Founder approval. A later authorised diagnostic must start a new transaction, verify the expected client/redirect/resource/scope/PKCE and consent, submit approval exactly once, and stop after the single outcome. Normal-use acceptance and session, token-expiry and reauthentication questions remain unresolved. **NO CROSS-LANE IMPACT.**
+
+## 325. Founder disposition — `BRIDGE-MCP-001` normal use policy (2026-09-27)
+
+**Decision:** The Founder states `normal use disposition approved` after reviewing the §324 single fresh authorization outcome. Record that approval as permission for later private Founder-only normal use within the existing four fixed read-only evidence tools. Preserve the observed failure: the single consent submission consumed consent and created downstream Access state, but no onward Cloudflare Access navigation, matching Access decision, Worker callback, token exchange, authenticated MCP request, tool discovery or evidence retrieval was verified. Governance approval is not evidence of technical operation, so normal use cannot start from the current unauthenticated connection.
+
+**Scope and stop:** Continue the same non-lane `BRIDGE-MCP-001`; do not create a replacement workstream or alter HedgrOps' mandate. This permission covers local source-first recording and a separately committed deterministic branch RAP only. It does not authorise a second submission from the consumed transaction, a fresh OAuth attempt, redirect diagnosis/remediation, runtime or documentation implementation, push/merge, automatic Vercel Production deployment, permanent-main RAP rebind, Worker/Cloudflare/plugin configuration or deployment, protected evidence calls, broader users/tools/parameters, arbitrary repository access, mutation, ticket activation, research/participant action or financial capability. Retain the four-tool, Founder-only, evidence-qualification, legacy-client and fail-closed boundaries. Return for the minimum separately scoped successor needed to establish an authenticated connection. **NO CROSS-LANE IMPACT.**
+
+## 326. Founder disposition — PR Posture Remediation (2026-09-28)
+
+**Decision:** On 28 September 2026 the Founder issued APPROVE WITH AMENDMENTS on the Repo Steward finding that Hedgr's delivery architecture had outgrown the earlier PR posture. Recurring merge-before-verifier events on PRs #680, #685, #721 and #722 are accepted as a material repo-governance gap, not primarily as an implementation-agent failure. The Founder should not become the routine human merge gate. Ordinary bounded implementation, verification and merge completion should proceed through the governed agent/repository system after upstream Founder judgement. At 08:53 AWST the Founder amended this source record to include #722 as the fourth known deviation.
+
+**Standing rule:** Binding invariant in `AGENTS.md`. Procedure in `docs/ops/runbook.md` → PR Posture. External Codex operator skill `hedgr-pr-posture` remains the richer execution procedure and is not copied into repo authority. Sequence: DRAFT → IMPLEMENTED → VERIFYING → VERIFIED → AUTO-MERGE ELIGIBLE → MERGED; a head change returns the PR to VERIFYING. Auto-merge is retained and may be enabled only after an independent verifier has reported PASS against the current PR head SHA and all other applicable repository and ticket gates are satisfied. Merge eligibility is repository merge only; it does not widen ticket authority or imply launch/release approval. Ticket gates may be stricter, never looser. `product:approved` / `qa:approved` (and area/risk labels) are descriptive metadata only.
+
+**Mechanical gate:** `.github/workflows/verifier-gate.yml` sets commit status `hedgr/verifier` from exact-SHA comment attestations. Labels are not the merge token. At this recording, classic branch protection on `main` requires `E2E smoke (@hedgr/frontend)` only; `hedgr/verifier` is not yet a required check (Founder-only settings change, surfaced separately). [Note 2026-10-05: superseded for current protection by §331 / runbook PR Posture (`validate`, `E2E smoke (@hedgr/frontend)`, `hedgr/verifier`).] RAP rebind after this source merges is a separate authority-binding sequence.
+
+**#721 sequencing note (third known merge-before-verifier deviation):** PR #721 was squash-merged at `1b1ca1e6f8b4d8f3544a9a48987b737603d0be48` at 08:19:51 AWST on 28 September 2026 from the `mhibajene` account. Labels were applied and draft status lifted about six seconds before merge. The merged tree is identical to head `a748172`. Production deploy Ready 08:20:39 AWST. Ticket `CLASS-A-VAL-002-HOME-EXPERIENCE-001`. Process compliance is kept distinct from technical correctness; this sequence is not reclassified as compliant because a later verification passed. Prior deviations: #680 / §312; #685 / §314. Later the same morning: #722 (fourth).
+
+**#721 retrospective verifier verdict (technical correctness only):** Independent retrospective verification of merged SHA `1b1ca1e6f8b4d8f3544a9a48987b737603d0be48` is **PASS WITH NOTES**. Notes recorded at the time of review: `HOME_EXPERIENCE_QA.md` was missing; live mode was untested; live-copy tension was observed. The merge-before-verifier process deviation remains in force.
+
+**#722 sequencing note (fourth known merge-before-verifier deviation):** PR #722 (`CLASS-A-VAL-002-HOME-EXPERIENCE-001` T2) squash-merged as `4c99e0b95bdbb8a7a70573abca24cf625e1a8cba` (16 files; 2 commits). Opened 08:35:23 AWST and auto-merged 08:41:59 AWST on 28 September 2026. Auto-merge was enabled from the `mhibajene` account. The PR carried `product:approved` and `qa:approved`. No verifier report appears in the PR record before merge (the only PR comment is Vercel’s). At the time, the only required status check on `main` was `E2E smoke (@hedgr/frontend)`, so auto-merge completed once that passed; the approval labels therefore functioned as de facto merge authority, which is the gap the disposition closes (§6). GitHub Production deployment `6700071345` for this SHA recorded success at 08:42:53 AWST (`Deployment has completed`). Process compliance is kept distinct from technical correctness; this sequence is not reclassified as compliant because later remediation or verification occurred.
+
+**#722 retrospective verifier verdict (technical correctness only):** Independent retrospective verification of merged SHA `4c99e0b95bdbb8a7a70573abca24cf625e1a8cba` is **FAIL**. The merge-before-verifier process deviation remains in force. Technical defects were remediated by #724 (merged `5ab40b419c4ae027721c78ef7eb4d78f39a7bce0` from verified head `712028c`). That remediation does not reclassify the #722 merge sequence as compliant.
+
+**Preservation:** Do not change Home ticket scope or open findings in live §7a. Do not widen into unrelated CI redesign, product implementation, release decisions or agent-role restructuring. **NO CROSS-LANE IMPACT.**
+
+## 327. One Home experience technical closeout (2026-09-28)
+
+**Delivery and provenance:** Source activation #719 merged at `040683e4e309f20f97869cafeed756d2891e849d` and separate permanent-main RAP rebind #720 at `c253579262cc019c3bc0e45ca18625d5a67dc536` preceded runtime. Tranches, each with separate runtime and verification commits:
+
+- **T1 Home translation:** #721 at `1b1ca1e6f8b4d8f3544a9a48987b737603d0be48` (runtime `303a0a5`, verification `a748172`).
+- **T2 receipts, next step, step thread, rate-unavailable and failure states:** #722 at `4c99e0b95bdbb8a7a70573abca24cf625e1a8cba` (`dd1bc5a`, `cd3dbf3`). Correction #724 at `5ab40b419c4a` fixed a 320px/200% reflow overflow on the rate-unavailable panel and added `HOME_EXPERIENCE_QA.md`; the §7a evidence allowlist amendment #725 at `9f71097` preceded its merge.
+- **T3 since-last-visit Home, position line, first use, loading, date line and the one last-visit value:** #729 at `e1c6789e922f946333c96d42c8210fa6fc4cc82b`, after the §7a verification amendment #728 at `82de5e7` allowed one superseded assertion in `stability-scenarios.spec.ts`. The first Verifier FAIL on `c08a25b` (reset rewrote the last-visit value) was corrected before PASS.
+- **T4 Activity entry thread:** #730 at `4dcc74f910d1aae179c3e6d638e82e389d7183f0`.
+- **T5 arrival motion:** #731 at `3aa035ac3c2cc857879e9e01fb72d87a944ed619`.
+- **Wallet-balance-mode correction:** #732 at `39de4b651db7c2fc92878da528bb2868b0d8e63a`. Production builds with `NEXT_PUBLIC_BALANCE_FROM_LEDGER=false`; the T3 guard also required ledger mode, so no T3 surface and no T5 motion rendered in Production between #729/#731 and #732. The first Verifier FAIL on `b8509ac` (the PR body named the wrong rollback commit) was corrected in the description before PASS on the same head.
+
+**Verification:** Independent Verifier PASS on the exact merged head for #724 (`712028c`), #725 (`f8026d2`), #728 (`3cea37c`), #729 (`cb2640f`), #730 (`3a40254`), #731 (`eb06b89`) and #732 (`b8509ac`). Hosted checks passed on each merged head. GitHub Production deployments succeeded for every merge commit, most recently `6709548499` for `39de4b6`. Full local validation at closeout: typecheck, lint, 923 unit tests and 132 browser tests. A wallet-mode build passed the same 120-check inspection as Production.
+
+**Process deviations and findings (recorded, not reclassified):**
+
+- #721 and #722 merged before any independent verification (§326). Their authorised retrospective verifications on `1b1ca1e` and `4c99e0b` are recorded in §326 (#721 PASS WITH NOTES; #722 FAIL, remediated by #724); this record does not substitute for them. For information only: every later verified head (#724 onward) contained the T1 and T2 trees.
+- #722 edited `tests-e2e/critical.spec.ts` and `tests-e2e/empty-error-states.spec.ts` (superseded copy only), which were outside the §7a verification allowlist.
+- The T3 wallet-mode defect reached Production and was corrected by #732. CI, local runs and Verifier reviews build only the default ledger configuration, while Production uses wallet mode. A wallet-mode build also shows one pre-existing ledger-only assertion in `currency-insight.spec.ts`. Any wallet-mode CI coverage requires a separate decision.
+- `empty-error-states.spec.ts` has a pre-existing one-shot `isVisible()` flake under full-suite load. It is outside this ticket's allowlist and was left unchanged.
+
+**Limitations:** Live mode could not be inspected in a browser (it requires non-mock sign-in) and is covered by unit tests. The simulated deposit failure state is covered by unit tests only. This is technical delivery, not participant comprehension or release evidence.
+
+**Effect:** [Closed 2026-09-28 via #733 `38cf6b2` and RAP rebind #736 `72979e8`.] On permanent-main merge of this source-first completion record and a final separate verified projection-only RAP rebind, close only nested `CLASS-A-VAL-002-HOME-EXPERIENCE-001`. Parent `CLASS-A-VAL-002` stays open without an active nested successor. [Historical: `CLASS-A-VAL-002-RESEARCH-NEW-MARKER-001` remains held (runtime #710 retained, route unreleased) and resumes only on Founder resumption after a `/research/stability-scenarios` review; that review is not activated here — NEW-MARKER closed under §330; review completed 2026-09-29 (§332); current occupancy is §335 / no nested Lane V.] `CLASS-A-VAL-002-WEEKEND-PREP-001` remains deferred with its duties intact. No participant release, financial capability, Lane E/G occupancy or Green delegation follows. **NO CROSS-LANE IMPACT.**
+
+## 328. Founder amendment — Home deduplication and Production balance mode (2026-09-28)
+
+**Findings addressed:** §327 recorded that Production builds with `NEXT_PUBLIC_BALANCE_FROM_LEDGER=false` (wallet mode) while CI builds the ledger default, which let the T3/T5 defect reach Production until #732. It also recorded that default simulated Home showed the latest entry twice.
+
+**Decision 1 — Production balance mode:** The Founder said “ledger is intended so we can work downstream from that”. Ledger mode, the documented default and source of truth in `lib/state/balance.mode.ts`, is Production's intended configuration. The Founder-owned action is to remove `NEXT_PUBLIC_BALANCE_FROM_LEDGER=false` from the Vercel Production environment (or set it to `true`) and redeploy. No repository change is required; the flag remains a documented rollback. After the change, the steward verifies with the §327 probe (ledger $5 and wallet $7 on Home shows $5) and re-runs the closeout inspection on Production. [Done 5 Oct 2026 (§341): probe $5.00; inspection 82/82.] Browsers whose stored wallet balance has no matching ledger entries will show the ledger figure after the switch. The research route is unreleased, so exposure is limited. A wallet-mode CI job is not adopted. The wallet-mode unit tests from #732 are retained. [Superseded §344, 5 Oct 2026: the flag stops being the documented rollback (rollback is a single revert of the runtime PR), and the #732 wallet-mode unit tests are removed with the wallet branch.]
+
+**Decision 3 — Recent activity overlap (amendment, 2026-09-28):** After #738 merged, the Founder chose to also clean up the remaining overlap: in the several-changes case, Recent activity repeated the entries listed under “Since you were last here”. The Founder said “merge is done - we can perform the cleanup” and selected “Recent activity overlap” and “Hide when ‘since’ lists”. Under the same ticket and allowed files, default-route Recent activity is hidden while the one-change or several-changes variant shows, and kept in every other state. The §7a brief records the exact states. This source amendment and its own separate verified RAP rebind precede the runtime edit.
+
+**Decision 2 — Home deduplication:** The Founder said “We need to clean that up lets go with our latest direction ‘Since you were last here’”. Finite nested Lane V ticket `CLASS-A-VAL-002-HOME-DEDUP-001` (brief in §7a) removes the default-route “Latest change” strip. It supersedes, for that strip only, the §7a HOME-EXPERIENCE-001 decision-4 retention of existing default Home elements; Recent activity and the empty states stay.
+
+**Sequence:** The §327 closeout rebind completed in #736 (`72979e8`). This source record, then its own separate verified permanent-main RAP rebind, then the runtime PR with an independent Verifier PASS on its exact head, Production inspection, a source-first completion record and a final RAP rebind. **NO CROSS-LANE IMPACT.**
+
+## 329. Home deduplication technical closeout (2026-09-29)
+
+**Delivery and provenance:**
+
+- **Source #735:** at `22d09a03eeff70469e63fb0a8c943b65c40d8d85`. Verifier PASS on `4001637`, then on `7b47202`, the head after merging `main` to resolve a generated-RAP conflict.
+- **Separate permanent-main RAP rebind #737:** at `3e388b5c573628bfab62ca6008accea987ddae1e`. Verifier PASS `e22dcf2`.
+- **Strip removal #738:** at `cbfb05ce071692c01a573ba999b1686334fc767e`, with runtime `af0f76f` and verification `fa49420`. Verifier PASS `fa49420`. Production deployment `6713948792` succeeded.
+- **Amendment #739 (§328 decision 3):** at `b07a4eb0dd39af715c59f89e23bfb95843217e28`. Verifier PASS `8e559e6`.
+- **Separate permanent-main RAP rebind #740:** at `23b4f81f1fb91904abb6387e17e245522b131ac2`. Verifier PASS `34fb004`.
+- **Recent activity overlap #741:** at `d51277cefa7b556155e9251e4f8b93452e2eba7b`, with runtime `508af04` and verification `94196e5`. Verifier PASS `94196e5`. Production deployment `6723529926` succeeded.
+
+Every PR merged after an independent Verifier PASS on its exact head; no merge-before-verifier deviation occurred.
+
+**Validation:** Local validation for #741 passed typecheck, lint, 930 unit tests and 132 browser tests with retries off. The new unit tests failed on the unmodified runtime and passed with each change.
+
+**Production inspection:** On 2026-09-29, Production at `d51277c` passed 32/32 checks at 390 and 1440px, with no overflow and no page errors:
+
+- The strip is absent in every state.
+- Recent activity is hidden with one or several changes since the last visit.
+- Recent activity is shown with no previous visit, no change and a pending entry; the pending entry is listed.
+- The journey control has neither the strip nor Recent activity.
+
+At 1440px the "no previous visit" case rendered as "no change" because the harness's login step recorded a Home visit. That state is covered at 390px and by unit tests.
+
+**Balance mode:** The probe (ledger $5, wallet $7) showed $7.00, so Production still runs wallet mode. The Founder-owned §328 ledger switch in Vercel remains outstanding. This inspection therefore exercised the #732 wallet-mode guard. [Resolved 5 Oct 2026 (§341): the Founder completed the §328 switch; Production now runs ledger mode, verified 82/82.]
+
+**Effect:** [Closed 2026-09-29 via #742 `35891e2` and RAP rebind #743 `1e5bf51`.] On permanent-main merge of this source-first completion record and a final separate verified projection-only RAP rebind, close only nested `CLASS-A-VAL-002-HOME-DEDUP-001`. Parent `CLASS-A-VAL-002` stays open without an active nested successor. [Historical: `CLASS-A-VAL-002-RESEARCH-NEW-MARKER-001` remains held and resumes only on Founder resumption after a `/research/stability-scenarios` review, which is not activated here — NEW-MARKER closed under §330; review completed 2026-09-29 (§332); current occupancy is §335 / no nested Lane V.] `CLASS-A-VAL-002-WEEKEND-PREP-001` remains deferred with its duties intact. No participant release, financial capability, Lane E/G occupancy or Green delegation follows. **NO CROSS-LANE IMPACT.**
+
+## 330. New Marker technical closeout (2026-09-29)
+
+**Delivery and provenance:** Founder source #691 merged at `c2124b79b53743067512b0edeea7bb43718e3cf3`, followed by separate permanent-main RAP rebind #693 at `4e31918858fd6b46603b38387f6fd7e111e5dbf7`. The stacked-row amendment #707 merged at `762bd1bf5a2908f8e22cf76649a1e7afabc5c366`, followed by separate rebind #708 at `95c9471d0fd14153997e9e3f1a56c23ec46fd7ab`. Runtime #710 squash-merged at `fb25660f57b2c70d34d13acf6c3199a4c9f7d95d` on 2026-09-27 at 11:53:40 UTC. Its diff is limited to `ScenarioStimulus.tsx` and `stability-scenarios.spec.ts`; it places only the After `Due` and `What to watch` markers in their headings and stacks every row heading above its value in both states.
+
+**Independent retrospective verification:** A distinct local Verifier had returned PASS WITH NOTES on earlier draft head `b6cc84ae1a97f4e0e8b4fe6267dcc4519e951c4c`; the subsequent merge-main commit changed the head. A new distinct read-only Verifier reviewed the exact merged SHA `fb25660f57b2c70d34d13acf6c3199a4c9f7d95d` and returned **PASS WITH NOTES**. The final PR head `21d5aa811c7580463cc6debd4ef6a029035c6b0e` and merge commit have the same tree. The Verifier independently passed frontend typecheck, scoped lint of both changed files, a Production Next build and the focused Chromium Stability scenarios suite (6/6). The hosted #710 head checks, including its 127-test E2E job, passed; that broader suite was observed in GitHub, not rerun by this Verifier. #710's PR body and the earlier local Verifier report record 390px and 1440px screenshots supplied by the Implementer; the retrospective Verifier did not capture them or claim a new Production browser inspection. At 320px with 200% text, the `What to watch` pill wraps inside its heading while its value remains below. The Production deployment for the merged SHA (`6691852052`) recorded success.
+
+**Missing final-head pre-merge verification:** #710 has no submitted PR review or independent Verifier report/comment on its final head `21d5aa811c7580463cc6debd4ef6a029035c6b0e`. The earlier local PASS applied only to `b6cc84a`, before the merge-main commit. Its PR body explicitly said that the final head needed a fresh distinct review before merge. The merge therefore preceded independent verification, a process deviation under the standing PR invariant and runbook. The later PASS WITH NOTES establishes retrospective technical confidence only; it does not make the original merge sequence compliant. No code correction is indicated by the retrospective findings.
+
+**Effect:** [Closed 2026-09-29 via #744 `a5e035c` and RAP rebind #745 `afb3dc0`.] On permanent-main merge of this source-first completion record and a final separate verified projection-only RAP rebind, close only nested `CLASS-A-VAL-002-RESEARCH-NEW-MARKER-001` without new runtime code. Parent `CLASS-A-VAL-002` stays open without an active nested successor. [Historical: the `/research/stability-scenarios` route remains unreleased and its review is not activated here — review completed 2026-09-29 (§332); current occupancy is §335 / no nested Lane V.] The weekend ticket remains deferred; the separate Digital Feedback v1 Founder custody is unaffected. No participant release, response capture, telemetry, Engine/Wallet/ledger, financial capability, Lane E/G occupancy or Green delegation follows. **NO CROSS-LANE IMPACT.**
+
+## 331. Founder disposition — PR Posture execution refinement (2026-09-29)
+
+**Decision and observed gap:** Founder Musalwa Hibajene approved this source-first repository-process refinement after the New Marker closeout source #744 and separate RAP rebind #745. The Verifier's PASS comment on #745 was blocked when its READ_ONLY brief was interpreted to prohibit every PR write; #741–#745 were each marked ready and merged manually; and #710 merged a head changed about 15 seconds after ready without fresh verification. At the time this gap was found, classic `main` branch protection required `E2E smoke (@hedgr/frontend)` and `hedgr/verifier`, required an up-to-date branch (`strict=true`), and enforced for admins. Auto-merge was available and no rulesets applied. `validate` ran but was not a required status check.
+
+**Approved procedure:** Once implementation is complete, the implementing or steward agent updates the branch under the owner's account, lets current-head checks start, and may mark the PR ready and arm auto-merge when applicable ticket gates permit. The independent Verifier remains READ_ONLY except for one `Hedgr-Verifier:` attestation comment in the exact runbook format on the PR and reviewed head. Its brief must expressly allow that write; it re-reads the current PR head immediately before posting and aborts on a mismatch. Implementers and stewards never post attestations despite the shared Founder GitHub account. Required `validate`, `E2E smoke (@hedgr/frontend)`, exact-head `hedgr/verifier`, and strict branch protection prevent merge until the current up-to-date head receives an eligible independent PASS and all applicable gates pass. Admin enforcement applies. If `main` moves after PASS and the PR is behind, the steward updates under the owner's account and re-launches an independent Verifier on the new head without Founder intervention. A new head invalidates the earlier PASS. Keep at most one PR in the merge step at a time. This refines procedure and does not weaken the six-point standing PR invariant.
+
+**Boundary and sequence:** Recommendation 4, the Fork 2 mechanical RAP rebind and mechanical attestation for projection-only PRs, remains deferred and inactive. The Founder added `validate` to main's required checks on 2026-09-29 as part of this disposition. Any harness permission rule remains a Founder-owned action. This is repository process only. It creates no lane or ticket occupancy, participant, financial or cross-lane authority. Merge this authority source first, then complete a separate verified permanent-main projection-only RAP rebind. **NO CROSS-LANE IMPACT.**
+
+## 332. Founder activation — nested Lane V Sarah research refresh (2026-09-29)
+
+**Basis:** After the NEW-MARKER-001 closeout (§330), a read-only Product Experience review of `/research/stability-scenarios` found:
+- a returning participant who follows the bridge lands on their earlier simulation state (“Nothing has changed since …”) instead of first use;
+- the bridge wording (“made-up money”, “practice deposit”) differs from the finished Home (“pretend money”, “Add simulated deposit”);
+- the research page and orientation keep the pre-productisation look, so participants cross a visible seam into the new Home.
+
+**Founder dispositions (2026-09-29):**
+- Point the bridge at a clean start.
+- Align the wording with the finished UI, choosing the Home-aligned sentence.
+- Align the research route with the newer look, extending it to all of orientation.
+- Create one shared research chrome component.
+- Ticket `CLASS-A-VAL-002-RESEARCH-REFRESH-001`, with the brief in §7a.
+
+**Relationship to other work:**
+- NEW-MARKER-001's delivered markers and stacked rows are preserved.
+- [Superseded §334, historical only] The Mulenga ticket frame (`CLASS-A-VAL-002-RESEARCH-RESERVE-001`, approved 2026-09-27, not activated) stays queued behind this ticket. [Superseded §334: the Mulenga/Kwesi reserve scenario is not queued.] Before its own activation it needs a Founder amendment covering:
+  - digital, unmoderated delivery through a shared build link and a Google Form;
+  - participants engaging with both Sarah and Mulenga;
+  - reuse of the shared research chrome.
+- Its fixed Zambian-kwacha setting, standalone entry and Sarah's retained currency selection are unchanged by this record.
+
+**Design usage:** The `DESIGN.md` usage addendum in this source extends the existing `syntheticHome` canvas, divider and text-token usage and the shipped pill and rounded-panel treatment to `/orientation` and `/research/stability-scenarios` for this ticket only. No token value, typeface, asset or status meaning changes.
+
+**Sequence:** This source record; a separate verified permanent-main RAP rebind; the runtime PR with distinct Implementer and verification commits under the §331 PR Posture; Production inspection; a source-first completion record; and a final RAP rebind. **NO CROSS-LANE IMPACT.**
+
+## 333. Sarah research refresh technical closeout (2026-10-01)
+
+**Delivery and provenance:**
+- **Source #748:** at `4d97c748d203613d0ceb368cca13f6ea865fa683`; Verifier PASS on `1ead441`.
+- **Separate permanent-main RAP rebind #749:** at `bad4b94a6cc4077ac206221b438803e245afa3cc`; Verifier PASS on `ef23fd8`.
+- **Runtime #750:** at `1dad23e0b291e21f5fb2f46567463d004df17efd`. Runtime commit `8c09105`:
+  - new `ResearchChrome.tsx` and `research.module.css`;
+  - `ScenarioStimulus.tsx`;
+  - `orientation/page.tsx`.
+
+  Verification commit `ddcc109`:
+  - `stability-scenarios.spec.ts`;
+  - `orientation.spec.ts`;
+  - the QA record.
+
+  Independent Verifier PASS on the exact head `ddcc109`. Production deployment `6775738407` succeeded.
+
+Every PR merged after an exact-head Verifier PASS under the §331 posture; no merge-before-verifier deviation occurred.
+
+**Delivered:**
+- The bridge links to `/dashboard-synthetic-journey?reset=1`.
+- Exactly one sentence changed, to the Home-aligned wording.
+- The newer look on all four research stages and both orientation entries uses existing token values only.
+- A shared `ResearchChrome` exists for the research header, boundary line and footer.
+
+No other participant string changed; the Verifier compared every literal before and after. `SimulationDisplayCurrencySelector.tsx`, `lib/narrative/orientation-surface.ts` and `styles/globals.css` were not changed. The global white `main` rule is neutralised only inside the research canvas.
+
+**Validation:** Local and Verifier runs both passed:
+- typecheck and lint;
+- 930 unit tests;
+- 133 browser tests with retries off.
+
+A new returning-participant test fails on the unmodified page ($3.00 instead of $0.00). The Verifier independently walked 320px at 200% text, and 390, 640, 1024, 1280 and 1440px:
+- no overflow;
+- no control under 44px;
+- exactly two `New` markers;
+- every row stacked;
+- Before/After rows aligned at 640px and wider.
+
+**Production inspection (2026-10-01, `1dad23e`):** At 390px, 1440px, and 320px with 200% text, across both orientation entries, all four stages and Home after the bridge:
+- no overflow, no control under 44px and no page errors;
+- NEW-MARKER-001 geometry preserved;
+- the bridge `href` and sentence exact;
+- the canvas showing through `main`.
+
+A returning participant with an earlier $3.00 simulation who follows the bridge lands on first use at $0.00.
+
+**Notes carried forward:**
+- **Mulenga/Kwesi reserve scenario:** superseded by the Daniel reserve case (§334); nested `CLASS-A-VAL-002-RESEARCH-RESERVE-001` is not queued. See §335 for technical closeout.
+- **#748 Verifier notes:**
+  - The NEW-MARKER-001 tense lag in the §7 Lane V bullet is corrected here.
+  - Older dated §7 paragraphs remain as history.
+
+**Effect:** [Closed 2026-10-01 via #751 `cca7514` and RAP rebind #752 `58de687`.] On permanent-main merge of this source-first completion record and a final separate verified projection-only RAP rebind, close only nested `CLASS-A-VAL-002-RESEARCH-REFRESH-001`. Parent `CLASS-A-VAL-002` stays open without an active nested successor. The research route remains unreleased. No participant release, Form, telemetry, financial capability, Lane E/G occupancy or Green delegation follows. **NO CROSS-LANE IMPACT.**
+
+## 334. Founder activation — nested Lane V Daniel reserve + legibility pass (2026-10-02)
+
+**Launch approval:** Founder Musalwa Hibajene approved this source-first activation on 2026-10-02 at 11:23 AWST (source PR, then a later separate permanent-main RAP rebind). Runtime T1–T3 is not authorised until that rebind is verified.
+
+**Founder lock:** 2026-10-02 at 11:21 AWST. Quote, verbatim: “Let's go with written in advance by Hedgr. More accurate. Other than that we can lock it in.” All [Sue] and [HedgrOps] strings, the figure table, top label “Research example about a fictional person”, attribution “written in advance by Hedgr” (mirrored for Sarah), token `{localFull}` in Daniel’s Held now row and After heading with bare `{localPlural}` elsewhere, paired-guard (h), and the drop of the “Held in kwacha” replacement are LOCKED. This source records that lock; it does not author or alter copy or figures. [Amendment §340, 5 Oct 2026:] §340 supersedes **only** the After-heading token slot: `{localFull}` remains in Daniel’s Held now row; `{localFullSingular}` is used in the After heading; bare `{localPlural}` remains elsewhere. All other 2 Oct locks remain.
+
+**Founder direction, 2 Oct 2026 (verbatim record of the locked brief’s 2 Oct direction):**
+1. The reserve case sits after Sarah and before the existing bridge.
+2. Currency option B: both cases, and any future case, keep the five-currency picker, with credible per-currency authored figures and no rate shown, “to widen the tester pool beyond Zambia”. §302 optionality is kept. Sarah’s figures change under “fix Sarah currency”.
+3. The reserve case is renamed **Daniel**. The internal label Kwesi and the ticket ID are unchanged.
+4. All other recommendations are accepted: partial supersession of the LOCK COPY (top label, attribution); the Home copy-register amendment; the protocol doc deferred to the release ticket; the weakened-local-currency variant fixed in the flow; Sue proposes the transition label and the Founder locks it.
+
+**Carried in from 1 Oct:** Sue’s `SUE-HUMAN-VOICE-001` is the copy baseline. Participant release stays held.
+
+**Ticket:** `CLASS-A-VAL-002-RESEARCH-RESERVE-001` is the sole active nested Lane V ticket under open parent `CLASS-A-VAL-002`. [Closed §335, 5 Oct 2026] It reuses the queued ID. No D-number.
+
+**Off-repo provenance (now recorded here; the Implementer needs no off-repo files because §7a holds the locked strings and figures):**
+- Frame approval 2026-09-27 at 15:02 AWST (carried in §333 “Notes carried forward”).
+- 27 Sep LOCK COPY of `KWESI-RECONCILED-COPY-002`.
+- `SUE-HUMAN-VOICE-001`.
+- `SUE-MULTI-CURRENCY-001`.
+
+**Supersedes (Founder-confirmed 1–2 Oct):**
+- (a) Frame and §332 “standalone route / entry, no Bridge, no link from Sarah”.
+- (b) Frame “Sarah untouched / re-declare chrome”.
+- (c) LOCK COPY: top label and attribution only.
+- (d) The 27 Sep “protocol doc in first PR”, which moves to the release ticket.
+- (e) Home copy register (2026-09-27): listed strings only.
+- (f) Frame and §332 “fixed Zambia/ZMW context”, replaced by five-currency figures.
+- (g) LOCK COPY “Mulenga LOCKED”, renamed to Daniel.
+
+**Still open with the Founder (do not block this source record):**
+1. Name the cold readers.
+2. Confirm that an internal cold read is not participant exposure under §7.
+
+**Sequence:** This source record; a separate verified permanent-main RAP rebind; T1–T3 under the §331 PR Posture; Production inspection; the release-bar read; a source-first completion record as §335; and a final RAP rebind. A separate release ticket carries the protocol doc and tester-pool scope. **NO CROSS-LANE IMPACT.**
+
+## 335. Daniel reserve + legibility pass technical closeout (2026-10-05)
+
+**Founder approval:** 2026-10-05 at 09:40 AWST, for this source-first closeout and the later separate permanent-main RAP rebind.
+
+**Delivery and provenance:**
+- **Source #753:** at `d04ab0ecaa25e680c8abc3c726204422cfcfb296`; Verifier PASS on `e7661669bd500dcfe097bccc698efb38425bae08` ([attestation](https://github.com/mhibajene/hedgr-copilot/pull/753#issuecomment-5945307941)).
+- **Separate permanent-main RAP rebind #754:** at `75e7f251f352d251d3568ee88a7d68373540fedd`; Verifier PASS on `0ef6a3aef8441c620ea7a1de130d55cb3ba2c915` ([attestation](https://github.com/mhibajene/hedgr-copilot/pull/754#issuecomment-5945418864)).
+- **Runtime T1–T3 #755:** squash-merged at `3c2efea82621c6949d296570f75f6cea331404af` from verified head `5d7271c5afdaa90f37d0c1252879dc9c46d1d63c`. Per-tranche commits on that PR:
+  - T1 `06f93d86deb9b5522ccc541ce2aa868059fb6ac7` — fixtures and Sarah figures/strings;
+  - T2 `a247d2ca3b28534f4b876b44c9ae383595ffc87a` — Daniel and the shared bridge;
+  - T3 `c1555dad46ccdd69dc902dc4990e87ab9a307969` — simulated Home copy-register strings;
+  - follow-up `f423b39616ca6bf9e4148f8fe0a202767d0b1388` — type import and compact insight assertion;
+  - evidence `5d7271c5afdaa90f37d0c1252879dc9c46d1d63c` — `HEDGR_LEGIBILITY_PASS_QA.md`.
+
+  Independent Verifier PASS WITH NOTES on the exact head `5d7271c` ([attestation](https://github.com/mhibajene/hedgr-copilot/pull/755#issuecomment-5986438540); run `bc-bc845cca`). Production deployment `dpl_6LZo9n13LZTwUj718JX1qWuEcfKw` of `3c2efea` is READY.
+
+Every PR merged after an exact-head Verifier PASS under the §331 posture; no merge-before-verifier deviation occurred.
+
+**Delivered:**
+- Daniel’s reserve case sits after Sarah and before the existing bridge.
+- Five-currency authored figures with no rate shown; locked strings, tokens and the figure table.
+- Simulated-route Home copy-register amendment; live mode unchanged outside the existing step labels.
+- Shared `ResearchBridge`; `/research/reserve-scenario` with `v=1` in-flow and `v=2` by direct URL.
+
+**#755 Verifier notes (PASS WITH NOTES; recorded, not resolved by this closeout):**
+1. §7a said each tranche is its own PR; Founder-approved launch used one PR with per-tranche commits — acceptable packaging difference.
+2. `HEDGR_LEGIBILITY_PASS_QA.md` is permitted evidence.
+3. ZMW After heading uses the locked `{localFull}` render “After kwacha weakened against the US dollar” — ungrammatical-token stop approached, not fired.
+4. Paired guard (h) coverage is split between unit and e2e.
+
+**Still open with the Founder (carried forward; not resolved by this closeout):**
+1. Name the cold readers.
+2. Confirm that an internal cold read is not participant exposure under §7.
+
+The research route remains unreleased. No participant release follows. The release-bar cold read was not executed; those two items continue to gate it. A separate later release ticket still carries the protocol doc and tester-pool scope; it is not occupancy and is not activated here.
+
+**Effect:** [Closed 2026-10-05 via #756 `fc3ff0b` and RAP rebind #757 `e6e07ad`.] On permanent-main merge of this source-first completion record and a final separate verified projection-only RAP rebind, close only nested `CLASS-A-VAL-002-RESEARCH-RESERVE-001`. Parent `CLASS-A-VAL-002` stays open without an active nested successor. No participant release, Form, telemetry, financial capability, Lane E/G occupancy or Green delegation follows. **NO CROSS-LANE IMPACT.**
+
+## 336. Founder doctrine alignment — Stability Engine allocation-envelope scope; ADR 0027 Accepted (2026-10-05)
+
+**Date:** 2026-10-02 (amendment approved); 2026-10-05 (ADR acceptance and public-export confirmation, ~09:47 AWST, in conversation with HedgrOps)
+
+**Status:** **ACCEPTED** — minimum doctrine amendment and ADR 0027; effective on permanent-main merge, followed by a separate verified projection-only RAP rebind; no ticket or implementation activation
+
+**Decision ID:** Internal **D-152** ↔ ADR **0027**
+
+**Decision type:** Architecture / engine-authority boundary
+
+**Strategic horizon:** Short-term MVP doctrine alignment with long-term institutional relevance
+
+**Visibility:** ADR 0027 is Public; the Founder confirmed export of the engine-boundary decision only. The underlying §286 partial-capital strategy, audience and GTM content remain Founder Only.
+
+**Problem / trigger:** §286 / §288 / §290 adopted the partial-capital direction and the "Hedgr allocation envelope" ("The portion of capital the user intentionally places under Hedgr's stability reasoning") without amending doctrine. Active doctrine still permitted a whole-deposit / automatic-allocation reading: Stability Engine §1 "core capital management system", Invariant 5 "canonical allocator of user capital within the Hedgr system", Default Allocation Policy Art. I "All retail deposits are automatically allocated… mandatory", Internal Stability Model §II.A, and `.cursorrules` §IV. The Founder assessed the direction as ABSORBED BUT UNDER-SPECIFIED.
+
+**Founder decision:** ADOPT ADR 0027 and the minimum amendment:
+- `docs/doctrine/hedgr-stability-engine.md`: v1.1; §1; new §1.1; §4 preamble; Invariant 5.
+- `docs/doctrine/hedgr-default-allocation-policy.md`: Art. I.
+- `docs/doctrine/hedgr-stability-model™ (Internal).md`: §II.A.
+- `.cursorrules` §IV.
+
+Engine scope and Invariant 5 are limited to the user-selected allocation envelope. The default split applies within it. The envelope defines what Hedgr may reason about and grants no authority to move, rebalance or act on capital. "Allocation envelope" is distinguished from D05 constitutional risk envelopes. This supersedes only §286's "No public ADR export or doctrine amendment" clause, for this scope; §286 / §288 / §290 are otherwise unchanged.
+
+**Deliberate non-changes:**
+- Default Allocation Policy Art. II is unchanged: it is adjacent to the Art. VI buffer-minimum parameter, and Art. I scoping governs.
+- No D05 edit: the engine-doctrine disambiguation suffices.
+- Active Doctrine Index membership and `.cursorrules` §II precedence are unchanged.
+
+**Liquidity / Art. VI:** No buffer minimum, exposure cap, yield-deployment rule, withdrawal path or treasury behaviour changes. Liquidity impact: none.
+
+**Explicit non-authorisation:** No mandate primitive, delegation ladder, moat hypothesis, D05 narrative change, runtime / code / `EngineState` / test / copy / schema change, envelope capture or consent design, execution, custody, conversion, settlement, routing, rebalancing, Class B / Class C, customer-money, ticket or sequencing change. ADRs 0011 / 0013 / 0014 / 0015 unchanged. F1–F4, the scoped-interface candidate and §288 / §290 deferrals remain as recorded.
+
+**Current-ticket consequence:** None. Nested Lane V §334 and its reserved §335 closeout are unchanged. [Note 5 Oct 2026: §335 closeout merged as #756 before this record merged.] Lane E has no nested occupancy, Lane G is deferred and Lane N is idle. **NO CROSS-LANE IMPACT.**
+
+**Reversibility:** Supersede ADR 0027 and revert the paired doctrine and `.cursorrules` passages, preserving history. No financial unwind or customer commitment.
+
+**Revisit / kill criteria:** As in ADR 0027 — envelope not understood or misleading; envelope treated as authority to act; a later mandate / execution ADR; Founder revision of §286.
+
+**Strategic pillar alignment:** Capital Preservation Above All; Liquidity First; Stability Before Speculation; Security and Trust; Risk Visibility. No tension.
+
+**ADR treatment:** ADR 0027 Accepted and exported at `docs/decisions/0027-stability-engine-scope-is-the-user-selected-allocation-envelope.md`; indexed in `docs/decisions/SPRINT-2-ADR-INDEX.md`.
+
+**Exact recording scope:** the ADR; `docs/decisions/SPRINT-2-ADR-INDEX.md`; the three doctrine files above; `.cursorrules`; this section; deterministic `docs/ops/bridge/repo-authority-projection.json`. No other file.
+
+**RAP treatment:** Commit the authority-bearing sources before RAP generation. After squash merge, complete a separate projection-only permanent-main RAP rebind. Never project uncommitted doctrine as permanent-main authority.
+
+## 337. Ops docs tidy — stale wording after §335/§336 (`OPS-DOCS-TIDY-001`, 2026-10-05)
+
+**Date:** 2026-10-05
+
+**Founder approval:** Musalwa Hibajene, 5 Oct 2026 at 14:29 AWST (“Please tidy up”).
+
+**Status:** docs-only factual-currency tidy. No doctrine, authority, precedence, sequencing decision, ticket scope or occupancy changed. Occupancy already closed by §335 source #756 (`fc3ff0b`) and RAP rebind #757 (`e6e07ad`); this record only aligns stale descriptive wording.
+
+**Corrected lines (this source):**
+- `docs/ops/product-finish/HOME_EXPERIENCE_QA.md` evidence-boundary paragraph: §326 #721/#722 retrospectives from “outstanding” to recorded.
+- `docs/ops/HEDGR_STATUS.md` live §7 §327 summary and numbered §327 process-deviation bullet: same retrospectives from “not recorded” to recorded in §326.
+- `docs/ops/HEDGR_STATUS.md` live §7 §335 occupancy paragraph and Lane V bullet: nested `CLASS-A-VAL-002-RESEARCH-RESERVE-001` technically closed; no nested Lane V ticket active; parents `CLASS-A-VAL-002` and `SE-REASON-001` remain open.
+- `docs/ops/HEDGR_STATUS.md` §7a read-order sentence, RESERVE-001 completed-brief heading, and historical “sole active nested Lane V ticket” sentences (RESERVE-001 and REFRESH-001 briefs, plus numbered §334 ticket line): current occupancy or bracketed `[Closed …]` notes.
+- `AGENTS.md` live §335 closeout sentence made current; historical §334/§332 “sole active nested” lines given bracketed closed notes.
+- `docs/ops/HEDGR_STATUS.md` live §7 §333 summary, live §7 §332 Mulenga sentence, numbered §333 notes, numbered §332 relationship bullet, and `AGENTS.md` §333/§332 lines: Mulenga/Kwesi reserve scenario superseded by the Daniel reserve case (§334), not queued.
+- `docs/ops/HEDGR_STATUS.md` numbered §336 current-ticket sentence: one dated currency note only; Founder-locked verbatim record otherwise unchanged.
+
+**Skipped:** `docs/ops/runbook.md` PR Posture “What CI actually enforces” already states that classic branch protection on `main` requires `validate`, `E2E smoke (@hedgr/frontend)`, and `hedgr/verifier`, with admin enforcement. The §7 sequencing-posture RAP field was left unchanged so the Fork 1 current-sequencing fixture did not require a test edit.
+
+**Effect:** none on doctrine, ADRs, `.cursorrules`, D05, the doctrine index, runtime, tests, CI or workflows. **NO CROSS-LANE IMPACT.**
+
+## 338. Ops docs tidy — PR template and remaining stale wording (`OPS-DOCS-TIDY-002`, 2026-10-05)
+
+**Date:** 2026-10-05
+
+**Founder approval:** Musalwa Hibajene, 5 Oct 2026 at 16:46 AWST (“run the second docs tidy and its rebind, each verified, then merge.”).
+
+**Status:** docs-only factual-currency tidy. No doctrine, authority, precedence, sequencing decision, ticket scope or occupancy changed. Occupancy remains parent `CLASS-A-VAL-002` and parent `SE-REASON-001` with no nested Lane V ticket. The RAP permanent-main rebind for this source follows separately. §337 was RAP-bound by #761.
+
+**Corrected lines (this source):**
+- `.github/pull_request_template.md`: Merge Gates now match AGENTS.md and runbook PR Posture (`validate`, `E2E smoke (@hedgr/frontend)`, `hedgr/verifier`; exact-head independent verifier PASS; implementers open as draft and never change draft state). Labels moved to descriptive metadata only.
+- `docs/ops/HEDGR_STATUS.md` live §7 §334 and §332 activation paragraphs: `[Closed §335 …]` / `[Closed §333 …]` prefixes; history retained.
+- Completed closeout future-tense lines in `AGENTS.md`, live §7, §7a verified-completion blocks, and numbered Effect paragraphs for §335 / §333 / §330 / §329 / §327: dated past-tense closed brackets with verified PRs and merge SHAs.
+- Stale “held” / “named next step” lines for NEW-MARKER and `/research/stability-scenarios`: bracketed as historical; pointed to §330 closeout, §332 review (2026-09-29), and §335 / current occupancy (no nested Lane V).
+- Numbered §332 Mulenga relationship bullets: `[Superseded §334, historical only]` lead; numbered record retained.
+- Last-updated headers: `HEDGR_STATUS.md`, `AGENTS.md`, and `docs/ops/product-finish/HOME_EXPERIENCE_QA.md` set to 2026-10-05. Doctrine index and doctrine files untouched.
+- `HOME_EXPERIENCE_QA.md` T1/T2 mid-delivery tables: one-line archive notes; table data unchanged.
+- Numbered §326 mechanical-gate sentence: dated note that current protection is §331 / runbook PR Posture.
+- `.github/workflows/ci.yml.bak` deleted after confirming no current workflow reference.
+- `scripts/bridge/rap-provenance-rebind.test.mjs`: metadata-only Last-updated fixture date updated so validate stays green after the STATUS header bump. No rebind-script behaviour change.
+
+**Skipped:** RAP `sequencing_posture` live-§7 sentence left unchanged so `apps/bridge-worker/tests/fork1-authority.test.mjs` did not require a test edit (O7). Doctrine files, ADR 0027, §5, and the §336 locked B2 sentence (current-ticket consequence; already carries the §337 dated note) were not touched. Runtime, env, and workflows other than deleting `ci.yml.bak` were not touched.
+
+**Effect:** none on doctrine, ADRs, `.cursorrules`, D05, the doctrine index, occupancy or authority meaning. **NO CROSS-LANE IMPACT.**
+
+## 339. Founder decision — cold-read supersession (`OPS-COLD-READ-SUPERSESSION-001`, 2026-10-05)
+
+**Date:** 2026-10-05
+
+**Founder decision:** ~18:31–18:32 AWST.
+
+**Founder approval to record:** Musalwa Hibajene, 5 Oct 2026 at 18:34 AWST (“Yes, record the cold-read supersession: docs PR and its rebind, each verified, then merge.”).
+
+**Status:** docs-only Founder-decision record. No ticket is activated. Nothing is released. Occupancy remains parent `CLASS-A-VAL-002` and parent `SE-REASON-001` with no nested Lane V ticket. The RAP permanent-main rebind for this source follows separately.
+
+**Decision:** There is no separate internal cold read for the Sarah/Daniel research route.
+
+**Rationale:** The Founder's reviewers are a scarce, trusted feedback pool; several would be both cold readers and participants; the Founder does not want them seeing every micro-change. The route is interrogated rigorously in-house, then released for participant feedback.
+
+**Release gate that replaces the cold read:**
+1. An internal hostile read of Sarah and Daniel in every currency, checking for anything that reads as live money, advice, an automatic split or a promised outcome, and that the limits line holds. The zero-harmful-readings guard is kept and moves before exposure. Agent reads are now the gate rather than being excluded.
+2. A comprehension check by Sue (Human Narrative Lead) and a flow check by Kip (Product Experience Lead), consolidated by HedgrOps with the hostile read into one release verdict sorted into blocking and fix-later.
+3. A separate release ticket (not opened by this record) with the tester pool and a short protocol; the first question to participants is "what does Hedgr help with?", so the cold-read signal is still captured from the first fresh readers.
+
+**Knock-on:**
+- Both open cold-reader items are closed (no cold-reader list; the question of whether an internal cold read counts as participant exposure is moot).
+- Participant exposure starts at release under the release ticket.
+- In the Dynamic Stability Testing sequence, the Sarah/Daniel participant release replaces the Daniel cold read as the static-comprehension baseline; everything else in that sequence holds (the §302 review, then the ticket, then Lane E activation, then the build).
+- Release still waits on the gate verdict.
+- The research route stays unreleased.
+
+**Explicit non-authorisation:** This record does not open or activate a release ticket, occupy a nested Lane V ticket, change parent occupancy, amend doctrine or ADRs, or release the research route. **NO CROSS-LANE IMPACT.**
+
+## 340. Founder activation — nested Lane V Daniel research-route fix (`CLASS-A-VAL-002-RESEARCH-DANIEL-FIX-001`, 2026-10-05)
+
+**Date:** 2026-10-05
+
+**Founder approval to proceed:** Musalwa Hibajene, 5 Oct 2026 at 18:46 AWST — “you can proceed with the Daniel fix ticket”.
+
+**Scope chosen:** 5 Oct 2026 at 18:42 AWST via HedgrOps — three items only:
+1. **Facts-only split.** “What to watch” moves to the interpreted view only; locked Watch strings are **moved, not rewritten**.
+2. **Attribution + limits on facts.** The locked attribution + limits pair renders directly under the panel on the **facts** stage too (27 Sep LOCK COPY §4 / line 67).
+3. **Heading grammar.** Amend the §334 `{localFull}` After-heading lock to `{localFullSingular}` (singular with article), e.g. “After the kwacha weakened…”.
+
+**Status:** source-first nested Lane V activation under open parent `CLASS-A-VAL-002`. No D-number. `CLASS-A-VAL-002-RESEARCH-RESERVE-001` remains closed under §335; this is a **new** nested ticket (RESERVE-001 granted no standing refinement). Source merge and a separate verified permanent-main RAP rebind precede any runtime. The research route remains unreleased. No participant release, tester-pool or protocol work.
+
+**Heading-lock amendment (After heading only):** `{localFull}` remains in Daniel’s Held now row. `{localFullSingular}` = the kwacha / the Nigerian naira / the Kenyan shilling / the Ghanaian cedi / the Philippine peso is used in the After heading. Bare `{localPlural}` is used elsewhere. `{localSingular}` remains in After What to watch. Heading: “After {localFullSingular} weakened against the US dollar” (v=2: “strengthened”). Example renders: ZMW `After the kwacha weakened against the US dollar`; NGN `After the Nigerian naira weakened against the US dollar`; KES `After the Kenyan shilling weakened against the US dollar`; GHS `After the Ghanaian cedi weakened against the US dollar`; PHP `After the Philippine peso weakened against the US dollar`. This amendment is the disposition that resolves the release-bar 3(h) contradiction.
+
+**Structure restatement:** 27 Sep LOCK COPY §4 (facts view vs interpreted view) is now restated in-repo under the live §7a brief for this ticket. “facts → interpreted parity” means the same underlying scenario facts in both views; it does **not** mean the same panel including What to watch.
+
+**Explicit non-authorisation:** No runtime in this source. No participant release. No tester pool. No protocol doc. No cold-read revival. No Lane E/G, Green delegation, doctrine/ADR/`.cursorrules` change, or financial capability. **NO CROSS-LANE IMPACT.**
+
+## 341. Production ledger balance mode verified (§328 decision 1, 2026-10-05)
+
+**Date:** 2026-10-05
+
+**Founder action:** In the 5 Oct 2026 steward session, the Founder (Musalwa Hibajene) performed the §328 decision 1 action. The Founder changed `NEXT_PUBLIC_BALANCE_FROM_LEDGER` in the Vercel Production environment and redeployed, then reported “Production deployment has been done”. The Founder did not state whether the variable was removed or set to `true`; both satisfy §328. The shipped bundle reads the variable at runtime rather than inlining a value, which is consistent with removal.
+
+**Founder approval to record:** Musalwa Hibajene, 5 Oct 2026 (AWST), in the same session: “spin up a opus 5.5 orchestrator who will action the docs only record. The orchestrator should spin up a gpt 6.1 agent for verification review of the PR once the commit is done”.
+
+**Status:** docs-only record of a completed Founder-owned Production configuration action. No ticket is activated, closed or amended. This record does not change occupancy; live §7 / §7a remain the occupancy surface. The RAP permanent-main rebind for this source follows separately.
+
+**Deployment:** GitHub Production deployment `6856469933` for commit `82c5d3bf6cc8483bbc820217b240e006f243fc76` (#764, docs-only) received a second success status at 2026-10-05T10:42:22Z (Vercel URL `hedgr-copilot-frontend-f81zbwg0q-hedgr.vercel.app`). This matches the Founder's redeploy; the frontend runtime is unchanged from the prior Production build. The later automatic Production build of `bed0c96` (#767) also reads the variable at runtime (alias bundle checked 5 Oct 2026).
+
+**Verification (steward, public alias `https://hedgr-copilot-frontend.vercel.app`):**
+- **Bundle, before:** the `/dashboard` client bundle folded `getBalanceMode` to `return "wallet"` with `"false"` inlined.
+- **Bundle, after (~10:45 UTC):** the variable is no longer inlined; `getBalanceMode` evaluates at runtime and falls back to `ledger`.
+- **§327 probe (ledger $5, wallet $7):** Home shows **$5.00** at 390 × 844 and 1440 × 1024 (previously $7.00; `HOME_EXPERIENCE_QA.md` and §329).
+- **Closeout inspection re-run in ledger mode (10:48 UTC):** **82/82 checks passed** at 390 and 1440 px in fresh Chromium contexts, with mock sign-in and browser-local simulated entries only. No previous visit: Recent activity shown. One change: the one-sentence “One simulated withdrawal of $2.00 on 5 Oct took your position from $5.00 to $3.00.”, with Recent activity hidden. Several changes: the since list shown and Recent activity hidden. No change: “Nothing has changed since …” with Recent activity shown. Pending: ledger total $4.00 includes the pending deposit, and +$1.00 is listed. Journey Home control: $3.00, no Recent activity. Every case had no “Latest change” strip, no horizontal overflow and no page error.
+- **Harness disclosure:** the first two runs scored 73/80 and 78/80. Every failure was a harness fault: a last-visit seed race after login; a wrong pending expectation (the ledger total includes pending); and expecting a list where the one-change state renders a sentence. After the harness was fixed, the run passed 82/82. Evidence is kept locally and not committed; `HOME_EXPERIENCE_QA.md` records the table and file hashes.
+
+**Accepted side effect (§328):** a browser whose stored wallet balance lacks matching ledger entries now shows the ledger figure. The research route is unreleased, so exposure is limited. The flag remains the documented rollback. [Superseded §344, 5 Oct 2026: the flag is retired by `CLASS-A-VAL-002-STABILITY-LEDGER-ONLY-001`; rollback is a single revert of its runtime PR.] No wallet-mode CI job is adopted.
+
+**Limitations:** The exact Vercel change (deleted or set to `true`) was not stated by the Founder. No Vercel CLI or dashboard read was used; deployment identity comes from GitHub deployment statuses.
+
+**Effect:** none on doctrine, ADRs, `.cursorrules`, occupancy, sequencing or ticket scope. This record closes the §328 / §329 “ledger switch outstanding” note. It grants no participant release, financial capability or cross-lane authority. **NO CROSS-LANE IMPACT.**
+
+## 342. Daniel research-route fix technical closeout (`CLASS-A-VAL-002-RESEARCH-DANIEL-FIX-001`, 2026-10-05)
+
+**Founder approval:** 2026-10-05 at 18:46 AWST (“you can proceed with the Daniel fix ticket”), covering in-ticket sequence step 4 (this source-first closeout and the later separate permanent-main RAP rebind).
+
+**Delivery and provenance:**
+
+| Step | PR | Merge SHA | Verified head | Notes |
+| --- | --- | --- | --- | --- |
+| Source §340 | #767 | `bed0c96c6e9fa12cb367f255148f7b85b85d89be` | `2120db7…` (PASS WITH NOTES) | Activation + heading-lock amendment |
+| RAP rebind | #768 | `78d2049b967d714657937a6bc2b31f19ad3e2f5f` | `8e50076…` | Permanent-main rebind after §340 |
+| Runtime | #770 | `67cd46ff80a7d5127617b55d42489194f9e3b326` | `6e8ae07a75157ba085f6f1941feb93a70dbc92e2` | PASS WITH NOTES (OWNER `mhibajene`); attestation https://github.com/mhibajene/hedgr-copilot/pull/770#issuecomment-5994037879 |
+| Production | — | deploy `dpl_AttUa2EYcXDU4Dz5Mgz4XVxwS75x` of `67cd46f` | READY | Confirmed 2026-10-05 ~20:08 AWST |
+
+Every PR after an exact-head Verifier PASS under the §331 posture; no merge-before-verifier deviation occurred.
+
+**Intervening unrelated main (do not claim as this ticket):** #769 §341 ledger-mode record `1b8ba6f`; #771 RAP rebind `da100f1`. Runtime #770 was updated onto those before final verification.
+
+**Delivered (Founder-locked items (1)–(3)):**
+- **Facts-only split.** “What to watch” is on the interpreted view only; locked Watch strings were moved, not rewritten.
+- **Attribution + limits on facts.** The locked attribution + limits pair renders directly under the panel on the facts stage too.
+- **Heading grammar.** After heading uses `{localFullSingular}`; Held-now `{localFull}` is unchanged.
+
+**#770 Verifier notes (PASS WITH NOTES; recorded, not resolved by this closeout):**
+1. PR body still named pre-rebind head `c34789f` / base `#768` after branch updates — packaging/docs staleness only.
+2. `v=2` E2E asserts Watch absence on facts / strengthened After heading but does not click through to interpreted Watch for the strengthened twin (unit tests cover v2 heading tokens).
+3. Screenshot SHA-256s live in the PR body only (no QA markdown authorised under §7a for this ticket).
+
+Cold-reader / internal-cold-read items remain closed under §339 and are not reopened. The research route remains unreleased. No participant release follows. No nested Lane V successor is named.
+
+**Effect:** On permanent-main merge of this source-first completion record and a final separate verified projection-only RAP rebind, close only nested `CLASS-A-VAL-002-RESEARCH-DANIEL-FIX-001`. Parent `CLASS-A-VAL-002` stays open without an active nested successor. No participant release, Form, telemetry, financial capability, Lane E/G occupancy or Green delegation follows. **NO CROSS-LANE IMPACT.**
+
+## 343. Founder decision — D2 obligation-anchored progress as hypothesis only (`OPS-D2-DISPOSITION-001`, 2026-10-05)
+
+**Date:** 2026-10-05
+
+**Founder decision:** 21:00 AWST — option B (hypothesis only).
+
+**Founder approval to record:** Musalwa Hibajene, 5 Oct 2026 at 21:01 AWST (“you can record the D2 disposition”).
+
+**Status:** docs-only Founder-decision record. No ticket is activated. No D-number. Nothing is released. Occupancy remains parent `CLASS-A-VAL-002` and parent `SE-REASON-001` with no nested Lane V ticket. The RAP permanent-main rebind for this source follows separately.
+
+**Decision:** Record “obligation-anchored progress” (tracking savings against a specific future payment and keeping that relationship visible) as a research hypothesis / product-thesis candidate only. It is not product direction, not accepted capability, and not a claim Hedgr currently makes or builds.
+
+**No-claim fence (retained):** Participant-facing surfaces must not use “anchored to the obligation”, “progress relative to the USD obligation”, “what your money means relative to the obligation”, or paraphrase. Existing Holds that keep D2 out of research copy remain in force.
+
+**Evidence path (not activated):** Dynamic Stability Testing is the natural later evidence path; any such work must keep the no-claim fence. This record does not open that ticket, activate Lane E, amend the canonical story, or authorise Engine/Wallet/ledger work.
+
+**Knock-on:**
+- The open “Founder decision required” D2 lines in weekly reviews (and their AGENTS echoes of live §7) close by pointing to this §343 disposition.
+- D2 remains held out of copy; the research route stays unreleased.
+- No nested successor is named.
+
+**Explicit non-authorisation:** This record does not open or activate any ticket, occupy a nested Lane V or Lane E ticket, assign a D-number, change parent occupancy, amend doctrine or ADRs, revise the canonical story, or release the research route. **NO CROSS-LANE IMPACT.**
+
+## 344. Founder activation — nested Lane V wallet balance mode retirement (`CLASS-A-VAL-002-STABILITY-LEDGER-ONLY-001`, 2026-10-05)
+
+**Date:** 2026-10-05
+
+**Founder direction:** Musalwa Hibajene, 5 Oct 2026 (AWST), in session: “lets also fix the wallet vs ledgr configuration. I would recommend retiring the wallet configuration from production paths.”
+
+**Founder approval:** Musalwa Hibajene, 5 Oct 2026 (AWST), later in the same session: “approved to proceed”. This answers the steward proposal, which asked for approval of (a) the scope in the live §7a brief, (b) both §328 supersessions below, and (c) the full sequence: source-first activation → separate RAP rebind → runtime PR → exact-head independent Verifier → merge → Production probe → source-first closeout → separate RAP rebind.
+
+**Status:** source-first nested Lane V activation under open parent `CLASS-A-VAL-002`. Class A, synthetic. No D-number. Source merge and a separate verified permanent-main RAP rebind precede any runtime.
+
+**Foundation layer:** **Stability** under `docs/strategy/PHASE-SEQUENCING-2026-10-05.md`. Ledger becomes the only balance source, so the balance a user sees no longer depends on a build-time flag. This is not research polish and not Stability Engine spec work (which the Founder owns personally). It changes no Engine / `EngineState` and respects the dissemination hold.
+
+**Why:** Production has run ledger mode since §341 (82/82). The wallet branch is now dead code, and the configuration split (Production wallet mode, CI ledger only) let the §327 T3/T5 defect reach Production until #732. Retiring the branch removes that drift class.
+
+**Supersessions of §328 (Founder-approved):**
+1. §328 Decision 1 kept the flag as “a documented rollback”. Superseded: rollback is a **single revert** of the runtime PR, which meets AGENTS §4 (“flag or single revert”). §341's “The flag remains the documented rollback” is superseded on the same basis.
+2. §328 retained the #732 wallet-mode unit tests. Superseded: they are removed with the wallet branch.
+
+**Scope:** exactly the live §7a brief for this ticket (runtime allowlist, must-not-change list, known residuals, verification, stop/rollback).
+
+**Explicit non-authorisation:** No runtime in this source. No Vercel or other environment change (the Founder owns the Preview check). No ledger-maths, ledger storage, route or copy change. No Engine or Daniel-slice work, no legibility fixes, no participant release, no Lane E/G, Green delegation, doctrine/ADR/`.cursorrules` change, or financial capability. **NO CROSS-LANE IMPACT.**
+
+## 345. Wallet balance mode retirement technical closeout (`CLASS-A-VAL-002-STABILITY-LEDGER-ONLY-001`, 2026-10-05)
+
+**Founder approval:** Musalwa Hibajene, 5 Oct 2026 (AWST), “approved to proceed”. This covers the full sequence recorded in §344, including this source-first closeout and the later separate permanent-main RAP rebind.
+
+**Delivery and provenance:**
+
+| Step | PR | Merge SHA | Verified head | Verdict / attestation |
+| --- | --- | --- | --- | --- |
+| Source §344 | #777 | `0bba3d43991b3f7733998d0a48e2d6c7f1fe7670` | `fc72f378cca02a4ddb97f38a15ab240e5ce345b4` | PASS WITH NOTES; https://github.com/mhibajene/hedgr-copilot/pull/777#issuecomment-5996588507 |
+| RAP rebind | #778 | `1373e50bcb64fe3a47fdd138a33678afc528488b` | `7c8a55c6d357a3e12ee614f0ae7f1de301695a16` | PASS; https://github.com/mhibajene/hedgr-copilot/pull/778#issuecomment-5996807157 |
+| Runtime | #779 | `6b848e40537c902e8415f8a5fda4b9a963f38f4a` | `6adc1b696f74910adc39fd9a74d2ca1c8f9d8f1f` | PASS WITH NOTES; https://github.com/mhibajene/hedgr-copilot/pull/779#issuecomment-5997546750 |
+| Production | — | GitHub deployment `6863008500` of `6b848e4` | READY (success 2026-10-05T15:27:21Z) | Vercel URL `hedgr-copilot-frontend-knrow6v2q-hedgr.vercel.app` |
+
+Each Verifier was a distinct GPT-6.1 (`gpt-6.1-sol`) Codex session run with `codex exec`, separate from the Opus 5.5 orchestrator, and was briefed `READ_ONLY` except for one attestation. Every PR merged by auto-merge after an exact-head Verifier PASS and green required checks under the §331 posture; no merge-before-verifier deviation occurred. The visible MonoCode Verifier tab was not used because MonoCode app access was inactive in that thread; the brief's `codex exec` fallback was used instead.
+
+**Delivered (runtime #779):**
+- `balance.mode.ts` and the wallet store are deleted. Deletion was chosen over a ledger-only constant because every call site only branched on the mode.
+- `useBalance` always projects the ledger.
+- Deposit, Withdraw and the synthetic deposit lifecycle no longer credit or debit the wallet or write `hedgr:wallet`.
+- Home drops `resetWallet` and the wallet-only guard, keeping its ledger branch. The ledger agreement check predates #732 (from #729) and is retained.
+- A journey reset (clean start and Restart) removes any stale `hedgr:wallet` key.
+- `config/env.ts` drops the flag pass-through.
+- Tests: the #732 wallet-mode unit tests and wallet-store tests were removed. A new permanent hermetic e2e regression, `tests-e2e/ledger-only-balance.spec.ts`, checks that a settled $5 ledger entry plus a stale $7 wallet shows $5.00 on both Home routes.
+- Local validation: `validate` passed (928 frontend / 74 Bridge) and `e2e:ci` passed 139/139. Hosted `validate`, `E2E smoke (@hedgr/frontend)` and `hedgr/verifier` were green on the exact head.
+
+**Production probe (steward, public alias `https://hedgr-copilot-frontend.vercel.app`, 2026-10-05T15:28Z):**
+- **Bundle:** the deployed `/dashboard` chunk no longer contains the flag. Its only `hedgr:wallet` reference is the reset-time key removal.
+- **Method:** the §341 probe (`output/ledger-switch-20261005/probe.mjs`, local and untracked) was copied into `apps/frontend/.ledger-probe.mjs` with a local OUT path, run, and the copy deleted.
+- **Result: 82/82 passed.** The §327 probe (ledger $5, stale wallet $7) shows **$5.00** at 390 × 844 and 1440 × 1024. All closeout-inspection states match §341, with no “Latest change” strip, no overflow and no page error. Now that the wallet value is ignored by construction, this result no longer depends on Vercel configuration.
+- Evidence is kept locally and not committed (`results.json` SHA-256 `bc7d1e62a7f284f9c45c42448e134be455d8f0b85890eeaa631771f2e7d7d826`).
+
+**Verifier notes (recorded, not resolved by this closeout):**
+1. #777: the Verifier's local Bridge run hit missing-dependency module-load failures (49 pass, 3 load failures), so it did not reproduce the author's 74/74 locally. Hosted checks passed on the exact head.
+2. #779: the `HOME_EXPERIENCE_QA.md` §344 note points forward to the Production probe in this closeout. This record supplies that probe result.
+
+**Known residuals (unchanged, outside scope per §7a):** `env/templates/frontend.env.schema` still lists the flag with its rollback comment, and `docs/ops/mobile-native/HEDGR_PLATFORM_BOUNDARY_REGISTER.md` still lists `wallet.ts`. Neither has any runtime effect. The Founder-owned Vercel Preview check is not part of this record.
+
+**Effect:** On permanent-main merge of this source-first completion record and a final separate verified projection-only RAP rebind, close only nested `CLASS-A-VAL-002-STABILITY-LEDGER-ONLY-001`. Parent `CLASS-A-VAL-002` stays open without an active nested successor. Rollback remains a single revert of #779. No participant release, Engine change, legibility fix, Lane E/G occupancy, Green delegation or financial capability follows. **NO CROSS-LANE IMPACT.**
+
+## 346. Founder disposition — TDD standing build posture (`OPS-TDD-POSTURE-001`, 2026-10-06)
+
+**Date:** 2026-10-06
+
+**Founder disposition:** RETAIN — TDD (red → green → refactor) is the standing build posture for every future Engine and Home runtime §7a brief.
+
+**Founder approval to record:** Musalwa Hibajene (repo owner `mhibajene`), 6 Oct 2026 at ~06:34 AWST. Same-source amendment: 6 Oct 2026 at ~06:41 AWST, fold the smallest-durable-change-then-prove-the-real-result principle into this same S1 record.
+
+**Status:** docs-only Founder-decision record. No ticket is activated. No D-number. Occupancy remains parent `CLASS-A-VAL-002` and parent `SE-REASON-001` with no nested Lane V ticket. The RAP permanent-main rebind for this source follows separately. Required checks and branch protection are unchanged.
+
+**Decision:** Record the following as binding for every future Engine and Home runtime §7a brief:
+
+1. Every runtime §7a brief must name at least one test that fails before the change and passes after it. That test is an Acceptance Criterion, and its path is in the file allowlist. Use a Vitest contract for engine, balance and copy invariants. Use a hermetic Playwright case when the behaviour is user-visible on a route.
+2. The Implementer's first commit on a runtime PR is the failing test, unless the brief records an explicit Founder waiver.
+3. The independent Verifier confirms that the named tests exist, assert what the brief asks for, and pass in hosted CI on the exact head SHA. Verifier PASS remains an attestation gate and does not replace tests.
+4. Stability Engine slices use the three testable properties of "stable" in `docs/strategy/stability-engine-pack.md` as their test contract: same inputs give the same read; changing one input moves only the explained parts; an engine change moves nothing else unless deliberate.
+5. Any new Flask/backend surface in a ticket gets a pytest case in the same PR.
+6. Docs/authority PRs stay docs-first. Their checks are fixture/authority tests, not product TDD.
+7. Dynamic Stability Testing and the Lane E interpretation suites (IT-*) stay research-only and out of product CI until separately opened by the Founder.
+8. This disposition activates no ticket, launches no Implementer for runtime work, changes no occupancy, and changes no required checks or branch protection.
+
+**Same-record addition (~06:41 AWST):** Record “smallest durable change, then prove the real result” as a standing non-negotiable (HedgrOps pstack: laziness / subtract-before-add / prove-it-works). Make the smallest change that meets the brief. Prefer removing or reusing over adding new files, abstractions or surfaces. Prove the change against the real behaviour or artifact (a test, a hermetic run, a production probe where the brief names one), not just that it compiles or that CI is green.
+
+**Knock-on:**
+- `AGENTS.md` §7 Testing Standards carries the TDD binding rule. The existing "Behavior changes should ship with corresponding test updates unless explicitly waived" line remains; Engine/Home runtime briefs are tightened to named red→green tests.
+- `AGENTS.md` §4 Non-Negotiables and `.cursor/rules.md` carry the smallest-durable-change-then-prove principle.
+- Implementer and Verifier skills carry matching one-line TDD duties.
+- No nested successor is named.
+
+**Explicit non-authorisation:** This record does not open or activate any ticket, occupy a nested Lane V or Lane E ticket, assign a D-number, change parent occupancy, amend doctrine or ADRs, change required checks or branch protection, or launch runtime implementation. **NO CROSS-LANE IMPACT.**
+
+## 347. Founder decision — Stability Engine spec lock (`OPS-SE-SPEC-LOCK-001`, 2026-10-06)
+
+**Date:** 2026-10-06 (AWST)
+
+**Founder approval to record:** Musalwa Hibajene (repo owner `mhibajene`), 6 Oct 2026 (AWST), in session: “lets work on 2 and then 1. I believe the work spec was already updated so happy to lock that in.” This answers the steward recommendation to record a docs-only lock of the spec already written in `docs/strategy/stability-engine-pack.md` (Founder-reviewed refresh `9068f0f`), with the ledger-only residual tidy, using the §343 / §346 source-first and separate permanent-main RAP rebind pattern.
+
+**Status:** docs-only Founder-decision record. No ticket is activated. No D-number. Occupancy remains parent `CLASS-A-VAL-002` and parent `SE-REASON-001` open with no nested ticket. The permanent-main RAP rebind for this source follows separately.
+
+**Foundation layer:** **Stability** under `docs/strategy/PHASE-SEQUENCING-2026-10-05.md`. Spec ownership remains with the Founder.
+
+**Decision:** Lock the following existing spec text faithfully from the pack; this records the lock, not new spec content.
+
+### Definition of stable — locked
+
+> Same inputs, same read. When an input changes, only the parts of the read that input explains change. Nothing else changes unless the engine is deliberately changed.
+
+**Test contract:** The pack's three testable properties are already the standing test contract in §346, decision 4, and AGENTS §7. That existing contract is cross-referenced here without creating a new rule.
+
+### Two meanings — kept separate
+
+**Two meanings must not be blended.**
+
+- **Engineering determinism:** the engine's behavior doesn't change unless someone intends it to.
+- **Hedgr "stability":** about the user's capital (what holds for them when the world moves).
+
+### Implementation order — locked
+
+1. **Daniel first**
+2. **Sarah second**
+3. **SME held**
+
+### First thin vertical slice (Daniel) — locked, not activated
+
+**One saver, one currency pair, one user-declared holding** — the full path from input to read, nothing more.
+
+The holding is fixture input with stubbed FX and hermetic CI. Hedgr only reads it. Per ADR 0027 and doctrine (advisory, never directive), Hedgr does not recommend or run a hedge. **"Hedge" stays out of anything a user sees.**
+
+As the Daniel inventory seed states: “Hedgr only reads it; it does not recommend or run FX strategies”.
+
+### Language guard — locked
+
+Do not use "hedge" / "hedging" in participant-facing or product copy for this slice. Prefer **user-declared holding**, **dollar-linked portion**, or **read-only FX display**. Matches shipped Daniel limits ("Hedgr plays no part in it") and ADR 0027 / doctrine: advisory, never directive.
+
+**Residual tidy (§345):** Remove the retired `NEXT_PUBLIC_BALANCE_FROM_LEDGER=true` line and its two comments from `env/templates/frontend.env.schema`, and remove the deleted `apps/frontend/lib/state/wallet.ts` row from the current platform-boundary register. Neither residual has runtime effect. Rollback remains a single revert of #779 under §344 / §345.
+
+**Live surfaces:** §7 and the AGENTS live echo point to this decision. The pack changes only its Status line, definition lock label and lock pointer. Authority-test fixtures and the separately committed generated branch RAP follow the §346 / #782 pattern; a separate verified projection-only permanent-main RAP rebind follows source merge.
+
+**Explicit non-authorisation:** This record does not open or activate any ticket (including the Daniel slice), launch runtime, change occupancy, assign a D-number, amend doctrine, ADRs or `.cursorrules`, change required checks or branch protection, release the research route, or occupy Lane E/G. The Daniel slice still needs its own Founder activation and source-first §7/§7a brief. **NO CROSS-LANE IMPACT.**
+
+## 348. Founder activation — Home review-memory crash fix (`CLASS-A-VAL-002-STABILITY-REVIEW-MEMORY-001`, 2026-10-06)
+
+**Founder activation — Home review-memory crash fix (2026-10-06; §348):** Founder Musalwa Hibajene accepted the corrected inventory as evidence and approved crash fix first, then the later Daniel slice brief. Activate only `CLASS-A-VAL-002-STABILITY-REVIEW-MEMORY-001` as the sole nested Lane V ticket under open parent `CLASS-A-VAL-002` (Stability, Class A informational/synthetic, Green classification only; no standing delegation). Invalid, missing or corrupt saved review-memory entries are ignored at the read boundary, never rendered as prior changed/unchanged memory. Source merge and a separate verified permanent-main RAP rebind precede runtime. The first runtime commit contains only failing reproducing tests under §346; a later commit supplies the smallest fix. Runtime exact-head verification, post-runtime RAP rebind, exact-revision READY Production probe, source-first closeout and final separate verified RAP rebind are required. No Daniel activation/build, Engine logic, posture/notices, copy/routes, other drift items, Lane E/G or research release follows. **NO CROSS-LANE IMPACT.**
+
+**Controlling brief:** Live §7a above contains exact allowed files, named red-to-green acceptance, exclusions, stop/rollback and all source/RAP/runtime/Production/closeout gates. The Founder-approved inventory is evidence only. This record activates no Daniel slice or later brief and changes no locked pack, doctrine, ADR or standing delegation.
+
+## 349. Home review-memory crash fix technical closeout (`CLASS-A-VAL-002-STABILITY-REVIEW-MEMORY-001`, 2026-10-06)
+
+**Founder authority:** Full bounded sequence approved on 6 Oct 2026 under §348, including ordinary automatic frontend Production deployments, the bounded Production probe, this source-first closeout and its later separate verified permanent-main RAP rebind. No routine repeat permission is needed.
+
+**Delivery / independent exact-head evidence:**
+- source: [#786](https://github.com/mhibajene/hedgr-copilot/pull/786), merged `cda4cce71ed948c4592a7c04ad70b99907228021` from independently reviewed head `f0c1f8b32dc633dd53b773da248ca3244f2d4d40`; [PASS attestation](https://github.com/mhibajene/hedgr-copilot/pull/786#issuecomment-6014800157) posted 2026-10-06T10:59:40Z, before merge 2026-10-06T11:00:14Z.
+- pre-runtime-rebind: [#787](https://github.com/mhibajene/hedgr-copilot/pull/787), merged `a770d5ed8893ed4808b0cd8cd272534b42e36c49` from independently reviewed head `b31e887d09ab42c3bc06cbb07e594dc7d48a20e7`; [PASS attestation](https://github.com/mhibajene/hedgr-copilot/pull/787#issuecomment-6014912112) posted 2026-10-06T11:07:05Z, before merge 2026-10-06T11:07:56Z.
+- runtime: [#788](https://github.com/mhibajene/hedgr-copilot/pull/788), merged `aab2cfdb6f8de0f5d717995588eca065510c28f6` from independently reviewed head `173ef6b1f3e6beff7ecb784fbd215059bf89b855`; [PASS attestation](https://github.com/mhibajene/hedgr-copilot/pull/788#issuecomment-6015152906) posted 2026-10-06T11:20:29Z, before merge 2026-10-06T11:20:53Z.
+- post-runtime-rebind: [#789](https://github.com/mhibajene/hedgr-copilot/pull/789), merged `0c28bae89b021094cd33cef842d2e6a8ac32d6c1` from independently reviewed head `63eb53f790f03afa8fc6b20a14b0e61fefc73441`; [PASS attestation](https://github.com/mhibajene/hedgr-copilot/pull/789#issuecomment-6015277124) posted 2026-10-06T11:28:08Z, before merge 2026-10-06T11:28:44Z.
+
+Every PR merged after a distinct independent GPT-6.1 Sol high Verifier PASS and successful exact-head `hedgr/verifier` readback with required validate/E2E green. No author/coordinator attestation, protection bypass or merge-before-verifier deviation occurred. Runtime started only after the source and separate permanent-main rebind merged and `bridge:rap:check` passed.
+
+**Runtime / TDD:** First runtime commit `6cff9cfb0559d69b4b7e7b299046644331281e90` contains only reproducing tests; focused red was 4 failed / 20 passed, with actual Home review component `RangeError: Invalid time value`. Test-only `cd62215e4e4902e75ddb70912d0536bad9783151` corrected a nested-summary browser selector before any runtime change; corrected browser red was 1 failed / 4 passed, the invalid-date case reaching Next's client-side exception page. The initial browser run's additional selector timeouts were test-harness errors, not extra product defects. Later `173ef6b1f3e6beff7ecb784fbd215059bf89b855` adds only `Number.isFinite(Date.parse(o.viewedAt))` to the existing memory entry guard. Focused green 53/53, full validate (937 frontend tests, Bridge/provenance, trust, RAP, typecheck/lint) and full local frontend `e2e:ci` 144/144 passed. The test-first commits remained separate for independent review; normal final PR squash retained the reviewed tree.
+
+**Production evidence:** GitHub deployment `6882739747` of exact post-runtime RAP merge `0c28bae89b021094cd33cef842d2e6a8ac32d6c1` succeeded at 2026-10-06T11:29:44Z; deployment URL https://hedgr-copilot-frontend-hbsd2rmlb-hedgr.vercel.app. Vercel read-only alias records before and after the probe bind the public alias to READY deployment `dpl_6tnL6Ha7ySdRPqrq4hpnJCFUBK6w` at this exact SHA. Public-alias `/dashboard` probe on 2026-10-06T11:30:37.082Z passed 12/12 in isolated browser contexts at 390/1440 px: invalid date, missing memory, malformed entry, corrupt JSON, valid saved control and invalid row with a prior fingerprint. No page errors. Rejected rows produce no plausible history/changed/unchanged memory; valid control remains visible. The prior-fingerprint case retains one valid current-visit row and removes rejected history. Only same-origin requests were allowed; no Production configuration was changed. Retained JSON, screenshots, logs, PR descriptions and verifier outputs are under `output/home-review-memory-crash-20261006/` in the preserved original checkout.
+
+**Scope:** Only the §348 four runtime/test paths changed. Valid parseable entry behaviour, stored ordering/cap, fingerprint comparison, visit/reset behaviour, Engine/EngineState, posture, notices, copy/routes and all other drift items are unchanged. No dependency, abstraction or storage/clock architecture. The locked pack and §347 are unchanged. The original checkout and all unrelated artifacts/worktrees were preserved.
+
+**Effect / remaining gate:** On this source closeout's permanent-main merge and its separate independently verified projection-only RAP rebind, close only this nested ticket and restore no active nested Lane V. Both parents remain open; Lane E has no nested ticket, G is deferred, Green is classification only and research remains unreleased. No automatic successor, Daniel activation/build/brief, other drift fix, release, financial or cross-lane authority follows. Rollback remains one revert of runtime #788. **NO CROSS-LANE IMPACT.**
+
+## 350. Founder activation — Daniel thin vertical slice (`CLASS-A-VAL-002-STABILITY-DANIEL-SLICE-001`, 2026-10-06)
+
+**Founder activation — Daniel thin vertical slice (2026-10-06; §350):** Founder Musalwa Hibajene (repo owner `mhibajene`) directly approved activation and implementation on 6 Oct 2026 (AWST). Activate only `CLASS-A-VAL-002-STABILITY-DANIEL-SLICE-001` as the sole nested Lane V ticket under open parent `CLASS-A-VAL-002` (Stability layer, Class A informational/synthetic, Green classification only; no standing delegation). One pure deterministic Engine function computes a separate `DanielRead` from one user-declared USD holding, disclosed fixture ZMW/USD rate, explicit `asOf` and Engine version. RETAIN ZMW 27/USD; reuse BigInt cents and the non-negative half-cent-up rule with fixed `en-US`. Daniel's K17,500 local portion is out. The engine owns the golden fixture. §350 records three explicit additions to §347; the locked pack remains untouched. Source merge and a separate independently verified permanent-main RAP rebind precede test-only red-first runtime under §346. No Home/route surface, EngineState/posture/notices change, live FX, Sarah/SME, other drift, Lane E/G or research release follows. **NO CROSS-LANE IMPACT.**
+
+**Founder instruction / answers:** Musalwa Hibajene, 6 Oct 2026 (AWST), after the next-ticket recommendation: “spin up an gpt 6.1 high agent to activate the ticket and a opus 5.5 Medium agent to implement the ticket in a new worktree.” Direct activation and implementation approval, with source-first gates retained. The Founder accepted (1) reuse of BigInt cents plus the non-negative half-cent-up rule from `simulation-currency-insight.ts`, fixed `en-US`; (2) exactly one user-declared USD holding, excluding Daniel's local K17,500 portion; (3) an engine-owned golden fixture. The named disclosed ZMW 27/USD fixture rate is RETAINed, reproducing USD 800 → K21,600, 29.5 → K23,600 and 24.5 → K19,600; the app's existing ZMW 20 table is unchanged.
+
+**Explicit amendment to §347 — three additions (Founder-approved, recorded here only):** §347 locked only the pack at Founder-reviewed `9068f0f`. Preserve that locked pack unchanged; this record adds these controlling Daniel-slice requirements:
+1. **One authoritative computation path:** exactly one function computes the read; no caller recomputes any part.
+2. **Independence:** the read depends only on declared holding, fixture rate, explicit `asOf` and Engine version; not storage, clock, display preference, explanation/copy layer or display metadata.
+3. **Declared amount semantics:** user-declared, USD-denominated, read-only; not custody, balance, settled amount or verified wealth (ADR 0027 decision 3; ADR 0013).
+
+**Other explicit Founder decisions:** Canonical computed Engine fields define the read; Home is presentation with its own tests, with no Home/route surface in this ticket. Use a separate `DanielRead` type, not an `EngineState` extension; this supersedes the 5 Oct feed-EngineState direction for this slice only. `EngineState` may be read-only context. No new posture; existing `EnginePosture` may be read-only context or omitted, never given a second meaning. Storage and clock are not inputs; time (`asOf`) is explicit. Engineering determinism and capital stability remain separate meanings; §346's three-property test contract remains binding.
+
+**Predecessor / legibility:** §349 is complete after source closeout [#790](https://github.com/mhibajene/hedgr-copilot/pull/790) (`83764b68db823e6082bd05fa0ca4867e179a9513`) and final separate verified RAP [#791](https://github.com/mhibajene/hedgr-copilot/pull/791) (`a4355a79c736dbf4b4d9517375734a7c5159d8bf`). The §7a header's future-tense closeout lag is explicitly tidied. That closeout supplied no successor authority; this separate Founder activation names the sole new nested ticket.
+
+**Controlling brief / effect:** Live §7a contains the exact source/runtime/test file allowlists, named red→green tests, exclusions, stop/rollback and all gates. Source permanent-main merge plus its separate independently verified projection-only RAP rebind precede runtime. No D-number, locked-pack edit, doctrine/ADR amendment, broader Engine acceptance, Lane E/G work, research release, financial capability or standing delegation. Only this nested ticket may later close; both parents stay open. **NO CROSS-LANE IMPACT.**
+
+## 351. Daniel thin vertical slice technical closeout (`CLASS-A-VAL-002-STABILITY-DANIEL-SLICE-001`, 2026-10-07)
+
+**Founder authority:** Full bounded sequence approved on 6 Oct 2026 under §350, including ordinary automatic frontend deployments, this source-first closeout and its later separate verified permanent-main RAP rebind. On 7 Oct 2026 (AWST) the Founder relayed HedgrOps review, then chose option A after the independent Verifier FAIL described below. No routine repeat permission is needed.
+
+**Delivery / independent exact-head evidence:**
+- source: [#792](https://github.com/mhibajene/hedgr-copilot/pull/792), merged `026d89ea298abeece0813cc8ac8fe251327ebdd7` from independently reviewed head `0708d855d76edab7ff4b256683ca917d6087052e`; PASS and successful `hedgr/verifier` before merge.
+- pre-runtime-rebind: [#793](https://github.com/mhibajene/hedgr-copilot/pull/793), merged `cc09d92feebce0892f0200350acb40ef43b4bae2` from independently reviewed head `e058bc9acc24553653418a06d05779545cc865eb`; its own distinct PASS and successful `hedgr/verifier` before merge.
+- runtime: [#794](https://github.com/mhibajene/hedgr-copilot/pull/794), merged `fa69b8a823bec3049007ef6c3cc3a231c57b81f8` from independently reviewed head `bf9904d08681cc79f80bb3314158c50c569e88dd`; [PASS attestation](https://github.com/mhibajene/hedgr-copilot/pull/794#issuecomment-6027638601) posted 2026-10-06T23:49:28Z, `hedgr/verifier` success 23:49:35Z, before merge 23:49:44Z. Merged tree equals the reviewed head tree.
+
+Runtime started only after the source and separate permanent-main rebind merged and `bridge:rap:check` passed on `cc09d92`. Every PR merged after a distinct independent GPT-6.1 Sol high Verifier PASS on its exact head with required validate/E2E green. No author/coordinator attestation, protection bypass or merge-before-verifier deviation occurred.
+
+**Runtime / TDD:** First runtime commit `93653ca` contains only the eight named §7a tests and the literal engine-owned golden grid; red on unchanged runtime (module absent, suite cannot load). `425361e` adds only `apps/frontend/lib/engine/daniel-read.ts` (8/8 green). HedgrOps review then requested a numeric canonical `localAmountZmw`, with a stop instruction if §7a's named outputs did not allow it; it was built red-first (`e393d83`, 7 failed / 3 passed) and green (`d10e538`). An independent Verifier posted [FAIL](https://github.com/mhibajene/hedgr-copilot/pull/794#issuecomment-6027389096) on `d10e538`: B1 the extra numeric field widened §7a AC2 ("only the local display field and what-changed explanation move"); B2 `Number(cents)/100` could lose a cent within the guard; B3 a non-string `asOf` passed `Date.parse`. The Founder chose option A: `f6dbe4d` reverts both revision commits (tree equals `425361e`; B2 no longer applies), test-only `43a8b33` reproduces B3 (1 failed / 8 passed), and `bf9904d` adds only a `typeof asOf` check to the existing guard (9/9 green). A distinct second Verifier PASSed `bf9904d`. Final-head local `pnpm run validate` passed (946 frontend tests) and frontend `e2e:ci` 144/144; hosted validate and E2E passed on the exact head.
+
+**Read:** USD 800 at the disclosed ZMW 27/USD fixture → K21,600; 29.5 → K23,600; 24.5 → K19,600; USD 1,000 at 27 → K27,000 (golden holding control). Decimal BigInt cents with the non-negative half-cent-up rule and fixed `en-US`. Inputs are the declared USD holding, fixture rate and explicit `asOf`; the Engine version is a module constant carried in the read. Invalid inputs throw `RangeError` with no read. No clock, storage, display preference or display metadata input.
+
+**Deferred:** The numeric canonical local amount (HedgrOps revision) is the first item for the next slice and needs its own source authority covering §7a AC2-style named outputs and exact-cent numeric conversion.
+
+**Production evidence:** `bridge:rap:check` passed unchanged on `fa69b8a` (projection still bound to source `026d89e`), so no post-runtime RAP rebind was required. GitHub Production deployment `6898015615` of exact `fa69b8a823bec3049007ef6c3cc3a231c57b81f8` succeeded at 2026-10-06T23:50:32Z (https://hedgr-copilot-frontend-1oqkn9qfg-hedgr.vercel.app). No Production probe: the ticket adds no user-visible surface. Evidence is retained under `output/daniel-slice-20261006/` in the preserved original checkout.
+
+**Scope:** Only the three §7a runtime/test paths changed. No Home/route surface, `EngineState`, posture, notices, `scenario-fixtures.ts`, app FX table, live FX, local portion, dependency, locked-pack, doctrine or ADR change.
+
+**Effect / remaining gate:** On this source closeout's permanent-main merge and its separate independently verified projection-only RAP rebind, close only this nested ticket and restore no active nested Lane V. Both parents remain open; Lane E has no nested ticket, G is deferred, Green is classification only and research remains unreleased. No automatic successor, Sarah/SME, other drift fix, release, financial or cross-lane authority follows. Rollback remains one revert of runtime #794. **NO CROSS-LANE IMPACT.**
+
+## 352. Founder disposition — Engineering Operator registration (`OPS-ENGINEERING-OPERATOR-001`, 2026-10-08)
+
+**Date:** 2026-10-08 (AWST)
+
+**Founder decision:** Musalwa Hibajene (repo owner `mhibajene`), 8 Oct 2026 at 19:45 AWST: register Dex as **Engineering Operator** (not Coordinator, not Synthesizer), with scope covering operational awareness, execution planning, delegation, coordination, operational hygiene and escalation; `READ_ONLY` by default and `ACT_WITH_CONFIRMATION` for bounded engineering operations.
+
+**Founder approval to record:** Musalwa Hibajene, 8 Oct 2026 at 19:56 AWST: “Founder disposition: APPROVED — proceed with the bounded registration lifecycle.”
+
+**Status:** docs-only Founder-decision record, following the §346 / §347 finite-record pattern. No ticket is activated. No D-number. Occupancy is unchanged: parents `CLASS-A-VAL-002` and `SE-REASON-001` remain open with no nested ticket. The permanent-main RAP rebind for this source follows separately; the registration is effective only after that rebind is independently verified and merged.
+
+**Registration:** AGENTS §9.11 Engineering Operator is registered as an institutional capability with an `AGENTS.md inline` contract. Dex, a persistent agent in the MonoCode environment, is its operating instance (Dex (§9.11)). MonoCode is an operating environment, not an authority surface. Registration establishes identity and boundaries only (AGENTS §9 Role Registration Contract); the delegation below is granted by this Founder record, not by registration.
+
+**Initial authorisation vs routine coordination:** The initial authorisation of an objective is Founder-only and must be recorded repo-natively (an active §7 / §7a ticket or appropriate Founder record). Once an objective is so authorised, Dex may coordinate implementation and review sessions within that scope without repeated Founder approval for routine delegation, unless the active brief sets a stricter gate. Routine delegation includes session routing, bounded worktree allocation, coordinating implementers and initiating independent verification through established mechanisms. Dex cannot expand the authorised objective, activate new tickets or bypass existing gates; any step beyond the authorised scope escalates to the Founder.
+
+**Operating model:** Founder → Dex (Engineering Operator) → Implementers / Orchestrators → Independent Verification; Barry oversees stewardship. Dex is the Founder's primary Engineering Operator within MonoCode, especially in focused development sessions. The Founder retains strategy and activation. Barry remains Repo Steward for governance records and PR mechanics. HedgrOps retains its existing institutional responsibilities. Implementers deliver bounded implementation; independent Verifiers alone issue attestations. Dex complements these roles and creates no new governance or approval layer.
+
+**Boundaries:** Dex may not activate, select or prioritise tickets, expand approved scope, modify product strategy, doctrine or governance, edit repository content, open or merge PRs, arm auto-merge, alter repository settings or protections, bypass verification or other gates, post `Hedgr-Verifier:` attestations, or assume authority over Repo Steward, HedgrOps, Implementers or Verifiers.
+
+**Explicit non-authorisation:** This record activates no ticket or development work, changes no occupancy, assigns no D-number, creates no Green delegation envelope (§6g / ADR 0025), amends no doctrine, ADR or `.cursorrules`, changes no test fixtures, verifier requirements, ticket-activation rules, required checks or branch protection, and releases nothing. TDD §346 does not apply (docs/authority record). **NO CROSS-LANE IMPACT.**
+
+## 353. Founder disposition — numbered-record contiguity and placement (`B-P2-min`, 2026-10-08)
+
+**Date:** 2026-10-08 (AWST)
+
+**Founder approval to record:** Musalwa Hibajene (repo owner `mhibajene`), 8 Oct 2026 at ~21:59 AWST: “B-P2-min — APPROVED, sequentially after P0. Bounded, verbatim relocation of embedded §323–§352 into one contiguous numbered-record region. Adopt ascending record placement at EOF for future records. Preserve every record's content, historical references and evidence. Require hash, line-multiset, RAP and independent-verification checks. Use the minimum new finite authority record required. Do not modify active occupancy or execution boundaries.”
+
+**Status:** docs-only Founder-decision record, following the §346 / §347 / §352 finite-record pattern. No ticket is activated. No D-number. Occupancy is unchanged. The permanent-main RAP rebind for this source follows separately.
+
+**Relocation:** Records §323–§352 had been inserted newest-first inside §7a. They now follow §322 in ascending order. Each record is byte-identical to its prior text; only its position changed. §7a now runs contiguously from its heading to `## 8.`. Git history keeps the prior layout. §52's earlier placement between §44 and §45 is outside this relocation and is unchanged.
+
+**Placement convention:** Each new numbered record, starting with this one, is appended at the end of this file after the highest-numbered record. Numbered records are not inserted inside §7 or §7a.
+
+**Check:** `apps/bridge-worker/tests/status-record-order.test.mjs` fails if a numbered record appears inside §7 or §7a, if records after `## 8.` are not in ascending order, or if a record number repeats. TDD §346 item 6 applies: this is a docs/authority change checked by an authority test, not product TDD.
+
+**Explicit non-authorisation:** This record activates no ticket or development work and changes no occupancy, §7 or §7a text, execution boundary, existing test or fixture, verifier requirement, required check or branch protection. It changes no RAP materiality rule, adds no rebind automation and keeps Fork 2 inactive. It amends no doctrine, ADR, `AGENTS.md` or `.cursorrules`. Every `BRIDGE-MCP-001` record and its unresolved holds are unchanged. **NO CROSS-LANE IMPACT.**
