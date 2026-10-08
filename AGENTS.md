@@ -15,6 +15,93 @@ Last updated: 2026-10-08
 5. Satisfying merge gates authorises repository merge only. It does not widen the originating ticket authority or imply launch/release approval.
 6. Once all required gates are satisfied, automated merge is permitted and preferred where supported.
 
+<!-- BEGIN OPERATING CARD -->
+## Operating card (non-authoritative index)
+
+This card is a non-authoritative index for tools that load only the start of this file. Each bullet is quoted verbatim from the AGENTS.md section named in the bold line above it. The card adds and changes no rule: the rest of this file, including the Standing PR invariant above and the numbered sections below, remains the binding text, and if a quoted line ever differs from its source, the source controls.
+
+**2) Authority model**
+- Founder — direction, prioritization, approval
+- Repo authority — `docs/ops/HEDGR_STATUS.md`, accepted ADRs, `AGENTS.md`, repo-native doctrine, governance standards.
+- Project Ops / `docs/ops` — governance framing, review traceability, bounded critique and refinement artifacts
+- Cursor — primary repo execution surface
+- Codex — bounded secondary operator for exploration, reconstruction, verification, testing, and explicitly approved implementation support only
+- Agents must not override higher authority for convenience.
+- Draft branches, unmerged PRs, review evidence, RAP projections and Bridge responses cannot independently activate work or establish accepted decision history.
+
+**1) Purpose**
+- For doctrine, architecture, product/system invariants, and anti-drift rules, `.cursorrules` remains governing authority.
+
+**12) Context provenance rule**
+- If memory conflicts with repo authority or current artifacts, memory loses automatically.
+
+**10) Execution modes and action controls**
+- Default: `READ_ONLY`
+- No side-effecting or persistent action should occur without explicit declaration and approval.
+
+**Ticket sequencing / governed parallelism (deny-by-default)**
+- The default posture is one active implementation ticket.
+
+**8) Execution Rules**
+- Do not widen scope beyond the stated task.
+- Do not silently modify unrelated files.
+
+**4) Non-Negotiables**
+- CI/E2E must remain hermetic: no live external calls.
+- Rollback must be possible via flag or single revert.
+- Do not treat memory, inferred continuity, or connected tools as approval authority.
+
+**Green Lane operator rules (ADR 0025 / §6g)**
+- **Binding:** Green Lane classification does not activate work and does not override `HEDGR_STATUS.md` `§7` / `§7a`. HedgrOps briefs are not executable tickets. Class A is not automatically Green.
+
+**7) Testing Standards**
+- No test depends on external services (CoinGecko, MTN, Aave, OpenAI, Magic).
+- every future Engine and Home runtime brief must name at least one test that fails before the change and passes after it.
+
+**Validation commands**
+- `pnpm run validate` — all of the above plus trust checks
+
+**9) Registered agent roles**
+- Agents must declare the role they are operating under for meaningful tasks.
+- Registration establishes role identity and boundaries only. It does not activate work, select tickets, widen execution authority, create Green delegation, or override `HEDGR_STATUS.md §7 / §7a`, ADRs, doctrine or Founder authority.
+
+**9.1 Implementer**
+- Execution mode: `PROPOSE_ONLY` by default; `ACT_WITH_CONFIRMATION` only when explicitly authorised.
+- Must not:
+  - infer approval from memory or prior conversations
+
+**9.2 Verifier**
+- Execution mode: `READ_ONLY`.
+- Must not:
+  - present critique as approval
+
+**9.3 Repo Steward**
+- Execution mode: `PROPOSE_ONLY` by default; `ACT_WITH_CONFIRMATION` only when explicitly authorised.
+- Must not:
+  - create new policy by summary
+
+**9.11 Engineering Operator**
+- Execution mode: `READ_ONLY` by default; `ACT_WITH_CONFIRMATION` only for bounded engineering operations within an explicitly authorised scope.
+- Must not:
+  - activate, select or prioritise tickets; expand the authorised objective; modify product strategy, doctrine or governance
+  - post `Hedgr-Verifier:` attestations or present coordination as verification
+
+**13) Conflict handling rule**
+- Agents must not reconcile conflicting sources by inference.
+
+**15) Escalation rules**
+- Agents must stop and escalate if:
+  - ADR conflict is detected
+  - required context is missing
+  - multiple valid implementation paths materially differ
+  - the requested change impacts system architecture, trust posture, or governance posture
+  - the task would create a new authority surface
+  - the task would require persistent or external action without declared approval
+
+**14) Required output contract**
+- All agent outputs are non-authoritative by default unless and until absorbed into the governed repo chain under the applicable authority.
+<!-- END OPERATING CARD -->
+
 **Founder disposition — PR Posture execution refinement (2026-09-29; §331):** The Founder approved ready-stage auto-merge arming, owner-account branch updates followed by fresh independent verification whenever the head changes, and one bounded exception to the §9.2 Verifier `READ_ONLY` mode: the independent Verifier may post exactly one `Hedgr-Verifier:` attestation comment, in the exact runbook format, on the PR under review for the head SHA it reviewed, only when its brief expressly permits it and only after re-reading the current head immediately before posting; it may not push, commit, label, mark ready, arm auto-merge, merge or post any other comment. Implementing and coordinating agents never post attestations. The Founder added `validate` to main's required checks on 2026-09-29, so `main` now requires `validate`, `E2E smoke (@hedgr/frontend)` and `hedgr/verifier` on an up-to-date head with admin enforcement. Operating procedure: [docs/ops/runbook.md](docs/ops/runbook.md) → **PR Posture**; record: `HEDGR_STATUS.md` §331. This refines the procedure without weakening the standing invariant. Any harness permission rule remains a Founder-owned action. **NO CROSS-LANE IMPACT.**
 
 **Founder disposition — Engineering Operator registration (2026-10-08; §352):** Founder Musalwa Hibajene (repo owner `mhibajene`) decided on 8 Oct 2026 at 19:45 AWST to register the Engineering Operator role and approved the bounded registration at 19:56 AWST. Finite docs-only record `OPS-ENGINEERING-OPERATOR-001` / §352 adds §9.11 Engineering Operator (`READ_ONLY` by default; `ACT_WITH_CONFIRMATION` only for bounded engineering operations within an explicitly authorised scope) and names Dex, a persistent agent in the MonoCode environment, as its operating instance. The initial authorisation of any objective remains Founder-only and repo-natively recorded; routine coordination inside that scope needs no further per-delegation approval unless the active brief sets a stricter gate. Dex cannot activate tickets, expand scope, modify governance, bypass gates, merge PRs, alter protections or post attestations. Activates no ticket or development work; occupancy unchanged; no D-number, Green delegation envelope, doctrine/ADR, required-check or protection change. Effective after the separate verified permanent-main RAP rebind. **NO CROSS-LANE IMPACT.**
