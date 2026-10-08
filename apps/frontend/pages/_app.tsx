@@ -4,10 +4,8 @@ import { useEffect } from 'react'
 import type { FC } from 'react'
 // import { initAnalytics } from '../lib/analytics'
 import '../styles/globals.css'
-import { Inter } from 'next/font/google'
 import dynamic from "next/dynamic";
 
-const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
 const DevSecretsToast = dynamic(() => import('../components/DevSecretsToast'), { ssr: false })
 
 export default function App({ Component, pageProps }: AppProps) {
