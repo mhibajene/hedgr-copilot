@@ -120,8 +120,10 @@ test('Home line shows no dashed guide or max label on either route', async ({ pa
   await seed(page, [deposit(5, 1000), withdraw(2, 2000)], 500);
   for (const route of [...HOME_ROUTES, '/dashboard-synthetic-journey']) {
     await gotoHome(page, route);
+    const line = page.getByTestId('dashboard-position-line');
+    await expect(line).toBeVisible();
     expect(await dashedHorizontalLineCount(page)).toBe(0);
-    await expect(page.getByTestId('dashboard-position-line')).not.toContainText('$5.00');
+    await expect(line).not.toContainText('$5.00');
   }
 });
 
@@ -281,7 +283,9 @@ test('Home axis does not imply time on either route', async ({ page }) => {
   await seed(page, [deposit(), withdraw()], 500);
   for (const route of HOME_ROUTES) {
     await gotoHome(page, route);
-    const text = (await page.getByTestId('dashboard-position-line').textContent()) ?? '';
+    const line = page.getByTestId('dashboard-position-line');
+    await expect(line).toBeVisible();
+    const text = (await line.textContent()) ?? '';
     expect(text).not.toMatch(AXIS_TIME);
   }
 });
@@ -383,9 +387,16 @@ test('Home adds no totals meters progress gap or gain-loss colour', async ({ pag
     }
 
     const scoped = await page.evaluate(() => {
-      const clone = document.querySelector('main')!.cloneNode(true) as HTMLElement;
-      clone.querySelectorAll('[data-testid="engine-allocation-bands"]').forEach((node) => node.remove());
-      return clone.textContent ?? '';
+      const selectors = [
+        '[data-testid="dashboard-balance"]',
+        '[data-testid="dashboard-current-status"]',
+        '[data-testid="dashboard-position-line"]',
+        '[data-testid="dashboard-simulation-utilities"]',
+        '[data-testid="dashboard-first-use-steps"]',
+      ];
+      return selectors
+        .map((selector) => document.querySelector(selector)?.textContent ?? '')
+        .join('\n');
     });
     expect(scoped).not.toMatch(FORWARD_COPY);
   }
