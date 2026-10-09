@@ -7,7 +7,9 @@ import { TrustDisclosureBanner } from '../components/TrustDisclosureBanner';
 import {
   SIMULATION_DISPLAY_CURRENCY_KEY as key,
   SIMULATION_DISPLAY_CURRENCIES,
+  SIMULATION_DISPLAY_ESTIMATE_CAPTION,
   formatSimulationDisplayEstimate,
+  formatSimulationDisplayFigure,
   getSimulationDisplayCurrency,
   setSimulationDisplayCurrency,
 } from '../lib/state/simulation-display-currency';
@@ -22,6 +24,8 @@ describe('isolated synthetic display preference', () => {
   it.each([
     ['ZMW', '60.00'], ['KES', '390.00'], ['NGN', '4,500.00'], ['GHS', '45.00'], ['PHP', '168.00'],
   ] as const)('formats the approved non-zero %s fixture', (currency, amount) => {
+    expect(formatSimulationDisplayFigure(3, currency)).toBe(`≈ ${currency} ${amount}`);
+    expect(SIMULATION_DISPLAY_ESTIMATE_CAPTION).toBe('display estimate');
     expect(formatSimulationDisplayEstimate(3, currency)).toBe(`≈ ${currency} ${amount} display estimate`);
   });
 

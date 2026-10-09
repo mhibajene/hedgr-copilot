@@ -453,7 +453,7 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   await expect(firstEventHome.getByTestId('engine-posture-context')).toHaveText(
     /^One simulated deposit of \$5\.00 on \d{1,2} (?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) took your position from \$0\.00 to \$5\.00\.$/
   );
-  await expect(firstEventHome.getByTestId('dashboard-change-chip')).toHaveText(/^↑\$5\.00 since \d{1,2} (?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)$/);
+  await expect(firstEventHome.getByTestId('dashboard-change-chip')).toHaveCount(0);
   await expect(firstEventHome.getByText('Does anything need attention?')).toHaveCount(0);
   await expect(firstEventHome.getByTestId('engine-simulation-attention-answer')).toHaveCount(0);
   await expect(firstEventHome.getByText(
@@ -596,7 +596,7 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   await expect(page.getByTestId('engine-posture-context')).toHaveText(
     /^One simulated withdrawal of \$2\.00 on \d{1,2} (?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) took your position from \$5\.00 to \$3\.00\.$/
   );
-  await expect(page.getByTestId('dashboard-change-chip')).toHaveText(/^↓\$2\.00 since \d{1,2} (?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)$/);
+  await expect(page.getByTestId('dashboard-change-chip')).toHaveCount(0);
   await expect(page.getByTestId('dashboard-since-link')).toHaveAttribute('href', '/activity?journey=class-a-val-002');
   await expect(page.getByTestId('dashboard-optional-actions')).toHaveCount(0);
 
@@ -792,9 +792,9 @@ test('Home explains what changed since the last visit and clears it on reset', a
   await expect(entries.nth(0)).toHaveText(new RegExp(`^Simulated deposit${date}\\+\\$5\\.00$`));
   await expect(entries.nth(1)).toHaveText(new RegExp(`^Simulated withdrawal${date}−\\$2\\.00$`));
   await expect(page.getByTestId('dashboard-since-link')).toHaveText('See all in Activity→');
-  await expect(page.getByTestId('dashboard-change-chip')).toHaveText(new RegExp(`^↑\\$3\\.00 since ${date}$`));
+  await expect(page.getByTestId('dashboard-change-chip')).toHaveCount(0);
   await expect(page.getByTestId('dashboard-position-line-visit')).toHaveText('Your last visit');
-  await expect(page.getByTestId('dashboard-position-line')).toContainText('Today');
+  await expect(page.getByTestId('dashboard-position-line')).not.toContainText('Today');
   await expect(page.getByText('This is what happened in the example. It doesn’t tell you what will happen next.')).toBeVisible();
 
   // Nothing changed since that visit.
@@ -803,7 +803,7 @@ test('Home explains what changed since the last visit and clears it on reset', a
     new RegExp(`^Nothing has changed since ${date}\\. Your position is still \\$3\\.00\\.$`)
   );
   await expect(page.getByText('The ZMW estimate can still move with the exchange rate.')).toBeVisible();
-  await expect(page.getByTestId('dashboard-change-chip')).toHaveText(new RegExp(`^–No change since ${date}$`));
+  await expect(page.getByTestId('dashboard-change-chip')).toHaveCount(0);
 
   // Journey reset clears the value; first use returns on both routes.
   expect(await page.evaluate(() => localStorage.getItem('hedgr:last-home-visit'))).not.toBeNull();
@@ -870,33 +870,28 @@ test('Home counts from the last figure seen after a confirmed change', async ({ 
   // Pause on the loaded receipt, then arrive client-side so no full load waits on frozen timers.
   await page.clock.pauseAt(new Date(Date.now() + 60_000));
   await page.getByTestId('withdraw-status-region').getByRole('link', { name: 'Back to your position' }).click();
-  await expect(page.getByTestId('dashboard-change-chip')).toBeAttached();
   await expect(page.getByTestId('usd-balance')).toHaveText('$5.00');
-  await expect(page.getByTestId('dashboard-change-chip')).toHaveCSS('opacity', '0');
   await expect(page.getByTestId('dashboard-arrival-announcement')).toHaveText('');
 
   await page.clock.runFor(700);
   await expect(page.getByTestId('usd-balance')).toHaveText('$3.00');
   await expect(page.getByTestId('dashboard-arrival-announcement')).toHaveText(arrivalSentence);
-  await expect(page.getByTestId('dashboard-change-chip')).toHaveCSS('opacity', '1');
   await expect(page.getByTestId('dashboard-arrival-announcement')).toHaveAttribute('role', 'status');
 
   // It runs once: a reload with no new change shows no motion and no sentence.
   await page.clock.resume();
   await page.reload();
   await expect(page.getByTestId('usd-balance')).toHaveText('$3.00');
-  await expect(page.getByTestId('dashboard-change-chip')).toHaveText(/No change since/);
+  await expect(page.getByTestId('dashboard-change-chip')).toHaveCount(0);
   await expect(page.getByTestId('dashboard-arrival-announcement')).toHaveText('');
 });
 
-test('reduced motion shows the new figure, line and chip at once', async ({ page }) => {
+test('reduced motion shows the new figure and line at once', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await recordWithdrawalSinceLastHomeVisit(page);
   await page.goto('/dashboard-synthetic-journey');
-  await expect(page.getByTestId('dashboard-change-chip')).toBeAttached();
-  // The first frame with the chip already shows the final figure.
+  await expect(page.getByTestId('usd-balance')).toHaveText('$3.00');
   expect(await page.getByTestId('usd-balance').textContent()).toBe('$3.00');
-  await expect(page.getByTestId('dashboard-change-chip')).toHaveCSS('opacity', '1');
-  await expect(page.getByTestId('dashboard-change-chip')).toHaveCSS('animation-name', 'none');
+  await expect(page.getByTestId('dashboard-change-chip')).toHaveCount(0);
   await expect(page.getByTestId('dashboard-arrival-announcement')).toHaveText(arrivalSentence);
 });

@@ -1,6 +1,6 @@
 "use client";
 
-import { formatSimulationDisplayEstimate, getSimulationDisplayRate, useSimulationDisplayCurrency } from "../../../lib/state/simulation-display-currency";
+import { formatSimulationDisplayEstimate, formatSimulationDisplayFigure, getSimulationDisplayRate, SIMULATION_DISPLAY_ESTIMATE_CAPTION, useSimulationDisplayCurrency } from "../../../lib/state/simulation-display-currency";
 import finish from '../product-finish.module.css';
 import home from './synthetic-home.module.css';
 import { SimulationDisplayCurrencySelector } from '../../../components/SimulationDisplayCurrencySelector';
@@ -262,7 +262,7 @@ export default function DashboardPage() {
   // Only the journey names its display currency explicitly; default Home omits the line.
   const estimateCurrency = syntheticJourneyActive ? displayCurrency : null;
 
-  // T5 arrival: count from the last figure seen, settle the line, then fade the chip in.
+  // T5 arrival: count from the last figure seen and settle the line.
   // Runs once per Home arrival, only for a confirmed change; reduced motion shows the end state.
   const arrivalChange =
     sinceSummary && normalPosture && sinceSummary.kind !== "no-change" && sinceDelta !== 0
@@ -354,30 +354,14 @@ export default function DashboardPage() {
         <BalanceWithLocalEstimate
           usdAmount={ready && !cleanStartRequested ? displayedTotal : 0}
           displayEstimate={syntheticJourneyActive ? formatSimulationDisplayEstimate(ready && !cleanStartRequested ? displayedTotal : 0, displayCurrency) : undefined}
+          displayEstimateParts={syntheticJourneyActive ? {
+            figure: formatSimulationDisplayFigure(ready && !cleanStartRequested ? displayedTotal : 0, displayCurrency),
+            caption: SIMULATION_DISPLAY_ESTIMATE_CAPTION,
+          } : undefined}
           data-testid="usd-balance"
           className={`${home.amount} tabular-nums`}
         />
       )}
-      {sinceSummary && normalPosture && (sinceSummary.kind === "no-change" || sinceDelta !== 0) ? (
-        <p
-          className={`${home.changeChip} ${
-            arrivalAnimating ? home.chipPending : arrivalChange ? home.chipEnter : ""
-          }`}
-          data-testid="dashboard-change-chip"
-        >
-          {sinceSummary.kind === "no-change" ? (
-            <>
-              <span aria-hidden="true">–</span>
-              <span>No change since {formatShortDate(sinceSummary.since)}</span>
-            </>
-          ) : (
-            <>
-              <span>{sinceDelta > 0 ? "↑" : "↓"}</span>
-              <span>{formatUsd(sinceDelta)} since {formatShortDate(sinceSummary.since)}</span>
-            </>
-          )}
-        </p>
-      ) : null}
       {productSimulationActive ? (
         <p className="sr-only" role="status" data-testid="dashboard-arrival-announcement">
           {arrivalAnnouncement}
@@ -424,7 +408,11 @@ export default function DashboardPage() {
       <Link href={productRouteHref("/deposit")} className={home.utility} data-testid="dashboard-add-simulated-deposit">
         <span>Add simulated deposit</span>
       </Link>
-      {firstUse && normalPosture ? (
+      {syntheticComparison.comparisonState === "first-event" ? (
+        <Link href={productRouteHref("/withdraw")} className={home.utility} data-testid="dashboard-simulated-withdraw">
+          <span>Simulate a withdrawal</span>
+        </Link>
+      ) : firstUse && normalPosture ? (
         <button type="button" onClick={openSimulationExplainer} className={home.utility} data-testid="dashboard-how-simulation-works">
           <span>How this simulation works</span>
         </button>
