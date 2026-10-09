@@ -188,6 +188,10 @@ pnpm bridge:snapshots:check
 
 If those commands are unavailable or fail, report the failure explicitly. Do not invent success.
 
+## Publication cadence (§354)
+
+Generating this review stays `READ_ONLY`. Publishing it (committing the review file and the three bridge snapshot JSONs, then opening and merging the PR) is governed only by `docs/ops/HEDGR_STATUS.md` §354 (`OPS-REVIEW-CADENCE-001`) and the Publication cadence (§354) block in `docs/ops/reviews/README.md`. This command grants no publication authority of its own; where it differs from §354, §354 governs.
+
 ## Completion summary
 
 After completion, summarize:

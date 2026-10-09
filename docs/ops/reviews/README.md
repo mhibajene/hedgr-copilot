@@ -347,6 +347,14 @@ Future weekly reviews must become materially more **delta- and convergence-led**
 5. Compact Convergence Ledger
 6. Time-based / completed-work summary
 7. Process assessment, without repeating identical authority constraints
+   - **Institutional Operating Efficiency** is part of Process assessment, not a separate section or framework.
+   - North Star: Hedgr should become more capable without becoming proportionally more complex or expensive to operate.
+   - Use repo evidence from the review window only: merged PRs and commits, STATUS records, RAP rebinds, Verifier PASS/FAIL comments, check runs and reruns. Do not use memory, external tools or unrecorded time or spend.
+   - Note, with citations, where operating cost grew or shrank relative to capability delivered, e.g. PRs, records, rebinds or Verifier cycles per delivered outcome; reruns, FAILs and rework; standing surfaces, roles, rules or synced copies added versus retired.
+   - Describe signals qualitatively. Do not compute composite scores, indices or ratings, and do not set targets or thresholds.
+   - If the evidence is thin, say so rather than inferring.
+   - Raise at most one priority efficiency recommendation, and only through Decision pressure (item 16), phrased as a bounded governance question. If none stands out, say so here.
+   - Efficiency never justifies relaxing an authority, verification, synthetic-state or trust boundary, and this assessment creates no authority, ticket or sequencing.
 8. Execution classification (A / B / C)
 9. Capability progression
 10. Trust-surface coverage
@@ -404,6 +412,17 @@ After generating weekly or MVP process reviews, operators should refresh and che
 pnpm bridge:snapshots:refresh
 pnpm bridge:snapshots:check
 ```
+
+### Publication cadence (§354)
+
+`docs/ops/HEDGR_STATUS.md` §354 (`OPS-REVIEW-CADENCE-001`) records the Founder-approved publication cadence. This block points to it; it does not restate it in full or widen it. If they differ, §354 governs.
+
+- **Cadence:** each Friday (AWST), one weekly review for the week ending that day, produced with `.cursor/commands/weekly-review.md`. In the same run, at most one MVP process review, produced with `.cursor/commands/mvp-process-review.md` for the next bounded completed slice under this guide.
+- **No slice, no file:** if no such slice exists, no MVP process review file is written and no placeholder is committed.
+- **Publication authority:** for these reviews only, Barry (Repo Steward, AGENTS §9.3) may add each new review file under `docs/ops/reviews/weekly/` or `docs/ops/reviews/MVP/`, run `pnpm bridge:snapshots:refresh` and commit only `docs/ops/bridge/latest-weekly-review.json`, `docs/ops/bridge/latest-mvp-process-review.json` and `docs/ops/bridge/review-index.json`, then open the PR, keep it up to date, mark it ready, arm auto-merge and merge it. No other path is in scope. Existing reviews are not edited or deleted.
+- **Merge gate:** each publication PR follows the Standing PR invariant unchanged, including an independent Verifier PASS on the exact current head SHA. Barry never posts a `Hedgr-Verifier:` attestation and never verifies its own publication.
+- **Usage by Agents:** for these publication steps only, §354 supersedes "Agents must NOT … modify repo state" above. Generating a review stays `READ_ONLY`, and a published review remains non-authoritative evidence that activates no work and suggests no sequencing.
+- **Stop:** Barry stops and escalates to the Founder instead of publishing if a run would touch any other path, the snapshot refresh or check fails, or a Verifier FAIL cannot be fixed within those paths. The Founder may pause or revoke this authority at any time.
 
 ---
 
