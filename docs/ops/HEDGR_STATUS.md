@@ -16156,3 +16156,23 @@ Runtime started only after the source and separate permanent-main rebind merged 
 **Check:** `apps/bridge-worker/tests/status-record-order.test.mjs` fails if a numbered record appears inside §7 or §7a, if records after `## 8.` are not in ascending order, or if a record number repeats. TDD §346 item 6 applies: this is a docs/authority change checked by an authority test, not product TDD.
 
 **Explicit non-authorisation:** This record activates no ticket or development work and changes no occupancy, §7 or §7a text, execution boundary, existing test or fixture, verifier requirement, required check or branch protection. It changes no RAP materiality rule, adds no rebind automation and keeps Fork 2 inactive. It amends no doctrine, ADR, `AGENTS.md` or `.cursorrules`. Every `BRIDGE-MCP-001` record and its unresolved holds are unchanged. **NO CROSS-LANE IMPACT.**
+
+## 354. Founder disposition — review publication cadence (`OPS-REVIEW-CADENCE-001`, 2026-10-08)
+
+**Date:** 2026-10-08 (AWST)
+
+**Founder approval to record:** Musalwa Hibajene (repo owner `mhibajene`), 8 Oct 2026 at ~22:34 AWST, approved a Friday cadence for weekly reviews and MVP process reviews, approved recording it in its own docs-only record with a separate RAP rebind after B-P2-min (§353), and authorised Barry (Repo Steward, AGENTS §9.3) to commit and merge the reviews it covers.
+
+**Status:** docs-only Founder-decision record, following the §346 / §347 / §352 / §353 finite-record pattern. No ticket is activated. No D-number. Occupancy is unchanged. The permanent-main RAP rebind for this source follows separately; this authority takes effect only after that rebind is independently verified and merged.
+
+**Cadence:** Each Friday (AWST), one weekly review for the week ending that day, produced with `.cursor/commands/weekly-review.md`. In the same run, at most one MVP process review, produced with `.cursor/commands/mvp-process-review.md` for the next bounded completed slice under `docs/ops/reviews/README.md`. If no such slice exists, no MVP process review file is written; no placeholder is committed.
+
+**Publication authority:** For these reviews only, Barry operates `ACT_WITH_CONFIRMATION`, and this record is the explicit approval AGENTS §10 requires; no per-run Founder confirmation is needed. Barry may add each new review file under `docs/ops/reviews/weekly/` or `docs/ops/reviews/MVP/`, run `pnpm bridge:snapshots:refresh` and commit only `docs/ops/bridge/latest-weekly-review.json`, `docs/ops/bridge/latest-mvp-process-review.json` and `docs/ops/bridge/review-index.json`, then open the PR, keep it up to date, mark it ready, arm auto-merge and merge it. No other path is in scope. Existing reviews are not edited or deleted under this record.
+
+**Merge gate:** Each publication PR follows the Standing PR invariant and runbook PR Posture unchanged, including the required `validate`, `E2E smoke (@hedgr/frontend)` and `hedgr/verifier` checks and an independent Verifier PASS on the exact current head SHA. Barry never posts a `Hedgr-Verifier:` attestation and never verifies its own publication.
+
+**Content boundary:** Reviews stay non-authoritative evidence under `docs/ops/reviews/README.md`; generating them stays `READ_ONLY`. Publishing a review does not make it authority, activate work or suggest sequencing. Publication PRs touch no RAP mandatory source and need no RAP rebind. Where `docs/ops/reviews/README.md` (Usage by Agents) or the two review commands say agents must not modify repo state, this record supersedes them for these publication steps only. Matching README, command and skill wording is a separate later docs change.
+
+**Stop and revocation:** Barry stops and escalates to the Founder instead of publishing if a run would touch any other path, the snapshot refresh or check fails, or a Verifier FAIL cannot be fixed within those paths. The Founder may pause or revoke this authority at any time; Barry stops on that direction, and a later numbered record captures it.
+
+**Explicit non-authorisation:** This record activates no ticket or development work and changes no occupancy, §7 or §7a text, execution boundary, existing test or fixture, verifier requirement, required check or branch protection. It creates no role, Green delegation envelope or rebind automation; RAP materiality rules are unchanged and Fork 2 stays inactive. It amends no doctrine, ADR, `AGENTS.md`, `.cursorrules`, `docs/ops/reviews/README.md` or review command. Every `BRIDGE-MCP-001` record and its unresolved holds are unchanged. TDD §346 does not apply (docs/authority record). **NO CROSS-LANE IMPACT.**
