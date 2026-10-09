@@ -608,7 +608,7 @@ describe("Currency context integration", () => {
     const { rerender } = render(<DashboardPage />);
     expect(screen.getByTestId("dashboard-current-overview").contains(screen.getByTestId("currency-insight"))).toBe(true);
     expect(screen.getByTestId("dashboard-balance").contains(screen.getByTestId("currency-insight"))).toBe(false);
-    expect(screen.getByTestId("currency-insight-headline").textContent).toContain("ZMW 3 higher");
+    expect(screen.getByTestId("currency-insight-headline").textContent).toContain("ZMW 4.05 higher");
     expect(screen.queryByTestId("engine-simulation-attention-answer")).toBeNull();
     expect(screen.getByTestId("engine-posture-context").textContent).toContain("withdrawal reduced the balance");
     // Pending entries must withhold direction even when their numeric net cancels.

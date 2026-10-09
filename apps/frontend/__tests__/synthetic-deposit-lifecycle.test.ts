@@ -24,6 +24,10 @@ import { useLedgerStore, type Tx } from '../lib/state/ledger';
 import { useBalance } from '../lib/hooks/useBalance';
 import { computeBalanceFromLedger } from '../lib/state/balance';
 import { scheduleSyntheticDeposit } from '../lib/deposits/synthetic-deposit-lifecycle';
+import { DANIEL_FIXTURE_RATE_ZMW_PER_USD } from '../lib/engine/daniel-read';
+
+// The unchanged default 100 ZMW synthetic Deposit at the Engine fixture rate (§360): 3.70.
+const DEFAULT_DEPOSIT_USD = (100 / DANIEL_FIXTURE_RATE_ZMW_PER_USD).toFixed(2);
 
 let nextRef = 0;
 function deposit(overrides: Partial<Tx> = {}): Tx {
@@ -111,10 +115,10 @@ describe('transaction pages with reactive balance and real simulation lifecycles
     await ready(DepositPage);
     await advance(1200);
     expect(useLedgerStore.getState().getByTxnRef(tx.txn_ref)?.status).toBe('settled');
-    expect(screen.getByTestId('reactive-balance').textContent).toBe('5.00');
+    expect(screen.getByTestId('reactive-balance').textContent).toBe(DEFAULT_DEPOSIT_USD);
     await advance(3000);
     expect(useLedgerStore.getState().transactions).toHaveLength(1);
-    expect(screen.getByTestId('reactive-balance').textContent).toBe('5.00');
+    expect(screen.getByTestId('reactive-balance').textContent).toBe(DEFAULT_DEPOSIT_USD);
   });
 
   test('reset after navigating from pending Deposit leaves the ledger empty', async () => {
