@@ -347,6 +347,14 @@ Future weekly reviews must become materially more **delta- and convergence-led**
 5. Compact Convergence Ledger
 6. Time-based / completed-work summary
 7. Process assessment, without repeating identical authority constraints
+   - **Institutional Operating Efficiency** is part of Process assessment, not a separate section or framework.
+   - North Star: Hedgr should become more capable without becoming proportionally more complex or expensive to operate.
+   - Use repo evidence from the review window only: merged PRs and commits, STATUS records, RAP rebinds, Verifier PASS/FAIL comments, check runs and reruns. Do not use memory, external tools or unrecorded time or spend.
+   - Note, with citations, where operating cost grew or shrank relative to capability delivered, e.g. PRs, records, rebinds or Verifier cycles per delivered outcome; reruns, FAILs and rework; standing surfaces, roles, rules or synced copies added versus retired.
+   - Describe signals qualitatively. Do not compute composite scores, indices or ratings, and do not set targets or thresholds.
+   - If the evidence is thin, say so rather than inferring.
+   - Raise at most one priority efficiency recommendation, and only through Decision pressure (item 16), phrased as a bounded governance question. If none stands out, say so here.
+   - Efficiency never justifies relaxing an authority, verification, synthetic-state or trust boundary, and this assessment creates no authority, ticket or sequencing.
 8. Execution classification (A / B / C)
 9. Capability progression
 10. Trust-surface coverage
