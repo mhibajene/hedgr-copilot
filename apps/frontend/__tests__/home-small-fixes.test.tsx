@@ -72,14 +72,15 @@ vi.mock("next/navigation", () => ({
 vi.mock("../components", () => ({
   BalanceWithLocalEstimate: ({
     usdAmount,
-    displayEstimate: _displayEstimate,
-    displayEstimateParts: _displayEstimateParts,
     ...props
   }: {
     usdAmount: number;
-    displayEstimate?: string;
-    displayEstimateParts?: { figure: string; caption: string };
-  }) => <div {...props}>{usdAmount}</div>,
+  } & Record<string, unknown>) => {
+    const rest = { ...props };
+    delete rest.displayEstimate;
+    delete rest.displayEstimateParts;
+    return <div {...rest}>{usdAmount}</div>;
+  },
   PolicyDisclosure: ({ context }: { context?: string }) => {
     dashboardStateMocks.policyContexts.push(context);
     return <div data-testid="policy-disclosure" />;
