@@ -9,13 +9,22 @@ import {
 } from '../lib/engine/daniel-read';
 import { REVIEW_SNAPSHOT_MEMORY_STORAGE_KEY } from '../lib/engine/review-snapshot-memory';
 import { SIMULATION_DISPLAY_CURRENCY_KEY } from '../lib/state/simulation-display-currency';
-import { DANIEL_GOLDEN_AS_OF, DANIEL_GOLDEN_GRID } from './engine-daniel-read.golden';
+import { DANIEL_GOLDEN_AS_OF, DANIEL_GOLDEN_GRID, type DanielGoldenRead } from './engine-daniel-read.golden';
 
 const BASELINE: DanielReadInput = {
   declaredHoldingUsd: 800,
   fixtureRateZmwPerUsd: 27,
   asOf: DANIEL_GOLDEN_AS_OF,
 };
+
+const readOf = (input: DanielReadInput) => computeDanielRead(input) as DanielGoldenRead;
+
+/** Independently decodes a K display string to integer ngwee, without the engine. */
+function decodeDisplayMinor(display: string): bigint {
+  const match = /^K(\d{1,3}(?:,\d{3})*)(?:\.(\d{2}))?$/.exec(display);
+  if (!match) throw new Error(`Unexpected display: ${display}`);
+  return BigInt(match[1].replace(/,/g, '')) * 100n + BigInt(match[2] ?? '0');
+}
 
 /** Leaf paths whose values differ between two reads. */
 function changedPaths(a: unknown, b: unknown, path = ''): string[] {
@@ -59,28 +68,31 @@ describe('Daniel read (§350)', () => {
     expect(input).toEqual(frozen);
   });
 
-  test('changes only the local display and rate explanation when the fixture rate changes', () => {
+  test('changes only the canonical local amount display and rate explanation when the fixture rate changes', () => {
     expect(DANIEL_FIXTURE_RATE_ZMW_PER_USD).toBe(27);
-    const base = computeDanielRead(BASELINE);
+    const base = readOf(BASELINE);
     expect(base.localDisplay).toBe('K21,600');
-    for (const [rate, expected] of [[29.5, 'K23,600'], [24.5, 'K19,600']] as const) {
-      const moved = computeDanielRead({ ...BASELINE, fixtureRateZmwPerUsd: rate });
+    expect(base.localAmountZmwMinor).toBe(2160000);
+    for (const [rate, expected, minor] of [[29.5, 'K23,600', 2360000], [24.5, 'K19,600', 1960000]] as const) {
+      const moved = readOf({ ...BASELINE, fixtureRateZmwPerUsd: rate });
       expect(moved.localDisplay).toBe(expected);
+      expect(moved.localAmountZmwMinor).toBe(minor);
       expect(changedPaths(base, moved).sort()).toEqual(
-        ['explanation.holding', 'explanation.rateAssumption', 'localDisplay'],
+        ['explanation.holding', 'explanation.rateAssumption', 'localAmountZmwMinor', 'localDisplay'],
       );
       expect(moved.explanation.rateAssumption).toContain(`ZMW ${rate} per USD`);
     }
   });
 
   test('changes only holding-derived fields when the declared USD holding changes', () => {
-    const base = computeDanielRead(BASELINE);
-    const moved = computeDanielRead({ ...BASELINE, declaredHoldingUsd: 1000 });
+    const base = readOf(BASELINE);
+    const moved = readOf({ ...BASELINE, declaredHoldingUsd: 1000 });
     expect(changedPaths(base, moved).sort()).toEqual(
-      ['declaredHolding.amount', 'explanation.holding', 'localDisplay'],
+      ['declaredHolding.amount', 'explanation.holding', 'localAmountZmwMinor', 'localDisplay'],
     );
     expect(moved.declaredHolding.amount).toBe(1000);
     expect(moved.localDisplay).toBe('K27,000');
+    expect(moved.localAmountZmwMinor).toBe(2700000);
     expect(moved.explanation.rateAssumption).toBe(base.explanation.rateAssumption);
   });
 
@@ -107,9 +119,90 @@ describe('Daniel read (§350)', () => {
       'fixture rate 29.5',
       'fixture rate 24.5',
       'holding-change control at fixture rate 27',
+      'fractional-cent control 1.005 at fixture rate 1',
     ]);
     for (const row of DANIEL_GOLDEN_GRID) {
       expect(computeDanielRead(row.input), row.name).toEqual(row.read);
+    }
+  });
+
+  test('exposes exact safe-integer ngwee across the engine-owned golden grid', () => {
+    const literal = DANIEL_GOLDEN_GRID.map((row) => [
+      row.input.declaredHoldingUsd,
+      row.input.fixtureRateZmwPerUsd,
+      row.read.localDisplay,
+      row.read.localAmountZmwMinor,
+    ]);
+    expect(literal).toEqual([
+      [800, 27, 'K21,600', 2160000],
+      [800, 29.5, 'K23,600', 2360000],
+      [800, 24.5, 'K19,600', 1960000],
+      [1000, 27, 'K27,000', 2700000],
+      [1.005, 1, 'K1.01', 101],
+    ]);
+    for (const row of DANIEL_GOLDEN_GRID) {
+      const read = readOf(row.input);
+      expect(typeof read.localAmountZmwMinor, row.name).toBe('number');
+      expect(Number.isSafeInteger(read.localAmountZmwMinor), row.name).toBe(true);
+      expect(read.localAmountZmwMinor, row.name).toBe(row.read.localAmountZmwMinor);
+      expect(read.localDisplay, row.name).toBe(row.read.localDisplay);
+    }
+  });
+
+  test('keeps localAmountZmwMinor and localDisplay identical in minor units', () => {
+    const cases: [DanielReadInput, string, number][] = [
+      ...DANIEL_GOLDEN_GRID.map((row) => [row.input, row.read.localDisplay, row.read.localAmountZmwMinor] as [DanielReadInput, string, number]),
+      [{ ...BASELINE, declaredHoldingUsd: 1.005, fixtureRateZmwPerUsd: 1 }, 'K1.01', 101],
+      [{ ...BASELINE, declaredHoldingUsd: 0.05, fixtureRateZmwPerUsd: 0.1 }, 'K0.01', 1],
+      [{ ...BASELINE, declaredHoldingUsd: 0.04, fixtureRateZmwPerUsd: 0.1 }, 'K0', 0],
+      [{ ...BASELINE, declaredHoldingUsd: 1000.5, fixtureRateZmwPerUsd: 27 }, 'K27,013.50', 2701350],
+    ];
+    for (const [input, display, minor] of cases) {
+      const read = readOf(input);
+      expect(read.localDisplay).toBe(display);
+      expect(read.localAmountZmwMinor).toBe(minor);
+      expect(BigInt(read.localAmountZmwMinor)).toBe(decodeDisplayMinor(read.localDisplay));
+    }
+  });
+
+  test('throws RangeError without a read above the safe-integer cents limit', () => {
+    const nearLimit = readOf({ ...BASELINE, declaredHoldingUsd: 90071992547409.9, fixtureRateZmwPerUsd: 1 });
+    expect(nearLimit.localAmountZmwMinor).toBe(9007199254740990);
+    expect(Number.isSafeInteger(nearLimit.localAmountZmwMinor)).toBe(true);
+    expect(nearLimit.localDisplay).toBe('K90,071,992,547,409.90');
+    expect(BigInt(nearLimit.localAmountZmwMinor)).toBe(decodeDisplayMinor(nearLimit.localDisplay));
+
+    // 90071992547409.92 × 1 → 9007199254740992 cents, one above Number.MAX_SAFE_INTEGER.
+    for (const [declaredHoldingUsd, fixtureRateZmwPerUsd] of [[90071992547409.92, 1], [Number.MAX_VALUE, 27]]) {
+      let read: unknown;
+      expect(() => {
+        read = computeDanielRead({ ...BASELINE, declaredHoldingUsd, fixtureRateZmwPerUsd });
+      }).toThrow(RangeError);
+      expect(read).toBeUndefined();
+    }
+  });
+
+  test('reports daniel-read-v2 as the explicit engine version', () => {
+    expect(DANIEL_READ_ENGINE_VERSION).toBe('daniel-read-v2');
+    for (const row of DANIEL_GOLDEN_GRID) {
+      expect(row.read.engineVersion, row.name).toBe('daniel-read-v2');
+      expect(computeDanielRead(row.input).engineVersion, row.name).toBe('daniel-read-v2');
+    }
+  });
+
+  test('adds only localAmountZmwMinor to the Daniel read output envelope', () => {
+    for (const row of DANIEL_GOLDEN_GRID) {
+      for (const read of [row.read, computeDanielRead(row.input)]) {
+        expect(Object.keys(read).sort(), row.name).toEqual(
+          ['asOf', 'declaredHolding', 'engineVersion', 'explanation', 'localAmountZmwMinor', 'localDisplay', 'pair'],
+        );
+        expect(Object.keys(read.declaredHolding).sort(), row.name).toEqual(['access', 'amount', 'currency', 'source']);
+        expect(Object.keys(read.explanation).sort(), row.name).toEqual(['holding', 'rateAssumption']);
+        expect(collectKeys(read).sort(), row.name).toEqual([
+          'access', 'amount', 'asOf', 'currency', 'declaredHolding', 'engineVersion', 'explanation',
+          'holding', 'localAmountZmwMinor', 'localDisplay', 'pair', 'rateAssumption', 'source',
+        ]);
+      }
     }
   });
 

@@ -4,7 +4,7 @@
  * copy layer is an input. The amount is user-declared, USD-denominated and read-only; it is
  * not custody, a balance, a settled amount or verified wealth (ADR 0027 decision 3; ADR 0013).
  */
-export const DANIEL_READ_ENGINE_VERSION = 'daniel-read-v1';
+export const DANIEL_READ_ENGINE_VERSION = 'daniel-read-v2';
 
 /** Named, disclosed fixture rate (ZMW per USD). Not a live or market rate. */
 export const DANIEL_FIXTURE_RATE_ZMW_PER_USD = 27;
@@ -20,6 +20,8 @@ export type DanielRead = {
   asOf: string;
   pair: 'USD/ZMW';
   declaredHolding: { amount: number; currency: 'USD'; source: 'user-declared'; access: 'read-only' };
+  /** §357 canonical local amount: integer ngwee from the same BigInt cents as `localDisplay`. */
+  localAmountZmwMinor: number;
   localDisplay: string;
   explanation: { rateAssumption: string; holding: string };
 };
@@ -54,6 +56,9 @@ export function computeDanielRead({ declaredHoldingUsd, fixtureRateZmwPerUsd, as
   const [r, rScale] = decimalFraction(fixtureRateZmwPerUsd);
   const denominator = aScale * rScale;
   const cents = (a * r * 100n * 2n + denominator) / (denominator * 2n);
+  if (cents > BigInt(Number.MAX_SAFE_INTEGER)) {
+    throw new RangeError('Local amount exceeds the safe-integer ngwee limit.');
+  }
   const fraction = (cents % 100n).toString().padStart(2, '0');
   const localDisplay = `K${(cents / 100n).toLocaleString('en-US')}${fraction === '00' ? '' : `.${fraction}`}`;
   return {
@@ -61,6 +66,7 @@ export function computeDanielRead({ declaredHoldingUsd, fixtureRateZmwPerUsd, as
     asOf,
     pair: 'USD/ZMW',
     declaredHolding: { amount: declaredHoldingUsd, currency: 'USD', source: 'user-declared', access: 'read-only' },
+    localAmountZmwMinor: Number(cents),
     localDisplay,
     explanation: {
       rateAssumption: `Disclosed fixture rate: ZMW ${formatNumber(fixtureRateZmwPerUsd)} per USD. Not a live rate.`,
