@@ -253,6 +253,41 @@ describe('BalanceWithLocalEstimate', () => {
     });
   });
 
+  describe('Home display-estimate split', () => {
+    test('splits the display estimate into figure and caption with identical text', () => {
+      const mockFxRate: FxRateData = {
+        base: 'USD',
+        quote: 'ZMW',
+        rate: 20,
+        timestamp: Date.now(),
+        isLoading: false,
+        error: null,
+        isStale: false,
+        refresh: vi.fn(),
+      };
+      vi.mocked(useFxRate).mockReturnValue(mockFxRate);
+      vi.mocked(isFxRateAvailable).mockReturnValue(true);
+
+      const displayEstimate = '≈ NGN 720,000.00 display estimate';
+      const displayEstimateParts = {
+        figure: '≈ NGN 720,000.00',
+        caption: 'display estimate',
+      };
+      render(
+        <BalanceWithLocalEstimate
+          usdAmount={480}
+          displayEstimate={displayEstimate}
+          {...{ displayEstimateParts }}
+        />
+      );
+
+      const local = screen.getByTestId('local-balance');
+      expect(screen.getByTestId('local-balance-figure').textContent).toBe('≈ NGN 720,000.00');
+      expect(screen.getByTestId('local-balance-caption').textContent).toBe('display estimate');
+      expect(local.textContent).toBe('≈ NGN 720,000.00 display estimate');
+    });
+  });
+
   describe('Edge cases', () => {
     test('handles zero USD amount', () => {
       const mockFxRate: FxRateData = {

@@ -386,8 +386,8 @@ describe("DashboardPage engine trust surface", () => {
         .getAttribute("href")
     ).toBe("/deposit?journey=class-a-val-002");
     expect(
-      screen.getByTestId("dashboard-view-activity").getAttribute("href")
-    ).toBe("/activity?journey=class-a-val-002");
+      screen.getByTestId("dashboard-simulated-withdraw").getAttribute("href")
+    ).toBe("/withdraw?journey=class-a-val-002");
     expect(screen.queryByText("How your position changed")).toBeNull();
     expect(screen.queryByTestId("dashboard-change-delta")).toBeNull();
     expect(screen.getByTestId("engine-posture-context").textContent).toBe(
