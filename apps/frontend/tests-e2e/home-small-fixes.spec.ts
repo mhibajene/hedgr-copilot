@@ -7,7 +7,6 @@ const FORWARD_COPY = /toward|target|goal|on track|you will|will grow/i;
 const ATTRIBUTION =
   'This is what happened in the example. It doesn’t tell you what will happen next.';
 const RUST = 'rgb(150, 63, 34)';
-const EVIDENCE = '/opt/cursor/artifacts/home-small-fixes-20261009';
 const HOME_ROUTES = ['/dashboard', '/dashboard?journey=class-a-val-002'] as const;
 
 type LedgerTx = {
@@ -333,7 +332,7 @@ test('Home layout holds across routes states currencies and text size', async ({
         }
         if (currency.code === 'NGN') {
           await page.screenshot({
-            path: `${EVIDENCE}/layout-journey-NGN-${stateName}-${viewport.label}.png`,
+            path: test.info().outputPath(`layout-journey-NGN-${stateName}-${viewport.label}.png`),
             fullPage: true,
           });
         }
@@ -355,7 +354,7 @@ test('Home layout holds across routes states currencies and text size', async ({
         await expect(status).toContainText(ATTRIBUTION);
       }
       await page.screenshot({
-        path: `${EVIDENCE}/layout-default-${stateName}-${viewport.label}.png`,
+        path: test.info().outputPath(`layout-default-${stateName}-${viewport.label}.png`),
         fullPage: true,
       });
     }
