@@ -72,9 +72,13 @@ vi.mock("next/navigation", () => ({
 vi.mock("../components", () => ({
   BalanceWithLocalEstimate: ({
     usdAmount,
+    displayEstimate: _displayEstimate,
+    displayEstimateParts: _displayEstimateParts,
     ...props
   }: {
     usdAmount: number;
+    displayEstimate?: string;
+    displayEstimateParts?: { figure: string; caption: string };
   }) => <div {...props}>{usdAmount}</div>,
   PolicyDisclosure: ({ context }: { context?: string }) => {
     dashboardStateMocks.policyContexts.push(context);

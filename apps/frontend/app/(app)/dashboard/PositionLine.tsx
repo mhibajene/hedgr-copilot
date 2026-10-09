@@ -1,7 +1,7 @@
 'use client';
 
 import home from './synthetic-home.module.css';
-import { balanceAt, formatShortDate, formatUsd, type PositionEntry } from '../../../lib/state/last-visit';
+import { balanceAt, type PositionEntry } from '../../../lib/state/last-visit';
 
 type PositionLineProps = {
   entries: PositionEntry[];
@@ -25,7 +25,8 @@ function visitLabelStyle(ratio: number) {
 type LineEvent = { kind: 'entry'; entry: PositionEntry } | { kind: 'visit'; at: number };
 
 /**
- * HOME-EXPERIENCE-001 T3 position line. Derived only from completed ledger
+ * HOME-EXPERIENCE-001 T3 position line, with HOME-SMALL-FIXES-001 (§355):
+ * no max guide, max label, or axis dates. Derived only from completed ledger
  * entries (Activity order) and the last-visit value. Events are evenly spaced;
  * the line after the last visit uses the emphasis colour. Decorative for
  * assistive technology: the Observation states the same facts in words.
@@ -77,14 +78,12 @@ export function PositionLine({ entries, lastVisit, settle = 1 }: PositionLinePro
   target.push(`H ${WIDTH}`);
 
   const area = `${[...before, ...after.filter((step) => !step.startsWith('M'))].join(' ')} V ${HEIGHT} H 0 Z`;
-  const startAt = Math.min(entries[0].at, lastVisit ?? entries[0].at);
   const pct = (value: number, total: number) => `${(value / total) * 100}%`;
 
   return (
     <div className={home.positionLine} data-testid="dashboard-position-line" data-state="line" aria-hidden="true">
       <div className={home.positionLinePlot}>
         <svg viewBox={`0 0 ${WIDTH} ${HEIGHT}`} preserveAspectRatio="none" focusable="false">
-          <line className={home.positionLineGuide} x1="0" x2={WIDTH} y1={y(max)} y2={y(max)} vectorEffect="non-scaling-stroke" />
           <path className={home.positionLineArea} d={area} />
           <path className={home.positionLineBefore} d={before.join(' ')} vectorEffect="non-scaling-stroke" />
           {after.length ? <path className={home.positionLineAfter} d={after.join(' ')} vectorEffect="non-scaling-stroke" /> : null}
@@ -99,7 +98,6 @@ export function PositionLine({ entries, lastVisit, settle = 1 }: PositionLinePro
             style={{ left: pct(dot.x, WIDTH), top: pct(dot.y, HEIGHT) }}
           />
         ))}
-        <span className={home.positionLineTop} style={{ top: pct(y(max), HEIGHT) }}>{formatUsd(max)}</span>
         {visitX !== null ? (
           <span
             className={home.positionLineVisitLabel}
@@ -109,10 +107,6 @@ export function PositionLine({ entries, lastVisit, settle = 1 }: PositionLinePro
             Your last visit
           </span>
         ) : null}
-      </div>
-      <div className={home.positionLineAxis}>
-        <span>{formatShortDate(startAt)}</span>
-        <span>Today</span>
       </div>
     </div>
   );

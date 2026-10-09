@@ -24,12 +24,18 @@ export function getSimulationDisplayRate(currency: SimulationDisplayCurrency): n
   return SIMULATION_DISPLAY_CURRENCIES.find(({ code }) => code === currency)!.unitsPerUsd;
 }
 
-export function formatSimulationDisplayEstimate(usd: number, currency: SimulationDisplayCurrency): string {
+export const SIMULATION_DISPLAY_ESTIMATE_CAPTION = 'display estimate';
+
+export function formatSimulationDisplayFigure(usd: number, currency: SimulationDisplayCurrency): string {
   const amount = (usd * getSimulationDisplayRate(currency)).toLocaleString('en-US', {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   });
-  return `≈ ${currency} ${amount} display estimate`;
+  return `≈ ${currency} ${amount}`;
+}
+
+export function formatSimulationDisplayEstimate(usd: number, currency: SimulationDisplayCurrency): string {
+  return `${formatSimulationDisplayFigure(usd, currency)} ${SIMULATION_DISPLAY_ESTIMATE_CAPTION}`;
 }
 
 let memoryCurrency: SimulationDisplayCurrency = DEFAULT_SIMULATION_DISPLAY_CURRENCY;

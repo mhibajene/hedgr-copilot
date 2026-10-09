@@ -9,6 +9,8 @@ export interface BalanceWithLocalEstimateProps {
   usdAmount: number;
   /** Explicit display-only text for the eligible synthetic Position. */
   displayEstimate?: string;
+  /** Opt-in figure/caption split; default rendering stays byte-identical. */
+  displayEstimateParts?: { figure: string; caption: string };
   /**
    * If true, renders in a compact inline format suitable for text flows.
    * If false (default), renders with block-level styling for cards.
@@ -42,6 +44,7 @@ export interface BalanceWithLocalEstimateProps {
 export function BalanceWithLocalEstimate({
   usdAmount,
   displayEstimate,
+  displayEstimateParts,
   inline = false,
   className = '',
   'data-testid': dataTestId,
@@ -94,11 +97,17 @@ export function BalanceWithLocalEstimate({
       >
         {formattedUsd}
       </div>
-      {formattedLocal && (
+      {formattedLocal && displayEstimateParts ? (
+        <div className="text-xs text-gray-500 mt-1" data-testid="local-balance">
+          <span data-testid="local-balance-figure">{displayEstimateParts.figure}</span>
+          {' '}
+          <span data-testid="local-balance-caption">{displayEstimateParts.caption}</span>
+        </div>
+      ) : formattedLocal ? (
         <div className="text-xs text-gray-500 mt-1" data-testid="local-balance">
           {formattedLocal}
         </div>
-      )}
+      ) : null}
       {!formattedLocal && (
         <div className="text-xs text-gray-400 mt-1" data-testid="local-balance">
           Local estimate unavailable
