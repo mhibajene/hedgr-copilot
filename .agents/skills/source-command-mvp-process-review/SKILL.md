@@ -80,6 +80,8 @@ Do not infer completion from draft artifacts.
 
 Do not infer blocker closure unless explicitly evidenced in repo-native closeout material.
 
+If no bounded completed slice exists (neither a next unreviewed 3-5 completed-ticket slice nor an evident completed milestone), do not write an MVP process review file and do not commit a placeholder. Report that no slice was available, with the evidence checked, in the completion summary. This follows `docs/ops/HEDGR_STATUS.md` §354. An ambiguous next range is still handled as above, by surfacing the ambiguity.
+
 ## Output path
 
 Write the MVP process review under:
@@ -191,6 +193,10 @@ pnpm bridge:snapshots:check
 ```
 
 If those commands are unavailable or fail, report the failure explicitly. Do not invent success.
+
+## Publication cadence (§354)
+
+Generating this review stays `READ_ONLY`. Publishing it (committing the review file and the three bridge snapshot JSONs, then opening and merging the PR) is governed only by `docs/ops/HEDGR_STATUS.md` §354 (`OPS-REVIEW-CADENCE-001`) and the Publication cadence (§354) block in `docs/ops/reviews/README.md`. This command grants no publication authority of its own; where it differs from §354, §354 governs.
 
 ## Completion summary
 

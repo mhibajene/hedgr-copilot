@@ -405,6 +405,17 @@ pnpm bridge:snapshots:refresh
 pnpm bridge:snapshots:check
 ```
 
+### Publication cadence (§354)
+
+`docs/ops/HEDGR_STATUS.md` §354 (`OPS-REVIEW-CADENCE-001`) records the Founder-approved publication cadence. This block points to it; it does not restate it in full or widen it. If they differ, §354 governs.
+
+- **Cadence:** each Friday (AWST), one weekly review for the week ending that day, produced with `.cursor/commands/weekly-review.md`. In the same run, at most one MVP process review, produced with `.cursor/commands/mvp-process-review.md` for the next bounded completed slice under this guide.
+- **No slice, no file:** if no such slice exists, no MVP process review file is written and no placeholder is committed.
+- **Publication authority:** for these reviews only, Barry (Repo Steward, AGENTS §9.3) may add each new review file under `docs/ops/reviews/weekly/` or `docs/ops/reviews/MVP/`, run `pnpm bridge:snapshots:refresh` and commit only `docs/ops/bridge/latest-weekly-review.json`, `docs/ops/bridge/latest-mvp-process-review.json` and `docs/ops/bridge/review-index.json`, then open the PR, keep it up to date, mark it ready, arm auto-merge and merge it. No other path is in scope. Existing reviews are not edited or deleted.
+- **Merge gate:** each publication PR follows the Standing PR invariant unchanged, including an independent Verifier PASS on the exact current head SHA. Barry never posts a `Hedgr-Verifier:` attestation and never verifies its own publication.
+- **Usage by Agents:** for these publication steps only, §354 supersedes "Agents must NOT … modify repo state" above. Generating a review stays `READ_ONLY`, and a published review remains non-authoritative evidence that activates no work and suggests no sequencing.
+- **Stop:** Barry stops and escalates to the Founder instead of publishing if a run would touch any other path, the snapshot refresh or check fails, or a Verifier FAIL cannot be fixed within those paths. The Founder may pause or revoke this authority at any time.
+
 ---
 
 ## Final Principle
