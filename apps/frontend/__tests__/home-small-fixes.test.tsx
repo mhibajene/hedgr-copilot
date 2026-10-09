@@ -515,7 +515,7 @@ describe("live Home is unchanged", () => {
 describe("display estimate composition", () => {
   test("keeps the composed display estimate for every currency at $480", () => {
     const amounts: Record<string, string> = {
-      ZMW: "9,600.00",
+      ZMW: "12,960.00",
       KES: "62,400.00",
       NGN: "720,000.00",
       GHS: "7,200.00",

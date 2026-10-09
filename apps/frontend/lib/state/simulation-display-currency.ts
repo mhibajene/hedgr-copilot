@@ -1,13 +1,15 @@
 'use client';
 
 import { useSyncExternalStore } from 'react';
+import { DANIEL_FIXTURE_RATE_ZMW_PER_USD } from '../engine/daniel-read';
 
 export const SIMULATION_DISPLAY_CURRENCY_KEY = 'hedgr.simulation.display-currency';
 export const DEFAULT_SIMULATION_DISPLAY_CURRENCY = 'ZMW';
 
-/** D-132 fixed simulation fixtures, also used by the bounded synthetic Deposit adapter; never live rates. */
+/** D-132 fixed simulation fixtures, also used by the bounded synthetic Deposit adapter; never live rates.
+ * ZMW derives from the Engine fixture (§359); it is not a second literal. */
 export const SIMULATION_DISPLAY_CURRENCIES = [
-  { code: 'ZMW', name: 'Zambian kwacha', unitsPerUsd: 20 },
+  { code: 'ZMW', name: 'Zambian kwacha', unitsPerUsd: DANIEL_FIXTURE_RATE_ZMW_PER_USD },
   { code: 'KES', name: 'Kenyan shilling', unitsPerUsd: 130 },
   { code: 'NGN', name: 'Nigerian naira', unitsPerUsd: 1500 },
   { code: 'GHS', name: 'Ghanaian cedi', unitsPerUsd: 15 },

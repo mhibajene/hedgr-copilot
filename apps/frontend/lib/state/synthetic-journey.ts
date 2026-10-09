@@ -1,6 +1,7 @@
 import { isSupportedQuote } from '../../config/market';
 import { getAuthMode } from '../auth/mode';
 import { getFixedRate } from '../fx';
+import { DANIEL_FIXTURE_RATE_ZMW_PER_USD } from '../engine/daniel-read';
 
 export const CLASS_A_VAL_002_JOURNEY_PARAM = 'journey';
 export const CLASS_A_VAL_002_JOURNEY_VALUE = 'class-a-val-002';
@@ -74,11 +75,13 @@ export function isSyntheticJourneyResetRequested(search?: string): boolean {
   );
 }
 
-/** Fixed, explicitly simulated preview rate. Never a production quote or fallback. */
+/** Fixed, explicitly simulated preview rate. Never a production quote or fallback.
+ * ZMW derives from the Engine fixture (§359); other quotes keep their fixed rates. */
 export function getSyntheticJourneyRate(quote: string): number {
   if (!isSupportedQuote(quote)) {
     throw new Error(`Unsupported synthetic journey quote: ${quote}`);
   }
+  if (quote === 'ZMW') return DANIEL_FIXTURE_RATE_ZMW_PER_USD;
   return getFixedRate(quote);
 }
 

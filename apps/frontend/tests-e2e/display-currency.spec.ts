@@ -1,5 +1,6 @@
 import { expect, test, type Page } from '@playwright/test';
 import { SIMULATION_DISPLAY_CURRENCY_COPY as copy } from '../lib/narrative/orientation-surface';
+import { DANIEL_FIXTURE_RATE_ZMW_PER_USD } from '../lib/engine/daniel-read';
 
 const key = 'hedgr.simulation.display-currency';
 const home = '/dashboard-synthetic-journey';
@@ -85,7 +86,7 @@ test('zero-USD simulated deposit preserves the position and Activity until a val
   await expect(page.locator('[data-activity-type]')).toHaveCount(3);
   const records = JSON.parse((await financialStorage(page))['hedgr:ledger']!).transactions;
   expect(records).toHaveLength(3);
-  expect(records[2]).toMatchObject({ type: 'deposit', amount_usd: 0.01, amount_zmw: 0.2, fx_rate: 20 });
+  expect(records[2]).toMatchObject({ type: 'deposit', amount_usd: 0.01, amount_zmw: 0.27, fx_rate: DANIEL_FIXTURE_RATE_ZMW_PER_USD });
 });
 
 test('entry selection persists through navigation, reload and clean journey restart', async ({ page }) => {
@@ -122,12 +123,12 @@ test('entry selection persists through navigation, reload and clean journey rest
 test('all five Settings estimates preserve USD, market, Activity and planning with aligned transaction previews', async ({ page }) => {
   test.setTimeout(90000);
   await seedPosition(page);
-  await expect(page.getByTestId('local-balance')).toHaveText('≈ ZMW 60.00 display estimate');
+  await expect(page.getByTestId('local-balance')).toHaveText('≈ ZMW 81.00 display estimate');
   const originalStorage = await financialStorage(page);
   const planning = await page.getByTestId('engine-allocation-structure').textContent();
   await page.goto('/activity?journey=class-a-val-002');
   const activity = await page.locator('main').textContent();
-  for (const [code, amount] of [['ZMW', '60.00'], ['KES', '390.00'], ['NGN', '4,500.00'], ['GHS', '45.00'], ['PHP', '168.00']]) {
+  for (const [code, amount] of [['ZMW', '81.00'], ['KES', '390.00'], ['NGN', '4,500.00'], ['GHS', '45.00'], ['PHP', '168.00']]) {
     await page.goto(settings);
     await page.getByRole('button', { name: /Display currency/ }).click();
     const dialog = page.getByRole('dialog', { name: 'Display currency', exact: true });
@@ -260,7 +261,7 @@ for (const width of [320, 390, 1280]) {
 
 
 for (const [currency, rate, localFive, localThree] of [
-  ['ZMW', 20, '100.00', '60.00'],
+  ['ZMW', DANIEL_FIXTURE_RATE_ZMW_PER_USD, '135.00', '81.00'],
   ['KES', 130, '650.00', '390.00'],
   ['NGN', 1500, '7,500.00', '4,500.00'],
   ['GHS', 15, '75.00', '45.00'],
@@ -289,7 +290,7 @@ for (const [currency, rate, localFive, localThree] of [
     await expect(page.getByTestId('deposit-confirmation-region')).toContainText('You added $5.00 to your simulated balance');
     const deposits = await page.evaluate(() => JSON.parse(localStorage.getItem('hedgr:ledger')!).transactions);
     expect(deposits).toHaveLength(1);
-    expect(deposits[0]).toMatchObject({ type: 'deposit', status: 'settled', amount_usd: 5, amount_zmw: 100, fx_rate: 20 });
+    expect(deposits[0]).toMatchObject({ type: 'deposit', status: 'settled', amount_usd: 5, amount_zmw: 135, fx_rate: DANIEL_FIXTURE_RATE_ZMW_PER_USD });
     await page.getByRole('link', { name: 'Continue to simulated withdrawal' }).click();
     await expect(page).toHaveURL(/\/withdraw\?journey=class-a-val-002$/);
     await expect(page.getByTestId('withdraw-fx-block')).toHaveText(`Simulated example rate: 1 USD = ${rate.toFixed(2)} ${currency}`);

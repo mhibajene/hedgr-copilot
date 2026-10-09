@@ -1,13 +1,14 @@
 import { describe, expect, test } from 'vitest';
 import { compareCurrencyExample, formatComparisonCents, makeCurrencyExample, type CurrencyExample } from '../lib/narrative/simulation-currency-insight';
 import { SIMULATION_DISPLAY_CURRENCIES } from '../lib/state/simulation-display-currency';
+import { DANIEL_FIXTURE_RATE_ZMW_PER_USD } from '../lib/engine/daniel-read';
 
 const compare = (usdAmount = 300, rate = 20, example = makeCurrencyExample(rate), pending = false) =>
   compareCurrencyExample({ usdAmount, latestDisplayRate: rate, example, pending });
 
 describe('invented currency comparison', () => {
   test.each([
-    ['ZMW', 19, 570000n, 600000n, 30000n],
+    ['ZMW', DANIEL_FIXTURE_RATE_ZMW_PER_USD * 95 / 100, 769500n, 810000n, 40500n],
     ['KES', 123.5, 3705000n, 3900000n, 195000n],
     ['NGN', 1425, 42750000n, 45000000n, 2250000n],
     ['GHS', 14.25, 427500n, 450000n, 22500n],

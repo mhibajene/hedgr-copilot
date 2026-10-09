@@ -1,4 +1,5 @@
 import { expect, test, type Page } from '@playwright/test';
+import { DANIEL_FIXTURE_RATE_ZMW_PER_USD } from '../lib/engine/daniel-read';
 
 async function seedPosition(page: Page) {
   await page.goto('/login');
@@ -146,7 +147,7 @@ for (const synthetic of [true, false]) {
     await expect(page.locator('main').getByRole('alert')).toHaveText('Amount exceeds available balance.');
 
     await page.goto(route('/deposit'));
-    await expect(page.getByTestId('deposit-balance-change')).toContainText('+$5.00');
+    await expect(page.getByTestId('deposit-balance-change')).toContainText(synthetic ? `+$${(100 / DANIEL_FIXTURE_RATE_ZMW_PER_USD).toFixed(2)}` : '+$5.00');
     await expectMainFits(page);
     await page.screenshot({ path: testInfo.outputPath(`${family}-deposit.png`), fullPage: true });
     await page.getByTestId('deposit-amount').fill('0');

@@ -7,6 +7,10 @@ import {
   isSyntheticJourneyResetRequested,
   isSyntheticJourneyUnavailableDataScenario,
 } from '../lib/state/synthetic-journey';
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+import { DANIEL_FIXTURE_RATE_ZMW_PER_USD } from '../lib/engine/daniel-read';
+import { FIXED_RATE_BY_QUOTE, FX_RATE_ZMW_PER_USD_DEFAULT, getFixedRate, zmwToUsd } from '../lib/fx';
 
 afterEach(() => {
   vi.unstubAllEnvs();
@@ -82,6 +86,35 @@ describe('CLASS-A-VAL-002 synthetic journey state', () => {
     expect(
       getSyntheticJourneyHref('/deposit', { unavailableData: true }),
     ).toBe('/deposit?journey=class-a-val-002&scenario=unavailable-data');
-    expect(getSyntheticJourneyRate('ZMW')).toBe(20);
+    expect(getSyntheticJourneyRate('ZMW')).toBe(DANIEL_FIXTURE_RATE_ZMW_PER_USD);
+  });
+});
+
+describe('imports the Engine ZMW fixture while preserving all other display and fixed FX rates', () => {
+  test('imports the Engine ZMW fixture while preserving all other display and fixed FX rates', async () => {
+    expect(getSyntheticJourneyRate('ZMW')).toBe(DANIEL_FIXTURE_RATE_ZMW_PER_USD);
+    expect(getSyntheticJourneyRate('ZMW')).toBe(27);
+    // Other supported quotes keep their fixed behaviour.
+    expect(getSyntheticJourneyRate('KES')).toBe(130);
+    expect(getSyntheticJourneyRate('NGN')).toBe(1500);
+    expect(() => getSyntheticJourneyRate('GHS')).toThrow(/Unsupported synthetic journey quote/);
+    const source = readFileSync(resolve(__dirname, '../lib/state/synthetic-journey.ts'), 'utf8');
+    expect(source).toMatch(/import \{ DANIEL_FIXTURE_RATE_ZMW_PER_USD \} from '\.\.\/engine\/daniel-read';/);
+    expect(source).not.toMatch(/\b27\b/);
+    vi.resetModules();
+    vi.doMock('../lib/engine/daniel-read', async (importOriginal) => ({
+      ...(await importOriginal<typeof import('../lib/engine/daniel-read')>()),
+      DANIEL_FIXTURE_RATE_ZMW_PER_USD: 31,
+    }));
+    const rewired = await import('../lib/state/synthetic-journey');
+    expect(rewired.getSyntheticJourneyRate('ZMW')).toBe(31);
+    expect(rewired.getSyntheticJourneyRate('KES')).toBe(130);
+    vi.doUnmock('../lib/engine/daniel-read');
+    vi.resetModules();
+    // Fixed FX separation: the live/API boundary stays at 20.
+    expect(getFixedRate('ZMW')).toBe(20);
+    expect(FIXED_RATE_BY_QUOTE).toEqual({ ZMW: 20, NGN: 1500, KES: 130 });
+    expect(FX_RATE_ZMW_PER_USD_DEFAULT).toBe(20);
+    expect(zmwToUsd(100)).toBe(5);
   });
 });
