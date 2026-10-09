@@ -50,6 +50,7 @@ import {
   isSyntheticJourneyPrimaryCondition,
   isSyntheticJourneyResetRequested,
 } from "../../../lib/state/synthetic-journey";
+import { DANIEL_HOME_READ } from "../../../lib/state/daniel-home-fixture";
 
 function formatActivityDayLabel(timestamp: number): string {
   const date = new Date(timestamp);
@@ -589,6 +590,40 @@ export default function DashboardPage() {
     />
   ) : null;
 
+  // §359: Daniel's computed Engine read, shown verbatim beside (never inside) the hero on every
+  // simulated Home route. It is not an input to, nor derived from, the mock posture or notices.
+  const danielPanel = productSimulationActive ? (
+    <section
+      className={home.observation}
+      aria-labelledby="dashboard-daniel-label"
+      data-testid="dashboard-daniel-read"
+    >
+      <p id="dashboard-daniel-label" className="text-sm font-semibold text-hedgr-800">
+        Daniel’s declared holding · Fictional example
+      </p>
+      <div className="mt-2 text-2xl font-semibold tabular-nums text-hedgr-dark" data-testid="daniel-read-figure">
+        {DANIEL_HOME_READ.localDisplay}
+      </div>
+      <p className="text-xs text-hedgr-500" data-testid="daniel-read-caption">
+        {SIMULATION_DISPLAY_ESTIMATE_CAPTION}
+      </p>
+      <ul className="mt-3 space-y-1 text-sm leading-relaxed text-hedgr-600" data-testid="daniel-read-disclosure">
+        <li data-testid="daniel-read-holding">
+          Fictional user-declared holding: {DANIEL_HOME_READ.declaredHolding.currency}{" "}
+          {DANIEL_HOME_READ.declaredHolding.amount.toLocaleString("en-US")}. Hedgr only reads it.
+        </li>
+        <li data-testid="daniel-read-pair">Pair: {DANIEL_HOME_READ.pair}.</li>
+        <li data-testid="daniel-read-rate">{DANIEL_HOME_READ.explanation.rateAssumption}</li>
+        <li data-testid="daniel-read-as-of">
+          As of <time dateTime={DANIEL_HOME_READ.asOf}>{DANIEL_HOME_READ.asOf}</time>, a fixed example time.
+        </li>
+      </ul>
+      <p className="mt-3 text-xs leading-relaxed text-hedgr-500" data-testid="daniel-read-coexistence">
+        The mock guidance on this page is not calculated from Daniel’s amount. Daniel’s figure neither confirms nor overrides it.
+      </p>
+    </section>
+  ) : null;
+
   const currentOverview = (
     <section
       aria-label={
@@ -679,6 +714,7 @@ export default function DashboardPage() {
           }`}
         >
           {currentOverview}
+          {danielPanel}
           <EngineAllocationBands
             engineState={engineState}
             collapsed={productSimulationActive}
@@ -725,6 +761,7 @@ export default function DashboardPage() {
         </section>
 
         {currentOverview}
+        {danielPanel}
 
         {isFirstTimeUser && !productSimulationActive && (
           <div
