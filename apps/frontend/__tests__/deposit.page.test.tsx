@@ -62,6 +62,8 @@ import { CONVERSION_PREVIEW_UNAVAILABLE_PLACEHOLDER } from '../lib/fx/market-dat
 import { useSearchParams } from 'next/navigation';
 import { TX_REVIEW_BYPASS_FX_PARAM } from '../lib/tx';
 import { useLedgerStore } from '../lib/state/ledger';
+import { DANIEL_FIXTURE_RATE_ZMW_PER_USD } from '../lib/engine/daniel-read';
+import { FX_RATE_ZMW_PER_USD_DEFAULT, getFixedRate } from '../lib/fx';
 
 const ORIGINAL_CI = process.env.CI;
 const ORIGINAL_NODE_ENV = process.env.NODE_ENV;
@@ -419,11 +421,14 @@ describe('DepositPage CLASS-A-VAL-002 primary and exception conditions', () => {
       /see how the simulated position changes/i,
     );
     expect(screen.getByTestId('deposit-fx-block').textContent).toContain(
-      '1 USD = 20.00 ZMW',
+      `1 USD = ${DANIEL_FIXTURE_RATE_ZMW_PER_USD.toFixed(2)} ZMW`,
     );
+    fireEvent.change(screen.getByTestId('deposit-amount'), {
+      target: { value: String(DANIEL_FIXTURE_RATE_ZMW_PER_USD * 5) },
+    });
     expect(screen.getByTestId('deposit-conversion-preview').textContent).toContain('$5.00');
     expect(screen.getByTestId('deposit-balance-change').textContent).toMatch(
-      /shows 100 ZMW as \+\$5\.00/i,
+      /shows 135 ZMW as \+\$5\.00/i,
     );
     expect(screen.getByTestId('deposit-balance-change').textContent).not.toMatch(
       /fixture|synthetic|settlement/i,
@@ -549,19 +554,19 @@ describe('D-132 selected simulation deposit currency', () => {
   });
 
   test.each([
-    ['ZMW', 20, '100', 5, 100],
-    ['KES', 130, '650', 5, 100],
-    ['NGN', 1500, '7500', 5, 100],
-    ['GHS', 15, '75', 5, 100],
-    ['PHP', 56, '280', 5, 100],
-    ['ZMW', 20, '1', 0.05, 1],
-    ['KES', 130, '1', 0.01, 0.2],
-    ['GHS', 15, '1', 0.07, 1.4],
-    ['PHP', 56, '1', 0.02, 0.4],
-    ['KES', 130, '100', 0.77, 15.4],
-    ['NGN', 1500, '100', 0.07, 1.4],
-    ['PHP', 56, '100', 1.79, 35.8],
-    ['invalid', 20, '100', 5, 100],
+    ['ZMW', DANIEL_FIXTURE_RATE_ZMW_PER_USD, '135', 5, 135],
+    ['KES', 130, '650', 5, 135],
+    ['NGN', 1500, '7500', 5, 135],
+    ['GHS', 15, '75', 5, 135],
+    ['PHP', 56, '280', 5, 135],
+    ['ZMW', DANIEL_FIXTURE_RATE_ZMW_PER_USD, '1', 0.04, 1.08],
+    ['KES', 130, '1', 0.01, 0.27],
+    ['GHS', 15, '1', 0.07, 1.89],
+    ['PHP', 56, '1', 0.02, 0.54],
+    ['KES', 130, '100', 0.77, 20.79],
+    ['NGN', 1500, '100', 0.07, 1.89],
+    ['PHP', 56, '100', 1.79, 48.33],
+    ['invalid', DANIEL_FIXTURE_RATE_ZMW_PER_USD, '135', 5, 135],
   ])('%s input %s: preview and confirmation share rounded USD and valid ZMW ledger fields', async (currency, rate, input, usd, zmw) => {
     vi.stubEnv('NEXT_PUBLIC_AUTH_MODE', 'mock');
     vi.stubEnv('NEXT_PUBLIC_FX_MODE', 'stub');
@@ -583,7 +588,7 @@ describe('D-132 selected simulation deposit currency', () => {
     expect(postDeposit).not.toHaveBeenCalled();
     expect(depositStateMocks.append).toHaveBeenCalledTimes(1);
     expect(depositStateMocks.append).toHaveBeenCalledWith(expect.objectContaining({
-      type: 'deposit', amount_usd: usd, amount_zmw: zmw, fx_rate: 20,
+      type: 'deposit', amount_usd: usd, amount_zmw: zmw, fx_rate: DANIEL_FIXTURE_RATE_ZMW_PER_USD,
     }));
     await act(async () => { await vi.advanceTimersByTimeAsync(1600); });
     expect(screen.getByTestId('deposit-confirmation-region').textContent).toContain(`You added $${usd.toFixed(2)} to your simulated balance`);
@@ -604,5 +609,86 @@ describe('D-132 selected simulation deposit currency', () => {
     expect(screen.queryByTestId('deposit-synthetic-condition')).toBeNull();
     expect(screen.getByLabelText(/Amount.*\(ZMW\)/)).toBeTruthy();
     expect(screen.getByTestId('deposit-conversion-preview').textContent).toContain('$5.00');
+  });
+});
+
+describe('§359 synthetic ZMW normalization at the Engine fixture', () => {
+  function stubJourney(currency: string) {
+    vi.stubEnv('NEXT_PUBLIC_AUTH_MODE', 'mock');
+    vi.stubEnv('NEXT_PUBLIC_FX_MODE', 'stub');
+    vi.useFakeTimers();
+    vi.mocked(postDeposit).mockClear();
+    localStorage.setItem('hedgr.simulation.display-currency', currency);
+    vi.mocked(useSearchParams).mockReturnValue(
+      new URLSearchParams('journey=class-a-val-002') as ReturnType<typeof useSearchParams>,
+    );
+    vi.mocked(useLatestFx).mockReturnValue({ status: 'error', retry: vi.fn() });
+  }
+
+  test('normalizes new synthetic ZMW deposit rows at the Engine fixture without changing the live API boundary', async () => {
+    const oldRow = {
+      txn_ref: 'old-20-row', type: 'deposit' as const, status: 'settled' as const,
+      amount_zmw: 100, amount_usd: 5, fx_rate: 20, created_at: 1, updated_at: 1,
+    };
+    useLedgerStore.getState().append(oldRow);
+    const oldBefore = JSON.stringify(useLedgerStore.getState().getByTxnRef('old-20-row'));
+    depositStateMocks.append.mockClear();
+    const fetchSpy = vi.spyOn(globalThis, 'fetch');
+    stubJourney('ZMW');
+    render(<DepositPage />);
+    await act(async () => { await vi.advanceTimersByTimeAsync(350); });
+    expect(screen.getByTestId('deposit-fx-block').textContent).toContain('1 USD = 27.00 ZMW');
+    fireEvent.change(screen.getByTestId('deposit-amount'), { target: { value: '135' } });
+    expect(screen.getByTestId('deposit-balance-change').textContent).toContain('shows 135 ZMW as +$5.00');
+    await act(async () => { fireEvent.click(screen.getByRole('button', { name: 'Confirm' })); });
+    expect(depositStateMocks.append).toHaveBeenCalledTimes(1);
+    expect(depositStateMocks.append).toHaveBeenCalledWith(expect.objectContaining({
+      type: 'deposit', amount_usd: 5, amount_zmw: 135, fx_rate: DANIEL_FIXTURE_RATE_ZMW_PER_USD,
+    }));
+    expect(postDeposit).not.toHaveBeenCalled();
+    expect(fetchSpy).not.toHaveBeenCalled();
+    await act(async () => { await vi.advanceTimersByTimeAsync(1600); });
+    expect(screen.getByTestId('deposit-confirmation-region').textContent).toContain('You added $5.00 to your simulated balance');
+    // The seeded old row stays byte-identical.
+    expect(JSON.stringify(useLedgerStore.getState().getByTxnRef('old-20-row'))).toBe(oldBefore);
+    // Live/API boundary unchanged.
+    expect(getFixedRate('ZMW')).toBe(20);
+    expect(FX_RATE_ZMW_PER_USD_DEFAULT).toBe(20);
+  });
+
+  test('default non-journey simulated deposit keeps its backend 20 rate (boundary control)', async () => {
+    vi.stubEnv('NEXT_PUBLIC_AUTH_MODE', 'mock');
+    vi.stubEnv('NEXT_PUBLIC_FX_MODE', 'fixed');
+    vi.useFakeTimers();
+    vi.mocked(postDeposit).mockClear();
+    vi.mocked(useLatestFx).mockReturnValue({ status: 'success', data: { pair: 'USDZMW', rate: 20, ts: 1 }, retry: vi.fn() });
+    render(<DepositPage />);
+    await act(async () => { await vi.advanceTimersByTimeAsync(350); });
+    await act(async () => { fireEvent.click(screen.getByRole('button', { name: 'Confirm' })); });
+    expect(depositStateMocks.append).toHaveBeenCalledWith(expect.objectContaining({
+      amount_usd: 5, amount_zmw: 100, fx_rate: 20,
+    }));
+    expect(postDeposit).not.toHaveBeenCalled();
+  });
+
+  test.each([
+    ['KES', 130, '650'],
+    ['NGN', 1500, '7500'],
+    ['GHS', 15, '75'],
+    ['PHP', 56, '280'],
+  ])('normalizes non-ZMW synthetic deposit ZMW legs at the Engine fixture with unchanged selected-currency amounts (%s)', async (currency, rate, input) => {
+    stubJourney(currency);
+    render(<DepositPage />);
+    await act(async () => { await vi.advanceTimersByTimeAsync(350); });
+    expect(screen.getByTestId('deposit-fx-block').textContent).toContain(`1 USD = ${rate.toFixed(2)} ${currency}`);
+    expect(screen.getByText(`Amount to simulate (${currency})`)).toBeTruthy();
+    fireEvent.change(screen.getByTestId('deposit-amount'), { target: { value: input } });
+    expect(screen.getByTestId('deposit-balance-change').textContent).toContain(`shows ${input} ${currency} as +$5.00`);
+    await act(async () => { fireEvent.click(screen.getByRole('button', { name: 'Confirm' })); });
+    expect(depositStateMocks.append).toHaveBeenCalledTimes(1);
+    expect(depositStateMocks.append).toHaveBeenCalledWith(expect.objectContaining({
+      type: 'deposit', amount_usd: 5, amount_zmw: 135, fx_rate: DANIEL_FIXTURE_RATE_ZMW_PER_USD,
+    }));
+    expect(postDeposit).not.toHaveBeenCalled();
   });
 });

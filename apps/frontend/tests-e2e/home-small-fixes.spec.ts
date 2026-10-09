@@ -221,7 +221,7 @@ test('Home after the first deposit offers Simulate a withdrawal on either route'
 });
 
 const estimateAmounts: Record<string, string> = {
-  ZMW: '9,600.00',
+  ZMW: '12,960.00',
   KES: '62,400.00',
   NGN: '720,000.00',
   GHS: '7,200.00',

@@ -1,4 +1,5 @@
 import { expect, test, type Page } from '@playwright/test';
+import { DANIEL_FIXTURE_RATE_ZMW_PER_USD } from '../lib/engine/daniel-read';
 
 const home = '/dashboard-synthetic-journey';
 const key = 'hedgr.simulation.display-currency';
@@ -33,7 +34,7 @@ test.beforeEach(async ({ context }) => {
 });
 
 for (const [currency, rate, deltaFive, deltaThree] of [
-  ['ZMW', 20, '5', '3'], ['KES', 130, '32.50', '19.50'],
+  ['ZMW', DANIEL_FIXTURE_RATE_ZMW_PER_USD, '6.75', '4.05'], ['KES', 130, '32.50', '19.50'],
   ['NGN', 1500, '375', '225'], ['GHS', 15, '3.75', '2.25'], ['PHP', 56, '14', '8.40'],
 ] as const) {
   test(`${currency}: comparison preserves the complete $0 → $5 → $3 journey`, async ({ page }) => {
@@ -79,7 +80,7 @@ for (const [currency, rate, deltaFive, deltaThree] of [
     const before = await storedState(page);
     const records = JSON.parse(before['hedgr:ledger']!).transactions;
     expect(records).toHaveLength(2);
-    expect(records[0]).toMatchObject({ amount_usd: 5, amount_zmw: 100, fx_rate: 20 });
+    expect(records[0]).toMatchObject({ amount_usd: 5, amount_zmw: 135, fx_rate: DANIEL_FIXTURE_RATE_ZMW_PER_USD });
     expect(records[1]).toMatchObject({ amount_usd: 2, type: 'withdrawal' });
     await page.waitForLoadState('networkidle');
     const requests: string[] = [];
@@ -139,7 +140,7 @@ test('preference fallback and hydration never display a stale direction or misma
   await page.evaluate(key => localStorage.setItem(key, 'invalid'), key);
   await page.reload();
   await page.getByRole('button', { name: 'Currency context', exact: true }).click();
-  await expect(page.getByTestId('currency-insight-headline')).toContainText('ZMW 300 higher');
+  await expect(page.getByTestId('currency-insight-headline')).toContainText('ZMW 405 higher');
   await page.getByRole('button', { name: 'Back to Home' }).click();
   await page.evaluate(key => localStorage.setItem(key, 'KES'), key);
   // Observe every DOM commit before hydration, rather than only the settled screenshot.
@@ -179,7 +180,7 @@ test('blocked preference storage preserves a usable in-session comparison', asyn
   }, key);
   await page.reload();
   await page.getByRole('button', { name: 'Currency context', exact: true }).click();
-  await expect(page.getByTestId('currency-insight-headline')).toContainText('ZMW 300 higher');
+  await expect(page.getByTestId('currency-insight-headline')).toContainText('ZMW 405 higher');
   await page.getByRole('button', { name: 'Back to Home' }).click();
   await page.getByRole('link', { name: 'Settings', exact: true }).first().click();
   await page.getByRole('button', { name: /Display currency/ }).click();
@@ -197,17 +198,17 @@ test('inline insight is one keyboard launcher with a complete unchanged shelf an
   await seedPosition(page);
   const before = await storedState(page);
   const launcher = page.getByRole('button', { name: 'Currency context', exact: true });
-  await expect(launcher).toHaveAccessibleDescription('ZMW 300 higher from the rate change');
+  await expect(launcher).toHaveAccessibleDescription('ZMW 405 higher from the rate change');
   await expect(launcher).toContainText('Understand the comparison');
-  await expect(page.getByTestId('currency-insight-inline')).toHaveText('ZMW 300 higher from the rate change');
+  await expect(page.getByTestId('currency-insight-inline')).toHaveText('ZMW 405 higher from the rate change');
   await launcher.focus();
   await page.keyboard.press('Enter');
   const dialog = page.getByRole('dialog', { name: 'Currency context', exact: true });
   await expect(dialog).toBeVisible();
   await expect(dialog).toContainText('Same USD amount.');
   await expect(dialog).toContainText('Different local estimate.');
-  await expect(dialog).toContainText('ZMW 5,700.00');
-  await expect(dialog).toContainText('ZMW 6,000.00');
+  await expect(dialog).toContainText('ZMW 7,695.00');
+  await expect(dialog).toContainText('ZMW 8,100.00');
   await expect(dialog).toContainText('FX comparison only—not earnings, purchasing power, guaranteed protection or a conversion quote.');
   await expect(dialog).toContainText('This shows the same amount at two made-up exchange rates. No money is earned or exchanged, and it isn’t what you’d receive.');
   await expect(dialog).toContainText('A made-up example, shown today and 30 days later.');
@@ -245,9 +246,9 @@ for (const width of [320, 390, 700, 1280, 1440]) {
       await page.addStyleTag({ content: `html { font-size: ${size}%; }` });
       const section = page.getByTestId('currency-insight');
       const launcher = page.getByRole('button', { name: 'Currency context', exact: true });
-      await expect(page.getByTestId('currency-insight-inline')).toContainText('ZMW 300 higher');
+      await expect(page.getByTestId('currency-insight-inline')).toContainText('ZMW 405 higher');
       await expect(page.getByTestId('currency-insight-inline')).toContainText('from the rate change');
-      await expect(launcher).toHaveAccessibleDescription('ZMW 300 higher from the rate change');
+      await expect(launcher).toHaveAccessibleDescription('ZMW 405 higher from the rate change');
       expect((await launcher.boundingBox())!.height).toBeGreaterThanOrEqual(44);
       await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)).toBeLessThanOrEqual(1);
       expect(await launcher.evaluate(el => el.scrollWidth - el.clientWidth)).toBeLessThanOrEqual(1);

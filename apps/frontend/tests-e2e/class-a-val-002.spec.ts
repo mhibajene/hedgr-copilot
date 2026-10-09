@@ -1,4 +1,8 @@
 import { expect, test, type Page } from '@playwright/test';
+import { DANIEL_FIXTURE_RATE_ZMW_PER_USD } from '../lib/engine/daniel-read';
+
+// §359: the synthetic ZMW rate is the Engine fixture; this is the ZMW input worth USD 5.
+const ZMW_FOR_USD_5 = String(DANIEL_FIXTURE_RATE_ZMW_PER_USD * 5);
 
 const browserErrors = new WeakMap<Page, string[]>();
 
@@ -92,6 +96,7 @@ test('pending simulated Deposit completes once after in-app navigation and remou
   await login(page);
   await page.getByTestId('dashboard-add-simulated-deposit').click();
   await expect(page.getByTestId('deposit-amount')).toBeVisible();
+  await page.getByTestId('deposit-amount').fill(ZMW_FOR_USD_5);
   await page.clock.pauseAt(new Date('2026-09-18T01:00:00Z'));
   await page.getByRole('button', { name: 'Confirm', exact: true }).click();
   await expect(page.getByRole('button', { name: 'Processing…' })).toBeVisible();
@@ -137,6 +142,7 @@ test('simulated withdrawal rejects fractional cents, refreshes the next draft an
   await clearStorage(page);
   await login(page);
   await page.getByTestId('dashboard-add-simulated-deposit').click();
+  await page.getByTestId('deposit-amount').fill(ZMW_FOR_USD_5);
   await page.getByRole('button', { name: 'Confirm', exact: true }).click();
   await expect(page.getByTestId('deposit-confirmation-region')).toBeVisible();
   await page.getByRole('link', { name: 'Continue to simulated withdrawal' }).click();
@@ -416,7 +422,7 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
     'see how the simulated position changes'
   );
   await expect(page.getByTestId('deposit-fx-block')).toContainText(
-    'Simulated example rate: 1 USD = 20.00 ZMW'
+    `Simulated example rate: 1 USD = ${DANIEL_FIXTURE_RATE_ZMW_PER_USD.toFixed(2)} ZMW`
   );
 
   const depositAmount = page.getByTestId('deposit-amount');
@@ -429,12 +435,12 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   ).toBeVisible();
   await expect(depositConfirm).toBeDisabled();
 
-  await depositAmount.fill('100');
+  await depositAmount.fill(ZMW_FOR_USD_5);
   await expect(page.getByTestId('deposit-conversion-preview')).toContainText(
     '$5.00'
   );
   await expect(page.getByTestId('deposit-balance-change')).toContainText(
-    'shows 100 ZMW as +$5.00'
+    `shows ${ZMW_FOR_USD_5} ZMW as +$5.00`
   );
   await depositConfirm.click();
   await expect(page.getByTestId('deposit-confirmation-region')).toContainText(
@@ -626,7 +632,7 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   await expect(page.getByTestId('dashboard-optional-actions')).toHaveCount(0);
 
   await page.getByTestId('dashboard-add-simulated-deposit').click();
-  await page.getByTestId('deposit-amount').fill('100');
+  await page.getByTestId('deposit-amount').fill(ZMW_FOR_USD_5);
   await page.getByRole('button', { name: 'Confirm' }).click();
   await expect(page.getByTestId('deposit-confirmation-region')).toBeVisible({
     timeout: 10_000,
@@ -773,7 +779,7 @@ test('Home explains what changed since the last visit and clears it on reset', a
 
   // Two entries between Home visits.
   await page.getByTestId('dashboard-add-simulated-deposit').click();
-  await page.getByTestId('deposit-amount').fill('100');
+  await page.getByTestId('deposit-amount').fill(ZMW_FOR_USD_5);
   await page.getByRole('button', { name: 'Confirm' }).click();
   await expect(page.getByTestId('deposit-confirmed')).toHaveText('You added $5.00 to your simulated balance');
   await page.getByRole('link', { name: 'Continue to simulated withdrawal' }).click();
@@ -852,7 +858,7 @@ async function recordWithdrawalSinceLastHomeVisit(page: Page) {
   await clearStorage(page);
   await login(page);
   await page.goto('/deposit?journey=class-a-val-002');
-  await page.getByTestId('deposit-amount').fill('100');
+  await page.getByTestId('deposit-amount').fill(ZMW_FOR_USD_5);
   await page.getByRole('button', { name: 'Confirm' }).click();
   await expect(page.getByTestId('deposit-confirmed')).toBeVisible();
   await page.getByRole('link', { name: 'Back to your position' }).click();

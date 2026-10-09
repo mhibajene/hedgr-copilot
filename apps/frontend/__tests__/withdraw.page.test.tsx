@@ -110,6 +110,10 @@ import { useLatestFx } from '../lib/hooks/useLatestFx';
 import { useSearchParams } from 'next/navigation';
 import { withdrawMock } from '../lib/payments/withdraw.mock';
 import { TX_REVIEW_BYPASS_FX_PARAM, TX_REVIEW_HOLD_PENDING_PARAM } from '../lib/tx';
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+import { DANIEL_FIXTURE_RATE_ZMW_PER_USD } from '../lib/engine/daniel-read';
+import { SIMULATION_DISPLAY_CURRENCIES } from '../lib/state/simulation-display-currency';
 
 const ORIGINAL_CI = process.env.CI;
 const ORIGINAL_NODE_ENV = process.env.NODE_ENV;
@@ -645,7 +649,7 @@ describe('WithdrawPage CLASS-A-VAL-002 primary condition', () => {
       /what would remain in the simulated balance/i,
     );
     expect(screen.getByTestId('withdraw-fx-block').textContent).toContain(
-      '1 USD = 20.00 ZMW',
+      `1 USD = ${DANIEL_FIXTURE_RATE_ZMW_PER_USD.toFixed(2)} ZMW`,
     );
     fireEvent.change(screen.getByLabelText('Amount to simulate (USD)'), {
       target: { value: '1' },
@@ -702,7 +706,7 @@ describe('D-132 selected simulation withdrawal estimate', () => {
   });
 
   test.each([
-    ['ZMW', 20, '100.00'], ['KES', 130, '650.00'], ['NGN', 1500, '7,500.00'],
+    ['ZMW', DANIEL_FIXTURE_RATE_ZMW_PER_USD, '135.00'], ['KES', 130, '650.00'], ['NGN', 1500, '7,500.00'],
     ['GHS', 15, '75.00'], ['PHP', 56, '280.00'],
   ])('%s estimate retains USD input, balance limit and withdrawal amount', async (currency, rate, estimate) => {
     vi.stubEnv('NEXT_PUBLIC_AUTH_MODE', 'mock');
@@ -725,5 +729,37 @@ describe('D-132 selected simulation withdrawal estimate', () => {
     expect(withdrawMock.createWithdraw).not.toHaveBeenCalled();
     await act(async () => { fireEvent.click(screen.getByRole('button', { name: 'Confirm' })); });
     expect(withdrawMock.createWithdraw).toHaveBeenCalledWith(2, { skipAutoConfirm: false });
+  });
+});
+
+describe('§359 synthetic withdrawal estimate at the Engine fixture', () => {
+  test('shows synthetic withdrawal ZMW estimates at the Engine fixture while preserving USD and lifecycle semantics', async () => {
+    vi.stubEnv('NEXT_PUBLIC_AUTH_MODE', 'mock');
+    vi.stubEnv('NEXT_PUBLIC_FX_MODE', 'stub');
+    vi.useFakeTimers();
+    vi.mocked(withdrawMock.createWithdraw).mockClear();
+    localStorage.setItem('hedgr.simulation.display-currency', 'ZMW');
+    vi.mocked(useSearchParams).mockReturnValue(new URLSearchParams('journey=class-a-val-002') as ReturnType<typeof useSearchParams>);
+    vi.mocked(useBalance).mockReturnValue({ total: 5, available: 5, pending: 0, currency: 'USD', asOf: 1, isLoading: false, error: null, refresh: vi.fn() });
+    vi.mocked(useLatestFx).mockReturnValue({ status: 'error', retry: vi.fn() });
+    render(<WithdrawPage />);
+    await act(async () => { await vi.advanceTimersByTimeAsync(350); });
+    expect(screen.getByTestId('withdraw-fx-block').textContent).toContain('1 USD = 27.00 ZMW');
+    expect(screen.getByTestId('withdraw-local-estimate').textContent).toBe('≈ ZMW 135.00 display estimate');
+    const amount = screen.getByLabelText('Amount to simulate (USD)');
+    fireEvent.change(amount, { target: { value: '6' } });
+    expect((screen.getByRole('button', { name: 'Confirm' }) as HTMLButtonElement).disabled).toBe(true);
+    fireEvent.change(amount, { target: { value: '2' } });
+    expect(screen.getByTestId('withdraw-balance-preview').textContent).toContain('$5.00 − $2.00 = $3.00');
+    await act(async () => { fireEvent.click(screen.getByRole('button', { name: 'Confirm' })); });
+    expect(withdrawMock.createWithdraw).toHaveBeenCalledTimes(1);
+    expect(withdrawMock.createWithdraw).toHaveBeenCalledWith(2, { skipAutoConfirm: false });
+    // Other display rates unchanged; the withdrawal writer keeps zero technical ZMW fields.
+    expect(SIMULATION_DISPLAY_CURRENCIES.map(({ code, unitsPerUsd }) => [code, unitsPerUsd])).toEqual([
+      ['ZMW', DANIEL_FIXTURE_RATE_ZMW_PER_USD], ['KES', 130], ['NGN', 1500], ['GHS', 15], ['PHP', 56],
+    ]);
+    const writer = readFileSync(resolve(__dirname, '../lib/payments/withdraw.mock.ts'), 'utf8');
+    expect(writer).toMatch(/amount_zmw: 0,/);
+    expect(writer).toMatch(/fx_rate: 0,/);
   });
 });

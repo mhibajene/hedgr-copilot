@@ -44,8 +44,8 @@ test('research baseline: navigation, dialog focus, currency and event reconcilia
   await trigger.click();
   const dialog = page.getByRole('dialog', { name: 'Currency context', exact: true });
   await expect(dialog).toBeVisible();
-  await expect(dialog).toContainText('ZMW 5,700.00');
-  await expect(dialog).toContainText('ZMW 6,000.00');
+  await expect(dialog).toContainText('ZMW 7,695.00');
+  await expect(dialog).toContainText('ZMW 8,100.00');
   await page.screenshot({ path: testInfo.outputPath('currency-390.png') });
   await page.setViewportSize({ width: 458, height: 956 });
   await page.screenshot({ path: testInfo.outputPath('currency-reference.png') });
