@@ -6,6 +6,7 @@ import {
   isSyntheticJourneyPrimaryCondition,
   isSyntheticJourneyResetRequested,
   isSyntheticJourneyUnavailableDataScenario,
+  parseSyntheticJourneyExample,
 } from '../lib/state/synthetic-journey';
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
@@ -116,5 +117,26 @@ describe('imports the Engine ZMW fixture while preserving all other display and 
     expect(FIXED_RATE_BY_QUOTE).toEqual({ ZMW: 20, NGN: 1500, KES: 130 });
     expect(FX_RATE_ZMW_PER_USD_DEFAULT).toBe(20);
     expect(zmwToUsd(100)).toBe(5);
+  });
+});
+
+// §362 CLASS-A-VAL-002-HOME-EXAMPLE-PICKER-001 — the example is selected only by the URL.
+describe('parses the example parameter with Daniel as the only recognised value', () => {
+  test('parses the example parameter with Daniel as the only recognised value', () => {
+    expect(parseSyntheticJourneyExample('example=daniel')).toBe('daniel');
+    expect(parseSyntheticJourneyExample('?journey=class-a-val-002&example=daniel')).toBe('daniel');
+    for (const search of [
+      undefined,
+      '',
+      'example=',
+      'example=sarah',
+      'example=DANIEL',
+      'example=daniel%20',
+      'example=own',
+      'journey=class-a-val-002',
+      'scenario=daniel',
+    ]) {
+      expect(parseSyntheticJourneyExample(search), String(search)).toBe('own');
+    }
   });
 });
