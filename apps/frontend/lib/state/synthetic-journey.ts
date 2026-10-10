@@ -10,6 +10,15 @@ export const CLASS_A_VAL_002_SCENARIO_PARAM = 'scenario';
 export const CLASS_A_VAL_002_UNAVAILABLE_DATA_SCENARIO = 'unavailable-data';
 export const CLASS_A_VAL_002_RESET_PARAM = 'reset';
 export const CLASS_A_VAL_002_RESET_VALUE = '1';
+export const CLASS_A_VAL_002_EXAMPLE_PARAM = 'example';
+export const CLASS_A_VAL_002_DANIEL_EXAMPLE = 'daniel';
+
+/** §362: the journey Home example comes only from the URL; `daniel` is the only recognised value. */
+export function parseSyntheticJourneyExample(search?: string): 'own' | 'daniel' {
+  return getSearchParams(search).get(CLASS_A_VAL_002_EXAMPLE_PARAM) === CLASS_A_VAL_002_DANIEL_EXAMPLE
+    ? 'daniel'
+    : 'own';
+}
 
 function getSearchParams(search?: string): URLSearchParams {
   if (!search) return new URLSearchParams();

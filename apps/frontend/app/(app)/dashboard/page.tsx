@@ -43,12 +43,16 @@ import {
   type TxLifecycle,
 } from "../../../lib/tx";
 import {
+  CLASS_A_VAL_002_DANIEL_EXAMPLE,
   CLASS_A_VAL_002_DASHBOARD_PATH,
+  CLASS_A_VAL_002_EXAMPLE_PARAM,
   CLASS_A_VAL_002_JOURNEY_PARAM,
+  CLASS_A_VAL_002_RESET_PARAM,
   CLASS_A_VAL_002_JOURNEY_VALUE,
   getSyntheticJourneyHref,
   isSyntheticJourneyPrimaryCondition,
   isSyntheticJourneyResetRequested,
+  parseSyntheticJourneyExample,
 } from "../../../lib/state/synthetic-journey";
 import { DANIEL_HOME_READ } from "../../../lib/state/daniel-home-fixture";
 
@@ -121,7 +125,11 @@ export default function DashboardPage() {
     (pathname === CLASS_A_VAL_002_DASHBOARD_PATH ||
       searchParams?.get(CLASS_A_VAL_002_JOURNEY_PARAM) ===
         CLASS_A_VAL_002_JOURNEY_VALUE);
-  const displayCurrency = useSimulationDisplayCurrency(syntheticJourneyActive);
+  // §362: Daniel's reserve shows only on the journey Home, selected only by the URL.
+  const danielExample =
+    syntheticJourneyActive &&
+    parseSyntheticJourneyExample(searchParams?.toString()) === CLASS_A_VAL_002_DANIEL_EXAMPLE;
+  const displayCurrency = useSimulationDisplayCurrency(syntheticJourneyActive && !danielExample);
   const simulatedEnvironment = getEnvironmentMode() !== "live";
   const productSimulationActive =
     syntheticJourneyActive || simulatedEnvironment;
@@ -157,7 +165,13 @@ export default function DashboardPage() {
   const [visitRead, setVisitRead] = useState(false);
   const [today, setToday] = useState<number | null>(null);
   const visitRecorded = useRef(false);
+  // §362: an example never records a visit; arriving on one and returning records none either.
+  const arrivedOnExample = useRef(danielExample);
   useEffect(() => {
+    if (danielExample) {
+      setToday((current) => current ?? Date.now());
+      return;
+    }
     if (!productSimulationActive || visitRecorded.current) return;
     visitRecorded.current = true;
     const now = Date.now();
@@ -166,11 +180,11 @@ export default function DashboardPage() {
       setPreviousVisit(null);
     } else {
       setPreviousVisit(readLastVisit());
-      writeLastVisit(now);
+      if (!arrivedOnExample.current) writeLastVisit(now);
     }
     setToday(now);
     setVisitRead(true);
-  }, [productSimulationActive, cleanStartRequested]);
+  }, [productSimulationActive, cleanStartRequested, danielExample]);
 
   const hasNoTransactions = transactions.length === 0;
   const isFirstTimeUser =
@@ -590,9 +604,9 @@ export default function DashboardPage() {
     />
   ) : null;
 
-  // §359: Daniel's computed Engine read, shown verbatim beside (never inside) the hero on every
-  // simulated Home route. It is not an input to, nor derived from, the mock posture or notices.
-  const danielPanel = productSimulationActive ? (
+  // §359/§362: Daniel's computed Engine read, shown verbatim only as Daniel's reserve on the
+  // journey Home. It is not an input to, nor derived from, the mock posture or notices.
+  const danielPanel = danielExample ? (
     <section
       className={home.observation}
       aria-labelledby="dashboard-daniel-label"
@@ -618,10 +632,29 @@ export default function DashboardPage() {
           As of <time dateTime={DANIEL_HOME_READ.asOf}>{DANIEL_HOME_READ.asOf}</time>, a fixed example time.
         </li>
       </ul>
-      <p className="mt-3 text-xs leading-relaxed text-hedgr-500" data-testid="daniel-read-coexistence">
-        The mock guidance on this page is not calculated from Daniel’s amount. Daniel’s figure neither confirms nor overrides it.
-      </p>
     </section>
+  ) : null;
+
+  // §362: changing the example navigates on the same route, keeps journey and drops reset.
+  // The selection lives only in the URL; nothing is stored.
+  const chooseExample = (value: string) => {
+    const params = new URLSearchParams(window.location.search);
+    params.delete(CLASS_A_VAL_002_RESET_PARAM);
+    if (value === CLASS_A_VAL_002_DANIEL_EXAMPLE) params.set(CLASS_A_VAL_002_EXAMPLE_PARAM, value);
+    else params.delete(CLASS_A_VAL_002_EXAMPLE_PARAM);
+    const query = params.toString();
+    window.history.pushState(null, "", `${window.location.pathname}${query ? `?${query}` : ""}`);
+  };
+  const examplePicker = syntheticJourneyActive ? (
+    <select
+      aria-label="Choose an example"
+      value={danielExample ? CLASS_A_VAL_002_DANIEL_EXAMPLE : "own"}
+      onChange={(event) => chooseExample(event.target.value)}
+      className="mt-2 min-h-11 w-full min-w-0 max-w-xs rounded-xl border border-hedgr-300 bg-white px-3 py-2 text-sm text-hedgr-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-hedgr-500 focus-visible:ring-offset-2"
+    >
+      <option value="own">Your own simulation</option>
+      <option value={CLASS_A_VAL_002_DANIEL_EXAMPLE}>{"Daniel's reserve"}</option>
+    </select>
   ) : null;
 
   const currentOverview = (
@@ -705,7 +738,7 @@ export default function DashboardPage() {
     </details>
   );
 
-  if (error) {
+  if (error && !danielExample) {
     return (
       <main className={`${home.page} ${home.scopeFirst}`}>
         <div
@@ -714,7 +747,6 @@ export default function DashboardPage() {
           }`}
         >
           {currentOverview}
-          {danielPanel}
           <EngineAllocationBands
             engineState={engineState}
             collapsed={productSimulationActive}
@@ -753,6 +785,7 @@ export default function DashboardPage() {
           >
             Your position
           </h1>
+          {examplePicker}
           {!syntheticJourneyActive ? <p className={home.contextLine} data-testid="dashboard-context-line">
             {productSimulationActive
               ? 'This simulated experience provides context, not an instruction.'
@@ -760,8 +793,7 @@ export default function DashboardPage() {
           </p> : null}
         </section>
 
-        {currentOverview}
-        {danielPanel}
+        {danielExample ? danielPanel : currentOverview}
 
         {isFirstTimeUser && !productSimulationActive && (
           <div
@@ -791,7 +823,9 @@ export default function DashboardPage() {
           </div>
         )}
 
-        {syntheticJourneyActive ? (
+        {danielExample ? (
+          <div className={home.support}>{disclosureSection}</div>
+        ) : syntheticJourneyActive ? (
           <div className={home.support}>
             <details className={home.accordion} data-testid="research-planning-targets">
               <summary className={home.accordionSummary}>
@@ -806,7 +840,7 @@ export default function DashboardPage() {
 
 
 
-        {syntheticJourneyActive && hasSyntheticFixtureState && (
+        {syntheticJourneyActive && !danielExample && hasSyntheticFixtureState && (
           <section
             className={`${finish.replay} text-hedgr-800`}
             data-testid="dashboard-restart-journey"
