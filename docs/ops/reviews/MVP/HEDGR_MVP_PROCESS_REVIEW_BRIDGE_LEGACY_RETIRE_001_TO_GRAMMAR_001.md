@@ -4,7 +4,7 @@
 
 Status: bounded, non-authoritative evidence artifact (`codex-synthesizer`, `READ_ONLY`). Scope: the next four completed tickets after the existing review ending at `NARRATIVE-007`: `BRIDGE-LEGACY-RETIRE-001`, `SE-REASON-001-EVID-001`, `GOV-GREEN-RETIRE-001`, and `CLASS-A-VAL-002-GRAMMAR-001` (closeouts in `HEDGR_STATUS.md` §§214, 216, 217, and 223). Counting follows the prior review boundary at `STATUS-HYGIENE-001` (§173): only ticket closeout records count; combined activation-and-closeout records count once (§§214 and 217). Founder dispositions, RETAINs, direction records, and GRAMMAR amendments §§213 and 218–222 are not additional completed tickets; Internal D-087 / §219 Familiar Financial Grammar acceptance is a doctrine/principle record and is excluded. No existing MVP Process Review covers this slice. `HEDGR_STATUS.md` remains the execution source of truth; later completion records and current active work are outside this bounded slice except where noted to prevent a historical artifact from being mistaken for current occupancy.
 
-Last updated: 2026-10-10
+Last updated: 2026-10-11
 
 ## 2. Purpose
 

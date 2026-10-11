@@ -4,7 +4,7 @@
 
 Status: bounded, non-authoritative evidence artifact (`codex-synthesizer`, `READ_ONLY`). Scope: the next four completed tickets after the existing review ending at `CLASS-A-VAL-002-HOME-SETTINGS-001`: `CLASS-A-VAL-002-ORIENT-003`, `CLASS-A-VAL-002-ABOUT-001`, `CLASS-A-VAL-002-ROUTE-HYGIENE-001`, and `CLASS-A-VAL-002-PROD-CONVERGENCE-001` (closeouts in `HEDGR_STATUS.md` §§243, 245, 248, and 251). Counting follows the prior review boundary at `STATUS-HYGIENE-001` (§173): only ticket closeout records count; a combined closeout-and-successor-naming record counts once for the closed ticket (§243 closes ORIENT-003; §248 closes ROUTE-HYGIENE-001). Activation §242, ABOUT verification-only §244, ROUTE-HYGIENE in-place amendment §247, and PROD-CONVERGENCE verification-only §§249–250 are not additional completed tickets. No existing MVP Process Review covers this slice. `HEDGR_STATUS.md` remains the execution source of truth; later completion records and current active work are outside this bounded slice except where noted to prevent a historical artifact from being mistaken for current occupancy.
 
-Last updated: 2026-10-10
+Last updated: 2026-10-11
 
 ## 2. Purpose
 

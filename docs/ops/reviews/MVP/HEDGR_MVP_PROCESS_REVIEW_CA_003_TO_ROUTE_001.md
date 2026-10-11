@@ -4,7 +4,7 @@
 
 Status: bounded, non-authoritative evidence artifact (`codex-synthesizer`, `READ_ONLY`). Scope: the next five completed tickets after the existing review ending at `CLASS-A-VAL-002-CA-002`: `CLASS-A-VAL-002-CA-003`, `CLASS-A-VAL-002-GF-001`, `CLASS-A-VAL-002-WARMTH-001`, `CLASS-A-VAL-002-AFF-001`, and `CLASS-A-VAL-002-ROUTE-001` (closeouts in `HEDGR_STATUS.md` §§187, 190, 195, 197, and 199). Counting follows the prior review boundary at `STATUS-HYGIENE-001` (§173): only ticket closeout records count; activation records §§186, 189, 194, 196, and 198 are not additional completed tickets; Internal D-065 / D-067–D-069 principle acceptances §§188 and 191–193 are excluded. No existing MVP Process Review covers this slice. `HEDGR_STATUS.md` remains the execution source of truth; later completion records and current active work are outside this bounded slice except where noted to prevent a historical artifact from being mistaken for current occupancy.
 
-Last updated: 2026-10-10
+Last updated: 2026-10-11
 
 ## 2. Purpose
 
