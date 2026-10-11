@@ -58,7 +58,9 @@ Do not include:
 
 ## Review slice selection
 
-Identify the bounded completed-ticket slice to review.
+Identify the bounded completed-ticket slice to review. Slice selection follows `docs/ops/HEDGR_STATUS.md` §354 as amended by §364.
+
+Catch-up until the MVP process-review series is current (targeted Fri 16 Oct 2026):
 
 Preferred slice:
 
@@ -72,7 +74,17 @@ Alternative allowed slice:
 a meaningful completed milestone if evident from existing review coverage
 ```
 
-If the next ticket range is ambiguous, surface that ambiguity in the report instead of resolving it by inference.
+Each generated review covers one such bounded completed slice. More than one review may be published in the same PR, in sequence, including outside the Friday run.
+
+After the series is current:
+
+```text
+completed delivery in this week's window (matching the weekly review window)
+```
+
+Do not select the next sequential unreviewed slice after catch-up. If nothing completed that week, do not write an MVP process review file.
+
+If the next ticket range or weekly window is ambiguous, surface that ambiguity in the report instead of resolving it by inference.
 
 Do not infer coverage from memory.
 
@@ -80,7 +92,7 @@ Do not infer completion from draft artifacts.
 
 Do not infer blocker closure unless explicitly evidenced in repo-native closeout material.
 
-If no bounded completed slice exists (neither a next unreviewed 3-5 completed-ticket slice nor an evident completed milestone), do not write an MVP process review file and do not commit a placeholder. Report that no slice was available, with the evidence checked, in the completion summary. This follows `docs/ops/HEDGR_STATUS.md` §354. An ambiguous next range is still handled as above, by surfacing the ambiguity.
+If no bounded completed slice exists (catch-up: neither a next unreviewed 3-5 completed-ticket slice nor an evident completed milestone; after catch-up: nothing completed in that week's window), do not write an MVP process review file and do not commit a placeholder. Report that no slice was available, with the evidence checked, in the completion summary. An ambiguous next range is still handled as above, by surfacing the ambiguity.
 
 ## Output path
 
@@ -194,9 +206,9 @@ pnpm bridge:snapshots:check
 
 If those commands are unavailable or fail, report the failure explicitly. Do not invent success.
 
-## Publication cadence (§354)
+## Publication cadence (§354, amended by §364)
 
-Generating this review stays `READ_ONLY`. Publishing it (committing the review file and the three bridge snapshot JSONs, then opening and merging the PR) is governed only by `docs/ops/HEDGR_STATUS.md` §354 (`OPS-REVIEW-CADENCE-001`) and the Publication cadence (§354) block in `docs/ops/reviews/README.md`. This command grants no publication authority of its own; where it differs from §354, §354 governs.
+Generating this review stays `READ_ONLY`. Publishing it (committing the review file and the three bridge snapshot JSONs, then opening and merging the PR) is governed only by `docs/ops/HEDGR_STATUS.md` §354 (`OPS-REVIEW-CADENCE-001`) as amended by §364 (`OPS-RAP-CADENCE-001`) and the Publication cadence block in `docs/ops/reviews/README.md`. This command grants no publication authority of its own; where it differs from those records, §354 as amended by §364 governs.
 
 ## Completion summary
 

@@ -47,8 +47,9 @@ They must not:
 
 **When to create:**
 
-- Every 3–5 tickets
-- At meaningful milestones (e.g. phase completion)
+- Catch-up until the series is current (targeted Fri 16 Oct 2026, §364): one bounded completed slice (typically the next unreviewed 3–5 tickets, or a milestone). More than one such review may be published per PR, in sequence, including outside the Friday run.
+- After the series is current: each Friday, the completed delivery in that week's window (matching the weekly review window), not the next sequential slice. If nothing completed that week, no file is written.
+
 
 **Naming convention:**
 
@@ -413,12 +414,14 @@ pnpm bridge:snapshots:refresh
 pnpm bridge:snapshots:check
 ```
 
-### Publication cadence (§354)
+### Publication cadence (§354, amended by §364)
 
-`docs/ops/HEDGR_STATUS.md` §354 (`OPS-REVIEW-CADENCE-001`) records the Founder-approved publication cadence. This block points to it; it does not restate it in full or widen it. If they differ, §354 governs.
+`docs/ops/HEDGR_STATUS.md` §354 (`OPS-REVIEW-CADENCE-001`), as amended by §364 (`OPS-RAP-CADENCE-001`), records the Founder-approved publication cadence. This block points to it; it does not restate it in full or widen it. If they differ, §354 as amended by §364 governs.
 
-- **Cadence:** each Friday (AWST), one weekly review for the week ending that day, produced with `.cursor/commands/weekly-review.md`. In the same run, at most one MVP process review, produced with `.cursor/commands/mvp-process-review.md` for the next bounded completed slice under this guide.
-- **No slice, no file:** if no such slice exists, no MVP process review file is written and no placeholder is committed.
+- **Weekly reviews:** each Friday (AWST), one weekly review for the week ending that day, produced with `.cursor/commands/weekly-review.md`.
+- **MVP catch-up (until the series is current, targeted Fri 16 Oct 2026):** Barry may publish more than one MVP process review per PR, each covering one bounded completed slice in sequence, produced with `.cursor/commands/mvp-process-review.md`, including outside the Friday run.
+- **MVP after catch-up:** each Friday MVP process review covers the completed delivery in that week's window, matching the weekly review window, rather than the next sequential slice.
+- **No slice, no file:** if no such slice exists (catch-up) or nothing completed that week (after catch-up), no MVP process review file is written and no placeholder is committed.
 - **Publication authority:** for these reviews only, Barry (Repo Steward, AGENTS §9.3) may add each new review file under `docs/ops/reviews/weekly/` or `docs/ops/reviews/MVP/`, run `pnpm bridge:snapshots:refresh` and commit only `docs/ops/bridge/latest-weekly-review.json`, `docs/ops/bridge/latest-mvp-process-review.json` and `docs/ops/bridge/review-index.json`, then open the PR, keep it up to date, mark it ready, arm auto-merge and merge it. No other path is in scope. Existing reviews are not edited or deleted.
 - **Merge gate:** each publication PR follows the Standing PR invariant unchanged, including an independent Verifier PASS on the exact current head SHA. Barry never posts a `Hedgr-Verifier:` attestation and never verifies its own publication.
 - **Usage by Agents:** for these publication steps only, §354 supersedes "Agents must NOT … modify repo state" above. Generating a review stays `READ_ONLY`, and a published review remains non-authoritative evidence that activates no work and suggests no sequencing.

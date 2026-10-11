@@ -52,6 +52,11 @@ Founder merge action is not required for normal bounded implementation PRs. Foun
 
 Ticket-specific gate sections may be stricter than this standing rule and may never be looser. Satisfying merge gates authorises **repository merge only**. It does not widen originating ticket authority and does not imply launch, participant release, customer exposure, financial capability, or production-configuration approval.
 
+### Permanent-main RAP rebind (§364)
+
+Authority-effect PRs keep a separate verified permanent-main RAP rebind after source merge. A PR whose only RAP-mandatory-source change is a docs-only `HEDGR_STATUS.md` or `AGENTS.md` record with no authority effect does not need its own separate rebind PR: regenerate the branch RAP in the same PR so `bridge:rap:check` passes; the next PR that activates or closes a ticket, or otherwise has an authority effect, carries the permanent-main rebind covering all earlier deferred records. “No authority effect” means the record activates or closes no ticket and changes no occupancy, §7 or §7a text, execution boundary, role or verifier requirement. A record that changes a RAP materiality rule still gets its own separate rebind. Exact-head independent Verifier PASS and required checks are unchanged. This adds no rebind automation and keeps Fork 2 inactive. Binding source: `HEDGR_STATUS.md` §364.
+
+
 ### What CI actually enforces
 
 `.github/workflows/validate.yml` runs `trust:check`, `trust:phrases`, the route-conflict guard, typecheck, lint, and unit tests. It does **not** enforce labels. There is no `QA_GATE_BYPASS` implementation in `validate.yml`. Do not claim a Solo QA label gate in validate.
