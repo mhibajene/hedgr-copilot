@@ -421,6 +421,13 @@ async function expectCurrencyContext(page: Page) {
   await expect(points.nth(1)).toContainText(COPY.current);
   await expect(context.getByTestId('daniel-currency-figure')).toHaveText([lastRead.figure, currentRead.figure]);
   await expect(context.getByTestId('daniel-currency-rate')).toHaveText([lastRead.rate, currentRead.rate]);
+  for (const figure of await context.getByTestId('daniel-currency-figure').all()) {
+    const lines = await figure.evaluate((node) => {
+      const range = document.createRange(); range.selectNodeContents(node);
+      return Array.from(range.getClientRects()).filter((rect) => rect.width > 0).length;
+    });
+    expect(lines, 'each Engine figure remains a complete, unbroken number').toBe(1);
+  }
   const boxes = await points.evaluateAll((nodes) => nodes.map((node) => {
     const r = node.getBoundingClientRect();
     return { left: r.left, right: r.right, top: r.top, width: r.width };
