@@ -193,7 +193,11 @@ export function EnginePostureHeader({
             </>
           ) : null}
           <p className="text-xs leading-relaxed text-hedgr-500">
-            This is what happened in the example. It doesn’t tell you what will happen next.
+            {isSyntheticJourneyPrimaryCondition(searchParams?.toString(), pathname) &&
+            (pathname === CLASS_A_VAL_002_DASHBOARD_PATH ||
+              searchParams?.get(CLASS_A_VAL_002_JOURNEY_PARAM) === CLASS_A_VAL_002_JOURNEY_VALUE)
+              ? "This is what happened in your simulation. It doesn’t tell you what will happen next."
+              : "This is what happened in the example. It doesn’t tell you what will happen next."}
           </p>
         </div>
       ) : null}

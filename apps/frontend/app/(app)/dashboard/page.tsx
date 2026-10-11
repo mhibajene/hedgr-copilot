@@ -50,6 +50,7 @@ import {
   CLASS_A_VAL_002_JOURNEY_PARAM,
   CLASS_A_VAL_002_RESET_PARAM,
   CLASS_A_VAL_002_JOURNEY_VALUE,
+  SYNTHETIC_JOURNEY_EXAMPLES,
   getSyntheticJourneyHref,
   isSyntheticJourneyPrimaryCondition,
   isSyntheticJourneyResetRequested,
@@ -127,9 +128,9 @@ export default function DashboardPage() {
       searchParams?.get(CLASS_A_VAL_002_JOURNEY_PARAM) ===
         CLASS_A_VAL_002_JOURNEY_VALUE);
   // §362: Daniel's reserve shows only on the journey Home, selected only by the URL.
+  const selectedExample = parseSyntheticJourneyExample(searchParams?.toString());
   const danielExample =
-    syntheticJourneyActive &&
-    parseSyntheticJourneyExample(searchParams?.toString()) === CLASS_A_VAL_002_DANIEL_EXAMPLE;
+    syntheticJourneyActive && selectedExample === CLASS_A_VAL_002_DANIEL_EXAMPLE;
   const displayCurrency = useSimulationDisplayCurrency(syntheticJourneyActive && !danielExample);
   const simulatedEnvironment = getEnvironmentMode() !== "live";
   const productSimulationActive =
@@ -151,14 +152,19 @@ export default function DashboardPage() {
     if (cleanStartRequested) {
       clearTransactions();
       removeRetiredWalletBalance();
+      const resetParams = new URLSearchParams(searchParams?.toString());
+      resetParams.delete(CLASS_A_VAL_002_RESET_PARAM);
+      const resetTarget = syntheticJourneyActive && selectedExample !== "own"
+        ? `${pathname}?${resetParams.toString()}`
+        : CLASS_A_VAL_002_DASHBOARD_PATH;
       window.history.replaceState(
         window.history.state,
         "",
-        CLASS_A_VAL_002_DASHBOARD_PATH
+        resetTarget
       );
     }
     setReady(true);
-  }, [cleanStartRequested, clearTransactions]);
+  }, [cleanStartRequested, clearTransactions, pathname, searchParams, selectedExample, syntheticJourneyActive]);
 
   // HOME-EXPERIENCE-001 T3: read the previous Home visit once, then record this one.
   // A journey reset only clears the value; the next ordinary Home visit records it.
@@ -293,7 +299,9 @@ export default function DashboardPage() {
     if (!arrivalKey || !arrivalChange || arrivalStarted.current) return;
     arrivalStarted.current = true;
     const change = +(arrivalChange.to - arrivalChange.from).toFixed(2);
-    const sentence = `Your position is now ${formatUsd(arrivalChange.to)}, ${formatUsd(change)} ${change > 0 ? "higher" : "lower"} than on your last visit.`;
+    const sentence = syntheticJourneyActive
+      ? `Your simulated balance is now ${formatUsd(arrivalChange.to)}. On your last visit it was ${formatUsd(arrivalChange.from)}.`
+      : `Your position is now ${formatUsd(arrivalChange.to)}, ${formatUsd(change)} ${change > 0 ? "higher" : "lower"} than on your last visit.`;
     const finish = () => {
       setArrivalProgress(1);
       setArrivalPhase("done");
@@ -318,7 +326,7 @@ export default function DashboardPage() {
       finish();
     };
     // arrivalKey captures the only inputs that matter; the summary object is rebuilt each render.
-  }, [arrivalKey]);
+  }, [arrivalKey, syntheticJourneyActive]);
   // Before the first frame, show the last-seen figure only when motion will actually run.
   const arrivalAnimating =
     arrivalChange !== null && arrivalPhase !== "done" && (arrivalPhase === "running" || motionAllowed());
@@ -477,7 +485,9 @@ export default function DashboardPage() {
   );
   const guaranteeLine = (
     <p className="text-xs leading-relaxed text-hedgr-500">
-      This is what happened in the example. It doesn’t tell you what will happen next.
+      {syntheticJourneyActive && !danielExample
+        ? "This is what happened in your simulation. It doesn’t tell you what will happen next."
+        : "This is what happened in the example. It doesn’t tell you what will happen next."}
     </p>
   );
   const activityHref = productRouteHref("/activity");
@@ -508,7 +518,9 @@ export default function DashboardPage() {
         >
           {observationLabel("Start here")}
           <p className="max-w-xl text-sm leading-relaxed text-hedgr-dark" data-testid="engine-posture-context">
-            Practise with pretend money first. Hedgr shows what changes, and why.
+            {syntheticJourneyActive
+              ? "Practise with pretend money first. See what changes, and why."
+              : "Practise with pretend money first. Hedgr shows what changes, and why."}
           </p>
           <ol className={home.firstUseSteps} data-testid="dashboard-first-use-steps">
             <li aria-current="step">
@@ -610,7 +622,7 @@ export default function DashboardPage() {
   const exampleHref = (value: string, search: string, path: string) => {
     const params = new URLSearchParams(search);
     params.delete(CLASS_A_VAL_002_RESET_PARAM);
-    if (value === CLASS_A_VAL_002_DANIEL_EXAMPLE) params.set(CLASS_A_VAL_002_EXAMPLE_PARAM, value);
+    if (SYNTHETIC_JOURNEY_EXAMPLES.some((example) => example.id === value)) params.set(CLASS_A_VAL_002_EXAMPLE_PARAM, value);
     else params.delete(CLASS_A_VAL_002_EXAMPLE_PARAM);
     const query = params.toString();
     return `${path}${query ? `?${query}` : ""}`;
@@ -628,15 +640,26 @@ export default function DashboardPage() {
     />
   ) : null;
   const examplePicker = syntheticJourneyActive ? (
-    <select
-      aria-label="Choose an example"
-      value={danielExample ? CLASS_A_VAL_002_DANIEL_EXAMPLE : "own"}
-      onChange={(event) => chooseExample(event.target.value)}
-      className="mt-2 min-h-11 w-full min-w-0 max-w-xs rounded-xl border border-hedgr-300 bg-white px-3 py-2 text-sm text-hedgr-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-hedgr-500 focus-visible:ring-offset-2"
-    >
-      <option value="own">Your own simulation</option>
-      <option value={CLASS_A_VAL_002_DANIEL_EXAMPLE}>{"Daniel's reserve"}</option>
-    </select>
+    <div className="mt-2 w-full min-w-0 max-w-xs">
+      <label htmlFor="dashboard-example-picker" className="mb-1 block text-sm font-medium text-hedgr-800">
+        Choose an example
+      </label>
+      <div className={home.examplePicker}>
+        <span aria-hidden="true" data-testid="example-picker-value">
+          {SYNTHETIC_JOURNEY_EXAMPLES.find((example) => example.id === selectedExample)?.label ?? "Your own simulation"}
+        </span>
+        <select
+          id="dashboard-example-picker"
+          value={selectedExample}
+          onChange={(event) => chooseExample(event.target.value)}
+        >
+          <option value="own">Your own simulation</option>
+          {SYNTHETIC_JOURNEY_EXAMPLES.map((example) => (
+            <option key={example.id} value={example.id}>{example.label}</option>
+          ))}
+        </select>
+      </div>
+    </div>
   ) : null;
 
   const currentOverview = (
@@ -765,7 +788,7 @@ export default function DashboardPage() {
             id="dashboard-orientation-heading"
             className="text-xl font-bold tracking-tight text-hedgr-800 sm:text-4xl"
           >
-            Your position
+            {syntheticJourneyActive ? danielExample ? "Daniel’s example" : "Your simulation" : "Your position"}
           </h1>
           {examplePicker}
           {!syntheticJourneyActive ? <p className={home.contextLine} data-testid="dashboard-context-line">
