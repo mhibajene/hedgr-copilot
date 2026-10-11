@@ -9,7 +9,7 @@ const DEFAULT_HOME = '/dashboard';
 const JOURNEY_ROUTES = ['/dashboard?journey=class-a-val-002', '/dashboard-synthetic-journey'] as const;
 const FIGURE = 'K21,600';
 const RATE_ASSUMPTION = 'Disclosed fixture rate: ZMW 27 per USD. Not a live rate.';
-const COPY = { since: 'Since Daniel was last here', visit: 'Daniel’s last visit', back: 'Back to your own simulation', current: 'Now', lastDate: '25 Sep 2026', currentDate: '9 Oct 2026' };
+const COPY = { since: 'Since Daniel was last here', visit: 'Daniel’s last visit', currencyVisit: 'At Daniel’s last visit', back: 'Back to your own simulation', current: 'Now', lastDate: '25 Sep 2026', currentDate: '9 Oct 2026' };
 const AS_OF = '2026-10-09T00:00:00.000Z';
 const CURRENCY_KEY = 'hedgr.simulation.display-currency';
 const PICKER = 'Choose an example';
@@ -417,10 +417,13 @@ async function expectCurrencyContext(page: Page) {
   await expect(context).toBeVisible();
   const points = context.getByTestId('daniel-currency-point');
   await expect(points).toHaveCount(2);
-  await expect(points.nth(0)).toContainText(COPY.visit);
-  await expect(points.nth(1)).toContainText(COPY.current);
+  await expect(points.nth(0).locator('p').first()).toHaveText(COPY.currencyVisit);
+  await expect(points.nth(1).locator('p').first()).toHaveText(COPY.current);
   await expect(context.getByTestId('daniel-currency-figure')).toHaveText([lastRead.figure, currentRead.figure]);
   await expect(context.getByTestId('daniel-currency-rate')).toHaveText([lastRead.rate, currentRead.rate]);
+  await expect(context.locator('time')).toHaveText([COPY.lastDate, COPY.currentDate]);
+  await expect(context.locator('time').nth(0)).toHaveAttribute('datetime', lastRead.asOf);
+  await expect(context.locator('time').nth(1)).toHaveAttribute('datetime', currentRead.asOf);
   for (const figure of await context.getByTestId('daniel-currency-figure').all()) {
     const lines = await figure.evaluate((node) => {
       const range = document.createRange(); range.selectNodeContents(node);
@@ -596,5 +599,20 @@ test("Daniel's currency context shows two Engine figures side by side with no co
     await gotoDaniel(page, route);
     await expectCurrencyContext(page);
     await expect(panel(page)).not.toContainText(/K2,000|higher|lower|increase|decrease|delta|difference|\+|−|→|↑|↓/i);
+  }
+});
+
+
+test("Founder-locked copy and dates are character-exact across Daniel's example Home", async ({ page }) => {
+  await login(page);
+  for (const route of JOURNEY_ROUTES) {
+    await gotoDaniel(page, route);
+    await expect(page.locator('#dashboard-current-status-label')).toHaveText(COPY.since);
+    await expect(page.getByTestId('dashboard-position-line-visit')).toHaveText(COPY.visit);
+    await expect(panel(page).getByRole('link', { name: COPY.back, exact: true })).toHaveText(COPY.back);
+    await expect(page.getByTestId('daniel-read-as-of')).toHaveText(`As of ${COPY.currentDate}, a fixed example time.`);
+    await expect(page.getByTestId('daniel-since-card').locator('time')).toHaveText([COPY.lastDate, COPY.currentDate]);
+    await expect.soft(page.getByTestId('daniel-currency-context').locator('time')).toHaveText([COPY.lastDate, COPY.currentDate]);
+    await expectCurrencyContext(page);
   }
 });

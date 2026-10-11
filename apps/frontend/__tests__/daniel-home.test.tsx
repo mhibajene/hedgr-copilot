@@ -100,10 +100,11 @@ type JourneyRoute = (typeof JOURNEY_ROUTES)[number];
 const POSTURES: EnginePosture[] = ["normal", "tightening", "tightened", "recovery"];
 const PICKER = "Choose an example";
 const OPTIONS = ["Your own simulation", "Daniel's reserve"];
-// Candidate wording: the runtime keeps these slots together for the pending copy lock.
-const CANDIDATE_COPY = {
+// Founder lock, 11 Oct 2026: "Lock 1-6 as recommended"; character-exact assertions.
+const LOCKED_COPY = {
   since: "Since Daniel was last here",
   visit: "Daniel’s last visit",
+  currencyVisit: "At Daniel’s last visit",
   back: "Back to your own simulation",
   current: "Now",
   currentDate: "9 Oct 2026",
@@ -377,7 +378,7 @@ describe("shows Engine localDisplay above its caption with the complete runtime 
       expect(screen.getByTestId("daniel-read-rate").textContent).toBe(DANIEL_HOME_READ.explanation.rateAssumption);
       const time = screen.getByTestId("daniel-read-as-of").querySelector("time");
       expect(time?.getAttribute("dateTime")).toBe(FIXTURE_AS_OF);
-      expect(time?.textContent).toBe(CANDIDATE_COPY.currentDate);
+      expect(time?.textContent).toBe(LOCKED_COPY.currentDate);
       expect(disclosure.textContent).toContain("fixed example time");
       expect(panel().contains(screen.getByText("Daniel’s declared holding · Fictional example"))).toBe(true);
       expect(panel().textContent).toContain(DANIEL_HOME_READ.explanation.holding);
@@ -532,9 +533,9 @@ describe("Daniel's reserve shows his example as a full Home", () => {
       const chart = screen.getByTestId("dashboard-position-line");
       expect(chart.getAttribute("aria-hidden")).toBe("true");
       expect(chart.querySelectorAll('span[style*="top:"]')).toHaveLength(3);
-      expect(screen.getByTestId("dashboard-position-line-visit").textContent).toBe(CANDIDATE_COPY.visit);
+      expect(screen.getByTestId("dashboard-position-line-visit").textContent).toBe(LOCKED_COPY.visit);
       expect(chart.textContent).not.toMatch(/Today|max|9 Oct|25 Sep/);
-      const card = screen.getByRole("region", { name: CANDIDATE_COPY.since });
+      const card = screen.getByRole("region", { name: LOCKED_COPY.since });
       const observations = card.querySelectorAll('[data-testid="daniel-observation"]');
       expect(observations).toHaveLength(2);
       for (const [index, node] of Array.from(observations).entries()) {
@@ -543,7 +544,7 @@ describe("Daniel's reserve shows his example as a full Home", () => {
         expect(node.querySelector("time")?.getAttribute("datetime")).toBe(expectedTimeline[index + 1].asOf);
       }
       expect(Array.from(card.querySelectorAll("time")).map((time) => time.textContent)).toEqual([
-        CANDIDATE_COPY.lastDate, CANDIDATE_COPY.currentDate,
+        LOCKED_COPY.lastDate, LOCKED_COPY.currentDate,
       ]);
       expect(card.textContent).toContain(LIMITATION);
       expect(panel().textContent).not.toMatch(/balance/i);
@@ -591,7 +592,7 @@ test("Daniel's example timeline comes only from the Engine", () => {
 
 test("Daniel's example offers no actions on your simulation", async () => {
   await renderDaniel("journey", "settled");
-  expect(within(panel()).getByRole("link", { name: CANDIDATE_COPY.back })).toBeDefined();
+  expect(within(panel()).getByRole("link", { name: LOCKED_COPY.back })).toBeDefined();
   expect(panel().querySelectorAll("a")).toHaveLength(1);
   expect(panel().querySelectorAll("button, input, select")).toHaveLength(0);
   expect(document.querySelectorAll('main a[href*="/deposit"], main a[href*="/withdraw"], main a[href*="/activity"]')).toHaveLength(0);
@@ -644,7 +645,7 @@ test("Back to your own simulation returns without writing", async () => {
     // The href preserves the route and unrelated query; no reset is carried into it.
     vi.mocked(useSearchParams).mockReturnValue(new URLSearchParams(`${query}example=daniel&keep=1`) as ReturnType<typeof useSearchParams>);
     view.rerender(<DashboardPage />);
-    const link = within(panel()).getByRole("link", { name: CANDIDATE_COPY.back });
+    const link = within(panel()).getByRole("link", { name: LOCKED_COPY.back });
     expect(link.getAttribute("href")).toBe(`${pathname}?${query}keep=1`);
     const before = JSON.stringify({ ...window.localStorage });
     const setItem = vi.spyOn(Storage.prototype, "setItem");
@@ -691,8 +692,8 @@ test("Daniel's currency context shows two Engine figures side by side with no co
   expect(Array.from(context.querySelectorAll('[data-testid="daniel-currency-rate"]')).map((node) => node.textContent)).toEqual([
     "ENGINE RATE 1", "ENGINE RATE 2",
   ]);
-  expect(columns[0].textContent).toContain(CANDIDATE_COPY.visit);
-  expect(columns[1].textContent).toContain(CANDIDATE_COPY.current);
+  expect(columns[0].querySelector("p")?.textContent).toBe(LOCKED_COPY.currencyVisit);
+  expect(columns[1].querySelector("p")?.textContent).toBe(LOCKED_COPY.current);
   expect(screen.getByTestId("daniel-read-figure").textContent).toBe("ENGINE FIGURE 2");
   expect(screen.getByTestId("dashboard-position-line").querySelectorAll('span[style*="top:"]')).toHaveLength(3);
   expect(panel().textContent).not.toMatch(/K21,600|K23,600|higher|lower|increase|decrease|delta|difference|\+|−|→|↑|↓/i);
@@ -701,4 +702,30 @@ test("Daniel's currency context shows two Engine figures side by side with no co
   expect(source).toContain("localAmountZmwMinor");
   expect(source).not.toMatch(/CurrencyInsight|compareCurrencyExample|estimateCents|getSimulationDisplayRate|formatSimulationDisplay|lib\/fx|parseFloat|parseInt|Number\(.*localDisplay/);
   expect(source).not.toMatch(/research|__tests__|golden|fixtureRateZmwPerUsd|\.localAmountZmwMinor\s*[-+*/]/);
+});
+
+
+test("Founder-locked copy and dates are character-exact across Daniel's example Home", async () => {
+  for (const route of JOURNEY_ROUTES) {
+    const view = await renderDaniel(route);
+    expect(document.getElementById("dashboard-current-status-label")?.textContent).toBe(LOCKED_COPY.since);
+    expect(screen.getByTestId("dashboard-position-line-visit").textContent).toBe(LOCKED_COPY.visit);
+    expect(within(panel()).getByRole("link", { name: LOCKED_COPY.back }).textContent).toBe(LOCKED_COPY.back);
+    expect(screen.getByTestId("daniel-read-as-of").textContent).toBe(`As of ${LOCKED_COPY.currentDate}, a fixed example time.`);
+    const card = screen.getByTestId("daniel-since-card");
+    expect(Array.from(card.querySelectorAll("time")).map((time) => [time.textContent, time.getAttribute("datetime")])).toEqual([
+      [LOCKED_COPY.lastDate, expectedTimeline[1].asOf], [LOCKED_COPY.currentDate, expectedTimeline[2].asOf],
+    ]);
+    const context = screen.getByTestId("daniel-currency-context");
+    const points = context.querySelectorAll('[data-testid="daniel-currency-point"]');
+    expect.soft(Array.from(points).map((point) => point.querySelector("p")?.textContent)).toEqual([
+      LOCKED_COPY.currencyVisit, LOCKED_COPY.current,
+    ]);
+    expect(Array.from(context.querySelectorAll("time")).map((time) => [time.textContent, time.getAttribute("datetime")])).toEqual([
+      [LOCKED_COPY.lastDate, expectedTimeline[1].asOf], [LOCKED_COPY.currentDate, expectedTimeline[2].asOf],
+    ]);
+    expect(context.querySelectorAll("time")[1]?.textContent).toBe(screen.getByTestId("daniel-read-as-of").querySelector("time")?.textContent);
+    expect(context.textContent).not.toMatch(/higher|lower|increase|decrease|difference|delta|balance/i);
+    view.unmount();
+  }
 });
