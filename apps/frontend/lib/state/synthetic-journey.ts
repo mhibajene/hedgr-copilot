@@ -13,11 +13,14 @@ export const CLASS_A_VAL_002_RESET_VALUE = '1';
 export const CLASS_A_VAL_002_EXAMPLE_PARAM = 'example';
 export const CLASS_A_VAL_002_DANIEL_EXAMPLE = 'daniel';
 
-/** §362: the journey Home example comes only from the URL; `daniel` is the only recognised value. */
-export function parseSyntheticJourneyExample(search?: string): 'own' | 'daniel' {
-  return getSearchParams(search).get(CLASS_A_VAL_002_EXAMPLE_PARAM) === CLASS_A_VAL_002_DANIEL_EXAMPLE
-    ? 'daniel'
-    : 'own';
+/** §367: recognized examples and picker options share one URL-only registry. */
+export const SYNTHETIC_JOURNEY_EXAMPLES = Object.freeze([
+  Object.freeze({ id: CLASS_A_VAL_002_DANIEL_EXAMPLE, label: "Daniel's reserve" }),
+] as const);
+
+export function parseSyntheticJourneyExample(search?: string): 'own' | (typeof SYNTHETIC_JOURNEY_EXAMPLES)[number]['id'] {
+  const id = getSearchParams(search).get(CLASS_A_VAL_002_EXAMPLE_PARAM);
+  return SYNTHETIC_JOURNEY_EXAMPLES.find((example) => example.id === id)?.id ?? 'own';
 }
 
 function getSearchParams(search?: string): URLSearchParams {

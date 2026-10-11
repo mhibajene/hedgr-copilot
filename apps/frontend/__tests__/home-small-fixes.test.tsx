@@ -302,6 +302,9 @@ describe.each(["default", "journey"] as const)(
     });
 
     test("attribution stays in the change card after the explanation", async () => {
+      const expectedAttribution = route === "journey"
+        ? "This is what happened in your simulation. It doesn’t tell you what will happen next."
+        : ATTRIBUTION;
       activateRoute(route);
       dashboardStateMocks.transactions = [depositTx(), withdrawalTx()];
       window.localStorage.setItem("hedgr:last-home-visit", "2");
@@ -317,7 +320,7 @@ describe.each(["default", "journey"] as const)(
         '[data-testid="engine-posture-context"]'
       );
       const sinceAttribution = Array.from(sinceCard.querySelectorAll("p")).find(
-        (node) => node.textContent === ATTRIBUTION
+        (node) => node.textContent === expectedAttribution
       );
       expect(sinceAttribution).toBeDefined();
       expect(
@@ -333,7 +336,7 @@ describe.each(["default", "journey"] as const)(
         '[data-testid="engine-posture-context"]'
       );
       const attribution = Array.from(whatChanged.querySelectorAll("p")).find(
-        (node) => node.textContent === ATTRIBUTION
+        (node) => node.textContent === expectedAttribution
       );
       expect(attribution).toBeDefined();
       expect(

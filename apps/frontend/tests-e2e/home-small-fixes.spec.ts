@@ -6,6 +6,8 @@ const AXIS_TIME = /Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec|\d{1,2}\/\d{1
 const FORWARD_COPY = /toward|target|goal|on track|you will|will grow/i;
 const ATTRIBUTION =
   'This is what happened in the example. It doesn’t tell you what will happen next.';
+const JOURNEY_ATTRIBUTION =
+  'This is what happened in your simulation. It doesn’t tell you what will happen next.';
 const RUST = 'rgb(150, 63, 34)';
 const HOME_ROUTES = ['/dashboard', '/dashboard?journey=class-a-val-002'] as const;
 
@@ -323,11 +325,11 @@ test('Home layout holds across routes states currencies and text size', async ({
         const status = page.getByTestId('dashboard-current-status');
         if ((await status.getAttribute('data-home-state'))?.startsWith('since-') &&
             (await status.getAttribute('data-home-state')) !== 'since-no-change') {
-          await expect(status).toContainText(ATTRIBUTION);
+          await expect(status).toContainText(JOURNEY_ATTRIBUTION);
         } else if (await status.getByTestId('engine-posture-context').count()) {
           const label = await status.locator('#dashboard-current-status-label').textContent();
           if (label === 'What changed' || (await status.textContent())?.includes('What Hedgr notices')) {
-            await expect(status).toContainText(ATTRIBUTION);
+            await expect(status).toContainText(JOURNEY_ATTRIBUTION);
           }
         }
         if (currency.code === 'NGN') {

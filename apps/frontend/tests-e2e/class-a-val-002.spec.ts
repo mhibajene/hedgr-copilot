@@ -292,11 +292,11 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   await expect(
     page.getByRole('heading', {
       level: 1,
-      name: 'Your position',
+      name: 'Your simulation',
     })
   ).toBeVisible();
   await expect(page.getByRole('heading', { level: 1 })).toHaveCount(1);
-  await expect(dashboardOrientation).toContainText('Your position');
+  await expect(dashboardOrientation).toContainText('Your simulation');
   await expect(dashboardOrientation).not.toContainText(
     /crypto|blockchain|stablecoin|DeFi|trading|yield routing/i
   );
@@ -321,13 +321,13 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   await expect(
     page.getByTestId('engine-simulation-attention-answer')
   ).toHaveCount(0);
-  await expect(page.getByText('This is what happened in the example. It doesn’t tell you what will happen next.')).toHaveCount(0);
+  await expect(page.getByText('This is what happened in your simulation. It doesn’t tell you what will happen next.')).toHaveCount(0);
   await expect(page.getByTestId('dashboard-current-status')).not.toContainText(
     'NORMAL'
   );
   // HOME-EXPERIENCE-001 T3: the first-use card replaces the empty comparison.
   await expect(page.getByTestId('engine-posture-context')).toHaveText(
-    'Practise with pretend money first. Hedgr shows what changes, and why.'
+    'Practise with pretend money first. See what changes, and why.'
   );
   await expect(page.getByTestId('dashboard-current-status')).toContainText('Start here');
   await expect(page.getByTestId('dashboard-first-use-steps').locator('li[aria-current="step"]')).toHaveText(
@@ -463,7 +463,7 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   await expect(firstEventHome.getByText('Does anything need attention?')).toHaveCount(0);
   await expect(firstEventHome.getByTestId('engine-simulation-attention-answer')).toHaveCount(0);
   await expect(firstEventHome.getByText(
-    'This is what happened in the example. It doesn’t tell you what will happen next.'
+    'This is what happened in your simulation. It doesn’t tell you what will happen next.'
   )).toBeVisible();
   await firstEventHome.close();
 
@@ -718,7 +718,7 @@ test('mobile keeps the persistent boundary and current research step visible', a
 
   await expect(page.getByTestId('trust-disclosure-banner')).toBeVisible();
   await expect(page.getByTestId('synthetic-journey-shell')).toBeVisible();
-  await expect(page.getByRole('heading', { name: 'Your position', exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Your simulation', exact: true })).toBeVisible();
   await expect(
     page.getByTestId('dashboard-add-simulated-deposit')
   ).toBeVisible();
@@ -801,7 +801,7 @@ test('Home explains what changed since the last visit and clears it on reset', a
   await expect(page.getByTestId('dashboard-change-chip')).toHaveCount(0);
   await expect(page.getByTestId('dashboard-position-line-visit')).toHaveText('Your last visit');
   await expect(page.getByTestId('dashboard-position-line')).not.toContainText('Today');
-  await expect(page.getByText('This is what happened in the example. It doesn’t tell you what will happen next.')).toBeVisible();
+  await expect(page.getByText('This is what happened in your simulation. It doesn’t tell you what will happen next.')).toBeVisible();
 
   // Nothing changed since that visit.
   await page.reload();
@@ -869,7 +869,7 @@ async function recordWithdrawalSinceLastHomeVisit(page: Page) {
   await expect(page.getByTestId('withdraw-balance-reconciliation')).toContainText('$5.00 → $3.00');
 }
 
-const arrivalSentence = 'Your position is now $3.00, $2.00 lower than on your last visit.';
+const arrivalSentence = 'Your simulated balance is now $3.00. On your last visit it was $5.00.';
 
 test('Home counts from the last figure seen after a confirmed change', async ({ page }) => {
   await recordWithdrawalSinceLastHomeVisit(page);

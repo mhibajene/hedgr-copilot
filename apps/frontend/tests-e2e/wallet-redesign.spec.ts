@@ -31,7 +31,7 @@ test('research baseline: navigation, dialog focus, currency and event reconcilia
   await page.setViewportSize({ width: 390, height: 844 });
   await seed(page);
   const before = await financialState(page);
-  await expect(page.getByRole('heading', { name: 'Your position', exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Your simulation', exact: true })).toBeVisible();
   await expect(page.getByTestId('engine-posture-context')).toHaveText(/^Nothing has changed since \d{1,2} (?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\. Your position is still \$300\.00\.$/);
   await expect(page.getByRole('link', { name: 'See the activity', exact: true })).toHaveCount(0);
   await expect(page.getByRole('link', { name: 'View Activity', exact: true })).toHaveAttribute('href', '/activity?journey=class-a-val-002');
@@ -135,7 +135,7 @@ test('Shared baseline supports both journeys while preserving query-route eligib
   await seed(page);
   const before = await financialState(page);
   await page.goto('/dashboard?journey=class-a-val-002');
-  await expect(page.getByRole('heading', { name: 'Your position', exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Your simulation', exact: true })).toBeVisible();
   await expect(page.getByRole('main')).toHaveCSS('background-color', 'rgb(250, 248, 245)');
   await expect(page.getByTestId('usd-balance')).toHaveText('$300.00');
   await expect(page.getByTestId('research-planning-targets')).toBeVisible();

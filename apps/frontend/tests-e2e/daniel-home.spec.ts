@@ -9,7 +9,7 @@ const DEFAULT_HOME = '/dashboard';
 const JOURNEY_ROUTES = ['/dashboard?journey=class-a-val-002', '/dashboard-synthetic-journey'] as const;
 const FIGURE = 'K21,600';
 const RATE_ASSUMPTION = 'Disclosed fixture rate: ZMW 27 per USD. Not a live rate.';
-const COPY = { since: 'Since Daniel was last here', visit: 'Daniel’s last visit', currencyVisit: 'At Daniel’s last visit', back: 'Back to your own simulation', current: 'Now', lastDate: '25 Sep 2026', currentDate: '9 Oct 2026' };
+const COPY = { since: 'What changed since Daniel’s last visit', visit: 'Daniel’s last visit', currencyVisit: 'At Daniel’s last visit', back: 'Go to your own simulation', current: 'Now', lastDate: '25 Sep 2026', currentDate: '9 Oct 2026' };
 const AS_OF = '2026-10-09T00:00:00.000Z';
 const CURRENCY_KEY = 'hedgr.simulation.display-currency';
 const PICKER = 'Choose an example';
@@ -122,9 +122,9 @@ test('shows Your own simulation by default on both journey routes without Daniel
       // Directly under the "Your position" heading.
       const underHeading = await page.evaluate(() => {
         const heading = document.querySelector('#dashboard-orientation-heading')!;
-        return heading.nextElementSibling?.getAttribute('aria-label');
+        return heading.nextElementSibling?.textContent?.includes('Choose an example');
       });
-      expect(underHeading).toBe(PICKER);
+      expect(underHeading).toBe(true);
     }
   }
 });
@@ -139,8 +139,8 @@ test("shows only Daniel's reserve when the example is selected", async ({ page }
       await expect(page.getByTestId('dashboard-orientation')).toBeVisible();
       await expect(page.getByTestId('dashboard-disclosures')).toBeVisible();
       await expect(page.getByTestId('daniel-read-figure')).toHaveText(FIGURE);
-      await expect(page.getByTestId('daniel-read-caption')).toHaveText('display estimate');
-      await expect(page.getByTestId('daniel-read-disclosure').locator('li')).toHaveCount(4);
+      await expect(page.getByTestId('daniel-read-caption')).toHaveText('Example figure, not a quote');
+      await expect(page.getByTestId('daniel-read-disclosure').locator('li')).toHaveCount(2);
       for (const testId of [
         'dashboard-current-overview',
         'dashboard-balance',
@@ -252,7 +252,7 @@ test('example picker is labelled, keyboard-operable and reflows', async ({ page 
         else await gotoHome(page, route);
         await page.addStyleTag({ content: `html { font-size: ${viewport.text}%; }` });
         const layout = await page.evaluate(() => {
-          const select = document.querySelector<HTMLSelectElement>('select[aria-label="Choose an example"]')!;
+          const select = document.querySelector<HTMLSelectElement>('select#dashboard-example-picker')!;
           const box = select.getBoundingClientRect();
           const daniel = document.querySelector<HTMLElement>('[data-testid="dashboard-daniel-read"]');
           const clipped = daniel
@@ -283,7 +283,7 @@ test('example picker is labelled, keyboard-operable and reflows', async ({ page 
         await expect(picker(page)).toBeVisible();
         if (selection === 'daniel') {
           await expect(page.getByTestId('daniel-read-disclosure')).toBeVisible();
-          await expect(page.getByRole('region', { name: 'Daniel’s declared holding · Fictional example' })).toBeVisible();
+          await expect(page.getByRole('region', { name: 'Fictional example · Daniel’s dollar savings' })).toBeVisible();
         }
       }
     }
@@ -298,7 +298,7 @@ test('shows Engine localDisplay above its caption with the complete runtime fixt
     const figure = page.getByTestId('daniel-read-figure');
     const caption = page.getByTestId('daniel-read-caption');
     await expect(figure).toHaveText(FIGURE);
-    await expect(caption).toHaveText('display estimate');
+    await expect(caption).toHaveText('Example figure, not a quote');
     const figureBox = (await figure.boundingBox())!;
     const captionBox = (await caption.boundingBox())!;
     expect(captionBox.y).toBeGreaterThanOrEqual(figureBox.y + figureBox.height - 1);
@@ -307,11 +307,11 @@ test('shows Engine localDisplay above its caption with the complete runtime fixt
       caption: parseFloat(getComputedStyle(document.querySelector('[data-testid="daniel-read-caption"]')!).fontSize),
     }));
     expect(sizes.caption).toBeLessThan(sizes.figure);
-    await expect(page.getByTestId('daniel-read-holding')).toContainText('Fictional user-declared holding: USD 800.');
-    await expect(page.getByTestId('daniel-read-pair')).toHaveText('Pair: USD/ZMW.');
-    await expect(page.getByTestId('daniel-read-rate')).toHaveText(RATE_ASSUMPTION);
+    await expect(page.getByTestId('daniel-read-holding')).toHaveText('Daniel holds USD 800 in this fictional example. This example only displays it. Nothing is moved or exchanged.');
+    await expect(page.getByTestId('daniel-read-pair')).toHaveCount(0);
+    await expect(page.getByTestId('daniel-observation-rate').nth(1)).toHaveText(RATE_ASSUMPTION);
     await expect(page.getByTestId('daniel-read-as-of').locator('time')).toHaveAttribute('datetime', AS_OF);
-    await expect(page.getByTestId('daniel-read-as-of')).toContainText('fixed example time');
+    await expect(page.getByTestId('daniel-read-as-of')).toHaveText('Example date: 9 Oct 2026.');
     await expect(panel(page)).toContainText('Declared USD 800 shows as K21,600 at this rate.');
   }
 });
@@ -394,7 +394,7 @@ test('contains no prohibited claims in Daniel Home copy', async ({ page }) => {
     expect(text).not.toMatch(/custod|verified|wealth|sufficien|enough|guarantee|protect|recommend|should|advis|action|buy|sell|convert|balance|\bheld\b/i);
     expect(text).toContain('Fictional');
     expect(text).toContain('Not a live rate.');
-    expect(text).toContain('fixed example time');
+    expect(text).toContain('Example date: 9 Oct 2026.');
   }
 });
 
@@ -413,33 +413,13 @@ const currentRead = {
 };
 
 async function expectCurrencyContext(page: Page) {
-  const context = page.getByRole('region', { name: 'Currency context', exact: true });
-  await expect(context).toBeVisible();
-  const points = context.getByTestId('daniel-currency-point');
-  await expect(points).toHaveCount(2);
-  await expect(points.nth(0).locator('p').first()).toHaveText(COPY.currencyVisit);
-  await expect(points.nth(1).locator('p').first()).toHaveText(COPY.current);
-  await expect(context.getByTestId('daniel-currency-figure')).toHaveText([lastRead.figure, currentRead.figure]);
-  await expect(context.getByTestId('daniel-currency-rate')).toHaveText([lastRead.rate, currentRead.rate]);
-  await expect(context.locator('time')).toHaveText([COPY.lastDate, COPY.currentDate]);
-  await expect(context.locator('time').nth(0)).toHaveAttribute('datetime', lastRead.asOf);
-  await expect(context.locator('time').nth(1)).toHaveAttribute('datetime', currentRead.asOf);
-  for (const figure of await context.getByTestId('daniel-currency-figure').all()) {
-    const lines = await figure.evaluate((node) => {
-      const range = document.createRange(); range.selectNodeContents(node);
-      return Array.from(range.getClientRects()).filter((rect) => rect.width > 0).length;
-    });
-    expect(lines, 'each Engine figure remains a complete, unbroken number').toBe(1);
-  }
-  const boxes = await points.evaluateAll((nodes) => nodes.map((node) => {
-    const r = node.getBoundingClientRect();
-    return { left: r.left, right: r.right, top: r.top, width: r.width };
-  }));
-  expect(boxes[0].width).toBeGreaterThan(0);
-  expect(boxes[1].left).toBeGreaterThanOrEqual(boxes[0].right);
-  expect(boxes[0].top).toBe(boxes[1].top);
-  await expect(context).not.toContainText(/higher|lower|increase|decrease|difference|delta|\+|−|→|↑|↓/i);
-  await expect(context.locator('svg, [data-delta], [data-direction], button, [role="dialog"]')).toHaveCount(0);
+  await expect(page.getByTestId('daniel-currency-context')).toHaveCount(0);
+  const card = page.getByTestId('daniel-since-card');
+  await expect(card.getByTestId('daniel-observation-holding')).toHaveText([lastRead.holding, currentRead.holding]);
+  await expect(card.getByTestId('daniel-observation-rate')).toHaveText([lastRead.rate, currentRead.rate]);
+  await expect(card.locator('time')).toHaveText([COPY.lastDate, COPY.currentDate]);
+  await expect(card.locator('time').nth(0)).toHaveAttribute('datetime', lastRead.asOf);
+  await expect(card.locator('time').nth(1)).toHaveAttribute('datetime', currentRead.asOf);
 }
 
 test("Daniel's reserve shows his example as a full Home", async ({ page }) => {
@@ -449,7 +429,7 @@ test("Daniel's reserve shows his example as a full Home", async ({ page }) => {
     await gotoDaniel(page, route);
     await expect(page.getByTestId('daniel-home-grid')).toBeVisible();
     await expect(page.getByTestId('daniel-read-figure')).toHaveText(FIGURE);
-    await expect(page.getByTestId('daniel-read-caption')).toHaveText('display estimate');
+    await expect(page.getByTestId('daniel-read-caption')).toHaveText('Example figure, not a quote');
     const chart = page.getByTestId('dashboard-position-line');
     await expect(chart).toHaveAttribute('aria-hidden', 'true');
     await expect(chart.locator('span[style*="top:"]')).toHaveCount(3);
@@ -610,9 +590,304 @@ test("Founder-locked copy and dates are character-exact across Daniel's example 
     await expect(page.locator('#dashboard-current-status-label')).toHaveText(COPY.since);
     await expect(page.getByTestId('dashboard-position-line-visit')).toHaveText(COPY.visit);
     await expect(panel(page).getByRole('link', { name: COPY.back, exact: true })).toHaveText(COPY.back);
-    await expect(page.getByTestId('daniel-read-as-of')).toHaveText(`As of ${COPY.currentDate}, a fixed example time.`);
+    await expect(page.getByTestId('daniel-read-as-of')).toHaveText(`Example date: ${COPY.currentDate}.`);
     await expect(page.getByTestId('daniel-since-card').locator('time')).toHaveText([COPY.lastDate, COPY.currentDate]);
-    await expect.soft(page.getByTestId('daniel-currency-context').locator('time')).toHaveText([COPY.lastDate, COPY.currentDate]);
     await expectCurrencyContext(page);
+  }
+});
+
+const LEGIBILITY = {
+  invariant: 'Daniel still holds USD 800. Only the exchange rate changed, so the same amount shows as a different number of kwacha.',
+  ownLimitation: 'This is what happened in your simulation. It doesn’t tell you what will happen next.',
+  start: 'Practise with pretend money first. See what changes, and why.',
+  currency: 'Shown in ZMW, Daniel’s currency',
+};
+
+test('Daniel invariant sits directly under the change card', async ({ page }) => {
+  await login(page);
+  for (const route of JOURNEY_ROUTES) {
+    await gotoDaniel(page, route);
+    await expect(page.getByRole('region', { name: COPY.since, exact: true })).toBeVisible();
+    expect(await page.getByTestId('daniel-since-card').evaluate(n => n.nextElementSibling?.textContent)).toBe(LEGIBILITY.invariant);
+    await expect(page.getByText(LEGIBILITY.invariant, { exact: true })).toHaveCount(1);
+  }
+});
+
+test('Daniel current-rate disclosure appears exactly once beside the change card', async ({ page }) => {
+  await login(page);
+  for (const route of JOURNEY_ROUTES) {
+    await gotoDaniel(page, route);
+    for (const read of [lastRead, currentRead]) {
+      await expect(panel(page).getByText(read.rate, { exact: true })).toHaveCount(1);
+      await expect(page.getByTestId('daniel-since-card').getByText(read.holding, { exact: true })).toHaveCount(1);
+    }
+    await expect(panel(page).getByText('Not a live rate', { exact: true })).toHaveCount(1);
+    expect(await page.getByTestId('daniel-since-card').evaluate(n => Array.from(n.parentElement!.querySelectorAll('p')).some(p => p.textContent === 'Not a live rate'))).toBe(true);
+    await expect(page.getByTestId('daniel-read-rate')).toHaveCount(0);
+    await expect(page.getByTestId('daniel-currency-context')).toHaveCount(0);
+  }
+});
+
+test('Daniel change card retains locked observation labels and dates', async ({ page }) => {
+  await login(page);
+  for (const route of JOURNEY_ROUTES) {
+    await gotoDaniel(page, route);
+    await expect(page.getByTestId('daniel-observation-label')).toHaveText(['Daniel’s last visit · 25 Sep 2026', 'Now · 9 Oct 2026']);
+    await expectCurrencyContext(page);
+    await expect(page.getByTestId('dashboard-position-line-visit')).toHaveText('Daniel’s last visit');
+    await expect(panel(page)).not.toContainText('At Daniel’s last visit');
+  }
+});
+
+test('Journey H1 follows the selected example', async ({ page }) => {
+  await login(page);
+  for (const route of JOURNEY_ROUTES) {
+    await gotoDaniel(page, route);
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Daniel’s example');
+    await picker(page).selectOption('own');
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Your simulation');
+    await picker(page).selectOption('daniel');
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Daniel’s example');
+  }
+  await gotoHome(page, '/dashboard?example=daniel');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Your position');
+});
+
+test('Example picker has a visible associated label', async ({ page }) => {
+  await login(page);
+  for (const route of JOURNEY_ROUTES) {
+    await gotoHome(page, route);
+    await expect(page.locator('label[for="dashboard-example-picker"]')).toHaveText(PICKER);
+    await expect(page.locator('label[for="dashboard-example-picker"]')).toBeVisible();
+    await expect(picker(page)).toHaveAttribute('id', 'dashboard-example-picker');
+    await expect(picker(page).locator('option')).toHaveText(OPTIONS);
+    await picker(page).focus(); await page.keyboard.press('D');
+    await expect(panel(page)).toBeVisible();
+    await expect(picker(page)).toBeFocused();
+  }
+});
+
+test('Daniel names ZMW as his currency without another conversion', async ({ page }) => {
+  await login(page); await seed(page, ACTIVITY.changed, 'KES');
+  for (const route of JOURNEY_ROUTES) {
+    await gotoDaniel(page, route);
+    await expect(page.getByText(LEGIBILITY.currency, { exact: true })).toBeVisible();
+    await expect(page.getByTestId('daniel-read-figure')).toHaveText(FIGURE);
+    await expect(page.getByRole('combobox', { name: /display currency/i })).toHaveCount(0);
+    await expect(panel(page)).not.toContainText(/KES|KSh/);
+  }
+});
+
+test('Daniel page-owned strings match the Founder lock', async ({ page }) => {
+  await login(page);
+  for (const route of JOURNEY_ROUTES) {
+    await gotoDaniel(page, route);
+    await expect(page.getByTestId('daniel-read-holding')).toHaveText('Daniel holds USD 800 in this fictional example. This example only displays it. Nothing is moved or exchanged.');
+    const heading = page.locator('#dashboard-daniel-label');
+    await expect(heading).toHaveText('Fictional example · Daniel’s dollar savings');
+    const color = await heading.evaluate(n => getComputedStyle(n).color);
+    expect(color).toBe('rgb(31, 41, 55)'); // governed body ink #1F2937, > 4.5:1 on the Home canvas.
+    await expect(page.getByTestId('daniel-read-caption')).toHaveText('Example figure, not a quote');
+    await expect(page.getByTestId('daniel-read-as-of')).toHaveText('Example date: 9 Oct 2026.');
+    await expect(page.getByTestId('daniel-read-as-of').locator('time')).toHaveAttribute('datetime', AS_OF);
+    await expect(panel(page).getByRole('link', { name: 'Go to your own simulation', exact: true })).toBeVisible();
+    await expect(panel(page).getByText('This is what happened in the example. It doesn’t tell you what will happen next.', { exact: true })).toBeVisible();
+    await expect(panel(page)).not.toContainText(/Pair:|Currency context|display estimate|Hedgr only reads it/);
+  }
+});
+
+test('Own-simulation limitation is mode-aware on journey Home', async ({ page }) => {
+  await login(page);
+  for (const route of JOURNEY_ROUTES) {
+    // Since card, then fallback without a saved visit, normal and non-normal posture.
+    await seed(page, ACTIVITY.changed);
+    await page.evaluate(() => localStorage.setItem('hedgr:last-home-visit', '1500'));
+    await gotoHome(page, route);
+    await expect(page.getByText(LEGIBILITY.ownLimitation, { exact: true })).toBeVisible();
+    // Production builds disable the local posture seam; non-normal fallback is covered in Vitest.
+    for (const posture of ['normal']) {
+      await seed(page, ACTIVITY.changed);
+      await gotoHome(page, `${route}${route.includes('?') ? '&' : '?'}enginePosture=${posture}`);
+      await expect(page.getByTestId('engine-posture-context')).toBeVisible();
+      await expect(page.getByText(LEGIBILITY.ownLimitation, { exact: true })).toBeVisible();
+    }
+  }
+  await seed(page, ACTIVITY.changed);
+  await page.evaluate(() => localStorage.setItem('hedgr:last-home-visit', '1500'));
+  await gotoHome(page, '/dashboard');
+  await expect(page.getByText('This is what happened in the example. It doesn’t tell you what will happen next.', { exact: true })).toBeVisible();
+});
+
+test('Journey Start here uses locked pretend-money wording', async ({ page }) => {
+  await login(page);
+  for (const route of JOURNEY_ROUTES) {
+    await seed(page, []); await gotoHome(page, route);
+    await expect(page.getByText(LEGIBILITY.start, { exact: true })).toBeVisible();
+  }
+  await seed(page, []); await gotoHome(page, '/dashboard');
+  await expect(page.getByText('Practise with pretend money first. Hedgr shows what changes, and why.', { exact: true })).toBeVisible();
+});
+
+test('Journey arrival announces current and prior simulated balances without a delta', async ({ page }) => {
+  await login(page);
+  for (const route of JOURNEY_ROUTES) {
+    for (const reducedMotion of ['reduce', 'no-preference'] as const) {
+      await page.emulateMedia({ reducedMotion });
+      for (const rising of [false, true]) {
+        await seed(page, rising ? [row('d1', 'deposit', 'settled', 5, 1000), row('d2', 'deposit', 'settled', 4, 2000)] : ACTIVITY.changed);
+        await page.evaluate(() => localStorage.setItem('hedgr:last-home-visit', '1500'));
+        await gotoHome(page, route);
+        const status = page.getByTestId('dashboard-arrival-announcement');
+        await expect(status).toHaveText(`Your simulated balance is now ${rising ? '$9.00' : '$3.00'}. On your last visit it was $5.00.`);
+        await expect(status).toHaveAttribute('role', 'status');
+        await expect(status).toHaveClass('sr-only');
+        await expect(status).not.toContainText(/higher|lower|delta/);
+        expect(await status.ariaSnapshot()).toContain('Your simulated balance is now');
+        // The visible summary still describes the transaction and has not been rewritten as S17.
+        await expect(page.getByTestId('dashboard-current-status')).toContainText(rising ? 'One simulated deposit of' : 'One simulated withdrawal of');
+      }
+    }
+  }
+});
+
+test('Example registry resolves Daniel and preserves his behavior', async ({ page }) => {
+  await login(page); await seed(page, ACTIVITY.changed, 'KES');
+  for (const route of JOURNEY_ROUTES) {
+    await gotoHome(page, route);
+    const before = await storageSnapshot(page);
+    await expect(picker(page).locator('option')).toHaveText(OPTIONS);
+    await picker(page).selectOption('daniel');
+    await expect(page.getByTestId('daniel-read-figure')).toHaveText(FIGURE);
+    await expectCurrencyContext(page);
+    expect(await storageSnapshot(page)).toEqual(before);
+    await picker(page).selectOption('own');
+    await expect(page.getByTestId('usd-balance')).toContainText('$3.00');
+    expect(await storageSnapshot(page)).toEqual(before);
+  }
+});
+
+test('Example parameter survives explicit reset on both journey routes', async ({ page }) => {
+  await login(page);
+  for (const route of JOURNEY_ROUTES) {
+    await seed(page, ACTIVITY.changed);
+    await page.goto(`${danielRoute(route)}&reset=1`);
+    await expect(panel(page)).toBeVisible();
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Daniel’s example');
+    const url = new URL(page.url());
+    expect(url.pathname).toBe(new URL(route, 'http://x').pathname);
+    expect(url.searchParams.get('example')).toBe('daniel');
+    expect(url.searchParams.has('reset')).toBe(false);
+    if (route.includes('journey=')) expect(url.searchParams.get('journey')).toBe('class-a-val-002');
+    expect(await page.evaluate(() => JSON.parse(localStorage.getItem('hedgr:ledger')!).transactions)).toEqual([]);
+    await page.reload(); await expect(panel(page)).toBeVisible();
+    await picker(page).selectOption('own');
+    await expect(page.getByTestId('usd-balance')).toContainText('$0.00');
+  }
+});
+
+test('Unknown example ids fall back to own simulation', async ({ page }) => {
+  await login(page);
+  for (const route of JOURNEY_ROUTES) {
+    for (const id of ['sarah', 'DANIEL', '__proto__']) {
+      await gotoHome(page, `${route}${route.includes('?') ? '&' : '?'}example=${id}`);
+      await expect(page.getByRole('heading', { level: 1 })).toHaveText('Your simulation');
+      await expect(picker(page)).toHaveValue('own');
+      await expect(panel(page)).toHaveCount(0);
+    }
+  }
+});
+
+async function expectWrappingLabel(page: Page, text: string) {
+  const value = page.getByTestId('example-picker-value');
+  await expect(value).toHaveText(text);
+  await expect(value).toBeVisible();
+  const fit = await value.evaluate(n => {
+    const box = n.getBoundingClientRect();
+    const range = document.createRange(); range.selectNodeContents(n);
+    const rects = Array.from(range.getClientRects());
+    const style = getComputedStyle(n);
+    return { font: parseFloat(style.fontSize), truncated: style.textOverflow === 'ellipsis',
+      clipped: n.scrollWidth > n.clientWidth + 1,
+      complete: rects.every(r => r.left >= box.left - 1 && r.right <= box.right + 1 && r.top >= box.top - 1 && r.bottom <= box.bottom + 1) };
+  });
+  expect(fit).toMatchObject({ truncated: false, clipped: false, complete: true });
+  expect(fit.font).toBeGreaterThanOrEqual(28); // 14px at 200%, no shrinking away zoom.
+}
+
+test('Example picker fits complete long names at 320px with 200 percent zoom', async ({ page }) => {
+  await login(page); await page.setViewportSize({ width: 320, height: 700 });
+  for (const route of JOURNEY_ROUTES) {
+    await gotoDaniel(page, route); await page.addStyleTag({ content: 'html { font-size: 200%; }' });
+    await expectWrappingLabel(page, "Daniel's reserve");
+    await picker(page).focus(); await page.keyboard.press('Y');
+    await expect(page.getByTestId('dashboard-current-overview')).toBeVisible();
+    await expectWrappingLabel(page, 'Your own simulation');
+    // Only the sizing slot is changed in this browser test. No Sarah production option exists.
+    await page.getByTestId('example-picker-value').evaluate(n => { n.textContent = 'Sarah’s course fee'; });
+    await expectWrappingLabel(page, 'Sarah’s course fee');
+    await expect(picker(page).locator('option')).toHaveText(OPTIONS);
+    await page.screenshot({ path: test.info().outputPath(`future-name-${route.includes('journey=') ? 'query' : 'path'}.png`), fullPage: true });
+  }
+});
+
+test('Legibility Home reflows at 390px and 320px with 200 percent zoom', async ({ page }) => {
+  test.setTimeout(120_000); await login(page);
+  for (const viewport of [{ width: 1440, height: 1000, text: 100 }, { width: 390, height: 844, text: 100 }, { width: 320, height: 700, text: 200 }]) {
+    await page.setViewportSize({ width: viewport.width, height: viewport.height });
+    for (const route of JOURNEY_ROUTES) {
+      for (const mode of ['own', 'daniel']) {
+        await seed(page, ACTIVITY.changed);
+        if (mode === 'daniel') await gotoDaniel(page, route); else await gotoHome(page, route);
+        await page.addStyleTag({ content: `html { font-size: ${viewport.text}%; }` });
+        const layout = await page.locator('main').evaluate(root => ({
+          overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
+          clipped: [root, ...root.querySelectorAll<HTMLElement>('*')].filter(n => {
+            // Ignore only confirmed visually hidden accessibility content, not visible text
+            // that happens to carry the class or any clipped picker/label.
+            const srOnly = n.closest<HTMLElement>('.sr-only');
+            if (srOnly) {
+              const style = getComputedStyle(srOnly);
+              const box = srOnly.getBoundingClientRect();
+              if (style.position === 'absolute' && style.overflow === 'hidden' &&
+                  box.width <= 1 && box.height <= 1 &&
+                  (style.clip === 'rect(0px, 0px, 0px, 0px)' || style.clipPath === 'inset(50%)')) return false;
+            }
+            return n.clientWidth > 0 && n.scrollWidth > n.clientWidth + 1 && getComputedStyle(n).display !== 'inline';
+          }).map(n => n.getAttribute('data-testid') ?? n.tagName),
+        }));
+        expect(layout.overflow).toBeLessThanOrEqual(1); expect(layout.clipped).toEqual([]);
+        if (mode === 'daniel') {
+          await expect(page.getByText(LEGIBILITY.invariant, { exact: true })).toBeVisible();
+          await expect(page.getByText(LEGIBILITY.currency, { exact: true })).toBeVisible();
+        }
+        await page.screenshot({ path: test.info().outputPath(`${mode}-${route.includes('journey=') ? 'query' : 'path'}-${viewport.width}-${viewport.text}.png`), fullPage: true });
+      }
+    }
+  }
+});
+
+test('Daniel legibility retains claim, presentation and isolation fences', async ({ page }) => {
+  await login(page); await seed(page, ACTIVITY.changed, 'KES');
+  for (const route of JOURNEY_ROUTES) {
+    const before = await storageSnapshot(page); await gotoDaniel(page, route);
+    expect(await storageSnapshot(page)).toEqual(before);
+    await expect(panel(page)).not.toContainText(/custod|wealth|sufficien|guarantee|hedging|obligation|progress|gain|loss|gap|higher|lower|balance/i);
+    await expect(panel(page).locator('progress, meter, [role="progressbar"], button, input, select, [data-delta], [data-direction]')).toHaveCount(0);
+    const colors = await panel(page).locator('p').evaluateAll(nodes => nodes.map(n => n.className));
+    expect(colors.join(' ')).not.toMatch(/green|red-|success|error/);
+  }
+});
+
+test('Daniel legibility leaves chart and runtime fixtures unchanged', async ({ page }) => {
+  await login(page);
+  for (const route of JOURNEY_ROUTES) {
+    await gotoDaniel(page, route);
+    const chart = page.getByTestId('dashboard-position-line');
+    await expect(chart).toHaveAttribute('aria-hidden', 'true');
+    await expect(chart.locator('span[style*="top:"]')).toHaveCount(3);
+    await expect(page.getByTestId('dashboard-position-line-visit')).toHaveText('Daniel’s last visit');
+    await expect(chart).not.toContainText(/Today|max|9 Oct|25 Sep/);
+    await expect(page.getByTestId('daniel-read-figure')).toHaveText(FIGURE);
+    await expect(page.getByTestId('daniel-observation-holding')).toHaveText([lastRead.holding, currentRead.holding]);
   }
 });
