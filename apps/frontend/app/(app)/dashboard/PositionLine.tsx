@@ -8,6 +8,8 @@ type PositionLineProps = {
   lastVisit: number | null;
   /** T5: 0–1 progress of the arrival settle; entries after the last visit ease from the last-seen level. */
   settle?: number;
+  /** §365: example label; own simulation keeps its existing label. */
+  visitLabel?: string;
 };
 
 const WIDTH = 1000;
@@ -31,7 +33,7 @@ type LineEvent = { kind: 'entry'; entry: PositionEntry } | { kind: 'visit'; at: 
  * the line after the last visit uses the emphasis colour. Decorative for
  * assistive technology: the Observation states the same facts in words.
  */
-export function PositionLine({ entries, lastVisit, settle = 1 }: PositionLineProps) {
+export function PositionLine({ entries, lastVisit, settle = 1, visitLabel = 'Your last visit' }: PositionLineProps) {
   if (entries.length === 0) {
     return (
       <div className={home.positionLineEmpty} data-testid="dashboard-position-line" data-state="empty">
@@ -104,7 +106,7 @@ export function PositionLine({ entries, lastVisit, settle = 1 }: PositionLinePro
             style={visitLabelStyle(visitX / WIDTH)}
             data-testid="dashboard-position-line-visit"
           >
-            Your last visit
+            {visitLabel}
           </span>
         ) : null}
       </div>
