@@ -112,10 +112,10 @@ export function DanielExampleHome({ currentRead, timeline, returnHref, onReturn,
         <h2 id="daniel-currency-label" className="text-sm font-semibold text-hedgr-800">{DANIEL_EXAMPLE_COPY.currencyContext}</h2>
         <div className="mt-3 grid grid-cols-2 gap-3">
           {observations.map((read, index) => (
-            <div key={read.asOf} className="min-w-0 space-y-2" data-testid="daniel-currency-point">
+            <div key={read.asOf} className="min-w-0 space-y-2" style={{ containerType: 'inline-size' }} data-testid="daniel-currency-point">
               <p className="text-xs text-hedgr-600">{index === 0 ? DANIEL_EXAMPLE_COPY.visit : DANIEL_EXAMPLE_COPY.current}</p>
-              <p className="text-xl font-semibold leading-tight tabular-nums text-hedgr-dark" data-testid="daniel-currency-figure">{read.localDisplay}</p>
-              <p className="text-sm leading-relaxed text-hedgr-600" data-testid="daniel-currency-rate">{read.explanation.rateAssumption}</p>
+              <p className="text-xl font-semibold leading-tight tabular-nums text-hedgr-dark" style={{ fontSize: 'clamp(0.75rem, 12cqi, 1.25rem)', whiteSpace: 'nowrap' }} data-testid="daniel-currency-figure">{read.localDisplay}</p>
+              <p className="text-sm leading-relaxed text-hedgr-600" style={{ fontSize: 'clamp(0.75rem, 8cqi, 0.875rem)' }} data-testid="daniel-currency-rate">{read.explanation.rateAssumption}</p>
             </div>
           ))}
         </div>
