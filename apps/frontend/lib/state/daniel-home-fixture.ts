@@ -18,3 +18,20 @@ export const DANIEL_HOME_FIXTURE_INPUT: Readonly<DanielReadInput> = Object.freez
 
 /** Computed once through the Engine; Home renders it verbatim. */
 export const DANIEL_HOME_READ = computeDanielRead(DANIEL_HOME_FIXTURE_INPUT);
+
+/** §365: fixed fictional history; O3 keeps the existing current input object. */
+export const DANIEL_HOME_TIMELINE_INPUTS: readonly Readonly<DanielReadInput>[] = Object.freeze([
+  Object.freeze({
+    declaredHoldingUsd: 800,
+    fixtureRateZmwPerUsd: 24.5,
+    asOf: '2026-09-09T00:00:00.000Z',
+  }),
+  Object.freeze({
+    declaredHoldingUsd: 800,
+    fixtureRateZmwPerUsd: 29.5,
+    asOf: '2026-09-25T00:00:00.000Z',
+  }),
+  DANIEL_HOME_FIXTURE_INPUT,
+]);
+
+export const DANIEL_HOME_TIMELINE = Object.freeze(DANIEL_HOME_TIMELINE_INPUTS.map(computeDanielRead));
