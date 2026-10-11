@@ -744,7 +744,7 @@ test('Journey arrival announces current and prior simulated balances without a d
         await expect(status).not.toContainText(/higher|lower|delta/);
         expect(await status.ariaSnapshot()).toContain('Your simulated balance is now');
         // The visible summary still describes the transaction and has not been rewritten as S17.
-        await expect(page.getByTestId('dashboard-current-status')).toContainText(rising ? 'You added' : 'You withdrew');
+        await expect(page.getByTestId('dashboard-current-status')).toContainText(rising ? 'One simulated deposit of' : 'One simulated withdrawal of');
       }
     }
   }
@@ -841,7 +841,19 @@ test('Legibility Home reflows at 390px and 320px with 200 percent zoom', async (
         await page.addStyleTag({ content: `html { font-size: ${viewport.text}%; }` });
         const layout = await page.locator('main').evaluate(root => ({
           overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
-          clipped: [root, ...root.querySelectorAll<HTMLElement>('*')].filter(n => n.clientWidth > 0 && n.scrollWidth > n.clientWidth + 1 && getComputedStyle(n).display !== 'inline').map(n => n.getAttribute('data-testid') ?? n.tagName),
+          clipped: [root, ...root.querySelectorAll<HTMLElement>('*')].filter(n => {
+            // Ignore only confirmed visually hidden accessibility content, not visible text
+            // that happens to carry the class or any clipped picker/label.
+            const srOnly = n.closest<HTMLElement>('.sr-only');
+            if (srOnly) {
+              const style = getComputedStyle(srOnly);
+              const box = srOnly.getBoundingClientRect();
+              if (style.position === 'absolute' && style.overflow === 'hidden' &&
+                  box.width <= 1 && box.height <= 1 &&
+                  (style.clip === 'rect(0px, 0px, 0px, 0px)' || style.clipPath === 'inset(50%)')) return false;
+            }
+            return n.clientWidth > 0 && n.scrollWidth > n.clientWidth + 1 && getComputedStyle(n).display !== 'inline';
+          }).map(n => n.getAttribute('data-testid') ?? n.tagName),
         }));
         expect(layout.overflow).toBeLessThanOrEqual(1); expect(layout.clipped).toEqual([]);
         if (mode === 'daniel') {
