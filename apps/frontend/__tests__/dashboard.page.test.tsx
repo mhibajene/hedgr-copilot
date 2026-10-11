@@ -201,7 +201,7 @@ describe("DashboardPage engine trust surface", () => {
       ).getAttribute("href")
     ).toBe("/deposit?journey=class-a-val-002");
     expect(screen.getByTestId("dashboard-orientation").textContent).toContain(
-      "Your position"
+      "Your simulation"
     );
   });
 
@@ -239,11 +239,11 @@ describe("DashboardPage engine trust surface", () => {
     expect(
       screen.getByRole("heading", {
         level: 1,
-        name: "Your position",
+        name: "Your simulation",
       })
     ).toBeDefined();
     expect(screen.getAllByRole("heading", { level: 1 })).toHaveLength(1);
-    expect(orientation.textContent).toContain("Your position");
+    expect(orientation.textContent).toContain("Your simulation");
     expect(screen.getByRole("combobox", { name: "Display currency for this simulation" })).toBeDefined();
     expect(orientation.textContent).not.toMatch(
       /Financial Stability Companion|crypto|blockchain|stablecoin|DeFi|trading|yield routing/i
@@ -266,11 +266,11 @@ describe("DashboardPage engine trust surface", () => {
     expect(screen.getByText("Start here")).toBeDefined();
     expect(screen.queryByText("Start with a simulated deposit")).toBeNull();
     expect(screen.queryByText("What Hedgr notices")).toBeNull();
-    expect(screen.queryByText("This is what happened in the example. It doesn’t tell you what will happen next.")).toBeNull();
+    expect(screen.queryByText("This is what happened in your simulation. It doesn’t tell you what will happen next.")).toBeNull();
     expect(screen.queryByTestId("engine-posture-badge")).toBeNull();
     expect(screen.queryByText("NORMAL")).toBeNull();
     expect(screen.getByTestId("engine-posture-context").textContent).toBe(
-      "Practise with pretend money first. Hedgr shows what changes, and why."
+      "Practise with pretend money first. See what changes, and why."
     );
     expect(
       Array.from(screen.getByTestId("dashboard-first-use-steps").querySelectorAll("li")).map((step) => step.textContent)
@@ -400,7 +400,7 @@ describe("DashboardPage engine trust surface", () => {
     );
     expect(screen.getByText("What Hedgr notices")).toBeDefined();
     expect(screen.queryByTestId("engine-simulation-attention-answer")).toBeNull();
-    expect(screen.getByText("This is what happened in the example. It doesn’t tell you what will happen next.")).toBeDefined();
+    expect(screen.getByText("This is what happened in your simulation. It doesn’t tell you what will happen next.")).toBeDefined();
   });
 
   test("restarts a completed explicit synthetic journey only after confirmation", async () => {
