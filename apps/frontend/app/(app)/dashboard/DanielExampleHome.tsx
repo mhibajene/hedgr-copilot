@@ -6,10 +6,11 @@ import { SIMULATION_DISPLAY_ESTIMATE_CAPTION } from '../../../lib/state/simulati
 import { PositionLine } from './PositionLine';
 import home from './synthetic-home.module.css';
 
-/** Candidate slots only until Dex supplies the Founder-confirmed copy/date-format lock. */
+/** Founder copy/date-format lock, 11 Oct 2026: "Lock 1-6 as recommended" (§365 gate). */
 export const DANIEL_EXAMPLE_COPY = Object.freeze({
   since: 'Since Daniel was last here',
   visit: 'Daniel’s last visit',
+  currencyVisit: 'At Daniel’s last visit',
   back: 'Back to your own simulation',
   current: 'Now',
   currencyContext: 'Currency context',
@@ -113,7 +114,8 @@ export function DanielExampleHome({ currentRead, timeline, returnHref, onReturn,
         <div className="mt-3 grid grid-cols-2 gap-3">
           {observations.map((read, index) => (
             <div key={read.asOf} className="min-w-0 space-y-2" style={{ containerType: 'inline-size' }} data-testid="daniel-currency-point">
-              <p className="text-xs text-hedgr-600">{index === 0 ? DANIEL_EXAMPLE_COPY.visit : DANIEL_EXAMPLE_COPY.current}</p>
+              <p className="text-xs text-hedgr-600">{index === 0 ? DANIEL_EXAMPLE_COPY.currencyVisit : DANIEL_EXAMPLE_COPY.current}</p>
+              <time className="block text-xs text-hedgr-500" dateTime={read.asOf}>{exampleDate(read.asOf)}</time>
               <p className="text-xl font-semibold leading-tight tabular-nums text-hedgr-dark" style={{ fontSize: 'clamp(0.75rem, 12cqi, 1.25rem)', whiteSpace: 'nowrap' }} data-testid="daniel-currency-figure">{read.localDisplay}</p>
               <p className="text-sm leading-relaxed text-hedgr-600" style={{ fontSize: 'clamp(0.75rem, 8cqi, 0.875rem)' }} data-testid="daniel-currency-rate">{read.explanation.rateAssumption}</p>
             </div>
