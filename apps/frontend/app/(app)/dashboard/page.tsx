@@ -11,6 +11,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { EngineAllocationBands } from "./EngineAllocationBands";
 import { EnginePostureHeader } from "./EnginePostureHeader";
 import { PositionLine } from "./PositionLine";
+import { DanielExampleHome } from './DanielExampleHome';
 import { CurrencyInsight } from "./CurrencyInsight";
 import { EngineProtectiveGuidance } from "./EngineProtectiveGuidance";
 import { EngineStabilityExplainer } from "./EngineStabilityExplainer";
@@ -54,7 +55,7 @@ import {
   isSyntheticJourneyResetRequested,
   parseSyntheticJourneyExample,
 } from "../../../lib/state/synthetic-journey";
-import { DANIEL_HOME_READ } from "../../../lib/state/daniel-home-fixture";
+import { DANIEL_HOME_READ, DANIEL_HOME_TIMELINE } from "../../../lib/state/daniel-home-fixture";
 
 function formatActivityDayLabel(timestamp: number): string {
   const date = new Date(timestamp);
@@ -604,47 +605,28 @@ export default function DashboardPage() {
     />
   ) : null;
 
-  // §359/§362: Daniel's computed Engine read, shown verbatim only as Daniel's reserve on the
-  // journey Home. It is not an input to, nor derived from, the mock posture or notices.
-  const danielPanel = danielExample ? (
-    <section
-      className={home.observation}
-      aria-labelledby="dashboard-daniel-label"
-      data-testid="dashboard-daniel-read"
-    >
-      <p id="dashboard-daniel-label" className="text-sm font-semibold text-hedgr-800">
-        Daniel’s declared holding · Fictional example
-      </p>
-      <div className="mt-2 text-2xl font-semibold tabular-nums text-hedgr-dark" data-testid="daniel-read-figure">
-        {DANIEL_HOME_READ.localDisplay}
-      </div>
-      <p className="text-xs text-hedgr-500" data-testid="daniel-read-caption">
-        {SIMULATION_DISPLAY_ESTIMATE_CAPTION}
-      </p>
-      <ul className="mt-3 space-y-1 text-sm leading-relaxed text-hedgr-600" data-testid="daniel-read-disclosure">
-        <li data-testid="daniel-read-holding">
-          Fictional user-declared holding: {DANIEL_HOME_READ.declaredHolding.currency}{" "}
-          {DANIEL_HOME_READ.declaredHolding.amount.toLocaleString("en-US")}. Hedgr only reads it.
-        </li>
-        <li data-testid="daniel-read-pair">Pair: {DANIEL_HOME_READ.pair}.</li>
-        <li data-testid="daniel-read-rate">{DANIEL_HOME_READ.explanation.rateAssumption}</li>
-        <li data-testid="daniel-read-as-of">
-          As of <time dateTime={DANIEL_HOME_READ.asOf}>{DANIEL_HOME_READ.asOf}</time>, a fixed example time.
-        </li>
-      </ul>
-    </section>
-  ) : null;
-
-  // §362: changing the example navigates on the same route, keeps journey and drops reset.
-  // The selection lives only in the URL; nothing is stored.
-  const chooseExample = (value: string) => {
-    const params = new URLSearchParams(window.location.search);
+  // §362/§365: picker and return share URL-only navigation, preserving the mounted
+  // Home and its visit guard. Neither resets nor writes the simulation.
+  const exampleHref = (value: string, search: string, path: string) => {
+    const params = new URLSearchParams(search);
     params.delete(CLASS_A_VAL_002_RESET_PARAM);
     if (value === CLASS_A_VAL_002_DANIEL_EXAMPLE) params.set(CLASS_A_VAL_002_EXAMPLE_PARAM, value);
     else params.delete(CLASS_A_VAL_002_EXAMPLE_PARAM);
     const query = params.toString();
-    window.history.pushState(null, "", `${window.location.pathname}${query ? `?${query}` : ""}`);
+    return `${path}${query ? `?${query}` : ""}`;
   };
+  const chooseExample = (value: string) => {
+    window.history.pushState(null, "", exampleHref(value, window.location.search, window.location.pathname));
+  };
+  const danielPanel = danielExample ? (
+    <DanielExampleHome
+      currentRead={DANIEL_HOME_READ}
+      timeline={DANIEL_HOME_TIMELINE}
+      returnHref={exampleHref("own", searchParams?.toString() ?? "", pathname ?? CLASS_A_VAL_002_DASHBOARD_PATH)}
+      onReturn={() => chooseExample("own")}
+      limitation={guaranteeLine}
+    />
+  ) : null;
   const examplePicker = syntheticJourneyActive ? (
     <select
       aria-label="Choose an example"
@@ -774,7 +756,7 @@ export default function DashboardPage() {
           className="space-y-0.5 pb-1 sm:space-y-2"
           data-testid="dashboard-orientation"
         >
-          {productSimulationActive && today !== null ? (
+          {productSimulationActive && !danielExample && today !== null ? (
             <p className={home.dateLine} data-testid="dashboard-date-line">
               {formatDateLine(today)}
             </p>
