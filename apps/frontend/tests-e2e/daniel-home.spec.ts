@@ -8,7 +8,7 @@ import { SIMULATION_DISPLAY_CURRENCIES } from '../lib/state/simulation-display-c
 const DEFAULT_HOME = '/dashboard';
 const JOURNEY_ROUTES = ['/dashboard?journey=class-a-val-002', '/dashboard-synthetic-journey'] as const;
 const FIGURE = 'K21,600';
-const RATE_ASSUMPTION = 'Disclosed fixture rate: ZMW 27 per USD. Not a live rate.';
+const RATE_ASSUMPTION = 'Example rate: ZMW 27 per US dollar. Not a live rate.';
 const COPY = { since: 'What changed since Daniel’s last visit', visit: 'Daniel’s last visit', currencyVisit: 'At Daniel’s last visit', back: 'Go to your own simulation', current: 'Now', lastDate: '25 Sep 2026', currentDate: '9 Oct 2026' };
 const AS_OF = '2026-10-09T00:00:00.000Z';
 const CURRENCY_KEY = 'hedgr.simulation.display-currency';
@@ -312,7 +312,7 @@ test('shows Engine localDisplay above its caption with the complete runtime fixt
     await expect(page.getByTestId('daniel-observation-rate').nth(1)).toHaveText(RATE_ASSUMPTION);
     await expect(page.getByTestId('daniel-read-as-of').locator('time')).toHaveAttribute('datetime', AS_OF);
     await expect(page.getByTestId('daniel-read-as-of')).toHaveText('Example date: 9 Oct 2026.');
-    await expect(panel(page)).toContainText('Declared USD 800 shows as K21,600 at this rate.');
+    await expect(panel(page)).toContainText('USD 800 shows as K21,600 at this example rate.');
   }
 });
 
@@ -401,13 +401,13 @@ test('contains no prohibited claims in Daniel Home copy', async ({ page }) => {
 // §365: the full example Home, preserving the earlier picker/rate controls above.
 const lastRead = {
   figure: 'K23,600',
-  holding: 'Declared USD 800 shows as K23,600 at this rate.',
-  rate: 'Disclosed fixture rate: ZMW 29.5 per USD. Not a live rate.',
+  holding: 'USD 800 shows as K23,600 at this example rate.',
+  rate: 'Example rate: ZMW 29.5 per US dollar. Not a live rate.',
   asOf: '2026-09-25T00:00:00.000Z',
 };
 const currentRead = {
   figure: FIGURE,
-  holding: 'Declared USD 800 shows as K21,600 at this rate.',
+  holding: 'USD 800 shows as K21,600 at this example rate.',
   rate: RATE_ASSUMPTION,
   asOf: AS_OF,
 };
@@ -610,6 +610,31 @@ test('Daniel invariant sits directly under the change card', async ({ page }) =>
     await expect(page.getByRole('region', { name: COPY.since, exact: true })).toBeVisible();
     expect(await page.getByTestId('daniel-since-card').evaluate(n => n.nextElementSibling?.textContent)).toBe(LEGIBILITY.invariant);
     await expect(page.getByText(LEGIBILITY.invariant, { exact: true })).toHaveCount(1);
+  }
+});
+
+test('Home keeps the rate disclosure exactly once with v3 strings', async ({ page }) => {
+  await login(page);
+  for (const route of JOURNEY_ROUTES) {
+    await gotoDaniel(page, route);
+    for (const read of [lastRead, currentRead]) {
+      await expect(panel(page).getByText(read.rate, { exact: true })).toHaveCount(1);
+      await expect(page.getByTestId('daniel-since-card').getByText(read.holding, { exact: true })).toHaveCount(1);
+    }
+    await expect(page.getByTestId('daniel-observation-holding')).toHaveText([
+      'USD 800 shows as K23,600 at this example rate.',
+      'USD 800 shows as K21,600 at this example rate.',
+    ]);
+    await expect(page.getByTestId('daniel-observation-rate')).toHaveText([
+      'Example rate: ZMW 29.5 per US dollar. Not a live rate.',
+      'Example rate: ZMW 27 per US dollar. Not a live rate.',
+    ]);
+    await expect(panel(page).getByText('Not a live rate', { exact: true })).toHaveCount(1);
+    expect(await page.getByTestId('daniel-since-card').evaluate(n => Array.from(n.parentElement!.querySelectorAll('p')).some(p => p.textContent === 'Not a live rate'))).toBe(true);
+    await expect(page.getByText(LEGIBILITY.invariant, { exact: true })).toHaveCount(1);
+    await expect(page.getByTestId('daniel-read-figure')).toHaveText(FIGURE);
+    await expect(page.getByTestId('daniel-observation').nth(0).locator('time')).toHaveAttribute('datetime', lastRead.asOf);
+    await expect(page.getByTestId('daniel-observation').nth(1).locator('time')).toHaveAttribute('datetime', currentRead.asOf);
   }
 });
 
