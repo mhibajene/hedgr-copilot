@@ -17,6 +17,90 @@ const BASELINE: DanielReadInput = {
   asOf: DANIEL_GOLDEN_AS_OF,
 };
 
+/** Literal shipped v2 evidence retained for the §370 preservation comparison. */
+const V2_GOLDEN_GRID: typeof DANIEL_GOLDEN_GRID = [
+  {
+    name: 'baseline fixture rate 27',
+    input: { declaredHoldingUsd: 800, fixtureRateZmwPerUsd: 27, asOf: '2026-10-06T00:00:00.000Z' },
+    read: {
+      engineVersion: 'daniel-read-v2',
+      asOf: '2026-10-06T00:00:00.000Z',
+      pair: 'USD/ZMW',
+      declaredHolding: { amount: 800, currency: 'USD', source: 'user-declared', access: 'read-only' },
+      localAmountZmwMinor: 2160000,
+      localDisplay: 'K21,600',
+      explanation: {
+        rateAssumption: 'Disclosed fixture rate: ZMW 27 per USD. Not a live rate.',
+        holding: 'Declared USD 800 shows as K21,600 at this rate.',
+      },
+    },
+  },
+  {
+    name: 'fixture rate 29.5',
+    input: { declaredHoldingUsd: 800, fixtureRateZmwPerUsd: 29.5, asOf: '2026-10-06T00:00:00.000Z' },
+    read: {
+      engineVersion: 'daniel-read-v2',
+      asOf: '2026-10-06T00:00:00.000Z',
+      pair: 'USD/ZMW',
+      declaredHolding: { amount: 800, currency: 'USD', source: 'user-declared', access: 'read-only' },
+      localAmountZmwMinor: 2360000,
+      localDisplay: 'K23,600',
+      explanation: {
+        rateAssumption: 'Disclosed fixture rate: ZMW 29.5 per USD. Not a live rate.',
+        holding: 'Declared USD 800 shows as K23,600 at this rate.',
+      },
+    },
+  },
+  {
+    name: 'fixture rate 24.5',
+    input: { declaredHoldingUsd: 800, fixtureRateZmwPerUsd: 24.5, asOf: '2026-10-06T00:00:00.000Z' },
+    read: {
+      engineVersion: 'daniel-read-v2',
+      asOf: '2026-10-06T00:00:00.000Z',
+      pair: 'USD/ZMW',
+      declaredHolding: { amount: 800, currency: 'USD', source: 'user-declared', access: 'read-only' },
+      localAmountZmwMinor: 1960000,
+      localDisplay: 'K19,600',
+      explanation: {
+        rateAssumption: 'Disclosed fixture rate: ZMW 24.5 per USD. Not a live rate.',
+        holding: 'Declared USD 800 shows as K19,600 at this rate.',
+      },
+    },
+  },
+  {
+    name: 'holding-change control at fixture rate 27',
+    input: { declaredHoldingUsd: 1000, fixtureRateZmwPerUsd: 27, asOf: '2026-10-06T00:00:00.000Z' },
+    read: {
+      engineVersion: 'daniel-read-v2',
+      asOf: '2026-10-06T00:00:00.000Z',
+      pair: 'USD/ZMW',
+      declaredHolding: { amount: 1000, currency: 'USD', source: 'user-declared', access: 'read-only' },
+      localAmountZmwMinor: 2700000,
+      localDisplay: 'K27,000',
+      explanation: {
+        rateAssumption: 'Disclosed fixture rate: ZMW 27 per USD. Not a live rate.',
+        holding: 'Declared USD 1,000 shows as K27,000 at this rate.',
+      },
+    },
+  },
+  {
+    name: 'fractional-cent control 1.005 at fixture rate 1',
+    input: { declaredHoldingUsd: 1.005, fixtureRateZmwPerUsd: 1, asOf: '2026-10-06T00:00:00.000Z' },
+    read: {
+      engineVersion: 'daniel-read-v2',
+      asOf: '2026-10-06T00:00:00.000Z',
+      pair: 'USD/ZMW',
+      declaredHolding: { amount: 1.005, currency: 'USD', source: 'user-declared', access: 'read-only' },
+      localAmountZmwMinor: 101,
+      localDisplay: 'K1.01',
+      explanation: {
+        rateAssumption: 'Disclosed fixture rate: ZMW 1 per USD. Not a live rate.',
+        holding: 'Declared USD 1.005 shows as K1.01 at this rate.',
+      },
+    },
+  },
+];
+
 const readOf = (input: DanielReadInput) => computeDanielRead(input) as DanielGoldenRead;
 
 /** Independently decodes a K display string to integer ngwee, without the engine. */
@@ -58,6 +142,66 @@ describe('Daniel read (§350)', () => {
     window.localStorage.clear();
   });
 
+  test('v3 holding explanation is parameterised from the declared amount and currency', () => {
+    for (const [amount, display, holding] of [
+      [800, 'K21,600', 'USD 800 shows as K21,600 at this example rate.'],
+      [1000, 'K27,000', 'USD 1,000 shows as K27,000 at this example rate.'],
+      [1000.5, 'K27,013.50', 'USD 1,000.5 shows as K27,013.50 at this example rate.'],
+    ] as const) {
+      const input = { ...BASELINE, declaredHoldingUsd: amount };
+      const before = structuredClone(input);
+      const read = computeDanielRead(input);
+      expect(read.explanation.holding).toBe(holding);
+      expect(read.declaredHolding).toEqual({ amount, currency: 'USD', source: 'user-declared', access: 'read-only' });
+      expect(read.localDisplay).toBe(display);
+      expect(read.explanation.holding.startsWith(`${read.declaredHolding.currency} `)).toBe(true);
+      expect(input).toEqual(before);
+    }
+    const fractional = computeDanielRead({ ...BASELINE, declaredHoldingUsd: 1.005, fixtureRateZmwPerUsd: 1 });
+    expect(fractional.explanation.holding).toBe('USD 1.005 shows as K1.01 at this example rate.');
+    expect(fractional.declaredHolding.amount).toBe(1.005);
+  });
+
+  test('v3 rate explanation matches the locked wording', () => {
+    for (const [rate, explanation] of [
+      [27, 'Example rate: ZMW 27 per US dollar. Not a live rate.'],
+      [29.5, 'Example rate: ZMW 29.5 per US dollar. Not a live rate.'],
+      [24.5, 'Example rate: ZMW 24.5 per US dollar. Not a live rate.'],
+      [1, 'Example rate: ZMW 1 per US dollar. Not a live rate.'],
+      [0.1, 'Example rate: ZMW 0.1 per US dollar. Not a live rate.'],
+    ] as const) {
+      const input = { ...BASELINE, fixtureRateZmwPerUsd: rate };
+      const before = structuredClone(input);
+      expect(computeDanielRead(input).explanation.rateAssumption).toBe(explanation);
+      expect(input).toEqual(before);
+    }
+  });
+
+  test('v3 changes only the version and the two approved strings', () => {
+    expect(DANIEL_GOLDEN_GRID).toHaveLength(V2_GOLDEN_GRID.length);
+    V2_GOLDEN_GRID.forEach((v2, index) => {
+      const v3 = DANIEL_GOLDEN_GRID[index];
+      expect(v3.name).toBe(v2.name);
+      expect(v3.input).toEqual(v2.input);
+      const input = structuredClone(v3.input);
+      const before = structuredClone(input);
+      const computed = computeDanielRead(input);
+      expect(input).toEqual(before);
+      expect(computed).toEqual(v3.read);
+      for (const read of [v3.read, computed]) {
+        expect(changedPaths(v2.read, read).sort(), v2.name).toEqual([
+          'engineVersion', 'explanation.holding', 'explanation.rateAssumption',
+        ]);
+        const { engineVersion, explanation, ...preserved } = read;
+        expect(engineVersion).toBe('daniel-read-v3');
+        expect({ ...preserved, engineVersion: v2.read.engineVersion, explanation: v2.read.explanation }, v2.name).toEqual(v2.read);
+        expect(Object.keys(read).sort()).toEqual(Object.keys(v2.read).sort());
+        expect(Object.keys(read.declaredHolding).sort()).toEqual(Object.keys(v2.read.declaredHolding).sort());
+        expect(Object.keys(explanation).sort()).toEqual(Object.keys(v2.read.explanation).sort());
+      }
+    });
+  });
+
   test('replays identical declared inputs to a deep-equal Daniel read', () => {
     const input = { ...BASELINE };
     const frozen = structuredClone(input);
@@ -80,7 +224,7 @@ describe('Daniel read (§350)', () => {
       expect(changedPaths(base, moved).sort()).toEqual(
         ['explanation.holding', 'explanation.rateAssumption', 'localAmountZmwMinor', 'localDisplay'],
       );
-      expect(moved.explanation.rateAssumption).toContain(`ZMW ${rate} per USD`);
+      expect(moved.explanation.rateAssumption).toContain(`ZMW ${rate} per US dollar`);
     }
   });
 
@@ -182,11 +326,11 @@ describe('Daniel read (§350)', () => {
     }
   });
 
-  test('reports daniel-read-v2 as the explicit engine version', () => {
-    expect(DANIEL_READ_ENGINE_VERSION).toBe('daniel-read-v2');
+  test('reports daniel-read-v3', () => {
+    expect(DANIEL_READ_ENGINE_VERSION).toBe('daniel-read-v3');
     for (const row of DANIEL_GOLDEN_GRID) {
-      expect(row.read.engineVersion, row.name).toBe('daniel-read-v2');
-      expect(computeDanielRead(row.input).engineVersion, row.name).toBe('daniel-read-v2');
+      expect(row.read.engineVersion, row.name).toBe('daniel-read-v3');
+      expect(computeDanielRead(row.input).engineVersion, row.name).toBe('daniel-read-v3');
     }
   });
 

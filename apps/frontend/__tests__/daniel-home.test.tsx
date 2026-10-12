@@ -92,7 +92,7 @@ import { SIMULATION_DISPLAY_CURRENCIES, SIMULATION_DISPLAY_CURRENCY_KEY } from "
 import { ENGINE_TRUST_INFORMATIONAL_DENYLIST } from "./engine-trust-framing-denylist";
 
 const FIXTURE_AS_OF = "2026-10-09T00:00:00.000Z";
-const RATE_ASSUMPTION = "Disclosed fixture rate: ZMW 27 per USD. Not a live rate.";
+const RATE_ASSUMPTION = "Example rate: ZMW 27 per US dollar. Not a live rate.";
 const ROUTES = ["default", "journey", "synthetic-path"] as const;
 const JOURNEY_ROUTES = ["journey", "synthetic-path"] as const;
 type Route = (typeof ROUTES)[number];
@@ -393,7 +393,7 @@ describe("shows Engine localDisplay above its caption with the complete runtime 
       asOf: FIXTURE_AS_OF,
     });
     expect(DANIEL_HOME_READ).toEqual(computeDanielRead(DANIEL_HOME_FIXTURE_INPUT));
-    expect(DANIEL_HOME_READ.engineVersion).toBe("daniel-read-v2");
+    expect(DANIEL_HOME_READ.engineVersion).toBe("daniel-read-v3");
     expect(DANIEL_HOME_READ.localDisplay).toBe("K21,600");
     const source = readFileSync(resolve(__dirname, "../lib/state/daniel-home-fixture.ts"), "utf8");
     expect(source).toMatch(/RUNTIME fixture/);
@@ -574,7 +574,7 @@ test("Daniel's example timeline comes only from the Engine", () => {
     expect(computeDanielRead(input)).toEqual(computeDanielRead(input));
     const { asOf, localDisplay, localAmountZmwMinor, explanation, ...invariant } = reads![index];
     expect(invariant).toEqual({
-      engineVersion: "daniel-read-v2", pair: "USD/ZMW",
+      engineVersion: "daniel-read-v3", pair: "USD/ZMW",
       declaredHolding: { amount: 800, currency: "USD", source: "user-declared", access: "read-only" },
     });
     expect({ asOf, localDisplay, localAmountZmwMinor, explanation }).toEqual({
@@ -719,6 +719,37 @@ test('Daniel invariant sits directly under the change card', async () => {
     const card = screen.getByRole('region', { name: LOCKED_COPY.since, exact: true });
     expect(card.nextElementSibling?.textContent).toBe(LEGIBILITY.invariant);
     expect(screen.getAllByText(LEGIBILITY.invariant)).toHaveLength(1);
+    view.unmount();
+  }
+});
+
+test('Home keeps the rate disclosure exactly once with v3 strings', async () => {
+  const inputsBefore = structuredClone(expectedTimelineInputs);
+  for (const route of JOURNEY_ROUTES) {
+    const view = await renderDaniel(route);
+    const card = screen.getByTestId('daniel-since-card');
+    const holdings = [
+      'USD 800 shows as K23,600 at this example rate.',
+      'USD 800 shows as K21,600 at this example rate.',
+    ];
+    const rates = [
+      'Example rate: ZMW 29.5 per US dollar. Not a live rate.',
+      'Example rate: ZMW 27 per US dollar. Not a live rate.',
+    ];
+    expectedTimeline.slice(1).forEach((read, index) => {
+      expect(read.engineVersion).toBe('daniel-read-v3');
+      expect(read.explanation).toEqual({ holding: holdings[index], rateAssumption: rates[index] });
+      expect(within(card).getAllByText(holdings[index], { exact: true })).toHaveLength(1);
+      expect(within(panel()).getAllByText(rates[index], { exact: true })).toHaveLength(1);
+    });
+    expect(screen.getAllByTestId('daniel-observation-holding').map(n => n.textContent)).toEqual(holdings);
+    expect(screen.getAllByTestId('daniel-observation-rate').map(n => n.textContent)).toEqual(rates);
+    const disclosure = within(panel()).getAllByText('Not a live rate', { exact: true });
+    expect(disclosure).toHaveLength(1);
+    expect(card.parentElement?.contains(disclosure[0])).toBe(true);
+    expect(screen.getAllByText(LEGIBILITY.invariant, { exact: true })).toHaveLength(1);
+    expect(screen.getByTestId('daniel-read-figure').textContent).toBe('K21,600');
+    expect(expectedTimelineInputs).toEqual(inputsBefore);
     view.unmount();
   }
 });
