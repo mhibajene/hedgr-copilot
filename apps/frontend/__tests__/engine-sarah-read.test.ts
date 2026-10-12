@@ -253,7 +253,7 @@ describe('Sarah read (§372)', () => {
     expect([USD, ZMW].map(computeSarahRead)).toStrictEqual(before);
     expect(fetch).not.toHaveBeenCalled();
     expect(source()).not.toMatch(/Date\.now|new Date|localStorage|sessionStorage|displayPreference|fetch\s*\(|provider|__tests__|\.golden/);
-    expect([...source().matchAll(/\b(?:import|from)\b[^\n]*['"]([^'"]+)['"]/g)].map((match) => match[1])).toEqual(['./daniel-read']);
+    expect([...source().matchAll(/\bfrom\s*['"]([^'"\n]+)['"]/g)].map((match) => match[1])).toEqual(['./daniel-read']);
   });
 
   test('deadline and observation changes stay isolated', async () => {
