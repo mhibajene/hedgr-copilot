@@ -4587,6 +4587,8 @@ This section does **not** authorize provider-specific implementation, legal reli
 
 ## 7. Current sequence and active status
 
+**Founder activation — Sarah Stability Engine read (2026-10-12; §372):** Founder Musalwa Hibajene (repo owner `mhibajene`), 12 Oct 2026 ~19:10 AWST in MonoCode via Dex, accepted Sarah decisions 1–5 and sequenced her Engine slice immediately after the now-completed §371 S7/S8 ticket. At ~19:48 AWST he locked Sue's five Sarah copy items, including the shared D2 sentence and omission of the rate line for ZMW fees. Activate only `CLASS-A-VAL-002-STABILITY-SARAH-READ-001` as the sole nested Lane V under open `CLASS-A-VAL-002` (Stability layer; Class A informational/synthetic; Green classification only, no standing delegation). One pure `computeSarahRead` / separate `SarahRead` reads one declared USD or ZMW course fee, due 1 Oct 2027, at one explicit observation. USD 1,000 reads K24,500 / K29,500 / K27,000 at explicit example rates 24.5 / 29.5 / current 27; ZMW K29,500 stays K29,500. No comparison, trend, progress, savings relationship or inferred rate. Current rate derives from `DANIEL_FIXTURE_RATE_ZMW_PER_USD`; historical rates/dates are example-history inputs only (§365 decision 2). §7a controls the exact contract, literal goldens, locked copy, three runtime/test paths and gates. Source merge, separate independently verified permanent-main RAP rebind (§364) and fetched-main `bridge:rap:check` precede runtime. Steward stops at effective activation; Dex separately launches GPT-6.1 Sol xhigh Implementer. Fresh independent GPT-6.1 Sol high exact-head verification and §331 governed auto-merge apply. Engine-only; Sarah Home is a later separate ticket. USD hero/chart redesign remain in the post-Sarah bundle, SME held, research unreleased. **NO CROSS-LANE IMPACT.**
+
 **Daniel Engine explanation strings technical closeout (2026-10-12; §371):** `CLASS-A-VAL-002-STABILITY-DANIEL-STRINGS-001` delivered §370 S7/S8 and `daniel-read-v3` in #851 (`a95eca6`, exact independently verified head `c945681`). Post-runtime RAP passed unchanged; exact-revision Production is READY and the isolated Daniel probe passed 67/67 across both journey routes at 1440 / 390 / 320@200%. Close only this nested ticket on source closeout merge and final separate verified permanent-main RAP rebind (§364); both parents stay open with no active nested successor or activation. Sarah's Engine slice follows as already directed, requiring its own separate activation. USD hero and chart redesign remain in the post-Sarah bundle; research remains unreleased. **NO CROSS-LANE IMPACT.**
 
 **Daniel example legibility technical closeout (2026-10-12; §369):** `CLASS-A-VAL-002-HOME-EXAMPLE-LEGIBILITY-001` delivered §367 / §368 in #845 (`f508a37`, exact independently verified head `2751f53`). Post-runtime RAP check passed unchanged; exact-revision Production is READY. Both journey routes actually render Daniel at 1440 / 390 / 320@200%; the remaining 320@200% probe passed 43/43 and visual review confirms the §362 picker clipping defect resolved. Founder-approved conditional comparison reproduced the default-Home 11 px chart-label excess identically on immutable pre-ticket `cef0dfb`; retain it as pre-existing under chart redesign deferred until after Sarah. The confirmed Daniel URL is ready to share within that bounded disposition, not research release. Defective-red correction `539f00c` remains explicitly reviewed history. Close only this nested ticket on source closeout merge and final separate verified permanent-main RAP rebind (§364); both parents remain open with no successor or activation. S7/S8, general fence sweep and other deferred work remain non-authorising notes. **NO CROSS-LANE IMPACT.**
@@ -4755,13 +4757,13 @@ Source: `KIP-ACTIVITY-VISUALISER-EXPLORATION-001` (advisory evidence, not author
 
 Current active ticket status:
 
-- **Lane V:** `CLASS-A-VAL-002` — open Class A informational / synthetic validation parent. `CLASS-A-VAL-002-HOME-EXPERIENCE-001` closed under §327 (RAP rebind #736). `CLASS-A-VAL-002-HOME-DEDUP-001` closed after §329 source #742 and separate verified RAP rebind #743. `CLASS-A-VAL-002-RESEARCH-NEW-MARKER-001` closed under §330 (source #744, separate verified RAP rebind #745). `CLASS-A-VAL-002-RESEARCH-REFRESH-001` closed under §333 (source #751, separate verified RAP rebind #752). `CLASS-A-VAL-002-RESEARCH-RESERVE-001` is technically closed under §335 (source #756 `fc3ff0b`, separate verified RAP rebind #757 `e6e07ad`). `CLASS-A-VAL-002-RESEARCH-DANIEL-FIX-001` is technically closed under §342 (source #772 `1e6b8b1`, separate verified RAP rebind #773 `90e01b8`). Nested `CLASS-A-VAL-002-STABILITY-LEDGER-ONLY-001` is closed under §345. Nested `CLASS-A-VAL-002-STABILITY-REVIEW-MEMORY-001` (§348, Stability layer) is closed under §349 after source #790 and final separate verified RAP #791. Nested `CLASS-A-VAL-002-STABILITY-DANIEL-SLICE-001` (§350, Stability layer) is closed under §351 after source closeout #795 (`5cac273`) and final separate verified RAP #796 (`9e5fd77`). Nested `CLASS-A-VAL-002-HOME-SMALL-FIXES-001` (§355, Home layer) is closed under §356 after source #810 and final separate verified RAP #811 (`3c83b19`). Nested `CLASS-A-VAL-002-STABILITY-DANIEL-AMOUNT-001` (§357, Stability layer) is technically closed under §358 on source closeout merge and final separate verified permanent-main RAP rebind. Nested `CLASS-A-VAL-002-STABILITY-DANIEL-HOME-001` (§359, amended §360) is closed under §361 after source closeout #825 and final separate verified permanent-main RAP #826 (`7ca19e6`). Nested `CLASS-A-VAL-002-HOME-EXAMPLE-PICKER-001` (§362, Home layer) is closed under §363 after source closeout #830 and final verified RAP #831 (`f645e10`). Nested `CLASS-A-VAL-002-HOME-EXAMPLE-DASHBOARD-001` (§365, Home layer) is technically closed under §366 on source closeout merge and final separate verified permanent-main RAP rebind. Nested `CLASS-A-VAL-002-HOME-EXAMPLE-LEGIBILITY-001` (§367, amended §368, Home layer) is technically closed under §369 on source closeout merge and final separate verified permanent-main RAP rebind. Nested `CLASS-A-VAL-002-STABILITY-DANIEL-STRINGS-001` (§370, Stability layer) is technically closed under §371 on source closeout merge and final separate verified permanent-main RAP rebind (§364). No active nested Lane V successor is selected or activated. Parents `CLASS-A-VAL-002` and `SE-REASON-001` remain open. The research route remains unreleased. `CLASS-A-VAL-002-RESEARCH-COMPRESSION-001` closed under §314; Research Value Panel §311/§312 and Research Two-Beat §309/§310 are completed history. §302 stimulus and §§298–301 preparation/packages remain completed history. `CLASS-A-VAL-002-WEEKEND-PREP-001` remains deferred with duties intact; its separate Digital Feedback v1 release and Founder custody remain in force. No scenario participant distribution follows.
+- **Lane V:** `CLASS-A-VAL-002` — open Class A informational / synthetic validation parent. `CLASS-A-VAL-002-HOME-EXPERIENCE-001` closed under §327 (RAP rebind #736). `CLASS-A-VAL-002-HOME-DEDUP-001` closed after §329 source #742 and separate verified RAP rebind #743. `CLASS-A-VAL-002-RESEARCH-NEW-MARKER-001` closed under §330 (source #744, separate verified RAP rebind #745). `CLASS-A-VAL-002-RESEARCH-REFRESH-001` closed under §333 (source #751, separate verified RAP rebind #752). `CLASS-A-VAL-002-RESEARCH-RESERVE-001` is technically closed under §335 (source #756 `fc3ff0b`, separate verified RAP rebind #757 `e6e07ad`). `CLASS-A-VAL-002-RESEARCH-DANIEL-FIX-001` is technically closed under §342 (source #772 `1e6b8b1`, separate verified RAP rebind #773 `90e01b8`). Nested `CLASS-A-VAL-002-STABILITY-LEDGER-ONLY-001` is closed under §345. Nested `CLASS-A-VAL-002-STABILITY-REVIEW-MEMORY-001` (§348, Stability layer) is closed under §349 after source #790 and final separate verified RAP #791. Nested `CLASS-A-VAL-002-STABILITY-DANIEL-SLICE-001` (§350, Stability layer) is closed under §351 after source closeout #795 (`5cac273`) and final separate verified RAP #796 (`9e5fd77`). Nested `CLASS-A-VAL-002-HOME-SMALL-FIXES-001` (§355, Home layer) is closed under §356 after source #810 and final separate verified RAP #811 (`3c83b19`). Nested `CLASS-A-VAL-002-STABILITY-DANIEL-AMOUNT-001` (§357, Stability layer) is technically closed under §358 on source closeout merge and final separate verified permanent-main RAP rebind. Nested `CLASS-A-VAL-002-STABILITY-DANIEL-HOME-001` (§359, amended §360) is closed under §361 after source closeout #825 and final separate verified permanent-main RAP #826 (`7ca19e6`). Nested `CLASS-A-VAL-002-HOME-EXAMPLE-PICKER-001` (§362, Home layer) is closed under §363 after source closeout #830 and final verified RAP #831 (`f645e10`). Nested `CLASS-A-VAL-002-HOME-EXAMPLE-DASHBOARD-001` (§365, Home layer) is technically closed under §366 on source closeout merge and final separate verified permanent-main RAP rebind. Nested `CLASS-A-VAL-002-HOME-EXAMPLE-LEGIBILITY-001` (§367, amended §368, Home layer) is technically closed under §369 on source closeout merge and final separate verified permanent-main RAP rebind. Nested `CLASS-A-VAL-002-STABILITY-DANIEL-STRINGS-001` (§370, Stability layer) is technically closed under §371 on source closeout merge and final separate verified permanent-main RAP rebind (§364). §372 activates sole nested Lane V `CLASS-A-VAL-002-STABILITY-SARAH-READ-001` (Stability, Engine-only) after source merge, separate verified permanent-main RAP rebind and fetched-main RAP check. Parents `CLASS-A-VAL-002` and `SE-REASON-001` remain open. The research route remains unreleased. `CLASS-A-VAL-002-RESEARCH-COMPRESSION-001` closed under §314; Research Value Panel §311/§312 and Research Two-Beat §309/§310 are completed history. §302 stimulus and §§298–301 preparation/packages remain completed history. `CLASS-A-VAL-002-WEEKEND-PREP-001` remains deferred with duties intact; its separate Digital Feedback v1 release and Founder custody remain in force. No scenario participant distribution follows.
 - **Lane E:** `SE-REASON-001` — open Class A informational / Yellow parent; no active nested ticket after §290. No further authoring, model/executable-interface acceptance, coexistence work or product/runtime implementation. D-099 remains direction only; §288, D-121/D-143 retained evidence and limitations remain unchanged.
 - **Lane G:** none. `GTM-MARKET-DISCOVERY-001` / D-151 is deferred, not cancelled, under §285. No research, intake, analysis or automatic restart.
 - **Lane N:** none. `NARRATIVE-007` is completed under D-080 / §212; Customer One-Pager v2.0 is Accepted / Frozen and unpublished.
 - **Lane A / B / C / M / R:** none. Prior completed work supplies no successor or standing concurrency.
 - **Temporary repository support:** `PRODUCT-EXPERIENCE-LEAD-ADOPTION-001` is completed finite support after source closeout #662 and separate RAP rebind #663; the role remains registered `PROPOSE_ONLY`. `AGENT-ROLE-REGISTRY-RECONCILIATION-001` is completed finite support after source #666, rebind #667, amendment #671 / rebind #673, closeout #676 and separate permanent-main RAP rebind #677 at `2a1a8bf`. This finite activity creates no standing support authority and does not occupy or alter a product/research lane. Local `BRIDGE-MCP-001` remains separate under §§304–308 with no live Lane R occupancy.
-- **Sequencing posture:** Controlled Parallelism v22 / §6f.22 retains V/E parents while §285 defers G. §301–§302 nested Lane V work is completed history; §303 Product Experience Lead registration is closed. §309–§310 Research Two-Beat work is completed history. The role-registry reconciliation is completed finite non-lane support after source closeout #676 and separate RAP rebind #677. §311–§312 Research Value Panel and §313–§314 Research Compression work are completed history. §327, §329 and §330 record the Home experience, Home deduplication and New Marker technical closeouts. NEW-MARKER-001 requires no further runtime work; its retrospective Verifier PASS does not erase the #710 merge-before-verifier deviation. §333 records the `CLASS-A-VAL-002-RESEARCH-REFRESH-001` technical closeout. §335 records the `CLASS-A-VAL-002-RESEARCH-RESERVE-001` technical closeout; RESERVE-001 remains closed. §339 records the Founder cold-read supersession: there is no separate internal cold read; participant exposure starts only under a later, separate release ticket. §342 records the `CLASS-A-VAL-002-RESEARCH-DANIEL-FIX-001` technical closeout; DANIEL-FIX-001 remains closed. §343 records the D2 hypothesis-only disposition and closes the open Founder-decision line, without changing occupancy. §344 activated nested Lane V `CLASS-A-VAL-002-STABILITY-LEDGER-ONLY-001` (Stability layer); §345 records its technical closeout; after its source merge and separate verified RAP rebind, no nested Lane V ticket is active. §346 records the TDD standing build posture for future Engine and Home runtime §7a briefs, without changing occupancy. §347 records the Founder lock of the Stability Engine spec in `docs/strategy/stability-engine-pack.md`, without activating a ticket or changing occupancy. §348 activated nested Lane V `CLASS-A-VAL-002-STABILITY-REVIEW-MEMORY-001`; §349 records its verified technical delivery, post-runtime rebind and READY Production probe. §349 is complete after source #790 and final separate verified RAP #791. §350 activated nested Lane V `CLASS-A-VAL-002-STABILITY-DANIEL-SLICE-001`, with an explicit §347 amendment recorded inside §350 and no locked-pack edit; §351 records its verified technical delivery and READY deployment. §351 is complete after source closeout #795 and final separate verified RAP #796. §355 activated nested Lane V `CLASS-A-VAL-002-HOME-SMALL-FIXES-001` (Home layer; six Home fixes on both Home routes as one Home experience); §356 records its verified technical delivery and READY deployment. §356 is complete after source #810 and final separate verified RAP #811 (`3c83b19`). §357 activated nested Lane V `CLASS-A-VAL-002-STABILITY-DANIEL-AMOUNT-001` (Stability layer), the §351 deferred canonical local amount with the explicit §350 AC2-style amendment; §358 records its verified technical delivery and successful Production deployment. §358 is complete after source #815 and final separate verified permanent-main RAP #816 (`2d0287a`). §359 activated nested `CLASS-A-VAL-002-STABILITY-DANIEL-HOME-001`, amended by §360; §361 records its verified technical delivery, READY Production deployment and isolated public-alias probe. §361 is complete after source closeout #825 and final separate verified permanent-main RAP #826 (`7ca19e6`). §362 activated nested `CLASS-A-VAL-002-HOME-EXAMPLE-PICKER-001` (Home layer; synthetic journey Home example picker); §363 records its verified technical delivery, READY Production deployment and public-alias probe. §363 is complete after source closeout #830 (`9e0f6fc`) and final separate verified permanent-main RAP #831 (`f645e10`). §365 activated nested Lane V `CLASS-A-VAL-002-HOME-EXAMPLE-DASHBOARD-001` (Home layer); §366 records its independently verified runtime, READY Production and Founder-accepted scoped public-alias probe, with the pre-existing §362 picker defect and B1 historical copy-gate deviation retained. Close only this nested ticket on source closeout merge and final separate verified permanent-main RAP rebind under §364. §367 activated nested Lane V `CLASS-A-VAL-002-HOME-EXAMPLE-LEGIBILITY-001` (Home layer), amended by §368; §369 records its independently verified runtime, READY Production, completed browser-confirmed Daniel URLs and resolved §362 picker clipping. The Founder-approved immutable pre-ticket comparison retains the identical default-Home chart-label excess as pre-existing under chart redesign deferred until after Sarah. Close only this nested ticket on source closeout merge and final separate verified permanent-main RAP rebind (§364). §370 activated nested Lane V `CLASS-A-VAL-002-STABILITY-DANIEL-STRINGS-001` (Stability layer; Engine S7/S8 and `daniel-read-v3`); §371 records its independently verified runtime, unchanged post-runtime RAP, exact-revision READY Production and isolated Daniel probe (67/67). Close only this nested ticket on source closeout merge and final separate verified permanent-main RAP rebind (§364); no active nested successor is selected or activated. USD hero and chart redesign remain in the post-Sarah bundle. Sarah's Engine slice follows straight after as a separate ticket requiring its own source-first activation; Sarah runtime, Home entry and authored walkthroughs are not activated here. Both parents `CLASS-A-VAL-002` and `SE-REASON-001` remain open. Research stimuli and release stay unchanged; live/backend FX remain at 20 and existing stored rows are not rewritten. Sarah/SME and other drift items remain held. The weekend ticket remains deferred, not completed or cancelled. The separately released Digital Feedback v1 pulse and Founder-owned participant selection, invitations and raw-response custody continue under their existing conditions; moderated v2.1 and other parent distribution remain paused. The Stability research route is not released for participant use. No participant session, new Form, response collection, telemetry, personal-input collection, limited manipulation or “Use My Numbers” is activated. Lane E remains open without a nested ticket; §290 responsibilities remain non-executable and current EngineState/posture is preserved. No Lane G restart, Green delegation, financial capability or cross-lane authority follows. NO CROSS-LANE IMPACT.
+- **Sequencing posture:** Controlled Parallelism v22 / §6f.22 retains V/E parents while §285 defers G. §301–§302 nested Lane V work is completed history; §303 Product Experience Lead registration is closed. §309–§310 Research Two-Beat work is completed history. The role-registry reconciliation is completed finite non-lane support after source closeout #676 and separate RAP rebind #677. §311–§312 Research Value Panel and §313–§314 Research Compression work are completed history. §327, §329 and §330 record the Home experience, Home deduplication and New Marker technical closeouts. NEW-MARKER-001 requires no further runtime work; its retrospective Verifier PASS does not erase the #710 merge-before-verifier deviation. §333 records the `CLASS-A-VAL-002-RESEARCH-REFRESH-001` technical closeout. §335 records the `CLASS-A-VAL-002-RESEARCH-RESERVE-001` technical closeout; RESERVE-001 remains closed. §339 records the Founder cold-read supersession: there is no separate internal cold read; participant exposure starts only under a later, separate release ticket. §342 records the `CLASS-A-VAL-002-RESEARCH-DANIEL-FIX-001` technical closeout; DANIEL-FIX-001 remains closed. §343 records the D2 hypothesis-only disposition and closes the open Founder-decision line, without changing occupancy. §344 activated nested Lane V `CLASS-A-VAL-002-STABILITY-LEDGER-ONLY-001` (Stability layer); §345 records its technical closeout; after its source merge and separate verified RAP rebind, no nested Lane V ticket is active. §346 records the TDD standing build posture for future Engine and Home runtime §7a briefs, without changing occupancy. §347 records the Founder lock of the Stability Engine spec in `docs/strategy/stability-engine-pack.md`, without activating a ticket or changing occupancy. §348 activated nested Lane V `CLASS-A-VAL-002-STABILITY-REVIEW-MEMORY-001`; §349 records its verified technical delivery, post-runtime rebind and READY Production probe. §349 is complete after source #790 and final separate verified RAP #791. §350 activated nested Lane V `CLASS-A-VAL-002-STABILITY-DANIEL-SLICE-001`, with an explicit §347 amendment recorded inside §350 and no locked-pack edit; §351 records its verified technical delivery and READY deployment. §351 is complete after source closeout #795 and final separate verified RAP #796. §355 activated nested Lane V `CLASS-A-VAL-002-HOME-SMALL-FIXES-001` (Home layer; six Home fixes on both Home routes as one Home experience); §356 records its verified technical delivery and READY deployment. §356 is complete after source #810 and final separate verified RAP #811 (`3c83b19`). §357 activated nested Lane V `CLASS-A-VAL-002-STABILITY-DANIEL-AMOUNT-001` (Stability layer), the §351 deferred canonical local amount with the explicit §350 AC2-style amendment; §358 records its verified technical delivery and successful Production deployment. §358 is complete after source #815 and final separate verified permanent-main RAP #816 (`2d0287a`). §359 activated nested `CLASS-A-VAL-002-STABILITY-DANIEL-HOME-001`, amended by §360; §361 records its verified technical delivery, READY Production deployment and isolated public-alias probe. §361 is complete after source closeout #825 and final separate verified permanent-main RAP #826 (`7ca19e6`). §362 activated nested `CLASS-A-VAL-002-HOME-EXAMPLE-PICKER-001` (Home layer; synthetic journey Home example picker); §363 records its verified technical delivery, READY Production deployment and public-alias probe. §363 is complete after source closeout #830 (`9e0f6fc`) and final separate verified permanent-main RAP #831 (`f645e10`). §365 activated nested Lane V `CLASS-A-VAL-002-HOME-EXAMPLE-DASHBOARD-001` (Home layer); §366 records its independently verified runtime, READY Production and Founder-accepted scoped public-alias probe, with the pre-existing §362 picker defect and B1 historical copy-gate deviation retained. Close only this nested ticket on source closeout merge and final separate verified permanent-main RAP rebind under §364. §367 activated nested Lane V `CLASS-A-VAL-002-HOME-EXAMPLE-LEGIBILITY-001` (Home layer), amended by §368; §369 records its independently verified runtime, READY Production, completed browser-confirmed Daniel URLs and resolved §362 picker clipping. The Founder-approved immutable pre-ticket comparison retains the identical default-Home chart-label excess as pre-existing under chart redesign deferred until after Sarah. Close only this nested ticket on source closeout merge and final separate verified permanent-main RAP rebind (§364). §370 activated nested Lane V `CLASS-A-VAL-002-STABILITY-DANIEL-STRINGS-001` (Stability layer; Engine S7/S8 and `daniel-read-v3`); §371 records its independently verified runtime, unchanged post-runtime RAP, exact-revision READY Production and isolated Daniel probe (67/67). Close only this nested ticket on source closeout merge and final separate verified permanent-main RAP rebind (§364); no active nested successor is selected or activated. USD hero and chart redesign remain in the post-Sarah bundle. §372 activates sole nested Lane V `CLASS-A-VAL-002-STABILITY-SARAH-READ-001` (Stability layer; Engine-only) from the Founder's accepted decisions 1–5 and locked copy. Effective activation requires source merge, separate verified permanent-main RAP rebind (§364) and fetched-main RAP check. One USD or ZMW fee, one explicit observation, due 1 Oct 2027; no comparison, trend, progress or savings relationship. Current 27 derives from the existing Daniel Engine constant; 24.5 and 29.5 are example-history inputs. Sarah Home and authored walkthroughs remain later separate tickets. Both parents `CLASS-A-VAL-002` and `SE-REASON-001` remain open. Research stimuli and release stay unchanged; live/backend FX remain at 20 and existing stored rows are not rewritten. Sarah Home, SME and other drift items remain held. The weekend ticket remains deferred, not completed or cancelled. The separately released Digital Feedback v1 pulse and Founder-owned participant selection, invitations and raw-response custody continue under their existing conditions; moderated v2.1 and other parent distribution remain paused. The Stability research route is not released for participant use. No participant session, new Form, response collection, telemetry, personal-input collection, limited manipulation or “Use My Numbers” is activated. Lane E remains open without a nested ticket; §290 responsibilities remain non-executable and current EngineState/posture is preserved. No Lane G restart, Green delegation, financial capability or cross-lane authority follows. NO CROSS-LANE IMPACT.
 
 **Scope-first completion / interpretation (2026-09-20):** Verified PR #602 delivery consumes the finite synthetic Home amendment (§294). References to that amendment in the retained sequencing statement identify its bounded scope and history only; they grant no further runtime or refinement permission. Only remaining approved weekend instrument/verification, human rehearsal/timing and release duties remain unfinished. This completion record takes effect on permanent-main merge with a separate verified RAP rebind; publication/distribution remains paused and both parents stay open.
 
@@ -4788,11 +4790,275 @@ Current active ticket status:
 
 ---
 
-## 7a. Execution tickets — V/E parents open; no active nested ticket; Lane G deferred (Controlled Parallelism v22)
+## 7a. Execution tickets — V/E parents open; Sarah Engine-only sole nested Lane V; Lane G deferred (Controlled Parallelism v22)
 
-**Current completion:** §371 records technical closeout of `CLASS-A-VAL-002-STABILITY-DANIEL-STRINGS-001` after source closeout merge, final separate independently verified projection-only permanent-main RAP rebind (§364) and successful `bridge:rap:check` on fetched main. Both parents remain open with no active nested ticket; Lane E has no nested ticket and G stays deferred. The §370 brief below and all completed briefs remain history, not continuing runtime permission. Sarah's Engine slice follows as already directed by the Founder, requiring its own separate activation; this closeout selects or activates no successor. USD hero and chart redesign remain in the post-Sarah bundle; research remains unreleased.
+**Current activation:** §371 S7/S8 closeout is complete. §372 activates only `CLASS-A-VAL-002-STABILITY-SARAH-READ-001` (Engine-only), subject to source merge, separate verified permanent-main RAP rebind (§364) and fetched-main `bridge:rap:check`. Both parents stay open; E has no nested ticket, G deferred. Copy lock is satisfied before runtime. Completed briefs below remain history; Sarah Home is a later ticket. USD hero/chart redesign stay in the post-Sarah bundle; research remains unreleased.
 
 **Read order:** Current occupancy and operative controls are in §7. The §348 crash-fix ticket is closed under §349 after source #790 and final separate verified permanent-main RAP #791. Its brief below is completed history, not continuing runtime permission. The §355 Home small-fixes ticket is closed under §356 after source #810 and final separate verified RAP #811 (`3c83b19`); its brief below is completed history, not continuing runtime permission. The §357 Daniel amount ticket is closed under §358 after source #815 and final separate verified RAP #816 (`2d0287a`); its brief below is completed history, not continuing runtime permission. The §359 Daniel on Home ticket, amended by §360, is closed under §361 after source closeout #825 and final separate verified permanent-main RAP #826 (`7ca19e6`); its brief below is completed history, not continuing runtime permission. The §362 Home example picker ticket is closed under §363 after source #830 (`9e0f6fc`) and final separate verified RAP #831 (`f645e10`); its brief below is completed history, not continuing runtime permission. The §365 Daniel example full Home ticket is technically closed under §366 on source closeout merge and final separate verified permanent-main RAP rebind; its brief below is completed history, not continuing runtime permission. §367 / §368 Daniel example legibility is technically closed under §369 on source closeout merge and final separate verified permanent-main RAP rebind; its brief below is completed history, and no closeout supplies successor authority. The §350 Daniel ticket is closed under §351 (#795, #796); its brief below is completed history, not continuing runtime permission. The §345 ledger-only closeout and rebind are complete and supply no continuing runtime permission. The §344 `CLASS-A-VAL-002-STABILITY-LEDGER-ONLY-001` brief below is completed history, not continuing runtime permission. The §342 source closeout (#772) and its separate permanent-main RAP rebind (#773) are merged; the §340 `CLASS-A-VAL-002-RESEARCH-DANIEL-FIX-001` brief below is completed history, not continuing runtime permission. The §335 source closeout (#756) and its separate permanent-main RAP rebind (#757) are merged; `CLASS-A-VAL-002-RESEARCH-RESERVE-001` remains completed history, not continuing runtime permission. The §334 `CLASS-A-VAL-002-RESEARCH-RESERVE-001` brief below is completed history, not continuing runtime permission. The §332 `CLASS-A-VAL-002-RESEARCH-REFRESH-001` brief below is completed history, not continuing runtime permission. The `CLASS-A-VAL-002-HOME-DEDUP-001` brief (§329) and the `CLASS-A-VAL-002-HOME-EXPERIENCE-001` brief (§327) below are completed history, not continuing runtime permission. `CLASS-A-VAL-002-RESEARCH-NEW-MARKER-001` is delivered by #710 and [Closed 2026-09-29 via #744 `a5e035c` and RAP rebind #745 `afb3dc0`] after source merge and separate RAP rebind; its brief and amendment below remain historical and grant no further runtime permission. The `/research/stability-scenarios` review was completed read-only on 2026-09-29 and produced the §332 dispositions. The §313 Research Compression, §311/§312 Research Value Panel, and §309/§310 Research Two-Beat tickets are completed history. The §302 stimulus, §301 convergence package, humanised stimulus, prior stimulus and retained preflight remain completed history; the retained weekend brief and completed Home amendments preserve history and deferred obligations, not concurrent permission. Parent validation obligations and the separate digital-pulse release remain binding. Lane E is open without a nested ticket; §290 is a read-only compatibility input only. Local `BRIDGE-MCP-001` has no live Lane R occupancy. Completed registry reconciliation is non-lane support, not occupancy. Historical “current” language is not a restart instruction.
+
+### Active nested Lane V — `CLASS-A-VAL-002-STABILITY-SARAH-READ-001` (Sarah Engine-only; §372)
+
+**Authority / start:** Founder decisions and verbatim locks are recorded in §372. This assignment grants Repo Steward (§9.3) ACT_WITH_CONFIRMATION; Dex coordinates as Engineering Operator (§9.11). Sole nested Lane V under open `CLASS-A-VAL-002`; `SE-REASON-001` stays open without a nested ticket and G stays deferred. Source activation has no runtime code. Effective activation requires permanent-main source merge, separate independently verified projection-only RAP rebind and successful `bridge:rap:check` on fetched main (§364). No TDD waiver: implementation is launched separately by Dex using GPT-6.1 Sol xhigh; independent verification uses GPT-6.1 Sol high.
+
+**Objective / exact input contract:** Export one pure deterministic `computeSarahRead(input: SarahReadInput): SarahRead` from the new Engine module. Input has exactly `declaredFee: { amount: number, currency: 'USD' | 'ZMW', dueDate: string }`, `fixtureRateZmwPerUsd: number`, and `asOf: string`. Amount is finite and non-negative; rate is explicit, finite and positive, including for ZMW observations, but ZMW computation does not use it. Deadline is an explicit valid calendar date in `YYYY-MM-DD`; the six approved examples use `2027-10-01`. `asOf` is an explicit valid ISO timestamp with a timezone, not a Date object, number, missing value or ambient clock. Reject impossible calendar dates, missing/invalid fields, unsupported currency, invalid rate, negative/non-finite amount and rounded ngwee overflow with `RangeError` and no read. No guessing, date normalization to another calendar day, coercion, fallback or partially returned read. The deadline supplies context only, never a forecast or countdown.
+
+**Exact output contract / one computation path:** Top-level keys are exactly `engineVersion`, `asOf`, `declaredFee`, `localAmountZmwMinor`, `localDisplay`, `rateBasis`, `explanation`. `engineVersion` is the module constant `SARAH_READ_ENGINE_VERSION = 'sarah-read-v1'`; caller cannot choose it. `asOf` preserves the explicit input string. `declaredFee` preserves amount/currency/deadline and adds only `source: 'user-declared'` and `access: 'read-only'`; this is a fictional fee declaration, not custody, wealth, a holding, balance, provider quote or evidence of payment ability. `localAmountZmwMinor` is one JS safe-integer number of ngwee, non-negative. `localDisplay` comes from those same BigInt minor units using fixed `en-US`, `K` with no space, grouping and meaningful two-digit fractional minor units (omit `.00`). No floating-point kwacha field or second numerical representation.
+
+USD: multiply declared USD fee by the explicit fixture ZMW/USD rate using decimal-to-BigInt fractions and non-negative half-a-local-cent-up rounding, matching Daniel's pattern; guard against `Number.MAX_SAFE_INTEGER` before conversion. `rateBasis` is exactly `{ kind: 'example-rate', zmwPerUsd: input.fixtureRateZmwPerUsd }`. `explanation` has exactly `fee`, `rateAssumption`, `limits`.
+
+ZMW: convert the declared kwacha fee directly to rounded BigInt ngwee, with the same rounding/overflow/display rule, without FX multiplication or division. `rateBasis` is exactly `{ kind: 'declared-zmw' }`; the irrelevant rate is absent from the read. `explanation` has exactly `fee`, `limits`; omit the `rateAssumption` key entirely, not null/empty wording. No division of K29,500 by USD 1,000 to recover 29.5. No comparison, sequence, trend, progress, sufficiency or action output; U1–U3/Z1–Z3 are six independent observations, not one timeline read.
+
+**Permitted input-change paths:** Identical inputs deep-equal, with no input mutation. Vary rate alone at fixed amount/currency/deadline/asOf: USD may change only `localAmountZmwMinor`, `localDisplay`, `rateBasis.zmwPerUsd`, `explanation.fee` and `explanation.rateAssumption`; ZMW read stays deep-equal, including its direct rate basis and omitted rate line. Vary amount: declared amount plus amount-derived minor units/display/fee explanation may change, nothing else. Vary denomination alone: declared currency, fee-derived minor units/display/fee explanation, rate basis and presence/value of the USD-only rate line may change, nothing else (preserve amount, deadline, asOf, version, source/access, limits). Vary deadline alone: declared deadline and the formatted deadline in `explanation.fee` only. Vary `asOf` alone: `asOf` only. A later deliberate Engine change needs separately authorised version/change control; these three locked stability properties (§346/§347) are tests, not claims about Sarah's capital.
+
+**Current source / examples:** The module may expose `SARAH_CURRENT_FIXTURE_RATE_ZMW_PER_USD` only as an alias derived by importing the existing `DANIEL_FIXTURE_RATE_ZMW_PER_USD`; no second current literal, live fetch or Daniel file edit. Current U3/Z3 example inputs use that alias (literal expected 27 in test goldens). Historical 24.5 and 29.5 and the frozen dates below are explicit example-history inputs, following §365 decision 2, never alternate current rates. The module may hold the six labelled fictional example input declarations for tests/future separately authorised consumption; no Home consumer or registry is introduced. Runtime never imports test goldens or research figures; Engine-owned goldens below are literal expected test data, not outputs generated from `computeSarahRead`.
+
+**Locked §7a copy register — five Founder-approved items, verbatim before runtime:**
+1. USD fee: `Course fee USD {amount}, due {dueDate}, shows as {localDisplay} at this example rate.`
+2. ZMW fee: `Course fee K{amount}, due {dueDate}, is set in kwacha. The exchange rate does not change this declared amount.`
+3. Rate line (USD fees only; omitted for ZMW fees): `Example rate: ZMW {r} per US dollar. Not a live rate.`
+4. Shared D2 sentence (both currencies): `Fictional course fee. This figure is not a payment quote. This read does not establish whether Sarah can pay the fee.`
+5. Formats: `{D} {Mon} {YYYY}` (e.g. 1 Oct 2027); `USD {amount}`; `K{amount}`; fixed en-US grouping.
+
+Copy gate is satisfied by Sue's Human Narrative Lead proposal and Founder's ~19:48 AWST lock, recorded verbatim in §372. Amount/rate formatting retains meaningful fractions (Daniel fixed-locale pattern); deadline uses non-zero-padded day, English short month and year. Engine inserts only declared values/canonical display. The shared sentence applies equally to both denominations; it must not say the ZMW figure uses an example rate. No other claim or copy permission follows.
+
+**Six Engine-owned literal golden reads (all due 1 Oct 2027):** The input/output JSON below is literal expected data to reproduce in `engine-sarah-read.golden.ts`; full key/value equality is required. Current expected rate 27 is a test literal; runtime current input derives from the existing constant. Labels index observations only. Due date and observation date are distinct.
+
+```json
+[
+  {
+    "name": "U1",
+    "input": {
+      "declaredFee": {
+        "amount": 1000,
+        "currency": "USD",
+        "dueDate": "2027-10-01"
+      },
+      "fixtureRateZmwPerUsd": 24.5,
+      "asOf": "2026-09-09T00:00:00.000Z"
+    },
+    "read": {
+      "engineVersion": "sarah-read-v1",
+      "asOf": "2026-09-09T00:00:00.000Z",
+      "declaredFee": {
+        "amount": 1000,
+        "currency": "USD",
+        "dueDate": "2027-10-01",
+        "source": "user-declared",
+        "access": "read-only"
+      },
+      "localAmountZmwMinor": 2450000,
+      "localDisplay": "K24,500",
+      "rateBasis": {
+        "kind": "example-rate",
+        "zmwPerUsd": 24.5
+      },
+      "explanation": {
+        "fee": "Course fee USD 1,000, due 1 Oct 2027, shows as K24,500 at this example rate.",
+        "rateAssumption": "Example rate: ZMW 24.5 per US dollar. Not a live rate.",
+        "limits": "Fictional course fee. This figure is not a payment quote. This read does not establish whether Sarah can pay the fee."
+      }
+    }
+  },
+  {
+    "name": "U2",
+    "input": {
+      "declaredFee": {
+        "amount": 1000,
+        "currency": "USD",
+        "dueDate": "2027-10-01"
+      },
+      "fixtureRateZmwPerUsd": 29.5,
+      "asOf": "2026-09-25T00:00:00.000Z"
+    },
+    "read": {
+      "engineVersion": "sarah-read-v1",
+      "asOf": "2026-09-25T00:00:00.000Z",
+      "declaredFee": {
+        "amount": 1000,
+        "currency": "USD",
+        "dueDate": "2027-10-01",
+        "source": "user-declared",
+        "access": "read-only"
+      },
+      "localAmountZmwMinor": 2950000,
+      "localDisplay": "K29,500",
+      "rateBasis": {
+        "kind": "example-rate",
+        "zmwPerUsd": 29.5
+      },
+      "explanation": {
+        "fee": "Course fee USD 1,000, due 1 Oct 2027, shows as K29,500 at this example rate.",
+        "rateAssumption": "Example rate: ZMW 29.5 per US dollar. Not a live rate.",
+        "limits": "Fictional course fee. This figure is not a payment quote. This read does not establish whether Sarah can pay the fee."
+      }
+    }
+  },
+  {
+    "name": "U3",
+    "input": {
+      "declaredFee": {
+        "amount": 1000,
+        "currency": "USD",
+        "dueDate": "2027-10-01"
+      },
+      "fixtureRateZmwPerUsd": 27,
+      "asOf": "2026-10-09T00:00:00.000Z"
+    },
+    "read": {
+      "engineVersion": "sarah-read-v1",
+      "asOf": "2026-10-09T00:00:00.000Z",
+      "declaredFee": {
+        "amount": 1000,
+        "currency": "USD",
+        "dueDate": "2027-10-01",
+        "source": "user-declared",
+        "access": "read-only"
+      },
+      "localAmountZmwMinor": 2700000,
+      "localDisplay": "K27,000",
+      "rateBasis": {
+        "kind": "example-rate",
+        "zmwPerUsd": 27
+      },
+      "explanation": {
+        "fee": "Course fee USD 1,000, due 1 Oct 2027, shows as K27,000 at this example rate.",
+        "rateAssumption": "Example rate: ZMW 27 per US dollar. Not a live rate.",
+        "limits": "Fictional course fee. This figure is not a payment quote. This read does not establish whether Sarah can pay the fee."
+      }
+    }
+  },
+  {
+    "name": "Z1",
+    "input": {
+      "declaredFee": {
+        "amount": 29500,
+        "currency": "ZMW",
+        "dueDate": "2027-10-01"
+      },
+      "fixtureRateZmwPerUsd": 24.5,
+      "asOf": "2026-09-09T00:00:00.000Z"
+    },
+    "read": {
+      "engineVersion": "sarah-read-v1",
+      "asOf": "2026-09-09T00:00:00.000Z",
+      "declaredFee": {
+        "amount": 29500,
+        "currency": "ZMW",
+        "dueDate": "2027-10-01",
+        "source": "user-declared",
+        "access": "read-only"
+      },
+      "localAmountZmwMinor": 2950000,
+      "localDisplay": "K29,500",
+      "rateBasis": {
+        "kind": "declared-zmw"
+      },
+      "explanation": {
+        "fee": "Course fee K29,500, due 1 Oct 2027, is set in kwacha. The exchange rate does not change this declared amount.",
+        "limits": "Fictional course fee. This figure is not a payment quote. This read does not establish whether Sarah can pay the fee."
+      }
+    }
+  },
+  {
+    "name": "Z2",
+    "input": {
+      "declaredFee": {
+        "amount": 29500,
+        "currency": "ZMW",
+        "dueDate": "2027-10-01"
+      },
+      "fixtureRateZmwPerUsd": 29.5,
+      "asOf": "2026-09-25T00:00:00.000Z"
+    },
+    "read": {
+      "engineVersion": "sarah-read-v1",
+      "asOf": "2026-09-25T00:00:00.000Z",
+      "declaredFee": {
+        "amount": 29500,
+        "currency": "ZMW",
+        "dueDate": "2027-10-01",
+        "source": "user-declared",
+        "access": "read-only"
+      },
+      "localAmountZmwMinor": 2950000,
+      "localDisplay": "K29,500",
+      "rateBasis": {
+        "kind": "declared-zmw"
+      },
+      "explanation": {
+        "fee": "Course fee K29,500, due 1 Oct 2027, is set in kwacha. The exchange rate does not change this declared amount.",
+        "limits": "Fictional course fee. This figure is not a payment quote. This read does not establish whether Sarah can pay the fee."
+      }
+    }
+  },
+  {
+    "name": "Z3",
+    "input": {
+      "declaredFee": {
+        "amount": 29500,
+        "currency": "ZMW",
+        "dueDate": "2027-10-01"
+      },
+      "fixtureRateZmwPerUsd": 27,
+      "asOf": "2026-10-09T00:00:00.000Z"
+    },
+    "read": {
+      "engineVersion": "sarah-read-v1",
+      "asOf": "2026-10-09T00:00:00.000Z",
+      "declaredFee": {
+        "amount": 29500,
+        "currency": "ZMW",
+        "dueDate": "2027-10-01",
+        "source": "user-declared",
+        "access": "read-only"
+      },
+      "localAmountZmwMinor": 2950000,
+      "localDisplay": "K29,500",
+      "rateBasis": {
+        "kind": "declared-zmw"
+      },
+      "explanation": {
+        "fee": "Course fee K29,500, due 1 Oct 2027, is set in kwacha. The exchange rate does not change this declared amount.",
+        "limits": "Fictional course fee. This figure is not a payment quote. This read does not establish whether Sarah can pay the fee."
+      }
+    }
+  }
+]
+```
+
+**Discovery / exact file allowlists:**
+- Source activation/closeout: `docs/ops/HEDGR_STATUS.md` (§7, §7a, §372/current record); `AGENTS.md` (one short live pointer); `apps/bridge-worker/tests/fork1-authority.test.mjs` (exact projected sequencing fixture only). After committing sources, separately commit deterministic generated `docs/ops/bridge/repo-authority-projection.json`. Separate permanent-main rebind: that JSON only.
+- Runtime: `apps/frontend/lib/engine/sarah-read.ts` (new, one separate pure computation/type/version, current-rate alias, optional six Engine-owned example input declarations only).
+- Runtime tests: `apps/frontend/__tests__/engine-sarah-read.test.ts` and `apps/frontend/__tests__/engine-sarah-read.golden.ts` (new). Language-guard / D2-fence scans extend inside the new Sarah contract test to all computed/golden string values and output keys; no existing Daniel or Home test edits.
+- Discovery at fetched main `f5f2d4f7f49631911d3fefbd23cdd2e2e0252d1a`: no Engine barrel/index exists or needs export modification; frontend Vitest discovers `__tests__` automatically; no module-enumeration or central language-guard list requires modification. Existing Daniel tests carry local scans, which Sarah mirrors in its own test. RAP generator projects parent Lane IDs, so `rap-generator.test.mjs` parent expectations stay unchanged. `fork1-authority.test.mjs` compares the complete literal sequencing paragraph, requiring its precise fixture update; AGENTS gets the short live pointer for readable consistency. No other test/fixture addition is needed. No runtime discovery substitutions or code edits were made.
+- Steward evidence only: `/Users/musalwa/Projects/hedgr-copilot/output/sarah-slice-20261012/activation/`; disposable checkouts under `/Users/musalwa/Projects/hedgr-copilot-worktrees/`, never inside output. No clean, hard reset or forced removal.
+
+**Named red→green Acceptance Criteria (§346, no waiver; Sarah Vitest contract test):**
+1. `replays identical fee inputs to a deep-equal Sarah read` — six full literal goldens, repeat calls, exact keys/values and input immutability.
+2. `USD fee responds only to the rate` — at fixed asOf/deadline/amount vary 24.5 / 29.5 / current Engine constant; only the permitted leaf paths above change; 2,450,000 / 2,950,000 / 2,700,000 ngwee. Separately verify all three literal observation dates.
+3. `ZMW fee ignores the rate` — fixed asOf/deadline/fee yields a deep-equal read at all three rates, 2,950,000 ngwee / K29,500, direct basis and no rate line.
+4. `fee denomination changes only fee-derived outputs` — vary currency alone at the same numeric amount and other inputs; assert exact allowed path changes and preserved limits/deadline/asOf/version/source/access. The U/Z story pair also changes amount, so is not the one-input control.
+5. `never infers a rate from the ZMW fee` — vary the ZMW fee and explicit unrelated rates; direct cents only, no ratio or inferred 29.5 basis/output.
+6. `uses the locked explanation strings` — all USD/ZMW worked strings, USD-only rate line entirely omitted for ZMW, shared D2 sentence, exact date/grouping/fraction formatting.
+7. `rejects invalid dates, amounts and overflow without a read` — missing/non-string/impossible dates, unsupported currency, non-finite/negative amounts, missing/non-positive/non-finite rates, both denomination overflow boundaries; valid zero/control and safe-integer boundary. Throw RangeError, no partial read.
+8. `rounds exact minor units` — literal USD 1.005 at rate 1 → 101 ngwee / K1.01; USD 0.05 at 0.1 → 1 / K0.01; USD 0.04 at 0.1 → 0 / K0; ZMW 1.005 → 101 / K1.01; K1.50 retains two minor-unit digits. Same BigInt cents supply canonical number and display; no binary floating-point half-cent shortcut.
+9. `reports sarah-read-v1` — module version and all computed/golden reads; exact output envelope blocks undeclared fields.
+10. `excludes progress, comparison, sufficiency and action claims` — recursive key and string scans across all goldens/computed controls plus source review; retain §347 hedge/hedging guard and §343 prohibited phrases/paraphrases. Ban gaps, percentages, coverage, targets, on-track/closer claims, savings/contribution relationships, custody/verified-wealth, action/permission/CTA/route keys. Assert locked negative sufficiency sentence exactly; do not falsely ban its necessary denial by matching the words “can pay” alone. No historical tracking or comparison output.
+11. `current rate derives from the Engine constant` — source import/alias and current U3/Z3 input evidence plus mocked constant control; current alias changes with the Daniel constant, historical 24.5 / 29.5 stay fixed; literal goldens still expect 27. No second current literal or Daniel edit.
+12. `ignores ambient clock storage and display preference` — change clock, local/session storage and display preference without changing read; no ambient access, fetch, provider or storage imports. Repeated explicit time, including deadline independence, remains deterministic.
+13. `deadline and observation changes stay isolated` — deadline alone changes only deadline/fee prose; asOf alone changes only asOf. The current time supplies no deadline/progress/forecast computation.
+
+FIRST runtime commit contains only the two new test files, literal expected goldens and failing reproductions against the absent Sarah module; record red command/output, then smallest Engine-only green in a later commit. Preserve red/green commit history for independent reproduction (normal final squash allowed). Named assertions must test the real result, not just imported types or source text.
+
+**Authority tension surfaced, scope already disposed by Founder:** The locked pack's Sarah inventory seed says “tracking both the goal and the rate path to it.” §343 holds tracking savings against a future payment as hypothesis-only and prohibits related claims/paraphrases. The inventory seed supplies no executable tracking contract. Accepted decision 2 framing A separates fee facts/rate assumptions from savings, and the verbatim Founder conditions expressly exclude comparison, trend and progress. This activation records that direct bounded disposition, not an agent synthesis or acceptance of tracking. Preserve the pack unchanged; no savings relationship, history/trend/progress output or D2 weakening follows. Stop/escalate if any consumer or test requires that broader meaning.
+
+**Exclusions:** No Home, picker, registry, route, dashboard, UI, hero/chart redesign or walkthrough; Sarah Home requires its own later activation/copy/coexistence decisions. No Daniel file/test/golden edit, shared numeric-helper refactor, generic example registry or new dependency. No EngineState/posture/notices/mapping/override, savings, contributions, holding, forecasts, countdown, comparison/trend/progress, gap/percentage, sufficiency/coverage/capacity, multiple obligations, financial advice or action. No ledger, wallet/balance, storage/review-memory, display preferences/table/normalization, live/backend/API FX, research/stimulus/fixture or locked-pack changes. No SME, Lane E/G, D-number, doctrine/ADR, provider/configuration/protection/check change, participant/research release, personal input, telemetry, standing delegation or financial capability. USD hero and chart redesign stay in the post-Sarah bundle.
+
+**Sequence / gates:** Source docs/fixture commit → separate deterministic branch RAP commit → full local `pnpm run validate` / authority/record/allowlist checks → draft source PR → owner-account update if behind main / current-head checks start → ready and §331 governed squash auto-merge armed → fresh distinct GPT-6.1 Sol high independent exact-head PASS / required hosted validate and E2E smoke / exact-head `hedgr/verifier` success → source merge → separate projection-only permanent-main RAP PR with its own fresh distinct GPT-6.1 Sol high exact-head PASS and governed merge → fetch main / `bridge:rap:check` PASS → activation effective / Steward records evidence and stops. §364 rebind covers earlier deferred nil-effect records; no permanent-main claim before it passes.
+
+Dex then separately launches GPT-6.1 Sol xhigh Implementer → tests-only red first → smallest Engine-only green → focused Sarah Vitest, full local validate, required hosted validate/E2E smoke and independent exact-head PASS / verifier readback / governed merge → post-runtime RAP rebind only if fetched-main check requires it → exact-revision ordinary frontend deployment READY (no Production browser probe required: no user-visible consumer) → source-first technical closeout with independent gates → final separate verified permanent-main RAP rebind. Close only this nested ticket; both parents remain open; no automatic Home/SME activation or release. Every PR follows runbook PR Posture, one merge step at a time, no bypass. Verifier READ_ONLY exception permits exactly one expressly authorised runbook attestation on the reviewed PR, after immediately rereading live head and aborting on mismatch; author/coordinator never attest; head changes invalidate PASS.
+
+**Stop / rollback:** Stop and report without merging on two Verifier FAILs, genuine current-authority conflict, any Home/Daniel/registry/research change need, contract ambiguity not settled by Founder inputs, record/ID collision or path outside the allowlist. No inferred exception or widened output. Runtime rollback: one revert of the runtime PR, no migration or stored data; authority rollback requires governed source/rebind sequence, never silently restores a predecessor. Research remains unreleased. **NO CROSS-LANE IMPACT.**
 
 ### Completed nested Lane V — `CLASS-A-VAL-002-STABILITY-DANIEL-STRINGS-001` (closed §371 on source merge and final rebind)
 
@@ -17051,3 +17317,93 @@ Context: answering the Sarah decision sheet (`output/sarah-slice-20261012/GOVERN
 **Non-authorising follow-ups only:** S7/S8 is delivered in `daniel-read-v3`. Sarah's Engine slice follows straight after as already decided by the Founder under §370; its activation is a separate assignment and no Sarah runtime, Home entry or walkthrough is activated here. USD hero and chart redesign remain in the post-Sarah bundle; the §369 pre-existing default-Home 11 px chart-label observation remains retained. SME and other deferred work stay held; research remains unreleased.
 
 **Scope / final gate / rollback:** Only STATUS §7/§7a / this §371 record, one short AGENTS live pointer and the exact projected sequencing fixture change; deterministic branch RAP is a separate commit after source. This closes a ticket and changes occupancy, so §364 requires the final separate independently verified projection-only permanent-main RAP rebind. Fetch main and pass `bridge:rap:check` after its governed merge. No doctrine/ADR, D-number, required-check/protection, standing delegation, Lane E/G, participant/research release, provider/configuration or financial capability change follows. Runtime rollback remains one revert of #851; authority rollback is a governed source/rebind sequence. **NO CROSS-LANE IMPACT.**
+
+## 372. Founder activation — Sarah Stability Engine read (`CLASS-A-VAL-002-STABILITY-SARAH-READ-001`, 2026-10-12)
+
+**Founder activation — Sarah Stability Engine read (2026-10-12; §372):** Founder Musalwa Hibajene (repo owner `mhibajene`), 12 Oct 2026 ~19:10 AWST in MonoCode via Dex, accepted Sarah decisions 1–5 and sequenced her Engine slice immediately after the now-completed §371 S7/S8 ticket. At ~19:48 AWST he locked Sue's five Sarah copy items, including the shared D2 sentence and omission of the rate line for ZMW fees. Activate only `CLASS-A-VAL-002-STABILITY-SARAH-READ-001` as the sole nested Lane V under open `CLASS-A-VAL-002` (Stability layer; Class A informational/synthetic; Green classification only, no standing delegation). One pure `computeSarahRead` / separate `SarahRead` reads one declared USD or ZMW course fee, due 1 Oct 2027, at one explicit observation. USD 1,000 reads K24,500 / K29,500 / K27,000 at explicit example rates 24.5 / 29.5 / current 27; ZMW K29,500 stays K29,500. No comparison, trend, progress, savings relationship or inferred rate. Current rate derives from `DANIEL_FIXTURE_RATE_ZMW_PER_USD`; historical rates/dates are example-history inputs only (§365 decision 2). §7a controls the exact contract, literal goldens, locked copy, three runtime/test paths and gates. Source merge, separate independently verified permanent-main RAP rebind (§364) and fetched-main `bridge:rap:check` precede runtime. Steward stops at effective activation; Dex separately launches GPT-6.1 Sol xhigh Implementer. Fresh independent GPT-6.1 Sol high exact-head verification and §331 governed auto-merge apply. Engine-only; Sarah Home is a later separate ticket. USD hero/chart redesign remain in the post-Sarah bundle, SME held, research unreleased. **NO CROSS-LANE IMPACT.**
+
+**Record / evidence / precedence:** Next free §372 and collision-free ID checked against fetched `origin/main` `f5f2d4f7f49631911d3fefbd23cdd2e2e0252d1a`; no open PRs at discovery. §371 is complete after source #852 and final separate RAP #853. These closeouts supply no successor authority; the direct Founder decision and this source-first activation do. §343 D2 fence, §346 TDD, §347 locked stability properties/order/language guard, §350/§351 and §357/§358 Daniel numerical pattern, §359 current-rate source, §365 decision 2 example history and the scoped functional contract/ADRs 0013/0014/0015/0027 remain controlling. No locked-pack amendment or generalized scoped-interface acceptance.
+
+### Verbatim supplied Founder decision (~19:10 AWST)
+
+# Founder decision, 12 Oct 2026, ~19:10 AWST, MonoCode (verbatim)
+
+> Agreed on S7. The Engine can't honestly say "unchanged" from a single observation, so the invariant line carries that meaning.
+>
+> "Sarah 1–5 as recommended. S7/S8 as its own ticket with v3; S7 without 'unchanged', S8 as given."
+>
+> Sequence is fine: S7/S8 first, then Sarah's Engine slice straight after. Usual pattern for both: strings locked before code, failing tests first, extra-high implementer, independent verifier PASS on the exact head.
+>
+> Three conditions:
+>
+> S7 is parameterised from the read's declared amount and currency, never a hard-coded "USD 800".
+> For v3, the goldens change only the version and the approved strings. Tests prove every amount and input is unchanged, and Home keeps the rate disclosure.
+> For Sarah: a single declared fee in USD or ZMW, due 1 Oct 2027. Historical rates reuse Daniel's existing example rates and dates: 24.5 on 9 Sep, 29.5 on 25 Sep and 27 on 9 Oct. That gives a USD 1,000 fee of K24,500, then K29,500, then K27,000. The ZMW K29,500 fee stays at K29,500 at every rate. Each read takes one observation with an explicit asOf. There's no comparison, trend or progress output, and the "29.5 rate" must never be inferred from the K29,500 fee. Sue reviews the D2 no-claim sentence before I lock it. No Home entry, and the USD hero and chart redesign stay in the post-Sarah bundle.
+
+Context: answering the Sarah decision sheet (`output/sarah-slice-20261012/GOVERNANCE_DECISION_SHEET.md`) and Dex's S7/S8 recommendation. Locked strings for the S7/S8 ticket:
+- S7 (parameterised): "{declared amount in its currency} shows as {Engine localDisplay} at this example rate." e.g. "USD 800 shows as K21,600 at this example rate."
+- S8 (as given): "Example rate: ZMW {r} per US dollar. Not a live rate."
+
+### Decisions 1–5 as put and accepted, verbatim decision-sheet extract
+
+## 1. What should Sarah’s Engine read compute?
+
+**[Verified]** Research Sarah has local savings and future contributions, initially a USD 1,000 fee due 1 October 2027, then a fee payable in local currency. She has no declared USD holding in this story. [Stimulus, `ScenarioStimulus`][R].
+
+**[Inferred — options]** A: read a USD fee at a fixture rate only; smallest, but omits the denomination change. B: read one declared fee denominated in USD **or** ZMW, its due date, fixture rate and explicit `asOf`; covers that change. C: add savings, contributions and funding assessment; introduces projections and D2 risk.
+
+**[Inferred — recommendation]** B. Outputs: original declared fee/currency/deadline, canonical safe-integer local minor units and display, applicable rate basis, explanation/limits, `asOf` and `sarah-read-v1`. USD fee × rate gives a local **example fee estimate**; a ZMW fee is read directly, without FX multiplication. No USD holding, contribution forecast, coverage or posture. The Founder must lock exact fields and permitted change paths. Authority: [Pack, “Inventory seeds”/“Working definition of stable”][P]; [Contract, “Scoped semantic interface disposition”][C]; [STATUS §350/§357][S]. **Required before Sarah activation: yes.**
+
+## 2. How does the read retain the D2 fence?
+
+**[Verified]** Obligation-anchored progress is hypothesis-only, neither product direction nor accepted capability; prohibited participant claims include paraphrases. [STATUS §343, “No-claim fence”][S].
+
+**[Inferred — options]** A: separate fee facts and rate assumptions, with no relationship to savings. B: show savings and fee together, even without subtraction; visual comparison can imply progress. C: percentage, gap, target meter or “on track”; unavailable under the retained fence.
+
+**[Inferred — recommendation]** A. Proposed framing for review: “Fictional course fee. This figure uses an example rate; it is not a payment quote. This read does not establish whether Sarah can pay the fee.” No percentage, gap, progress chart, sufficiency, “closer”, gain/loss colour or paraphrased D2 claim. No “hedge/hedging”. Future Home must preserve these limits and add no financial inference. Authority: [STATUS §343/§347/§367][S]; [Contract, “Scoped semantic interface disposition”][C]. **Required before Sarah activation: yes; final Home wording separately locked later.**
+
+## 3. Which figures, currency and rates should be used?
+
+**[Verified]** ZMW research figures are 6,000 set aside, 2,000 monthly, 24,000 planned and 29,500 fee; five authored currency variants exist. The changed fee is a local obligation, not an FX conversion. [Fixtures, `SARAH_FIGURES`][F]; [Stimulus][R]. ZMW 27 is the only current simulated ZMW source; historical example rates are separately permitted, and research/live FX stay unchanged. [STATUS §359/§365 decision 2][S].
+
+**[Inferred — options]** A: new Engine-owned literal goldens, one USD/ZMW pair. B: import research figures as computational fixtures; couples authored research to runtime and expands to five denominations.
+
+**[Inferred — recommendation]** A: explicitly redeclare USD 1,000 and changed ZMW 29,500 as fictional Engine inputs; never infer a 29.5 rate from that fee. Current 27 derives from the existing Engine constant, with no second current literal. Candidate goldens: USD 1,000 at 27 → K27,000/2,700,000 ngwee; fixed ZMW 29,500 → 2,950,000 ngwee regardless of FX. Historical rates, observation dates and deadline need explicit Founder selection; future runtime fixtures must not import test goldens. Authority: [STATUS §350/§357/§359/§365][S]. **Required before Sarah activation: yes.**
+
+## 4. Separate Sarah function or generalised example read?
+
+**[Inferred — options]** A: separate pure `computeSarahRead`/`SarahRead`. B: generalised example computation; refactors Daniel and introduces broader schema/change control.
+
+**[Inferred — recommendation]** A. Mirror Daniel’s explicit time, module version, BigInt rounding, safe-integer guard and fixed locale; independently define fee semantics. Avoid an `EngineState` extension, posture mapping, clock/storage dependence or generic registry refactor. Authority: [STATUS §346/§350/§351/§357/§358][S]; [Daniel, `computeDanielRead`][D]; decision bullets in [ADR 0013][A13], [0014][A14], [0015][A15] and [0027][A27]. **Required before Sarah activation: yes.**
+
+## 5. Engine first, or Engine and Home together?
+
+**[Verified]** §365 decision 1 explicitly separates Sarah’s Stability slice from her later Home entry. §367 introduced the URL registry; it currently contains Daniel only. Chart redesign remains deferred until after Sarah. [STATUS §365/§367/§369][S]; [Registry, `SYNTHETIC_JOURNEY_EXAMPLES`][J].
+
+**[Inferred — options]** A: Engine-only first, later full-Home picker entry; independent scopes and gates. B: combined Engine/Home ticket; widens the recorded sequence and requires explicit amendment plus experience/copy decisions.
+
+**[Inferred — recommendation]** A. Later Home uses “Sarah’s course fee”, URL-only selection, example-preserving reset, own-simulation fallback/isolation and the §365/§367 experience pattern; no automatic walkthrough or chart redesign. Coexistence with mock posture requires its own surface decision, not Daniel’s permission by analogy. Authority: [STATUS §365/§367][S]; [Contract, “Bounded coexistence question”][C]. **Required before Sarah activation: yes; detailed Home decisions later.**
+
+
+**Bounded adoption:** Recommended B / A / A / A / A are accepted by the Founder above, with his explicit fee/deadline/rates/dates/no-progress conditions. Candidate/proposed wording is replaced only by the later verbatim copy lock below. The quoted Home recommendations are future context, never activation. §7a supplies the precise contract/goldens/tests within those accepted outputs; no savings or funding model is accepted.
+
+### Verbatim Founder copy lock (~19:48 AWST)
+
+# Founder copy lock: Sarah Engine strings
+
+Founder Musalwa Hibajene (repo owner `mhibajene`), 12 Oct 2026, ~19:48 AWST, in MonoCode via Dex, replying to `COPY_LOCK_PROPOSAL.md` (Sue, Human Narrative Lead):
+
+> "Lock Sarah items 1-5 as recommended. Include the shared D2 sentence and omission of the rate line for ZMW fees"
+
+Locked (character-exact per COPY_LOCK_PROPOSAL.md):
+1. USD fee: `Course fee USD {amount}, due {dueDate}, shows as {localDisplay} at this example rate.`
+2. ZMW fee: `Course fee K{amount}, due {dueDate}, is set in kwacha. The exchange rate does not change this declared amount.`
+3. Rate line (USD fees only; omitted for ZMW fees): `Example rate: ZMW {r} per US dollar. Not a live rate.`
+4. Shared D2 sentence (both currencies): `Fictional course fee. This figure is not a payment quote. This read does not establish whether Sarah can pay the fee.`
+5. Formats: `{D} {Mon} {YYYY}` (e.g. 1 Oct 2027); `USD {amount}`; `K{amount}`; fixed en-US grouping.
+
+Non-authoritative evidence recorded by Dex; the Sarah activation record will control.
+
+**Copy provenance:** Sue (Human Narrative Lead, §9.9) authored `output/sarah-slice-20261012/copy-lock/COPY_LOCK_PROPOSAL.md`, read in full. Her six independent worked reads and five templates are carried character-exact into §7a. The proposal's final paraphrased “Founder reply” does not replace the exact Founder quotation in the supplied lock above. Copy gate is satisfied before runtime.
+
+**Tension / boundaries / effect:** The pack's Sarah inventory “tracking” wording is surfaced in §7a alongside §343; the Founder expressly selected fee facts separate from savings and forbade comparisons/trends/progress. No broader tracking permission is inferred or reconciled. Exact §7a allowlists, stop rules and source/RAP/runtime/closeout gates control. Source merge and separate independently verified permanent-main RAP rebind, followed by fetched-main RAP PASS, make this activation effective. Steward stops there; Dex launches the separate xhigh Implementer. Green is classification only, no standing delegation or D-number. Both parents stay open, E no nested ticket, G deferred, SME held, Home later, research unreleased. **NO CROSS-LANE IMPACT.**
