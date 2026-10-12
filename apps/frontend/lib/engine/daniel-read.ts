@@ -4,7 +4,7 @@
  * copy layer is an input. The amount is user-declared, USD-denominated and read-only; it is
  * not custody, a balance, a settled amount or verified wealth (ADR 0027 decision 3; ADR 0013).
  */
-export const DANIEL_READ_ENGINE_VERSION = 'daniel-read-v2';
+export const DANIEL_READ_ENGINE_VERSION = 'daniel-read-v3';
 
 /** Named, disclosed fixture rate (ZMW per USD). Not a live or market rate. */
 export const DANIEL_FIXTURE_RATE_ZMW_PER_USD = 27;
@@ -61,16 +61,19 @@ export function computeDanielRead({ declaredHoldingUsd, fixtureRateZmwPerUsd, as
   }
   const fraction = (cents % 100n).toString().padStart(2, '0');
   const localDisplay = `K${(cents / 100n).toLocaleString('en-US')}${fraction === '00' ? '' : `.${fraction}`}`;
+  const declaredHolding: DanielRead['declaredHolding'] = {
+    amount: declaredHoldingUsd, currency: 'USD', source: 'user-declared', access: 'read-only',
+  };
   return {
     engineVersion: DANIEL_READ_ENGINE_VERSION,
     asOf,
     pair: 'USD/ZMW',
-    declaredHolding: { amount: declaredHoldingUsd, currency: 'USD', source: 'user-declared', access: 'read-only' },
+    declaredHolding,
     localAmountZmwMinor: Number(cents),
     localDisplay,
     explanation: {
-      rateAssumption: `Disclosed fixture rate: ZMW ${formatNumber(fixtureRateZmwPerUsd)} per USD. Not a live rate.`,
-      holding: `Declared USD ${formatNumber(declaredHoldingUsd)} shows as ${localDisplay} at this rate.`,
+      rateAssumption: `Example rate: ZMW ${formatNumber(fixtureRateZmwPerUsd)} per US dollar. Not a live rate.`,
+      holding: `${declaredHolding.currency} ${formatNumber(declaredHolding.amount)} shows as ${localDisplay} at this example rate.`,
     },
   };
 }
