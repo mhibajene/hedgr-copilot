@@ -39,7 +39,7 @@ Unchecked or inaccurate items may block merge.
 
 **Draft handling**
 - Implementers open the PR as draft.
-- Implementers never change draft state.
+- Once implementation is complete, the implementing or steward agent may mark the PR ready and arm auto-merge after the branch is updated and current-head checks have started, subject to stricter ticket gates (runbook PR Posture, §331).
 
 Satisfying merge gates authorises repository merge only. It does not widen ticket authority or imply launch/release approval.
 
