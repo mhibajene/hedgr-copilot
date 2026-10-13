@@ -26,7 +26,7 @@ export function getSimulationDisplayRate(currency: SimulationDisplayCurrency): n
   return SIMULATION_DISPLAY_CURRENCIES.find(({ code }) => code === currency)!.unitsPerUsd;
 }
 
-export const SIMULATION_DISPLAY_ESTIMATE_CAPTION = 'display estimate';
+export const SIMULATION_DISPLAY_ESTIMATE_CAPTION = 'Example figure, not a quote';
 
 export function formatSimulationDisplayFigure(usd: number, currency: SimulationDisplayCurrency): string {
   const amount = (usd * getSimulationDisplayRate(currency)).toLocaleString('en-US', {

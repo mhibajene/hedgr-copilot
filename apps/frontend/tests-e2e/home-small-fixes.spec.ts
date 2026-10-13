@@ -249,7 +249,7 @@ test('hero caption sits under the local figure for every display currency', asyn
       const figure = page.getByTestId('local-balance-figure');
       const caption = page.getByTestId('local-balance-caption');
       await expect(page.getByTestId('local-balance')).toHaveText(
-        `≈ ${currency.code} ${estimateAmounts[currency.code]} display estimate`
+        `≈ ${currency.code} ${estimateAmounts[currency.code]} Example figure, not a quote`
       );
       const figureBox = (await figure.boundingBox())!;
       const captionBox = (await caption.boundingBox())!;
@@ -400,5 +400,68 @@ test('Home adds no totals meters progress gap or gain-loss colour', async ({ pag
         .join('\n');
     });
     expect(scoped).not.toMatch(FORWARD_COPY);
+  }
+});
+
+const B_ROUTES = ['/dashboard-synthetic-journey', '/dashboard?journey=class-a-val-002'];
+
+test('Own-simulation card and caption reflow at root200', async ({ page }, testInfo) => {
+  test.setTimeout(240_000);
+  await page.clock.install({ time: new Date(2026, 9, 13, 12) });
+  await loginJourney(page);
+  const today = new Date(2026, 9, 13, 10).getTime();
+  const yesterday = new Date(2026, 9, 12, 10).getTime();
+  for (const viewport of [{ width: 1440, height: 1000, text: 100 }, { width: 390, height: 844, text: 100 }, { width: 320, height: 700, text: 200 }]) {
+    await page.setViewportSize({ width: viewport.width, height: viewport.height });
+    for (const route of B_ROUTES) {
+      for (const currency of SIMULATION_DISPLAY_CURRENCIES) {
+        await page.evaluate(code => localStorage.setItem('hedgr.simulation.display-currency', code), currency.code);
+        for (const [state, visit] of [['fallback', null], ['one', yesterday + 1], ['several', yesterday - 86400000], ['no-change', today + 1]] as const) {
+          await seed(page, [deposit(500, yesterday), withdraw(20, today)], visit);
+          await gotoHome(page, route);
+          await applyTextSize(page, viewport.text);
+          const card = page.getByTestId('dashboard-current-status');
+          await expect(card).toContainText(JOURNEY_ATTRIBUTION);
+          await expect(page.getByTestId('local-balance-caption')).toHaveText('Example figure, not a quote');
+          await expect(card).toContainText(state === 'no-change' ? 'No simulated activity since' : 'included in the balance above.');
+          for (const region of [card, page.getByTestId('local-balance'), page.getByTestId('dashboard-simulation-utilities')]) {
+            expect(await region.evaluate(el => el.scrollWidth - el.clientWidth)).toBeLessThanOrEqual(1);
+            await expect(region).toBeVisible();
+          }
+          const limit = card.getByText(JOURNEY_ATTRIBUTION, { exact: true });
+          await expect(limit).toBeVisible();
+          expect(await limit.evaluate(el => getComputedStyle(el).textOverflow)).not.toBe('ellipsis');
+          const link = card.getByTestId('dashboard-since-link');
+          if (await link.count()) { await link.focus(); await expect(link).toBeFocused(); }
+          await page.getByTestId('research-planning-targets').locator(':scope > summary').click();
+          const percentages = page.getByTestId('engine-allocation-values-details');
+          await percentages.locator(':scope > summary').focus();
+          await page.keyboard.press('Enter');
+          await expect(percentages.getByText('Illustrative example values, not live targets or advice', { exact: true })).toBeVisible();
+          expect(await percentages.evaluate(el => el.scrollWidth - el.clientWidth)).toBeLessThanOrEqual(1);
+          if (currency.code === 'NGN' && state === 'several') await page.screenshot({ path: testInfo.outputPath(`ticket-b-${viewport.width}-${route.includes('?') ? 'query' : 'path'}.png`), fullPage: true });
+        }
+      }
+    }
+  }
+});
+
+test('Journey What changed states type amount and actual event date once', async ({ page }) => {
+  await page.clock.install({ time: new Date(2026, 9, 13, 12) });
+  await loginJourney(page);
+  for (const route of B_ROUTES) {
+    for (const [at, suffix] of [[new Date(2026, 9, 13, 10).getTime(), ' today'], [new Date(2026, 9, 12, 10).getTime(), ' on 12 Oct'], [new Date(2026, 8, 9, 10).getTime(), ' on 9 Sep']] as const) {
+      for (const type of ['deposit', 'withdrawal'] as const) {
+        await seed(page, [deposit(500, at - 1000), type === 'deposit' ? deposit(20, at) : withdraw(20, at)], null);
+        await gotoHome(page, route);
+        const card = page.getByTestId('dashboard-current-status');
+        await expect(card.getByRole('heading', { name: 'What changed', level: 2 })).toBeVisible();
+        await expect(card.getByTestId('engine-posture-context')).toHaveText(`A simulated ${type} of $20.00${suffix}.`);
+        await expect(card.getByText(`This simulated ${type} is included in the balance above.`, { exact: true })).toBeVisible();
+        await expect(page.getByTestId('dashboard-synthetic-balance-explainer')).toHaveCount(0);
+        await expect(page.getByTestId('dashboard-position-line')).toHaveAttribute('aria-hidden', 'true');
+        expect(await card.locator('[aria-live], [tabindex], svg, img').count()).toBe(0);
+      }
+    }
   }
 });

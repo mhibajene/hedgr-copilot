@@ -8,6 +8,9 @@ import type { EnginePosture } from './types';
 
 export const ENGINE_STABILITY_REVIEW_SNAPSHOT_TITLE = 'Review snapshot';
 
+export const ENGINE_ILLUSTRATIVE_VALUES_LABEL =
+  'Illustrative example values, not live targets or advice';
+
 const STANCE_BY_POSTURE: Record<EnginePosture, string> = {
   normal: 'Where things stand: within expected range',
   tightening: 'Where things stand: protective posture increasing',

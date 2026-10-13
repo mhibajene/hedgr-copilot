@@ -70,13 +70,13 @@ for (const [currency, rate, deltaFive, deltaThree] of [
     await page.getByRole('link', { name: 'Back to your position' }).click();
     await expect(page.getByTestId('usd-balance')).toHaveText('$3.00');
     const local = (rate * 3).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-    await expect(page.getByTestId('local-balance')).toHaveText(`≈ ${currency} ${local} display estimate`);
+    await expect(page.getByTestId('local-balance')).toHaveText(`≈ ${currency} ${local} Example figure, not a quote`);
     await expect(page.getByTestId('currency-insight-inline')).toContainText(`${currency} ${deltaThree} higher`);
     await page.getByRole('button', { name: 'Currency context', exact: true }).click();
     await expect(page.getByTestId('currency-insight-headline')).toContainText(`${currency} ${deltaThree} higher from the rate change`);
     await page.getByRole('button', { name: 'Back to Home' }).click();
     await expect(page.getByTestId('engine-simulation-attention-answer')).toHaveCount(0);
-    await expect(page.getByTestId('engine-posture-context')).toHaveText(/^One simulated withdrawal of \$2\.00 on \d{1,2} (?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) took your position from \$5\.00 to \$3\.00\.$/);
+    await expect(page.getByTestId('engine-posture-context')).toHaveText(/^One simulated withdrawal of \$2\.00 on \d{1,2} (?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\.$/);
     const before = await storedState(page);
     const records = JSON.parse(before['hedgr:ledger']!).transactions;
     expect(records).toHaveLength(2);
@@ -190,7 +190,7 @@ test('blocked preference storage preserves a usable in-session comparison', asyn
   await page.getByRole('button', { name: 'Currency context', exact: true }).click();
   await expect(page.getByTestId('currency-insight-headline')).toContainText('PHP 840 higher');
   await page.getByRole('button', { name: 'Back to Home' }).click();
-  await expect(page.getByTestId('local-balance')).toHaveText('≈ PHP 16,800.00 display estimate');
+  await expect(page.getByTestId('local-balance')).toHaveText('≈ PHP 16,800.00 Example figure, not a quote');
   await expect(page.getByTestId('usd-balance')).toHaveText('$300.00');
 });
 
@@ -226,7 +226,7 @@ test('compact KES result retains the reference signal without restoring its full
   await page.reload();
   const section = page.getByTestId('currency-insight');
   const launcher = page.getByRole('button', { name: 'Currency context', exact: true });
-  await expect(page.getByTestId('local-balance')).toHaveText('≈ KES 39,000.00 display estimate');
+  await expect(page.getByTestId('local-balance')).toHaveText('≈ KES 39,000.00 Example figure, not a quote');
   await expect(page.getByTestId('currency-insight-inline')).toHaveText('KES 1,950 higher from the rate change');
   await expect(launcher).toHaveAccessibleDescription('KES 1,950 higher from the rate change');
   await expect(launcher).toContainText('Understand the comparison');

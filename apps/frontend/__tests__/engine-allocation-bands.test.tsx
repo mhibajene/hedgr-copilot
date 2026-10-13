@@ -405,3 +405,30 @@ describe("EngineAllocationBands", () => {
     }
   });
 });
+
+test('Posture and percentage regions identify illustrative values before the reading', () => {
+  const label = 'Illustrative example values, not live targets or advice';
+  for (const collapsed of [true, false]) {
+    for (const posture of ['normal', 'tightening', 'tightened', 'recovery'] as const) {
+      cleanup();
+      const state = getMockEngineState(posture);
+      render(<EngineAllocationBands engineState={state} collapsed={collapsed} />);
+      const qualifier = screen.getByText(label, { exact: true });
+      expect(screen.getAllByText(label, { exact: true })).toHaveLength(1);
+      const structure = screen.getByTestId('engine-allocation-structure');
+      expect(qualifier.compareDocumentPosition(structure) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+      expect(qualifier.closest('[aria-hidden="true"]')).toBeNull();
+      if (collapsed) {
+        const details = screen.getByTestId('engine-allocation-values-details');
+        expect(details.contains(qualifier)).toBe(true);
+        expect(details.hasAttribute('open')).toBe(false);
+        details.setAttribute('open', '');
+      } else {
+        expect(screen.getByText('Stability guidance').nextElementSibling).toBe(qualifier);
+      }
+      const keys = collapsed ? ['coreTargetPct', 'liquidityTargetPct', 'yieldCapPct'] as const : ['coreTargetPct', 'yieldCapPct', 'liquidityTargetPct'] as const;
+      expect(Array.from(structure.children).map(row => row.getAttribute('data-testid'))).toEqual(keys.map(key => `engine-allocation-band-${key}`));
+      for (const key of keys) expect(screen.getByTestId(`engine-allocation-band-${key}`).textContent).toContain(`${state[key]}%`);
+    }
+  }
+});

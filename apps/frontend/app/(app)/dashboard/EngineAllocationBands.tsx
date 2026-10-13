@@ -4,6 +4,7 @@ import finish from '../product-finish.module.css';
 
 import React from "react";
 import type { EngineState } from "../../../lib/engine/types";
+import { ENGINE_ILLUSTRATIVE_VALUES_LABEL } from "../../../lib/engine/stability-review-snapshot-copy";
 
 type EngineAllocationBandsProps = {
   engineState: EngineState;
@@ -137,6 +138,9 @@ export function EngineAllocationBands({
         <summary className="inline-flex min-h-11 cursor-pointer items-center text-sm font-semibold text-hedgr-600 hover:text-hedgr-primary focus:outline-none focus:ring-2 focus:ring-hedgr-500 focus:ring-offset-2">
           View planning percentages
         </summary>
+        <p className="mt-4 text-xs leading-relaxed text-hedgr-500">
+          {ENGINE_ILLUSTRATIVE_VALUES_LABEL}
+        </p>
         <dl
           className="mt-4 divide-y divide-hedgr-100 border-y border-hedgr-100"
           data-testid="engine-allocation-structure"
@@ -333,6 +337,11 @@ export function EngineAllocationBands({
         >
           {collapsed ? "What you are building toward" : "Stability guidance"}
         </h2>
+        {!collapsed ? (
+          <p className="text-xs leading-relaxed text-hedgr-500">
+            {ENGINE_ILLUSTRATIVE_VALUES_LABEL}
+          </p>
+        ) : null}
         <p
           className="max-w-xl text-sm leading-relaxed text-hedgr-500"
           data-testid="engine-allocation-bands-caption"

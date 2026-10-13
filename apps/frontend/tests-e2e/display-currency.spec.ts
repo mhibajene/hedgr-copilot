@@ -108,7 +108,7 @@ test('entry selection persists through navigation, reload and clean journey rest
   await expect(page.getByTestId('orientation-continue')).toBeFocused();
   await page.keyboard.press('Enter');
   await expect(page).toHaveURL(/\/dashboard-synthetic-journey$/);
-  await expect(page.getByTestId('local-balance')).toHaveText('≈ KES 0.00 display estimate');
+  await expect(page.getByTestId('local-balance')).toHaveText('≈ KES 0.00 Example figure, not a quote');
   await page.goto(settings);
   await expect(page.getByRole('button', { name: /Display currency/ })).toContainText('KES');
   await page.reload();
@@ -117,13 +117,13 @@ test('entry selection persists through navigation, reload and clean journey rest
   await expect(select).toHaveValue('KES');
   await page.getByTestId('orientation-continue').click();
   await expect(page.getByTestId('usd-balance')).toHaveText('$0.00');
-  await expect(page.getByTestId('local-balance')).toHaveText('≈ KES 0.00 display estimate');
+  await expect(page.getByTestId('local-balance')).toHaveText('≈ KES 0.00 Example figure, not a quote');
 });
 
 test('all five Settings estimates preserve USD, market, Activity and planning with aligned transaction previews', async ({ page }) => {
   test.setTimeout(90000);
   await seedPosition(page);
-  await expect(page.getByTestId('local-balance')).toHaveText('≈ ZMW 81.00 display estimate');
+  await expect(page.getByTestId('local-balance')).toHaveText('≈ ZMW 81.00 Example figure, not a quote');
   const originalStorage = await financialStorage(page);
   const planning = await page.getByTestId('engine-allocation-structure').textContent();
   await page.goto('/activity?journey=class-a-val-002');
@@ -150,13 +150,13 @@ test('all five Settings estimates preserve USD, market, Activity and planning wi
     expect(await financialStorage(page)).toEqual(originalStorage);
     await page.goto(home);
     await expect(page.getByTestId('usd-balance')).toHaveText('$3.00');
-    await expect(page.getByTestId('local-balance')).toHaveText(`≈ ${code} ${amount} display estimate`);
+    await expect(page.getByTestId('local-balance')).toHaveText(`≈ ${code} ${amount} Example figure, not a quote`);
     await expect(page.getByTestId('dashboard-synthetic-balance-explainer')).toHaveText('Includes your simulated activity.');
     expect(await page.getByTestId('engine-allocation-structure').textContent()).toBe(planning);
     await expect(page.getByRole('combobox', { name: 'Display currency for this simulation' })).toHaveValue(code);
   }
   await page.goto('/dashboard?journey=class-a-val-002');
-  await expect(page.getByTestId('local-balance')).toHaveText('≈ PHP 168.00 display estimate');
+  await expect(page.getByTestId('local-balance')).toHaveText('≈ PHP 168.00 Example figure, not a quote');
   await page.goto('/activity?journey=class-a-val-002');
   expect(await page.locator('main').textContent()).toBe(activity);
   await page.goto('/deposit?journey=class-a-val-002');
@@ -220,7 +220,7 @@ for (const width of [320, 390, 1280]) {
       await page.screenshot({ path: testInfo.outputPath(`entry-${width}-${textSize}.png`), fullPage: true });
       await page.goto(home);
       await page.addStyleTag({ content: `html { font-size: ${textSize}%; }` });
-      await expect(page.getByTestId('local-balance')).toHaveText('≈ KES 390.00 display estimate');
+      await expect(page.getByTestId('local-balance')).toHaveText('≈ KES 390.00 Example figure, not a quote');
       await checkFits(page);
       await page.screenshot({ path: testInfo.outputPath(`position-${width}-${textSize}.png`), fullPage: true });
       if (width === 390 && textSize === 100) await page.screenshot({ path: testInfo.outputPath('position-mobile.png') });
@@ -294,7 +294,7 @@ for (const [currency, rate, localFive, localThree] of [
     await page.getByRole('link', { name: 'Continue to simulated withdrawal' }).click();
     await expect(page).toHaveURL(/\/withdraw\?journey=class-a-val-002$/);
     await expect(page.getByTestId('withdraw-fx-block')).toHaveText(`Simulated example rate: 1 USD = ${rate.toFixed(2)} ${currency}`);
-    await expect(page.getByTestId('local-balance')).toHaveText(`≈ ${currency} ${localFive} display estimate`);
+    await expect(page.getByTestId('local-balance')).toHaveText(`≈ ${currency} ${localFive} Example figure, not a quote`);
     await page.getByLabel('Amount to simulate (USD)', { exact: true }).fill('2');
     await expect(page.getByTestId('withdraw-balance-preview')).toContainText('$5.00 − $2.00 = $3.00');
     await page.getByRole('button', { name: 'Confirm', exact: true }).click();
@@ -302,9 +302,9 @@ for (const [currency, rate, localFive, localThree] of [
     await page.getByRole('link', { name: 'Review Activity' }).click();
     await page.getByRole('link', { name: 'Back to your position' }).click();
     await expect(page.getByTestId('usd-balance')).toHaveText('$3.00');
-    await expect(page.getByTestId('local-balance')).toHaveText(`≈ ${currency} ${localThree} display estimate`);
+    await expect(page.getByTestId('local-balance')).toHaveText(`≈ ${currency} ${localThree} Example figure, not a quote`);
     await page.reload();
-    await expect(page.getByTestId('local-balance')).toHaveText(`≈ ${currency} ${localThree} display estimate`);
+    await expect(page.getByTestId('local-balance')).toHaveText(`≈ ${currency} ${localThree} Example figure, not a quote`);
     const records = await page.evaluate(() => JSON.parse(localStorage.getItem('hedgr:ledger')!).transactions);
     expect(records).toHaveLength(2);
     expect(records[0]).toEqual(deposits[0]);

@@ -720,7 +720,7 @@ describe('D-132 selected simulation withdrawal estimate', () => {
     render(<WithdrawPage />);
     await act(async () => { await vi.advanceTimersByTimeAsync(350); });
     expect(screen.getByTestId('withdraw-fx-block').textContent).toContain(`1 USD = ${rate.toFixed(2)} ${currency}`);
-    expect(screen.getByTestId('withdraw-local-estimate').textContent).toBe(`≈ ${currency} ${estimate} display estimate`);
+    expect(screen.getByTestId('withdraw-local-estimate').textContent).toBe(`≈ ${currency} ${estimate} Example figure, not a quote`);
     const amount = screen.getByLabelText('Amount to simulate (USD)');
     fireEvent.change(amount, { target: { value: '6' } });
     expect((screen.getByRole('button', { name: 'Confirm' }) as HTMLButtonElement).disabled).toBe(true);
@@ -745,7 +745,7 @@ describe('§359 synthetic withdrawal estimate at the Engine fixture', () => {
     render(<WithdrawPage />);
     await act(async () => { await vi.advanceTimersByTimeAsync(350); });
     expect(screen.getByTestId('withdraw-fx-block').textContent).toContain('1 USD = 27.00 ZMW');
-    expect(screen.getByTestId('withdraw-local-estimate').textContent).toBe('≈ ZMW 135.00 display estimate');
+    expect(screen.getByTestId('withdraw-local-estimate').textContent).toBe('≈ ZMW 135.00 Example figure, not a quote');
     const amount = screen.getByLabelText('Amount to simulate (USD)');
     fireEvent.change(amount, { target: { value: '6' } });
     expect((screen.getByRole('button', { name: 'Confirm' }) as HTMLButtonElement).disabled).toBe(true);

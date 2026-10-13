@@ -276,11 +276,69 @@ test.each(["tightening", "tightened", "recovery"] as const)("redesigned research
 
 
 test.each([
-  ["DEPOSIT", "deposit increased"],
-  ["WITHDRAW", "withdrawal reduced"],
+  ["DEPOSIT", "deposit"],
+  ["WITHDRAW", "withdrawal"],
 ] as const)("polished %s observation retains readable amount and simulation boundary", (type, direction) => {
   render(<EnginePostureHeader engineState={getMockEngineState("normal")} syntheticJourneyActive redesigned comparisonState="change" latestChangeType={type} latestChangeAmountUSD={2} />);
-  expect(screen.getByTestId("engine-posture-context").textContent).toBe(`Your simulated ${direction} the balance by $2.00.`);
+  expect(screen.getByTestId("engine-posture-context").textContent).toBe(`A simulated ${direction} of $2.00.`);
   expect(screen.getByText("This is what happened in your simulation. It doesn’t tell you what will happen next.")).toBeDefined();
   expect(screen.queryByTestId("engine-posture-banner")).toBeNull();
+});
+
+const B_LIMIT = 'This is what happened in your simulation. It doesn’t tell you what will happen next.';
+const B_QUALIFIER = 'Illustrative example values, not live targets or advice';
+
+test('Journey What changed states type amount and actual event date once', () => {
+  const today = new Date(2026, 9, 13, 12).getTime();
+  for (const type of ['DEPOSIT', 'WITHDRAW'] as const) {
+    for (const [createdAt, suffix] of [
+      [today - 3600000, ' today'],
+      [new Date(2026, 9, 12, 12).getTime(), ' on 12 Oct'],
+      [new Date(2026, 8, 9, 12).getTime(), ' on 9 Sep'],
+      [undefined, ''],
+    ] as const) {
+      cleanup();
+      const metadata = { latestChangeCreatedAt: createdAt, homeDate: today };
+      render(<EnginePostureHeader engineState={getMockEngineState('normal')} syntheticJourneyActive redesigned comparisonState="change" latestChangeType={type} latestChangeAmountUSD={20} {...metadata} />);
+      const context = screen.getByTestId('engine-posture-context');
+      expect(context.textContent).toBe(`A simulated ${type === 'DEPOSIT' ? 'deposit' : 'withdrawal'} of $20.00${suffix}.`);
+      expect(context.textContent?.match(/\$20\.00/g)).toHaveLength(1);
+      expect(context.textContent).not.toMatch(/balance by|position from|→/);
+    }
+  }
+});
+
+test('Own-simulation card is understandable without the graphic', () => {
+  render(<EnginePostureHeader engineState={getMockEngineState('normal')} syntheticJourneyActive redesigned comparisonState="change" latestChangeType="WITHDRAW" latestChangeAmountUSD={20} />);
+  const heading = screen.getByRole('heading', { name: 'What changed', level: 2 });
+  const card = screen.getByTestId('dashboard-current-status');
+  expect(card.getAttribute('aria-labelledby')).toBe(heading.id);
+  const context = screen.getByTestId('engine-posture-context');
+  const inclusion = screen.getByText('This simulated withdrawal is included in the balance above.');
+  const limit = screen.getByText(B_LIMIT);
+  expect(context.compareDocumentPosition(inclusion) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+  expect(inclusion.nextElementSibling).toBe(limit);
+  expect(card.querySelector('[aria-live], [tabindex], svg, img')).toBeNull();
+  expect(card.getAttribute('role')).not.toBe('status');
+});
+
+test('Posture and percentage regions identify illustrative values before the reading', () => {
+  vi.spyOn(console, 'warn').mockImplementation(() => {});
+  for (const syntheticJourneyActive of [false, true]) {
+    for (const posture of ['normal', 'tightening', 'tightened', 'recovery'] as const) {
+      for (const missingNotice of [false, true]) {
+        cleanup();
+        const state = { ...getMockEngineState(posture), ...(missingNotice ? { notice: undefined } : {}) };
+        render(<EnginePostureHeader engineState={state} syntheticJourneyActive={syntheticJourneyActive} redesigned={syntheticJourneyActive} latestChangeType="WITHDRAW" latestChangeAmountUSD={20} />);
+        const labels = screen.queryAllByText(B_QUALIFIER, { exact: true });
+        expect(labels).toHaveLength(!syntheticJourneyActive || posture !== 'normal' ? 1 : 0);
+        if (labels.length) {
+          expect(labels[0].closest('[aria-hidden="true"]')).toBeNull();
+          expect(labels[0].compareDocumentPosition(screen.getByTestId('engine-posture-context')) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+          if (!syntheticJourneyActive) expect(labels[0].compareDocumentPosition(screen.getByTestId('engine-posture-badge')) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+        }
+        if (missingNotice) expect(screen.queryByTestId('engine-posture-banner')).toBeNull();
+      }
+    }
+  }
 });
