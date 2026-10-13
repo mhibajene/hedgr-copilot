@@ -6,9 +6,9 @@ import type { ResolvedPolicy } from '../lib/policy/schema';
 const ROUTES = ['/dashboard?journey=class-a-val-002', '/dashboard-synthetic-journey'];
 const OPTIONS = ['Your own simulation', "Daniel's reserve", "Sarah's course fee"];
 const COPY = {
-  h1: 'Sarah’s example', heading: 'Sarah’s fictional course fee', caption: 'Example fee estimate', card: 'Course fee',
+  h1: 'Sarah’s example', heading: 'Sarah’s course fee', caption: 'K27,000 · Example figure', card: 'Course fee',
   date: 'Example date: 9 Oct 2026',
-  fee: 'Course fee USD 1,000, due 1 Oct 2027, shows as K27,000 at this example rate.',
+  due: 'Due 1 Oct 2027.',
   rate: 'Example rate: ZMW 27 per US dollar. Not a live rate.',
   limits: 'Fictional course fee. This figure is not a payment quote. This read does not establish whether Sarah can pay the fee.',
 };
@@ -66,7 +66,7 @@ async function noWrites(page: Page) {
 async function assertRead(page: Page) {
   await expect(page.getByRole('heading', { level: 1 })).toHaveText(COPY.h1);
   await expect(panel(page)).toHaveCount(1); await expect(panel(page)).toBeVisible();
-  await expect(page.getByTestId('sarah-read-figure')).toHaveText('K27,000');
+  await expect(page.getByTestId('sarah-read-figure')).toHaveText('$1,000.00 USD');
 }
 test.beforeEach(async ({ context }) => {
   await context.route('**/*', route => ['localhost', '127.0.0.1', '::1'].includes(new URL(route.request().url()).hostname) ? route.continue() : route.abort());
@@ -89,14 +89,14 @@ test('Sarah is selectable on both journey Homes', async ({ page }) => {
   // Live/auth eligibility is covered with real environment guards in paired Vitest, without changing build flags.
 });
 
-test('Sarah renders one fee read at one example observation', async ({ page }) => {
+test('Sarah hero uses $1,000.00 USD and one independent fee observation', async ({ page }) => {
   await login(page);
   for (const route of ROUTES) {
     await page.goto(routeFor(route)); await assertRead(page);
     await expect(page.getByTestId('sarah-fee-card')).toHaveCount(1);
     await expect(page.getByTestId('sarah-read-as-of')).toHaveText(COPY.date);
-    await expect(panel(page).locator('time')).toHaveCount(1); await expect(panel(page).locator('time')).toHaveAttribute('datetime', AS_OF);
-    for (const text of [COPY.fee, COPY.rate, COPY.limits]) { await expect(panel(page).getByText(text, { exact: true })).toHaveCount(1); await expect(panel(page).getByText(text, { exact: true })).toBeVisible(); }
+    await expect(panel(page).locator('time')).toHaveCount(2); await expect(page.getByTestId('sarah-read-as-of').locator('time')).toHaveAttribute('datetime', AS_OF); await expect(page.getByTestId('sarah-fee-card').locator('time')).toHaveAttribute('datetime', '2027-10-01');
+    for (const text of [COPY.due, COPY.rate, COPY.limits]) { await expect(panel(page).getByText(text, { exact: true })).toHaveCount(1); await expect(panel(page).getByText(text, { exact: true })).toBeVisible(); }
     await expect(panel(page).locator('svg, canvas, progress, meter, [role="progressbar"], [data-delta], [data-direction]')).toHaveCount(0);
     await expect(panel(page)).not.toContainText(/history|before|after|last visit|difference|countdown|progress/i);
   }
@@ -196,8 +196,8 @@ test('Sarah Home uses locked copy and no funding claims', async ({ page }) => {
   for (const route of ROUTES) {
     await page.goto(routeFor(route)); await assertRead(page);
     await expect(page.locator('#dashboard-sarah-label')).toHaveText(COPY.heading); await expect(page.getByTestId('sarah-read-caption')).toHaveText(COPY.caption);
-    expect(await panel(page).textContent()).toBe(COPY.heading + 'K27,000' + COPY.caption + COPY.date + COPY.card + COPY.fee + COPY.rate + COPY.limits);
-    await expect(page.getByTestId('sarah-fee-card')).toHaveText(COPY.card + COPY.fee + COPY.rate + COPY.limits);
+    expect(await panel(page).textContent()).toBe(COPY.heading + '$1,000.00 USD' + COPY.caption + COPY.date + COPY.card + COPY.due + COPY.rate + COPY.limits);
+    await expect(page.getByTestId('sarah-fee-card')).toHaveText(COPY.card + COPY.due + COPY.rate + COPY.limits);
     await expect(page.getByText(COPY.rate, { exact: true })).toHaveCount(1);
     await expect(page.getByText(COPY.limits, { exact: true })).toBeVisible();
     const text = (await panel(page).textContent())!.replace(COPY.limits, '');
@@ -210,7 +210,7 @@ test('Sarah Home uses locked copy and no funding claims', async ({ page }) => {
   }
 });
 
-test('Sarah controls and disclosures fit and work by keyboard', async ({ page }) => {
+test('Example reading order and reflow survive enlarged text', async ({ page }) => {
   test.setTimeout(120_000); const errors: string[] = []; page.on('pageerror', error => errors.push(error.message)); await login(page);
   const policy = await (await page.request.get('/api/policy')).json() as ResolvedPolicy;
   const disclosureKeys = policy.policy.disclosures.requiredKeys;
@@ -229,7 +229,7 @@ test('Sarah controls and disclosures fit and work by keyboard', async ({ page })
         expect(Object.keys(SYNTHETIC_RESEARCH_DISCLOSURE_COPY)).toContain(key);
         await expect(page.getByText(SYNTHETIC_RESEARCH_DISCLOSURE_COPY[key as DisclosureKey], { exact: true })).toBeVisible();
       }
-      for (const text of [COPY.fee, COPY.rate, COPY.limits]) await expect(panel(page).getByText(text, { exact: true })).toBeVisible();
+      for (const text of [COPY.due, COPY.rate, COPY.limits]) await expect(panel(page).getByText(text, { exact: true })).toBeVisible();
       const geometry = await page.evaluate(() => {
         const visible = Array.from(document.querySelectorAll<HTMLElement>('[data-testid="dashboard-sarah-read"] *, [data-testid="example-picker-value"], label[for="dashboard-example-picker"], [data-disclosure-key], [data-testid="dashboard-disclosures"] summary'))
           .filter(n => n.textContent?.trim() && getComputedStyle(n).display !== 'none' && !n.classList.contains('sr-only') && n.getBoundingClientRect().width > 0);
@@ -269,6 +269,7 @@ test('Sarah controls and disclosures fit and work by keyboard', async ({ page })
       expect(geometry.rootFont).toBe(viewport.text === 200 ? 32 : 16);
       await page.goBack(); await expect(page.getByTestId('dashboard-balance')).toBeVisible();
       await page.goForward(); await assertRead(page);
+      await page.waitForTimeout(700); // Native type-ahead must expire before the next independent letter.
       await picker(page).focus(); await page.keyboard.press('Y'); await expect(page.getByTestId('dashboard-balance')).toBeVisible();
     }
   }

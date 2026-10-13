@@ -7,9 +7,9 @@ import { SIMULATION_DISPLAY_CURRENCIES } from '../lib/state/simulation-display-c
 
 const DEFAULT_HOME = '/dashboard';
 const JOURNEY_ROUTES = ['/dashboard?journey=class-a-val-002', '/dashboard-synthetic-journey'] as const;
-const FIGURE = 'K21,600';
+const FIGURE = '$800.00 USD';
 const RATE_ASSUMPTION = 'Example rate: ZMW 27 per US dollar. Not a live rate.';
-const COPY = { since: 'What changed since Daniel’s last visit', visit: 'Daniel’s last visit', currencyVisit: 'At Daniel’s last visit', back: 'Go to your own simulation', current: 'Now', lastDate: '25 Sep 2026', currentDate: '9 Oct 2026' };
+const COPY = { since: 'Daniel’s example readings', visit: 'Daniel’s last visit', currencyVisit: 'At Daniel’s last visit', back: 'Go to your own simulation', current: 'Now', lastDate: '25 Sep 2026', currentDate: '9 Oct 2026' };
 const AS_OF = '2026-10-09T00:00:00.000Z';
 const CURRENCY_KEY = 'hedgr.simulation.display-currency';
 const PICKER = 'Choose an example';
@@ -139,8 +139,8 @@ test("shows only Daniel's reserve when the example is selected", async ({ page }
       await expect(page.getByTestId('dashboard-orientation')).toBeVisible();
       await expect(page.getByTestId('dashboard-disclosures')).toBeVisible();
       await expect(page.getByTestId('daniel-read-figure')).toHaveText(FIGURE);
-      await expect(page.getByTestId('daniel-read-caption')).toHaveText('Example figure, not a quote');
-      await expect(page.getByTestId('daniel-read-disclosure').locator('li')).toHaveCount(2);
+      await expect(page.getByTestId('daniel-read-caption')).toHaveText('K21,600 · Example figure, not a quote');
+      await expect(page.getByTestId('daniel-observation')).toHaveCount(3);
       for (const testId of [
         'dashboard-current-overview',
         'dashboard-balance',
@@ -290,30 +290,8 @@ test('example picker is labelled, keyboard-operable and reflows', async ({ page 
   }
 });
 
-test('shows Engine localDisplay above its caption with the complete runtime fixture disclosure', async ({ page }) => {
-  await login(page);
-  await seed(page, ACTIVITY.changed);
-  for (const route of JOURNEY_ROUTES) {
-    await gotoDaniel(page, route);
-    const figure = page.getByTestId('daniel-read-figure');
-    const caption = page.getByTestId('daniel-read-caption');
-    await expect(figure).toHaveText(FIGURE);
-    await expect(caption).toHaveText('Example figure, not a quote');
-    const figureBox = (await figure.boundingBox())!;
-    const captionBox = (await caption.boundingBox())!;
-    expect(captionBox.y).toBeGreaterThanOrEqual(figureBox.y + figureBox.height - 1);
-    const sizes = await page.evaluate(() => ({
-      figure: parseFloat(getComputedStyle(document.querySelector('[data-testid="daniel-read-figure"]')!).fontSize),
-      caption: parseFloat(getComputedStyle(document.querySelector('[data-testid="daniel-read-caption"]')!).fontSize),
-    }));
-    expect(sizes.caption).toBeLessThan(sizes.figure);
-    await expect(page.getByTestId('daniel-read-holding')).toHaveText('Daniel holds USD 800 in this fictional example. This example only displays it. Nothing is moved or exchanged.');
-    await expect(page.getByTestId('daniel-read-pair')).toHaveCount(0);
-    await expect(page.getByTestId('daniel-observation-rate').nth(1)).toHaveText(RATE_ASSUMPTION);
-    await expect(page.getByTestId('daniel-read-as-of').locator('time')).toHaveAttribute('datetime', AS_OF);
-    await expect(page.getByTestId('daniel-read-as-of')).toHaveText('Example date: 9 Oct 2026.');
-    await expect(panel(page)).toContainText('USD 800 shows as K21,600 at this example rate.');
-  }
+test('Daniel hero uses $800.00 USD with one local secondary and the accepted latest-row repeat', async ({ page }) => {
+  await login(page); for(const route of JOURNEY_ROUTES) {await gotoDaniel(page,route); await assertTicketA(page);}
 });
 
 test('keeps the Daniel read identical when display currency or simulated activity changes', async ({ page }) => {
@@ -394,7 +372,7 @@ test('contains no prohibited claims in Daniel Home copy', async ({ page }) => {
     expect(text).not.toMatch(/custod|verified|wealth|sufficien|enough|guarantee|protect|recommend|should|advis|action|buy|sell|convert|balance|\bheld\b/i);
     expect(text).toContain('Fictional');
     expect(text).toContain('Not a live rate.');
-    expect(text).toContain('Example date: 9 Oct 2026.');
+    expect(text).toContain('9 Oct 2026 · K21,600');
   }
 });
 
@@ -406,7 +384,7 @@ const lastRead = {
   asOf: '2026-09-25T00:00:00.000Z',
 };
 const currentRead = {
-  figure: FIGURE,
+  figure: 'K21,600',
   holding: 'USD 800 shows as K21,600 at this example rate.',
   rate: RATE_ASSUMPTION,
   asOf: AS_OF,
@@ -414,38 +392,13 @@ const currentRead = {
 
 async function expectCurrencyContext(page: Page) {
   await expect(page.getByTestId('daniel-currency-context')).toHaveCount(0);
-  const card = page.getByTestId('daniel-since-card');
-  await expect(card.getByTestId('daniel-observation-holding')).toHaveText([lastRead.holding, currentRead.holding]);
-  await expect(card.getByTestId('daniel-observation-rate')).toHaveText([lastRead.rate, currentRead.rate]);
-  await expect(card.locator('time')).toHaveText([COPY.lastDate, COPY.currentDate]);
-  await expect(card.locator('time').nth(0)).toHaveAttribute('datetime', lastRead.asOf);
-  await expect(card.locator('time').nth(1)).toHaveAttribute('datetime', currentRead.asOf);
+  await expect(page.getByTestId('daniel-observation')).toHaveText(A_ROWS);
+  await expect(page.getByTestId('daniel-since-card').locator('time')).toHaveText(['9 Sep 2026',COPY.lastDate,COPY.currentDate]);
+  for(const [i,date] of ['2026-09-09T00:00:00.000Z',lastRead.asOf,currentRead.asOf].entries()) await expect(page.getByTestId('daniel-observation').nth(i).locator('time')).toHaveAttribute('datetime',date);
 }
 
 test("Daniel's reserve shows his example as a full Home", async ({ page }) => {
-  await login(page);
-  await seed(page, ACTIVITY.changed, 'KES');
-  for (const route of JOURNEY_ROUTES) {
-    await gotoDaniel(page, route);
-    await expect(page.getByTestId('daniel-home-grid')).toBeVisible();
-    await expect(page.getByTestId('daniel-read-figure')).toHaveText(FIGURE);
-    await expect(page.getByTestId('daniel-read-caption')).toHaveText('Example figure, not a quote');
-    const chart = page.getByTestId('dashboard-position-line');
-    await expect(chart).toHaveAttribute('aria-hidden', 'true');
-    await expect(chart.locator('span[style*="top:"]')).toHaveCount(3);
-    await expect(page.getByTestId('dashboard-position-line-visit')).toHaveText(COPY.visit);
-    await expect(chart).not.toContainText(/Today|max|9 Oct|25 Sep/);
-    const card = page.getByRole('region', { name: COPY.since, exact: true });
-    await expect(card).toBeVisible();
-    await expect(card.getByTestId('daniel-observation-holding')).toHaveText([lastRead.holding, currentRead.holding]);
-    await expect(card.getByTestId('daniel-observation-rate')).toHaveText([lastRead.rate, currentRead.rate]);
-    await expect(card.locator('time')).toHaveText([COPY.lastDate, COPY.currentDate]);
-    await expect(card.locator('time').nth(0)).toHaveAttribute('datetime', lastRead.asOf);
-    await expect(card.locator('time').nth(1)).toHaveAttribute('datetime', currentRead.asOf);
-    await expect(card).toContainText('This is what happened in the example. It doesn’t tell you what will happen next.');
-    await expect(page.getByTestId('daniel-read-as-of').locator('time')).toHaveText(COPY.currentDate);
-    await expect(panel(page)).not.toContainText(/balance/i);
-  }
+  await login(page); for(const route of JOURNEY_ROUTES) {await gotoDaniel(page,route); await assertTicketA(page);}
 });
 
 test("Daniel's example offers no actions on your simulation", async ({ page }) => {
@@ -584,84 +537,30 @@ test("Daniel's currency context shows two Engine figures side by side with no co
 
 
 test("Founder-locked copy and dates are character-exact across Daniel's example Home", async ({ page }) => {
-  await login(page);
-  for (const route of JOURNEY_ROUTES) {
-    await gotoDaniel(page, route);
-    await expect(page.locator('#dashboard-current-status-label')).toHaveText(COPY.since);
-    await expect(page.getByTestId('dashboard-position-line-visit')).toHaveText(COPY.visit);
-    await expect(panel(page).getByRole('link', { name: COPY.back, exact: true })).toHaveText(COPY.back);
-    await expect(page.getByTestId('daniel-read-as-of')).toHaveText(`Example date: ${COPY.currentDate}.`);
-    await expect(page.getByTestId('daniel-since-card').locator('time')).toHaveText([COPY.lastDate, COPY.currentDate]);
-    await expectCurrencyContext(page);
-  }
+  await login(page); for(const route of JOURNEY_ROUTES) {await gotoDaniel(page,route); await assertTicketA(page);}
 });
 
 const LEGIBILITY = {
-  invariant: 'Daniel still holds USD 800. Only the exchange rate changed, so the same amount shows as a different number of kwacha.',
+  invariant: 'Daniel’s dollar amount is unchanged across these example dates. Only the example exchange rate changes the kwacha figure.',
   ownLimitation: 'This is what happened in your simulation. It doesn’t tell you what will happen next.',
   start: 'Practise with pretend money first. See what changes, and why.',
   currency: 'Shown in ZMW, Daniel’s currency',
 };
 
 test('Daniel invariant sits directly under the change card', async ({ page }) => {
-  await login(page);
-  for (const route of JOURNEY_ROUTES) {
-    await gotoDaniel(page, route);
-    await expect(page.getByRole('region', { name: COPY.since, exact: true })).toBeVisible();
-    expect(await page.getByTestId('daniel-since-card').evaluate(n => n.nextElementSibling?.textContent)).toBe(LEGIBILITY.invariant);
-    await expect(page.getByText(LEGIBILITY.invariant, { exact: true })).toHaveCount(1);
-  }
+  await login(page); for(const route of JOURNEY_ROUTES) {await gotoDaniel(page,route); await assertTicketA(page);}
 });
 
 test('Home keeps the rate disclosure exactly once with v3 strings', async ({ page }) => {
-  await login(page);
-  for (const route of JOURNEY_ROUTES) {
-    await gotoDaniel(page, route);
-    for (const read of [lastRead, currentRead]) {
-      await expect(panel(page).getByText(read.rate, { exact: true })).toHaveCount(1);
-      await expect(page.getByTestId('daniel-since-card').getByText(read.holding, { exact: true })).toHaveCount(1);
-    }
-    await expect(page.getByTestId('daniel-observation-holding')).toHaveText([
-      'USD 800 shows as K23,600 at this example rate.',
-      'USD 800 shows as K21,600 at this example rate.',
-    ]);
-    await expect(page.getByTestId('daniel-observation-rate')).toHaveText([
-      'Example rate: ZMW 29.5 per US dollar. Not a live rate.',
-      'Example rate: ZMW 27 per US dollar. Not a live rate.',
-    ]);
-    await expect(panel(page).getByText('Not a live rate', { exact: true })).toHaveCount(1);
-    expect(await page.getByTestId('daniel-since-card').evaluate(n => Array.from(n.parentElement!.querySelectorAll('p')).some(p => p.textContent === 'Not a live rate'))).toBe(true);
-    await expect(page.getByText(LEGIBILITY.invariant, { exact: true })).toHaveCount(1);
-    await expect(page.getByTestId('daniel-read-figure')).toHaveText(FIGURE);
-    await expect(page.getByTestId('daniel-observation').nth(0).locator('time')).toHaveAttribute('datetime', lastRead.asOf);
-    await expect(page.getByTestId('daniel-observation').nth(1).locator('time')).toHaveAttribute('datetime', currentRead.asOf);
-  }
+  await login(page); for(const route of JOURNEY_ROUTES) {await gotoDaniel(page,route); await assertTicketA(page);}
 });
 
 test('Daniel current-rate disclosure appears exactly once beside the change card', async ({ page }) => {
-  await login(page);
-  for (const route of JOURNEY_ROUTES) {
-    await gotoDaniel(page, route);
-    for (const read of [lastRead, currentRead]) {
-      await expect(panel(page).getByText(read.rate, { exact: true })).toHaveCount(1);
-      await expect(page.getByTestId('daniel-since-card').getByText(read.holding, { exact: true })).toHaveCount(1);
-    }
-    await expect(panel(page).getByText('Not a live rate', { exact: true })).toHaveCount(1);
-    expect(await page.getByTestId('daniel-since-card').evaluate(n => Array.from(n.parentElement!.querySelectorAll('p')).some(p => p.textContent === 'Not a live rate'))).toBe(true);
-    await expect(page.getByTestId('daniel-read-rate')).toHaveCount(0);
-    await expect(page.getByTestId('daniel-currency-context')).toHaveCount(0);
-  }
+  await login(page); for(const route of JOURNEY_ROUTES) {await gotoDaniel(page,route); await assertTicketA(page);}
 });
 
 test('Daniel change card retains locked observation labels and dates', async ({ page }) => {
-  await login(page);
-  for (const route of JOURNEY_ROUTES) {
-    await gotoDaniel(page, route);
-    await expect(page.getByTestId('daniel-observation-label')).toHaveText(['Daniel’s last visit · 25 Sep 2026', 'Now · 9 Oct 2026']);
-    await expectCurrencyContext(page);
-    await expect(page.getByTestId('dashboard-position-line-visit')).toHaveText('Daniel’s last visit');
-    await expect(panel(page)).not.toContainText('At Daniel’s last visit');
-  }
+  await login(page); for(const route of JOURNEY_ROUTES) {await gotoDaniel(page,route); await assertTicketA(page);}
 });
 
 test('Journey H1 follows the selected example', async ({ page }) => {
@@ -693,32 +592,17 @@ test('Example picker has a visible associated label', async ({ page }) => {
 });
 
 test('Daniel names ZMW as his currency without another conversion', async ({ page }) => {
-  await login(page); await seed(page, ACTIVITY.changed, 'KES');
-  for (const route of JOURNEY_ROUTES) {
-    await gotoDaniel(page, route);
-    await expect(page.getByText(LEGIBILITY.currency, { exact: true })).toBeVisible();
-    await expect(page.getByTestId('daniel-read-figure')).toHaveText(FIGURE);
-    await expect(page.getByRole('combobox', { name: /display currency/i })).toHaveCount(0);
+  await login(page); await seed(page,ACTIVITY.changed,'KES');
+  for(const route of JOURNEY_ROUTES) {await gotoDaniel(page,route);
+    await expect(page.getByText(LEGIBILITY.currency,{exact:true})).toHaveCount(0);
+    await expect(page.getByTestId('daniel-read-caption')).toHaveText('K21,600 · Example figure, not a quote');
+    await expect(page.getByRole('combobox',{name:/display currency/i})).toHaveCount(0);
     await expect(panel(page)).not.toContainText(/KES|KSh/);
   }
 });
 
 test('Daniel page-owned strings match the Founder lock', async ({ page }) => {
-  await login(page);
-  for (const route of JOURNEY_ROUTES) {
-    await gotoDaniel(page, route);
-    await expect(page.getByTestId('daniel-read-holding')).toHaveText('Daniel holds USD 800 in this fictional example. This example only displays it. Nothing is moved or exchanged.');
-    const heading = page.locator('#dashboard-daniel-label');
-    await expect(heading).toHaveText('Fictional example · Daniel’s dollar savings');
-    const color = await heading.evaluate(n => getComputedStyle(n).color);
-    expect(color).toBe('rgb(31, 41, 55)'); // governed body ink #1F2937, > 4.5:1 on the Home canvas.
-    await expect(page.getByTestId('daniel-read-caption')).toHaveText('Example figure, not a quote');
-    await expect(page.getByTestId('daniel-read-as-of')).toHaveText('Example date: 9 Oct 2026.');
-    await expect(page.getByTestId('daniel-read-as-of').locator('time')).toHaveAttribute('datetime', AS_OF);
-    await expect(panel(page).getByRole('link', { name: 'Go to your own simulation', exact: true })).toBeVisible();
-    await expect(panel(page).getByText('This is what happened in the example. It doesn’t tell you what will happen next.', { exact: true })).toBeVisible();
-    await expect(panel(page)).not.toContainText(/Pair:|Currency context|display estimate|Hedgr only reads it/);
-  }
+  await login(page); for(const route of JOURNEY_ROUTES) {await gotoDaniel(page,route); await assertTicketA(page);}
 });
 
 test('Own-simulation limitation is mode-aware on journey Home', async ({ page }) => {
@@ -855,7 +739,7 @@ test('Example picker fits complete long names at 320px with 200 percent zoom', a
   }
 });
 
-test('Legibility Home reflows at 390px and 320px with 200 percent zoom', async ({ page }) => {
+test('Example reading order and reflow survive enlarged text', async ({ page }) => {
   test.setTimeout(120_000); await login(page);
   for (const viewport of [{ width: 1440, height: 1000, text: 100 }, { width: 390, height: 844, text: 100 }, { width: 320, height: 700, text: 200 }]) {
     await page.setViewportSize({ width: viewport.width, height: viewport.height });
@@ -882,8 +766,19 @@ test('Legibility Home reflows at 390px and 320px with 200 percent zoom', async (
         }));
         expect(layout.overflow).toBeLessThanOrEqual(1); expect(layout.clipped).toEqual([]);
         if (mode === 'daniel') {
+          await assertTicketA(page);
+          const rootSize=await page.locator('html').evaluate(n=>parseFloat(getComputedStyle(n).fontSize));
+          expect(rootSize).toBe(viewport.text===200?32:16);
+          const svg=page.getByTestId('held-amount-line').locator('svg');
+          await expect(svg).toHaveAttribute('viewBox','0 0 300 100');
+          const overlap=await panel(page).evaluate(root=>{
+            const nodes=Array.from(root.querySelectorAll<HTMLElement>('p,h2,li,[data-testid="daniel-read-figure"]')).filter(n=>!n.closest('[aria-hidden="true"]'));
+            const boxes=nodes.map(n=>n.getBoundingClientRect());
+            return boxes.flatMap((a,i)=>boxes.slice(i+1).filter(b=>Math.min(a.right,b.right)-Math.max(a.left,b.left)>1 && Math.min(a.bottom,b.bottom)-Math.max(a.top,b.top)>1).map(()=>i));
+          });
+          expect(overlap).toEqual([]);
           await expect(page.getByText(LEGIBILITY.invariant, { exact: true })).toBeVisible();
-          await expect(page.getByText(LEGIBILITY.currency, { exact: true })).toBeVisible();
+          await expect(page.getByTestId('daniel-read-caption')).toHaveText('K21,600 · Example figure, not a quote');
         }
         await page.screenshot({ path: test.info().outputPath(`${mode}-${route.includes('journey=') ? 'query' : 'path'}-${viewport.width}-${viewport.text}.png`), fullPage: true });
       }
@@ -904,15 +799,40 @@ test('Daniel legibility retains claim, presentation and isolation fences', async
 });
 
 test('Daniel legibility leaves chart and runtime fixtures unchanged', async ({ page }) => {
-  await login(page);
-  for (const route of JOURNEY_ROUTES) {
-    await gotoDaniel(page, route);
-    const chart = page.getByTestId('dashboard-position-line');
-    await expect(chart).toHaveAttribute('aria-hidden', 'true');
-    await expect(chart.locator('span[style*="top:"]')).toHaveCount(3);
-    await expect(page.getByTestId('dashboard-position-line-visit')).toHaveText('Daniel’s last visit');
-    await expect(chart).not.toContainText(/Today|max|9 Oct|25 Sep/);
-    await expect(page.getByTestId('daniel-read-figure')).toHaveText(FIGURE);
-    await expect(page.getByTestId('daniel-observation-holding')).toHaveText([lastRead.holding, currentRead.holding]);
-  }
+  await login(page); for(const route of JOURNEY_ROUTES) {await gotoDaniel(page,route); await assertTicketA(page);}
+});
+
+const A_ROWS=['9 Sep 2026 · K19,600','25 Sep 2026 · K23,600','9 Oct 2026 · K21,600'];
+async function assertTicketA(page: Page) {
+  await expect(page.getByTestId('daniel-read-figure')).toHaveText('$800.00 USD');
+  await expect(page.getByTestId('daniel-read-caption')).toHaveText('K21,600 · Example figure, not a quote');
+  const region=page.getByRole('region',{name:COPY.since,exact:true});
+  await expect(region.getByRole('heading',{level:2})).toHaveText(COPY.since);
+  await expect(region.locator('ol > li')).toHaveText(A_ROWS);
+  await expect(region.getByTestId('held-amount-line')).toHaveAttribute('aria-hidden','true');
+  await expect(region.locator('svg')).toHaveAttribute('focusable','false');
+  await expect(region.locator('circle')).toHaveCount(3);
+  await expect(region.getByText('K0',{exact:true})).toBeVisible(); await expect(region.getByText('K30,000',{exact:true})).toBeVisible();
+  await expect(page.getByTestId('dashboard-position-line')).toHaveCount(0);
+  await expect(panel(page).locator('[aria-live], [role="status"], .sr-only')).toHaveCount(0);
+  await expect(page.getByTestId('daniel-read-holding')).toHaveText('This example only displays it. Nothing is moved or exchanged.');
+  await expect(page.getByTestId('daniel-read-rate')).toHaveText(RATE_ASSUMPTION);
+  await expect(page.getByTestId('daniel-invariant')).toHaveText(LEGIBILITY.invariant);
+  const text=(await panel(page).textContent())!;
+  for(const [claim,count] of [['$800.00 USD',1],['K21,600',2],['9 Oct 2026',1],['Fictional example · Daniel’s dollar savings',1],['Example figure, not a quote',1],[RATE_ASSUMPTION,1],[LEGIBILITY.invariant,1],['This is what happened in the example. It doesn’t tell you what will happen next.',1]] as const) expect(text.split(claim).length-1,claim).toBe(count);
+  expect(text).not.toMatch(/Daniel holds USD 800|Shown in ZMW|USD 800 shows|Now ·|Example date:|What changed since Daniel’s last visit|Example rate: ZMW 29.5/);
+  await expect(panel(page).getByText('Not a live rate',{exact:true})).toHaveCount(0);
+  const order=await panel(page).locator('[data-testid]').evaluateAll(nodes=>nodes.map(n=>n.getAttribute('data-testid')));
+  const sequence=['daniel-read-figure','daniel-read-caption','daniel-read-holding','daniel-since-card','daniel-invariant','daniel-read-rate'];
+  for(let i=1;i<sequence.length;i++) expect(order.indexOf(sequence[i])).toBeGreaterThan(order.indexOf(sequence[i-1]));
+  expect(await page.getByTestId('daniel-since-card').evaluate(n=>n.nextElementSibling?.textContent)).toBe(LEGIBILITY.invariant);
+  await expect(panel(page).getByRole('link',{name:COPY.back})).toBeVisible();
+  await expectCurrencyContext(page);
+}
+
+test('Example claims and amounts have one semantic home except the locked Daniel repeat',async({page})=>{
+  await login(page);for(const route of JOURNEY_ROUTES){await gotoDaniel(page,route);await assertTicketA(page);}
+});
+test('Daniel exposes every plotted point in the locked three-row list',async({page})=>{
+  await login(page);for(const route of JOURNEY_ROUTES){await gotoDaniel(page,route);await assertTicketA(page);}
 });

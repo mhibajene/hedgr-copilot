@@ -224,3 +224,16 @@
   .sinceList strong { font-size: 1.0625rem; }
   .sinceLink { font-size: 1.0625rem; }
 }
+
+/* §377: opt-in example hierarchy and Daniel's decorative held-amount geometry only. */
+.exampleHome .position .exampleHero { font-size: 1.5rem; line-height: 1.2; overflow-wrap: normal; }
+.exampleHome .position .exampleSecondary { font-size: 1rem; line-height: 1.5; color: var(--color-hedgr-600); }
+.exampleHome .exampleReadings { display: grid; gap: .75rem; min-width: 0; font-size: .875rem; line-height: 1.5; color: var(--color-hedgr-dark); }
+.heldAmountLine { min-width: 0; color: var(--color-hedgr-dark); }
+.heldAmountPlot { display: block; width: 100%; height: 8rem; }
+.heldAmountBounds { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .5rem 1rem; font-size: .875rem; line-height: 1.5; }
+@media (min-width: 64rem) {
+  .exampleHome .position .exampleHero { font-size: 3rem; }
+  .exampleHome .exampleReadings { font-size: 1rem; }
+  .heldAmountPlot { height: 10rem; }
+}
