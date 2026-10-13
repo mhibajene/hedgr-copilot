@@ -13,7 +13,7 @@ const COPY = { since: 'What changed since Daniel’s last visit', visit: 'Daniel
 const AS_OF = '2026-10-09T00:00:00.000Z';
 const CURRENCY_KEY = 'hedgr.simulation.display-currency';
 const PICKER = 'Choose an example';
-const OPTIONS = ['Your own simulation', "Daniel's reserve"];
+const OPTIONS = ['Your own simulation', "Daniel's reserve", "Sarah's course fee"];
 
 type LedgerTx = {
   txn_ref: string;
@@ -199,7 +199,7 @@ test('falls back to your own simulation for an unknown example value', async ({ 
   await login(page);
   await seed(page, ACTIVITY.settled);
   for (const route of JOURNEY_ROUTES) {
-    for (const value of ['sarah', 'DANIEL']) {
+    for (const value of ['unknown', 'DANIEL']) {
       await gotoHome(page, `${route}${route.includes('?') ? '&' : '?'}example=${value}`);
       await expect(picker(page).locator('option:checked')).toHaveText('Your own simulation');
       await expect(page.getByTestId('dashboard-balance')).toBeVisible();
@@ -813,7 +813,7 @@ test('Example parameter survives explicit reset on both journey routes', async (
 test('Unknown example ids fall back to own simulation', async ({ page }) => {
   await login(page);
   for (const route of JOURNEY_ROUTES) {
-    for (const id of ['sarah', 'DANIEL', '__proto__']) {
+    for (const id of ['unknown', 'DANIEL', '__proto__']) {
       await gotoHome(page, `${route}${route.includes('?') ? '&' : '?'}example=${id}`);
       await expect(page.getByRole('heading', { level: 1 })).toHaveText('Your simulation');
       await expect(picker(page)).toHaveValue('own');
@@ -847,9 +847,9 @@ test('Example picker fits complete long names at 320px with 200 percent zoom', a
     await picker(page).focus(); await page.keyboard.press('Y');
     await expect(page.getByTestId('dashboard-current-overview')).toBeVisible();
     await expectWrappingLabel(page, 'Your own simulation');
-    // Only the sizing slot is changed in this browser test. No Sarah production option exists.
-    await page.getByTestId('example-picker-value').evaluate(n => { n.textContent = 'Sarah’s course fee'; });
-    await expectWrappingLabel(page, 'Sarah’s course fee');
+    // Sizing-slot control uses the locked registry spelling; Sarah navigation has its own contract.
+    await page.getByTestId('example-picker-value').evaluate(n => { n.textContent = "Sarah's course fee"; });
+    await expectWrappingLabel(page, "Sarah's course fee");
     await expect(picker(page).locator('option')).toHaveText(OPTIONS);
     await page.screenshot({ path: test.info().outputPath(`future-name-${route.includes('journey=') ? 'query' : 'path'}.png`), fullPage: true });
   }

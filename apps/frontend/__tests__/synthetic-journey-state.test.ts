@@ -121,15 +121,16 @@ describe('imports the Engine ZMW fixture while preserving all other display and 
 });
 
 // §362 CLASS-A-VAL-002-HOME-EXAMPLE-PICKER-001 — the example is selected only by the URL.
-describe('parses the example parameter with Daniel as the only recognised value', () => {
-  test('parses the example parameter with Daniel as the only recognised value', () => {
+describe('parses the example parameter with Daniel and Sarah as the recognised values', () => {
+  test('parses the example parameter with Daniel and Sarah as the recognised values', () => {
     expect(parseSyntheticJourneyExample('example=daniel')).toBe('daniel');
+    expect(parseSyntheticJourneyExample('example=sarah')).toBe('sarah');
     expect(parseSyntheticJourneyExample('?journey=class-a-val-002&example=daniel')).toBe('daniel');
     for (const search of [
       undefined,
       '',
       'example=',
-      'example=sarah',
+      'example=unknown',
       'example=DANIEL',
       'example=daniel%20',
       'example=own',
