@@ -36,9 +36,9 @@ import { ENGINE_TRUST_INFORMATIONAL_DENYLIST } from './engine-trust-framing-deny
 const ROUTES = ['/dashboard?journey=class-a-val-002', '/dashboard-synthetic-journey'];
 const OPTIONS = ['Your own simulation', "Daniel's reserve", "Sarah's course fee"];
 const COPY = {
-  h1: 'Sarah’s example', heading: 'Sarah’s fictional course fee', caption: 'Example fee estimate', card: 'Course fee',
+  h1: 'Sarah’s example', heading: 'Sarah’s course fee', caption: 'K27,000 · Example figure', card: 'Course fee',
   date: 'Example date: 9 Oct 2026',
-  fee: 'Course fee USD 1,000, due 1 Oct 2027, shows as K27,000 at this example rate.',
+  due: 'Due 1 Oct 2027.',
   rate: 'Example rate: ZMW 27 per US dollar. Not a live rate.',
   limits: 'Fictional course fee. This figure is not a payment quote. This read does not establish whether Sarah can pay the fee.',
 };
@@ -79,7 +79,7 @@ function seed() {
 function assertRead() {
   expect(screen.getByRole('heading', { level: 1 }).textContent).toBe(COPY.h1);
   expect(screen.getAllByTestId('dashboard-sarah-read')).toHaveLength(1);
-  expect(screen.getByTestId('sarah-read-figure').textContent).toBe('K27,000');
+  expect(screen.getByTestId('sarah-read-figure').textContent).toBe('$1,000.00 USD');
 }
 beforeEach(() => {
   vi.stubEnv('NEXT_PUBLIC_AUTH_MODE', 'mock'); vi.stubEnv('NEXT_PUBLIC_FX_MODE', 'stub'); vi.stubEnv('NEXT_PUBLIC_APP_ENV', 'prod');
@@ -116,7 +116,7 @@ test('Sarah is selectable on both journey Homes', () => {
   }
 });
 
-test('Sarah renders one fee read at one example observation', async () => {
+test('Sarah hero uses $1,000.00 USD and one independent fee observation', async () => {
   at(ROUTES[0], 'sarah'); const view = render(<DashboardPage />); assertRead();
   const fixturePath = '../lib/state/sarah-home-fixture';
   expect(existsSync(resolve(__dirname, fixturePath + '.ts'))).toBe(true);
@@ -130,9 +130,12 @@ test('Sarah renders one fee read at one example observation', async () => {
   expect(SARAH_CURRENT_FIXTURE_RATE_ZMW_PER_USD).toBe(DANIEL_FIXTURE_RATE_ZMW_PER_USD);
   expect(screen.getByTestId('sarah-read-as-of').textContent).toBe(COPY.date);
   expect(panel().querySelector('time')?.getAttribute('datetime')).toBe(AS_OF);
-  expect(panel().querySelectorAll('time')).toHaveLength(1);
+  expect(panel().querySelectorAll('time')).toHaveLength(2);
+  expect(panel().querySelectorAll('time')[1].getAttribute('datetime')).toBe('2027-10-01');
+  expect(panel().textContent?.split('K27,000')).toHaveLength(2);
+  expect(panel().textContent).not.toContain('Course fee USD 1,000');
   expect(screen.getAllByTestId('sarah-fee-card')).toHaveLength(1);
-  expect(within(panel()).getAllByText(COPY.fee, { exact: true })).toHaveLength(1);
+  expect(within(panel()).getAllByText(COPY.due, { exact: true })).toHaveLength(1);
   expect(within(panel()).getAllByText(COPY.rate, { exact: true })).toHaveLength(1);
   expect(within(panel()).getAllByText(COPY.limits, { exact: true })).toHaveLength(1);
   const fixtureSource = source('lib/state/sarah-home-fixture.ts');
@@ -142,13 +145,19 @@ test('Sarah renders one fee read at one example observation', async () => {
   expect(panel().querySelectorAll('svg, canvas, progress, meter, [role="progressbar"], [data-delta], [data-direction]')).toHaveLength(0);
   expect(panel().textContent).not.toMatch(/history|last visit|before|after|difference|countdown|progress/i);
   view.unmount();
-  // Presentation consumes an arbitrary Engine read verbatim, including all explanations.
-  const componentPath = '../app/(app)/dashboard/SarahExampleHome';
-  const { SarahExampleHome } = await import(componentPath);
+  // Arbitrary read proves both dates, declaration and local text without clock/visit dependence.
+  const { SarahExampleHome } = await import('../app/(app)/dashboard/SarahExampleHome');
   const read = computeSarahRead(u3);
-  const sentinel = { ...read, localDisplay: 'ENGINE FIGURE', explanation: { fee: 'ENGINE FEE', rateAssumption: 'ENGINE RATE', limits: 'ENGINE LIMITS' } };
-  render(<SarahExampleHome read={sentinel} />);
-  for (const text of ['ENGINE FIGURE', 'ENGINE FEE', 'ENGINE RATE', 'ENGINE LIMITS']) expect(screen.getByText(text, { exact: true })).toBeDefined();
+  const sentinel = {...read, asOf:'2030-02-03T23:45:00.000Z',declaredFee:{...read.declaredFee,amount:1234.56,dueDate:'2031-04-05'},localDisplay:'ENGINE FIGURE',
+    explanation:{fee:'ENGINE FEE',rateAssumption:'ENGINE RATE',limits:'ENGINE LIMITS'}};
+  render(<SarahExampleHome read={sentinel}/>);
+  expect(screen.getByTestId('sarah-read-figure').textContent).toBe('$1,234.56 USD');
+  expect(screen.getByTestId('sarah-read-caption').textContent).toBe('ENGINE FIGURE · Example figure');
+  expect(screen.getByTestId('sarah-read-as-of').textContent).toBe('Example date: 3 Feb 2030');
+  expect(screen.getByTestId('sarah-fee-card').querySelector('time')?.textContent).toBe('5 Apr 2031');
+  expect(Array.from(panel().querySelectorAll('time')).map(n=>n.getAttribute('datetime'))).toEqual([sentinel.asOf,sentinel.declaredFee.dueDate]);
+  for (const text of ['ENGINE RATE','ENGINE LIMITS']) expect(screen.getByText(text,{exact:true})).toBeDefined();
+  expect(screen.queryByText('ENGINE FEE')).toBeNull();
 });
 
 test('Sarah Home has no fee selector or kwacha read', () => {
@@ -232,8 +241,8 @@ test('Sarah Home uses locked copy and no funding claims', () => {
     at(route, 'sarah'); const view = render(<DashboardPage />); assertRead();
     expect(document.getElementById('dashboard-sarah-label')?.textContent).toBe(COPY.heading);
     expect(screen.getByTestId('sarah-read-caption').textContent).toBe(COPY.caption);
-    expect(screen.getByTestId('sarah-fee-card').textContent).toBe(COPY.card + COPY.fee + COPY.rate + COPY.limits);
-    expect(panel().textContent).toBe(COPY.heading + 'K27,000' + COPY.caption + COPY.date + COPY.card + COPY.fee + COPY.rate + COPY.limits);
+    expect(screen.getByTestId('sarah-fee-card').textContent).toBe(COPY.card + COPY.due + COPY.rate + COPY.limits);
+    expect(panel().textContent).toBe(COPY.heading + '$1,000.00 USD' + COPY.caption + COPY.date + COPY.card + COPY.due + COPY.rate + COPY.limits);
     expect(picker().selectedOptions[0].textContent).toBe(OPTIONS[2]);
     expect(screen.getAllByText(COPY.rate, { exact: true })).toHaveLength(1);
     const text = panel().textContent!.replace(COPY.limits, ''); // Keep the exact negative payment-ability statement.
