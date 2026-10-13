@@ -235,18 +235,38 @@ test('Sarah controls and disclosures fit and work by keyboard', async ({ page })
           .filter(n => n.textContent?.trim() && getComputedStyle(n).display !== 'none' && !n.classList.contains('sr-only') && n.getBoundingClientRect().width > 0);
         const clipped = visible.filter(n => {
           const b = n.getBoundingClientRect(); const range = document.createRange(); range.selectNodeContents(n);
+          const rects = Array.from(range.getClientRects());
+          // Font metrics can extend vertically beyond a line box with visible overflow.
+          // Check actual clipping boundaries as well as horizontal fit; do not mistake
+          // those visible glyphs for clipped accessibility text.
+          const ancestorClips = rects.some(r => {
+            for (let parent: HTMLElement | null = n; parent; parent = parent.parentElement) {
+              const style = getComputedStyle(parent); const box = parent.getBoundingClientRect();
+              const clips = (overflow: string) => ['hidden', 'clip', 'auto', 'scroll'].includes(overflow);
+              if (clips(style.overflowX) && (r.left < box.left - 1 || r.right > box.right + 1)) return true;
+              if (parent !== document.body && parent !== document.documentElement && clips(style.overflowY) &&
+                (r.top < box.top - 1 || r.bottom > box.bottom + 1)) return true;
+            }
+            return false;
+          });
           return n.scrollWidth > n.clientWidth + 1 && getComputedStyle(n).display !== 'inline' ||
-            Array.from(range.getClientRects()).some(r => r.left < b.left - 1 || r.right > b.right + 1 || r.top < b.top - 1 || r.bottom > b.bottom + 1) || getComputedStyle(n).textOverflow === 'ellipsis';
-        }).map(n => n.getAttribute('data-testid') ?? n.textContent);
+            rects.some(r => r.left < b.left - 1 || r.right > b.right + 1) || ancestorClips || getComputedStyle(n).textOverflow === 'ellipsis';
+        }).map(n => {
+          const box = n.getBoundingClientRect(); const range = document.createRange(); range.selectNodeContents(n);
+          return { id: n.getAttribute('data-testid') ?? n.textContent, width: n.clientWidth, scrollWidth: n.scrollWidth,
+            box: box.toJSON(), rects: Array.from(range.getClientRects()).map(r => r.toJSON()),
+            overflow: getComputedStyle(n).overflow, font: getComputedStyle(n).fontSize, lineHeight: getComputedStyle(n).lineHeight };
+        });
         const grid = getComputedStyle(document.querySelector('[data-testid="sarah-home-grid"]')!).gridTemplateColumns;
         return { overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth, clipped,
           columns: grid.split(' ').length, font: parseFloat(getComputedStyle(document.querySelector('[data-testid="example-picker-value"]')!).fontSize),
           rootFont: parseFloat(getComputedStyle(document.documentElement).fontSize) };
       });
+      await test.info().attach(`layout-${viewport.width}-${viewport.text}`, { body: JSON.stringify(geometry, null, 2), contentType: 'application/json' });
+      await page.screenshot({ path: test.info().outputPath(`sarah-${route.includes('journey=') ? 'query' : 'path'}-${viewport.width}-${viewport.text}.png`), fullPage: true });
       expect(geometry.overflow).toBeLessThanOrEqual(1); expect(geometry.clipped).toEqual([]);
       expect(geometry.columns).toBe(viewport.width === 1440 ? 2 : 1); expect(geometry.font).toBeGreaterThanOrEqual(viewport.text === 200 ? 28 : 14);
       expect(geometry.rootFont).toBe(viewport.text === 200 ? 32 : 16);
-      await page.screenshot({ path: test.info().outputPath(`sarah-${route.includes('journey=') ? 'query' : 'path'}-${viewport.width}-${viewport.text}.png`), fullPage: true });
       await page.goBack(); await expect(page.getByTestId('dashboard-balance')).toBeVisible();
       await page.goForward(); await assertRead(page);
       await picker(page).focus(); await page.keyboard.press('Y'); await expect(page.getByTestId('dashboard-balance')).toBeVisible();
