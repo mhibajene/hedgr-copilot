@@ -99,7 +99,7 @@ type Route = (typeof ROUTES)[number];
 type JourneyRoute = (typeof JOURNEY_ROUTES)[number];
 const POSTURES: EnginePosture[] = ["normal", "tightening", "tightened", "recovery"];
 const PICKER = "Choose an example";
-const OPTIONS = ["Your own simulation", "Daniel's reserve"];
+const OPTIONS = ["Your own simulation", "Daniel's reserve", "Sarah's course fee"];
 // Founder lock, 11 Oct 2026: "Lock 1-6 as recommended"; character-exact assertions.
 const LOCKED_COPY = {
   since: "What changed since Daniel’s last visit",
@@ -873,7 +873,7 @@ test('Journey arrival announces current and prior simulated balances without a d
 test('Example registry resolves Daniel and preserves his behavior', async () => {
   const journey = await import('../lib/state/synthetic-journey');
   const registry = (journey as typeof journey & { SYNTHETIC_JOURNEY_EXAMPLES?: readonly { id: string; label: string }[] }).SYNTHETIC_JOURNEY_EXAMPLES;
-  expect(registry).toEqual([{ id: 'daniel', label: "Daniel's reserve" }]);
+  expect(registry).toEqual([{ id: 'daniel', label: "Daniel's reserve" }, { id: 'sarah', label: "Sarah's course fee" }]);
   expect(journey.parseSyntheticJourneyExample('?example=daniel')).toBe('daniel');
   const view = await renderDaniel('journey', 'returning');
   expect(screen.getByTestId('daniel-read-figure').textContent).toBe(DANIEL_HOME_READ.localDisplay);
@@ -901,7 +901,7 @@ test('Example parameter survives explicit reset on both journey routes', async (
 
 test('Unknown example ids fall back to own simulation', async () => {
   const { parseSyntheticJourneyExample } = await import('../lib/state/synthetic-journey');
-  for (const value of ['sarah', 'DANIEL', '', 'own', 'toString', '__proto__']) {
+  for (const value of ['unknown', 'DANIEL', '', 'own', 'toString', '__proto__']) {
     expect(parseSyntheticJourneyExample(`example=${value}`)).toBe('own');
     const view = await renderHome('journey', 'settled', 'normal', value);
     expect(screen.getByRole('heading', { level: 1 }).textContent).toBe('Your simulation');
