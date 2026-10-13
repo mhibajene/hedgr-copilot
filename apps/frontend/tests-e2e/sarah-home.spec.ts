@@ -1,5 +1,6 @@
 import { expect, test, type Page } from '@playwright/test';
-import { SYNTHETIC_RESEARCH_DISCLOSURE_COPY } from '../components/PolicyDisclosure';
+import { SYNTHETIC_RESEARCH_DISCLOSURE_COPY, type DisclosureKey } from '../components/PolicyDisclosure';
+import type { ResolvedPolicy } from '../lib/policy/schema';
 
 // §374: one USD-only U3 read, no fee semantics, no writes in Sarah mode.
 const ROUTES = ['/dashboard?journey=class-a-val-002', '/dashboard-synthetic-journey'];
@@ -154,9 +155,9 @@ test('Example navigation restores the URL without changing simulation state', as
 
 test('Sarah refuses reset without clearing stored simulation', async ({ page }) => {
   await login(page);
-  for (const route of ROUTES) {
+  for (const route of ROUTES) for (const reset of ['1', '0', 'unknown']) {
     await seed(page); const before = await snapshot(page); await recordWrites(page);
-    await page.goto(routeFor(route, 'sarah', 'reset=1&keep=1'));
+    await page.goto(routeFor(route, 'sarah', `reset=${reset}&keep=1`));
     await expect.poll(async () => (await snapshot(page)).local['hedgr:wallet']).toBe(before.local['hedgr:wallet']);
     await assertRead(page); expect(await snapshot(page)).toEqual(before); await noWrites(page);
     const u = new URL(page.url()); expect(u.searchParams.has('reset')).toBe(false);
@@ -211,6 +212,9 @@ test('Sarah Home uses locked copy and no funding claims', async ({ page }) => {
 
 test('Sarah controls and disclosures fit and work by keyboard', async ({ page }) => {
   test.setTimeout(120_000); const errors: string[] = []; page.on('pageerror', error => errors.push(error.message)); await login(page);
+  const policy = await (await page.request.get('/api/policy')).json() as ResolvedPolicy;
+  const disclosureKeys = policy.policy.disclosures.requiredKeys;
+  expect(disclosureKeys.length).toBeGreaterThan(0);
   for (const viewport of [{ width: 1440, height: 1000, text: 100 }, { width: 390, height: 844, text: 100 }, { width: 320, height: 700, text: 200 }]) {
     await page.setViewportSize(viewport);
     for (const route of ROUTES) {
@@ -220,7 +224,11 @@ test('Sarah controls and disclosures fit and work by keyboard', async ({ page })
       await expect(page.getByTestId('example-picker-value')).toHaveText(OPTIONS[2]);
       await expect(page.locator('label[for="dashboard-example-picker"]')).toBeVisible();
       await page.getByTestId('dashboard-disclosures').locator('summary').focus(); await page.keyboard.press('Enter');
-      for (const text of Object.values(SYNTHETIC_RESEARCH_DISCLOSURE_COPY)) await expect(page.getByText(text, { exact: true })).toBeVisible();
+      await expect(page.getByTestId('dashboard-disclosures').locator('[data-disclosure-key]')).toHaveCount(disclosureKeys.length);
+      for (const key of disclosureKeys) {
+        expect(Object.keys(SYNTHETIC_RESEARCH_DISCLOSURE_COPY)).toContain(key);
+        await expect(page.getByText(SYNTHETIC_RESEARCH_DISCLOSURE_COPY[key as DisclosureKey], { exact: true })).toBeVisible();
+      }
       for (const text of [COPY.fee, COPY.rate, COPY.limits]) await expect(panel(page).getByText(text, { exact: true })).toBeVisible();
       const geometry = await page.evaluate(() => {
         const visible = Array.from(document.querySelectorAll<HTMLElement>('[data-testid="dashboard-sarah-read"] *, [data-testid="example-picker-value"], label[for="dashboard-example-picker"], [data-disclosure-key], [data-testid="dashboard-disclosures"] summary'))

@@ -189,8 +189,8 @@ test('Example navigation restores the URL without changing simulation state', ()
 });
 
 test('Sarah refuses reset without clearing stored simulation', () => {
-  for (const route of ROUTES) {
-    seed(); at(route, 'sarah', 'reset=1&keep=1'); const before = snapshot();
+  for (const route of ROUTES) for (const reset of ['1', '0', 'unknown']) {
+    seed(); at(route, 'sarah', `reset=${reset}&keep=1`); const before = snapshot();
     const write = vi.spyOn(Storage.prototype, 'setItem'); const remove = vi.spyOn(Storage.prototype, 'removeItem'); const clear = vi.spyOn(Storage.prototype, 'clear');
     const view = render(<DashboardPage />);
     expect(snapshot()).toEqual(before); expect(mocks.clear).not.toHaveBeenCalled();
