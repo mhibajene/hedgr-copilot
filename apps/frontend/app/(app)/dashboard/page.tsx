@@ -12,6 +12,7 @@ import { EngineAllocationBands } from "./EngineAllocationBands";
 import { EnginePostureHeader } from "./EnginePostureHeader";
 import { PositionLine } from "./PositionLine";
 import { DanielExampleHome } from './DanielExampleHome';
+import { SarahExampleHome } from './SarahExampleHome';
 import { CurrencyInsight } from "./CurrencyInsight";
 import { EngineProtectiveGuidance } from "./EngineProtectiveGuidance";
 import { EngineStabilityExplainer } from "./EngineStabilityExplainer";
@@ -45,6 +46,7 @@ import {
 } from "../../../lib/tx";
 import {
   CLASS_A_VAL_002_DANIEL_EXAMPLE,
+  CLASS_A_VAL_002_SARAH_EXAMPLE,
   CLASS_A_VAL_002_DASHBOARD_PATH,
   CLASS_A_VAL_002_EXAMPLE_PARAM,
   CLASS_A_VAL_002_JOURNEY_PARAM,
@@ -57,6 +59,7 @@ import {
   parseSyntheticJourneyExample,
 } from "../../../lib/state/synthetic-journey";
 import { DANIEL_HOME_READ, DANIEL_HOME_TIMELINE } from "../../../lib/state/daniel-home-fixture";
+import { SARAH_HOME_READ } from "../../../lib/state/sarah-home-fixture";
 
 function formatActivityDayLabel(timestamp: number): string {
   const date = new Date(timestamp);
@@ -131,7 +134,10 @@ export default function DashboardPage() {
   const selectedExample = parseSyntheticJourneyExample(searchParams?.toString());
   const danielExample =
     syntheticJourneyActive && selectedExample === CLASS_A_VAL_002_DANIEL_EXAMPLE;
-  const displayCurrency = useSimulationDisplayCurrency(syntheticJourneyActive && !danielExample);
+  const sarahExample =
+    syntheticJourneyActive && selectedExample === CLASS_A_VAL_002_SARAH_EXAMPLE;
+  const exampleActive = danielExample || sarahExample;
+  const displayCurrency = useSimulationDisplayCurrency(syntheticJourneyActive && !exampleActive);
   const simulatedEnvironment = getEnvironmentMode() !== "live";
   const productSimulationActive =
     syntheticJourneyActive || simulatedEnvironment;
@@ -149,9 +155,12 @@ export default function DashboardPage() {
   }, []);
 
   useEffect(() => {
-    if (cleanStartRequested) {
-      clearTransactions();
-      removeRetiredWalletBalance();
+    if (cleanStartRequested || (sarahExample && searchParams?.has(CLASS_A_VAL_002_RESET_PARAM))) {
+      // §374: eligible Sarah consumes reset while refusing all simulation writes.
+      if (!sarahExample) {
+        clearTransactions();
+        removeRetiredWalletBalance();
+      }
       const resetParams = new URLSearchParams(searchParams?.toString());
       resetParams.delete(CLASS_A_VAL_002_RESET_PARAM);
       const resetTarget = syntheticJourneyActive && selectedExample !== "own"
@@ -164,7 +173,7 @@ export default function DashboardPage() {
       );
     }
     setReady(true);
-  }, [cleanStartRequested, clearTransactions, pathname, searchParams, selectedExample, syntheticJourneyActive]);
+  }, [cleanStartRequested, clearTransactions, pathname, searchParams, selectedExample, syntheticJourneyActive, sarahExample]);
 
   // HOME-EXPERIENCE-001 T3: read the previous Home visit once, then record this one.
   // A journey reset only clears the value; the next ordinary Home visit records it.
@@ -173,10 +182,10 @@ export default function DashboardPage() {
   const [today, setToday] = useState<number | null>(null);
   const visitRecorded = useRef(false);
   // §362: an example never records a visit; arriving on one and returning records none either.
-  const arrivedOnExample = useRef(danielExample);
+  const arrivedOnExample = useRef(exampleActive);
   useEffect(() => {
-    if (danielExample) {
-      setToday((current) => current ?? Date.now());
+    if (exampleActive) {
+      if (danielExample) setToday((current) => current ?? Date.now());
       return;
     }
     if (!productSimulationActive || visitRecorded.current) return;
@@ -191,7 +200,7 @@ export default function DashboardPage() {
     }
     setToday(now);
     setVisitRead(true);
-  }, [productSimulationActive, cleanStartRequested, danielExample]);
+  }, [productSimulationActive, cleanStartRequested, exampleActive, danielExample]);
 
   const hasNoTransactions = transactions.length === 0;
   const isFirstTimeUser =
@@ -743,7 +752,7 @@ export default function DashboardPage() {
     </details>
   );
 
-  if (error && !danielExample) {
+  if (error && !exampleActive) {
     return (
       <main className={`${home.page} ${home.scopeFirst}`}>
         <div
@@ -779,7 +788,7 @@ export default function DashboardPage() {
           className="space-y-0.5 pb-1 sm:space-y-2"
           data-testid="dashboard-orientation"
         >
-          {productSimulationActive && !danielExample && today !== null ? (
+          {productSimulationActive && !exampleActive && today !== null ? (
             <p className={home.dateLine} data-testid="dashboard-date-line">
               {formatDateLine(today)}
             </p>
@@ -788,7 +797,7 @@ export default function DashboardPage() {
             id="dashboard-orientation-heading"
             className="text-xl font-bold tracking-tight text-hedgr-800 sm:text-4xl"
           >
-            {syntheticJourneyActive ? danielExample ? "Daniel’s example" : "Your simulation" : "Your position"}
+            {syntheticJourneyActive ? sarahExample ? "Sarah’s example" : danielExample ? "Daniel’s example" : "Your simulation" : "Your position"}
           </h1>
           {examplePicker}
           {!syntheticJourneyActive ? <p className={home.contextLine} data-testid="dashboard-context-line">
@@ -798,7 +807,7 @@ export default function DashboardPage() {
           </p> : null}
         </section>
 
-        {danielExample ? danielPanel : currentOverview}
+        {sarahExample ? <SarahExampleHome read={SARAH_HOME_READ} /> : danielExample ? danielPanel : currentOverview}
 
         {isFirstTimeUser && !productSimulationActive && (
           <div
@@ -828,7 +837,7 @@ export default function DashboardPage() {
           </div>
         )}
 
-        {danielExample ? (
+        {exampleActive ? (
           <div className={home.support}>{disclosureSection}</div>
         ) : syntheticJourneyActive ? (
           <div className={home.support}>
@@ -845,7 +854,7 @@ export default function DashboardPage() {
 
 
 
-        {syntheticJourneyActive && !danielExample && hasSyntheticFixtureState && (
+        {syntheticJourneyActive && !exampleActive && hasSyntheticFixtureState && (
           <section
             className={`${finish.replay} text-hedgr-800`}
             data-testid="dashboard-restart-journey"

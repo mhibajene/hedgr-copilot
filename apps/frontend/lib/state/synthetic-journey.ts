@@ -12,10 +12,12 @@ export const CLASS_A_VAL_002_RESET_PARAM = 'reset';
 export const CLASS_A_VAL_002_RESET_VALUE = '1';
 export const CLASS_A_VAL_002_EXAMPLE_PARAM = 'example';
 export const CLASS_A_VAL_002_DANIEL_EXAMPLE = 'daniel';
+export const CLASS_A_VAL_002_SARAH_EXAMPLE = 'sarah';
 
 /** §367: recognized examples and picker options share one URL-only registry. */
 export const SYNTHETIC_JOURNEY_EXAMPLES = Object.freeze([
   Object.freeze({ id: CLASS_A_VAL_002_DANIEL_EXAMPLE, label: "Daniel's reserve" }),
+  Object.freeze({ id: CLASS_A_VAL_002_SARAH_EXAMPLE, label: "Sarah's course fee" }),
 ] as const);
 
 export function parseSyntheticJourneyExample(search?: string): 'own' | (typeof SYNTHETIC_JOURNEY_EXAMPLES)[number]['id'] {

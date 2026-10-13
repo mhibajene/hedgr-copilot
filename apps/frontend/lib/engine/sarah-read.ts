@@ -1,7 +1,7 @@
 import { DANIEL_FIXTURE_RATE_ZMW_PER_USD } from './daniel-read';
 
 /** §372: one fictional declared fee at one explicit observation. */
-export const SARAH_READ_ENGINE_VERSION = 'sarah-read-v1';
+export const SARAH_READ_ENGINE_VERSION = 'sarah-read-v1' as const;
 export const SARAH_CURRENT_FIXTURE_RATE_ZMW_PER_USD = DANIEL_FIXTURE_RATE_ZMW_PER_USD;
 
 export type SarahReadInput = {
