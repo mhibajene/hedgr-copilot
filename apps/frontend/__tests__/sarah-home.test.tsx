@@ -135,7 +135,7 @@ test('Sarah hero uses $1,000.00 USD and one independent fee observation', async 
   expect(panel().textContent?.split('K27,000')).toHaveLength(2);
   expect(panel().textContent).not.toContain('Course fee USD 1,000');
   expect(screen.getAllByTestId('sarah-fee-card')).toHaveLength(1);
-  expect(within(panel()).getAllByText(COPY.due, { exact: true })).toHaveLength(1);
+  expect(screen.getByTestId('sarah-fee-card').querySelector('time')?.parentElement?.textContent).toBe(COPY.due);
   expect(within(panel()).getAllByText(COPY.rate, { exact: true })).toHaveLength(1);
   expect(within(panel()).getAllByText(COPY.limits, { exact: true })).toHaveLength(1);
   const fixtureSource = source('lib/state/sarah-home-fixture.ts');
