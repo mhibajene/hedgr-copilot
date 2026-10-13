@@ -111,7 +111,7 @@ for (const [currency, rate, deltaFive, deltaThree] of [
     await expect(page.getByTestId('currency-insight')).toHaveCount(0);
     await expect(page.getByTestId('currency-insight-inline')).toHaveCount(0);
     await expect(page.getByTestId('engine-simulation-attention-answer')).toHaveCount(0);
-    await expect(page.getByTestId('engine-posture-context')).toHaveText(/^No simulated activity since \d{1,2} (?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\.$/);
+    await expect(page.getByTestId('engine-posture-context')).toHaveText(/^Nothing has changed since \d{1,2} (?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\. Your position is still \$3\.00\.$/);
     await page.goto(`${home}?scenario=unavailable-data`);
     await expect(page.getByTestId('currency-insight')).toHaveCount(0);
     expect(await storedState(page)).toEqual(before);
