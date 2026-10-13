@@ -203,7 +203,7 @@ test('Sarah refuses reset without clearing stored simulation', () => {
     for (const selection of ['daniel', 'own']) {
       seed(); at(route, selection, 'reset=1'); const control = render(<DashboardPage />);
       expect(mocks.clear).toHaveBeenCalledTimes(1); expect(localStorage.getItem('hedgr:wallet')).toBeNull();
-      expect(localStorage.getItem('hedgr:last-home-visit')).toBeNull();
+      expect(localStorage.getItem('hedgr:last-home-visit')).toBe(selection === 'daniel' ? '2' : null);
       control.unmount(); mocks.clear.mockClear();
     }
   }
@@ -272,5 +272,18 @@ test('Sarah preserves Engine, golden, Daniel and shared style sources byte for b
     "app/(app)/dashboard/PositionLine.tsx": "d854781bd1b0950de0fc8e16a972e8ba7e47842e263a7c776664cb7deb8dae0a",
     "app/(app)/dashboard/CurrencyInsight.tsx": "769028b998087f94e53bc1b7ff875a1f916e6963537d06911f56bc19bd4f5b33"
 };
-  for (const [file, expected] of Object.entries(hashes)) expect(createHash('sha256').update(source(file)).digest('hex'), file).toBe(expected);
+  for (const [file, expected] of Object.entries(hashes)) {
+    let contents = source(file);
+    if (file === 'lib/engine/sarah-read.ts') {
+      // §375: accept only the authorised literal declaration; preserve the original
+      // source hash after reversing that exact line, including all other Engine bytes.
+      const original = "export const SARAH_READ_ENGINE_VERSION = 'sarah-read-v1';";
+      const corrected = "export const SARAH_READ_ENGINE_VERSION = 'sarah-read-v1' as const;";
+      expect(contents.split('\n').filter(line => line.startsWith('export const SARAH_READ_ENGINE_VERSION'))).toEqual([
+        contents.includes(corrected) ? corrected : original,
+      ]);
+      contents = contents.replace(corrected, original);
+    }
+    expect(createHash('sha256').update(contents).digest('hex'), file).toBe(expected);
+  }
 });

@@ -348,7 +348,7 @@ describe("shows only Daniel's reserve when the example is selected", () => {
 describe("falls back to your own simulation for an unknown example value", () => {
   test("falls back to your own simulation for an unknown example value", async () => {
     for (const route of JOURNEY_ROUTES) {
-      for (const example of ["sarah", "DANIEL", "", "own"]) {
+      for (const example of ["unknown", "DANIEL", "", "own"]) {
         const view = await renderHome(route, "settled", "normal", example);
         expect(picker().selectedOptions[0]?.textContent).toBe("Your own simulation");
         expect(screen.getByTestId("dashboard-balance")).toBeDefined();

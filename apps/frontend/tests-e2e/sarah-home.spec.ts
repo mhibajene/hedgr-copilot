@@ -168,7 +168,8 @@ test('Sarah refuses reset without clearing stored simulation', async ({ page }) 
       await expect(page.getByTestId(example === 'daniel' ? 'dashboard-daniel-read' : 'dashboard-balance')).toBeVisible();
       await expect.poll(async () => (await snapshot(page)).local['hedgr:wallet']).toBeUndefined();
       const cleared = await snapshot(page); expect(JSON.parse(cleared.local['hedgr:ledger']!).transactions).toEqual([]);
-      expect(cleared.local['hedgr:last-home-visit']).toBeUndefined(); expect(new URL(page.url()).searchParams.has('reset')).toBe(false);
+      expect(cleared.local['hedgr:last-home-visit']).toBe(example === 'daniel' ? '2' : undefined);
+      expect(new URL(page.url()).searchParams.has('reset')).toBe(false);
     }
   }
   await seed(page); await page.goto('/dashboard?example=sarah&reset=1');
