@@ -30,16 +30,16 @@ describe('isolated synthetic display preference', () => {
     ['ZMW', '81.00'], ['KES', '390.00'], ['NGN', '4,500.00'], ['GHS', '45.00'], ['PHP', '168.00'],
   ] as const)('formats the approved non-zero %s fixture', (currency, amount) => {
     expect(formatSimulationDisplayFigure(3, currency)).toBe(`≈ ${currency} ${amount}`);
-    expect(SIMULATION_DISPLAY_ESTIMATE_CAPTION).toBe('display estimate');
-    expect(formatSimulationDisplayEstimate(3, currency)).toBe(`≈ ${currency} ${amount} display estimate`);
+    expect(SIMULATION_DISPLAY_ESTIMATE_CAPTION).toBe('Example figure, not a quote');
+    expect(formatSimulationDisplayEstimate(3, currency)).toBe(`≈ ${currency} ${amount} Example figure, not a quote`);
   });
 
   it('keeps the bounded five fixtures and rounds only the formatted estimate', () => {
     expect(SIMULATION_DISPLAY_CURRENCIES.map(({ code }) => code)).toEqual(['ZMW', 'KES', 'NGN', 'GHS', 'PHP']);
     const usd = 1.23456;
-    expect(formatSimulationDisplayEstimate(usd, 'KES')).toBe('≈ KES 160.49 display estimate');
+    expect(formatSimulationDisplayEstimate(usd, 'KES')).toBe('≈ KES 160.49 Example figure, not a quote');
     expect(usd).toBe(1.23456);
-    expect(formatSimulationDisplayEstimate(0, 'ZMW')).toBe('≈ ZMW 0.00 display estimate');
+    expect(formatSimulationDisplayEstimate(0, 'ZMW')).toBe('≈ ZMW 0.00 Example figure, not a quote');
   });
 
   it('falls back to ZMW for missing/invalid stored values and rejects invalid selections', () => {
@@ -126,4 +126,12 @@ describe('imports the Engine ZMW fixture while preserving all other display and 
     expect(FIXED_RATE_BY_QUOTE.ZMW).toBe(20);
     expect(FX_RATE_ZMW_PER_USD_DEFAULT).toBe(20);
   });
+});
+
+it('Shared example caption covers Home and Withdraw with unchanged figures', () => {
+  const amounts = { ZMW: '12,960.00', KES: '62,400.00', NGN: '720,000.00', GHS: '7,200.00', PHP: '26,880.00' };
+  for (const currency of SIMULATION_DISPLAY_CURRENCIES) {
+    expect(formatSimulationDisplayEstimate(480, currency.code)).toBe(`≈ ${currency.code} ${amounts[currency.code]} Example figure, not a quote`);
+    expect(SIMULATION_DISPLAY_ESTIMATE_CAPTION).toBe('Example figure, not a quote');
+  }
 });

@@ -457,7 +457,7 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   await expect(firstEventHome.getByTestId('usd-balance')).toHaveText('$5.00');
   // HOME-EXPERIENCE-001 T3: the first deposit since the last Home visit.
   await expect(firstEventHome.getByTestId('engine-posture-context')).toHaveText(
-    /^One simulated deposit of \$5\.00 on \d{1,2} (?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) took your position from \$0\.00 to \$5\.00\.$/
+    /^One simulated deposit of \$5\.00 on \d{1,2} (?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\.$/
   );
   await expect(firstEventHome.getByTestId('dashboard-change-chip')).toHaveCount(0);
   await expect(firstEventHome.getByText('Does anything need attention?')).toHaveCount(0);
@@ -600,7 +600,7 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   await expect(page.getByText('How your position changed')).toHaveCount(0);
   // HOME-EXPERIENCE-001 T3: one withdrawal since the first-event Home visit.
   await expect(page.getByTestId('engine-posture-context')).toHaveText(
-    /^One simulated withdrawal of \$2\.00 on \d{1,2} (?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) took your position from \$5\.00 to \$3\.00\.$/
+    /^One simulated withdrawal of \$2\.00 on \d{1,2} (?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\.$/
   );
   await expect(page.getByTestId('dashboard-change-chip')).toHaveCount(0);
   await expect(page.getByTestId('dashboard-since-link')).toHaveAttribute('href', '/activity?journey=class-a-val-002');
@@ -791,7 +791,7 @@ test('Home explains what changed since the last visit and clears it on reset', a
   await expect(page.getByTestId('usd-balance')).toHaveText('$3.00');
   await expect(page.getByTestId('dashboard-current-status')).toContainText('Since you were last here');
   await expect(page.getByTestId('engine-posture-context')).toHaveText(
-    new RegExp(`^Two things changed since ${date}\\. Your position went from \\$0\\.00 to \\$3\\.00\\.$`)
+    new RegExp(`^Two simulated entries since ${date}\\.$`)
   );
   const entries = page.getByTestId('dashboard-since-entries').locator('li');
   await expect(entries).toHaveCount(2);
@@ -806,9 +806,9 @@ test('Home explains what changed since the last visit and clears it on reset', a
   // Nothing changed since that visit.
   await page.reload();
   await expect(page.getByTestId('engine-posture-context')).toHaveText(
-    new RegExp(`^Nothing has changed since ${date}\\. Your position is still \\$3\\.00\\.$`)
+    new RegExp(`^No simulated activity since ${date}\\.$`)
   );
-  await expect(page.getByText('The ZMW estimate can still move with the exchange rate.')).toBeVisible();
+  await expect(page.getByText('The ZMW estimate can change with the exchange rate.')).toBeVisible();
   await expect(page.getByTestId('dashboard-change-chip')).toHaveCount(0);
 
   // Journey reset clears the value; first use returns on both routes.
@@ -900,4 +900,42 @@ test('reduced motion shows the new figure and line at once', async ({ page }) =>
   expect(await page.getByTestId('usd-balance').textContent()).toBe('$3.00');
   await expect(page.getByTestId('dashboard-change-chip')).toHaveCount(0);
   await expect(page.getByTestId('dashboard-arrival-announcement')).toHaveText(arrivalSentence);
+});
+
+test('own-sim Home renders each figure and claim exactly once', async ({ page }) => {
+  test.setTimeout(90_000);
+  await page.clock.install({ time: new Date(2026, 9, 13, 12) });
+  await clearStorage(page);
+  await login(page);
+  const today = new Date(2026, 9, 13, 10).getTime();
+  const yesterday = new Date(2026, 9, 12, 10).getTime();
+  const limit = 'This is what happened in your simulation. It doesn’t tell you what will happen next.';
+  for (const route of ['/dashboard-synthetic-journey', '/dashboard?journey=class-a-val-002']) {
+    for (const [state, visit] of [['fallback', null], ['one', yesterday + 1], ['several', yesterday - 86400000], ['no-change', today + 1]] as const) {
+      await page.evaluate(({ today, yesterday, visit }) => {
+        localStorage.setItem('hedgr:ledger', JSON.stringify({ version: 2, transactions: [
+          { txn_ref: 'once-deposit', type: 'deposit', status: 'settled', amount_zmw: 13500, amount_usd: 500, fx_rate: 27, created_at: yesterday, updated_at: yesterday },
+          { txn_ref: 'once-withdraw', type: 'withdrawal', status: 'settled', amount_zmw: 0, amount_usd: 20, fx_rate: 0, created_at: today, updated_at: today },
+        ] }));
+        if (visit === null) localStorage.removeItem('hedgr:last-home-visit');
+        else localStorage.setItem('hedgr:last-home-visit', String(visit));
+      }, { today, yesterday, visit });
+      await page.goto(route);
+      const hero = page.getByTestId('dashboard-balance');
+      const card = page.getByTestId('dashboard-current-status');
+      await expect(page.getByTestId('usd-balance')).toHaveText('$480.00');
+      await expect(card.getByText(limit, { exact: true })).toHaveCount(1);
+      const text = await card.innerText();
+      expect(text.match(/\$480\.00/g) ?? []).toHaveLength(0);
+      expect(text.match(/\$20\.00/g) ?? []).toHaveLength(state === 'no-change' ? 0 : 1);
+      expect(text.match(/\$500\.00/g) ?? []).toHaveLength(state === 'several' ? 1 : 0);
+      const claims = (await hero.innerText()) + text;
+      expect(claims.match(/Includes your simulated activity\.|included in the balance above\./g)).toHaveLength(1);
+      await expect(card).toContainText(state === 'no-change' ? 'No simulated activity since' : 'included in the balance above.');
+      if (state === 'fallback') await expect(card.getByRole('heading', { name: 'What changed', level: 2 })).toBeVisible();
+      const graph = page.getByTestId('dashboard-position-line');
+      await expect(graph).toHaveAttribute('aria-hidden', 'true');
+      await expect(graph.locator('[tabindex="0"], button, a')).toHaveCount(0);
+    }
+  }
 });

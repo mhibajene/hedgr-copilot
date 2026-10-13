@@ -88,3 +88,9 @@ describe('ENGINE_STABILITY_REVIEW_SNAPSHOT copy contract', () => {
     }
   });
 });
+
+test('Ticket B qualifier is character-exact and leaves the authored timestamp helper unchanged', async () => {
+  const copy = await import('../lib/engine/stability-review-snapshot-copy');
+  expect((copy as Record<string, unknown>).ENGINE_ILLUSTRATIVE_VALUES_LABEL).toBe('Illustrative example values, not live targets or advice');
+  expect(getEngineStabilityReviewTimestampLine('8 Mar 2026')).toBe('Snapshot reflects current system targets as of 8 Mar 2026.');
+});

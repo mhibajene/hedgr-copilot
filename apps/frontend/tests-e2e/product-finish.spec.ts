@@ -43,7 +43,13 @@ for (const synthetic of [true, false]) {
         await page.addStyleTag({ content: `html { font-size: ${textSize}%; }` });
         if (synthetic) {
           await expect(page.getByRole('heading', { name: 'Your simulation', exact: true })).toBeVisible();
-          await expect(page.getByText('Includes your simulated activity.', { exact: true })).toBeVisible();
+          const card = page.getByTestId('dashboard-current-status');
+          if ((await card.getAttribute('data-home-state')) === 'since-no-change') {
+            await expect(page.getByText('Includes your simulated activity.', { exact: true })).toBeVisible();
+          } else {
+            await expect(page.getByText('Includes your simulated activity.', { exact: true })).toHaveCount(0);
+            await expect(card).toContainText('included in the balance above.');
+          }
           await expect(page.getByTestId('dashboard-balance-scope')).toHaveCount(0);
         } else {
           // HOME-EXPERIENCE-001 T1: canonical title; the context / non-instruction line stays visible (D-130, decision 2).

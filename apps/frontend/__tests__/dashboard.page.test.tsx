@@ -445,7 +445,7 @@ describe("DashboardPage engine trust surface", () => {
     expect(screen.queryByTestId("dashboard-change-evidence")).toBeNull();
     expect(screen.queryByText("How your position changed")).toBeNull();
     expect(screen.getByTestId("engine-posture-context").textContent).toBe(
-      "Your simulated withdrawal reduced the balance by $2.00."
+      "A simulated withdrawal of $2.00 on 1 Jan."
     );
     expect(screen.queryByTestId("engine-simulation-attention-answer")).toBeNull();
     expect(
@@ -610,7 +610,7 @@ describe("Currency context integration", () => {
     expect(screen.getByTestId("dashboard-balance").contains(screen.getByTestId("currency-insight"))).toBe(false);
     expect(screen.getByTestId("currency-insight-headline").textContent).toContain("ZMW 4.05 higher");
     expect(screen.queryByTestId("engine-simulation-attention-answer")).toBeNull();
-    expect(screen.getByTestId("engine-posture-context").textContent).toContain("withdrawal reduced the balance");
+    expect(screen.getByTestId("engine-posture-context").textContent).toContain("A simulated withdrawal of $2.00 on 1 Jan.");
     // Pending entries must withhold direction even when their numeric net cancels.
     dashboardStateMocks.transactions = dashboardStateMocks.transactions.map(tx => ({ ...tx, status: "pending" }));
     rerender(<DashboardPage />);
@@ -651,7 +651,7 @@ describe("Currency context integration", () => {
   // simulated context; currency context stays journey-only.
   test.each([
     ["/dashboard", "", false, true],
-    ["/dashboard", "journey=class-a-val-002", true, true],
+    ["/dashboard", "journey=class-a-val-002", true, false],
     ["/dashboard-synthetic-journey", "scenario=unavailable-data", false, true],
   ])("isolates %s?%s", (path, query, visible, captionVisible) => {
     setup();
@@ -790,4 +790,132 @@ describe("default simulated Home Recent activity overlap", () => {
     expect(screen.queryByText("Since you were last here")).toBeNull();
     expect(recentActivity()).not.toBeNull();
   });
+});
+
+const B_LIMIT = 'This is what happened in your simulation. It doesn’t tell you what will happen next.';
+const B_QUALIFIER = 'Illustrative example values, not live targets or advice';
+const B_TODAY = new Date(2026, 9, 13, 12).getTime();
+const B_YESTERDAY = new Date(2026, 9, 12, 12).getTime();
+
+function setupTicketB(route: string, state: 'fallback' | 'one' | 'several' | 'no-change', type: 'deposit' | 'withdrawal' = 'withdrawal') {
+  cleanup();
+  vi.stubEnv('NEXT_PUBLIC_AUTH_MODE', 'mock');
+  vi.stubEnv('NEXT_PUBLIC_FX_MODE', 'stub');
+  vi.stubEnv('NEXT_PUBLIC_APP_ENV', 'prod');
+  vi.spyOn(Date, 'now').mockReturnValue(B_TODAY);
+  vi.mocked(usePathname).mockReturnValue(route.split('?')[0]);
+  vi.mocked(useSearchParams).mockReturnValue(new URLSearchParams(route.split('?')[1]) as ReturnType<typeof useSearchParams>);
+  dashboardStateMocks.transactions = [
+    { txn_ref: 'b-deposit', type: 'deposit', status: 'settled', amount_zmw: 13500, amount_usd: 500, fx_rate: 27, created_at: B_YESTERDAY, updated_at: B_YESTERDAY },
+    { txn_ref: 'b-change', type, status: 'settled', amount_zmw: type === 'deposit' ? 540 : 0, amount_usd: 20, fx_rate: type === 'deposit' ? 27 : 0, created_at: B_TODAY - 3600000, updated_at: B_TODAY - 3600000 },
+  ];
+  if (state === 'fallback') window.localStorage.removeItem('hedgr:last-home-visit');
+  else window.localStorage.setItem('hedgr:last-home-visit', String(state === 'one' ? B_YESTERDAY + 1 : state === 'several' ? B_YESTERDAY - 86400000 : B_TODAY));
+  window.localStorage.setItem('hedgr.simulation.display-currency', 'ZMW');
+  const total = type === 'deposit' ? 520 : 480;
+  vi.mocked(useBalance).mockReturnValue(makeBalanceState({ total, available: total }));
+  vi.mocked(useEngineState).mockReturnValue(getMockEngineState('normal'));
+  render(<DashboardPage />);
+}
+
+const B_ROUTES = ['/dashboard-synthetic-journey', '/dashboard?journey=class-a-val-002'];
+
+test('Journey change inclusion replaces the hero claim and precedes visible limits', async () => {
+  for (const route of B_ROUTES) {
+    for (const state of ['fallback', 'one', 'several', 'no-change'] as const) {
+      setupTicketB(route, state);
+      const card = await screen.findByTestId('dashboard-current-status');
+      const claim = state === 'several' ? 'These simulated entries are included in the balance above.' : 'This simulated withdrawal is included in the balance above.';
+      expect(card.textContent).toContain(B_LIMIT);
+      if (state === 'no-change') {
+        expect(screen.getByText('Includes your simulated activity.')).toBeDefined();
+        expect(card.textContent).not.toContain('included in the balance above');
+      } else {
+        expect(screen.queryByText('Includes your simulated activity.')).toBeNull();
+        const inclusion = screen.getByText(claim, { exact: true });
+        const limit = screen.getByText(B_LIMIT, { exact: true });
+        expect(inclusion.nextElementSibling).toBe(limit);
+        const link = screen.queryByTestId('dashboard-since-link');
+        if (link) expect(limit.compareDocumentPosition(link) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+      }
+    }
+  }
+});
+
+test('Journey since states use simulation context without current-balance restatement', async () => {
+  for (const route of B_ROUTES) {
+    for (const type of ['withdrawal', 'deposit'] as const) {
+      setupTicketB(route, 'one', type);
+      expect((await screen.findByTestId('engine-posture-context')).textContent).toBe(`One simulated ${type} of $20.00 on 13 Oct.`);
+    }
+    setupTicketB(route, 'several');
+    expect((await screen.findByTestId('engine-posture-context')).textContent).toBe('Two simulated entries since 11 Oct.');
+    const rows = screen.getByTestId('dashboard-since-entries').querySelectorAll('li');
+    expect(Array.from(rows).map(row => row.textContent)).toEqual(['Simulated deposit12 Oct+$500.00', 'Simulated withdrawal13 Oct−$20.00']);
+    setupTicketB(route, 'no-change');
+    expect((await screen.findByTestId('engine-posture-context')).textContent).toBe('No simulated activity since 13 Oct.');
+    expect(screen.getByText('The ZMW estimate can change with the exchange rate.')).toBeDefined();
+  }
+});
+
+test('own-sim Home renders each figure and claim exactly once', async () => {
+  for (const route of B_ROUTES) {
+    for (const state of ['fallback', 'one', 'several', 'no-change'] as const) {
+      setupTicketB(route, state);
+      const card = await screen.findByTestId('dashboard-current-status');
+      expect(screen.getAllByTestId('usd-balance')).toHaveLength(1);
+      expect(card.textContent?.match(/\$480\.00/g) ?? []).toHaveLength(0);
+      expect(card.textContent?.split(B_LIMIT).length).toBe(2);
+      expect(card.textContent?.match(/\$20\.00/g) ?? []).toHaveLength(state === 'no-change' ? 0 : 1);
+      expect(card.textContent?.match(/\$500\.00/g) ?? []).toHaveLength(state === 'several' ? 1 : 0);
+      const activityClaims = (screen.getByTestId('dashboard-balance').textContent ?? '') + card.textContent;
+      expect(activityClaims.match(/Includes your simulated activity\.|included in the balance above\./g)).toHaveLength(1);
+    }
+  }
+});
+
+test('Posture qualifier integrates across journey default live and balance-error branches', () => {
+  for (const mode of ['journey', 'default', 'live'] as const) {
+    for (const error of [false, true]) {
+      for (const posture of ['normal', 'tightening', 'tightened', 'recovery'] as const) {
+        setupTicketB(mode === 'journey' ? B_ROUTES[0] : '/dashboard', 'fallback');
+        cleanup();
+        if (mode === 'live') {
+          vi.stubEnv('NEXT_PUBLIC_AUTH_MODE', 'magic');
+          vi.stubEnv('NEXT_PUBLIC_FX_MODE', 'live');
+        }
+        vi.mocked(useBalance).mockReturnValue(makeBalanceState({ total: 480, available: 480, error: error ? 'offline' : null }));
+        vi.mocked(useEngineState).mockReturnValue(getMockEngineState(posture));
+        render(<DashboardPage />);
+        const header = screen.getByTestId('dashboard-current-status');
+        expect(header.textContent?.split(B_QUALIFIER).length).toBe(mode === 'live' || posture !== 'normal' ? 2 : 1);
+        expect(screen.getByTestId('engine-allocation-bands').textContent?.split(B_QUALIFIER).length).toBe(2);
+        if (mode !== 'journey') {
+          const snapshot = screen.getByTestId('engine-stability-review-snapshot');
+          expect(snapshot.textContent?.split(B_QUALIFIER).length).toBe(2);
+          expect(snapshot.textContent).not.toMatch(/Simulation date|Snapshot reflects current system targets as of/);
+        }
+      }
+    }
+  }
+});
+
+test('Ticket B inclusion preserves pending error loading mismatched first-event and ineligible states', () => {
+  for (const variant of ['pending', 'error', 'loading', 'mismatch', 'first-event', 'ineligible', 'non-normal'] as const) {
+    setupTicketB(B_ROUTES[0], 'fallback');
+    cleanup();
+    const balance = makeBalanceState({ total: 480, available: 480 });
+    if (variant === 'pending') {
+      dashboardStateMocks.transactions.push({ ...dashboardStateMocks.transactions[1], txn_ref: 'b-pending', status: 'pending' });
+    } else if (variant === 'error') balance.error = 'offline';
+    else if (variant === 'loading') balance.isLoading = true;
+    else if (variant === 'mismatch') { balance.total = 490; balance.available = 490; }
+    else if (variant === 'first-event') { dashboardStateMocks.transactions.pop(); balance.total = 500; balance.available = 500; }
+    else if (variant === 'ineligible') vi.mocked(useSearchParams).mockReturnValue(new URLSearchParams('scenario=unavailable-data') as ReturnType<typeof useSearchParams>);
+    else vi.mocked(useEngineState).mockReturnValue(getMockEngineState('tightening'));
+    vi.mocked(useBalance).mockReturnValue(balance);
+    render(<DashboardPage />);
+    expect(screen.queryByText(/^(This simulated (deposit|withdrawal)|These simulated entries) (is|are) included in the balance above\.$/)).toBeNull();
+    if (variant !== 'loading') expect(screen.getByText('Includes your simulated activity.', { exact: true })).toBeDefined();
+  }
 });

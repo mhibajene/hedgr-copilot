@@ -69,8 +69,8 @@ describe("EngineStabilityReviewSnapshot", () => {
       ENGINE_STABILITY_REVIEW_WITHDRAWAL_CONTINUITY
     );
     expect(snapshot.textContent).toContain(ENGINE_STABILITY_REVIEW_CADENCE_CUE);
-    expect(snapshot.textContent).toContain("Current simulation status");
-    expect(snapshot.textContent).toContain("Simulation date");
+    expect(snapshot.textContent).toContain("Illustrative example values, not live targets or advice");
+    expect(snapshot.textContent).not.toContain("Simulation date");
     expect(snapshot.textContent).toContain("Last viewed locally");
     expect(
       screen.getByTestId("engine-stability-review-last-viewed-locally")
@@ -80,7 +80,7 @@ describe("EngineStabilityReviewSnapshot", () => {
     const formattedUpdatedAt = formatEngineSnapshotUpdatedAt(
       engineState.updatedAt
     );
-    expect(snapshot.textContent).toContain(
+    expect(snapshot.textContent).not.toContain(
       getEngineStabilityReviewTimestampLine(formattedUpdatedAt)
     );
     const details = screen.getByTestId("engine-stability-review-details");
@@ -146,18 +146,19 @@ describe("EngineStabilityReviewSnapshot", () => {
     const changeLine = screen.getByTestId(
       "engine-stability-review-snapshot-change-signal"
     );
-    const updatedAt = screen.getByTestId(
-      "engine-stability-review-snapshot-updated-at"
+    const localView = screen.getByTestId(
+      "engine-stability-review-last-viewed-locally"
     );
+    expect(screen.queryByTestId("engine-stability-review-snapshot-updated-at")).toBeNull();
     expect(details.contains(cadence)).toBe(true);
     expect(details.contains(changeLine)).toBe(true);
-    expect(details.contains(updatedAt)).toBe(false);
+    expect(details.contains(localView)).toBe(false);
     expect(
       cadence.compareDocumentPosition(changeLine) &
         Node.DOCUMENT_POSITION_FOLLOWING
     ).toBeTruthy();
     expect(
-      updatedAt.compareDocumentPosition(details) &
+      localView.compareDocumentPosition(details) &
         Node.DOCUMENT_POSITION_FOLLOWING
     ).toBeTruthy();
   });
@@ -411,4 +412,23 @@ describe("EngineStabilityReviewSnapshot", () => {
     expect(screen.getByTestId("engine-stability-review-memory").textContent).not.toContain(getEngineStabilityReviewSnapshotStance("recovery"));
   });
 
+});
+
+test('Review snapshot removes authored freshness and preserves local-view facts', async () => {
+  const label = 'Illustrative example values, not live targets or advice';
+  const state = makeEngineState({ updatedAt: '2026-03-08T00:00:00.000Z' });
+  const localDate = '2026-10-12T08:10:00.000Z';
+  localStorage.setItem(REVIEW_SNAPSHOT_FINGERPRINT_STORAGE_KEY, buildReviewSnapshotFingerprint(state));
+  localStorage.setItem(REVIEW_SNAPSHOT_MEMORY_STORAGE_KEY, JSON.stringify([{ viewedAt: localDate, changeVsPrior: 'changed', posture: 'tightened' }]));
+  render(<EngineStabilityReviewSnapshot engineState={state} />);
+  const snapshot = screen.getByTestId('engine-stability-review-snapshot');
+  const qualifier = screen.getByText(label, { exact: true });
+  expect(screen.getAllByText(label, { exact: true })).toHaveLength(1);
+  expect(snapshot.textContent).not.toMatch(/Current simulation status|Simulation date|Snapshot reflects current system targets as of/);
+  expect(screen.queryByTestId('engine-stability-review-snapshot-updated-at')).toBeNull();
+  expect(qualifier.compareDocumentPosition(screen.getByTestId('engine-stability-review-snapshot-stance')) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+  expect(screen.getByTestId('engine-stability-review-details').contains(qualifier)).toBe(false);
+  await waitFor(() => expect(screen.getByTestId('engine-stability-review-memory').textContent).toContain(formatEngineSnapshotUpdatedAt(localDate)));
+  expect(screen.getByTestId('engine-stability-review-memory').textContent).toContain(getEngineStabilityReviewSnapshotStance('tightened'));
+  expect(localStorage.getItem(REVIEW_SNAPSHOT_FINGERPRINT_STORAGE_KEY)).toBe(buildReviewSnapshotFingerprint(state));
 });

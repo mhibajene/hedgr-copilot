@@ -526,7 +526,7 @@ describe("display estimate composition", () => {
     };
     for (const { code } of SIMULATION_DISPLAY_CURRENCIES) {
       expect(formatSimulationDisplayEstimate(480, code)).toBe(
-        `≈ ${code} ${amounts[code]} display estimate`
+        `≈ ${code} ${amounts[code]} Example figure, not a quote`
       );
     }
   });

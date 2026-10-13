@@ -32,7 +32,7 @@ test('research baseline: navigation, dialog focus, currency and event reconcilia
   await seed(page);
   const before = await financialState(page);
   await expect(page.getByRole('heading', { name: 'Your simulation', exact: true })).toBeVisible();
-  await expect(page.getByTestId('engine-posture-context')).toHaveText(/^Nothing has changed since \d{1,2} (?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\. Your position is still \$300\.00\.$/);
+  await expect(page.getByTestId('engine-posture-context')).toHaveText(/^No simulated activity since \d{1,2} (?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\.$/);
   await expect(page.getByRole('link', { name: 'See the activity', exact: true })).toHaveCount(0);
   await expect(page.getByRole('link', { name: 'View Activity', exact: true })).toHaveAttribute('href', '/activity?journey=class-a-val-002');
   await expect(page.getByRole('navigation', { name: 'Primary' }).getByRole('link', { name: 'Activity', exact: true })).toBeVisible();
@@ -195,4 +195,48 @@ test('research Home, Activity and dialog reflow at narrow/enlarged and desktop w
     await page.evaluate(() => { document.documentElement.style.fontSize = '100%'; });
     await page.screenshot({ path: testInfo.outputPath(`home-${width}.png`), fullPage: true });
   }
+});
+
+test('Posture and percentage regions identify illustrative values before the reading', async ({ page }) => {
+  await seed(page);
+  const label = 'Illustrative example values, not live targets or advice';
+  for (const route of [home, '/dashboard?journey=class-a-val-002', '/dashboard']) {
+    await page.goto(route);
+    // The native planning disclosure remains the visibility and keyboard boundary.
+    const planning = page.getByTestId(route === '/dashboard' ? 'dashboard-planning-targets' : 'research-planning-targets');
+    const summary = planning.locator(':scope > summary');
+    await summary.focus();
+    await page.keyboard.press('Enter');
+    const details = page.getByTestId('engine-allocation-values-details');
+    await expect(details.getByText(label, { exact: true })).not.toBeVisible();
+    await details.locator(':scope > summary').focus();
+    await page.keyboard.press('Enter');
+    await expect(details.getByText(label, { exact: true })).toBeVisible();
+    await expect(details.getByText(label, { exact: true })).toHaveCount(1);
+    expect(await details.getByText(label, { exact: true }).evaluate(el => Boolean(el.compareDocumentPosition(document.querySelector('[data-testid="engine-allocation-structure"]')!) & Node.DOCUMENT_POSITION_FOLLOWING))).toBe(true);
+    await expect(details.getByTestId('engine-allocation-structure')).toHaveText(/Now\s*50%\s*Reserve\s*30%\s*Growth\s*20%/);
+    await expect(page.getByTestId('dashboard-current-status').getByText(label, { exact: true })).toHaveCount(0);
+  }
+});
+
+test('Review snapshot removes authored freshness and preserves local-view facts', async ({ page }) => {
+  await seed(page);
+  await page.goto('/dashboard');
+  const education = page.getByTestId('dashboard-education');
+  await education.locator(':scope > summary').focus();
+  await page.keyboard.press('Enter');
+  const snapshot = page.getByTestId('engine-stability-review-snapshot');
+  const label = 'Illustrative example values, not live targets or advice';
+  await expect(snapshot.getByText(label, { exact: true })).toBeVisible();
+  await expect(snapshot.getByText(label, { exact: true })).toHaveCount(1);
+  await expect(snapshot.getByText('Simulation date', { exact: true })).toHaveCount(0);
+  await expect(snapshot.getByTestId('engine-stability-review-snapshot-updated-at')).toHaveCount(0);
+  await expect(snapshot.getByText('Last viewed locally', { exact: true })).toBeVisible();
+  const details = snapshot.getByTestId('engine-stability-review-details');
+  await expect(details).not.toHaveAttribute('open', '');
+  await details.locator(':scope > summary').focus();
+  await page.keyboard.press('Enter');
+  await expect(snapshot).not.toContainText('Snapshot reflects current system targets as of');
+  await expect(snapshot.getByTestId('engine-stability-review-snapshot-stance')).toHaveText('Where things stand: within expected range');
+  await expect(snapshot.getByTestId('engine-stability-review-last-viewed-locally')).not.toBeEmpty();
 });
