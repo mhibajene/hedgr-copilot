@@ -4812,7 +4812,7 @@ Sarah uses the shared full-Home frame and spacing: orientation/H1, picker, one f
 
 **URL / state / Sarah-only reset refusal:** URL selection only; no storage key, migration or personal input. Switching own → Sarah → Daniel → own and browser Back/Forward preserves route/journey and unrelated query parameters, drops `reset`, and leaves stored simulation state byte-identical after ordinary initial Home arrival. Direct arrival on Sarah and subsequent return records no visit. Sarah mode consumes/removes `reset` without clearing or writing ledger, retired wallet remnants, last-visit/review memory, preferences or any other simulation state; preserve `example=sarah`, journey and unrelated parameters. Refusal applies only when Sarah mode is actually eligible, so `/dashboard?example=sarah` alone/live/ineligible do not acquire it. Daniel and own-simulation explicit reset remain unchanged, including their existing clear behavior. No `fee` parser/constants, generated `fee=` URLs, selector or read selection: a supplied `fee=zmw`/`fee=usd`/unknown value has no Sarah semantics and cannot select Z3 or change U3; it is an unrelated query parameter under existing URL preservation. Tests may supply those inert values only as negative controls, never as supported fee cases.
 
-## Locked Home strings (character-exact)
+#### Locked Home strings (character-exact)
 | Item | String |
 |---|---|
 | Picker option (registry label, straight apostrophe) | `Sarah's course fee` |
@@ -4824,7 +4824,7 @@ Sarah uses the shared full-Home frame and spacing: orientation/H1, picker, one f
 
 The existing picker label `Choose an example` and options `Your own simulation` / `Daniel's reserve` are unchanged.
 
-## Reused locked Engine strings (§372 lock, verbatim, not reopened)
+#### Reused locked Engine strings (§372 lock, verbatim, not reopened)
 - `Course fee USD 1,000, due 1 Oct 2027, shows as K27,000 at this example rate.`
 - `Example rate: ZMW 27 per US dollar. Not a live rate.`
 - `Fictional course fee. This figure is not a payment quote. This read does not establish whether Sarah can pay the fee.`
@@ -17504,82 +17504,82 @@ Non-authoritative evidence recorded by Dex; the Sarah activation record will con
 
 ### Supplied Founder records — word for word
 
-# Founder direction — Sarah Home (verbatim)
+    # Founder direction — Sarah Home (verbatim)
 
-- **Founder:** Musalwa Hibajene (repo owner mhibajene)
-- **When:** 2026-10-12 22:49 AWST (clock checked in the same turn), in MonoCode via Dex (§9.11)
-- **Context:** After §373 closed the Sarah Engine-only read (main a5f7e0e), Dex offered the next choice: Sarah Home, or the post-Sarah bundle (USD hero + chart redesign).
-- **Verbatim:** "Start with Sarah home"
+    - **Founder:** Musalwa Hibajene (repo owner mhibajene)
+    - **When:** 2026-10-12 22:49 AWST (clock checked in the same turn), in MonoCode via Dex (§9.11)
+    - **Context:** After §373 closed the Sarah Engine-only read (main a5f7e0e), Dex offered the next choice: Sarah Home, or the post-Sarah bundle (USD hero + chart redesign).
+    - **Verbatim:** "Start with Sarah home"
 
-**Effect:** sequencing direction only. §373/§372 record that Sarah Home needs its own activation and experience/copy/coexistence decisions, so this starts READ_ONLY decision shaping. It is not an activation, §7/§7a record or copy lock.
+    **Effect:** sequencing direction only. §373/§372 record that Sarah Home needs its own activation and experience/copy/coexistence decisions, so this starts READ_ONLY decision shaping. It is not an activation, §7/§7a record or copy lock.
 
-# Founder decision — Sarah Home package (verbatim)
+    # Founder decision — Sarah Home package (verbatim)
 
-- **Founder:** Musalwa Hibajene (repo owner mhibajene)
-- **When:** 2026-10-12 23:02 AWST (clock checked in the same turn), in MonoCode via Dex (§9.11)
-- **Decided on:** `decision/SARAH_HOME_DECISION_SHEET.md` (analysis base origin/main a5f7e0e), recommendations 1A, 2A, 3B, 4A, 5A, 6A.
-- **Verbatim:** "1-6 as recommended"
+    - **Founder:** Musalwa Hibajene (repo owner mhibajene)
+    - **When:** 2026-10-12 23:02 AWST (clock checked in the same turn), in MonoCode via Dex (§9.11)
+    - **Decided on:** `decision/SARAH_HOME_DECISION_SHEET.md` (analysis base origin/main a5f7e0e), recommendations 1A, 2A, 3B, 4A, 5A, 6A.
+    - **Verbatim:** "1-6 as recommended"
 
-**Accepted, as the sheet recommends:**
-1. Sarah is a third option in the existing journey picker (`example=sarah`), on both journey routes only; one example at a time, isolated from own simulation; Sarah-only reset refusal (Daniel/own reset unchanged).
-2. Shared full-Home frame; one fee figure and one explanation card at one frozen observation (9 Oct 2026); no Sarah chart, history or before/after.
-3. Independent USD (U3, default) and kwacha (Z3) fee examples, one at a time, via URL-only `fee=usd|zmw`; no denomination-change story.
-4. Locked Engine strings reused verbatim; Human Narrative Lead (Sue) reviews the small new Home copy register, then the Founder locks it.
-5. Fee facts only; D2/language, simulation, FX/data/release fences retained; USD hero and charts untouched.
-6. One separate Home-layer ticket with bounded registry/URL support, tests first, exact-head verification and deployed-route probe.
+    **Accepted, as the sheet recommends:**
+    1. Sarah is a third option in the existing journey picker (`example=sarah`), on both journey routes only; one example at a time, isolated from own simulation; Sarah-only reset refusal (Daniel/own reset unchanged).
+    2. Shared full-Home frame; one fee figure and one explanation card at one frozen observation (9 Oct 2026); no Sarah chart, history or before/after.
+    3. Independent USD (U3, default) and kwacha (Z3) fee examples, one at a time, via URL-only `fee=usd|zmw`; no denomination-change story.
+    4. Locked Engine strings reused verbatim; Human Narrative Lead (Sue) reviews the small new Home copy register, then the Founder locks it.
+    5. Fee facts only; D2/language, simulation, FX/data/release fences retained; USD hero and charts untouched.
+    6. One separate Home-layer ticket with bounded registry/URL support, tests first, exact-head verification and deployed-route probe.
 
-**Not answered explicitly (Dex defaults, Founder may override):** the optional read-failure note goes to Sue as "recommend omit"; the copy lock happens before activation, matching the sheet's "preferably before activation".
+    **Not answered explicitly (Dex defaults, Founder may override):** the optional read-failure note goes to Sue as "recommend omit"; the copy lock happens before activation, matching the sheet's "preferably before activation".
 
-**Effect:** decision input only; not an activation, §7/§7a record or copy lock.
+    **Effect:** decision input only; not an activation, §7/§7a record or copy lock.
 
-# Founder copy lock — Sarah Home (verbatim)
+    # Founder copy lock — Sarah Home (verbatim)
 
-- **Founder:** Musalwa Hibajene (repo owner mhibajene)
-- **When:** 2026-10-13 08:04 AWST (clock checked in the same turn), in MonoCode via Dex (§9.11)
-- **Locked on:** `copy-lock/COPY_LOCK_PROPOSAL.md` (Sue, Human Narrative Lead §9.9; source basis origin/main a5f7e0e)
-- **Verbatim:** "USD-only, lock Sue's strings as proposed."
+    - **Founder:** Musalwa Hibajene (repo owner mhibajene)
+    - **When:** 2026-10-13 08:04 AWST (clock checked in the same turn), in MonoCode via Dex (§9.11)
+    - **Locked on:** `copy-lock/COPY_LOCK_PROPOSAL.md` (Sue, Human Narrative Lead §9.9; source basis origin/main a5f7e0e)
+    - **Verbatim:** "USD-only, lock Sue's strings as proposed."
 
-## Effect on the 23:02 decision package
-- **Decision 3 changes from 3B to USD-only (3A):** Sarah Home shows only U3, USD 1,000 → K27,000 at the current fixture 27 (imported Engine constant), observation 9 Oct 2026. **No fee selector, no `fee=` URL parameter, no kwacha (Z3) case on Home.** The kwacha Engine branch stays shipped but unused by Home.
-- Decisions 1, 2, 4, 5, 6 stand as accepted at 23:02 (picker + `example=sarah` on both journey routes only; one fee figure + one card, no chart/history; Sarah-only reset refusal; fee-only boundaries; Home-only ticket).
-- The optional read-failure note is **omitted**.
+    ## Effect on the 23:02 decision package
+    - **Decision 3 changes from 3B to USD-only (3A):** Sarah Home shows only U3, USD 1,000 → K27,000 at the current fixture 27 (imported Engine constant), observation 9 Oct 2026. **No fee selector, no `fee=` URL parameter, no kwacha (Z3) case on Home.** The kwacha Engine branch stays shipped but unused by Home.
+    - Decisions 1, 2, 4, 5, 6 stand as accepted at 23:02 (picker + `example=sarah` on both journey routes only; one fee figure + one card, no chart/history; Sarah-only reset refusal; fee-only boundaries; Home-only ticket).
+    - The optional read-failure note is **omitted**.
 
-## Locked Home strings (character-exact)
-| Item | String |
-|---|---|
-| Picker option (registry label, straight apostrophe) | `Sarah's course fee` |
-| Page H1 (curly apostrophe) | `Sarah’s example` |
-| Figure heading (curly) | `Sarah’s fictional course fee` |
-| Figure caption | `Example fee estimate` |
-| Card heading | `Course fee` |
-| Observation date | `Example date: 9 Oct 2026` |
+    ## Locked Home strings (character-exact)
+    | Item | String |
+    |---|---|
+    | Picker option (registry label, straight apostrophe) | `Sarah's course fee` |
+    | Page H1 (curly apostrophe) | `Sarah’s example` |
+    | Figure heading (curly) | `Sarah’s fictional course fee` |
+    | Figure caption | `Example fee estimate` |
+    | Card heading | `Course fee` |
+    | Observation date | `Example date: 9 Oct 2026` |
 
-The existing picker label `Choose an example` and options `Your own simulation` / `Daniel's reserve` are unchanged.
+    The existing picker label `Choose an example` and options `Your own simulation` / `Daniel's reserve` are unchanged.
 
-## Reused locked Engine strings (§372 lock, verbatim, not reopened)
-- `Course fee USD 1,000, due 1 Oct 2027, shows as K27,000 at this example rate.`
-- `Example rate: ZMW 27 per US dollar. Not a live rate.`
-- `Fictional course fee. This figure is not a payment quote. This read does not establish whether Sarah can pay the fee.`
+    ## Reused locked Engine strings (§372 lock, verbatim, not reopened)
+    - `Course fee USD 1,000, due 1 Oct 2027, shows as K27,000 at this example rate.`
+    - `Example rate: ZMW 27 per US dollar. Not a live rate.`
+    - `Fictional course fee. This figure is not a payment quote. This read does not establish whether Sarah can pay the fee.`
 
-## Reader view (USD, reading order)
-```text
-Sarah’s example
+    ## Reader view (USD, reading order)
+    ```text
+    Sarah’s example
 
-Choose an example
-Sarah's course fee
+    Choose an example
+    Sarah's course fee
 
-Sarah’s fictional course fee
-K27,000
-Example fee estimate
-Example date: 9 Oct 2026
+    Sarah’s fictional course fee
+    K27,000
+    Example fee estimate
+    Example date: 9 Oct 2026
 
-Course fee
-Course fee USD 1,000, due 1 Oct 2027, shows as K27,000 at this example rate.
-Example rate: ZMW 27 per US dollar. Not a live rate.
-Fictional course fee. This figure is not a payment quote. This read does not establish whether Sarah can pay the fee.
-```
+    Course fee
+    Course fee USD 1,000, due 1 Oct 2027, shows as K27,000 at this example rate.
+    Example rate: ZMW 27 per US dollar. Not a live rate.
+    Fictional course fee. This figure is not a payment quote. This read does not establish whether Sarah can pay the fee.
+    ```
 
-Selector strings in the proposal (`Example fee`, `USD 1,000 fee` / `K29,500 fee`, helper) are **not** locked and must not ship.
+    Selector strings in the proposal (`Example fee`, `USD 1,000 fee` / `K29,500 fee`, helper) are **not** locked and must not ship.
 
 **Disposition / precedence:** The 13 Oct 08:04 lock expressly changes decision 3 from the 12 Oct 23:02 package to USD-only. It excludes selector strings/fee URL semantics/Z3 on Home and omits the optional failure note; six Home strings and three reused §372 strings are the complete new Sarah register. Decisions 1, 2, 4, 5, 6 remain accepted. The decision sheet and Sue proposal are evidence of the options/review, not competing activation or copy authority. §343/§346/§347, accepted ADRs 0013/0014/0015/0027 and AGENTS/runbook remain controlling. Daniel comparison permission supplies no Sarah precedent. The source documents themselves are preserved above, including their pre-activation effect labels; this governed record/§7a and permanent-main gates supply activation.
 
