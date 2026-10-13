@@ -6,6 +6,8 @@ import React from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import { ENGINE_POSTURE_CONTEXT } from "../../../lib/engine/posture-context";
 import type { EnginePosture, EngineState } from "../../../lib/engine/types";
+import { ENGINE_ILLUSTRATIVE_VALUES_LABEL } from "../../../lib/engine/stability-review-snapshot-copy";
+import { formatShortDate, formatUsd } from "../../../lib/state/last-visit";
 import {
   CLASS_A_VAL_002_DASHBOARD_PATH,
   CLASS_A_VAL_002_JOURNEY_PARAM,
@@ -72,6 +74,9 @@ type EnginePostureHeaderProps = {
   comparisonState?: ComparisonState;
   latestChangeType?: "DEPOSIT" | "WITHDRAW";
   latestChangeAmountUSD?: number;
+  latestChangeCreatedAt?: number;
+  homeDate?: number | null;
+  changeIncludedInBalance?: boolean;
   currencyContextVisible?: boolean;
   redesigned?: boolean;
 };
@@ -82,6 +87,9 @@ export function EnginePostureHeader({
   comparisonState = "change",
   latestChangeType,
   latestChangeAmountUSD,
+  latestChangeCreatedAt,
+  homeDate,
+  changeIncludedInBalance = true,
   currencyContextVisible = false,
   redesigned = false,
 }: EnginePostureHeaderProps) {
@@ -105,9 +113,19 @@ export function EnginePostureHeader({
   const researchRedesign = redesigned && syntheticJourneyActive && isSyntheticJourneyPrimaryCondition(searchParams?.toString(), pathname) && (pathname === CLASS_A_VAL_002_DASHBOARD_PATH || searchParams?.get(CLASS_A_VAL_002_JOURNEY_PARAM) === CLASS_A_VAL_002_JOURNEY_VALUE);
   const waitingForFirstEvent = researchRedesign && posture === "normal" && comparisonState === "empty";
   const preEventCaution = researchRedesign && posture !== "normal" && comparisonState === "empty";
+  const completedChangeCard = researchRedesign && posture === "normal" && comparisonState === "change";
+  const completedChangeIncluded = completedChangeCard && changeIncludedInBalance &&
+    latestChangeType !== undefined && latestChangeAmountUSD !== undefined;
+  const Heading = completedChangeCard ? "h2" : "p";
+  const eventDate = latestChangeCreatedAt !== undefined && Number.isFinite(latestChangeCreatedAt)
+    ? new Date(latestChangeCreatedAt) : null;
+  const eventDateSuffix = eventDate
+    ? homeDate != null && eventDate.toDateString() === new Date(homeDate).toDateString()
+      ? " today" : ` on ${formatShortDate(latestChangeCreatedAt!)}`
+    : "";
   const changeObservation =
     latestChangeType && latestChangeAmountUSD !== undefined
-      ? researchRedesign ? <>Your simulated {latestChangeType === "WITHDRAW" ? "withdrawal reduced" : "deposit increased"} the balance by <span data-observation-amount>${latestChangeAmountUSD.toFixed(2)}</span>.</> : `The simulated ${
+      ? researchRedesign ? <>A simulated {latestChangeType === "WITHDRAW" ? "withdrawal" : "deposit"} of <span data-observation-amount>{formatUsd(latestChangeAmountUSD)}</span>{eventDateSuffix}.</> : `The simulated ${
           latestChangeType === "WITHDRAW" ? "expense" : "deposit"
         } explains why the current position is $${latestChangeAmountUSD.toFixed(
           2
@@ -129,10 +147,11 @@ export function EnginePostureHeader({
       className={`space-y-3 ${finish.observationHeader}`}
       aria-labelledby="dashboard-current-status-label"
       data-testid="dashboard-current-status"
+      role={completedChangeCard ? "region" : undefined}
     >
       <div className="space-y-2">
         <div className="space-y-1">
-          <p
+          <Heading
             id="dashboard-current-status-label"
             className={researchRedesign ? "text-sm font-semibold text-hedgr-800" : "text-[11px] font-bold uppercase tracking-[0.14em] text-hedgr-600"}
           >
@@ -143,8 +162,13 @@ export function EnginePostureHeader({
                 : researchRedesign && posture === "normal" && comparisonState === "change"
                   ? "What changed"
                   : syntheticJourneyActive ? "What Hedgr notices" : "Current status"}
-          </p>
+          </Heading>
         </div>
+        {!syntheticJourneyActive || posture !== "normal" ? (
+          <p className="text-xs leading-relaxed text-hedgr-500">
+            {ENGINE_ILLUSTRATIVE_VALUES_LABEL}
+          </p>
+        ) : null}
         {!syntheticJourneyActive ? (
           <span
             data-testid="engine-posture-badge"
@@ -175,6 +199,11 @@ export function EnginePostureHeader({
 
       {syntheticJourneyActive && !waitingForFirstEvent ? (
         <div className={`space-y-2 ${finish.attention}`}>
+          {completedChangeIncluded ? (
+            <p className="text-sm leading-relaxed text-hedgr-dark">
+              This simulated {latestChangeType === "WITHDRAW" ? "withdrawal" : "deposit"} is included in the balance above.
+            </p>
+          ) : null}
           {!researchStartingPoint && !(researchRedesign && posture === "normal") ? (
             <>
               <h2 className="text-sm font-semibold tracking-tight text-hedgr-800">

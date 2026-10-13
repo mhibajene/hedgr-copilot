@@ -359,6 +359,11 @@ export default function DashboardPage() {
     details.scrollIntoView({ block: "nearest" });
   };
 
+  const journeyActivityIncluded = syntheticJourneyActive && normalPosture && positionDerivable &&
+    (sinceSummary
+      ? sinceSummary.kind !== "no-change"
+      : syntheticComparison.comparisonState === "change" && syntheticComparison.lastEvent !== undefined);
+
   const balanceHero = (
     <section
       className={`space-y-1 ${home.position}`}
@@ -405,7 +410,7 @@ export default function DashboardPage() {
       ) : firstUse ? (
         <p className={home.balanceCaption} data-testid="dashboard-synthetic-balance-explainer">No simulated activity yet.</p>
       ) : syntheticJourneyActive ? (
-        <p className={home.balanceCaption} data-testid="dashboard-synthetic-balance-explainer">Includes your simulated activity.</p>
+        journeyActivityIncluded ? null : <p className={home.balanceCaption} data-testid="dashboard-synthetic-balance-explainer">Includes your simulated activity.</p>
       ) : productSimulationActive && ready && !isLoading ? (
         <p
           className={home.balanceCaption}
@@ -479,6 +484,9 @@ export default function DashboardPage() {
         comparisonState={syntheticComparison.comparisonState}
         latestChangeType={syntheticComparison.lastEvent?.type}
         latestChangeAmountUSD={syntheticComparison.lastEvent?.amountUSD}
+        latestChangeCreatedAt={syntheticComparison.lastEvent?.createdAt}
+        homeDate={today}
+        changeIncludedInBalance={positionDerivable}
       />
     </div>
   );
@@ -487,10 +495,11 @@ export default function DashboardPage() {
     <PositionLine entries={positionEntries} lastVisit={previousVisit} settle={arrivalSettle} />
   ) : null;
 
+  const ObservationHeading = syntheticJourneyActive ? "h2" : "p";
   const observationLabel = (text: string) => (
-    <p id="dashboard-current-status-label" className="text-sm font-semibold text-hedgr-800">
+    <ObservationHeading id="dashboard-current-status-label" className="text-sm font-semibold text-hedgr-800">
       {text}
-    </p>
+    </ObservationHeading>
   );
   const guaranteeLine = (
     <p className="text-xs leading-relaxed text-hedgr-500">
@@ -565,12 +574,14 @@ export default function DashboardPage() {
           {sinceSummary.kind === "no-change" ? (
             <>
               <p className="max-w-xl text-sm leading-relaxed text-hedgr-dark" data-testid="engine-posture-context">
-                Nothing has changed since {formatShortDate(sinceSummary.since)}. Your position is still{" "}
-                <span data-observation-amount>{formatUsd(sinceSummary.balance)}</span>.
+                {syntheticJourneyActive ? <>No simulated activity since {formatShortDate(sinceSummary.since)}.</> : <>
+                  Nothing has changed since {formatShortDate(sinceSummary.since)}. Your position is still{" "}
+                  <span data-observation-amount>{formatUsd(sinceSummary.balance)}</span>.
+                </>}
               </p>
               {estimateCurrency ? (
                 <p className="text-sm leading-relaxed text-hedgr-600">
-                  The {estimateCurrency} estimate can still move with the exchange rate.
+                  The {estimateCurrency} estimate can change with the exchange rate.
                 </p>
               ) : null}
             </>
@@ -579,17 +590,26 @@ export default function DashboardPage() {
               <p className="max-w-xl text-sm leading-relaxed text-hedgr-dark" data-testid="engine-posture-context">
                 One simulated {sinceSummary.entry.type === "DEPOSIT" ? "deposit" : "withdrawal"} of{" "}
                 <span data-observation-amount>{formatUsd(sinceSummary.entry.amountUSD)}</span> on{" "}
-                {formatShortDate(sinceSummary.entry.at)} took your position from {formatUsd(sinceSummary.from)} to{" "}
-                {formatUsd(sinceSummary.to)}.
+                {formatShortDate(sinceSummary.entry.at)}{syntheticJourneyActive ? "." : <>
+                  {" "}took your position from {formatUsd(sinceSummary.from)} to {formatUsd(sinceSummary.to)}.
+                </>}
               </p>
-              {sinceLink("See the entry")}
+              {syntheticJourneyActive ? (
+                <p className="text-sm leading-relaxed text-hedgr-dark">
+                  This simulated {sinceSummary.entry.type === "DEPOSIT" ? "deposit" : "withdrawal"} is included in the balance above.
+                </p>
+              ) : sinceLink("See the entry")}
             </>
           ) : (
             <>
               <p className="max-w-xl text-sm leading-relaxed text-hedgr-dark" data-testid="engine-posture-context">
-                {formatChangeCount(sinceSummary.entries.length)} things changed since{" "}
-                {formatShortDate(sinceSummary.since)}. Your position went from {formatUsd(sinceSummary.from)} to{" "}
-                <span data-observation-amount>{formatUsd(sinceSummary.to)}</span>.
+                {syntheticJourneyActive ? <>
+                  {formatChangeCount(sinceSummary.entries.length)} simulated entries since {formatShortDate(sinceSummary.since)}.
+                </> : <>
+                  {formatChangeCount(sinceSummary.entries.length)} things changed since{" "}
+                  {formatShortDate(sinceSummary.since)}. Your position went from {formatUsd(sinceSummary.from)} to{" "}
+                  <span data-observation-amount>{formatUsd(sinceSummary.to)}</span>.
+                </>}
               </p>
               <ul className={home.sinceList} data-testid="dashboard-since-entries">
                 {sinceSummary.entries.map((entry) => (
@@ -605,10 +625,17 @@ export default function DashboardPage() {
                   </li>
                 ))}
               </ul>
-              {sinceLink("See all in Activity")}
+              {syntheticJourneyActive ? (
+                <p className="text-sm leading-relaxed text-hedgr-dark">
+                  These simulated entries are included in the balance above.
+                </p>
+              ) : sinceLink("See all in Activity")}
             </>
           )}
           {guaranteeLine}
+          {syntheticJourneyActive && sinceSummary.kind !== "no-change"
+            ? sinceLink(sinceSummary.kind === "one" ? "See the entry" : "See all in Activity")
+            : null}
         </section>
       </div>
     );

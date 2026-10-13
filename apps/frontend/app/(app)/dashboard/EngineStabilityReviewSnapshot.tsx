@@ -12,6 +12,7 @@ import {
   type ReviewSnapshotMemoryEntry,
 } from "../../../lib/engine/review-snapshot-memory";
 import {
+  ENGINE_ILLUSTRATIVE_VALUES_LABEL,
   ENGINE_STABILITY_REVIEW_AVAILABLE_CONTINUITY,
   ENGINE_STABILITY_REVIEW_CADENCE_CUE,
   ENGINE_STABILITY_REVIEW_CHANGE_CHANGED,
@@ -24,7 +25,6 @@ import {
   ENGINE_STABILITY_REVIEW_SNAPSHOT_TITLE,
   ENGINE_STABILITY_REVIEW_WITHDRAWAL_CONTINUITY,
   getEngineStabilityReviewSnapshotStance,
-  getEngineStabilityReviewTimestampLine,
 } from "../../../lib/engine/stability-review-snapshot-copy";
 import type { EngineState } from "../../../lib/engine/types";
 
@@ -37,10 +37,6 @@ type ChangeSignal = "unchanged" | "changed" | null;
 export function EngineStabilityReviewSnapshot({
   engineState,
 }: EngineStabilityReviewSnapshotProps) {
-  const formattedUpdatedAt = formatEngineSnapshotUpdatedAt(
-    engineState.updatedAt
-  );
-
   const fingerprint = useMemo(
     () => buildReviewSnapshotFingerprint(engineState),
     [
@@ -110,8 +106,8 @@ export function EngineStabilityReviewSnapshot({
         </h2>
       </div>
       <div className="mt-4" data-testid="engine-stability-review-orientation">
-        <p className="text-[11px] font-semibold uppercase tracking-wide text-hedgr-500">
-          Current simulation status
+        <p className="text-xs leading-relaxed text-hedgr-500">
+          {ENGINE_ILLUSTRATIVE_VALUES_LABEL}
         </p>
         <p
           className="mt-1 text-sm font-medium leading-relaxed text-hedgr-800"
@@ -121,17 +117,6 @@ export function EngineStabilityReviewSnapshot({
         </p>
       </div>
       <dl className="mt-4 grid gap-4 border-t border-hedgr-100 pt-4 sm:grid-cols-2">
-        <div>
-          <dt className="text-[11px] font-semibold uppercase tracking-wide text-hedgr-500">
-            Simulation date
-          </dt>
-          <dd
-            className="mt-1 text-xs leading-relaxed text-hedgr-600"
-            data-testid="engine-stability-review-snapshot-updated-at"
-          >
-            {getEngineStabilityReviewTimestampLine(formattedUpdatedAt)}
-          </dd>
-        </div>
         <div>
           <dt className="text-[11px] font-semibold uppercase tracking-wide text-hedgr-500">
             Last viewed locally
