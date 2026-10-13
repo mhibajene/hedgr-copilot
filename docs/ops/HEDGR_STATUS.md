@@ -18070,56 +18070,56 @@ Lock: `Illustrative example values, not live targets or advice`, once per region
 
 ### Supplied Founder D2 and resolved-contract record — word for word
 
-# Founder decision — D2 currency-only carve-out and currency-match open questions (verbatim)
+    # Founder decision — D2 currency-only carve-out and currency-match open questions (verbatim)
 
-- **Founder:** Musalwa Hibajene (repo owner mhibajene)
-- **When:** 2026-10-13 20:03 AWST (clock checked in the same turn), in MonoCode via Dex (§9.11)
-- **Context:** Dex's pressure test of `../SARAH-CURRENCY-MATCH-V2-CONTRACT-001.md` (Founder-supplied, read at main e67c86e) raised §343 D2 compatibility and seven open questions.
+    - **Founder:** Musalwa Hibajene (repo owner mhibajene)
+    - **When:** 2026-10-13 20:03 AWST (clock checked in the same turn), in MonoCode via Dex (§9.11)
+    - **Context:** Dex's pressure test of `../SARAH-CURRENCY-MATCH-V2-CONTRACT-001.md` (Founder-supplied, read at main e67c86e) raised §343 D2 compatibility and seven open questions.
 
-## Verbatim
-> D2 currency-only carve-out. The Engine may state the relationship between the currency Sarah's savings are held in and the currency her fee is fixed in, and nothing else. The read takes no amounts as input and produces no coverage, gap, comparison, progress, sufficiency, ability-to-pay or action output. Its explanation never names a savings or fee figure. Wherever it is shown, Sarah's limits sentence ("This read does not establish whether Sarah can pay the fee.") stays visible next to it. Any read that uses savings amounts remains under the full §343 fence and needs its own Founder decision.Make the carve-out specific to this module and version. Name sarah-currency-match-v1, so it can't spread by analogy to future savings reads. Add a test that pins the explanation strings so they contain no digits or currency symbols. That way the amount-blind rule is enforced in the copy as well as the types.
->
-> Other open questions as recommended
+    ## Verbatim
+    > D2 currency-only carve-out. The Engine may state the relationship between the currency Sarah's savings are held in and the currency her fee is fixed in, and nothing else. The read takes no amounts as input and produces no coverage, gap, comparison, progress, sufficiency, ability-to-pay or action output. Its explanation never names a savings or fee figure. Wherever it is shown, Sarah's limits sentence ("This read does not establish whether Sarah can pay the fee.") stays visible next to it. Any read that uses savings amounts remains under the full §343 fence and needs its own Founder decision.Make the carve-out specific to this module and version. Name sarah-currency-match-v1, so it can't spread by analogy to future savings reads. Add a test that pins the explanation strings so they contain no digits or currency symbols. That way the amount-blind rule is enforced in the copy as well as the types.
+    >
+    > Other open questions as recommended
 
-## Open questions resolved "as recommended" (Dex's recommendations in the preceding message)
-1. Keep `savingsCurrency: 'ZMW'` as an explicit input (E2 enforceable).
-2. Earlier state via `priorFeeFixedCurrency`, not fixture names (no story knowledge in the Engine).
-3. `asOf` optional (echoed only when supplied; never defaulted from a clock).
-4. Drop C-USD; E4 rejects prior=ZMW→current=USD as well as prior=current. Only P-USD, P-ZMW, C-ZMW remain.
-5. Keep `rateAffectsFeeLocalCost` (enables the cross-read alignment test with sarah-read-v1).
-6. Sue reconciles P-ZMW wording with the v1 kwacha sentence ("The exchange rate does not change this declared amount.").
-7. Research route only for now; no Home consumer.
+    ## Open questions resolved "as recommended" (Dex's recommendations in the preceding message)
+    1. Keep `savingsCurrency: 'ZMW'` as an explicit input (E2 enforceable).
+    2. Earlier state via `priorFeeFixedCurrency`, not fixture names (no story knowledge in the Engine).
+    3. `asOf` optional (echoed only when supplied; never defaulted from a clock).
+    4. Drop C-USD; E4 rejects prior=ZMW→current=USD as well as prior=current. Only P-USD, P-ZMW, C-ZMW remain.
+    5. Keep `rateAffectsFeeLocalCost` (enables the cross-read alignment test with sarah-read-v1).
+    6. Sue reconciles P-ZMW wording with the v1 kwacha sentence ("The exchange rate does not change this declared amount.").
+    7. Research route only for now; no Home consumer.
 
-## Corrections to the brief adopted
-- §364 RAP cadence exists and applies (source PR + separate permanent-main RAP rebind).
-- `docs/ops/HEDGR_STATUS.md` changes travel in source PRs, not the runtime allowlist.
-- The research sequence (brief §9) needs its own later brief; the research route stays unreleased.
+    ## Corrections to the brief adopted
+    - §364 RAP cadence exists and applies (source PR + separate permanent-main RAP rebind).
+    - `docs/ops/HEDGR_STATUS.md` changes travel in source PRs, not the runtime allowlist.
+    - The research sequence (brief §9) needs its own later brief; the research route stays unreleased.
 
-## Gates before activation
-Sue review of the three explanation strings → Founder copy lock → activation (sole nested Lane V; sequenced after the post-Sarah bundle Ticket A per current order unless the Founder reorders).
+    ## Gates before activation
+    Sue review of the three explanation strings → Founder copy lock → activation (sole nested Lane V; sequenced after the post-Sarah bundle Ticket A per current order unless the Founder reorders).
 
-**Effect:** decision input only; not an activation, §7/§7a record or copy lock.
+    **Effect:** decision input only; not an activation, §7/§7a record or copy lock.
 
 ### Supplied Founder copy-lock record — word for word
 
-# Founder copy lock — sarah-currency-match-v1 (verbatim)
+    # Founder copy lock — sarah-currency-match-v1 (verbatim)
 
-- **Founder:** Musalwa Hibajene (repo owner mhibajene)
-- **When:** 2026-10-13 20:13 AWST (clock checked in the same turn), in MonoCode via Dex (§9.11)
-- **Locked on:** `copy/COPY_LOCK_PROPOSAL.md` (Sue, §9.9; source basis origin/main e67c86e)
-- **Verbatim:** "Lock Sue's three strings and the pinning rule"
+    - **Founder:** Musalwa Hibajene (repo owner mhibajene)
+    - **When:** 2026-10-13 20:13 AWST (clock checked in the same turn), in MonoCode via Dex (§9.11)
+    - **Locked on:** `copy/COPY_LOCK_PROPOSAL.md` (Sue, §9.9; source basis origin/main e67c86e)
+    - **Verbatim:** "Lock Sue's three strings and the pinning rule"
 
-## Locked explanation strings (character-exact, curly apostrophes)
-- **P-USD:** Sarah’s savings are in Zambian kwacha, while her course fee is fixed in US dollars. The fee’s kwacha cost depends on the example exchange rate.
-- **P-ZMW:** Sarah’s savings are in Zambian kwacha, and her course fee is fixed in the same currency. The fee’s kwacha cost does not depend on the example exchange rate.
-- **C-ZMW:** Sarah’s savings are in Zambian kwacha, and her course fee is now fixed in the same currency. The fee’s kwacha cost no longer depends on the example exchange rate.
+    ## Locked explanation strings (character-exact, curly apostrophes)
+    - **P-USD:** Sarah’s savings are in Zambian kwacha, while her course fee is fixed in US dollars. The fee’s kwacha cost depends on the example exchange rate.
+    - **P-ZMW:** Sarah’s savings are in Zambian kwacha, and her course fee is fixed in the same currency. The fee’s kwacha cost does not depend on the example exchange rate.
+    - **C-ZMW:** Sarah’s savings are in Zambian kwacha, and her course fee is now fixed in the same currency. The fee’s kwacha cost no longer depends on the example exchange rate.
 
-Wherever shown, beside: "This read does not establish whether Sarah can pay the fee." (sarah-read-v1 limits, verbatim).
+    Wherever shown, beside: "This read does not establish whether Sarah can pay the fee." (sarah-read-v1 limits, verbatim).
 
-## Locked pinning rule
-Exactly as specified in `copy/COPY_LOCK_PROPOSAL.md`: exact raw equality to the three literals; in `explanation` (not structured metadata) ban Unicode digits/numbers, currency symbols, standalone and K-prefixed currency figure tokens, standalone `USD`/`ZMW`, em dash, the brief's test-5 lexicon, and "hedge"/"hedging"; "now" and "no longer" permitted only in C-ZMW.
+    ## Locked pinning rule
+    Exactly as specified in `copy/COPY_LOCK_PROPOSAL.md`: exact raw equality to the three literals; in `explanation` (not structured metadata) ban Unicode digits/numbers, currency symbols, standalone and K-prefixed currency figure tokens, standalone `USD`/`ZMW`, em dash, the brief's test-5 lexicon, and "hedge"/"hedging"; "now" and "no longer" permitted only in C-ZMW.
 
-Scope: sarah-currency-match-v1 only (see `../FOUNDER_D2_CARVEOUT_VERBATIM.md`). Strings outside this lock must not ship.
+    Scope: sarah-currency-match-v1 only (see `../FOUNDER_D2_CARVEOUT_VERBATIM.md`). Strings outside this lock must not ship.
 
 **Bounded adoption / proposal corrections:** The supplied `output/post-sarah-bundle-20261013/SARAH-CURRENCY-MATCH-V2-CONTRACT-001.md` supplies the exact input/output types, E1–E6, module/function/version and named contract tests carried into §7a. Its candidate prose is replaced by the later 20:13 AWST lock, four-string golden expectation becomes exactly three, C-USD is dropped, E4 rejects ZMW→USD and prior=current, §364 is confirmed/applicable, STATUS changes travel only in source PRs, and the research sequence requires a later brief. The prior decision file’s sequencing-after-Ticket-A note is historical: this assignment activates the Engine only after the completed Ticket B §381/final rebind. No open question is re-decided. Full locked pinning rules are copied into §7a from Sue’s COPY_LOCK_PROPOSAL.md, as expressly locked by the Founder. Future limits rendering is mandatory but no consumer is activated.
 
