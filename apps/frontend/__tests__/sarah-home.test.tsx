@@ -148,7 +148,7 @@ test('Sarah hero uses $1,000.00 USD and one independent fee observation', async 
   // Arbitrary read proves both dates, declaration and local text without clock/visit dependence.
   const { SarahExampleHome } = await import('../app/(app)/dashboard/SarahExampleHome');
   const read = computeSarahRead(u3);
-  const sentinel = {...read, asOf:'2030-02-03T23:45:00.000Z',declaredFee:{...read.declaredFee,amount:1234.56,dueDate:'2031-04-05'},localDisplay:'ENGINE FIGURE',
+  const sentinel = {...read, rateBasis:{kind:'example-rate' as const,zmwPerUsd:DANIEL_FIXTURE_RATE_ZMW_PER_USD}, asOf:'2030-02-03T23:45:00.000Z',declaredFee:{...read.declaredFee,amount:1234.56,dueDate:'2031-04-05'},localDisplay:'ENGINE FIGURE',
     explanation:{fee:'ENGINE FEE',rateAssumption:'ENGINE RATE',limits:'ENGINE LIMITS'}};
   render(<SarahExampleHome read={sentinel}/>);
   expect(screen.getByTestId('sarah-read-figure').textContent).toBe('$1,234.56 USD');
@@ -276,8 +276,8 @@ test('Sarah preserves Engine, golden, Daniel and shared style sources byte for b
     "__tests__/engine-sarah-read.golden.ts": "656fb25c528c85f8b8a02c026e1b95699dc5cdd6ed617e276e2cbc64ac2784f5",
     "__tests__/engine-daniel-read.golden.ts": "d2fe6c27bfe369e068958181da41d1d04594e41b192f47d2379fe1f9d62d8ab4",
     "lib/state/daniel-home-fixture.ts": "af81ee319ae5b4f97e1dcf9403e79d8f94a71f9bc68b37df1da5c3b530fb2081",
-    "app/(app)/dashboard/DanielExampleHome.tsx": "5d1cff69405e70b761612f060df568208be5dd3a2773de76ad644942dda7902e",
-    "app/(app)/dashboard/synthetic-home.module.css": "45fb2785bdafbd5fa45dca02050777ce86c8d9defd9470b58c8fc255c70f8853",
+    "app/(app)/dashboard/DanielExampleHome.tsx": "8c58bf8734358e33b028b77e57dc8ae58e6bbcc1566299633828dadbb0008d9e",
+    "app/(app)/dashboard/synthetic-home.module.css": "f29cded5ea10c162a13d297b2810d8842fb63b3cc7e008b6544f4cee50512a84",
     "app/(app)/dashboard/PositionLine.tsx": "d854781bd1b0950de0fc8e16a972e8ba7e47842e263a7c776664cb7deb8dae0a",
     "app/(app)/dashboard/CurrencyInsight.tsx": "769028b998087f94e53bc1b7ff875a1f916e6963537d06911f56bc19bd4f5b33"
 };
