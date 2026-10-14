@@ -1,0 +1,15 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "incremental": false,
+    "types": ["vitest/globals", "node"]
+  },
+  "include": [
+    "__tests__/dashboard.page.test.tsx",
+    "__tests__/home-small-fixes.test.tsx",
+    "__tests__/withdraw.page.test.tsx",
+    "types/**/*.d.ts"
+  ],
+  "exclude": ["node_modules"]
+}

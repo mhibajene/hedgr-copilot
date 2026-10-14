@@ -135,7 +135,7 @@ test('OPS auto-merge recovery retains exact-head gates', () => {
   const predicates = [/about five minutes/, /unchanged head/, /current independent PASS/, /all required checks green/, /up-to-date.*CLEAN/, /owner-account/, /disable\/re-enable.*once/, /observe.*merge/, /Never direct\/admin merge/, /root cause.*unproven/];
   const eligible = (text) => predicates.every((predicate) => predicate.test(text));
   assert.ok(eligible(section), 'Recovery must retain every evidence predicate and stop boundary');
-  for (const predicate of predicates) assert.equal(eligible(section.replace(predicate, 'missing evidence')), false);
+  for (const predicate of predicates) assert.equal(eligible(section.replace(new RegExp(predicate.source, 'g'), 'missing evidence')), false);
 });
 
 test('OPS Vercel diagnosis is evidence-bounded', () => {

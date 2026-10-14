@@ -131,7 +131,7 @@ import { usePathname, useSearchParams } from "next/navigation";
 
 function makeBalanceState(
   overrides: Partial<ReturnType<typeof useBalance>> = {}
-) {
+): ReturnType<typeof useBalance> {
   return {
     total: 100,
     available: 100,
