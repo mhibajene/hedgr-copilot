@@ -151,3 +151,97 @@ test.describe('Navigation policy gating', () => {
     await expect(page.getByTestId('nav-send-link')).toHaveCount(0);
   });
 });
+
+// §384: these literals are independent of the runtime copy constant.
+const S18_TITLE = 'Example annual yield (APY)';
+const S18_QUALIFIER = 'Illustrative example values, not live targets or advice';
+
+async function s18HermeticEarnPolicy(page: import('@playwright/test').Page) {
+  await page.route('**/*', route => ['localhost', '127.0.0.1', '::1'].includes(new URL(route.request().url()).hostname) ? route.continue() : route.abort());
+  await page.route('**/api/policy', route => route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify(POLICY_EARN_ON) }));
+}
+
+async function expectS18BrowserLock(page: import('@playwright/test').Page) {
+  const tile = page.getByTestId('dashboard-earn-tile');
+  await expect(tile).toBeVisible();
+  // Clear the fixed navigation by ordinary scrolling before judging/capturing text.
+  await tile.evaluate(element => element.scrollIntoView({ block: 'center', inline: 'nearest' }));
+  await page.evaluate(() => new Promise<void>(resolve => requestAnimationFrame(() => requestAnimationFrame(() => resolve()))));
+  const title = tile.getByText(S18_TITLE, { exact: true });
+  const qualifier = tile.getByText(S18_QUALIFIER, { exact: true });
+  const value = tile.getByText('5.00%', { exact: true });
+  for (const part of [title, qualifier, value]) {
+    await expect(part).toHaveCount(1);
+    await expect(part).toBeVisible();
+  }
+  await expect(tile.getByText('Return rate (context)', { exact: true })).toHaveCount(0);
+  // §384 locks assistive text/order, not whether ordinary text has paragraph semantics.
+  const assistiveText = (await tile.ariaSnapshot()).split('\n').map(line => line.replace(/^- (?:text|paragraph): /, ''));
+  expect(assistiveText).toEqual([S18_TITLE, S18_QUALIFIER, '5.00%']);
+  const geometry = await tile.evaluate((element, copy) => {
+    const children = Array.from(element.children) as HTMLElement[];
+    return {
+      text: children.map(child => child.textContent?.trim()),
+      ordered: children.every((child, i) => i === 0 || !!(children[i - 1].compareDocumentPosition(child) & Node.DOCUMENT_POSITION_FOLLOWING)),
+      exposed: children.every(child => {
+        for (let node: HTMLElement | null = child; node && element.contains(node); node = node.parentElement) {
+          const style = getComputedStyle(node);
+          if (node.matches('[hidden], [inert], [aria-hidden="true"]') || style.display === 'none' || style.visibility === 'hidden' || style.order !== '0' || style.flexDirection.includes('reverse')) return false;
+        }
+        return true;
+      }),
+      // Check text fragments, not only boxes: wrapping must remain inside tile.
+      contained: children.every(child => {
+        const range = document.createRange(); range.selectNodeContents(child);
+        const box = element.getBoundingClientRect();
+        return Array.from(range.getClientRects()).every(rect => rect.left >= box.left && rect.right <= box.right && rect.top >= box.top && rect.bottom <= box.bottom);
+      }),
+      unobscured: children.every(child => {
+        const range = document.createRange(); range.selectNodeContents(child);
+        return Array.from(range.getClientRects()).every(rect => {
+          const hit = document.elementFromPoint(rect.left + rect.width / 2, rect.top + rect.height / 2);
+          return hit !== null && element.contains(hit);
+        });
+      }),
+      rootFontSize: getComputedStyle(document.documentElement).fontSize,
+      lock: copy,
+    };
+  }, [S18_TITLE, S18_QUALIFIER, '5.00%']);
+  expect(geometry.text).toEqual(geometry.lock);
+  expect(geometry.ordered).toBe(true);
+  expect(geometry.exposed).toBe(true);
+  expect(geometry.contained).toBe(true);
+  expect(geometry.unobscured).toBe(true);
+  return geometry;
+}
+
+test('S18 visible default Home earn tile keeps the exact lock and reading order', async ({ page }) => {
+  await s18HermeticEarnPolicy(page);
+  await loginAndGoToDashboard(page);
+  for (const [width, height, rootFontSize] of [[1440, 1000, '16px'], [390, 844, '16px'], [320, 900, '32px']] as const) {
+    await page.setViewportSize({ width, height });
+    await page.evaluate(size => { document.documentElement.style.fontSize = size; }, rootFontSize);
+    await page.getByTestId('dashboard-earn-tile').scrollIntoViewIfNeeded();
+    const geometry = await expectS18BrowserLock(page);
+    expect(geometry.rootFontSize).toBe(rootFontSize);
+    const box = await page.getByTestId('dashboard-earn-tile').boundingBox();
+    expect(box).not.toBeNull();
+    expect(box!.x).toBeGreaterThanOrEqual(0);
+    expect(box!.x + box!.width).toBeLessThanOrEqual(width);
+    await test.info().attach(`s18-${width}-${rootFontSize}`, { body: await page.getByTestId('dashboard-earn-tile').screenshot(), contentType: 'image/png' });
+  }
+});
+
+test('S18 journeys hide the earn tile even when earn is enabled', async ({ page }) => {
+  await s18HermeticEarnPolicy(page);
+  await loginAndGoToDashboard(page);
+  for (const route of ['/dashboard?journey=class-a-val-002', '/dashboard-synthetic-journey']) {
+    for (const example of ['own', 'daniel', 'sarah']) {
+      await page.goto(`${route}${route.includes('?') ? '&' : '?'}example=${example}`);
+      await expect(page.getByRole('combobox', { name: 'Choose an example' })).toHaveValue(example);
+      await expect(page.getByTestId('dashboard-earn-tile')).toHaveCount(0);
+    }
+  }
+  await page.goto('/dashboard');
+  await expectS18BrowserLock(page);
+});

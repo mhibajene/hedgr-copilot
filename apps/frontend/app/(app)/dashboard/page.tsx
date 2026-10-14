@@ -26,6 +26,7 @@ import {
   PolicyDisclosure,
 } from "../../../components";
 import { useEngineState } from "../../../lib/engine/useEngineState";
+import { ENGINE_ILLUSTRATIVE_VALUES_LABEL } from "../../../lib/engine/stability-review-snapshot-copy";
 import { usePolicy } from "../../../lib/policy/usePolicy";
 import { getEnvironmentMode } from "../../../lib/env/mode";
 import {
@@ -151,7 +152,7 @@ export default function DashboardPage() {
     defiAdapter
       .getNetApy()
       .then(setApy)
-      .catch(() => setApyError("Unable to load APY"));
+      .catch(() => setApyError("Unable to load example yield"));
   }, []);
 
   useEffect(() => {
@@ -972,15 +973,18 @@ export default function DashboardPage() {
                 data-testid="dashboard-earn-tile"
               >
                 <div className="text-xs font-medium text-hedgr-500">
-                  Return rate (context)
+                  Example annual yield (APY)
                 </div>
+                <p className="mt-1 text-xs text-hedgr-800">
+                  {ENGINE_ILLUSTRATIVE_VALUES_LABEL}
+                </p>
                 {apyError ? (
                   <div className="mt-1 text-xs font-medium text-hedgr-800">
                     {apyError}
                   </div>
                 ) : (
                   <div className="mt-1 text-xl font-semibold tabular-nums text-hedgr-dark">
-                    {apy !== null ? `${(apy * 100).toFixed(2)}%` : "n/a"}
+                    {apy !== null ? `${(apy * 100).toFixed(2)}%` : "Example yield unavailable"}
                   </div>
                 )}
               </div>
