@@ -134,7 +134,7 @@ afterEach(() => {
   } else {
     process.env.CI = ORIGINAL_CI;
   }
-  process.env.NODE_ENV = ORIGINAL_NODE_ENV;
+  vi.stubEnv('NODE_ENV', ORIGINAL_NODE_ENV);
   process.env.NEXT_PUBLIC_APP_ENV = ORIGINAL_APP_ENV;
 });
 
@@ -385,7 +385,7 @@ describe('WithdrawPage tx review seam (MC-S2-021)', () => {
   function stubApprovedLocalDev() {
     vi.unstubAllEnvs();
     delete process.env.CI;
-    process.env.NODE_ENV = 'development';
+    vi.stubEnv('NODE_ENV', 'development');
     process.env.NEXT_PUBLIC_APP_ENV = 'dev';
     process.env.NEXT_PUBLIC_AUTH_MODE = 'magic';
     process.env.NEXT_PUBLIC_FX_MODE = 'coingecko';

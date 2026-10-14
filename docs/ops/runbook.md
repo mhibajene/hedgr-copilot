@@ -50,6 +50,33 @@ Once implementation is complete, the implementing or steward agent may mark the 
 
 Founder merge action is not required for normal bounded implementation PRs. Founder involvement stays upstream at judgement and authority boundaries.
 
+### Stalled auto-merge recovery
+
+Evidence recorded in HEDGR_STATUS §7a / §386 (14 Oct 2026): #868 (`424d5ac`) and #875 (`4aa0360`) merged after an owner-account squash auto-merge re-toggle; #880 (`d18c952`) and #885 (`d260738`) merged unaided. The historical CLEAN/green stall observations cannot be reconstructed from merged-PR metadata. The platform root cause remains unproven. The verifier workflow uses `GITHUB_TOKEN` to publish status from default-branch `issue_comment` evaluation; GitHub's documented workflow-event suppression does not prove an auto-merge evaluation fault or justify a PAT/App replacement.
+
+If an armed PR continues to stall for about five minutes after all required gates become green, retain timestamped snapshots and proceed only on an unchanged head with a current independent PASS, all required checks green (`validate`, `E2E smoke (@hedgr/frontend)`, `hedgr/verifier`), and an up-to-date branch with `mergeStateStatus=CLEAN`. Re-read these gates immediately before recovery. Under the owner-account, disable/re-enable squash auto-merge once, then observe GitHub complete the merge:
+
+```bash
+gh pr merge "$PR" --disable-auto
+gh pr merge "$PR" --auto --squash
+gh pr view "$PR" --json headRefOid,mergeStateStatus,autoMergeRequest,state,mergedAt,mergeCommit
+```
+
+Never direct/admin merge, bypass protection, weaken a check or repeat the re-toggle. A changed head requires fresh independent verification under §331. If the gates are absent or the one recovery does not lead to merge, retain the evidence and stop for the coordinator; this procedure does not claim to repair GitHub's underlying fault. The recorded protection requires the three checks above, strict up-to-date branches and admin enforcement; no rulesets were present. Confirm current protection/rulesets read-only when diagnosing a new stall. An external-setting fix requires an exact old/new proposal, evidence and trade-off, then separate Dex/Founder confirmation before any change or merge.
+
+### Vercel Git-info diagnosis
+
+The non-required Vercel preview failures recorded in HEDGR_STATUS §7a / §386 remain unresolved:
+
+| Preview | Reviewed Git head | Observed phase |
+| --- | --- | --- |
+| #852 — `dpl_2NDERTw7vbtmznaSaw5CAcFCQ6EB` | `932233c839f5c7dfdacdcf6ec28c650060113749` | `source=git`, ERROR / `git_info_fail` about four seconds after creation; no build events |
+| #856 — `dpl_2aKnkWeZRTmRdVjufGNbJNyzZXTf` | `d6b02cd3548dc8785395543da9881c05efe7c9cb` | `source=git`, ERROR / `git_info_fail` about five seconds after creation; no build events |
+
+Later #868/#875/#880/#885 previews succeeded. The early Git-info failure and empty build-event logs support a Git metadata acquisition diagnosis, not a TypeScript/build error or proved permissions/configuration defect. No repo-file cause or exact faulty external setting was found by the read-only Git/project metadata comparison; no tracked Vercel config existed at the discovery baseline. Do not invent a `vercel.json` fix or claim remediation succeeded. Keep this diagnostic separate from required GitHub checks and exact-revision Production readiness. OPS-GOV-CLEANUP-001 fault remediation remains a closeout hold unless the Founder dispositions it.
+
+Further diagnosis is read-only. If evidence establishes a needed GitHub or Vercel setting change, record exact old/new settings, evidence and trade-off and stop for a separately confirmed external proposal without merging. No redeploy, Git reconnect, token/App introduction, project/dashboard or protection change is authorised by this procedure.
+
 ### Ticket gates and merge vs launch
 
 Ticket-specific gate sections may be stricter than this standing rule and may never be looser. Satisfying merge gates authorises **repository merge only**. It does not widen originating ticket authority and does not imply launch, participant release, customer exposure, financial capability, or production-configuration approval.
