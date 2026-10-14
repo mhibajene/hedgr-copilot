@@ -172,7 +172,9 @@ async function expectS18BrowserLock(page: import('@playwright/test').Page) {
     await expect(part).toBeVisible();
   }
   await expect(tile.getByText('Return rate (context)', { exact: true })).toHaveCount(0);
-  expect(await tile.ariaSnapshot()).toBe(`- text: ${S18_TITLE}\n- text: ${S18_QUALIFIER}\n- text: 5.00%`);
+  // §384 locks assistive text/order, not whether ordinary text has paragraph semantics.
+  const assistiveText = (await tile.ariaSnapshot()).split('\n').map(line => line.replace(/^- (?:text|paragraph): /, ''));
+  expect(assistiveText).toEqual([S18_TITLE, S18_QUALIFIER, '5.00%']);
   const geometry = await tile.evaluate((element, copy) => {
     const children = Array.from(element.children) as HTMLElement[];
     return {
