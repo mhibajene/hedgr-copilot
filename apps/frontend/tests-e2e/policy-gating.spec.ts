@@ -165,8 +165,7 @@ async function expectS18BrowserLock(page: import('@playwright/test').Page) {
   const tile = page.getByTestId('dashboard-earn-tile');
   await expect(tile).toBeVisible();
   // Clear the fixed navigation by ordinary scrolling before judging/capturing text.
-  await tile.scrollIntoViewIfNeeded();
-  await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+  await tile.evaluate(element => element.scrollIntoView({ block: 'center', inline: 'nearest' }));
   await page.evaluate(() => new Promise<void>(resolve => requestAnimationFrame(() => requestAnimationFrame(() => resolve()))));
   const title = tile.getByText(S18_TITLE, { exact: true });
   const qualifier = tile.getByText(S18_QUALIFIER, { exact: true });
