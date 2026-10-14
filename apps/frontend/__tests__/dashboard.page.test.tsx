@@ -1,13 +1,18 @@
 // @vitest-environment jsdom
 
 import React from "react";
+import { createHash } from "node:crypto";
+import { readFileSync, readdirSync, statSync } from "node:fs";
+import { resolve } from "node:path";
 import { afterEach, describe, expect, test, vi } from "vitest";
 import {
   cleanup,
+  act,
   fireEvent,
   render,
   screen,
   waitFor,
+  within,
 } from "@testing-library/react";
 import { ENGINE_NOTICE_COPY } from "../lib/engine/notices";
 import type { EngineState } from "../lib/engine/types";
@@ -120,6 +125,8 @@ import DashboardPage from "../app/(app)/dashboard/page";
 import { getMockEngineState } from "../lib/engine/mock";
 import { useBalance } from "../lib/hooks/useBalance";
 import { useEngineState } from "../lib/engine/useEngineState";
+import { defiAdapter } from "../lib/defi";
+import { usePolicy } from "../lib/policy/usePolicy";
 import { usePathname, useSearchParams } from "next/navigation";
 
 function makeBalanceState(
@@ -918,4 +925,235 @@ test('Ticket B inclusion preserves pending error loading mismatched first-event 
     expect(screen.queryByText(/^(This simulated (deposit|withdrawal)|These simulated entries) (is|are) included in the balance above\.$/)).toBeNull();
     if (variant !== 'loading') expect(screen.getByText('Includes your simulated activity.', { exact: true })).toBeDefined();
   }
+});
+
+// §384: expectations are independent literals, never imported runtime copy.
+const S18_TITLE = 'Example annual yield (APY)';
+const S18_QUALIFIER = 'Illustrative example values, not live targets or advice';
+const S18_ERROR = 'Unable to load example yield';
+const S18_UNAVAILABLE = 'Example yield unavailable';
+type S18State = number | null | 'pending' | 'rejected';
+
+function setupS18(route = '/dashboard', mode: 'simulated' | 'live' = 'simulated', earn = true, status: 'ready' | 'loading' | 'error' = 'ready') {
+  cleanup();
+  window.localStorage.clear();
+  vi.stubEnv('NEXT_PUBLIC_AUTH_MODE', mode === 'live' ? 'magic' : 'mock');
+  vi.stubEnv('NEXT_PUBLIC_FX_MODE', mode === 'live' ? 'live' : 'stub');
+  vi.stubEnv('NEXT_PUBLIC_DEFI_MODE', 'mock');
+  vi.stubEnv('NEXT_PUBLIC_APP_ENV', 'prod');
+  vi.useFakeTimers({ toFake: ['Date'] });
+  vi.setSystemTime(new Date('2026-10-14T00:00:00.000Z'));
+  vi.mocked(usePathname).mockReturnValue(route.split('?')[0]);
+  vi.mocked(useSearchParams).mockReturnValue(new URLSearchParams(route.split('?')[1]) as ReturnType<typeof useSearchParams>);
+  dashboardStateMocks.transactions = [];
+  vi.mocked(useBalance).mockReturnValue(makeBalanceState());
+  vi.mocked(useEngineState).mockReturnValue(getMockEngineState('normal'));
+  vi.mocked(usePolicy).mockReturnValue({
+    status, market: 'KE', version: 'v1', resolvedAt: '2026-01-01T00:00:00.000Z', policy: null,
+    isFeatureEnabled: vi.fn((key) => status === 'ready' && earn && key === 'earn'),
+  });
+  vi.mocked(defiAdapter.getNetApy).mockReset();
+}
+
+async function renderS18(state: S18State = 0.05) {
+  vi.mocked(defiAdapter.getNetApy).mockImplementation(() => {
+    if (state === 'pending') return new Promise<number>(() => {});
+    if (state === 'rejected') return Promise.reject(new Error('hermetic adapter rejection'));
+    // Exercise the existing null branch without changing the adapter contract.
+    return Promise.resolve(state as number);
+  });
+  const view = render(<DashboardPage />);
+  await act(async () => { await Promise.resolve(); });
+  return view;
+}
+
+function expectS18Lock(tile: HTMLElement, state: string) {
+  const scope = within(tile);
+  const title = scope.getAllByText(S18_TITLE, { exact: true });
+  const qualifier = scope.getAllByText(S18_QUALIFIER, { exact: true });
+  const value = scope.getAllByText(state, { exact: true });
+  expect(title).toHaveLength(1);
+  expect(qualifier).toHaveLength(1);
+  expect(value).toHaveLength(1);
+  expect(Array.from(tile.children).map(child => child.textContent)).toEqual([S18_TITLE, S18_QUALIFIER, state]);
+  expect(scope.queryByText('Return rate (context)', { exact: true })).toBeNull();
+  expect(title[0].compareDocumentPosition(qualifier[0]) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+  expect(qualifier[0].compareDocumentPosition(value[0]) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+  for (const element of [...title, ...qualifier, ...value]) {
+    expect(element.closest('[hidden], [inert], [aria-hidden="true"]')).toBeNull();
+    for (let current: HTMLElement | null = element; current && tile.contains(current); current = current.parentElement) {
+      const style = window.getComputedStyle(current);
+      expect(style.display).not.toBe('none');
+      expect(style.visibility).not.toBe('hidden');
+      expect(['', '0']).toContain(style.order);
+      expect(style.flexDirection).not.toMatch(/reverse/);
+      expect(current.className).not.toMatch(/\b(hidden|invisible|sr-only|order-\S+|flex-\S+-reverse)\b/);
+    }
+  }
+}
+
+function s18Digest(value: string | Buffer) {
+  return createHash('sha256').update(value).digest('hex');
+}
+
+// Pin every file below these excluded surfaces, including additions/deletions.
+const S18_EXCLUDED_ROOTS = [
+  'lib/engine', 'lib/defi', 'lib/policy', 'config', 'lib/state',
+  'app/(app)/withdraw', 'app/research', 'app/(app)/research-wallet.module.css',
+];
+function s18ExcludedDigest() {
+  const files: string[] = [];
+  function visit(path: string) {
+    if (statSync(resolve(path)).isDirectory()) {
+      for (const child of readdirSync(resolve(path)).sort()) visit(`${path}/${child}`);
+    } else files.push(path);
+  }
+  S18_EXCLUDED_ROOTS.forEach(visit);
+  return s18Digest(files.sort().map((path) => `${path}\0${s18Digest(readFileSync(resolve(path)))}`).join('\n'));
+}
+
+function s18OutsideTile(view: HTMLElement) {
+  const clone = view.cloneNode(true) as HTMLElement;
+  clone.querySelector('[data-testid="dashboard-earn-tile"]')?.parentElement?.remove();
+  // React's useId sequence is not Home content; canonicalize only generated IDs.
+  return clone.innerHTML.replace(/:r[0-9a-z]+:/g, ':react-id:');
+}
+
+describe('S18 earn tile fence sweep (§384)', () => {
+  afterEach(() => {
+    vi.useRealTimers();
+    vi.mocked(defiAdapter.getNetApy).mockReset().mockResolvedValue(0.05);
+    vi.mocked(usePolicy).mockReturnValue({
+      status: 'ready', market: '', version: '', resolvedAt: '', policy: null,
+      isFeatureEnabled: vi.fn(() => false),
+    });
+  });
+
+  test('S18 title and qualifier are character-exact and once per visible tile', async () => {
+    for (const mode of ['simulated', 'live'] as const) {
+      for (const state of [0.05, 'rejected', 'pending', null] as const) {
+        setupS18('/dashboard', mode);
+        await renderS18(state);
+        expectS18Lock(screen.getByTestId('dashboard-earn-tile'), state === 'rejected' ? S18_ERROR : typeof state === 'number' ? '5.00%' : S18_UNAVAILABLE);
+      }
+    }
+  });
+
+  test('S18 qualifier precedes the value or state in visible and assistive order', async () => {
+    for (const state of [0.05, 'rejected', 'pending', null] as const) {
+      setupS18();
+      await renderS18(state);
+      expectS18Lock(screen.getByTestId('dashboard-earn-tile'), state === 'rejected' ? S18_ERROR : typeof state === 'number' ? '5.00%' : S18_UNAVAILABLE);
+    }
+  });
+
+  test('S18 rejection renders the exact example-yield error once', async () => {
+    setupS18();
+    const view = await renderS18('rejected');
+    const tile = screen.getByTestId('dashboard-earn-tile');
+    // Rejection stays an error on rerender: no retry, fallback or swallowed error.
+    view.rerender(<DashboardPage />);
+    expect(defiAdapter.getNetApy).toHaveBeenCalledTimes(1);
+    expect(defiAdapter.getNetApy).toHaveBeenCalledWith();
+    expect(within(tile).queryByText('Unable to load APY', { exact: true })).toBeNull();
+    expect(within(tile).queryByText(S18_UNAVAILABLE, { exact: true })).toBeNull();
+    expect(tile.textContent).not.toMatch(/\d+\.\d{2}%/);
+    expect(tile.querySelector('button')).toBeNull();
+    expectS18Lock(tile, S18_ERROR);
+  });
+
+  test('S18 null and pending render the exact unavailable state once', async () => {
+    for (const state of ['pending', null] as const) {
+      setupS18();
+      await renderS18(state);
+      const tile = screen.getByTestId('dashboard-earn-tile');
+      expect(tile.textContent).not.toMatch(/\bn\/a\b|loading/i);
+      expect(within(tile).queryByText(S18_ERROR, { exact: true })).toBeNull();
+      expect(defiAdapter.getNetApy).toHaveBeenCalledTimes(1);
+      expectS18Lock(tile, S18_UNAVAILABLE);
+    }
+  });
+
+  test('S18 preserves two-decimal percentage formatting and adapter behavior', async () => {
+    for (const [fraction, formatted] of [[0.05, '5.00%'], [0.08, '8.00%'], [0.012345, '1.23%'], [0, '0.00%'], [-0.001, '-0.10%']] as const) {
+      setupS18();
+      const view = await renderS18(fraction);
+      expect(defiAdapter.getNetApy).toHaveBeenCalledTimes(1);
+      expect(defiAdapter.getNetApy).toHaveBeenCalledWith();
+      view.rerender(<DashboardPage />);
+      expect(defiAdapter.getNetApy).toHaveBeenCalledTimes(1);
+      expect(within(screen.getByTestId('dashboard-earn-tile')).getByText(formatted, { exact: true })).toBeDefined();
+    }
+    setupS18();
+    await renderS18('rejected');
+    expect(screen.getByTestId('dashboard-earn-tile').textContent).not.toMatch(/\d+\.\d{2}%/);
+    setupS18();
+    await renderS18();
+    expectS18Lock(screen.getByTestId('dashboard-earn-tile'), '5.00%');
+  });
+
+  test('S18 preserves eligible-journey suppression and policy gates', async () => {
+    for (const route of B_ROUTES) {
+      for (const example of ['own', 'daniel', 'sarah']) {
+        setupS18(`${route}${route.includes('?') ? '&' : '?'}example=${example}`);
+        await renderS18();
+        expect(screen.queryByTestId('dashboard-earn-tile')).toBeNull();
+        expect(screen.getByRole('combobox', { name: 'Choose an example' })).toBeDefined();
+        // Existing unconditional adapter mount remains even behind a hidden tile.
+        expect(defiAdapter.getNetApy).toHaveBeenCalledTimes(1);
+      }
+    }
+    for (const [earn, status] of [[false, 'ready'], [true, 'loading'], [true, 'error']] as const) {
+      setupS18('/dashboard', 'simulated', earn, status);
+      await renderS18();
+      expect(screen.queryByTestId('dashboard-earn-tile')).toBeNull();
+      expect(defiAdapter.getNetApy).toHaveBeenCalledTimes(1);
+    }
+    setupS18();
+    vi.mocked(useBalance).mockReturnValue(makeBalanceState({ error: 'offline' }));
+    await renderS18();
+    expect(screen.queryByTestId('dashboard-earn-tile')).toBeNull();
+    for (const route of ['/dashboard?example=daniel', '/dashboard?example=sarah', '/dashboard?journey=class-a-val-002&scenario=unavailable-data']) {
+      setupS18(route);
+      await renderS18();
+      expect(within(screen.getByTestId('dashboard-earn-tile')).getByText('5.00%', { exact: true })).toBeDefined();
+    }
+    setupS18('/dashboard?journey=class-a-val-002', 'live');
+    await renderS18();
+    expect(within(screen.getByTestId('dashboard-earn-tile')).getByText('5.00%', { exact: true })).toBeDefined();
+    setupS18();
+    vi.mocked(useBalance).mockReturnValue(makeBalanceState({ isLoading: true }));
+    await renderS18();
+    expectS18Lock(screen.getByTestId('dashboard-earn-tile'), '5.00%');
+  });
+
+  test('S18 changes no other Home copy or excluded source', async () => {
+    const baseline: Record<string, string> = {};
+    const cases = [
+      ['/dashboard', 'simulated'], ['/dashboard', 'live'],
+      ...B_ROUTES.flatMap((route) => ['own', 'daniel', 'sarah'].map((example) => [`${route}${route.includes('?') ? '&' : '?'}example=${example}`, 'simulated'])),
+    ];
+    for (const [route, mode] of cases) {
+      setupS18(route, mode as 'simulated' | 'live');
+      const view = await renderS18();
+      baseline[`${mode}:${route}`] = s18Digest(s18OutsideTile(view.container));
+      expect(useBalance()).toMatchObject({ total: 100, available: 100, pending: 0, currency: 'USD' });
+      expect(useEngineState()).toEqual(getMockEngineState('normal'));
+    }
+    // Captured from unchanged e901a56 before runtime edits; never refresh from green.
+    expect(baseline).toEqual({
+      "simulated:/dashboard": "0dadda5310541c5d62aec1cb4e919c0d3aa23f82017234d7c85a97fb487393c5",
+      "live:/dashboard": "fc912dcd7a591563f2faa95d8b9627b6aa9299e3cd55f5ec5b1c7e99e2348961",
+      "simulated:/dashboard-synthetic-journey?example=own": "61a738c8b05c6cd981874835b30d6d25542276fef8ce4f9e46f6537d7a628389",
+      "simulated:/dashboard-synthetic-journey?example=daniel": "f533d508f1ebdb0d8122577c6b6558b68f308101a3db96e549b89384f4141e07",
+      "simulated:/dashboard-synthetic-journey?example=sarah": "937876d4deeb41c13fb070677fa99544a5b6f471df3276d550ddd134b3a1336d",
+      "simulated:/dashboard?journey=class-a-val-002&example=own": "61a738c8b05c6cd981874835b30d6d25542276fef8ce4f9e46f6537d7a628389",
+      "simulated:/dashboard?journey=class-a-val-002&example=daniel": "e78fd3584ce555f456e78783207de3b1975bb339d9adb0cd9bcf12bd1cf3ba66",
+      "simulated:/dashboard?journey=class-a-val-002&example=sarah": "937876d4deeb41c13fb070677fa99544a5b6f471df3276d550ddd134b3a1336d"
+});
+    expect(s18ExcludedDigest()).toBe('cea366ecc247a70300f3d1a4c06116f0efaa515b7240210e8839bf04104341ed');
+    setupS18();
+    await renderS18();
+    expectS18Lock(screen.getByTestId('dashboard-earn-tile'), '5.00%');
+  });
 });
