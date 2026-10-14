@@ -13,16 +13,18 @@ No implementation PR may merge to `main` until an independent verifier, distinct
 Verifier attestations are PR comments whose first matching line is exactly:
 
 ```text
-Hedgr-Verifier: PASS sha=<40-hex head sha> run=<verifier agent URL>
+Hedgr-Verifier: PASS sha=<40-hex head sha> run=<exact-head hosted GitHub Actions E2E run URL>
 ```
 
 or
 
 ```text
-Hedgr-Verifier: FAIL sha=<40-hex head sha> run=<verifier agent URL>
+Hedgr-Verifier: FAIL sha=<40-hex head sha> run=<exact-head hosted GitHub Actions E2E run URL>
 ```
 
-Anchored at line start. Strict form: `Hedgr-Verifier: ` then `PASS` or `FAIL`, then ` sha=` plus forty hexadecimal characters, then ` run=` plus a non-whitespace verifier URL. No other line is an attestation.
+Anchored at line start. Strict form: `Hedgr-Verifier: ` then `PASS` or `FAIL`, then ` sha=` plus forty hexadecimal characters, then ` run=` plus a non-whitespace exact-head hosted GitHub Actions E2E run URL. No other line is an attestation.
+
+`run=` is always the exact-head hosted GitHub Actions E2E run URL (`https://github.com/<owner>/<repo>/actions/runs/<run-id>`). It must identify the E2E run for the reviewed current PR head SHA; confirm that run's head and successful E2E result before PASS. A verifier session URL, local log, validate-only run, or run for another head does not satisfy this rule. Founder direction: 14 Oct 2026 16:25 AWST, HEDGR_STATUS §386.
 
 The independent Verifier remains READ_ONLY except for one permitted write: a single attestation comment in this exact format on the PR under review for the head SHA it reviewed. The Verifier brief must explicitly permit that post. Immediately before posting, the Verifier re-reads the current PR head SHA and aborts without posting if it differs from the reviewed SHA. Implementers and stewards never post `Hedgr-Verifier:` attestations, even though all agents share the Founder's GitHub account.
 
