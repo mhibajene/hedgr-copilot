@@ -164,6 +164,10 @@ async function s18HermeticEarnPolicy(page: import('@playwright/test').Page) {
 async function expectS18BrowserLock(page: import('@playwright/test').Page) {
   const tile = page.getByTestId('dashboard-earn-tile');
   await expect(tile).toBeVisible();
+  // Clear the fixed navigation by ordinary scrolling before judging/capturing text.
+  await tile.scrollIntoViewIfNeeded();
+  await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+  await page.evaluate(() => new Promise<void>(resolve => requestAnimationFrame(() => requestAnimationFrame(() => resolve()))));
   const title = tile.getByText(S18_TITLE, { exact: true });
   const qualifier = tile.getByText(S18_QUALIFIER, { exact: true });
   const value = tile.getByText('5.00%', { exact: true });
@@ -193,6 +197,13 @@ async function expectS18BrowserLock(page: import('@playwright/test').Page) {
         const box = element.getBoundingClientRect();
         return Array.from(range.getClientRects()).every(rect => rect.left >= box.left && rect.right <= box.right && rect.top >= box.top && rect.bottom <= box.bottom);
       }),
+      unobscured: children.every(child => {
+        const range = document.createRange(); range.selectNodeContents(child);
+        return Array.from(range.getClientRects()).every(rect => {
+          const hit = document.elementFromPoint(rect.left + rect.width / 2, rect.top + rect.height / 2);
+          return hit !== null && element.contains(hit);
+        });
+      }),
       rootFontSize: getComputedStyle(document.documentElement).fontSize,
       lock: copy,
     };
@@ -201,6 +212,7 @@ async function expectS18BrowserLock(page: import('@playwright/test').Page) {
   expect(geometry.ordered).toBe(true);
   expect(geometry.exposed).toBe(true);
   expect(geometry.contained).toBe(true);
+  expect(geometry.unobscured).toBe(true);
   return geometry;
 }
 
