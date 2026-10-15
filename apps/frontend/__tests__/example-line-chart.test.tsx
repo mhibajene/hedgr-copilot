@@ -1,10 +1,12 @@
 // @vitest-environment jsdom
 import React from 'react';
+import { createHash } from 'node:crypto';
 import { existsSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { afterEach, expect, test } from 'vitest';
 import { cleanup, render, screen } from '@testing-library/react';
 import { DANIEL_HOME_TIMELINE } from '../lib/state/daniel-home-fixture';
+import { PositionLine } from '../app/(app)/dashboard/PositionLine';
 (globalThis as typeof globalThis & {React:typeof React}).React=React;
 afterEach(cleanup);
 async function component(){
@@ -60,4 +62,21 @@ test('empty and non-finite readings reject instead of clipping or inventing a va
   expect(()=>render(<ExampleLineChart reads={[]}/>)).toThrow(RangeError);
   for(const value of [NaN,Infinity,-Infinity]) expect(()=>render(<ExampleLineChart reads={DANIEL_HOME_TIMELINE.map(r=>({...r,localAmountZmwMinor:value}))}/>)).toThrow(RangeError);
   expect(()=>render(<ExampleLineChart reads={[{...DANIEL_HOME_TIMELINE[0],asOf:'not-a-date'}]}/>)).toThrow(RangeError);
+});
+
+test('V12 readings-mode-unchanged and default legacy DOM/geometry/motion', async () => {
+  const ExampleLineChart = await component();
+  const hash = (node: HTMLElement) => createHash('sha256').update(node.outerHTML.replace(/_([A-Za-z]+)_[a-z0-9]+/g, '$1')).digest('hex');
+  const readings = render(<ExampleLineChart reads={DANIEL_HOME_TIMELINE} />);
+  expect(hash(screen.getByTestId('example-line-chart'))).toBe('49e0f5591f0850349a2932d37f4860b85f7652cc9698d369cf2a047ccda93691');
+  readings.unmount();
+  const entries = [
+    { id: 'd', type: 'DEPOSIT' as const, amountUSD: 500, at: 1000, balanceBefore: 0, balanceAfter: 500 },
+    { id: 'w', type: 'WITHDRAW' as const, amountUSD: 20, at: 3000, balanceBefore: 500, balanceAfter: 480 },
+  ];
+  for (const settle of [0, 0.5, 1]) {
+    const view = render(<PositionLine entries={entries} lastVisit={2000} settle={settle} />);
+    expect(hash(screen.getByTestId('dashboard-position-line'))).toBe(new Map([[0, '17542abfe045ea0490a06ab268fdb8cf395102056b026209272bcaa7166395e8'], [0.5, '1f1f4591188bc13d71b449dde318fc56297341568cfe23d14b656ab35c5504d3'], [1, '85d9240498af285828145d2c8b4cb6be4a2bb67c671d58893df04f067362beeb']]).get(settle));
+    view.unmount();
+  }
 });

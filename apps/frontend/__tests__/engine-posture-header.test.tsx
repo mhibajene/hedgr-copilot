@@ -280,7 +280,7 @@ test.each([
   ["WITHDRAW", "withdrawal"],
 ] as const)("polished %s observation retains readable amount and simulation boundary", (type, direction) => {
   render(<EnginePostureHeader engineState={getMockEngineState("normal")} syntheticJourneyActive redesigned comparisonState="change" latestChangeType={type} latestChangeAmountUSD={2} />);
-  expect(screen.getByTestId("engine-posture-context").textContent).toBe(`A simulated ${direction} of $2.00.`);
+  expect(screen.getByTestId("engine-posture-context").textContent).toBe(`A simulated ${direction}.`);
   expect(screen.getByText("This is what happened in your simulation. It doesn’t tell you what will happen next.")).toBeDefined();
   expect(screen.queryByTestId("engine-posture-banner")).toBeNull();
 });
@@ -301,8 +301,8 @@ test('Journey What changed states type amount and actual event date once', () =>
       const metadata = { latestChangeCreatedAt: createdAt, homeDate: today };
       render(<EnginePostureHeader engineState={getMockEngineState('normal')} syntheticJourneyActive redesigned comparisonState="change" latestChangeType={type} latestChangeAmountUSD={20} {...metadata} />);
       const context = screen.getByTestId('engine-posture-context');
-      expect(context.textContent).toBe(`A simulated ${type === 'DEPOSIT' ? 'deposit' : 'withdrawal'} of $20.00${suffix}.`);
-      expect(context.textContent?.match(/\$20\.00/g)).toHaveLength(1);
+      expect(context.textContent).toBe(`A simulated ${type === 'DEPOSIT' ? 'deposit' : 'withdrawal'}${suffix}.`);
+      expect(context.textContent).not.toMatch(/\$20\.00/);
       expect(context.textContent).not.toMatch(/balance by|position from|→/);
     }
   }

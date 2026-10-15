@@ -93,7 +93,7 @@ afterEach(() => {
 });
 
 test('Sarah is selectable on both journey Homes', () => {
-  expect(SYNTHETIC_JOURNEY_EXAMPLES).toEqual([{ id: 'daniel', name: 'Daniel’s reserve', label: OPTIONS[1] }, { id: 'sarah', name: 'Sarah’s course fee', label: OPTIONS[2] }]);
+  expect(SYNTHETIC_JOURNEY_EXAMPLES.map(({ id, name, label }) => ({ id, name, label }))).toEqual([{ id: 'daniel', name: 'Daniel’s reserve', label: OPTIONS[1] }, { id: 'sarah', name: 'Sarah’s course fee', label: OPTIONS[2] }]);
   expect(parseSyntheticJourneyExample('example=sarah')).toBe('sarah');
   for (const route of ROUTES) {
     at(route, 'sarah'); const view = render(<DashboardPage />); assertRead();
@@ -130,7 +130,7 @@ test('Sarah hero uses $1000.00 USD and one independent fee observation', async (
   expect(SARAH_CURRENT_FIXTURE_RATE_ZMW_PER_USD).toBe(DANIEL_FIXTURE_RATE_ZMW_PER_USD);
   expect(screen.getByTestId('sarah-read-as-of').textContent).toBe(COPY.date);
   expect(panel().querySelector('time')?.getAttribute('datetime')).toBe(AS_OF);
-  expect(panel().querySelectorAll('time')).toHaveLength(2);
+  expect(panel().querySelectorAll('time')).toHaveLength(4);
   expect(panel().querySelectorAll('time')[1].getAttribute('datetime')).toBe('2027-10-01');
   expect(panel().textContent?.split('≈ ZMW 27,000.00')).toHaveLength(2);
   expect(panel().textContent).not.toContain('Course fee USD 1,000');
@@ -142,7 +142,7 @@ test('Sarah hero uses $1000.00 USD and one independent fee observation', async (
   expect(fixtureSource).toMatch(/SARAH_EXAMPLE_INPUTS/); expect(fixtureSource).toMatch(/name === 'U3'/);
   expect(fixtureSource.match(/computeSarahRead\(/g)).toHaveLength(1);
   expect(fixtureSource).not.toMatch(/\b27\b|research|golden|__tests__|Date\.now|localStorage|sessionStorage/);
-  expect(panel().querySelectorAll('svg, canvas, progress, meter, [role="progressbar"], [data-delta], [data-direction]')).toHaveLength(0);
+  expect(panel().querySelectorAll('canvas, progress, meter, [role="progressbar"], [data-delta], [data-direction]')).toHaveLength(0);
   expect(panel().textContent).not.toMatch(/history|last visit|before|after|difference|countdown|progress/i);
   view.unmount();
   // Arbitrary read proves both dates, declaration and local text without clock/visit dependence.
@@ -155,7 +155,7 @@ test('Sarah hero uses $1000.00 USD and one independent fee observation', async (
   expect(screen.getByTestId('sarah-read-caption').textContent).toBe('≈ ZMW 33,333.12 Example figure, not a quote');
   expect(screen.getByTestId('sarah-read-as-of').textContent).toBe('Example date: 3 Feb 2030');
   expect(screen.getByTestId('sarah-fee-card').querySelector('time')?.textContent).toBe('5 Apr 2031');
-  expect(Array.from(panel().querySelectorAll('time')).map(n=>n.getAttribute('datetime'))).toEqual([sentinel.asOf,sentinel.declaredFee.dueDate]);
+  expect(Array.from(panel().querySelectorAll('time')).map(n=>n.getAttribute('datetime'))).toEqual([sentinel.asOf,sentinel.declaredFee.dueDate,'2026-04-14T00:00:00.000Z','2026-07-21T00:00:00.000Z']);
   for (const text of ['ENGINE RATE','ENGINE LIMITS']) expect(screen.getByText(text,{exact:true})).toBeDefined();
   expect(screen.queryByText('ENGINE FEE')).toBeNull();
 });
@@ -164,7 +164,7 @@ test('Sarah Home has no fee selector or kwacha read', () => {
   for (const route of ROUTES) for (const fee of ['zmw', 'usd', 'unknown']) {
     at(route, 'sarah', `fee=${fee}&keep=1`); const view = render(<DashboardPage />); assertRead();
     expect(screen.getAllByRole('combobox')).toHaveLength(1);
-    expect(panel().querySelectorAll('select, input, button, a')).toHaveLength(0);
+    expect(panel().querySelectorAll('select, input, button:not([aria-controls]), a')).toHaveLength(0);
     expect(document.body.textContent).not.toMatch(/K29,500|is set in kwacha|USD 1,000 fee|K29,500 fee/);
     expect(screen.queryByLabelText('Example fee')).toBeNull();
     fireEvent.change(picker(), { target: { value: 'daniel' } });
@@ -241,14 +241,14 @@ test('Sarah Home uses locked copy and no funding claims', () => {
     at(route, 'sarah'); const view = render(<DashboardPage />); assertRead();
     expect(document.getElementById('dashboard-sarah-label')?.textContent).toBe(COPY.heading);
     expect(screen.getByTestId('sarah-read-caption').textContent).toBe(COPY.caption);
-    expect(screen.getByTestId('sarah-fee-card').textContent).toBe(COPY.card + COPY.due + COPY.rate + COPY.limits);
-    expect(panel().textContent).toBe(COPY.heading + '$1000.00 USD' + COPY.caption + COPY.date + COPY.card + COPY.due + COPY.rate + COPY.limits);
+    expect(withoutChart(screen.getByTestId('sarah-fee-card'))).toBe(COPY.card + COPY.due + COPY.rate + COPY.limits);
+    expect(withoutChart(panel())).toBe(COPY.heading + '$1000.00 USD' + COPY.caption + COPY.date + COPY.card + COPY.due + COPY.rate + COPY.limits);
     expect(picker().selectedOptions[0].textContent).toBe(OPTIONS[2]);
     expect(screen.getAllByText(COPY.rate, { exact: true })).toHaveLength(1);
     const text = panel().textContent!.replace(COPY.limits, ''); // Keep the exact negative payment-ability statement.
     for (const denied of ENGINE_TRUST_INFORMATIONAL_DENYLIST) expect(text.toLowerCase()).not.toContain(denied);
     expect(text).not.toMatch(/hedg(?:e|ing)|sav(?:ing|ings)|contribut|sufficien|cover(?:age|ed|s)?|gap|progress|forecast|afford|can pay|on track|fund(?:ed|ing)|goal|guarantee|protect|gain|loss|higher|lower|increase|decrease/i);
-    expect(panel().querySelectorAll('button, a, input, select, progress, meter, [role="progressbar"]')).toHaveLength(0);
+    expect(panel().querySelectorAll('button:not([aria-controls]), a, input, select, progress, meter, [role="progressbar"]')).toHaveLength(0);
     const component = source('app/(app)/dashboard/SarahExampleHome.tsx');
     expect(component).not.toMatch(/CurrencyInsight|PositionLine|localStorage|sessionStorage|Date\.now|parseFloat|parseInt|Number\(.*localDisplay|research|golden|__tests__/);
     view.unmount();
@@ -286,11 +286,14 @@ test('Sarah preserves immutable sources and the Founder-confirmed §389 journey 
     expect(shared).toMatch(/formatUsd/); expect(shared).toMatch(/SIMULATION_DISPLAY_ESTIMATE_CAPTION/);
   }
   const consumer = source('app/(app)/dashboard/DanielExampleHome.tsx');
-  expect(consumer).not.toMatch(/PositionEntry|PositionLine|DEPOSIT|CurrencyInsight|compareCurrencyExample|estimateCents|getSimulationDisplayRate|formatSimulationDisplay|parseFloat|parseInt|Number\(.*localDisplay|research|golden|fixtureRateZmwPerUsd/);
+  expect(consumer).not.toMatch(/PositionEntry|PositionLine|DEPOSIT|CurrencyInsight|compareCurrencyExample|estimateCents|getSimulationDisplayRate|formatSimulationDisplay|parseFloat|parseInt|Number\(.*localDisplay|research|golden/);
   for (const component of ['HomeHero', 'ExampleCard', 'RateLine', 'ExampleLineChart']) expect(consumer).toContain('<' + component);
   expect(consumer).toContain('currentRead.declaredHolding.amount');
   expect(consumer).toContain('currentRead.explanation.rateAssumption');
-  expect(consumer).toContain('reads={timeline}');
+  expect(consumer).toContain('series={series}');
+  expect(consumer).toContain('example.deposits');
+  expect(source('app/(app)/dashboard/PositionLine.tsx')).toMatch(/ExampleLineChart/);
+  expect(source('app/(app)/dashboard/PositionLine.tsx')).not.toMatch(/<svg/);
   expect(consumer).toContain('Figures over time');
   expect(consumer).toContain('shown above');
   expect(consumer).toMatch(/SYNTHETIC_JOURNEY_EXAMPLES/);
@@ -302,7 +305,6 @@ test('Sarah preserves immutable sources and the Founder-confirmed §389 journey 
     "__tests__/engine-sarah-read.golden.ts": "656fb25c528c85f8b8a02c026e1b95699dc5cdd6ed617e276e2cbc64ac2784f5",
     "__tests__/engine-daniel-read.golden.ts": "d2fe6c27bfe369e068958181da41d1d04594e41b192f47d2379fe1f9d62d8ab4",
     "lib/state/daniel-home-fixture.ts": "af81ee319ae5b4f97e1dcf9403e79d8f94a71f9bc68b37df1da5c3b530fb2081",
-    "app/(app)/dashboard/PositionLine.tsx": "d854781bd1b0950de0fc8e16a972e8ba7e47842e263a7c776664cb7deb8dae0a",
     "app/(app)/dashboard/CurrencyInsight.tsx": "769028b998087f94e53bc1b7ff875a1f916e6963537d06911f56bc19bd4f5b33"
 };
   for (const [file, expected] of Object.entries(hashes)) {
@@ -320,3 +322,10 @@ test('Sarah preserves immutable sources and the Founder-confirmed §389 journey 
     expect(createHash('sha256').update(contents).digest('hex'), file).toBe(expected);
   }
 });
+
+// §391: preserve all pre-chart fee copy in order, with the new list tested separately.
+function withoutChart(node: HTMLElement) {
+  const clone = node.cloneNode(true) as HTMLElement;
+  clone.querySelector('[data-testid="example-line-chart"]')?.remove();
+  return clone.textContent;
+}

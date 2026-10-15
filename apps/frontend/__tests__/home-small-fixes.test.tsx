@@ -469,7 +469,7 @@ describe("default Home keeps its retained elements", () => {
     render(<DashboardPage />);
     expect(
       (await screen.findByTestId("engine-posture-context")).textContent
-    ).toMatch(/^One simulated withdrawal/);
+    ).toBe('1 change since your last visit');
     expect(screen.queryByRole("region", { name: "Recent activity" })).toBeNull();
 
     cleanup();

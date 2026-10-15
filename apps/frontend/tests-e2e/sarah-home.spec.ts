@@ -98,9 +98,9 @@ test('Sarah hero uses $1000.00 USD and one independent fee observation', async (
     await page.goto(routeFor(route)); await assertRead(page);
     await expect(page.getByTestId('sarah-fee-card')).toHaveCount(1);
     await expect(page.getByTestId('sarah-read-as-of')).toHaveText(COPY.date);
-    await expect(panel(page).locator('time')).toHaveCount(2); await expect(page.getByTestId('sarah-read-as-of').locator('time')).toHaveAttribute('datetime', AS_OF); await expect(page.getByTestId('sarah-fee-card').locator('time')).toHaveAttribute('datetime', '2027-10-01');
+    await expect(panel(page).locator('time')).toHaveCount(4); await expect(page.getByTestId('sarah-read-as-of').locator('time')).toHaveAttribute('datetime', AS_OF); await expect(page.getByTestId('sarah-fee-card').locator('p > time')).toHaveAttribute('datetime', '2027-10-01');
     for (const text of [COPY.due, COPY.rate, COPY.limits]) { await expect(panel(page).getByText(text, { exact: true })).toHaveCount(1); await expect(panel(page).getByText(text, { exact: true })).toBeVisible(); }
-    await expect(panel(page).locator('svg, canvas, progress, meter, [role="progressbar"], [data-delta], [data-direction]')).toHaveCount(0);
+    await expect(panel(page).locator('canvas, progress, meter, [role="progressbar"], [data-delta], [data-direction]')).toHaveCount(0);
     await expect(panel(page)).not.toContainText(/history|before|after|last visit|difference|countdown|progress/i);
   }
 });
@@ -109,7 +109,7 @@ test('Sarah Home has no fee selector or kwacha read', async ({ page }) => {
   await login(page);
   for (const route of ROUTES) for (const fee of ['zmw', 'usd', 'unknown']) {
     await page.goto(routeFor(route, 'sarah', `fee=${fee}&keep=1`)); await assertRead(page);
-    await expect(page.getByRole('combobox')).toHaveCount(1); await expect(panel(page).locator('select, input, button, a')).toHaveCount(0);
+    await expect(page.getByRole('combobox')).toHaveCount(1); await expect(panel(page).locator('select, input, button:not([aria-controls]), a')).toHaveCount(0);
     await expect(page.getByLabel('Example fee', { exact: true })).toHaveCount(0);
     await expect(page.locator('main')).not.toContainText(/K29,500|is set in kwacha|USD 1,000 fee|K29,500 fee/);
     await picker(page).selectOption('daniel'); await expect(page.getByTestId('dashboard-daniel-read')).toBeVisible();
@@ -199,13 +199,13 @@ test('Sarah Home uses locked copy and no funding claims', async ({ page }) => {
   for (const route of ROUTES) {
     await page.goto(routeFor(route)); await assertRead(page);
     await expect(page.locator('#dashboard-sarah-label')).toHaveText(COPY.heading); await expect(page.getByTestId('sarah-read-caption')).toHaveText(COPY.caption);
-    expect(await panel(page).textContent()).toBe(COPY.heading + '$1000.00 USD' + COPY.caption + COPY.date + COPY.card + COPY.due + COPY.rate + COPY.limits);
-    await expect(page.getByTestId('sarah-fee-card')).toHaveText(COPY.card + COPY.due + COPY.rate + COPY.limits);
+    expect(await panel(page).evaluate(n => { const copy = n.cloneNode(true) as HTMLElement; copy.querySelector('[data-testid="example-line-chart"]')?.remove(); return copy.textContent; })).toBe(COPY.heading + '$1000.00 USD' + COPY.caption + COPY.date + COPY.card + COPY.due + COPY.rate + COPY.limits);
+    expect(await page.getByTestId('sarah-fee-card').evaluate(n => { const copy = n.cloneNode(true) as HTMLElement; copy.querySelector('[data-testid="example-line-chart"]')?.remove(); return copy.textContent; })).toBe(COPY.card + COPY.due + COPY.rate + COPY.limits);
     await expect(page.getByText(COPY.rate, { exact: true })).toHaveCount(1);
     await expect(page.getByText(COPY.limits, { exact: true })).toBeVisible();
     const text = (await panel(page).textContent())!.replace(COPY.limits, '');
     expect(text).not.toMatch(/hedg(?:e|ing)|sav(?:ing|ings)|contribut|sufficien|cover(?:age|ed|s)?|gap|progress|forecast|afford|can pay|on track|fund(?:ed|ing)|goal|guarantee|protect|gain|loss|higher|lower|increase|decrease/i);
-    await expect(panel(page).locator('button, a, input, select, progress, meter, [role="progressbar"], details')).toHaveCount(0);
+    await expect(panel(page).locator('button:not([aria-controls]), a, input, select, progress, meter, [role="progressbar"], details')).toHaveCount(0);
     // Reading order: figure then caption/date, followed by the complete adjacent fee card.
     const order = await panel(page).locator('[data-testid]').evaluateAll(nodes => nodes.map(n => n.getAttribute('data-testid')));
     expect(order.indexOf('sarah-read-figure')).toBeLessThan(order.indexOf('sarah-read-caption'));
@@ -278,3 +278,6 @@ test('Example reading order and reflow survive enlarged text', async ({ page }) 
   }
   expect(errors).toEqual([]);
 });
+
+// §391: deterministic event dates and current-year presentation.
+test.use({ timezoneId: 'UTC' });
