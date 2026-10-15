@@ -63,6 +63,12 @@ async function seed(page: Page, txs: LedgerTx[], currency?: string) {
   }, { txs, currency, key: CURRENCY_KEY });
 }
 
+async function seedAfterHomeUnmount(page: Page, txs: LedgerTx[], currency?: string) {
+  // Keep the preceding Home's pending visit/review effects outside this fixture.
+  await page.goto('/api/policy');
+  await seed(page, txs, currency);
+}
+
 /** Your own simulation (or an unrecognised example). */
 async function gotoHome(page: Page, route: string) {
   await page.goto(route);
@@ -434,7 +440,7 @@ test("Daniel's example ignores your simulation", async ({ page }) => {
   let reference: string | null = null;
   for (const route of JOURNEY_ROUTES) {
     for (const state of ['empty', 'changed']) {
-      await seed(page, ACTIVITY[state], 'KES');
+      await seedAfterHomeUnmount(page, ACTIVITY[state], 'KES');
       await page.evaluate(() => {
         localStorage.setItem('hedgr:last-home-visit', '1500');
         localStorage.setItem('hedgr:review-snapshot', 'preserved-review-value');
@@ -787,7 +793,7 @@ test('Example reading order and reflow survive enlarged text', async ({ page }) 
 });
 
 test('Daniel legibility retains claim, presentation and isolation fences', async ({ page }) => {
-  await login(page); await seed(page, ACTIVITY.changed, 'KES');
+  await login(page); await seedAfterHomeUnmount(page, ACTIVITY.changed, 'KES');
   for (const route of JOURNEY_ROUTES) {
     const before = await storageSnapshot(page); await gotoDaniel(page, route);
     expect(await storageSnapshot(page)).toEqual(before);
