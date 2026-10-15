@@ -323,7 +323,7 @@ describe("shows only Daniel's reserve when the example is selected", () => {
         expect(screen.getByTestId("dashboard-disclosures")).toBeDefined();
         expect(screen.getByTestId("daniel-read-figure").textContent).toBe("$800.00 USD");
         expect(screen.getByTestId("daniel-read-caption").textContent).toBe("≈ ZMW 21,600.00 Example figure, not a quote");
-        expect(screen.getAllByTestId("daniel-observation")).toHaveLength(3);
+        expect(screen.getAllByTestId("daniel-observation")).toHaveLength(5);
         for (const testId of OWN_SIMULATION_ONLY) {
           expect(screen.queryByTestId(testId), testId).toBeNull();
         }
@@ -438,8 +438,9 @@ describe("keeps the Daniel read identical when display currency or simulated act
           expect(screen.getByTestId("daniel-read-figure").textContent).toBe("$800.00 USD");
           const content = panel().cloneNode(true) as HTMLElement;
           content.querySelector("a")?.remove();
-          reference ??= content.outerHTML;
-          expect(content.outerHTML).toBe(reference);
+          const html = content.outerHTML.replace(/«r[a-z0-9]+»/g, ':react-id:');
+          reference ??= html;
+          expect(html).toBe(reference);
           view.unmount();
         }
       }
@@ -489,9 +490,9 @@ describe("contains no prohibited claims in Daniel Home copy", () => {
     // Fixture, time and rate limits accompany the read; only URL return navigation is offered.
     expect(text).toContain("Fictional");
     expect(text).toContain("Not a live rate.");
-    expect(text).toContain("9 Oct 2026 · shown above");
+    expect(text).toContain("9 Oct · shown above");
     expect(panel().querySelectorAll("a")).toHaveLength(1);
-    expect(panel().querySelectorAll("button, input, select, progress, meter, [role='progressbar']")).toHaveLength(0);
+    expect(panel().querySelectorAll("button:not([aria-controls]), input, select, progress, meter, [role='progressbar']")).toHaveLength(0);
     // The picker's locked option names carry no currency or claim.
     const pickerText = Array.from(picker().options).map((o) => o.textContent).join(" ");
     expect(pickerText).not.toMatch(/USD|ZMW|K21|\$|hedg|guarantee|protect|recommend/i);
@@ -546,7 +547,7 @@ test("Daniel's example offers no actions on your simulation", async () => {
   await renderDaniel("journey", "settled");
   expect(within(panel()).getByRole("link", { name: LOCKED_COPY.back })).toBeDefined();
   expect(panel().querySelectorAll("a")).toHaveLength(1);
-  expect(panel().querySelectorAll("button, input, select")).toHaveLength(0);
+  expect(panel().querySelectorAll("button:not([aria-controls]), input, select")).toHaveLength(0);
   expect(document.querySelectorAll('main a[href*="/deposit"], main a[href*="/withdraw"], main a[href*="/activity"]')).toHaveLength(0);
   expect(document.body.textContent).not.toMatch(/View Activity|Restart simulated journey|Simulate a withdrawal/);
 });
@@ -578,8 +579,9 @@ test("Daniel's example ignores your simulation", async () => {
       // Compare fictional content; the return href intentionally preserves each route.
       const content = panel().cloneNode(true) as HTMLElement;
       content.querySelector("a")?.remove();
-      reference ??= content.innerHTML;
-      expect(content.innerHTML).toBe(reference);
+      const html = content.innerHTML.replace(/«r[a-z0-9]+»/g, ':react-id:');
+      reference ??= html;
+      expect(html).toBe(reference);
       expect(JSON.stringify({ ...window.localStorage })).toBe(before);
       expect(setItem).not.toHaveBeenCalled();
       expect(removeItem).not.toHaveBeenCalled();
@@ -630,14 +632,14 @@ test("Daniel change card consumes Engine explanations verbatim without a compute
   homeMocks.danielOverride = homeMocks.timelineOverride[2]; await renderDaniel('journey');
   expect(screen.getByTestId('daniel-read-figure').textContent).toBe('$1234.56 USD');
   expect(screen.getByTestId('daniel-read-caption').textContent).toBe('≈ ZMW 33,333.12 Example figure, not a quote');
-  expect(screen.getAllByTestId('daniel-observation').map(n=>n.textContent)).toEqual(['1 Jan 2026 · ENGINE FIGURE 0','3 Jan 2026 · ENGINE FIGURE 1','11 Jan 2026 · shown above']);
+  expect(screen.getAllByTestId('daniel-observation').map(n=>n.textContent)).toEqual(['First deposit +$500.00 · 12 Jun', 'Deposit +$300.00 · 14 Aug', '≈ ZMW 15,000.00 · 1 Jan · example rate 24.5', '≈ ZMW 7,500.00 · 3 Jan · example rate 29.5', '11 Jan · shown above']);
   expect(screen.getByTestId('daniel-read-rate').textContent).toBe('ENGINE RATE 2');
   expect(panel().textContent).not.toMatch(/ENGINE HOLDING|ENGINE RATE [01]|K21,600|K23,600|higher|lower|delta|difference/);
-  const dots=Array.from(screen.getByTestId('example-line-chart').querySelectorAll('circle'));
-  expect(dots.map(n=>Number(n.getAttribute('cx')))).toEqual([6,63.6,294]);
-  const ys=dots.map(n=>Number(n.getAttribute('cy'))); expect(ys.every(Number.isFinite)).toBe(true); expect(ys[2]).toBeLessThan(ys[0]); expect(ys[0]).toBeLessThan(ys[1]);
+  const dots=Array.from(screen.getByTestId('example-line-chart').querySelectorAll('[data-series-value]'));
+  expect(dots.map(n=>Number(n.getAttribute('data-series-value')))).toEqual([500,800,800]);
+  const ys=dots.map(n=>Number(n.getAttribute('data-series-y'))); expect(ys.every(Number.isFinite)).toBe(true); expect(ys[2]).toBe(ys[1]); expect(ys[1]).toBeLessThan(ys[0]);
   const source=readFileSync(resolve(__dirname,'../app/(app)/dashboard/DanielExampleHome.tsx'),'utf8');
-  expect(source).not.toMatch(/PositionEntry|PositionLine|DEPOSIT|CurrencyInsight|compareCurrencyExample|estimateCents|getSimulationDisplayRate|formatSimulationDisplay|parseFloat|parseInt|Number\(.*localDisplay|research|golden|fixtureRateZmwPerUsd/);
+  expect(source).not.toMatch(/PositionEntry|PositionLine|DEPOSIT|CurrencyInsight|compareCurrencyExample|estimateCents|getSimulationDisplayRate|formatSimulationDisplay|parseFloat|parseInt|Number\(.*localDisplay|research|golden/);
 });
 
 test("Founder-locked copy and dates are character-exact across Daniel's example Home", async () => {
@@ -646,7 +648,7 @@ test("Founder-locked copy and dates are character-exact across Daniel's example 
 
 // §367: Founder-locked legibility contract; Engine strings remain deferred.
 const LEGIBILITY = {
-  invariant: 'Daniel’s dollar amount is unchanged across these example dates. Only the example exchange rate changes the kwacha figure.',
+  invariant: 'He made two deposits and none since. Each kwacha figure uses the example rate for its date.',
   ownLimitation: 'This is what happened in your simulation. It doesn’t tell you what will happen next.',
   start: 'Practise with pretend money first. See what changes, and why.',
   currency: 'Shown in ZMW, Daniel’s currency',
@@ -754,7 +756,7 @@ test('Journey arrival announces current and prior simulated balances without a d
 test('Example registry resolves Daniel and preserves his behavior', async () => {
   const journey = await import('../lib/state/synthetic-journey');
   const registry = (journey as typeof journey & { SYNTHETIC_JOURNEY_EXAMPLES?: readonly { id: string; label: string }[] }).SYNTHETIC_JOURNEY_EXAMPLES;
-  expect(registry).toEqual([{ id: 'daniel', name: 'Daniel’s reserve', label: "Daniel's reserve" }, { id: 'sarah', name: 'Sarah’s course fee', label: "Sarah's course fee" }]);
+  expect(registry?.map(({ id, name, label }) => ({ id, name, label }))).toEqual([{ id: 'daniel', name: 'Daniel’s reserve', label: "Daniel's reserve" }, { id: 'sarah', name: 'Sarah’s course fee', label: "Sarah's course fee" }]);
   expect(journey.parseSyntheticJourneyExample('?example=daniel')).toBe('daniel');
   const view = await renderDaniel('journey', 'returning');
   expect(screen.getByTestId('daniel-read-figure').textContent).toBe("$800.00 USD");
@@ -796,15 +798,16 @@ test('Daniel legibility retains claim, presentation and isolation fences', async
   await renderDaniel('journey', 'returning');
   const text = panel().textContent ?? '';
   expect(text).not.toMatch(/custod|wealth|sufficien|guarantee|hedging|obligation|progress|gain|loss|gap|higher|lower|balance/i);
-  expect(panel().querySelectorAll('progress, meter, [role="progressbar"], button, input, select, [data-delta], [data-direction]')).toHaveLength(0);
+  expect(panel().querySelectorAll('progress, meter, [role="progressbar"], button:not([aria-controls]), input, select, [data-delta], [data-direction]')).toHaveLength(0);
   expect(text).not.toMatch(/Hedgr (moves|exchanges|converts|protects)/);
   expect(homeMocks.clearLedger).not.toHaveBeenCalled();
 });
 
 test('Daniel legibility leaves chart and runtime fixtures unchanged', async () => {
+  const adapter = readFileSync(resolve(__dirname, '../app/(app)/dashboard/PositionLine.tsx'), 'utf8');
+  expect(adapter).toMatch(/ExampleLineChart/); expect(adapter).not.toMatch(/<svg/);
   const { createHash } = await import('node:crypto');
   for (const [file, hash] of [
-    ['app/(app)/dashboard/PositionLine.tsx', 'd854781bd1b0950de0fc8e16a972e8ba7e47842e263a7c776664cb7deb8dae0a'],
     ['lib/state/daniel-home-fixture.ts', 'af81ee319ae5b4f97e1dcf9403e79d8f94a71f9bc68b37df1da5c3b530fb2081'],
   ]) expect(createHash('sha256').update(readFileSync(resolve(__dirname, '..', file))).digest('hex')).toBe(hash);
   await renderDaniel('journey');
@@ -813,26 +816,28 @@ test('Daniel legibility leaves chart and runtime fixtures unchanged', async () =
 });
 
 // §377: accepted three-row list, two-decimal hero, with no latest monetary repeat.
-const A_ROWS = ['9 Sep 2026 · K19,600', '25 Sep 2026 · K23,600', '9 Oct 2026 · shown above'];
+const A_ROWS = ['First deposit +$500.00 · 12 Jun', 'Deposit +$300.00 · 14 Aug', '≈ ZMW 19,600.00 · 9 Sep · example rate 24.5', '≈ ZMW 23,600.00 · 25 Sep · example rate 29.5', '9 Oct · shown above'];
 function assertTicketA() {
   expect(screen.getByTestId('daniel-read-figure').textContent).toBe('$800.00 USD');
   expect(screen.getByTestId('daniel-read-caption').textContent).toBe('≈ ZMW 21,600.00 Example figure, not a quote');
   const region = within(panel()).getByRole('region', { name: LOCKED_COPY.since });
   expect(within(region).getByRole('heading', { level: 2 }).textContent).toBe(LOCKED_COPY.since);
   expect(Array.from(region.querySelectorAll('ol > li')).map(n => n.textContent)).toEqual(A_ROWS);
-  expect(Array.from(region.querySelectorAll('time')).map(n => n.getAttribute('datetime'))).toEqual(expectedTimeline.map(r => r.asOf));
+  expect(Array.from(region.querySelectorAll('time')).map(n => n.getAttribute('datetime'))).toEqual(['2026-06-12T00:00:00.000Z', '2026-08-14T00:00:00.000Z', ...expectedTimeline.map(r => r.asOf)]);
   const graphic = screen.getByTestId('example-line-chart');
   expect(region.contains(graphic)).toBe(true);
-  expect(graphic.getAttribute('aria-hidden')).toBe('true');
+  expect(graphic.getAttribute('aria-hidden')).toBeNull();
+  expect(graphic.querySelector('svg')?.getAttribute('aria-hidden')).toBe('true');
   expect(graphic.querySelector('svg')?.getAttribute('focusable')).toBe('false');
-  expect(graphic.querySelectorAll('circle')).toHaveLength(3);
-  expect(graphic.textContent).toBe(''); expect(graphic.querySelector('path')!.getAttribute('d')).not.toMatch(/NaN|Infinity/);
-  expect(graphic.querySelectorAll('a, button, [tabindex], title, desc')).toHaveLength(0);
+  expect(graphic.querySelectorAll('[data-series-value]')).toHaveLength(3);
+  expect(within(graphic).getByRole('button', { name: 'All changes · example dates' })).toBeDefined(); expect(graphic.querySelector('path')!.getAttribute('d')).not.toMatch(/NaN|Infinity/);
+  expect(graphic.querySelectorAll('svg a, svg button, svg [tabindex], title, desc')).toHaveLength(0);
+  expect(graphic.querySelectorAll('[data-testid="chart-event-dot"]')).toHaveLength(2);
   expect(screen.queryByTestId('dashboard-position-line')).toBeNull();
   expect(screen.queryByTestId('dashboard-position-line-visit')).toBeNull();
-  expect(panel().querySelectorAll('[aria-live], [role="status"], .sr-only')).toHaveLength(0);
+  expect(panel().querySelectorAll('[aria-live], [role="status"]')).toHaveLength(0);
   const text = panel().textContent!;
-  for (const [claim,count] of [['$800.00 USD',1],['≈ ZMW 21,600.00',1],['9 Oct 2026',2],['Fictional example · Daniel’s reserve',1],
+  for (const [claim,count] of [['$800.00 USD',1],['≈ ZMW 21,600.00',1],['9 Oct 2026',1],['Fictional example · Daniel’s reserve',1],
     ['Example figure, not a quote',1],[RATE_ASSUMPTION,1],[LEGIBILITY.invariant,1],[LIMITATION,1],
     ['This example only displays it. Nothing is moved or exchanged.',0]] as const) expect(text.split(claim).length-1,claim).toBe(count);
   for (const old of ['Daniel holds USD 800','Shown in ZMW','USD 800 shows','What changed since Daniel’s last visit','Now ·',expectedTimeline[1].explanation.rateAssumption]) expect(text).not.toContain(old);

@@ -288,7 +288,7 @@ describe("DashboardPage engine trust surface", () => {
       "How you can tellCheck both entries in Activity.",
     ]);
     expect(screen.getByTestId("dashboard-position-line").textContent).toBe(
-      "Your line starts with your first deposit"
+      "No deposits yet. Your first one will start this chart."
     );
     const utilities = screen.getByTestId("dashboard-simulation-utilities");
     expect(Array.from(utilities.children).map((node) => node.getAttribute("data-testid"))).toEqual([
@@ -452,7 +452,7 @@ describe("DashboardPage engine trust surface", () => {
     expect(screen.queryByTestId("dashboard-change-evidence")).toBeNull();
     expect(screen.queryByText("How your position changed")).toBeNull();
     expect(screen.getByTestId("engine-posture-context").textContent).toBe(
-      "A simulated withdrawal of $2.00 on 1 Jan."
+      "A simulated withdrawal on 1 Jan."
     );
     expect(screen.queryByTestId("engine-simulation-attention-answer")).toBeNull();
     expect(
@@ -617,7 +617,7 @@ describe("Currency context integration", () => {
     expect(screen.getByTestId("dashboard-balance").contains(screen.getByTestId("currency-insight"))).toBe(false);
     expect(screen.getByTestId("currency-insight-headline").textContent).toContain("ZMW 4.05 higher");
     expect(screen.queryByTestId("engine-simulation-attention-answer")).toBeNull();
-    expect(screen.getByTestId("engine-posture-context").textContent).toContain("A simulated withdrawal of $2.00 on 1 Jan.");
+    expect(screen.getByTestId("engine-posture-context").textContent).toContain("A simulated withdrawal on 1 Jan.");
     // Pending entries must withhold direction even when their numeric net cancels.
     dashboardStateMocks.transactions = dashboardStateMocks.transactions.map(tx => ({ ...tx, status: "pending" }));
     rerender(<DashboardPage />);
@@ -853,14 +853,15 @@ test('Journey since states use simulation context without current-balance restat
   for (const route of B_ROUTES) {
     for (const type of ['withdrawal', 'deposit'] as const) {
       setupTicketB(route, 'one', type);
-      expect((await screen.findByTestId('engine-posture-context')).textContent).toBe(`One simulated ${type} of $20.00 on 13 Oct.`);
+      expect((await screen.findByTestId('engine-posture-context')).textContent).toBe('1 change since your last visit');
     }
     setupTicketB(route, 'several');
-    expect((await screen.findByTestId('engine-posture-context')).textContent).toBe('Two simulated entries since 11 Oct.');
-    const rows = screen.getByTestId('dashboard-since-entries').querySelectorAll('li');
-    expect(Array.from(rows).map(row => row.textContent)).toEqual(['Simulated deposit12 Oct+$500.00', 'Simulated withdrawal13 Oct−$20.00']);
+    expect((await screen.findByTestId('engine-posture-context')).textContent).toBe('2 changes since your last visit');
+    expect(screen.queryByTestId('dashboard-since-entries')).toBeNull();
+    const rows = screen.getByTestId('chart-event-list').querySelectorAll('li');
+    expect(Array.from(rows).map(row => row.textContent)).toEqual(['First deposit +$500.00 · 12 Oct', 'Withdrawal −$20.00 · 13 Oct']);
     setupTicketB(route, 'no-change');
-    expect((await screen.findByTestId('engine-posture-context')).textContent).toBe('No simulated activity since 13 Oct.');
+    expect((await screen.findByTestId('engine-posture-context')).textContent).toBe('No changes since your last visit');
     expect(screen.getByText('The ZMW estimate can change with the exchange rate.')).toBeDefined();
   }
 });
@@ -873,8 +874,8 @@ test('own-sim Home renders each figure and claim exactly once', async () => {
       expect(screen.getAllByTestId('usd-balance')).toHaveLength(1);
       expect(card.textContent?.match(/\$480\.00/g) ?? []).toHaveLength(0);
       expect(card.textContent?.split(B_LIMIT).length).toBe(2);
-      expect(card.textContent?.match(/\$20\.00/g) ?? []).toHaveLength(state === 'no-change' ? 0 : 1);
-      expect(card.textContent?.match(/\$500\.00/g) ?? []).toHaveLength(state === 'several' ? 1 : 0);
+      expect(card.textContent?.match(/\$20\.00/g) ?? []).toHaveLength(0);
+      expect(card.textContent?.match(/\$500\.00/g) ?? []).toHaveLength(0);
       const activityClaims = (screen.getByTestId('dashboard-balance').textContent ?? '') + card.textContent;
       expect(activityClaims.match(/Includes your simulated activity\.|included in the balance above\./g)).toHaveLength(1);
     }
@@ -1018,7 +1019,10 @@ function s18OutsideTile(view: HTMLElement) {
   if (clone.querySelector('#dashboard-example-picker')) {
     const protectedHero = Array.from(clone.querySelectorAll('[data-testid="dashboard-arrival-announcement"], [data-testid="dashboard-synthetic-balance-explainer"], [class*="available"]')).map(n => n.textContent);
     const example = clone.querySelector('[data-testid="dashboard-daniel-read"], [data-testid="dashboard-sarah-read"]');
-    const protectedExample = example ? Array.from(example.querySelectorAll('p, a')).map(n => n.textContent).filter(t => t?.startsWith('Daniel’s dollar amount') || t?.startsWith('Example rate:') || t?.startsWith('This is what happened') || t?.startsWith('Fictional course fee.') || t === 'Go to your own simulation' || t === 'Due 1 Oct 2027.') : [];
+    const protectedExample = example ? Array.from(example.querySelectorAll('p, a')).map(n => n.textContent).filter(t => t?.startsWith('Example rate:') || t?.startsWith('This is what happened') || t?.startsWith('Fictional course fee.') || t === 'Go to your own simulation' || t === 'Due 1 Oct 2027.') : [];
+    clone.querySelectorAll('[data-testid="dashboard-position-line"], [data-testid="chart-event-list"], [data-testid="daniel-invariant"]').forEach(n => n.remove());
+    clone.querySelectorAll('[data-home-state^="since-"] [data-testid="engine-posture-context"]').forEach(n => { n.textContent = ':authorised-since:'; });
+    clone.querySelector('[data-testid="dashboard-since-entries"]')?.remove();
     clone.querySelector('#dashboard-orientation-heading')?.remove();
     clone.querySelector('[data-testid="dashboard-balance"]')?.remove();
     example?.remove();
@@ -1147,19 +1151,25 @@ describe('S18 earn tile fence sweep (§384)', () => {
       setupS18(route, mode as 'simulated' | 'live');
       const view = await renderS18();
       baseline[`${mode}:${route}`] = s18Digest(s18OutsideTile(view.container));
+      if (route.includes('example=daniel')) {
+        expect(screen.getByTestId('daniel-invariant').textContent).toBe('He made two deposits and none since. Each kwacha figure uses the example rate for its date.');
+        expect(screen.getByTestId('chart-event-list').textContent).toContain('First deposit +$500.00 · 12 Jun');
+      } else if (route.includes('example=sarah')) {
+        expect(screen.getByTestId('chart-event-list').textContent).toBe('First deposit +ZMW 4,000.00 · 14 AprDeposit +ZMW 2,000.00 · 21 Jul');
+      }
       expect(useBalance()).toMatchObject({ total: 100, available: 100, pending: 0, currency: 'USD' });
       expect(useEngineState()).toEqual(getMockEngineState('normal'));
     }
-    // §389 F3: captured on unmodified 56ce3e6 before green, after excluding only
+    // §391 F3: captured on unmodified b3ada40 before runtime, after excluding only
     // authorised journey regions. Both original non-journey hashes stay fixed.
     expect(baseline).toEqual({
       "simulated:/dashboard": "0dadda5310541c5d62aec1cb4e919c0d3aa23f82017234d7c85a97fb487393c5",
       "live:/dashboard": "fc912dcd7a591563f2faa95d8b9627b6aa9299e3cd55f5ec5b1c7e99e2348961",
       "simulated:/dashboard-synthetic-journey?example=own": "3af19b8cd1692dcde91d989b80e5d9a8d773b5e55f568fcc99c1e218f03b26cc",
-      "simulated:/dashboard-synthetic-journey?example=daniel": "26c8f79db0662da8e0ec9c011b25da51d022161ba3c7d9cd989ea7e3e9a05fb4",
+      "simulated:/dashboard-synthetic-journey?example=daniel": "c55064116f69b225003fc31573f27a602e8af88fa323f0db6e9f2ef0139b0cad",
       "simulated:/dashboard-synthetic-journey?example=sarah": "06e277c1f75575e1fe56fa6170ff15a2537a99f15884e1617dc9535cfe644de0",
       "simulated:/dashboard?journey=class-a-val-002&example=own": "3af19b8cd1692dcde91d989b80e5d9a8d773b5e55f568fcc99c1e218f03b26cc",
-      "simulated:/dashboard?journey=class-a-val-002&example=daniel": "26c8f79db0662da8e0ec9c011b25da51d022161ba3c7d9cd989ea7e3e9a05fb4",
+      "simulated:/dashboard?journey=class-a-val-002&example=daniel": "c55064116f69b225003fc31573f27a602e8af88fa323f0db6e9f2ef0139b0cad",
       "simulated:/dashboard?journey=class-a-val-002&example=sarah": "06e277c1f75575e1fe56fa6170ff15a2537a99f15884e1617dc9535cfe644de0"
 });
     expect(s18ExcludedDigest()).toBe('cea366ecc247a70300f3d1a4c06116f0efaa515b7240210e8839bf04104341ed');

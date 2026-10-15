@@ -146,7 +146,7 @@ test("shows only Daniel's reserve when the example is selected", async ({ page }
       await expect(page.getByTestId('dashboard-disclosures')).toBeVisible();
       await expect(page.getByTestId('daniel-read-figure')).toHaveText(FIGURE);
       await expect(page.getByTestId('daniel-read-caption')).toHaveText('≈ ZMW 21,600.00 Example figure, not a quote');
-      await expect(page.getByTestId('daniel-observation')).toHaveCount(3);
+      await expect(page.getByTestId('daniel-observation')).toHaveCount(5);
       for (const testId of [
         'dashboard-current-overview',
         'dashboard-balance',
@@ -308,7 +308,7 @@ test('keeps the Daniel read identical when display currency or simulated activit
     for (const state of ['empty', 'changed', 'pending', 'failed']) {
       await seed(page, ACTIVITY[state], code);
       await gotoDaniel(page, '/dashboard?journey=class-a-val-002');
-      const html = await panel(page).evaluate((node) => { const clone = node.cloneNode(true) as HTMLElement; clone.querySelector('a')?.remove(); return clone.innerHTML; });
+      const html = await panel(page).evaluate((node) => { const clone = node.cloneNode(true) as HTMLElement; clone.querySelector('a')?.remove(); return clone.innerHTML.replace(/«r[0-9a-z]+»/g, ':react-id:'); });
       reference ??= html;
       expect(html).toBe(reference);
     }
@@ -317,7 +317,7 @@ test('keeps the Daniel read identical when display currency or simulated activit
   await seed(page, ACTIVITY.changed, 'KES');
   await page.evaluate(() => localStorage.setItem('hedgr:last-home-visit', '1500'));
   await gotoDaniel(page, '/dashboard-synthetic-journey');
-  expect(await panel(page).evaluate((node) => { const clone = node.cloneNode(true) as HTMLElement; clone.querySelector('a')?.remove(); return clone.innerHTML; })).toBe(reference);
+  expect(await panel(page).evaluate((node) => { const clone = node.cloneNode(true) as HTMLElement; clone.querySelector('a')?.remove(); return clone.innerHTML.replace(/«r[0-9a-z]+»/g, ':react-id:'); })).toBe(reference);
 });
 
 test('normalizes new synthetic ZMW deposit rows at the Engine fixture without changing the live API boundary', async ({ page }) => {
@@ -378,7 +378,7 @@ test('contains no prohibited claims in Daniel Home copy', async ({ page }) => {
     expect(text).not.toMatch(/custod|verified|wealth|sufficien|enough|guarantee|protect|recommend|should|advis|action|buy|sell|convert|balance|\bheld\b/i);
     expect(text).toContain('Fictional');
     expect(text).toContain('Not a live rate.');
-    expect(text).toContain('9 Oct 2026 · shown above');
+    expect(text).toContain('9 Oct · shown above');
   }
 });
 
@@ -399,8 +399,8 @@ const currentRead = {
 async function expectCurrencyContext(page: Page) {
   await expect(page.getByTestId('daniel-currency-context')).toHaveCount(0);
   await expect(page.getByTestId('daniel-observation')).toHaveText(A_ROWS);
-  await expect(page.getByTestId('daniel-since-card').locator('time')).toHaveText(['9 Sep 2026',COPY.lastDate,COPY.currentDate]);
-  for(const [i,date] of ['2026-09-09T00:00:00.000Z',lastRead.asOf,currentRead.asOf].entries()) await expect(page.getByTestId('daniel-observation').nth(i).locator('time')).toHaveAttribute('datetime',date);
+  await expect(page.getByTestId('daniel-since-card').locator('time')).toHaveText(['12 Jun', '14 Aug', '9 Sep', '25 Sep', '9 Oct']);
+  for(const [i,date] of ['2026-06-12T00:00:00.000Z', '2026-08-14T00:00:00.000Z', '2026-09-09T00:00:00.000Z',lastRead.asOf,currentRead.asOf].entries()) await expect(page.getByTestId('daniel-observation').nth(i).locator('time')).toHaveAttribute('datetime',date);
 }
 
 test("Daniel's reserve shows his example as a full Home", async ({ page }) => {
@@ -413,7 +413,10 @@ test("Daniel's example offers no actions on your simulation", async ({ page }) =
     await gotoDaniel(page, route);
     await expect(panel(page).getByRole('link', { name: COPY.back })).toBeVisible();
     await expect(panel(page).locator('a')).toHaveCount(1);
-    await expect(panel(page).locator('button, input, select')).toHaveCount(0);
+    await expect(panel(page).locator('button:not([aria-controls]), input, select')).toHaveCount(0);
+    await expect(panel(page).getByRole('button', { name: 'All changes · example dates', exact: true })).toHaveCount(1);
+    await expect(panel(page).getByTestId('chart-event-dot')).toHaveCount(2);
+    await expect(panel(page).locator('button')).toHaveCount(3);
     await expect(page.locator('main a[href*="/deposit"], main a[href*="/withdraw"], main a[href*="/activity"]')).toHaveCount(0);
     await expect(page.locator('main')).not.toContainText(/View Activity|Restart simulated journey|Simulate a withdrawal/);
   }
@@ -451,7 +454,7 @@ test("Daniel's example ignores your simulation", async ({ page }) => {
       const html = await panel(page).evaluate((node) => {
         const clone = node.cloneNode(true) as HTMLElement;
         clone.querySelector('a')?.remove();
-        return clone.innerHTML;
+        return clone.innerHTML.replace(/«r[0-9a-z]+»/g, ':react-id:');
       });
       reference ??= html;
       expect(html).toBe(reference);
@@ -505,7 +508,7 @@ test("Daniel's example Home reflows", async ({ page }) => {
         };
       });
       expect(layout.overflow, `${route} ${viewport.width}@${viewport.text}%`).toBeLessThanOrEqual(1);
-      expect(layout.clipped).toEqual([]);
+      expect(layout.clipped, JSON.stringify({ viewport, route, layout })).toEqual([]);
       expect(layout.columns).toBe(viewport.width === 1440 ? 2 : 1);
       await picker(page).focus();
       await expect(picker(page)).toBeFocused();
@@ -537,7 +540,14 @@ test("Daniel's currency context shows two Engine figures side by side with no co
   for (const route of JOURNEY_ROUTES) {
     await gotoDaniel(page, route);
     await expectCurrencyContext(page);
-    await expect(panel(page)).not.toContainText(/K2,000|higher|lower|increase|decrease|delta|difference|\+|−|→|↑|↓/i);
+    await expect(panel(page)).not.toContainText(/K2,000|higher|lower|increase|decrease|delta|difference|→|↑|↓/i);
+    const nonEventCopy = await panel(page).evaluate(node => {
+      const clone = node.cloneNode(true) as HTMLElement;
+      clone.querySelector('[data-testid="chart-event-list"]')?.remove();
+      return clone.textContent;
+    });
+    expect(nonEventCopy).not.toMatch(/[+−]/);
+    await expect(panel(page).getByTestId('chart-event-list').locator('li')).toHaveText(A_ROWS);
   }
 });
 
@@ -547,7 +557,7 @@ test("Founder-locked copy and dates are character-exact across Daniel's example 
 });
 
 const LEGIBILITY = {
-  invariant: 'Daniel’s dollar amount is unchanged across these example dates. Only the example exchange rate changes the kwacha figure.',
+  invariant: 'He made two deposits and none since. Each kwacha figure uses the example rate for its date.',
   ownLimitation: 'This is what happened in your simulation. It doesn’t tell you what will happen next.',
   start: 'Practise with pretend money first. See what changes, and why.',
   currency: 'Shown in ZMW, Daniel’s currency',
@@ -659,7 +669,7 @@ test('Journey arrival announces current and prior simulated balances without a d
         await expect(status).not.toContainText(/higher|lower|delta/);
         expect(await status.ariaSnapshot()).toContain('Your simulated balance is now');
         // The visible summary still describes the transaction and has not been rewritten as S17.
-        await expect(page.getByTestId('dashboard-current-status')).toContainText(rising ? 'One simulated deposit of' : 'One simulated withdrawal of');
+        await expect(page.getByTestId('dashboard-current-status')).toContainText(rising ? '1 change since your last visit' : '1 change since your last visit');
       }
     }
   }
@@ -768,9 +778,9 @@ test('Example reading order and reflow survive enlarged text', async ({ page }) 
                   (style.clip === 'rect(0px, 0px, 0px, 0px)' || style.clipPath === 'inset(50%)')) return false;
             }
             return n.clientWidth > 0 && n.scrollWidth > n.clientWidth + 1 && getComputedStyle(n).display !== 'inline';
-          }).map(n => n.getAttribute('data-testid') ?? n.tagName),
+          }).map(n => ({ node: n.getAttribute('data-testid') ?? n.tagName, className: n.className, width: n.clientWidth, scrollWidth: n.scrollWidth, html: n.outerHTML.slice(0, 400) })),
         }));
-        expect(layout.overflow).toBeLessThanOrEqual(1); expect(layout.clipped).toEqual([]);
+        expect(layout.overflow).toBeLessThanOrEqual(1); expect(layout.clipped, JSON.stringify({ viewport, route, mode, layout })).toEqual([]);
         if (mode === 'daniel') {
           await assertTicketA(page);
           const rootSize=await page.locator('html').evaluate(n=>parseFloat(getComputedStyle(n).fontSize));
@@ -798,7 +808,7 @@ test('Daniel legibility retains claim, presentation and isolation fences', async
     const before = await storageSnapshot(page); await gotoDaniel(page, route);
     expect(await storageSnapshot(page)).toEqual(before);
     await expect(panel(page)).not.toContainText(/custod|wealth|sufficien|guarantee|hedging|obligation|progress|gain|loss|gap|higher|lower|balance/i);
-    await expect(panel(page).locator('progress, meter, [role="progressbar"], button, input, select, [data-delta], [data-direction]')).toHaveCount(0);
+    await expect(panel(page).locator('progress, meter, [role="progressbar"], button:not([aria-controls]), input, select, [data-delta], [data-direction]')).toHaveCount(0);
     const colors = await panel(page).locator('p').evaluateAll(nodes => nodes.map(n => n.className));
     expect(colors.join(' ')).not.toMatch(/green|red-|success|error/);
   }
@@ -808,24 +818,25 @@ test('Daniel legibility leaves chart and runtime fixtures unchanged', async ({ p
   await login(page); for(const route of JOURNEY_ROUTES) {await gotoDaniel(page,route); await assertTicketA(page);}
 });
 
-const A_ROWS=['9 Sep 2026 · K19,600','25 Sep 2026 · K23,600','9 Oct 2026 · shown above'];
+const A_ROWS=['First deposit +$500.00 · 12 Jun', 'Deposit +$300.00 · 14 Aug', '≈ ZMW 19,600.00 · 9 Sep · example rate 24.5', '≈ ZMW 23,600.00 · 25 Sep · example rate 29.5', '9 Oct · shown above'];
 async function assertTicketA(page: Page) {
   await expect(page.getByTestId('daniel-read-figure')).toHaveText('$800.00 USD');
   await expect(page.getByTestId('daniel-read-caption')).toHaveText('≈ ZMW 21,600.00 Example figure, not a quote');
   const region=page.getByRole('region',{name:COPY.since,exact:true});
   await expect(region.getByRole('heading',{level:2})).toHaveText(COPY.since);
   await expect(region.locator('ol > li')).toHaveText(A_ROWS);
-  await expect(region.getByTestId('example-line-chart')).toHaveAttribute('aria-hidden','true');
+  await expect(region.getByTestId('example-line-chart')).not.toHaveAttribute('aria-hidden','true');
+  await expect(region.locator('svg')).toHaveAttribute('aria-hidden','true');
   await expect(region.locator('svg')).toHaveAttribute('focusable','false');
-  await expect(region.locator('circle')).toHaveCount(3);
+  await expect(region.locator('[data-series-value]')).toHaveCount(3);
   await expect(region.getByText('K0',{exact:true})).toHaveCount(0); await expect(region.getByText('K30,000',{exact:true})).toHaveCount(0); expect(await region.locator('path').getAttribute('d')).not.toMatch(/NaN|Infinity/);
   await expect(page.getByTestId('dashboard-position-line')).toHaveCount(0);
-  await expect(panel(page).locator('[aria-live], [role="status"], .sr-only')).toHaveCount(0);
+  await expect(panel(page).locator('[aria-live], [role="status"]')).toHaveCount(0);
   await expect(page.getByTestId('daniel-read-holding')).toHaveCount(0);
   await expect(page.getByTestId('daniel-read-rate')).toHaveText(RATE_ASSUMPTION);
   await expect(page.getByTestId('daniel-invariant')).toHaveText(LEGIBILITY.invariant);
   const text=(await panel(page).textContent())!;
-  for(const [claim,count] of [['$800.00 USD',1],['≈ ZMW 21,600.00',1],['9 Oct 2026',2],['Fictional example · Daniel’s reserve',1],['Example figure, not a quote',1],[RATE_ASSUMPTION,1],[LEGIBILITY.invariant,1],['This is what happened in the example. It doesn’t tell you what will happen next.',1]] as const) expect(text.split(claim).length-1,claim).toBe(count);
+  for(const [claim,count] of [['$800.00 USD',1],['≈ ZMW 21,600.00',1],['9 Oct 2026',1],['Fictional example · Daniel’s reserve',1],['Example figure, not a quote',1],[RATE_ASSUMPTION,1],[LEGIBILITY.invariant,1],['This is what happened in the example. It doesn’t tell you what will happen next.',1]] as const) expect(text.split(claim).length-1,claim).toBe(count);
   expect(text).not.toMatch(/Daniel holds USD 800|Shown in ZMW|USD 800 shows|Now ·|What changed since Daniel’s last visit|Example rate: ZMW 29.5/);
   await expect(panel(page).getByText('Not a live rate',{exact:true})).toHaveCount(0);
   const order=await panel(page).locator('[data-testid]').evaluateAll(nodes=>nodes.map(n=>n.getAttribute('data-testid')));
@@ -842,3 +853,6 @@ test('Example claims and amounts have one semantic home without the former Danie
 test('Daniel exposes every plotted point in the locked three-row list',async({page})=>{
   await login(page);for(const route of JOURNEY_ROUTES){await gotoDaniel(page,route);await assertTicketA(page);}
 });
+
+// §391: deterministic event dates and current-year presentation.
+test.use({ timezoneId: 'UTC' });

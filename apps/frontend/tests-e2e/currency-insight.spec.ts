@@ -76,7 +76,7 @@ for (const [currency, rate, deltaFive, deltaThree] of [
     await expect(page.getByTestId('currency-insight-headline')).toContainText(`${currency} ${deltaThree} higher from the rate change`);
     await page.getByRole('button', { name: 'Back to Home' }).click();
     await expect(page.getByTestId('engine-simulation-attention-answer')).toHaveCount(0);
-    await expect(page.getByTestId('engine-posture-context')).toHaveText(/^One simulated withdrawal of \$2\.00 on \d{1,2} (?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\.$/);
+    await expect(page.getByTestId('engine-posture-context')).toHaveText('1 change since your last visit');
     const before = await storedState(page);
     const records = JSON.parse(before['hedgr:ledger']!).transactions;
     expect(records).toHaveLength(2);

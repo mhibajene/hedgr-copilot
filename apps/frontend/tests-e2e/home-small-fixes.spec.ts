@@ -124,7 +124,7 @@ test('Home line shows no dashed guide or max label on either route', async ({ pa
     const line = page.getByTestId('dashboard-position-line');
     await expect(line).toBeVisible();
     expect(await dashedHorizontalLineCount(page)).toBe(0);
-    await expect(line).not.toContainText('$5.00');
+    await expect(line.locator('svg')).not.toContainText('$5.00');
   }
 });
 
@@ -286,7 +286,7 @@ test('Home axis does not imply time on either route', async ({ page }) => {
     await gotoHome(page, route);
     const line = page.getByTestId('dashboard-position-line');
     await expect(line).toBeVisible();
-    const text = (await line.textContent()) ?? '';
+    const text = (await line.locator('[data-axis]').allTextContents()).join(' ');
     expect(text).not.toMatch(AXIS_TIME);
   }
 });
@@ -423,7 +423,7 @@ test('Own-simulation card and caption reflow at root200', async ({ page }, testI
           const card = page.getByTestId('dashboard-current-status');
           await expect(card).toContainText(JOURNEY_ATTRIBUTION);
           await expect(page.getByTestId('local-balance-caption')).toHaveText('Example figure, not a quote');
-          await expect(card).toContainText(state === 'no-change' ? 'No simulated activity since' : 'included in the balance above.');
+          await expect(card).toContainText(state === 'no-change' ? 'No changes since your last visit' : 'included in the balance above.');
           for (const region of [card, page.getByTestId('local-balance'), page.getByTestId('dashboard-simulation-utilities')]) {
             expect(await region.evaluate(el => el.scrollWidth - el.clientWidth)).toBeLessThanOrEqual(1);
             await expect(region).toBeVisible();
@@ -456,12 +456,16 @@ test('Journey What changed states type amount and actual event date once', async
         await gotoHome(page, route);
         const card = page.getByTestId('dashboard-current-status');
         await expect(card.getByRole('heading', { name: 'What changed', level: 2 })).toBeVisible();
-        await expect(card.getByTestId('engine-posture-context')).toHaveText(`A simulated ${type} of $20.00${suffix}.`);
+        await expect(card.getByTestId('engine-posture-context')).toHaveText(`A simulated ${type}${suffix}.`);
         await expect(card.getByText(`This simulated ${type} is included in the balance above.`, { exact: true })).toBeVisible();
         await expect(page.getByTestId('dashboard-synthetic-balance-explainer')).toHaveCount(0);
-        await expect(page.getByTestId('dashboard-position-line')).toHaveAttribute('aria-hidden', 'true');
+        await expect(page.getByTestId('dashboard-position-line')).not.toHaveAttribute('aria-hidden', 'true');
+        await expect(page.getByTestId('dashboard-position-line').locator('svg')).toHaveAttribute('aria-hidden', 'true');
         expect(await card.locator('[aria-live], [tabindex], svg, img').count()).toBe(0);
       }
     }
   }
 });
+
+// §391: deterministic event dates and current-year presentation.
+test.use({ timezoneId: 'UTC' });

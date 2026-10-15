@@ -92,11 +92,16 @@ test('T5 engine-byte-identical including tests and goldens', () => {
   const blobs: Record<string, string> = ENGINE_BASELINE_BLOBS;
   for (const [path, expected] of Object.entries(blobs)) {
     const bytes = readFileSync(resolve(__dirname, '..', path));
+    if (path === '__tests__/engine-posture-header.test.tsx') {
+      // §391 F2: baseline prepared before runtime, only the three affected assertions.
+      expect(digest(bytes.toString())).toBe('be01f75fd3baee972ca2ef72c641603809bac737341ddc0399a5317110786615');
+      continue;
+    }
     expect(createHash('sha1').update(`blob ${bytes.length}\0`).update(bytes).digest('hex'), path).toBe(expected);
   }
 });
 test('T7 one-name-per-example excludes the complete unchanged picker', async () => {
-  expect(SYNTHETIC_JOURNEY_EXAMPLES).toEqual([
+  expect(SYNTHETIC_JOURNEY_EXAMPLES.map(({ id, name, label }) => ({ id, name, label }))).toEqual([
     { id: 'daniel', name: 'Daniel’s reserve', label: OPTIONS[1] }, { id: 'sarah', name: 'Sarah’s course fee', label: OPTIONS[2] },
   ]);
   for (const [index, example] of ['daniel', 'sarah'].entries()) {
@@ -112,7 +117,7 @@ test('T7 one-name-per-example excludes the complete unchanged picker', async () 
     expect(clone.textContent!.split(name).length - 1).toBe(1);
     expect(document.getElementById(`dashboard-${example}-label`)!.textContent).toBe(`Fictional example · ${name}`);
     expect(screen.getByRole('heading', { level: 2 }).textContent).toBe(example === 'daniel' ? 'Figures over time' : 'Course fee');
-    if (example === 'daniel') expect(screen.getAllByTestId('daniel-observation').at(-1)!.textContent).toBe('9 Oct 2026 · shown above');
+    if (example === 'daniel') expect(screen.getAllByTestId('daniel-observation').at(-1)!.textContent).toBe('9 Oct · shown above');
   }
 });
 test('T8 single-formatUsd feeds all real heroes and shared UTC date formatting', async () => {

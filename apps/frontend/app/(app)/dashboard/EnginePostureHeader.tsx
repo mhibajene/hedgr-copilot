@@ -7,7 +7,7 @@ import { usePathname, useSearchParams } from "next/navigation";
 import { ENGINE_POSTURE_CONTEXT } from "../../../lib/engine/posture-context";
 import type { EnginePosture, EngineState } from "../../../lib/engine/types";
 import { ENGINE_ILLUSTRATIVE_VALUES_LABEL } from "../../../lib/engine/stability-review-snapshot-copy";
-import { formatShortDate, formatUsd } from "../../../lib/state/last-visit";
+import { formatShortDate } from "../../../lib/state/last-visit";
 import {
   CLASS_A_VAL_002_DASHBOARD_PATH,
   CLASS_A_VAL_002_JOURNEY_PARAM,
@@ -125,7 +125,7 @@ export function EnginePostureHeader({
     : "";
   const changeObservation =
     latestChangeType && latestChangeAmountUSD !== undefined
-      ? researchRedesign ? <>A simulated {latestChangeType === "WITHDRAW" ? "withdrawal" : "deposit"} of <span data-observation-amount>{formatUsd(latestChangeAmountUSD)}</span>{eventDateSuffix}.</> : `The simulated ${
+      ? researchRedesign ? <>A simulated {latestChangeType === "WITHDRAW" ? "withdrawal" : "deposit"}{eventDateSuffix}.</> : `The simulated ${
           latestChangeType === "WITHDRAW" ? "expense" : "deposit"
         } explains why the current position is $${latestChangeAmountUSD.toFixed(
           2

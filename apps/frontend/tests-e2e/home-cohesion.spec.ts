@@ -58,7 +58,7 @@ for (const width of [390, 1440]) test(`T1 T2 T3 T7: real journey cohesion at ${w
       await expect(card).toHaveCount(1);
       expect(await card.evaluate(n => n.lastElementChild!.textContent)).toBe(example === 'daniel' ? 'This is what happened in the example. It doesn’t tell you what will happen next.' : 'Fictional course fee. This figure is not a payment quote. This read does not establish whether Sarah can pay the fee.');
       if (example === 'daniel') {
-        await expect(page.getByTestId('daniel-observation').last()).toHaveText('9 Oct 2026 · shown above');
+        await expect(page.getByTestId('daniel-observation').last()).toHaveText('9 Oct · shown above');
         await expect(page.getByTestId('daniel-read-holding')).toHaveCount(0);
       }
     }
@@ -173,3 +173,6 @@ const PRE_GREEN_ROUTE_TEXT: Record<string, string> = {
   "/activity?journey=class-a-val-002:several": "c86e810a8df4b46acc740898a477d6910da04889d7eff822d325c0825a61de64",
   "/activity?journey=class-a-val-002:no-change": "c98ed8633a47f9776883b2f4128b89d51c967f1c491011cb19ebcd5f46e91a7b"
 };
+
+// §391: deterministic event dates and current-year presentation.
+test.use({ timezoneId: 'UTC' });
