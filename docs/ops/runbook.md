@@ -46,6 +46,8 @@ Trust model: only comments whose `author_association` is `OWNER`, `MEMBER`, or `
 
 ### Auto-merge
 
+**Live protection precondition (§392, Founder 15 Oct 2026 21:10 AWST):** Immediately before every `gh pr merge --auto` command, including recovery re-arming, GET live `main` protection and retain the read-back JSON. Abort if protection is absent or differs from the restored posture: exactly `validate`, `E2E smoke (@hedgr/frontend)` and `hedgr/verifier` required with `strict=true`; admin enforcement, required linear history and conversation resolution enabled; force pushes/deletions disabled; required reviews/restrictions null. A recorded past configuration is insufficient. Do not fall back to direct/admin merge or silently repair settings; stop for a separately authorised evidence-backed Founder disposition. PR #898 merged immediately before verification while protection was mistakenly removed; its retrospective technical PASS does not cure that deviation.
+
 Once implementation is complete, the implementing or steward agent may mark the PR ready and arm auto-merge with `gh pr merge --auto --squash` after the branch is updated and current-head checks have started. Check any stricter ticket gate before arming. Arming auto-merge is not merging: required `hedgr/verifier` remains pending until an independent Verifier attests PASS on that exact up-to-date head. GitHub then enforces required `validate`, `E2E smoke (@hedgr/frontend)`, `hedgr/verifier`, the standing invariant, and other applicable merge gates before completing the merge. Keep at most one PR in the merge step at a time.
 
 Founder merge action is not required for normal bounded implementation PRs. Founder involvement stays upstream at judgement and authority boundaries.
