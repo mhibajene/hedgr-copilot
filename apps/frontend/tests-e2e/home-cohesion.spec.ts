@@ -14,6 +14,7 @@ const row = (type: 'deposit' | 'withdrawal', amount: number, at: number, status 
 test.beforeEach(async ({ context, page }) => {
   await context.route('**/*', route => ['localhost', '127.0.0.1', '::1'].includes(new URL(route.request().url()).hostname) ? route.continue() : route.abort());
   await page.clock.install({ time: NOW });
+  await page.clock.setFixedTime(NOW);
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('/login'); await page.getByPlaceholder('you@example.com').fill('cohesion@hedgr.test');
   await page.getByRole('button', { name: 'Continue' }).click(); await expect(page).toHaveURL(/\/dashboard/);
@@ -98,24 +99,47 @@ test('F5 negative-pending and negative-historical-animation use accepted persist
   await expect(page.getByTestId('usd-balance')).toHaveText('$100.00');
   await expect(page.locator('[data-component="HomeHero"]')).toHaveCount(1);
 });
-test('T10 preservation: protected route text is pinned before green', async ({ page }) => {
-  const baseline: Record<string, string> = {};
-  for (const route of ['/dashboard', '/withdraw?journey=class-a-val-002', '/deposit?journey=class-a-val-002', '/activity?journey=class-a-val-002']) {
-    for (const state of ['first', 'one', 'several', 'no-change']) {
-      const rows = [row('deposit', 1000, 1000)];
-      if (state !== 'first') rows.push(row('deposit', 205.37, 3000));
-      if (state === 'several') rows.push(row('withdrawal', 5, 3500));
-      await seed(page, rows, state === 'first' ? null : state === 'no-change' ? 4000 : 2000);
-      await page.goto(route);
-      await expect(page.locator('main')).toBeVisible();
-      if (route === '/dashboard') await expect(page.getByTestId('usd-balance')).toBeVisible();
-      if (route.startsWith('/withdraw')) await expect(page.getByTestId('withdraw-amount')).toBeVisible();
-      if (route.startsWith('/deposit')) await expect(page.getByTestId('deposit-amount')).toBeVisible();
-      if (route.startsWith('/activity')) await expect(page.getByRole('heading', { name: 'Activity', exact: true })).toBeVisible();
-      baseline[`${route}:${state}`] = createHash('sha256').update((await page.locator('main').textContent())!).digest('hex');
+test.describe('protected route preservation', () => {
+  test.use({ timezoneId: 'UTC' });
+  test('T10 preservation: protected route text is pinned before green', async ({ page }, info) => {
+    const baseline: Record<string, string> = {};
+    const text: Record<string, string> = {};
+    // Complete the login Home's visit/review effects before preparing any fixture.
+    await expect.poll(() => page.evaluate(() => localStorage.getItem('hedgr:last-home-visit'))).toBe(String(NOW));
+    await expect.poll(() => page.evaluate(() => localStorage.getItem('hedgr:engine-review-snapshot-fingerprint'))).not.toBeNull();
+    for (const route of ['/dashboard', '/withdraw?journey=class-a-val-002', '/deposit?journey=class-a-val-002', '/activity?journey=class-a-val-002']) {
+      for (const [index, state] of ['first', 'one', 'several', 'no-change'].entries()) {
+        const rows = [row('deposit', 1000, 1000)];
+        if (state !== 'first') rows.push(row('deposit', 205.37, 3000));
+        if (state === 'several') rows.push(row('withdrawal', 5, 3500));
+        // An inert same-origin document unmounts Home before storage is seeded.
+        // Its late visit/review effects must never overwrite the next cell's inputs.
+        await page.goto('/api/policy');
+        await seed(page, rows, state === 'first' ? null : state === 'no-change' ? 4000 : 2000);
+        await page.goto(route);
+        await expect(page.locator('main')).toBeVisible();
+        if (route === '/dashboard') {
+          await expect(page.getByTestId('usd-balance')).toBeVisible();
+          await expect(page.getByTestId('dashboard-position-line')).toHaveAttribute('data-state', 'line');
+          await expect(page.getByTestId('dashboard-position-line-visit')).toHaveCount(state === 'first' ? 0 : 1);
+          if (state !== 'first') await expect(page.getByTestId('dashboard-current-status')).toHaveAttribute('data-home-state', `since-${state}`);
+          await expect(page.getByTestId('engine-stability-review-memory-entry')).toHaveCount(Math.min(index + 1, 2));
+          await expect(page.getByTestId('engine-stability-review-snapshot-change-signal')).toBeAttached();
+          if (state === 'one' || state === 'several') await expect(page.getByTestId('dashboard-arrival-announcement')).not.toBeEmpty();
+        }
+        if (route.startsWith('/withdraw')) await expect(page.getByTestId('withdraw-amount')).toBeVisible();
+        if (route.startsWith('/deposit')) await expect(page.getByTestId('deposit-amount')).toBeVisible();
+        if (route.startsWith('/activity')) {
+          await expect(page.getByRole('heading', { name: 'Activity', exact: true })).toBeVisible();
+          await expect(page.locator('[data-testid^="activity-row-"]')).toHaveCount(rows.length);
+        }
+        text[`${route}:${state}`] = (await page.locator('main').textContent())!;
+        baseline[`${route}:${state}`] = createHash('sha256').update(text[`${route}:${state}`]).digest('hex');
+      }
     }
-  }
-  expect(baseline).toEqual(PRE_GREEN_ROUTE_TEXT);
+    await info.attach('protected-route-text', { body: JSON.stringify({ timezone: 'UTC', now: NOW, text, hashes: baseline }, null, 2), contentType: 'application/json' });
+    expect(baseline).toEqual(PRE_GREEN_ROUTE_TEXT);
+  });
 });
 test('screenshots of three Homes at required viewports', async ({ page }, info) => {
   const directory = process.env.COH_SCREENSHOT_DIR ?? info.outputPath('cohesion'); mkdirSync(directory, { recursive: true });
@@ -129,7 +153,8 @@ test('screenshots of three Homes at required viewports', async ({ page }, info) 
     }
   }
 });
-// Captured against the unmodified 56ce3e6 production build before green.
+// Captured from immutable red 78077ea (runtime 56ce3e6), browser UTC, fixed 2026-10-15T00:00:00Z.
+// Complete main.textContent() for all 16 original cells; raw text/provenance retained in runtime/.
 const PRE_GREEN_ROUTE_TEXT: Record<string, string> = {
   "/dashboard:first": "0d8a91740ac80d8b36f5bdd5d533fb65ef4106912e570c8f7081369dd6b6c15e",
   "/dashboard:one": "beff4e250408d854186d41887fe771e9c27b702eaba81034e05482ffaea3c8a9",
@@ -143,8 +168,8 @@ const PRE_GREEN_ROUTE_TEXT: Record<string, string> = {
   "/deposit?journey=class-a-val-002:one": "02de236cb1e593ea7227f666157337e898070af2382002126d58d693b7f032cb",
   "/deposit?journey=class-a-val-002:several": "02de236cb1e593ea7227f666157337e898070af2382002126d58d693b7f032cb",
   "/deposit?journey=class-a-val-002:no-change": "02de236cb1e593ea7227f666157337e898070af2382002126d58d693b7f032cb",
-  "/activity?journey=class-a-val-002:first": "eb905e3a70fda1649ff2d96198553e76f8f3e1b1b93af834db6f3074863f5d58",
-  "/activity?journey=class-a-val-002:one": "0a6d175dc47ac1c16b60365754829ba9b8edde5538cda2e8f298b01ec427d0d3",
-  "/activity?journey=class-a-val-002:several": "643bef1342780c1212bc73d53497e3adaf35e037ad45abb93ccaefc1c2102665",
-  "/activity?journey=class-a-val-002:no-change": "0a6d175dc47ac1c16b60365754829ba9b8edde5538cda2e8f298b01ec427d0d3"
+  "/activity?journey=class-a-val-002:first": "6f6d9903f428aa8ac62d1c9fc292cb40581f1063f1774a3de30b287c90166f59",
+  "/activity?journey=class-a-val-002:one": "c98ed8633a47f9776883b2f4128b89d51c967f1c491011cb19ebcd5f46e91a7b",
+  "/activity?journey=class-a-val-002:several": "c86e810a8df4b46acc740898a477d6910da04889d7eff822d325c0825a61de64",
+  "/activity?journey=class-a-val-002:no-change": "c98ed8633a47f9776883b2f4128b89d51c967f1c491011cb19ebcd5f46e91a7b"
 };

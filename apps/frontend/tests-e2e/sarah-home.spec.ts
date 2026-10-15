@@ -28,6 +28,9 @@ async function login(page: Page) {
   await page.getByRole('button', { name: 'Continue' }).click(); await expect(page).toHaveURL(/\/dashboard/);
 }
 async function seed(page: Page, variant = 'activity') {
+  // Seed only after the preceding Home is unmounted. Pending visit/review
+  // effects otherwise race the reset-preservation snapshot (also on pre-green).
+  await page.goto('/api/policy');
   await page.evaluate(({ row, variant }) => {
     for (const store of [localStorage, sessionStorage]) {
       store.setItem('hedgr:ledger', JSON.stringify({ version: 2, transactions: variant === 'empty' ? [] : [row] }));
