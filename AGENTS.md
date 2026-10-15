@@ -678,6 +678,9 @@ Must not:
 - assume authority over Repo Steward, HedgrOps, Implementers or Verifiers, or create a new governance or approval layer or a competing status, sequencing or governance surface
 - be read as the "product / engineering operators" of `docs/ops/governance/product/HEDGR_PARTIAL_CAPITAL_DECISION.md` §16, who implement
 
+`hedgr-ops` (private) is a delivery-only channel for HedgrOps briefs to Dex. It holds no authority, execution state, status or governance record. A brief there activates nothing; only HEDGR_STATUS §7a on main does. §7a carries the executable contract (scope, allowlist, locked user-facing strings, tests and gates) and references the brief by ticket ID and checksum. Brief rationale and discussion are not reproduced in public artifacts, and PR titles and bodies, commits and verifier comments reference the ticket ID only.
+Founder-approved 15 Oct 2026, 21:45 AWST; wording option A 21:49 AWST.
+
 ### Role topology — descriptive only
 
 | Function | Role | Primary responsibility |
