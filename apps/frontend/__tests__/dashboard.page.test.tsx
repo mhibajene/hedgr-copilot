@@ -874,8 +874,8 @@ test('own-sim Home renders each figure and claim exactly once', async () => {
       expect(screen.getAllByTestId('usd-balance')).toHaveLength(1);
       expect(card.textContent?.match(/\$480\.00/g) ?? []).toHaveLength(0);
       expect(card.textContent?.split(B_LIMIT).length).toBe(2);
-      expect(card.textContent?.match(/\$20\.00/g) ?? []).toHaveLength(state === 'no-change' ? 0 : 1);
-      expect(card.textContent?.match(/\$500\.00/g) ?? []).toHaveLength(state === 'several' ? 1 : 0);
+      expect(card.textContent?.match(/\$20\.00/g) ?? []).toHaveLength(0);
+      expect(card.textContent?.match(/\$500\.00/g) ?? []).toHaveLength(0);
       const activityClaims = (screen.getByTestId('dashboard-balance').textContent ?? '') + card.textContent;
       expect(activityClaims.match(/Includes your simulated activity\.|included in the balance above\./g)).toHaveLength(1);
     }

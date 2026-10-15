@@ -10,6 +10,7 @@ import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { EngineAllocationBands } from "./EngineAllocationBands";
 import { EnginePostureHeader } from "./EnginePostureHeader";
+import { countChanges } from "./lineLabels";
 import { PositionLine } from "./PositionLine";
 import { DanielExampleHome } from './DanielExampleHome';
 import { SarahExampleHome } from './SarahExampleHome';
@@ -500,7 +501,7 @@ export default function DashboardPage() {
   );
 
   const positionLine = positionDerivable ? (
-    <PositionLine entries={positionEntries} lastVisit={previousVisit} settle={arrivalSettle} />
+    <PositionLine entries={positionEntries} lastVisit={previousVisit} settle={arrivalSettle} visualise={syntheticJourneyActive} heroAmount={total} />
   ) : null;
 
   const ObservationHeading = syntheticJourneyActive ? "h2" : "p";
@@ -520,7 +521,7 @@ export default function DashboardPage() {
   const sinceLink = (label: string) => (
     <Link href={activityHref} className={home.sinceLink} data-testid="dashboard-since-link">
       <span>{label}</span>
-      <span aria-hidden="true">→</span>
+      {syntheticJourneyActive ? null : <span aria-hidden="true">→</span>}
     </Link>
   );
 
@@ -583,7 +584,7 @@ export default function DashboardPage() {
           {sinceSummary.kind === "no-change" ? (
             <>
               <p className="max-w-xl text-sm leading-relaxed text-hedgr-dark" data-testid="engine-posture-context">
-                {syntheticJourneyActive ? <>No simulated activity since {formatShortDate(sinceSummary.since)}.</> : <>
+                {syntheticJourneyActive ? <>{countChanges(0, true)}</> : <>
                   Nothing has changed since {formatShortDate(sinceSummary.since)}. Your position is still{" "}
                   <span data-observation-amount>{formatUsd(sinceSummary.balance)}</span>.
                 </>}
@@ -597,11 +598,11 @@ export default function DashboardPage() {
           ) : sinceSummary.kind === "one" ? (
             <>
               <p className="max-w-xl text-sm leading-relaxed text-hedgr-dark" data-testid="engine-posture-context">
-                One simulated {sinceSummary.entry.type === "DEPOSIT" ? "deposit" : "withdrawal"} of{" "}
+                {syntheticJourneyActive ? countChanges(1, true) : <>One simulated {sinceSummary.entry.type === "DEPOSIT" ? "deposit" : "withdrawal"} of{" "}
                 <span data-observation-amount>{formatUsd(sinceSummary.entry.amountUSD)}</span> on{" "}
                 {formatShortDate(sinceSummary.entry.at)}{syntheticJourneyActive ? "." : <>
                   {" "}took your position from {formatUsd(sinceSummary.from)} to {formatUsd(sinceSummary.to)}.
-                </>}
+                </>}</>}
               </p>
               {syntheticJourneyActive ? (
                 <p className="text-sm leading-relaxed text-hedgr-dark">
@@ -613,14 +614,14 @@ export default function DashboardPage() {
             <>
               <p className="max-w-xl text-sm leading-relaxed text-hedgr-dark" data-testid="engine-posture-context">
                 {syntheticJourneyActive ? <>
-                  {formatChangeCount(sinceSummary.entries.length)} simulated entries since {formatShortDate(sinceSummary.since)}.
+                  {countChanges(sinceSummary.entries.length, true)}
                 </> : <>
                   {formatChangeCount(sinceSummary.entries.length)} things changed since{" "}
                   {formatShortDate(sinceSummary.since)}. Your position went from {formatUsd(sinceSummary.from)} to{" "}
                   <span data-observation-amount>{formatUsd(sinceSummary.to)}</span>.
                 </>}
               </p>
-              <ul className={home.sinceList} data-testid="dashboard-since-entries">
+              {syntheticJourneyActive ? null : <ul className={home.sinceList} data-testid="dashboard-since-entries">
                 {sinceSummary.entries.map((entry) => (
                   <li key={entry.id}>
                     <span>
@@ -633,7 +634,7 @@ export default function DashboardPage() {
                     </span>
                   </li>
                 ))}
-              </ul>
+              </ul>}
               {syntheticJourneyActive ? (
                 <p className="text-sm leading-relaxed text-hedgr-dark">
                   These simulated entries are included in the balance above.

@@ -242,3 +242,29 @@
   .exampleHome .exampleReadings { font-size: 1rem; }
   .exampleLinePlot { height: 10rem; }
 }
+
+/* §391: journey-only activity chart, one accessible event list and neutral controls. */
+.visualiser { min-width: 0; max-width: 100%; color: var(--color-hedgr-800); }
+.visualiserPlot { position: relative; min-width: 0; height: 10rem; margin: 3rem .75rem 3.5rem; }
+.visualiserSvg { display: block; width: 100%; height: 100%; overflow: visible; }
+.visualiserDot { position: absolute; display: grid; place-items: center; width: 1.5rem; height: 1.5rem; border-radius: 50%; transform: translate(-50%, -50%); background: var(--home-canvas); color: var(--color-hedgr-800); font: inherit; font-size: .75rem; font-weight: 600; cursor: pointer; }
+.visualiserDot:empty::before { content: ''; width: .5rem; height: .5rem; border-radius: 50%; background: currentColor; }
+.visualiserDot:focus-visible { outline: 2px solid var(--color-hedgr-800); outline-offset: 3px; }
+.visualiserLabel { position: absolute; font-size: .75rem; line-height: 1.4; color: var(--color-hedgr-800); pointer-events: none; overflow-wrap: anywhere; transform: translateY(calc(-100% - 1rem)); }
+.visualiserLabel[data-placement="below"] { transform: translateY(1rem); }
+.visualiserVisit { position: absolute; top: -2.5rem; font-size: .75rem; line-height: 1.4; color: var(--color-hedgr-600); }
+.visualiserVisitLine { stroke: var(--color-hedgr-600); stroke-width: 1; stroke-dasharray: 3 3; }
+.visualiserHeading { margin: 0; font-size: 1rem; }
+.visualiserToggle { min-height: 2.75rem; max-width: 100%; font: inherit; font-weight: 600; text-align: left; text-decoration: underline; text-underline-offset: .25rem; color: var(--color-hedgr-800); cursor: pointer; }
+.visualiserToggle:focus-visible { outline: 2px solid var(--color-hedgr-800); outline-offset: 3px; }
+.visualiserList { margin: .25rem 0 0; padding: 0; list-style: none; font-size: 1rem; line-height: 1.5; color: var(--color-hedgr-800); }
+.visualiserList li { padding-block: .5rem; border-bottom: 1px solid var(--home-divider); overflow-wrap: anywhere; }
+.visualiserList li[data-active="true"] { font-weight: 600; }
+.visualiserEndpoints { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .5rem; font-size: .75rem; color: var(--color-hedgr-600); }
+.visualiserEmpty { align-items: flex-start; }
+.visualiserEmpty p { position: static; margin: 0; min-width: 0; font-size: 1rem; line-height: 1.5; }
+.visualiserEmpty::after { display: none; }
+@media (max-width: 360px) {
+  .visualiserLabel { display: none; }
+  .visualiserPlot { margin-block: 2.5rem; }
+}

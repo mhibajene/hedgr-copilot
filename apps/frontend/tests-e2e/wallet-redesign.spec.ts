@@ -32,7 +32,7 @@ test('research baseline: navigation, dialog focus, currency and event reconcilia
   await seed(page);
   const before = await financialState(page);
   await expect(page.getByRole('heading', { name: 'Your simulation', exact: true })).toBeVisible();
-  await expect(page.getByTestId('engine-posture-context')).toHaveText(/^No simulated activity since \d{1,2} (?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\.$/);
+  await expect(page.getByTestId('engine-posture-context')).toHaveText('No changes since your last visit');
   await expect(page.getByRole('link', { name: 'See the activity', exact: true })).toHaveCount(0);
   await expect(page.getByRole('link', { name: 'View Activity', exact: true })).toHaveAttribute('href', '/activity?journey=class-a-val-002');
   await expect(page.getByRole('navigation', { name: 'Primary' }).getByRole('link', { name: 'Activity', exact: true })).toBeVisible();

@@ -438,8 +438,9 @@ describe("keeps the Daniel read identical when display currency or simulated act
           expect(screen.getByTestId("daniel-read-figure").textContent).toBe("$800.00 USD");
           const content = panel().cloneNode(true) as HTMLElement;
           content.querySelector("a")?.remove();
-          reference ??= content.outerHTML;
-          expect(content.outerHTML).toBe(reference);
+          const html = content.outerHTML.replace(/«r[a-z0-9]+»/g, ':react-id:');
+          reference ??= html;
+          expect(html).toBe(reference);
           view.unmount();
         }
       }
@@ -578,8 +579,9 @@ test("Daniel's example ignores your simulation", async () => {
       // Compare fictional content; the return href intentionally preserves each route.
       const content = panel().cloneNode(true) as HTMLElement;
       content.querySelector("a")?.remove();
-      reference ??= content.innerHTML;
-      expect(content.innerHTML).toBe(reference);
+      const html = content.innerHTML.replace(/«r[a-z0-9]+»/g, ':react-id:');
+      reference ??= html;
+      expect(html).toBe(reference);
       expect(JSON.stringify({ ...window.localStorage })).toBe(before);
       expect(setItem).not.toHaveBeenCalled();
       expect(removeItem).not.toHaveBeenCalled();
@@ -633,9 +635,9 @@ test("Daniel change card consumes Engine explanations verbatim without a compute
   expect(screen.getAllByTestId('daniel-observation').map(n=>n.textContent)).toEqual(['First deposit +$500.00 · 12 Jun', 'Deposit +$300.00 · 14 Aug', '≈ ZMW 15,000.00 · 1 Jan · example rate 24.5', '≈ ZMW 7,500.00 · 3 Jan · example rate 29.5', '11 Jan · shown above']);
   expect(screen.getByTestId('daniel-read-rate').textContent).toBe('ENGINE RATE 2');
   expect(panel().textContent).not.toMatch(/ENGINE HOLDING|ENGINE RATE [01]|K21,600|K23,600|higher|lower|delta|difference/);
-  const dots=Array.from(screen.getByTestId('example-line-chart').querySelectorAll('circle'));
+  const dots=Array.from(screen.getByTestId('example-line-chart').querySelectorAll('[data-series-value]'));
   expect(dots.map(n=>Number(n.getAttribute('data-series-value')))).toEqual([500,800,800]);
-  const ys=dots.map(n=>Number(n.getAttribute('cy'))); expect(ys.every(Number.isFinite)).toBe(true); expect(ys[2]).toBe(ys[1]); expect(ys[1]).toBeLessThan(ys[0]);
+  const ys=dots.map(n=>Number(n.getAttribute('data-series-y'))); expect(ys.every(Number.isFinite)).toBe(true); expect(ys[2]).toBe(ys[1]); expect(ys[1]).toBeLessThan(ys[0]);
   const source=readFileSync(resolve(__dirname,'../app/(app)/dashboard/DanielExampleHome.tsx'),'utf8');
   expect(source).not.toMatch(/PositionEntry|PositionLine|DEPOSIT|CurrencyInsight|compareCurrencyExample|estimateCents|getSimulationDisplayRate|formatSimulationDisplay|parseFloat|parseInt|Number\(.*localDisplay|research|golden/);
 });
@@ -754,7 +756,7 @@ test('Journey arrival announces current and prior simulated balances without a d
 test('Example registry resolves Daniel and preserves his behavior', async () => {
   const journey = await import('../lib/state/synthetic-journey');
   const registry = (journey as typeof journey & { SYNTHETIC_JOURNEY_EXAMPLES?: readonly { id: string; label: string }[] }).SYNTHETIC_JOURNEY_EXAMPLES;
-  expect(registry).toEqual([{ id: 'daniel', name: 'Daniel’s reserve', label: "Daniel's reserve" }, { id: 'sarah', name: 'Sarah’s course fee', label: "Sarah's course fee" }]);
+  expect(registry?.map(({ id, name, label }) => ({ id, name, label }))).toEqual([{ id: 'daniel', name: 'Daniel’s reserve', label: "Daniel's reserve" }, { id: 'sarah', name: 'Sarah’s course fee', label: "Sarah's course fee" }]);
   expect(journey.parseSyntheticJourneyExample('?example=daniel')).toBe('daniel');
   const view = await renderDaniel('journey', 'returning');
   expect(screen.getByTestId('daniel-read-figure').textContent).toBe("$800.00 USD");
@@ -827,7 +829,7 @@ function assertTicketA() {
   expect(graphic.getAttribute('aria-hidden')).toBeNull();
   expect(graphic.querySelector('svg')?.getAttribute('aria-hidden')).toBe('true');
   expect(graphic.querySelector('svg')?.getAttribute('focusable')).toBe('false');
-  expect(graphic.querySelectorAll('circle')).toHaveLength(3);
+  expect(graphic.querySelectorAll('[data-series-value]')).toHaveLength(3);
   expect(within(graphic).getByRole('button', { name: 'All changes · example dates' })).toBeDefined(); expect(graphic.querySelector('path')!.getAttribute('d')).not.toMatch(/NaN|Infinity/);
   expect(graphic.querySelectorAll('svg a, svg button, svg [tabindex], title, desc')).toHaveLength(0);
   expect(graphic.querySelectorAll('[data-testid="chart-event-dot"]')).toHaveLength(2);

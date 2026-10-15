@@ -38,7 +38,7 @@ for (const viewport of [{ width: 390, height: 844 }, { width: 1440, height: 1024
     expect((await page.getByTestId('local-balance').boundingBox())!.y).toBeGreaterThan((await page.getByTestId('usd-balance').boundingBox())!.y);
     expect((await context.boundingBox())!.y).toBeGreaterThan((await page.getByTestId('local-balance').boundingBox())!.y);
     await expect(context).toHaveCSS('font-weight', '600');
-    await expect(page.getByTestId('engine-posture-context')).toHaveText(/^No simulated activity since \d{1,2} (?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\.$/);
+    await expect(page.getByTestId('engine-posture-context')).toHaveText('No changes since your last visit');
     await expect(page.getByText('This is what happened in your simulation. It doesn’t tell you what will happen next.')).toBeVisible();
     const utilities = page.getByTestId('dashboard-simulation-utilities');
     const deposit = page.getByTestId('dashboard-add-simulated-deposit');
@@ -141,7 +141,7 @@ for (const width of [320, 390, 1280, 1440]) {
       await expect(estimate).toHaveText('≈ GHS 3,795.00 Example figure, not a quote');
       await expect(page.getByRole('combobox', { name: 'Display currency for this simulation' })).toHaveValue('GHS');
       await expect(page.getByTestId('dashboard-synthetic-balance-explainer')).toHaveText('Includes your simulated activity.');
-      await expect(page.getByTestId('engine-posture-context')).toHaveText(/^No simulated activity since \d{1,2} (?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\.$/);
+      await expect(page.getByTestId('engine-posture-context')).toHaveText('No changes since your last visit');
       await expect(page.getByText('This is what happened in your simulation. It doesn’t tell you what will happen next.')).toBeVisible();
       await expect(page.getByTestId('dashboard-simulation-utilities').locator(':scope > a').first()).toHaveAttribute('data-testid', 'dashboard-add-simulated-deposit');
       await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(1);
