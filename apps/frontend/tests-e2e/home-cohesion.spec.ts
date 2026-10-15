@@ -1,0 +1,150 @@
+import { createHash } from 'node:crypto';
+import { mkdirSync } from 'node:fs';
+import { join } from 'node:path';
+import { expect, test, type Page } from '@playwright/test';
+
+const ROUTES = ['/dashboard-synthetic-journey', '/dashboard?journey=class-a-val-002'];
+const OPTIONS = ['Your own simulation', "Daniel's reserve", "Sarah's course fee"];
+const CAPTION = 'Example figure, not a quote';
+const RATE = 'Example rate: ZMW 27 per US dollar. Not a live rate.';
+const NOW = Date.parse('2026-10-15T00:00:00Z');
+const row = (type: 'deposit' | 'withdrawal', amount: number, at: number, status = 'settled') => ({
+  txn_ref: `${type}-${at}`, type, status, amount_usd: amount, amount_zmw: amount * 20, fx_rate: 20, created_at: at, updated_at: at,
+});
+test.beforeEach(async ({ context, page }) => {
+  await context.route('**/*', route => ['localhost', '127.0.0.1', '::1'].includes(new URL(route.request().url()).hostname) ? route.continue() : route.abort());
+  await page.clock.install({ time: NOW });
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/login'); await page.getByPlaceholder('you@example.com').fill('cohesion@hedgr.test');
+  await page.getByRole('button', { name: 'Continue' }).click(); await expect(page).toHaveURL(/\/dashboard/);
+});
+async function seed(page: Page, rows = [row('deposit', 800, 1000)], since: number | null = null, currency = 'ZMW') {
+  await page.evaluate(({ rows, since, currency }) => {
+    localStorage.setItem('hedgr:ledger', JSON.stringify({ version: 2, transactions: rows }));
+    if (since === null) localStorage.removeItem('hedgr:last-home-visit'); else localStorage.setItem('hedgr:last-home-visit', String(since));
+    localStorage.setItem('hedgr.simulation.display-currency', currency);
+  }, { rows, since, currency });
+}
+const url = (route: string, example: string) => `${route}${route.includes('?') ? '&' : '?'}example=${example}`;
+for (const width of [390, 1440]) test(`T1 T2 T3 T7: real journey cohesion at ${width}`, async ({ page }) => {
+  await page.setViewportSize({ width, height: 1000 });
+  for (const route of ROUTES) for (const [index, example] of ['own', 'daniel', 'sarah'].entries()) {
+    await seed(page); await page.goto(url(route, example));
+    const hero = page.locator('[data-component="HomeHero"]');
+    await expect(hero).toHaveCount(1); await expect(hero).toBeVisible();
+    const picker = page.getByRole('combobox', { name: 'Choose an example' });
+    await expect(picker.locator('option')).toHaveText(OPTIONS);
+    await expect(picker.locator('option:checked')).toHaveText(OPTIONS[index]);
+    await expect(page.getByTestId('example-picker-value')).toHaveText(OPTIONS[index]);
+    await expect(hero.locator('[data-component="LocalFigure"]')).toHaveText(`${example === 'sarah' ? '≈ ZMW 27,000.00' : '≈ ZMW 21,600.00'} ${CAPTION}`);
+    await expect(hero.getByText(CAPTION, { exact: true })).toBeVisible();
+    await expect(page.locator('[data-component="RateLine"]')).toHaveCount(1);
+    await expect(page.getByText(RATE, { exact: true })).toBeVisible();
+    const text = await page.locator('main').evaluate(main => {
+      const clone = main.cloneNode(true) as HTMLElement;
+      clone.querySelector('label[for="dashboard-example-picker"]')?.parentElement?.remove();
+      clone.querySelectorAll('details:not([open]), .sr-only, [aria-hidden="true"]').forEach(n => n.remove());
+      return clone.textContent!;
+    });
+    for (const figure of [example === 'sarah' ? '$1000.00' : '$800.00', example === 'sarah' ? '≈ ZMW 27,000.00' : '≈ ZMW 21,600.00', RATE]) expect(text.split(figure).length - 1, figure).toBe(1);
+    if (example !== 'own') {
+      const name = example === 'daniel' ? 'Daniel’s reserve' : 'Sarah’s course fee';
+      expect(text.split(name).length - 1).toBe(1);
+      await expect(page.getByRole('heading', { level: 1 })).toHaveText('Example');
+      await expect(page.locator(`#dashboard-${example}-label`)).toHaveText(`Fictional example · ${name}`);
+      await expect(page.getByTestId(`${example}-read-as-of`)).toHaveText('Example date: 9 Oct 2026');
+      const card = page.locator('[data-component="ExampleCard"]');
+      await expect(card).toHaveCount(1);
+      expect(await card.evaluate(n => n.lastElementChild!.textContent)).toBe(example === 'daniel' ? 'This is what happened in the example. It doesn’t tell you what will happen next.' : 'Fictional course fee. This figure is not a payment quote. This read does not establish whether Sarah can pay the fee.');
+      if (example === 'daniel') {
+        await expect(page.getByTestId('daniel-observation').last()).toHaveText('9 Oct 2026 · shown above');
+        await expect(page.getByTestId('daniel-read-holding')).toHaveCount(0);
+      }
+    }
+    const suffix = hero.locator('[data-component="UsdSuffix"]');
+    expect(await suffix.evaluate(n => parseFloat(getComputedStyle(n).fontSize))).toBeLessThan(await hero.locator('[data-component="UsdFigure"]').evaluate(n => parseFloat(getComputedStyle(n).fontSize)));
+    expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(1);
+  }
+});
+test('T11 one locked own-sim rate for every supported currency', async ({ page }) => {
+  const rates = { ZMW: '27', KES: '130', NGN: '1,500', GHS: '15', PHP: '56' };
+  for (const [code, rate] of Object.entries(rates)) {
+    await seed(page, undefined, null, code); await page.goto(ROUTES[0]);
+    await expect(page.locator('[data-component="RateLine"]')).toHaveText(`Example rate: ${code} ${rate} per US dollar. Not a live rate.`);
+    await expect(page.getByTestId('local-balance-figure')).toContainText(`≈ ${code} `);
+  }
+});
+test('F5 negative-pending and negative-historical-animation use accepted persisted state', async ({ page }) => {
+  await seed(page, [row('deposit', -25, 1000, 'pending')]); await page.goto(ROUTES[0]);
+  await expect(page.getByTestId('usd-balance')).toHaveText('$-25.00');
+  await expect(page.getByTestId('local-balance-figure')).toHaveText('≈ ZMW -675.00');
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await seed(page, [row('withdrawal', 100, 1000), row('deposit', 200, 3000)], 2000);
+  await page.addInitScript(() => {
+    const frames: FrameRequestCallback[] = [];
+    performance.now = () => 0;
+    window.requestAnimationFrame = cb => { frames.push(cb); return frames.length; };
+    window.cancelAnimationFrame = () => {};
+    Object.defineProperty(window, 'cohesionFrame', { value: (elapsed: number) => frames.shift()?.(elapsed) });
+  });
+  await page.goto(ROUTES[0]);
+  await expect(page.getByTestId('usd-balance')).toHaveText('$-100.00');
+  await expect(page.getByTestId('local-balance-figure')).toHaveText('≈ ZMW -2,700.00');
+  // Advance actual page easing; do not substitute ledger/projection/interpolation.
+  await page.evaluate(() => (window as typeof window & { cohesionFrame: (elapsed: number) => void }).cohesionFrame(600 * (1 - Math.cbrt(0.75))));
+  await expect(page.getByTestId('usd-balance')).toHaveText('$-50.00');
+  await expect(page.getByTestId('local-balance-figure')).toHaveText('≈ ZMW -1,350.00');
+  await page.evaluate(() => (window as typeof window & { cohesionFrame: (elapsed: number) => void }).cohesionFrame(600));
+  await expect(page.getByTestId('usd-balance')).toHaveText('$100.00');
+  await expect(page.locator('[data-component="HomeHero"]')).toHaveCount(1);
+});
+test('T10 preservation: protected route text is pinned before green', async ({ page }) => {
+  const baseline: Record<string, string> = {};
+  for (const route of ['/dashboard', '/withdraw?journey=class-a-val-002', '/deposit?journey=class-a-val-002', '/activity?journey=class-a-val-002']) {
+    for (const state of ['first', 'one', 'several', 'no-change']) {
+      const rows = [row('deposit', 1000, 1000)];
+      if (state !== 'first') rows.push(row('deposit', 205.37, 3000));
+      if (state === 'several') rows.push(row('withdrawal', 5, 3500));
+      await seed(page, rows, state === 'first' ? null : state === 'no-change' ? 4000 : 2000);
+      await page.goto(route);
+      await expect(page.locator('main')).toBeVisible();
+      if (route === '/dashboard') await expect(page.getByTestId('usd-balance')).toBeVisible();
+      if (route.startsWith('/withdraw')) await expect(page.getByTestId('withdraw-amount')).toBeVisible();
+      if (route.startsWith('/deposit')) await expect(page.getByTestId('deposit-amount')).toBeVisible();
+      if (route.startsWith('/activity')) await expect(page.getByRole('heading', { name: 'Activity', exact: true })).toBeVisible();
+      baseline[`${route}:${state}`] = createHash('sha256').update((await page.locator('main').textContent())!).digest('hex');
+    }
+  }
+  expect(baseline).toEqual(PRE_GREEN_ROUTE_TEXT);
+});
+test('screenshots of three Homes at required viewports', async ({ page }, info) => {
+  const directory = process.env.COH_SCREENSHOT_DIR ?? info.outputPath('cohesion'); mkdirSync(directory, { recursive: true });
+  for (const [width, scale] of [[1440, 1], [390, 1], [320, 2]]) {
+    await page.setViewportSize({ width, height: 1000 });
+    for (const example of ['own', 'daniel', 'sarah']) {
+      await seed(page); await page.goto(url(ROUTES[0], example));
+      if (scale === 2) await page.addStyleTag({ content: 'html { font-size: 200% !important; }' });
+      await expect(page.locator('[data-component="HomeHero"]')).toBeVisible();
+      await page.screenshot({ path: join(directory, `${example}-${width}-${scale * 100}pct.png`), fullPage: true });
+    }
+  }
+});
+// Captured against the unmodified 56ce3e6 production build before green.
+const PRE_GREEN_ROUTE_TEXT: Record<string, string> = {
+  "/dashboard:first": "0d8a91740ac80d8b36f5bdd5d533fb65ef4106912e570c8f7081369dd6b6c15e",
+  "/dashboard:one": "beff4e250408d854186d41887fe771e9c27b702eaba81034e05482ffaea3c8a9",
+  "/dashboard:several": "8cac9770753067e14e237e1f692a05518d340787861769ff7c8ae37136bb227a",
+  "/dashboard:no-change": "86533c41f41b82f22ed48f8b7ef524309b44b2380778f0b8f25426287454a576",
+  "/withdraw?journey=class-a-val-002:first": "4ca20d49912f152257d74097f80839480988a373f94b6f2b5bad4ee9e829be86",
+  "/withdraw?journey=class-a-val-002:one": "33d1a8c0fdecb65aca6620d21cd46178dc0a566f7efb1a130385fdb2dc69d3b8",
+  "/withdraw?journey=class-a-val-002:several": "747cb2e5ad12be67aefb663b81dd094d014852ba8017df5f571dde2066bb560f",
+  "/withdraw?journey=class-a-val-002:no-change": "33d1a8c0fdecb65aca6620d21cd46178dc0a566f7efb1a130385fdb2dc69d3b8",
+  "/deposit?journey=class-a-val-002:first": "02de236cb1e593ea7227f666157337e898070af2382002126d58d693b7f032cb",
+  "/deposit?journey=class-a-val-002:one": "02de236cb1e593ea7227f666157337e898070af2382002126d58d693b7f032cb",
+  "/deposit?journey=class-a-val-002:several": "02de236cb1e593ea7227f666157337e898070af2382002126d58d693b7f032cb",
+  "/deposit?journey=class-a-val-002:no-change": "02de236cb1e593ea7227f666157337e898070af2382002126d58d693b7f032cb",
+  "/activity?journey=class-a-val-002:first": "eb905e3a70fda1649ff2d96198553e76f8f3e1b1b93af834db6f3074863f5d58",
+  "/activity?journey=class-a-val-002:one": "0a6d175dc47ac1c16b60365754829ba9b8edde5538cda2e8f298b01ec427d0d3",
+  "/activity?journey=class-a-val-002:several": "643bef1342780c1212bc73d53497e3adaf35e037ad45abb93ccaefc1c2102665",
+  "/activity?journey=class-a-val-002:no-change": "0a6d175dc47ac1c16b60365754829ba9b8edde5538cda2e8f298b01ec427d0d3"
+};

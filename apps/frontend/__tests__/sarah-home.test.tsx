@@ -36,7 +36,7 @@ import { ENGINE_TRUST_INFORMATIONAL_DENYLIST } from './engine-trust-framing-deny
 const ROUTES = ['/dashboard?journey=class-a-val-002', '/dashboard-synthetic-journey'];
 const OPTIONS = ['Your own simulation', "Daniel's reserve", "Sarah's course fee"];
 const COPY = {
-  h1: 'Sarah’s example', heading: 'Sarah’s course fee', caption: 'K27,000 · Example figure', card: 'Course fee',
+  h1: 'Example', heading: 'Fictional example · Sarah’s course fee', caption: '≈ ZMW 27,000.00 Example figure, not a quote', card: 'Course fee',
   date: 'Example date: 9 Oct 2026',
   due: 'Due 1 Oct 2027.',
   rate: 'Example rate: ZMW 27 per US dollar. Not a live rate.',
@@ -79,7 +79,7 @@ function seed() {
 function assertRead() {
   expect(screen.getByRole('heading', { level: 1 }).textContent).toBe(COPY.h1);
   expect(screen.getAllByTestId('dashboard-sarah-read')).toHaveLength(1);
-  expect(screen.getByTestId('sarah-read-figure').textContent).toBe('$1,000.00 USD');
+  expect(screen.getByTestId('sarah-read-figure').textContent).toBe('$1000.00 USD');
 }
 beforeEach(() => {
   vi.stubEnv('NEXT_PUBLIC_AUTH_MODE', 'mock'); vi.stubEnv('NEXT_PUBLIC_FX_MODE', 'stub'); vi.stubEnv('NEXT_PUBLIC_APP_ENV', 'prod');
@@ -93,7 +93,7 @@ afterEach(() => {
 });
 
 test('Sarah is selectable on both journey Homes', () => {
-  expect(SYNTHETIC_JOURNEY_EXAMPLES).toEqual([{ id: 'daniel', label: OPTIONS[1] }, { id: 'sarah', label: OPTIONS[2] }]);
+  expect(SYNTHETIC_JOURNEY_EXAMPLES).toEqual([{ id: 'daniel', name: 'Daniel’s reserve', label: OPTIONS[1] }, { id: 'sarah', name: 'Sarah’s course fee', label: OPTIONS[2] }]);
   expect(parseSyntheticJourneyExample('example=sarah')).toBe('sarah');
   for (const route of ROUTES) {
     at(route, 'sarah'); const view = render(<DashboardPage />); assertRead();
@@ -116,7 +116,7 @@ test('Sarah is selectable on both journey Homes', () => {
   }
 });
 
-test('Sarah hero uses $1,000.00 USD and one independent fee observation', async () => {
+test('Sarah hero uses $1000.00 USD and one independent fee observation', async () => {
   at(ROUTES[0], 'sarah'); const view = render(<DashboardPage />); assertRead();
   const fixturePath = '../lib/state/sarah-home-fixture';
   expect(existsSync(resolve(__dirname, fixturePath + '.ts'))).toBe(true);
@@ -132,7 +132,7 @@ test('Sarah hero uses $1,000.00 USD and one independent fee observation', async 
   expect(panel().querySelector('time')?.getAttribute('datetime')).toBe(AS_OF);
   expect(panel().querySelectorAll('time')).toHaveLength(2);
   expect(panel().querySelectorAll('time')[1].getAttribute('datetime')).toBe('2027-10-01');
-  expect(panel().textContent?.split('K27,000')).toHaveLength(2);
+  expect(panel().textContent?.split('≈ ZMW 27,000.00')).toHaveLength(2);
   expect(panel().textContent).not.toContain('Course fee USD 1,000');
   expect(screen.getAllByTestId('sarah-fee-card')).toHaveLength(1);
   expect(screen.getByTestId('sarah-fee-card').querySelector('time')?.parentElement?.textContent).toBe(COPY.due);
@@ -151,8 +151,8 @@ test('Sarah hero uses $1,000.00 USD and one independent fee observation', async 
   const sentinel = {...read, rateBasis:{kind:'example-rate' as const,zmwPerUsd:DANIEL_FIXTURE_RATE_ZMW_PER_USD}, asOf:'2030-02-03T23:45:00.000Z',declaredFee:{...read.declaredFee,amount:1234.56,dueDate:'2031-04-05'},localDisplay:'ENGINE FIGURE',
     explanation:{fee:'ENGINE FEE',rateAssumption:'ENGINE RATE',limits:'ENGINE LIMITS'}};
   render(<SarahExampleHome read={sentinel}/>);
-  expect(screen.getByTestId('sarah-read-figure').textContent).toBe('$1,234.56 USD');
-  expect(screen.getByTestId('sarah-read-caption').textContent).toBe('ENGINE FIGURE · Example figure');
+  expect(screen.getByTestId('sarah-read-figure').textContent).toBe('$1234.56 USD');
+  expect(screen.getByTestId('sarah-read-caption').textContent).toBe('≈ ZMW 33,333.12 Example figure, not a quote');
   expect(screen.getByTestId('sarah-read-as-of').textContent).toBe('Example date: 3 Feb 2030');
   expect(screen.getByTestId('sarah-fee-card').querySelector('time')?.textContent).toBe('5 Apr 2031');
   expect(Array.from(panel().querySelectorAll('time')).map(n=>n.getAttribute('datetime'))).toEqual([sentinel.asOf,sentinel.declaredFee.dueDate]);
@@ -242,7 +242,7 @@ test('Sarah Home uses locked copy and no funding claims', () => {
     expect(document.getElementById('dashboard-sarah-label')?.textContent).toBe(COPY.heading);
     expect(screen.getByTestId('sarah-read-caption').textContent).toBe(COPY.caption);
     expect(screen.getByTestId('sarah-fee-card').textContent).toBe(COPY.card + COPY.due + COPY.rate + COPY.limits);
-    expect(panel().textContent).toBe(COPY.heading + '$1,000.00 USD' + COPY.caption + COPY.date + COPY.card + COPY.due + COPY.rate + COPY.limits);
+    expect(panel().textContent).toBe(COPY.heading + '$1000.00 USD' + COPY.caption + COPY.date + COPY.card + COPY.due + COPY.rate + COPY.limits);
     expect(picker().selectedOptions[0].textContent).toBe(OPTIONS[2]);
     expect(screen.getAllByText(COPY.rate, { exact: true })).toHaveLength(1);
     const text = panel().textContent!.replace(COPY.limits, ''); // Keep the exact negative payment-ability statement.
@@ -269,15 +269,39 @@ test('Sarah controls and disclosures fit and work by keyboard', () => {
   }
 });
 
-test('Sarah preserves Engine, golden, Daniel and shared style sources byte for byte', () => {
+test('Sarah preserves immutable sources and the Founder-confirmed §389 journey boundaries', () => {
+  // Founder yes, 15 Oct 2026 09:55 AWST: bounded replacement of exactly two pins.
+  // Captured before any runtime edit; every byte before the example-only section is immutable.
+  const stylesheet = source('app/(app)/dashboard/synthetic-home.module.css');
+  const prefix = stylesheet.split(/\/\* §(?:377|389):/)[0];
+  expect(createHash('sha256').update(prefix).digest('hex')).toBe('ac9e62cbbbe43a6438d4aa28e563aeec8dd2ae29c3cca6abbce76e03706cf4bc');
+  expect(stylesheet).not.toMatch(/exampleHero/);
+  expect(stylesheet).toMatch(/\.journeyHero/);
+  expect(stylesheet).toMatch(/\.usdSuffix/);
+  const hero = resolve(__dirname, '../app/(app)/dashboard/HomeHero.tsx');
+  expect(existsSync(hero), 'shared journey hero is absent').toBe(true);
+  if (existsSync(hero)) {
+    const shared = readFileSync(hero, 'utf8');
+    expect(shared).toMatch(/home\.amount/); expect(shared).toMatch(/home\.usdSuffix/);
+    expect(shared).toMatch(/formatUsd/); expect(shared).toMatch(/SIMULATION_DISPLAY_ESTIMATE_CAPTION/);
+  }
+  const consumer = source('app/(app)/dashboard/DanielExampleHome.tsx');
+  expect(consumer).not.toMatch(/PositionEntry|PositionLine|DEPOSIT|CurrencyInsight|compareCurrencyExample|estimateCents|getSimulationDisplayRate|formatSimulationDisplay|parseFloat|parseInt|Number\(.*localDisplay|research|golden|fixtureRateZmwPerUsd/);
+  for (const component of ['HomeHero', 'ExampleCard', 'RateLine', 'ExampleLineChart']) expect(consumer).toContain('<' + component);
+  expect(consumer).toContain('currentRead.declaredHolding.amount');
+  expect(consumer).toContain('currentRead.explanation.rateAssumption');
+  expect(consumer).toContain('reads={timeline}');
+  expect(consumer).toContain('Figures over time');
+  expect(consumer).toContain('shown above');
+  expect(consumer).toMatch(/SYNTHETIC_JOURNEY_EXAMPLES/);
+  expect(consumer).toMatch(/limitation/);
+
   const hashes: Record<string, string> = {
     "lib/engine/sarah-read.ts": "6114b2bc267a6a997115e604b5865bf6feb4760aff922d27823e5854ae9fa34b",
     "lib/engine/daniel-read.ts": "84fb14d81def62ffe3491fe9f3f6b64a9705e497952fa37ff4f604d018764e60",
     "__tests__/engine-sarah-read.golden.ts": "656fb25c528c85f8b8a02c026e1b95699dc5cdd6ed617e276e2cbc64ac2784f5",
     "__tests__/engine-daniel-read.golden.ts": "d2fe6c27bfe369e068958181da41d1d04594e41b192f47d2379fe1f9d62d8ab4",
     "lib/state/daniel-home-fixture.ts": "af81ee319ae5b4f97e1dcf9403e79d8f94a71f9bc68b37df1da5c3b530fb2081",
-    "app/(app)/dashboard/DanielExampleHome.tsx": "8c58bf8734358e33b028b77e57dc8ae58e6bbcc1566299633828dadbb0008d9e",
-    "app/(app)/dashboard/synthetic-home.module.css": "f29cded5ea10c162a13d297b2810d8842fb63b3cc7e008b6544f4cee50512a84",
     "app/(app)/dashboard/PositionLine.tsx": "d854781bd1b0950de0fc8e16a972e8ba7e47842e263a7c776664cb7deb8dae0a",
     "app/(app)/dashboard/CurrencyInsight.tsx": "769028b998087f94e53bc1b7ff875a1f916e6963537d06911f56bc19bd4f5b33"
 };
