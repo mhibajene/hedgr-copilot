@@ -1,9 +1,7 @@
 // @vitest-environment jsdom
 
-import React from 'react';
-import { cleanup, render, screen } from '@testing-library/react';
+import { cleanup } from '@testing-library/react';
 import { afterEach, describe, expect, test } from 'vitest';
-import { SyntheticTxExceptionNotice } from '../components/SyntheticTxExceptionNotice';
 import {
   SYNTHETIC_TX_EXCEPTION_PRESENTATIONS,
   SyntheticTxExceptionState,
@@ -127,26 +125,4 @@ describe('synthetic transaction exception presentation contract', () => {
     );
   });
 
-  test('component renders a disabled non-executing primary action', () => {
-    render(<SyntheticTxExceptionNotice state={SyntheticTxExceptionState.BLOCKED} />);
-
-    expect(
-      screen
-        .getByTestId('synthetic-tx-exception-notice')
-        .getAttribute('data-synthetic')
-    ).toBe('true');
-    expect(screen.getByText('Blocked')).toBeTruthy();
-    expect(screen.getByText('Synthetic / non-live fixture')).toBeTruthy();
-    expect(
-      screen
-        .getByTestId('synthetic-tx-exception-notice')
-        .getAttribute('data-research-fixture-id')
-    ).toBe('blocked-v1');
-    expect(
-      screen.getByTestId('synthetic-tx-exception-primary-action').hasAttribute('disabled')
-    ).toBe(true);
-    expect(
-      screen.getByTestId('synthetic-tx-exception-primary-action').textContent
-    ).toBe('Read the synthetic status explanation');
-  });
 });

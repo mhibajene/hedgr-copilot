@@ -1,23 +1,7 @@
 import { describe, test, expect } from 'vitest';
-import { formatUsd, formatLocalCurrency } from '../lib/utils/money';
+import { formatLocalCurrency } from '../lib/utils/money';
 
 describe('money formatting utilities', () => {
-  describe('formatUsd', () => {
-    test('formats positive amounts with $ symbol', () => {
-      expect(formatUsd(100)).toBe('$100.00');
-      expect(formatUsd(1234.56)).toBe('$1,234.56');
-    });
-
-    test('formats zero correctly', () => {
-      expect(formatUsd(0)).toBe('$0.00');
-    });
-
-    test('rounds to 2 decimal places', () => {
-      expect(formatUsd(100.999)).toBe('$101.00');
-      expect(formatUsd(50.555)).toBe('$50.56');
-    });
-  });
-
   describe('formatLocalCurrency', () => {
     test('formats ZMW with currency code (not symbol)', () => {
       expect(formatLocalCurrency(1000, 'ZMW')).toBe('ZMW 1,000.00');

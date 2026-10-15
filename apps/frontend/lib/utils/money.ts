@@ -2,24 +2,8 @@
  * Currency formatting utilities
  *
  * This module provides consistent currency formatting across the app.
- * - USD uses the "$" symbol (Intl formatting)
  * - Local currencies use their ISO 4217 code (e.g., "ZMW", "NGN", "KES")
  */
-
-/**
- * Format an amount as USD with the "$" symbol.
- *
- * @param amount - The numeric amount to format
- * @returns Formatted string, e.g., "$1,234.56"
- */
-export function formatUsd(amount: number): string {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  }).format(amount);
-}
 
 /**
  * Format an amount in local currency using the currency code (not symbol).

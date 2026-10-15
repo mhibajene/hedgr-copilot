@@ -1,6 +1,6 @@
 "use client";
 
-import { formatSimulationDisplayEstimate, formatSimulationDisplayFigure, getSimulationDisplayRate, SIMULATION_DISPLAY_ESTIMATE_CAPTION, useSimulationDisplayCurrency } from "../../../lib/state/simulation-display-currency";
+import { getSimulationDisplayRate, useSimulationDisplayCurrency } from "../../../lib/state/simulation-display-currency";
 import finish from '../product-finish.module.css';
 import home from './synthetic-home.module.css';
 import { SimulationDisplayCurrencySelector } from '../../../components/SimulationDisplayCurrencySelector';
@@ -13,6 +13,8 @@ import { EnginePostureHeader } from "./EnginePostureHeader";
 import { PositionLine } from "./PositionLine";
 import { DanielExampleHome } from './DanielExampleHome';
 import { SarahExampleHome } from './SarahExampleHome';
+import { HomeHero } from './HomeHero';
+import { RateLine } from './RateLine';
 import { CurrencyInsight } from "./CurrencyInsight";
 import { EngineProtectiveGuidance } from "./EngineProtectiveGuidance";
 import { EngineStabilityExplainer } from "./EngineStabilityExplainer";
@@ -365,42 +367,7 @@ export default function DashboardPage() {
       ? sinceSummary.kind !== "no-change"
       : syntheticComparison.comparisonState === "change" && syntheticComparison.lastEvent !== undefined);
 
-  const balanceHero = (
-    <section
-      className={`space-y-1 ${home.position}`}
-      aria-labelledby="dashboard-total-balance-label"
-      data-testid="dashboard-balance"
-    >
-      <div className={home.balanceHeading}>
-        <p
-          id="dashboard-total-balance-label"
-          className="text-xs font-semibold tracking-tight text-hedgr-800"
-        >
-          {productSimulationActive ? "Simulated Hedgr balance" : "Your current position"}
-        </p>
-        {syntheticJourneyActive ? <SimulationDisplayCurrencySelector placement="position" /> : null}
-      </div>
-      {positionLoading ? (
-        <div className={home.amount} data-testid="dashboard-balance-loading" aria-busy="true">
-          <span className={`${home.skeleton} ${home.skeletonAmount}`} aria-hidden="true" />
-          <span className={`${home.skeleton} ${home.skeletonLine}`} aria-hidden="true" />
-        </div>
-      ) : isLoading ? (
-        <div className={`${home.amount} tabular-nums`}>
-          …
-        </div>
-      ) : (
-        <BalanceWithLocalEstimate
-          usdAmount={ready && !cleanStartRequested ? displayedTotal : 0}
-          displayEstimate={syntheticJourneyActive ? formatSimulationDisplayEstimate(ready && !cleanStartRequested ? displayedTotal : 0, displayCurrency) : undefined}
-          displayEstimateParts={syntheticJourneyActive ? {
-            figure: formatSimulationDisplayFigure(ready && !cleanStartRequested ? displayedTotal : 0, displayCurrency),
-            caption: SIMULATION_DISPLAY_ESTIMATE_CAPTION,
-          } : undefined}
-          data-testid="usd-balance"
-          className={`${home.amount} tabular-nums`}
-        />
-      )}
+  const balanceHeroTail = <>
       {productSimulationActive ? (
         <p className="sr-only" role="status" data-testid="dashboard-arrival-announcement">
           {arrivalAnnouncement}
@@ -435,6 +402,43 @@ export default function DashboardPage() {
           ) : null}
         </p>
       ) : null}
+  </>;
+  const balanceHero = syntheticJourneyActive ? (
+    <HomeHero label="Simulated Hedgr balance" labelId="dashboard-total-balance-label" usdAmount={ready && !cleanStartRequested ? displayedTotal : 0} currency={displayCurrency} ownSimulation figureTestId="usd-balance" testId="dashboard-balance" selector={<SimulationDisplayCurrencySelector placement="position" />} loading={positionLoading} isLoading={isLoading}>
+      {balanceHeroTail}
+    </HomeHero>
+  ) : (
+    <section
+      className={`space-y-1 ${home.position}`}
+      aria-labelledby="dashboard-total-balance-label"
+      data-testid="dashboard-balance"
+    >
+      <div className={home.balanceHeading}>
+        <p
+          id="dashboard-total-balance-label"
+          className="text-xs font-semibold tracking-tight text-hedgr-800"
+        >
+          {productSimulationActive ? "Simulated Hedgr balance" : "Your current position"}
+        </p>
+        {syntheticJourneyActive ? <SimulationDisplayCurrencySelector placement="position" /> : null}
+      </div>
+      {positionLoading ? (
+        <div className={home.amount} data-testid="dashboard-balance-loading" aria-busy="true">
+          <span className={`${home.skeleton} ${home.skeletonAmount}`} aria-hidden="true" />
+          <span className={`${home.skeleton} ${home.skeletonLine}`} aria-hidden="true" />
+        </div>
+      ) : isLoading ? (
+        <div className={`${home.amount} tabular-nums`}>
+          …
+        </div>
+      ) : (
+        <BalanceWithLocalEstimate
+          usdAmount={ready && !cleanStartRequested ? displayedTotal : 0}
+          data-testid="usd-balance"
+          className={`${home.amount} tabular-nums`}
+        />
+      )}
+      {balanceHeroTail}
     </section>
   );
 
@@ -475,6 +479,8 @@ export default function DashboardPage() {
     </nav>
   );
 
+  const ownRateLine = syntheticJourneyActive ? <RateLine code={displayCurrency} rate={getSimulationDisplayRate(displayCurrency)} /> : null;
+
   const observation = (
     <div className={home.observation}>
       <EnginePostureHeader
@@ -489,6 +495,7 @@ export default function DashboardPage() {
         homeDate={today}
         changeIncludedInBalance={positionDerivable}
       />
+      {ownRateLine}
     </div>
   );
 
@@ -560,6 +567,7 @@ export default function DashboardPage() {
             </li>
           </ol>
         </section>
+        {ownRateLine}
       </div>
     );
   } else if (normalPosture && sinceSummary) {
@@ -638,6 +646,7 @@ export default function DashboardPage() {
             ? sinceLink(sinceSummary.kind === "one" ? "See the entry" : "See all in Activity")
             : null}
         </section>
+        {ownRateLine}
       </div>
     );
   }
@@ -825,7 +834,7 @@ export default function DashboardPage() {
             id="dashboard-orientation-heading"
             className="text-xl font-bold tracking-tight text-hedgr-800 sm:text-4xl"
           >
-            {syntheticJourneyActive ? sarahExample ? "Sarah’s example" : danielExample ? "Daniel’s example" : "Your simulation" : "Your position"}
+            {syntheticJourneyActive ? exampleActive ? "Example" : "Your simulation" : "Your position"}
           </h1>
           {examplePicker}
           {!syntheticJourneyActive ? <p className={home.contextLine} data-testid="dashboard-context-line">

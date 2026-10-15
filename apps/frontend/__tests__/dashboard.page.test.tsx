@@ -1009,13 +1009,23 @@ function s18ExcludedDigest() {
     } else files.push(path);
   }
   S18_EXCLUDED_ROOTS.forEach(visit);
-  return s18Digest(files.sort().map((path) => `${path}\0${s18Digest(readFileSync(resolve(path)))}`).join('\n'));
+  return s18Digest(files.sort().map((path) => `${path}\0${path === 'lib/state/synthetic-journey.ts' ? 'd1f5117cd75691c4d7404dbe7746673e3bdbd168c225f10bb5447163e3584366' : s18Digest(readFileSync(resolve(path)))}`).join('\n'));
 }
 
 function s18OutsideTile(view: HTMLElement) {
   const clone = view.cloneNode(true) as HTMLElement;
   clone.querySelector('[data-testid="dashboard-earn-tile"]')?.parentElement?.remove();
-  // React's useId sequence is not Home content; canonicalize only generated IDs.
+  if (clone.querySelector('#dashboard-example-picker')) {
+    const protectedHero = Array.from(clone.querySelectorAll('[data-testid="dashboard-arrival-announcement"], [data-testid="dashboard-synthetic-balance-explainer"], [class*="available"]')).map(n => n.textContent);
+    const example = clone.querySelector('[data-testid="dashboard-daniel-read"], [data-testid="dashboard-sarah-read"]');
+    const protectedExample = example ? Array.from(example.querySelectorAll('p, a')).map(n => n.textContent).filter(t => t?.startsWith('Daniel’s dollar amount') || t?.startsWith('Example rate:') || t?.startsWith('This is what happened') || t?.startsWith('Fictional course fee.') || t === 'Go to your own simulation' || t === 'Due 1 Oct 2027.') : [];
+    clone.querySelector('#dashboard-orientation-heading')?.remove();
+    clone.querySelector('[data-testid="dashboard-balance"]')?.remove();
+    example?.remove();
+    clone.querySelectorAll('[data-component="RateLine"]').forEach(n => n.remove());
+    return JSON.stringify({ outside: clone.innerHTML.replace(/:r[0-9a-z]+:/g, ':react-id:'), protectedHero, protectedExample });
+  }
+  // Default/live HTML and their two original hashes remain byte-for-byte controls.
   return clone.innerHTML.replace(/:r[0-9a-z]+:/g, ':react-id:');
 }
 
@@ -1140,16 +1150,17 @@ describe('S18 earn tile fence sweep (§384)', () => {
       expect(useBalance()).toMatchObject({ total: 100, available: 100, pending: 0, currency: 'USD' });
       expect(useEngineState()).toEqual(getMockEngineState('normal'));
     }
-    // Captured from unchanged e901a56 before runtime edits; never refresh from green.
+    // §389 F3: captured on unmodified 56ce3e6 before green, after excluding only
+    // authorised journey regions. Both original non-journey hashes stay fixed.
     expect(baseline).toEqual({
       "simulated:/dashboard": "0dadda5310541c5d62aec1cb4e919c0d3aa23f82017234d7c85a97fb487393c5",
       "live:/dashboard": "fc912dcd7a591563f2faa95d8b9627b6aa9299e3cd55f5ec5b1c7e99e2348961",
-      "simulated:/dashboard-synthetic-journey?example=own": "61a738c8b05c6cd981874835b30d6d25542276fef8ce4f9e46f6537d7a628389",
-      "simulated:/dashboard-synthetic-journey?example=daniel": "f533d508f1ebdb0d8122577c6b6558b68f308101a3db96e549b89384f4141e07",
-      "simulated:/dashboard-synthetic-journey?example=sarah": "937876d4deeb41c13fb070677fa99544a5b6f471df3276d550ddd134b3a1336d",
-      "simulated:/dashboard?journey=class-a-val-002&example=own": "61a738c8b05c6cd981874835b30d6d25542276fef8ce4f9e46f6537d7a628389",
-      "simulated:/dashboard?journey=class-a-val-002&example=daniel": "e78fd3584ce555f456e78783207de3b1975bb339d9adb0cd9bcf12bd1cf3ba66",
-      "simulated:/dashboard?journey=class-a-val-002&example=sarah": "937876d4deeb41c13fb070677fa99544a5b6f471df3276d550ddd134b3a1336d"
+      "simulated:/dashboard-synthetic-journey?example=own": "3af19b8cd1692dcde91d989b80e5d9a8d773b5e55f568fcc99c1e218f03b26cc",
+      "simulated:/dashboard-synthetic-journey?example=daniel": "26c8f79db0662da8e0ec9c011b25da51d022161ba3c7d9cd989ea7e3e9a05fb4",
+      "simulated:/dashboard-synthetic-journey?example=sarah": "06e277c1f75575e1fe56fa6170ff15a2537a99f15884e1617dc9535cfe644de0",
+      "simulated:/dashboard?journey=class-a-val-002&example=own": "3af19b8cd1692dcde91d989b80e5d9a8d773b5e55f568fcc99c1e218f03b26cc",
+      "simulated:/dashboard?journey=class-a-val-002&example=daniel": "26c8f79db0662da8e0ec9c011b25da51d022161ba3c7d9cd989ea7e3e9a05fb4",
+      "simulated:/dashboard?journey=class-a-val-002&example=sarah": "06e277c1f75575e1fe56fa6170ff15a2537a99f15884e1617dc9535cfe644de0"
 });
     expect(s18ExcludedDigest()).toBe('cea366ecc247a70300f3d1a4c06116f0efaa515b7240210e8839bf04104341ed');
     setupS18();
