@@ -57,7 +57,8 @@ for (const [width, scale] of [[1440, 1], [390, 1], [320, 2]]) test(`V7 V8 V10 V1
         if (stateName === 'first') await expect(list).toHaveText('First deposit · 8 Oct · shown above');
         if (stateName === 'returning') {
           await expect(page.getByTestId('dashboard-position-line-visit')).toHaveText('Your last visit');
-          await expect(page.getByTestId('engine-posture-context')).toHaveText('1 change since your last visit');
+          await expect(page.getByTestId('engine-posture-context')).toHaveCount(0);
+          await expect(page.getByTestId('example-line-chart').locator('[data-chart-label]')).toHaveText('1 change since your last visit');
           const text = await page.locator('main').innerText();
           expect(text.split('$20.00').length - 1).toBe(1); expect(text.split('−$20.00').length - 1).toBe(1);
         } else await expect(page.getByTestId('dashboard-position-line-visit')).toHaveCount(0);
@@ -112,3 +113,73 @@ test('V11 all five currencies preserve caption/rate/current figures and V16 2027
     await expect(page.getByTestId('chart-event-list').locator('li').first()).toHaveText(example === 'daniel' ? 'First deposit +$500.00 · 12 Jun 2026' : 'First deposit +ZMW 4,000.00 · 14 Apr 2026');
   }
 });
+
+const S2_COUNT = /^(No changes|\d+ changes?)( since your last visit)?$/;
+const RETURNING_COUNT = /(No changes|\d+ changes?) since your last visit/g;
+const chartCounts = (page: Page) => page.getByTestId('example-line-chart').locator('[data-chart-label]').filter({ hasText: S2_COUNT });
+async function s2Viewport(page: Page, width: number, scale: number) {
+  await page.setViewportSize({ width, height: 1000 });
+  await page.evaluate(scale => { document.documentElement.style.fontSize = `${16 * scale}px`; }, scale);
+}
+const returningState = (count: number) => ({
+  rows: [row('deposit', 500, FIRST), ...Array.from({ length: count }, (_, i) => row('deposit', 10 + i, NEXT + i * 1000))],
+  visit: FIRST + 1,
+});
+for (const [width, scale] of [[1440, 1], [390, 1], [320, 2]]) {
+  test(`S5 e2e-own-sim-once ${width}@${scale * 100}%`, async ({ page }) => {
+    for (const route of ROUTES) {
+      await seed(page, returningState(2)); await page.goto(route); await s2Viewport(page, width, scale);
+      await expect(chartCounts(page)).toHaveCount(1);
+      await expect(chartCounts(page)).toHaveText('2 changes since your last visit');
+      await expect(page.getByTestId('example-line-chart').getByText('1 change since your last visit', { exact: true })).toHaveCount(0);
+      await expect(page.getByTestId('dashboard-position-line-visit')).toHaveText('Your last visit');
+      await expect(page.getByTestId('engine-posture-context')).toHaveCount(0);
+      if (width === 320) await expect(chartCounts(page)).not.toBeVisible();
+    }
+  });
+  for (const [id, example] of [['S6 e2e-daniel-once', 'daniel'], ['S7 e2e-sarah-once', 'sarah']]) {
+    test(`${id} ${width}@${scale * 100}%`, async ({ page }) => {
+      for (const route of ROUTES) {
+        await seed(page, STATES.empty); await page.goto(`${route}${route.includes('?') ? '&' : '?'}example=${example}`);
+        await s2Viewport(page, width, scale);
+        await expect(chartCounts(page)).toHaveCount(1);
+        await expect(chartCounts(page)).toHaveText('1 change');
+        if (width === 320) await expect(chartCounts(page)).not.toBeVisible();
+      }
+    });
+  }
+  test(`S8 e2e-no-new-styling ${width}@${scale * 100}%`, async ({ page }) => {
+    await seed(page, returningState(3)); await page.goto(ROUTES[0]); await s2Viewport(page, width, scale);
+    const labels = chartCounts(page);
+    await expect(labels).toHaveCount(1);
+    await expect(labels).toHaveAttribute('data-placement', 'above');
+    await expect(labels).toHaveClass(/visualiserLabel/);
+    await expect(page.getByTestId('example-line-chart').locator('[data-chart-label][data-placement="below"]')).toHaveCount(0);
+    expect(await labels.evaluate(n => ({ tag: n.tagName, parent: n.parentElement!.className, transform: (n as HTMLElement).style.transform }))).toMatchObject({ tag: 'SPAN', parent: expect.stringMatching(/visualiserPlot/), transform: '' });
+  });
+  test(`S10 e2e-count-once-per-page ${width}@${scale * 100}%`, async ({ page }) => {
+    test.setTimeout(90_000);
+    for (const route of ROUTES) for (const count of [1, 2, 4, 0]) {
+      await seed(page, returningState(count)); await page.goto(route); await s2Viewport(page, width, scale);
+      await expect(chartCounts(page)).toHaveCount(count === 0 ? 0 : 1);
+      const expected = count === 0 ? 'No changes since your last visit' : `${count} ${count === 1 ? 'change' : 'changes'} since your last visit`;
+      expect((await page.locator('main').textContent())!.match(RETURNING_COUNT)).toEqual([expected]);
+      if (count === 0) {
+        await expect(page.getByTestId('engine-posture-context')).toHaveText(expected);
+        expect(await page.getByTestId('chart-event-dot').count()).toBeGreaterThan(0);
+      } else {
+        await expect(chartCounts(page)).toHaveText(expected);
+        await expect(page.getByTestId('engine-posture-context')).toHaveCount(0);
+      }
+    }
+  });
+  test(`S11 e2e-examples-plain-label ${width}@${scale * 100}%`, async ({ page }) => {
+    for (const route of ROUTES) for (const example of ['daniel', 'sarah']) {
+      await seed(page, returningState(2)); await page.goto(`${route}${route.includes('?') ? '&' : '?'}example=${example}`);
+      await s2Viewport(page, width, scale);
+      await expect(chartCounts(page)).toHaveCount(1);
+      await expect(chartCounts(page)).toHaveText('1 change');
+      expect((await page.locator('main').textContent())!.match(RETURNING_COUNT) ?? []).toEqual([]);
+    }
+  });
+}

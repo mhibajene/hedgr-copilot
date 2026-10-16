@@ -669,7 +669,9 @@ test('Journey arrival announces current and prior simulated balances without a d
         await expect(status).not.toContainText(/higher|lower|delta/);
         expect(await status.ariaSnapshot()).toContain('Your simulated balance is now');
         // The visible summary still describes the transaction and has not been rewritten as S17.
-        await expect(page.getByTestId('dashboard-current-status')).toContainText(rising ? '1 change since your last visit' : '1 change since your last visit');
+        await expect(page.getByTestId('engine-posture-context')).toHaveCount(0);
+        await expect(page.getByTestId('dashboard-current-status')).toContainText(rising ? 'This simulated deposit is included in the balance above.' : 'This simulated withdrawal is included in the balance above.');
+        await expect(page.getByTestId('example-line-chart').locator('[data-chart-label]')).toHaveText('1 change since your last visit');
       }
     }
   }

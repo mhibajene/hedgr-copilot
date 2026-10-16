@@ -57,7 +57,9 @@ test('V5 merged dots retain every event and V6 chart collision flips below', () 
   vi.stubGlobal('innerWidth', 1440);
   const three = [...entries, { ...entries[1], id: 'd2', type: 'DEPOSIT' as const, amountUSD: 10, balanceBefore: 480, balanceAfter: 490, at: NEXT + 1000 }];
   const view = render(<PositionLine entries={three} lastVisit={FIRST - 1} visualise heroAmount={490} />);
-  expect(view.container.querySelector('[data-chart-label][data-placement="below"]')).not.toBeNull();
+  expect(view.container.querySelectorAll('[data-chart-label]')).toHaveLength(1);
+  expect(view.container.querySelector('[data-chart-label]')!.textContent).toBe('3 changes since your last visit');
+  expect(view.container.querySelector('[data-chart-label][data-placement="below"]')).toBeNull();
   view.unmount();
   const many = Array.from({ length: 40 }, (_, i) => ({ ...entries[0], id: `e${i}`, at: FIRST + i * 1000, amountUSD: 1, balanceBefore: i, balanceAfter: i + 1 }));
   render(<PositionLine entries={many} lastVisit={null} visualise heroAmount={40} />);
@@ -93,7 +95,10 @@ test('V10 say-it-once-incl-what-changed, V11 caption-and-rate-27, V13 no-arrow-l
     expect(screen.getByText('Example rate: ZMW 27 per US dollar. Not a live rate.', { exact: true })).toBeDefined();
     expect(screen.getByText('This is what happened in your simulation. It doesn’t tell you what will happen next.', { exact: true })).toBeDefined();
     const expected = visit === null ? 'A simulated withdrawal on 9 Oct.' : visit < FIRST ? '2 changes since your last visit' : visit < NEXT ? '1 change since your last visit' : 'No changes since your last visit';
-    expect(screen.getByTestId('engine-posture-context').textContent).toBe(expected);
+    if (visit !== null && visit < NEXT) {
+      expect(screen.queryByTestId('engine-posture-context')).toBeNull();
+      expect(screen.getByTestId('example-line-chart').querySelector('[data-chart-label]')!.textContent).toBe(expected);
+    } else expect(screen.getByTestId('engine-posture-context').textContent).toBe(expected);
     const inclusion = visit === NEXT + 1 ? 'Includes your simulated activity.' : visit === FIRST - 1 ? 'These simulated entries are included in the balance above.' : 'This simulated withdrawal is included in the balance above.';
     expect(screen.getAllByText(inclusion, { exact: true })).toHaveLength(1);
   }
