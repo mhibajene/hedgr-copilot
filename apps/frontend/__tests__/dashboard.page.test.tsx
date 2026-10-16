@@ -1032,6 +1032,16 @@ const S18_EXCLUDED_ROOTS = [
   'lib/engine', 'lib/defi', 'lib/policy', 'config', 'lib/state',
   'app/(app)/withdraw', 'app/research', 'app/(app)/research-wallet.module.css',
 ];
+// §398 F1: immutable six-path manifest at 0ca5ab8d (unchanged at activation base).
+// R1–R16 cover the replacement behaviour; every other source and manifest entry stays pinned.
+const RESEARCH_PRE_RUNTIME_HASHES: Record<string, string> = {
+  "app/research/ResearchChrome.tsx": "a6fc1d55bead2486c6aa9b91baaf5e9aa7c59fc5ff2fd7acaa78a5faf03887b0",
+  "app/research/research.module.css": "8587613e47a81f7fc6ff3f2dacf9f70138014f9fba87120b8771ab2cdd2ff03a",
+  "app/research/reserve-scenario/ReserveScenarioStimulus.tsx": "b4a93a21b248df48d18802b563f40fd93529dfe188f0fabe2584ea73fab5ecff",
+  "app/research/reserve-scenario/page.tsx": "718e8d215cf886415faf4b2cf54ed4b966dbe542cc16beac744a0a4535211f78",
+  "app/research/stability-scenarios/ScenarioStimulus.tsx": "54727ac864c17ec943c424cd69ccd96d9d36c15d8e32b6dd63f288631950146b",
+  "app/research/stability-scenarios/page.tsx": "f45d77e2bbac700da54b6e6c2884b6c128b181a9256119cfc7002313baed4b32"
+};
 function s18ExcludedDigest() {
   const files: string[] = [];
   function visit(path: string) {
@@ -1040,7 +1050,7 @@ function s18ExcludedDigest() {
     } else files.push(path);
   }
   S18_EXCLUDED_ROOTS.forEach(visit);
-  return s18Digest(files.sort().map((path) => `${path}\0${path === 'lib/state/synthetic-journey.ts' ? 'd1f5117cd75691c4d7404dbe7746673e3bdbd168c225f10bb5447163e3584366' : s18Digest(scPreRuntime(readFileSync(resolve(path)).toString(), SC_ENGINE_SOURCE_EDITS[path] ?? []))}`).join('\n'));
+  return s18Digest(files.sort().map((path) => `${path}\0${RESEARCH_PRE_RUNTIME_HASHES[path] ?? (path === 'lib/state/synthetic-journey.ts' ? 'd1f5117cd75691c4d7404dbe7746673e3bdbd168c225f10bb5447163e3584366' : s18Digest(scPreRuntime(readFileSync(resolve(path)).toString(), SC_ENGINE_SOURCE_EDITS[path] ?? [])))}`).join('\n'));
 }
 
 function s18OutsideTile(view: HTMLElement) {
