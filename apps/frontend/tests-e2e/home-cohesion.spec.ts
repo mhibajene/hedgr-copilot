@@ -134,6 +134,7 @@ test.describe('protected route preservation', () => {
           await expect(page.locator('[data-testid^="activity-row-"]')).toHaveCount(rows.length);
         }
         text[`${route}:${state}`] = (await page.locator('main').textContent())!;
+        if (route === '/dashboard') text[`${route}:${state}`] = scPreRuntime(text[`${route}:${state}`], SC_HOME_TEXT_EDITS);
         baseline[`${route}:${state}`] = createHash('sha256').update(text[`${route}:${state}`]).digest('hex');
       }
     }
@@ -176,3 +177,84 @@ const PRE_GREEN_ROUTE_TEXT: Record<string, string> = {
 
 // §391: deterministic event dates and current-year presentation.
 test.use({ timezoneId: 'UTC' });
+
+// §394: exact approved copy reversal only; all 16 original route hashes remain.
+const SC_HOME_TEXT_EDITS = [
+  [
+    "eturn opportunity when conditions allow.Stability target20%ReserveSupporting guidanceA buffer target, kept ready if needed.Stability target30%Guidance only. This planning structure is context, not an instruction. It does not show current money or prove that simulated money was divided or moved.Planning targets. The percentages show intended stability priorities in this simulation only.Verify what stability targets meanTarget role. A lower Conser",
+    "eturn opportunity when conditions allow.Target20%ReserveSupporting guidanceA buffer target, kept ready if needed.Target30%Targets only. They are not an instruction, and they do not divide or move your balance.Planning targets. The percentages show how Hedgr divides its plan.What these targets meanTarget role. A lower Conser"
+  ],
+  [
+    "ts are guidance, not current money.Hedgr's guidance makes its priorities visible in this simulation: preserve value first, keep access and risk visible, and understand the situation before action.Hedgr represents those priorities through three distinct target roles.Core stability targetPrimary stability rolePreserve value as the primary stability priority.Conservative yieldSupporting roleKeep return opportunity limited and conditional.ReserveSupporting roleKeep a buffer ready if needed.These percentages describe a simulated planning structure for those roles. They are guidance, not current money.Core stability targetPrimary stability guidanceThe largest target, focused on preserving value.Stability target50%Conservative yieldSupporting gui",
+    "ts are guidance, not current money.Hedgr shows its targets here: what it sets first, how access works and what the risks are.These percentages are Hedgr's planning targets for each role. They are not money.Main targetPlanning targetOne of the three targets.Target50%Conservative yieldSupporting gui"
+  ],
+  [
+    " kept ready in principle if you need it.Most of the structure is held steady. Conservative yield and a reserve are quieter supporting lanes. This shows system intent, not a map of where funds sit.When the system is more cautious, protection and the reserve can outweigh conservative yield. Posture reflects that caution. It does not describe completed movement.Targets are not accounting truth. Your ",
+    " kept ready in principle if you need it.The three planning targets show a plan. None of them shows where money sits.When Hedgr is more cautious, the Reserve target goes up and the target for earning goes down. Nothing is moved.Targets are not accounting truth. Your "
+  ],
+  [
+    "ciple; these targets stay informational.A protective posture does not, on its own, mean withdrawals are blocked or delayed.Protection in plain termsViewHedgr treats stability and protection as deliberate design choices. In tougher conditions, these informational targets may emphasize protection and liquidity ahead of conservative yield. That is visible intent you can review, not a nudge to move funds.Caution can limit conservative yield before protection is stressed. The split reflects that priority, not completed movement.The Reserve above still means readiness",
+    "ciple; these targets stay informational.When targets changeViewIn harder conditions, Hedgr may raise the Reserve target and lower the target for earning. You can see this here. It is not a prompt to do anything.The Reserve above still means readiness"
+  ],
+  [
+    " your prior check.Oct 15, 2026, 12:00 AMProtection in plain termsViewHedgr treats stability and protection as deliberate design choices. In tougher conditions, these informational targets may emphasize protection and liquidity ahead of conservative yield. That is visible intent you can review, not a nudge to move funds.Caution can limit conservative yield before protection is stressed. The split reflects that priority, not completed movement.The Reserve above still means readiness",
+    " your prior check.Oct 15, 2026, 12:00 AMWhen targets changeViewIn harder conditions, Hedgr may raise the Reserve target and lower the target for earning. You can see this here. It is not a prompt to do anything.The Reserve above still means readiness"
+  ],
+  [
+    "ets or adviceWhere things stand: within expected rangeLast viewed locallyNo prior local view in this browser.Review detailsViewUse this snapshot for a calm, regular check-in. Protective conditions stay visible here without nudging you to act.“Available” still means read",
+    "ets or adviceWhere things stand: within the usual rangeLast viewed locallyNo prior local view in this browser.Review detailsViewCheck in here whenever you like. Nothing here asks you to act.“Available” still means read"
+  ],
+  [
+    "ets or adviceWhere things stand: within expected rangeLast viewed locallyOct 15, 2026, 12:00 AMReview detailsViewUse this snapshot for a calm, regular check-in. Protective conditions stay visible here without nudging you to act.Since you last opened this r",
+    "ets or adviceWhere things stand: within the usual rangeLast viewed locallyOct 15, 2026, 12:00 AMReview detailsViewCheck in here whenever you like. Nothing here asks you to act.Since you last opened this r"
+  ],
+  [
+    "informational posture, not ledger truth.Stable balance — The primary holding lane. It is held steady to preserve value.Conservative yield — A supporting lane",
+    "informational posture, not ledger truth.Main target — One of the three planning targets. It is a percentage, not money set aside.Conservative yield — A supporting lane"
+  ],
+  [
+    "hown within the guidance.Current state. The simulated balance shown above is separate from this guidance. The percentages do not divide it.No instruction or movement. Guidance does not tell you what to do, and a target does not divide or move simulated money.How Hedgr interprets stabilityReviewReview snapshotIllustrative exampl",
+    "hown within the guidance.Current state. Your balance shown above is separate from these targets.How Hedgr sets its targetsReviewReview snapshotIllustrative exampl"
+  ],
+  [
+    " not live targets or adviceNORMALWithin expected range. Most of your balance stays steady, with conservative yield and reserve capacity kept visible.There is nothing here you need to manag",
+    " not live targets or adviceNORMALWithin the usual range. The main target is the largest of the three planning targets.There is nothing here you need to manag"
+  ],
+  [
+    "nformational, not your ledger balance.A protective posture does not by itself stop a withdrawal from processing or imply lockup.Why your balance is structured this way",
+    "nformational, not your ledger balance.A higher Reserve target does not stop or delay a withdrawal.Why your balance is structured this way"
+  ],
+  [
+    " real money is split or moved.How Hedgr interprets stabilityReviewReview snapshotIllustrative exampl",
+    " real money is split or moved.How Hedgr sets its targetsReviewReview snapshotIllustrative exampl"
+  ],
+  [
+    "allDepositJan 1+$1000.00Planning targetsStability guidanceIllustrative example values, not live ta",
+    "allDepositJan 1+$1000.00Planning targetsPlanning targetsIllustrative example values, not live ta"
+  ],
+  [
+    ".37DepositJan 1+$1000.00Planning targetsStability guidanceIllustrative example values, not live ta",
+    ".37DepositJan 1+$1000.00Planning targetsPlanning targetsIllustrative example values, not live ta"
+  ],
+  [
+    "ckend events.Where things stand: within expected rangeInformational targets unchanged si",
+    "ckend events.Where things stand: within the usual rangeInformational targets unchanged si"
+  ],
+  [
+    "026, 12:00 AMWhere things stand: within expected rangeInformational targets unchanged si",
+    "026, 12:00 AMWhere things stand: within the usual rangeInformational targets unchanged si"
+  ],
+  [
+    "nciple; these targets stay informational.A protective posture does not, on its own, mean withdrawals are blocked or delayed.This comparison is about system targets",
+    "nciple; these targets stay informational.This comparison is about system targets"
+  ],
+  [
+    " or adviceSee the planning position shown in this simulation and why it is structured this way. The",
+    " or adviceSee the planning position shown and why it is structured this way. The"
+  ]
+];
+
+function scPreRuntime(value: string, edits: readonly (readonly string[])[]): string {
+  for (const [before, after] of edits) value = value.replaceAll(after, before);
+  return value;
+}

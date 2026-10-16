@@ -23,7 +23,6 @@ import {
   ENGINE_STABILITY_REVIEW_MEMORY_TARGETS_UNCHANGED,
   ENGINE_STABILITY_REVIEW_MEMORY_TITLE,
   ENGINE_STABILITY_REVIEW_SNAPSHOT_TITLE,
-  ENGINE_STABILITY_REVIEW_WITHDRAWAL_CONTINUITY,
   getEngineStabilityReviewSnapshotStance,
 } from "../../../lib/engine/stability-review-snapshot-copy";
 import type { EngineState } from "../../../lib/engine/types";
@@ -162,9 +161,6 @@ export function EngineStabilityReviewSnapshot({
           )}
           <p className="max-w-xl leading-relaxed text-hedgr-dark">
             {ENGINE_STABILITY_REVIEW_AVAILABLE_CONTINUITY}
-          </p>
-          <p className="max-w-xl leading-relaxed text-hedgr-dark">
-            {ENGINE_STABILITY_REVIEW_WITHDRAWAL_CONTINUITY}
           </p>
           {changeSignal !== null && (
             <p

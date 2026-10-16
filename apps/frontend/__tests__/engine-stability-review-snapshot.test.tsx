@@ -65,7 +65,7 @@ describe("EngineStabilityReviewSnapshot", () => {
     expect(snapshot.textContent).toContain(
       ENGINE_STABILITY_REVIEW_AVAILABLE_CONTINUITY
     );
-    expect(snapshot.textContent).toContain(
+    expect(snapshot.textContent).not.toContain(
       ENGINE_STABILITY_REVIEW_WITHDRAWAL_CONTINUITY
     );
     expect(snapshot.textContent).toContain(ENGINE_STABILITY_REVIEW_CADENCE_CUE);

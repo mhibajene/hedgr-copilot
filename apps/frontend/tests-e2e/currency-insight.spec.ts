@@ -209,7 +209,7 @@ test('inline insight is one keyboard launcher with a complete unchanged shelf an
   await expect(dialog).toContainText('Different local estimate.');
   await expect(dialog).toContainText('ZMW 7,695.00');
   await expect(dialog).toContainText('ZMW 8,100.00');
-  await expect(dialog).toContainText('FX comparison only—not earnings, purchasing power, guaranteed protection or a conversion quote.');
+  await expect(dialog).toContainText('This compares two example rates. It does not show earnings, buying power or a rate you would get.');
   await expect(dialog).toContainText('This shows the same amount at two made-up exchange rates. No money is earned or exchanged, and it isn’t what you’d receive.');
   await expect(dialog).toContainText('A made-up example, shown today and 30 days later.');
   await expect(dialog).toContainText('Invented research example. Not your account history or live market data.');
@@ -265,7 +265,7 @@ for (const width of [320, 390, 700, 1280, 1440]) {
           expect(await summary.evaluate(el => getComputedStyle(el).outlineStyle)).not.toBe('none');
         }
         await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)).toBeLessThanOrEqual(1);
-        await expect(dialog.getByText('FX comparison only—not earnings, purchasing power, guaranteed protection or a conversion quote.')).toBeVisible();
+        await expect(dialog.getByText('This compares two example rates. It does not show earnings, buying power or a rate you would get.')).toBeVisible();
         const observation = (await page.getByTestId('dashboard-current-status').boundingBox())!;
         const utilities = (await page.getByTestId('dashboard-simulation-utilities').boundingBox())!;
         expect(utilities.y).toBeGreaterThanOrEqual(observation.y + observation.height);

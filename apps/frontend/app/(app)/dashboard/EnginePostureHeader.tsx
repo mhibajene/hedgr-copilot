@@ -40,11 +40,11 @@ const SIMULATION_STATUS_CONTEXT: Record<EnginePosture, string> = {
   normal:
     "The completed simulated changes reconcile with the current position.",
   tightening:
-    "Hedgr's qualitative reading shows stability guidance becoming more cautious.",
+    "Hedgr's planning targets are becoming more cautious.",
   tightened:
-    "Hedgr's qualitative reading shows stability guidance in a more cautious state.",
+    "Hedgr's planning targets are more cautious than usual.",
   recovery:
-    "Hedgr's qualitative reading shows stability guidance easing from a more cautious state.",
+    "Hedgr's planning targets are returning to usual.",
 };
 
 type ComparisonState = "empty" | "first-event" | "change";

@@ -63,16 +63,16 @@ describe('ENGINE_STABILITY_REVIEW_SNAPSHOT copy contract', () => {
 
   test('stance copy stays inside promoted or already-grounded protective posture language', () => {
     expect(getEngineStabilityReviewSnapshotStance('normal')).toMatch(
-      /within expected range/i,
+      /within the usual range|targets returning to usual/i,
     );
     expect(getEngineStabilityReviewSnapshotStance('recovery')).toMatch(
-      /within expected range/i,
+      /within the usual range|targets returning to usual/i,
     );
     expect(getEngineStabilityReviewSnapshotStance('tightening')).toMatch(
-      /protective posture/i,
+      /Reserve target/i,
     );
     expect(getEngineStabilityReviewSnapshotStance('tightened')).toMatch(
-      /protective posture/i,
+      /Reserve target/i,
     );
 
     for (const posture of [

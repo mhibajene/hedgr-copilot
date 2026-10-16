@@ -1010,7 +1010,7 @@ function s18ExcludedDigest() {
     } else files.push(path);
   }
   S18_EXCLUDED_ROOTS.forEach(visit);
-  return s18Digest(files.sort().map((path) => `${path}\0${path === 'lib/state/synthetic-journey.ts' ? 'd1f5117cd75691c4d7404dbe7746673e3bdbd168c225f10bb5447163e3584366' : s18Digest(readFileSync(resolve(path)))}`).join('\n'));
+  return s18Digest(files.sort().map((path) => `${path}\0${path === 'lib/state/synthetic-journey.ts' ? 'd1f5117cd75691c4d7404dbe7746673e3bdbd168c225f10bb5447163e3584366' : s18Digest(scPreRuntime(readFileSync(resolve(path)).toString(), SC_ENGINE_SOURCE_EDITS[path] ?? []))}`).join('\n'));
 }
 
 function s18OutsideTile(view: HTMLElement) {
@@ -1030,7 +1030,7 @@ function s18OutsideTile(view: HTMLElement) {
     return JSON.stringify({ outside: clone.innerHTML.replace(/:r[0-9a-z]+:/g, ':react-id:'), protectedHero, protectedExample });
   }
   // Default/live HTML and their two original hashes remain byte-for-byte controls.
-  return clone.innerHTML.replace(/:r[0-9a-z]+:/g, ':react-id:');
+  return scPreRuntime(clone.innerHTML.replace(/:r[0-9a-z]+:/g, ':react-id:'), SC_NON_JOURNEY_HTML_EDITS);
 }
 
 describe('S18 earn tile fence sweep (§384)', () => {
@@ -1178,3 +1178,148 @@ describe('S18 earn tile fence sweep (§384)', () => {
     expectS18Lock(screen.getByTestId('dashboard-earn-tile'), '5.00%');
   });
 });
+
+// §394: exact pre-runtime old/new snippets; all original S18 hashes remain.
+const SC_ENGINE_SOURCE_EDITS: Record<string, string[][]> = {
+  "lib/engine/notices.ts": [
+    [
+      "\nexport const ENGINE_NOTICE_COPY: Record<NonNormalEnginePosture, EngineNotice> = {\n  tightening: {\n    title: 'Stability protection is tightening',\n    body: 'The system is moving toward a more protective mix while conditions are reviewed. When protection and the reserve take priority, the conservative yield target can be lower. This is informational guidance about system intent. It is not your ledger balance, holdings, or confirmed positions.',\n  },\n  tightened: {\n    title: 'Stability protection is elevated',\n    body: 'The system is holding a more protective mix with the reserve prioritized while conditions stay elevated. This is informational guidance about system intent. It is not your ledger balance, holdings, or confirmed positions.',\n  },\n  recovery: {\n    title: 'Stability protection is easing',\n    body: 'The system is moving toward steadier targets as conditions stabilize, with reserve discipline still in view. This is informational guidance about system intent. It is not your ledger balance, holdings, or confirmed positions.',\n  },\n};\n",
+      "\nexport const ENGINE_NOTICE_COPY: Record<NonNormalEnginePosture, EngineNotice> = {\n  tightening: {\n    title: 'Targets are changing',\n    body: 'When the Reserve target goes up, the target for earning can go down. These are targets, not your balance.',\n  },\n  tightened: {\n    title: 'Targets are set higher than usual',\n    body: 'These are targets, not your balance.',\n  },\n  recovery: {\n    title: 'Targets are returning to usual',\n    body: 'These are targets, not your balance.',\n  },\n};\n"
+    ]
+  ],
+  "lib/engine/posture-context.ts": [
+    [
+      "/** One short sentence per posture: definition only. No banner disclaimers duplicated here. */\nexport const ENGINE_POSTURE_CONTEXT: Record<EnginePosture, string> = {\n  normal:\n    'Within expected range. Most of your balance stays steady, with conservative yield and reserve capacity kept visible.',\n  tightening:\n    'Protective posture is increasing. Reserve targets are more prominent while conditions are reviewed.',\n  tightened:\n    'Protective posture is elevated. Reserve targets stay prioritized until conditions ease.',\n  recovery:\n    'Within expected range. Targets are easing toward a steadier posture while reserve discipline remains visible.',\n};\n",
+      "/** One short sentence per posture: definition only. No banner disclaimers duplicated here. */\nexport const ENGINE_POSTURE_CONTEXT: Record<EnginePosture, string> = {\n  normal:\n    'Within the usual range. The main target is the largest of the three planning targets.',\n  tightening:\n    'The Reserve target is going up while conditions are reviewed.',\n  tightened:\n    'The Reserve target is higher than usual until conditions ease.',\n  recovery:\n    'Within the usual range. Targets are returning to their usual levels.',\n};\n"
+    ]
+  ],
+  "lib/engine/protective-guidance-copy.ts": [
+    [
+      " * Principle-level only. Does not duplicate ENGINE_POSTURE_CONTEXT or ENGINE_NOTICE_COPY.\n */\n\nexport const ENGINE_PROTECTIVE_GUIDANCE_TITLE = 'Protection in plain terms';\n\n/** One framing paragraph: deliberate intent, not operational status. */\nexport const ENGINE_PROTECTIVE_GUIDANCE_FRAMING =\n  'Hedgr treats stability and protection as deliberate design choices. In tougher conditions, these informational targets may emphasize protection and liquidity ahead of conservative yield. That is visible intent you can review, not a nudge to move funds.';\n\nexport const ENGINE_PROTECTIVE_GUIDANCE_POINTS: readonly string[] = [\n  'Caution can limit conservative yield before protection is stressed. The split reflects that priority, not completed movement.',\n  'The Reserve above still means readiness in principle. Targets are informational, not your ledger balance.',\n  'A protective posture does not by itself stop a withdrawal from processing or imply lockup.',\n];\n",
+      " * Principle-level only. Does not duplicate ENGINE_POSTURE_CONTEXT or ENGINE_NOTICE_COPY.\n */\n\nexport const ENGINE_PROTECTIVE_GUIDANCE_TITLE = 'When targets change';\n\n/** One framing paragraph: deliberate intent, not operational status. */\nexport const ENGINE_PROTECTIVE_GUIDANCE_FRAMING =\n  'In harder conditions, Hedgr may raise the Reserve target and lower the target for earning. You can see this here. It is not a prompt to do anything.';\n\nexport const ENGINE_PROTECTIVE_GUIDANCE_POINTS: readonly string[] = [\n  'The Reserve above still means readiness in principle. Targets are informational, not your ledger balance.',\n  'A higher Reserve target does not stop or delay a withdrawal.',\n];\n"
+    ]
+  ],
+  "lib/engine/stability-explainer-copy.ts": [
+    [
+      "  definition: string;\n}> = [\n  {\n    term: 'Stable balance',\n    definition: 'The primary holding lane. It is held steady to preserve value.',\n  },\n  {\n    term: 'Conservative yield',\n",
+      "  definition: string;\n}> = [\n  {\n    term: 'Main target',\n    definition: 'One of the three planning targets. It is a percentage, not money set aside.',\n  },\n  {\n    term: 'Conservative yield',\n"
+    ],
+    [
+      "];\n\nexport const ENGINE_STABILITY_EXPLAINER_PRINCIPLES: readonly string[] = [\n  'Most of the structure is held steady. Conservative yield and a reserve are quieter supporting lanes. This shows system intent, not a map of where funds sit.',\n  'When the system is more cautious, protection and the reserve can outweigh conservative yield. Posture reflects that caution. It does not describe completed movement.',\n];\n\nexport const ENGINE_STABILITY_EXPLAINER_FOOTER =\n",
+      "];\n\nexport const ENGINE_STABILITY_EXPLAINER_PRINCIPLES: readonly string[] = [\n  'The three planning targets show a plan. None of them shows where money sits.',\n  'When Hedgr is more cautious, the Reserve target goes up and the target for earning goes down. Nothing is moved.',\n];\n\nexport const ENGINE_STABILITY_EXPLAINER_FOOTER =\n"
+    ]
+  ],
+  "lib/engine/stability-review-snapshot-copy.ts": [
+    [
+      "  'Illustrative example values, not live targets or advice';\n\nconst STANCE_BY_POSTURE: Record<EnginePosture, string> = {\n  normal: 'Where things stand: within expected range',\n  tightening: 'Where things stand: protective posture increasing',\n  tightened: 'Where things stand: protective posture elevated',\n  recovery: 'Where things stand: within expected range, easing steadily',\n};\n\nexport function getEngineStabilityReviewSnapshotStance(\n",
+      "  'Illustrative example values, not live targets or advice';\n\nconst STANCE_BY_POSTURE: Record<EnginePosture, string> = {\n  normal: 'Where things stand: within the usual range',\n  tightening: 'Where things stand: Reserve target going up',\n  tightened: 'Where things stand: Reserve target higher than usual',\n  recovery: 'Where things stand: targets returning to usual',\n};\n\nexport function getEngineStabilityReviewSnapshotStance(\n"
+    ],
+    [
+      "  '“Available” still means ready to use in principle; these targets stay informational.';\n\nexport const ENGINE_STABILITY_REVIEW_WITHDRAWAL_CONTINUITY =\n  'A protective posture does not, on its own, mean withdrawals are blocked or delayed.';\n\nexport const ENGINE_STABILITY_REVIEW_CADENCE_CUE =\n  'Use this snapshot for a calm, regular check-in. Protective conditions stay visible here without nudging you to act.';\n\nexport function getEngineStabilityReviewTimestampLine(\n  formattedUpdatedAt: string,\n",
+      "  '“Available” still means ready to use in principle; these targets stay informational.';\n\nexport const ENGINE_STABILITY_REVIEW_WITHDRAWAL_CONTINUITY =\n  'A higher Reserve target does not stop or delay a withdrawal.';\n\nexport const ENGINE_STABILITY_REVIEW_CADENCE_CUE =\n  'Check in here whenever you like. Nothing here asks you to act.';\n\nexport function getEngineStabilityReviewTimestampLine(\n  formattedUpdatedAt: string,\n"
+    ]
+  ]
+};
+const SC_NON_JOURNEY_HTML_EDITS = [
+  [
+    "l-5 leading-relaxed text-[#36447C]\"><li>Most of the structure is held steady. Conservative yield and a reserve are quieter supporting lanes. This shows system intent, not a map of where funds sit.</li><li>When the system is more cautious, protection and the reserve can outweigh conservative yield. Posture reflects that caution. It does not describe completed movement.</li></ul><p class=\"max-w-xl text-xs le",
+    "l-5 leading-relaxed text-[#36447C]\"><li>The three planning targets show a plan. None of them shows where money sits.</li><li>When Hedgr is more cautious, the Reserve target goes up and the target for earning goes down. Nothing is moved.</li></ul><p class=\"max-w-xl text-xs le"
+  ],
+  [
+    "ax-w-xl leading-relaxed text-[#1F2937]\">Hedgr treats stability and protection as deliberate design choices. In tougher conditions, these informational targets may emphasize protection and liquidity ahead of conservative yield. That is visible intent you can review, not a nudge to move funds.</p><ul class=\"mt-4 max-w-xl list-disc ",
+    "ax-w-xl leading-relaxed text-[#1F2937]\">In harder conditions, Hedgr may raise the Reserve target and lower the target for earning. You can see this here. It is not a prompt to do anything.</p><ul class=\"mt-4 max-w-xl list-disc "
+  ],
+  [
+    "ass=\"inline font-medium text-[#171D35]\">Stable balance</dt><dd class=\"inline text-[#1F2937]\"> — The primary holding lane. It is held steady to preserve value.</dd></div><div><dt class=\"inline font",
+    "ass=\"inline font-medium text-[#171D35]\">Main target</dt><dd class=\"inline text-[#1F2937]\"> — One of the three planning targets. It is a percentage, not money set aside.</dd></div><div><dt class=\"inline font"
+  ],
+  [
+    "engine-allocation-boundary\" aria-label=\"Stability guidance boundary\"><span class=\"font-semibold text-hedgr-800\">Guidance only.</span> This planning structure is context, not an instruction. It does not show current money or prove that simulated money was divided or moved.</aside><aside class=\"max-w-xl border-t",
+    "engine-allocation-boundary\" aria-label=\"What these targets are not\">Targets only. They are not an instruction, and they do not divide or move your balance.</aside><aside class=\"max-w-xl border-t"
+  ],
+  [
+    "tid=\"engine-allocation-philosophy\">Hedgr's guidance makes its priorities visible in this simulation: preserve value first, keep access and risk visible, and understand the situation before action.</p><div class=\"space-y-3\" data-testid=\"engine-allocation-target-roles\" aria-label=\"Stability target roles\"><p class=\"max-w-xl text-sm leading-relaxed text-hedgr-dark\">Hedgr represents those priorities through three distinct target roles.</p><dl class=\"divide-y divide-hedgr-100 border-y border-hedgr-100\"><div class=\"grid gap-1 py-3 sm:grid-cols-[minmax(0,1fr)_minmax(0,1.5fr)] sm:gap-4\" data-testid=\"engine-allocation-role-coreTargetPct\"><dt><span class=\"block text-sm font-semibold text-hedgr-800\">Core stability target</span><span class=\"mt-0.5 block text-[11px] font-medium uppercase tracking-wide text-hedgr-500\">Primary stability role</span></dt><dd class=\"text-sm leading-relaxed text-hedgr-dark\">Preserve value as the primary stability priority.</dd></div><div class=\"grid gap-1 py-3 sm:grid-cols-[minmax(0,1fr)_minmax(0,1.5fr)] sm:gap-4\" data-testid=\"engine-allocation-role-yieldCapPct\"><dt><span class=\"block text-sm font-semibold text-hedgr-800\">Conservative yield</span><span class=\"mt-0.5 block text-[11px] font-medium uppercase tracking-wide text-hedgr-500\">Supporting role</span></dt><dd class=\"text-sm leading-relaxed text-hedgr-dark\">Keep return opportunity limited and conditional.</dd></div><div class=\"grid gap-1 py-3 sm:grid-cols-[minmax(0,1fr)_minmax(0,1.5fr)] sm:gap-4\" data-testid=\"engine-allocation-role-liquidityTargetPct\"><dt><span class=\"block text-sm font-semibold text-hedgr-800\">Reserve</span><span class=\"mt-0.5 block text-[11px] font-medium uppercase tracking-wide text-hedgr-500\">Supporting role</span></dt><dd class=\"text-sm leading-relaxed text-hedgr-dark\">Keep a buffer ready if needed.</dd></div></dl></div><p class=\"max-w-xl text-sm leading-rela",
+    "tid=\"engine-allocation-philosophy\">Hedgr shows its targets here: what it sets first, how access works and what the risks are.</p><p class=\"max-w-xl text-sm leading-rela"
+  ],
+  [
+    "-testid=\"engine-posture-context\">Within expected range. Most of your balance stays steady, with conservative yield and reserve capacity kept visible.</p><p class=\"text-sm font-medium text-",
+    "-testid=\"engine-posture-context\">Within the usual range. The main target is the largest of the three planning targets.</p><p class=\"text-sm font-medium text-"
+  ],
+  [
+    "nal, not your ledger balance.</li><li>A protective posture does not by itself stop a withdrawal from processing or imply lockup.</li></ul></div></details><details clas",
+    "nal, not your ledger balance.</li><li>A higher Reserve target does not stop or delay a withdrawal.</li></ul></div></details><details clas"
+  ],
+  [
+    "cation-targets-intro\">These percentages describe a simulated planning structure for those roles. They are guidance, not current money.</p><dl class=\"divide-y divide-h",
+    "cation-targets-intro\">These percentages are Hedgr's planning targets for each role. They are not money.</p><dl class=\"divide-y divide-h"
+  ],
+  [
+    "d text-hedgr-800\">Current state</span>. The simulated balance shown above is separate from this guidance. The percentages do not divide it.</p><p><span class=\"font-semibold text-hedgr-800\">No instruction or movement</span>. Guidance does not tell you what to do, and a target does not divide or move simulated money.</p></div></details></aside></div></sec",
+    "d text-hedgr-800\">Current state</span>. Your balance shown above is separate from these targets.</p></div></details></aside></div></sec"
+  ],
+  [
+    "gine-stability-review-snapshot-cadence\">Use this snapshot for a calm, regular check-in. Protective conditions stay visible here without nudging you to act.</p><p class=\"max-w-xl leadi",
+    "gine-stability-review-snapshot-cadence\">Check in here whenever you like. Nothing here asks you to act.</p><p class=\"max-w-xl leadi"
+  ],
+  [
+    "ng targets</span>. The percentages show intended stability priorities in this simulation only.</p><details class=\"mt-3\" data-testid=\"",
+    "ng targets</span>. The percentages show how Hedgr divides its plan.</p><details class=\"mt-3\" data-testid=\""
+  ],
+  [
+    "ext-sm leading-relaxed text-hedgr-dark\">The largest target, focused on preserving value.</dd></div><dd class=\"flex items-baseli",
+    "ext-sm leading-relaxed text-hedgr-dark\">One of the three targets.</dd></div><dd class=\"flex items-baseli"
+  ],
+  [
+    "ems-center justify-between gap-4\"><span>Protection in plain terms</span><span class=\"text-xs font-medium ",
+    "ems-center justify-between gap-4\"><span>When targets change</span><span class=\"text-xs font-medium "
+  ],
+  [
+    "ne-allocation-trust-legend\" aria-label=\"Detailed stability target distinction\"><p><span class=\"font-semibold text-hed",
+    "ne-allocation-trust-legend\" aria-label=\"More about targets\"><p><span class=\"font-semibold text-hed"
+  ],
+  [
+    "ccordionSummary_e19afb\"><span>How Hedgr interprets stability</span><span class=\"_chevron_e19afb\" ari",
+    "ccordionSummary_e19afb\"><span>How Hedgr sets its targets</span><span class=\"_chevron_e19afb\" ari"
+  ],
+  [
+    "semibold tracking-tight text-hedgr-800\">Stability guidance</h2><p class=\"text-xs leading-relaxed t",
+    "semibold tracking-tight text-hedgr-800\">Planning targets</h2><p class=\"text-xs leading-relaxed t"
+  ],
+  [
+    "ppercase tracking-wide text-hedgr-500\">Primary stability guidance</span></dt><dd id=\"engine-allocation-ba",
+    "ppercase tracking-wide text-hedgr-500\">Planning target</span></dt><dd id=\"engine-allocation-ba"
+  ],
+  [
+    "ecoration-hedgr-200 underline-offset-4\">Verify what stability targets mean</summary><div class=\"mt-3 ",
+    "ecoration-hedgr-200 underline-offset-4\">What these targets mean</summary><div class=\"mt-3 "
+  ],
+  [
+    "shot-stance\">Where things stand: within expected range</p></div><dl class=\"mt-4 grid gap",
+    "shot-stance\">Where things stand: within the usual range</p></div><dl class=\"mt-4 grid gap"
+  ],
+  [
+    "k text-sm font-semibold text-hedgr-800\">Core stability target</span><span class=\"mt-0.5 block ",
+    "k text-sm font-semibold text-hedgr-800\">Main target</span><span class=\"mt-0.5 block "
+  ],
+  [
+    "uppercase tracking-wide text-hedgr-500\">Stability target</span><span class=\"block text-lg f",
+    "uppercase tracking-wide text-hedgr-500\">Target</span><span class=\"block text-lg f"
+  ],
+  [
+    "nciple; these targets stay informational.</p><p class=\"max-w-xl leading-relaxed text-hedgr-dark\">A protective posture does not, on its own, mean withdrawals are blocked or delayed.</p></div></details></section><details ",
+    "nciple; these targets stay informational.</p></div></details></section><details "
+  ],
+  [
+    "2.5 pl-5 leading-relaxed text-[#36447C]\"><li>Caution can limit conservative yield before protection is stressed. The split reflects that priority, not completed movement.</li><li>The Reserve above still means readi",
+    "2.5 pl-5 leading-relaxed text-[#36447C]\"><li>The Reserve above still means readi"
+  ],
+  [
+    "aption\">See the planning position shown in this simulation and why it is structured this way. These",
+    "aption\">See the planning position shown and why it is structured this way. These"
+  ]
+];
+
+function scPreRuntime(value: string, edits: readonly (readonly string[])[]): string {
+  for (const [before, after] of edits) value = value.replaceAll(after, before);
+  return value;
+}

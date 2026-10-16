@@ -23,11 +23,11 @@ describe("EngineAllocationBands", () => {
   test("renders purpose-led stability guidance, target roles, values, and detailed distinction", () => {
     render(<EngineAllocationBands engineState={makeEngineState()} />);
 
-    expect(screen.getByText("Stability guidance")).toBeDefined();
+    expect(screen.getByRole("heading", { name: "Planning targets", exact: true })).toBeDefined();
     expect(
       within(
         screen.getByTestId("engine-allocation-band-coreTargetPct")
-      ).getByText("Core stability target")
+      ).getByText("Main target")
     ).toBeDefined();
     expect(
       within(
@@ -71,39 +71,36 @@ describe("EngineAllocationBands", () => {
       "engine-allocation-bands-caption"
     ).textContent;
     expect(caption).toBe(
-      "See the planning position shown in this simulation and why it is structured this way. These targets are guidance, not current money."
+      "See the planning position shown and why it is structured this way. These targets are guidance, not current money."
     );
 
     const philosophy = screen.getByTestId(
       "engine-allocation-philosophy"
     ).textContent;
-    expect(philosophy).toMatch(/preserve value/i);
-    expect(philosophy).toMatch(/keep access and risk visible/i);
-    expect(philosophy).toMatch(/before action/i);
+    expect(philosophy).toMatch(/Hedgr shows its targets here/i);
+    expect(philosophy).toMatch(/how access works/i);
+    expect(philosophy).toMatch(/what the risks are/i);
 
     const boundary = screen.getByTestId(
       "engine-allocation-boundary"
     ).textContent;
-    expect(boundary).toContain("Guidance only. This planning structure");
+    expect(boundary).toBe("Targets only. They are not an instruction, and they do not divide or move your balance.");
     expect(boundary).not.toContain("—");
-    expect(boundary).toMatch(/context, not an instruction/i);
-    expect(boundary).toMatch(/does not show current money/i);
-    expect(boundary).toMatch(/divided or moved/i);
+    expect(boundary).toMatch(/not an instruction/i);
+    expect(boundary).toMatch(/do not divide/i);
+    expect(boundary).toMatch(/move your balance/i);
     expect(boundary).not.toMatch(/funded|account|holding|allocated/i);
 
     const targetsIntro = screen.getByTestId(
       "engine-allocation-targets-intro"
     ).textContent;
-    expect(targetsIntro).toMatch(/simulated planning structure/i);
-    expect(targetsIntro).toMatch(/guidance, not current money/i);
+    expect(targetsIntro).toMatch(/Hedgr's planning targets/i);
+    expect(targetsIntro).toMatch(/They are not money/i);
 
-    const roles = screen.getByTestId(
-      "engine-allocation-target-roles"
-    ).textContent;
-    expect(roles).toMatch(/three distinct target roles/i);
-    expect(roles).toMatch(/primary stability role/i);
-    expect(roles).toMatch(/supporting role/i);
-    expect(roles).not.toMatch(/\d+%/);
+    expect(screen.queryByTestId("engine-allocation-target-roles")).toBeNull();
+    for (const label of ["Main target", "Conservative yield", "Reserve"]) {
+      expect(screen.getAllByText(label, { exact: true })).toHaveLength(1);
+    }
 
     const legend = screen.getByTestId(
       "engine-allocation-trust-legend"
@@ -112,9 +109,9 @@ describe("EngineAllocationBands", () => {
     expect(legend).toMatch(/target role/i);
     expect(legend).toMatch(/conservative yield/i);
     expect(legend).toMatch(/return opportunity/i);
-    expect(legend).toMatch(/percentages do not divide it/i);
-    expect(legend).toMatch(/guidance does not tell you what to do/i);
-    expect(legend).toMatch(/divide or move simulated money/i);
+    expect(legend).toMatch(/balance shown above is separate from these targets/i);
+    expect(legend).toMatch(/what these targets mean/i);
+    expect(legend).toMatch(/how Hedgr divides its plan/i);
     expect(legend).not.toMatch(/funded|account|holding|allocated/i);
     expect(legend).not.toMatch(/fixture|informational posture|settlement/i);
   });
@@ -124,7 +121,7 @@ describe("EngineAllocationBands", () => {
 
     const purpose = screen.getByTestId("engine-allocation-bands-caption");
     const philosophy = screen.getByTestId("engine-allocation-philosophy");
-    const roles = screen.getByTestId("engine-allocation-target-roles");
+    expect(screen.queryByTestId("engine-allocation-target-roles")).toBeNull();
     const targetsIntro = screen.getByTestId("engine-allocation-targets-intro");
     const structure = screen.getByTestId("engine-allocation-structure");
     const boundary = screen.getByTestId("engine-allocation-boundary");
@@ -136,8 +133,7 @@ describe("EngineAllocationBands", () => {
       );
 
     expect(comesBefore(purpose, philosophy)).toBe(true);
-    expect(comesBefore(philosophy, roles)).toBe(true);
-    expect(comesBefore(roles, targetsIntro)).toBe(true);
+    expect(comesBefore(philosophy, targetsIntro)).toBe(true);
     expect(comesBefore(targetsIntro, structure)).toBe(true);
     expect(comesBefore(structure, boundary)).toBe(true);
     expect(comesBefore(boundary, distinction)).toBe(true);
@@ -249,9 +245,9 @@ describe("EngineAllocationBands", () => {
     const stableBand = screen.getByTestId(
       "engine-allocation-band-coreTargetPct"
     );
-    expect(stableBand.textContent).toMatch(/largest target/i);
-    expect(stableBand.textContent).toMatch(/preserving value/i);
-    expect(stableBand.textContent).toMatch(/primary stability guidance/i);
+    expect(stableBand.textContent).toMatch(/one of the three targets/i);
+    expect(stableBand.textContent).toMatch(/Main target/i);
+    expect(stableBand.textContent).toMatch(/planning target/i);
 
     const yieldBand = screen.getByTestId("engine-allocation-band-yieldCapPct");
     expect(yieldBand.textContent).toMatch(/limited target/i);
@@ -348,7 +344,7 @@ describe("EngineAllocationBands", () => {
     expect(primary.getAttribute("data-guidance-row")).toBe("true");
     expect(yieldLane.getAttribute("data-guidance-row")).toBe("true");
     expect(reserveLane.getAttribute("data-guidance-row")).toBe("true");
-    expect(primary.textContent).toMatch(/primary stability guidance/i);
+    expect(primary.textContent).toMatch(/planning target/i);
     expect(yieldLane.textContent).toMatch(/supporting guidance/i);
     expect(reserveLane.textContent).toMatch(/supporting guidance/i);
     expect(
@@ -400,7 +396,7 @@ describe("EngineAllocationBands", () => {
       "engine-allocation-band-liquidityTargetPct",
     ]) {
       expect(screen.getByTestId(testId).textContent).toMatch(
-        /stability target\s*\d+%/i
+        /target\s*\d+%/i
       );
     }
   });
@@ -424,7 +420,7 @@ test('Posture and percentage regions identify illustrative values before the rea
         expect(details.hasAttribute('open')).toBe(false);
         details.setAttribute('open', '');
       } else {
-        expect(screen.getByText('Stability guidance').nextElementSibling).toBe(qualifier);
+        expect(screen.getByRole('heading', { name: 'Planning targets', exact: true }).nextElementSibling).toBe(qualifier);
       }
       const keys = collapsed ? ['coreTargetPct', 'liquidityTargetPct', 'yieldCapPct'] as const : ['coreTargetPct', 'yieldCapPct', 'liquidityTargetPct'] as const;
       expect(Array.from(structure.children).map(row => row.getAttribute('data-testid'))).toEqual(keys.map(key => `engine-allocation-band-${key}`));

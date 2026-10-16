@@ -23,8 +23,8 @@ const GUIDANCE_LANES: Array<{
 }> = [
   {
     key: "coreTargetPct",
-    label: "Core stability target",
-    role: "Primary stability guidance",
+    label: "Main target",
+    role: "Planning target",
   },
   {
     key: "yieldCapPct",
@@ -45,39 +45,13 @@ function formatPct(value: number) {
 function laneDescription(key: LaneKey): string {
   switch (key) {
     case "coreTargetPct":
-      return "The largest target, focused on preserving value.";
+      return "One of the three targets.";
     case "yieldCapPct":
       return "A limited target for return opportunity when conditions allow.";
     case "liquidityTargetPct":
       return "A buffer target, kept ready if needed.";
   }
 }
-
-const TARGET_ROLES: Array<{
-  key: LaneKey;
-  label: string;
-  role: string;
-  description: string;
-}> = [
-  {
-    key: "coreTargetPct",
-    label: "Core stability target",
-    role: "Primary stability role",
-    description: "Preserve value as the primary stability priority.",
-  },
-  {
-    key: "yieldCapPct",
-    label: "Conservative yield",
-    role: "Supporting role",
-    description: "Keep return opportunity limited and conditional.",
-  },
-  {
-    key: "liquidityTargetPct",
-    label: "Reserve",
-    role: "Supporting role",
-    description: "Keep a buffer ready if needed.",
-  },
-];
 
 const SYNTHETIC_PURPOSES: Array<{
   key: LaneKey;
@@ -171,43 +145,8 @@ export function EngineAllocationBands({
       className="max-w-xl text-sm leading-relaxed text-hedgr-dark"
       data-testid="engine-allocation-philosophy"
     >
-      Hedgr&apos;s guidance makes its priorities visible in this simulation:
-      preserve value first, keep access and risk visible, and understand the
-      situation before action.
+      Hedgr shows its targets here: what it sets first, how access works and what the risks are.
     </p>
-  );
-
-  const targetRoles = (
-    <div
-      className="space-y-3"
-      data-testid="engine-allocation-target-roles"
-      aria-label="Stability target roles"
-    >
-      <p className="max-w-xl text-sm leading-relaxed text-hedgr-dark">
-        Hedgr represents those priorities through three distinct target roles.
-      </p>
-      <dl className="divide-y divide-hedgr-100 border-y border-hedgr-100">
-        {TARGET_ROLES.map(({ key, label, role, description }) => (
-          <div
-            key={key}
-            className="grid gap-1 py-3 sm:grid-cols-[minmax(0,1fr)_minmax(0,1.5fr)] sm:gap-4"
-            data-testid={`engine-allocation-role-${key}`}
-          >
-            <dt>
-              <span className="block text-sm font-semibold text-hedgr-800">
-                {label}
-              </span>
-              <span className="mt-0.5 block text-[11px] font-medium uppercase tracking-wide text-hedgr-500">
-                {role}
-              </span>
-            </dt>
-            <dd className="text-sm leading-relaxed text-hedgr-dark">
-              {description}
-            </dd>
-          </div>
-        ))}
-      </dl>
-    </div>
   );
 
   const targetValues = (
@@ -216,8 +155,7 @@ export function EngineAllocationBands({
         className="max-w-xl text-sm leading-relaxed text-hedgr-dark"
         data-testid="engine-allocation-targets-intro"
       >
-        These percentages describe a simulated planning structure for those
-        roles. They are guidance, not current money.
+        These percentages are Hedgr&apos;s planning targets for each role. They are not money.
       </p>
 
       <dl
@@ -255,7 +193,7 @@ export function EngineAllocationBands({
               </div>
               <dd className="flex items-baseline justify-between gap-3 sm:block sm:min-w-24 sm:text-right">
                 <span className="text-[11px] font-medium uppercase tracking-wide text-hedgr-500">
-                  Stability target
+                  Target
                 </span>
                 <span className="block text-lg font-semibold tabular-nums text-hedgr-800">
                   {formatPct(value)}
@@ -269,29 +207,26 @@ export function EngineAllocationBands({
       <aside
         className="max-w-xl border-l-2 border-hedgr-200 pl-3 text-sm leading-relaxed text-hedgr-dark"
         data-testid="engine-allocation-boundary"
-        aria-label="Stability guidance boundary"
+        aria-label="What these targets are not"
       >
-        <span className="font-semibold text-hedgr-800">Guidance only.</span>{" "}
-        This planning structure is context, not an instruction. It does not show
-        current money or prove that simulated money was divided or moved.
+        Targets only. They are not an instruction, and they do not divide or move your balance.
       </aside>
 
       <aside
         className="max-w-xl border-t border-hedgr-100 pt-4 text-xs leading-relaxed text-hedgr-dark"
         data-testid="engine-allocation-trust-legend"
-        aria-label="Detailed stability target distinction"
+        aria-label="More about targets"
       >
         <p>
           <span className="font-semibold text-hedgr-800">Planning targets</span>
-          . The percentages show intended stability priorities in this
-          simulation only.
+          . The percentages show how Hedgr divides its plan.
         </p>
         <details
           className="mt-3"
           data-testid="engine-allocation-target-details"
         >
           <summary className="inline-flex min-h-11 cursor-pointer items-center font-medium text-hedgr-600 underline decoration-hedgr-200 underline-offset-4">
-            Verify what stability targets mean
+            What these targets mean
           </summary>
           <div className="mt-3 space-y-2 border-l border-hedgr-200 pl-3">
             <p>
@@ -303,15 +238,7 @@ export function EngineAllocationBands({
               <span className="font-semibold text-hedgr-800">
                 Current state
               </span>
-              . The simulated balance shown above is separate from this
-              guidance. The percentages do not divide it.
-            </p>
-            <p>
-              <span className="font-semibold text-hedgr-800">
-                No instruction or movement
-              </span>
-              . Guidance does not tell you what to do, and a target does not
-              divide or move simulated money.
+              . Your balance shown above is separate from these targets.
             </p>
           </div>
         </details>
@@ -335,7 +262,7 @@ export function EngineAllocationBands({
           id="engine-allocation-bands-title"
           className="text-lg font-semibold tracking-tight text-hedgr-800"
         >
-          {collapsed ? "What you are building toward" : "Stability guidance"}
+          {collapsed ? "What you are building toward" : "Planning targets"}
         </h2>
         {!collapsed ? (
           <p className="text-xs leading-relaxed text-hedgr-500">
@@ -348,7 +275,7 @@ export function EngineAllocationBands({
         >
           {collapsed
             ? "Three purposes for planning ahead. They are guidance, not money set aside."
-            : "See the planning position shown in this simulation and why it is structured this way. These targets are guidance, not current money."}
+            : "See the planning position shown and why it is structured this way. These targets are guidance, not current money."}
         </p>
       </div>
 
@@ -357,7 +284,6 @@ export function EngineAllocationBands({
       ) : (
         <div className="space-y-5">
           {priorities}
-          {targetRoles}
           {targetValues}
         </div>
       )}

@@ -38,7 +38,7 @@ export function CurrencyInsight({
     : result.kind === 'empty' ? 'No position to compare yet.' : 'Currency comparison unavailable.';
 
   if (redesigned) {
-    const limit = 'FX comparison only—not earnings, purchasing power, guaranteed protection or a conversion quote.';
+    const limit = 'This compares two example rates. It does not show earnings, buying power or a rate you would get.';
     const summary = (<>{comparison && (comparison.direction === 'higher' || comparison.direction === 'lower') ? <>
           <p className={styles.estimateLabel}>Change in {currency} estimate</p>
           <p className={styles.summary} data-testid="currency-insight-headline">
@@ -130,7 +130,7 @@ export function CurrencyInsight({
       {comparison ? (
         <>
           <p>Your USD amount is held constant in this comparison.</p>
-          <p className={styles.limit}>FX comparison only—not earnings, purchasing power, guaranteed protection or a conversion quote.</p>
+          <p className={styles.limit}>This compares two example rates. It does not show earnings, buying power or a rate you would get.</p>
           <details className={styles.calculation}>
             <summary>How this is calculated</summary>
             <div className={styles.explanation}>

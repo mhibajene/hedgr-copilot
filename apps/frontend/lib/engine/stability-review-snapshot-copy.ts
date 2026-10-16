@@ -12,10 +12,10 @@ export const ENGINE_ILLUSTRATIVE_VALUES_LABEL =
   'Illustrative example values, not live targets or advice';
 
 const STANCE_BY_POSTURE: Record<EnginePosture, string> = {
-  normal: 'Where things stand: within expected range',
-  tightening: 'Where things stand: protective posture increasing',
-  tightened: 'Where things stand: protective posture elevated',
-  recovery: 'Where things stand: within expected range, easing steadily',
+  normal: 'Where things stand: within the usual range',
+  tightening: 'Where things stand: Reserve target going up',
+  tightened: 'Where things stand: Reserve target higher than usual',
+  recovery: 'Where things stand: targets returning to usual',
 };
 
 export function getEngineStabilityReviewSnapshotStance(
@@ -28,10 +28,10 @@ export const ENGINE_STABILITY_REVIEW_AVAILABLE_CONTINUITY =
   '“Available” still means ready to use in principle; these targets stay informational.';
 
 export const ENGINE_STABILITY_REVIEW_WITHDRAWAL_CONTINUITY =
-  'A protective posture does not, on its own, mean withdrawals are blocked or delayed.';
+  'A higher Reserve target does not stop or delay a withdrawal.';
 
 export const ENGINE_STABILITY_REVIEW_CADENCE_CUE =
-  'Use this snapshot for a calm, regular check-in. Protective conditions stay visible here without nudging you to act.';
+  'Check in here whenever you like. Nothing here asks you to act.';
 
 export function getEngineStabilityReviewTimestampLine(
   formattedUpdatedAt: string,
