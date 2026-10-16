@@ -35,7 +35,7 @@ describe("EngineAllocationBands panel copy contract", () => {
   test("locks non-empty shipped panel copy segments", () => {
     render(<EngineAllocationBands engineState={makeContractEngineState()} />);
 
-    expect(screen.getByText("Stability guidance")).toBeDefined();
+    expect(screen.getByRole("heading", { name: "Planning targets", exact: true })).toBeDefined();
 
     const caption =
       screen.getByTestId("engine-allocation-bands-caption").textContent ?? "";
@@ -43,8 +43,8 @@ describe("EngineAllocationBands panel copy contract", () => {
       screen.getByTestId("engine-allocation-philosophy").textContent ?? "";
     const boundary =
       screen.getByTestId("engine-allocation-boundary").textContent ?? "";
-    const targetRoles =
-      screen.getByTestId("engine-allocation-target-roles").textContent ?? "";
+    expect(screen.queryByTestId("engine-allocation-target-roles")).toBeNull();
+    const targetRoles = screen.getByTestId("engine-allocation-structure").textContent ?? "";
     const targetsIntro =
       screen.getByTestId("engine-allocation-targets-intro").textContent ?? "";
     const trustLegend =
@@ -73,12 +73,12 @@ describe("EngineAllocationBands panel copy contract", () => {
     }
 
     expect(caption).toMatch(/these targets are guidance, not current money/i);
-    expect(philosophy).toMatch(/preserve value/i);
-    expect(boundary).toMatch(/context, not an instruction/i);
-    expect(targetRoles).toMatch(/three distinct target roles/i);
-    expect(targetRoles).not.toMatch(/\d+%/);
-    expect(targetsIntro).toMatch(/simulated planning structure/i);
-    expect(targetsIntro).toMatch(/guidance, not current money/i);
+    expect(philosophy).toBe("Hedgr shows its targets here: what it sets first, how access works and what the risks are.");
+    expect(boundary).toMatch(/not an instruction/i);
+    expect(targetRoles).toMatch(/Main target.*Conservative yield.*Reserve/s);
+    expect(targetRoles).toMatch(/50%|44%/);
+    expect(targetsIntro).toMatch(/Hedgr's planning targets/i);
+    expect(targetsIntro).toMatch(/They are not money/i);
   });
 
   test("keeps shipped panel copy informational and non-accounting", () => {
@@ -88,7 +88,7 @@ describe("EngineAllocationBands panel copy contract", () => {
       screen.getByTestId("engine-allocation-bands-caption").textContent ?? "",
       screen.getByTestId("engine-allocation-philosophy").textContent ?? "",
       screen.getByTestId("engine-allocation-boundary").textContent ?? "",
-      screen.getByTestId("engine-allocation-target-roles").textContent ?? "",
+      screen.getByTestId("engine-allocation-structure").textContent ?? "",
       screen.getByTestId("engine-allocation-targets-intro").textContent ?? "",
       screen.getByTestId("engine-allocation-trust-legend").textContent ?? "",
       document.getElementById("engine-allocation-band-liquidityTargetPct-desc")

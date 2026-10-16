@@ -764,7 +764,7 @@ export default function DashboardPage() {
   const educationSection = syntheticJourneyActive ? null : (
     <details className={home.accordion} data-testid="dashboard-education">
       <summary className={home.accordionSummary}>
-        <span>How Hedgr interprets stability</span>
+        <span>How Hedgr sets its targets</span>
         {accordionChevron}
       </summary>
       <div className={`${home.accordionContent} space-y-3`}>

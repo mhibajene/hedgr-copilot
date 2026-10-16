@@ -17,8 +17,8 @@ describe('ENGINE_NOTICE_COPY', () => {
       expect(notice.title.length).toBeGreaterThan(0);
       expect(notice.body.length).toBeGreaterThan(0);
       const body = notice.body.toLowerCase();
-      expect(body).toMatch(/informational/);
-      expect(body).toMatch(/not your ledger/);
+      expect(body).toMatch(/these are targets/);
+      expect(body).toMatch(/not your balance/);
     },
   );
 });

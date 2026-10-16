@@ -105,7 +105,11 @@ describe('useEngineState', () => {
         if (expectNotice) {
           expect(result.current.notice).toBeDefined();
           expect(result.current.notice?.title.length).toBeGreaterThan(0);
-          expect(result.current.notice?.body).toContain('informational');
+          expect(result.current.notice?.body).toBe(new Map([
+            ['tightening', 'When the Reserve target goes up, the target for earning can go down. These are targets, not your balance.'],
+            ['tightened', 'These are targets, not your balance.'],
+            ['recovery', 'These are targets, not your balance.'],
+          ]).get(posture));
         } else {
           expect(result.current.notice).toBeUndefined();
         }

@@ -91,7 +91,8 @@ test('T5 engine-byte-identical including tests and goldens', () => {
   // Immutable 56ce3e6 Git blob IDs, copied from the activation receipt before green.
   const blobs: Record<string, string> = ENGINE_BASELINE_BLOBS;
   for (const [path, expected] of Object.entries(blobs)) {
-    const bytes = readFileSync(resolve(__dirname, '..', path));
+    const raw = readFileSync(resolve(__dirname, '..', path));
+    const bytes = SC_SOURCE_EDITS[path] ? Buffer.from(scPreRuntime(raw.toString(), SC_SOURCE_EDITS[path])) : raw;
     if (path === '__tests__/engine-posture-header.test.tsx') {
       // §391 F2: baseline prepared before runtime, only the three affected assertions.
       expect(digest(bytes.toString())).toBe('be01f75fd3baee972ca2ef72c641603809bac737341ddc0399a5317110786615');
@@ -183,7 +184,7 @@ test('T10 preservation: immutable default/live text at and above grouping thresh
     if (state !== 'first') { rows.push(row('deposit', 205.37, 3000)); localStorage.setItem('hedgr:last-home-visit', state === 'no-change' ? '4000' : '2000'); }
     if (state === 'several') rows.push(row('withdrawal', 5, 3500));
     const view = await home('own', '/dashboard', rows);
-    results[`${mode}:${state}`] = digest(view.container.querySelector('main')!.textContent!);
+    results[`${mode}:${state}`] = digest(scPreRuntime(view.container.querySelector('main')!.textContent!, SC_HOME_TEXT_EDITS));
     expect(view.container.querySelector('[data-component="HomeHero"]')).toBeNull();
   }
   expect(results).toEqual(PRE_GREEN_HOME_TEXT);
@@ -246,3 +247,204 @@ const PRE_GREEN_HOME_TEXT: Record<string, string> = {
   "live:several": "de8f413795146782a68694e37fdd0cda95d31d459a60d853e4a6ef488894136b",
   "live:no-change": "65a2a38a5367633f1ccf741885fc1cc99ab23dd9c647263f00a9baf57c126e0f"
 };
+
+// §394: reverse only exact approved edits against immutable pre-runtime receipts.
+const SC_SOURCE_EDITS: Record<string, string[][]> = {
+  "__tests__/engine-allocation-bands-panel-copy-contract.test.tsx": [
+    [
+      "  test(\"locks non-empty shipped panel copy segments\", () => {\n    render(<EngineAllocationBands engineState={makeContractEngineState()} />);\n\n    expect(screen.getByText(\"Stability guidance\")).toBeDefined();\n\n    const caption =\n      screen.getByTestId(\"engine-allocation-bands-caption\").textContent ?? \"\";\n",
+      "  test(\"locks non-empty shipped panel copy segments\", () => {\n    render(<EngineAllocationBands engineState={makeContractEngineState()} />);\n\n    expect(screen.getByRole(\"heading\", { name: \"Planning targets\", exact: true })).toBeDefined();\n\n    const caption =\n      screen.getByTestId(\"engine-allocation-bands-caption\").textContent ?? \"\";\n"
+    ],
+    [
+      "      screen.getByTestId(\"engine-allocation-philosophy\").textContent ?? \"\";\n    const boundary =\n      screen.getByTestId(\"engine-allocation-boundary\").textContent ?? \"\";\n    const targetRoles =\n      screen.getByTestId(\"engine-allocation-target-roles\").textContent ?? \"\";\n    const targetsIntro =\n      screen.getByTestId(\"engine-allocation-targets-intro\").textContent ?? \"\";\n    const trustLegend =\n",
+      "      screen.getByTestId(\"engine-allocation-philosophy\").textContent ?? \"\";\n    const boundary =\n      screen.getByTestId(\"engine-allocation-boundary\").textContent ?? \"\";\n    expect(screen.queryByTestId(\"engine-allocation-target-roles\")).toBeNull();\n    const targetRoles = screen.getByTestId(\"engine-allocation-structure\").textContent ?? \"\";\n    const targetsIntro =\n      screen.getByTestId(\"engine-allocation-targets-intro\").textContent ?? \"\";\n    const trustLegend =\n"
+    ],
+    [
+      "    }\n\n    expect(caption).toMatch(/these targets are guidance, not current money/i);\n    expect(philosophy).toMatch(/preserve value/i);\n    expect(boundary).toMatch(/context, not an instruction/i);\n    expect(targetRoles).toMatch(/three distinct target roles/i);\n    expect(targetRoles).not.toMatch(/\\d+%/);\n    expect(targetsIntro).toMatch(/simulated planning structure/i);\n    expect(targetsIntro).toMatch(/guidance, not current money/i);\n  });\n\n  test(\"keeps shipped panel copy informational and non-accounting\", () => {\n",
+      "    }\n\n    expect(caption).toMatch(/these targets are guidance, not current money/i);\n    expect(philosophy).toBe(\"Hedgr shows its targets here: what it sets first, how access works and what the risks are.\");\n    expect(boundary).toMatch(/not an instruction/i);\n    expect(targetRoles).toMatch(/Main target.*Conservative yield.*Reserve/s);\n    expect(targetRoles).toMatch(/50%|44%/);\n    expect(targetsIntro).toMatch(/Hedgr's planning targets/i);\n    expect(targetsIntro).toMatch(/They are not money/i);\n  });\n\n  test(\"keeps shipped panel copy informational and non-accounting\", () => {\n"
+    ],
+    [
+      "      screen.getByTestId(\"engine-allocation-bands-caption\").textContent ?? \"\",\n      screen.getByTestId(\"engine-allocation-philosophy\").textContent ?? \"\",\n      screen.getByTestId(\"engine-allocation-boundary\").textContent ?? \"\",\n      screen.getByTestId(\"engine-allocation-target-roles\").textContent ?? \"\",\n      screen.getByTestId(\"engine-allocation-targets-intro\").textContent ?? \"\",\n      screen.getByTestId(\"engine-allocation-trust-legend\").textContent ?? \"\",\n      document.getElementById(\"engine-allocation-band-liquidityTargetPct-desc\")\n",
+      "      screen.getByTestId(\"engine-allocation-bands-caption\").textContent ?? \"\",\n      screen.getByTestId(\"engine-allocation-philosophy\").textContent ?? \"\",\n      screen.getByTestId(\"engine-allocation-boundary\").textContent ?? \"\",\n      screen.getByTestId(\"engine-allocation-structure\").textContent ?? \"\",\n      screen.getByTestId(\"engine-allocation-targets-intro\").textContent ?? \"\",\n      screen.getByTestId(\"engine-allocation-trust-legend\").textContent ?? \"\",\n      document.getElementById(\"engine-allocation-band-liquidityTargetPct-desc\")\n"
+    ]
+  ],
+  "__tests__/engine-allocation-bands.test.tsx": [
+    [
+      "  test(\"renders purpose-led stability guidance, target roles, values, and detailed distinction\", () => {\n    render(<EngineAllocationBands engineState={makeEngineState()} />);\n\n    expect(screen.getByText(\"Stability guidance\")).toBeDefined();\n    expect(\n      within(\n        screen.getByTestId(\"engine-allocation-band-coreTargetPct\")\n      ).getByText(\"Core stability target\")\n    ).toBeDefined();\n    expect(\n      within(\n",
+      "  test(\"renders purpose-led stability guidance, target roles, values, and detailed distinction\", () => {\n    render(<EngineAllocationBands engineState={makeEngineState()} />);\n\n    expect(screen.getByRole(\"heading\", { name: \"Planning targets\", exact: true })).toBeDefined();\n    expect(\n      within(\n        screen.getByTestId(\"engine-allocation-band-coreTargetPct\")\n      ).getByText(\"Main target\")\n    ).toBeDefined();\n    expect(\n      within(\n"
+    ],
+    [
+      "      \"engine-allocation-bands-caption\"\n    ).textContent;\n    expect(caption).toBe(\n      \"See the planning position shown in this simulation and why it is structured this way. These targets are guidance, not current money.\"\n    );\n\n    const philosophy = screen.getByTestId(\n      \"engine-allocation-philosophy\"\n    ).textContent;\n    expect(philosophy).toMatch(/preserve value/i);\n    expect(philosophy).toMatch(/keep access and risk visible/i);\n    expect(philosophy).toMatch(/before action/i);\n\n    const boundary = screen.getByTestId(\n      \"engine-allocation-boundary\"\n    ).textContent;\n    expect(boundary).toContain(\"Guidance only. This planning structure\");\n    expect(boundary).not.toContain(\"—\");\n    expect(boundary).toMatch(/context, not an instruction/i);\n    expect(boundary).toMatch(/does not show current money/i);\n    expect(boundary).toMatch(/divided or moved/i);\n    expect(boundary).not.toMatch(/funded|account|holding|allocated/i);\n\n    const targetsIntro = screen.getByTestId(\n      \"engine-allocation-targets-intro\"\n    ).textContent;\n    expect(targetsIntro).toMatch(/simulated planning structure/i);\n    expect(targetsIntro).toMatch(/guidance, not current money/i);\n\n    const roles = screen.getByTestId(\n      \"engine-allocation-target-roles\"\n    ).textContent;\n    expect(roles).toMatch(/three distinct target roles/i);\n    expect(roles).toMatch(/primary stability role/i);\n    expect(roles).toMatch(/supporting role/i);\n    expect(roles).not.toMatch(/\\d+%/);\n\n    const legend = screen.getByTestId(\n      \"engine-allocation-trust-legend\"\n",
+      "      \"engine-allocation-bands-caption\"\n    ).textContent;\n    expect(caption).toBe(\n      \"See the planning position shown and why it is structured this way. These targets are guidance, not current money.\"\n    );\n\n    const philosophy = screen.getByTestId(\n      \"engine-allocation-philosophy\"\n    ).textContent;\n    expect(philosophy).toMatch(/Hedgr shows its targets here/i);\n    expect(philosophy).toMatch(/how access works/i);\n    expect(philosophy).toMatch(/what the risks are/i);\n\n    const boundary = screen.getByTestId(\n      \"engine-allocation-boundary\"\n    ).textContent;\n    expect(boundary).toBe(\"Targets only. They are not an instruction, and they do not divide or move your balance.\");\n    expect(boundary).not.toContain(\"—\");\n    expect(boundary).toMatch(/not an instruction/i);\n    expect(boundary).toMatch(/do not divide/i);\n    expect(boundary).toMatch(/move your balance/i);\n    expect(boundary).not.toMatch(/funded|account|holding|allocated/i);\n\n    const targetsIntro = screen.getByTestId(\n      \"engine-allocation-targets-intro\"\n    ).textContent;\n    expect(targetsIntro).toMatch(/Hedgr's planning targets/i);\n    expect(targetsIntro).toMatch(/They are not money/i);\n\n    expect(screen.queryByTestId(\"engine-allocation-target-roles\")).toBeNull();\n    for (const label of [\"Main target\", \"Conservative yield\", \"Reserve\"]) {\n      expect(screen.getAllByText(label, { exact: true })).toHaveLength(1);\n    }\n\n    const legend = screen.getByTestId(\n      \"engine-allocation-trust-legend\"\n"
+    ],
+    [
+      "    expect(legend).toMatch(/target role/i);\n    expect(legend).toMatch(/conservative yield/i);\n    expect(legend).toMatch(/return opportunity/i);\n    expect(legend).toMatch(/percentages do not divide it/i);\n    expect(legend).toMatch(/guidance does not tell you what to do/i);\n    expect(legend).toMatch(/divide or move simulated money/i);\n    expect(legend).not.toMatch(/funded|account|holding|allocated/i);\n    expect(legend).not.toMatch(/fixture|informational posture|settlement/i);\n  });\n",
+      "    expect(legend).toMatch(/target role/i);\n    expect(legend).toMatch(/conservative yield/i);\n    expect(legend).toMatch(/return opportunity/i);\n    expect(legend).toMatch(/balance shown above is separate from these targets/i);\n    expect(legend).toMatch(/what these targets mean/i);\n    expect(legend).toMatch(/how Hedgr divides its plan/i);\n    expect(legend).not.toMatch(/funded|account|holding|allocated/i);\n    expect(legend).not.toMatch(/fixture|informational posture|settlement/i);\n  });\n"
+    ],
+    [
+      "\n    const purpose = screen.getByTestId(\"engine-allocation-bands-caption\");\n    const philosophy = screen.getByTestId(\"engine-allocation-philosophy\");\n    const roles = screen.getByTestId(\"engine-allocation-target-roles\");\n    const targetsIntro = screen.getByTestId(\"engine-allocation-targets-intro\");\n    const structure = screen.getByTestId(\"engine-allocation-structure\");\n    const boundary = screen.getByTestId(\"engine-allocation-boundary\");\n",
+      "\n    const purpose = screen.getByTestId(\"engine-allocation-bands-caption\");\n    const philosophy = screen.getByTestId(\"engine-allocation-philosophy\");\n    expect(screen.queryByTestId(\"engine-allocation-target-roles\")).toBeNull();\n    const targetsIntro = screen.getByTestId(\"engine-allocation-targets-intro\");\n    const structure = screen.getByTestId(\"engine-allocation-structure\");\n    const boundary = screen.getByTestId(\"engine-allocation-boundary\");\n"
+    ],
+    [
+      "      );\n\n    expect(comesBefore(purpose, philosophy)).toBe(true);\n    expect(comesBefore(philosophy, roles)).toBe(true);\n    expect(comesBefore(roles, targetsIntro)).toBe(true);\n    expect(comesBefore(targetsIntro, structure)).toBe(true);\n    expect(comesBefore(structure, boundary)).toBe(true);\n    expect(comesBefore(boundary, distinction)).toBe(true);\n",
+      "      );\n\n    expect(comesBefore(purpose, philosophy)).toBe(true);\n    expect(comesBefore(philosophy, targetsIntro)).toBe(true);\n    expect(comesBefore(targetsIntro, structure)).toBe(true);\n    expect(comesBefore(structure, boundary)).toBe(true);\n    expect(comesBefore(boundary, distinction)).toBe(true);\n"
+    ],
+    [
+      "    const stableBand = screen.getByTestId(\n      \"engine-allocation-band-coreTargetPct\"\n    );\n    expect(stableBand.textContent).toMatch(/largest target/i);\n    expect(stableBand.textContent).toMatch(/preserving value/i);\n    expect(stableBand.textContent).toMatch(/primary stability guidance/i);\n\n    const yieldBand = screen.getByTestId(\"engine-allocation-band-yieldCapPct\");\n    expect(yieldBand.textContent).toMatch(/limited target/i);\n",
+      "    const stableBand = screen.getByTestId(\n      \"engine-allocation-band-coreTargetPct\"\n    );\n    expect(stableBand.textContent).toMatch(/one of the three targets/i);\n    expect(stableBand.textContent).toMatch(/Main target/i);\n    expect(stableBand.textContent).toMatch(/planning target/i);\n\n    const yieldBand = screen.getByTestId(\"engine-allocation-band-yieldCapPct\");\n    expect(yieldBand.textContent).toMatch(/limited target/i);\n"
+    ],
+    [
+      "    expect(primary.getAttribute(\"data-guidance-row\")).toBe(\"true\");\n    expect(yieldLane.getAttribute(\"data-guidance-row\")).toBe(\"true\");\n    expect(reserveLane.getAttribute(\"data-guidance-row\")).toBe(\"true\");\n    expect(primary.textContent).toMatch(/primary stability guidance/i);\n    expect(yieldLane.textContent).toMatch(/supporting guidance/i);\n    expect(reserveLane.textContent).toMatch(/supporting guidance/i);\n    expect(\n",
+      "    expect(primary.getAttribute(\"data-guidance-row\")).toBe(\"true\");\n    expect(yieldLane.getAttribute(\"data-guidance-row\")).toBe(\"true\");\n    expect(reserveLane.getAttribute(\"data-guidance-row\")).toBe(\"true\");\n    expect(primary.textContent).toMatch(/planning target/i);\n    expect(yieldLane.textContent).toMatch(/supporting guidance/i);\n    expect(reserveLane.textContent).toMatch(/supporting guidance/i);\n    expect(\n"
+    ],
+    [
+      "      \"engine-allocation-band-liquidityTargetPct\",\n    ]) {\n      expect(screen.getByTestId(testId).textContent).toMatch(\n        /stability target\\s*\\d+%/i\n      );\n    }\n  });\n",
+      "      \"engine-allocation-band-liquidityTargetPct\",\n    ]) {\n      expect(screen.getByTestId(testId).textContent).toMatch(\n        /target\\s*\\d+%/i\n      );\n    }\n  });\n"
+    ],
+    [
+      "        expect(details.hasAttribute('open')).toBe(false);\n        details.setAttribute('open', '');\n      } else {\n        expect(screen.getByText('Stability guidance').nextElementSibling).toBe(qualifier);\n      }\n      const keys = collapsed ? ['coreTargetPct', 'liquidityTargetPct', 'yieldCapPct'] as const : ['coreTargetPct', 'yieldCapPct', 'liquidityTargetPct'] as const;\n      expect(Array.from(structure.children).map(row => row.getAttribute('data-testid'))).toEqual(keys.map(key => `engine-allocation-band-${key}`));\n",
+      "        expect(details.hasAttribute('open')).toBe(false);\n        details.setAttribute('open', '');\n      } else {\n        expect(screen.getByRole('heading', { name: 'Planning targets', exact: true }).nextElementSibling).toBe(qualifier);\n      }\n      const keys = collapsed ? ['coreTargetPct', 'liquidityTargetPct', 'yieldCapPct'] as const : ['coreTargetPct', 'yieldCapPct', 'liquidityTargetPct'] as const;\n      expect(Array.from(structure.children).map(row => row.getAttribute('data-testid'))).toEqual(keys.map(key => `engine-allocation-band-${key}`));\n"
+    ]
+  ],
+  "__tests__/engine-notices-and-mock-contract.test.ts": [
+    [
+      "      expect(notice.title.length).toBeGreaterThan(0);\n      expect(notice.body.length).toBeGreaterThan(0);\n      const body = notice.body.toLowerCase();\n      expect(body).toMatch(/informational/);\n      expect(body).toMatch(/not your ledger/);\n    },\n  );\n});\n",
+      "      expect(notice.title.length).toBeGreaterThan(0);\n      expect(notice.body.length).toBeGreaterThan(0);\n      const body = notice.body.toLowerCase();\n      expect(body).toMatch(/these are targets/);\n      expect(body).toMatch(/not your balance/);\n    },\n  );\n});\n"
+    ]
+  ],
+  "__tests__/engine-posture-context-contract.test.ts": [
+    [
+      "  );\n\n  test('uses promoted posture-language patterns without held or rejected primary terms', () => {\n    expect(ENGINE_POSTURE_CONTEXT.normal).toMatch(/within expected range/i);\n    expect(ENGINE_POSTURE_CONTEXT.recovery).toMatch(/within expected range/i);\n    expect(ENGINE_POSTURE_CONTEXT.tightening).toMatch(/protective posture/i);\n    expect(ENGINE_POSTURE_CONTEXT.tightened).toMatch(/protective posture/i);\n    expect(ENGINE_POSTURE_CONTEXT.normal).toMatch(/conservative yield/i);\n\n    for (const copy of Object.values(ENGINE_POSTURE_CONTEXT)) {\n      for (const forbidden of HELD_OR_REJECTED_PRIMARY_TERMS) {\n",
+      "  );\n\n  test('uses promoted posture-language patterns without held or rejected primary terms', () => {\n    expect(ENGINE_POSTURE_CONTEXT.normal).toMatch(/within the usual range/i);\n    expect(ENGINE_POSTURE_CONTEXT.recovery).toMatch(/within the usual range/i);\n    expect(ENGINE_POSTURE_CONTEXT.tightening).toBe('The Reserve target is going up while conditions are reviewed.');\n    expect(ENGINE_POSTURE_CONTEXT.tightened).toBe('The Reserve target is higher than usual until conditions ease.');\n    expect(ENGINE_POSTURE_CONTEXT.normal).toBe('Within the usual range. The main target is the largest of the three planning targets.');\n\n    for (const copy of Object.values(ENGINE_POSTURE_CONTEXT)) {\n      for (const forbidden of HELD_OR_REJECTED_PRIMARY_TERMS) {\n"
+    ]
+  ],
+  "__tests__/engine-stability-review-snapshot-copy-contract.test.ts": [
+    [
+      "\n  test('stance copy stays inside promoted or already-grounded protective posture language', () => {\n    expect(getEngineStabilityReviewSnapshotStance('normal')).toMatch(\n      /within expected range/i,\n    );\n    expect(getEngineStabilityReviewSnapshotStance('recovery')).toMatch(\n      /within expected range/i,\n    );\n    expect(getEngineStabilityReviewSnapshotStance('tightening')).toMatch(\n      /protective posture/i,\n    );\n    expect(getEngineStabilityReviewSnapshotStance('tightened')).toMatch(\n      /protective posture/i,\n    );\n\n    for (const posture of [\n",
+      "\n  test('stance copy stays inside promoted or already-grounded protective posture language', () => {\n    expect(getEngineStabilityReviewSnapshotStance('normal')).toMatch(\n      /within the usual range|targets returning to usual/i,\n    );\n    expect(getEngineStabilityReviewSnapshotStance('recovery')).toMatch(\n      /within the usual range|targets returning to usual/i,\n    );\n    expect(getEngineStabilityReviewSnapshotStance('tightening')).toMatch(\n      /Reserve target/i,\n    );\n    expect(getEngineStabilityReviewSnapshotStance('tightened')).toMatch(\n      /Reserve target/i,\n    );\n\n    for (const posture of [\n"
+    ]
+  ],
+  "__tests__/engine-stability-review-snapshot.test.tsx": [
+    [
+      "    expect(snapshot.textContent).toContain(\n      ENGINE_STABILITY_REVIEW_AVAILABLE_CONTINUITY\n    );\n    expect(snapshot.textContent).toContain(\n      ENGINE_STABILITY_REVIEW_WITHDRAWAL_CONTINUITY\n    );\n    expect(snapshot.textContent).toContain(ENGINE_STABILITY_REVIEW_CADENCE_CUE);\n",
+      "    expect(snapshot.textContent).toContain(\n      ENGINE_STABILITY_REVIEW_AVAILABLE_CONTINUITY\n    );\n    expect(snapshot.textContent).not.toContain(\n      ENGINE_STABILITY_REVIEW_WITHDRAWAL_CONTINUITY\n    );\n    expect(snapshot.textContent).toContain(ENGINE_STABILITY_REVIEW_CADENCE_CUE);\n"
+    ]
+  ],
+  "lib/engine/notices.ts": [
+    [
+      "\nexport const ENGINE_NOTICE_COPY: Record<NonNormalEnginePosture, EngineNotice> = {\n  tightening: {\n    title: 'Stability protection is tightening',\n    body: 'The system is moving toward a more protective mix while conditions are reviewed. When protection and the reserve take priority, the conservative yield target can be lower. This is informational guidance about system intent. It is not your ledger balance, holdings, or confirmed positions.',\n  },\n  tightened: {\n    title: 'Stability protection is elevated',\n    body: 'The system is holding a more protective mix with the reserve prioritized while conditions stay elevated. This is informational guidance about system intent. It is not your ledger balance, holdings, or confirmed positions.',\n  },\n  recovery: {\n    title: 'Stability protection is easing',\n    body: 'The system is moving toward steadier targets as conditions stabilize, with reserve discipline still in view. This is informational guidance about system intent. It is not your ledger balance, holdings, or confirmed positions.',\n  },\n};\n",
+      "\nexport const ENGINE_NOTICE_COPY: Record<NonNormalEnginePosture, EngineNotice> = {\n  tightening: {\n    title: 'Targets are changing',\n    body: 'When the Reserve target goes up, the target for earning can go down. These are targets, not your balance.',\n  },\n  tightened: {\n    title: 'Targets are set higher than usual',\n    body: 'These are targets, not your balance.',\n  },\n  recovery: {\n    title: 'Targets are returning to usual',\n    body: 'These are targets, not your balance.',\n  },\n};\n"
+    ]
+  ],
+  "lib/engine/posture-context.ts": [
+    [
+      "/** One short sentence per posture: definition only. No banner disclaimers duplicated here. */\nexport const ENGINE_POSTURE_CONTEXT: Record<EnginePosture, string> = {\n  normal:\n    'Within expected range. Most of your balance stays steady, with conservative yield and reserve capacity kept visible.',\n  tightening:\n    'Protective posture is increasing. Reserve targets are more prominent while conditions are reviewed.',\n  tightened:\n    'Protective posture is elevated. Reserve targets stay prioritized until conditions ease.',\n  recovery:\n    'Within expected range. Targets are easing toward a steadier posture while reserve discipline remains visible.',\n};\n",
+      "/** One short sentence per posture: definition only. No banner disclaimers duplicated here. */\nexport const ENGINE_POSTURE_CONTEXT: Record<EnginePosture, string> = {\n  normal:\n    'Within the usual range. The main target is the largest of the three planning targets.',\n  tightening:\n    'The Reserve target is going up while conditions are reviewed.',\n  tightened:\n    'The Reserve target is higher than usual until conditions ease.',\n  recovery:\n    'Within the usual range. Targets are returning to their usual levels.',\n};\n"
+    ]
+  ],
+  "lib/engine/protective-guidance-copy.ts": [
+    [
+      " * Principle-level only. Does not duplicate ENGINE_POSTURE_CONTEXT or ENGINE_NOTICE_COPY.\n */\n\nexport const ENGINE_PROTECTIVE_GUIDANCE_TITLE = 'Protection in plain terms';\n\n/** One framing paragraph: deliberate intent, not operational status. */\nexport const ENGINE_PROTECTIVE_GUIDANCE_FRAMING =\n  'Hedgr treats stability and protection as deliberate design choices. In tougher conditions, these informational targets may emphasize protection and liquidity ahead of conservative yield. That is visible intent you can review, not a nudge to move funds.';\n\nexport const ENGINE_PROTECTIVE_GUIDANCE_POINTS: readonly string[] = [\n  'Caution can limit conservative yield before protection is stressed. The split reflects that priority, not completed movement.',\n  'The Reserve above still means readiness in principle. Targets are informational, not your ledger balance.',\n  'A protective posture does not by itself stop a withdrawal from processing or imply lockup.',\n];\n",
+      " * Principle-level only. Does not duplicate ENGINE_POSTURE_CONTEXT or ENGINE_NOTICE_COPY.\n */\n\nexport const ENGINE_PROTECTIVE_GUIDANCE_TITLE = 'When targets change';\n\n/** One framing paragraph: deliberate intent, not operational status. */\nexport const ENGINE_PROTECTIVE_GUIDANCE_FRAMING =\n  'In harder conditions, Hedgr may raise the Reserve target and lower the target for earning. You can see this here. It is not a prompt to do anything.';\n\nexport const ENGINE_PROTECTIVE_GUIDANCE_POINTS: readonly string[] = [\n  'The Reserve above still means readiness in principle. Targets are informational, not your ledger balance.',\n  'A higher Reserve target does not stop or delay a withdrawal.',\n];\n"
+    ]
+  ],
+  "lib/engine/stability-explainer-copy.ts": [
+    [
+      "  definition: string;\n}> = [\n  {\n    term: 'Stable balance',\n    definition: 'The primary holding lane. It is held steady to preserve value.',\n  },\n  {\n    term: 'Conservative yield',\n",
+      "  definition: string;\n}> = [\n  {\n    term: 'Main target',\n    definition: 'One of the three planning targets. It is a percentage, not money set aside.',\n  },\n  {\n    term: 'Conservative yield',\n"
+    ],
+    [
+      "];\n\nexport const ENGINE_STABILITY_EXPLAINER_PRINCIPLES: readonly string[] = [\n  'Most of the structure is held steady. Conservative yield and a reserve are quieter supporting lanes. This shows system intent, not a map of where funds sit.',\n  'When the system is more cautious, protection and the reserve can outweigh conservative yield. Posture reflects that caution. It does not describe completed movement.',\n];\n\nexport const ENGINE_STABILITY_EXPLAINER_FOOTER =\n",
+      "];\n\nexport const ENGINE_STABILITY_EXPLAINER_PRINCIPLES: readonly string[] = [\n  'The three planning targets show a plan. None of them shows where money sits.',\n  'When Hedgr is more cautious, the Reserve target goes up and the target for earning goes down. Nothing is moved.',\n];\n\nexport const ENGINE_STABILITY_EXPLAINER_FOOTER =\n"
+    ]
+  ],
+  "lib/engine/stability-review-snapshot-copy.ts": [
+    [
+      "  'Illustrative example values, not live targets or advice';\n\nconst STANCE_BY_POSTURE: Record<EnginePosture, string> = {\n  normal: 'Where things stand: within expected range',\n  tightening: 'Where things stand: protective posture increasing',\n  tightened: 'Where things stand: protective posture elevated',\n  recovery: 'Where things stand: within expected range, easing steadily',\n};\n\nexport function getEngineStabilityReviewSnapshotStance(\n",
+      "  'Illustrative example values, not live targets or advice';\n\nconst STANCE_BY_POSTURE: Record<EnginePosture, string> = {\n  normal: 'Where things stand: within the usual range',\n  tightening: 'Where things stand: Reserve target going up',\n  tightened: 'Where things stand: Reserve target higher than usual',\n  recovery: 'Where things stand: targets returning to usual',\n};\n\nexport function getEngineStabilityReviewSnapshotStance(\n"
+    ],
+    [
+      "  '“Available” still means ready to use in principle; these targets stay informational.';\n\nexport const ENGINE_STABILITY_REVIEW_WITHDRAWAL_CONTINUITY =\n  'A protective posture does not, on its own, mean withdrawals are blocked or delayed.';\n\nexport const ENGINE_STABILITY_REVIEW_CADENCE_CUE =\n  'Use this snapshot for a calm, regular check-in. Protective conditions stay visible here without nudging you to act.';\n\nexport function getEngineStabilityReviewTimestampLine(\n  formattedUpdatedAt: string,\n",
+      "  '“Available” still means ready to use in principle; these targets stay informational.';\n\nexport const ENGINE_STABILITY_REVIEW_WITHDRAWAL_CONTINUITY =\n  'A higher Reserve target does not stop or delay a withdrawal.';\n\nexport const ENGINE_STABILITY_REVIEW_CADENCE_CUE =\n  'Check in here whenever you like. Nothing here asks you to act.';\n\nexport function getEngineStabilityReviewTimestampLine(\n  formattedUpdatedAt: string,\n"
+    ]
+  ]
+};
+const SC_HOME_TEXT_EDITS = [
+  [
+    "eturn opportunity when conditions allow.Stability target20%ReserveSupporting guidanceA buffer target, kept ready if needed.Stability target30%Guidance only. This planning structure is context, not an instruction. It does not show current money or prove that simulated money was divided or moved.Planning targets. The percentages show intended stability priorities in this simulation only.Verify what stability targets meanTarget role. A lower Conser",
+    "eturn opportunity when conditions allow.Target20%ReserveSupporting guidanceA buffer target, kept ready if needed.Target30%Targets only. They are not an instruction, and they do not divide or move your balance.Planning targets. The percentages show how Hedgr divides its plan.What these targets meanTarget role. A lower Conser"
+  ],
+  [
+    "ts are guidance, not current money.Hedgr's guidance makes its priorities visible in this simulation: preserve value first, keep access and risk visible, and understand the situation before action.Hedgr represents those priorities through three distinct target roles.Core stability targetPrimary stability rolePreserve value as the primary stability priority.Conservative yieldSupporting roleKeep return opportunity limited and conditional.ReserveSupporting roleKeep a buffer ready if needed.These percentages describe a simulated planning structure for those roles. They are guidance, not current money.Core stability targetPrimary stability guidanceThe largest target, focused on preserving value.Stability target50%Conservative yieldSupporting gui",
+    "ts are guidance, not current money.Hedgr shows its targets here: what it sets first, how access works and what the risks are.These percentages are Hedgr's planning targets for each role. They are not money.Main targetPlanning targetOne of the three targets.Target50%Conservative yieldSupporting gui"
+  ],
+  [
+    " kept ready in principle if you need it.Most of the structure is held steady. Conservative yield and a reserve are quieter supporting lanes. This shows system intent, not a map of where funds sit.When the system is more cautious, protection and the reserve can outweigh conservative yield. Posture reflects that caution. It does not describe completed movement.Targets are not accounting truth. Your ",
+    " kept ready in principle if you need it.The three planning targets show a plan. None of them shows where money sits.When Hedgr is more cautious, the Reserve target goes up and the target for earning goes down. Nothing is moved.Targets are not accounting truth. Your "
+  ],
+  [
+    "ciple; these targets stay informational.A protective posture does not, on its own, mean withdrawals are blocked or delayed.Protection in plain termsViewHedgr treats stability and protection as deliberate design choices. In tougher conditions, these informational targets may emphasize protection and liquidity ahead of conservative yield. That is visible intent you can review, not a nudge to move funds.Caution can limit conservative yield before protection is stressed. The split reflects that priority, not completed movement.The Reserve above still means readiness",
+    "ciple; these targets stay informational.When targets changeViewIn harder conditions, Hedgr may raise the Reserve target and lower the target for earning. You can see this here. It is not a prompt to do anything.The Reserve above still means readiness"
+  ],
+  [
+    " your prior check.Oct 15, 2026, 12:00 AMProtection in plain termsViewHedgr treats stability and protection as deliberate design choices. In tougher conditions, these informational targets may emphasize protection and liquidity ahead of conservative yield. That is visible intent you can review, not a nudge to move funds.Caution can limit conservative yield before protection is stressed. The split reflects that priority, not completed movement.The Reserve above still means readiness",
+    " your prior check.Oct 15, 2026, 12:00 AMWhen targets changeViewIn harder conditions, Hedgr may raise the Reserve target and lower the target for earning. You can see this here. It is not a prompt to do anything.The Reserve above still means readiness"
+  ],
+  [
+    "ets or adviceWhere things stand: within expected rangeLast viewed locallyNo prior local view in this browser.Review detailsViewUse this snapshot for a calm, regular check-in. Protective conditions stay visible here without nudging you to act.“Available” still means read",
+    "ets or adviceWhere things stand: within the usual rangeLast viewed locallyNo prior local view in this browser.Review detailsViewCheck in here whenever you like. Nothing here asks you to act.“Available” still means read"
+  ],
+  [
+    "ets or adviceWhere things stand: within expected rangeLast viewed locallyOct 15, 2026, 12:00 AMReview detailsViewUse this snapshot for a calm, regular check-in. Protective conditions stay visible here without nudging you to act.Since you last opened this r",
+    "ets or adviceWhere things stand: within the usual rangeLast viewed locallyOct 15, 2026, 12:00 AMReview detailsViewCheck in here whenever you like. Nothing here asks you to act.Since you last opened this r"
+  ],
+  [
+    "informational posture, not ledger truth.Stable balance — The primary holding lane. It is held steady to preserve value.Conservative yield — A supporting lane",
+    "informational posture, not ledger truth.Main target — One of the three planning targets. It is a percentage, not money set aside.Conservative yield — A supporting lane"
+  ],
+  [
+    "hown within the guidance.Current state. The simulated balance shown above is separate from this guidance. The percentages do not divide it.No instruction or movement. Guidance does not tell you what to do, and a target does not divide or move simulated money.How Hedgr interprets stabilityReviewReview snapshotIllustrative exampl",
+    "hown within the guidance.Current state. Your balance shown above is separate from these targets.How Hedgr sets its targetsReviewReview snapshotIllustrative exampl"
+  ],
+  [
+    " not live targets or adviceNORMALWithin expected range. Most of your balance stays steady, with conservative yield and reserve capacity kept visible.There is nothing here you need to manag",
+    " not live targets or adviceNORMALWithin the usual range. The main target is the largest of the three planning targets.There is nothing here you need to manag"
+  ],
+  [
+    "nformational, not your ledger balance.A protective posture does not by itself stop a withdrawal from processing or imply lockup.Why your balance is structured this way",
+    "nformational, not your ledger balance.A higher Reserve target does not stop or delay a withdrawal.Why your balance is structured this way"
+  ],
+  [
+    " real money is split or moved.How Hedgr interprets stabilityReviewReview snapshotIllustrative exampl",
+    " real money is split or moved.How Hedgr sets its targetsReviewReview snapshotIllustrative exampl"
+  ],
+  [
+    "allDepositJan 1+$1000.00Planning targetsStability guidanceIllustrative example values, not live ta",
+    "allDepositJan 1+$1000.00Planning targetsPlanning targetsIllustrative example values, not live ta"
+  ],
+  [
+    ".37DepositJan 1+$1000.00Planning targetsStability guidanceIllustrative example values, not live ta",
+    ".37DepositJan 1+$1000.00Planning targetsPlanning targetsIllustrative example values, not live ta"
+  ],
+  [
+    "ckend events.Where things stand: within expected rangeInformational targets unchanged si",
+    "ckend events.Where things stand: within the usual rangeInformational targets unchanged si"
+  ],
+  [
+    "026, 12:00 AMWhere things stand: within expected rangeInformational targets unchanged si",
+    "026, 12:00 AMWhere things stand: within the usual rangeInformational targets unchanged si"
+  ],
+  [
+    "nciple; these targets stay informational.A protective posture does not, on its own, mean withdrawals are blocked or delayed.This comparison is about system targets",
+    "nciple; these targets stay informational.This comparison is about system targets"
+  ],
+  [
+    " or adviceSee the planning position shown in this simulation and why it is structured this way. The",
+    " or adviceSee the planning position shown and why it is structured this way. The"
+  ]
+];
+
+function scPreRuntime(value: string, edits: readonly (readonly string[])[]): string {
+  for (const [before, after] of edits) value = value.replaceAll(after, before);
+  return value;
+}

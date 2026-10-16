@@ -23,7 +23,7 @@ test('keeps one compact difference, visible limits and a native calculation disc
   const writes = vi.spyOn(Storage.prototype, 'setItem');
   render(<CurrencyInsight {...props} />);
   expect(screen.getByTestId('currency-insight-headline').textContent).toContain('ZMW 300 higher from the rate change');
-  expect(screen.getByText('FX comparison only—not earnings, purchasing power, guaranteed protection or a conversion quote.')).toBeDefined();
+  expect(screen.getByText('This compares two example rates. It does not show earnings, buying power or a rate you would get.')).toBeDefined();
   const summary = screen.getByText('How this is calculated');
   const detail = summary.closest('details')!;
   expect(detail.open).toBe(false);
@@ -94,7 +94,7 @@ test('research detail preserves comparison limits, stays read-only and returns f
   expect(dialog.textContent).toContain('ZMW 6,000.00');
   expect(dialog.textContent).toContain('It does not mean you held this amount for 30 days.');
   expect(dialog.textContent).toContain('Not your account history or live market data.');
-  expect(dialog.textContent).toContain('not earnings, purchasing power, guaranteed protection or a conversion quote');
+  expect(dialog.textContent).toContain('It does not show earnings, buying power or a rate you would get');
   fireEvent.click(screen.getByRole('button', { name: 'Back to Home' }));
   expect(document.activeElement).toBe(trigger);
   expect(writes).not.toHaveBeenCalled();
@@ -133,12 +133,12 @@ test('compact Home opens the complete comparison and returns focus without chang
   expect(screen.getByRole('button', { name: 'Currency context', description: 'ZMW 300 higher from the rate change' })).toBe(trigger);
   expect(trigger.textContent).toContain('Understand the comparison');
   expect(trigger.textContent).not.toContain('Your USD amount is held constant in this comparison.');
-  expect(trigger.textContent).not.toContain('FX comparison only—not earnings, purchasing power, guaranteed protection or a conversion quote.');
+  expect(trigger.textContent).not.toContain('This compares two example rates. It does not show earnings, buying power or a rate you would get.');
   expect(screen.queryByRole('dialog')).toBeNull();
   expect(screen.getByTestId('currency-insight-headline').closest('dialog')?.open).toBe(false);
   fireEvent.click(trigger);
   const dialog = screen.getByRole('dialog', { name: 'Currency context' });
-  for (const text of ['ZMW 5,700.00', 'ZMW 6,000.00', 'This shows the same amount at two made-up exchange rates.', 'not earnings, purchasing power, guaranteed protection or a conversion quote', 'It does not mean you held this amount for 30 days.', 'fees and spreads', 'No money has moved.', 'A made-up example, shown today and 30 days later.']) {
+  for (const text of ['ZMW 5,700.00', 'ZMW 6,000.00', 'This shows the same amount at two made-up exchange rates.', 'It does not show earnings, buying power or a rate you would get', 'It does not mean you held this amount for 30 days.', 'fees and spreads', 'No money has moved.', 'A made-up example, shown today and 30 days later.']) {
     expect(dialog.textContent).toContain(text);
   }
   fireEvent.click(screen.getByRole('button', { name: 'Back to Home' }));
@@ -165,7 +165,7 @@ test.each([
   expect(trigger.textContent).toContain('Understand the comparison');
   expect(trigger.querySelector('[data-testid="currency-insight-direction"]')).toBeNull();
   expect(trigger.textContent).not.toContain('Your USD amount is held constant in this comparison.');
-  expect(trigger.textContent).not.toContain('FX comparison only—not earnings, purchasing power, guaranteed protection or a conversion quote.');
+  expect(trigger.textContent).not.toContain('This compares two example rates. It does not show earnings, buying power or a rate you would get.');
   expect(insight.textContent).not.toMatch(/[↑↓]|earnings|return|gain/i);
 });
 

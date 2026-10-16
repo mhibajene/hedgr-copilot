@@ -36,11 +36,11 @@ describe('ENGINE_POSTURE_CONTEXT', () => {
   );
 
   test('uses promoted posture-language patterns without held or rejected primary terms', () => {
-    expect(ENGINE_POSTURE_CONTEXT.normal).toMatch(/within expected range/i);
-    expect(ENGINE_POSTURE_CONTEXT.recovery).toMatch(/within expected range/i);
-    expect(ENGINE_POSTURE_CONTEXT.tightening).toMatch(/protective posture/i);
-    expect(ENGINE_POSTURE_CONTEXT.tightened).toMatch(/protective posture/i);
-    expect(ENGINE_POSTURE_CONTEXT.normal).toMatch(/conservative yield/i);
+    expect(ENGINE_POSTURE_CONTEXT.normal).toMatch(/within the usual range/i);
+    expect(ENGINE_POSTURE_CONTEXT.recovery).toMatch(/within the usual range/i);
+    expect(ENGINE_POSTURE_CONTEXT.tightening).toBe('The Reserve target is going up while conditions are reviewed.');
+    expect(ENGINE_POSTURE_CONTEXT.tightened).toBe('The Reserve target is higher than usual until conditions ease.');
+    expect(ENGINE_POSTURE_CONTEXT.normal).toBe('Within the usual range. The main target is the largest of the three planning targets.');
 
     for (const copy of Object.values(ENGINE_POSTURE_CONTEXT)) {
       for (const forbidden of HELD_OR_REJECTED_PRIMARY_TERMS) {

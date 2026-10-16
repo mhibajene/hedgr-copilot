@@ -237,6 +237,6 @@ test('Review snapshot removes authored freshness and preserves local-view facts'
   await details.locator(':scope > summary').focus();
   await page.keyboard.press('Enter');
   await expect(snapshot).not.toContainText('Snapshot reflects current system targets as of');
-  await expect(snapshot.getByTestId('engine-stability-review-snapshot-stance')).toHaveText('Where things stand: within expected range');
+  await expect(snapshot.getByTestId('engine-stability-review-snapshot-stance')).toHaveText('Where things stand: within the usual range');
   await expect(snapshot.getByTestId('engine-stability-review-last-viewed-locally')).not.toBeEmpty();
 });

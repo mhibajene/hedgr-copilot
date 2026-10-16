@@ -15,8 +15,8 @@ export const ENGINE_STABILITY_EXPLAINER_TERMS: ReadonlyArray<{
   definition: string;
 }> = [
   {
-    term: 'Stable balance',
-    definition: 'The primary holding lane. It is held steady to preserve value.',
+    term: 'Main target',
+    definition: 'One of the three planning targets. It is a percentage, not money set aside.',
   },
   {
     term: 'Conservative yield',
@@ -30,8 +30,8 @@ export const ENGINE_STABILITY_EXPLAINER_TERMS: ReadonlyArray<{
 ];
 
 export const ENGINE_STABILITY_EXPLAINER_PRINCIPLES: readonly string[] = [
-  'Most of the structure is held steady. Conservative yield and a reserve are quieter supporting lanes. This shows system intent, not a map of where funds sit.',
-  'When the system is more cautious, protection and the reserve can outweigh conservative yield. Posture reflects that caution. It does not describe completed movement.',
+  'The three planning targets show a plan. None of them shows where money sits.',
+  'When Hedgr is more cautious, the Reserve target goes up and the target for earning goes down. Nothing is moved.',
 ];
 
 export const ENGINE_STABILITY_EXPLAINER_FOOTER =

@@ -37,6 +37,7 @@ for (const [width, scale] of [[1440, 1], [390, 1], [320, 2]]) for (const posture
     if (i > 0) { const banner = page.getByTestId('engine-posture-banner'); await expect(banner.locator('p').first()).toHaveText(TITLES[i - 1]); await expect(banner.locator('p').last()).toHaveText(BODIES[i - 1]); }
     const panel = page.getByTestId('engine-allocation-bands');
     if (LIVE) {
+      await page.getByTestId('dashboard-planning-targets').locator('summary').first().click();
       await expect(panel).toHaveAttribute('data-presentation', 'expanded'); await expect(panel.getByRole('heading', { name: 'Planning targets', exact: true })).toBeVisible();
       for (const label of ['Main target', 'Conservative yield', 'Reserve']) await expect(panel.getByText(label, { exact: true })).toHaveCount(1);
       await expect(panel.getByText('Planning target', { exact: true })).toBeVisible(); await expect(panel.getByText('One of the three targets.', { exact: true })).toBeVisible();

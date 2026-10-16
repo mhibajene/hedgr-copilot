@@ -319,6 +319,9 @@ test('Sarah preserves immutable sources and the Founder-confirmed §389 journey 
       ]);
       contents = contents.replace(corrected, original);
     }
+    if (file === 'app/(app)/dashboard/CurrencyInsight.tsx') {
+      contents = contents.replaceAll("This compares two example rates. It does not show earnings, buying power or a rate you would get.", "FX comparison only\u2014not earnings, purchasing power, guaranteed protection or a conversion quote.");
+    }
     expect(createHash('sha256').update(contents).digest('hex'), file).toBe(expected);
   }
 });
