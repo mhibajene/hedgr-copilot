@@ -597,13 +597,13 @@ export default function DashboardPage() {
             </>
           ) : sinceSummary.kind === "one" ? (
             <>
-              <p className="max-w-xl text-sm leading-relaxed text-hedgr-dark" data-testid="engine-posture-context">
+              {!syntheticJourneyActive && (<p className="max-w-xl text-sm leading-relaxed text-hedgr-dark" data-testid="engine-posture-context">
                 {syntheticJourneyActive ? countChanges(1, true) : <>One simulated {sinceSummary.entry.type === "DEPOSIT" ? "deposit" : "withdrawal"} of{" "}
                 <span data-observation-amount>{formatUsd(sinceSummary.entry.amountUSD)}</span> on{" "}
                 {formatShortDate(sinceSummary.entry.at)}{syntheticJourneyActive ? "." : <>
                   {" "}took your position from {formatUsd(sinceSummary.from)} to {formatUsd(sinceSummary.to)}.
                 </>}</>}
-              </p>
+              </p>)}
               {syntheticJourneyActive ? (
                 <p className="text-sm leading-relaxed text-hedgr-dark">
                   This simulated {sinceSummary.entry.type === "DEPOSIT" ? "deposit" : "withdrawal"} is included in the balance above.
@@ -612,7 +612,7 @@ export default function DashboardPage() {
             </>
           ) : (
             <>
-              <p className="max-w-xl text-sm leading-relaxed text-hedgr-dark" data-testid="engine-posture-context">
+              {!syntheticJourneyActive && (<p className="max-w-xl text-sm leading-relaxed text-hedgr-dark" data-testid="engine-posture-context">
                 {syntheticJourneyActive ? <>
                   {countChanges(sinceSummary.entries.length, true)}
                 </> : <>
@@ -620,7 +620,7 @@ export default function DashboardPage() {
                   {formatShortDate(sinceSummary.since)}. Your position went from {formatUsd(sinceSummary.from)} to{" "}
                   <span data-observation-amount>{formatUsd(sinceSummary.to)}</span>.
                 </>}
-              </p>
+              </p>)}
               {syntheticJourneyActive ? null : <ul className={home.sinceList} data-testid="dashboard-since-entries">
                 {sinceSummary.entries.map((entry) => (
                   <li key={entry.id}>

@@ -456,9 +456,8 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   await firstEventHome.goto('/dashboard-synthetic-journey');
   await expect(firstEventHome.getByTestId('usd-balance')).toHaveText('$5.00');
   // HOME-EXPERIENCE-001 T3: the first deposit since the last Home visit.
-  await expect(firstEventHome.getByTestId('engine-posture-context')).toHaveText(
-    '1 change since your last visit'
-  );
+  await expect(firstEventHome.getByTestId('engine-posture-context')).toHaveCount(0);
+  await expect(firstEventHome.getByTestId('example-line-chart').locator('[data-chart-label]')).toHaveText('1 change since your last visit');
   await expect(firstEventHome.getByTestId('dashboard-change-chip')).toHaveCount(0);
   await expect(firstEventHome.getByText('Does anything need attention?')).toHaveCount(0);
   await expect(firstEventHome.getByTestId('engine-simulation-attention-answer')).toHaveCount(0);
@@ -599,9 +598,8 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   await expect(page.getByTestId('dashboard-change-evidence')).toHaveCount(0);
   await expect(page.getByText('How your position changed')).toHaveCount(0);
   // HOME-EXPERIENCE-001 T3: one withdrawal since the first-event Home visit.
-  await expect(page.getByTestId('engine-posture-context')).toHaveText(
-    '1 change since your last visit'
-  );
+  await expect(page.getByTestId('engine-posture-context')).toHaveCount(0);
+  await expect(page.getByTestId('example-line-chart').locator('[data-chart-label]')).toHaveText('1 change since your last visit');
   await expect(page.getByTestId('dashboard-change-chip')).toHaveCount(0);
   await expect(page.getByTestId('dashboard-since-link')).toHaveAttribute('href', '/activity?journey=class-a-val-002');
   await expect(page.getByTestId('dashboard-optional-actions')).toHaveCount(0);
@@ -790,9 +788,8 @@ test('Home explains what changed since the last visit and clears it on reset', a
 
   await expect(page.getByTestId('usd-balance')).toHaveText('$3.00');
   await expect(page.getByTestId('dashboard-current-status')).toContainText('Since you were last here');
-  await expect(page.getByTestId('engine-posture-context')).toHaveText(
-    '2 changes since your last visit'
-  );
+  await expect(page.getByTestId('engine-posture-context')).toHaveCount(0);
+  await expect(page.getByTestId('example-line-chart').locator('[data-chart-label]')).toHaveText('2 changes since your last visit');
   await page.getByRole('button', { name: 'All changes', exact: true }).click();
   const entries = page.getByTestId('chart-event-list').locator('li');
   await expect(entries).toHaveCount(2);

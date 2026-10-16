@@ -25,8 +25,9 @@ export function countChanges(count: number, visited: boolean): string {
 
 export function selectLabels(events: readonly LocatedEvent[], lastVisit: number | null, width: number): LineLabel[] {
   const changed = lastVisit === null ? [] : events.filter(event => event.at > lastVisit);
+  if (lastVisit !== null && changed.length === 0) return [];
   const selected = changed.length ? changed : events.slice(-1);
-  if (selected.length > labelBudget(width)) {
+  if (lastVisit !== null || selected.length > labelBudget(width)) {
     const latest = selected[selected.length - 1];
     return [{ id: latest.id, x: latest.x, text: countChanges(selected.length, lastVisit !== null) }];
   }

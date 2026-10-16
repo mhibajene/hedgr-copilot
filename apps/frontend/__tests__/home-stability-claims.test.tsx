@@ -76,7 +76,31 @@ test('SC13 labels-listed-once', () => {
 });
 test('SC14 held-strings-byte-identical and exact bounded runtime diff', () => {
   for (const [path, hash] of Object.entries(PROTECTED_BLOBS)) expect(digest(source(path)), path).toBe(hash);
-  for (const {path, baseline, edits} of APPROVED_EDITS) { const original = ORIGINAL_SOURCES[path]; let approved = original; for (const [old, replacement] of edits) approved = approved.replace(old, replacement); expect(digest(original)).toBe(baseline); expect([original, approved], path).toContain(source(path)); }
+  for (const {path, baseline, edits} of APPROVED_EDITS) {
+    const original = ORIGINAL_SOURCES[path]; let approved = original;
+    for (const [old, replacement] of edits) approved = approved.replace(old, replacement);
+    expect(digest(original)).toBe(baseline);
+    let actual = source(path);
+    if (path === 'app/(app)/dashboard/page.tsx') {
+      // §396: reverse only the two exact option-(a) wrappers. The immutable
+      // original, earlier transformations, and every remaining page byte stay pinned.
+      const paragraph = (text: string) => {
+        const start = approved.lastIndexOf('<p ', approved.indexOf(text));
+        return approved.slice(start, approved.indexOf('</p>', start) + 4);
+      };
+      const noChange = paragraph('{syntheticJourneyActive ? <>{countChanges(0, true)}</>');
+      expect(actual).toContain(noChange);
+      for (const text of ['{syntheticJourneyActive ? countChanges(1, true)', '{countChanges(sinceSummary.entries.length, true)}']) {
+        const held = paragraph(text);
+        const omittedInSimulation = `{!syntheticJourneyActive && (${held})}`;
+        expect(actual.split(omittedInSimulation)).toHaveLength(2);
+        // The complete non-simulation branch and its exact copy remain inside.
+        expect(omittedInSimulation).toContain(held);
+        actual = actual.replace(omittedInSimulation, held);
+      }
+    }
+    expect([original, approved], path).toContain(actual);
+  }
 });
 test('SC15 banned-terms-and-spelling-scan', () => {
   const changed = [...Object.values(ENGINE_POSTURE_CONTEXT), ...Object.values(ENGINE_NOTICE_COPY).flatMap(n => [n.title,n.body]), explainer.ENGINE_STABILITY_EXPLAINER_TERMS[0].term, explainer.ENGINE_STABILITY_EXPLAINER_TERMS[0].definition, ...explainer.ENGINE_STABILITY_EXPLAINER_PRINCIPLES, guidance.ENGINE_PROTECTIVE_GUIDANCE_TITLE, guidance.ENGINE_PROTECTIVE_GUIDANCE_FRAMING, guidance.ENGINE_PROTECTIVE_GUIDANCE_POINTS.at(-1)!, ...POSTURES.map(review.getEngineStabilityReviewSnapshotStance), review.ENGINE_STABILITY_REVIEW_CADENCE_CUE]; for (const text of changed) expect(text).not.toMatch(/stability|stable|protect|preserv|held steady|steadier|[→←↑↓]|\b\w+iz(?:e|ed|ing)\b|\d/i);

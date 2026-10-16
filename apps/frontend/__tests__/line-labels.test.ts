@@ -14,12 +14,13 @@ test('V2 label-budget-phone-desktop', async () => {
   const { labelBudget, selectLabels } = await labels();
   expect(labelBudget(390)).toBe(2); expect(labelBudget(480)).toBe(2); expect(labelBudget(481)).toBe(3); expect(labelBudget(1440)).toBe(3);
   expect(selectLabels(events.slice(0, 3), at - 1, 390)).toHaveLength(1);
-  expect(selectLabels(events.slice(0, 3), at - 1, 1440)).toHaveLength(3);
+  expect(selectLabels(events.slice(0, 3), at - 1, 1440)).toHaveLength(1);
 });
 test('V3 labels-since-last-visit-else-latest', async () => {
   const { selectLabels } = await labels();
-  expect(selectLabels(events, at + 1500, 1440).map((label: { id: string }) => label.id)).toEqual(['2', '3']);
-  for (const visit of [null, at + 9000]) expect(selectLabels(events, visit, 1440).map((label: { id: string }) => label.id)).toEqual(['3']);
+  expect(selectLabels(events, at + 1500, 1440).map((label: { id: string }) => label.id)).toEqual(['3']);
+  expect(selectLabels(events, null, 1440).map((label: { id: string }) => label.id)).toEqual(['3']);
+  expect(selectLabels(events, at + 9000, 1440)).toEqual([]);
   expect(selectLabels([], null, 390)).toEqual([]);
 });
 test('V4 overflow-summary-counts-only', async () => {
@@ -39,4 +40,24 @@ test('V5 dots-merge-under-14px', async () => {
 test('V6 label-flip-on-collision', async () => {
   const { placeLabels } = await labels();
   expect(placeLabels([{ id: 'a', x: 50, text: '1 change', width: 100 }, { id: 'b', x: 70, text: '1 change', width: 100 }], 300).map((label: { placement: string }) => label.placement)).toEqual(['above', 'below']);
+});
+
+for (const [name, count] of [['S1 one-count-label-two-changes', 2], ['S2 one-count-label-three-changes', 3], ['S3 one-change-singular', 1]] as const) {
+  test(name, async () => {
+    const { selectLabels } = await labels();
+    for (const width of [320, 390, 480, 481, 1440]) {
+      const latest = events[count - 1];
+      expect(selectLabels(events.slice(0, count), at - 1, width)).toEqual([
+        { id: latest.id, x: latest.x, text: `${count} ${count === 1 ? 'change' : 'changes'} since your last visit` },
+      ]);
+    }
+  });
+}
+test('S4 no-visit-unchanged-no-change-empty', async () => {
+  const { selectLabels } = await labels();
+  for (const width of [320, 390, 1440]) {
+    expect(selectLabels(events, null, width)).toEqual([{ id: '3', x: 280, text: '1 change' }]);
+    expect(selectLabels(events, at + 9000, width)).toEqual([]);
+    expect(selectLabels([], at, width)).toEqual([]);
+  }
 });

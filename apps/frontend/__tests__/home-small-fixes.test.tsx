@@ -323,7 +323,15 @@ describe.each(["default", "journey"] as const)(
         (node) => node.textContent === expectedAttribution
       );
       expect(sinceAttribution).toBeDefined();
-      expect(
+      if (route === "journey") {
+        expect(sinceContext).toBeNull();
+        const inclusion = Array.from(sinceCard.querySelectorAll("p")).find(
+          (node) => node.textContent === "This simulated withdrawal is included in the balance above."
+        );
+        expect(inclusion).toBeDefined();
+        expect(inclusion!.compareDocumentPosition(sinceAttribution!) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+        expect(screen.getByTestId("example-line-chart").querySelector('[data-chart-label]')!.textContent).toBe("1 change since your last visit");
+      } else expect(
         sinceContext!.compareDocumentPosition(sinceAttribution!) &
           Node.DOCUMENT_POSITION_FOLLOWING
       ).toBeTruthy();

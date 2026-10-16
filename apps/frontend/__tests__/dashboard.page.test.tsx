@@ -853,16 +853,46 @@ test('Journey since states use simulation context without current-balance restat
   for (const route of B_ROUTES) {
     for (const type of ['withdrawal', 'deposit'] as const) {
       setupTicketB(route, 'one', type);
-      expect((await screen.findByTestId('engine-posture-context')).textContent).toBe('1 change since your last visit');
+      await screen.findByTestId('dashboard-current-status');
+      expect(screen.queryByTestId('engine-posture-context')).toBeNull();
+      expect(screen.getByTestId('example-line-chart').querySelector('[data-chart-label]')!.textContent).toBe('1 change since your last visit');
     }
     setupTicketB(route, 'several');
-    expect((await screen.findByTestId('engine-posture-context')).textContent).toBe('2 changes since your last visit');
+    await screen.findByTestId('dashboard-current-status');
+    expect(screen.queryByTestId('engine-posture-context')).toBeNull();
+    expect(screen.getByTestId('example-line-chart').querySelector('[data-chart-label]')!.textContent).toBe('2 changes since your last visit');
     expect(screen.queryByTestId('dashboard-since-entries')).toBeNull();
     const rows = screen.getByTestId('chart-event-list').querySelectorAll('li');
     expect(Array.from(rows).map(row => row.textContent)).toEqual(['First deposit +$500.00 · 12 Oct', 'Withdrawal −$20.00 · 13 Oct']);
     setupTicketB(route, 'no-change');
     expect((await screen.findByTestId('engine-posture-context')).textContent).toBe('No changes since your last visit');
     expect(screen.getByText('The ZMW estimate can change with the exchange rate.')).toBeDefined();
+  }
+});
+
+test('S9 status-line-no-count-in-sim', async () => {
+  for (const route of B_ROUTES) {
+    for (const [state, count] of [['one', 1], ['several', 2]] as const) {
+      setupTicketB(route, state);
+      const card = await screen.findByTestId('dashboard-current-status');
+      expect(screen.queryByTestId('engine-posture-context')).toBeNull();
+      expect(within(card).getByRole('heading', { name: 'Since you were last here' })).toBeDefined();
+      expect(card.textContent).toContain(count === 1 ? 'This simulated withdrawal is included in the balance above.' : 'These simulated entries are included in the balance above.');
+      expect(screen.getByTestId('example-line-chart').querySelector('[data-chart-label]')!.textContent).toBe(`${count} ${count === 1 ? 'change' : 'changes'} since your last visit`);
+    }
+    setupTicketB(route, 'no-change');
+    expect((await screen.findByTestId('engine-posture-context')).textContent).toBe('No changes since your last visit');
+    expect(screen.getAllByText('No changes since your last visit', { exact: true })).toHaveLength(1);
+    expect(screen.getByTestId('example-line-chart').querySelectorAll('[data-chart-label]')).toHaveLength(0);
+    expect(screen.getAllByTestId('chart-event-dot').length).toBeGreaterThan(0);
+  }
+  for (const [state, expected] of [
+    ['one', 'One simulated withdrawal of $20.00 on 13 Oct took your position from $500.00 to $480.00.'],
+    ['several', 'Two things changed since 11 Oct. Your position went from $0.00 to $480.00.'],
+    ['no-change', 'Nothing has changed since 13 Oct. Your position is still $480.00.'],
+  ] as const) {
+    setupTicketB('/dashboard', state);
+    expect((await screen.findByTestId('engine-posture-context')).textContent).toBe(expected);
   }
 });
 
