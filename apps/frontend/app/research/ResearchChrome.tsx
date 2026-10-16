@@ -1,7 +1,5 @@
-'use client';
-
 import Link from 'next/link';
-import { useEffect, useRef, useState, type ReactNode } from 'react';
+import type { ReactNode, Ref } from 'react';
 import { ResearchBridge } from './ResearchBridge';
 import research from './research.module.css';
 
@@ -45,7 +43,12 @@ export function ResearchChrome({ title, testId, footer, children }: ResearchChro
 }
 
 
+export type ResearchStage = 'situation' | 'what-if' | 'hedgr' | 'bridge';
+
 type ResearchScenarioProps = {
+  stage: ResearchStage;
+  onStageChange: (stage: ResearchStage) => void;
+  stageHeading: Ref<HTMLHeadingElement>;
   title: string;
   testId: string;
   factsTestId: string;
@@ -66,13 +69,7 @@ type ResearchScenarioProps = {
 
 /** §398: both unreleased examples share the same slots and focus-preserving traversal. */
 export function ResearchScenario(props: ResearchScenarioProps) {
-  const [stage, setStage] = useState<'situation' | 'what-if' | 'hedgr' | 'bridge'>('situation');
-  const stageHeading = useRef<HTMLHeadingElement>(null);
-  useEffect(() => {
-    if (stage === 'situation') return;
-    stageHeading.current?.focus({ preventScroll: true });
-    stageHeading.current?.closest('main')?.scrollIntoView({ block: 'start' });
-  }, [stage]);
+  const { stage, onStageChange, stageHeading } = props;
 
   return (
     <ResearchChrome title={props.title} testId={props.testId}
@@ -85,7 +82,7 @@ export function ResearchScenario(props: ResearchScenarioProps) {
           <div data-slot="7">{props.differingFact}</div>
           <p data-slot="8">{props.lockedLine}</p>
         </section>
-        <button data-slot="9" data-testid="study-continue" type="button" onClick={() => setStage('what-if')} className={`${research.primary} mt-8`}>Continue to the what-if</button>
+        <button data-slot="9" data-testid="study-continue" type="button" onClick={() => onStageChange('what-if')} className={`${research.primary} mt-8`}>Continue to the what-if</button>
       </> : stage === 'what-if' ? <>
         <section aria-labelledby="research-what-if-heading" className={`${research.panel} mt-8 space-y-4 break-words`}>
           <p data-slot="10" className="text-sm font-medium text-hedgr-600">Example scenario</p>
@@ -93,7 +90,7 @@ export function ResearchScenario(props: ResearchScenarioProps) {
           <p data-slot="12">{props.whatIfBody}</p>
           <p data-slot="13">{props.whatIfClosing}</p>
         </section>
-        <button data-slot="14" data-testid="study-to-hedgr" type="button" onClick={() => setStage('hedgr')} className={`${research.primary} mt-8`}>Continue</button>
+        <button data-slot="14" data-testid="study-to-hedgr" type="button" onClick={() => onStageChange('hedgr')} className={`${research.primary} mt-8`}>Continue</button>
       </> : stage === 'hedgr' ? <>
         <section data-testid="study-hedgr-explanation" className="mt-8 space-y-5 break-words">
           <h2 data-slot="16" ref={stageHeading} tabIndex={-1} className="text-lg font-semibold sm:text-xl">{props.hedgrHeading}</h2>
@@ -104,7 +101,7 @@ export function ResearchScenario(props: ResearchScenarioProps) {
         <p data-slot="20" data-testid="study-limits" className="mt-5 text-sm leading-relaxed text-hedgr-700">This example does not predict exchange rates. It is not financial advice.</p>
         {props.nextLink
           ? <Link data-slot="21" data-testid="study-to-reserve" href={props.nextLink.href} className={`${research.primary} mt-5`}>{props.nextLink.label}</Link>
-          : <button data-slot="21" data-testid="study-to-bridge" type="button" onClick={() => setStage('bridge')} className={`${research.primary} mt-5`}>Continue</button>}
+          : <button data-slot="21" data-testid="study-to-bridge" type="button" onClick={() => onStageChange('bridge')} className={`${research.primary} mt-5`}>Continue</button>}
       </> : <ResearchBridge headingRef={stageHeading} />}
     </ResearchChrome>
   );

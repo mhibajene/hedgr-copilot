@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useRef, useState } from 'react';
 import {
   SARAH_SCENARIO,
   SARAH_OBSERVATION,
@@ -7,11 +8,21 @@ import {
   formatScenarioDate,
   formatScenarioUsd,
 } from '../../../lib/research/scenario-fixtures';
-import { ResearchScenario } from '../ResearchChrome';
+import { ResearchScenario, type ResearchStage } from '../ResearchChrome';
 
 export default function ScenarioStimulus() {
+  const [stage, setStage] = useState<ResearchStage>('situation');
+  const stageHeading = useRef<HTMLHeadingElement>(null);
+  useEffect(() => {
+    if (stage === 'situation') return;
+    stageHeading.current?.focus({ preventScroll: true });
+    stageHeading.current?.closest('main')?.scrollIntoView({ block: 'start' });
+  }, [stage]);
   const [first, second] = SARAH_SCENARIO.deposits;
   return <ResearchScenario
+    stage={stage}
+    onStageChange={setStage}
+    stageHeading={stageHeading}
     title={SARAH_SCENARIO.name}
     testId="stability-stimulus"
     factsTestId="sarah-facts"

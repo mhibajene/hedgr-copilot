@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useRef, useState } from 'react';
 import {
   DANIEL_SCENARIO,
   DANIEL_OBSERVATION,
@@ -7,15 +8,25 @@ import {
   formatScenarioDate,
   formatScenarioUsd,
 } from '../../../lib/research/scenario-fixtures';
-import { ResearchScenario } from '../ResearchChrome';
+import { ResearchScenario, type ResearchStage } from '../ResearchChrome';
 
 type Variant = '1' | '2';
 
 // Both admitted variants deliberately render the same registry-aligned page (§398).
 export default function ReserveScenarioStimulus({ variant }: { variant: Variant }) {
   void variant; // Route admission is validated by page.tsx; presentation is identical.
+  const [stage, setStage] = useState<ResearchStage>('situation');
+  const stageHeading = useRef<HTMLHeadingElement>(null);
+  useEffect(() => {
+    if (stage === 'situation') return;
+    stageHeading.current?.focus({ preventScroll: true });
+    stageHeading.current?.closest('main')?.scrollIntoView({ block: 'start' });
+  }, [stage]);
   const [first, second] = DANIEL_SCENARIO.deposits;
   return <ResearchScenario
+    stage={stage}
+    onStageChange={setStage}
+    stageHeading={stageHeading}
     title={DANIEL_SCENARIO.name}
     testId="reserve-stimulus"
     factsTestId="daniel-facts"
