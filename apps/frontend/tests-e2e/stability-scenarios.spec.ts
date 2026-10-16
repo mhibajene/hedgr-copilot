@@ -1,370 +1,158 @@
 import { expect, test } from '@playwright/test';
 
 const studyEntry = '/orientation?study=stability-scenarios';
-
-const holdPatterns = /30000|30,000|if every planned contribution|anchored|relative to the obligation|keep visible|fewer surprises|Hedgr shows|Hedgr tracks|enough money|will be there|companion|moves with it/;
-
-const retiredPanelStrings = [
-  'What Hedgr would add',
-  'What Hedgr would point out',
-  'What she needs',
-  'Same as before',
-  'Same savings, same due date. A different fee currency changes what Sarah needs to watch.',
-  'All other facts remain the same.',
-  'Continue to how Hedgr would put this',
-  'Continue to what Hedgr helps Sarah see',
-  'Authored research example · not a live assessment of anyone’s money',
-  'This is an authored research example for Sarah’s fictional situation. It is not Hedgr reading your money, not Stability Engine output, and not a live financial assessment.',
-];
-
-const rowKeys = ['available', 'planned', 'due', 'watch'] as const;
-const expectedLabels = ['Available now', 'Planned', 'Due', 'What to watch'];
+const preferenceKey = 'hedgr.simulation.display-currency';
+const boundary = 'This example uses the facts on this page and nothing else. No real money is involved. Nothing you do here is saved.';
+const retiredPanelStrings = ['What Hedgr would add', 'What Hedgr would point out', 'What she needs', 'Same as before', 'Same savings, same due date. A different fee currency changes what Sarah needs to watch.', 'All other facts remain the same.', 'Continue to how Hedgr would put this', 'Continue to what Hedgr helps Sarah see', 'Authored research example · not a live assessment of anyone’s money', 'This is an authored research example for Sarah’s fictional situation. It is not Hedgr reading your money, not Stability Engine output, and not a live financial assessment.'];
+const holdPatterns = /30000|30,000|if every planned contribution|anchored|relative to the obligation|keep visible|fewer surprises|Hedgr shows|Hedgr tracks|enough money|will be there|companion|moves with it|\bonly\b|with Hedgr|dollar-linked portion|Hedgr plays no part|no longer changes|fully funded|planned|saving for|progress|sufficien/i;
 
 async function enterStudy(page: import('@playwright/test').Page) {
   await page.goto(studyEntry);
   await page.getByTestId('orientation-continue').click();
   await expect(page).toHaveURL(/\/research\/stability-scenarios$/);
 }
-
 async function expectNoHolds(page: import('@playwright/test').Page) {
   const stimulus = page.getByTestId('stability-stimulus');
   await expect(stimulus).not.toContainText(holdPatterns);
   await expect(stimulus).not.toContainText(/position|judgement|interprets|Stability Status|posture|score/i);
-  await expect(stimulus.locator('input, textarea, form')).toHaveCount(0);
+  await expect(stimulus.locator('input, textarea, form, meter')).toHaveCount(0);
   await expect(stimulus.getByRole('progressbar')).toHaveCount(0);
-  await expect(stimulus.locator('meter')).toHaveCount(0);
+  for (const phrase of retiredPanelStrings) await expect(stimulus).not.toContainText(phrase);
+  await expect(stimulus.locator('[data-testid="study-panel-before"], [data-testid="study-panel-after"], [data-testid="study-row-marker"], [data-testid="study-authored-label"]')).toHaveCount(0);
+  await expect(stimulus).not.toContainText('→');
+}
+async function fixedFacts(page: import('@playwright/test').Page) {
+  await expect(page.getByTestId('sarah-facts')).toContainText('Situation on 9 October 2026');
+  await expect(page.getByTestId('sarah-facts')).toContainText('She deposited ZMW 4,000.00 on 14 April 2026 and ZMW 2,000.00 on 21 July 2026. She holds ZMW 6,000.00.');
+  await expect(page.getByTestId('course-fee')).toHaveText('Her course fee is $1000.00 USD, due on 1 October 2027.');
+  await expect(page.locator('[data-slot="8"]')).toHaveText('This read does not establish whether Sarah can pay the fee.');
 }
 
-async function expectRetiredStringsAbsent(page: import('@playwright/test').Page) {
-  const stimulus = page.getByTestId('stability-stimulus');
-  for (const phrase of retiredPanelStrings) {
-    await expect(stimulus).not.toContainText(phrase);
-  }
-  await expect(stimulus.getByText('What changed:', { exact: true })).toHaveCount(0);
-  await expect(stimulus.getByText('What is still open:', { exact: true })).toHaveCount(0);
-  await expect(stimulus.getByRole('heading', { name: 'Before the change', exact: true })).toHaveCount(0);
-  await expect(stimulus.getByRole('heading', { name: 'After the change', exact: true })).toHaveCount(0);
-}
-
-test.describe('Research Two-Beat Sarah example', () => {
-  test('keeps ordinary orientation and presents A1 facts without prompts or premature interpretation', async ({ page }) => {
+test.describe('RESEARCH-PAGES-REGISTRY-ALIGN-001', () => {
+  test('keeps ordinary orientation and presents registry facts without prompts or premature interpretation', async ({ page }) => {
     await page.goto('/orientation');
     await expect(page.getByTestId('orientation-continue')).toHaveText('Enter Hedgr');
     await expect(page.getByTestId('orientation-continue')).toHaveAttribute('href', '/dashboard-synthetic-journey?reset=1');
     await expect(page.locator('#simulation-display-currency-helper')).toContainText('Choose how local estimates are shown.');
-
     await page.goto(studyEntry);
     await expect(page.getByTestId('orientation-disclosure')).toContainText('No real money moves');
     await expect(page.getByTestId('orientation-data-boundary')).toContainText('Do not enter real personal or financial information.');
+    // §398 F2 accepts this frozen entry promise for this unreleased ticket.
     await expect(page.locator('#simulation-display-currency-helper')).toContainText('Choose the currency used for Sarah’s fictional savings amounts.');
     await expect(page.locator('#simulation-display-currency-helper')).toContainText('not converted estimates');
     await expect(page.getByTestId('orientation-continue')).toHaveText('Continue to Sarah’s example');
     await page.getByTestId('orientation-continue').click();
-
-    const stimulus = page.getByTestId('stability-stimulus');
-    await expect(stimulus).toContainText('Fictional research example · no real money');
-    await expect(page.getByTestId('study-common-boundary')).toHaveText('This example uses only the facts on this page. Nothing you do here is saved.');
-    await expect(page.getByTestId('sarah-facts')).toContainText('Situation on 1 October 2026');
-    await expect(page.getByTestId('sarah-facts')).toContainText('Sarah already has K6,000 set aside');
-    await expect(page.getByTestId('sarah-facts')).toContainText('Those contributions have not happened yet');
-    await expect(page.getByTestId('course-fee')).toHaveText('The course costs USD 1,000. Payment is due in US dollars on 1 October 2027.');
-    await expect(page.getByTestId('sarah-lived-caution')).toHaveCount(0);
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Sarah’s course fee');
+    await expect(page.locator('[data-slot="1"]')).toHaveText('Fictional example');
+    await expect(page.getByTestId('study-common-boundary')).toHaveText(boundary);
+    await fixedFacts(page);
     await expect(page.getByTestId('study-hedgr-explanation')).toHaveCount(0);
-    await expect(stimulus).not.toContainText(/what can you conclude|in your own words|what would you still need to know|does this change|what changes in your interpretation/i);
-    await expect(stimulus.locator('input, textarea, form')).toHaveCount(0);
+    await expect(page.getByTestId('sarah-lived-caution')).toHaveCount(0);
+    await expect(page.getByTestId('stability-stimulus')).not.toContainText(/what can you conclude|in your own words|what would you still need to know|does this change|what changes in your interpretation/i);
+    await expectNoHolds(page);
   });
 
-  test('moves from Sarah’s fee change to the value panel and a simulation bridge', async ({ page }) => {
+  test('moves from the locked what-if to the Hedgr stage and preserved next action', async ({ page }) => {
     await enterStudy(page);
-    const commonBoundary = await page.getByTestId('study-common-boundary').innerText();
     await page.getByTestId('study-continue').click();
-    await expect(page.getByRole('heading', { name: 'Sarah’s changed course fee', level: 2 })).toBeFocused();
-    await expect(page.getByTestId('sarah-facts')).not.toContainText('Situation on 1 October 2026');
-    await expect(page.getByTestId('sarah-facts')).not.toContainText('Sarah already has K6,000 set aside');
-    await expect(page.getByTestId('sarah-facts')).not.toContainText('Those contributions have not happened yet');
-    await expect(page.getByTestId('course-fee')).toHaveText('The course provider has changed the fee to K29,500, payable in Zambian kwacha on 1 October 2027. It was USD 1,000, payable in US dollars.');
-    await expect(page.getByTestId('sarah-facts')).toContainText('Nothing else has changed.');
-    await expect(page.getByTestId('sarah-lived-caution')).toHaveCount(0);
-    await expect(page.getByTestId('stability-stimulus')).not.toContainText('Before this change');
-    await expect(page.getByTestId('stability-stimulus')).not.toContainText('currency mismatch no longer applies');
+    await expect(page.getByRole('heading', { name: 'What if the course provider took kwacha?' })).toBeFocused();
+    await expect(page.locator('[data-slot="10"]')).toHaveText('Example scenario');
+    await expect(page.locator('[data-slot="12"]')).toHaveText('Imagine the provider offered to take payment in kwacha. How much kwacha it would ask for depends on terms the provider sets. This example does not set them.');
+    await expect(page.locator('[data-slot="13"]')).toHaveText('Nothing else about Sarah changes in this scenario.');
+    await expect(page.getByTestId('course-fee')).toHaveCount(0);
     await expect(page.getByTestId('study-to-hedgr')).toHaveText('Continue');
-    await expect(page.getByTestId('study-hedgr-explanation')).toHaveCount(0);
     await expectNoHolds(page);
-    await expectRetiredStringsAbsent(page);
-
     await page.getByTestId('study-to-hedgr').click();
     const explanation = page.getByTestId('study-hedgr-explanation');
     await expect(explanation.getByRole('heading', { name: 'What Hedgr helps Sarah see' })).toBeFocused();
-    await expect(page.getByTestId('stability-stimulus')).not.toContainText('How Hedgr would put this');
-    await expect(page.getByTestId('stability-stimulus')).not.toContainText('Still Sarah’s course-savings example.');
-    await expect(page.getByTestId('study-authored-label')).toHaveText('Research example about a fictional person');
-    await expect(page.getByTestId('study-value-panel').getByRole('heading', { name: 'Before the fee changed' })).toBeVisible();
-    await expect(page.getByTestId('study-value-panel').getByRole('heading', { name: 'After the fee changed' })).toBeVisible();
-    await expect(page.getByTestId('study-value-panel').getByRole('tablist')).toHaveCount(0);
-    await expect(page.getByTestId('study-panel-close')).toHaveCount(0);
-    await expectRetiredStringsAbsent(page);
-
-    const beforeLabels = await page.getByTestId('study-panel-before').getByTestId('study-row-label').allTextContents();
-    const afterLabels = await page.getByTestId('study-panel-after').getByTestId('study-row-label').allTextContents();
-    expect(beforeLabels).toEqual(expectedLabels);
-    expect(afterLabels).toEqual(expectedLabels);
-
-    await expect(page.getByTestId('study-value-panel')).toContainText('K6,000');
-    await expect(page.getByTestId('study-value-panel')).toContainText('K24,000 over 12 months, not available yet');
-    await expect(page.getByTestId('study-value-panel')).toContainText('USD 1,000 on 1 October 2027');
-    await expect(page.getByTestId('study-value-panel')).toContainText('K29,500 on 1 October 2027');
-    await expect(page.getByTestId('study-panel-before')).toContainText('Sarah is saving in kwacha, but the fee is in US dollars. If the exchange rate moves, the amount of kwacha she needs can change.');
-    await expect(page.getByTestId('study-panel-after')).toContainText('Sarah’s savings and the fee are now both in kwacha, so the exchange rate no longer changes the amount she needs. What is still open is whether the planned K24,000 arrives on time.');
-
-    await expect(page.getByTestId('study-panel-before').getByTestId('study-row-marker')).toHaveCount(0);
-    await expect(page.getByTestId('study-panel-after').getByTestId('study-row-marker')).toHaveCount(2);
-    await expect(page.getByTestId('study-panel-after').locator('[data-row="due"] dt [data-testid="study-row-marker"]')).toHaveText('New');
-    await expect(page.getByTestId('study-panel-after').locator('[data-row="watch"] dt [data-testid="study-row-marker"]')).toHaveText('New');
-    await expect(page.getByTestId('study-value-panel').locator('dd [data-testid="study-row-marker"]')).toHaveCount(0);
-    await expect(page.getByTestId('study-panel-after').locator('[data-row="due"] dd')).toHaveText('K29,500 on 1 October 2027');
-    await expect(page.getByTestId('study-panel-after').locator('[data-row="watch"] dd')).toHaveText('Sarah’s savings and the fee are now both in kwacha, so the exchange rate no longer changes the amount she needs. What is still open is whether the planned K24,000 arrives on time.');
-    await expect(page.getByTestId('study-value-panel').getByText('New', { exact: true })).toHaveCount(2);
-
-    await expect(explanation.getByTestId('study-attribution')).toHaveText('This example was written in advance by Hedgr, using only the facts about Sarah on this page. It isn’t generated automatically, and it doesn’t look at anyone’s real money.');
-    await expect(explanation.getByTestId('study-limits')).toHaveText('This example cannot predict the future exchange rate, assume Sarah’s planned contributions will happen, or establish that the course will be fully funded. It is not financial advice.');
-    const panelBox = await page.getByTestId('study-value-panel').boundingBox();
-    const attributionBox = await page.getByTestId('study-attribution').boundingBox();
-    const limitsBox = await page.getByTestId('study-limits').boundingBox();
-    expect(panelBox).toBeTruthy();
-    expect(attributionBox).toBeTruthy();
-    expect(limitsBox).toBeTruthy();
-    expect(attributionBox!.y).toBeGreaterThan(panelBox!.y);
-    expect(limitsBox!.y).toBeGreaterThan(attributionBox!.y);
-    expect(await page.getByTestId('study-common-boundary').innerText()).toBe(commonBoundary);
-    await expect(page.getByTestId('course-fee')).toHaveCount(0);
-    await expectNoHolds(page);
-
-    for (const key of rowKeys) {
-      const row = page.getByTestId('study-panel-after').locator(`[data-row="${key}"] dd`);
-      const styles = await row.evaluate((el) => {
-        const computed = getComputedStyle(el);
-        return {
-          textAlign: computed.textAlign,
-          fontVariantNumeric: computed.fontVariantNumeric,
-        };
-      });
-      expect(styles.textAlign).not.toBe('right');
-      expect(styles.fontVariantNumeric).not.toMatch(/tabular-nums/);
-    }
-    const dueBorder = await page.getByTestId('study-panel-after').locator('[data-row="due"]').evaluate((el) => getComputedStyle(el).borderBottomWidth);
-    expect(dueBorder).toBe('0px');
-    const plannedBorder = await page.getByTestId('study-panel-after').locator('[data-row="planned"]').evaluate((el) => getComputedStyle(el).borderBottomWidth);
-    expect(plannedBorder).toBe('0px');
-    const watchBorder = await page.getByTestId('study-panel-after').locator('[data-row="watch"]').evaluate((el) => getComputedStyle(el).borderTopWidth);
-    expect(Number.parseFloat(watchBorder)).toBeGreaterThan(0);
-
-    await expect(page.getByTestId('study-to-reserve')).toHaveText('Next: Daniel’s reserve');
+    await expect(explanation.locator('[data-slot="17"]')).toHaveText('Sarah holds kwacha. Her fee is in US dollars. The number of kwacha it takes to pay a US dollar fee changes when the exchange rate changes.');
+    const home = page.getByRole('link', { name: 'See Sarah’s example on Home' });
+    await expect(home).toHaveAttribute('href', '/dashboard-synthetic-journey?example=sarah');
+    await expect(page.getByTestId('study-attribution')).toHaveText('Hedgr wrote this example in advance, from the facts about Sarah on this page. It isn’t generated automatically. It doesn’t look at anyone’s real money.');
+    await expect(page.getByTestId('study-limits')).toHaveText('This example does not predict exchange rates. It is not financial advice.');
+    const order = await page.locator('[data-slot]').evaluateAll(nodes => nodes.map(node => node.getAttribute('data-slot')));
+    expect(order).toEqual(['1','2','16','17','18','19','20','21','22']);
+    const attribution = await page.getByTestId('study-attribution').boundingBox();
+    const limit = await page.getByTestId('study-limits').boundingBox();
+    expect(limit!.y).toBeGreaterThan(attribution!.y);
+    await expect(page.getByTestId('study-common-boundary')).toHaveText(boundary);
     await expect(page.getByTestId('study-to-reserve')).toHaveAttribute('href', '/research/reserve-scenario?v=1');
     await expect(page.getByTestId('study-bridge')).toHaveCount(0);
     await expect(page.getByTestId('study-simulation-link')).toHaveCount(0);
     await expect(page.getByTestId('stability-stimulus')).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
     await expect(page.getByTestId('study-to-reserve')).toHaveCSS('border-radius', '9999px');
     await expect(page.getByText('Review the introduction')).toBeVisible();
-    await expect(page.getByTestId('stability-stimulus')).not.toContainText(/in your own words|what can you conclude|what would you still need to know|does this change|what changes in your interpretation/i);
     await expectNoHolds(page);
-    await expectRetiredStringsAbsent(page);
-
+    await home.click();
+    await expect(page).toHaveURL(/\/dashboard-synthetic-journey\?example=sarah$/);
+    await expect(page.getByTestId('dashboard-sarah-read')).toBeVisible();
+    await page.goBack();
+    await page.getByTestId('study-continue').click(); await page.getByTestId('study-to-hedgr').click();
     await page.getByTestId('study-to-reserve').click();
     await expect(page).toHaveURL(/\/research\/reserve-scenario\?v=1$/);
-    await expect(page.getByTestId('reserve-stimulus')).toBeVisible();
-    await expect(page.getByTestId('daniel-intro')).toContainText('Here’s a second fictional example: Daniel, a salaried professional, and part of his savings. No real money is involved.');
+    await expect(page.getByTestId('reserve-stimulus')).toContainText('Daniel keeps a reserve in US dollars.');
   });
 
-  test('keeps each selected denomination consistent across both beats', async ({ page }) => {
-    for (const [currency, prefix, name, setAside, monthly, planned, fee] of [
-      ['ZMW', 'K', 'kwacha', '6,000', '2,000', '24,000', '29,500'],
-      ['KES', 'KES ', 'Kenyan shillings', '31,800', '10,600', '127,200', '156,350'],
-      ['NGN', 'NGN ', 'Nigerian naira', '360,000', '120,000', '1,440,000', '1,770,000'],
-      ['GHS', 'GHS ', 'Ghanaian cedis', '3,000', '1,000', '12,000', '14,750'],
-      ['PHP', 'PHP ', 'Philippine pesos', '10,800', '3,600', '43,200', '53,100'],
-    ] as const) {
-      await page.goto(studyEntry);
-      await page.getByRole('combobox').selectOption(currency);
-      await page.getByTestId('orientation-continue').click();
-      await expect(page.getByTestId('sarah-facts')).toContainText(`${prefix}${setAside}`);
-      await expect(page.getByTestId('sarah-facts')).toContainText(`${prefix}${monthly}`);
-      await expect(page.getByTestId('course-fee')).toContainText('USD 1,000');
-      await page.getByTestId('study-continue').click();
-      await expect(page.getByTestId('course-fee')).toContainText(`${prefix}${fee}, payable in`);
-      if (currency === 'ZMW') {
-        await expect(page.getByTestId('course-fee')).toContainText('Zambian kwacha');
-      } else {
-        await expect(page.getByTestId('course-fee')).toContainText(name);
+  test('R11 zmw-only keeps each stored preference unchanged across all stages', async ({ page }) => {
+    for (const currency of ['ZMW','KES','NGN','GHS','PHP']) {
+      await page.goto(studyEntry); await page.getByRole('combobox').selectOption(currency);
+      await page.getByTestId('orientation-continue').click(); await fixedFacts(page);
+      for (const control of ['study-continue','study-to-hedgr']) {
+        await page.getByTestId(control).click(); await expectNoHolds(page);
+        expect(await page.evaluate(key => localStorage.getItem(key), preferenceKey)).toBe(currency);
       }
-      await expect(page.getByTestId('sarah-lived-caution')).toHaveCount(0);
-      await page.getByTestId('study-to-hedgr').click();
-      const panel = page.getByTestId('study-value-panel');
-      await expect(panel).toContainText(`${prefix}${setAside}`);
-      await expect(panel).toContainText(`${prefix}${planned} over 12 months, not available yet`);
-      await expect(panel).toContainText(`${prefix}${fee} on 1 October 2027`);
-      await expect(panel).toContainText(`Sarah is saving in ${name}, but the fee is in US dollars. If the exchange rate moves, the amount of ${name} she needs can change.`);
-      await expect(panel).toContainText(`Sarah’s savings and the fee are now both in ${name}, so the exchange rate no longer changes the amount she needs. What is still open is whether the planned ${prefix}${planned} arrives on time.`);
-      await expect(page.getByTestId('study-attribution')).toHaveText('This example was written in advance by Hedgr, using only the facts about Sarah on this page. It isn’t generated automatically, and it doesn’t look at anyone’s real money.');
-      await expectNoHolds(page);
+      await page.goto(studyEntry); await expect(page.getByRole('combobox')).toHaveValue(currency);
     }
   });
 
-  test('pins the selected denomination even if another tab changes the preference', async ({ page, context }) => {
-    await page.goto(studyEntry);
-    await page.getByRole('combobox').selectOption('KES');
+  test('keeps ZMW facts and leaves another-tab preference changes untouched', async ({ page, context }) => {
+    await page.goto(studyEntry); await page.getByRole('combobox').selectOption('KES');
     await page.getByTestId('orientation-continue').click();
-    const otherTab = await context.newPage();
-    await otherTab.goto('/orientation');
-    await otherTab.getByRole('combobox').selectOption('NGN');
-    await expect(page.getByTestId('sarah-facts')).toContainText('KES 31,800');
+    const otherTab = await context.newPage(); await otherTab.goto('/orientation');
+    await otherTab.getByRole('combobox').selectOption('NGN'); await fixedFacts(page);
     await page.getByTestId('study-continue').click();
-    await expect(page.getByTestId('course-fee')).toContainText('KES 156,350');
+    await expect(page.locator('[data-slot="11"]')).toHaveText('What if the course provider took kwacha?');
     await page.getByTestId('study-to-hedgr').click();
-    await expect(page.getByTestId('study-value-panel')).toContainText('Kenyan shillings');
-    await expect(page.getByTestId('study-value-panel')).toContainText('KES 127,200');
-    await otherTab.close();
+    await expect(page.locator('[data-slot="17"]')).toContainText('Sarah holds kwacha.');
+    expect(await page.evaluate(key => localStorage.getItem(key), preferenceKey)).toBe('NGN');
+    await expect(otherTab.getByRole('combobox')).toHaveValue('NGN'); await otherTab.close();
   });
 
   test('keeps every Continue operable at small width and enlarged text', async ({ page }) => {
-    await page.setViewportSize({ width: 320, height: 720 });
-    await enterStudy(page);
+    await page.setViewportSize({ width: 320, height: 720 }); await enterStudy(page);
     await page.evaluate(() => { document.documentElement.style.fontSize = '200%'; });
-    for (const button of ['study-continue', 'study-to-hedgr', 'study-to-reserve']) {
-      await page.getByTestId(button).focus();
-      await expect(page.getByTestId(button)).toBeFocused();
+    for (const control of ['study-continue','study-to-hedgr','study-to-reserve']) {
+      await page.getByTestId(control).focus(); await expect(page.getByTestId(control)).toBeFocused();
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
-      await page.getByTestId(button).click();
+      await page.getByTestId(control).press('Enter');
     }
     await expect(page.getByTestId('reserve-stimulus')).toBeVisible();
-    for (const width of [320, 390, 1280, 1440]) {
+    for (const width of [320,390,1280,1440]) {
       await page.setViewportSize({ width, height: 800 });
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
     }
   });
 
-  test('shows the top label and panel start together at 390px and stacks Before first', async ({ page }) => {
-    await page.setViewportSize({ width: 390, height: 844 });
-    await enterStudy(page);
-    await page.getByTestId('study-continue').click();
-    await page.getByTestId('study-to-hedgr').click();
-
-    const label = page.getByTestId('study-authored-label');
-    const panel = page.getByTestId('study-value-panel');
-    await expect(label).toBeVisible();
-    await expect(panel).toBeVisible();
-    const labelBox = await label.boundingBox();
-    const panelBox = await panel.boundingBox();
-    expect(labelBox).toBeTruthy();
-    expect(panelBox).toBeTruthy();
-    expect(labelBox!.y).toBeGreaterThanOrEqual(0);
-    expect(labelBox!.y + labelBox!.height).toBeLessThanOrEqual(844);
-    expect(panelBox!.y).toBeGreaterThanOrEqual(0);
-    expect(panelBox!.y).toBeLessThan(844);
-    const overflow = await label.evaluate((el) => {
-      const styles = getComputedStyle(el);
-      return styles.textOverflow === 'ellipsis' || el.scrollWidth > el.clientWidth + 1;
-    });
-    expect(overflow).toBe(false);
-    expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
-
-    const beforeY = await page.getByRole('heading', { name: 'Before the fee changed' }).evaluate((el) => el.getBoundingClientRect().y);
-    const afterY = await page.getByRole('heading', { name: 'After the fee changed' }).evaluate((el) => el.getBoundingClientRect().y);
-    expect(afterY).toBeGreaterThan(beforeY);
-
-    await page.setViewportSize({ width: 1280, height: 900 });
-    const before = await page.getByRole('heading', { name: 'Before the fee changed' }).boundingBox();
-    const after = await page.getByRole('heading', { name: 'After the fee changed' }).boundingBox();
-    expect(before).toBeTruthy();
-    expect(after).toBeTruthy();
-    expect(after!.x).toBeGreaterThan(before!.x);
-    expect(Math.abs(after!.y - before!.y)).toBeLessThan(24);
-
-    for (const key of rowKeys) {
-      const beforeRow = await page.getByTestId('study-panel-before').locator(`[data-row="${key}"]`).boundingBox();
-      const afterRow = await page.getByTestId('study-panel-after').locator(`[data-row="${key}"]`).boundingBox();
-      expect(beforeRow).toBeTruthy();
-      expect(afterRow).toBeTruthy();
-      expect(Math.abs(beforeRow!.y - afterRow!.y)).toBeLessThan(4);
-    }
-
-    // New sits beside its row heading, not with the value, at mobile and desktop widths.
-    for (const width of [390, 1280]) {
-      await page.setViewportSize({ width, height: 900 });
-      for (const key of ['due', 'watch'] as const) {
-        const row = page.getByTestId('study-panel-after').locator(`[data-row="${key}"]`);
-        const labelBox = await row.getByTestId('study-row-label').boundingBox();
-        const markerBox = await row.getByTestId('study-row-marker').boundingBox();
-        expect(labelBox).toBeTruthy();
-        expect(markerBox).toBeTruthy();
-        expect(markerBox!.x).toBeGreaterThan(labelBox!.x + labelBox!.width - 1);
-        expect(Math.abs((markerBox!.y + markerBox!.height / 2) - (labelBox!.y + labelBox!.height / 2))).toBeLessThan(4);
+  test('R16 layout-a11y keeps cards, focus and slot order at 1440, 390 and 320@200%', async ({ page }) => {
+    for (const width of [1440,390,320]) {
+      await page.setViewportSize({ width, height: 900 }); await enterStudy(page);
+      if (width === 320) await page.evaluate(() => { document.documentElement.style.fontSize = '200%'; });
+      for (const control of ['study-continue','study-to-hedgr']) {
+        await page.keyboard.press('Tab');
+        // Traverse the actual keyboard order, including the footer between stages.
+        for (let step = 0; step < 5 && !await page.getByTestId(control).evaluate(el => el === document.activeElement); step++) await page.keyboard.press('Tab');
+        await expect(page.getByTestId(control)).toBeFocused();
+        expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+        await page.keyboard.press('Enter');
       }
-    }
-    await page.setViewportSize({ width: 1280, height: 900 });
-
-    await page.setViewportSize({ width: 1280, height: 800 });
-    await page.evaluate(() => document.querySelector('h2')?.focus({ preventScroll: true }));
-    await page.getByRole('heading', { name: 'What Hedgr helps Sarah see' }).evaluate((el) => el.closest('main')?.scrollIntoView({ block: 'start' }));
-    const glance = [];
-    for (const state of ['study-panel-before', 'study-panel-after'] as const) {
-      const box = await page.getByTestId(state).locator('[data-row="watch"]').boundingBox();
-      expect(box).toBeTruthy();
-      const topOverflow = Math.max(0, -box!.y);
-      const bottomOverflow = Math.max(0, box!.y + box!.height - 800);
-      glance.push({ state, y: box!.y, height: box!.height, topOverflow, bottomOverflow });
-    }
-    await test.info().attach('desktop-glance-1280x800', {
-      body: Buffer.from(JSON.stringify(glance, null, 2)),
-      contentType: 'application/json',
-    });
-    // Kip #4: record overflow as a WATCH rather than failing the suite.
-    if (glance.some((row) => row.topOverflow > 0 || row.bottomOverflow > 0)) {
-      test.info().annotations.push({
-        type: 'WATCH',
-        description: `Desktop glance 1280×800: What to watch overflow ${JSON.stringify(glance)}`,
-      });
-    }
-
-    // Stacked-rows amendment: no row value shares a line with its heading or marker, and desktop rows stay aligned.
-    for (const [width, fontSize] of [[390, null], [640, null], [1024, null], [1280, null], [1440, null], [320, '200%']] as const) {
-      await page.setViewportSize({ width, height: 900 });
-      await page.evaluate((size) => { document.documentElement.style.fontSize = size ?? ''; }, fontSize);
-      for (const state of ['study-panel-before', 'study-panel-after'] as const) {
-        for (const key of rowKeys) {
-          const row = page.getByTestId(state).locator(`[data-row="${key}"]`);
-          const heading = await row.locator('dt').boundingBox();
-          const value = await row.locator('dd').boundingBox();
-          expect(heading).toBeTruthy();
-          expect(value).toBeTruthy();
-          expect(value!.y).toBeGreaterThanOrEqual(heading!.y + heading!.height - 1);
-        }
-      }
-      if (width >= 1024) {
-        for (const key of rowKeys) {
-          const beforeRow = await page.getByTestId('study-panel-before').locator(`[data-row="${key}"]`).boundingBox();
-          const afterRow = await page.getByTestId('study-panel-after').locator(`[data-row="${key}"]`).boundingBox();
-          expect(Math.abs(beforeRow!.y - afterRow!.y)).toBeLessThan(4);
-        }
-      }
+      await page.keyboard.press('Tab'); await expect(page.getByRole('link', { name: 'See Sarah’s example on Home' })).toBeFocused();
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+      await expect(page.getByTestId('study-authored-label')).toHaveCount(0);
     }
-    await page.evaluate(() => { document.documentElement.style.fontSize = ''; });
-
-    await page.setViewportSize({ width: 320, height: 720 });
-    await page.evaluate(() => { document.documentElement.style.fontSize = '200%'; });
-    const stackedBefore = await page.getByRole('heading', { name: 'Before the fee changed' }).boundingBox();
-    const stackedAfter = await page.getByRole('heading', { name: 'After the fee changed' }).boundingBox();
-    expect(stackedBefore).toBeTruthy();
-    expect(stackedAfter).toBeTruthy();
-    expect(stackedAfter!.y).toBeGreaterThan(stackedBefore!.y + stackedBefore!.height - 1);
-    expect(stackedAfter!.x).toBeLessThan(stackedBefore!.x + 48);
-    expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
   });
 
-  // §332: a returning participant leaves the bridge at a clean start, not their earlier simulation.
   test('the bridge opens the simulation at first use for a returning participant', async ({ page }) => {
-    await page.goto('/');
-    await page.evaluate(() => {
+    await page.goto('/'); await page.evaluate(() => {
       const now = Date.now();
       localStorage.setItem('hedgr:ledger', JSON.stringify({ version: 2, transactions: [
         { txn_ref: 'earlier-deposit', type: 'deposit', status: 'settled', amount_zmw: 100, amount_usd: 5, fx_rate: 20, created_at: now - 3 * 86400000, updated_at: now - 3 * 86400000 },
@@ -374,13 +162,7 @@ test.describe('Research Two-Beat Sarah example', () => {
       localStorage.setItem('hedgr:last-home-visit', String(now - 86400000));
     });
     await enterStudy(page);
-    await page.getByTestId('study-continue').click();
-    await page.getByTestId('study-to-hedgr').click();
-    await page.getByTestId('study-to-reserve').click();
-    await page.getByTestId('study-to-facts').click();
-    await page.getByTestId('study-to-interpreted').click();
-    await page.getByTestId('study-to-bridge').click();
-    await page.getByTestId('study-simulation-link').click();
+    for (const control of ['study-continue','study-to-hedgr','study-to-reserve','study-continue','study-to-hedgr','study-to-bridge','study-simulation-link']) await page.getByTestId(control).click();
     await expect(page).toHaveURL(/\/dashboard-synthetic-journey$/);
     await expect(page.getByTestId('usd-balance')).toHaveText('$0.00');
     await expect(page.getByTestId('dashboard-first-use-steps')).toBeVisible();
