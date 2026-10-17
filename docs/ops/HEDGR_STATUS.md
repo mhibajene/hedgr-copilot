@@ -4554,6 +4554,18 @@ This section does **not** authorize provider-specific implementation, legal reli
 
 ---
 
+### 6f.23 Parallelism exception: finite non-lane operational support `VERA-MONOCODE-OPERATIONAL-001`
+
+**Disposition (Founder, 17 Oct 2026 10:22 AWST):** One explicit exception to the §2 one-active-implementation-ticket default. `VERA-MONOCODE-OPERATIONAL-001` may run as finite non-lane operational support in parallel with Lane V research. It is not a lane, nested ticket, D-number, standing delegation or verification gate. V/E under §6f.22 and D-076 are unchanged; G stays deferred under §285.
+
+**Priority:** Research closeout, done record and release retain priority. Vera must not become a research prerequisite or delay research; on any resource or sequencing conflict Vera pauses.
+
+**Authority class:** Operational setup and documentation only: one persistent Vera Mono in MonoCode on existing subscriptions, implementing the existing Verifier remit in advisory mode; advisory Dex to Vera handoff; independent retrieval of canonical criteria; concise evidence contract; bounded acceptance tests. Formal verification continues only through the existing independently launched verifier workflow and required `hedgr/verifier`. Shared MonoCode sessions do not resolve E1.
+
+**Exclusions, stops, rollback:** As live §7a. No new recurring expenditure, paid infrastructure, additional model API, credential migration, external App/runner/KV, protection change, gate retirement or Class B. Expires on §7a closeout. **NO CROSS-LANE EXECUTION IMPACT.**
+
+---
+
 ## 6g. Green Lane Delegation Pilot envelope — retired historical record (ADR 0025 / `GOV-GREEN-001`)
 
 **Delegation status:** **REVOKED — PILOT CONCLUDED** on 2026-08-25 under Internal **D-085** / **§217** after the stated review / expiry date passed. No active Green Lane delegation remains.
@@ -4822,8 +4834,8 @@ Current active ticket status:
 - **Lane G:** none. `GTM-MARKET-DISCOVERY-001` / D-151 is deferred, not cancelled, under §285. No research, intake, analysis or automatic restart.
 - **Lane N:** none. `NARRATIVE-007` is completed under D-080 / §212; Customer One-Pager v2.0 is Accepted / Frozen and unpublished.
 - **Lane A / B / C / M / R:** none. Prior completed work supplies no successor or standing concurrency.
-- **Temporary repository support:** None active after §388 source closeout, final separate independently verified permanent-main RAP rebind (§364) and fetched-main RAP PASS. `OPS-GOV-CLEANUP-001` is completed finite non-lane support; its §7a brief is retained history. §387 item 1 is completed on the §390 source/rebind gates; item 2 is closed under §393; item 3 closes only on §395 source/rebind/fetched-main RAP gates; research pages, done record and release remain queued only. `PRODUCT-EXPERIENCE-LEAD-ADOPTION-001` is completed finite support after source closeout #662 and separate RAP rebind #663; the role remains registered `PROPOSE_ONLY`. `AGENT-ROLE-REGISTRY-RECONCILIATION-001` is completed finite support after source #666, rebind #667, amendment #671 / rebind #673, closeout #676 and separate permanent-main RAP rebind #677 at `2a1a8bf`. This finite activity creates no standing support authority and does not occupy or alter a product/research lane. Local `BRIDGE-MCP-001` remains separate under §§304–308 with no live Lane R occupancy.
-- **Sequencing posture:** §401 closes only `STUDY-ENTRY-CURRENCY-ALIGN-001` after source closeout merge, separate independently verified permanent-main RAP rebind (§364) and fetched-main RAP PASS. No active nested successor. The pre-release entry prerequisite is satisfied and the §398/§399 F2 limitation resolved; done record then release remain queued only, each requiring its own brief, re-pin and Founder activation. Three pre-existing 390px navigation failures and inherited accessibility/capture limitations remain disclosed. Both parents `CLASS-A-VAL-002` and `SE-REASON-001` remain open; E has no nested ticket, G deferred. Research unreleased and SME held; no standing delegation, parent closure, release or financial capability. NO CROSS-LANE IMPACT.
+- **Temporary repository support:** `VERA-MONOCODE-OPERATIONAL-001` is active as finite non-lane operational support under §6f.23 / §402, parallel to Lane V with research priority; live §7a controls. Prior: none active after §388 source closeout, final separate independently verified permanent-main RAP rebind (§364) and fetched-main RAP PASS. `OPS-GOV-CLEANUP-001` is completed finite non-lane support; its §7a brief is retained history. §387 item 1 is completed on the §390 source/rebind gates; item 2 is closed under §393; item 3 closes only on §395 source/rebind/fetched-main RAP gates; research pages, done record and release remain queued only. `PRODUCT-EXPERIENCE-LEAD-ADOPTION-001` is completed finite support after source closeout #662 and separate RAP rebind #663; the role remains registered `PROPOSE_ONLY`. `AGENT-ROLE-REGISTRY-RECONCILIATION-001` is completed finite support after source #666, rebind #667, amendment #671 / rebind #673, closeout #676 and separate permanent-main RAP rebind #677 at `2a1a8bf`. This finite activity creates no standing support authority and does not occupy or alter a product/research lane. Local `BRIDGE-MCP-001` remains separate under §§304–308 with no live Lane R occupancy.
+- **Sequencing posture:** §402 activates only `VERA-MONOCODE-OPERATIONAL-001` as finite non-lane operational support under §6f.23, parallel to and subordinate to research priority, effective after source merge, separate independently verified permanent-main RAP rebind (§364) and fetched-main RAP PASS. §401 closure of `STUDY-ENTRY-CURRENCY-ALIGN-001` stands; no active nested Lane V ticket. Done record then release remain queued only, each requiring its own brief, re-pin and Founder activation, and take priority over Vera. Both parents `CLASS-A-VAL-002` and `SE-REASON-001` remain open; E has no nested ticket, G deferred. Research unreleased and SME held; formal verification and `hedgr/verifier` unchanged; E1 open.
 
 **Scope-first completion / interpretation (2026-09-20):** Verified PR #602 delivery consumes the finite synthetic Home amendment (§294). References to that amendment in the retained sequencing statement identify its bounded scope and history only; they grant no further runtime or refinement permission. Only remaining approved weekend instrument/verification, human rehearsal/timing and release duties remain unfinished. This completion record takes effect on permanent-main merge with a separate verified RAP rebind; publication/distribution remains paused and both parents stay open.
 
@@ -4837,6 +4849,7 @@ Current active ticket status:
 
 ### Operative controls and non-activating direction
 
+- **Vera operational support (§6f.23 / §402):** Advisory only; no `Hedgr-Verifier:` attestation, gate, protection, credential or spend change; pauses on any research conflict. E1 remains open.
 - **Live protection gate (§392):** Immediately before every `gh pr merge --auto` (including recovery re-arming), GET live main protection; abort if absent or if required contexts, strict/admin enforcement, linear-history or conversation-resolution protections differ from the restored posture. No setting repair is implied; stop for separately authorised action.
 - **Home stability claims closeout (§395):** Runtime permission is consumed. Complete only this source closeout / separate independently verified permanent-main RAP rebind (§364) / fetched-main RAP gates. Retained §394 and the completed §7a brief supply no further runtime permission. No research-page work, done record, release or nested successor is activated or pre-staged.
 
@@ -4853,7 +4866,21 @@ Current active ticket status:
 
 ---
 
-## 7a. Execution tickets — V/E parents open; STUDY-ENTRY-CURRENCY-ALIGN-001 §401 closeout; no nested successor; Lane G deferred (Controlled Parallelism v22)
+## 7a. Execution tickets — V/E parents open; finite non-lane VERA-MONOCODE-OPERATIONAL-001 §402; no nested successor; Lane G deferred (Controlled Parallelism v22; §6f.23 exception)
+
+### Finite non-lane operational support — `VERA-MONOCODE-OPERATIONAL-001` (§402; MonoCode; parallel under §6f.23)
+
+**Authority:** Founder 17 Oct 2026 10:22 AWST. Effective only after source merge, separate independently verified permanent-main RAP rebind (§364) and fetched-main `bridge:rap:check` PASS. Pinned main `cb11fe39846d875f7a85d9cbb8d787b960eca7c6`. Package held outside the repo, referenced by ID and sha256 only: BRIEF `e5dab2a8e894b320e58f0f2c89160167889ce12e50433861ccf73aab663595dc`, ROLE `373f04a33c7b051f02ffe32734b33063af822f4efef5c871cdd71db247f09cf9`, HANDOFF `0d27c9c81d4ec4739adbb479aa51e5994f683ded8a92161450ca1382ea570b43`, INSPECTION `0a6a226c6e891e9226b74baddb246017707e883751b452c8adeecbf56e7a4534` (at `08c482e`, superseded by this re-pin), proposal `b1cd2293d067c8d81b9609beeabaa475b882e5a57bb109a5d09a6779008b27f9`.
+
+**Objective:** The existing Founder-created Mono `Vera` (MonoCode 0.13.0, existing subscriptions), configured as a persistent role implementing the existing Verifier remit in advisory mode; Dex uses the HANDOFF template without standing-memory change; Vera independently retrieves fetched main §7/§7a, criteria, RAP and live head; evidence per the HANDOFF contract; A1 to A10; records. Vera has no formal publishing permission. Procedural separation only; E1 OPEN; neither Mode M nor Mode X established.
+
+**Source allowlist:** `docs/ops/HEDGR_STATUS.md` (§6f.23; §7 support, sequencing and one operative line; §7a heading and this block; §402, §403, closeout); `AGENTS.md` (one pointer line); `apps/bridge-worker/tests/fork1-authority.test.mjs` (`currentSequencing` literal only); `docs/ops/bridge/repo-authority-projection.json` (deterministic regeneration; separate rebind PR). Fork 2 markers unchanged.
+
+**Operational allowlist:** back up MonoCode config; record the existing Founder-created Mono `Vera` (ID, role-file path, placeholder state), idle until effective; pin these in §403 before applying instructions; configure it via supported UI/API (never DB edits) with the Founder's original ROLE bytes verbatim and verify the read-back sha256 against the installed bytes; per-request HANDOFF use by Dex; A1 to A10 with fixtures and local session evidence; evidence uncommitted under `output/vera-monocode-operational-001/`. No edits to Dex SOUL.md or memory, other Monos or credentials; no habits, scans, schedules or external services.
+
+**Exclusions / stop conditions / rollback:** as package §5, §7 and §8; each stop pauses Vera only.
+
+**Verification:** each source PR has full validate, a fresh independent exact-head PASS with `run=` bound to the successful exact-head hosted E2E, required checks and an immediate live-protection read (§392) before governed squash auto-merge (§331). Vera does not verify her own ticket. **NO CROSS-LANE IMPACT.**
 
 **Current posture / closeout gates:** Runtime #923 delivered `STUDY-ENTRY-CURRENCY-ALIGN-001` (§400). §401 closes only this nested ticket after source closeout merge, separate independently verified permanent-main RAP rebind (§364) and fetched-main RAP PASS. Implementation permission is consumed; no active nested successor follows. The pre-release entry prerequisite is satisfied and §398/§399 F2 resolved. Done record then release remain queued only, each separately briefed, re-pinned and activated. Both parents open, G deferred, research unreleased and SME held.
 
@@ -19247,3 +19274,6 @@ Contexts used only private synthetic KES seed, UTC, blocked service workers, blo
 Done record then release remain queued only, each needing its own brief, re-pin and Founder activation. Both parents stay open, no active nested successor follows, research stays unreleased and SME held. No participant distribution, parent closure or financial capability follows.
 
 **Closeout gates / effect:** None-level source-record mechanics touch only STATUS §7/§7a/this §401, a short AGENTS pointer, the exact currentSequencing literal and deterministic branch RAP in a separate commit. Full local validate, fresh independent GPT-6.1 Sol high exact-head PASS with `run=` bound to successful exact-head hosted E2E, required hosted gates and immediately retained matching live main protection precede governed squash auto-merge. Separate sole-JSON permanent-main RAP rebind (§364) requires its own independent exact-head PASS and required gates; fetched-main RAP PASS closes only this nested ticket. No new doctrine/ADR/D-number/role/delegation/check/protection. Rollback remains one governed runtime revert of #923 with source reconciliation and §364 rebind where applicable. **NO CROSS-LANE IMPACT.**
+
+## 402. Founder activation (`VERA-MONOCODE-OPERATIONAL-001`, 2026-10-17)
+**Founder activation (2026-10-17; §402):** Only finite non-lane operational support `VERA-MONOCODE-OPERATIONAL-001` under the §6f.23 parallelism exception, with research priority. Live §7a fixes source and operational allowlists, exclusions, independent stop conditions and rollback. Formal verification and `hedgr/verifier` unchanged; shared MonoCode sessions do not resolve E1; no spend, credential, App, protection, gate or Class B change. Source merge, separate independently verified permanent-main RAP rebind (§364) and fetched-main RAP PASS precede any operational write. The Founder-created Vera Mono remains idle and unconfigured. **NO CROSS-LANE IMPACT.**
