@@ -69,18 +69,15 @@ export default async function OrientationPage({
           </p>
         </section>
 
-        {isSyntheticJourneyEnvironment() ? (
+        {isSyntheticJourneyEnvironment() && !studyEntry ? (
           <SimulationDisplayCurrencySelector
             placement="entry"
-            entryHelper={studyEntry
-              ? 'Choose the currency used for Sarah’s fictional savings amounts. These are made-up amounts, not converted estimates. This choice does not mean Hedgr offers an account in that currency.'
-              : undefined}
           />
         ) : null}
 
         {studyEntry ? (
           <p data-testid="stability-study-currency-note" className="text-sm leading-relaxed text-hedgr-700">
-            The next page presents Sarah&apos;s fictional course-savings situation. Do not enter real financial information.
+            The next page shows Sarah&apos;s fictional course fee. Do not enter real financial information.
           </p>
         ) : null}
 
