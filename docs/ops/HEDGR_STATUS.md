@@ -4972,11 +4972,11 @@ Current active ticket status:
 
 **Verification:** each source PR has full validate, a fresh independent exact-head PASS with `run=` bound to the successful exact-head hosted E2E, required checks and an immediate live-protection read (§392) before governed squash auto-merge (§331). Vera does not verify her own ticket. **NO CROSS-LANE IMPACT.**
 
-**Current posture / closeout gates:** Runtime #923 delivered `STUDY-ENTRY-CURRENCY-ALIGN-001` (§400). §401 closes only this nested ticket after source closeout merge, separate independently verified permanent-main RAP rebind (§364) and fetched-main RAP PASS. Implementation permission is consumed; no active nested successor follows. The pre-release entry prerequisite is satisfied and §398/§399 F2 resolved. Done record then release remain queued only, each separately briefed, re-pinned and activated. Both parents open, G deferred, research unreleased and SME held.
+**Current posture:** §401 closed the study-entry prerequisite and resolved §398/§399 F2. §406 now names only `HOME-SOFTHALO-RATESLIDER-BUNDLE-001` as sole nested Lane V ticket, effective on its source/rebind/fetched-main RAP gates. Its active §7a contract above controls; all completed contracts below remain history. Done record then release follow only after this bundle closes, each separately briefed, re-pinned and activated. §405 support is closed and §6f.23 expired. Both parents open, G deferred, research unreleased and SME held.
 
 **Incident continuation completed (§392):** The recorded merge-before-verification deviation remains factual; retrospective technical PASS does not cure it. Re-read and retain matching live main protection immediately before every auto-merge request, including recovery.
 
-**Read order:** Live §7 / §7a / §401 control closeout. The completed §400 contract below is retained history and grants no continuing runtime permission. Current doctrine/ADRs/AGENTS and §343/§346/§347/§363/§364/§331 remain controlling. No queued ticket activates.
+**Read order:** Live §7 / active §7a / §406 control the sole Home bundle. The completed §400 and other completed contracts below grant no continuing runtime permission. Current doctrine/ADRs/AGENTS and §343/§346/§347/§363/§364/§331 remain controlling. Done record and release stay queued only.
 
 ### Completed nested Lane V — `STUDY-ENTRY-CURRENCY-ALIGN-001` (§400; study entry; §401 closeout)
 
