@@ -44,7 +44,7 @@ for (const width of [390, 1440]) test(`T1 T2 T3 T7: real journey cohesion at ${w
     const text = await page.locator('main').evaluate(main => {
       const clone = main.cloneNode(true) as HTMLElement;
       clone.querySelector('label[for="dashboard-example-picker"]')?.parentElement?.remove();
-      clone.querySelectorAll('details:not([open]), .sr-only, [aria-hidden="true"]').forEach(n => n.remove());
+      clone.querySelectorAll('dialog:not([open]), details:not([open]), .sr-only, [aria-hidden="true"]').forEach(n => n.remove());
       return clone.textContent!;
     });
     for (const figure of [example === 'sarah' ? '$1000.00' : '$800.00', example === 'sarah' ? '≈ ZMW 27,000.00' : '≈ ZMW 21,600.00', RATE]) expect(text.split(figure).length - 1, figure).toBe(1);

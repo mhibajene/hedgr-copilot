@@ -615,7 +615,7 @@ describe("Currency context integration", () => {
     const { rerender } = render(<DashboardPage />);
     expect(screen.getByTestId("dashboard-current-overview").contains(screen.getByTestId("currency-insight"))).toBe(true);
     expect(screen.getByTestId("dashboard-balance").contains(screen.getByTestId("currency-insight"))).toBe(false);
-    expect(screen.getByTestId("currency-insight-headline").textContent).toContain("ZMW 4.05 higher");
+    expect(screen.getByRole("button", { name: /^Currency context$/ }).textContent).toContain("Try example exchange rates");
     expect(screen.queryByTestId("engine-simulation-attention-answer")).toBeNull();
     expect(screen.getByTestId("engine-posture-context").textContent).toContain("A simulated withdrawal on 1 Jan.");
     // Pending entries must withhold direction even when their numeric net cancels.
@@ -1057,6 +1057,8 @@ function s18OutsideTile(view: HTMLElement) {
   const clone = view.cloneNode(true) as HTMLElement;
   clone.querySelector('[data-testid="dashboard-earn-tile"]')?.parentElement?.remove();
   if (clone.querySelector('#dashboard-example-picker')) {
+    // HOME-SOFTHALO-RATESLIDER-BUNDLE-001: only the replaced modal/launcher region.
+    clone.querySelector('[data-testid="currency-insight"]')?.remove();
     const protectedHero = Array.from(clone.querySelectorAll('[data-testid="dashboard-arrival-announcement"], [data-testid="dashboard-synthetic-balance-explainer"], [class*="available"]')).map(n => n.textContent);
     const example = clone.querySelector('[data-testid="dashboard-daniel-read"], [data-testid="dashboard-sarah-read"]');
     const protectedExample = example ? Array.from(example.querySelectorAll('p, a')).map(n => n.textContent).filter(t => t?.startsWith('Example rate:') || t?.startsWith('This is what happened') || t?.startsWith('Fictional course fee.') || t === 'Go to your own simulation' || t === 'Due 1 Oct 2027.') : [];

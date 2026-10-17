@@ -1,75 +1,48 @@
 import { describe, expect, test } from 'vitest';
-import { compareCurrencyExample, formatComparisonCents, makeCurrencyExample, type CurrencyExample } from '../lib/narrative/simulation-currency-insight';
+import { computeRateFigure, formatRateCents, ZMW_EXAMPLE_RATES } from '../lib/narrative/simulation-currency-insight';
 import { SIMULATION_DISPLAY_CURRENCIES } from '../lib/state/simulation-display-currency';
-import { DANIEL_FIXTURE_RATE_ZMW_PER_USD } from '../lib/engine/daniel-read';
-
-const compare = (usdAmount = 300, rate = 20, example = makeCurrencyExample(rate), pending = false) =>
-  compareCurrencyExample({ usdAmount, latestDisplayRate: rate, example, pending });
-
-describe('invented currency comparison', () => {
-  test.each([
-    ['ZMW', DANIEL_FIXTURE_RATE_ZMW_PER_USD * 95 / 100, 769500n, 810000n, 40500n],
-    ['KES', 123.5, 3705000n, 3900000n, 195000n],
-    ['NGN', 1425, 42750000n, 45000000n, 2250000n],
-    ['GHS', 14.25, 427500n, 450000n, 22500n],
-    ['PHP', 53.2, 1596000n, 1680000n, 84000n],
-  ] as const)('reconciles the approved %s fixture with its existing latest rate', (code, earlierRate, earlierCents, latestCents, deltaCents) => {
-    const rate = SIMULATION_DISPLAY_CURRENCIES.find(currency => currency.code === code)!.unitsPerUsd;
-    expect(compare(300, rate)).toEqual({ kind: 'comparison', earlierRate, latestRate: rate, earlierCents, latestCents, deltaCents, direction: 'higher' });
+const figure = (usdAmount = 300, rate = 27, pending = false) => computeRateFigure({ usdAmount, rate, pending });
+// HOME-SOFTHALO-RATESLIDER-BUNDLE-001 P1: retired two-date/delta contracts become
+// three-stop/fixed-rate controls; decimal, finite, zero/pending and non-mutation stay.
+describe('HOME-SOFTHALO-RATESLIDER-BUNDLE-001 AC5', () => {
+  test.each([['ZMW',810000n],['KES',3900000n],['NGN',45000000n],['GHS',450000n],['PHP',1680000n]] as const)('fixed %s', (code,cents) => {
+    const rate = SIMULATION_DISPLAY_CURRENCIES.find(c => c.code === code)!.unitsPerUsd;
+    expect(figure(300,rate)).toEqual({kind:'figure', cents});
   });
-
-  test.each(SIMULATION_DISPLAY_CURRENCIES)('supports lower and equal $code examples without changing the latest rate', ({ unitsPerUsd }) => {
-    const example = makeCurrencyExample(unitsPerUsd);
-    example.earlier.rate = unitsPerUsd * 105 / 100;
-    expect(compare(300, unitsPerUsd, example)).toMatchObject({ direction: 'lower', latestRate: unitsPerUsd });
-    example.earlier.rate = unitsPerUsd;
-    expect(compare(300, unitsPerUsd, example)).toMatchObject({ direction: 'equal', deltaCents: 0n });
+  test.each(SIMULATION_DISPLAY_CURRENCIES)('three stops and fixed $code', ({unitsPerUsd}) => {
+    expect(ZMW_EXAMPLE_RATES).toEqual([24.5,27,29.5]);
+    expect(ZMW_EXAMPLE_RATES.map(rate => figure(800,rate))).toEqual([1960000n,2160000n,2360000n].map(cents => ({kind:'figure',cents})));
+    expect(figure(1,unitsPerUsd)).toEqual({kind:'figure',cents:BigInt(unitsPerUsd*100)});
   });
-
-  test('rounds half-cents in decimal and subtracts displayed amounts', () => {
-    const result = compare(1, 1.005, { earlier: { rate: 0.995, status: 'available' }, latest: { rate: 1.005, status: 'available' } });
-    expect(result).toMatchObject({ earlierCents: 100n, latestCents: 101n, deltaCents: 1n });
-    expect(compare(0.01, 0.2)).toMatchObject({ direction: 'rounded-zero', deltaCents: 0n });
-    expect(compare(1e-7, 20)).toMatchObject({ direction: 'rounded-zero' });
+  test('decimal half cents and tiny amounts', () => {
+    expect(figure(1,1.005)).toEqual({kind:'figure',cents:101n});
+    expect(figure(1,0.995)).toEqual({kind:'figure',cents:100n});
+    expect(figure(0.01,0.2)).toEqual({kind:'figure',cents:0n});
+    expect(figure(1e-7,27)).toEqual({kind:'figure',cents:0n});
   });
-
-  test('handles large finite inputs without numeric overflow or lost integer cents', () => {
-    const result = compare(1e21, 20);
-    expect(result).toMatchObject({ latestCents: 2000000000000000000000000n, deltaCents: 100000000000000000000000n });
-    expect(formatComparisonCents(-2250000n, true)).toBe('22,500');
-    expect(formatComparisonCents(1n, true)).toBe('0.01');
-    expect(formatComparisonCents(100n)).toBe('1.00');
+  test('large finite and formatted integer cents', () => {
+    expect(figure(1e21,20)).toEqual({kind:'figure',cents:2000000000000000000000000n});
+    expect(figure(Number.MAX_VALUE,Number.MAX_VALUE).kind).toBe('figure');
+    expect(formatRateCents(-2250000n)).toBe('22,500.00');
+    expect(formatRateCents(1n)).toBe('0.01');expect(formatRateCents(100n)).toBe('1.00');
   });
-
-  test('does not treat a zero position as unchanged rates or pending money as settled', () => {
-    expect(compare(0)).toEqual({ kind: 'empty' });
-    expect(compare(0, 20, makeCurrencyExample(20), true)).toEqual({ kind: 'unavailable', reason: 'Waiting for the simulated position to settle.' });
+  test('zero and pending are distinct', () => {
+    expect(figure(0)).toEqual({kind:'empty'});
+    expect(figure(0,27,true)).toEqual({kind:'unavailable',reason:'Waiting for the simulated position to settle.'});
   });
-
-  test.each([NaN, Infinity, -Infinity, -1])('rejects invalid amount %s', value => {
-    expect(compare(value)).toEqual({ kind: 'unavailable', reason: 'The simulated position is unavailable.' });
+  test.each([NaN,Infinity,-Infinity,-1])('invalid amount %s', value => {
+    expect(figure(value)).toEqual({kind:'unavailable',reason:'The simulated position is unavailable.'});
   });
-
-  test.each(['earlier', 'latest'] as const)('rejects missing, invalid and stale %s samples', side => {
-    for (const value of [null, 0, -1, NaN, Infinity]) {
-      const example = makeCurrencyExample(20);
-      example[side].rate = value;
-      expect(compare(300, 20, example)).toEqual({ kind: 'unavailable', reason: `The ${side} example rate is unavailable.` });
-    }
-    for (const status of ['missing', 'stale'] as const) {
-      const example = makeCurrencyExample(20);
-      example[side].status = status;
-      expect(compare(300, 20, example)).toEqual({ kind: 'unavailable', reason: `The ${side} example rate is ${side === 'latest' && status === 'stale' ? 'out of date' : 'unavailable'}.` });
-    }
+  test.each([0,-1,NaN,Infinity,-Infinity,null,undefined])('invalid fixed rate %s', rate => {
+    expect(computeRateFigure({usdAmount:300,rate:rate as number})).toEqual({kind:'unavailable',reason:'The latest example rate is unavailable.'});
   });
-
-  test('rejects disagreement with the independent display rate', () => {
-    expect(compare(300, 20, makeCurrencyExample(21))).toEqual({ kind: 'unavailable', reason: 'The latest example rate does not match the display rate.' });
+  test('three distinct positive stops use their own rate', () => {
+    expect(ZMW_EXAMPLE_RATES.map(rate => figure(0.01,rate))).toEqual([25n,27n,30n].map(cents=>({kind:'figure',cents})));
+    expect(SIMULATION_DISPLAY_CURRENCIES.map(c=>c.unitsPerUsd)).toEqual([27,130,1500,15,56]);
   });
-
-  test('does not mutate sample input', () => {
-    const example: CurrencyExample = Object.freeze({ earlier: Object.freeze({ rate: 19, status: 'available' }), latest: Object.freeze({ rate: 20, status: 'available' }) });
-    expect(compare(300, 20, example)).toMatchObject({ direction: 'higher' });
-    expect(example.earlier.rate).toBe(19);
+  test('input and stop table are not mutated', () => {
+    const input=Object.freeze({usdAmount:800,rate:27,pending:false});
+    expect(computeRateFigure(input)).toEqual({kind:'figure',cents:2160000n});
+    expect(input).toEqual({usdAmount:800,rate:27,pending:false});expect(Object.isFrozen(ZMW_EXAMPLE_RATES)).toBe(true);
   });
 });

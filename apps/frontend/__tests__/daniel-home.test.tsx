@@ -559,7 +559,7 @@ test("Daniel's example shows no mock guidance, planning targets, date line or di
   expect(screen.queryByRole("combobox", { name: /display currency/i })).toBeNull();
   expect(document.body.textContent).not.toMatch(/Start here|Recent activity|Planning targets|mock guidance/);
   expect(screen.getByTestId("dashboard-disclosures")).toBeDefined();
-  expect(screen.queryByRole("region", { name: "Currency context" })).toBeNull();
+  expect(screen.getByRole("region", { name: "Currency context" })).toBeDefined();
 });
 
 test("Daniel's example ignores your simulation", async () => {
@@ -822,15 +822,15 @@ function assertTicketA() {
   expect(screen.getByTestId('daniel-read-caption').textContent).toBe('≈ ZMW 21,600.00 Example figure, not a quote');
   const region = within(panel()).getByRole('region', { name: LOCKED_COPY.since });
   expect(within(region).getByRole('heading', { level: 2 }).textContent).toBe(LOCKED_COPY.since);
-  expect(Array.from(region.querySelectorAll('ol > li')).map(n => n.textContent)).toEqual(A_ROWS);
-  expect(Array.from(region.querySelectorAll('time')).map(n => n.getAttribute('datetime'))).toEqual(['2026-06-12T00:00:00.000Z', '2026-08-14T00:00:00.000Z', ...expectedTimeline.map(r => r.asOf)]);
+  expect(Array.from(screen.getByTestId('chart-event-list').querySelectorAll('li')).map(n => n.textContent)).toEqual(A_ROWS);
+  expect(Array.from(screen.getByTestId('chart-event-list').querySelectorAll('time')).map(n => n.getAttribute('datetime'))).toEqual(['2026-06-12T00:00:00.000Z', '2026-08-14T00:00:00.000Z', ...expectedTimeline.map(r => r.asOf)]);
   const graphic = screen.getByTestId('example-line-chart');
-  expect(region.contains(graphic)).toBe(true);
+  expect(graphic.parentElement?.querySelector('[data-component="HomeHero"]')?.nextElementSibling).toBe(graphic);
   expect(graphic.getAttribute('aria-hidden')).toBeNull();
   expect(graphic.querySelector('svg')?.getAttribute('aria-hidden')).toBe('true');
   expect(graphic.querySelector('svg')?.getAttribute('focusable')).toBe('false');
   expect(graphic.querySelectorAll('[data-series-value]')).toHaveLength(3);
-  expect(within(graphic).getByRole('button', { name: 'All changes · example dates' })).toBeDefined(); expect(graphic.querySelector('path')!.getAttribute('d')).not.toMatch(/NaN|Infinity/);
+  expect(within(graphic).getByRole('button', { name: 'All changes · example dates' })).toBeDefined(); expect(graphic.querySelector('path:not([data-chart-wash])')!.getAttribute('d')).not.toMatch(/NaN|Infinity/);
   expect(graphic.querySelectorAll('svg a, svg button, svg [tabindex], title, desc')).toHaveLength(0);
   expect(graphic.querySelectorAll('[data-testid="chart-event-dot"]')).toHaveLength(2);
   expect(screen.queryByTestId('dashboard-position-line')).toBeNull();
@@ -843,7 +843,7 @@ function assertTicketA() {
   for (const old of ['Daniel holds USD 800','Shown in ZMW','USD 800 shows','What changed since Daniel’s last visit','Now ·',expectedTimeline[1].explanation.rateAssumption]) expect(text).not.toContain(old);
   expect(within(panel()).queryByText('Not a live rate', {exact:true})).toBeNull();
   expect(region.querySelector('[data-testid="daniel-invariant"]')?.textContent).toBe(LEGIBILITY.invariant);
-  const order = ['dashboard-daniel-label','daniel-read-figure','daniel-read-caption','daniel-read-as-of','daniel-since-card','daniel-invariant','daniel-read-rate'];
+  const order = ['dashboard-daniel-label','daniel-read-figure','daniel-read-caption','example-line-chart','daniel-read-as-of','daniel-since-card','daniel-invariant','daniel-read-rate'];
   const nodes=order.map(id=>document.getElementById(id) ?? screen.getByTestId(id));
   nodes.slice(1).forEach((n,i)=>expect(nodes[i].compareDocumentPosition(n)&Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy());
   expect(screen.getByTestId('daniel-read-rate').nextElementSibling?.textContent).toBe(LIMITATION);

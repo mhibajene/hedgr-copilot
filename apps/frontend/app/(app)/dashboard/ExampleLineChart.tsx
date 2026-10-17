@@ -218,6 +218,7 @@ function ActivityLine({ series, events, lastVisit = null, settle = 1, example = 
     <div className={home.visualiser} data-testid="example-line-chart">
       <div ref={plot} className={home.visualiserPlot}>
         <svg className={home.visualiserSvg} aria-hidden="true" viewBox="0 0 300 100" preserveAspectRatio="none" focusable="false">
+          <path className={home.visualiserWash} data-chart-wash d={`${path} V 100 H ${points[0].x} Z`} />
           <path d={path} fill="none" stroke="currentColor" strokeWidth="2" vectorEffect="non-scaling-stroke" />
           {points.map((point, index) => <g key={index} transform={`translate(${point.x} ${point.y})`} data-series-at={point.at} data-series-value={point.value} data-series-y={point.y} data-series-currency={point.currency} />)}
           {lastVisit !== null ? <line x1={x(visitIndex)} x2={x(visitIndex)} y1="0" y2="100" className={home.visualiserVisitLine} vectorEffect="non-scaling-stroke" /> : null}
@@ -229,10 +230,11 @@ function ActivityLine({ series, events, lastVisit = null, settle = 1, example = 
           const name = deposit ? `First deposit, ${formatEventDate(firstDeposit!.at, example, false)}${merged ? ` · ${merged}` : ''}` : merged || countChanges(1, false);
           return <button key={first.id} type="button" data-testid="chart-event-dot" className={home.visualiserDot} style={{ left: `clamp(.75rem, ${group.x / size.plot * 100}%, calc(100% - .75rem))`, top: `${first.y}%` }} aria-label={name} aria-describedby={group.events.map(event => `${listId}-${event.id}`).join(' ')} aria-controls={listId} aria-expanded={opened} onFocus={() => reveal(first.id)} onClick={() => reveal(first.id)}>{group.events.length > 1 ? group.events.length : null}</button>;
         })}
+        <span aria-hidden="true" data-chart-latest className={home.visualiserLatest} style={{ left: `${points.at(-1)!.x / 3}%`, top: `${points.at(-1)!.y}%` }} />
         {labels.map(label => <span key={label.id} className={home.visualiserLabel} data-chart-label data-placement={label.placement} style={{ left: `${label.left / size.plot * 100}%`, maxWidth: `${label.width}px`, top: `${located.find(event => event.id === label.id)?.y ?? 50}%`, transform: label.placement === 'below' ? `translateY(${1 + label.lane * 3}rem)` : undefined }}>{label.text}</span>)}
         {lastVisit !== null ? <span className={home.visualiserVisit} data-testid="dashboard-position-line-visit" style={{ left: `${Math.min(80, x(visitIndex) / 3)}%` }}>Your last visit</span> : null}
       </div>
-      <h3 className={home.visualiserHeading}><button type="button" className={home.visualiserToggle} aria-expanded={opened} aria-controls={listId} onClick={() => setOpened(!opened)}>{title}</button></h3>
+      <div className={home.visualiserHeading}><button type="button" className={home.visualiserToggle} aria-expanded={opened} aria-controls={listId} onClick={() => setOpened(!opened)}>{title}</button></div>
       <ol id={listId} data-testid="chart-event-list" className={opened ? home.visualiserList : 'sr-only'}>
         {events.map(event => {
           const parts = rowParts(event);

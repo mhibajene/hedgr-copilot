@@ -43,10 +43,11 @@ for (const synthetic of [false, true]) {
           await expect(page.getByTestId('currency-insight')).toHaveCount(synthetic ? 1 : 0);
           if (synthetic) {
             await page.getByRole('button', { name: 'Currency context', exact: true }).click();
-            const delta = await page.getByTestId('currency-insight-difference').evaluate(el => parseFloat(getComputedStyle(el).fontSize));
+            const delta = await page.getByTestId('currency-rate-figure').evaluate(el => parseFloat(getComputedStyle(el).fontSize));
             const balance = await page.getByLabel('USD Balance amount', { exact: true }).evaluate(el => parseFloat(getComputedStyle(el).fontSize));
             expect(delta).toBeLessThan(balance);
-            await expect(page.getByTestId('currency-insight-direction')).toHaveAttribute('data-direction', 'higher');
+            await expect(page.getByTestId('currency-rate-figure')).toHaveText('≈ ZMW 81.00');
+            await expect(page.getByRole('slider', {name:'Try an example rate'})).toHaveValue('1');
             await page.getByRole('button', { name: 'Back to Home' }).click();
           }
         }

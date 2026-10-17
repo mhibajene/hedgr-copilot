@@ -268,3 +268,8 @@
   .visualiserLabel { display: none; }
   .visualiserPlot { margin-block: 2.5rem; }
 }
+
+/* HOME-SOFTHALO-RATESLIDER-BUNDLE-001: decorative, journey step mode only. */
+.visualiserWash { fill: var(--color-hedgr-primary); opacity: .06; stroke: none; }
+.visualiserLatest { position: absolute; width: 10px; height: 10px; border-radius: 50%; transform: translate(-50%, -50%); background: #B4846C; box-shadow: 0 0 10px color-mix(in srgb, #B4846C 35%, transparent); pointer-events: none; }
+@media (min-width: 64rem) { .visualiserPlot { height: 180px; } }

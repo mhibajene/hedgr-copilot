@@ -1,12 +1,7 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import wallet from '../research-wallet.module.css';
 import type { SimulationDisplayCurrency } from '../../../lib/state/simulation-display-currency';
-import {
-  compareCurrencyExample,
-  formatComparisonCents,
-  makeCurrencyExample,
-  type CurrencyExample,
-} from '../../../lib/narrative/simulation-currency-insight';
+import { computeRateFigure, formatRateCents, ZMW_EXAMPLE_RATES } from '../../../lib/narrative/simulation-currency-insight';
 import styles from './currency-insight.module.css';
 
 type CurrencyInsightProps = {
@@ -15,142 +10,70 @@ type CurrencyInsightProps = {
   latestDisplayRate: number;
   ready: boolean;
   pending?: boolean;
-  /** Explicit synthetic samples for isolated review/tests, never a runtime selector. */
-  example?: CurrencyExample;
-  redesigned?: boolean;
-  /** Synthetic Home only: keep the complete comparison inside its dialog. */
-  compact?: boolean;
+  /** The frozen Home rate line already supplies the non-ZMW limit. */
+  rateLineOnHome?: boolean;
 };
 
 export function CurrencyInsight({
-  usdAmount, currency, latestDisplayRate, ready, pending = false,
-  example = makeCurrencyExample(latestDisplayRate), redesigned = false, compact = false,
+  usdAmount, currency, latestDisplayRate, ready, pending = false, rateLineOnHome = false,
 }: CurrencyInsightProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
+  const [stop, setStop] = useState(1);
+  const [opened, setOpened] = useState(false);
   if (!ready) return null;
-  const result = compareCurrencyExample({ usdAmount, latestDisplayRate, example, pending });
-  const comparison = result.kind === 'comparison' ? result : null;
-  const headline = comparison
-    ? comparison.direction === 'equal' ? 'No exchange-rate difference'
-      : comparison.direction === 'rounded-zero' ? 'No difference at this display precision'
-        : `${currency} ${formatComparisonCents(comparison.deltaCents, true)} ${comparison.direction} from the rate change`
-    : result.kind === 'empty' ? 'No position to compare yet.' : 'Currency comparison unavailable.';
-
-  if (redesigned) {
-    const limit = 'This compares two example rates. It does not show earnings, buying power or a rate you would get.';
-    const summary = (<>{comparison && (comparison.direction === 'higher' || comparison.direction === 'lower') ? <>
-          <p className={styles.estimateLabel}>Change in {currency} estimate</p>
-          <p className={styles.summary} data-testid="currency-insight-headline">
-            <span className={styles.difference} data-testid="currency-insight-difference">{currency} {formatComparisonCents(comparison.deltaCents, true)}</span>{' '}
-            <span className={styles.cause}><span className={styles.direction} aria-hidden="true" data-testid="currency-insight-direction" data-direction={comparison.direction} />{comparison.direction} from the rate change</span>
-          </p>
-        </> : <p className={wallet.headline} data-testid="currency-insight-headline">
-          {comparison ? <span className={styles.direction} aria-hidden="true" data-testid="currency-insight-direction">—</span> : null}
-          <span>{headline}</span>
-        </p>}</>);
-    return (
-      <section className={`${wallet.context} ${styles.refined} ${compact ? styles.compact : ""}`} aria-label="Currency context" data-testid="currency-insight">
-        {!compact || !comparison ? <p className={styles.period}>30-day example · Simulated</p> : null}
-        {(!compact || !comparison) ? summary : null}
-        {comparison ? <>
-          {!compact ? <p>Your USD amount is held constant in this comparison.</p> : null}
-          <button ref={triggerRef} type="button" className={compact ? styles.launcher : wallet.link} aria-label={compact ? 'Currency context' : undefined} aria-describedby={compact ? 'currency-context-inline-insight' : undefined} aria-haspopup="dialog" onClick={() => dialogRef.current?.showModal()}>
-            {compact ? <span className={styles.launcherContent}>
-              <span>Currency context</span>
-              <span className={styles.launcherSubtitle}>30-day example · Simulated</span>
-              <span id="currency-context-inline-insight" className={styles.launcherInsight} data-testid="currency-insight-inline">
-                {comparison.direction === 'higher' || comparison.direction === 'lower' ? <>
-                  <span className={styles.launcherDelta}>{currency} {formatComparisonCents(comparison.deltaCents, true)} {comparison.direction}</span>{' '}
-                  <span className={styles.launcherCause}>from the rate change</span>
-                </> : headline}
-              </span>
-              <span className={styles.launcherAffordance}>Understand the comparison <span aria-hidden="true">→</span></span>
-            </span> : 'Understand the comparison'}
-          </button>
-          {!compact ? <p className={wallet.limit}>{limit}</p> : null}
-          <dialog ref={dialogRef} className={wallet.dialog} aria-labelledby="currency-context-title" onClose={() => triggerRef.current?.focus()} onKeyDown={event => {
-            if (event.key !== 'Tab') return;
-            const controls = event.currentTarget.querySelectorAll<HTMLElement>('button, summary');
-            const first = controls[0];
-            const last = controls[controls.length - 1];
-            if (event.shiftKey && document.activeElement === first) {
-              event.preventDefault();
-              last?.focus();
-            } else if (!event.shiftKey && document.activeElement === last) {
-              event.preventDefault();
-              first?.focus();
-            }
-          }}>
-            <div className={wallet.dialogStrip}>Simulation · No real money</div>
-            <div className={wallet.page}>
-              <div className={wallet.dialogHeader}>
-                <button type="button" onClick={() => dialogRef.current?.close()}>Back to Home</button>
-                <h2 id="currency-context-title">Currency context</h2>
-              </div>
-              <p>30-day example · Simulated</p>
-              <h3 className={wallet.dialogTitle}>Same USD amount.<br />{comparison.direction === 'equal' ? 'Same local estimate.' : comparison.direction === 'rounded-zero' ? 'Same estimate at this display precision.' : 'Different local estimate.'}</h3>
-              <p>This shows the same amount at two made-up exchange rates. No money is earned or exchanged, and it isn’t what you’d receive.</p>
-              <div className={wallet.comparison}>
-                <dl>
-                  <div className={wallet.comparisonRow}><dt>Day 0<span>1 USD = {comparison.earlierRate.toLocaleString('en-US', { maximumFractionDigits: 20 })} {currency}</span></dt><dd>{currency} {formatComparisonCents(comparison.earlierCents)}</dd></div>
-                  <div className={wallet.comparisonRow}><dt>Day 30<span>1 USD = {comparison.latestRate.toLocaleString('en-US', { maximumFractionDigits: 20 })} {currency}</span></dt><dd>{currency} {formatComparisonCents(comparison.latestCents)}</dd></div>
-                </dl>
-                {compact ? summary : <p className={wallet.headline}>{headline}</p>}
-              </div>
-              <section><h2>What this means</h2><p>{comparison.direction === 'equal' ? 'The exchange rates are equal in this comparison.' : 'Only the exchange rate changes in this comparison.'}</p></section>
-              <section><h2>What this does not show</h2><p>{limit}</p></section>
-              <p className={wallet.comparison}>Invented research example. Not your account history or live market data.</p>
-              <details><summary>How this is calculated</summary>
-                <p>A made-up example, shown today and 30 days later.</p>
-                <p>The current USD {usdAmount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 20 })} is applied to both rates. It does not mean you held this amount for 30 days.</p>
-                <p>Both estimates are rounded to two decimals; the difference uses those rounded amounts. Deposits, withdrawals, yield and asset-price changes are excluded, as are fees and spreads. No money has moved.</p>
-              </details>
-            </div>
-          </dialog>
-        </> : result.kind === 'unavailable' ? <p>{result.reason}</p> : null}
-      </section>
-    );
+  const selectedRate = currency === 'ZMW' ? ZMW_EXAMPLE_RATES[stop] : latestDisplayRate;
+  const result = computeRateFigure({ usdAmount, rate: selectedRate, pending });
+  const validDisplayRate = Number.isFinite(latestDisplayRate) && latestDisplayRate > 0;
+  if (result.kind !== 'figure' || !validDisplayRate) {
+    return <section className={styles.context} aria-label="Currency context" data-testid="currency-insight">
+      <p data-testid="currency-insight-headline">{result.kind === 'empty' ? 'No position to compare yet.' : 'Currency comparison unavailable.'}</p>
+      {result.kind === 'unavailable' ? <p>{result.reason}</p> : !validDisplayRate ? <p>The latest example rate is unavailable.</p> : null}
+    </section>;
   }
-
+  const localFigure = `${currency} ${formatRateCents(result.cents)}`;
   return (
     <section className={styles.context} aria-label="Currency context" data-testid="currency-insight">
-      <div className={styles.heading}>
-        <h2>Currency context</h2>
-        <p>30-day example · Simulated</p>
-      </div>
-      <p className={styles.headline} data-testid="currency-insight-headline">
-        {comparison ? (
-          <span className={styles.direction} aria-hidden="true" data-testid="currency-insight-direction">
-            {comparison.direction === 'higher' ? '↑' : comparison.direction === 'lower' ? '↓' : '—'}
-          </span>
-        ) : null}
-        <span>{headline}</span>
-      </p>
-      {comparison ? (
-        <>
-          <p>Your USD amount is held constant in this comparison.</p>
-          <p className={styles.limit}>This compares two example rates. It does not show earnings, buying power or a rate you would get.</p>
-          <details className={styles.calculation}>
-            <summary>How this is calculated</summary>
-            <div className={styles.explanation}>
-              <p>A made-up example, shown today and 30 days later.</p>
-              <p>The current USD {usdAmount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 20 })} is applied to both rates. It does not mean you held this amount for 30 days.</p>
-              <dl className={styles.values}>
-                <div>
-                  <dt>Earlier · day 0 <span>1 USD = {comparison.earlierRate.toLocaleString('en-US', { maximumFractionDigits: 20 })} {currency}</span></dt>
-                  <dd>{currency} {formatComparisonCents(comparison.earlierCents)}</dd>
-                </div>
-                <div>
-                  <dt>Latest · day 30 <span>1 USD = {comparison.latestRate.toLocaleString('en-US', { maximumFractionDigits: 20 })} {currency}</span></dt>
-                  <dd>{currency} {formatComparisonCents(comparison.latestCents)}</dd>
-                </div>
-              </dl>
-              <p>Both estimates are rounded to two decimals; the difference uses those rounded amounts. Deposits, withdrawals, yield and asset-price changes are excluded, as are fees and spreads. No money has moved.</p>
-            </div>
+      <button ref={triggerRef} type="button" className={styles.launcher} aria-label="Currency context" aria-describedby="currency-context-description" aria-haspopup="dialog" onClick={() => {
+        setStop(1);
+        setOpened(true);
+        dialogRef.current?.showModal();
+      }}>
+        <span>Currency context</span>
+        <span id="currency-context-description" className={styles.launcherSubtitle}>Try example exchange rates</span>
+      </button>
+      <dialog ref={dialogRef} className={`${wallet.dialog} ${styles.dialog}`} aria-labelledby="currency-context-title" onClose={() => { setOpened(false); triggerRef.current?.focus(); }} onKeyDown={event => {
+        if (event.key !== 'Tab') return;
+        const controls = event.currentTarget.querySelectorAll<HTMLElement>('button, input, summary');
+        const first = controls[0];
+        const last = controls[controls.length - 1];
+        if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
+        else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
+      }}>
+        <div className={wallet.dialogStrip}>Simulation · No real money</div>
+        <div className={wallet.page}>
+          <div className={wallet.dialogHeader}>
+            <button type="button" onClick={() => dialogRef.current?.close()}>Back to Home</button>
+            <h2 id="currency-context-title">Currency context</h2>
+          </div>
+          {opened ? <>
+          <div className={styles.card} data-testid="currency-rate-card">
+            <p className={styles.usd}>${usdAmount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+            <p className={styles.local} data-testid="currency-rate-figure" aria-live="polite" aria-atomic="true">≈ {localFigure}</p>
+          </div>
+          {currency === 'ZMW' ? <div className={styles.slider}>
+            <label htmlFor="currency-example-rate">Try an example rate</label>
+            <input id="currency-example-rate" type="range" min="0" max="2" step="1" value={stop} aria-valuetext={`Example rate ZMW ${selectedRate} per US dollar, about ${localFigure}`} onChange={event => setStop(Number(event.currentTarget.value))} />
+            <div className={styles.stops}>{ZMW_EXAMPLE_RATES.map(rate => <span key={rate}>ZMW {rate}</span>)}</div>
+            <p className={styles.limit}>Three example rates. Not a live rate and not a forecast.</p>
+          </div> : !rateLineOnHome ? <p className={styles.limit}>Example rate: {currency} {latestDisplayRate.toLocaleString('en-US', { maximumFractionDigits: 20 })} per US dollar. Not a live rate.</p> : null}
+          <section className={styles.meaning}><h2>What this means</h2><p>The dollar amount is the same at each rate. The rate sets the local figure.</p></section>
+          <details className={styles.calculation}><summary>How this is calculated</summary>
+            <p>Your US dollar amount is multiplied by each example rate and rounded to two decimal places. Deposits, withdrawals, fees and spreads are not included. This is not your account history or live market data. No money moves.</p>
           </details>
-        </>
-      ) : result.kind === 'unavailable' ? <p>{result.reason}</p> : null}
+          </> : null}
+        </div>
+      </dialog>
     </section>
   );
 }

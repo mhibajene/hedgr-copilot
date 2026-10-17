@@ -1,30 +1,10 @@
-/** D-133 invented scenario samples. Read-only; never market or transaction pricing. */
-export type ExampleRate = {
-  rate: number | null;
-  status: 'available' | 'missing' | 'stale';
-};
+/** HOME-SOFTHALO-RATESLIDER-BUNDLE-001: fixed illustrative stops, never pricing. */
+export const ZMW_EXAMPLE_RATES = Object.freeze([24.5, 27, 29.5] as const);
 
-export type CurrencyExample = { earlier: ExampleRate; latest: ExampleRate };
-
-export function makeCurrencyExample(latestRate: number): CurrencyExample {
-  return {
-    earlier: { rate: latestRate * 95 / 100, status: 'available' },
-    latest: { rate: latestRate, status: 'available' },
-  };
-}
-
-export type CurrencyComparison =
+export type RateFigure =
   | { kind: 'empty' }
   | { kind: 'unavailable'; reason: string }
-  | {
-      kind: 'comparison';
-      earlierCents: bigint;
-      latestCents: bigint;
-      deltaCents: bigint;
-      direction: 'higher' | 'lower' | 'equal' | 'rounded-zero';
-      earlierRate: number;
-      latestRate: number;
-    };
+  | { kind: 'figure'; cents: bigint };
 
 // Parse the decimal representation, including scientific notation, before multiplying.
 // This avoids binary floating-point half-cent errors without adding a pricing dependency.
@@ -47,46 +27,20 @@ function estimateCents(amount: number, rate: number): bigint {
   return (numerator * 2n + denominator) / (denominator * 2n);
 }
 
-export function formatComparisonCents(cents: bigint, compact = false): string {
+export function formatRateCents(cents: bigint, compact = false): string {
   const absolute = cents < 0n ? -cents : cents;
   const fraction = (absolute % 100n).toString().padStart(2, '0');
   return `${(absolute / 100n).toLocaleString('en-US')}${compact && fraction === '00' ? '' : `.${fraction}`}`;
 }
 
-export function compareCurrencyExample({
-  usdAmount,
-  latestDisplayRate,
-  example,
-  pending = false,
-}: {
+export function computeRateFigure({ usdAmount, rate, pending = false }: {
   usdAmount: number;
-  latestDisplayRate: number;
-  example: CurrencyExample;
+  rate: number;
   pending?: boolean;
-}): CurrencyComparison {
-  const unavailable = (reason: string): CurrencyComparison => ({ kind: 'unavailable', reason });
-  if (!Number.isFinite(usdAmount) || usdAmount < 0) {
-    return unavailable('The simulated position is unavailable.');
-  }
-  if (pending) return unavailable('Waiting for the simulated position to settle.');
+}): RateFigure {
+  if (!Number.isFinite(usdAmount) || usdAmount < 0) return { kind: 'unavailable', reason: 'The simulated position is unavailable.' };
+  if (pending) return { kind: 'unavailable', reason: 'Waiting for the simulated position to settle.' };
   if (usdAmount === 0) return { kind: 'empty' };
-  const { earlier, latest } = example;
-  if (latest.status === 'stale') return unavailable('The latest example rate is out of date.');
-  if (latest.status !== 'available' || latest.rate === null || !Number.isFinite(latest.rate) || latest.rate <= 0) {
-    return unavailable('The latest example rate is unavailable.');
-  }
-  if (!Number.isFinite(latestDisplayRate) || latestDisplayRate <= 0 || latest.rate !== latestDisplayRate) {
-    return unavailable('The latest example rate does not match the display rate.');
-  }
-  if (earlier.status !== 'available' || earlier.rate === null || !Number.isFinite(earlier.rate) || earlier.rate <= 0) {
-    return unavailable('The earlier example rate is unavailable.');
-  }
-  const earlierCents = estimateCents(usdAmount, earlier.rate);
-  const latestCents = estimateCents(usdAmount, latest.rate);
-  const deltaCents = latestCents - earlierCents;
-  return {
-    kind: 'comparison', earlierCents, latestCents, deltaCents,
-    direction: deltaCents > 0n ? 'higher' : deltaCents < 0n ? 'lower' : earlier.rate === latest.rate ? 'equal' : 'rounded-zero',
-    earlierRate: earlier.rate, latestRate: latest.rate,
-  };
+  if (!Number.isFinite(rate) || rate <= 0) return { kind: 'unavailable', reason: 'The latest example rate is unavailable.' };
+  return { kind: 'figure', cents: estimateCents(usdAmount, rate) };
 }

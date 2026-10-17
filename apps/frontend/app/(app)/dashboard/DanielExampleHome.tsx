@@ -38,12 +38,12 @@ export function DanielExampleHome({ currentRead, timeline, returnHref, onReturn,
       <div className={home.overviewGrid} data-testid="daniel-home-grid">
         <div className={home.positionPanel}>
           <HomeHero label={`Fictional example · ${example.name}`} labelId="dashboard-daniel-label" usdAmount={currentRead.declaredHolding.amount} figureTestId="daniel-read-figure" localTestId="daniel-read-caption" />
+          <ExampleLineChart mode="step" series={series} events={events} example />
           <p className="text-sm leading-relaxed text-hedgr-600" data-testid="daniel-read-as-of">Example date: <time dateTime={currentRead.asOf}>{formatExampleDate(currentRead.asOf)}</time></p>
         </div>
         <div className={home.insights}>
           <div className={home.observation} data-testid="daniel-read-disclosure">
             <ExampleCard title={DANIEL_EXAMPLE_COPY.since} testId="daniel-since-card" rate={<RateLine text={currentRead.explanation.rateAssumption} data-testid="daniel-read-rate" />} limits={limitation}>
-              <ExampleLineChart mode="step" series={series} events={events} example />
               <p className="mt-3 text-sm leading-relaxed text-hedgr-dark" data-testid="daniel-invariant">He made two deposits and none since. Each kwacha figure uses the example rate for its date.</p>
             </ExampleCard>
             <Link href={returnHref} className={home.sinceLink} onClick={(event) => {
