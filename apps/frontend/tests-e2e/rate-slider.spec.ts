@@ -80,10 +80,14 @@ for(const [width,scale] of [[1440,1],[390,1],[320,2]])test(`HOME-SOFTHALO-RATESL
   const before=await visibleText(page);once(before,MEANING,0);once(before,LIMIT,0);
   const usdFigure=kind==='sarah'?'$1000.00':kind==='daniel'?'$800.00':'$480.00';
   once(before,usdFigure);
+  const localRate={ZMW:27,KES:130,NGN:1500,GHS:15,PHP:56}[currency]!;
+  const homeLocal=`≈ ${currency} ${((kind==='sarah'?1000:kind==='daniel'?800:480)*localRate).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}`;
+  once(before,homeLocal);
   if(kind==='sarah'){await expect(page.getByRole('slider')).toHaveCount(0);continue;}
   await expect(launcher).toHaveAccessibleDescription('Try example exchange rates');expect((await launcher.boundingBox())!.height).toBeGreaterThanOrEqual(44);
   await launcher.click();const dialog=page.getByRole('dialog',{name:'Currency context',exact:true});await expect(dialog).toBeVisible();await expect(page.getByRole('heading',{level:2,name:'Currency context',exact:true})).toHaveCount(1);
-  await retained(page,kind,state);const openText=await visibleText(page);once(openText,MEANING);once(openText,LIMIT,currency==='ZMW'?1:0);once(openText,usdFigure,2);
+  await expect(page.getByRole('button',{name:'Currency context',exact:true})).toHaveCount(0);
+  await retained(page,kind,state);const openText=await visibleText(page);once(openText,MEANING);once(openText,LIMIT,currency==='ZMW'?1:0);once(openText,usdFigure,2);once(openText,homeLocal,2);
   const slider=dialog.getByRole('slider',{name:'Try an example rate'});await expect(slider).toHaveCount(currency==='ZMW'?1:0);
   const usd=kind==='daniel'?800:480;const rate={ZMW:27,KES:130,NGN:1500,GHS:15,PHP:56}[currency]!;
   const amount=(usd*rate).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});await expect(dialog.getByTestId('currency-rate-figure')).toHaveText(`≈ ${currency} ${amount}`);
