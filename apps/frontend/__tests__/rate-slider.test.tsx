@@ -29,6 +29,6 @@ test('HOME-SOFTHALO-RATESLIDER-BUNDLE-001 AC1',()=>{
  expect(wash.getAttribute('d')).toMatch(/^M .*H .*V .* V 100 H .* Z$/);expect(chart.querySelectorAll('[data-chart-wash]')).toHaveLength(1);
  const latest=chart.querySelector('[data-chart-latest]')!;expect(latest.getAttribute('aria-hidden')).toBe('true');expect(latest.textContent).toBe('');expect(chart.querySelectorAll('[data-chart-latest]')).toHaveLength(1);
  const css=source('app/(app)/dashboard/synthetic-home.module.css');expect(css).toContain('height: 10rem');expect(css).toContain('@media (min-width: 64rem) { .visualiserPlot { height: 180px; } }');expect(css).toContain('background: #B4846C');
- expect(within(chart).getByRole('heading',{level:2,name:'All changes · example dates'})).toBeDefined();
+ expect(within(chart).getByRole('button',{name:'All changes · example dates'}).getAttribute('aria-controls')).toBe(screen.getByTestId('chart-event-list').id);
  expect(chart.querySelector('[data-testid="dashboard-position-line-visit"]')).toBeNull();
 });
