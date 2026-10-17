@@ -13,6 +13,7 @@
 // activity-visualiser/home-cohesion: closed dialogs excluded from visible counts.
 // shared-baseline/wallet-redesign: retired delta -> positive card/slider/explanation;
 // all ordinary route, storage, keyboard and disclosure controls retained.
+// sarah-home: as-of/due time scopes follow the named elements after chart relocation.
 // first-deposit: additive wash/latest/decorative/order contracts. Example tick
 // assertions were already absent; own-simulation and legacy ticks stay exact.
 // AC6 below counts visible/accessible content by state and heading/launcher role;
@@ -76,10 +77,12 @@ for(const [width,scale] of [[1440,1],[390,1],[320,2]])test(`HOME-SOFTHALO-RATESL
   await retained(page,kind,state);const launcher=page.getByRole('button',{name:'Currency context',exact:true});await expect(launcher).toHaveCount(kind==='sarah'?0:1);
   await expect(page.getByRole('heading',{name:'Currency context',exact:true})).toHaveCount(0);
   const before=await visibleText(page);once(before,MEANING,0);once(before,LIMIT,0);
+  const usdFigure=kind==='sarah'?'$1000.00':kind==='daniel'?'$800.00':'$480.00';
+  once(before,usdFigure);
   if(kind==='sarah'){await expect(page.getByRole('slider')).toHaveCount(0);continue;}
   await expect(launcher).toHaveAccessibleDescription('Try example exchange rates');expect((await launcher.boundingBox())!.height).toBeGreaterThanOrEqual(44);
   await launcher.click();const dialog=page.getByRole('dialog',{name:'Currency context',exact:true});await expect(dialog).toBeVisible();await expect(page.getByRole('heading',{level:2,name:'Currency context',exact:true})).toHaveCount(1);
-  await retained(page,kind,state);const openText=await visibleText(page);once(openText,MEANING);once(openText,LIMIT,currency==='ZMW'?1:0);
+  await retained(page,kind,state);const openText=await visibleText(page);once(openText,MEANING);once(openText,LIMIT,currency==='ZMW'?1:0);once(openText,usdFigure,2);
   const slider=dialog.getByRole('slider',{name:'Try an example rate'});await expect(slider).toHaveCount(currency==='ZMW'?1:0);
   const usd=kind==='daniel'?800:480;const rate={ZMW:27,KES:130,NGN:1500,GHS:15,PHP:56}[currency]!;
   const amount=(usd*rate).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});await expect(dialog.getByTestId('currency-rate-figure')).toHaveText(`≈ ${currency} ${amount}`);

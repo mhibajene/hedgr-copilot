@@ -34,7 +34,7 @@ describe('HOME-SOFTHALO-RATESLIDER-BUNDLE-001 AC5', () => {
     expect(figure(value)).toEqual({kind:'unavailable',reason:'The simulated position is unavailable.'});
   });
   test.each([0,-1,NaN,Infinity,-Infinity,null,undefined])('invalid fixed rate %s', rate => {
-    expect(figure(300,rate as number)).toEqual({kind:'unavailable',reason:'The latest example rate is unavailable.'});
+    expect(computeRateFigure({usdAmount:300,rate:rate as number})).toEqual({kind:'unavailable',reason:'The latest example rate is unavailable.'});
   });
   test('three distinct positive stops use their own rate', () => {
     expect(ZMW_EXAMPLE_RATES.map(rate => figure(0.01,rate))).toEqual([25n,27n,30n].map(cents=>({kind:'figure',cents})));

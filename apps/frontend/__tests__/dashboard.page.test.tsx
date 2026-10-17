@@ -615,7 +615,7 @@ describe("Currency context integration", () => {
     const { rerender } = render(<DashboardPage />);
     expect(screen.getByTestId("dashboard-current-overview").contains(screen.getByTestId("currency-insight"))).toBe(true);
     expect(screen.getByTestId("dashboard-balance").contains(screen.getByTestId("currency-insight"))).toBe(false);
-    expect(screen.getByRole("button", { name: "Currency context", exact: true }).textContent).toContain("Try example exchange rates");
+    expect(screen.getByRole("button", { name: /^Currency context$/ }).textContent).toContain("Try example exchange rates");
     expect(screen.queryByTestId("engine-simulation-attention-answer")).toBeNull();
     expect(screen.getByTestId("engine-posture-context").textContent).toContain("A simulated withdrawal on 1 Jan.");
     // Pending entries must withhold direction even when their numeric net cancels.
