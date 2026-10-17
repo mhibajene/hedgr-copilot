@@ -150,7 +150,26 @@ test('R9 chrome-eyebrow-and-boundary', () => {
     expect(view.getByTestId('study-common-boundary').textContent).toBe(boundary); view.unmount();
   }
   expect(source('app/research/ResearchChrome.tsx')).not.toMatch(/name\??:/);
-  expect(createHash('sha256').update(source('app/orientation/page.tsx')).digest('hex')).toBe('240743dd1d450d070a5fda79192823d1e3c95dde5effcc121026869d17f0ed67');
+  const orientation = source('app/orientation/page.tsx');
+  const currentSelector = `{isSyntheticJourneyEnvironment() && !studyEntry ? (
+          <SimulationDisplayCurrencySelector
+            placement="entry"
+          />
+        ) : null}`;
+  const retiredSelector = `{isSyntheticJourneyEnvironment() ? (
+          <SimulationDisplayCurrencySelector
+            placement="entry"
+            entryHelper={studyEntry
+              ? 'Choose the currency used for Sarah’s fictional savings amounts. These are made-up amounts, not converted estimates. This choice does not mean Hedgr offers an account in that currency.'
+              : undefined}
+          />
+        ) : null}`;
+  const currentNote = 'The next page shows Sarah&apos;s fictional course fee. Do not enter real financial information.';
+  const retiredNote = 'The next page presents Sarah&apos;s fictional course-savings situation. Do not enter real financial information.';
+  for (const snippet of [currentSelector, currentNote]) expect(orientation.split(snippet)).toHaveLength(2);
+  for (const snippet of [retiredSelector, retiredNote]) expect(orientation).not.toContain(snippet);
+  const reconstructed = orientation.replace(currentSelector, retiredSelector).replace(currentNote, retiredNote);
+  expect(createHash('sha256').update(reconstructed).digest('hex')).toBe('240743dd1d450d070a5fda79192823d1e3c95dde5effcc121026869d17f0ed67');
   expect(createHash('sha256').update(source('app/research/ResearchBridge.tsx')).digest('hex')).toBe('ac5bb098c28657b0ccf6c43eefe3127666036800a2fe86db43f41972b0fb5bff');
   const bridge = render(<ResearchBridge />);
   expect(bridge.getByTestId('study-bridge').textContent).toBe('You’ve reached the end of this research example.Next, try Hedgr with pretend money. Add a simulated deposit, then see what changes and what remains. No real money moves, no account is opened, and nothing here is financial advice.Continue to the Hedgr simulation');

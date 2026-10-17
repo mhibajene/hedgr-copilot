@@ -37,9 +37,9 @@ test.describe('RESEARCH-PAGES-REGISTRY-ALIGN-001', () => {
     await page.goto(studyEntry);
     await expect(page.getByTestId('orientation-disclosure')).toContainText('No real money moves');
     await expect(page.getByTestId('orientation-data-boundary')).toContainText('Do not enter real personal or financial information.');
-    // §398 F2 accepts this frozen entry promise for this unreleased ticket.
-    await expect(page.locator('#simulation-display-currency-helper')).toContainText('Choose the currency used for Sarah’s fictional savings amounts.');
-    await expect(page.locator('#simulation-display-currency-helper')).toContainText('not converted estimates');
+    await expect(page.locator('#simulation-display-currency-helper')).toHaveCount(0);
+    await expect(page.getByRole('combobox')).toHaveCount(0);
+    await expect(page.getByTestId('orientation-surface')).not.toContainText(/Choose the currency|fictional savings amounts|not converted estimates/);
     await expect(page.getByTestId('orientation-continue')).toHaveText('Continue to Sarah’s example');
     await page.getByTestId('orientation-continue').click();
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Sarah’s course fee');
@@ -95,18 +95,23 @@ test.describe('RESEARCH-PAGES-REGISTRY-ALIGN-001', () => {
 
   test('R11 zmw-only keeps each stored preference unchanged across all stages', async ({ page }) => {
     for (const currency of ['ZMW','KES','NGN','GHS','PHP']) {
-      await page.goto(studyEntry); await page.getByRole('combobox').selectOption(currency);
+      await page.goto('/orientation');
+      await page.evaluate(({ key, currency }) => localStorage.setItem(key, currency), { key: preferenceKey, currency });
+      await page.goto(studyEntry); await expect(page.getByRole('combobox')).toHaveCount(0);
       await page.getByTestId('orientation-continue').click(); await fixedFacts(page);
       for (const control of ['study-continue','study-to-hedgr']) {
         await page.getByTestId(control).click(); await expectNoHolds(page);
         expect(await page.evaluate(key => localStorage.getItem(key), preferenceKey)).toBe(currency);
       }
-      await page.goto(studyEntry); await expect(page.getByRole('combobox')).toHaveValue(currency);
+      await page.goto(studyEntry); await expect(page.getByRole('combobox')).toHaveCount(0);
+      expect(await page.evaluate(key => localStorage.getItem(key), preferenceKey)).toBe(currency);
     }
   });
 
   test('keeps ZMW facts and leaves another-tab preference changes untouched', async ({ page, context }) => {
-    await page.goto(studyEntry); await page.getByRole('combobox').selectOption('KES');
+    await page.goto('/orientation');
+    await page.evaluate(key => localStorage.setItem(key, 'KES'), preferenceKey);
+    await page.goto(studyEntry); await expect(page.getByRole('combobox')).toHaveCount(0);
     await page.getByTestId('orientation-continue').click();
     const otherTab = await context.newPage(); await otherTab.goto('/orientation');
     await otherTab.getByRole('combobox').selectOption('NGN'); await fixedFacts(page);
@@ -167,5 +172,97 @@ test.describe('RESEARCH-PAGES-REGISTRY-ALIGN-001', () => {
     await expect(page.getByTestId('usd-balance')).toHaveText('$0.00');
     await expect(page.getByTestId('dashboard-first-use-steps')).toBeVisible();
     await expect(page.getByText('Since you were last here')).toHaveCount(0);
+  });
+});
+
+test.describe('STUDY-ENTRY-CURRENCY-ALIGN-001', () => {
+  test('E1 E2 E7 E8 study entry omits currency choice and renders exact S3', async ({ page }) => {
+    await page.goto(studyEntry);
+    const surface = page.getByTestId('orientation-surface');
+    await expect(page.getByTestId('simulation-display-currency-entry')).toHaveCount(0);
+    await expect(page.getByRole('combobox')).toHaveCount(0);
+    await expect(surface).not.toContainText(/Choose the currency|fictional savings amounts|not converted estimates|ZMW|kwacha|USD|US dollar|KES|NGN|GHS|PHP|currency/i);
+    await expect(page.getByTestId('stability-study-currency-note')).toHaveText("The next page shows Sarah's fictional course fee. Do not enter real financial information.");
+    await expect(surface).not.toContainText(/presents|course-savings situation/);
+    expect(await page.getByTestId('orientation-disclosure').evaluate(el => [el.nextElementSibling?.getAttribute('data-testid'), el.nextElementSibling?.nextElementSibling?.tagName])).toEqual(['stability-study-currency-note', 'FOOTER']);
+  });
+
+  test('E4 E5 stored-value-preserved through both pages and home-readers-unaffected', async ({ page, context }) => {
+    await page.goto('/login');
+    await page.getByPlaceholder('you@example.com').fill('study-entry@hedgr.test');
+    await page.getByRole('button', { name: 'Continue', exact: true }).click();
+    await expect(page).toHaveURL(/\/dashboard$/);
+    // Unmount Home before seeding; instrumentation begins after this setup write.
+    await page.goto('/orientation');
+    await page.evaluate(key => {
+      localStorage.setItem(key, 'KES');
+      localStorage.setItem('hedgr:ledger', JSON.stringify({ version: 2, transactions: [
+        { txn_ref: 'study-entry-deposit', type: 'deposit', status: 'settled', amount_zmw: 135, amount_usd: 5, fx_rate: 27, created_at: 1000, updated_at: 1000 },
+      ] }));
+    }, preferenceKey);
+    const writes: string[] = [];
+    await context.exposeBinding('recordStudyPreferenceWrite', (_source, operation: string) => { writes.push(operation); });
+    await context.addInitScript(key => {
+      const original = Storage.prototype.setItem;
+      Storage.prototype.setItem = function(name, value) {
+        if (name === key) void (window as unknown as { recordStudyPreferenceWrite: (operation: string) => Promise<void> }).recordStudyPreferenceWrite('setItem');
+        return original.call(this, name, value);
+      };
+      const remove = Storage.prototype.removeItem;
+      Storage.prototype.removeItem = function(name) {
+        if (name === key) void (window as unknown as { recordStudyPreferenceWrite: (operation: string) => Promise<void> }).recordStudyPreferenceWrite('removeItem');
+        return remove.call(this, name);
+      };
+      const clear = Storage.prototype.clear;
+      Storage.prototype.clear = function() {
+        void (window as unknown as { recordStudyPreferenceWrite: (operation: string) => Promise<void> }).recordStudyPreferenceWrite('clear');
+        return clear.call(this);
+      };
+    }, preferenceKey);
+    await enterStudy(page);
+    for (const control of ['study-continue','study-to-hedgr','study-to-reserve','study-continue','study-to-hedgr']) {
+      expect(await page.evaluate(key => localStorage.getItem(key), preferenceKey)).toBe('KES');
+      await page.getByTestId(control).click();
+    }
+    expect(await page.evaluate(key => localStorage.getItem(key), preferenceKey)).toBe('KES');
+    expect(writes).toEqual([]);
+    await page.goto('/dashboard-synthetic-journey');
+    await expect(page.getByTestId('local-balance')).toHaveText('≈ KES 650.00 Example figure, not a quote');
+    await page.goto('/deposit?journey=class-a-val-002');
+    await expect(page.getByTestId('deposit-fx-block')).toHaveText('Simulated example rate: 1 USD = 130.00 KES');
+    await page.getByTestId('deposit-amount').fill('130');
+    await expect(page.getByTestId('deposit-conversion-preview')).toContainText('shows 130 KES as +$1.00');
+    await page.goto('/withdraw?journey=class-a-val-002');
+    await expect(page.getByTestId('withdraw-fx-block')).toHaveText('Simulated example rate: 1 USD = 130.00 KES');
+    await expect(page.getByTestId('local-balance')).toHaveText('≈ KES 650.00 Example figure, not a quote');
+    expect(await page.evaluate(key => localStorage.getItem(key), preferenceKey)).toBe('KES');
+    expect(writes).toEqual([]);
+  });
+
+  test('E10 layout-a11y at 1440, 390 and 320@200% with real keyboard reachability', async ({ page }) => {
+    const { readFileSync } = await import('node:fs');
+    const { resolve } = await import('node:path');
+    // Local optional axe source lives with private evidence; no product dependency.
+    const axePath = process.env.STUDY_ENTRY_AXE_PATH;
+    for (const width of [1440,390,320]) {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto(studyEntry);
+      if (width === 320) await page.evaluate(() => { document.documentElement.style.fontSize = '200%'; });
+      expect(await page.evaluate(() => ({ width: innerWidth, text: document.documentElement.style.fontSize }))).toEqual({ width, text: width === 320 ? '200%' : '' });
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+      const next = page.getByTestId('orientation-continue');
+      for (let step = 0; step < 8 && !await next.evaluate(el => el === document.activeElement); step++) await page.keyboard.press('Tab');
+      await expect(next).toBeFocused();
+      if (axePath) {
+        await page.addScriptTag({ content: readFileSync(resolve(axePath), 'utf8') });
+        const violations = await page.evaluate(async () => {
+          const axe = (window as unknown as { axe: { run: () => Promise<{ violations: { id: string }[] }> } }).axe;
+          return (await axe.run()).violations;
+        });
+        expect(violations).toEqual([]);
+      }
+      await page.keyboard.press('Enter');
+      await expect(page).toHaveURL(/\/research\/stability-scenarios$/);
+    }
   });
 });
