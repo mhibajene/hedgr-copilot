@@ -68,7 +68,7 @@ test('V21 daniel-chart-usd-balance and V27 sarah-zmw-balance-line', () => {
     expect(points.map(point => [point.getAttribute('data-series-at'), Number(point.getAttribute('data-series-value')), point.getAttribute('data-series-currency')])).toEqual(id === 'daniel' ? [
       ['2026-06-12T00:00:00.000Z', 500, 'USD'], ['2026-08-14T00:00:00.000Z', 800, 'USD'], [DANIEL_HOME_READ.asOf, 800, 'USD'],
     ] : [['2026-04-14T00:00:00.000Z', 4000, 'ZMW'], ['2026-07-21T00:00:00.000Z', 6000, 'ZMW'], [SARAH_HOME_READ.asOf, 6000, 'ZMW']]);
-    expect(screen.getByTestId('example-line-chart').querySelector('path')!.getAttribute('d')).not.toMatch(/NaN|Infinity/);
+    expect(screen.getByTestId('example-line-chart').querySelector('path:not([data-chart-wash])')!.getAttribute('d')).not.toMatch(/NaN|Infinity/);
   }
 });
 test('V23 daniel-note-and-retired-framing and V25 kwacha-format-journey', () => {

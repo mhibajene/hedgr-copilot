@@ -831,7 +831,7 @@ async function assertTicketA(page: Page) {
   await expect(page.getByTestId('example-line-chart').locator('svg')).toHaveAttribute('aria-hidden','true');
   await expect(page.getByTestId('example-line-chart').locator('svg')).toHaveAttribute('focusable','false');
   await expect(page.getByTestId('example-line-chart').locator('[data-series-value]')).toHaveCount(3);
-  await expect(page.getByTestId('example-line-chart').getByText('K0',{exact:true})).toHaveCount(0); await expect(page.getByTestId('example-line-chart').getByText('K30,000',{exact:true})).toHaveCount(0); expect(await page.getByTestId('example-line-chart').locator('path').getAttribute('d')).not.toMatch(/NaN|Infinity/);
+  await expect(page.getByTestId('example-line-chart').getByText('K0',{exact:true})).toHaveCount(0); await expect(page.getByTestId('example-line-chart').getByText('K30,000',{exact:true})).toHaveCount(0); expect(await page.getByTestId('example-line-chart').locator('path:not([data-chart-wash])').getAttribute('d')).not.toMatch(/NaN|Infinity/);
   await expect(page.getByTestId('dashboard-position-line')).toHaveCount(0);
   await expect(panel(page).locator('[aria-live], [role="status"]')).toHaveCount(0);
   await expect(page.getByTestId('daniel-read-holding')).toHaveCount(0);

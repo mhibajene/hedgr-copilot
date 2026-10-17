@@ -14,6 +14,7 @@
 // shared-baseline/wallet-redesign: retired delta -> positive card/slider/explanation;
 // all ordinary route, storage, keyboard and disclosure controls retained.
 // sarah-home: as-of/due time scopes follow the named elements after chart relocation.
+// Chart finite-geometry selectors retain the stepped line separately from its wash.
 // first-deposit: additive wash/latest/decorative/order contracts. Example tick
 // assertions were already absent; own-simulation and legacy ticks stay exact.
 // AC6 below counts visible/accessible content by state and heading/launcher role;

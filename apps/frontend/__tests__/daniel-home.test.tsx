@@ -830,7 +830,7 @@ function assertTicketA() {
   expect(graphic.querySelector('svg')?.getAttribute('aria-hidden')).toBe('true');
   expect(graphic.querySelector('svg')?.getAttribute('focusable')).toBe('false');
   expect(graphic.querySelectorAll('[data-series-value]')).toHaveLength(3);
-  expect(within(graphic).getByRole('button', { name: 'All changes · example dates' })).toBeDefined(); expect(graphic.querySelector('path')!.getAttribute('d')).not.toMatch(/NaN|Infinity/);
+  expect(within(graphic).getByRole('button', { name: 'All changes · example dates' })).toBeDefined(); expect(graphic.querySelector('path:not([data-chart-wash])')!.getAttribute('d')).not.toMatch(/NaN|Infinity/);
   expect(graphic.querySelectorAll('svg a, svg button, svg [tabindex], title, desc')).toHaveLength(0);
   expect(graphic.querySelectorAll('[data-testid="chart-event-dot"]')).toHaveLength(2);
   expect(screen.queryByTestId('dashboard-position-line')).toBeNull();
