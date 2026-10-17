@@ -86,7 +86,7 @@ test('V10 say-it-once-incl-what-changed, V11 caption-and-rate-27, V13 no-arrow-l
     expect(screen.getByTestId('usd-balance').textContent).toBe('$480.00');
     fireEvent.click(screen.getByRole('button', { name: 'All changes' }));
     const main = view.container.querySelector('main')!.cloneNode(true) as HTMLElement;
-    main.querySelectorAll('[aria-hidden="true"], .sr-only, details:not([open])').forEach(n => n.remove());
+    main.querySelectorAll('[aria-hidden="true"], .sr-only, details:not([open]), dialog:not([open])').forEach(n => n.remove());
     expect(main.textContent!.split('$20.00').length - 1).toBe(1); expect(main.textContent!.split('−$20.00').length - 1).toBe(1);
     expect(screen.getByTestId('dashboard-current-status').textContent).not.toMatch(/\$|→/);
     expect(screen.queryByTestId('dashboard-since-entries')).toBeNull(); expect(screen.queryByTestId('dashboard-change-chip')).toBeNull();

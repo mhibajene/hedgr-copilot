@@ -44,14 +44,14 @@ test('research baseline: navigation, dialog focus, currency and event reconcilia
   await trigger.click();
   const dialog = page.getByRole('dialog', { name: 'Currency context', exact: true });
   await expect(dialog).toBeVisible();
-  await expect(dialog).toContainText('ZMW 7,695.00');
-  await expect(dialog).toContainText('ZMW 8,100.00');
+  await expect(dialog.getByTestId('currency-rate-card')).toContainText('$300.00');
+  await expect(dialog.getByTestId('currency-rate-figure')).toHaveText('≈ ZMW 8,100.00');
   await page.screenshot({ path: testInfo.outputPath('currency-390.png') });
   await page.setViewportSize({ width: 458, height: 956 });
   await page.screenshot({ path: testInfo.outputPath('currency-reference.png') });
   await page.setViewportSize({ width: 390, height: 844 });
   await dialog.getByText('How this is calculated', { exact: true }).click();
-  await expect(dialog).toContainText('It does not mean you held this amount for 30 days.');
+  await expect(dialog).toContainText('Your US dollar amount is multiplied by each example rate and rounded to two decimal places.');
   await dialog.getByText('How this is calculated', { exact: true }).focus();
   await page.keyboard.press('Tab');
   await expect(dialog.getByRole('button', { name: 'Back to Home' })).toBeFocused();

@@ -89,3 +89,14 @@ test('V26 no-growing-label, V28 sarah-no-total-row, V29 sarah-fee-hero-and-limit
     }
   }
 });
+
+test('HOME-SOFTHALO-RATESLIDER-BUNDLE-001 AC1 AC2', () => {
+  for (const id of ['daniel','sarah'] as const) {
+    example(id); const chart=screen.getByTestId('example-line-chart');
+    expect(chart.parentElement?.querySelector('[data-component="HomeHero"]')?.nextElementSibling).toBe(chart);
+    expect(chart.querySelectorAll('[data-chart-wash]')).toHaveLength(1);
+    expect(chart.querySelectorAll('[data-chart-latest]')).toHaveLength(1);
+    expect(chart.querySelector('[data-chart-latest]')?.getAttribute('aria-hidden')).toBe('true');
+    expect(screen.queryByTestId('dashboard-position-line-visit')).toBeNull();
+  }
+});

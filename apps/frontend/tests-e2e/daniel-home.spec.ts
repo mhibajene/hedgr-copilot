@@ -399,7 +399,7 @@ const currentRead = {
 async function expectCurrencyContext(page: Page) {
   await expect(page.getByTestId('daniel-currency-context')).toHaveCount(0);
   await expect(page.getByTestId('daniel-observation')).toHaveText(A_ROWS);
-  await expect(page.getByTestId('daniel-since-card').locator('time')).toHaveText(['12 Jun', '14 Aug', '9 Sep', '25 Sep', '9 Oct']);
+  await expect(page.getByTestId('chart-event-list').locator('time')).toHaveText(['12 Jun', '14 Aug', '9 Sep', '25 Sep', '9 Oct']);
   for(const [i,date] of ['2026-06-12T00:00:00.000Z', '2026-08-14T00:00:00.000Z', '2026-09-09T00:00:00.000Z',lastRead.asOf,currentRead.asOf].entries()) await expect(page.getByTestId('daniel-observation').nth(i).locator('time')).toHaveAttribute('datetime',date);
 }
 
@@ -826,12 +826,12 @@ async function assertTicketA(page: Page) {
   await expect(page.getByTestId('daniel-read-caption')).toHaveText('≈ ZMW 21,600.00 Example figure, not a quote');
   const region=page.getByRole('region',{name:COPY.since,exact:true});
   await expect(region.getByRole('heading',{level:2})).toHaveText(COPY.since);
-  await expect(region.locator('ol > li')).toHaveText(A_ROWS);
-  await expect(region.getByTestId('example-line-chart')).not.toHaveAttribute('aria-hidden','true');
-  await expect(region.locator('svg')).toHaveAttribute('aria-hidden','true');
-  await expect(region.locator('svg')).toHaveAttribute('focusable','false');
-  await expect(region.locator('[data-series-value]')).toHaveCount(3);
-  await expect(region.getByText('K0',{exact:true})).toHaveCount(0); await expect(region.getByText('K30,000',{exact:true})).toHaveCount(0); expect(await region.locator('path').getAttribute('d')).not.toMatch(/NaN|Infinity/);
+  await expect(page.getByTestId('chart-event-list').locator('li')).toHaveText(A_ROWS);
+  await expect(page.getByTestId('example-line-chart')).not.toHaveAttribute('aria-hidden','true');
+  await expect(page.getByTestId('example-line-chart').locator('svg')).toHaveAttribute('aria-hidden','true');
+  await expect(page.getByTestId('example-line-chart').locator('svg')).toHaveAttribute('focusable','false');
+  await expect(page.getByTestId('example-line-chart').locator('[data-series-value]')).toHaveCount(3);
+  await expect(page.getByTestId('example-line-chart').getByText('K0',{exact:true})).toHaveCount(0); await expect(page.getByTestId('example-line-chart').getByText('K30,000',{exact:true})).toHaveCount(0); expect(await page.getByTestId('example-line-chart').locator('path').getAttribute('d')).not.toMatch(/NaN|Infinity/);
   await expect(page.getByTestId('dashboard-position-line')).toHaveCount(0);
   await expect(panel(page).locator('[aria-live], [role="status"]')).toHaveCount(0);
   await expect(page.getByTestId('daniel-read-holding')).toHaveCount(0);
@@ -842,7 +842,7 @@ async function assertTicketA(page: Page) {
   expect(text).not.toMatch(/Daniel holds USD 800|Shown in ZMW|USD 800 shows|Now ·|What changed since Daniel’s last visit|Example rate: ZMW 29.5/);
   await expect(panel(page).getByText('Not a live rate',{exact:true})).toHaveCount(0);
   const order=await panel(page).locator('[data-testid]').evaluateAll(nodes=>nodes.map(n=>n.getAttribute('data-testid')));
-  const sequence=['daniel-read-figure','daniel-read-caption','daniel-read-as-of','daniel-since-card','daniel-invariant','daniel-read-rate'];
+  const sequence=['daniel-read-figure','daniel-read-caption','example-line-chart','daniel-read-as-of','daniel-since-card','daniel-invariant','daniel-read-rate'];
   for(let i=1;i<sequence.length;i++) expect(order.indexOf(sequence[i])).toBeGreaterThan(order.indexOf(sequence[i-1]));
   await expect(region.getByTestId('daniel-invariant')).toHaveText(LEGIBILITY.invariant);
   await expect(panel(page).getByRole('link',{name:COPY.back})).toBeVisible();
