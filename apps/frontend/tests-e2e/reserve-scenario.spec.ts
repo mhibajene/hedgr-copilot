@@ -5,7 +5,10 @@ const preferenceKey = 'hedgr.simulation.display-currency';
 const holdPatterns = /30000|30,000|automatically split|Hedgr shows|Hedgr tracks|\bonly\b|with Hedgr|dollar-linked portion|Hedgr plays no part|no longer changes|fully funded|planned|saving for|progress|sufficien/i;
 const readings = ['≈ ZMW 19,600.00 · 9 Sep · example rate 24.5', '≈ ZMW 23,600.00 · 25 Sep · example rate 29.5', '≈ ZMW 21,600.00 · 9 Oct · example rate 27'];
 async function enterDaniel(page: import('@playwright/test').Page, currency = 'ZMW') {
-  await page.goto(studyEntry); await page.getByRole('combobox').selectOption(currency);
+  await page.goto('/orientation');
+  await page.evaluate(({ key, currency }) => localStorage.setItem(key, currency), { key: preferenceKey, currency });
+  await page.goto(studyEntry); await expect(page.getByRole('combobox')).toHaveCount(0);
+  expect(await page.evaluate(key => localStorage.getItem(key), preferenceKey)).toBe(currency);
   await page.getByTestId('orientation-continue').click();
   await expect(page.getByTestId('sarah-facts')).toContainText('ZMW 6,000.00');
   for (const control of ['study-continue','study-to-hedgr','study-to-reserve']) await page.getByTestId(control).click();
@@ -90,7 +93,8 @@ test.describe('RESEARCH-PAGES-REGISTRY-ALIGN-001 reserve', () => {
         expect(await page.evaluate(key => localStorage.getItem(key), preferenceKey)).toBe(changed);
       }
       await expect(otherTab.getByRole('combobox')).toHaveValue(changed); await otherTab.close();
-      await page.goto(studyEntry); await expect(page.getByRole('combobox')).toHaveValue(changed);
+      await page.goto(studyEntry); await expect(page.getByRole('combobox')).toHaveCount(0);
+      expect(await page.evaluate(key => localStorage.getItem(key), preferenceKey)).toBe(changed);
     }
   });
 
