@@ -654,8 +654,7 @@ export default function DashboardPage() {
 
   const currencyContext = currencyContextVisible ? (
     <CurrencyInsight
-      redesigned
-      compact={syntheticJourneyActive}
+      rateLineOnHome
       usdAmount={total}
       currency={displayCurrency}
       latestDisplayRate={getSimulationDisplayRate(displayCurrency)}
@@ -678,6 +677,7 @@ export default function DashboardPage() {
     window.history.pushState(null, "", exampleHref(value, window.location.search, window.location.pathname));
   };
   const danielPanel = danielExample ? (
+    <>
     <DanielExampleHome
       currentRead={DANIEL_HOME_READ}
       timeline={DANIEL_HOME_TIMELINE}
@@ -685,6 +685,13 @@ export default function DashboardPage() {
       onReturn={() => chooseExample("own")}
       limitation={guaranteeLine}
     />
+    <CurrencyInsight
+      usdAmount={DANIEL_HOME_READ.declaredHolding.amount}
+      currency="ZMW"
+      latestDisplayRate={getSimulationDisplayRate('ZMW')}
+      ready={ready}
+    />
+    </>
   ) : null;
   const examplePicker = syntheticJourneyActive ? (
     <div className="mt-2 w-full min-w-0 max-w-xs">
