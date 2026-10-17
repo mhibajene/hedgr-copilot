@@ -86,7 +86,8 @@ for(const [width,scale] of [[1440,1],[390,1],[320,2]])test(`HOME-SOFTHALO-RATESL
   if(kind==='sarah'){await expect(page.getByRole('slider')).toHaveCount(0);continue;}
   await expect(launcher).toHaveAccessibleDescription('Try example exchange rates');expect((await launcher.boundingBox())!.height).toBeGreaterThanOrEqual(44);
   await launcher.click();const dialog=page.getByRole('dialog',{name:'Currency context',exact:true});await expect(dialog).toBeVisible();await expect(page.getByRole('heading',{level:2,name:'Currency context',exact:true})).toHaveCount(1);
-  await expect(page.getByRole('button',{name:'Currency context',exact:true})).toHaveCount(0);
+  // The one Home launcher remains in the DOM; the native dialog owns keyboard focus.
+  await expect(page.getByRole('button',{name:'Currency context',exact:true})).toHaveCount(1);
   await retained(page,kind,state);const openText=await visibleText(page);once(openText,MEANING);once(openText,LIMIT,currency==='ZMW'?1:0);once(openText,usdFigure,2);once(openText,homeLocal,2);
   const slider=dialog.getByRole('slider',{name:'Try an example rate'});await expect(slider).toHaveCount(currency==='ZMW'?1:0);
   const usd=kind==='daniel'?800:480;const rate={ZMW:27,KES:130,NGN:1500,GHS:15,PHP:56}[currency]!;
