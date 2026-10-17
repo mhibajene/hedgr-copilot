@@ -19277,3 +19277,7 @@ Done record then release remain queued only, each needing its own brief, re-pin 
 
 ## 402. Founder activation (`VERA-MONOCODE-OPERATIONAL-001`, 2026-10-17)
 **Founder activation (2026-10-17; §402):** Only finite non-lane operational support `VERA-MONOCODE-OPERATIONAL-001` under the §6f.23 parallelism exception, with research priority. Live §7a fixes source and operational allowlists, exclusions, independent stop conditions and rollback. Formal verification and `hedgr/verifier` unchanged; shared MonoCode sessions do not resolve E1; no spend, credential, App, protection, gate or Class B change. Source merge, separate independently verified permanent-main RAP rebind (§364) and fetched-main RAP PASS precede any operational write. The Founder-created Vera Mono remains idle and unconfigured. **NO CROSS-LANE IMPACT.**
+
+
+## 403. Vera Mono pin (`VERA-MONOCODE-OPERATIONAL-001`, 2026-10-17)
+**Mono pin (§403; nil-effect under §364):** Existing Founder-created Mono `Vera` (MonoCode 0.13.0), ID `d38cc4e0-f129-482b-b241-2979518fdd55`, role file `/Users/musalwa/Library/Application Support/com.monocode.desktop/monos/d38cc4e0-f129-482b-b241-2979518fdd55/SOUL.md`, pre-change placeholder sha256 `d1cf07e933e76fbca7cfe06de770087b89d24ee2c1aca60e24dd1128633e2f46`, no instructions, memory or handoffs. Pre-change config backup recorded (uncommitted). Founder's original ROLE bytes to be applied next; expected read-back sha256 `373f04a33c7b051f02ffe32734b33063af822f4efef5c871cdd71db247f09cf9`. No other Mono, Dex, credential or setting changed. **NO CROSS-LANE IMPACT.**
