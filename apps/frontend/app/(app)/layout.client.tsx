@@ -16,6 +16,7 @@ import {
   CLASS_A_VAL_002_JOURNEY_VALUE,
   getSyntheticJourneyHref,
   isSyntheticJourneyPrimaryCondition,
+  isSyntheticJourneyLinkContext,
 } from '@/lib/state/synthetic-journey';
 
 type NavLink = {
@@ -102,6 +103,7 @@ export function AppLayoutClient({ children }: { children: React.ReactNode }) {
       searchParams?.get(CLASS_A_VAL_002_JOURNEY_PARAM) ===
         CLASS_A_VAL_002_JOURNEY_VALUE);
   const syntheticJourneyActive = explicitSyntheticJourney;
+  const syntheticJourneyLinkContext = isSyntheticJourneyLinkContext(searchParams?.toString(), pathname);
   const activePathname =
     pathname === CLASS_A_VAL_002_DASHBOARD_PATH ? '/dashboard' : pathname;
   const settingsActive = activePathname?.startsWith('/settings') ?? false;
@@ -109,7 +111,7 @@ export function AppLayoutClient({ children }: { children: React.ReactNode }) {
     activePathname === href || (href === '/settings' && settingsActive);
   const collapsedSyntheticMobileNav =
     explicitSyntheticJourney && !settingsActive;
-  const trustInformationHref = explicitSyntheticJourney
+  const trustInformationHref = syntheticJourneyLinkContext
     ? `/settings/trust?${CLASS_A_VAL_002_JOURNEY_PARAM}=${CLASS_A_VAL_002_JOURNEY_VALUE}`
     : '/settings/trust';
 
@@ -143,7 +145,7 @@ export function AppLayoutClient({ children }: { children: React.ReactNode }) {
     ...syntheticNavLinks.filter(link => link.href !== '/activity'),
     ...copilotNavLinks,
   ];
-  const navLinks = explicitSyntheticJourney
+  const navLinks = syntheticJourneyLinkContext
     ? syntheticNavLinks
     : productNavLinks;
 
@@ -151,17 +153,17 @@ export function AppLayoutClient({ children }: { children: React.ReactNode }) {
   const scopeFirstHome = activePathname === '/dashboard';
   const primaryNavigation = (
     <nav aria-label="Primary" data-testid={explicitSyntheticJourney ? 'synthetic-bottom-nav' : 'product-bottom-nav'} className={scopeFirstHome ? home.scopeNavigation : "fixed inset-x-0 bottom-0 z-40 border-t border-hedgr-100 bg-white"}>
-      <div className={wallet.bottomNav} data-testid="nav-links">{syntheticNavLinks.map(link => <Link key={link.href} href={navHref(link.href, explicitSyntheticJourney)} aria-current={isNavLinkActive(link.href) ? 'page' : undefined}>{link.label}</Link>)}</div>
+      <div className={wallet.bottomNav} data-testid="nav-links">{syntheticNavLinks.map(link => <Link key={link.href} href={navHref(link.href, syntheticJourneyLinkContext)} aria-current={isNavLinkActive(link.href) ? 'page' : undefined}>{link.label}</Link>)}</div>
     </nav>
   );
   if (sharedSurface) {
     return <div className={`${home.shell} ${scopeFirstHome ? home.scopeShell : ''} ${activePathname === '/dashboard' ? '' : baseline.narrowShell}`} data-testid="shared-baseline-shell">
       <TrustDisclosureBanner syntheticResearch={explicitSyntheticJourney} dismissible={false} consolidateTechnicalDetails learnMoreUrl={trustInformationHref} />
       <header className={home.brand} data-testid={explicitSyntheticJourney ? 'synthetic-journey-shell' : 'app-nav'}>
-        <Link href={navHref('/dashboard', explicitSyntheticJourney)} aria-label="Hedgr Home"><Image src="/brand/hedgr_logo.svg" alt="Hedgr" width={92} height={32} priority /></Link>
-        {scopeFirstHome ? (!explicitSyntheticJourney && copilotNavLinks.length ? <div className={baseline.headerLinks}>{copilotNavLinks.map(link => <Link key={link.href} href={link.href} data-testid={link.testId}>{link.label}</Link>)}{primaryNavigation}</div> : primaryNavigation) : <div className={baseline.headerLinks}>
-          {!explicitSyntheticJourney ? copilotNavLinks.map(link => <Link key={link.href} href={link.href} data-testid={link.testId}>{link.label}</Link>) : null}
-          {!settingsActive ? <Link href={navHref('/settings', explicitSyntheticJourney)}>Settings</Link> : null}
+        <Link href={navHref('/dashboard', syntheticJourneyLinkContext)} aria-label="Hedgr Home"><Image src="/brand/hedgr_logo.svg" alt="Hedgr" width={92} height={32} priority /></Link>
+        {scopeFirstHome ? (!syntheticJourneyLinkContext && copilotNavLinks.length ? <div className={baseline.headerLinks}>{copilotNavLinks.map(link => <Link key={link.href} href={link.href} data-testid={link.testId}>{link.label}</Link>)}{primaryNavigation}</div> : primaryNavigation) : <div className={baseline.headerLinks}>
+          {!syntheticJourneyLinkContext ? copilotNavLinks.map(link => <Link key={link.href} href={link.href} data-testid={link.testId}>{link.label}</Link>) : null}
+          {!settingsActive ? <Link href={navHref('/settings', syntheticJourneyLinkContext)}>Settings</Link> : null}
         </div>}
       </header>
       {children}
@@ -244,7 +246,7 @@ export function AppLayoutClient({ children }: { children: React.ReactNode }) {
                 {navLinks.map((link) => (
                   <Link
                     key={link.href}
-                    href={navHref(link.href, explicitSyntheticJourney)}
+                    href={navHref(link.href, syntheticJourneyLinkContext)}
                     data-testid={link.testId}
                     className={`relative inline-flex items-center justify-center px-3 text-sm font-medium transition-colors md:border-b-2 md:px-1 md:pt-1 ${
                       isNavLinkActive(link.href)
@@ -274,7 +276,7 @@ export function AppLayoutClient({ children }: { children: React.ReactNode }) {
             {navLinks.map((link) => (
               <Link
                 key={link.href}
-                href={navHref(link.href, explicitSyntheticJourney)}
+                href={navHref(link.href, syntheticJourneyLinkContext)}
                 data-testid={link.testId}
                 onClick={() => setIsNavOpen(false)}
                 className={`flex min-h-11 items-center rounded-md px-3 py-2 text-base font-medium ${

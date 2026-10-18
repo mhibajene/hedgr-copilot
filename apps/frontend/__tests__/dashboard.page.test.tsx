@@ -1050,7 +1050,7 @@ function s18ExcludedDigest() {
     } else files.push(path);
   }
   S18_EXCLUDED_ROOTS.forEach(visit);
-  return s18Digest(files.sort().map((path) => `${path}\0${RESEARCH_PRE_RUNTIME_HASHES[path] ?? (path === 'lib/state/synthetic-journey.ts' ? 'd1f5117cd75691c4d7404dbe7746673e3bdbd168c225f10bb5447163e3584366' : s18Digest(scPreRuntime(releaseGatePreRuntime(path, studyBridgePreRuntime(path, readFileSync(resolve(path)).toString())), SC_ENGINE_SOURCE_EDITS[path] ?? [])))}`).join('\n'));
+  return s18Digest(files.sort().map((path) => `${path}\0${RESEARCH_PRE_RUNTIME_HASHES[path] ?? (path === 'lib/state/synthetic-journey.ts' ? 'd1f5117cd75691c4d7404dbe7746673e3bdbd168c225f10bb5447163e3584366' : s18Digest(scPreRuntime(releaseGatePreRuntime(path, studyBridgePreRuntime(path, releaseGate002PreRuntime(path, readFileSync(resolve(path)).toString()))), SC_ENGINE_SOURCE_EDITS[path] ?? [])))}`).join('\n'));
 }
 
 function s18OutsideTile(view: HTMLElement) {
@@ -1403,6 +1403,49 @@ function releaseGatePreRuntime(path: string, value: string): string {
     const count = value.split(replacement).length - 1;
     expect(count, path).toBe(1);
     value = value.replace(replacement, old);
+  }
+  return value;
+}
+
+// RELEASE-GATE-FIX-002: reverse only exact authorised link snippets to immutable 01fd6b5.
+const RELEASE_GATE_002_SOURCE_EDITS: Record<string, string[][]> = {
+  "app/(app)/withdraw/page.tsx": [
+    [
+      "  getSyntheticJourneyHref,\n  isSyntheticJourneyPrimaryCondition,\n} from '../../../lib/state/synthetic-journey';\n\n",
+      "  getSyntheticJourneyHref,\n  isSyntheticJourneyPrimaryCondition,\n  isSyntheticJourneyLinkContext,\n} from '../../../lib/state/synthetic-journey';\n\n"
+    ],
+    [
+      "  const txReviewFlags = useMemo(() => resolveTxReviewSimulatorFlags(search), [search]);\n  const reviewSeamActive = isTxReviewSeamActive(txReviewFlags);\n  const syntheticJourneyActive =\n    isSyntheticJourneyPrimaryCondition(search) &&\n",
+      "  const txReviewFlags = useMemo(() => resolveTxReviewSimulatorFlags(search), [search]);\n  const reviewSeamActive = isTxReviewSeamActive(txReviewFlags);\n  const syntheticJourneyLinkContext = isSyntheticJourneyLinkContext(search);\n  const syntheticJourneyActive =\n    isSyntheticJourneyPrimaryCondition(search) &&\n"
+    ],
+    [
+      "          description=\"We couldn't fetch your account balance. Please try again.\"\n          primaryAction={{ label: 'Retry', onClick: refresh }}\n          secondaryAction={{ label: 'Go to Dashboard', href: '/dashboard' }}\n          data-testid=\"withdraw-balance-error\"\n        />\n",
+      "          description=\"We couldn't fetch your account balance. Please try again.\"\n          primaryAction={{ label: 'Retry', onClick: refresh }}\n          secondaryAction={{ label: 'Go to Dashboard', href: syntheticJourneyLinkContext ? getSyntheticJourneyHref('/dashboard') : '/dashboard' }}\n          data-testid=\"withdraw-balance-error\"\n        />\n"
+    ],
+    [
+      "          description=\"We couldn't fetch the available withdrawal methods. Please try again.\"\n          primaryAction={{ label: 'Retry', onClick: retryLoadMethods }}\n          secondaryAction={{ label: 'Go to Dashboard', href: '/dashboard' }}\n          data-testid=\"withdraw-methods-error\"\n        />\n",
+      "          description=\"We couldn't fetch the available withdrawal methods. Please try again.\"\n          primaryAction={{ label: 'Retry', onClick: retryLoadMethods }}\n          secondaryAction={{ label: 'Go to Dashboard', href: syntheticJourneyLinkContext ? getSyntheticJourneyHref('/dashboard') : '/dashboard' }}\n          data-testid=\"withdraw-methods-error\"\n        />\n"
+    ],
+    [
+      "            </svg>\n          }\n          secondaryAction={{ label: 'Go to Dashboard', href: '/dashboard' }}\n          data-testid=\"withdraw-no-methods\"\n        />\n",
+      "            </svg>\n          }\n          secondaryAction={{ label: 'Go to Dashboard', href: syntheticJourneyLinkContext ? getSyntheticJourneyHref('/dashboard') : '/dashboard' }}\n          data-testid=\"withdraw-no-methods\"\n        />\n"
+    ],
+    [
+      "              ? 'Add simulated deposit'\n              : 'Make a deposit',\n            href: syntheticJourneyActive\n              ? getSyntheticJourneyHref('/deposit')\n              : '/deposit',\n",
+      "              ? 'Add simulated deposit'\n              : 'Make a deposit',\n            href: syntheticJourneyLinkContext\n              ? getSyntheticJourneyHref('/deposit')\n              : '/deposit',\n"
+    ],
+    [
+      "            title=\"Check the evidence\"\n            why=\"Activity lists both entries and the balance after each one.\"\n            primary={{ label: 'Review Activity', href: syntheticJourneyActive ? getSyntheticJourneyHref('/activity') : '/activity' }}\n            secondary={{ label: 'Back to your position', href: syntheticJourneyActive ? getSyntheticJourneyHref('/dashboard') : '/dashboard' }}\n          />\n        </div>\n",
+      "            title=\"Check the evidence\"\n            why=\"Activity lists both entries and the balance after each one.\"\n            primary={{ label: 'Review Activity', href: syntheticJourneyLinkContext ? getSyntheticJourneyHref('/activity') : '/activity' }}\n            secondary={{ label: 'Back to your position', href: syntheticJourneyLinkContext ? getSyntheticJourneyHref('/dashboard') : '/dashboard' }}\n          />\n        </div>\n"
+    ]
+  ]
+};
+function releaseGate002PreRuntime(path: string, value: string): string {
+  for (const [old, replacement] of RELEASE_GATE_002_SOURCE_EDITS[path] ?? []) {
+    if (value.includes(replacement)) {
+      expect(value.split(replacement), path).toHaveLength(2);
+      value = value.replace(replacement, old);
+    } else expect(value, path).toContain(old);
   }
   return value;
 }

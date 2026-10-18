@@ -462,7 +462,7 @@ const BUNDLE_SOURCE_EDITS: Record<string, [string, string][]> = {
   ]
 };
 function bundlePreRuntime(path: string, value: string): string {
-  value = releaseGatePreRuntime(path, value);
+  value = releaseGatePreRuntime(path, releaseGate002PreRuntime(path, value));
   for (const [old, replacement] of BUNDLE_SOURCE_EDITS[path] ?? []) {
     if (value.includes(replacement)) {
       expect(value.split(replacement), path).toHaveLength(2);
@@ -524,6 +524,45 @@ function releaseGatePreRuntime(path: string, value: string): string {
     const count = value.split(replacement).length - 1;
     expect(count, path).toBe(1);
     value = value.replace(replacement, old);
+  }
+  return value;
+}
+
+// RELEASE-GATE-FIX-002: reverse only exact authorised link snippets to immutable 01fd6b5.
+const RELEASE_GATE_002_SOURCE_EDITS: Record<string, string[][]> = {
+  "app/(app)/dashboard/page.tsx": [
+    [
+      "  getSyntheticJourneyHref,\n  isSyntheticJourneyPrimaryCondition,\n  isSyntheticJourneyResetRequested,\n  parseSyntheticJourneyExample,\n",
+      "  getSyntheticJourneyHref,\n  isSyntheticJourneyPrimaryCondition,\n  isSyntheticJourneyLinkContext,\n  isSyntheticJourneyResetRequested,\n  parseSyntheticJourneyExample,\n"
+    ],
+    [
+      "  const pathname = usePathname();\n  const searchParams = useSearchParams();\n  const syntheticJourneyEligible = isSyntheticJourneyPrimaryCondition(\n    searchParams?.toString(),\n",
+      "  const pathname = usePathname();\n  const searchParams = useSearchParams();\n  const syntheticJourneyLinkContext = isSyntheticJourneyLinkContext(searchParams?.toString(), pathname);\n  const syntheticJourneyEligible = isSyntheticJourneyPrimaryCondition(\n    searchParams?.toString(),\n"
+    ],
+    [
+      "    ? +(arrivalChange.from + (arrivalChange.to - arrivalChange.from) * arrivalProgress).toFixed(2)\n    : total;\n  const trustHref = syntheticJourneyActive\n    ? `/settings/trust?${CLASS_A_VAL_002_JOURNEY_PARAM}=${CLASS_A_VAL_002_JOURNEY_VALUE}`\n    : \"/settings/trust\";\n",
+      "    ? +(arrivalChange.from + (arrivalChange.to - arrivalChange.from) * arrivalProgress).toFixed(2)\n    : total;\n  const trustHref = syntheticJourneyLinkContext\n    ? `/settings/trust?${CLASS_A_VAL_002_JOURNEY_PARAM}=${CLASS_A_VAL_002_JOURNEY_VALUE}`\n    : \"/settings/trust\";\n"
+    ],
+    [
+      "  const productRouteHref = (\n    route: \"/deposit\" | \"/withdraw\" | \"/activity\"\n  ) => (syntheticJourneyActive ? getSyntheticJourneyHref(route) : route);\n\n  const homeUtilities = syntheticJourneyActive ? (\n",
+      "  const productRouteHref = (\n    route: \"/deposit\" | \"/withdraw\" | \"/activity\"\n  ) => (syntheticJourneyLinkContext ? getSyntheticJourneyHref(route) : route);\n\n  const homeUtilities = syntheticJourneyActive ? (\n"
+    ],
+    [
+      "              </div>\n              <Link\n                href=\"/deposit\"\n                className=\"inline-flex shrink-0 items-center justify-center rounded-xl bg-hedgr-primary px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-hedgr-600 focus:outline-none focus:ring-2 focus:ring-hedgr-500 focus:ring-offset-2 focus:ring-offset-hedgr-100\"\n              >\n",
+      "              </div>\n              <Link\n                href={productRouteHref(\"/deposit\")}\n                className=\"inline-flex shrink-0 items-center justify-center rounded-xl bg-hedgr-primary px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-hedgr-600 focus:outline-none focus:ring-2 focus:ring-hedgr-500 focus:ring-offset-2 focus:ring-offset-hedgr-100\"\n              >\n"
+    ],
+    [
+      "              </h2>\n              <Link\n                href=\"/activity\"\n                className=\"shrink-0 text-sm font-medium text-hedgr-600 underline-offset-2 hover:text-hedgr-primary hover:underline\"\n              >\n",
+      "              </h2>\n              <Link\n                href={productRouteHref(\"/activity\")}\n                className=\"shrink-0 text-sm font-medium text-hedgr-600 underline-offset-2 hover:text-hedgr-primary hover:underline\"\n              >\n"
+    ]
+  ]
+};
+function releaseGate002PreRuntime(path: string, value: string): string {
+  for (const [old, replacement] of RELEASE_GATE_002_SOURCE_EDITS[path] ?? []) {
+    if (value.includes(replacement)) {
+      expect(value.split(replacement), path).toHaveLength(2);
+      value = value.replace(replacement, old);
+    } else expect(value, path).toContain(old);
   }
   return value;
 }

@@ -27,6 +27,7 @@ import {
   CLASS_A_VAL_002_UNAVAILABLE_DATA_SCENARIO,
   getSyntheticJourneyHref,
   isSyntheticJourneyPrimaryCondition,
+  isSyntheticJourneyLinkContext,
 } from '../../../lib/state/synthetic-journey';
 
 function formatDate(timestamp: number): string {
@@ -296,6 +297,7 @@ export default function ActivityPage() {
   const transactions = useLedgerStore((s) => s.transactions);
   const sourceAmounts = new Map(transactions.flatMap(tx => tx.type === 'deposit' && tx.source_local_amount !== undefined && tx.source_local_currency ? [[tx.txn_ref, formatLocalCurrency(tx.source_local_amount, tx.source_local_currency)] as const] : []));
   const searchParams = useSearchParams();
+  const syntheticJourneyLinkContext = isSyntheticJourneyLinkContext(searchParams?.toString());
   const syntheticJourneyActive =
     isSyntheticJourneyPrimaryCondition(searchParams?.toString()) &&
     searchParams?.get(CLASS_A_VAL_002_JOURNEY_PARAM) ===
@@ -397,7 +399,7 @@ export default function ActivityPage() {
       </li>
     ) : null;
 
-  const positionHref = syntheticJourneyActive ? getSyntheticJourneyHref('/dashboard') : '/dashboard';
+  const positionHref = syntheticJourneyLinkContext ? getSyntheticJourneyHref('/dashboard') : '/dashboard';
   const nextStep =
     completedChronological.length === 2 ? (
       <ActionDock
@@ -458,7 +460,7 @@ export default function ActivityPage() {
             label: productSimulationActive
               ? 'Start simulated deposit'
               : 'Make your first deposit',
-            href: syntheticJourneyActive
+            href: syntheticJourneyLinkContext
               ? getSyntheticJourneyHref('/deposit')
               : '/deposit',
           }}
