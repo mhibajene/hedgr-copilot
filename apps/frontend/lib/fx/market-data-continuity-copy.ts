@@ -26,7 +26,7 @@ const WITHDRAW: MarketDataContinuityCopy = {
   lines: [
     "The example rate didn't load. This simulation uses a fixed example rate, not market data.",
     'That means we cannot show a reliable local-currency estimate for your withdrawal while the rate is missing.',
-    'You are still on Withdraw. Your USD balance and payout methods stay visible.',
+    'You are still on Withdraw. Your simulated balance stays visible.',
     'Confirm turns on once the example rate loads.',
   ],
 };

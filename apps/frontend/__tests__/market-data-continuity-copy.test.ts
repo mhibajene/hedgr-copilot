@@ -52,3 +52,28 @@ describe('market-data-continuity-copy (MC-S2-020)', () => {
     }
   });
 });
+
+
+test('RELEASE-GATE-FIX-002 T2 exact Withdraw line 3 and method denylist', () => {
+  const copy = getMarketDataContinuityCopy('withdraw');
+  expect(copy.lines[2]).toBe('You are still on Withdraw. Your simulated balance stays visible.');
+  expect(getMarketDataContinuityCopyJoined('withdraw')).not.toMatch(/(?:payment|payout)[ -]+methods?/i);
+});
+
+test('RELEASE-GATE-FIX-002 T4 DEPOSIT and other WITHDRAW lines remain locked', () => {
+  expect(getMarketDataContinuityCopy('deposit')).toEqual({
+    headline: 'Exchange rate data is temporarily unavailable',
+    lines: [
+      "The example rate didn't load. This simulation uses a fixed example rate, not market data.",
+      'That means we cannot show a reliable conversion between your local amount and USD.',
+      'Confirm turns on once the example rate loads.',
+    ],
+  });
+  const copy = getMarketDataContinuityCopy('withdraw');
+  expect(copy.headline).toBe('Exchange rate data is temporarily unavailable');
+  expect([copy.lines[0], copy.lines[1], copy.lines[3]]).toEqual([
+    "The example rate didn't load. This simulation uses a fixed example rate, not market data.",
+    'That means we cannot show a reliable local-currency estimate for your withdrawal while the rate is missing.',
+    'Confirm turns on once the example rate loads.',
+  ]);
+});
