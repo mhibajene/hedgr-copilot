@@ -554,15 +554,15 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   // HOME-EXPERIENCE-001 T4: the entry thread replaces the balance-after strip.
   await expect(page.getByTestId('activity-result-deposit')).toHaveCount(0);
   await expect(page.getByTestId('activity-status-line-deposit')).toHaveText(/^Completed · \d{2}:\d{2}$/);
-  await expect(page.getByTestId('activity-row-deposit')).not.toContainText(
-    'ZMW'
+  await expect(page.getByTestId('activity-row-deposit')).toContainText(
+    'ZMW 135.00'
   );
   const depositRow = page.getByTestId('activity-row-deposit');
   await depositRow.click();
   const depositDetail = page.locator('main details[open]');
   await expect(depositDetail).toContainText('Before$0.00');
   await expect(depositDetail).toContainText('After$5.00');
-  await expect(depositDetail).not.toContainText('ZMW');
+  await expect(depositDetail).toContainText('ZMW 135.00');
   await depositRow.press('Enter');
   await expect(depositDetail).toHaveCount(0);
   await expect(depositRow).toBeFocused();

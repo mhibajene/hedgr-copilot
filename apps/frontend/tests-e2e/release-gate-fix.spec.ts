@@ -25,7 +25,10 @@ async function seed(page: Page, currency = 'ZMW', amount = 0) {
 }
 async function viewport(page: Page, width: number, scale: number) {
   await page.setViewportSize({ width, height: 1000 });
-  if (scale === 2) await page.addStyleTag({ content: 'html { font-size: 200% !important; }' });
+  if (scale === 2) {
+    await page.addInitScript(() => document.addEventListener('DOMContentLoaded', () => { document.documentElement.style.setProperty('font-size', '200%', 'important'); }));
+    await page.addStyleTag({ content: 'html { font-size: 200% !important; }' });
+  }
 }
 for (const [width, scale] of [[1440, 1], [390, 1], [320, 2]]) {
   test(`RELEASE-GATE-FIX-001 T1 unavailable rates ${width}`, async ({ page }) => {
@@ -81,6 +84,8 @@ for (const [width, scale] of [[1440, 1], [390, 1], [320, 2]]) {
     expect(await page.evaluate(key => localStorage.getItem(key), KEY)).toBe('KES');
     await page.goto('/api/policy'); await page.evaluate(() => { localStorage.clear(); sessionStorage.clear(); });
     await page.goto('/orientation?study=stability-scenarios'); await page.getByTestId('orientation-continue').click();
+    await page.getByTestId('study-continue').click(); await page.getByTestId('study-to-hedgr').click();
+    await page.getByRole('link', { name: 'Next: Daniel’s reserve', exact: true }).click();
     await page.getByTestId('study-continue').click(); await page.getByTestId('study-to-hedgr').click(); await page.getByTestId('study-to-bridge').click();
     await expect(page.getByTestId('study-simulation-link')).toHaveAttribute('href', `${HOME}?reset=1&study=1`);
     await page.getByTestId('study-simulation-link').click();
