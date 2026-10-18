@@ -63,7 +63,7 @@ for (const [currency, rate] of [
     await page.goto('/withdraw?journey=class-a-val-002');
     await expect(page.getByTestId('withdraw-fx-block')).toContainText(`${rate.toFixed(2)} ${currency}`);
     await page.getByTestId('withdraw-amount').fill('2');
-    await expect(page.getByTestId('withdraw-balance-preview')).toContainText('$5.00 − $2.00 = $3.00');
+    await expect(page.getByTestId('withdraw-balance-preview')).toContainText('What would remain: $3.00');
     await page.getByRole('button', { name: 'Confirm', exact: true }).click();
     await expect(page.getByTestId('withdraw-status-region')).toHaveAttribute('data-status', 'SUCCESS');
     await page.getByRole('link', { name: 'Review Activity' }).click();

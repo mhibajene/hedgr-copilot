@@ -2,7 +2,7 @@
 import { create } from 'zustand';
 import { persist, type PersistStorage, type StorageValue } from 'zustand/middleware';
 
-/** Bump when ledger Tx shape or persisted format changes; mismatch on load → clear. */
+/** Bump for incompatible persisted formats; optional display metadata stays compatible. Mismatch on load → clear. */
 export const LEDGER_SCHEMA_VERSION = 2;
 
 /**
@@ -19,6 +19,9 @@ export type Tx = {
   amount_zmw: number;
   amount_usd: number;
   fx_rate: number;
+  /** Original deposit input for display only; never used in balance or FX arithmetic. */
+  source_local_amount?: number;
+  source_local_currency?: string;
   created_at: number;
   updated_at: number;
   /** Set when status is 'failed' */
@@ -159,6 +162,8 @@ export const useLedgerStore = create<LedgerStore>()(
           amount_zmw: update.amount_zmw!,
           amount_usd: update.amount_usd!,
           fx_rate: update.fx_rate!,
+          ...(update.source_local_amount !== undefined ? { source_local_amount: update.source_local_amount } : {}),
+          ...(update.source_local_currency !== undefined ? { source_local_currency: update.source_local_currency } : {}),
           created_at: update.created_at!,
           updated_at: update.updated_at ?? update.created_at!,
           ...(update.failure_reason !== undefined ? { failure_reason: update.failure_reason } : {}),

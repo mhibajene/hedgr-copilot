@@ -72,7 +72,7 @@ test.describe('RESEARCH-PAGES-REGISTRY-ALIGN-001 reserve', () => {
     await expect(page.getByRole('heading', { name: 'You’ve reached the end of this research example.' })).toBeFocused();
     await expect(page.getByTestId('study-bridge')).toHaveText('You’ve reached the end of this research example.Next, try Hedgr with pretend money. Add a simulated deposit, then see what changes and what remains. No real money moves, no account is opened, and nothing here is financial advice.Continue to the Hedgr simulation');
     await expect(page.getByTestId('study-bridge')).not.toContainText(/made-up money|practice deposit/);
-    await expect(page.getByTestId('study-simulation-link')).toHaveAttribute('href', '/dashboard-synthetic-journey?reset=1');
+    await expect(page.getByTestId('study-simulation-link')).toHaveAttribute('href', '/dashboard-synthetic-journey?reset=1&study=1');
     await expect(page.getByTestId('study-simulation-link')).toHaveCSS('border-radius', '9999px');
     await expect(page.getByTestId('reserve-stimulus')).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
     await page.getByTestId('study-simulation-link').click();

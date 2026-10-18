@@ -196,7 +196,7 @@ test("5 · settings page keeps customer information and trust boundaries legible
   await page.goto("/settings");
   await expect(page.getByRole("heading", { name: "Settings" })).toBeVisible();
   await expect(page.getByTestId("settings-account")).toContainText(
-    "Verification status"
+    "Email (placeholder)"
   );
   await expect(page.getByTestId("settings-preferences")).toContainText(
     "No preferences available yet"

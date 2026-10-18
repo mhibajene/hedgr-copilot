@@ -74,14 +74,15 @@ for (const [width, scale] of [[1440, 1], [390, 1], [320, 2]]) test(`V7 V8 V10 V1
       await seed(page, STATES.empty); await page.goto(`${route}${route.includes('?') ? '&' : '?'}example=${example}`);
       await page.evaluate(scale => { document.documentElement.style.fontSize = `${16 * scale}px`; }, scale);
       const chart = page.getByTestId('example-line-chart'); await expect(chart).toHaveCount(1);
-      await expect(chart.getByRole('button', { name: `First deposit, ${example === 'daniel' ? '12 Jun' : '14 Apr'}` })).toHaveText('');
+      await expect(chart.getByRole('button', { name: `Deposit, ${example === 'daniel' ? '12 Jun' : '14 Apr'}` })).toHaveText('');
       await expect(page.getByTestId('dashboard-position-line-visit')).toHaveCount(0);
       const list = await openList(page, true); await expect(list.locator('li')).toHaveText(example === 'daniel' ? [
         'First deposit +$500.00 · 12 Jun', 'Deposit +$300.00 · 14 Aug', '≈ ZMW 19,600.00 · 9 Sep · example rate 24.5', '≈ ZMW 23,600.00 · 25 Sep · example rate 29.5', '9 Oct · shown above',
       ] : ['First deposit +ZMW 4,000.00 · 14 Apr', 'Deposit +ZMW 2,000.00 · 21 Jul']);
       const panel = page.getByTestId(`dashboard-${example}-read`); const text = await panel.innerText();
       for (const amount of example === 'daniel' ? ['$500.00', '$300.00', '$800.00'] : ['ZMW 4,000.00', 'ZMW 2,000.00', '$1000.00']) expect(text.split(amount).length - 1).toBe(1);
-      expect(text).not.toMatch(/6,000|K\d|grow|rising|increase|progress|towards|funded|enough|cover|remaining|left to|% of|→/i);
+      const outsideHero = await panel.evaluate(n => { const copy = n.cloneNode(true) as HTMLElement; copy.querySelector('[data-testid="sarah-read-figure"]')?.remove(); return copy.textContent; });
+      expect(outsideHero).not.toMatch(/6,000|K\d|grow|rising|increase|progress|towards|funded|enough|cover|remaining|left to|% of|→/i);
       expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(1);
       const dir = process.env.HEDGR_VISUALISER_SCREENSHOTS ?? info.outputPath('screenshots'); mkdirSync(dir, { recursive: true });
       await panel.scrollIntoViewIfNeeded();
@@ -142,9 +143,7 @@ for (const [width, scale] of [[1440, 1], [390, 1], [320, 2]]) {
       for (const route of ROUTES) {
         await seed(page, STATES.empty); await page.goto(`${route}${route.includes('?') ? '&' : '?'}example=${example}`);
         await s2Viewport(page, width, scale);
-        await expect(chartCounts(page)).toHaveCount(1);
-        await expect(chartCounts(page)).toHaveText('1 change');
-        if (width === 320) await expect(chartCounts(page)).not.toBeVisible();
+        await expect(chartCounts(page)).toHaveCount(0);
       }
     });
   }
@@ -177,8 +176,7 @@ for (const [width, scale] of [[1440, 1], [390, 1], [320, 2]]) {
     for (const route of ROUTES) for (const example of ['daniel', 'sarah']) {
       await seed(page, returningState(2)); await page.goto(`${route}${route.includes('?') ? '&' : '?'}example=${example}`);
       await s2Viewport(page, width, scale);
-      await expect(chartCounts(page)).toHaveCount(1);
-      await expect(chartCounts(page)).toHaveText('1 change');
+      await expect(chartCounts(page)).toHaveCount(0);
       expect((await page.locator('main').textContent())!.match(RETURNING_COUNT) ?? []).toEqual([]);
     }
   });

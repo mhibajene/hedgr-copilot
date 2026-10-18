@@ -8,6 +8,7 @@ import wallet from '../research-wallet.module.css';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { useState, useMemo } from 'react';
+import { formatLocalCurrency } from '../../../lib/utils/money';
 import { useLedgerStore } from '../../../lib/state/ledger';
 import { getEnvironmentMode } from '../../../lib/env/mode';
 import { TxStatusPill, TxDetailModal } from '../../../components';
@@ -130,7 +131,7 @@ function ThreadIcon({ type }: { type: 'DEPOSIT' | 'WITHDRAW' }) {
 }
 
 /** Title, status line and amount shared by both simulated thread cards. */
-function ThreadCardContent({ tx, completed }: { tx: TxLifecycle; completed: boolean }) {
+function ThreadCardContent({ tx, completed, sourceAmount }: { tx: TxLifecycle; completed: boolean; sourceAmount?: string }) {
   return (
     <>
       <span className={finish.threadCardText}>
@@ -147,9 +148,12 @@ function ThreadCardContent({ tx, completed }: { tx: TxLifecycle; completed: bool
           )}
         </small>
       </span>
-      <strong className={finish.threadCardAmount} data-testid={`activity-delta-${tx.type.toLowerCase()}`}>
-        {tx.type === 'DEPOSIT' ? '+' : '−'}${tx.amountUSD.toFixed(2)}
-      </strong>
+      <span className={finish.threadCardAmount}>
+        <strong data-testid={`activity-delta-${tx.type.toLowerCase()}`}>
+          {tx.type === 'DEPOSIT' ? '+' : '−'}${tx.amountUSD.toFixed(2)}
+        </strong>
+        {sourceAmount ? <small className="block text-sm font-normal">{sourceAmount}</small> : null}
+      </span>
     </>
   );
 }
@@ -199,11 +203,13 @@ function ActivityRow({
   onClick,
   syntheticJourneyActive,
   resultingBalance,
+  sourceAmount,
 }: {
   tx: TxLifecycle;
   onClick: () => void;
   syntheticJourneyActive: boolean;
   resultingBalance?: number;
+  sourceAmount?: string;
 }) {
   return (
     <button
@@ -248,7 +254,8 @@ function ActivityRow({
           >
             {tx.type === 'DEPOSIT' ? '+' : '-'}${tx.amountUSD.toFixed(2)}
           </div>
-          {!syntheticJourneyActive &&
+          {sourceAmount ? <span className="block text-sm font-normal">{sourceAmount}</span> : null}
+          {!sourceAmount && !syntheticJourneyActive &&
           tx.amountZMW !== undefined &&
           tx.amountZMW > 0 ? (
             <div className="text-sm tabular-nums text-hedgr-500">
@@ -287,6 +294,7 @@ function ActivityRow({
 
 export default function ActivityPage() {
   const transactions = useLedgerStore((s) => s.transactions);
+  const sourceAmounts = new Map(transactions.flatMap(tx => tx.type === 'deposit' && tx.source_local_amount !== undefined && tx.source_local_currency ? [[tx.txn_ref, formatLocalCurrency(tx.source_local_amount, tx.source_local_currency)] as const] : []));
   const searchParams = useSearchParams();
   const syntheticJourneyActive =
     isSyntheticJourneyPrimaryCondition(searchParams?.toString()) &&
@@ -520,7 +528,7 @@ export default function ActivityPage() {
               <ThreadIcon type={tx.type} />
               <details className={finish.threadCard}>
               <summary data-testid={`activity-row-${tx.type.toLowerCase()}`} data-activity-type={tx.type} data-activity-status={tx.status}>
-                <ThreadCardContent tx={tx} completed={completed} />
+                <ThreadCardContent tx={tx} completed={completed} sourceAmount={sourceAmounts.get(tx.id)} />
               </summary>
               <div data-testid="research-activity-detail">
                 <p>{label} detail · {formatTime(tx.createdAt)}</p>
@@ -694,6 +702,7 @@ export default function ActivityPage() {
                     onClick={() => handleRowClick(tx)}
                     syntheticJourneyActive={productSimulationActive}
                     resultingBalance={syntheticResultingBalances.get(tx.id)}
+                    sourceAmount={sourceAmounts.get(tx.id)}
                   />
                 ))}
               </div>

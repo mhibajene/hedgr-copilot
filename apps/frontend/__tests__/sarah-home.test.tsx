@@ -36,7 +36,7 @@ import { ENGINE_TRUST_INFORMATIONAL_DENYLIST } from './engine-trust-framing-deny
 const ROUTES = ['/dashboard?journey=class-a-val-002', '/dashboard-synthetic-journey'];
 const OPTIONS = ['Your own simulation', "Daniel's reserve", "Sarah's course fee"];
 const COPY = {
-  h1: 'Example', heading: 'Fictional example · Sarah’s course fee', caption: '≈ ZMW 27,000.00 Example figure, not a quote', card: 'Course fee',
+  h1: 'Example', heading: 'Fictional example · Sarah’s course fee', caption: 'ZMW 6,000.00', card: 'Course fee',
   date: 'Example date: 9 Oct 2026',
   due: 'Due 1 Oct 2027.',
   rate: 'Example rate: ZMW 27 per US dollar. Not a live rate.',
@@ -79,7 +79,7 @@ function seed() {
 function assertRead() {
   expect(screen.getByRole('heading', { level: 1 }).textContent).toBe(COPY.h1);
   expect(screen.getAllByTestId('dashboard-sarah-read')).toHaveLength(1);
-  expect(screen.getByTestId('sarah-read-figure').textContent).toBe('$1000.00 USD');
+  expect(screen.getByTestId('sarah-read-figure').textContent).toBe('ZMW 6,000.00');
 }
 beforeEach(() => {
   vi.stubEnv('NEXT_PUBLIC_AUTH_MODE', 'mock'); vi.stubEnv('NEXT_PUBLIC_FX_MODE', 'stub'); vi.stubEnv('NEXT_PUBLIC_APP_ENV', 'prod');
@@ -132,7 +132,7 @@ test('Sarah hero uses $1000.00 USD and one independent fee observation', async (
   expect(screen.getByTestId('sarah-read-as-of').querySelector('time')?.getAttribute('datetime')).toBe(AS_OF);
   expect(panel().querySelectorAll('time')).toHaveLength(4);
   expect(screen.getByTestId('sarah-fee-card').querySelector('time')?.getAttribute('datetime')).toBe('2027-10-01');
-  expect(panel().textContent?.split('≈ ZMW 27,000.00')).toHaveLength(2);
+  expect(panel().textContent?.split('ZMW 6,000.00')).toHaveLength(2);
   expect(panel().textContent).not.toContain('Course fee USD 1,000');
   expect(screen.getAllByTestId('sarah-fee-card')).toHaveLength(1);
   expect(screen.getByTestId('sarah-fee-card').querySelector('time')?.parentElement?.textContent).toBe(COPY.due);
@@ -151,8 +151,9 @@ test('Sarah hero uses $1000.00 USD and one independent fee observation', async (
   const sentinel = {...read, rateBasis:{kind:'example-rate' as const,zmwPerUsd:DANIEL_FIXTURE_RATE_ZMW_PER_USD}, asOf:'2030-02-03T23:45:00.000Z',declaredFee:{...read.declaredFee,amount:1234.56,dueDate:'2031-04-05'},localDisplay:'ENGINE FIGURE',
     explanation:{fee:'ENGINE FEE',rateAssumption:'ENGINE RATE',limits:'ENGINE LIMITS'}};
   render(<SarahExampleHome read={sentinel}/>);
-  expect(screen.getByTestId('sarah-read-figure').textContent).toBe('$1234.56 USD');
-  expect(screen.getByTestId('sarah-read-caption').textContent).toBe('≈ ZMW 33,333.12 Example figure, not a quote');
+  expect(screen.getByTestId('sarah-fee-figure').textContent).toBe('$1234.56 USD');
+  expect(screen.getByTestId('sarah-read-figure').textContent).toBe('ZMW 6,000.00');
+  expect(screen.queryByTestId('sarah-read-caption')).toBeNull();
   expect(screen.getByTestId('sarah-read-as-of').textContent).toBe('Example date: 3 Feb 2030');
   expect(screen.getByTestId('sarah-fee-card').querySelector('time')?.textContent).toBe('5 Apr 2031');
   expect(Array.from(panel().querySelectorAll('time')).map(n=>n.getAttribute('datetime'))).toEqual(['2026-04-14T00:00:00.000Z','2026-07-21T00:00:00.000Z',sentinel.asOf,sentinel.declaredFee.dueDate]);
@@ -240,9 +241,10 @@ test('Sarah Home uses locked copy and no funding claims', () => {
   for (const route of ROUTES) {
     at(route, 'sarah'); const view = render(<DashboardPage />); assertRead();
     expect(document.getElementById('dashboard-sarah-label')?.textContent).toBe(COPY.heading);
-    expect(screen.getByTestId('sarah-read-caption').textContent).toBe(COPY.caption);
-    expect(withoutChart(screen.getByTestId('sarah-fee-card'))).toBe(COPY.card + COPY.due + COPY.rate + COPY.limits);
-    expect(withoutChart(panel())).toBe(COPY.heading + '$1000.00 USD' + COPY.caption + COPY.date + COPY.card + COPY.due + COPY.rate + COPY.limits);
+    expect(screen.getByTestId('sarah-read-figure').textContent).toBe(COPY.caption);
+    expect(screen.queryByTestId('sarah-read-caption')).toBeNull();
+    expect(withoutChart(screen.getByTestId('sarah-fee-card'))).toBe(COPY.card + '$1000.00 USD' + COPY.due + COPY.rate + COPY.limits);
+    expect(withoutChart(panel())).toBe(COPY.heading + COPY.caption + COPY.date + COPY.card + '$1000.00 USD' + COPY.due + COPY.rate + COPY.limits);
     expect(picker().selectedOptions[0].textContent).toBe(OPTIONS[2]);
     expect(screen.getAllByText(COPY.rate, { exact: true })).toHaveLength(1);
     const text = panel().textContent!.replace(COPY.limits, ''); // Keep the exact negative payment-ability statement.

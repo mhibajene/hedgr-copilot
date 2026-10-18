@@ -20,14 +20,19 @@ function assertNoHighRisk(text: string) {
 }
 
 describe('market-data-continuity-copy (MC-S2-020)', () => {
+  test.each(['deposit', 'withdraw'] as const)('RELEASE-GATE-FIX-001 T1 %s locked example-rate copy', (route) => {
+      const copy = getMarketDataContinuityCopyJoined(route);
+      expect(copy).toContain("The example rate didn't load. This simulation uses a fixed example rate, not market data.");
+      expect(copy).toContain('Confirm turns on once the example rate loads.');
+      expect(copy).not.toMatch(/payment method|We could not load current market data|Confirm stays off/);
+  });
   test('deposit: four body lines and headline cover trust structure', () => {
     const c = getMarketDataContinuityCopy('deposit');
     expect(c.headline.length).toBeGreaterThan(10);
-    expect(c.lines).toHaveLength(4);
-    const [a, b, d, e] = c.lines;
+    expect(c.lines).toHaveLength(3);
+    const [a, b, e] = c.lines;
     expect(a).toMatch(/could not load|market data|exchange rate/i);
     expect(b).toMatch(/conversion|local|USD/i);
-    expect(d).toMatch(/Deposit|payment method|amount field/i);
     expect(e).toMatch(/Confirm|off until|rate|without/i);
   });
 

@@ -1,4 +1,15 @@
+// @vitest-environment jsdom
+import React from 'react';
+import { act, cleanup, render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, test, vi } from 'vitest';
+import { usePathname, useSearchParams } from 'next/navigation';
+import { getSimulationDisplayCurrency, setSimulationDisplayCurrency } from '../lib/state/simulation-display-currency';
+vi.mock('next/navigation', () => ({ usePathname: vi.fn(), useSearchParams: vi.fn() }));
+vi.mock('../lib/defi', () => ({ defiAdapter: { getNetApy: () => Promise.resolve(.05) } }));
+vi.mock('../lib/policy/usePolicy', () => ({ usePolicy: () => ({ isFeatureEnabled: () => false }) }));
+vi.mock('../lib/fx/FxRateContext', () => ({ useFxRate: () => ({ rate: 20, status: 'ready' }), isFxRateAvailable: () => true }));
+import DashboardPage from '../app/(app)/dashboard/page';
+(globalThis as typeof globalThis & { React: typeof React }).React = React;
 import {
   getSyntheticJourneyHref,
   getSyntheticJourneyRate,
@@ -14,7 +25,40 @@ import { DANIEL_FIXTURE_RATE_ZMW_PER_USD } from '../lib/engine/daniel-read';
 import { FIXED_RATE_BY_QUOTE, FX_RATE_ZMW_PER_USD_DEFAULT, getFixedRate, zmwToUsd } from '../lib/fx';
 
 afterEach(() => {
+  cleanup(); vi.restoreAllMocks(); vi.unstubAllGlobals(); localStorage.clear();
   vi.unstubAllEnvs();
+});
+
+test.each(['PHP', 'NGN'])('RELEASE-GATE-FIX-001 T4 study reset %s', async (stored) => {
+  stubSyntheticEnvironment();
+  vi.stubGlobal('matchMedia', () => ({ matches: true }));
+  for (const example of ['own', 'daniel', 'sarah']) for (const reset of [false, true]) for (const study of [false, true]) {
+    cleanup(); localStorage.clear(); setSimulationDisplayCurrency(stored);
+    const query = `example=${example}${reset ? '&reset=1' : ''}${study ? '&study=1' : ''}`;
+    window.history.replaceState(null, '', `/dashboard-synthetic-journey?${query}`);
+    vi.mocked(usePathname).mockReturnValue('/dashboard-synthetic-journey');
+    vi.mocked(useSearchParams).mockReturnValue(new URLSearchParams(query) as ReturnType<typeof useSearchParams>);
+    const { useSimulationDisplayCurrency } = await import('../lib/state/simulation-display-currency');
+    function Subscriber() { return React.createElement('span', { 'data-testid': 'release-gate-fix-001-currency' }, useSimulationDisplayCurrency()); }
+    await act(async () => { render(React.createElement(React.Fragment, null, React.createElement(Subscriber), React.createElement(DashboardPage))); });
+    const expected = reset && study && example !== 'sarah' ? 'ZMW' : stored;
+    expect(localStorage.getItem('hedgr.simulation.display-currency')).toBe(expected);
+    expect(screen.getByTestId('release-gate-fix-001-currency').textContent).toBe(expected);
+    if (reset) expect(new URLSearchParams(window.location.search).has('study')).toBe(false);
+  }
+});
+test('RELEASE-GATE-FIX-001 T4 ordinary KES entry and blocked study storage', async () => {
+  stubSyntheticEnvironment(); vi.stubGlobal('matchMedia', () => ({ matches: true }));
+  localStorage.clear(); setSimulationDisplayCurrency('KES');
+  vi.mocked(usePathname).mockReturnValue('/dashboard-synthetic-journey');
+  vi.mocked(useSearchParams).mockReturnValue(new URLSearchParams('reset=1') as ReturnType<typeof useSearchParams>);
+  await act(async () => { render(React.createElement(DashboardPage)); });
+  expect(localStorage.getItem('hedgr.simulation.display-currency')).toBe('KES');
+  expect(screen.getByTestId('local-balance-figure').textContent).toContain('KES');
+  cleanup(); localStorage.clear(); setSimulationDisplayCurrency('NGN');
+  vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => { throw new Error('blocked'); });
+  vi.mocked(useSearchParams).mockReturnValue(new URLSearchParams('reset=1&study=1') as ReturnType<typeof useSearchParams>);
+  await act(async () => { render(React.createElement(DashboardPage)); }); expect(getSimulationDisplayCurrency()).toBe('ZMW');
 });
 
 function stubSyntheticEnvironment() {

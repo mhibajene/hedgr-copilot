@@ -655,9 +655,7 @@ describe('WithdrawPage CLASS-A-VAL-002 primary condition', () => {
       target: { value: '1' },
     });
     const balancePreview = screen.getByTestId('withdraw-balance-preview');
-    expect(balancePreview.textContent).toContain('$25.00');
-    expect(balancePreview.textContent).toContain('$1.00');
-    expect(balancePreview.textContent).toContain('$24.00');
+    expect(balancePreview.textContent).toContain('What would remain: $24.00');
     expect(balancePreview.textContent).toMatch(/example calculation/i);
     expect(balancePreview.textContent).toMatch(/does not create a real payout/i);
     expect(balancePreview.textContent).not.toMatch(
@@ -725,7 +723,7 @@ describe('D-132 selected simulation withdrawal estimate', () => {
     fireEvent.change(amount, { target: { value: '6' } });
     expect((screen.getByRole('button', { name: 'Confirm' }) as HTMLButtonElement).disabled).toBe(true);
     fireEvent.change(amount, { target: { value: '2' } });
-    expect(screen.getByTestId('withdraw-balance-preview').textContent).toContain('$5.00 − $2.00 = $3.00');
+    expect(screen.getByTestId('withdraw-balance-preview').textContent).toContain('What would remain: $3.00');
     expect(withdrawMock.createWithdraw).not.toHaveBeenCalled();
     await act(async () => { fireEvent.click(screen.getByRole('button', { name: 'Confirm' })); });
     expect(withdrawMock.createWithdraw).toHaveBeenCalledWith(2, { skipAutoConfirm: false });
@@ -750,7 +748,7 @@ describe('§359 synthetic withdrawal estimate at the Engine fixture', () => {
     fireEvent.change(amount, { target: { value: '6' } });
     expect((screen.getByRole('button', { name: 'Confirm' }) as HTMLButtonElement).disabled).toBe(true);
     fireEvent.change(amount, { target: { value: '2' } });
-    expect(screen.getByTestId('withdraw-balance-preview').textContent).toContain('$5.00 − $2.00 = $3.00');
+    expect(screen.getByTestId('withdraw-balance-preview').textContent).toContain('What would remain: $3.00');
     await act(async () => { fireEvent.click(screen.getByRole('button', { name: 'Confirm' })); });
     expect(withdrawMock.createWithdraw).toHaveBeenCalledTimes(1);
     expect(withdrawMock.createWithdraw).toHaveBeenCalledWith(2, { skipAutoConfirm: false });
@@ -761,5 +759,29 @@ describe('§359 synthetic withdrawal estimate at the Engine fixture', () => {
     const writer = readFileSync(resolve(__dirname, '../lib/payments/withdraw.mock.ts'), 'utf8');
     expect(writer).toMatch(/amount_zmw: 0,/);
     expect(writer).toMatch(/fx_rate: 0,/);
+  });
+});
+
+describe('RELEASE-GATE-FIX-001', () => {
+  test('T1 Withdraw unavailable-rate extension', async () => {
+    vi.useFakeTimers();
+    vi.mocked(useBalance).mockReturnValue({ total: 37.04, available: 37.04, pending: 0, currency: 'USD', asOf: 1, isLoading: false, error: null, refresh: vi.fn() });
+    vi.mocked(useLatestFx).mockReturnValue({ status: 'error', retry: vi.fn() });
+    render(<WithdrawPage />); await act(async () => { await vi.advanceTimersByTimeAsync(350); });
+    const panel = screen.getByTestId('withdraw-market-data-continuity');
+    expect(panel.textContent).toContain("The example rate didn't load. This simulation uses a fixed example rate, not market data.");
+    expect(panel.textContent).toContain('Confirm turns on once the example rate loads.');
+  });
+  test('T5 Withdraw receipt extension', async () => {
+    vi.useFakeTimers(); vi.stubEnv('NEXT_PUBLIC_AUTH_MODE', 'mock'); vi.stubEnv('NEXT_PUBLIC_FX_MODE', 'stub');
+    vi.mocked(useSearchParams).mockReturnValue(new URLSearchParams('journey=class-a-val-002') as ReturnType<typeof useSearchParams>);
+    vi.mocked(useBalance).mockReturnValue({ total: 37.04, available: 37.04, pending: 0, currency: 'USD', asOf: 1, isLoading: false, error: null, refresh: vi.fn() });
+    vi.mocked(useLatestFx).mockReturnValue({ status: 'success', data: { pair: 'USDZMW', rate: 20, ts: 1 }, retry: vi.fn() });
+    vi.mocked(withdrawMock.status).mockResolvedValue('CONFIRMED');
+    render(<WithdrawPage />); await act(async () => { await vi.advanceTimersByTimeAsync(350); });
+    fireEvent.change(screen.getByTestId('withdraw-amount'), { target: { value: '10' } });
+    await act(async () => { fireEvent.click(screen.getByRole('button', { name: 'Confirm' })); });
+    await act(async () => { await vi.advanceTimersByTimeAsync(3000); });
+    expect(screen.getByTestId('withdraw-balance-reconciliation').closest('div')!.textContent).toBe('Balance now $27.04');
   });
 });

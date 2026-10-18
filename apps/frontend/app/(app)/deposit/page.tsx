@@ -13,6 +13,7 @@ import { LOCAL_STUB_DEPOSIT_FAILURE_REVIEW_HINTS } from '../../../lib/deposits/l
 import { isLocalDevSimulationSeamEnabled } from '../../../lib/dev/local-simulation-guard';
 import { useBalance } from '../../../lib/hooks/useBalance';
 import { useLedgerStore } from '../../../lib/state/ledger';
+import { formatLocalCurrency } from '../../../lib/utils/money';
 import { getEnvironmentMode } from '../../../lib/env/mode';
 import { useLatestFx } from '../../../lib/hooks/useLatestFx';
 import { resolveMarket, resolveLocalCurrencyCode } from '../../../config/market';
@@ -77,6 +78,7 @@ function DepositPageContent() {
 
   const [amountLocalStr, setAmountLocalStr] = useState<string>('100');
   const [txnRef, setTxnRef] = useState<string | null>(null);
+  const receiptSource = useLedgerStore(s => txnRef ? s.getByTxnRef(txnRef) : undefined);
   const [usdToCredit, setUsdToCredit] = useState(0);
   const [balanceBefore, setBalanceBefore] = useState<number | null>(null);
   const [recordedAt, setRecordedAt] = useState<number | null>(null);
@@ -179,6 +181,8 @@ function DepositPageContent() {
       status: 'pending',
       amount_zmw: amountZmwLedger,
       amount_usd: amountUsdLedger,
+      source_local_amount: amountLocalNum,
+      source_local_currency: quote,
       fx_rate: fxRateLedger,
       created_at: now,
       updated_at: now,
@@ -382,7 +386,7 @@ function DepositPageContent() {
             </>
           )
         ) : (
-          <span className="text-gray-600">{CONVERSION_PREVIEW_UNAVAILABLE_PLACEHOLDER}</span>
+          <span className="text-gray-600">{rate === null ? CONVERSION_PREVIEW_UNAVAILABLE_PLACEHOLDER : 'Enter an amount to see it at the example rate.'}</span>
         )}
       </div>
       <button
@@ -393,7 +397,7 @@ function DepositPageContent() {
         {status === 'PENDING' ? 'Processing…' : 'Confirm'}
       </button>
       {productSimulationActive && !rateAllowsConfirm ? (
-        <p className={finish.reason} data-testid="deposit-confirm-reason">Confirm turns on when the rate is back.</p>
+        <p className={finish.reason} data-testid="deposit-confirm-reason">Confirm turns on once the example rate loads.</p>
       ) : null}
       {status === 'CONFIRMED' && productSimulationActive ? (
         <div className="space-y-4" data-testid="deposit-confirmation-region">
@@ -402,10 +406,10 @@ function DepositPageContent() {
             headlineTestId="deposit-confirmed"
             time={formatRecordedTime(recordedAt ?? Date.now())}
             rows={[
-              ...(amountLocalNum !== null ? [{ label: 'Amount', value: `${quote} ${amountLocalNum.toFixed(2)}` }] : []),
+              ...(amountLocalNum !== null ? [{ label: 'Amount', value: receiptSource?.source_local_amount !== undefined && receiptSource.source_local_currency ? formatLocalCurrency(receiptSource.source_local_amount, receiptSource.source_local_currency) : `${quote} ${amountLocalNum.toFixed(2)}` }] : []),
               { label: 'Shown as', value: `+$${usdToCredit.toFixed(2)}` },
               ...(syntheticJourneyActive && rate !== null ? [{ label: 'Example rate', value: `1 USD = ${rate.toFixed(2)} ${quote}` }] : []),
-              ...(balanceBefore !== null ? [{ label: 'Balance', value: <>${balanceBefore.toFixed(2)} → <b>${(balanceBefore + usdToCredit).toFixed(2)}</b></> }] : []),
+              ...(balanceBefore !== null ? [{ label: 'Balance now ', value: <b>${(balanceBefore + usdToCredit).toFixed(2)}</b> }] : []),
               { label: 'Real money moved', value: 'None' },
             ]}
           />

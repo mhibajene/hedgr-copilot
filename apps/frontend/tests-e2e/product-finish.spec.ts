@@ -145,7 +145,7 @@ for (const synthetic of [true, false]) {
 
     await page.goto(route('/withdraw'));
     await page.getByTestId('withdraw-amount').fill('200');
-    await expect(page.getByTestId('withdraw-balance-preview')).toContainText('$300.00 − $200.00 = $100.00');
+    await expect(page.getByTestId('withdraw-balance-preview')).toContainText('What would remain: $100.00');
     await expectMainFits(page);
     await page.screenshot({ path: testInfo.outputPath(`${family}-withdraw.png`), fullPage: true });
     await page.getByTestId('withdraw-amount').fill('301');

@@ -48,7 +48,7 @@ export function MarketDataContinuityPanel({
         <dl className="mt-3">
           {lines.map((line, index) => (
             <div key={line} className="border-t border-hedgr-100 py-3">
-              <dt className="text-[11px] font-semibold uppercase tracking-[0.1em] text-hedgr-500">{ROW_LABELS[index]}</dt>
+              <dt className="text-[11px] font-semibold uppercase tracking-[0.1em] text-hedgr-500">{ROW_LABELS[route === 'deposit' && index === 2 ? 3 : index]}</dt>
               <dd className="mt-1 text-sm leading-relaxed">{line}</dd>
             </div>
           ))}

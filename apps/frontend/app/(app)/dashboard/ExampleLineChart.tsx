@@ -1,6 +1,9 @@
 'use client';
 
-import { useEffect, useId, useRef, useState } from 'react';
+import { createContext, useContext, useEffect, useId, useRef, useState } from 'react';
+
+/** Optional presentation lookup supplied by Home; position and series facts stay unchanged. */
+export const ChartSourceAmountsContext = createContext<ReadonlyMap<string, string>>(new Map());
 import { balanceAt, formatUsd, type PositionEntry } from '../../../lib/state/last-visit';
 import { formatLocalCurrency } from '../../../lib/utils/money';
 import { countChanges, formatEventDate, mergeDots, placeLabels, selectLabels, type BalanceSample, type ChartEvent } from './lineLabels';
@@ -158,6 +161,7 @@ export function ExampleLineChart(props: ChartProps) {
 }
 
 function ActivityLine({ series, events, lastVisit = null, settle = 1, example = false, heroAmount }: Extract<ChartProps, { mode: 'step' }>) {
+  const sourceAmounts = useContext(ChartSourceAmountsContext);
   const plot = useRef<HTMLDivElement>(null);
   const listId = useId();
   const [size, setSize] = useState({ plot: 300, screen: 1440, gutter: 12 });
@@ -202,16 +206,17 @@ function ActivityLine({ series, events, lastVisit = null, settle = 1, example = 
     return { ...event, x: (point.x / 300) * size.plot, y: point.y };
   });
   const groups = mergeDots(located);
-  const labels = placeLabels(selectLabels(located, lastVisit, size.screen), size.plot);
+  const labels = example ? [] : placeLabels(selectLabels(located, lastVisit, size.screen), size.plot);
   const title = example ? 'All changes · example dates' : 'All changes';
   const reveal = (id: string) => { setActive(id); setOpened(true); };
   const rowParts = (event: ChartEvent) => {
     if (event.kind === 'reading') return { prefix: event.prefix ?? '', suffix: event.suffix ?? '' };
     const first = event.id === firstDeposit?.id;
-    const defers = !example && first && events.length === 1 && event.amount === heroAmount;
+    const sourceAmount = !example ? sourceAmounts.get(event.id) : undefined;
+    const defers = !sourceAmount && !example && first && events.length === 1 && event.amount === heroAmount;
     const name = first ? 'First deposit' : event.kind === 'deposit' ? 'Deposit' : 'Withdrawal';
     if (defers) return { prefix: `${name} · `, suffix: ' · shown above' };
-    const amount = event.currency === 'ZMW' ? formatLocalCurrency(event.amount!, event.currency) : formatUsd(event.amount!);
+    const amount = sourceAmount ?? (event.currency === 'ZMW' ? formatLocalCurrency(event.amount!, event.currency) : formatUsd(event.amount!));
     return { prefix: `${name} ${event.kind === 'withdrawal' ? '−' : '+'}${amount} · `, suffix: '' };
   };
   return (
@@ -227,8 +232,9 @@ function ActivityLine({ series, events, lastVisit = null, settle = 1, example = 
           const first = group.events[0];
           const deposit = group.events.some(event => event.id === firstDeposit?.id);
           const merged = group.events.length > 1 ? `${group.events.length} changes on ${formatEventDate(first.at, example, false)}` : '';
-          const name = deposit ? `First deposit, ${formatEventDate(firstDeposit!.at, example, false)}${merged ? ` · ${merged}` : ''}` : merged || countChanges(1, false);
-          return <button key={first.id} type="button" data-testid="chart-event-dot" className={home.visualiserDot} style={{ left: `clamp(.75rem, ${group.x / size.plot * 100}%, calc(100% - .75rem))`, top: `${first.y}%` }} aria-label={name} aria-describedby={group.events.map(event => `${listId}-${event.id}`).join(' ')} aria-controls={listId} aria-expanded={opened} onFocus={() => reveal(first.id)} onClick={() => reveal(first.id)}>{group.events.length > 1 ? group.events.length : null}</button>;
+          const exampleName = `${first.kind === 'withdrawal' ? 'Withdrawal' : 'Deposit'}, ${formatEventDate(first.at, true, false)}`;
+          const name = example ? exampleName : deposit ? `First deposit, ${formatEventDate(firstDeposit!.at, example, false)}${merged ? ` · ${merged}` : ''}` : merged || countChanges(1, false);
+          return <button key={first.id} type="button" data-testid="chart-event-dot" className={home.visualiserDot} style={{ left: `clamp(.75rem, ${group.x / size.plot * 100}%, calc(100% - .75rem))`, top: `${first.y}%` }} aria-label={name} aria-describedby={group.events.map(event => `${listId}-${event.id}`).join(' ')} aria-controls={listId} aria-expanded={opened} onFocus={() => reveal(first.id)} onClick={() => reveal(first.id)}>{!example && group.events.length > 1 ? group.events.length : null}</button>;
         })}
         <span aria-hidden="true" data-chart-latest className={home.visualiserLatest} style={{ left: `${points.at(-1)!.x / 3}%`, top: `${points.at(-1)!.y}%` }} />
         {labels.map(label => <span key={label.id} className={home.visualiserLabel} data-chart-label data-placement={label.placement} style={{ left: `${label.left / size.plot * 100}%`, maxWidth: `${label.width}px`, top: `${located.find(event => event.id === label.id)?.y ?? 50}%`, transform: label.placement === 'below' ? `translateY(${1 + label.lane * 3}rem)` : undefined }}>{label.text}</span>)}

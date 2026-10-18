@@ -37,8 +37,13 @@ for (const width of [390, 1440]) test(`T1 T2 T3 T7: real journey cohesion at ${w
     await expect(picker.locator('option')).toHaveText(OPTIONS);
     await expect(picker.locator('option:checked')).toHaveText(OPTIONS[index]);
     await expect(page.getByTestId('example-picker-value')).toHaveText(OPTIONS[index]);
-    await expect(hero.locator('[data-component="LocalFigure"]')).toHaveText(`${example === 'sarah' ? '≈ ZMW 27,000.00' : '≈ ZMW 21,600.00'} ${CAPTION}`);
-    await expect(hero.getByText(CAPTION, { exact: true })).toBeVisible();
+    if (example === 'sarah') {
+      await expect(hero).toContainText('ZMW 6,000.00');
+      await expect(hero.locator('[data-component="LocalFigure"]')).toHaveCount(0);
+    } else {
+      await expect(hero.locator('[data-component="LocalFigure"]')).toHaveText(`≈ ZMW 21,600.00 ${CAPTION}`);
+      await expect(hero.getByText(CAPTION, { exact: true })).toBeVisible();
+    }
     await expect(page.locator('[data-component="RateLine"]')).toHaveCount(1);
     await expect(page.getByText(RATE, { exact: true })).toBeVisible();
     const text = await page.locator('main').evaluate(main => {
@@ -47,7 +52,7 @@ for (const width of [390, 1440]) test(`T1 T2 T3 T7: real journey cohesion at ${w
       clone.querySelectorAll('dialog:not([open]), details:not([open]), .sr-only, [aria-hidden="true"]').forEach(n => n.remove());
       return clone.textContent!;
     });
-    for (const figure of [example === 'sarah' ? '$1000.00' : '$800.00', example === 'sarah' ? '≈ ZMW 27,000.00' : '≈ ZMW 21,600.00', RATE]) expect(text.split(figure).length - 1, figure).toBe(1);
+    for (const figure of [example === 'sarah' ? '$1000.00' : '$800.00', example === 'sarah' ? 'ZMW 6,000.00' : '≈ ZMW 21,600.00', RATE]) expect(text.split(figure).length - 1, figure).toBe(1);
     if (example !== 'own') {
       const name = example === 'daniel' ? 'Daniel’s reserve' : 'Sarah’s course fee';
       expect(text.split(name).length - 1).toBe(1);
@@ -63,7 +68,7 @@ for (const width of [390, 1440]) test(`T1 T2 T3 T7: real journey cohesion at ${w
       }
     }
     const suffix = hero.locator('[data-component="UsdSuffix"]');
-    expect(await suffix.evaluate(n => parseFloat(getComputedStyle(n).fontSize))).toBeLessThan(await hero.locator('[data-component="UsdFigure"]').evaluate(n => parseFloat(getComputedStyle(n).fontSize)));
+    if (example !== 'sarah') expect(await suffix.evaluate(n => parseFloat(getComputedStyle(n).fontSize))).toBeLessThan(await hero.locator('[data-component="UsdFigure"]').evaluate(n => parseFloat(getComputedStyle(n).fontSize)));
     expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(1);
   }
 });
