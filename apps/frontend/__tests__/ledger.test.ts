@@ -5,6 +5,17 @@ import { useLedgerStore, LEDGER_SCHEMA_VERSION } from '../lib/state/ledger';
 import type { Tx } from '../lib/state/ledger';
 
 describe('LedgerStore', () => {
+  test('RELEASE-GATE-FIX-001 T8 retains display source metadata through settlement and hydration', async () => {
+    for (const [currency, amount, usd] of [['ZMW', 100, 3.70], ['ZMW', 1000, 37.04], ['NGN', 100, .07]] as const) {
+      useLedgerStore.getState().clear();
+      const tx = { txn_ref: `release-gate-fix-001-${currency}-${amount}`, type: 'deposit' as const, status: 'pending' as const, amount_zmw: +(usd * 27).toFixed(2), amount_usd: usd, fx_rate: 27, created_at: 1, updated_at: 1, source_local_amount: amount, source_local_currency: currency };
+      useLedgerStore.getState().append(tx);
+      useLedgerStore.getState().confirm(tx.txn_ref);
+      await useLedgerStore.persist.rehydrate();
+      expect(LEDGER_SCHEMA_VERSION).toBe(2);
+      expect(useLedgerStore.getState().getByTxnRef(tx.txn_ref)).toMatchObject({ ...tx, status: 'settled', updated_at: expect.any(Number) });
+    }
+  });
   beforeEach(() => {
     window.localStorage.clear();
     useLedgerStore.getState().clear();

@@ -763,3 +763,27 @@ describe('§359 synthetic withdrawal estimate at the Engine fixture', () => {
     expect(writer).toMatch(/fx_rate: 0,/);
   });
 });
+
+describe('RELEASE-GATE-FIX-001', () => {
+  test('T1 Withdraw unavailable-rate extension', async () => {
+    vi.useFakeTimers();
+    vi.mocked(useBalance).mockReturnValue({ total: 37.04, available: 37.04, pending: 0, currency: 'USD', asOf: 1, isLoading: false, error: null, refresh: vi.fn() });
+    vi.mocked(useLatestFx).mockReturnValue({ status: 'error', retry: vi.fn() });
+    render(<WithdrawPage />); await act(async () => { await vi.advanceTimersByTimeAsync(350); });
+    const panel = screen.getByTestId('withdraw-market-data-continuity');
+    expect(panel.textContent).toContain("The example rate didn't load. This simulation uses a fixed example rate, not market data.");
+    expect(panel.textContent).toContain('Confirm turns on once the example rate loads.');
+  });
+  test('T5 Withdraw receipt extension', async () => {
+    vi.useFakeTimers(); vi.stubEnv('NEXT_PUBLIC_AUTH_MODE', 'mock'); vi.stubEnv('NEXT_PUBLIC_FX_MODE', 'stub');
+    vi.mocked(useSearchParams).mockReturnValue(new URLSearchParams('journey=class-a-val-002') as ReturnType<typeof useSearchParams>);
+    vi.mocked(useBalance).mockReturnValue({ total: 37.04, available: 37.04, pending: 0, currency: 'USD', asOf: 1, isLoading: false, error: null, refresh: vi.fn() });
+    vi.mocked(useLatestFx).mockReturnValue({ status: 'success', data: { pair: 'USDZMW', rate: 20, ts: 1 }, retry: vi.fn() });
+    vi.mocked(withdrawMock.status).mockResolvedValue('CONFIRMED');
+    render(<WithdrawPage />); await act(async () => { await vi.advanceTimersByTimeAsync(350); });
+    fireEvent.change(screen.getByTestId('withdraw-amount'), { target: { value: '10' } });
+    await act(async () => { fireEvent.click(screen.getByRole('button', { name: 'Confirm' })); });
+    await act(async () => { await vi.advanceTimersByTimeAsync(3000); });
+    expect(screen.getByTestId('withdraw-balance-reconciliation').closest('div')!.textContent).toBe('Balance now $27.04');
+  });
+});

@@ -90,6 +90,15 @@ afterEach(() => {
 });
 
 describe('DepositPage market-data degraded state (MC-S2-020)', () => {
+  test('RELEASE-GATE-FIX-001 T2 valid-rate zero and empty prompt', async () => {
+    vi.useFakeTimers();
+    vi.mocked(useLatestFx).mockReturnValue({ status: 'success', data: { pair: 'USDZMW', rate: 20, ts: 1 }, retry: vi.fn() });
+    render(<DepositPage />); await act(async () => { await vi.advanceTimersByTimeAsync(350); });
+    for (const value of ['', '0']) {
+      fireEvent.change(screen.getByTestId('deposit-amount'), { target: { value } });
+      expect(screen.getByTestId('deposit-conversion-preview').textContent).toBe('Enter an amount to see it at the example rate.');
+    }
+  });
   test('preserves the non-simulated backend call and mounted confirmation path', async () => {
     vi.stubEnv('NEXT_PUBLIC_AUTH_MODE', 'magic');
     vi.stubEnv('NEXT_PUBLIC_FX_MODE', 'live');
