@@ -31,6 +31,7 @@ import {
   getSyntheticJourneyHref,
   getSyntheticJourneyRate,
   isSyntheticJourneyPrimaryCondition,
+  isSyntheticJourneyLinkContext,
   isSyntheticJourneyUnavailableDataScenario,
 } from '../../../lib/state/synthetic-journey';
 
@@ -51,6 +52,7 @@ function DepositPageContent() {
 
   const txReviewFlags = useMemo(() => resolveTxReviewSimulatorFlags(search), [search]);
   const reviewSeamActive = isTxReviewSeamActive(txReviewFlags);
+  const syntheticJourneyLinkContext = isSyntheticJourneyLinkContext(search);
   const syntheticJourneyActive =
     isSyntheticJourneyPrimaryCondition(search) &&
     searchParams?.get(CLASS_A_VAL_002_JOURNEY_PARAM) ===
@@ -221,7 +223,7 @@ function DepositPageContent() {
           title="Unable to load payment methods"
           description="We couldn't fetch the available deposit methods. Please try again."
           primaryAction={{ label: 'Retry', onClick: retryLoadMethods }}
-          secondaryAction={{ label: 'Go to Dashboard', href: '/dashboard' }}
+          secondaryAction={{ label: 'Go to Dashboard', href: syntheticJourneyLinkContext ? getSyntheticJourneyHref('/dashboard') : '/dashboard' }}
           data-testid="deposit-methods-error"
         />
       </main>
@@ -263,7 +265,7 @@ function DepositPageContent() {
               />
             </svg>
           }
-          secondaryAction={{ label: 'Go to Dashboard', href: '/dashboard' }}
+          secondaryAction={{ label: 'Go to Dashboard', href: syntheticJourneyLinkContext ? getSyntheticJourneyHref('/dashboard') : '/dashboard' }}
           data-testid="deposit-no-methods"
         />
       </main>
@@ -416,8 +418,8 @@ function DepositPageContent() {
           <ActionDock
             title="Try a simulated withdrawal"
             why="See what changes, and what stays, when money comes out."
-            primary={{ label: 'Continue to simulated withdrawal', href: syntheticJourneyActive ? getSyntheticJourneyHref('/withdraw') : '/withdraw' }}
-            secondary={{ label: 'Back to your position', href: syntheticJourneyActive ? getSyntheticJourneyHref('/dashboard') : '/dashboard' }}
+            primary={{ label: 'Continue to simulated withdrawal', href: syntheticJourneyLinkContext ? getSyntheticJourneyHref('/withdraw') : '/withdraw' }}
+            secondary={{ label: 'Back to your position', href: syntheticJourneyLinkContext ? getSyntheticJourneyHref('/dashboard') : '/dashboard' }}
           />
         </div>
       ) : status === 'CONFIRMED' ? (

@@ -36,6 +36,7 @@ import {
   CLASS_A_VAL_002_JOURNEY_VALUE,
   getSyntheticJourneyHref,
   isSyntheticJourneyPrimaryCondition,
+  isSyntheticJourneyLinkContext,
 } from '../../../lib/state/synthetic-journey';
 
 interface WithdrawMethod {
@@ -91,6 +92,7 @@ function WithdrawPageContent() {
 
   const txReviewFlags = useMemo(() => resolveTxReviewSimulatorFlags(search), [search]);
   const reviewSeamActive = isTxReviewSeamActive(txReviewFlags);
+  const syntheticJourneyLinkContext = isSyntheticJourneyLinkContext(search);
   const syntheticJourneyActive =
     isSyntheticJourneyPrimaryCondition(search) &&
     searchParams?.get(CLASS_A_VAL_002_JOURNEY_PARAM) ===
@@ -234,7 +236,7 @@ function WithdrawPageContent() {
           title="Unable to load your balance"
           description="We couldn't fetch your account balance. Please try again."
           primaryAction={{ label: 'Retry', onClick: refresh }}
-          secondaryAction={{ label: 'Go to Dashboard', href: '/dashboard' }}
+          secondaryAction={{ label: 'Go to Dashboard', href: syntheticJourneyLinkContext ? getSyntheticJourneyHref('/dashboard') : '/dashboard' }}
           data-testid="withdraw-balance-error"
         />
       </main>
@@ -249,7 +251,7 @@ function WithdrawPageContent() {
           title="Unable to load withdrawal methods"
           description="We couldn't fetch the available withdrawal methods. Please try again."
           primaryAction={{ label: 'Retry', onClick: retryLoadMethods }}
-          secondaryAction={{ label: 'Go to Dashboard', href: '/dashboard' }}
+          secondaryAction={{ label: 'Go to Dashboard', href: syntheticJourneyLinkContext ? getSyntheticJourneyHref('/dashboard') : '/dashboard' }}
           data-testid="withdraw-methods-error"
         />
       </main>
@@ -291,7 +293,7 @@ function WithdrawPageContent() {
               />
             </svg>
           }
-          secondaryAction={{ label: 'Go to Dashboard', href: '/dashboard' }}
+          secondaryAction={{ label: 'Go to Dashboard', href: syntheticJourneyLinkContext ? getSyntheticJourneyHref('/dashboard') : '/dashboard' }}
           data-testid="withdraw-no-methods"
         />
       </main>
@@ -332,7 +334,7 @@ function WithdrawPageContent() {
             label: productSimulationActive
               ? 'Add simulated deposit'
               : 'Make a deposit',
-            href: syntheticJourneyActive
+            href: syntheticJourneyLinkContext
               ? getSyntheticJourneyHref('/deposit')
               : '/deposit',
           }}
@@ -492,8 +494,8 @@ function WithdrawPageContent() {
           <ActionDock
             title="Check the evidence"
             why="Activity lists both entries and the balance after each one."
-            primary={{ label: 'Review Activity', href: syntheticJourneyActive ? getSyntheticJourneyHref('/activity') : '/activity' }}
-            secondary={{ label: 'Back to your position', href: syntheticJourneyActive ? getSyntheticJourneyHref('/dashboard') : '/dashboard' }}
+            primary={{ label: 'Review Activity', href: syntheticJourneyLinkContext ? getSyntheticJourneyHref('/activity') : '/activity' }}
+            secondary={{ label: 'Back to your position', href: syntheticJourneyLinkContext ? getSyntheticJourneyHref('/dashboard') : '/dashboard' }}
           />
         </div>
       ) : activeStatus && activeStatusPresentation && (

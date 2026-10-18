@@ -61,6 +61,7 @@ import {
   SYNTHETIC_JOURNEY_EXAMPLES,
   getSyntheticJourneyHref,
   isSyntheticJourneyPrimaryCondition,
+  isSyntheticJourneyLinkContext,
   isSyntheticJourneyResetRequested,
   parseSyntheticJourneyExample,
 } from "../../../lib/state/synthetic-journey";
@@ -128,6 +129,7 @@ export default function DashboardPage() {
   const [ready, setReady] = useState(false);
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const syntheticJourneyLinkContext = isSyntheticJourneyLinkContext(searchParams?.toString(), pathname);
   const syntheticJourneyEligible = isSyntheticJourneyPrimaryCondition(
     searchParams?.toString(),
     pathname
@@ -352,7 +354,7 @@ export default function DashboardPage() {
   const displayedTotal = arrivalAnimating && arrivalChange
     ? +(arrivalChange.from + (arrivalChange.to - arrivalChange.from) * arrivalProgress).toFixed(2)
     : total;
-  const trustHref = syntheticJourneyActive
+  const trustHref = syntheticJourneyLinkContext
     ? `/settings/trust?${CLASS_A_VAL_002_JOURNEY_PARAM}=${CLASS_A_VAL_002_JOURNEY_VALUE}`
     : "/settings/trust";
   const openSimulationExplainer = () => {
@@ -450,7 +452,7 @@ export default function DashboardPage() {
 
   const productRouteHref = (
     route: "/deposit" | "/withdraw" | "/activity"
-  ) => (syntheticJourneyActive ? getSyntheticJourneyHref(route) : route);
+  ) => (syntheticJourneyLinkContext ? getSyntheticJourneyHref(route) : route);
 
   const homeUtilities = syntheticJourneyActive ? (
     <nav aria-label="Simulation utilities" className={home.utilities} data-testid="dashboard-simulation-utilities">
@@ -878,7 +880,7 @@ export default function DashboardPage() {
                 </p>
               </div>
               <Link
-                href="/deposit"
+                href={productRouteHref("/deposit")}
                 className="inline-flex shrink-0 items-center justify-center rounded-xl bg-hedgr-primary px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-hedgr-600 focus:outline-none focus:ring-2 focus:ring-hedgr-500 focus:ring-offset-2 focus:ring-offset-hedgr-100"
               >
                 Make your first deposit
@@ -951,7 +953,7 @@ export default function DashboardPage() {
                 Recent activity
               </h2>
               <Link
-                href="/activity"
+                href={productRouteHref("/activity")}
                 className="shrink-0 text-sm font-medium text-hedgr-600 underline-offset-2 hover:text-hedgr-primary hover:underline"
               >
                 View all

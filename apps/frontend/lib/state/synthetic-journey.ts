@@ -41,6 +41,12 @@ export function isSyntheticJourneyEnvironment(): boolean {
   return getAuthMode() === 'mock' && isNonLiveFx;
 }
 
+/** Link identity only; scenario/content/rate eligibility stays independent. */
+export function isSyntheticJourneyLinkContext(search?: string, pathname?: string | null): boolean {
+  return pathname === CLASS_A_VAL_002_DASHBOARD_PATH ||
+    getSearchParams(search).get(CLASS_A_VAL_002_JOURNEY_PARAM) === CLASS_A_VAL_002_JOURNEY_VALUE;
+}
+
 export function isSyntheticJourneyPrimaryCondition(
   search?: string,
   pathname?: string | null,
