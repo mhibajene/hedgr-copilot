@@ -43,7 +43,7 @@ test('V15 one-shared-chart-all-examples, V16 first-row-and-marker-exact, V17 exa
   for (const year of [2026, 2027]) for (const id of ['daniel', 'sarah'] as const) {
     vi.setSystemTime(`${year}-10-15T12:00:00Z`); example(id);
     expect(screen.getAllByTestId('example-line-chart')).toHaveLength(1);
-    const marker = screen.getByRole('button', { name: `First deposit, ${id === 'daniel' ? '12 Jun' : '14 Apr'}` });
+    const marker = screen.getByRole('button', { name: `Deposit, ${id === 'daniel' ? '12 Jun' : '14 Apr'}` });
     expect(marker.textContent).toBe(''); expect(marker.closest('[aria-hidden="true"]')).toBeNull();
     fireEvent.click(screen.getByRole('button', { name: 'All changes · example dates' }));
     const rows = within(screen.getByTestId('chart-event-list')).getAllByRole('listitem').map(row => row.textContent);
@@ -83,9 +83,11 @@ test('V26 no-growing-label, V28 sarah-no-total-row, V29 sarah-fee-hero-and-limit
     const chart = screen.getByTestId('example-line-chart');
     expect(chart.textContent + Array.from(chart.querySelectorAll('[aria-label], [title]')).map(n => n.getAttribute('aria-label') ?? n.getAttribute('title')).join(' ')).not.toMatch(/grow|rising|increase|progress|towards|funded|enough|cover|remaining|left to|% of/i);
     if (id === 'sarah') {
-      expect(screen.getByTestId('sarah-read-figure').textContent).toBe('$1000.00 USD');
+      expect(screen.getByTestId('sarah-read-figure').textContent).toBe('ZMW 6,000.00');
       expect(screen.getAllByText(LIMITS, { exact: true })).toHaveLength(1);
-      expect(view.container.textContent).not.toMatch(/6,000|6000|\$600|\$400|3 Mar|5 Jun|progress|towards|funded|enough|cover|remaining|left to|% of/i);
+      const outsideHero = view.container.cloneNode(true) as HTMLElement;
+      outsideHero.querySelector('[data-testid="sarah-read-figure"]')!.remove();
+      expect(outsideHero.textContent).not.toMatch(/6,000|6000|\$600|\$400|3 Mar|5 Jun|progress|towards|funded|enough|cover|remaining|left to|% of/i);
     }
   }
 });

@@ -9,9 +9,8 @@ import {
 import { ABOUT_HEDGR_PATH } from '@/lib/narrative/about-hedgr';
 
 const accountRows = [
-  { label: 'Email', value: 'user@example.com' },
+  { label: 'Email (placeholder)', value: 'user@example.com' },
   { label: 'Display name', value: 'Not set', muted: true },
-  { label: 'Verification status', value: 'Not verified' },
 ];
 
 type SettingsPageProps = {
@@ -42,8 +41,9 @@ export default async function SettingsPage({ searchParams }: SettingsPageProps) 
 
       <section className="space-y-3" data-testid="settings-account">
         <h2 className="border-b border-hedgr-100 pb-2 text-[11px] font-bold uppercase tracking-[0.14em] text-hedgr-600">
-          Account
+          Example profile
         </h2>
+        <p className="text-sm leading-relaxed text-hedgr-500">Placeholder details. This simulation has no real account.</p>
         <dl className="border-y border-hedgr-100 bg-white">
           {accountRows.map((row) => (
             <div
@@ -91,8 +91,7 @@ export default async function SettingsPage({ searchParams }: SettingsPageProps) 
         <div className={baseline.trustCard}>
           <h3 className="text-sm font-semibold">About this simulation</h3>
           <p className="mt-2 text-sm leading-relaxed text-hedgr-dark">
-            Hedgr is currently using simulated information. Balances,
-            transactions and returns shown here are not real. No real customer
+            Hedgr is currently using simulated information. Balances and transactions shown here are not real. No real customer
             money is held or moved.
           </p>
           <Link

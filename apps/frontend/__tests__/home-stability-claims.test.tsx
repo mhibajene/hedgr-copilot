@@ -462,11 +462,68 @@ const BUNDLE_SOURCE_EDITS: Record<string, [string, string][]> = {
   ]
 };
 function bundlePreRuntime(path: string, value: string): string {
+  value = releaseGatePreRuntime(path, value);
   for (const [old, replacement] of BUNDLE_SOURCE_EDITS[path] ?? []) {
     if (value.includes(replacement)) {
       expect(value.split(replacement), path).toHaveLength(2);
       value = value.replace(replacement, old);
     } else expect(value, path).toContain(old);
+  }
+  return value;
+}
+
+// RELEASE-GATE-FIX-001 P3: exact immutable-base source edits; all original pins remain.
+const RELEASE_GATE_SOURCE_EDITS: Record<string, string[][]> = {
+  "app/(app)/dashboard/page.tsx": [
+    [
+      "import { getSimulationDisplayRate, useSimulationDisplayCurrency }",
+      "import { getSimulationDisplayRate, setSimulationDisplayCurrency, useSimulationDisplayCurrency }"
+    ],
+    [
+      "import { PositionLine } from \"./PositionLine\";",
+      "import { PositionLine } from \"./PositionLine\";\nimport { ChartSourceAmountsContext } from \"./ExampleLineChart\";\nimport { formatLocalCurrency } from \"../../../lib/utils/money\";"
+    ],
+    [
+      "        clearTransactions();\n        removeRetiredWalletBalance();",
+      "        clearTransactions();\n        removeRetiredWalletBalance();\n        if (searchParams?.get(\"study\") === \"1\") setSimulationDisplayCurrency(\"ZMW\");"
+    ],
+    [
+      "  const clearTransactions = useLedgerStore((s) => s.clear);",
+      "  const clearTransactions = useLedgerStore((s) => s.clear);\n  const sourceAmounts = useMemo(() => new Map(transactions.flatMap(tx => tx.type === \"deposit\" && tx.source_local_amount !== undefined && tx.source_local_currency ? [[tx.txn_ref, formatLocalCurrency(tx.source_local_amount, tx.source_local_currency)] as const] : [])), [transactions]);"
+    ],
+    [
+      "    <PositionLine entries={positionEntries} lastVisit={previousVisit} settle={arrivalSettle} visualise={syntheticJourneyActive} heroAmount={total} />",
+      "    <ChartSourceAmountsContext.Provider value={sourceAmounts}><PositionLine entries={positionEntries} lastVisit={previousVisit} settle={arrivalSettle} visualise={syntheticJourneyActive} heroAmount={total} /></ChartSourceAmountsContext.Provider>"
+    ],
+    [
+      "                    {tx.amountUSD.toFixed(2)}\n                  </p>",
+      "                    {tx.amountUSD.toFixed(2)}\n                    {sourceAmounts.has(tx.id) ? <span className=\"block text-sm font-normal\">{sourceAmounts.get(tx.id)}</span> : null}\n                  </p>"
+    ],
+    [
+      "      resetParams.delete(CLASS_A_VAL_002_RESET_PARAM);",
+      "      resetParams.delete(CLASS_A_VAL_002_RESET_PARAM);\n      resetParams.delete(\"study\");"
+    ]
+  ],
+  "app/(app)/dashboard/SarahExampleHome.tsx": [
+    [
+      "import type { SarahRead }",
+      "import { formatUsd } from '../../../lib/state/last-visit';\nimport type { SarahRead }"
+    ],
+    [
+      "usdAmount={read.declaredFee.amount} figureTestId=\"sarah-read-figure\" localTestId=\"sarah-read-caption\"",
+      "usdAmount={0} localHolding={example.holding} figureTestId=\"sarah-read-figure\""
+    ],
+    [
+      "              <p className=\"text-sm leading-relaxed text-hedgr-dark\">Due",
+      "              <p className=\"text-lg font-semibold tabular-nums text-hedgr-800\" data-testid=\"sarah-fee-figure\">{formatUsd(read.declaredFee.amount)} USD</p>\n              <p className=\"text-sm leading-relaxed text-hedgr-dark\">Due"
+    ]
+  ]
+};
+function releaseGatePreRuntime(path: string, value: string): string {
+  for (const [old, replacement] of [...(RELEASE_GATE_SOURCE_EDITS[path] ?? [])].reverse()) {
+    const count = value.split(replacement).length - 1;
+    expect(count, path).toBe(1);
+    value = value.replace(replacement, old);
   }
   return value;
 }

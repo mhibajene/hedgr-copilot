@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { formatLocalCurrency } from '../../../lib/utils/money';
 import { formatUsd } from '../../../lib/state/last-visit';
 import { formatSimulationDisplayFigure, SIMULATION_DISPLAY_ESTIMATE_CAPTION, type SimulationDisplayCurrency } from '../../../lib/state/simulation-display-currency';
 import home from './synthetic-home.module.css';
@@ -7,6 +8,7 @@ type HomeHeroProps = {
   label: string;
   labelId: string;
   usdAmount: number;
+  localHolding?: { amount: number; currency: string };
   currency?: SimulationDisplayCurrency;
   ownSimulation?: boolean;
   figureTestId: string;
@@ -19,7 +21,7 @@ type HomeHeroProps = {
 };
 
 /** §389: journey-only presentation; the canonical formatter supplies magnitude. */
-export function HomeHero({ label, labelId, usdAmount, currency = 'ZMW', ownSimulation = false, figureTestId, localTestId = 'local-balance', testId, selector, loading, isLoading, children }: HomeHeroProps) {
+export function HomeHero({ label, labelId, usdAmount, localHolding, currency = 'ZMW', ownSimulation = false, figureTestId, localTestId = 'local-balance', testId, selector, loading, isLoading, children }: HomeHeroProps) {
   const magnitude = formatUsd(usdAmount);
   // F5: retain the existing own-simulation sign without changing its numeric input.
   const figure = ownSimulation && usdAmount < 0 ? `$-${magnitude.slice(1)}` : magnitude;
@@ -30,7 +32,9 @@ export function HomeHero({ label, labelId, usdAmount, currency = 'ZMW', ownSimul
         <p id={labelId} className="text-xs font-semibold tracking-tight text-hedgr-800">{label}</p>
         {selector}
       </div>
-      {loading ? (
+      {localHolding ? (
+        <div className={`${home.amount} tabular-nums`} data-testid={figureTestId}>{formatLocalCurrency(localHolding.amount, localHolding.currency)}</div>
+      ) : loading ? (
         <div className={home.amount} data-testid="dashboard-balance-loading" aria-busy="true">
           <span className={`${home.skeleton} ${home.skeletonAmount}`} aria-hidden="true" />
           <span className={`${home.skeleton} ${home.skeletonLine}`} aria-hidden="true" />

@@ -162,7 +162,7 @@ test('simulated withdrawal rejects fractional cents, refreshes the next draft an
   await expect(confirm).toBeDisabled();
   await amount.fill('2');
   await expect(page.getByTestId('withdraw-status-region')).toHaveCount(0);
-  await expect(page.getByTestId('withdraw-balance-preview')).toContainText('$4.00 − $2.00 = $2.00');
+  await expect(page.getByTestId('withdraw-balance-preview')).toContainText('What would remain: $2.00');
   await confirm.click();
   await expect(page.getByTestId('withdraw-status-title')).toHaveText(/^You took \$\d+\.\d{2} out of your simulated balance$/);
   // Editing the completed value creates a fresh draft even when the intended amount is identical.
@@ -173,7 +173,7 @@ test('simulated withdrawal rejects fractional cents, refreshes the next draft an
   await expect(page.getByTestId('withdraw-no-funds')).toHaveCount(0);
   await expect(page.locator('#withdraw-amount-error')).toHaveCount(0);
   await expect(page.getByTestId('withdraw-status-title')).toHaveText(/^You took \$\d+\.\d{2} out of your simulated balance$/);
-  await expect(page.getByTestId('withdraw-balance-reconciliation')).toContainText('→ $0.00');
+  await expect(page.getByTestId('withdraw-balance-reconciliation').locator('..').locator('..')).toContainText('Balance now $0.00');
   await page.getByRole('link', { name: 'Review Activity' }).click();
   await expect(page.getByTestId('activity-row-withdraw')).toHaveCount(3);
   await page.getByRole('link', { name: 'Back to your position' }).click();
@@ -262,7 +262,7 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   await primaryNav.getByRole('link', { name: 'Settings', exact: true }).click();
   await expect(page).toHaveURL(/\/settings\?journey=class-a-val-002/);
   await expect(page.getByTestId('settings-account')).toContainText(
-    'Verification status'
+    'Email (placeholder)'
   );
   await expect(page.getByTestId('settings-preferences')).toContainText(
     'Used for simulation estimates'
@@ -509,8 +509,6 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   await withdrawAmount.fill('2');
   await expect(withdrawConfirm).toBeEnabled();
   const withdrawBalancePreview = page.getByTestId('withdraw-balance-preview');
-  await expect(withdrawBalancePreview).toContainText('$5.00');
-  await expect(withdrawBalancePreview).toContainText('$2.00');
   await expect(withdrawBalancePreview).toContainText('$3.00');
   await withdrawConfirm.click();
   await expect(page.getByTestId('withdraw-status-region')).toHaveAttribute(
@@ -527,8 +525,8 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
     page.getByTestId('withdraw-status-next-step-guidance')
   ).toHaveCount(0);
   await expect(
-    page.getByTestId('withdraw-balance-reconciliation')
-  ).toContainText('→ $3.00');
+    page.getByTestId('withdraw-balance-reconciliation').locator('..').locator('..')
+  ).toContainText('Balance now $3.00');
 
   await page.getByRole('link', { name: 'Review Activity' }).click();
   await expect(page).toHaveURL(/\/activity\?journey=class-a-val-002/);
@@ -783,7 +781,7 @@ test('Home explains what changed since the last visit and clears it on reset', a
   await page.getByRole('link', { name: 'Continue to simulated withdrawal' }).click();
   await page.getByTestId('withdraw-amount').fill('2');
   await page.getByRole('button', { name: 'Confirm' }).click();
-  await expect(page.getByTestId('withdraw-balance-reconciliation')).toContainText('$5.00 → $3.00');
+  await expect(page.getByTestId('withdraw-balance-reconciliation').locator('..').locator('..')).toContainText('Balance now $3.00');
   await page.getByRole('link', { name: 'Back to your position' }).click();
 
   await expect(page.getByTestId('usd-balance')).toHaveText('$3.00');
@@ -793,7 +791,7 @@ test('Home explains what changed since the last visit and clears it on reset', a
   await page.getByRole('button', { name: 'All changes', exact: true }).click();
   const entries = page.getByTestId('chart-event-list').locator('li');
   await expect(entries).toHaveCount(2);
-  await expect(entries.nth(0)).toHaveText(new RegExp(`^First deposit [+][$]5[.]00 · ${date}$`));
+  await expect(entries.nth(0)).toHaveText(new RegExp(`^First deposit [+]ZMW 135[.]00 · ${date}$`));
   await expect(entries.nth(1)).toHaveText(new RegExp(`^Withdrawal −[$]2[.]00 · ${date}$`));
   await expect(page.getByTestId('dashboard-since-link')).toHaveText('See all in Activity');
   await expect(page.getByTestId('dashboard-change-chip')).toHaveCount(0);
@@ -864,7 +862,7 @@ async function recordWithdrawalSinceLastHomeVisit(page: Page) {
   await page.goto('/withdraw?journey=class-a-val-002');
   await page.getByTestId('withdraw-amount').fill('2');
   await page.getByRole('button', { name: 'Confirm' }).click();
-  await expect(page.getByTestId('withdraw-balance-reconciliation')).toContainText('$5.00 → $3.00');
+  await expect(page.getByTestId('withdraw-balance-reconciliation').locator('..').locator('..')).toContainText('Balance now $3.00');
 }
 
 const arrivalSentence = 'Your simulated balance is now $3.00. On your last visit it was $5.00.';

@@ -29,11 +29,10 @@ describe('market-data-continuity-copy (MC-S2-020)', () => {
   test('deposit: four body lines and headline cover trust structure', () => {
     const c = getMarketDataContinuityCopy('deposit');
     expect(c.headline.length).toBeGreaterThan(10);
-    expect(c.lines).toHaveLength(4);
-    const [a, b, d, e] = c.lines;
+    expect(c.lines).toHaveLength(3);
+    const [a, b, e] = c.lines;
     expect(a).toMatch(/could not load|market data|exchange rate/i);
     expect(b).toMatch(/conversion|local|USD/i);
-    expect(d).toMatch(/Deposit|payment method|amount field/i);
     expect(e).toMatch(/Confirm|off until|rate|without/i);
   });
 

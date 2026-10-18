@@ -452,12 +452,8 @@ function WithdrawPageContent() {
           data-testid="withdraw-balance-preview"
           aria-label="Simulated balance preview"
         >
-          <p className="text-xs font-semibold uppercase tracking-wide text-hedgr-500">
-            What would remain
-          </p>
           <p className="mt-1 text-lg font-semibold tabular-nums text-hedgr-800">
-            ${displayedBalanceBefore.toFixed(2)} − ${usd.toFixed(2)} = $
-            {remainingAfterWithdrawal.toFixed(2)}
+            What would remain: ${remainingAfterWithdrawal.toFixed(2)}
           </p>
           <p className="mt-1 text-sm leading-relaxed text-hedgr-500">
             This is an example calculation. Confirming records only a simulated
@@ -489,7 +485,7 @@ function WithdrawPageContent() {
               ...(rate !== null ? [{ label: 'Amount', value: `${quote} ${(usd * rate).toFixed(2)}` }] : []),
               { label: 'Shown as', value: `−$${usd.toFixed(2)}` },
               ...(syntheticJourneyActive && rate !== null ? [{ label: 'Example rate', value: `1 USD = ${rate.toFixed(2)} ${quote}` }] : []),
-              ...(remainingAfterWithdrawal !== null ? [{ label: 'Balance', value: <span data-testid="withdraw-balance-reconciliation">${displayedBalanceBefore.toFixed(2)} → <b>${remainingAfterWithdrawal.toFixed(2)}</b></span> }] : []),
+              ...(remainingAfterWithdrawal !== null ? [{ label: 'Balance now ', value: <span data-testid="withdraw-balance-reconciliation"><b>${remainingAfterWithdrawal.toFixed(2)}</b></span> }] : []),
               { label: 'Real money moved', value: 'None' },
             ]}
           />

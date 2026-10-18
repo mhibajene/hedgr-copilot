@@ -50,7 +50,7 @@ async function visibleText(page:Page){return page.locator('main').evaluate(main=
 function once(text:string,claim:string,count=1){expect(text.split(claim).length-1,claim).toBe(count);}
 async function retained(page:Page,kind:string,state:string){
  const text=await visibleText(page);
- once(text,'Example figure, not a quote');
+ once(text,'Example figure, not a quote',kind==='sarah'?0:1);
  if(kind==='daniel'){once(text,INVARIANT);once(text,'Example rate: ZMW 27 per US dollar. Not a live rate.');}
  else if(kind==='sarah'){once(text,'Fictional course fee. This figure is not a payment quote. This read does not establish whether Sarah can pay the fee.');once(text,'Due 1 Oct 2027.');}
  else{
@@ -81,7 +81,7 @@ for(const [width,scale] of [[1440,1],[390,1],[320,2]])test(`HOME-SOFTHALO-RATESL
   const usdFigure=kind==='sarah'?'$1000.00':kind==='daniel'?'$800.00':'$480.00';
   once(before,usdFigure);
   const localRate={ZMW:27,KES:130,NGN:1500,GHS:15,PHP:56}[currency]!;
-  const homeLocal=`≈ ${currency} ${((kind==='sarah'?1000:kind==='daniel'?800:480)*localRate).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}`;
+  const homeLocal=kind==='sarah'?'ZMW 6,000.00':`≈ ${currency} ${((kind==='sarah'?1000:kind==='daniel'?800:480)*localRate).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}`;
   once(before,homeLocal);
   if(kind==='sarah'){await expect(page.getByRole('slider')).toHaveCount(0);continue;}
   await expect(launcher).toHaveAccessibleDescription('Try example exchange rates');expect((await launcher.boundingBox())!.height).toBeGreaterThanOrEqual(44);

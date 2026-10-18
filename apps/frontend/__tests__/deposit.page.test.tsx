@@ -139,7 +139,7 @@ describe('DepositPage market-data degraded state (MC-S2-020)', () => {
     expect(amount.getAttribute('aria-invalid')).toBe('true');
     expect(screen.getByRole('alert').textContent).toMatch(/greater than 0 ZMW/i);
     expect(screen.getByTestId('deposit-conversion-preview').textContent).toContain(
-      CONVERSION_PREVIEW_UNAVAILABLE_PLACEHOLDER,
+      'Enter an amount to see it at the example rate.',
     );
 
     const confirm = screen.getByRole('button', { name: 'Confirm' }) as HTMLButtonElement;

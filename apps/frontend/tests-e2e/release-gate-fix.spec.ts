@@ -29,10 +29,14 @@ async function viewport(page: Page, width: number, scale: number) {
 }
 for (const [width, scale] of [[1440, 1], [390, 1], [320, 2]]) {
   test(`RELEASE-GATE-FIX-001 T1 unavailable rates ${width}`, async ({ page }) => {
+    await seed(page, 'ZMW', 5);
+    await page.route('**/api/fx?**', route => route.fulfill({ status: 503, contentType: 'application/json', body: '{}' }));
     for (const route of ['deposit', 'withdraw']) {
       await page.goto(`/${route}?journey=class-a-val-002&scenario=unavailable-data`); await viewport(page, width, scale);
       const panel = page.getByTestId(`${route}-market-data-continuity`);
       await expect(panel).toContainText(FAILURE); await expect(panel).toContainText(CONFIRM);
+      await expect(panel.locator('dt').last()).toHaveText('What is paused');
+      await expect(panel.locator('dd').last()).toHaveText(CONFIRM);
       await expect(panel).not.toContainText(/payment method|We could not load current market data|Confirm stays off/);
       await expect(page.getByRole('button', { name: 'Confirm', exact: true })).toBeDisabled();
       if (route === 'deposit') await expect(page.getByTestId('deposit-conversion-preview')).toHaveText(CONFIRM);

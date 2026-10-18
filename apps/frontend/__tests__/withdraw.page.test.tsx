@@ -655,9 +655,7 @@ describe('WithdrawPage CLASS-A-VAL-002 primary condition', () => {
       target: { value: '1' },
     });
     const balancePreview = screen.getByTestId('withdraw-balance-preview');
-    expect(balancePreview.textContent).toContain('$25.00');
-    expect(balancePreview.textContent).toContain('$1.00');
-    expect(balancePreview.textContent).toContain('$24.00');
+    expect(balancePreview.textContent).toContain('What would remain: $24.00');
     expect(balancePreview.textContent).toMatch(/example calculation/i);
     expect(balancePreview.textContent).toMatch(/does not create a real payout/i);
     expect(balancePreview.textContent).not.toMatch(
@@ -725,7 +723,7 @@ describe('D-132 selected simulation withdrawal estimate', () => {
     fireEvent.change(amount, { target: { value: '6' } });
     expect((screen.getByRole('button', { name: 'Confirm' }) as HTMLButtonElement).disabled).toBe(true);
     fireEvent.change(amount, { target: { value: '2' } });
-    expect(screen.getByTestId('withdraw-balance-preview').textContent).toContain('$5.00 − $2.00 = $3.00');
+    expect(screen.getByTestId('withdraw-balance-preview').textContent).toContain('What would remain: $3.00');
     expect(withdrawMock.createWithdraw).not.toHaveBeenCalled();
     await act(async () => { fireEvent.click(screen.getByRole('button', { name: 'Confirm' })); });
     expect(withdrawMock.createWithdraw).toHaveBeenCalledWith(2, { skipAutoConfirm: false });
@@ -750,7 +748,7 @@ describe('§359 synthetic withdrawal estimate at the Engine fixture', () => {
     fireEvent.change(amount, { target: { value: '6' } });
     expect((screen.getByRole('button', { name: 'Confirm' }) as HTMLButtonElement).disabled).toBe(true);
     fireEvent.change(amount, { target: { value: '2' } });
-    expect(screen.getByTestId('withdraw-balance-preview').textContent).toContain('$5.00 − $2.00 = $3.00');
+    expect(screen.getByTestId('withdraw-balance-preview').textContent).toContain('What would remain: $3.00');
     await act(async () => { fireEvent.click(screen.getByRole('button', { name: 'Confirm' })); });
     expect(withdrawMock.createWithdraw).toHaveBeenCalledTimes(1);
     expect(withdrawMock.createWithdraw).toHaveBeenCalledWith(2, { skipAutoConfirm: false });

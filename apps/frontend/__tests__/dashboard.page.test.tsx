@@ -1050,7 +1050,7 @@ function s18ExcludedDigest() {
     } else files.push(path);
   }
   S18_EXCLUDED_ROOTS.forEach(visit);
-  return s18Digest(files.sort().map((path) => `${path}\0${RESEARCH_PRE_RUNTIME_HASHES[path] ?? (path === 'lib/state/synthetic-journey.ts' ? 'd1f5117cd75691c4d7404dbe7746673e3bdbd168c225f10bb5447163e3584366' : s18Digest(scPreRuntime(studyBridgePreRuntime(path, readFileSync(resolve(path)).toString()), SC_ENGINE_SOURCE_EDITS[path] ?? [])))}`).join('\n'));
+  return s18Digest(files.sort().map((path) => `${path}\0${RESEARCH_PRE_RUNTIME_HASHES[path] ?? (path === 'lib/state/synthetic-journey.ts' ? 'd1f5117cd75691c4d7404dbe7746673e3bdbd168c225f10bb5447163e3584366' : s18Digest(scPreRuntime(releaseGatePreRuntime(path, studyBridgePreRuntime(path, readFileSync(resolve(path)).toString())), SC_ENGINE_SOURCE_EDITS[path] ?? [])))}`).join('\n'));
 }
 
 function s18OutsideTile(view: HTMLElement) {
@@ -1368,5 +1368,41 @@ const SC_NON_JOURNEY_HTML_EDITS = [
 
 function scPreRuntime(value: string, edits: readonly (readonly string[])[]): string {
   for (const [before, after] of edits) value = value.replaceAll(after, before);
+  return value;
+}
+
+// RELEASE-GATE-FIX-001 P3: exact immutable-base source edits; all original pins remain.
+const RELEASE_GATE_SOURCE_EDITS: Record<string, string[][]> = {
+  "lib/state/ledger.ts": [
+    [
+      "/** Bump when ledger Tx shape or persisted format changes; mismatch on load \u2192 clear. */",
+      "/** Bump for incompatible persisted formats; optional display metadata stays compatible. Mismatch on load \u2192 clear. */"
+    ],
+    [
+      "  fx_rate: number;",
+      "  fx_rate: number;\n  /** Original deposit input for display only; never used in balance or FX arithmetic. */\n  source_local_amount?: number;\n  source_local_currency?: string;"
+    ],
+    [
+      "          fx_rate: update.fx_rate!,",
+      "          fx_rate: update.fx_rate!,\n          ...(update.source_local_amount !== undefined ? { source_local_amount: update.source_local_amount } : {}),\n          ...(update.source_local_currency !== undefined ? { source_local_currency: update.source_local_currency } : {}),"
+    ]
+  ],
+  "app/(app)/withdraw/page.tsx": [
+    [
+      "          <p className=\"text-xs font-semibold uppercase tracking-wide text-hedgr-500\">\n            What would remain\n          </p>\n          <p className=\"mt-1 text-lg font-semibold tabular-nums text-hedgr-800\">\n            ${displayedBalanceBefore.toFixed(2)} \u2212 ${usd.toFixed(2)} = $\n            {remainingAfterWithdrawal.toFixed(2)}\n          </p>",
+      "          <p className=\"mt-1 text-lg font-semibold tabular-nums text-hedgr-800\">\n            What would remain: ${remainingAfterWithdrawal.toFixed(2)}\n          </p>"
+    ],
+    [
+      "[{ label: 'Balance', value: <span data-testid=\"withdraw-balance-reconciliation\">${displayedBalanceBefore.toFixed(2)} \u2192 <b>${remainingAfterWithdrawal.toFixed(2)}</b></span> }]",
+      "[{ label: 'Balance now ', value: <span data-testid=\"withdraw-balance-reconciliation\"><b>${remainingAfterWithdrawal.toFixed(2)}</b></span> }]"
+    ]
+  ]
+};
+function releaseGatePreRuntime(path: string, value: string): string {
+  for (const [old, replacement] of [...(RELEASE_GATE_SOURCE_EDITS[path] ?? [])].reverse()) {
+    const count = value.split(replacement).length - 1;
+    expect(count, path).toBe(1);
+    value = value.replace(replacement, old);
+  }
   return value;
 }

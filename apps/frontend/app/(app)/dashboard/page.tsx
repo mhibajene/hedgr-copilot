@@ -1,6 +1,6 @@
 "use client";
 
-import { getSimulationDisplayRate, useSimulationDisplayCurrency } from "../../../lib/state/simulation-display-currency";
+import { getSimulationDisplayRate, setSimulationDisplayCurrency, useSimulationDisplayCurrency } from "../../../lib/state/simulation-display-currency";
 import finish from '../product-finish.module.css';
 import home from './synthetic-home.module.css';
 import { SimulationDisplayCurrencySelector } from '../../../components/SimulationDisplayCurrencySelector';
@@ -12,6 +12,8 @@ import { EngineAllocationBands } from "./EngineAllocationBands";
 import { EnginePostureHeader } from "./EnginePostureHeader";
 import { countChanges } from "./lineLabels";
 import { PositionLine } from "./PositionLine";
+import { ChartSourceAmountsContext } from "./ExampleLineChart";
+import { formatLocalCurrency } from "../../../lib/utils/money";
 import { DanielExampleHome } from './DanielExampleHome';
 import { SarahExampleHome } from './SarahExampleHome';
 import { HomeHero } from './HomeHero';
@@ -120,6 +122,7 @@ export default function DashboardPage() {
   const { isFeatureEnabled } = usePolicy();
   const transactions = useLedgerStore((s) => s.transactions);
   const clearTransactions = useLedgerStore((s) => s.clear);
+  const sourceAmounts = useMemo(() => new Map(transactions.flatMap(tx => tx.type === "deposit" && tx.source_local_amount !== undefined && tx.source_local_currency ? [[tx.txn_ref, formatLocalCurrency(tx.source_local_amount, tx.source_local_currency)] as const] : [])), [transactions]);
   const [apy, setApy] = useState<number | null>(null);
   const [apyError, setApyError] = useState<string | null>(null);
   const [ready, setReady] = useState(false);
@@ -164,9 +167,11 @@ export default function DashboardPage() {
       if (!sarahExample) {
         clearTransactions();
         removeRetiredWalletBalance();
+        if (searchParams?.get("study") === "1") setSimulationDisplayCurrency("ZMW");
       }
       const resetParams = new URLSearchParams(searchParams?.toString());
       resetParams.delete(CLASS_A_VAL_002_RESET_PARAM);
+      resetParams.delete("study");
       const resetTarget = syntheticJourneyActive && selectedExample !== "own"
         ? `${pathname}?${resetParams.toString()}`
         : CLASS_A_VAL_002_DASHBOARD_PATH;
@@ -501,7 +506,7 @@ export default function DashboardPage() {
   );
 
   const positionLine = positionDerivable ? (
-    <PositionLine entries={positionEntries} lastVisit={previousVisit} settle={arrivalSettle} visualise={syntheticJourneyActive} heroAmount={total} />
+    <ChartSourceAmountsContext.Provider value={sourceAmounts}><PositionLine entries={positionEntries} lastVisit={previousVisit} settle={arrivalSettle} visualise={syntheticJourneyActive} heroAmount={total} /></ChartSourceAmountsContext.Provider>
   ) : null;
 
   const ObservationHeading = syntheticJourneyActive ? "h2" : "p";
@@ -975,6 +980,7 @@ export default function DashboardPage() {
                   >
                     {tx.type === "DEPOSIT" ? "+" : "-"}$
                     {tx.amountUSD.toFixed(2)}
+                    {sourceAmounts.has(tx.id) ? <span className="block text-sm font-normal">{sourceAmounts.get(tx.id)}</span> : null}
                   </p>
                 </li>
               ))}

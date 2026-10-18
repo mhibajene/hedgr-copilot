@@ -9,26 +9,25 @@ export interface MarketDataContinuityCopy {
   /** Short panel title — market / rate certainty missing */
   headline: string;
   /** Four calm lines in order: unavailable, affects, still knowable, limited action */
-  lines: [string, string, string, string];
+  lines: string[];
 }
 
 const DEPOSIT: MarketDataContinuityCopy = {
   headline: 'Exchange rate data is temporarily unavailable',
   lines: [
-    'We could not load current market data for the exchange rate.',
+    "The example rate didn't load. This simulation uses a fixed example rate, not market data.",
     'That means we cannot show a reliable conversion between your local amount and USD.',
-    'You are still on Deposit. Your payment method and amount field stay here for context.',
-    'Confirm stays off until a current rate is available; without it we will not show a dollar credit preview.',
+    'Confirm turns on once the example rate loads.',
   ],
 };
 
 const WITHDRAW: MarketDataContinuityCopy = {
   headline: 'Exchange rate data is temporarily unavailable',
   lines: [
-    'We could not load current market data for the exchange rate.',
+    "The example rate didn't load. This simulation uses a fixed example rate, not market data.",
     'That means we cannot show a reliable local-currency estimate for your withdrawal while the rate is missing.',
     'You are still on Withdraw. Your USD balance and payout methods stay visible.',
-    'Confirm stays off until a current rate is available; without it we will not imply conversion certainty.',
+    'Confirm turns on once the example rate loads.',
   ],
 };
 
@@ -46,4 +45,4 @@ export function getMarketDataContinuityCopyJoined(route: MarketDataContinuityRou
 
 /** Shown in the preview row whenever rate is missing (loading or error) — never assert $0 as FX-derived */
 export const CONVERSION_PREVIEW_UNAVAILABLE_PLACEHOLDER =
-  'Conversion preview unavailable until a current exchange rate is available.';
+  'Confirm turns on once the example rate loads.';

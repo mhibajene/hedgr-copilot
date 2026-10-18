@@ -143,8 +143,8 @@ describe('transaction pages with reactive balance and real simulation lifecycles
     await advance(2000);
     // HOME-EXPERIENCE-001 T2: approved receipt headline and next step.
     expect(screen.getByTestId('withdraw-status-title').textContent).toBe('You took $5.00 out of your simulated balance');
-    expect(screen.getByTestId('withdraw-balance-reconciliation').textContent).toBe('$5.00 → $0.00');
-    expect(screen.getByTestId('withdraw-balance-preview').textContent).toContain('$5.00 − $5.00 = $0.00');
+    expect(screen.getByTestId('withdraw-balance-reconciliation').closest('div')!.textContent).toBe('Balance now $0.00');
+    expect(screen.getByTestId('withdraw-balance-preview').textContent).toContain('What would remain: $0.00');
     expect(screen.getByRole('link', { name: 'Review Activity' }).getAttribute('href')).toBe(
       query ? '/activity?journey=class-a-val-002' : '/activity',
     );
@@ -170,7 +170,7 @@ describe('transaction pages with reactive balance and real simulation lifecycles
     expect(useLedgerStore.getState().transactions).toHaveLength(2);
     fireEvent.change(screen.getByTestId('withdraw-amount'), { target: { value: '2' } });
     expect(screen.queryByTestId('withdraw-status-region')).toBeNull();
-    expect(screen.getByTestId('withdraw-balance-preview').textContent).toContain('$4.00 − $2.00 = $2.00');
+    expect(screen.getByTestId('withdraw-balance-preview').textContent).toContain('What would remain: $2.00');
     await confirm();
     await advance(2000);
     expect(screen.getByTestId('reactive-balance').textContent).toBe('2.00');

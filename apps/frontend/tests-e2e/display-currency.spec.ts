@@ -168,7 +168,7 @@ test('all five Settings estimates preserve USD, market, Activity and planning wi
   await page.goto('/withdraw?journey=class-a-val-002');
   await page.getByTestId('withdraw-amount').fill('2');
   const withdrawal = page.getByTestId('withdraw-balance-preview');
-  for (const amount of ['$3.00', '$2.00', '$1.00']) await expect(withdrawal).toContainText(amount);
+  await expect(withdrawal).toContainText('What would remain: $1.00');
   expect(await financialStorage(page)).toEqual(originalStorage);
   await page.goto('/settings/trust?journey=class-a-val-002');
   await expect(page.getByTestId('trust-information')).toContainText('The display currency preference changes illustrative simulation estimates only.');
@@ -296,7 +296,7 @@ for (const [currency, rate, localFive, localThree] of [
     await expect(page.getByTestId('withdraw-fx-block')).toHaveText(`Simulated example rate: 1 USD = ${rate.toFixed(2)} ${currency}`);
     await expect(page.getByTestId('local-balance')).toHaveText(`≈ ${currency} ${localFive} Example figure, not a quote`);
     await page.getByLabel('Amount to simulate (USD)', { exact: true }).fill('2');
-    await expect(page.getByTestId('withdraw-balance-preview')).toContainText('$5.00 − $2.00 = $3.00');
+    await expect(page.getByTestId('withdraw-balance-preview')).toContainText('What would remain: $3.00');
     await page.getByRole('button', { name: 'Confirm', exact: true }).click();
     await expect(page.getByTestId('withdraw-status-region')).toHaveAttribute('data-status', 'SUCCESS');
     await page.getByRole('link', { name: 'Review Activity' }).click();
