@@ -1050,7 +1050,7 @@ function s18ExcludedDigest() {
     } else files.push(path);
   }
   S18_EXCLUDED_ROOTS.forEach(visit);
-  return s18Digest(files.sort().map((path) => `${path}\0${RESEARCH_PRE_RUNTIME_HASHES[path] ?? (path === 'lib/state/synthetic-journey.ts' ? 'd1f5117cd75691c4d7404dbe7746673e3bdbd168c225f10bb5447163e3584366' : s18Digest(scPreRuntime(readFileSync(resolve(path)).toString(), SC_ENGINE_SOURCE_EDITS[path] ?? [])))}`).join('\n'));
+  return s18Digest(files.sort().map((path) => `${path}\0${RESEARCH_PRE_RUNTIME_HASHES[path] ?? (path === 'lib/state/synthetic-journey.ts' ? 'd1f5117cd75691c4d7404dbe7746673e3bdbd168c225f10bb5447163e3584366' : s18Digest(scPreRuntime(studyBridgePreRuntime(path, readFileSync(resolve(path)).toString()), SC_ENGINE_SOURCE_EDITS[path] ?? [])))}`).join('\n'));
 }
 
 function s18OutsideTile(view: HTMLElement) {
@@ -1222,6 +1222,11 @@ describe('S18 earn tile fence sweep (§384)', () => {
 });
 
 // §394: exact pre-runtime old/new snippets; all original S18 hashes remain.
+function studyBridgePreRuntime(path: string, value: string): string {
+  return path === 'app/research/ResearchBridge.tsx'
+    ? value.replace('/dashboard-synthetic-journey?reset=1&study=1', '/dashboard-synthetic-journey?reset=1')
+    : value;
+}
 const SC_ENGINE_SOURCE_EDITS: Record<string, string[][]> = {
   "lib/engine/notices.ts": [
     [

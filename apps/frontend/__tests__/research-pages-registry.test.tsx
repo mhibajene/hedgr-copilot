@@ -170,7 +170,7 @@ test('R9 chrome-eyebrow-and-boundary', () => {
   for (const snippet of [retiredSelector, retiredNote]) expect(orientation).not.toContain(snippet);
   const reconstructed = orientation.replace(currentSelector, retiredSelector).replace(currentNote, retiredNote);
   expect(createHash('sha256').update(reconstructed).digest('hex')).toBe('240743dd1d450d070a5fda79192823d1e3c95dde5effcc121026869d17f0ed67');
-  expect(createHash('sha256').update(source('app/research/ResearchBridge.tsx')).digest('hex')).toBe('ac5bb098c28657b0ccf6c43eefe3127666036800a2fe86db43f41972b0fb5bff');
+  expect(createHash('sha256').update(source('app/research/ResearchBridge.tsx').replace('/dashboard-synthetic-journey?reset=1&study=1', '/dashboard-synthetic-journey?reset=1')).digest('hex')).toBe('ac5bb098c28657b0ccf6c43eefe3127666036800a2fe86db43f41972b0fb5bff');
   const bridge = render(<ResearchBridge />);
   expect(bridge.getByTestId('study-bridge').textContent).toBe('You’ve reached the end of this research example.Next, try Hedgr with pretend money. Add a simulated deposit, then see what changes and what remains. No real money moves, no account is opened, and nothing here is financial advice.Continue to the Hedgr simulation');
 });

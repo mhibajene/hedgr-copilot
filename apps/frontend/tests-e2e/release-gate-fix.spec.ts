@@ -58,18 +58,30 @@ for (const [width, scale] of [[1440, 1], [390, 1], [320, 2]]) {
     await expect(page.getByTestId('settings-trust-information')).toContainText('Balances and transactions shown here are not real.');
     await expect(page.getByTestId('settings-trust-information')).not.toContainText('returns shown');
   });
-  test(`RELEASE-GATE-FIX-001 T4 reset ${width}`, async ({ page }) => {
+  test(`RELEASE-GATE-FIX-001 T4 study reset ${width}`, async ({ page }) => {
     for (const currency of ['PHP', 'NGN']) for (const example of ['own', 'daniel']) {
-      await seed(page, currency, 5); await page.goto(`${HOME}?example=${example}&reset=1`); await viewport(page, width, scale);
+      await seed(page, currency, 5); await page.goto(`${HOME}?example=${example}&reset=1&study=1`); await viewport(page, width, scale);
       await expect.poll(() => page.evaluate(key => localStorage.getItem(key), KEY)).toBe('ZMW');
       await expect(page.getByTestId(example === 'own' ? 'local-balance-figure' : 'daniel-read-caption')).toContainText('ZMW');
+      expect(new URL(page.url()).searchParams.has('study')).toBe(false);
     }
-    await seed(page, 'NGN', 5); await page.goto(`${HOME}?example=sarah&reset=1`);
+    await seed(page, 'NGN', 5); await page.goto(`${HOME}?example=sarah&reset=1&study=1`);
     expect(await page.evaluate(key => localStorage.getItem(key), KEY)).toBe('NGN');
-    await seed(page, 'PHP', 5); await page.goto(HOME); await expect(page.getByTestId('local-balance-figure')).toContainText('PHP');
+    expect(new URL(page.url()).searchParams.has('study')).toBe(false);
+    await seed(page, 'PHP', 5); await page.goto(`${HOME}?study=1`); await expect(page.getByTestId('local-balance-figure')).toContainText('PHP');
+    expect(await page.evaluate(key => localStorage.getItem(key), KEY)).toBe('PHP');
+    await seed(page); await page.goto('/orientation');
+    await page.getByRole('combobox', { name: 'Display currency for this simulation' }).selectOption('KES');
+    await page.getByTestId('orientation-continue').click();
+    await expect(page.getByTestId('local-balance-figure')).toContainText('KES');
+    expect(await page.evaluate(key => localStorage.getItem(key), KEY)).toBe('KES');
     await page.goto('/api/policy'); await page.evaluate(() => { localStorage.clear(); sessionStorage.clear(); });
     await page.goto('/orientation?study=stability-scenarios'); await page.getByTestId('orientation-continue').click();
-    await page.goto(HOME); await expect(page.getByTestId('local-balance-figure')).toContainText('ZMW');
+    await page.getByTestId('study-continue').click(); await page.getByTestId('study-to-hedgr').click(); await page.getByTestId('study-to-bridge').click();
+    await expect(page.getByTestId('study-simulation-link')).toHaveAttribute('href', `${HOME}?reset=1&study=1`);
+    await page.getByTestId('study-simulation-link').click();
+    await expect(page.getByTestId('local-balance-figure')).toContainText('ZMW');
+    expect(await page.evaluate(key => localStorage.getItem(key), KEY)).toBe('ZMW');
   });
   test(`RELEASE-GATE-FIX-001 T5 receipts and preview ${width}`, async ({ page }) => {
     await seed(page); await page.goto('/deposit?journey=class-a-val-002'); await viewport(page, width, scale);

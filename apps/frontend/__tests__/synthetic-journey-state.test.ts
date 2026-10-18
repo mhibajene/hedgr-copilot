@@ -29,25 +29,36 @@ afterEach(() => {
   vi.unstubAllEnvs();
 });
 
-test('RELEASE-GATE-FIX-001 T4 reset notifies mounted subscribers and keeps Sarah and normal entry unchanged', async () => {
+test.each(['PHP', 'NGN'])('RELEASE-GATE-FIX-001 T4 study reset %s', async (stored) => {
   stubSyntheticEnvironment();
   vi.stubGlobal('matchMedia', () => ({ matches: true }));
-  for (const stored of ['PHP', 'NGN']) for (const example of ['own', 'daniel', 'sarah']) for (const reset of [false, true]) {
+  for (const example of ['own', 'daniel', 'sarah']) for (const reset of [false, true]) for (const study of [false, true]) {
     cleanup(); localStorage.clear(); setSimulationDisplayCurrency(stored);
+    const query = `example=${example}${reset ? '&reset=1' : ''}${study ? '&study=1' : ''}`;
+    window.history.replaceState(null, '', `/dashboard-synthetic-journey?${query}`);
     vi.mocked(usePathname).mockReturnValue('/dashboard-synthetic-journey');
-    vi.mocked(useSearchParams).mockReturnValue(new URLSearchParams(`example=${example}${reset ? '&reset=1' : ''}`) as ReturnType<typeof useSearchParams>);
+    vi.mocked(useSearchParams).mockReturnValue(new URLSearchParams(query) as ReturnType<typeof useSearchParams>);
     const { useSimulationDisplayCurrency } = await import('../lib/state/simulation-display-currency');
     function Subscriber() { return React.createElement('span', { 'data-testid': 'release-gate-fix-001-currency' }, useSimulationDisplayCurrency()); }
     await act(async () => { render(React.createElement(React.Fragment, null, React.createElement(Subscriber), React.createElement(DashboardPage))); });
-    const expected = reset && example !== 'sarah' ? 'ZMW' : stored;
+    const expected = reset && study && example !== 'sarah' ? 'ZMW' : stored;
     expect(localStorage.getItem('hedgr.simulation.display-currency')).toBe(expected);
     expect(screen.getByTestId('release-gate-fix-001-currency').textContent).toBe(expected);
+    if (reset) expect(new URLSearchParams(window.location.search).has('study')).toBe(false);
   }
+});
+test('RELEASE-GATE-FIX-001 T4 ordinary KES entry and blocked study storage', async () => {
+  stubSyntheticEnvironment(); vi.stubGlobal('matchMedia', () => ({ matches: true }));
+  localStorage.clear(); setSimulationDisplayCurrency('KES');
+  vi.mocked(usePathname).mockReturnValue('/dashboard-synthetic-journey');
+  vi.mocked(useSearchParams).mockReturnValue(new URLSearchParams('reset=1') as ReturnType<typeof useSearchParams>);
+  await act(async () => { render(React.createElement(DashboardPage)); });
+  expect(localStorage.getItem('hedgr.simulation.display-currency')).toBe('KES');
+  expect(screen.getByTestId('local-balance-figure').textContent).toContain('KES');
   cleanup(); localStorage.clear(); setSimulationDisplayCurrency('NGN');
   vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => { throw new Error('blocked'); });
-  vi.mocked(useSearchParams).mockReturnValue(new URLSearchParams('reset=1') as ReturnType<typeof useSearchParams>);
+  vi.mocked(useSearchParams).mockReturnValue(new URLSearchParams('reset=1&study=1') as ReturnType<typeof useSearchParams>);
   await act(async () => { render(React.createElement(DashboardPage)); }); expect(getSimulationDisplayCurrency()).toBe('ZMW');
-  vi.unstubAllGlobals();
 });
 
 function stubSyntheticEnvironment() {
