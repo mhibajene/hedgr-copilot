@@ -26,7 +26,7 @@
     "@magic-sdk/admin": "^2.8.2",
     "magic-sdk": "^32.0.0",
     "next": "15.5.28",
-    "openai": "^4.0.0",
+    "openai": "^7.34.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "zod": "3",
