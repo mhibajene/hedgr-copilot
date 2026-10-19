@@ -1474,6 +1474,10 @@ const RELEASE_GATE_003_SOURCE_EDITS: Record<string, string[][]> = {
     [
       "          data-testid=\"withdraw-fx-block\"\n        >\n          Simulated example rate: 1 USD = {rate?.toFixed(2)} {quote}\n        </div>\n      ) : fx.status === 'error' ? (\n        <MarketDataContinuityPanel\n          route=\"withdraw\"\n          onRetryFx={fx.retry}\n          labelled={productSimulationActive}\n",
       "          data-testid=\"withdraw-fx-block\"\n        >\n          Simulated example rate: 1 USD = {rate?.toFixed(2)} {quote}\n        </div>\n      ) : unavailableDataScenario || fx.status === 'error' ? (\n        <MarketDataContinuityPanel\n          route=\"withdraw\"\n          onRetryFx={fx.retry}\n          labelled={productSimulationActive}\n"
+    ],
+    [
+      "            ? 'Simulated balance: '\n            : 'Current balance: '}\n        <BalanceWithLocalEstimate\n          usdAmount={displayedBalanceBefore}\n          displayEstimate={syntheticJourneyActive\n            ? formatSimulationDisplayEstimate(displayedBalanceBefore, displayCurrency)\n            : undefined}\n          inline\n        />\n",
+      "            ? 'Simulated balance: '\n            : 'Current balance: '}\n        <BalanceWithLocalEstimate\n          usdAmount={displayedBalanceBefore}\n          displayEstimate={unavailableDataScenario ? '' : syntheticJourneyActive\n            ? formatSimulationDisplayEstimate(displayedBalanceBefore, displayCurrency)\n            : undefined}\n          inline\n        />\n"
     ]
   ],
   "lib/state/ledger.ts": [

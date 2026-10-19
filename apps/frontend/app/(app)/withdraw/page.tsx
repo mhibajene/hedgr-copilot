@@ -413,7 +413,7 @@ function WithdrawPageContent() {
             : 'Current balance: '}
         <BalanceWithLocalEstimate
           usdAmount={displayedBalanceBefore}
-          displayEstimate={syntheticJourneyActive
+          displayEstimate={unavailableDataScenario ? '' : syntheticJourneyActive
             ? formatSimulationDisplayEstimate(displayedBalanceBefore, displayCurrency)
             : undefined}
           inline
