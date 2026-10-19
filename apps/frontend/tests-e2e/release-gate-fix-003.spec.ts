@@ -55,6 +55,10 @@ for (const width of [1440, 390]) {
         await panel(page, route);
         if (balance === 'zero' && route === 'withdraw') await expect(page.getByTestId('withdraw-no-funds')).toBeVisible();
         if (balance === 'settled' && route === 'withdraw') {
+          const local = page.locator('main').getByTestId('local-balance');
+          await expect(local).toHaveText('(estimate unavailable)');
+          await expect(local.locator('..')).toContainText('$37.04');
+          await expect(local).not.toContainText(/≈|ZMW\s*\d/);
           await page.getByTestId('withdraw-amount').fill('1');
           await expect(page.getByRole('button', { name: 'Confirm', exact: true })).toBeDisabled();
           await expect(page.getByTestId('withdraw-balance-preview')).not.toContainText(/≈|20\.00/);
@@ -95,6 +99,9 @@ for (const width of [1440, 390]) {
       await page.goto(`/${route}?scenario=unavailable-data`);
       await expect(page.getByTestId(`${route}-fx-block`)).toContainText('1 USD =');
       await expect(page.getByTestId(`${route}-fx-block`)).toContainText('Updated at');
+      if (route === 'withdraw') {
+        await expect(page.locator('main').getByTestId('local-balance')).toHaveText('≈ ZMW 740.80');
+      }
     }
   });
 }
