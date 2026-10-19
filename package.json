@@ -75,7 +75,7 @@
     "source-map-js": "^1.2.1",
     "streamsearch": "^1.1.0",
     "styled-jsx": "^5.1.6",
-    "tailwindcss": "^4.1.11",
+    "tailwindcss": "^4.3.3",
     "tapable": "^2.2.2",
     "tar": "^7.4.3",
     "tslib": "^2.8.1",
