@@ -42,6 +42,10 @@ jobs:
       - name: Install dependencies (frozen)
         run: pnpm -r install --frozen-lockfile
 
+      - name: SEC-DEPS-001 dependency audit
+        continue-on-error: true
+        run: pnpm audit --audit-level=high --prod
+
       - name: Trust check (environment safety)
         run: pnpm -w trust:check
 
