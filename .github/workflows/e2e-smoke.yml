@@ -25,7 +25,7 @@ jobs:
       NEXT_FONT_GOOGLE_MOCKED_RESPONSES: /nonexistent-hermetic-guard-no-google-fonts.js
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       # bridge: mark required context as pending at start
       - name: Publish pending commit status (start)
