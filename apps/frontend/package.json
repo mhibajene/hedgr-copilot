@@ -50,7 +50,7 @@
     "posthog-js": "^1.200.0",
     "tailwindcss": "^4.1.11",
     "typescript": "^5.8.3",
-    "typescript-eslint": "^8.9.0",
+    "typescript-eslint": "^8.71.2",
     "vitest": "^1.6.1"
   }
 }
