@@ -212,3 +212,18 @@ describe('transaction pages with reactive balance and real simulation lifecycles
     expect(screen.getByTestId('reactive-balance').textContent).toBe('4.71');
   });
 });
+
+// RELEASE-GATE-FIX-003: persisted pending entries lose their original realm timers.
+describe('RELEASE-GATE-FIX-003 pending hydration', () => {
+  test.each(['deposit', 'withdrawal'] as const)('resumes %s after rehydration without changing immutable fields', async (type) => {
+    const tx = deposit({ type, created_at: Date.now() - 500, updated_at: Date.now() - 500,
+      ...(type === 'deposit' ? { source_local_amount: 100, source_local_currency: 'ZMW' } : { amount_zmw: 0, fx_rate: 0 }) });
+    localStorage.setItem('hedgr:ledger', JSON.stringify({ version: 2, transactions: [tx] }));
+    await useLedgerStore.persist.rehydrate();
+    await vi.dynamicImportSettled();
+    await advance(2000);
+    const { status: _status, updated_at: _updated, ...immutable } = tx;
+    void _status; void _updated;
+    expect(useLedgerStore.getState().getByTxnRef(tx.txn_ref)).toMatchObject({ ...immutable, status: 'settled' });
+  });
+});

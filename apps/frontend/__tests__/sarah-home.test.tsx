@@ -358,3 +358,16 @@ function bundlePreRuntime(path: string, value: string): string {
   }
   return value;
 }
+
+// RELEASE-GATE-FIX-003 T3/T8/T9: shared hero; the fee is independent.
+test('RELEASE-GATE-FIX-003 Sarah uses the shared static USD holding and local estimate', () => {
+  at(ROUTES[0], 'sarah');
+  render(<DashboardPage />);
+  const hero = panel().querySelector('[data-component="HomeHero"]')!;
+  expect(hero.querySelector('[data-component="UsdFigure"]')?.textContent).toBe('$222.22 USD');
+  expect(within(hero as HTMLElement).getByTestId('local-balance-figure').textContent).toBe('≈ ZMW 5,999.94');
+  expect(within(hero as HTMLElement).getByTestId('local-balance-caption').textContent).toBe('Example figure, not a quote');
+  expect(source('lib/state/synthetic-journey.ts')).toContain("usdHolding: Object.freeze({ amount: 222.22, currency: 'USD' as const })");
+  expect(source('app/(app)/dashboard/SarahExampleHome.tsx')).toContain('usdAmount={example.usdHolding.amount}');
+  expect(hero.textContent).not.toMatch(/6,000|1000/);
+});

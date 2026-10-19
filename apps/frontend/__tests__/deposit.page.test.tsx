@@ -701,3 +701,15 @@ describe('§359 synthetic ZMW normalization at the Engine fixture', () => {
     expect(postDeposit).not.toHaveBeenCalled();
   });
 });
+
+// RELEASE-GATE-FIX-003: successful/loading/error FX cannot escape the scenario panel.
+describe('RELEASE-GATE-FIX-003 continuity', () => {
+  test.each(['loading', 'success', 'error'] as const)('scenario %s FX stays on locked panel', async (status) => {
+    vi.useFakeTimers(); vi.stubEnv('NEXT_PUBLIC_AUTH_MODE', 'mock'); vi.stubEnv('NEXT_PUBLIC_FX_MODE', 'stub');
+    vi.mocked(useSearchParams).mockReturnValue(new URLSearchParams('journey=class-a-val-002&scenario=unavailable-data') as ReturnType<typeof useSearchParams>);
+    vi.mocked(useLatestFx).mockReturnValue({ status, data: { pair: 'USDZMW', rate: 20, ts: 1 }, retry: vi.fn() });
+    render(<DepositPage />); await act(async () => { await vi.advanceTimersByTimeAsync(350); });
+    expect(screen.getByTestId('deposit-market-data-continuity').textContent).toContain("The example rate didn't load. This simulation uses a fixed example rate, not market data.");
+    expect(screen.queryByTestId('deposit-fx-block')).toBeNull();
+  });
+});
