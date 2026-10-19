@@ -59,7 +59,7 @@ test('T1 each-figure-renders-once on all three real Homes', async () => {
     main.querySelector('label[for="dashboard-example-picker"]')?.parentElement?.remove();
     main.querySelectorAll('details:not([open]), .sr-only, [aria-hidden="true"]').forEach(n => n.remove());
     const usd = example === 'sarah' ? '$1000.00' : '$800.00';
-    const local = example === 'sarah' ? 'ZMW 6,000.00' : '≈ ZMW 21,600.00';
+    const local = example === 'sarah' ? '≈ ZMW 5,999.94' : '≈ ZMW 21,600.00';
     for (const figure of [usd, local, RATE]) expect(main.textContent!.split(figure).length - 1, `${example}: ${figure}`).toBe(1);
   }
 });
@@ -68,8 +68,8 @@ test('T2 shared-component-used-by-all-three and T3 caption-constant', async () =
     const view = await home(example);
     const hero = view.container.querySelector('[data-component="HomeHero"]');
     expect(hero, `${example} must use HomeHero`).not.toBeNull();
-    expect(hero!.querySelectorAll('[data-component="LocalFigure"]')).toHaveLength(example === 'sarah' ? 0 : 1);
-    if (example !== 'sarah') expect(hero!.querySelector('[data-component="LocalFigure"]')!.textContent).toContain(SIMULATION_DISPLAY_ESTIMATE_CAPTION);
+    expect(hero!.querySelectorAll('[data-component="LocalFigure"]')).toHaveLength(1);
+    expect(hero!.querySelector('[data-component="LocalFigure"]')!.textContent).toContain(SIMULATION_DISPLAY_ESTIMATE_CAPTION);
     expect(view.container.querySelectorAll('[data-component="RateLine"]')).toHaveLength(1);
   }
   for (const file of ['HomeHero', 'DanielExampleHome', 'SarahExampleHome']) {
@@ -131,7 +131,7 @@ test('T8 single-formatUsd feeds all real heroes and shared UTC date formatting',
   for (const example of ['own', 'daniel', 'sarah']) {
     formatter.mockClear(); const view = await home(example);
     expect(view.container.querySelector('[data-component="HomeHero"]')).not.toBeNull();
-    expect(formatter).toHaveBeenCalledWith(example === 'sarah' ? 1000 : 800);
+    expect(formatter).toHaveBeenCalledWith(example === 'sarah' ? 222.22 : 800);
   }
   expect(existsSync(resolve(__dirname, '../lib/utils/date.ts'))).toBe(true);
   const datePath = '../lib/utils/date'; const { formatExampleDate } = await import(datePath);

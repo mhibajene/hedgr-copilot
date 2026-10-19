@@ -462,7 +462,7 @@ const BUNDLE_SOURCE_EDITS: Record<string, [string, string][]> = {
   ]
 };
 function bundlePreRuntime(path: string, value: string): string {
-  value = releaseGatePreRuntime(path, releaseGate002PreRuntime(path, value));
+  value = releaseGatePreRuntime(path, releaseGate002PreRuntime(path, releaseGate003PreRuntime(path, value)));
   for (const [old, replacement] of BUNDLE_SOURCE_EDITS[path] ?? []) {
     if (value.includes(replacement)) {
       expect(value.split(replacement), path).toHaveLength(2);
@@ -563,6 +563,23 @@ function releaseGate002PreRuntime(path: string, value: string): string {
       expect(value.split(replacement), path).toHaveLength(2);
       value = value.replace(replacement, old);
     } else expect(value, path).toContain(old);
+  }
+  return value;
+}
+
+// RELEASE-GATE-FIX-003: exact authorised hunks reversed before all historical pins.
+const RELEASE_GATE_003_SOURCE_EDITS: Record<string, string[][]> = {
+  "app/(app)/dashboard/SarahExampleHome.tsx": [
+    [
+      "  return (\n    <section className={`${home.overview} ${home.exampleHome}`} aria-labelledby=\"dashboard-sarah-label\" data-testid=\"dashboard-sarah-read\">\n      <div className={home.overviewGrid} data-testid=\"sarah-home-grid\">\n        <div className={home.positionPanel}>\n          <HomeHero label={`Fictional example \u00b7 ${example.name}`} labelId=\"dashboard-sarah-label\" usdAmount={0} localHolding={example.holding} figureTestId=\"sarah-read-figure\" />\n          <ExampleLineChart mode=\"step\" series={series} events={events} example />\n          <p className=\"text-sm leading-relaxed text-hedgr-600\" data-testid=\"sarah-read-as-of\">Example date: <time dateTime={read.asOf}>{formatExampleDate(read.asOf)}</time></p>\n        </div>\n        <div className={home.insights}>\n",
+      "  return (\n    <section className={`${home.overview} ${home.exampleHome}`} aria-labelledby=\"dashboard-sarah-label\" data-testid=\"dashboard-sarah-read\">\n      <div className={home.overviewGrid} data-testid=\"sarah-home-grid\">\n        <div className={home.positionPanel}>\n          <HomeHero label={`Fictional example \u00b7 ${example.name}`} labelId=\"dashboard-sarah-label\" usdAmount={example.usdHolding.amount} figureTestId=\"sarah-read-figure\" />\n          <ExampleLineChart mode=\"step\" series={series} events={events} example />\n          <p className=\"text-sm leading-relaxed text-hedgr-600\" data-testid=\"sarah-read-as-of\">Example date: <time dateTime={read.asOf}>{formatExampleDate(read.asOf)}</time></p>\n        </div>\n        <div className={home.insights}>\n"
+    ]
+  ]
+};
+function releaseGate003PreRuntime(path: string, value: string): string {
+  for (const [old, replacement] of RELEASE_GATE_003_SOURCE_EDITS[path] ?? []) {
+    expect(value.split(replacement), path).toHaveLength(2);
+    value = value.replace(replacement, old);
   }
   return value;
 }

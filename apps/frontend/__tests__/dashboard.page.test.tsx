@@ -1043,6 +1043,8 @@ const RESEARCH_PRE_RUNTIME_HASHES: Record<string, string> = {
   "app/research/stability-scenarios/page.tsx": "f45d77e2bbac700da54b6e6c2884b6c128b181a9256119cfc7002313baed4b32"
 };
 function s18ExcludedDigest() {
+  // Prove only the additive Sarah field changed before retaining the historical pin.
+  expect(s18Digest(releaseGate003PreRuntime('lib/state/synthetic-journey.ts', readFileSync(resolve('lib/state/synthetic-journey.ts')).toString()))).toBe('ac3d3d29607619c2f8196a5ef062677c8a2796a531e87b31ad90106cce78a9f9');
   const files: string[] = [];
   function visit(path: string) {
     if (statSync(resolve(path)).isDirectory()) {
@@ -1050,7 +1052,7 @@ function s18ExcludedDigest() {
     } else files.push(path);
   }
   S18_EXCLUDED_ROOTS.forEach(visit);
-  return s18Digest(files.sort().map((path) => `${path}\0${RESEARCH_PRE_RUNTIME_HASHES[path] ?? (path === 'lib/state/synthetic-journey.ts' ? 'd1f5117cd75691c4d7404dbe7746673e3bdbd168c225f10bb5447163e3584366' : s18Digest(scPreRuntime(releaseGatePreRuntime(path, studyBridgePreRuntime(path, releaseGate002PreRuntime(path, readFileSync(resolve(path)).toString()))), SC_ENGINE_SOURCE_EDITS[path] ?? [])))}`).join('\n'));
+  return s18Digest(files.sort().map((path) => `${path}\0${RESEARCH_PRE_RUNTIME_HASHES[path] ?? (path === 'lib/state/synthetic-journey.ts' ? 'd1f5117cd75691c4d7404dbe7746673e3bdbd168c225f10bb5447163e3584366' : s18Digest(scPreRuntime(releaseGatePreRuntime(path, studyBridgePreRuntime(path, releaseGate002PreRuntime(path, releaseGate003PreRuntime(path, readFileSync(resolve(path)).toString())))), SC_ENGINE_SOURCE_EDITS[path] ?? [])))}`).join('\n'));
 }
 
 function s18OutsideTile(view: HTMLElement) {
@@ -1446,6 +1448,55 @@ function releaseGate002PreRuntime(path: string, value: string): string {
       expect(value.split(replacement), path).toHaveLength(2);
       value = value.replace(replacement, old);
     } else expect(value, path).toContain(old);
+  }
+  return value;
+}
+
+// RELEASE-GATE-FIX-003: exact authorised hunks reversed before all historical pins.
+const RELEASE_GATE_003_SOURCE_EDITS: Record<string, string[][]> = {
+  "app/(app)/withdraw/page.tsx": [
+    [
+      "  CLASS_A_VAL_002_JOURNEY_VALUE,\n  getSyntheticJourneyHref,\n  isSyntheticJourneyPrimaryCondition,\n  isSyntheticJourneyLinkContext,\n} from '../../../lib/state/synthetic-journey';\n\ninterface WithdrawMethod {\n  id: string;\n",
+      "  CLASS_A_VAL_002_JOURNEY_VALUE,\n  getSyntheticJourneyHref,\n  isSyntheticJourneyPrimaryCondition,\n  isSyntheticJourneyLinkContext,\n  isSyntheticJourneyUnavailableDataScenario,\n} from '../../../lib/state/synthetic-journey';\n\ninterface WithdrawMethod {\n  id: string;\n"
+    ],
+    [
+      "\n  const txReviewFlags = useMemo(() => resolveTxReviewSimulatorFlags(search), [search]);\n  const reviewSeamActive = isTxReviewSeamActive(txReviewFlags);\n  const syntheticJourneyLinkContext = isSyntheticJourneyLinkContext(search);\n  const syntheticJourneyActive =\n    isSyntheticJourneyPrimaryCondition(search) &&\n    searchParams?.get(CLASS_A_VAL_002_JOURNEY_PARAM) ===\n      CLASS_A_VAL_002_JOURNEY_VALUE;\n",
+      "\n  const txReviewFlags = useMemo(() => resolveTxReviewSimulatorFlags(search), [search]);\n  const reviewSeamActive = isTxReviewSeamActive(txReviewFlags);\n  const syntheticJourneyLinkContext = isSyntheticJourneyLinkContext(search);\n  const unavailableDataScenario = isSyntheticJourneyUnavailableDataScenario(search);\n  const syntheticJourneyActive =\n    isSyntheticJourneyPrimaryCondition(search) &&\n    searchParams?.get(CLASS_A_VAL_002_JOURNEY_PARAM) ===\n      CLASS_A_VAL_002_JOURNEY_VALUE;\n"
+    ],
+    [
+      "  const displayCurrency = useSimulationDisplayCurrency(syntheticJourneyActive);\n  const quote = syntheticJourneyActive ? displayCurrency : marketQuote;\n  const fx = useLatestFx(`USD${marketQuote}`);\n  const backendRate = fx.status === 'success' && fx.data ? fx.data.rate : null;\n  const rate = syntheticJourneyActive ? getSimulationDisplayRate(displayCurrency) : backendRate;\n  const confirmTx = useLedgerStore((s) => s.confirm);\n  const failTx = useLedgerStore((s) => s.fail);\n\n  const [usdInput, setUsdInput] = useState('');\n",
+      "  const displayCurrency = useSimulationDisplayCurrency(syntheticJourneyActive);\n  const quote = syntheticJourneyActive ? displayCurrency : marketQuote;\n  const fx = useLatestFx(`USD${marketQuote}`);\n  const backendRate = fx.status === 'success' && fx.data ? fx.data.rate : null;\n  const rate = unavailableDataScenario ? null : syntheticJourneyActive ? getSimulationDisplayRate(displayCurrency) : backendRate;\n  const confirmTx = useLedgerStore((s) => s.confirm);\n  const failTx = useLedgerStore((s) => s.fail);\n\n  const [usdInput, setUsdInput] = useState('');\n"
+    ],
+    [
+      "  if (available === 0 && !simulatedResultActive) {\n    return (\n      <main className={`mx-auto max-w-xl p-6 ${finish.choice}`}>\n        <h1 className=\"text-2xl font-semibold\">Withdraw</h1>\n        <EmptyState\n          title={\n            productSimulationActive\n              ? 'No simulated funds to withdraw'\n",
+      "  if (available === 0 && !simulatedResultActive) {\n    return (\n      <main className={`mx-auto max-w-xl p-6 ${finish.choice}`}>\n        <h1 className=\"text-2xl font-semibold\">Withdraw</h1>\n        {unavailableDataScenario ? (\n          <MarketDataContinuityPanel\n            route=\"withdraw\"\n            onRetryFx={fx.retry}\n            labelled={productSimulationActive}\n            data-testid=\"withdraw-market-data-continuity\"\n          />\n        ) : null}\n        <EmptyState\n          title={\n            productSimulationActive\n              ? 'No simulated funds to withdraw'\n"
+    ],
+    [
+      "          data-testid=\"withdraw-fx-block\"\n        >\n          Simulated example rate: 1 USD = {rate?.toFixed(2)} {quote}\n        </div>\n      ) : fx.status === 'error' ? (\n        <MarketDataContinuityPanel\n          route=\"withdraw\"\n          onRetryFx={fx.retry}\n          labelled={productSimulationActive}\n",
+      "          data-testid=\"withdraw-fx-block\"\n        >\n          Simulated example rate: 1 USD = {rate?.toFixed(2)} {quote}\n        </div>\n      ) : unavailableDataScenario || fx.status === 'error' ? (\n        <MarketDataContinuityPanel\n          route=\"withdraw\"\n          onRetryFx={fx.retry}\n          labelled={productSimulationActive}\n"
+    ],
+    [
+      "            ? 'Simulated balance: '\n            : 'Current balance: '}\n        <BalanceWithLocalEstimate\n          usdAmount={displayedBalanceBefore}\n          displayEstimate={syntheticJourneyActive\n            ? formatSimulationDisplayEstimate(displayedBalanceBefore, displayCurrency)\n            : undefined}\n          inline\n        />\n",
+      "            ? 'Simulated balance: '\n            : 'Current balance: '}\n        <BalanceWithLocalEstimate\n          usdAmount={displayedBalanceBefore}\n          displayEstimate={unavailableDataScenario ? '' : syntheticJourneyActive\n            ? formatSimulationDisplayEstimate(displayedBalanceBefore, displayCurrency)\n            : undefined}\n          inline\n        />\n"
+    ]
+  ],
+  "lib/state/ledger.ts": [
+    [
+      "      storage: createLedgerStorage(\n        typeof window !== 'undefined' ? window.localStorage : (memoryStorage as unknown as Storage)\n      ),\n      partialize: (state) => ({ transactions: state.transactions }),\n    }\n  )\n);\n",
+      "      storage: createLedgerStorage(\n        typeof window !== 'undefined' ? window.localStorage : (memoryStorage as unknown as Storage)\n      ),\n      partialize: (state) => ({ transactions: state.transactions }),\n      onRehydrateStorage: () => (state) => {\n        if (!state || typeof window === 'undefined' || !state.transactions.some(tx => tx.status === 'pending')) return;\n        // Load after this store has initialized; do not alter persisted entries.\n        void import('../deposits/synthetic-deposit-lifecycle').then(({ recoverSyntheticDeposits }) => recoverSyntheticDeposits());\n        void import('../payments/withdraw.mock').then(({ recoverSyntheticWithdrawals }) => recoverSyntheticWithdrawals());\n      },\n    }\n  )\n);\n"
+    ]
+  ],
+  "lib/state/synthetic-journey.ts": [
+    [
+      "\n/** \u00a7391: one registry for URL identity, picker names and locked fictional deposit facts. */\nexport const SYNTHETIC_JOURNEY_EXAMPLES = Object.freeze([\n  Object.freeze({ id: CLASS_A_VAL_002_DANIEL_EXAMPLE, name: 'Daniel\u2019s reserve', deposits: Object.freeze([Object.freeze({ at: '2026-06-12T00:00:00.000Z', amount: 500, currency: 'USD' as const }), Object.freeze({ at: '2026-08-14T00:00:00.000Z', amount: 300, currency: 'USD' as const })]), get label() { return this.name.replace('\u2019', \"'\"); } }),\n  Object.freeze({ id: CLASS_A_VAL_002_SARAH_EXAMPLE, name: 'Sarah\u2019s course fee', holding: Object.freeze({ amount: 6000, currency: 'ZMW' as const }), deposits: Object.freeze([Object.freeze({ at: '2026-04-14T00:00:00.000Z', amount: 4000, currency: 'ZMW' as const }), Object.freeze({ at: '2026-07-21T00:00:00.000Z', amount: 2000, currency: 'ZMW' as const })]), get label() { return this.name.replace('\u2019', \"'\"); } }),\n] as const);\n\nexport function parseSyntheticJourneyExample(search?: string): 'own' | (typeof SYNTHETIC_JOURNEY_EXAMPLES)[number]['id'] {\n  const id = getSearchParams(search).get(CLASS_A_VAL_002_EXAMPLE_PARAM);\n",
+      "\n/** \u00a7391: one registry for URL identity, picker names and locked fictional deposit facts. */\nexport const SYNTHETIC_JOURNEY_EXAMPLES = Object.freeze([\n  Object.freeze({ id: CLASS_A_VAL_002_DANIEL_EXAMPLE, name: 'Daniel\u2019s reserve', deposits: Object.freeze([Object.freeze({ at: '2026-06-12T00:00:00.000Z', amount: 500, currency: 'USD' as const }), Object.freeze({ at: '2026-08-14T00:00:00.000Z', amount: 300, currency: 'USD' as const })]), get label() { return this.name.replace('\u2019', \"'\"); } }),\n  Object.freeze({ id: CLASS_A_VAL_002_SARAH_EXAMPLE, name: 'Sarah\u2019s course fee', holding: Object.freeze({ amount: 6000, currency: 'ZMW' as const }), usdHolding: Object.freeze({ amount: 222.22, currency: 'USD' as const }), deposits: Object.freeze([Object.freeze({ at: '2026-04-14T00:00:00.000Z', amount: 4000, currency: 'ZMW' as const }), Object.freeze({ at: '2026-07-21T00:00:00.000Z', amount: 2000, currency: 'ZMW' as const })]), get label() { return this.name.replace('\u2019', \"'\"); } }),\n] as const);\n\nexport function parseSyntheticJourneyExample(search?: string): 'own' | (typeof SYNTHETIC_JOURNEY_EXAMPLES)[number]['id'] {\n  const id = getSearchParams(search).get(CLASS_A_VAL_002_EXAMPLE_PARAM);\n"
+    ]
+  ]
+};
+function releaseGate003PreRuntime(path: string, value: string): string {
+  for (const [old, replacement] of RELEASE_GATE_003_SOURCE_EDITS[path] ?? []) {
+    expect(value.split(replacement), path).toHaveLength(2);
+    value = value.replace(replacement, old);
   }
   return value;
 }

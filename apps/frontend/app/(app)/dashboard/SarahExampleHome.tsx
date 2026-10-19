@@ -18,7 +18,7 @@ export function SarahExampleHome({ read }: { read: SarahRead }) {
     <section className={`${home.overview} ${home.exampleHome}`} aria-labelledby="dashboard-sarah-label" data-testid="dashboard-sarah-read">
       <div className={home.overviewGrid} data-testid="sarah-home-grid">
         <div className={home.positionPanel}>
-          <HomeHero label={`Fictional example · ${example.name}`} labelId="dashboard-sarah-label" usdAmount={0} localHolding={example.holding} figureTestId="sarah-read-figure" />
+          <HomeHero label={`Fictional example · ${example.name}`} labelId="dashboard-sarah-label" usdAmount={example.usdHolding.amount} figureTestId="sarah-read-figure" />
           <ExampleLineChart mode="step" series={series} events={events} example />
           <p className="text-sm leading-relaxed text-hedgr-600" data-testid="sarah-read-as-of">Example date: <time dateTime={read.asOf}>{formatExampleDate(read.asOf)}</time></p>
         </div>

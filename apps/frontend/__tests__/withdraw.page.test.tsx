@@ -785,3 +785,22 @@ describe('RELEASE-GATE-FIX-001', () => {
     expect(screen.getByTestId('withdraw-balance-reconciliation').closest('div')!.textContent).toBe('Balance now $27.04');
   });
 });
+
+// RELEASE-GATE-FIX-003: successful/loading/error FX cannot escape the scenario panel.
+describe('RELEASE-GATE-FIX-003 continuity', () => {
+  for (const available of [0, 50]) test.each(['loading', 'success', 'error'] as const)(`scenario ${available} balance with %s FX`, async (status) => {
+    vi.useFakeTimers(); vi.stubEnv('NEXT_PUBLIC_AUTH_MODE', 'mock'); vi.stubEnv('NEXT_PUBLIC_FX_MODE', 'stub');
+    vi.mocked(useSearchParams).mockReturnValue(new URLSearchParams('journey=class-a-val-002&scenario=unavailable-data') as ReturnType<typeof useSearchParams>);
+    vi.mocked(useBalance).mockReturnValue({ total: available, available, pending: 0, currency: 'USD', asOf: 1, isLoading: false, error: null, refresh: vi.fn() });
+    vi.mocked(useLatestFx).mockReturnValue({ status, data: { pair: 'USDZMW', rate: 20, ts: 1 }, retry: vi.fn() });
+    render(<WithdrawPage />); await act(async () => { await vi.advanceTimersByTimeAsync(350); });
+    expect(screen.getByTestId('withdraw-market-data-continuity').textContent).toContain('You are still on Withdraw. Your simulated balance stays visible.');
+    expect(screen.queryByTestId('withdraw-fx-block')).toBeNull();
+    if (available === 0) expect(screen.getByTestId('withdraw-no-funds')).toBeTruthy();
+    else {
+      fireEvent.change(screen.getByTestId('withdraw-amount'), { target: { value: '1' } });
+      expect((screen.getByRole('button', { name: 'Confirm' }) as HTMLButtonElement).disabled).toBe(true);
+      expect(screen.getByTestId('withdraw-local-estimate').textContent).toBe('');
+    }
+  });
+});

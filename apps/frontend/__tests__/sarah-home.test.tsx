@@ -36,7 +36,7 @@ import { ENGINE_TRUST_INFORMATIONAL_DENYLIST } from './engine-trust-framing-deny
 const ROUTES = ['/dashboard?journey=class-a-val-002', '/dashboard-synthetic-journey'];
 const OPTIONS = ['Your own simulation', "Daniel's reserve", "Sarah's course fee"];
 const COPY = {
-  h1: 'Example', heading: 'Fictional example · Sarah’s course fee', caption: 'ZMW 6,000.00', card: 'Course fee',
+  h1: 'Example', heading: 'Fictional example · Sarah’s course fee', figure: '$222.22 USD', caption: '≈ ZMW 5,999.94 Example figure, not a quote', card: 'Course fee',
   date: 'Example date: 9 Oct 2026',
   due: 'Due 1 Oct 2027.',
   rate: 'Example rate: ZMW 27 per US dollar. Not a live rate.',
@@ -79,7 +79,7 @@ function seed() {
 function assertRead() {
   expect(screen.getByRole('heading', { level: 1 }).textContent).toBe(COPY.h1);
   expect(screen.getAllByTestId('dashboard-sarah-read')).toHaveLength(1);
-  expect(screen.getByTestId('sarah-read-figure').textContent).toBe('ZMW 6,000.00');
+  expect(screen.getByTestId('sarah-read-figure').textContent).toBe(COPY.figure);
 }
 beforeEach(() => {
   vi.stubEnv('NEXT_PUBLIC_AUTH_MODE', 'mock'); vi.stubEnv('NEXT_PUBLIC_FX_MODE', 'stub'); vi.stubEnv('NEXT_PUBLIC_APP_ENV', 'prod');
@@ -116,7 +116,7 @@ test('Sarah is selectable on both journey Homes', () => {
   }
 });
 
-test('Sarah hero uses $1000.00 USD and one independent fee observation', async () => {
+test('Sarah hero uses $222.22 USD and one independent fee observation', async () => {
   at(ROUTES[0], 'sarah'); const view = render(<DashboardPage />); assertRead();
   const fixturePath = '../lib/state/sarah-home-fixture';
   expect(existsSync(resolve(__dirname, fixturePath + '.ts'))).toBe(true);
@@ -132,7 +132,7 @@ test('Sarah hero uses $1000.00 USD and one independent fee observation', async (
   expect(screen.getByTestId('sarah-read-as-of').querySelector('time')?.getAttribute('datetime')).toBe(AS_OF);
   expect(panel().querySelectorAll('time')).toHaveLength(4);
   expect(screen.getByTestId('sarah-fee-card').querySelector('time')?.getAttribute('datetime')).toBe('2027-10-01');
-  expect(panel().textContent?.split('ZMW 6,000.00')).toHaveLength(2);
+  expect(panel().textContent?.split('≈ ZMW 5,999.94')).toHaveLength(2);
   expect(panel().textContent).not.toContain('Course fee USD 1,000');
   expect(screen.getAllByTestId('sarah-fee-card')).toHaveLength(1);
   expect(screen.getByTestId('sarah-fee-card').querySelector('time')?.parentElement?.textContent).toBe(COPY.due);
@@ -152,8 +152,8 @@ test('Sarah hero uses $1000.00 USD and one independent fee observation', async (
     explanation:{fee:'ENGINE FEE',rateAssumption:'ENGINE RATE',limits:'ENGINE LIMITS'}};
   render(<SarahExampleHome read={sentinel}/>);
   expect(screen.getByTestId('sarah-fee-figure').textContent).toBe('$1234.56 USD');
-  expect(screen.getByTestId('sarah-read-figure').textContent).toBe('ZMW 6,000.00');
-  expect(screen.queryByTestId('sarah-read-caption')).toBeNull();
+  expect(screen.getByTestId('sarah-read-figure').textContent).toBe(COPY.figure);
+  expect(screen.getByTestId('local-balance').textContent).toBe(COPY.caption);
   expect(screen.getByTestId('sarah-read-as-of').textContent).toBe('Example date: 3 Feb 2030');
   expect(screen.getByTestId('sarah-fee-card').querySelector('time')?.textContent).toBe('5 Apr 2031');
   expect(Array.from(panel().querySelectorAll('time')).map(n=>n.getAttribute('datetime'))).toEqual(['2026-04-14T00:00:00.000Z','2026-07-21T00:00:00.000Z',sentinel.asOf,sentinel.declaredFee.dueDate]);
@@ -241,10 +241,10 @@ test('Sarah Home uses locked copy and no funding claims', () => {
   for (const route of ROUTES) {
     at(route, 'sarah'); const view = render(<DashboardPage />); assertRead();
     expect(document.getElementById('dashboard-sarah-label')?.textContent).toBe(COPY.heading);
-    expect(screen.getByTestId('sarah-read-figure').textContent).toBe(COPY.caption);
-    expect(screen.queryByTestId('sarah-read-caption')).toBeNull();
+    expect(screen.getByTestId('sarah-read-figure').textContent).toBe(COPY.figure);
+    expect(screen.getByTestId('local-balance').textContent).toBe(COPY.caption);
     expect(withoutChart(screen.getByTestId('sarah-fee-card'))).toBe(COPY.card + '$1000.00 USD' + COPY.due + COPY.rate + COPY.limits);
-    expect(withoutChart(panel())).toBe(COPY.heading + COPY.caption + COPY.date + COPY.card + '$1000.00 USD' + COPY.due + COPY.rate + COPY.limits);
+    expect(withoutChart(panel())).toBe(COPY.heading + COPY.figure + COPY.caption + COPY.date + COPY.card + '$1000.00 USD' + COPY.due + COPY.rate + COPY.limits);
     expect(picker().selectedOptions[0].textContent).toBe(OPTIONS[2]);
     expect(screen.getAllByText(COPY.rate, { exact: true })).toHaveLength(1);
     const text = panel().textContent!.replace(COPY.limits, ''); // Keep the exact negative payment-ability statement.
@@ -358,3 +358,16 @@ function bundlePreRuntime(path: string, value: string): string {
   }
   return value;
 }
+
+// RELEASE-GATE-FIX-003 T3/T8/T9: shared hero; the fee is independent.
+test('RELEASE-GATE-FIX-003 Sarah uses the shared static USD holding and local estimate', () => {
+  at(ROUTES[0], 'sarah');
+  render(<DashboardPage />);
+  const hero = panel().querySelector('[data-component="HomeHero"]')!;
+  expect(hero.querySelector('[data-component="UsdFigure"]')?.textContent).toBe('$222.22 USD');
+  expect(within(hero as HTMLElement).getByTestId('local-balance-figure').textContent).toBe('≈ ZMW 5,999.94');
+  expect(within(hero as HTMLElement).getByTestId('local-balance-caption').textContent).toBe('Example figure, not a quote');
+  expect(source('lib/state/synthetic-journey.ts')).toContain("usdHolding: Object.freeze({ amount: 222.22, currency: 'USD' as const })");
+  expect(source('app/(app)/dashboard/SarahExampleHome.tsx')).toContain('usdAmount={example.usdHolding.amount}');
+  expect(hero.textContent).not.toMatch(/6,000|1000/);
+});

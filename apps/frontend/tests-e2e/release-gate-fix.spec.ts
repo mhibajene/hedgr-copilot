@@ -114,8 +114,10 @@ for (const [width, scale] of [[1440, 1], [390, 1], [320, 2]]) {
   });
   test(`RELEASE-GATE-FIX-001 T6 Sarah hero ${width}`, async ({ page }) => {
     await seed(page); await page.goto(`${HOME}?example=sarah`); await viewport(page, width, scale);
-    const hero = page.locator('[data-component="HomeHero"]'); await expect(hero).toContainText('ZMW 6,000.00');
-    await expect(hero).not.toContainText(/USD|≈|Example figure, not a quote|1000/);
+    const hero = page.locator('[data-component="HomeHero"]'); await expect(hero).toContainText('$222.22 USD');
+    await expect(hero.getByTestId('local-balance-figure')).toHaveText('≈ ZMW 5,999.94');
+    await expect(hero.getByTestId('local-balance-caption')).toHaveText('Example figure, not a quote');
+    await expect(hero).not.toContainText(/6,000|6000|1000/);
     await expect(page.getByTestId('sarah-fee-card')).toContainText('$1000.00');
     await expect(page.getByTestId('sarah-fee-card')).toContainText('This read does not establish whether Sarah can pay the fee.');
   });
