@@ -38,7 +38,7 @@
     "@playwright/test": "^1.55.1",
     "@sentry/browser": "^8.40.0",
     "@tailwindcss/postcss": "^4.1.11",
-    "@testing-library/react": "^16.3.0",
+    "@testing-library/react": "^16.3.3",
     "@types/node": "^24.0.13",
     "@types/react": "19.1.8",
     "@types/react-dom": "19.1.9",
