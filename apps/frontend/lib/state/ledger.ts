@@ -198,6 +198,12 @@ export const useLedgerStore = create<LedgerStore>()(
         typeof window !== 'undefined' ? window.localStorage : (memoryStorage as unknown as Storage)
       ),
       partialize: (state) => ({ transactions: state.transactions }),
+      onRehydrateStorage: () => (state) => {
+        if (!state || typeof window === 'undefined' || !state.transactions.some(tx => tx.status === 'pending')) return;
+        // Load after this store has initialized; do not alter persisted entries.
+        void import('../deposits/synthetic-deposit-lifecycle').then(({ recoverSyntheticDeposits }) => recoverSyntheticDeposits());
+        void import('../payments/withdraw.mock').then(({ recoverSyntheticWithdrawals }) => recoverSyntheticWithdrawals());
+      },
     }
   )
 );

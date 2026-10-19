@@ -83,7 +83,7 @@ test('V26 no-growing-label, V28 sarah-no-total-row, V29 sarah-fee-hero-and-limit
     const chart = screen.getByTestId('example-line-chart');
     expect(chart.textContent + Array.from(chart.querySelectorAll('[aria-label], [title]')).map(n => n.getAttribute('aria-label') ?? n.getAttribute('title')).join(' ')).not.toMatch(/grow|rising|increase|progress|towards|funded|enough|cover|remaining|left to|% of/i);
     if (id === 'sarah') {
-      expect(screen.getByTestId('sarah-read-figure').textContent).toBe('ZMW 6,000.00');
+      expect(screen.getByTestId('sarah-read-figure').textContent).toBe('$222.22 USD');
       expect(screen.getAllByText(LIMITS, { exact: true })).toHaveLength(1);
       const outsideHero = view.container.cloneNode(true) as HTMLElement;
       outsideHero.querySelector('[data-testid="sarah-read-figure"]')!.remove();

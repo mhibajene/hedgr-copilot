@@ -37,6 +37,7 @@ import {
   getSyntheticJourneyHref,
   isSyntheticJourneyPrimaryCondition,
   isSyntheticJourneyLinkContext,
+  isSyntheticJourneyUnavailableDataScenario,
 } from '../../../lib/state/synthetic-journey';
 
 interface WithdrawMethod {
@@ -93,6 +94,7 @@ function WithdrawPageContent() {
   const txReviewFlags = useMemo(() => resolveTxReviewSimulatorFlags(search), [search]);
   const reviewSeamActive = isTxReviewSeamActive(txReviewFlags);
   const syntheticJourneyLinkContext = isSyntheticJourneyLinkContext(search);
+  const unavailableDataScenario = isSyntheticJourneyUnavailableDataScenario(search);
   const syntheticJourneyActive =
     isSyntheticJourneyPrimaryCondition(search) &&
     searchParams?.get(CLASS_A_VAL_002_JOURNEY_PARAM) ===
@@ -106,7 +108,7 @@ function WithdrawPageContent() {
   const quote = syntheticJourneyActive ? displayCurrency : marketQuote;
   const fx = useLatestFx(`USD${marketQuote}`);
   const backendRate = fx.status === 'success' && fx.data ? fx.data.rate : null;
-  const rate = syntheticJourneyActive ? getSimulationDisplayRate(displayCurrency) : backendRate;
+  const rate = unavailableDataScenario ? null : syntheticJourneyActive ? getSimulationDisplayRate(displayCurrency) : backendRate;
   const confirmTx = useLedgerStore((s) => s.confirm);
   const failTx = useLedgerStore((s) => s.fail);
 
@@ -304,6 +306,14 @@ function WithdrawPageContent() {
     return (
       <main className={`mx-auto max-w-xl p-6 ${finish.choice}`}>
         <h1 className="text-2xl font-semibold">Withdraw</h1>
+        {unavailableDataScenario ? (
+          <MarketDataContinuityPanel
+            route="withdraw"
+            onRetryFx={fx.retry}
+            labelled={productSimulationActive}
+            data-testid="withdraw-market-data-continuity"
+          />
+        ) : null}
         <EmptyState
           title={
             productSimulationActive
@@ -372,7 +382,7 @@ function WithdrawPageContent() {
         >
           Simulated example rate: 1 USD = {rate?.toFixed(2)} {quote}
         </div>
-      ) : fx.status === 'error' ? (
+      ) : unavailableDataScenario || fx.status === 'error' ? (
         <MarketDataContinuityPanel
           route="withdraw"
           onRetryFx={fx.retry}

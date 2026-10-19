@@ -17,7 +17,7 @@ export const CLASS_A_VAL_002_SARAH_EXAMPLE = 'sarah';
 /** §391: one registry for URL identity, picker names and locked fictional deposit facts. */
 export const SYNTHETIC_JOURNEY_EXAMPLES = Object.freeze([
   Object.freeze({ id: CLASS_A_VAL_002_DANIEL_EXAMPLE, name: 'Daniel’s reserve', deposits: Object.freeze([Object.freeze({ at: '2026-06-12T00:00:00.000Z', amount: 500, currency: 'USD' as const }), Object.freeze({ at: '2026-08-14T00:00:00.000Z', amount: 300, currency: 'USD' as const })]), get label() { return this.name.replace('’', "'"); } }),
-  Object.freeze({ id: CLASS_A_VAL_002_SARAH_EXAMPLE, name: 'Sarah’s course fee', holding: Object.freeze({ amount: 6000, currency: 'ZMW' as const }), deposits: Object.freeze([Object.freeze({ at: '2026-04-14T00:00:00.000Z', amount: 4000, currency: 'ZMW' as const }), Object.freeze({ at: '2026-07-21T00:00:00.000Z', amount: 2000, currency: 'ZMW' as const })]), get label() { return this.name.replace('’', "'"); } }),
+  Object.freeze({ id: CLASS_A_VAL_002_SARAH_EXAMPLE, name: 'Sarah’s course fee', holding: Object.freeze({ amount: 6000, currency: 'ZMW' as const }), usdHolding: Object.freeze({ amount: 222.22, currency: 'USD' as const }), deposits: Object.freeze([Object.freeze({ at: '2026-04-14T00:00:00.000Z', amount: 4000, currency: 'ZMW' as const }), Object.freeze({ at: '2026-07-21T00:00:00.000Z', amount: 2000, currency: 'ZMW' as const })]), get label() { return this.name.replace('’', "'"); } }),
 ] as const);
 
 export function parseSyntheticJourneyExample(search?: string): 'own' | (typeof SYNTHETIC_JOURNEY_EXAMPLES)[number]['id'] {

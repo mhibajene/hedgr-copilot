@@ -1,6 +1,7 @@
 'use client';
 
 import { useLedgerStore, type Tx } from '../state/ledger';
+import { getEnvironmentMode } from '../env/mode';
 
 const pendingTimers = new Map<string, ReturnType<typeof setTimeout>>();
 
@@ -16,7 +17,7 @@ function matchesDeposit(current: Tx | undefined, original: Tx): current is Tx {
 
 /**
  * Own a newly-created local simulation's timer outside the page lifetime.
- * In-app navigation is supported; reloads and historical pending recovery are not.
+ * In-app navigation is supported; hydration resumes the remaining delay below.
  */
 export function scheduleSyntheticDeposit(txnRef: string, delayMs: number): void {
   if (pendingTimers.has(txnRef)) return;
@@ -36,4 +37,16 @@ export function scheduleSyntheticDeposit(txnRef: string, delayMs: number): void 
     }
   }, delayMs);
   pendingTimers.set(txnRef, timer);
+}
+
+/** Resume only simulation deposits with the existing entered-source metadata. */
+export function recoverSyntheticDeposits(): void {
+  if (getEnvironmentMode() === 'live') return;
+  const delay = Number(process.env.NEXT_PUBLIC_MOMO_CONFIRM_DELAY_MS ?? '1500');
+  for (const tx of useLedgerStore.getState().transactions) {
+    if (tx.type === 'deposit' && tx.status === 'pending' &&
+        tx.source_local_amount !== undefined && tx.source_local_currency) {
+      scheduleSyntheticDeposit(tx.txn_ref, Math.max(0, delay - (Date.now() - tx.created_at)));
+    }
+  }
 }

@@ -227,3 +227,27 @@ describe('RELEASE-GATE-FIX-003 pending hydration', () => {
     expect(useLedgerStore.getState().getByTxnRef(tx.txn_ref)).toMatchObject({ ...immutable, status: 'settled' });
   });
 });
+
+test('RELEASE-GATE-FIX-003 hydration leaves live entries pending', async () => {
+  vi.stubEnv('NEXT_PUBLIC_AUTH_MODE', 'magic'); vi.stubEnv('NEXT_PUBLIC_FX_MODE', 'live');
+  const tx = deposit({ created_at: Date.now() - 5000, source_local_amount: 100, source_local_currency: 'ZMW' });
+  localStorage.setItem('hedgr:ledger', JSON.stringify({ version: 2, transactions: [tx] }));
+  await useLedgerStore.persist.rehydrate(); await vi.dynamicImportSettled(); await advance(5000);
+  expect(useLedgerStore.getState().getByTxnRef(tx.txn_ref)).toEqual(tx);
+});
+test('RELEASE-GATE-FIX-003 recovery cannot resurrect a reset', async () => {
+  const tx = deposit({ created_at: Date.now(), source_local_amount: 100, source_local_currency: 'ZMW' });
+  localStorage.setItem('hedgr:ledger', JSON.stringify({ version: 2, transactions: [tx] }));
+  await useLedgerStore.persist.rehydrate(); await vi.dynamicImportSettled();
+  useLedgerStore.getState().clear(); await advance(5000);
+  expect(useLedgerStore.getState().transactions).toEqual([]);
+});
+test('RELEASE-GATE-FIX-003 deliberate withdrawal review hold survives rehydration', async () => {
+  vi.stubEnv('NODE_ENV', 'development'); vi.stubEnv('NEXT_PUBLIC_APP_ENV', 'dev'); vi.stubEnv('CI', 'false');
+  window.history.replaceState(null, '', '/withdraw?txReviewHoldPending=1');
+  const { withdrawMock } = await import('../lib/payments/withdraw.mock');
+  const tx = await withdrawMock.createWithdraw(1, { skipAutoConfirm: true });
+  await useLedgerStore.persist.rehydrate(); await vi.dynamicImportSettled(); await advance(5000);
+  expect(useLedgerStore.getState().getByTxnRef(tx.txn_ref)?.status).toBe('pending');
+  window.history.replaceState(null, '', '/');
+});
