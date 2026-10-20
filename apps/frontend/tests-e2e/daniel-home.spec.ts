@@ -308,7 +308,7 @@ test('keeps the Daniel read identical when display currency or simulated activit
     for (const state of ['empty', 'changed', 'pending', 'failed']) {
       await seed(page, ACTIVITY[state], code);
       await gotoDaniel(page, '/dashboard?journey=class-a-val-002');
-      const html = await panel(page).evaluate((node) => { const clone = node.cloneNode(true) as HTMLElement; clone.querySelector('a')?.remove(); return clone.innerHTML.replace(/«r[0-9a-z]+»/g, ':react-id:'); });
+      const html = await panel(page).evaluate((node) => { const clone = node.cloneNode(true) as HTMLElement; clone.querySelector('a')?.remove(); return clone.innerHTML.replace(/«r[0-9a-z]+»|_r_[0-9a-z]+_/g, ':react-id:'); });
       reference ??= html;
       expect(html).toBe(reference);
     }
@@ -317,7 +317,7 @@ test('keeps the Daniel read identical when display currency or simulated activit
   await seed(page, ACTIVITY.changed, 'KES');
   await page.evaluate(() => localStorage.setItem('hedgr:last-home-visit', '1500'));
   await gotoDaniel(page, '/dashboard-synthetic-journey');
-  expect(await panel(page).evaluate((node) => { const clone = node.cloneNode(true) as HTMLElement; clone.querySelector('a')?.remove(); return clone.innerHTML.replace(/«r[0-9a-z]+»/g, ':react-id:'); })).toBe(reference);
+  expect(await panel(page).evaluate((node) => { const clone = node.cloneNode(true) as HTMLElement; clone.querySelector('a')?.remove(); return clone.innerHTML.replace(/«r[0-9a-z]+»|_r_[0-9a-z]+_/g, ':react-id:'); })).toBe(reference);
 });
 
 test('normalizes new synthetic ZMW deposit rows at the Engine fixture without changing the live API boundary', async ({ page }) => {
@@ -454,7 +454,7 @@ test("Daniel's example ignores your simulation", async ({ page }) => {
       const html = await panel(page).evaluate((node) => {
         const clone = node.cloneNode(true) as HTMLElement;
         clone.querySelector('a')?.remove();
-        return clone.innerHTML.replace(/«r[0-9a-z]+»/g, ':react-id:');
+        return clone.innerHTML.replace(/«r[0-9a-z]+»|_r_[0-9a-z]+_/g, ':react-id:');
       });
       reference ??= html;
       expect(html).toBe(reference);
