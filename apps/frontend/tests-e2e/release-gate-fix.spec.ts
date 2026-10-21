@@ -36,6 +36,13 @@ for (const [width, scale] of [[1440, 1], [390, 1], [320, 2]]) {
     await page.route('**/api/fx?**', route => route.fulfill({ status: 503, contentType: 'application/json', body: '{}' }));
     for (const route of ['deposit', 'withdraw']) {
       await page.goto(`/${route}?journey=class-a-val-002&scenario=unavailable-data`); await viewport(page, width, scale);
+      if (route === 'withdraw') {
+        await expect(page.getByText("This example has no rate set, so the local amount and Confirm aren't available.", { exact: true })).toBeVisible();
+        await expect(page.getByRole('link', { name: 'Back to Home', exact: true })).toHaveAttribute('href', HOME);
+        await expect(page.getByTestId('withdraw-market-data-continuity')).toHaveCount(0);
+        await expect(page.getByRole('button', { name: 'Confirm', exact: true })).toHaveCount(0);
+        continue;
+      }
       const panel = page.getByTestId(`${route}-market-data-continuity`);
       await expect(panel).toContainText(FAILURE); await expect(panel).toContainText(CONFIRM);
       await expect(panel.locator('dt').last()).toHaveText('What is paused');
@@ -127,7 +134,7 @@ for (const [width, scale] of [[1440, 1], [390, 1], [320, 2]]) {
       const chart = page.getByTestId('example-line-chart'); await expect(chart.locator('[data-chart-label]')).toHaveCount(0);
       await expect(chart.getByRole('button', { name: 'All changes · example dates', exact: true })).toBeVisible();
       const dots = chart.getByTestId('chart-event-dot'); expect(await dots.count()).toBeGreaterThan(0);
-      for (const dot of await dots.all()) await expect(dot).toHaveAccessibleName(/^(Deposit|Withdrawal), \d+ [A-Z][a-z]{2}$/);
+      for (const dot of await dots.all()) await expect(dot).toHaveAttribute('aria-hidden', 'true');
       await expect(chart).not.toContainText(/\d+ changes?/);
     }
   });
@@ -141,7 +148,7 @@ for (const [width, scale] of [[1440, 1], [390, 1], [320, 2]]) {
       await page.goto('/activity?journey=class-a-val-002'); await viewport(page, width, scale);
       await expect(page.getByTestId('activity-row-deposit')).toContainText(local);
       await page.goto(HOME); await viewport(page, width, scale); await page.getByRole('button', { name: 'All changes', exact: true }).click();
-      await expect(page.getByTestId('chart-event-list')).toContainText(local);
+      await expect(page.getByTestId('chart-event-list')).toHaveText(new RegExp(`^First deposit · .* · [+]\\$${usd.toFixed(2).replace('.', '[.]')}$`));
       await expect(page.getByTestId('usd-balance')).toHaveText(`$${usd.toFixed(2)}`);
     });
   }

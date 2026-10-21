@@ -791,11 +791,11 @@ test('Home explains what changed since the last visit and clears it on reset', a
   await page.getByRole('button', { name: 'All changes', exact: true }).click();
   const entries = page.getByTestId('chart-event-list').locator('li');
   await expect(entries).toHaveCount(2);
-  await expect(entries.nth(0)).toHaveText(new RegExp(`^First deposit [+]ZMW 135[.]00 · ${date}$`));
-  await expect(entries.nth(1)).toHaveText(new RegExp(`^Withdrawal −[$]2[.]00 · ${date}$`));
+  await expect(entries.nth(0)).toHaveText(new RegExp(`^First deposit · ${date} · [+][$]5[.]00$`));
+  await expect(entries.nth(1)).toHaveText(new RegExp(`^Withdrawal · ${date} · −[$]2[.]00$`));
   await expect(page.getByTestId('dashboard-since-link')).toHaveText('See all in Activity');
   await expect(page.getByTestId('dashboard-change-chip')).toHaveCount(0);
-  await expect(page.getByTestId('dashboard-position-line-visit')).toHaveText('Your last visit');
+  await expect(page.getByTestId('dashboard-position-line-visit')).toHaveCount(0);
   await expect(page.getByTestId('dashboard-position-line')).not.toContainText('Today');
   await expect(page.getByText('This is what happened in your simulation. It doesn’t tell you what will happen next.')).toBeVisible();
 

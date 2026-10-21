@@ -13,7 +13,9 @@ async function deposit(page: Page) {
   await page.getByRole('button', { name: 'Confirm', exact: true }).click();
   await expect.poll(async () => (await entries(page)).length).toBe(1);
 }
-for (const route of ['deposit', 'withdraw'] as const) for (const timing of [0, 500, 1000, 1500, 'settled'] as const) test(`T8 ${route} real reload ${timing}`, async ({ page }) => {
+for (const [width, scale] of [[1440, 1], [390, 1], [320, 2]]) for (const route of ['deposit', 'withdraw'] as const) for (const timing of [0, 500, 1000, 1500, 'settled'] as const) test(`T8 ${route} real reload ${timing} ${width}@${scale * 100}% root text`, async ({ page }, info) => {
+  await page.setViewportSize({ width, height: 1000 });
+  await page.addInitScript(scale => { addEventListener('DOMContentLoaded', () => { document.documentElement.style.fontSize = `${16 * scale}px`; }); }, scale);
   await deposit(page);
   if (route === 'withdraw') {
     await expect.poll(async () => (await entries(page))[0].status).toBe('settled');
@@ -28,6 +30,9 @@ for (const route of ['deposit', 'withdraw'] as const) for (const timing of [0, 5
   await expect.poll(async () => (await entries(page)).at(-1)?.status).toBe('settled');
   const receipt = page.getByTestId(route === 'deposit' ? 'deposit-confirmed' : 'withdraw-status-title');
   await expect(receipt).toContainText(route === 'deposit' ? 'You added $10.00' : 'You took $1.00');
+  await expect(page.getByTestId(`${route}-amount`)).toHaveCount(0);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(1);
+  if (timing === 'settled') await page.screenshot({ path: info.outputPath(`${route}-receipt-${width}.png`), fullPage: true });
   await page.reload(); await expect(receipt).toBeVisible();
   const after = await entries(page); expect(after).toHaveLength(before.length);
   expect(after.at(-1)).toMatchObject({ txn_ref: tx.txn_ref, amount_usd: tx.amount_usd, created_at: tx.created_at, status: 'settled' });

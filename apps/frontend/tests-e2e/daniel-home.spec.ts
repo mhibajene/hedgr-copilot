@@ -146,7 +146,7 @@ test("shows only Daniel's reserve when the example is selected", async ({ page }
       await expect(page.getByTestId('dashboard-disclosures')).toBeVisible();
       await expect(page.getByTestId('daniel-read-figure')).toHaveText(FIGURE);
       await expect(page.getByTestId('daniel-read-caption')).toHaveText('≈ ZMW 21,600.00 Example figure, not a quote');
-      await expect(page.getByTestId('daniel-observation')).toHaveCount(5);
+      await expect(page.getByTestId('daniel-observation')).toHaveCount(4);
       for (const testId of [
         'dashboard-current-overview',
         'dashboard-balance',
@@ -378,7 +378,7 @@ test('contains no prohibited claims in Daniel Home copy', async ({ page }) => {
     expect(text).not.toMatch(/custod|verified|wealth|sufficien|enough|guarantee|protect|recommend|should|advis|action|buy|sell|convert|balance|\bheld\b/i);
     expect(text).toContain('Fictional');
     expect(text).toContain('Not a live rate.');
-    expect(text).toContain('9 Oct · shown above');
+    expect(text).not.toContain('9 Oct · shown above');
   }
 });
 
@@ -399,8 +399,9 @@ const currentRead = {
 async function expectCurrencyContext(page: Page) {
   await expect(page.getByTestId('daniel-currency-context')).toHaveCount(0);
   await expect(page.getByTestId('daniel-observation')).toHaveText(A_ROWS);
-  await expect(page.getByTestId('chart-event-list').locator('time')).toHaveText(['12 Jun', '14 Aug', '9 Sep', '25 Sep', '9 Oct']);
-  for(const [i,date] of ['2026-06-12T00:00:00.000Z', '2026-08-14T00:00:00.000Z', '2026-09-09T00:00:00.000Z',lastRead.asOf,currentRead.asOf].entries()) await expect(page.getByTestId('daniel-observation').nth(i).locator('time')).toHaveAttribute('datetime',date);
+  await expect(page.getByTestId('chart-event-list').locator('time')).toHaveText(['12 Jun', '14 Aug', '9 Sep', '25 Sep']);
+  for(const [i,date] of ['2026-06-12T00:00:00.000Z', '2026-08-14T00:00:00.000Z', '2026-09-09T00:00:00.000Z',lastRead.asOf].entries()) await expect(page.getByTestId('daniel-observation').nth(i).locator('time')).toHaveAttribute('datetime',date);
+  await expect(page.getByTestId('daniel-read-as-of').locator('time')).toHaveAttribute('datetime',currentRead.asOf);
 }
 
 test("Daniel's reserve shows his example as a full Home", async ({ page }) => {
@@ -524,7 +525,7 @@ test('own simulation, default Home and live mode stay unchanged', async ({ page 
   await seed(page, ACTIVITY.changed);
   await page.evaluate(() => localStorage.setItem('hedgr:last-home-visit', '1500'));
   await gotoHome(page, '/dashboard?journey=class-a-val-002');
-  await expect(page.getByTestId('dashboard-position-line-visit')).toHaveText('Your last visit');
+  await expect(page.getByTestId('dashboard-position-line-visit')).toHaveCount(0);
   await expect(page.getByTestId('dashboard-date-line')).toBeVisible();
   await expect(page.getByTestId('daniel-currency-context')).toHaveCount(0);
   await gotoHome(page, '/dashboard?example=daniel');
@@ -543,7 +544,7 @@ test("Daniel's currency context shows two Engine figures side by side with no co
     await expect(panel(page)).not.toContainText(/K2,000|higher|lower|increase|decrease|delta|difference|→|↑|↓/i);
     const nonEventCopy = await panel(page).evaluate(node => {
       const clone = node.cloneNode(true) as HTMLElement;
-      clone.querySelector('[data-testid="chart-event-list"]')?.remove();
+      clone.querySelectorAll('[data-testid="chart-event-list"], [data-testid="activity-stack"]').forEach(n => n.remove());
       return clone.textContent;
     });
     expect(nonEventCopy).not.toMatch(/[+−]/);
@@ -820,7 +821,7 @@ test('Daniel legibility leaves chart and runtime fixtures unchanged', async ({ p
   await login(page); for(const route of JOURNEY_ROUTES) {await gotoDaniel(page,route); await assertTicketA(page);}
 });
 
-const A_ROWS=['First deposit +$500.00 · 12 Jun', 'Deposit +$300.00 · 14 Aug', '≈ ZMW 19,600.00 · 9 Sep · example rate 24.5', '≈ ZMW 23,600.00 · 25 Sep · example rate 29.5', '9 Oct · shown above'];
+const A_ROWS=['First deposit · 12 Jun · +$500.00', 'Deposit · 14 Aug · +$300.00', '≈ ZMW 19,600.00 · 9 Sep · example rate 24.5', '≈ ZMW 23,600.00 · 25 Sep · example rate 29.5'];
 async function assertTicketA(page: Page) {
   await expect(page.getByTestId('daniel-read-figure')).toHaveText('$800.00 USD');
   await expect(page.getByTestId('daniel-read-caption')).toHaveText('≈ ZMW 21,600.00 Example figure, not a quote');
@@ -833,7 +834,7 @@ async function assertTicketA(page: Page) {
   await expect(page.getByTestId('example-line-chart').locator('[data-series-value]')).toHaveCount(3);
   await expect(page.getByTestId('example-line-chart').getByText('K0',{exact:true})).toHaveCount(0); await expect(page.getByTestId('example-line-chart').getByText('K30,000',{exact:true})).toHaveCount(0); expect(await page.getByTestId('example-line-chart').locator('path:not([data-chart-wash])').getAttribute('d')).not.toMatch(/NaN|Infinity/);
   await expect(page.getByTestId('dashboard-position-line')).toHaveCount(0);
-  await expect(panel(page).locator('[aria-live], [role="status"]')).toHaveCount(0);
+  await expect(panel(page).locator('[aria-live], [role="status"]')).toHaveCount(1);
   await expect(page.getByTestId('daniel-read-holding')).toHaveCount(0);
   await expect(page.getByTestId('daniel-read-rate')).toHaveText(RATE_ASSUMPTION);
   await expect(page.getByTestId('daniel-invariant')).toHaveText(LEGIBILITY.invariant);

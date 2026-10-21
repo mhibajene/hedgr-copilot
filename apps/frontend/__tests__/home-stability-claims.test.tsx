@@ -461,7 +461,35 @@ const BUNDLE_SOURCE_EDITS: Record<string, [string, string][]> = {
     ]
   ]
 };
+
+// QOL-BUNDLE-001: reverse only exact authorised runtime hunks before historical pins.
+const QOL_SOURCE_EDITS: Record<string, string[][]> = {
+  "app/(app)/dashboard/page.tsx": [
+    [
+      "import { countChanges } from \"./lineLabels\";\nimport { PositionLine } from \"./PositionLine\";\nimport { ChartSourceAmountsContext } from \"./ExampleLineChart\";\nimport { formatLocalCurrency } from \"../../../lib/utils/money\";\nimport { DanielExampleHome } from './DanielExampleHome';\nimport { SarahExampleHome } from './SarahExampleHome';\n",
+      "import { countChanges } from \"./lineLabels\";\nimport { PositionLine } from \"./PositionLine\";\nimport { ChartSourceAmountsContext } from \"./ExampleLineChart\";\nimport { clearSimulationReceipt } from \"../simulation-receipt\";\nimport { formatLocalCurrency } from \"../../../lib/utils/money\";\nimport { DanielExampleHome } from './DanielExampleHome';\nimport { SarahExampleHome } from './SarahExampleHome';\n"
+    ],
+    [
+      "      // \u00a7374: eligible Sarah consumes reset while refusing all simulation writes.\n      if (!sarahExample) {\n        clearTransactions();\n        removeRetiredWalletBalance();\n        if (searchParams?.get(\"study\") === \"1\") setSimulationDisplayCurrency(\"ZMW\");\n      }\n",
+      "      // \u00a7374: eligible Sarah consumes reset while refusing all simulation writes.\n      if (!sarahExample) {\n        clearTransactions();\n        clearSimulationReceipt();\n        removeRetiredWalletBalance();\n        if (searchParams?.get(\"study\") === \"1\") setSimulationDisplayCurrency(\"ZMW\");\n      }\n"
+    ]
+  ]
+};
+const QOL_SOURCE_BASE: Record<string, string> = {
+  "app/(app)/dashboard/page.tsx": "55f4fa8f7c618cf07e69ae990112bb5f428a7d4b440c4340e1fcd2b03350ea03"
+};
+function qolPreRuntime(path: string, value: string): string {
+  if (!QOL_SOURCE_EDITS[path]) return value;
+  for (const [old, replacement] of [...QOL_SOURCE_EDITS[path]].reverse()) {
+    expect(value.split(replacement), path).toHaveLength(2);
+    value = value.replace(replacement, () => old);
+  }
+  expect(digest(value), path).toBe(QOL_SOURCE_BASE[path]);
+  return value;
+}
+
 function bundlePreRuntime(path: string, value: string): string {
+  value = qolPreRuntime(path, value);
   value = releaseGatePreRuntime(path, releaseGate002PreRuntime(path, releaseGate003PreRuntime(path, value)));
   for (const [old, replacement] of BUNDLE_SOURCE_EDITS[path] ?? []) {
     if (value.includes(replacement)) {

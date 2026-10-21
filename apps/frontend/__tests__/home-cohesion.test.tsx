@@ -118,7 +118,7 @@ test('T7 one-name-per-example excludes the complete unchanged picker', async () 
     expect(clone.textContent!.split(name).length - 1).toBe(1);
     expect(document.getElementById(`dashboard-${example}-label`)!.textContent).toBe(`Fictional example · ${name}`);
     expect(screen.getByRole('heading', { level: 2 }).textContent).toBe(example === 'daniel' ? 'Figures over time' : 'Course fee');
-    if (example === 'daniel') expect(screen.getAllByTestId('daniel-observation').at(-1)!.textContent).toBe('9 Oct · shown above');
+    if (example === 'daniel') expect(screen.getAllByTestId('daniel-observation').at(-1)!.textContent).toBe('≈ ZMW 23,600.00 · 25 Sep · example rate 29.5');
   }
 });
 test('T8 single-formatUsd feeds all real heroes and shared UTC date formatting', async () => {

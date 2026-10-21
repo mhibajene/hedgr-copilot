@@ -43,5 +43,8 @@ export function ReceiptCard({ headline, time, rows, 'data-testid': testId, headl
 
 export function formatRecordedTime(timestamp: number): string {
   const time = new Date(timestamp).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+  if (new Date(timestamp).toDateString() !== new Date().toDateString()) {
+    return `${new Date(timestamp).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}, ${time}`;
+  }
   return `Today, ${time}`;
 }

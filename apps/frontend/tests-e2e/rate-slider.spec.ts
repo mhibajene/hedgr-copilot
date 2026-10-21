@@ -68,12 +68,14 @@ for(const [width,scale] of [[1440,1],[390,1],[320,2]])test(`HOME-SOFTHALO-RATESL
  ]){
   const {kind,state,currency}=cell;await seed(page,state,currency);await page.goto(`${route}${route.includes('?')?'&':'?'}example=${kind}`);
   await page.getByTestId(kind==='own'?'usd-balance':`${kind}-read-figure`).waitFor();await page.evaluate(scale=>document.documentElement.style.fontSize=`${16*scale}px`,scale);
-  const chart=page.getByTestId('example-line-chart');await expect(chart).toHaveCount(1);await expect(chart.locator('[data-chart-wash]')).toHaveCount(1);await expect(chart.locator('[data-chart-latest]')).toHaveCount(1);
+  const chart=page.getByTestId('example-line-chart');await expect(chart).toHaveCount(1);await expect(chart.locator('[data-chart-wash]')).toHaveCount(1);await expect(chart.locator('[data-chart-selected]')).toHaveCount(kind==='own'&&state==='no-change'?0:1);
   const plot=chart.locator('[class*="visualiserPlot"]');await expect(plot).toHaveCSS('height',`${width===1440?180:160*scale}px`);
-  await expect(chart.locator('[data-chart-latest]')).toHaveCSS('background-color','rgb(180, 132, 108)');
-  await expect(chart.locator('[data-chart-latest]')).toHaveAttribute('aria-hidden','true');
+  if(!(kind==='own'&&state==='no-change')){
+  await expect(chart.locator('[data-chart-selected]')).toHaveCSS('background-color','rgb(180, 132, 108)');
+  await expect(chart.locator('[data-chart-selected]')).toHaveAttribute('aria-hidden','true');
+  }
   await expect(chart.locator('[data-chart-wash]')).toHaveCSS('fill','rgb(31, 39, 71)');
-  await expect(chart.locator('[data-testid="dashboard-position-line-visit"]')).toHaveCount(kind==='own'&&state!=='no-visit'?1:0);
+  await expect(chart.locator('[data-testid="dashboard-position-line-visit"]')).toHaveCount(0);
   if(kind!=='own')expect(await chart.evaluate(n=>n.previousElementSibling?.getAttribute('data-component'))).toBe('HomeHero');
   await retained(page,kind,state);const launcher=page.getByRole('button',{name:'Currency context',exact:true});await expect(launcher).toHaveCount(kind==='sarah'?0:1);
   await expect(page.getByRole('heading',{name:'Currency context',exact:true})).toHaveCount(0);

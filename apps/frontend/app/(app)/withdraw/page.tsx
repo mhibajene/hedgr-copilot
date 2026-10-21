@@ -3,8 +3,9 @@
 import finish from '../product-finish.module.css';
 import { ReceiptCard, formatRecordedTime } from '../ReceiptCard';
 import { ActionDock } from '../ActionDock';
+import { clearSimulationReceipt, isDocumentReload, readSimulationReceipt, rememberSimulationReceipt, type SimulationReceipt } from '../simulation-receipt';
 
-import { Suspense, useState, useEffect, useMemo } from 'react';
+import { Suspense, useState, useEffect, useMemo, useRef } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { withdrawMock } from '../../../lib/payments/withdraw.mock';
 import { useBalance } from '../../../lib/hooks/useBalance';
@@ -114,9 +115,56 @@ function WithdrawPageContent() {
 
   const [usdInput, setUsdInput] = useState('');
   const [txnRef, setTxnRef] = useState<string | null>(null);
-  const [status, setStatus] = useState<WithdrawPageStatus>('IDLE');
+  const [requestStatus, setStatus] = useState<WithdrawPageStatus>('IDLE');
   const [balanceBeforeWithdrawal, setBalanceBeforeWithdrawal] = useState<number | null>(null);
   const [recordedAt, setRecordedAt] = useState<number | null>(null);
+  const transactions = useLedgerStore(s => s.transactions);
+  const [restoredReceipt, setRestoredReceipt] = useState<SimulationReceipt | null>(null);
+  const restoreChecked = useRef(false);
+  const acknowledged = useRef(false);
+  const markerRecorded = useRef<string | null>(null);
+  useEffect(() => {
+    if (restoreChecked.current || !productSimulationActive || unavailableDataScenario) return;
+    restoreChecked.current = true;
+    const marker = readSimulationReceipt('withdrawal', transactions ?? []);
+    if (!marker || !isDocumentReload(marker.view.recordedAt)) return;
+    setRestoredReceipt(marker);
+    setTxnRef(marker.txnRef);
+    setRecordedAt(marker.view.recordedAt);
+    setUsdInput(String(transactions.find(tx => tx.txn_ref === marker.txnRef)!.amount_usd));
+    setBalanceBeforeWithdrawal(marker.view.balanceBefore);
+    setStatus('PENDING');
+  }, [productSimulationActive, unavailableDataScenario, transactions]);
+  const receiptQuote = restoredReceipt?.view.quote ?? quote;
+  const receiptRate = restoredReceipt ? restoredReceipt.view.rate : rate;
+
+
+  const restoredTx = restoredReceipt ? transactions?.find(tx => tx.txn_ref === restoredReceipt.txnRef) : undefined;
+  const status: WithdrawPageStatus = restoredReceipt
+    ? restoredTx?.status === 'settled' ? 'CONFIRMED' : restoredTx?.status === 'pending' ? 'PENDING' : 'FAILED'
+    : requestStatus;
+
+  useEffect(() => {
+    if (!restoredReceipt || (restoredTx && restoredTx.status !== 'failed')) return;
+    clearSimulationReceipt(restoredReceipt.txnRef);
+    setRestoredReceipt(null);
+    setTxnRef(null);
+    setBalanceBeforeWithdrawal(null);
+    setStatus(restoredTx?.status === 'failed' ? 'FAILED' : 'IDLE');
+  }, [restoredReceipt, restoredTx]);
+
+  useEffect(() => {
+    if (!productSimulationActive || restoredReceipt || acknowledged.current || !txnRef) return;
+    const tx = transactions?.find(tx => tx.txn_ref === txnRef);
+    if (tx?.status === 'failed') { clearSimulationReceipt(tx.txn_ref); return; }
+    if (!tx || markerRecorded.current === txnRef) return;
+    markerRecorded.current = txnRef;
+    rememberSimulationReceipt(tx, {
+      recordedAt: recordedAt ?? tx.created_at,
+      balanceBefore: balanceBeforeWithdrawal,
+      amountInput: usdInput, quote, rate,
+    });
+  }, [productSimulationActive, restoredReceipt, txnRef, transactions, recordedAt, balanceBeforeWithdrawal, usdInput, quote, rate]);
 
   const [withdrawMethods, setWithdrawMethods] = useState<WithdrawMethod[]>([]);
   const [methodsLoading, setMethodsLoading] = useState(true);
@@ -159,7 +207,7 @@ function WithdrawPageContent() {
   }, []);
 
   useEffect(() => {
-    if (!txnRef || status !== 'PENDING') return;
+    if (restoredReceipt || !txnRef || status !== 'PENDING') return;
 
     const h = setInterval(async () => {
       const s = await withdrawMock.status(txnRef);
@@ -177,12 +225,13 @@ function WithdrawPageContent() {
     }, 500);
 
     return () => clearInterval(h);
-  }, [txnRef, status, confirmTx, failTx, refresh]);
+  }, [txnRef, status, confirmTx, failTx, refresh, restoredReceipt]);
 
   const confirm = async () => {
     if (status === 'PENDING' || simulatedResultActive || !hasPositiveAmount ||
         amountIsInvalid || amountExceedsBalance || !rateAllowsConfirm) return;
 
+    acknowledged.current = false;
     setBalanceBeforeWithdrawal(available);
     setRecordedAt(Date.now());
     setStatus('PENDING');
@@ -229,6 +278,51 @@ function WithdrawPageContent() {
   const fallbackPathClarificationLines = activeStatus
     ? getFallbackPathClarificationLines(activeStatus.publicStatus)
     : null;
+
+  const acknowledgeReceipt: React.MouseEventHandler<HTMLElement> = event => {
+    if (event.target instanceof Element && event.target.closest('[data-simulation-receipt] a[href]')) {
+      acknowledged.current = true;
+      clearSimulationReceipt(txnRef ?? undefined);
+    }
+  };
+  const confirmationReceipt = (
+        <div data-simulation-receipt className="space-y-4" data-testid="withdraw-status-region" data-status={activeStatus?.publicStatus}>
+          <ReceiptCard
+            headline={`You took $${usd.toFixed(2)} out of your simulated balance`}
+            headlineTestId="withdraw-status-title"
+            time={formatRecordedTime(recordedAt ?? Date.now())}
+            rows={[
+              ...(receiptRate !== null ? [{ label: 'Amount', value: `${receiptQuote} ${(usd * receiptRate).toFixed(2)}` }] : []),
+              { label: 'Shown as', value: `−$${usd.toFixed(2)}` },
+              ...(syntheticJourneyActive && receiptRate !== null ? [{ label: 'Example rate', value: `1 USD = ${receiptRate.toFixed(2)} ${receiptQuote}` }] : []),
+              ...(remainingAfterWithdrawal !== null ? [{ label: 'Balance now ', value: <span data-testid="withdraw-balance-reconciliation"><b>${remainingAfterWithdrawal.toFixed(2)}</b></span> }] : []),
+              { label: 'Real money moved', value: 'None' },
+            ]}
+          />
+          <ActionDock
+            title="Check the evidence"
+            why="Activity lists both entries and the balance after each one."
+            primary={{ label: 'Review Activity', href: syntheticJourneyLinkContext ? getSyntheticJourneyHref('/activity') : '/activity' }}
+            secondary={{ label: 'Back to your position', href: syntheticJourneyLinkContext ? getSyntheticJourneyHref('/dashboard') : '/dashboard' }}
+          />
+        </div>
+  );
+  if (unavailableDataScenario) {
+    return <main className={`mx-auto max-w-xl p-6 ${finish.choice}`}>
+      <h1 className="text-sm font-semibold">Step 3 · check the position after a simulated withdrawal</h1>
+      <p className="mt-1 text-sm leading-relaxed text-hedgr-dark">This example has no rate set, so the local amount and Confirm aren't available.</p>
+      <a href={getSyntheticJourneyHref('/dashboard')} className="inline-flex min-h-11 items-center font-medium text-hedgr-primary underline underline-offset-2">Back to Home</a>
+    </main>;
+  }
+  if (restoredReceipt && status !== 'FAILED') {
+    return <main className={`mx-auto max-w-xl p-6 ${finish.choice}`} onClickCapture={acknowledgeReceipt}>
+      {status === 'CONFIRMED' ? confirmationReceipt : <section data-testid="withdraw-status-region" data-status={activeStatus?.publicStatus}>
+        <p data-testid="withdraw-status-title">{activeStatus?.title}</p>
+        <p data-testid="withdraw-status-description">{activeStatus?.description}</p>
+        <p data-testid="withdraw-status-disclosure">{activeStatus?.disclosure}</p>
+      </section>}
+    </main>;
+  }
 
   if (balanceError) {
     return (
@@ -355,7 +449,7 @@ function WithdrawPageContent() {
   }
 
   return (
-    <main className={`mx-auto max-w-xl p-6 ${finish.choice}`}>
+    <main className={`mx-auto max-w-xl p-6 ${finish.choice}`} onClickCapture={acknowledgeReceipt}>
       <h1 className="text-2xl font-semibold">Withdraw</h1>
       {reviewSeamActive ? (
         <TxReviewSimulatorBanner data-testid="withdraw-tx-review-simulator-banner" />
@@ -488,26 +582,7 @@ function WithdrawPageContent() {
         {status === 'PENDING' ? 'Processing…' : 'Confirm'}
       </button>
       {status === 'CONFIRMED' && productSimulationActive ? (
-        <div className="space-y-4" data-testid="withdraw-status-region" data-status={activeStatus?.publicStatus}>
-          <ReceiptCard
-            headline={`You took $${usd.toFixed(2)} out of your simulated balance`}
-            headlineTestId="withdraw-status-title"
-            time={formatRecordedTime(recordedAt ?? Date.now())}
-            rows={[
-              ...(rate !== null ? [{ label: 'Amount', value: `${quote} ${(usd * rate).toFixed(2)}` }] : []),
-              { label: 'Shown as', value: `−$${usd.toFixed(2)}` },
-              ...(syntheticJourneyActive && rate !== null ? [{ label: 'Example rate', value: `1 USD = ${rate.toFixed(2)} ${quote}` }] : []),
-              ...(remainingAfterWithdrawal !== null ? [{ label: 'Balance now ', value: <span data-testid="withdraw-balance-reconciliation"><b>${remainingAfterWithdrawal.toFixed(2)}</b></span> }] : []),
-              { label: 'Real money moved', value: 'None' },
-            ]}
-          />
-          <ActionDock
-            title="Check the evidence"
-            why="Activity lists both entries and the balance after each one."
-            primary={{ label: 'Review Activity', href: syntheticJourneyLinkContext ? getSyntheticJourneyHref('/activity') : '/activity' }}
-            secondary={{ label: 'Back to your position', href: syntheticJourneyLinkContext ? getSyntheticJourneyHref('/dashboard') : '/dashboard' }}
-          />
-        </div>
+        confirmationReceipt
       ) : activeStatus && activeStatusPresentation && (
         <section
           data-testid="withdraw-status-region"

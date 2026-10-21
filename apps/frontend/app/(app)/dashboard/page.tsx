@@ -13,6 +13,7 @@ import { EnginePostureHeader } from "./EnginePostureHeader";
 import { countChanges } from "./lineLabels";
 import { PositionLine } from "./PositionLine";
 import { ChartSourceAmountsContext } from "./ExampleLineChart";
+import { clearSimulationReceipt } from "../simulation-receipt";
 import { formatLocalCurrency } from "../../../lib/utils/money";
 import { DanielExampleHome } from './DanielExampleHome';
 import { SarahExampleHome } from './SarahExampleHome';
@@ -168,6 +169,7 @@ export default function DashboardPage() {
       // §374: eligible Sarah consumes reset while refusing all simulation writes.
       if (!sarahExample) {
         clearTransactions();
+        clearSimulationReceipt();
         removeRetiredWalletBalance();
         if (searchParams?.get("study") === "1") setSimulationDisplayCurrency("ZMW");
       }

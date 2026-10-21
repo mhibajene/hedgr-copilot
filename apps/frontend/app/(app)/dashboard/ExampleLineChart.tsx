@@ -1,12 +1,11 @@
 'use client';
 
-import { createContext, useContext, useEffect, useId, useRef, useState } from 'react';
+import { createContext, useEffect, useId, useRef, useState } from 'react';
 
 /** Optional presentation lookup supplied by Home; position and series facts stay unchanged. */
 export const ChartSourceAmountsContext = createContext<ReadonlyMap<string, string>>(new Map());
-import { balanceAt, formatUsd, type PositionEntry } from '../../../lib/state/last-visit';
-import { formatLocalCurrency } from '../../../lib/utils/money';
-import { countChanges, formatEventDate, mergeDots, placeLabels, selectLabels, type BalanceSample, type ChartEvent } from './lineLabels';
+import { balanceAt, type PositionEntry } from '../../../lib/state/last-visit';
+import { activityText, formatEventDate, mergeDots, placeLabels, selectLabels, type BalanceSample, type ChartEvent } from './lineLabels';
 import type { DanielRead } from '../../../lib/engine/daniel-read';
 import home from './synthetic-home.module.css';
 
@@ -160,13 +159,28 @@ export function ExampleLineChart(props: ChartProps) {
   return <ReadingsLine reads={props.reads} />;
 }
 
-function ActivityLine({ series, events, lastVisit = null, settle = 1, example = false, heroAmount }: Extract<ChartProps, { mode: 'step' }>) {
-  const sourceAmounts = useContext(ChartSourceAmountsContext);
+function ActivityLine({ series, events, lastVisit = null, settle = 1, example = false }: Extract<ChartProps, { mode: 'step' }>) {
   const plot = useRef<HTMLDivElement>(null);
   const listId = useId();
   const [size, setSize] = useState({ plot: 300, screen: 1440, gutter: 12 });
-  const [opened, setOpened] = useState(example);
-  const [active, setActive] = useState<string | null>(null);
+  const [opened, setOpened] = useState(false);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [touchHint, setTouchHint] = useState(false);
+  const [hintDismissed, setHintDismissed] = useState(false);
+  const touchStart = useRef<{ x: number; y: number } | null>(null);
+  useEffect(() => {
+    const coarse = window.matchMedia?.('(pointer: coarse)');
+    const reduced = window.matchMedia?.('(prefers-reduced-motion: reduce)');
+    const update = () => setTouchHint(Boolean(coarse?.matches && !reduced?.matches));
+    const dismiss = () => setHintDismissed(true);
+    update();
+    coarse?.addEventListener?.('change', update); reduced?.addEventListener?.('change', update);
+    window.addEventListener('keydown', dismiss);
+    return () => {
+      coarse?.removeEventListener?.('change', update); reduced?.removeEventListener?.('change', update);
+      window.removeEventListener('keydown', dismiss);
+    };
+  }, []);
   useEffect(() => {
     const measure = () => {
       const next = {
@@ -201,24 +215,32 @@ function ActivityLine({ series, events, lastVisit = null, settle = 1, example = 
   const y = (value: number) => 94 - (value / scale - low + padding) / (high - low + padding * 2) * 88;
   const points = series.map((point, index) => ({ ...point, x: x(index + (visitIndex >= 0 && index >= visitIndex ? 1 : 0)), y: y(values[index]) }));
   const path = points.map((point, index) => index === 0 ? `M ${point.x} ${point.y}` : `H ${point.x} V ${point.y}`).join(' ');
+  const occurrences = new Map<number, number>();
   const located = events.filter(event => event.kind !== 'reading').map(event => {
-    const point = points.find(point => Date.parse(point.at) === event.at)!;
+    const occurrence = occurrences.get(event.at) ?? 0;
+    occurrences.set(event.at, occurrence + 1);
+    const point = points.filter(point => Date.parse(point.at) === event.at)[occurrence];
+    if (!point) throw new RangeError('ExampleLineChart needs non-empty finite readings');
     return { ...event, x: (point.x / 300) * size.plot, y: point.y };
   });
   const groups = mergeDots(located);
-  const labels = example ? [] : placeLabels(selectLabels(located, lastVisit, size.screen), size.plot);
+  const cards = [...events].filter(event => event.kind !== 'reading').sort((a, b) => b.at - a.at || events.indexOf(b) - events.indexOf(a));
+  const selectedIndex = Math.max(0, cards.findIndex(event => event.id === selectedId));
+  const selected = cards[selectedIndex];
+  const noChange = !example && lastVisit !== null && !cards.some(event => event.at > lastVisit);
+  const labels = example || lastVisit === null ? [] : placeLabels(selectLabels(located, lastVisit, size.screen), size.plot);
+  const summaryVisible = labels.length > 0 && size.screen > 360;
+  const since = (event: ChartEvent) => lastVisit !== null && event.at > lastVisit && !summaryVisible;
+  const eventText = new Map(cards.map(event => [event.id, activityText(event, firstDeposit?.id, example, since(event))]));
+  const text = (event: ChartEvent) => eventText.get(event.id)!;
   const title = example ? 'All changes · example dates' : 'All changes';
-  const reveal = (id: string) => { setActive(id); setOpened(true); };
-  const rowParts = (event: ChartEvent) => {
-    if (event.kind === 'reading') return { prefix: event.prefix ?? '', suffix: event.suffix ?? '' };
-    const first = event.id === firstDeposit?.id;
-    const sourceAmount = !example ? sourceAmounts.get(event.id) : undefined;
-    const defers = !sourceAmount && !example && first && events.length === 1 && event.amount === heroAmount;
-    const name = first ? 'First deposit' : event.kind === 'deposit' ? 'Deposit' : 'Withdrawal';
-    if (defers) return { prefix: `${name} · `, suffix: ' · shown above' };
-    const amount = sourceAmount ?? (event.currency === 'ZMW' ? formatLocalCurrency(event.amount!, event.currency) : formatUsd(event.amount!));
-    return { prefix: `${name} ${event.kind === 'withdrawal' ? '−' : '+'}${amount} · `, suffix: '' };
+  // The stack starts newest; the alternative retains the existing history order.
+  const listEvents = events.filter(event => event.kind !== 'reading' || event.suffix !== ' · shown above');
+  const move = (offset: number) => {
+    const next = cards[selectedIndex + offset];
+    if (next) { setSelectedId(next.id); setHintDismissed(true); }
   };
+  const selectedPoint = located.find(event => event.id === selected?.id);
   return (
     <div className={home.visualiser} data-testid="example-line-chart">
       <div ref={plot} className={home.visualiserPlot}>
@@ -226,28 +248,41 @@ function ActivityLine({ series, events, lastVisit = null, settle = 1, example = 
           <path className={home.visualiserWash} data-chart-wash d={`${path} V 100 H ${points[0].x} Z`} />
           <path d={path} fill="none" stroke="currentColor" strokeWidth="2" vectorEffect="non-scaling-stroke" />
           {points.map((point, index) => <g key={index} transform={`translate(${point.x} ${point.y})`} data-series-at={point.at} data-series-value={point.value} data-series-y={point.y} data-series-currency={point.currency} />)}
-          {lastVisit !== null ? <line x1={x(visitIndex)} x2={x(visitIndex)} y1="0" y2="100" className={home.visualiserVisitLine} vectorEffect="non-scaling-stroke" /> : null}
         </svg>
-        {groups.map(group => {
-          const first = group.events[0];
-          const deposit = group.events.some(event => event.id === firstDeposit?.id);
-          const merged = group.events.length > 1 ? `${group.events.length} changes on ${formatEventDate(first.at, example, false)}` : '';
-          const exampleName = `${first.kind === 'withdrawal' ? 'Withdrawal' : 'Deposit'}, ${formatEventDate(first.at, true, false)}`;
-          const name = example ? exampleName : deposit ? `First deposit, ${formatEventDate(firstDeposit!.at, example, false)}${merged ? ` · ${merged}` : ''}` : merged || countChanges(1, false);
-          return <button key={first.id} type="button" data-testid="chart-event-dot" className={home.visualiserDot} style={{ left: `clamp(.75rem, ${group.x / size.plot * 100}%, calc(100% - .75rem))`, top: `${first.y}%` }} aria-label={name} aria-describedby={group.events.map(event => `${listId}-${event.id}`).join(' ')} aria-controls={listId} aria-expanded={opened} onFocus={() => reveal(first.id)} onClick={() => reveal(first.id)}>{!example && group.events.length > 1 ? group.events.length : null}</button>;
-        })}
-        <span aria-hidden="true" data-chart-latest className={home.visualiserLatest} style={{ left: `${points.at(-1)!.x / 3}%`, top: `${points.at(-1)!.y}%` }} />
+        {groups.map(group => <span key={group.events[0].id} aria-hidden="true" data-testid="chart-event-dot" className={home.visualiserPoint} style={{ left: `${group.x / size.plot * 100}%`, top: `${group.events[0].y}%` }} />)}
+        {!noChange && selectedPoint ? <span aria-hidden="true" data-chart-selected className={home.visualiserLatest} style={{ left: `${selectedPoint.x / size.plot * 100}%`, top: `${selectedPoint.y}%` }} /> : null}
         {labels.map(label => <span key={label.id} className={home.visualiserLabel} data-chart-label data-placement={label.placement} style={{ left: `${label.left / size.plot * 100}%`, maxWidth: `${label.width}px`, top: `${located.find(event => event.id === label.id)?.y ?? 50}%`, transform: label.placement === 'below' ? `translateY(${1 + label.lane * 3}rem)` : undefined }}>{label.text}</span>)}
-        {lastVisit !== null ? <span className={home.visualiserVisit} data-testid="dashboard-position-line-visit" style={{ left: `${Math.min(80, x(visitIndex) / 3)}%` }}>Your last visit</span> : null}
       </div>
+      {!opened && selected ? <div
+        className={home.activityStack} data-testid="activity-stack" data-depth={cards.length > 1 ? 'stack' : 'single'}
+        onKeyDown={event => {
+          setHintDismissed(true);
+          if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') { event.preventDefault(); move(event.key === 'ArrowLeft' ? 1 : -1); }
+        }}
+        onTouchStart={event => { const touch = event.touches[0]; touchStart.current = { x: touch.clientX, y: touch.clientY }; }}
+        onTouchEnd={event => {
+          const start = touchStart.current; touchStart.current = null;
+          const end = event.changedTouches[0];
+          if (start && end && Math.abs(end.clientX - start.x) > 40 && Math.abs(end.clientX - start.x) > Math.abs(end.clientY - start.y)) move(end.clientX < start.x ? 1 : -1);
+        }}
+      >
+        <div id={`${listId}-selected`} className={home.activityCard}>
+          {since(selected) ? <p className={home.activityEyebrow} aria-hidden="true">Since your last visit</p> : null}
+          <p data-testid="activity-card" aria-hidden="true">{text(selected).visible}</p>
+          <p className={`sr-only ${home.activityAnnouncement}`} role="status" aria-live="polite" aria-atomic="true" data-testid="activity-announcement">{text(selected).spoken}</p>
+        </div>
+        <div className={home.activityControls}>
+          <button type="button" aria-controls={`${listId}-selected`} aria-disabled={selectedIndex === cards.length - 1} onClick={() => move(1)}>Earlier change</button>
+          <button type="button" aria-controls={`${listId}-selected`} aria-disabled={selectedIndex === 0} onClick={() => move(-1)}>Later change</button>
+        </div>
+        {touchHint && !hintDismissed && selectedIndex < cards.length - 1 ? <p className={home.activityHint}>Swipe to see earlier changes</p> : null}
+      </div> : null}
       <div className={home.visualiserHeading}><button type="button" className={home.visualiserToggle} aria-expanded={opened} aria-controls={listId} onClick={() => setOpened(!opened)}>{title}</button></div>
-      <ol id={listId} data-testid="chart-event-list" className={opened ? home.visualiserList : 'sr-only'}>
-        {events.map(event => {
-          const parts = rowParts(event);
-          return <li key={event.id} id={`${listId}-${event.id}`} data-testid={event.testId} data-active={event.id === active ? 'true' : undefined}>{parts.prefix}<time dateTime={new Date(event.at).toISOString()}>{formatEventDate(event.at, example)}</time>{parts.suffix}</li>;
-        })}
+      <ol id={listId} data-testid="chart-event-list" aria-label={title} className={home.visualiserList} hidden={!opened}>
+        {listEvents.map(event => <li key={event.id} id={`${listId}-${event.id}`} data-testid={event.testId} aria-label={event.kind === 'reading' ? undefined : text(event).spoken}>
+          {event.kind === 'reading' ? <>{event.prefix}<time dateTime={new Date(event.at).toISOString()}>{formatEventDate(event.at, example)}</time>{event.suffix}</> : <span aria-hidden="true">{text(event).type} · <time dateTime={new Date(event.at).toISOString()}>{text(event).date}</time> · {text(event).sign}{text(event).visibleAmount}</span>}
+        </li>)}
       </ol>
-      {!firstDeposit ? <div className={home.visualiserEndpoints}><span>First entry</span><span>Latest entry</span></div> : null}
     </div>
   );
 }

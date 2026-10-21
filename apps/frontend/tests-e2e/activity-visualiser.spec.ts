@@ -50,13 +50,15 @@ for (const [width, scale] of [[1440, 1], [390, 1], [320, 2]]) test(`V7 V8 V10 V1
         await expect(chart.locator('svg')).toHaveAttribute('aria-hidden', 'true');
         await expect(chart.locator('svg [tabindex], svg button, svg a')).toHaveCount(0);
         const dots = chart.getByTestId('chart-event-dot'); expect(await dots.count()).toBeGreaterThan(0);
-        await dots.first().focus(); await expect(dots.first()).toBeFocused();
-        expect(await dots.first().evaluate(n => getComputedStyle(n).outlineStyle)).not.toBe('none');
+        await expect(dots.first()).toHaveAttribute('aria-hidden', 'true');
+        const listToggle = chart.getByRole('button', { name: 'All changes', exact: true });
+        await listToggle.focus(); await expect(listToggle).toBeFocused();
+        expect(await listToggle.evaluate(n => getComputedStyle(n).outlineStyle)).not.toBe('none');
         const list = await openList(page); await expect(list).toBeVisible();
         await expect(list.locator('li')).toHaveCount(state.rows.length);
-        if (stateName === 'first') await expect(list).toHaveText('First deposit · 8 Oct · shown above');
+        if (stateName === 'first') await expect(list).toHaveText('First deposit · 8 Oct · +$500.00');
         if (stateName === 'returning') {
-          await expect(page.getByTestId('dashboard-position-line-visit')).toHaveText('Your last visit');
+          await expect(page.getByTestId('dashboard-position-line-visit')).toHaveCount(0);
           await expect(page.getByTestId('engine-posture-context')).toHaveCount(0);
           await expect(page.getByTestId('example-line-chart').locator('[data-chart-label]')).toHaveText('1 change since your last visit');
           const text = await page.locator('main').innerText();
@@ -74,11 +76,11 @@ for (const [width, scale] of [[1440, 1], [390, 1], [320, 2]]) test(`V7 V8 V10 V1
       await seed(page, STATES.empty); await page.goto(`${route}${route.includes('?') ? '&' : '?'}example=${example}`);
       await page.evaluate(scale => { document.documentElement.style.fontSize = `${16 * scale}px`; }, scale);
       const chart = page.getByTestId('example-line-chart'); await expect(chart).toHaveCount(1);
-      await expect(chart.getByRole('button', { name: `Deposit, ${example === 'daniel' ? '12 Jun' : '14 Apr'}` })).toHaveText('');
+      await expect(chart.getByTestId('chart-event-dot').first()).toHaveAttribute('aria-hidden', 'true');
       await expect(page.getByTestId('dashboard-position-line-visit')).toHaveCount(0);
       const list = await openList(page, true); await expect(list.locator('li')).toHaveText(example === 'daniel' ? [
-        'First deposit +$500.00 · 12 Jun', 'Deposit +$300.00 · 14 Aug', '≈ ZMW 19,600.00 · 9 Sep · example rate 24.5', '≈ ZMW 23,600.00 · 25 Sep · example rate 29.5', '9 Oct · shown above',
-      ] : ['First deposit +ZMW 4,000.00 · 14 Apr', 'Deposit +ZMW 2,000.00 · 21 Jul']);
+        'First deposit · 12 Jun · +$500.00', 'Deposit · 14 Aug · +$300.00', '≈ ZMW 19,600.00 · 9 Sep · example rate 24.5', '≈ ZMW 23,600.00 · 25 Sep · example rate 29.5',
+      ] : ['First deposit · 14 Apr · +ZMW 4,000.00', 'Deposit · 21 Jul · +ZMW 2,000.00']);
       const panel = page.getByTestId(`dashboard-${example}-read`); const text = await panel.innerText();
       for (const amount of example === 'daniel' ? ['$500.00', '$300.00', '$800.00'] : ['ZMW 4,000.00', 'ZMW 2,000.00', '$1000.00']) expect(text.split(amount).length - 1).toBe(1);
       const outsideHero = await panel.evaluate(n => { const copy = n.cloneNode(true) as HTMLElement; copy.querySelector('[data-testid="sarah-read-figure"]')?.remove(); return copy.textContent; });
@@ -111,7 +113,7 @@ test('V11 all five currencies preserve caption/rate/current figures and V16 2027
   for (const example of ['daniel', 'sarah']) {
     await seed(page, STATES.empty); await page.goto(`${ROUTES[0]}?example=${example}`);
     await openList(page, true);
-    await expect(page.getByTestId('chart-event-list').locator('li').first()).toHaveText(example === 'daniel' ? 'First deposit +$500.00 · 12 Jun 2026' : 'First deposit +ZMW 4,000.00 · 14 Apr 2026');
+    await expect(page.getByTestId('chart-event-list').locator('li').first()).toHaveText(example === 'daniel' ? 'First deposit · 12 Jun 2026 · +$500.00' : 'First deposit · 14 Apr 2026 · +ZMW 4,000.00');
   }
 });
 
@@ -133,7 +135,7 @@ for (const [width, scale] of [[1440, 1], [390, 1], [320, 2]]) {
       await expect(chartCounts(page)).toHaveCount(1);
       await expect(chartCounts(page)).toHaveText('2 changes since your last visit');
       await expect(page.getByTestId('example-line-chart').getByText('1 change since your last visit', { exact: true })).toHaveCount(0);
-      await expect(page.getByTestId('dashboard-position-line-visit')).toHaveText('Your last visit');
+      await expect(page.getByTestId('dashboard-position-line-visit')).toHaveCount(0);
       await expect(page.getByTestId('engine-posture-context')).toHaveCount(0);
       if (width === 320) await expect(chartCounts(page)).not.toBeVisible();
     }
