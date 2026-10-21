@@ -1,23 +1,26 @@
 // @vitest-environment jsdom
 import React from 'react';
-import { act, cleanup, fireEvent, render, screen } from '@testing-library/react';
+import { act, cleanup, fireEvent, render as renderView, screen } from '@testing-library/react';
 import { afterEach, beforeEach, expect, test, vi } from 'vitest';
 import { useLedgerStore } from '../lib/state/ledger';
 import { formatRecordedTime } from '../app/(app)/ReceiptCard';
 import DepositPage from '../app/(app)/deposit/page';
 import WithdrawPage from '../app/(app)/withdraw/page';
+import { FxRateProvider } from '../lib/fx/FxRateContext';
 
 (globalThis as typeof globalThis & { React: typeof React }).React = React;
 const state = vi.hoisted(() => ({ search: 'journey=class-a-val-002', fx: 'success' }));
+const render = (view: React.ReactNode) => renderView(<FxRateProvider>{view}</FxRateProvider>);
 vi.mock('next/navigation', () => ({ useSearchParams: () => new URLSearchParams(state.search) }));
 vi.mock('../lib/hooks/useLatestFx', () => ({ useLatestFx: () => ({ status: state.fx, data: state.fx === 'success' ? { rate: 27, pair: 'USDZMW', ts: 1 } : null, retry: vi.fn() }) }));
 beforeEach(() => {
   vi.stubEnv('NEXT_PUBLIC_AUTH_MODE', 'mock'); vi.stubEnv('NEXT_PUBLIC_FX_MODE', 'stub');
   vi.useFakeTimers(); vi.setSystemTime('2026-10-21T12:00:00Z');
+  vi.stubGlobal('fetch', vi.fn(async () => ({ ok: true, json: async () => ({ base: 'USD', quote: 'ZMW', rate: 27 }) })));
   localStorage.clear(); sessionStorage.clear(); useLedgerStore.getState().clear();
   state.search = 'journey=class-a-val-002'; state.fx = 'success';
 });
-afterEach(() => { cleanup(); vi.useRealTimers(); vi.unstubAllEnvs(); });
+afterEach(() => { cleanup(); vi.useRealTimers(); vi.unstubAllEnvs(); vi.unstubAllGlobals(); });
 async function ready() { await act(async () => { await vi.advanceTimersByTimeAsync(350); }); }
 for (const fx of ['success', 'loading', 'error']) for (const funded of [false, true]) test(`T7 NH3 ${fx} funded=${funded}`, async () => {
   state.search += '&scenario=unavailable-data'; state.fx = fx;
