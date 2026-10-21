@@ -35,12 +35,18 @@ async function deposit(page: Page) {
 }
 async function panel(page: Page, route: string) {
   const p = page.getByTestId(`${route}-market-data-continuity`);
-  await expect(p).toBeVisible();
-  await expect(p).toContainText("The example rate didn't load. This simulation uses a fixed example rate, not market data.");
+  if (route === 'withdraw') {
+    await expect(page.getByText("This example has no rate set, so the local amount and Confirm aren't available.", { exact: true })).toBeVisible();
+    await expect(p).toHaveCount(0);
+    await expect(page.getByRole('link', { name: 'Back to Home', exact: true })).toHaveAttribute('href', HOME);
+  } else {
+    await expect(p).toBeVisible();
+    await expect(p).toContainText("The example rate didn't load. This simulation uses a fixed example rate, not market data.");
+  }
   await expect(page.getByTestId(`${route}-fx-block`)).toHaveCount(0);
   await expect(page.locator('main').first()).not.toContainText(/Updated at|1 USD =/);
   if (route === 'deposit') await expect(page.locator('main').first()).toContainText('Confirm turns on once the example rate loads.');
-  else await expect(p).toContainText('You are still on Withdraw. Your simulated balance stays visible.');
+  else await expect(page.getByRole('button', { name: 'Confirm', exact: true })).toHaveCount(0);
   expect(await page.evaluate(() => (window as unknown as { rateFrames: string[] }).rateFrames)).toEqual([]);
 }
 for (const width of [1440, 390]) {
@@ -53,15 +59,12 @@ for (const width of [1440, 390]) {
         await page.goto(`/${route}?${SCENARIO}`);
         const fx = await response; expect(fx.status()).toBeGreaterThanOrEqual(200); expect(fx.status()).toBeLessThan(300);
         await panel(page, route);
-        if (balance === 'zero' && route === 'withdraw') await expect(page.getByTestId('withdraw-no-funds')).toBeVisible();
-        if (balance === 'settled' && route === 'withdraw') {
-          const local = page.locator('main').getByTestId('local-balance');
-          await expect(local).toHaveText('(estimate unavailable)');
-          await expect(local.locator('..')).toContainText('$37.04');
-          await expect(local).not.toContainText(/≈|ZMW\s*\d/);
-          await page.getByTestId('withdraw-amount').fill('1');
-          await expect(page.getByRole('button', { name: 'Confirm', exact: true })).toBeDisabled();
-          await expect(page.getByTestId('withdraw-balance-preview')).not.toContainText(/≈|20\.00/);
+        if (route === 'withdraw') {
+          await expect(page.getByTestId('withdraw-no-funds')).toHaveCount(0);
+          await expect(page.getByTestId('local-balance')).toHaveCount(0);
+          await expect(page.getByTestId('withdraw-amount')).toHaveCount(0);
+          await expect(page.getByRole('button', { name: 'Confirm', exact: true })).toHaveCount(0);
+          await expect(page.getByTestId('withdraw-balance-preview')).toHaveCount(0);
         }
       });
       test(`T2 failing FX ${route} ${balance} ${width}`, async ({ page }) => {

@@ -12,8 +12,8 @@ import { SYNTHETIC_JOURNEY_EXAMPLES } from '../lib/state/synthetic-journey';
 import { SARAH_EXAMPLE_INPUTS } from '../lib/engine/sarah-read';
 
 (globalThis as typeof globalThis & { React: typeof React }).React = React;
-const DANIEL_ROWS = ['First deposit +$500.00 · 12 Jun', 'Deposit +$300.00 · 14 Aug', '≈ ZMW 19,600.00 · 9 Sep · example rate 24.5', '≈ ZMW 23,600.00 · 25 Sep · example rate 29.5', '9 Oct · shown above'];
-const SARAH_ROWS = ['First deposit +ZMW 4,000.00 · 14 Apr', 'Deposit +ZMW 2,000.00 · 21 Jul'];
+const DANIEL_ROWS = ['First deposit · 12 Jun · +$500.00', 'Deposit · 14 Aug · +$300.00', '≈ ZMW 19,600.00 · 9 Sep · example rate 24.5', '≈ ZMW 23,600.00 · 25 Sep · example rate 29.5'];
+const SARAH_ROWS = ['First deposit · 14 Apr · +ZMW 4,000.00', 'Deposit · 21 Jul · +ZMW 2,000.00'];
 const NOTE = 'He made two deposits and none since. Each kwacha figure uses the example rate for its date.';
 const LIMITS = 'Fictional course fee. This figure is not a payment quote. This read does not establish whether Sarah can pay the fee.';
 function example(id: 'daniel' | 'sarah') {
@@ -43,8 +43,8 @@ test('V15 one-shared-chart-all-examples, V16 first-row-and-marker-exact, V17 exa
   for (const year of [2026, 2027]) for (const id of ['daniel', 'sarah'] as const) {
     vi.setSystemTime(`${year}-10-15T12:00:00Z`); example(id);
     expect(screen.getAllByTestId('example-line-chart')).toHaveLength(1);
-    const marker = screen.getByRole('button', { name: `Deposit, ${id === 'daniel' ? '12 Jun' : '14 Apr'}` });
-    expect(marker.textContent).toBe(''); expect(marker.closest('[aria-hidden="true"]')).toBeNull();
+    const markers = screen.getAllByTestId('chart-event-dot');
+    expect(markers).toHaveLength(2); for (const marker of markers) expect(marker.getAttribute('aria-hidden')).toBe('true');
     fireEvent.click(screen.getByRole('button', { name: 'All changes · example dates' }));
     const rows = within(screen.getByTestId('chart-event-list')).getAllByRole('listitem').map(row => row.textContent);
     const expected = id === 'daniel' ? DANIEL_ROWS : SARAH_ROWS;
@@ -97,8 +97,8 @@ test('HOME-SOFTHALO-RATESLIDER-BUNDLE-001 AC1 AC2', () => {
     example(id); const chart=screen.getByTestId('example-line-chart');
     expect(chart.parentElement?.querySelector('[data-component="HomeHero"]')?.nextElementSibling).toBe(chart);
     expect(chart.querySelectorAll('[data-chart-wash]')).toHaveLength(1);
-    expect(chart.querySelectorAll('[data-chart-latest]')).toHaveLength(1);
-    expect(chart.querySelector('[data-chart-latest]')?.getAttribute('aria-hidden')).toBe('true');
+    expect(chart.querySelectorAll('[data-chart-selected]')).toHaveLength(1);
+    expect(chart.querySelector('[data-chart-selected]')?.getAttribute('aria-hidden')).toBe('true');
     expect(screen.queryByTestId('dashboard-position-line-visit')).toBeNull();
   }
 });

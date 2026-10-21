@@ -273,3 +273,17 @@
 .visualiserWash { fill: var(--color-hedgr-primary); opacity: .06; stroke: none; }
 .visualiserLatest { position: absolute; width: 10px; height: 10px; border-radius: 50%; transform: translate(-50%, -50%); background: #B4846C; box-shadow: 0 0 10px color-mix(in srgb, #B4846C 35%, transparent); pointer-events: none; }
 @media (min-width: 64rem) { .visualiserPlot { height: 180px; } }
+
+/* QOL-BUNDLE-001: bounded shared activity selection; existing chart tokens stay. */
+.visualiserPoint { position: absolute; width: .5rem; height: .5rem; border-radius: 50%; transform: translate(-50%, -50%); background: var(--color-hedgr-800); }
+.activityStack { position: relative; min-width: 0; margin-block: 1rem; touch-action: pan-y; }
+.activityCard { position: relative; min-width: 0; padding: 1rem; border: 1px solid var(--home-divider); border-radius: 1rem; background: var(--color-hedgr-white, #fff); color: var(--color-hedgr-800); font-size: 1rem; line-height: 1.5; overflow-wrap: anywhere; }
+.activityStack[data-depth="stack"] .activityCard { margin-bottom: .75rem; box-shadow: 0 .25rem 0 -.0625rem var(--home-canvas), 0 .3125rem 0 -.0625rem var(--home-divider), 0 .5rem 0 -.125rem var(--home-canvas), 0 .5625rem 0 -.125rem var(--home-divider); }
+.activityEyebrow { margin-bottom: .375rem; font-size: .75rem; color: var(--color-hedgr-600); }
+.activityCard .activityAnnouncement { width: calc(100% - 2rem); white-space: normal; }
+.activityControls { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1rem; }
+.activityControls button { min-height: 2.75rem; min-width: 2.75rem; max-width: 100%; padding: .5rem .75rem; border: 1px solid var(--home-divider); border-radius: .75rem; background: var(--color-hedgr-white, #fff); color: var(--color-hedgr-800); font: inherit; line-height: 1.5; overflow-wrap: anywhere; cursor: pointer; }
+.activityControls button[aria-disabled="true"] { color: var(--color-hedgr-600); cursor: default; }
+.activityControls button:focus-visible { outline: 2px solid var(--color-hedgr-800); outline-offset: 3px; }
+.activityHint { margin-top: .75rem; font-size: .875rem; color: var(--color-hedgr-600); }
+@media (prefers-reduced-motion: reduce) { .activityStack, .activityCard { animation: none; transition: none; } .activityHint { display: none; } }

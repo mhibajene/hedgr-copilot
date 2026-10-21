@@ -6,7 +6,7 @@ import { resolve } from 'node:path';
 const HOME = '/dashboard-synthetic-journey';
 const JOURNEY = 'journey=class-a-val-002';
 const SCENARIO = `${JOURNEY}&scenario=unavailable-data`;
-const LINE = 'You are still on Withdraw. Your simulated balance stays visible.';
+const LINE = "This example has no rate set, so the local amount and Confirm aren't available.";
 const NOW = Date.parse('2026-10-18T04:00:00Z');
 test.use({ timezoneId: 'UTC' });
 test.beforeEach(async ({ page, context }) => {
@@ -89,13 +89,17 @@ for (const width of [1440, 390]) {
     await page.route('**/api/fx?**', route => route.fulfill({ status: 503, contentType: 'application/json', body: '{}' }));
     for (const route of ['deposit', 'withdraw']) {
       await page.goto(`/${route}?${SCENARIO}`);
-      const panel = page.getByTestId(`${route}-market-data-continuity`); await expect(panel).toBeVisible();
-      await expect(panel).toContainText("The example rate didn't load. This simulation uses a fixed example rate, not market data.");
-      await expect(page.getByRole('button', { name: 'Confirm', exact: true })).toBeDisabled();
       if (route === 'withdraw') {
-        await expect(panel).toContainText(LINE);
-        await expect(panel).not.toContainText(/(?:payment|payout)[ -]+methods?/i);
-      } else await expect(page.getByRole('link', { name: 'Return to the simulated deposit', exact: true })).toHaveAttribute('href', `/deposit?${JOURNEY}`);
+        await expect(page.getByText(LINE, { exact: true })).toBeVisible();
+        await expect(page.getByTestId('withdraw-market-data-continuity')).toHaveCount(0);
+        await expect(page.getByRole('button', { name: 'Confirm', exact: true })).toHaveCount(0);
+        await expect(page.getByRole('link', { name: 'Back to Home', exact: true })).toHaveAttribute('href', HOME);
+      } else {
+        const panel = page.getByTestId(`${route}-market-data-continuity`); await expect(panel).toBeVisible();
+        await expect(panel).toContainText("The example rate didn't load. This simulation uses a fixed example rate, not market data.");
+        await expect(page.getByRole('button', { name: 'Confirm', exact: true })).toBeDisabled();
+        await expect(page.getByRole('link', { name: 'Return to the simulated deposit', exact: true })).toHaveAttribute('href', `/deposit?${JOURNEY}`);
+      }
     }
   });
 }

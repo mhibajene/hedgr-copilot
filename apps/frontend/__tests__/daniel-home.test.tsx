@@ -323,7 +323,7 @@ describe("shows only Daniel's reserve when the example is selected", () => {
         expect(screen.getByTestId("dashboard-disclosures")).toBeDefined();
         expect(screen.getByTestId("daniel-read-figure").textContent).toBe("$800.00 USD");
         expect(screen.getByTestId("daniel-read-caption").textContent).toBe("≈ ZMW 21,600.00 Example figure, not a quote");
-        expect(screen.getAllByTestId("daniel-observation")).toHaveLength(5);
+        expect(screen.getAllByTestId("daniel-observation")).toHaveLength(4);
         for (const testId of OWN_SIMULATION_ONLY) {
           expect(screen.queryByTestId(testId), testId).toBeNull();
         }
@@ -490,7 +490,7 @@ describe("contains no prohibited claims in Daniel Home copy", () => {
     // Fixture, time and rate limits accompany the read; only URL return navigation is offered.
     expect(text).toContain("Fictional");
     expect(text).toContain("Not a live rate.");
-    expect(text).toContain("9 Oct · shown above");
+    expect(text).not.toContain("9 Oct · shown above");
     expect(panel().querySelectorAll("a")).toHaveLength(1);
     expect(panel().querySelectorAll("button:not([aria-controls]), input, select, progress, meter, [role='progressbar']")).toHaveLength(0);
     // The picker's locked option names carry no currency or claim.
@@ -616,7 +616,7 @@ test("own simulation, default Home and live mode stay unchanged", async () => {
   const originalRead = computeDanielRead(DANIEL_HOME_FIXTURE_INPUT);
   expect(DANIEL_HOME_READ).toEqual(originalRead);
   const view = await renderHome("journey", "returning");
-  expect(screen.getByTestId("dashboard-position-line-visit").textContent).toBe("Your last visit");
+  expect(screen.queryByTestId("dashboard-position-line-visit")).toBeNull();
   expect(screen.getByTestId("dashboard-date-line")).toBeDefined();
   expect(screen.queryByTestId("daniel-currency-context")).toBeNull();
   expect(picker().selectedOptions[0]?.textContent).toBe(OPTIONS[0]);
@@ -632,7 +632,7 @@ test("Daniel change card consumes Engine explanations verbatim without a compute
   homeMocks.danielOverride = homeMocks.timelineOverride[2]; await renderDaniel('journey');
   expect(screen.getByTestId('daniel-read-figure').textContent).toBe('$1234.56 USD');
   expect(screen.getByTestId('daniel-read-caption').textContent).toBe('≈ ZMW 33,333.12 Example figure, not a quote');
-  expect(screen.getAllByTestId('daniel-observation').map(n=>n.textContent)).toEqual(['First deposit +$500.00 · 12 Jun', 'Deposit +$300.00 · 14 Aug', '≈ ZMW 15,000.00 · 1 Jan · example rate 24.5', '≈ ZMW 7,500.00 · 3 Jan · example rate 29.5', '11 Jan · shown above']);
+  expect(screen.getAllByTestId('daniel-observation').map(n=>n.textContent)).toEqual(['First deposit · 12 Jun · +$500.00', 'Deposit · 14 Aug · +$300.00', '≈ ZMW 15,000.00 · 1 Jan · example rate 24.5', '≈ ZMW 7,500.00 · 3 Jan · example rate 29.5']);
   expect(screen.getByTestId('daniel-read-rate').textContent).toBe('ENGINE RATE 2');
   expect(panel().textContent).not.toMatch(/ENGINE HOLDING|ENGINE RATE [01]|K21,600|K23,600|higher|lower|delta|difference/);
   const dots=Array.from(screen.getByTestId('example-line-chart').querySelectorAll('[data-series-value]'));
@@ -816,14 +816,14 @@ test('Daniel legibility leaves chart and runtime fixtures unchanged', async () =
 });
 
 // §377: accepted three-row list, two-decimal hero, with no latest monetary repeat.
-const A_ROWS = ['First deposit +$500.00 · 12 Jun', 'Deposit +$300.00 · 14 Aug', '≈ ZMW 19,600.00 · 9 Sep · example rate 24.5', '≈ ZMW 23,600.00 · 25 Sep · example rate 29.5', '9 Oct · shown above'];
+const A_ROWS = ['First deposit · 12 Jun · +$500.00', 'Deposit · 14 Aug · +$300.00', '≈ ZMW 19,600.00 · 9 Sep · example rate 24.5', '≈ ZMW 23,600.00 · 25 Sep · example rate 29.5'];
 function assertTicketA() {
   expect(screen.getByTestId('daniel-read-figure').textContent).toBe('$800.00 USD');
   expect(screen.getByTestId('daniel-read-caption').textContent).toBe('≈ ZMW 21,600.00 Example figure, not a quote');
   const region = within(panel()).getByRole('region', { name: LOCKED_COPY.since });
   expect(within(region).getByRole('heading', { level: 2 }).textContent).toBe(LOCKED_COPY.since);
   expect(Array.from(screen.getByTestId('chart-event-list').querySelectorAll('li')).map(n => n.textContent)).toEqual(A_ROWS);
-  expect(Array.from(screen.getByTestId('chart-event-list').querySelectorAll('time')).map(n => n.getAttribute('datetime'))).toEqual(['2026-06-12T00:00:00.000Z', '2026-08-14T00:00:00.000Z', ...expectedTimeline.map(r => r.asOf)]);
+  expect(Array.from(screen.getByTestId('chart-event-list').querySelectorAll('time')).map(n => n.getAttribute('datetime'))).toEqual(['2026-06-12T00:00:00.000Z', '2026-08-14T00:00:00.000Z', ...expectedTimeline.slice(0, -1).map(r => r.asOf)]);
   const graphic = screen.getByTestId('example-line-chart');
   expect(graphic.parentElement?.querySelector('[data-component="HomeHero"]')?.nextElementSibling).toBe(graphic);
   expect(graphic.getAttribute('aria-hidden')).toBeNull();
@@ -835,7 +835,7 @@ function assertTicketA() {
   expect(graphic.querySelectorAll('[data-testid="chart-event-dot"]')).toHaveLength(2);
   expect(screen.queryByTestId('dashboard-position-line')).toBeNull();
   expect(screen.queryByTestId('dashboard-position-line-visit')).toBeNull();
-  expect(panel().querySelectorAll('[aria-live], [role="status"]')).toHaveLength(0);
+  expect(panel().querySelectorAll('[aria-live], [role="status"]')).toHaveLength(1);
   const text = panel().textContent!;
   for (const [claim,count] of [['$800.00 USD',1],['≈ ZMW 21,600.00',1],['9 Oct 2026',1],['Fictional example · Daniel’s reserve',1],
     ['Example figure, not a quote',1],[RATE_ASSUMPTION,1],[LEGIBILITY.invariant,1],[LIMITATION,1],

@@ -3,6 +3,7 @@
 import finish from '../product-finish.module.css';
 import { ReceiptCard, formatRecordedTime } from '../ReceiptCard';
 import { ActionDock } from '../ActionDock';
+import { clearSimulationReceipt, isDocumentReload, readSimulationReceipt, rememberSimulationReceipt, type SimulationReceipt } from '../simulation-receipt';
 
 import Link from 'next/link';
 import { Suspense, useState, useEffect, useRef, useMemo } from 'react';
@@ -84,6 +85,27 @@ function DepositPageContent() {
   const [usdToCredit, setUsdToCredit] = useState(0);
   const [balanceBefore, setBalanceBefore] = useState<number | null>(null);
   const [recordedAt, setRecordedAt] = useState<number | null>(null);
+  const transactions = useLedgerStore(s => s.transactions);
+  const [restoredReceipt, setRestoredReceipt] = useState<SimulationReceipt | null>(null);
+  const restoreChecked = useRef(false);
+  const acknowledged = useRef(false);
+  const markerRecorded = useRef<string | null>(null);
+  useEffect(() => {
+    if (restoreChecked.current || !productSimulationActive || unavailableDataScenario) return;
+    restoreChecked.current = true;
+    const marker = readSimulationReceipt('deposit', transactions ?? []);
+    if (!marker || !isDocumentReload(marker.view.recordedAt)) return;
+    setRestoredReceipt(marker);
+    setTxnRef(marker.txnRef);
+    setRecordedAt(marker.view.recordedAt);
+    setAmountLocalStr(marker.view.amountInput);
+    setUsdToCredit(transactions.find(tx => tx.txn_ref === marker.txnRef)!.amount_usd);
+    setBalanceBefore(marker.view.balanceBefore);
+    setStatus('PENDING');
+  }, [productSimulationActive, unavailableDataScenario, transactions]);
+  const receiptQuote = restoredReceipt?.view.quote ?? quote;
+  const receiptRate = restoredReceipt ? restoredReceipt.view.rate : rate;
+
   const [requestStatus, setStatus] = useState<'IDLE' | 'PENDING' | 'CONFIRMED' | 'FAILED'>('IDLE');
   const simulatedTxStatus = useLedgerStore((s) =>
     txnRef ? s.getByTxnRef(txnRef)?.status : undefined,
@@ -93,6 +115,28 @@ function DepositPageContent() {
       ? 'CONFIRMED'
       : simulatedTxStatus === 'failed' ? 'FAILED' : requestStatus
     : requestStatus;
+
+  useEffect(() => {
+    if (!restoredReceipt || (receiptSource && receiptSource.status !== 'failed')) return;
+    clearSimulationReceipt(restoredReceipt.txnRef);
+    setRestoredReceipt(null);
+    setTxnRef(null);
+    setBalanceBefore(null);
+    setStatus(receiptSource?.status === 'failed' ? 'FAILED' : 'IDLE');
+  }, [restoredReceipt, receiptSource]);
+
+  useEffect(() => {
+    if (!productSimulationActive || restoredReceipt || acknowledged.current || !txnRef) return;
+    const tx = transactions?.find(tx => tx.txn_ref === txnRef);
+    if (tx?.status === 'failed') { clearSimulationReceipt(tx.txn_ref); return; }
+    if (!tx || markerRecorded.current === txnRef) return;
+    markerRecorded.current = txnRef;
+    rememberSimulationReceipt(tx, {
+      recordedAt: recordedAt ?? tx.created_at,
+      balanceBefore: balanceBefore,
+      amountInput: amountLocalStr, quote, rate,
+    });
+  }, [productSimulationActive, restoredReceipt, txnRef, transactions, recordedAt, balanceBefore, amountLocalStr, quote, rate]);
 
   const [paymentMethods, setPaymentMethods] = useState<PaymentMethod[]>([]);
   const [methodsLoading, setMethodsLoading] = useState(true);
@@ -150,6 +194,7 @@ function DepositPageContent() {
     if (!rateAllowsConfirm) return;
 
     const usdForStub = rate !== null && usdPreview !== null ? usdPreview : 0;
+    acknowledged.current = false;
     setStatus('PENDING');
     setUsdToCredit(usdForStub);
     setBalanceBefore(typeof total === 'number' && Number.isFinite(total) ? total : null);
@@ -215,6 +260,40 @@ function DepositPageContent() {
     roundsToZero ||
     !rateAllowsConfirm;
 
+  const acknowledgeReceipt: React.MouseEventHandler<HTMLElement> = event => {
+    if (event.target instanceof Element && event.target.closest('[data-simulation-receipt] a[href]')) {
+      acknowledged.current = true;
+      clearSimulationReceipt(txnRef ?? undefined);
+    }
+  };
+  const confirmationReceipt = (
+        <div data-simulation-receipt className="space-y-4" data-testid="deposit-confirmation-region">
+          <ReceiptCard
+            headline={`You added $${usdToCredit.toFixed(2)} to your simulated balance`}
+            headlineTestId="deposit-confirmed"
+            time={formatRecordedTime(recordedAt ?? Date.now())}
+            rows={[
+              ...(amountLocalNum !== null ? [{ label: 'Amount', value: receiptSource?.source_local_amount !== undefined && receiptSource.source_local_currency ? formatLocalCurrency(receiptSource.source_local_amount, receiptSource.source_local_currency) : `${receiptQuote} ${amountLocalNum.toFixed(2)}` }] : []),
+              { label: 'Shown as', value: `+$${usdToCredit.toFixed(2)}` },
+              ...(syntheticJourneyActive && receiptRate !== null ? [{ label: 'Example rate', value: `1 USD = ${receiptRate.toFixed(2)} ${receiptQuote}` }] : []),
+              ...(balanceBefore !== null ? [{ label: 'Balance now ', value: <b>${(balanceBefore + usdToCredit).toFixed(2)}</b> }] : []),
+              { label: 'Real money moved', value: 'None' },
+            ]}
+          />
+          <ActionDock
+            title="Try a simulated withdrawal"
+            why="See what changes, and what stays, when money comes out."
+            primary={{ label: 'Continue to simulated withdrawal', href: syntheticJourneyLinkContext ? getSyntheticJourneyHref('/withdraw') : '/withdraw' }}
+            secondary={{ label: 'Back to your position', href: syntheticJourneyLinkContext ? getSyntheticJourneyHref('/dashboard') : '/dashboard' }}
+          />
+        </div>
+  );
+  if (restoredReceipt && status !== 'FAILED') {
+    return <main className={`mx-auto max-w-xl p-6 ${finish.choice}`} onClickCapture={acknowledgeReceipt}>
+      {status === 'CONFIRMED' ? confirmationReceipt : <button type="button" disabled className={`w-full ${finish.confirm}`}>Processing…</button>}
+    </main>;
+  }
+
   if (methodsError) {
     return (
       <main className={`mx-auto max-w-xl p-6 ${finish.choice}`}>
@@ -273,7 +352,7 @@ function DepositPageContent() {
   }
 
   return (
-    <main className={`mx-auto max-w-xl p-6 ${finish.choice}`}>
+    <main className={`mx-auto max-w-xl p-6 ${finish.choice}`} onClickCapture={acknowledgeReceipt}>
       <h1 className="text-2xl font-semibold">Deposit</h1>
       {reviewSeamActive ? (
         <TxReviewSimulatorBanner data-testid="deposit-tx-review-simulator-banner" />
@@ -402,26 +481,7 @@ function DepositPageContent() {
         <p className={finish.reason} data-testid="deposit-confirm-reason">Confirm turns on once the example rate loads.</p>
       ) : null}
       {status === 'CONFIRMED' && productSimulationActive ? (
-        <div className="space-y-4" data-testid="deposit-confirmation-region">
-          <ReceiptCard
-            headline={`You added $${usdToCredit.toFixed(2)} to your simulated balance`}
-            headlineTestId="deposit-confirmed"
-            time={formatRecordedTime(recordedAt ?? Date.now())}
-            rows={[
-              ...(amountLocalNum !== null ? [{ label: 'Amount', value: receiptSource?.source_local_amount !== undefined && receiptSource.source_local_currency ? formatLocalCurrency(receiptSource.source_local_amount, receiptSource.source_local_currency) : `${quote} ${amountLocalNum.toFixed(2)}` }] : []),
-              { label: 'Shown as', value: `+$${usdToCredit.toFixed(2)}` },
-              ...(syntheticJourneyActive && rate !== null ? [{ label: 'Example rate', value: `1 USD = ${rate.toFixed(2)} ${quote}` }] : []),
-              ...(balanceBefore !== null ? [{ label: 'Balance now ', value: <b>${(balanceBefore + usdToCredit).toFixed(2)}</b> }] : []),
-              { label: 'Real money moved', value: 'None' },
-            ]}
-          />
-          <ActionDock
-            title="Try a simulated withdrawal"
-            why="See what changes, and what stays, when money comes out."
-            primary={{ label: 'Continue to simulated withdrawal', href: syntheticJourneyLinkContext ? getSyntheticJourneyHref('/withdraw') : '/withdraw' }}
-            secondary={{ label: 'Back to your position', href: syntheticJourneyLinkContext ? getSyntheticJourneyHref('/dashboard') : '/dashboard' }}
-          />
-        </div>
+        confirmationReceipt
       ) : status === 'CONFIRMED' ? (
         <section
           className="rounded-xl border border-hedgr-200 bg-white p-4 text-hedgr-800"

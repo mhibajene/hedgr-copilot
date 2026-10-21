@@ -1,5 +1,7 @@
 import { formatShortDate } from '../../../lib/state/last-visit';
 import { formatExampleDate } from '../../../lib/utils/date';
+import { formatUsd } from '../../../lib/state/last-visit';
+import { formatLocalCurrency } from '../../../lib/utils/money';
 
 export type LineCurrency = 'USD' | 'ZMW';
 export type BalanceSample = { at: string; value: number; currency: LineCurrency };
@@ -70,6 +72,36 @@ export function formatEventDate(at: number, example = false, showYear = true): s
   const short = example ? full.replace(/ \d{4}$/, '') : formatShortDate(at);
   const year = example ? date.getUTCFullYear() : date.getFullYear();
   return `${short}${showYear && year !== new Date().getFullYear() ? ` ${year}` : ''}`;
+}
+
+// Locked vocabulary; current Home records support USD/ZMW only.
+export const ACTIVITY_CURRENCY_NAMES = {
+  USD: ['US dollar', 'US dollars'], ZMW: ['Zambian kwacha', 'Zambian kwacha'],
+  NGN: ['Nigerian naira', 'Nigerian naira'], KES: ['Kenyan shilling', 'Kenyan shillings'],
+  GHS: ['Ghanaian cedi', 'Ghanaian cedis'], PHP: ['Philippine peso', 'Philippine pesos'],
+} as const;
+
+/** Recorded event presentation only; hero preference and FX never enter this helper. */
+export function activityText(event: ChartEvent, firstDepositId: string | undefined, example: boolean, since: boolean) {
+  if (event.kind === 'reading' || !Number.isFinite(event.amount) || event.amount! < 0 ||
+      (event.currency !== 'USD' && event.currency !== 'ZMW')) {
+    throw new RangeError('Activity cards require a recorded USD/ZMW event amount');
+  }
+  const amount = event.amount!;
+  const type = event.id === firstDepositId ? 'First deposit' : event.kind === 'withdrawal' ? 'Withdrawal' : 'Deposit';
+  const sign = event.kind === 'withdrawal' ? '−' : '+';
+  const visibleAmount = event.currency === 'USD' ? formatUsd(amount) : formatLocalCurrency(amount, event.currency);
+  const spokenAmount = amount.toLocaleString('en-US', { minimumFractionDigits: Number.isInteger(amount) ? 0 : 2, maximumFractionDigits: 2 });
+  const date = new Date(event.at);
+  const year = example ? date.getUTCFullYear() : date.getFullYear();
+  const spokenDate = date.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', ...(year !== new Date().getFullYear() ? { year: 'numeric' } : {}), ...(example ? { timeZone: 'UTC' } : {}) });
+  const currency = ACTIVITY_CURRENCY_NAMES[event.currency][amount === 1 ? 0 : 1];
+  const visibleDate = formatEventDate(event.at, example);
+  return {
+    type, sign, visibleAmount, date: visibleDate,
+    visible: `${type} · ${visibleDate} · ${sign}${visibleAmount}`,
+    spoken: `${since ? 'Since your last visit. ' : ''}${type}, ${event.kind === 'withdrawal' ? 'minus' : 'plus'} ${spokenAmount} ${currency}, ${spokenDate}.`,
+  };
 }
 
 /** Registry facts only; no FX or Engine computation. */

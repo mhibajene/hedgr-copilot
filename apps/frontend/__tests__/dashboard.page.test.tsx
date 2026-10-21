@@ -863,7 +863,7 @@ test('Journey since states use simulation context without current-balance restat
     expect(screen.getByTestId('example-line-chart').querySelector('[data-chart-label]')!.textContent).toBe('2 changes since your last visit');
     expect(screen.queryByTestId('dashboard-since-entries')).toBeNull();
     const rows = screen.getByTestId('chart-event-list').querySelectorAll('li');
-    expect(Array.from(rows).map(row => row.textContent)).toEqual(['First deposit +$500.00 · 12 Oct', 'Withdrawal −$20.00 · 13 Oct']);
+    expect(Array.from(rows).map(row => row.textContent)).toEqual(['First deposit · 12 Oct · +$500.00', 'Withdrawal · 13 Oct · −$20.00']);
     setupTicketB(route, 'no-change');
     expect((await screen.findByTestId('engine-posture-context')).textContent).toBe('No changes since your last visit');
     expect(screen.getByText('The ZMW estimate can change with the exchange rate.')).toBeDefined();
@@ -1197,9 +1197,9 @@ describe('S18 earn tile fence sweep (§384)', () => {
       baseline[`${mode}:${route}`] = s18Digest(s18OutsideTile(view.container));
       if (route.includes('example=daniel')) {
         expect(screen.getByTestId('daniel-invariant').textContent).toBe('He made two deposits and none since. Each kwacha figure uses the example rate for its date.');
-        expect(screen.getByTestId('chart-event-list').textContent).toContain('First deposit +$500.00 · 12 Jun');
+        expect(screen.getByTestId('chart-event-list').textContent).toContain('First deposit · 12 Jun · +$500.00');
       } else if (route.includes('example=sarah')) {
-        expect(screen.getByTestId('chart-event-list').textContent).toBe('First deposit +ZMW 4,000.00 · 14 AprDeposit +ZMW 2,000.00 · 21 Jul');
+        expect(screen.getByTestId('chart-event-list').textContent).toBe('First deposit · 14 Apr · +ZMW 4,000.00Deposit · 21 Jul · +ZMW 2,000.00');
       }
       expect(useBalance()).toMatchObject({ total: 100, available: 100, pending: 0, currency: 'USD' });
       expect(useEngineState()).toEqual(getMockEngineState('normal'));
@@ -1494,9 +1494,67 @@ const RELEASE_GATE_003_SOURCE_EDITS: Record<string, string[][]> = {
   ]
 };
 function releaseGate003PreRuntime(path: string, value: string): string {
+  value = qolPreRuntime(path, value);
   for (const [old, replacement] of RELEASE_GATE_003_SOURCE_EDITS[path] ?? []) {
     expect(value.split(replacement), path).toHaveLength(2);
     value = value.replace(replacement, old);
   }
+  return value;
+}
+
+// QOL-BUNDLE-001: reverse only exact authorised runtime hunks before historical pins.
+const QOL_SOURCE_EDITS: Record<string, string[][]> = {
+  "app/(app)/dashboard/page.tsx": [
+    [
+      "import { countChanges } from \"./lineLabels\";\nimport { PositionLine } from \"./PositionLine\";\nimport { ChartSourceAmountsContext } from \"./ExampleLineChart\";\nimport { formatLocalCurrency } from \"../../../lib/utils/money\";\nimport { DanielExampleHome } from './DanielExampleHome';\nimport { SarahExampleHome } from './SarahExampleHome';\n",
+      "import { countChanges } from \"./lineLabels\";\nimport { PositionLine } from \"./PositionLine\";\nimport { ChartSourceAmountsContext } from \"./ExampleLineChart\";\nimport { clearSimulationReceipt } from \"../simulation-receipt\";\nimport { formatLocalCurrency } from \"../../../lib/utils/money\";\nimport { DanielExampleHome } from './DanielExampleHome';\nimport { SarahExampleHome } from './SarahExampleHome';\n"
+    ],
+    [
+      "      // \u00a7374: eligible Sarah consumes reset while refusing all simulation writes.\n      if (!sarahExample) {\n        clearTransactions();\n        removeRetiredWalletBalance();\n        if (searchParams?.get(\"study\") === \"1\") setSimulationDisplayCurrency(\"ZMW\");\n      }\n",
+      "      // \u00a7374: eligible Sarah consumes reset while refusing all simulation writes.\n      if (!sarahExample) {\n        clearTransactions();\n        clearSimulationReceipt();\n        removeRetiredWalletBalance();\n        if (searchParams?.get(\"study\") === \"1\") setSimulationDisplayCurrency(\"ZMW\");\n      }\n"
+    ]
+  ],
+  "app/(app)/withdraw/page.tsx": [
+    [
+      "import finish from '../product-finish.module.css';\nimport { ReceiptCard, formatRecordedTime } from '../ReceiptCard';\nimport { ActionDock } from '../ActionDock';\n\nimport { Suspense, useState, useEffect, useMemo } from 'react';\nimport { useSearchParams } from 'next/navigation';\nimport { withdrawMock } from '../../../lib/payments/withdraw.mock';\nimport { useBalance } from '../../../lib/hooks/useBalance';\n",
+      "import finish from '../product-finish.module.css';\nimport { ReceiptCard, formatRecordedTime } from '../ReceiptCard';\nimport { ActionDock } from '../ActionDock';\nimport { clearSimulationReceipt, isDocumentReload, readSimulationReceipt, rememberSimulationReceipt, type SimulationReceipt } from '../simulation-receipt';\n\nimport { Suspense, useState, useEffect, useMemo, useRef } from 'react';\nimport { useSearchParams } from 'next/navigation';\nimport { withdrawMock } from '../../../lib/payments/withdraw.mock';\nimport { useBalance } from '../../../lib/hooks/useBalance';\n"
+    ],
+    [
+      "\n  const [usdInput, setUsdInput] = useState('');\n  const [txnRef, setTxnRef] = useState<string | null>(null);\n  const [status, setStatus] = useState<WithdrawPageStatus>('IDLE');\n  const [balanceBeforeWithdrawal, setBalanceBeforeWithdrawal] = useState<number | null>(null);\n  const [recordedAt, setRecordedAt] = useState<number | null>(null);\n\n  const [withdrawMethods, setWithdrawMethods] = useState<WithdrawMethod[]>([]);\n  const [methodsLoading, setMethodsLoading] = useState(true);\n",
+      "\n  const [usdInput, setUsdInput] = useState('');\n  const [txnRef, setTxnRef] = useState<string | null>(null);\n  const [requestStatus, setStatus] = useState<WithdrawPageStatus>('IDLE');\n  const [balanceBeforeWithdrawal, setBalanceBeforeWithdrawal] = useState<number | null>(null);\n  const [recordedAt, setRecordedAt] = useState<number | null>(null);\n  const transactions = useLedgerStore(s => s.transactions);\n  const [restoredReceipt, setRestoredReceipt] = useState<SimulationReceipt | null>(null);\n  const restoreChecked = useRef(false);\n  const acknowledged = useRef(false);\n  const markerRecorded = useRef<string | null>(null);\n  useEffect(() => {\n    if (restoreChecked.current || !productSimulationActive || unavailableDataScenario) return;\n    restoreChecked.current = true;\n    const marker = readSimulationReceipt('withdrawal', transactions ?? []);\n    if (!marker || !isDocumentReload(marker.view.recordedAt)) return;\n    setRestoredReceipt(marker);\n    setTxnRef(marker.txnRef);\n    setRecordedAt(marker.view.recordedAt);\n    setUsdInput(String(transactions.find(tx => tx.txn_ref === marker.txnRef)!.amount_usd));\n    setBalanceBeforeWithdrawal(marker.view.balanceBefore);\n    setStatus('PENDING');\n  }, [productSimulationActive, unavailableDataScenario, transactions]);\n  const receiptQuote = restoredReceipt?.view.quote ?? quote;\n  const receiptRate = restoredReceipt ? restoredReceipt.view.rate : rate;\n\n\n  const restoredTx = restoredReceipt ? transactions?.find(tx => tx.txn_ref === restoredReceipt.txnRef) : undefined;\n  const status: WithdrawPageStatus = restoredReceipt\n    ? restoredTx?.status === 'settled' ? 'CONFIRMED' : restoredTx?.status === 'pending' ? 'PENDING' : 'FAILED'\n    : requestStatus;\n\n  useEffect(() => {\n    if (!restoredReceipt || (restoredTx && restoredTx.status !== 'failed')) return;\n    clearSimulationReceipt(restoredReceipt.txnRef);\n    setRestoredReceipt(null);\n    setTxnRef(null);\n    setBalanceBeforeWithdrawal(null);\n    setStatus(restoredTx?.status === 'failed' ? 'FAILED' : 'IDLE');\n  }, [restoredReceipt, restoredTx]);\n\n  useEffect(() => {\n    if (!productSimulationActive || restoredReceipt || acknowledged.current || !txnRef) return;\n    const tx = transactions?.find(tx => tx.txn_ref === txnRef);\n    if (tx?.status === 'failed') { clearSimulationReceipt(tx.txn_ref); return; }\n    if (!tx || markerRecorded.current === txnRef) return;\n    markerRecorded.current = txnRef;\n    rememberSimulationReceipt(tx, {\n      recordedAt: recordedAt ?? tx.created_at,\n      balanceBefore: balanceBeforeWithdrawal,\n      amountInput: usdInput, quote, rate,\n    });\n  }, [productSimulationActive, restoredReceipt, txnRef, transactions, recordedAt, balanceBeforeWithdrawal, usdInput, quote, rate]);\n\n  const [withdrawMethods, setWithdrawMethods] = useState<WithdrawMethod[]>([]);\n  const [methodsLoading, setMethodsLoading] = useState(true);\n"
+    ],
+    [
+      "  }, []);\n\n  useEffect(() => {\n    if (!txnRef || status !== 'PENDING') return;\n\n    const h = setInterval(async () => {\n      const s = await withdrawMock.status(txnRef);\n",
+      "  }, []);\n\n  useEffect(() => {\n    if (restoredReceipt || !txnRef || status !== 'PENDING') return;\n\n    const h = setInterval(async () => {\n      const s = await withdrawMock.status(txnRef);\n"
+    ],
+    [
+      "    }, 500);\n\n    return () => clearInterval(h);\n  }, [txnRef, status, confirmTx, failTx, refresh]);\n\n  const confirm = async () => {\n    if (status === 'PENDING' || simulatedResultActive || !hasPositiveAmount ||\n        amountIsInvalid || amountExceedsBalance || !rateAllowsConfirm) return;\n\n    setBalanceBeforeWithdrawal(available);\n    setRecordedAt(Date.now());\n    setStatus('PENDING');\n",
+      "    }, 500);\n\n    return () => clearInterval(h);\n  }, [txnRef, status, confirmTx, failTx, refresh, restoredReceipt]);\n\n  const confirm = async () => {\n    if (status === 'PENDING' || simulatedResultActive || !hasPositiveAmount ||\n        amountIsInvalid || amountExceedsBalance || !rateAllowsConfirm) return;\n\n    acknowledged.current = false;\n    setBalanceBeforeWithdrawal(available);\n    setRecordedAt(Date.now());\n    setStatus('PENDING');\n"
+    ],
+    [
+      "  const fallbackPathClarificationLines = activeStatus\n    ? getFallbackPathClarificationLines(activeStatus.publicStatus)\n    : null;\n\n  if (balanceError) {\n    return (\n",
+      "  const fallbackPathClarificationLines = activeStatus\n    ? getFallbackPathClarificationLines(activeStatus.publicStatus)\n    : null;\n\n  const acknowledgeReceipt: React.MouseEventHandler<HTMLElement> = event => {\n    if (event.target instanceof Element && event.target.closest('[data-simulation-receipt] a[href]')) {\n      acknowledged.current = true;\n      clearSimulationReceipt(txnRef ?? undefined);\n    }\n  };\n  const confirmationReceipt = (\n        <div data-simulation-receipt className=\"space-y-4\" data-testid=\"withdraw-status-region\" data-status={activeStatus?.publicStatus}>\n          <ReceiptCard\n            headline={`You took $${usd.toFixed(2)} out of your simulated balance`}\n            headlineTestId=\"withdraw-status-title\"\n            time={formatRecordedTime(recordedAt ?? Date.now())}\n            rows={[\n              ...(receiptRate !== null ? [{ label: 'Amount', value: `${receiptQuote} ${(usd * receiptRate).toFixed(2)}` }] : []),\n              { label: 'Shown as', value: `\u2212$${usd.toFixed(2)}` },\n              ...(syntheticJourneyActive && receiptRate !== null ? [{ label: 'Example rate', value: `1 USD = ${receiptRate.toFixed(2)} ${receiptQuote}` }] : []),\n              ...(remainingAfterWithdrawal !== null ? [{ label: 'Balance now ', value: <span data-testid=\"withdraw-balance-reconciliation\"><b>${remainingAfterWithdrawal.toFixed(2)}</b></span> }] : []),\n              { label: 'Real money moved', value: 'None' },\n            ]}\n          />\n          <ActionDock\n            title=\"Check the evidence\"\n            why=\"Activity lists both entries and the balance after each one.\"\n            primary={{ label: 'Review Activity', href: syntheticJourneyLinkContext ? getSyntheticJourneyHref('/activity') : '/activity' }}\n            secondary={{ label: 'Back to your position', href: syntheticJourneyLinkContext ? getSyntheticJourneyHref('/dashboard') : '/dashboard' }}\n          />\n        </div>\n  );\n  if (unavailableDataScenario) {\n    return <main className={`mx-auto max-w-xl p-6 ${finish.choice}`}>\n      <h1 className=\"text-sm font-semibold\">Step 3 \u00b7 check the position after a simulated withdrawal</h1>\n      <p className=\"mt-1 text-sm leading-relaxed text-hedgr-dark\">This example has no rate set, so the local amount and Confirm aren't available.</p>\n      <a href={getSyntheticJourneyHref('/dashboard')} className=\"inline-flex min-h-11 items-center font-medium text-hedgr-primary underline underline-offset-2\">Back to Home</a>\n    </main>;\n  }\n  if (restoredReceipt && status !== 'FAILED') {\n    return <main className={`mx-auto max-w-xl p-6 ${finish.choice}`} onClickCapture={acknowledgeReceipt}>\n      {status === 'CONFIRMED' ? confirmationReceipt : <section data-testid=\"withdraw-status-region\" data-status={activeStatus?.publicStatus}>\n        <p data-testid=\"withdraw-status-title\">{activeStatus?.title}</p>\n        <p data-testid=\"withdraw-status-description\">{activeStatus?.description}</p>\n        <p data-testid=\"withdraw-status-disclosure\">{activeStatus?.disclosure}</p>\n      </section>}\n    </main>;\n  }\n\n  if (balanceError) {\n    return (\n"
+    ],
+    [
+      "  }\n\n  return (\n    <main className={`mx-auto max-w-xl p-6 ${finish.choice}`}>\n      <h1 className=\"text-2xl font-semibold\">Withdraw</h1>\n      {reviewSeamActive ? (\n        <TxReviewSimulatorBanner data-testid=\"withdraw-tx-review-simulator-banner\" />\n",
+      "  }\n\n  return (\n    <main className={`mx-auto max-w-xl p-6 ${finish.choice}`} onClickCapture={acknowledgeReceipt}>\n      <h1 className=\"text-2xl font-semibold\">Withdraw</h1>\n      {reviewSeamActive ? (\n        <TxReviewSimulatorBanner data-testid=\"withdraw-tx-review-simulator-banner\" />\n"
+    ],
+    [
+      "        {status === 'PENDING' ? 'Processing\u2026' : 'Confirm'}\n      </button>\n      {status === 'CONFIRMED' && productSimulationActive ? (\n        <div className=\"space-y-4\" data-testid=\"withdraw-status-region\" data-status={activeStatus?.publicStatus}>\n          <ReceiptCard\n            headline={`You took $${usd.toFixed(2)} out of your simulated balance`}\n            headlineTestId=\"withdraw-status-title\"\n            time={formatRecordedTime(recordedAt ?? Date.now())}\n            rows={[\n              ...(rate !== null ? [{ label: 'Amount', value: `${quote} ${(usd * rate).toFixed(2)}` }] : []),\n              { label: 'Shown as', value: `\u2212$${usd.toFixed(2)}` },\n              ...(syntheticJourneyActive && rate !== null ? [{ label: 'Example rate', value: `1 USD = ${rate.toFixed(2)} ${quote}` }] : []),\n              ...(remainingAfterWithdrawal !== null ? [{ label: 'Balance now ', value: <span data-testid=\"withdraw-balance-reconciliation\"><b>${remainingAfterWithdrawal.toFixed(2)}</b></span> }] : []),\n              { label: 'Real money moved', value: 'None' },\n            ]}\n          />\n          <ActionDock\n            title=\"Check the evidence\"\n            why=\"Activity lists both entries and the balance after each one.\"\n            primary={{ label: 'Review Activity', href: syntheticJourneyLinkContext ? getSyntheticJourneyHref('/activity') : '/activity' }}\n            secondary={{ label: 'Back to your position', href: syntheticJourneyLinkContext ? getSyntheticJourneyHref('/dashboard') : '/dashboard' }}\n          />\n        </div>\n      ) : activeStatus && activeStatusPresentation && (\n        <section\n          data-testid=\"withdraw-status-region\"\n",
+      "        {status === 'PENDING' ? 'Processing\u2026' : 'Confirm'}\n      </button>\n      {status === 'CONFIRMED' && productSimulationActive ? (\n        confirmationReceipt\n      ) : activeStatus && activeStatusPresentation && (\n        <section\n          data-testid=\"withdraw-status-region\"\n"
+    ]
+  ]
+};
+const QOL_SOURCE_BASE: Record<string, string> = {
+  "app/(app)/dashboard/page.tsx": "55f4fa8f7c618cf07e69ae990112bb5f428a7d4b440c4340e1fcd2b03350ea03",
+  "app/(app)/withdraw/page.tsx": "78cd6abcbf6b375769783bc4da819bf9ae9e779235df14764fbd66370668c3dd"
+};
+function qolPreRuntime(path: string, value: string): string {
+  if (!QOL_SOURCE_EDITS[path]) return value;
+  for (const [old, replacement] of [...QOL_SOURCE_EDITS[path]].reverse()) {
+    expect(value.split(replacement), path).toHaveLength(2);
+    value = value.replace(replacement, () => old);
+  }
+  expect(s18Digest(value), path).toBe(QOL_SOURCE_BASE[path]);
   return value;
 }

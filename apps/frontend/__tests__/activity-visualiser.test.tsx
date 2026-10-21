@@ -37,17 +37,17 @@ test('V7 tap-focus-reveal-accessible and V6 rendered label-flip-on-collision', (
   const chart = screen.getByTestId('example-line-chart');
   expect(chart.closest('[aria-hidden="true"]')).toBeNull();
   const dots = within(chart).getAllByTestId('chart-event-dot'); expect(dots).toHaveLength(2);
-  for (const dot of dots) { expect(dot.tagName).toBe('BUTTON'); expect(dot.getAttribute('aria-controls')).toBe(screen.getByTestId('chart-event-list').id); expect(dot.closest('[aria-hidden="true"]')).toBeNull(); }
-  fireEvent.focus(dots[1]);
+  for (const dot of dots) { expect(dot.tagName).toBe('SPAN'); expect(dot.getAttribute('aria-hidden')).toBe('true'); }
+  fireEvent.click(screen.getByRole('button', { name: 'All changes' }));
   expect(screen.getByRole('button', { name: 'All changes' }).getAttribute('aria-expanded')).toBe('true');
   expect(screen.getByTestId('chart-event-list').className).not.toMatch(/sr-only/);
-  expect(within(screen.getByTestId('chart-event-list')).getAllByRole('listitem').map(n => n.textContent)).toEqual(['First deposit +$500.00 · 8 Oct', 'Withdrawal −$20.00 · 9 Oct']);
+  expect(within(screen.getByTestId('chart-event-list')).getAllByRole('listitem').map(n => n.textContent)).toEqual(['First deposit · 8 Oct · +$500.00', 'Withdrawal · 9 Oct · −$20.00']);
   expect(source('app/(app)/dashboard/synthetic-home.module.css')).toMatch(/visualiserDot:focus-visible/);
 });
 test('V8 last-visit-own-sim-only and V9 no-axis-dates-when-event-spaced', () => {
   const view = render(<PositionLine entries={entries} lastVisit={FIRST + 1} visualise heroAmount={480} />);
-  expect(screen.getByTestId('dashboard-position-line-visit').textContent).toBe('Your last visit');
-  expect(screen.getByTestId('dashboard-position-line-visit').className).toMatch(/visualiserVisit/);
+  expect(screen.queryByTestId('dashboard-position-line-visit')).toBeNull();
+  expect(view.container.querySelector('[class*=visualiserVisitLine]')).toBeNull();
   expect(view.container.querySelectorAll('[data-axis], .axis')).toHaveLength(0);
   view.unmount(); render(<PositionLine entries={entries} lastVisit={null} visualise heroAmount={480} />);
   expect(screen.queryByTestId('dashboard-position-line-visit')).toBeNull();
@@ -65,7 +65,8 @@ test('V5 merged dots retain every event and V6 chart collision flips below', () 
   render(<PositionLine entries={many} lastVisit={null} visualise heroAmount={40} />);
   const dots = screen.getAllByTestId('chart-event-dot');
   expect(dots.length).toBeLessThan(many.length);
-  expect(dots.some(dot => /\d+ changes on 8 Oct/.test(dot.getAttribute('aria-label') ?? ''))).toBe(true);
+  expect(dots.every(dot => dot.getAttribute('aria-hidden') === 'true')).toBe(true);
+  fireEvent.click(screen.getByRole('button', { name: 'All changes' }));
   expect(within(screen.getByTestId('chart-event-list')).getAllByRole('listitem')).toHaveLength(40);
 });
 test('V18 own-sim-empty-state-exact and sole first deposit hero deferral', () => {
@@ -73,8 +74,8 @@ test('V18 own-sim-empty-state-exact and sole first deposit hero deferral', () =>
   expect(screen.getByTestId('dashboard-position-line').textContent).toBe('No deposits yet. Your first one will start this chart.');
   view.unmount(); render(<PositionLine entries={[entries[0]]} lastVisit={null} visualise heroAmount={500} />);
   fireEvent.click(screen.getByRole('button', { name: 'All changes' }));
-  expect(screen.getByTestId('chart-event-list').textContent).toBe('First deposit · 8 Oct · shown above');
-  expect(screen.getByRole('button', { name: 'First deposit, 8 Oct' }).textContent).toBe('');
+  expect(screen.getByTestId('chart-event-list').textContent).toBe('First deposit · 8 Oct · +$500.00');
+  expect(screen.getByTestId('chart-event-list').getAttribute('aria-label')).toBe('All changes');
 });
 test('V10 say-it-once-incl-what-changed, V11 caption-and-rate-27, V13 no-arrow-line-ticket-b-copy-locked', async () => {
   for (const visit of [null, FIRST + 1, FIRST - 1, NEXT + 1]) {
@@ -86,6 +87,7 @@ test('V10 say-it-once-incl-what-changed, V11 caption-and-rate-27, V13 no-arrow-l
     expect(screen.getByTestId('usd-balance').textContent).toBe('$480.00');
     fireEvent.click(screen.getByRole('button', { name: 'All changes' }));
     const main = view.container.querySelector('main')!.cloneNode(true) as HTMLElement;
+    main.querySelectorAll('[data-testid="chart-event-list"] [aria-hidden="true"]').forEach(n => n.removeAttribute('aria-hidden'));
     main.querySelectorAll('[aria-hidden="true"], .sr-only, details:not([open]), dialog:not([open])').forEach(n => n.remove());
     expect(main.textContent!.split('$20.00').length - 1).toBe(1); expect(main.textContent!.split('−$20.00').length - 1).toBe(1);
     expect(screen.getByTestId('dashboard-current-status').textContent).not.toMatch(/\$|→/);

@@ -27,7 +27,7 @@ test('HOME-SOFTHALO-RATESLIDER-BUNDLE-001 AC1',()=>{
  render(<ExampleLineChart mode="step" series={[{at:'2026-06-12T00:00:00Z',value:500,currency:'USD'},{at:'2026-08-14T00:00:00Z',value:800,currency:'USD'}]} events={[]} example/>);
  const chart=screen.getByTestId('example-line-chart');const wash=chart.querySelector('[data-chart-wash]')!;
  expect(wash.getAttribute('d')).toMatch(/^M .*H .*V .* V 100 H .* Z$/);expect(chart.querySelectorAll('[data-chart-wash]')).toHaveLength(1);
- const latest=chart.querySelector('[data-chart-latest]')!;expect(latest.getAttribute('aria-hidden')).toBe('true');expect(latest.textContent).toBe('');expect(chart.querySelectorAll('[data-chart-latest]')).toHaveLength(1);
+ expect(chart.querySelectorAll('[data-chart-selected], [data-chart-latest]')).toHaveLength(0);
  const css=source('app/(app)/dashboard/synthetic-home.module.css');expect(css).toContain('height: 10rem');expect(css).toContain('@media (min-width: 64rem) { .visualiserPlot { height: 180px; } }');expect(css).toContain('background: #B4846C');
  expect(within(chart).getByRole('button',{name:'All changes · example dates'}).getAttribute('aria-controls')).toBe(screen.getByTestId('chart-event-list').id);
  expect(chart.querySelector('[data-testid="dashboard-position-line-visit"]')).toBeNull();

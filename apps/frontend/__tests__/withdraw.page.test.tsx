@@ -794,13 +794,13 @@ describe('RELEASE-GATE-FIX-003 continuity', () => {
     vi.mocked(useBalance).mockReturnValue({ total: available, available, pending: 0, currency: 'USD', asOf: 1, isLoading: false, error: null, refresh: vi.fn() });
     vi.mocked(useLatestFx).mockReturnValue({ status, data: { pair: 'USDZMW', rate: 20, ts: 1 }, retry: vi.fn() });
     render(<WithdrawPage />); await act(async () => { await vi.advanceTimersByTimeAsync(350); });
-    expect(screen.getByTestId('withdraw-market-data-continuity').textContent).toContain('You are still on Withdraw. Your simulated balance stays visible.');
+    expect(screen.getByText("This example has no rate set, so the local amount and Confirm aren't available.")).toBeDefined();
+    expect(screen.queryByTestId('withdraw-market-data-continuity')).toBeNull();
     expect(screen.queryByTestId('withdraw-fx-block')).toBeNull();
-    if (available === 0) expect(screen.getByTestId('withdraw-no-funds')).toBeTruthy();
-    else {
-      fireEvent.change(screen.getByTestId('withdraw-amount'), { target: { value: '1' } });
-      expect((screen.getByRole('button', { name: 'Confirm' }) as HTMLButtonElement).disabled).toBe(true);
-      expect(screen.getByTestId('withdraw-local-estimate').textContent).toBe('');
-    }
+    expect(screen.queryByTestId('withdraw-no-funds')).toBeNull();
+    expect(screen.queryByTestId('withdraw-amount')).toBeNull();
+    expect(screen.queryByTestId('withdraw-local-estimate')).toBeNull();
+    expect(screen.queryByRole('button', { name: 'Confirm' })).toBeNull();
+    expect(screen.getByRole('link', { name: 'Back to Home' }).getAttribute('href')).toBe('/dashboard-synthetic-journey');
   });
 });
