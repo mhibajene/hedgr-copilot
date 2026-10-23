@@ -1,6 +1,9 @@
 {
   "name": "hedgr-copilot",
   "private": true,
+  "engines": {
+    "node": ">=24.22.1 <25"
+  },
   "packageManager": "pnpm@9.12.0",
   "workspaces": [
     "apps/*",
@@ -23,7 +26,6 @@
     "bridge:snapshots:check": "node scripts/bridge/refresh-snapshots.mjs --check",
     "bridge:snapshots:test": "node --test scripts/bridge/*.test.mjs scripts/rap/tests/*.test.mjs",
     "dev:cli": "doppler run -- pnpm --filter @hedgr/frontend dev",
-    "dev:docker": "doppler run -- docker compose up --build frontend",
     "ci:guard:versions": "node ./scripts/ci/guard-no-latest.mjs",
     "changeset": "changeset",
     "version-packages": "changeset version && pnpm -w install"

@@ -12,9 +12,8 @@ Hedgr Copilot is a monorepo for Hedgr's developer tooling and web app surfaces. 
 ```
 
 ## Requirements
-- Node 20 with **Corepack** (pnpm managed via Corepack)
+- Node 24.22.1 with **Corepack** (pnpm managed via Corepack)
 - **Doppler** CLI (source of truth for env/secrets)
-- Docker (optional, for `dev:docker`)
 
 ### Doppler setup (once)
 ```bash
@@ -27,7 +26,6 @@ doppler setup -p hedgr-copilot -c dev_config_dev
 ### Quick scripts
 ```bash
 pnpm run dev:cli       # run frontend (Doppler-provided env)
-pnpm run dev:docker    # run via docker compose (frontend)
 pnpm run validate      # test + typecheck + lint for the whole workspace
 ```
 
@@ -185,10 +183,9 @@ For exact doctrine, see:
 
 ## Requirements
 
-- Node 20 with **Corepack**
+- Node 24.22.1 with **Corepack**
 - **pnpm** via Corepack
 - **Doppler CLI** as the canonical env / secrets source
-- Docker (optional, for local container workflows)
 
 ### Doppler setup (once)
 
@@ -205,7 +202,6 @@ doppler setup -p hedgr-copilot -c dev_config_dev
 
 ```bash
 pnpm run dev:cli       # run app surfaces with Doppler-provided env
-pnpm run dev:docker    # run via docker compose
 pnpm run validate      # test + typecheck + lint for the whole workspace
 ```
 

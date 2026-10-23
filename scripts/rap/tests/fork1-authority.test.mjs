@@ -88,6 +88,7 @@ test("Fork 1 retains the standing AGENTS execution contract without dated overri
   assert.match(registered, /This topology describes functional separation only\. It creates no sequencing, approval, handoff, task-activation or execution authority\./);
   assert.match(after, /All agent outputs are non-authoritative by default unless and until absorbed into the governed repo chain under the applicable authority\./);
   const normalize = (text) => text.slice(text.lastIndexOf("## 1) Purpose"))
+    .replace("The repo requires Node 24.22.1 (pinned in `.nvmrc`). Use `nvm use 24.22.1` before running any Node/pnpm commands. The VM default may be Node 22; always switch first.", "The repo requires Node 20 (pinned in `.nvmrc`). Use `nvm use 20` before running any Node/pnpm commands. The VM default may be Node 22; always switch first.")
     .replace(/Current parallelism posture:[\s\S]*?(?=### Green Lane operator rules)/, "")
     .replace(/\n- \*\*TDD standing posture for Engine and Home runtime §7a briefs \(binding; §346\):[^\n]+/, "")
     .replace(/\n- Smallest durable change, then prove the real result:[^\n]+/, "")
