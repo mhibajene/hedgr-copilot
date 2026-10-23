@@ -927,7 +927,7 @@ Set these as env vars when launching the frontend dev server.
 
 ### Node version
 
-The repo requires Node 20 (pinned in `.nvmrc`). Use `nvm use 20` before running any Node/pnpm commands. The VM default may be Node 22; always switch first.
+The repo requires Node 24.22.1 (pinned in `.nvmrc`). Use `nvm use 24.22.1` before running any Node/pnpm commands. The VM default may be Node 22; always switch first.
 
 ### pnpm setup
 
