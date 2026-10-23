@@ -13,7 +13,7 @@ import {
   buildProjection,
   generateFromGit,
   serializeProjection
-} from "../scripts/generate-repo-authority-projection.mjs";
+} from "../generate-repo-authority-projection.mjs";
 
 const REPO_ROOT = new URL("../../../", import.meta.url);
 const SOURCE_COMMIT = "93c75ed1b2c4d5e6f708192a3b4c5d6e7f8091ab";
@@ -151,7 +151,7 @@ test("revision identifiers fail closed unless they are full lowercase git SHAs",
 
 test("generator implementation contains no discovery or external retrieval", async () => {
   const generator = await readFile(
-    new URL("../scripts/generate-repo-authority-projection.mjs", import.meta.url),
+    new URL("../generate-repo-authority-projection.mjs", import.meta.url),
     "utf8"
   );
   assert.doesNotMatch(generator, /\breaddir\b|\bglob\b|\bfetch\b|https?:\/\//i);
@@ -245,7 +245,7 @@ test("unclassified prose is not guessed into a non-blocking lag classification",
 });
 
 const execute = promisify(execFileCallback);
-const GENERATOR_PATH = "apps/bridge-worker/scripts/generate-repo-authority-projection.mjs";
+const GENERATOR_PATH = "scripts/rap/generate-repo-authority-projection.mjs";
 
 async function gitFixture(t, sources) {
   const repoRoot = await realpath(await mkdtemp(path.join(tmpdir(), "hedgr-legibility-")));
@@ -257,8 +257,8 @@ async function gitFixture(t, sources) {
   // Only the generator's existing contract dependencies are copied into the disposable repo.
   for (const file of [
     GENERATOR_PATH,
-    "apps/bridge-worker/contracts/phase0/validate.mjs",
-    "apps/bridge-worker/contracts/phase0/phase0-policy.json"
+    "scripts/rap/contracts/phase0/validate.mjs",
+    "scripts/rap/contracts/phase0/phase0-policy.json"
   ]) {
     const destination = path.join(repoRoot, file);
     await mkdir(path.dirname(destination), { recursive: true });

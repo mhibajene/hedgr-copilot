@@ -12,7 +12,7 @@ import {
   OUTPUT_PATH,
   serializeProjection,
   SOURCE_DEFINITIONS
-} from "../../apps/bridge-worker/scripts/generate-repo-authority-projection.mjs";
+} from "../rap/generate-repo-authority-projection.mjs";
 
 const REPO_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
 const FULL_SHA = /^[0-9a-f]{40}$/;
