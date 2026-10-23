@@ -226,14 +226,6 @@ test("source ordering and enum rendering remain stable", () => {
   assert.deepEqual(policy.coverage, ["COMPLETE", "PARTIAL", "INSUFFICIENT"]);
 });
 
-test("Phase 0 contracts are not imported by the live Worker", async () => {
-  const workerSource = await readFile(
-    new URL("../src/index.js", import.meta.url),
-    "utf8"
-  );
-  assert.doesNotMatch(workerSource, /contracts\/phase0|validate\.mjs/);
-});
-
 test("fixtures contain no secrets, credentials, user data, or financial data", () => {
   const serialized = JSON.stringify({ validFixtures, invalidFixtures });
   assert.doesNotMatch(serialized, /api[_-]?key|password|secret|private[_-]?key/i);

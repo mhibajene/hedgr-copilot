@@ -7,7 +7,7 @@ import { fileURLToPath } from "node:url";
 import {
   classifyConflict,
   validateResponseEnvelope
-} from "../contracts/phase0/validate.mjs";
+} from "./contracts/phase0/validate.mjs";
 
 const execFile = promisify(execFileCallback);
 const FULL_GIT_SHA = /^[0-9a-f]{40}$/;
@@ -468,7 +468,7 @@ function parseArgs(args) {
 async function main() {
   const options = parseArgs(process.argv.slice(2));
   const scriptPath = fileURLToPath(import.meta.url);
-  const repoRoot = path.resolve(path.dirname(scriptPath), "../../..");
+  const repoRoot = path.resolve(path.dirname(scriptPath), "../..");
   const outputPath = path.join(repoRoot, OUTPUT_PATH);
 
   if (options.mode === "check" && !options.requestedCommit) {

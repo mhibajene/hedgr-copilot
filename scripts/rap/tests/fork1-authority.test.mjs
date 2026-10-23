@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
-import { buildProjection, SOURCE_DEFINITIONS } from "../scripts/generate-repo-authority-projection.mjs";
+import { buildProjection, SOURCE_DEFINITIONS } from "../generate-repo-authority-projection.mjs";
 
 const ROOT = new URL("../../../", import.meta.url);
 const read = (file) => readFile(new URL(file, ROOT), "utf8");
