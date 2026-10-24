@@ -1,7 +1,10 @@
 name: validate
 on:
   pull_request:
-    branches: [ "*" ]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   validate:
@@ -14,6 +17,32 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: CI-EFF-001 gitleaks scan
+        continue-on-error: true
+        env:
+          PR_BASE: ${{ github.event.pull_request.base.sha }}
+          PR_HEAD: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+          scan_dir=$(mktemp -d)
+          trap 'result=$?; printf "Gitleaks report-only diagnostic exit: %s\n" "$result" >> "$GITHUB_STEP_SUMMARY"; rm -rf "$scan_dir"' EXIT
+          test "$RUNNER_OS" = Linux
+          test "$RUNNER_ARCH" = X64
+          archive="$scan_dir/gitleaks_8.30.0_linux_x64.tar.gz"
+          curl --fail --location --retry 3 --silent --show-error \
+            https://github.com/gitleaks/gitleaks/releases/download/v8.30.0/gitleaks_8.30.0_linux_x64.tar.gz \
+            --output "$archive"
+          echo "79a3ab579b53f71efd634f3aaf7e04a0fa0cf206b7ed434638d1547a2470a66e  $archive" | sha256sum --check --strict
+          tar -xzf "$archive" -C "$scan_dir" gitleaks
+          git rev-parse --verify --end-of-options "${PR_BASE}^{commit}"
+          git rev-parse --verify --end-of-options "${PR_HEAD}^{commit}"
+          merge_base=$(git merge-base "$PR_BASE" "$PR_HEAD")
+          test -n "$merge_base"
+          "$scan_dir/gitleaks" git --no-banner --redact=100 \
+            --log-opts="$merge_base..$PR_HEAD" .
 
       - name: Setup Node from .nvmrc
         uses: actions/setup-node@v4
@@ -41,6 +70,11 @@ jobs:
 
       - name: Install dependencies (frozen)
         run: pnpm -r install --frozen-lockfile
+
+      - name: CI-EFF-001 hermetic tests
+        run: |
+          bash .github/scripts/ci-eff-001-docs-only.test.sh
+          node --test .github/scripts/ci-eff-001-verifier-condition.test.mjs
 
       - name: SEC-DEPS-001 dependency audit
         continue-on-error: true

@@ -1,13 +1,16 @@
 name: E2E smoke (@hedgr/frontend)
 on:
   pull_request:
-    branches: [ "*" ]
 
 # allow the workflow to write commit statuses
 permissions:
   contents: read
   statuses: write
   pull-requests: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   e2e:
@@ -26,6 +29,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       # bridge: mark required context as pending at start
       - name: Publish pending commit status (start)
@@ -44,12 +49,25 @@ jobs:
               target_url: `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`
             });
 
+      - name: Classify PR changes
+        id: classify
+        env:
+          PR_BASE: ${{ github.event.pull_request.base.sha }}
+          PR_HEAD: ${{ github.event.pull_request.head.sha }}
+        run: |
+          if ! bash .github/scripts/ci-eff-001-docs-only.sh "$PR_BASE" "$PR_HEAD" >> "$GITHUB_OUTPUT"; then
+            echo 'Classifier failed; selecting full E2E.' >&2
+            echo 'docs_only=false' >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Setup Node
+        if: ${{ steps.classify.outputs.docs_only != 'true' }}
         uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
 
       - name: Enable Corepack & install pinned pnpm
+        if: ${{ steps.classify.outputs.docs_only != 'true' }}
         run: |
           corepack enable
           corepack install
@@ -57,10 +75,12 @@ jobs:
           pnpm -v
 
       - name: Compute pnpm store path
+        if: ${{ steps.classify.outputs.docs_only != 'true' }}
         id: pnpm_store
         run: echo "path=$(pnpm store path --silent)" >> "$GITHUB_OUTPUT"
 
       - name: Cache pnpm store
+        if: ${{ steps.classify.outputs.docs_only != 'true' }}
         uses: actions/cache@v4
         with:
           path: ${{ steps.pnpm_store.outputs.path }}
@@ -69,41 +89,55 @@ jobs:
             ${{ runner.os }}-pnpm-
 
       - name: Install dependencies (frozen)
+        if: ${{ steps.classify.outputs.docs_only != 'true' }}
         run: pnpm -r install --frozen-lockfile
 
-      - name: Trust check (environment safety)
-        run: pnpm -w trust:check
-
-      - name: Typecheck (workspace)
-        run: pnpm -w typecheck
-
-      - name: Lint (workspace)
-        run: pnpm -w lint
-
-      - name: Unit tests
-        run: pnpm -w test
-
       - name: Build frontend
+        if: ${{ steps.classify.outputs.docs_only != 'true' }}
         run: pnpm --filter @hedgr/frontend run build
         env:
           NEXT_PUBLIC_FX_MODE: stub
           NEXT_PUBLIC_API_BASE_URL: http://localhost:${{ env.BACKEND_PORT }}
 
       - name: Setup Python
+        if: ${{ steps.classify.outputs.docs_only != 'true' }}
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
           cache: 'pip'
 
       - name: Install backend (editable, with test extras)
+        if: ${{ steps.classify.outputs.docs_only != 'true' }}
         run: |
           python -m pip install --upgrade pip
           pip install -e "apps/backend[test]"
 
+      - name: Resolve Playwright version
+        if: ${{ steps.classify.outputs.docs_only != 'true' }}
+        id: playwright_version
+        run: |
+          version=$(node -p "require('./apps/frontend/node_modules/@playwright/test/package.json').version")
+          test "$version" = '1.55.1'
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+
+      - name: Cache Playwright
+        if: ${{ steps.classify.outputs.docs_only != 'true' }}
+        id: playwright_cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-ubuntu-24.04-${{ runner.os }}-${{ runner.arch }}-${{ steps.playwright_version.outputs.version }}
+
+      - name: Install Playwright system dependencies
+        if: ${{ steps.classify.outputs.docs_only != 'true' && steps.playwright_cache.outputs.cache-hit == 'true' }}
+        run: pnpm --filter @hedgr/frontend exec playwright install-deps chromium
+
       - name: Install Playwright
-        run: pnpm --filter @hedgr/frontend exec playwright install --with-deps
+        if: ${{ steps.classify.outputs.docs_only != 'true' && steps.playwright_cache.outputs.cache-hit != 'true' }}
+        run: pnpm --filter @hedgr/frontend exec playwright install --with-deps chromium
 
       - name: Start stub backend (STUB_MODE)
+        if: ${{ steps.classify.outputs.docs_only != 'true' }}
         run: |
           set -euo pipefail
           : > apps/backend/backend.log
@@ -116,6 +150,7 @@ jobs:
           PYTHONUNBUFFERED: "1"
 
       - name: Wait for backend readiness (/v1/health)
+        if: ${{ steps.classify.outputs.docs_only != 'true' }}
         run: |
           set -euo pipefail
           url="http://localhost:${BACKEND_PORT}/v1/health"
@@ -133,6 +168,7 @@ jobs:
           exit 1
 
       - name: Run E2E tests
+        if: ${{ steps.classify.outputs.docs_only != 'true' }}
         run: pnpm --filter @hedgr/frontend run e2e:ci
         env:
           NEXT_PUBLIC_FX_MODE: stub
@@ -147,9 +183,26 @@ jobs:
           if-no-files-found: warn
           retention-days: 7
 
+      - name: Report E2E status (docs-only)
+        if: ${{ success() && steps.classify.outputs.docs_only == 'true' }}
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const sha = context.payload.pull_request?.head.sha ?? context.sha;
+            await github.rest.repos.createCommitStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              sha,
+              state: 'success',
+              context: 'E2E smoke (@hedgr/frontend)',
+              description: 'SKIPPED (docs-only, E2E not executed) CI-EFF-001',
+              target_url: `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`
+            });
+
       # bridge: set required context to success/failure to satisfy branch protection
       - name: Report E2E status (success)
-        if: ${{ success() }}
+        if: ${{ success() && steps.classify.outputs.docs_only != 'true' }}
         uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}

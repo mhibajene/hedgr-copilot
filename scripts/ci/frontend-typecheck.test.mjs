@@ -124,7 +124,7 @@ test('OPS typecheck remains on validate and hosted CI paths', () => {
   const workspace = json(join(root, 'package.json')).scripts;
   assert.equal(workspace.typecheck, 'pnpm -r --if-present run typecheck');
   assert.ok(workspace.validate.split(' && ').includes('pnpm -w typecheck'));
-  for (const workflow of ['validate.yml', 'ci.yml', 'e2e-smoke.yml']) {
+  for (const workflow of ['validate.yml', 'ci.yml']) {
     assert.match(read(join(root, '.github/workflows', workflow)), /name: Typecheck \(workspace\)\s+run: pnpm -w typecheck/);
   }
 });

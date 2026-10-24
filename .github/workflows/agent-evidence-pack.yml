@@ -6,6 +6,10 @@ on:
 
 jobs:
   evidence-pack:
+    if: >-
+      contains(github.event.pull_request.labels.*.name, 'source:agent') &&
+      ((github.event.action != 'labeled' && github.event.action != 'unlabeled') ||
+       github.event.label.name == 'source:agent')
     runs-on: ubuntu-latest
     steps:
       - name: Check agent PR evidence pack
