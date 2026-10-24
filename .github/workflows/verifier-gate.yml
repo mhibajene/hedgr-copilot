@@ -21,7 +21,10 @@ permissions:
 jobs:
   bind-verifier-attestation:
     name: Bind verifier attestation
-    if: github.event_name == 'pull_request' || github.event.issue.pull_request
+    if: >-
+      github.event_name == 'pull_request' ||
+      (github.event.issue.pull_request &&
+       (github.event.action == 'edited' || contains(github.event.comment.body, 'Hedgr-Verifier:')))
     runs-on: ubuntu-latest
     steps:
       - name: Bind hedgr/verifier to current head
