@@ -2923,3 +2923,101 @@ Markers are text (`Same as before`, `New`). Colour or icon may reinforce a marke
 
 **Post-merge release-record reconciliation (2026-09-22):** PR #550 and its separate projection-only rebind PR #623 have merged with required checks. Replace their stale draft/pending references only in current release and sequencing summaries, while leaving the dated 2026-09-18 preparation text historical. Reconcile `apps/bridge-worker/tests/fork1-authority.test.mjs` only for that exact current §7 merged-state substitution; retain the immutable archive and complete projection/deny-by-default assertions. This records delivery provenance, not nested-ticket technical closeout or a new release, runtime or participant permission. **NO CROSS-LANE IMPACT.**
 
+
+**HISTORICAL / NON-OPERATIVE — OPS-GOV-STATUS-RESTRUCTURE-001 closeout relocation.** Source: `ded7f30808c70f1129e046302616c1d1ff2f87b0`. Original ranges: docs/ops/HEDGR_STATUS.md L1098–L1099; docs/ops/HEDGR_STATUS.md L1100–L1101; docs/ops/HEDGR_STATUS.md L1102–L1103; docs/ops/HEDGR_STATUS.md L1104–L1178. Current authority remains STATUS §7 / §7a and §441 under repo precedence.
+
+<!-- Source: docs/ops/HEDGR_STATUS.md L1098–L1099 @ ded7f30808c70f1129e046302616c1d1ff2f87b0 -->
+
+### OPS-GOV-STATUS-RESTRUCTURE-001 completed §7a source statement §440
+
+**Founder amendment (OPS-GOV-STATUS-RESTRUCTURE-001; §440; 2026-10-24):** Amendment 2 permits only the two stale fixtures in `scripts/bridge/rap-provenance-rebind.test.mjs`, exactly by proposal SHA-256 `92052e2329843b199a29ea08957cf6262c42d6f5b8c32d17080ac49e33cce4f0`. The metadata fixture matches any `Last updated: YYYY-MM-DD` line and still asserts a change; the authority fixture mutates a standing-contract sentence. No other line changes; test names, intent and assertions stay. The §7 Fork 2 implementation-boundary paragraph stays current under the existing allowlist. Every other §438/§439/§6f.30/§7a term stands. Source merge, separate independently verified sole-JSON permanent-main §364 rebind and fetched-main RAP PASS precede the existing Implementer resuming. No restructure or precedent beyond this ticket. NO CROSS-LANE IMPACT.
+
+<!-- Source: docs/ops/HEDGR_STATUS.md L1100–L1101 @ ded7f30808c70f1129e046302616c1d1ff2f87b0 -->
+
+### OPS-GOV-STATUS-RESTRUCTURE-001 completed §7a source statement §439
+
+**Founder amendment (OPS-GOV-STATUS-RESTRUCTURE-001; §439; 2026-10-24):** Amendment 1 corrects only live §7a R0 to compare the effective activation rebind `11ffe8964856129d53bb420f90d847c2346fead5` with `B_exec`, A5 to use 100 KB = 102,400 B and the 383,394 B same-basis common-startup baseline, and the spec/brief provenance attributed in §438. Every other §438/§6f.30/§7a term stands unchanged. Source merge, separate independently verified sole-JSON permanent-main §364 rebind and fetched-main RAP PASS precede the existing Implementer resuming. The changed-set stop remains. No restructure or precedent beyond this ticket. NO CROSS-LANE IMPACT.
+
+<!-- Source: docs/ops/HEDGR_STATUS.md L1102–L1103 @ ded7f30808c70f1129e046302616c1d1ff2f87b0 -->
+
+### OPS-GOV-STATUS-RESTRUCTURE-001 completed §7a source statement §438
+
+**Founder activation (OPS-GOV-STATUS-RESTRUCTURE-001; §438; 2026-10-24):** Only this finite non-lane governance/documentation ticket activates under §6f.30, after source merge, a separate independently verified sole-JSON permanent-main §364 rebind and a fetched-main RAP PASS. The ticket restructures `AGENTS.md` and `docs/ops/HEDGR_STATUS.md`: AGENTS keeps the standing execution contract; STATUS keeps current authority, with §7/§7a as the recognised entry point; complete and superseded material moves verbatim, headings included, to `docs/ops/history/**`, with a relocation index outside the default startup path. Live §7a fixes the exact scope, allowlist, acceptance and stops. The restructure changes no authority except as recorded in D1 and D2 below. Bounded overlap with SEC-DEPS-002 permits only its remaining conditional 27 Oct D3 and governed closeout. RESEARCH-RELEASE-001's §437 posture, both parents CLASS-A-VAL-002 and SE-REASON-001, SME held and the §409 limits remain. Steward records the effective SHA and stops under §363 without implementation. NO CROSS-LANE IMPACT.
+
+<!-- Source: docs/ops/HEDGR_STATUS.md L1104–L1178 @ ded7f30808c70f1129e046302616c1d1ff2f87b0 -->
+
+### Finite non-lane governance/documentation — `OPS-GOV-STATUS-RESTRUCTURE-001` (§438; §6f.30; expires on closeout)
+
+**Pre-execution baseline refresh (R0; Amendment 1, §439):** The Implementer fetches main and records `B_exec`, then diffs `11ffe8964856129d53bb420f90d847c2346fead5..B_exec` for AGENTS and STATUS. Every changed record or §7/§7a change is reclassified before any move. The Implementer re-measures startup reading and records `B_exec` in the PR body, history banners and index. If the active, held or permitted set changed, the Implementer stops. The effective activation rebind is `11ffe8964856129d53bb420f90d847c2346fead5`; it includes the §438 activation changes to AGENTS and STATUS. Their identity to pre-activation `11f5f42792e93d01420add9d10afaee6a63fa6ce` is not asserted; any later changes are covered by this comparison and reclassification.
+
+**Scope:**
+1. AGENTS becomes the standing contract. Its 126 dated paragraphs move verbatim to `docs/ops/history/AGENTS_DATED_RECORDS.md`. The operating card and the "Current parallelism posture" line stay.
+2. STATUS §7 becomes the current-state table (≤6,500 B). §7a holds live briefs and continuing statements only. The §437 text, verbatim, becomes the RESEARCH-RELEASE-001 continuing statement, together with D1.
+3. Continuing numbered records stay verbatim in STATUS: §207, §213, §217, §219, §233, §234, §278, §286, §288, §290, §291, §292, §293, §303, §326, §331, §336, §339, §343, §346, §347, §352, §353, §354, §364, §410, §421 and §437. The same applies to §6b, §6d, §6e, §6f.22, §6f.27 and §6f.30.
+4. Complete and superseded material moves verbatim, headings included, to `docs/ops/history/HEDGR_STATUS_RECORDS_*.md`, under a non-authority banner with source SHA and line ranges. This includes the BRIDGE-MCP-001 blocks under D2.
+5. `docs/ops/history/RELOCATION_INDEX.md` is added and is not part of the startup path.
+6. The reading procedure (contract → current state → exact task requirements → history only when relevant) and the maintenance rule (closeout PRs move their own completed material; no standalone admin PRs) are written into AGENTS.
+7. `Last updated` metadata is corrected in AGENTS and STATUS.
+
+**Exact implementation allowlist (edit only as needed):**
+- `AGENTS.md`
+- `docs/ops/HEDGR_STATUS.md`
+- `docs/ops/history/AGENTS_DATED_RECORDS.md` (new)
+- `docs/ops/history/HEDGR_STATUS_RECORDS_*.md` (new)
+- `docs/ops/history/RELOCATION_INDEX.md` (new)
+- `scripts/bridge/rap-provenance-rebind.test.mjs` (Amendment 2, §440: only the metadata-only fixture at baseline L105–118 and the authority-edit fixture at baseline L138–143, exactly by proposal SHA-256 `92052e2329843b199a29ea08957cf6262c42d6f5b8c32d17080ac49e33cce4f0`; no other line changes; every test keeps its name, intent and assertions)
+- `scripts/rap/tests/status-record-order.test.mjs`
+- `scripts/rap/tests/fork1-authority.test.mjs`
+- `scripts/rap/tests/agents-operating-card.test.mjs`
+- `scripts/rap/tests/history-not-mandatory.test.mjs` (new executable guard, Q-S5)
+- `docs/ops/governance/mvp/HEDGR_STABILITY_INTERPRETATION_CONVERGENCE_PACKAGE.md` (anchor lines 8 and 411 only)
+- `docs/ops/stability-engine/research/HEDGR_PARTIAL_CAPITAL_WORKED_CASES.md` (anchor line 14 only)
+- `docs/ops/stability-engine/research/HEDGR_SCOPED_ENGINE_INTERPRETATION_INTERFACE_CANDIDATE.md` (anchor line 14 only)
+- Reading-order and history-path wording only, in mirrored pairs that keep parity: `.cursor/commands/{governance,propose-next-ticket,weekly-review,mvp-process-review}.md` and `.agents/skills/source-command-{governance,execution,closeout,propose-next-ticket,weekly-review,mvp-process-review,adversarial-review}/SKILL.md`
+- `docs/agents/skills/codex-{implementer,verifier,repo-steward}.md` (reading-order wording only)
+- `docs/ops/bridge/repo-authority-projection.json` (deterministic branch RAP, own commit)
+
+**Exclusions:**
+- `scripts/rap/generate-repo-authority-projection.mjs`; `scripts/rap/contracts/**` (manifest, policy and schemas stay at the four mandatory sources); `scripts/bridge/**` except only the two §440 fixtures in `scripts/bridge/rap-provenance-rebind.test.mjs` above (the dormant reader `scripts/bridge/rap-provenance-rebind.mjs` and every other line/path remain excluded); `.github/**`; `package.json`
+- `.cursorrules`, `.cursor/rules.md`
+- ADRs, doctrine, `docs/ops/runbook.md`, `docs/ops/governance/AGENTS_PRE_FORK_1.md`, `docs/ops/HEDGR_AUTHORITY_HISTORY_PRE_FORK_1.md`, dated reviews under `docs/ops/reviews/**`
+- All product and runtime code (`apps/**`, `packages/**`)
+- Branch protection and repository settings
+- Any rewording of moved or continuing records, renumbering or new authority beyond D1 and D2
+
+**Acceptance (A1–A10):**
+- **A1 Meaning preserved:** every active, held, permitted, excluded, dependency and stop item is mapped to a current source holding its complete wording.
+- **A1a Continuing terms byte-identical:** the §437 text, D1, the Home permission text and the LOCK COPY/term ban.
+- **A2 RAP equivalence:** `bridge:rap:check` PASS, and the projection `payload.fields` are semantically equal to `B_exec`.
+- **A3 History verbatim:** moved blocks are byte-identical, headings included, and each has one index row.
+- **A3a Anchors resolve:** the rewritten `:14` anchors (§287, §289) and the line 8/411 anchors (§301, §302) resolve, and the `:3` anchors (§288, §290) and §7 anchors still resolve.
+- **A4 Provenance:** banners and index rows cite `B_exec` and the original line ranges.
+- **A5 Startup reading (Amendment 1, §439):** same-basis common startup (`.cursorrules`, `.cursor/rules.md`, AGENTS, STATUS header–§5, §7, §8–§10, ADR index, ADRs 0013–0015) is ≤100 KB (100 KB = 102,400 B) at the final head, against 383,394 B at `11f5f42792e93d01420add9d10afaee6a63fa6ce`. The 1,192,271 B figure is that common-startup list plus the whole of §7a at the same SHA, retained as a reference figure only. Task-specific reading is reported separately.
+- **A6 Fresh-agent answer key:** SEC-DEPS-002, CLASS-A-VAL-002, a closed ticket, and no assigned ticket.
+- **A7 No mistaken authority:** history cannot be read as current authority.
+- **A8 Metadata:** `Last updated` corrected.
+- **A9 Process:** the activation and closeout gates above are followed.
+- **A10 Guard test:** the Q-S5 guard passes, and its negative fixture fails.
+
+**Stops:** Stop and return to the Founder/HedgrOps on any of the following:
+- the active, held or permitted set changed at `B_exec`;
+- any classification needs an inferred supersession;
+- a continuing rule would exist only in history;
+- §7 can't fit within 6,500 B without dropping operative pointers;
+- a generator, contract, workflow, runbook or other excluded-path change is needed;
+- a RAP `payload.fields` difference;
+- a byte mismatch in moved text;
+- a SEC-DEPS-002 same-file conflict;
+- a research-priority conflict;
+- any authority conflict (AGENTS §13).
+
+The target is never met by moving operative wording out.
+
+**Verification:** A separate Implementer is launched by Dex. An independent Verifier, distinct from the author, gives a PASS on the exact final head with a hosted E2E `run=`. Any later commit invalidates it. The required checks are `validate`, `E2E smoke (@hedgr/frontend)` and `hedgr/verifier`. Governed squash auto-merge follows.
+
+**§364 rebind:** This changes RAP-mandatory STATUS and AGENTS, and §7/§7a text, so it is an authority-effect record. The §364(A) deferral does not apply. After source merge, a **separate** independently verified sole-JSON permanent-main §364 rebind PR follows, with its own hosted gates, and then a fetched-main `bridge:rap:check` PASS. The same applies to the closeout.
+
+**Closeout:** A technical closeout record (next free §) cites the implementation PR and squash SHA, `B_exec`, the measured before/after reading figures, the A1–A10 results and the index location. It closes OPS-GOV-STATUS-RESTRUCTURE-001 and expires §6f.30 only after the closeout source merge, the separate sole-JSON §364 rebind and a fetched-main RAP PASS. No successor activates; the rebind redesign (Option 2) is a separate, later proposal.
+
+**Rollback:** One governed source revert, with occupancy reconciliation and a separate §364 rebind, restores the pre-restructure AGENTS/STATUS. History files are removed by the same revert, and D1/D2 are reverted only by a new Founder record. NO CROSS-LANE IMPACT.
+
