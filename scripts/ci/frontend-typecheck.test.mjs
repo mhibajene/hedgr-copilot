@@ -148,6 +148,12 @@ test('OPS verifier run URL is exact-head hosted E2E', () => {
   const runbook = read(join(root, 'docs/ops/runbook.md'));
   for (const result of ['PASS', 'FAIL']) assert.ok(runbook.includes(`Hedgr-Verifier: ${result} sha=<40-hex head sha> run=<exact-head hosted GitHub Actions E2E run URL>`));
   assert.match(runbook, /run=.*always the exact-head hosted GitHub Actions E2E run URL/);
-  assert.match(runbook, /confirm that run's head and successful E2E result before PASS/);
+  assert.match(runbook, /confirm that run's head and applicable E2E result before PASS/);
+  assert.match(runbook, /For a PR whose exact head the CI-EFF-001 classifier marks docs-only/);
+  assert.ok(runbook.includes('SKIPPED (docs-only, E2E not executed) CI-EFF-001'));
+  assert.match(runbook, /Verifier must independently confirm the diff is docs-only under the recorded rule/);
+  assert.match(runbook, /Every other PR, including any runtime, CI, test or script change and the CI-EFF-001 implementation PR itself, requires successful full exact-head hosted E2E/);
+  assert.match(runbook, /A SKIPPED result is never described as executed or passed E2E/);
+  assert.match(runbook, /docs-only exception takes practical effect only once the classifier is on main/);
   assert.match(runbook, /Immediately before posting, the Verifier re-reads the current PR head SHA and aborts without posting if it differs/);
 });
