@@ -4602,7 +4602,7 @@ This section does **not** authorize provider-specific implementation, legal reli
 
 **Founder authority / placement (§427):** Amendment 1 sequencing lock, 19 Oct 2026 22:16 AWST, expressly approved in the activation launch as the bounded §2 exception while RESEARCH-RELEASE-001 remains open and held at its invite step. Live §7/§7a name SEC-DEPS-002 as finite security support after completed FIX-003 §424 and passing §339 re-gate §425, before Founder invitations under §410. Base normalised SHA-256 `2aef1e0ddfaa60f77b68abf9e255727e099e9bedd322e00b4e90b333b1b829e2`; Amendment 1 normalised SHA-256 `045b42df01f8c541f11de1a0116455e83fd03e02dee29550f682bbf9d4f48ba9`. The amendment supersedes differing base terms. Private evidence remains outside committed records.
 
-**Authority class / exclusions:** One governed dependency batch and the later conditional D3 option-B switch only, within live §7a, and the §433 bridge removal/relocation, finite and expiring on SEC-DEPS-002 closeout. Source merge, separate independently verified permanent-main §364 rebind and fetched-main RAP PASS precede separate implementation. This is separate from research release, not a release gate, nested ticket, new lane, D-number or standing delegation. Research retains priority outside the locked order. V/E under §6f.22 and D-076 remain unchanged; G deferred. No concurrent lockfile work, app source/config/behaviour or test edit except the exact §428 three-regex exception, the enumerated §433 removal/relocation, Dependabot action limited to closing #1001 as superseded after that merge, external setting, required-check or protection change. No new standing exception is added; expired §6f.28 is not extended. The distinct SEC-NODE-001 coexistence is bounded only by §6f.29/§435 to the remaining conditional 27 Oct D3 and governed closeout; it grants no additional SEC-DEPS-002 scope.
+**Authority class / exclusions:** One governed dependency batch and the later conditional D3 option-B switch only, within live §7a, and the §433 bridge removal/relocation, finite and expiring on SEC-DEPS-002 closeout. Source merge, separate independently verified permanent-main §364 rebind and fetched-main RAP PASS precede separate implementation. This is separate from research release, not a release gate, nested ticket, new lane, D-number or standing delegation. Research retains priority outside the locked order. V/E under §6f.22 and D-076 remain unchanged; G deferred. No concurrent lockfile work, app source/config/behaviour or test edit except the exact §428 three-regex exception, the enumerated §433 removal/relocation, Dependabot action limited to closing #1001 as superseded after that merge, external setting, required-check or protection change. No new standing exception is added; expired §6f.28 is not extended. The distinct SEC-NODE-001 coexistence is bounded only by §6f.29/§435 to the remaining conditional 27 Oct D3 and governed closeout; it grants no additional SEC-DEPS-002 scope. The distinct OPS-GOV-STATUS-RESTRUCTURE-001 coexistence is bounded only by §6f.30/§438 to the remaining conditional 27 Oct D3 and governed closeout; it grants no additional SEC-DEPS-002 scope.
 
 **Expiry / stops / rollback:** Expires on SEC-DEPS-002 governed closeout after the D3 date/disposition and source/rebind/fetched-main RAP gates. No automatic switch, standing support or continuing permission follows. §7a supplies independent stops; conflicts outside the accepted order or scope/authority needs stop for Founder disposition. One governed runtime revert with source occupancy reconciliation and separate §364 rebind where applicable provides rollback. Revocation ends only this exception. Both parents open and all research/participant/SME holds retained. NO CROSS-LANE IMPACT.
 
@@ -4627,6 +4627,18 @@ This section does **not** authorize provider-specific implementation, legal reli
 **Bounded overlap:** SEC-NODE-001 may coexist with open SEC-DEPS-002 solely for that ticket's remaining conditional 27 Oct 2026 D3 PR (`validate.yml` audit step) and governed closeout. No concurrent lockfile work or same-file edits with D3 or closeout. SEC-NODE-001 leaves `validate.yml` untouched; its `.nvmrc` change affects that workflow indirectly, so each ticket retains separate exact-head CI evidence. Source records serialise on main. Research retains priority on resource or sequencing conflict; SEC-NODE-001 stops. Neither ticket inherits the other's permission, dates, audit condition, tests, evidence, stop disposition or closeout.
 
 **Independent stops / rollback / expiry:** Live §7a supplies the finite allowlist, acceptance and independent stops. Each ticket retains one governed implementation revert with source occupancy reconciliation and separate §364 rebind where applicable. Revocation ends only this exception. §6f.29 expires on SEC-NODE-001 independently verified closeout source merge, separate independently verified permanent-main §364 rebind and fetched-main RAP PASS; no continuing support or successor follows. Both parents open, RESEARCH-RELEASE-001 open, research unreleased, participant release paused, SME held and §409 limits retained. NO CROSS-LANE IMPACT.
+
+### 6f.30 Finite non-lane governance/documentation exception: `OPS-GOV-STATUS-RESTRUCTURE-001`
+
+**Founder authority / placement (§438):** One finite non-lane ticket, separate from research. It creates no new lane, nested ticket, D-number, release gate or standing delegation. Source merge, a separate independently verified sole-JSON permanent-main §364 rebind and a fetched-main RAP PASS establish activation. V/E under §6f.22 and D-076 remain unchanged; G is deferred.
+
+**Bounded overlap:** It may coexist with open SEC-DEPS-002 solely for that ticket's remaining conditional 27 Oct 2026 D3 PR and governed closeout.
+- No same-file edits with D3 or closeout. This ticket does not touch `validate.yml`, manifests or the lockfile.
+- Source records serialise on main. If a SEC-DEPS-002 record lands first, this ticket re-pins to the new `B_exec`, regenerates and re-verifies.
+- Research keeps priority on any conflict, and this ticket stops.
+- Neither ticket inherits the other's permission, tests, evidence or closeout.
+
+**Expiry:** This exception expires only on the ticket's independently verified technical closeout source merge, its separate sole-JSON §364 rebind and a fetched-main RAP PASS. No continuing support or successor permission follows.
 
 ## 6g. Green Lane Delegation Pilot envelope — retired historical record (ADR 0025 / `GOV-GREEN-001`)
 
@@ -4668,6 +4680,8 @@ This section does **not** authorize provider-specific implementation, legal reli
 ---
 
 ## 7. Current sequence and active status
+
+**Founder activation (OPS-GOV-STATUS-RESTRUCTURE-001; §438; 2026-10-24):** Only this finite non-lane governance/documentation ticket activates under §6f.30, after source merge, a separate independently verified sole-JSON permanent-main §364 rebind and a fetched-main RAP PASS. The ticket restructures `AGENTS.md` and `docs/ops/HEDGR_STATUS.md`: AGENTS keeps the standing execution contract; STATUS keeps current authority, with §7/§7a as the recognised entry point; complete and superseded material moves verbatim, headings included, to `docs/ops/history/**`, with a relocation index outside the default startup path. Live §7a fixes the exact scope, allowlist, acceptance and stops. The restructure changes no authority except as recorded in D1 and D2 below. Bounded overlap with SEC-DEPS-002 permits only its remaining conditional 27 Oct D3 and governed closeout. RESEARCH-RELEASE-001's §437 posture, both parents CLASS-A-VAL-002 and SE-REASON-001, SME held and the §409 limits remain. Steward records the effective SHA and stops under §363 without implementation. NO CROSS-LANE IMPACT.
 
 **RESEARCH-RELEASE-001 closeout (2026-10-24; §437):** Founder-confirmed invitations are recorded by receipt SHA-256 `41f0896060472832b38737baa0d637d995230f93ec9e2334f8e480b53e37a2a6`; confirmation recorded 23 Oct 2026 AWST, without an asserted send time, channel or count. Effective §434 gate-4 FIT/PASS and its source/rebind preceded the invite-ready handoff. Under §410 D3/D4/D7, research unreleased and participant release paused lift only for the named research route and authorised pool; SME remains held. Close only RESEARCH-RELEASE-001 after this source merge, separate independently verified sole-JSON permanent-main §364 rebind and fetched-main RAP PASS. Parents CLASS-A-VAL-002 and SE-REASON-001 remain open; no exit verdict or nested successor. Post-invite fixes remain carried by verdict checksum only, unactivated. SEC-DEPS-002 remains open solely for its conditional 27 Oct D3 and governed closeout; no operation on that ticket. §409 limits and TalkBack/fractional-ZMW actual speech INCOMPLETE, never PASS, remain. NO CROSS-LANE IMPACT.
 
@@ -4945,7 +4959,8 @@ Current active ticket status:
 - **Completed finite review support:** CODE-REVIEW-FIN-001 private register delivered 19 Oct 2026; §6f.24 expired on delivery. §419 closeout source merge, separate independently verified permanent-main §364 rebind and fetched-main RAP PASS record this expiry. No continuing review authority, lane, nested ticket, gate or standing delegation follows. §6f.23 remains expired; Vera retains only §405 advisory standing.
 - **Completed finite security support:** SEC-DEPS-001 under §418 closes and §6f.25 expires on source closeout merge, separate independently verified permanent-main §364 rebind and fetched-main RAP PASS. Runtime #960 consumed implementation permission. CODE-REVIEW-FIN-001/§6f.24 unchanged. RELEASE-GATE-FIX-003 is next and requires separate activation; none follows here.
 - **Finite non-lane security support:** SEC-DEPS-002 under §6f.27/§427, amended §428/§433; only the live §7a contract, effective on source/rebind/fetched-main RAP gates. Separate Implementer launch follows §363. Exception expires on governed closeout.
-- **Sequencing posture:** RESEARCH-RELEASE-001 closes under §437 after independently verified source merge, separate independently verified sole-JSON permanent-main §364 rebind and fetched-main RAP PASS. Founder-confirmed invitations are recorded by receipt checksum only; confirmation recorded 23 Oct 2026 AWST, actual send time, channel and count unspecified. Effective §434 gate-4 FIT/PASS at dc9c44a4 and its source #1013/rebind #1014 preceded the invite-ready handoff. Under §410 D3/D4/D7, research unreleased and participant release paused lift only for the named research route and authorised pool. Founder invitation, pause and withdrawal custody remains exclusive; SME remains held. Parents CLASS-A-VAL-002 and SE-REASON-001 remain open, with no exit verdict or active nested successor; E has no nested ticket and G stays deferred. §431 bounded VoiceOver PASS remains; actual TalkBack and fractional-ZMW speech remain INCOMPLETE, never PASS, under the existing Founder research-only non-blocking disposition. §409 and accepted navigation limitations remain. Post-invite fixes are carried only by verdict checksum, unactivated and not pre-staged; all other QoL and §387 deferred items remain queued only. SEC-DEPS-002 remains independently open solely for conditional 27 Oct 2026 D3 and governed closeout under unchanged §6f.27/§427/§428/§433. SEC-NODE-001 is closed under §436; §6f.29 expired with no continuing support, overlap or successor. QOL-BUNDLE-001 is closed under §432; §6f.28 expired. CI-RUNNER-PIN-001 is closed under §426; §6f.26 expired. SEC-DEPS-001 is closed under §418; CODE-REVIEW-FIN-001 delivered under §419; §6f.23/§6f.24/§6f.25 expired. The observability.md:30 dev:docker mention remains a separate unauthorised follow-up. No parent closure, Lane E/G activation, broader participant exposure or financial capability follows. NO CROSS-LANE IMPACT.
+- **Finite non-lane governance/documentation:** OPS-GOV-STATUS-RESTRUCTURE-001 under §6f.30/§438; only the live §7a contract, effective on source/rebind/fetched-main RAP gates. Steward records the effective SHA and stops under §363 without implementation. Exception expires on governed closeout.
+- **Sequencing posture:** RESEARCH-RELEASE-001 closes under §437 after independently verified source merge, separate independently verified sole-JSON permanent-main §364 rebind and fetched-main RAP PASS. Founder-confirmed invitations are recorded by receipt checksum only; confirmation recorded 23 Oct 2026 AWST, actual send time, channel and count unspecified. Effective §434 gate-4 FIT/PASS at dc9c44a4 and its source #1013/rebind #1014 preceded the invite-ready handoff. Under §410 D3/D4/D7, research unreleased and participant release paused lift only for the named research route and authorised pool. Founder invitation, pause and withdrawal custody remains exclusive; SME remains held. Parents CLASS-A-VAL-002 and SE-REASON-001 remain open, with no exit verdict or active nested successor; E has no nested ticket and G stays deferred. §431 bounded VoiceOver PASS remains; actual TalkBack and fractional-ZMW speech remain INCOMPLETE, never PASS. TalkBack and fractional-ZMW actual speech testing must close before the next research pass (§438 D1); this replaces the research-only non-blocking treatment for that next pass only. §409 and accepted navigation limitations remain. Post-invite fixes are carried only by verdict checksum, unactivated and not pre-staged; all other QoL and §387 deferred items remain queued only. SEC-DEPS-002 remains independently open solely for conditional 27 Oct 2026 D3 and governed closeout under unchanged §6f.27/§427/§428/§433. SEC-NODE-001 is closed under §436; §6f.29 expired with no continuing support, overlap or successor. OPS-GOV-STATUS-RESTRUCTURE-001 is the finite non-lane governance/documentation ticket under §6f.30/§438, effective only after source merge, separate independently verified sole-JSON permanent-main §364 rebind and fetched-main RAP PASS. Bounded overlap permits only remaining D3 and closeout, with no concurrent lockfile or same-file work, source records serialised on main and research priority. Steward records the effective SHA and stops under §363 without implementation. BRIDGE-MCP-001 is formally closed and retired by §438 D2. QOL-BUNDLE-001 is closed under §432; §6f.28 expired. CI-RUNNER-PIN-001 is closed under §426; §6f.26 expired. SEC-DEPS-001 is closed under §418; CODE-REVIEW-FIN-001 delivered under §419; §6f.23/§6f.24/§6f.25 expired. The observability.md:30 dev:docker mention remains a separate unauthorised follow-up. No parent closure, Lane E/G activation, broader participant exposure or financial capability follows. NO CROSS-LANE IMPACT.
 
 **Scope-first completion / interpretation (2026-09-20):** Verified PR #602 delivery consumes the finite synthetic Home amendment (§294). References to that amendment in the retained sequencing statement identify its bounded scope and history only; they grant no further runtime or refinement permission. Only remaining approved weekend instrument/verification, human rehearsal/timing and release duties remain unfinished. This completion record takes effect on permanent-main merge with a separate verified RAP rebind; publication/distribution remains paused and both parents stay open.
 
@@ -4978,9 +4993,89 @@ Current active ticket status:
 
 ---
 
-## 7a. Execution tickets: V/E parents open; RESEARCH-RELEASE-001 closeout under §437; no nested successor; SEC-DEPS-002 finite security support; SEC-NODE-001 closed under §436; Lane G deferred (Controlled Parallelism v22)
+## 7a. Execution tickets: V/E parents open; RESEARCH-RELEASE-001 closeout under §437; no nested successor; SEC-DEPS-002 finite security support; OPS-GOV-STATUS-RESTRUCTURE-001 finite governance/documentation under §6f.30; SEC-NODE-001 closed under §436; Lane G deferred (Controlled Parallelism v22)
+
+**Founder activation (OPS-GOV-STATUS-RESTRUCTURE-001; §438; 2026-10-24):** Only this finite non-lane governance/documentation ticket activates under §6f.30, after source merge, a separate independently verified sole-JSON permanent-main §364 rebind and a fetched-main RAP PASS. The ticket restructures `AGENTS.md` and `docs/ops/HEDGR_STATUS.md`: AGENTS keeps the standing execution contract; STATUS keeps current authority, with §7/§7a as the recognised entry point; complete and superseded material moves verbatim, headings included, to `docs/ops/history/**`, with a relocation index outside the default startup path. Live §7a fixes the exact scope, allowlist, acceptance and stops. The restructure changes no authority except as recorded in D1 and D2 below. Bounded overlap with SEC-DEPS-002 permits only its remaining conditional 27 Oct D3 and governed closeout. RESEARCH-RELEASE-001's §437 posture, both parents CLASS-A-VAL-002 and SE-REASON-001, SME held and the §409 limits remain. Steward records the effective SHA and stops under §363 without implementation. NO CROSS-LANE IMPACT.
+
+### Finite non-lane governance/documentation — `OPS-GOV-STATUS-RESTRUCTURE-001` (§438; §6f.30; expires on closeout)
+
+**Pre-execution baseline refresh (R0):** The Implementer fetches main and records `B_exec`, then diffs `11f5f427..B_exec` for AGENTS and STATUS. Every changed record or §7/§7a change is reclassified before any move. The Implementer re-measures startup reading and records `B_exec` in the PR body, history banners and index. If the active, held or permitted set changed, the Implementer stops. Activation baseline fetched main `11f5f42792e93d01420add9d10afaee6a63fa6ce` (`B_exec`); STATUS and AGENTS are identical to that SHA.
+
+**Scope:**
+1. AGENTS becomes the standing contract. Its 126 dated paragraphs move verbatim to `docs/ops/history/AGENTS_DATED_RECORDS.md`. The operating card and the "Current parallelism posture" line stay.
+2. STATUS §7 becomes the current-state table (≤6,500 B). §7a holds live briefs and continuing statements only. The §437 text, verbatim, becomes the RESEARCH-RELEASE-001 continuing statement, together with D1.
+3. Continuing numbered records stay verbatim in STATUS: §207, §213, §217, §219, §233, §234, §278, §286, §288, §290, §291, §292, §293, §303, §326, §331, §336, §339, §343, §346, §347, §352, §353, §354, §364, §410, §421 and §437. The same applies to §6b, §6d, §6e, §6f.22, §6f.27 and §6f.30.
+4. Complete and superseded material moves verbatim, headings included, to `docs/ops/history/HEDGR_STATUS_RECORDS_*.md`, under a non-authority banner with source SHA and line ranges. This includes the BRIDGE-MCP-001 blocks under D2.
+5. `docs/ops/history/RELOCATION_INDEX.md` is added and is not part of the startup path.
+6. The reading procedure (contract → current state → exact task requirements → history only when relevant) and the maintenance rule (closeout PRs move their own completed material; no standalone admin PRs) are written into AGENTS.
+7. `Last updated` metadata is corrected in AGENTS and STATUS.
+
+**Exact implementation allowlist (edit only as needed):**
+- `AGENTS.md`
+- `docs/ops/HEDGR_STATUS.md`
+- `docs/ops/history/AGENTS_DATED_RECORDS.md` (new)
+- `docs/ops/history/HEDGR_STATUS_RECORDS_*.md` (new)
+- `docs/ops/history/RELOCATION_INDEX.md` (new)
+- `scripts/rap/tests/status-record-order.test.mjs`
+- `scripts/rap/tests/fork1-authority.test.mjs`
+- `scripts/rap/tests/agents-operating-card.test.mjs`
+- `scripts/rap/tests/history-not-mandatory.test.mjs` (new executable guard, Q-S5)
+- `docs/ops/governance/mvp/HEDGR_STABILITY_INTERPRETATION_CONVERGENCE_PACKAGE.md` (anchor lines 8 and 411 only)
+- `docs/ops/stability-engine/research/HEDGR_PARTIAL_CAPITAL_WORKED_CASES.md` (anchor line 14 only)
+- `docs/ops/stability-engine/research/HEDGR_SCOPED_ENGINE_INTERPRETATION_INTERFACE_CANDIDATE.md` (anchor line 14 only)
+- Reading-order and history-path wording only, in mirrored pairs that keep parity: `.cursor/commands/{governance,propose-next-ticket,weekly-review,mvp-process-review}.md` and `.agents/skills/source-command-{governance,execution,closeout,propose-next-ticket,weekly-review,mvp-process-review,adversarial-review}/SKILL.md`
+- `docs/agents/skills/codex-{implementer,verifier,repo-steward}.md` (reading-order wording only)
+- `docs/ops/bridge/repo-authority-projection.json` (deterministic branch RAP, own commit)
+
+**Exclusions:**
+- `scripts/rap/generate-repo-authority-projection.mjs`; `scripts/rap/contracts/**` (manifest, policy and schemas stay at the four mandatory sources); `scripts/bridge/**`; `.github/**`; `package.json`
+- `.cursorrules`, `.cursor/rules.md`
+- ADRs, doctrine, `docs/ops/runbook.md`, `docs/ops/governance/AGENTS_PRE_FORK_1.md`, `docs/ops/HEDGR_AUTHORITY_HISTORY_PRE_FORK_1.md`, dated reviews under `docs/ops/reviews/**`
+- All product and runtime code (`apps/**`, `packages/**`)
+- Branch protection and repository settings
+- Any rewording of moved or continuing records, renumbering or new authority beyond D1 and D2
+
+**Acceptance (A1–A10):**
+- **A1 Meaning preserved:** every active, held, permitted, excluded, dependency and stop item is mapped to a current source holding its complete wording.
+- **A1a Continuing terms byte-identical:** the §437 text, D1, the Home permission text and the LOCK COPY/term ban.
+- **A2 RAP equivalence:** `bridge:rap:check` PASS, and the projection `payload.fields` are semantically equal to `B_exec`.
+- **A3 History verbatim:** moved blocks are byte-identical, headings included, and each has one index row.
+- **A3a Anchors resolve:** the rewritten `:14` anchors (§287, §289) and the line 8/411 anchors (§301, §302) resolve, and the `:3` anchors (§288, §290) and §7 anchors still resolve.
+- **A4 Provenance:** banners and index rows cite `B_exec` and the original line ranges.
+- **A5 Startup reading:** same-basis common startup (`.cursorrules`, `.cursor/rules.md`, AGENTS, STATUS header–§5, §7, §8–§10, ADR index, ADRs 0013–0015) is ≤100 KB at the final head, against 1,192,271 B at `11f5f427`. Task-specific reading is reported separately.
+- **A6 Fresh-agent answer key:** SEC-DEPS-002, CLASS-A-VAL-002, a closed ticket, and no assigned ticket.
+- **A7 No mistaken authority:** history cannot be read as current authority.
+- **A8 Metadata:** `Last updated` corrected.
+- **A9 Process:** the activation and closeout gates above are followed.
+- **A10 Guard test:** the Q-S5 guard passes, and its negative fixture fails.
+
+**Stops:** Stop and return to the Founder/HedgrOps on any of the following:
+- the active, held or permitted set changed at `B_exec`;
+- any classification needs an inferred supersession;
+- a continuing rule would exist only in history;
+- §7 can't fit within 6,500 B without dropping operative pointers;
+- a generator, contract, workflow, runbook or other excluded-path change is needed;
+- a RAP `payload.fields` difference;
+- a byte mismatch in moved text;
+- a SEC-DEPS-002 same-file conflict;
+- a research-priority conflict;
+- any authority conflict (AGENTS §13).
+
+The target is never met by moving operative wording out.
+
+**Verification:** A separate Implementer is launched by Dex. An independent Verifier, distinct from the author, gives a PASS on the exact final head with a hosted E2E `run=`. Any later commit invalidates it. The required checks are `validate`, `E2E smoke (@hedgr/frontend)` and `hedgr/verifier`. Governed squash auto-merge follows.
+
+**§364 rebind:** This changes RAP-mandatory STATUS and AGENTS, and §7/§7a text, so it is an authority-effect record. The §364(A) deferral does not apply. After source merge, a **separate** independently verified sole-JSON permanent-main §364 rebind PR follows, with its own hosted gates, and then a fetched-main `bridge:rap:check` PASS. The same applies to the closeout.
+
+**Closeout:** A technical closeout record (next free §) cites the implementation PR and squash SHA, `B_exec`, the measured before/after reading figures, the A1–A10 results and the index location. It closes OPS-GOV-STATUS-RESTRUCTURE-001 and expires §6f.30 only after the closeout source merge, the separate sole-JSON §364 rebind and a fetched-main RAP PASS. No successor activates; the rebind redesign (Option 2) is a separate, later proposal.
+
+**Rollback:** One governed source revert, with occupancy reconciliation and a separate §364 rebind, restores the pre-restructure AGENTS/STATUS. History files are removed by the same revert, and D1/D2 are reverted only by a new Founder record. NO CROSS-LANE IMPACT.
+
+**BRIDGE-MCP-001:** retired by §438 D2; superseded in effect by §433 / #1016 (`ac50489`). No permission, gate or hold under it remains performable or pending. Its §7 and §7a blocks remain in place until the authorised restructure moves them unchanged to history.
 
 **RESEARCH-RELEASE-001 closeout (2026-10-24; §437):** Founder-confirmed invitations are recorded by receipt SHA-256 `41f0896060472832b38737baa0d637d995230f93ec9e2334f8e480b53e37a2a6`; confirmation recorded 23 Oct 2026 AWST, without an asserted send time, channel or count. Effective §434 gate-4 FIT/PASS and its source/rebind preceded the invite-ready handoff. Under §410 D3/D4/D7, research unreleased and participant release paused lift only for the named research route and authorised pool; SME remains held. Close only RESEARCH-RELEASE-001 after this source merge, separate independently verified sole-JSON permanent-main §364 rebind and fetched-main RAP PASS. Parents CLASS-A-VAL-002 and SE-REASON-001 remain open; no exit verdict or nested successor. Post-invite fixes remain carried by verdict checksum only, unactivated. SEC-DEPS-002 remains open solely for its conditional 27 Oct D3 and governed closeout; no operation on that ticket. §409 limits and TalkBack/fractional-ZMW actual speech INCOMPLETE, never PASS, remain. NO CROSS-LANE IMPACT.
+
+**Founder substance (D1; 2026-10-24; §438):** TalkBack and fractional-ZMW actual speech testing must close before the next research pass. This sentence does not edit §437's wording. It replaces §437's research-only non-blocking treatment for the next research pass only. Until then the disclosure stays INCOMPLETE, never PASS. It activates no testing work and no research pass.
 
 **Current effect / retained records:** §437 controls the bounded research-release posture. Earlier ticket-specific activation/closeout statements below preserve their own recorded effect and do not reverse §437 or authorise a successor.
 
@@ -20410,3 +20505,29 @@ Scoped Production smoke passed 29/29 isolated cells, 174/174 screenshot stages: 
 **Effect / independent scope:** Close only RESEARCH-RELEASE-001 and consume §387 item 5 after this source closeout merge, separate independently verified sole-JSON permanent-main §364 rebind and fetched-main RAP PASS. No continuing release-mechanics permission or active nested successor follows. SEC-NODE-001 remains closed under §436 and §6f.29 expired. SEC-DEPS-002 stays independently open solely for conditional 27 Oct D3 and governed closeout under unchanged §6f.27/§427/§428/§433; no security operation or change to its date, audit condition, expiry or scope. No #1015, Dependabot, settings, Vercel, hedgr-ops, doctrine, ADR, role, check/protection or financial-authority action is added.
 
 **Source / gates / rollback:** Only STATUS §7/§7a/§387 item 5/this §437, a short AGENTS pointer and the routine exact currentSequencing literal at its live `scripts/rap/tests/fork1-authority.test.mjs` path change; deterministic branch RAP is a separate commit. No apps/lib/packages byte changes are made by this closeout. Full local validate, required hosted checks and fresh independent exact-head PASS with run= the successful exact-head hosted GitHub Actions E2E URL precede governed source merge. Immediately GET and retain matching live main protection before every auto-merge request, including runbook-only bounded unchanged-head recovery. Separate sole-JSON §364 rebind has its own independent exact-head PASS and hosted gates; fetched-main RAP PASS establishes closeout. One governed source revert with occupancy reconciliation and separate §364 rebind where applicable provides rollback; participant pause and withdrawal remain Founder-owned. NO CROSS-LANE IMPACT.
+
+## 438. Founder activation (`OPS-GOV-STATUS-RESTRUCTURE-001`, 2026-10-24)
+
+**Founder activation (OPS-GOV-STATUS-RESTRUCTURE-001; §438; 2026-10-24):** Only this finite non-lane governance/documentation ticket activates under §6f.30, after source merge, a separate independently verified sole-JSON permanent-main §364 rebind and a fetched-main RAP PASS. The ticket restructures `AGENTS.md` and `docs/ops/HEDGR_STATUS.md`: AGENTS keeps the standing execution contract; STATUS keeps current authority, with §7/§7a as the recognised entry point; complete and superseded material moves verbatim, headings included, to `docs/ops/history/**`, with a relocation index outside the default startup path. Live §7a fixes the exact scope, allowlist, acceptance and stops. The restructure changes no authority except as recorded in D1 and D2 below. Bounded overlap with SEC-DEPS-002 permits only its remaining conditional 27 Oct D3 and governed closeout. RESEARCH-RELEASE-001's §437 posture, both parents CLASS-A-VAL-002 and SE-REASON-001, SME held and the §409 limits remain. Steward records the effective SHA and stops under §363 without implementation. NO CROSS-LANE IMPACT.
+
+**Founder record provenance:** Musalwa Hibajene (repo owner `mhibajene`), 2026-10-24 in Repo Steward Barry's chat. Verbatim approvals: 08:25 AWST approved the direction and the revision; 08:43 AWST "All clear from me based on HedgrOps rulings" (this covers the rulings, D1 TalkBack/fractional-ZMW precondition and D2 BRIDGE-MCP-001 closure record); 09:29 AWST "Approve §6f.30 and proceed". Ticket brief: `OPS-GOV-STATUS-RESTRUCTURE-001`, identified by ticket ID and SHA-256 `2ff085c6b6716502a0fba1267618a6685f038b66404a0a6f26d2269c9a660b44` only; the brief file is not committed. HedgrOps rulings Q-S1 to Q-S7 (24 Oct 2026) are applied in the brief.
+
+**D1. Founder substance decision: accessibility precondition.** TalkBack and fractional-ZMW actual speech testing must close before the next research pass. This sentence is added to the §7a RESEARCH-RELEASE-001 continuing statement as a separate dated sentence. It does not edit §437's wording. It replaces §437's research-only non-blocking treatment for the next research pass only. Until then the disclosure stays INCOMPLETE, never PASS. It activates no testing work and no research pass.
+
+**D2. Founder closure: `BRIDGE-MCP-001` retired.** `BRIDGE-MCP-001` (§304–§308, §315–§325) is formally closed and retired. It has been superseded in effect by §433 (v1 bridge deprecated, Worker deleted and tokens revoked on 20 Oct) and by #1016 (`ac50489`), which removed `apps/bridge-worker` and `tools/hedgrops-mcp`. No permission, gate or hold under it remains performable or pending. Its §7 and §7a blocks move unchanged to history, with a one-line §7a pointer. Dated records stay unedited history, consistent with §433. No successor, credential, deployment or bridge work follows.
+
+**Authority / executable boundary.** The exact scope, allowlist, acceptance A1–A10 and stops are in live §7a. §6f.30 provides the finite overlap, independent stops, revert and expiry. §6f.27 is reconciled only to acknowledge coexistence. Classification follows the continuing-effect rule: a still-binding rule keeps its complete operative wording in a recognised current source and is never held only in history. Further rules:
+- Supersession is recorded only where an explicit superseding record exists.
+- The Synthetic Home permission text and the Daniel LOCK COPY and term ban stay byte-identical. References to the removed `apps/bridge-worker/tests/fork1-authority.test.mjs` are annotated as historical pointers only in history and the index.
+- "Deferred (retained brief)" for `CLASS-A-VAL-002-WEEKEND-PREP-001` is kept without relabelling or a new §7 row.
+- STATUS §3 items 1–6 are unchanged.
+
+Private rationale and review discussion stay outside public records.
+
+**Source / effect / role boundary (this activation PR only):**
+- **Sources:** STATUS §6f.30, §7, §7a and this §438; minimum reciprocal §6f.27 wording; a short AGENTS pointer; the exact `currentSequencing` fixture literal in `scripts/rap/tests/fork1-authority.test.mjs`.
+- **RAP:** deterministic branch RAP (`docs/ops/bridge/repo-authority-projection.json`) in its own commit.
+- **Gates before merge:** full local `validate`; successful required hosted checks (`validate`, `E2E smoke (@hedgr/frontend)`, `hedgr/verifier`); a fresh independent exact-head Verifier PASS with a successful exact-head hosted GitHub Actions E2E `run=`; any later commit invalidates that PASS (AGENTS standing PR invariant); and main protection confirmed live and matching. These come before governed source auto-merge.
+- **Rebind:** a separate sole-JSON permanent-main §364 rebind follows, with its own independent PASS and hosted gates. The final fetched-main `bridge:rap:check` PASS makes the activation effective.
+- **Steward:** writes the effective-SHA receipt and the bounded Implementer brief, then stops under §363.
+- **Excluded from this PR:** any restructure, implementation, history move, D3, SEC-DEPS-002 closeout, parent closure, research pass or successor activation.
