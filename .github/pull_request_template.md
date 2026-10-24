@@ -108,3 +108,14 @@ Use for changes touching brand-facing UI, assets, visual tokens, typography, AI-
   pnpm -w test
   pnpm --filter @hedgr/frontend run e2e:ci
   ```
+
+## 3) Evidence pack
+- Hosted run: https://github.com/mhibajene/hedgr-copilot/actions/runs/<id>
+- Local checks: <command> -> <result>
+
+<!--
+Agent PRs open as draft with `source:agent`.
+Authoring agents never write or edit a `Hedgr-Verifier:` line.
+Run evidence is the exact-head GitHub Actions run URL.
+Public references carry only ticket IDs, checksums, public GHSA IDs and counts.
+-->
