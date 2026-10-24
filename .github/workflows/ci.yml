@@ -19,19 +19,13 @@ jobs:
         with:
           fetch-depth: 0
 
-      # Use repo's Node (from .nvmrc) if present, else fall back to Node 20.
+      # Use repo's Node (from .nvmrc) if present.
       - name: Setup Node from .nvmrc (if present)
         if: ${{ hashFiles('.nvmrc') != '' }}
         uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
           # NOTE: no cache here; pnpm not installed yet
-
-      - name: Setup Node 20 (fallback)
-        if: ${{ hashFiles('.nvmrc') == '' }}
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
 
       # Install/activate repo-pinned pnpm via Corepack
       - name: Enable Corepack and install pinned pnpm
@@ -90,7 +84,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version-file: '.nvmrc'
 
       - uses: pnpm/action-setup@v4
         with:

@@ -12,7 +12,7 @@ import fs from "node:fs";
 import path from "node:path";
 import process from "node:process";
 
-import { validateResponseEnvelope } from "../../apps/bridge-worker/contracts/phase0/validate.mjs";
+import { validateResponseEnvelope } from "../rap/contracts/phase0/validate.mjs";
 
 const NON_AUTHORIZATION_STATEMENT =
   "This snapshot is evidence/retrieval only. It does not authorize implementation, sequencing, ticket activation, or repo mutation.";

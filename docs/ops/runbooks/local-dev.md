@@ -1,7 +1,7 @@
 # Local Development (Hedgr Copilot)
 
 ## Prereqs
-- Node 20 (Corepack enabled), pnpm via Corepack
+- Node 24.22.1 (Corepack enabled), pnpm via Corepack
 - Doppler CLI logged in
   ```bash
   doppler login 
@@ -12,10 +12,6 @@
 - Start frontend (CLI):
   ```bash
   pnpm run dev:cli
-  ```
-- Start frontend (Docker Compose):
-  ```bash
-  pnpm run dev:docker
   ```
 - Validate workspace (CI-equivalent):
   ```bash

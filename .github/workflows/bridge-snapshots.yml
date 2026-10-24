@@ -7,7 +7,7 @@ on:
       - "docs/ops/reviews/MVP/**"
       - "docs/ops/bridge/**"
       - "scripts/bridge/**"
-      - "apps/bridge-worker/**"
+      - "scripts/rap/**"
       - "package.json"
       - "pnpm-lock.yaml"
       - ".github/workflows/bridge-snapshots.yml"

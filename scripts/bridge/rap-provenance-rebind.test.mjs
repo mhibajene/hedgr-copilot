@@ -11,7 +11,7 @@ import {
   OUTPUT_PATH,
   serializeProjection,
   SOURCE_DEFINITIONS
-} from "../../apps/bridge-worker/scripts/generate-repo-authority-projection.mjs";
+} from "../rap/generate-repo-authority-projection.mjs";
 import { planRebind, RebindError, writeRebind } from "./rap-provenance-rebind.mjs";
 
 const PROJECT_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");

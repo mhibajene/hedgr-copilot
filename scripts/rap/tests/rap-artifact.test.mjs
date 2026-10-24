@@ -11,7 +11,7 @@ import {
   buildProjection,
   generateFromGit,
   serializeProjection
-} from "../scripts/generate-repo-authority-projection.mjs";
+} from "../generate-repo-authority-projection.mjs";
 
 const execFile = promisify(execFileCallback);
 
