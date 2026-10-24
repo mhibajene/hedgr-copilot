@@ -7,6 +7,10 @@ description: "Migrated source command `closeout`"
 
 Use this skill when the user asks to run the migrated source command `closeout`.
 
+Reading scope: follow AGENTS reading procedure: standing contract first; STATUS header–§5, §7 and §8–§10 for common startup; the assigned §7a brief and every cited current source for the task. Consult `docs/ops/history/RELOCATION_INDEX.md` and history only when relevant; history never supplies current authority.
+
+Follow AGENTS closeout maintenance: move the ticket’s completed brief and records verbatim inside its closeout PR, add index rows, update §7, and preserve complete continuing wording in current sources. No standalone archive/admin PRs.
+
 ## Command Template
 
 # closeout

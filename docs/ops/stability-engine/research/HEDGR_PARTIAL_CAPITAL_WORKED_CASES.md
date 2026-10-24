@@ -11,7 +11,7 @@
 
 ## 1. Authority, provenance and method
 
-The Founder approved the proposal with “approved to activate and implement”. [HEDGR_STATUS.md §287 / §7a](../../HEDGR_STATUS.md#287-founder-activation--partial-capital-worked-case-translation-2026-09-19) records the four-pair/eight-state, one-artifact and one-review/correction boundary. Activation [PR #575](https://github.com/mhibajene/hedgr-copilot/pull/575) merged at `13a40aafe6963b25f4245e04f76f5f74fbee6ff1`; separate projection rebind [PR #576](https://github.com/mhibajene/hedgr-copilot/pull/576) merged at `419276cd839e3d38f49b54e8f6d9675ad6515ea7`. Before authoring, deterministic RAP check passed with CURRENT freshness, no conflicts, verified source ancestry, V/E parent IDs and disabled execution/mutation/activation/sequencing permissions.
+The Founder approved the proposal with “approved to activate and implement”. [HEDGR_STATUS.md §287 / §7a](../../history/HEDGR_STATUS_RECORDS_200_299.md#287-founder-activation--partial-capital-worked-case-translation-2026-09-19) records the four-pair/eight-state, one-artifact and one-review/correction boundary. Activation [PR #575](https://github.com/mhibajene/hedgr-copilot/pull/575) merged at `13a40aafe6963b25f4245e04f76f5f74fbee6ff1`; separate projection rebind [PR #576](https://github.com/mhibajene/hedgr-copilot/pull/576) merged at `419276cd839e3d38f49b54e8f6d9675ad6515ea7`. Before authoring, deterministic RAP check passed with CURRENT freshness, no conflicts, verified source ancestry, V/E parent IDs and disabled execution/mutation/activation/sequencing permissions.
 
 Read-only inputs:
 

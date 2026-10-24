@@ -107,13 +107,13 @@ test("mechanical write is deterministic, read-only and becomes a no-event merge"
   const { root } = fixture(t);
   amend(root, "docs/ops/HEDGR_STATUS.md", (content) => {
     const next = content.replace(
-      "Last updated: 2026-10-06",
-      "Last updated: 2026-10-07"
+      /^Last updated: \d{4}-\d{2}-\d{2}$/m,
+      "Last updated: 1970-01-01"
     );
     assert.notEqual(
       next,
       content,
-      "HEDGR_STATUS.md must contain Last updated: 2026-10-06 so the metadata-only edit actually changes the file"
+      "HEDGR_STATUS.md must contain a date line and the metadata-only edit must change the file"
     );
     return next;
   });
@@ -138,7 +138,8 @@ test("mechanical write is deterministic, read-only and becomes a no-event merge"
 test("authority text and accepted-index changes return to review instead of self-classifying", (t) => {
   const { root } = fixture(t);
   amend(root, "AGENTS.md", (content) => content.replace(
-    "No standing delegation follows.", "No standing delegation follows. New authority is proposed."
+    "No side-effecting or persistent action should occur without explicit declaration and approval.",
+    "No side-effecting or persistent action should occur without explicit declaration and approval. New authority is proposed."
   ));
   assert.equal(planRebind(root).kind, "review_required");
   amend(root, "docs/decisions/SPRINT-2-ADR-INDEX.md", (content) => `${content}\n<!-- changed index -->\n`);

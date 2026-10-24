@@ -11,6 +11,8 @@ Use this skill when the user asks to run the migrated source command `propose-ne
 
 # propose-next-ticket
 
+Reading scope: follow AGENTS reading procedure: standing contract first; STATUS header–§5, §7 and §8–§10 for common startup; the assigned §7a brief and every cited current source for the task. Consult `docs/ops/history/RELOCATION_INDEX.md` and history only when relevant; history never supplies current authority.
+
 You are producing a **recommendation-only** pre-§7 sequencing aid. This command **does not** authorize work, **does not** change repo authority, and **must not** be treated as a new governance surface.
 
 ## Usage (vs `/governance`)

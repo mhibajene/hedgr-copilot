@@ -1,58 +1,62 @@
 import assert from "node:assert/strict";
-import { readFile } from "node:fs/promises";
+import { readFile, readdir } from "node:fs/promises";
 import test from "node:test";
 
-// B-P2-min (§353): numbered records form one ascending region from `## 8.` to the
-// end of HEDGR_STATUS.md; §7 and §7a contain no numbered record, so §7a runs
-// contiguously from its heading to `## 8.`. New records are appended at EOF.
-
+// §353, as restructured by OPS-GOV-STATUS-RESTRUCTURE-001: current records
+// remain ordered and §7a contiguous; relocated records retain their original
+// order inside each history file and are discoverable through the index.
 const ROOT = new URL("../../../", import.meta.url);
-const RECORD = /^## (\d+)([a-z]?)\. /;
-// Pre-existing placement at main when §353 was recorded (§52 sits between §44 and
-// §45). B-P2-min relocated only §323–§352 and deliberately left this untouched.
-const KNOWN_OUT_OF_ORDER = new Set(["52"]);
+const read = (path) => readFile(new URL(path, ROOT), "utf8");
+const records = (text) => [...text.matchAll(/^## (\d+)([a-z]?)\. /gm)]
+  .filter((m) => Number(m[1]) >= 8)
+  .map((m) => ({ number: Number(m[1]), suffix: m[2], id: m[1] + m[2], index: m.index }));
 
-async function statusHeadings() {
-  const text = await readFile(new URL("docs/ops/HEDGR_STATUS.md", ROOT), "utf8");
-  return text.split("\n").flatMap((line, index) => (line.startsWith("## ") ? [{ line, index }] : []));
+function ordered(list) {
+  assert.equal(new Set(list.map(({id}) => id)).size, list.length, "Record identifiers must be unique per file");
+  const comparable = list.filter(({id}) => id !== "52");
+  for (let i = 1; i < comparable.length; i += 1) {
+    const [a, b] = [comparable[i - 1], comparable[i]];
+    assert.ok(a.number < b.number || (a.number === b.number && a.suffix < b.suffix),
+      `§${b.id} follows §${a.id}: records must ascend`);
+  }
 }
 
-const one = (headings, prefix) => {
-  const hits = headings.filter(({ line }) => line.startsWith(prefix));
-  assert.equal(hits.length, 1, `HEDGR_STATUS.md must contain exactly one "${prefix}" heading`);
-  return hits[0];
-};
-
-const records = (headings) => headings.flatMap(({ line, index }) => {
-  const match = RECORD.exec(line);
-  return match && Number(match[1]) >= 8 ? [{ index, number: Number(match[1]), suffix: match[2], id: match[1] + match[2] }] : [];
-});
-
-test("§7a is contiguous: the next ## heading after ## 7a. is ## 8.", async () => {
-  const headings = await statusHeadings();
-  const section7a = one(headings, "## 7a. ");
-  const next = headings.find(({ index }) => index > section7a.index);
-  assert.ok(next, "A ## heading must follow ## 7a.");
-  assert.ok(next.line.startsWith("## 8. "), `Numbered record or other ## heading inside §7a: ${next.line.slice(0, 80)}`);
-});
-
-test("numbered records (§8 onward) all sit in one region from ## 8. to EOF, each number once", async () => {
-  const headings = await statusHeadings();
-  const section8 = one(headings, "## 8. ");
-  const list = records(headings);
-  const misplaced = list.filter(({ index }) => index < section8.index).map(({ id }) => `§${id}`);
-  assert.deepEqual(misplaced, [], "Numbered records must not appear above ## 8. (inside §7 / §7a)");
-  const unnumbered = headings.filter(({ line, index }) => index > section8.index && !RECORD.test(line));
-  assert.deepEqual(unnumbered.map(({ line }) => line.slice(0, 80)), [], "Only numbered records may follow ## 8.");
-  const ids = list.map(({ id }) => id);
-  assert.equal(new Set(ids).size, ids.length, "Each numbered record heading must appear exactly once");
-});
-
-test("numbered records ascend to EOF; new records are appended after the highest number", async () => {
-  const list = records(await statusHeadings()).filter(({ id }) => !KNOWN_OUT_OF_ORDER.has(id));
-  for (let i = 1; i < list.length; i += 1) {
-    const [a, b] = [list[i - 1], list[i]];
-    const ascending = a.number < b.number || (a.number === b.number && a.suffix < b.suffix);
-    assert.ok(ascending, `§${b.id} follows §${a.id}: numbered records must be in ascending order with new records at EOF`);
+test("§7a is contiguous and continuing numbered records stay after §8", async () => {
+  const status = await read("docs/ops/HEDGR_STATUS.md");
+  assert.equal((status.match(/^## 7a\. /gm) ?? []).length, 1);
+  const from = status.indexOf("## 7a. ");
+  assert.match(status.slice(from + 1).match(/^## .+$/m)?.[0] ?? "", /^## 8\. /);
+  const section8 = status.indexOf("## 8. ");
+  assert.ok(section8 > from);
+  const list = records(status);
+  assert.ok(list.every(({index}) => index >= section8));
+  ordered(list);
+  for (const n of [207,213,217,219,233,234,278,286,288,290,291,292,293,303,326,331,336,339,343,346,347,352,353,354,364,410,421,437]) {
+    assert.ok(list.some(({id}) => id === String(n)), `Continuing §${n} stays current`);
   }
+});
+
+test("history numbered records ascend, retain §52 placement, and each has an index row", async () => {
+  const names = (await readdir(new URL("docs/ops/history/", ROOT)))
+    .filter((name) => /^HEDGR_STATUS_RECORDS_.*\.md$/.test(name));
+  assert.ok(names.length > 0);
+  const index = await read("docs/ops/history/RELOCATION_INDEX.md");
+  const all = [];
+  for (const name of names) {
+    const list = records(await read(`docs/ops/history/${name}`));
+    ordered(list);
+    for (const item of list) {
+      assert.ok(index.includes(`${name}#${item.id}-`), `Missing relocation row for ${name} §${item.id}`);
+      all.push(item.id);
+    }
+    if (list.some(({id}) => id === "52")) {
+      const ids = list.map(({id}) => id);
+      const at = ids.indexOf("52");
+      assert.deepEqual(ids.slice(at - 1, at + 2), ["44", "52", "45"]);
+    }
+  }
+  const current = records(await read("docs/ops/HEDGR_STATUS.md")).map(({id}) => id);
+  const combined = [...current, ...all];
+  assert.equal(new Set(combined).size, combined.length, "No numbered record may be duplicated across current/history");
+  assert.ok(!combined.includes("153") && !combined.includes("208"), "Original absent identifiers stay absent");
 });
