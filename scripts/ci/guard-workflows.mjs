@@ -20,7 +20,7 @@ for (const f of files) {
   if (badColon) errors.push(`${f}: unquoted colon in a step name`);
 
   // 2) setup-node must NOT use pnpm cache (pnpm not installed yet)
-  const nodePnpmCache = /uses:\s*actions\/setup-node@v4[\s\S]{0,250}^\s*cache:\s*['"]?pnpm['"]?/m.test(s);
+  const nodePnpmCache = /uses:\s*actions\/setup-node@(?:v4|[0-9a-f]{40})[\s\S]{0,250}^\s*cache:\s*['"]?pnpm['"]?/m.test(s);
   if (nodePnpmCache) errors.push(`${f}: setup-node uses cache: pnpm (forbidden; enable Corepack first)`);
 
   // 3) E2E workflow invariants

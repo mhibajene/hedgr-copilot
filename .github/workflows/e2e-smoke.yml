@@ -28,13 +28,13 @@ jobs:
       NEXT_FONT_GOOGLE_MOCKED_RESPONSES: /nonexistent-hermetic-guard-no-google-fonts.js
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           fetch-depth: 0
 
       # bridge: mark required context as pending at start
       - name: Publish pending commit status (start)
-        uses: actions/github-script@v7
+        uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b # v7
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
@@ -62,7 +62,7 @@ jobs:
 
       - name: Setup Node
         if: ${{ steps.classify.outputs.docs_only != 'true' }}
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version-file: '.nvmrc'
 
@@ -81,7 +81,7 @@ jobs:
 
       - name: Cache pnpm store
         if: ${{ steps.classify.outputs.docs_only != 'true' }}
-        uses: actions/cache@v4
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
         with:
           path: ${{ steps.pnpm_store.outputs.path }}
           key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
@@ -101,7 +101,7 @@ jobs:
 
       - name: Setup Python
         if: ${{ steps.classify.outputs.docs_only != 'true' }}
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
         with:
           python-version: '3.11'
           cache: 'pip'
@@ -123,7 +123,7 @@ jobs:
       - name: Cache Playwright
         if: ${{ steps.classify.outputs.docs_only != 'true' }}
         id: playwright_cache
-        uses: actions/cache@v4
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
         with:
           path: ~/.cache/ms-playwright
           key: playwright-ubuntu-24.04-${{ runner.os }}-${{ runner.arch }}-${{ steps.playwright_version.outputs.version }}
@@ -176,7 +176,7 @@ jobs:
 
       - name: Upload backend logs (on failure)
         if: ${{ failure() || cancelled() }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: backend-log
           path: apps/backend/backend.log
@@ -185,7 +185,7 @@ jobs:
 
       - name: Report E2E status (docs-only)
         if: ${{ success() && steps.classify.outputs.docs_only == 'true' }}
-        uses: actions/github-script@v7
+        uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b # v7
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
@@ -203,7 +203,7 @@ jobs:
       # bridge: set required context to success/failure to satisfy branch protection
       - name: Report E2E status (success)
         if: ${{ success() && steps.classify.outputs.docs_only != 'true' }}
-        uses: actions/github-script@v7
+        uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b # v7
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
@@ -220,7 +220,7 @@ jobs:
 
       - name: Report E2E status (failure)
         if: ${{ failure() || cancelled() }}
-        uses: actions/github-script@v7
+        uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b # v7
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
