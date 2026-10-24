@@ -11,6 +11,8 @@ Use this skill when the user asks to run the migrated source command `governance
 
 # governance
 
+Reading scope: follow AGENTS reading procedure: standing contract first; STATUS header–§5, §7 and §8–§10 for common startup; the assigned §7a brief and every cited current source for the task. Consult `docs/ops/history/RELOCATION_INDEX.md` and history only when relevant; history never supplies current authority.
+
 You are operating in **Governance Mode**.
 
 Purpose:
@@ -66,3 +68,4 @@ Hard rules:
 - Do not widen doctrine silently
 - Do not open more than one active ticket
 - Do not imply approval unless `§7` is updated
+

@@ -5,7 +5,7 @@
 **Date:** 2026-09-23
 **Ticket:** `CLASS-A-VAL-002-STABILITY-CONVERGENCE-001`, nested in Lane V
 **Execution class:** Class A — synthetic / informational / read-only
-**Authority:** [`HEDGR_STATUS.md` §7, §7a and §301](../../HEDGR_STATUS.md#301-founder-activation--stability-interpretation-convergence-package-2026-09-23)
+**Authority:** [`HEDGR_STATUS.md` §7, §7a and §301](../../history/HEDGR_STATUS_RECORDS_300_399.md#301-founder-activation--stability-interpretation-convergence-package-2026-09-23)
 **Activation:** PR #641, permanent-main source `c435287a40902c70618e218939f6e50cd439dde6`
 **Activation RAP rebind:** PR #642, permanent-main merge `c84c3285bd17262038560be258ae5dbb5855de2e`, projection bound to the activation source
 
@@ -408,7 +408,7 @@ Completion records conceptual convergence only. Participant exposure and any run
 
 ## 17. Additive Founder amendment — selected savings currency (2026-09-23)
 
-The Founder directed retention of the existing local-currency selection because a fixed ZMW case can limit relevance to a participant unfamiliar with it. This is a bounded amendment to the active stimulus ticket under [`HEDGR_STATUS.md` §7/§7a/§302](../../HEDGR_STATUS.md#302-founder-activation--stability-interpretation-stimulus-2026-09-23), not a new study, Engine contract or participant-release decision. The original ZMW record and semantic review above remain historical evidence; the runtime may not silently claim that their exact ZMW wording applies to other denominations.
+The Founder directed retention of the existing local-currency selection because a fixed ZMW case can limit relevance to a participant unfamiliar with it. This is a bounded amendment to the active stimulus ticket under [`HEDGR_STATUS.md` §7/§7a/§302](../../history/HEDGR_STATUS_RECORDS_300_399.md#302-founder-activation--stability-interpretation-stimulus-2026-09-23), not a new study, Engine contract or participant-release decision. The original ZMW record and semantic review above remain historical evidence; the runtime may not silently claim that their exact ZMW wording applies to other denominations.
 
 For the active stimulus, Sarah's existing 6,000 and twelve planned 2,000 contributions are denominated in the **one local currency selected at orientation** from ZMW, KES, NGN, GHS or PHP. The same selection persists through the matched baseline, authored interpretation and transfer within a traversal. The baseline obligation remains fixed at **USD 1,000 payable in US dollars on 1 October 2027**. The transfer changes only that obligation to **29,500 payable in the selected local currency on the same date**. The observation and contribution dates, current-versus-planned distinction, no future FX rate, fixed context, excluded Access dimension and all other supplied or withheld facts remain as in Outputs A–E. The same numeric amounts across variants are fictional fixtures, not conversions or equal-purchasing-power cases.
 

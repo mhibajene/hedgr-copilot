@@ -17,7 +17,7 @@ const HEADER =
   "remains the binding text, and if a quoted line ever differs from its source, the source controls.";
 const BEFORE_ANCHOR =
   "6. Once all required gates are satisfied, automated merge is permitted and preferred where supported.";
-const AFTER_ANCHOR = "**Founder disposition — PR Posture execution refinement";
+const AFTER_ANCHOR = "## 1) Purpose";
 const MAX_CARD_END_BYTES = 16 * 1024;
 const EXPECTED_GROUPS = [
   "2) Authority model",
@@ -95,14 +95,14 @@ function parseCard(card) {
   return groups;
 }
 
-test("operating card exists once, between the PR invariant and §331, within the first 16 KiB", async () => {
+test("operating card exists once, between the PR invariant and the standing contract, within the first 16 KiB", async () => {
   const { agents, start, end } = await load();
   assert.equal(count(agents, HEADING), 1);
   const before = agents.indexOf(BEFORE_ANCHOR);
   const after = agents.indexOf(AFTER_ANCHOR);
   assert.ok(before >= 0 && after >= 0, "Insertion anchors must exist");
   assert.ok(before < start, "Card must follow Standing PR invariant item 6");
-  assert.ok(end < after, "Card must precede the §331 PR Posture disposition");
+  assert.ok(end < after, "Card must precede the standing execution contract");
   assert.ok(bytes(agents.slice(0, end)) <= MAX_CARD_END_BYTES,
     `Card must end within the first ${MAX_CARD_END_BYTES} bytes of AGENTS.md`);
 });
