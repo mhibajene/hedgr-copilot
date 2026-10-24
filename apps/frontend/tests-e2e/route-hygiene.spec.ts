@@ -1,4 +1,4 @@
-// CI-EFF-001 frontend dry-run.
+// CI-EFF-001 frontend dry-run revision two.
 import { expect, test } from '@playwright/test';
 
 test.beforeEach(async ({ context }) => {
