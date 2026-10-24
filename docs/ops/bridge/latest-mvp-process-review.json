@@ -1,7 +1,7 @@
 {
   "artifact_type": "hedgrops_bridge_latest_mvp_process_review_snapshot",
-  "generated_at": "2026-10-16T00:00:00.000Z",
-  "source_path": "docs/ops/reviews/MVP/HEDGR_MVP_PROCESS_REVIEW_SARAH_CURRENCY_MATCH_001_TO_HOME_VISUALISER_001.md",
+  "generated_at": "2026-10-23T00:00:00.000Z",
+  "source_path": "docs/ops/reviews/MVP/HEDGR_MVP_PROCESS_REVIEW_HOME_STABILITY_CLAIMS_001_TO_QOL_BUNDLE_001.md",
   "authority_posture": {
     "class": "A",
     "mode": "READ_ONLY",
