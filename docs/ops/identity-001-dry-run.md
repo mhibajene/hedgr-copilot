@@ -2,3 +2,4 @@
 
 This documentation fixture supports IDENTITY-001 dry run 1.
 It exercises the documentation-only pull request path.
+This run arms auto-merge before independent verification.
