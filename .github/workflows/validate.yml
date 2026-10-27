@@ -77,7 +77,6 @@ jobs:
           node --test .github/scripts/ci-eff-001-verifier-condition.test.mjs
 
       - name: SEC-DEPS-001 dependency audit
-        continue-on-error: true
         run: pnpm audit --audit-level=high --prod
 
       - name: Trust check (environment safety)
