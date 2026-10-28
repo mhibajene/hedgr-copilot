@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { Magic } from '@magic-sdk/admin';
 
-export const config = { api: { bodyParser: { sizeLimit: 16_384 } } };
+export const config = { api: { bodyParser: { sizeLimit: '16kb' } } };
 
 let magicAdminInstance: Magic | null = null;
 

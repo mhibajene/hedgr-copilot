@@ -11,7 +11,7 @@ import { deriveRecommendation } from '../../lib/server/copilotSignals';
 import type { CopilotSignals } from '../../lib/server/copilotSignals';
 import { isInvestmentAdviceRequest } from '../../lib/server/copilotIntent';
 
-export const config = { api: { bodyParser: { sizeLimit: 65_536 } } };
+export const config = { api: { bodyParser: { sizeLimit: '64kb' } } };
 
 type ErrorCode = 'SERVICE_UNAVAILABLE' | 'INVALID_REQUEST' | 'INTERNAL_ERROR' | 'METHOD_NOT_ALLOWED';
 
