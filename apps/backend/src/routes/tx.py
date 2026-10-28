@@ -1,10 +1,11 @@
 import os
 import uuid
 import time
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify
 
 from ..lib.errors import DomainErrorCode, error_response
 from ..lib.validation import require_json_fields
+from ..lib.request_body import read_limited_json
 from ..lib.store import get_by_ref, put
 
 bp = Blueprint("tx", __name__)
@@ -32,7 +33,7 @@ def deposits():
             DomainErrorCode.NOT_IMPLEMENTED, "live deposits not enabled", 501
         )
 
-    payload = request.get_json(silent=True) or {}
+    payload = read_limited_json() or {}
     err = require_json_fields(payload, ["txn_ref"])
     if err:
         return err
@@ -49,7 +50,7 @@ def withdrawals():
             DomainErrorCode.NOT_IMPLEMENTED, "live withdrawals not enabled", 501
         )
 
-    payload = request.get_json(silent=True) or {}
+    payload = read_limited_json() or {}
     err = require_json_fields(payload, ["txn_ref"])
     if err:
         return err
