@@ -1025,3 +1025,86 @@ Source: `KIP-ACTIVITY-VISUALISER-EXPLORATION-001` (advisory evidence, not author
 **SEC-DEPS-005 coexistence (§449/§6f.35):** Only the finite two-file dependency work coexists; neither ticket inherits or changes the other's permissions. No concurrent same-file work; governance source records serialise on main, research retains priority, and independent stops and rollback remain. This overlap expires on SEC-DEPS-005 governed closeout.
 
 <!-- End SEC-DEPS-005 coexistence in §6f.33. -->
+
+
+<!-- Source: docs/ops/HEDGR_STATUS.md L1063–L1063 @ 28ddbc5b31096437e84823fe96e063dd8aae6e21 -->
+
+<a id="zod-cve-001-coexistence-6f30"></a>
+
+### ZOD-CVE-001 coexistence in §6f.30
+
+**ZOD-CVE-001 coexistence (§451/§6f.36):** Only the finite request-body-limit ticket may coexist with this ticket; neither scope transfers. No concurrent same-file work; source records serialise on main with research priority, independent stops and rollback. ZOD-CVE-001 has no lockfile authority. Its overlap permission expires at its governed closeout.
+
+<!-- End ZOD-CVE-001 coexistence in §6f.30. -->
+
+
+<!-- Source: docs/ops/HEDGR_STATUS.md L1079–L1079 @ 28ddbc5b31096437e84823fe96e063dd8aae6e21 -->
+
+<a id="zod-cve-001-coexistence-6f31"></a>
+
+### ZOD-CVE-001 coexistence in §6f.31
+
+**ZOD-CVE-001 coexistence (§451/§6f.36):** Only the finite request-body-limit ticket may coexist with this ticket; neither scope transfers. No concurrent same-file work; source records serialise on main with research priority, independent stops and rollback. ZOD-CVE-001 has no lockfile authority. Its overlap permission expires at its governed closeout.
+
+<!-- End ZOD-CVE-001 coexistence in §6f.31. -->
+
+
+<!-- Source: docs/ops/HEDGR_STATUS.md L1091–L1091 @ 28ddbc5b31096437e84823fe96e063dd8aae6e21 -->
+
+<a id="zod-cve-001-coexistence-6f32"></a>
+
+### ZOD-CVE-001 coexistence in §6f.32
+
+**ZOD-CVE-001 coexistence (§451/§6f.36):** Only the finite request-body-limit ticket may coexist with this ticket; neither scope transfers. No concurrent same-file work; source records serialise on main with research priority, independent stops and rollback. ZOD-CVE-001 has no lockfile authority. Its overlap permission expires at its governed closeout.
+
+<!-- End ZOD-CVE-001 coexistence in §6f.32. -->
+
+
+<!-- Source: docs/ops/HEDGR_STATUS.md L1103–L1103 @ 28ddbc5b31096437e84823fe96e063dd8aae6e21 -->
+
+<a id="zod-cve-001-coexistence-6f33"></a>
+
+### ZOD-CVE-001 coexistence in §6f.33
+
+**ZOD-CVE-001 coexistence (§451/§6f.36):** Only the finite request-body-limit ticket may coexist with this ticket; neither scope transfers. No concurrent same-file work; source records serialise on main with research priority, independent stops and rollback. ZOD-CVE-001 has no lockfile authority. Its overlap permission expires at its governed closeout.
+
+<!-- End ZOD-CVE-001 coexistence in §6f.33. -->
+
+
+<!-- Source: docs/ops/HEDGR_STATUS.md L1129–L1136 @ 28ddbc5b31096437e84823fe96e063dd8aae6e21 -->
+
+<a id="zod-cve-001-consumed-6f36"></a>
+
+### ZOD-CVE-001 consumed §6f.36
+
+### 6f.36 Finite non-lane security-support exception: `ZOD-CVE-001`
+
+**Effect / scope:** Only ZOD-CVE-001 activates under §451 after its independently verified source merge, separate independently verified sole-JSON permanent-main §364 rebind and fetched-main RAP PASS. The exact §7a contract permits four public Next Pages API body-parser limits and two Flask stub transaction body limits, with their named tests. No new lane, nested ticket, standing delegation or lockfile authority is created. SEC-DEPS-005 §450 is effective and §6f.35 expired at 0400c53e; no earlier permission resumes.
+
+**Coordination:** Coexistence is limited to CI-EFF-001 (§6f.31), IDENTITY-001 Steps 0/2 (§6f.32/§6f.33), OPS-GOV-STATUS-RESTRUCTURE-001's remaining closeout (§6f.30) and the unchanged V/E parent scope. Neither ticket inherits or changes another's scope. No concurrent same-file work, including STATUS; governance source records serialise on main with research priority. A second delivery re-pins to fetched main and receives fresh exact-head verification. All existing validate.yml coordination remains; this ticket changes no workflow, manifest or lockfile. Any current-authority, scope, control, resource or research-priority conflict stops for Founder disposition.
+
+**Expiry / rollback:** Keep ZOD-CVE-001 open through the exact-head implementation gates and its independently verified closeout source, separate sole-JSON §364 rebind and fetched-main RAP PASS; then expire only §6f.36 and all its overlap permission. One governed implementation-PR revert with source occupancy reconciliation and separate §364 rebind where applicable provides rollback. No continuing support or successor follows. SEC-DEPS-003, SEC-TEST-001, DOCS-DRIFT-001 and REPLIT-PURGE-001 remain separately governed and unactivated. Independent stops, parent scope, bounded §437 route/pool release and exclusive Founder custody, SME hold, §409/navigation limits and §438 D1 remain. NO CROSS-LANE IMPACT.
+
+
+<!-- End ZOD-CVE-001 consumed §6f.36. -->
+
+
+<!-- Source: docs/ops/HEDGR_STATUS.md L1141–L1141 @ 28ddbc5b31096437e84823fe96e063dd8aae6e21 -->
+
+<a id="zod-cve-001-pre-452-7-row"></a>
+
+### ZOD-CVE-001 pre-§452 §7 row
+
+| ZOD-CVE-001 | Finite body-limit support; effective only on §451 source/rebind/RAP gates | §6f.36; §451 | §7a, request-body limits |
+
+<!-- End ZOD-CVE-001 pre-§452 §7 row. -->
+
+
+<!-- Source: docs/ops/HEDGR_STATUS.md L1159–L1159 @ 28ddbc5b31096437e84823fe96e063dd8aae6e21 -->
+
+<a id="zod-cve-001-pre-452-sequencing"></a>
+
+### ZOD-CVE-001 pre-§452 sequencing
+
+- **Sequencing posture:** RESEARCH-RELEASE-001 closes only through §437 source/rebind/fetched-main RAP gates. Founder-confirmed invitations are recorded by checksum; confirmation 23 Oct 2026 AWST, send time/channel/count unspecified. Effective §434 gate-4 FIT/PASS at dc9c44a4, source #1013 and rebind #1014 preceded the invite-ready handoff. §410 D3/D4/D7 lifts research-unreleased/participant-paused holds only for the named route and authorised pool; invitation/pause/withdrawal custody stays exclusively Founder-owned, SME held. CLASS-A-VAL-002 and SE-REASON-001 stay open, no exit verdict or active nested successor; E has no nested ticket, G deferred. §431 bounded VoiceOver PASS remains; actual TalkBack/fractional-ZMW speech INCOMPLETE, never PASS. §438 D1 requires both closed before the next research pass, superseding the research-only non-blocking treatment for that pass only and activating no testing. §409/navigation limits remain. Post-invite fixes stay checksum-only, unactivated and not pre-staged; other QoL/§387 items queued only. SEC-DEPS-002/004 are closed under effective §447/§448; §6f.27/§6f.34 expired. D3 #1056 is delivered and the dependency audit blocks high/critical findings. SEC-DEPS-005 is closed under effective §450 at 0400c53e; §6f.35 expired. ZOD-CVE-001 activates only after §451 source/rebind/fetched-main RAP gates, within finite §6f.36 and exact §7a body-limit scope. No ticket holds lockfile authority. Remaining queue: SEC-DEPS-003, SEC-TEST-001, DOCS-DRIFT-001, REPLIT-PURGE-001 (not yet briefed); each separately governed, unactivated here. Record PRs follow ready/arm-while-pending then STOP for Dex's independent exact-head PASS; only the implementation PR waits unarmed for Wes's exact-head sign-off and explicit Founder go after independent PASS. CI-EFF-001 keeps §6f.31/§442 activation and §443 runtime prerequisites; the docs-only exception applies only with the classifier on main, otherwise full exact-head hosted E2E. IDENTITY-001 Step 0 keeps §6f.32/§444 gates and separate A/B/C/deferred-D PRs; Step 2 keeps §6f.33/§445 gates. D waits for the CI-EFF scanner switch; Step 0 stays open through D and closeout. Only the Founder enables code-owner review after D3, scanner switch and PR-D merge and both cutover dry-runs pass; until then OFF. No concurrent open validate.yml PRs or same-file/lockfile work; source records serialise with research priority. OPS-GOV-STATUS-RESTRUCTURE-001 retains only §441 closeout gates and §6f.30 expiry; no continuing support/successor. Rebind redesign Option 2 is a later unactivated proposal. §438 D1/D2 and §439 provenance correction stay current; completed material is indexed in history/RELOCATION_INDEX.md. BRIDGE-MCP-001 is closed/retired under §438 D2. observability.md:30 dev:docker remains an unauthorised follow-up. No permission inheritance, parent closure, Lane E/G activation, broader participant exposure or financial capability. NO CROSS-LANE IMPACT.
+<!-- End ZOD-CVE-001 pre-§452 sequencing. -->
