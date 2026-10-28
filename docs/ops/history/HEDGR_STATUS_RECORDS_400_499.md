@@ -566,3 +566,18 @@ Once effective, the Steward records the effective SHA and exact Implementer brie
 
 
 <!-- End 446. Activation (SEC-DEPS-004, 2026-10-27). -->
+
+
+<!-- Source: docs/ops/HEDGR_STATUS.md L3680–L3686 @ 6cb57358d7266be6812e0eedb1e3aa6ab082c004 -->
+
+<a id="449-activation-sec-deps-005-2026-10-27"></a>
+
+## 449. Activation (`SEC-DEPS-005`, 2026-10-27)
+
+Only SEC-DEPS-005 activates under finite §6f.35 after this independently verified source merge, a separate independently verified sole-JSON permanent-main §364 rebind and fetched-main RAP PASS. SEC-DEPS-002 §447 and SEC-DEPS-004 §448 are already effective at fetched main d8e2ac379aa0e8405d617c590b51f8bc89ceae00; §6f.27 and §6f.34 expired. The checksum-bound §7a contract records the Founder-approved option A: only root package.json's existing pnpm.overrides.postcss value 8.5.18 → exact 8.5.23 and the pnpm 9.12.0 / Node 24.22.1 regenerated lockfile. Its substitution of Next's own PostCSS request is explicitly permitted. No new override key, other manifest/app/config/test/workflow/control change follows; frontend package.json is byte-identical. Audit 0 critical/0 high/0 moderate, frozen install, full validate, production build, successful full hosted exact-head E2E and independent GPT-6.1 high exact-head PASS are mandatory on implementation.
+
+The source, sole-JSON rebind and later closeout records follow standing ready/arm-while-pending order, then STOP for Dex's independent current-head PASS. Only the dependency implementation PR stays UNARMED until all gates and explicit Founder go for its unchanged head; no direct/admin merge or bypass. Live protection and both repositories' rulesets are retained immediately before each governed auto-merge request. The fixture-bearing source requires full hosted exact-head E2E; the sole-JSON rebind follows §443's independently confirmed SKIPPED rule, never reported as executed or passed E2E.
+
+This source changes only STATUS §6f.27/§6f.31–§6f.35/§7/§7a/this §449, the exact currentSequencing fixture literal in scripts/rap/tests/fork1-authority.test.mjs and deterministic branch RAP in its own commit. Earlier numbered records remain verbatim. No dependency implementation occurs here. Each record requires full local validate, required hosted gates and fresh independent exact-head PASS. SEC-DEPS-005 is the sole finite lockfile writer; CI-EFF-001, IDENTITY-001 Steps 0/2 and OPS-GOV-STATUS-RESTRUCTURE-001 keep their own limits. Same-file exclusion, serial source records, research priority, independent stops and one governed implementation-PR revert with occupancy reconciliation/separate §364 rebind where applicable remain. Its governed closeout source/rebind/fetched-main RAP chain expires §6f.35 and all SEC-DEPS-005 writer/overlap authority; no continuing support follows. SEC-TEST-001 then DOCS-DRIFT-001 are separately governed and unactivated. Parent, bounded §437 research, SME, §409 and §438 D1 controls remain. Once effective, the Steward writes the effective-SHA receipt and exact Implementer brief, then stops under §363 for Dex's separate launch. NO CROSS-LANE IMPACT.
+
+<!-- End SEC-DEPS-005 complete §449 activation record. -->
