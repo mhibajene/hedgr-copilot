@@ -77,11 +77,11 @@ for (const [width, scale] of [[1440, 1], [390, 1], [320, 2]]) {
       await seed(page, currency, 5); await page.goto(`${HOME}?example=${example}&reset=1&study=1`); await viewport(page, width, scale);
       await expect.poll(() => page.evaluate(key => localStorage.getItem(key), KEY)).toBe('ZMW');
       await expect(page.getByTestId(example === 'own' ? 'local-balance-figure' : 'daniel-read-caption')).toContainText('ZMW');
-      expect(new URL(page.url()).searchParams.has('study')).toBe(false);
+      await expect(page).toHaveURL(example === 'own' ? HOME : `${HOME}?example=${example}`);
     }
     await seed(page, 'NGN', 5); await page.goto(`${HOME}?example=sarah&reset=1&study=1`);
+    await expect(page).toHaveURL(`${HOME}?example=sarah`);
     expect(await page.evaluate(key => localStorage.getItem(key), KEY)).toBe('NGN');
-    expect(new URL(page.url()).searchParams.has('study')).toBe(false);
     await seed(page, 'PHP', 5); await page.goto(`${HOME}?study=1`); await expect(page.getByTestId('local-balance-figure')).toContainText('PHP');
     expect(await page.evaluate(key => localStorage.getItem(key), KEY)).toBe('PHP');
     await seed(page); await page.goto('/orientation');
