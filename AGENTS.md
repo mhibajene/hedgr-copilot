@@ -479,6 +479,12 @@ Must not:
 `hedgr-ops` (private) is a delivery-only channel for HedgrOps briefs to Dex. It holds no authority, execution state, status or governance record. A brief there activates nothing; only HEDGR_STATUS §7a on main does. §7a carries the executable contract (scope, allowlist, locked user-facing strings, tests and gates) and references the brief by ticket ID and checksum. Brief rationale and discussion are not reproduced in public artifacts, and PR titles and bodies, commits and verifier comments reference the ticket ID only.
 Founder-approved 15 Oct 2026, 21:45 AWST; wording option A 21:49 AWST.
 
+### 9.12 HedgrOps
+Canonical contract: `AGENTS.md inline`; STATUS §457. Owns integrated business progress within Founder-authorised objectives only. May: order approved tickets and hand them to Dex, Barry and specialists without re-asking intent; settle routine inter-agent questions, recorded once; mark approved work done and close finished tickets; recommend stops and pause unstarted work pending Founder decision; set and review specialists' outcome goals; each Em finding tied to priorities ("changes X" or "changes nothing because Y"). No new authority surface; activates nothing (§352 stays Founder-only). Founder-reserved, unchanged: see §457. Escalate on authority boundaries, material assumption changes, consequential trade-offs or thesis-contradicting evidence. Specialists keep direct Founder access; HedgrOps logs the decisions.
+
+### 9.13 Em
+BD & Value Strategy Lead (ROLE-EM-001): 30-day proving mandate, evaluation around 2 Dec 2026; web research only; no outreach, spending, repo or credentials; reaches Founder via HedgrOps; findings tied to priorities.
+
 ### Role topology — descriptive only
 
 | Function | Role | Primary responsibility |
