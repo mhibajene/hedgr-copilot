@@ -1108,3 +1108,87 @@ Source: `KIP-ACTIVITY-VISUALISER-EXPLORATION-001` (advisory evidence, not author
 
 - **Sequencing posture:** RESEARCH-RELEASE-001 closes only through §437 source/rebind/fetched-main RAP gates. Founder-confirmed invitations are recorded by checksum; confirmation 23 Oct 2026 AWST, send time/channel/count unspecified. Effective §434 gate-4 FIT/PASS at dc9c44a4, source #1013 and rebind #1014 preceded the invite-ready handoff. §410 D3/D4/D7 lifts research-unreleased/participant-paused holds only for the named route and authorised pool; invitation/pause/withdrawal custody stays exclusively Founder-owned, SME held. CLASS-A-VAL-002 and SE-REASON-001 stay open, no exit verdict or active nested successor; E has no nested ticket, G deferred. §431 bounded VoiceOver PASS remains; actual TalkBack/fractional-ZMW speech INCOMPLETE, never PASS. §438 D1 requires both closed before the next research pass, superseding the research-only non-blocking treatment for that pass only and activating no testing. §409/navigation limits remain. Post-invite fixes stay checksum-only, unactivated and not pre-staged; other QoL/§387 items queued only. SEC-DEPS-002/004 are closed under effective §447/§448; §6f.27/§6f.34 expired. D3 #1056 is delivered and the dependency audit blocks high/critical findings. SEC-DEPS-005 is closed under effective §450 at 0400c53e; §6f.35 expired. ZOD-CVE-001 activates only after §451 source/rebind/fetched-main RAP gates, within finite §6f.36 and exact §7a body-limit scope. No ticket holds lockfile authority. Remaining queue: SEC-DEPS-003, SEC-TEST-001, DOCS-DRIFT-001, REPLIT-PURGE-001 (not yet briefed); each separately governed, unactivated here. Record PRs follow ready/arm-while-pending then STOP for Dex's independent exact-head PASS; only the implementation PR waits unarmed for Wes's exact-head sign-off and explicit Founder go after independent PASS. CI-EFF-001 keeps §6f.31/§442 activation and §443 runtime prerequisites; the docs-only exception applies only with the classifier on main, otherwise full exact-head hosted E2E. IDENTITY-001 Step 0 keeps §6f.32/§444 gates and separate A/B/C/deferred-D PRs; Step 2 keeps §6f.33/§445 gates. D waits for the CI-EFF scanner switch; Step 0 stays open through D and closeout. Only the Founder enables code-owner review after D3, scanner switch and PR-D merge and both cutover dry-runs pass; until then OFF. No concurrent open validate.yml PRs or same-file/lockfile work; source records serialise with research priority. OPS-GOV-STATUS-RESTRUCTURE-001 retains only §441 closeout gates and §6f.30 expiry; no continuing support/successor. Rebind redesign Option 2 is a later unactivated proposal. §438 D1/D2 and §439 provenance correction stay current; completed material is indexed in history/RELOCATION_INDEX.md. BRIDGE-MCP-001 is closed/retired under §438 D2. observability.md:30 dev:docker remains an unauthorised follow-up. No permission inheritance, parent closure, Lane E/G activation, broader participant exposure or financial capability. NO CROSS-LANE IMPACT.
 <!-- End ZOD-CVE-001 pre-§452 sequencing. -->
+
+
+<!-- Source: docs/ops/HEDGR_STATUS.md L1063–L1063 @ 9788be307afe96f0b01e36630380a6b3fcf0cf1c -->
+
+<a id="sec-deps-003-coexistence-6f30"></a>
+
+### SEC-DEPS-003 slice-1 coexistence in §6f.30
+
+**SEC-DEPS-003 slice 1 (§453/§6f.37):** Finite coexistence covers only its four-path repository-support contract after its source/rebind/fetched-main RAP gates; no pnpm-lock.yaml authority is granted or needed. No permission transfers. No concurrent same-file work; source records serialise on main with research priority, independent stops and rollback. Its governed slice-1 closeout expires only §6f.37; SEC-DEPS-003 stays open for separately governed remaining work.
+
+<!-- End SEC-DEPS-003 slice-1 coexistence in §6f.30. -->
+
+
+<!-- Source: docs/ops/HEDGR_STATUS.md L1081–L1081 @ 9788be307afe96f0b01e36630380a6b3fcf0cf1c -->
+
+<a id="sec-deps-003-coexistence-6f31"></a>
+
+### SEC-DEPS-003 slice-1 coexistence in §6f.31
+
+**SEC-DEPS-003 slice 1 (§453/§6f.37):** Finite coexistence covers only its four-path repository-support contract after its source/rebind/fetched-main RAP gates; no pnpm-lock.yaml authority is granted or needed. No permission transfers. No concurrent same-file work; source records serialise on main with research priority, independent stops and rollback. Its governed slice-1 closeout expires only §6f.37; SEC-DEPS-003 stays open for separately governed remaining work.
+
+<!-- End SEC-DEPS-003 slice-1 coexistence in §6f.31. -->
+
+
+<!-- Source: docs/ops/HEDGR_STATUS.md L1095–L1095 @ 9788be307afe96f0b01e36630380a6b3fcf0cf1c -->
+
+<a id="sec-deps-003-coexistence-6f32"></a>
+
+### SEC-DEPS-003 slice-1 coexistence in §6f.32
+
+**SEC-DEPS-003 slice 1 (§453/§6f.37):** Finite coexistence covers only its four-path repository-support contract after its source/rebind/fetched-main RAP gates; no pnpm-lock.yaml authority is granted or needed. No permission transfers. No concurrent same-file work; source records serialise on main with research priority, independent stops and rollback. Its governed slice-1 closeout expires only §6f.37; SEC-DEPS-003 stays open for separately governed remaining work.
+
+<!-- End SEC-DEPS-003 slice-1 coexistence in §6f.32. -->
+
+
+<!-- Source: docs/ops/HEDGR_STATUS.md L1109–L1109 @ 9788be307afe96f0b01e36630380a6b3fcf0cf1c -->
+
+<a id="sec-deps-003-coexistence-6f33"></a>
+
+### SEC-DEPS-003 slice-1 coexistence in §6f.33
+
+**SEC-DEPS-003 slice 1 (§453/§6f.37):** Finite coexistence covers only its four-path repository-support contract after its source/rebind/fetched-main RAP gates; no pnpm-lock.yaml authority is granted or needed. No permission transfers. No concurrent same-file work; source records serialise on main with research priority, independent stops and rollback. Its governed slice-1 closeout expires only §6f.37; SEC-DEPS-003 stays open for separately governed remaining work.
+
+<!-- End SEC-DEPS-003 slice-1 coexistence in §6f.33. -->
+
+
+<!-- Source: docs/ops/HEDGR_STATUS.md L1145–L1152 @ 9788be307afe96f0b01e36630380a6b3fcf0cf1c -->
+
+<a id="sec-deps-003-consumed-6f37"></a>
+
+### SEC-DEPS-003 slice-1 consumed §6f.37
+
+### 6f.37 Finite non-lane repository-support exception: `SEC-DEPS-003` slice 1
+
+**Effect / scope:** Only SEC-DEPS-003 slice 1 activates under §453 after its independently verified source merge, separate independently verified sole-JSON permanent-main §364 rebind and fetched-main RAP PASS. The four-path §7a implementation contract deletes root package-lock.json, ignores its return, switches Cursor worktree setup to frozen pnpm and deletes .replit with D7 retired. No new lane, nested ticket, standing delegation or successor follows. No lockfile authority is granted or needed; pnpm-lock.yaml stays byte-identical. ZOD-CVE-001 is closed under effective §452 at b9576b9b; §6f.36 expired and no permission transfers.
+
+**Coordination:** Coexistence is limited to CI-EFF-001 (§6f.31), IDENTITY-001 Steps 0/2 (§6f.32/§6f.33), OPS-GOV-STATUS-RESTRUCTURE-001's remaining closeout (§6f.30) and unchanged V/E parent scope. Each retains only its own contract. No concurrent same-file work, including STATUS or the four implementation paths; governance source records serialise on main with research priority. A later delivery re-pins to fetched main and receives fresh exact-head verification. Existing validate.yml coordination remains; this slice changes no workflow, manifest, app, test or pnpm lockfile. A current-authority, scope, control, resource or research-priority conflict stops for Founder disposition.
+
+**Expiry / rollback:** This exception and all its overlap permission expire at the independently verified slice-1 governed closeout source merge, separate sole-JSON §364 rebind and fetched-main RAP PASS. Close only slice 1; SEC-DEPS-003 / delivery #24 stay open for separately governed remaining work. No continuing support follows. One governed implementation-PR revert with source occupancy reconciliation and separate §364 rebind where applicable provides rollback. The later Vitest major migration requires its own activation, test-repair scope and finite pnpm-lockfile exception; no cross-major tinypool override. Remaining queue stays unactivated. Independent stops, open parents, bounded §437 route/pool and exclusive Founder custody, SME hold, §409/navigation limits and §438 D1 remain. NO CROSS-LANE IMPACT.
+
+
+<!-- End SEC-DEPS-003 slice-1 consumed §6f.37. -->
+
+
+<!-- Source: docs/ops/HEDGR_STATUS.md L1157–L1157 @ 9788be307afe96f0b01e36630380a6b3fcf0cf1c -->
+
+<a id="sec-deps-003-pre-454-7-row"></a>
+
+### SEC-DEPS-003 pre-§454 §7 row
+
+| SEC-DEPS-003 slice 1 | Finite repository support; effective only on §453 source/rebind/RAP gates | §6f.37; §453 | §7a, slice 1 |
+
+<!-- End SEC-DEPS-003 pre-§454 §7 row. -->
+
+
+<!-- Source: docs/ops/HEDGR_STATUS.md L1176–L1176 @ 9788be307afe96f0b01e36630380a6b3fcf0cf1c -->
+
+<a id="sec-deps-003-pre-454-sequencing"></a>
+
+### SEC-DEPS-003 pre-§454 sequencing
+
+- **Sequencing posture:** RESEARCH-RELEASE-001 closes only through §437 source/rebind/fetched-main RAP gates. Founder-confirmed invitations are recorded by checksum; confirmation 23 Oct 2026 AWST, send time/channel/count unspecified. Effective §434 gate-4 FIT/PASS at dc9c44a4, source #1013 and rebind #1014 preceded the invite-ready handoff. §410 D3/D4/D7 lifts research-unreleased/participant-paused holds only for the named route and authorised pool; invitation/pause/withdrawal custody stays exclusively Founder-owned, SME held. CLASS-A-VAL-002 and SE-REASON-001 stay open, no exit verdict or active nested successor; E has no nested ticket, G deferred. §431 bounded VoiceOver PASS remains; actual TalkBack/fractional-ZMW speech INCOMPLETE, never PASS. §438 D1 requires both closed before the next research pass, superseding the research-only non-blocking treatment for that pass only and activating no testing. §409/navigation limits remain. Post-invite fixes stay checksum-only, unactivated and not pre-staged; other QoL/§387 items queued only. SEC-DEPS-002/004 are closed under effective §447/§448; §6f.27/§6f.34 expired. D3 #1056 is delivered and the dependency audit blocks high/critical findings. SEC-DEPS-005 is closed under effective §450 at 0400c53e; §6f.35 expired. ZOD-CVE-001 is closed under effective §452 at b9576b9b; §6f.36 expired. Only SEC-DEPS-003 slice 1 activates on §453/§6f.37 source/rebind/fetched-main RAP gates, with four implementation paths and staged alert acceptance; #24 stays open. No lockfile authority is granted or needed; pnpm-lock.yaml is untouched. Remaining queue, none activated: ZOD-CVE-001 follow-ups (#34; CI change needs separate approval), SEC-TEST-001 (#31), DOCS-DRIFT-001 (#32), REPLIT-PURGE-001 (#33; this slice only deletes .replit), then the separately governed Vitest-major slice. Record PRs follow ready/arm-while-pending then STOP for Dex's independent exact-head PASS. CI-EFF-001 keeps §6f.31/§442 activation and §443 runtime prerequisites; the docs-only exception applies only with the classifier on main, otherwise full exact-head hosted E2E. IDENTITY-001 Step 0 keeps §6f.32/§444 gates and separate A/B/C/deferred-D PRs; Step 2 keeps §6f.33/§445 gates. D waits for the CI-EFF scanner switch; Step 0 stays open through D and closeout. Only the Founder enables code-owner review after D3, scanner switch and PR-D merge and both cutover dry-runs pass; until then OFF. No concurrent open validate.yml PRs or same-file/lockfile work; source records serialise with research priority. OPS-GOV-STATUS-RESTRUCTURE-001 retains only §441 closeout gates and §6f.30 expiry; no continuing support/successor. Rebind redesign Option 2 is a later unactivated proposal. §438 D1/D2 and §439 provenance correction stay current; completed material is indexed in history/RELOCATION_INDEX.md. BRIDGE-MCP-001 is closed/retired under §438 D2. observability.md:30 dev:docker remains an unauthorised follow-up. No permission inheritance, parent closure, Lane E/G activation, broader participant exposure or financial capability. NO CROSS-LANE IMPACT.
+
+<!-- End SEC-DEPS-003 pre-§454 sequencing. -->
