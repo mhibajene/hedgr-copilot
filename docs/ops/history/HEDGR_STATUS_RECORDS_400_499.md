@@ -643,3 +643,21 @@ Finite coexistence, same-file exclusion, source records serialised on main with 
 
 
 <!-- End DOCS-DRIFT-001 complete §457 activation record. -->
+
+
+<!-- ZOD-CVE-CI-001 complete §459 activation record; source 7fa758297f46fe7ccb956f4b6128111c83d01e72:L3946–L3956. -->
+<a id="459-activation-zod-cve-ci-001-2026-10-30"></a>
+
+## 459. Activation (`ZOD-CVE-CI-001`, 2026-10-30)
+
+Only ZOD-CVE-CI-001 activates as finite non-lane CI coverage under §6f.40 after this independently verified source merge, separate independently verified sole-JSON permanent-main §364 rebind and fetched-main RAP PASS. It is the first #34 ZOD-CVE-001 follow-up slice and runs the existing complete backend pytest suite in hosted CI. Checksum-bound §7a records Founder Q1–Q5 (“Yes to all”), the exact patch and standing queued-ticket decision. Q2 expressly approves the workflow-file change and exact Python/package pins, satisfying workflow-change controls. DOCS-DRIFT-001 is closed under effective §458 at c5456fb0; §6f.39 expired. Prior numbered records remain verbatim.
+
+Implementation changes ONLY .github/workflows/e2e-smoke.yml, exactly ZOD-CVE-CI-001.patch SHA-256 575b263bb3947eb130b8eaa19baefd412973fd78563f1955dc29262bc5c0fc53. The §7a commands/pins and docs-only guards are locked. No new job/action/trigger/required check/context, control change or other path. Any need beyond that file stops for a new Founder decision. Flask default ZOD-CVE-FLASK-001 is deferred, NOT activated; a later test-only route guard needs its own proposal. No App Router change: fx/policy are GET-only and read no body.
+
+Exact implementation-head pinned Node/pnpm frozen install, full validate and production build, exact Python 3.11.18/package install and complete local backend pytest suite (63/63 at investigation base), workflow guard, stable names/controls and all-other-files byte/mode proof are mandatory. Full executed hosted exact-head E2E must succeed with zero retries and visibly execute/pass the backend pytest step; a workflow change is not docs-only. Distinct independent exact-head PASS remains mandatory. No Engine/Home runtime or new Flask surface is added; §346 tests-first is not engaged.
+
+Implementer leaves the implementation PR UNARMED. Dex obtains independent exact-head PASS first, then Wes's exact-head sign-off relayed on #34, then performs the expressly approved Founder-account head-matched squash merge without admin bypass. A CLEAN PR cannot be armed. A new commit voids both sign-off and PASS. This implementation-only disposition does not apply to records: source, rebind and later closeout records follow ready/arm-while-pending, then STOP for Dex's independent exact-head PASS report. Live protection and complete ruleset readbacks immediately precede arming; never arm already-CLEAN, direct/admin merge, bypass or repair controls for records. Fixture-bearing source requires full executed hosted E2E; sole-JSON rebind follows §443 only after independent classifier/diff confirmation, never calling SKIPPED executed/passed E2E.
+
+Finite coexistence, same-file exclusion including workflow/STATUS, source records serialised on main with research priority, independent stops, one-revert rollback/occupancy reconciliation and separate §364 rebind where applicable remain. Governed closeout source/rebind/fetched-main RAP gates expire only §6f.40 and its overlap permission; AGENTS maintenance applies. Remaining §7 queue is unactivated; no continuing support or successor. Drafts #1081/#1087 stay untouched and reserve no number. A non-draft same-file PR or #1081 leaving draft before source merge stops. Parents, bounded §437 route/pool and exclusive Founder custody, SME, §409/navigation and §438 D1 controls remain. After effectivity the Steward writes ACTIVATION_EFFECTIVE.md and IMPLEMENTER_BRIEF.md, removes created worktrees and stops under §363 for Dex's distinct Implementer launch. No implementation occurs here. NO CROSS-LANE IMPACT.
+
+<!-- End ZOD-CVE-CI-001 complete §459 activation record. -->
