@@ -1276,3 +1276,92 @@ Source: `KIP-ACTIVITY-VISUALISER-EXPLORATION-001` (advisory evidence, not author
 - **Sequencing posture:** RESEARCH-RELEASE-001 closes only through §437 source/rebind/fetched-main RAP gates. Founder-confirmed invitations are recorded by checksum; confirmation 23 Oct 2026 AWST, send time/channel/count unspecified. Effective §434 gate-4 FIT/PASS at dc9c44a4, source #1013 and rebind #1014 preceded the invite-ready handoff. §410 D3/D4/D7 lifts research-unreleased/participant-paused holds only for the named route and authorised pool; invitation/pause/withdrawal custody stays exclusively Founder-owned, SME held. CLASS-A-VAL-002 and SE-REASON-001 stay open, no exit verdict or active nested successor; E has no nested ticket, G deferred. §431 bounded VoiceOver PASS remains; actual TalkBack/fractional-ZMW speech INCOMPLETE, never PASS. §438 D1 requires both closed before the next research pass, superseding the research-only non-blocking treatment for that pass only and activating no testing. §409/navigation limits remain. Post-invite fixes stay checksum-only, unactivated and not pre-staged; other QoL/§387 items queued only. SEC-DEPS-002/004 are closed under effective §447/§448; §6f.27/§6f.34 expired. SEC-DEPS-005 is closed under effective §450 at 0400c53e; §6f.35 expired. ZOD-CVE-001 is closed under effective §452 at b9576b9b; §6f.36 expired. SEC-DEPS-003 slice 1 is closed under effective §454 at ee524fd6; §6f.37 expired. SEC-DEPS-003 / #24 and four dev-only critical alerts stay open; no ticket holds pnpm-lock.yaml authority. Founder orders SEC-TEST-001 next under §455/§6f.38, effective only on source/rebind/fetched-main RAP gates; one-file test support only. Remaining queue after SEC-TEST-001, none activated: REPLIT-PURGE-001 (#33; waiting on Founder confirmations), DOCS-DRIFT-001 (#32), ZOD-CVE-001 follow-ups (#34; CI change needs separate approval), #24 sharp-alert slice (pending Founder decision), then #24 Vitest-major slice. Record PRs follow ready/arm-while-pending then STOP for Dex's independent exact-head PASS. CI-EFF-001 keeps §6f.31/§442 activation and §443 runtime prerequisites; the docs-only exception applies only with the classifier on main, otherwise full exact-head hosted E2E. IDENTITY-001 Step 0 keeps §6f.32/§444 gates and separate A/B/C/deferred-D PRs; Step 2 keeps §6f.33/§445 gates. D waits for the CI-EFF scanner switch; Step 0 stays open through D and closeout. Only the Founder enables code-owner review after D3, scanner switch and PR-D merge and both cutover dry-runs pass; until then OFF. No concurrent open validate.yml PRs or same-file/lockfile work; source records serialise with research priority. OPS-GOV-STATUS-RESTRUCTURE-001 retains only §441 closeout gates and §6f.30 expiry; no continuing support/successor. Rebind redesign Option 2 is a later unactivated proposal. §438 D1/D2 and §439 provenance correction stay current; completed material is indexed in history/RELOCATION_INDEX.md. BRIDGE-MCP-001 is closed/retired under §438 D2. observability.md:30 dev:docker remains an unauthorised follow-up. No permission inheritance, parent closure, Lane E/G activation, broader participant exposure or financial capability. NO CROSS-LANE IMPACT.
 
 <!-- End SEC-TEST-001 pre-§456 sequencing. -->
+
+
+<!-- DOCS-DRIFT-001 coexistence in §6f.30; source 4ae99d383c8535fbd741844c6c251ff259ff6b8c:L1063–L1063. -->
+<a id="docs-drift-001-coexistence-6f30"></a>
+
+**DOCS-DRIFT-001 (§457/§6f.39):** Finite coexistence covers only its four-file documentation-support contract after source/rebind/fetched-main RAP gates. No permission transfers. No concurrent same-file work; governance source records serialise on main with research priority, independent stops and one-revert rollback. Its governed closeout expires only §6f.39; no continuing support or successor follows.
+
+<!-- End DOCS-DRIFT-001 coexistence in §6f.30. -->
+
+
+<!-- DOCS-DRIFT-001 coexistence in §6f.31; source 4ae99d383c8535fbd741844c6c251ff259ff6b8c:L1085–L1085. -->
+<a id="docs-drift-001-coexistence-6f31"></a>
+
+**DOCS-DRIFT-001 (§457/§6f.39):** Finite coexistence covers only its four-file documentation-support contract after source/rebind/fetched-main RAP gates. No permission transfers. No concurrent same-file work; governance source records serialise on main with research priority, independent stops and one-revert rollback. Its governed closeout expires only §6f.39; no continuing support or successor follows.
+
+<!-- End DOCS-DRIFT-001 coexistence in §6f.31. -->
+
+
+<!-- DOCS-DRIFT-001 coexistence in §6f.32; source 4ae99d383c8535fbd741844c6c251ff259ff6b8c:L1103–L1103. -->
+<a id="docs-drift-001-coexistence-6f32"></a>
+
+**DOCS-DRIFT-001 (§457/§6f.39):** Finite coexistence covers only its four-file documentation-support contract after source/rebind/fetched-main RAP gates. No permission transfers. No concurrent same-file work; governance source records serialise on main with research priority, independent stops and one-revert rollback. Its governed closeout expires only §6f.39; no continuing support or successor follows.
+
+<!-- End DOCS-DRIFT-001 coexistence in §6f.32. -->
+
+
+<!-- DOCS-DRIFT-001 coexistence in §6f.33; source 4ae99d383c8535fbd741844c6c251ff259ff6b8c:L1121–L1121. -->
+<a id="docs-drift-001-coexistence-6f33"></a>
+
+**DOCS-DRIFT-001 (§457/§6f.39):** Finite coexistence covers only its four-file documentation-support contract after source/rebind/fetched-main RAP gates. No permission transfers. No concurrent same-file work; governance source records serialise on main with research priority, independent stops and one-revert rollback. Its governed closeout expires only §6f.39; no continuing support or successor follows.
+
+<!-- End DOCS-DRIFT-001 coexistence in §6f.33. -->
+
+
+<!-- DOCS-DRIFT-001 consumed §6f.39; source 4ae99d383c8535fbd741844c6c251ff259ff6b8c:L1177–L1183. -->
+<a id="docs-drift-001-consumed-6f39"></a>
+
+### 6f.39 Finite non-lane documentation-support exception: `DOCS-DRIFT-001`
+
+**Effect / scope:** Only DOCS-DRIFT-001 activates under §457 after its independently verified source merge, separate independently verified sole-JSON permanent-main §364 rebind and fetched-main RAP PASS. §7a fixes the exact four-file documentation/template patch and one added leave-unset comment. No runtime change, new lane, nested ticket, standing delegation or successor follows. SEC-TEST-001 is closed under effective §456 at 6922c516; §6f.38 expired and no permission transfers. No ticket holds pnpm-lock.yaml authority.
+
+**Coordination:** Coexistence is limited to CI-EFF-001 (§6f.31), IDENTITY-001 Steps 0/2 (§6f.32/§6f.33), OPS-GOV-STATUS-RESTRUCTURE-001's remaining closeout (§6f.30) and unchanged V/E parent scope. Each retains only its own contract. No concurrent same-file work, including STATUS and the four implementation paths; governance source records serialise on main with research priority. A later delivery re-pins to fetched main and receives fresh exact-head verification. Existing validate.yml coordination remains; DOCS-DRIFT-001 changes no workflow, manifest, lockfile or runtime. Current-authority, scope, control, resource, same-file or research-priority conflict stops for Founder disposition.
+
+**Expiry / rollback:** This finite exception and all its overlap permission expire at DOCS-DRIFT-001's independently verified governed closeout source merge, separate sole-JSON §364 rebind and fetched-main RAP PASS. One governed implementation-PR revert with source occupancy reconciliation and separate §364 rebind where applicable provides rollback. Independent stops remain. Remaining queue stays unactivated; no continuing support or successor follows. Parents open, no active nested successor, G deferred; bounded §437 route/pool and exclusive Founder custody, SME hold, §409/navigation limits and §438 D1 remain. NO CROSS-LANE IMPACT.
+
+
+
+<!-- End DOCS-DRIFT-001 consumed §6f.39. -->
+
+
+<!-- DOCS-DRIFT-001 pre-§458 §7; source 4ae99d383c8535fbd741844c6c251ff259ff6b8c:L1185–L1216. -->
+<a id="docs-drift-001-pre-458-7"></a>
+
+## 7. Current sequence and active status
+
+| Item | State | Controlling source (this file unless named) | Live brief |
+|---|---|---|---|
+| DOCS-DRIFT-001 | Finite documentation support; effective only on §457 source/rebind/RAP gates | §6f.39; §457 | §7a, documentation support |
+| SEC-TEST-001 | Closed under effective §456; §6f.38 expired | Source #1079/rebind #1080/RAP at 6922c516 | §456; §7a |
+| SEC-DEPS-003 slice 1 | Closed under effective §454; §6f.37 expired; #24 stays open | Source #1074/rebind #1075/RAP at ee524fd6 | §454; §7a |
+| ZOD-CVE-001 | Closed under effective §452; §6f.36 expired | Source #1069/rebind #1070/RAP at b9576b9b | §452; §7a |
+| SEC-DEPS-005 | Closed under effective §450; §6f.35 expired | Source #1064/rebind #1065/RAP at 0400c53e | §450; §7a |
+| IDENTITY-001 Step 0 | Finite repository support; effective only on §444 source/rebind/RAP gates | §6f.32; §444 | §7a, Step 0 |
+| IDENTITY-001 Step 2 | Finite identity support; §445 source/rebind/RAP gates | §6f.33; §445 | §7a, Step 2 |
+| CI-EFF-001 | Finite CI support; runtime merge awaits §443 source/rebind/RAP gates | §6f.31; §442; §443 | §7a, CI support |
+| OPS-GOV-STATUS-RESTRUCTURE-001 | §441 closeout gates; no successor | §6f.30; §441 | History; current §438/§439 |
+| SEC-DEPS-002; SEC-DEPS-004 | Closed under effective §447/§448; §6f.27/§6f.34 expired | Source/rebind/fetched-main RAP at d8e2ac37 | History; §447/§448 |
+| CLASS-A-VAL-002; SE-REASON-001 | Open parents; no active nested successor | §6f.21–§6f.22; §288; §290; §7a | §7a, V/E |
+| Research route / authorised pool | Bounded §437 release; Founder custody; SME held | §410; §437; §438 D1; §7a continuing statement | §7a |
+| Lane G; other lanes; Green | Deferred / no activation; no active delegation | §285; §217; §7a | §7a, G |
+| Frozen/public surfaces; retained direction | No activation | §7a; §212; §278; §286; §290 | §7a |
+| Accessibility / observability follow-up | INCOMPLETE / unauthorised follow-up | §409; §437; §438 D1; sequencing below | §7a |
+| Exclusions / stops / rollback | No inherited authority | §2; §6f; §7a; AGENTS §13/§15 | Assigned §7a brief |
+
+Current active ticket status:
+
+- **Lane V:** `CLASS-A-VAL-002` — controlling scope and holds: §7a Lane V; §437.
+- **Lane E:** `SE-REASON-001` — controlling scope and holds: §7a Lane E; §288 / §290.
+- **Sequencing posture:** RESEARCH-RELEASE-001 closes only through §437 source/rebind/fetched-main RAP gates. §410 D3/D4/D7 lifts research-unreleased/participant-paused holds only for the named route and authorised pool; invitation/pause/withdrawal custody stays exclusively Founder-owned, SME held. CLASS-A-VAL-002 and SE-REASON-001 stay open, no exit verdict or active nested successor; E has no nested ticket, G deferred. §431 bounded VoiceOver PASS remains; actual TalkBack/fractional-ZMW speech INCOMPLETE, never PASS. §438 D1 requires both closed before the next research pass, superseding the research-only non-blocking treatment for that pass only and activating no testing. §409/navigation limits remain. Post-invite fixes stay checksum-only, unactivated and not pre-staged; other QoL/§387 items queued only. SEC-DEPS-002/004 are closed under effective §447/§448; §6f.27/§6f.34 expired. SEC-DEPS-005 is closed under effective §450 at 0400c53e; §6f.35 expired. ZOD-CVE-001 is closed under effective §452 at b9576b9b; §6f.36 expired. SEC-DEPS-003 slice 1 is closed under effective §454 at ee524fd6; §6f.37 expired. SEC-DEPS-003 / #24 and four dev-only critical alerts stay open; no ticket holds pnpm-lock.yaml authority. SEC-TEST-001 is closed under effective §456 at 6922c516; §6f.38/all overlap permission expired. Founder orders DOCS-DRIFT-001 next under §457/§6f.39, effective only on source/rebind/fetched-main RAP gates; four-file documentation support only. Remaining queue after DOCS-DRIFT-001, none activated: REPLIT-PURGE-001 (#33; waiting on Founder confirmations plus Barry's doc cleanup), ZOD-CVE-001 follow-ups (#34; CI change needs separate approval), #24 sharp-alert slice (pending Founder decision), #24 Vitest-major slice, then nearby env-name drift follow-up. Record PRs follow ready/arm-while-pending then STOP for Dex's independent exact-head PASS. CI-EFF-001 keeps §6f.31/§442 activation and §443 runtime prerequisites; the docs-only exception applies only with the classifier on main, otherwise full exact-head hosted E2E. IDENTITY-001 Step 0 keeps §6f.32/§444 gates and separate A/B/C/deferred-D PRs; Step 2 keeps §6f.33/§445 gates. D waits for the CI-EFF scanner switch; Step 0 stays open through D and closeout. Only the Founder enables code-owner review after D3, scanner switch and PR-D merge and both cutover dry-runs pass; until then OFF. No concurrent open validate.yml PRs or same-file/lockfile work; source records serialise with research priority. OPS-GOV-STATUS-RESTRUCTURE-001 retains only §441 closeout gates and §6f.30 expiry; no continuing support/successor. Rebind redesign Option 2 is a later unactivated proposal. §438 D1/D2 and §439 provenance correction stay current; completed material is indexed in history/RELOCATION_INDEX.md. BRIDGE-MCP-001 is closed/retired under §438 D2. observability.md:30 dev:docker remains an unauthorised follow-up. No permission inheritance, parent closure, Lane E/G activation, broader participant exposure or financial capability. NO CROSS-LANE IMPACT.
+
+**Fork 2 implementation boundary:** §293 and the live §7a brief separately authorise one finite mechanical-provenance implementation exercise after source-first permanent-main merge and the current separate verified RAP rebind. This is governance/tooling work, not product/research occupancy. Fork 2 operating behaviour remains **INACTIVE**; the existing RAP procedure controls until implementation, verification and an explicit later repo-native activation. Fork 3 remains inactive.
+
+Gating `evidence-pack` on `source:agent` under CI-EFF-001 is a stop condition for any future Fork 2 activation; `rap-provenance-rebind.yml` remains untouched.
+
+---
+
+
+
+<!-- End DOCS-DRIFT-001 pre-§458 §7. -->
