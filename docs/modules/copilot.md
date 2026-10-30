@@ -86,12 +86,12 @@ Copilot execution is flag-gated.
 ### Flags
 
 - `NEXT_PUBLIC_FEATURE_COPILOT_ENABLED` (UI gating)
-- `OPENAI_MODE` (stub vs live)
+- `OPENAI_MODE` (`stub` or `openai`; unset or unrecognised values fall back to `stub`, and exact `CI=true` forces `stub`)
 
 ### Modes
 
 - **Stub mode:** deterministic local responses for dev and CI
-- **Live mode:** real model calls (non-CI)
+- **OpenAI mode** (`OPENAI_MODE=openai`): real model calls (non-CI)
 
 Invariant:
 CI must never call live models.
