@@ -46,7 +46,7 @@ Controls whether Copilot uses a real OpenAI model or a stubbed deterministic mod
 **Allowed Values**
 
 - `stub` (default)
-- `live`
+- `openai`
 
 **Defaults**
 
@@ -60,11 +60,19 @@ Controls whether Copilot uses a real OpenAI model or a stubbed deterministic mod
 **Behavior**
 
 - `stub`: No external network calls. Deterministic responses.
-- `live`: Uses OpenAI API (requires `OPENAI_API_KEY`).
+- `openai`: Selects the server-side OpenAI provider outside CI.
+- Only exact `openai` selects that provider. Unset, empty and unrecognised values (including `live`) resolve to `stub`; values are not trimmed or case-normalised.
+- Exact `CI=true` forces `stub` regardless of `OPENAI_MODE`.
 
 **Failure Mode**
 
-- If `OPENAI_MODE=live` and `OPENAI_API_KEY` is missing → Copilot API returns 503.
+- In `openai` mode, an uncached or cache-bypassed request with `OPENAI_API_KEY` unset or empty returns 503; application startup is unaffected.
+
+**Server-only variable names**
+
+- Hedgr reads `OPENAI_MODE` and `OPENAI_API_KEY` directly.
+- The OpenAI SDK constructor also reads optional `OPENAI_BASE_URL`, `OPENAI_ORG_ID`, `OPENAI_PROJECT_ID`, `OPENAI_WEBHOOK_SECRET` and `OPENAI_LOG`. The chat route does not use SDK webhook operations.
+- `env/templates/frontend.env.schema` lists names with blank placeholders; it is not a runtime validator. No OpenAI variable has a `NEXT_PUBLIC_` prefix.
 
 **Rollback**
 
@@ -72,7 +80,7 @@ Controls whether Copilot uses a real OpenAI model or a stubbed deterministic mod
 OPENAI_MODE=stub
 ```
 
-No rebuild required (server-side).
+No rebuild required for this server-side mode selector. The server process must receive the updated environment; restart or redeploy as appropriate.
 
 ---
 
@@ -177,12 +185,12 @@ Same as dev. Validate:
 ### Step 3 — (Optional) Enable Live OpenAI
 
 ```bash
-OPENAI_MODE=live
+OPENAI_MODE=openai
 ```
 
 Requirements:
 
-- API key present
+- Provider credential is never handled by agents.
 - Logs monitored
 - Rollback ready
 

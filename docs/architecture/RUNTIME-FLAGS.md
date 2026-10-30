@@ -158,10 +158,12 @@ Build-time and runtime gating of Copilot UI.
 
 **Values:**
 - `stub`
-- `live`
+- `openai`
+
+Only exact `openai` selects the OpenAI provider outside CI. Unset, empty or unrecognised values (including `live`) resolve to `stub`; no trimming or case normalisation occurs.
 
 **Default (local):** `stub`
-**CI:** `stub`
+**CI:** exact `CI=true` forces `stub`
 
 **Purpose:**
 Determines model execution mode.
@@ -179,7 +181,7 @@ CI must enforce:
 - DEFI_MODE=mock
 - OPENAI_MODE=stub
 
-Any deviation must fail the build.
+The trust check rejects non-safe AUTH, FX and DEFI modes in CI. `OPENAI_MODE` is not in that allowlist; its selector forces `stub` when `CI=true`.
 
 ---
 
