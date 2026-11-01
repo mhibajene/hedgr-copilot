@@ -3930,9 +3930,9 @@ Source scope is STATUS closeout/maintenance, four add-only history/index files, 
 
 **Retained controls:** Exactly validate, E2E smoke (@hedgr/frontend) and hedgr/verifier remain protected, strict=true with admin enforcement, linear history and conversation resolution; force pushes/deletions OFF, review/restriction fields null. Active hedgr-main 25778284 and hedgr-ops 25783105 retain code-owner review OFF, empty bypass lists and current-user bypass never. Runbook historical no-rulesets prose remains the already-disclosed legibility lag, not a live control claim. No protection, workflow or settings change. NO CROSS-LANE IMPACT.
 
-## 461. Founder decision record (`HEDGROPS-MANDATE-001`, DRAFT, pending Founder go)
+## 461. Founder decision record (`HEDGROPS-MANDATE-001`)
 
-**Founder record provenance:** Musalwa Hibajene (repo owner `mhibajene`). Founder approval 29 Oct 2026 12:44 AWST, as relayed; confirmed by merge go. Until merged this record is DRAFT and has no effect.
+**Founder record provenance:** Musalwa Hibajene (repo owner `mhibajene`). Founder approval 29 Oct 2026 12:44 AWST, as relayed; confirmed by merge go.
 
 **Direction:** HedgrOps takes CEO-like executive ownership of integrated business progress within the founder-led model. The Founder keeps direction, customer closeness, judgement and reserved decisions. This is not blanket permission to expand scope or bypass governance. The role contract is AGENTS §9.12. Em is registered at AGENTS §9.13 under `ROLE-EM-001`: 30-day proving mandate, web research only, no outreach, spending, repo or credentials, Founder reached via HedgrOps, evaluation around 2 Dec 2026. Each Em finding is tied to priorities: "changes X" or "changes nothing because Y".
 
