@@ -3965,18 +3965,18 @@ Source scope is STATUS closeout/maintenance, four add-only history/index files, 
 
 **Gates / rollback:** Docs-only; no §7/§7a change, no ticket activation and no auto-merge. Merge requires validate, required checks, independent exact-head verifier PASS and explicit Founder go. A single revert commit provides rollback. NO CROSS-LANE IMPACT.
 
-## 463. Founder decision record (`TEAM-LINES-001`, DRAFT, pending Founder go)
+## 463. Founder decision record (`TEAM-LINES-001`, Founder-approved, merged 1 Nov 2026)
 
-**Founder record provenance:** Musalwa Hibajene (repo owner `mhibajene`). Team structure Founder-approved 1 Nov 2026 (structure); confirm at PR review. Mel's mandate Founder-approved 1 Nov 2026, as relayed. Until merged this record is DRAFT and has no effect. Sequenced after `VERA-MANDATE-001` (§462). This record replaces the earlier reporting-lines draft in this PR.
+**Founder record provenance:** Musalwa Hibajene (repo owner `mhibajene`). Team structure Founder-approved 1 Nov 2026; pod leads, reporting lines, AGENTS pointer and Vera ops access Founder-confirmed 1 Nov 2026. Mel's mandate Founder-approved 1 Nov 2026, as relayed. Merged 1 Nov 2026. Sequenced after `VERA-MANDATE-001` (§462). This record replaces the earlier reporting-lines draft in this PR.
 
 **Structure:**
 - Founder at the top.
 - HedgrOps holds the title Hedgr CEO and reports to the Founder.
 - Three pods, each with one lead reporting to HedgrOps:
-  - Product: lead Kip (lead proposed, Founder to confirm in PR review). Members Sue and Mel; Mel reports to Sue for copy approval.
-  - Engineering: Dex, Vera and Barry (repo steward). Lead: Founder to name in PR review.
+  - Product: lead Kip (Founder-confirmed 1 Nov 2026). Members Sue and Mel; Mel reports to Sue for copy approval.
+  - Engineering: Dex, Vera and Barry (repo steward). Lead: Barry (Founder-confirmed 1 Nov 2026).
   - Strategy: Em.
-- Wes reports to the Founder, outside the pods, so his sign-off stays independent.
+- Wes reports to the Founder (Founder-confirmed 1 Nov 2026), outside the pods, so his sign-off stays independent.
 - All specialists keep direct access to the Founder.
 
 **Standard role entry:** Every role is recorded with one standard entry: what it owns, its limits, one outcome measure and a review date.
@@ -3991,8 +3991,40 @@ Source scope is STATUS closeout/maintenance, four add-only history/index files, 
 
 **Grants:** This record activates no ticket and grants no credential, GitHub App, posting access, protection or workflow change.
 
-**AGENTS pointer:** AGENTS §9.15 (Wes) and §9.16 (Mel) point here.
+**AGENTS pointer:** AGENTS §9.15 (Wes) and §9.16 (Mel) point here (Founder-confirmed 1 Nov 2026).
 
-**Vera ops access:** Vera's ops access (GitHub App `ops-vera`) on the ops repository is read-only on Contents and Issues, Founder direction 1 Nov 2026; confirm at PR review.
+**Vera ops access:** Vera's ops access (GitHub App `ops-vera`) on the ops repository is read-only on Contents and Issues, Founder direction 1 Nov 2026, Founder-confirmed 1 Nov 2026.
 
 **Gates / rollback:** Docs-only; no §7/§7a change, no ticket activation and no auto-merge. Merge requires validate, required checks, Wes exact-head security sign-off, independent exact-head verifier PASS and explicit Founder go. A single revert commit provides rollback. NO CROSS-LANE IMPACT.
+
+## 465. Proposal record (`MERGE-TIERS-001`, PROVISIONAL number)
+
+**Status:** PROPOSAL — not active; Founder approval at PR review required. Numbered §465 PROVISIONAL: §463 is taken by draft `TEAM-LINES-001` and `OPS-RAP-BATCH-001` is also pending, so this record is renumbered at merge.
+
+**Founder record provenance:** Musalwa Hibajene (repo owner `mhibajene`). Founder direction, as relayed: reviewing every PR is not efficient, and bot verifications should pass. Wes set the boundaries below. Takes effect only on Founder approval at PR review.
+
+**Founder decision (relayed, pending confirmation):** "I approve Barrys proposal and allow that low risk PRs can be merged once the verifier passes and Wes signs-off without any review from me. Governance files will follow a stricter tier with my approval required." (1 Nov 2026, 20:24 AWST). This was relayed and must be confirmed directly by the Founder at PR review before merge. Once confirmed, it amends Wes's mandate so that Tier 1 needs no Founder go. The record stays PROPOSAL / not active: Tier 1 takes effect only when this PR merges on the Founder's go, and the verifier-gate workflow change remains a separate Founder-reserved PR.
+
+**§463 amendment (on activation):** Once active, this record amends the statement in §463 (`TEAM-LINES-001`, merged 1 Nov 2026) that Wes's sign-off is review evidence, not approval, and that every merge needs the Founder's go. Under Tier 1, a verifier PASS plus Wes's sign-off on the same SHA is sufficient; Tier 2 still needs the Founder's go.
+
+**Precondition:** Wes's current mandate says agents cannot approve for the Founder. Tier 1 takes effect only once the Founder explicitly amends that in his own words, through this record's approval.
+
+**Classification:** Mechanical, by changed paths, not by the author's label. Any Tier 2 path makes the whole PR Tier 2. Exploration branches are not tiered because they never merge to main.
+- **Tier 2 (Founder go required):** money, custody, permissions, workflows, branch protection, main-branch product behaviour and reserved items; governance docs (AGENTS.md, HEDGR_STATUS.md decision records and mandates, repo-authority-projection.json, CODEOWNERS, agent-scope text); test config, network-touching fixtures, env or secret handling, CI gates, `.github/**`, `scripts/ci/**`, `package.json`, lockfiles and overrides.
+- **Tier 1 (no Founder go):** other docs and test files only.
+
+**Tier 1 conditions, all required:** an independent verifier PASS on the exact head from the trusted verifier identity, which is not the author; Wes's sign-off on the same SHA; all required checks green; no auto-merge; a `--match-head-commit` merge; Barry does not count his own authored PR as a review. Vera cannot merge in either tier during her proving period (§462). Wes spot-audits a weekly sample of Tier 1 merges.
+
+**Verifier provenance (prerequisite for Tier 1):**
+1. `cursor[bot]` is not a trusted identity, because authoring sessions also post as it.
+2. A dedicated verifier GitHub App, installed only on this repo, with comments, statuses and contents read-only permissions. The Founder holds its credential; no authoring agent ever does. The gate trusts it by numeric app ID only.
+3. The attestation names the full head SHA, checked against the current head at evaluation time, so any push voids it. It also names the verifier run and the PR author; the gate rejects it if the run was started by the author.
+4. The gate runs from the default branch, never checks out or runs PR code, gets only `statuses: write` and `pull-requests: read`, and has no secrets.
+5. Edited comments are ignored, or the latest per SHA is used. A PASS on an old SHA never satisfies a new one.
+6. Audit trail per Tier 1 merge: verifier comment ID, Wes sign-off SHA, merger.
+
+Until all of this is built, the Founder's OWNER-comment trigger remains. Both the workflow change and the mandate amendment are the Founder's to make, each in a separate PR; Wes reviews the implementing PR.
+
+**Open item:** The verifier gate currently trusts only OWNER/MEMBER/COLLABORATOR comments, so a bot PASS needs a workflow change, reserved to the Founder as a separate PR.
+
+**Gates / rollback:** Docs-only proposal; no §7/§7a change, no AGENTS.md pointer yet (AGENTS is near its 37,612 B cap), no ticket activation, no workflow or settings change and no auto-merge. Merge requires validate, required checks, independent exact-head verifier PASS and explicit Founder go. A single revert commit provides rollback. NO CROSS-LANE IMPACT.
