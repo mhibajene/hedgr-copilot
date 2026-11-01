@@ -3991,14 +3991,8 @@ Source scope is STATUS closeout/maintenance, four add-only history/index files, 
 
 **Grants:** This record activates no ticket and grants no credential, GitHub App, posting access, protection or workflow change.
 
-<<<<<<< HEAD
-**Reserved to Founder, unchanged:** as §461. Activation stays Founder-only under §352. This record activates no ticket and grants no credential, GitHub App, posting access, protection or workflow change.
-
 **AGENTS pointer:** AGENTS §9.15 (Wes) and §9.16 (Mel) point here.
 
 **Vera ops access:** Vera's ops access (GitHub App `ops-vera`) on the ops repository is read-only on Contents and Issues, Founder direction 1 Nov 2026; confirm at PR review.
-=======
-**AGENTS pointer:** A combined AGENTS pointer for §9.15 (Wes) and §9.16 (Mel) to this record is added after `VERA-MANDATE-001` (§462) merges, subject to the 37,612 B cap and Founder confirmation.
->>>>>>> 1064b1a (docs: record Founder-approved team structure (TEAM-LINES-001, §463))
 
 **Gates / rollback:** Docs-only; no §7/§7a change, no ticket activation and no auto-merge. Merge requires validate, required checks, Wes exact-head security sign-off, independent exact-head verifier PASS and explicit Founder go. A single revert commit provides rollback. NO CROSS-LANE IMPACT.
