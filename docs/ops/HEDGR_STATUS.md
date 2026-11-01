@@ -3999,7 +3999,7 @@ Source scope is STATUS closeout/maintenance, four add-only history/index files, 
 
 ## 465. Proposal record (`MERGE-TIERS-001`, PROVISIONAL number)
 
-**Status:** PROPOSAL — not active; Founder approval at PR review required. Numbered §465 PROVISIONAL: §463 is taken by draft `TEAM-LINES-001` and `OPS-RAP-BATCH-001` is also pending, so this record is renumbered at merge.
+**Status:** PROPOSAL — not active; Founder approval at PR review required. Numbered §465 PROVISIONAL: §463 is taken by `TEAM-LINES-001` (merged 1 Nov 2026) and `OPS-RAP-BATCH-001` is also pending, so this record is renumbered at merge.
 
 **Founder record provenance:** Musalwa Hibajene (repo owner `mhibajene`). Founder direction, as relayed: reviewing every PR is not efficient, and bot verifications should pass. Wes set the boundaries below. Takes effect only on Founder approval at PR review.
 
@@ -4011,7 +4011,8 @@ Source scope is STATUS closeout/maintenance, four add-only history/index files, 
 
 **Classification:** Mechanical, by changed paths, not by the author's label. Any Tier 2 path makes the whole PR Tier 2. Exploration branches are not tiered because they never merge to main.
 - **Tier 2 (Founder go required):** money, custody, permissions, workflows, branch protection, main-branch product behaviour and reserved items; governance docs (AGENTS.md, HEDGR_STATUS.md decision records and mandates, repo-authority-projection.json, CODEOWNERS, agent-scope text); test config, network-touching fixtures, env or secret handling, CI gates, `.github/**`, `scripts/ci/**`, `package.json`, lockfiles and overrides.
-- **Tier 1 (no Founder go):** other docs and test files only.
+- **Tier 1 (no Founder go):** only paths on this allowlist: `docs/**` excluding `docs/ops/**`, plus `README` and `*.md` files outside governance paths (AGENTS.md, `docs/ops/**`, CODEOWNERS, agent-scope text, `.github/**`). Anything not on the allowlist is Tier 2.
+- **Test files:** Tier 2 until a separate backend-test CI job without `statuses: write` lands. They can move to Tier 1 only by a later Founder-approved amendment of this record.
 
 **Tier 1 conditions, all required:** an independent verifier PASS on the exact head from the trusted verifier identity, which is not the author; Wes's sign-off on the same SHA; all required checks green; no auto-merge; a `--match-head-commit` merge; Barry does not count his own authored PR as a review. Vera cannot merge in either tier during her proving period (§462). Wes spot-audits a weekly sample of Tier 1 merges.
 
