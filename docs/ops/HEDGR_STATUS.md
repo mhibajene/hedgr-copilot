@@ -3964,3 +3964,30 @@ Source scope is STATUS closeout/maintenance, four add-only history/index files, 
 **Reserved to Founder, unchanged:** as §461. Activation stays Founder-only under §352. This record activates no ticket and grants no credential, GitHub App, protection or workflow change.
 
 **Gates / rollback:** Docs-only; no §7/§7a change, no ticket activation and no auto-merge. Merge requires validate, required checks, independent exact-head verifier PASS and explicit Founder go. A single revert commit provides rollback. NO CROSS-LANE IMPACT.
+
+## 463. Founder decision record (`TEAM-LINES-001`, DRAFT, pending Founder go)
+
+**Founder record provenance:** Musalwa Hibajene (repo owner `mhibajene`). Mel's mandate Founder-approved 1 Nov 2026, as relayed. Wes's reporting line is proposed, for Founder confirmation in PR review. Until merged this record is DRAFT and has no effect. Sequenced after `VERA-MANDATE-001` (§462).
+
+**Wes, Security Oversight Lead:** Registered read-only and propose-only. Wes gives exact-head security sign-off before merges. That sign-off is review evidence, not approval; every merge still needs the Founder's own go. Wes holds no merge, push, protection, workflow or credential authority.
+
+**Mel, X ghostwriter (Founder-approved 1 Nov 2026):** Mel drafts suggested copy for the Founder's X account from Sue's research and dashboard. Mel never posts. Sue approves the copy. Mel's X KPIs are kept separate and attributable to Mel.
+
+**Reporting lines:**
+- Founder at the top.
+- HedgrOps reports to the Founder.
+- Barry and Dex report to HedgrOps.
+- Kip and Sue report to Barry.
+- Mel reports to Sue.
+- Em reports to the Founder through HedgrOps.
+- Wes reports to the Founder (proposed, Founder to confirm in PR review).
+- Vera: per §462.
+- All specialists keep direct access to the Founder.
+
+**Reserved to Founder, unchanged:** as §461. Activation stays Founder-only under §352. This record activates no ticket and grants no credential, GitHub App, posting access, protection or workflow change.
+
+**AGENTS pointer:** AGENTS §9.15 (Wes) and §9.16 (Mel) point here.
+
+**Vera ops access:** Vera's ops access (GitHub App `ops-vera`) on the ops repository is read-only on Contents and Issues, Founder direction 1 Nov 2026; confirm at PR review.
+
+**Gates / rollback:** Docs-only; no §7/§7a change, no ticket activation and no auto-merge. Merge requires validate, required checks, Wes exact-head security sign-off, independent exact-head verifier PASS and explicit Founder go. A single revert commit provides rollback. NO CROSS-LANE IMPACT.
