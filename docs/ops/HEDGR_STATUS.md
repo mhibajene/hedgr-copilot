@@ -3964,3 +3964,35 @@ Source scope is STATUS closeout/maintenance, four add-only history/index files, 
 **Reserved to Founder, unchanged:** as §461. Activation stays Founder-only under §352. This record activates no ticket and grants no credential, GitHub App, protection or workflow change.
 
 **Gates / rollback:** Docs-only; no §7/§7a change, no ticket activation and no auto-merge. Merge requires validate, required checks, independent exact-head verifier PASS and explicit Founder go. A single revert commit provides rollback. NO CROSS-LANE IMPACT.
+
+## 463. Founder decision record (`TEAM-LINES-001`, DRAFT, pending Founder go)
+
+**Founder record provenance:** Musalwa Hibajene (repo owner `mhibajene`). Team structure Founder-approved 1 Nov 2026 (structure); confirm at PR review. Mel's mandate Founder-approved 1 Nov 2026, as relayed. Until merged this record is DRAFT and has no effect. Sequenced after `VERA-MANDATE-001` (§462). This record replaces the earlier reporting-lines draft in this PR.
+
+**Structure:**
+- Founder at the top.
+- HedgrOps holds the title Hedgr CEO and reports to the Founder.
+- Three pods, each with one lead reporting to HedgrOps:
+  - Product: lead Kip (lead proposed, Founder to confirm in PR review). Members Sue and Mel; Mel reports to Sue for copy approval.
+  - Engineering: Dex, Vera and Barry (repo steward). Lead: Founder to name in PR review.
+  - Strategy: Em.
+- Wes reports to the Founder, outside the pods, so his sign-off stays independent.
+- All specialists keep direct access to the Founder.
+
+**Standard role entry:** Every role is recorded with one standard entry: what it owns, its limits, one outcome measure and a review date.
+
+**Proving mandate:** Every new role starts on a proving mandate. Access widens only on evidence.
+
+**Decision level:** Decisions are made at the lowest authorised level. The Founder keeps the reserved items: merges, activation, credentials and spend (as §461; activation stays Founder-only under §352).
+
+**Wes, Security Oversight Lead:** Registered read-only and propose-only. Wes gives exact-head security sign-off before merges. That sign-off is review evidence, not approval; every merge still needs the Founder's own go. Wes holds no merge, push, protection, workflow or credential authority.
+
+**Mel, X ghostwriter (Founder-approved 1 Nov 2026):** Mel drafts suggested copy for the Founder's X account from Sue's research and dashboard. Mel never posts. Sue approves the copy. Mel's X KPIs are kept separate and attributable to Mel.
+
+**Grants:** This record activates no ticket and grants no credential, GitHub App, posting access, protection or workflow change.
+
+**AGENTS pointer:** AGENTS §9.15 (Wes) and §9.16 (Mel) point here.
+
+**Vera ops access:** Vera's ops access (GitHub App `ops-vera`) on the ops repository is read-only on Contents and Issues, Founder direction 1 Nov 2026; confirm at PR review.
+
+**Gates / rollback:** Docs-only; no §7/§7a change, no ticket activation and no auto-merge. Merge requires validate, required checks, Wes exact-head security sign-off, independent exact-head verifier PASS and explicit Founder go. A single revert commit provides rollback. NO CROSS-LANE IMPACT.

@@ -488,6 +488,9 @@ BD & Value Strategy Lead (ROLE-EM-001); see STATUS §461.
 ### 9.14 Vera
 Engineering operator (VERA-MANDATE-001): 30-day proving mandate; see STATUS §462.
 
+### 9.15 Wes, 9.16 Mel
+See STATUS §463 (TEAM-LINES-001).
+
 ### Role topology — descriptive only
 
 | Function | Role | Primary responsibility |
