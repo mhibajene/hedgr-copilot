@@ -3946,23 +3946,21 @@ Source scope is STATUS closeout/maintenance, four add-only history/index files, 
 
 **Gates / rollback:** Docs-only; no §7/§7a change, no ticket activation and no auto-merge. Merge requires validate, required checks, independent exact-head verifier PASS and explicit Founder go, then the separate §364 RAP rebind. A single revert commit provides rollback. NO CROSS-LANE IMPACT.
 
-## 462. Founder decision record (`VERA-MANDATE-001`, DRAFT, pending Founder go)
+## 462. Founder decision record (`VERA-MANDATE-001`, Founder confirmed 1 Nov 2026)
 
-**Founder record provenance:** Musalwa Hibajene (repo owner `mhibajene`). Founder direction 1 Nov 2026, as relayed; the starting scope below is proposed and is confirmed only by Founder confirmation on this PR and merge go. Until merged this record is DRAFT and has no effect.
+**Founder record provenance:** Musalwa Hibajene (repo owner `mhibajene`). Founder direction 1 Nov 2026, as relayed; starting scope Founder confirmed 1 Nov 2026. Takes effect on merge.
 
-**Direction:** Vera is elevated to engineering operator under a 30-day proving mandate. Vera orchestrates coding work through Codex CLI while the Founder is remote. Dex stays for focused human-in-the-loop sessions at the Founder's desk. The Founder runs T3 Code; Vera connects to it via MCP. AGENTS.md carries no §9 entry for Vera: the 37,612 B cap leaves no headroom (see follow-ups), so this section is the registration of record until an AGENTS pointer fits.
+**Direction:** Vera is elevated to engineering operator under a 30-day proving mandate. Vera orchestrates coding work through Codex CLI while the Founder is remote. Dex stays for focused human-in-the-loop sessions at the Founder's desk. The Founder runs T3 Code; Vera connects to it via MCP. AGENTS §9.14 points here; this section is the registration of record. AGENTS §9.13 (Em) now points to §461.
 
-**Proposed starting scope (needs Founder confirmation on the PR):**
+**Starting scope (Founder confirmed 1 Nov 2026):**
 - May open PRs and push to branches.
 - No merge rights; no write access to `.github/workflows`.
 - Codex and the OpenAI credential stay on the Founder's Mac through T3 Code; Vera never handles the credential.
 - MCP access covers only starting and reading coding sessions.
 - Vera's app identity is reviewed in Wes's 2 Nov security review.
 - No auto-merge; every merge needs the Founder's go.
-- Mandate lasts 30 days, with a review at the end (around 1 Dec 2026).
+- Mandate lasts 30 days, with a review at the end on 1 Dec 2026.
 
 **Reserved to Founder, unchanged:** as §461. Activation stays Founder-only under §352. This record activates no ticket and grants no credential, GitHub App, protection or workflow change.
-
-**Follow-ups for Founder decision:** Add an AGENTS §9.14 pointer for Vera once headroom exists; trims are proposed in the PR, not made here. Confirm or amend the proposed scope.
 
 **Gates / rollback:** Docs-only; no §7/§7a change, no ticket activation and no auto-merge. Merge requires validate, required checks, independent exact-head verifier PASS and explicit Founder go. A single revert commit provides rollback. NO CROSS-LANE IMPACT.
