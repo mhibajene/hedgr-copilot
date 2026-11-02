@@ -104,6 +104,7 @@ Perform a bounded read-only verification pass against the active ticket, accepta
 You MUST:
 - remain READ_ONLY except for the expressly permitted single PR attestation comment
 - assess acceptance alignment and scope discipline
+- [ ] projection on main binds this ticket's activation source SHA
 - identify doctrine-sensitive risks, especially trust-surface overclaim or implied execution
 - distinguish blocking issues from non-blocking notes
 - for Engine and Home runtime §7a briefs, confirm the named TDD tests exist, assert what the brief asks for, and pass in hosted CI on the exact head SHA; Verifier PASS remains an attestation gate and does not replace tests (AGENTS §7 / §346)
