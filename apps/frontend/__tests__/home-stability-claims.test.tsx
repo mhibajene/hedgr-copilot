@@ -87,6 +87,8 @@ test('SC13 labels-listed-once', () => {
   render(<EngineAllocationBands engineState={getMockEngineState()} />); for (const label of ['Main target', 'Conservative yield', 'Reserve']) expect(screen.getAllByText(label, { exact: true })).toHaveLength(1); expect(screen.queryByTestId('engine-allocation-target-roles')).toBeNull(); cleanup(); render(<EngineAllocationBands engineState={getMockEngineState()} collapsed />); const purposes = screen.getByTestId('engine-allocation-target-roles'); expect(Array.from(purposes.querySelectorAll('dt')).map(n => n.textContent)).toEqual(['Now', 'Reserve', 'Growth']); expect(within(purposes).getByText('For what matters in the near term.')).toBeDefined();
 });
 test('SC14 held-strings-byte-identical and exact bounded runtime diff', () => {
+  // PLAN-INTENT-001: pin the approved additions, never substitute old baselines.
+  for (const [path, hash] of Object.entries(PLAN_INTENT_ADDITIONS)) expect(digest(source(path)), path).toBe(hash);
   for (const [path, hash] of Object.entries(PROTECTED_BLOBS)) expect(digest(bundlePreRuntime(path, source(path))), path).toBe(hash);
   for (const {path, baseline, edits} of APPROVED_EDITS) {
     const original = ORIGINAL_SOURCES[path]; let approved = original;
@@ -116,6 +118,22 @@ test('SC14 held-strings-byte-identical and exact bounded runtime diff', () => {
 });
 test('SC15 banned-terms-and-spelling-scan', () => {
   const changed = [...Object.values(ENGINE_POSTURE_CONTEXT), ...Object.values(ENGINE_NOTICE_COPY).flatMap(n => [n.title,n.body]), explainer.ENGINE_STABILITY_EXPLAINER_TERMS[0].term, explainer.ENGINE_STABILITY_EXPLAINER_TERMS[0].definition, ...explainer.ENGINE_STABILITY_EXPLAINER_PRINCIPLES, guidance.ENGINE_PROTECTIVE_GUIDANCE_TITLE, guidance.ENGINE_PROTECTIVE_GUIDANCE_FRAMING, guidance.ENGINE_PROTECTIVE_GUIDANCE_POINTS.at(-1)!, ...POSTURES.map(review.getEngineStabilityReviewSnapshotStance), review.ENGINE_STABILITY_REVIEW_CADENCE_CUE]; for (const text of changed) expect(text).not.toMatch(/stability|stable|protect|preserv|held steady|steadier|[→←↑↓]|\b\w+iz(?:e|ed|ing)\b|\d/i);
+});
+
+test('PLAN-INTENT-001 exact source reversal rejects unrelated edits and changed or duplicate insertions', () => {
+  const path = 'app/(app)/dashboard/page.tsx';
+  const page = source(path);
+  const addedImport = "import { PlanningReadCard } from './PlanningReadCard';\n";
+  for (const mutation of [
+    `${page}\n// PLAN-INTENT-001 mutation\n`,
+    page.replace(addedImport, addedImport + addedImport),
+    page.replace(addedImport, ''),
+    page.replace('<PlanningReadCard />', '<PlanningReadCard /><PlanningReadCard />'),
+    page.replace('selectedExample === "own"', 'selectedExample !== "own"'),
+  ]) {
+    expect(mutation).not.toBe(page);
+    expect(() => bundlePreRuntime(path, mutation)).toThrow();
+  }
 });
 
 // Immutable 97c864e source, captured before runtime; no green-source hashes.
@@ -488,7 +506,24 @@ function qolPreRuntime(path: string, value: string): string {
   return value;
 }
 
+const PLAN_INTENT_ADDITIONS: Record<string, string> = {
+  'app/(app)/dashboard/PlanningReadCard.tsx': '6bba18d44a8375214976138e3db870540ed005f06e1666977901c14cd6469e34',
+  'lib/state/simulation-intent.ts': 'b3f8fd083a4f2ac3cfece67ce4668ac7f05ebada3adffc1c8b3914eaff0d1078',
+  'lib/copy/plan-intent-copy.ts': '9fd4c8bf5d3c731a1f443fea78f3a723a4804d580e64e4030ea2358cd53b13ff',
+};
+const PLAN_INTENT_PAGE_EDITS = [
+  ["import { HomeHero } from './HomeHero';\n", "import { HomeHero } from './HomeHero';\nimport { PlanningReadCard } from './PlanningReadCard';\n"],
+  ['  const balanceHero = syntheticJourneyActive ? (\n', '  const balanceHero = syntheticJourneyActive ? (\n    <>\n'],
+  ['    </HomeHero>\n  ) : (', '    </HomeHero>\n    {selectedExample === "own" ? <PlanningReadCard /> : null}\n    </>\n  ) : ('],
+] as const;
+
 function bundlePreRuntime(path: string, value: string): string {
+  if (path === 'app/(app)/dashboard/page.tsx') {
+    for (const [old, replacement] of PLAN_INTENT_PAGE_EDITS) {
+      expect(value.split(replacement), 'PLAN-INTENT-001 exact page addition').toHaveLength(2);
+      value = value.replace(replacement, () => old);
+    }
+  }
   value = qolPreRuntime(path, value);
   value = releaseGatePreRuntime(path, releaseGate002PreRuntime(path, releaseGate003PreRuntime(path, value)));
   for (const [old, replacement] of BUNDLE_SOURCE_EDITS[path] ?? []) {
