@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import React from 'react';
-import { act, cleanup, render, screen } from '@testing-library/react';
+import { act, cleanup, render, screen, fireEvent, within } from '@testing-library/react';
 import { afterEach, beforeEach, expect, test, vi } from 'vitest';
 
 (globalThis as typeof globalThis & { React: typeof React }).React = React;
@@ -12,22 +12,124 @@ vi.mock('../lib/fx/FxRateContext', () => ({ useFxRate: () => ({ rate: 20, status
 import DashboardPage from '../app/(app)/dashboard/page';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { useLedgerStore } from '../lib/state/ledger';
+import { PlanningReadCard } from '../app/(app)/dashboard/PlanningReadCard';
+import { PLAN_INTENT_COPY as copy } from '../lib/copy/plan-intent-copy';
+import { getPlanningReadOrder, getSimulationIntent, setSimulationIntent, type SimulationPurpose } from '../lib/state/simulation-intent';
 
 beforeEach(() => {
   vi.stubEnv('NEXT_PUBLIC_AUTH_MODE', 'mock');
   vi.stubEnv('NEXT_PUBLIC_FX_MODE', 'stub');
   vi.stubEnv('NEXT_PUBLIC_APP_ENV', 'prod');
   vi.stubGlobal('matchMedia', () => ({ matches: true }));
-  localStorage.clear(); sessionStorage.clear();
+  localStorage.clear(); sessionStorage.clear(); setSimulationIntent(null);
 });
 afterEach(() => { cleanup(); vi.restoreAllMocks(); vi.unstubAllGlobals(); vi.unstubAllEnvs(); });
 
-test('PLAN-INTENT-001 own simulation offers its purpose question', async () => {
-  window.history.replaceState(null, '', '/dashboard-synthetic-journey');
-  vi.mocked(usePathname).mockReturnValue('/dashboard-synthetic-journey');
-  vi.mocked(useSearchParams).mockReturnValue(new URLSearchParams() as ReturnType<typeof useSearchParams>);
+async function home(route = '/dashboard-synthetic-journey') {
+  const url = new URL(route, 'http://localhost');
+  window.history.replaceState(null, '', url.pathname + url.search);
+  vi.mocked(usePathname).mockReturnValue(url.pathname);
+  vi.mocked(useSearchParams).mockReturnValue(new URLSearchParams(url.search) as ReturnType<typeof useSearchParams>);
   await act(async () => { await useLedgerStore.persist.rehydrate(); });
-  render(<DashboardPage />);
+  const view = render(<DashboardPage />);
   await act(async () => { await Promise.resolve(); });
-  expect(screen.queryByRole('group', { name: 'What is this portion meant to support?' })).not.toBeNull();
+  return view;
+}
+
+const orders = {
+  regular: ['regular', 'reserve', 'goals'],
+  dated: ['goals', 'regular', 'reserve'],
+  reserve: ['reserve', 'regular', 'goals'],
+} as const;
+function checkCard() {
+  const card = screen.getByTestId('planning-read-card');
+  const text = card.textContent!;
+  expect(text.split(copy.limits)).toHaveLength(2);
+  expect(text).not.toMatch(/\d|[$£€%]|\b(?:USD|ZMW|KES|NGN|GHS|PHP|yield|first|then|before|priority|ready|covered|enough|safe|protected|locked|growth|earnings|returns)\b|your money|emergency fund|will be there/i);
+  expect(within(card).queryByRole('switch')).toBeNull();
+  expect(within(card).queryByRole('checkbox')).toBeNull();
+  expect(text).not.toMatch(/You told us|Nothing has moved/);
+  return card;
+}
+
+test('PLAN-INTENT-001 own simulation offers its purpose question after the unchanged hero', async () => {
+  const view = await home();
+  const card = checkCard();
+  expect(screen.getByRole('group', { name: copy.question })).not.toBeNull();
+  const hero = view.container.querySelector('[data-component="HomeHero"]')!;
+  expect(hero.nextElementSibling).toBe(card);
+  const targets = screen.getByTestId('research-planning-targets');
+  const heroBefore = hero.innerHTML;
+  const targetsBefore = targets.innerHTML;
+  fireEvent.click(screen.getByRole('radio', { name: copy.answers.dated, exact: true }));
+  expect(hero.innerHTML).toBe(heroBefore);
+  expect(targets.innerHTML).toBe(targetsBefore);
+  expect(hero.querySelector('[data-testid="usd-balance"]')?.textContent).toBe('$0.00');
+});
+
+test('default and skipped reads have the approved stance and default words-only order', () => {
+  render(<PlanningReadCard />);
+  for (const skip of [false, true]) {
+    if (skip) fireEvent.click(screen.getByRole('radio', { name: copy.answers.skip }));
+    checkCard();
+    expect(screen.getByTestId('planning-read-stance').textContent).toBe(copy.skipped);
+    expect(within(screen.getByTestId('planning-read-labels')).getAllByRole('heading').map(n => n.textContent)).toEqual(['Regular costs', 'Reserve', 'Goals']);
+    expect(screen.queryByTestId('planning-read-why')).toBeNull();
+    expect(screen.queryByTestId('planning-read-dated')).toBeNull();
+  }
+});
+
+for (const purpose of Object.keys(orders) as SimulationPurpose[]) {
+  test(`${purpose} choice, exact merged copy, mapping and change to skip`, () => {
+    render(<PlanningReadCard />);
+    fireEvent.click(screen.getByRole('radio', { name: copy.answers[purpose], exact: true }));
+    checkCard();
+    expect(getPlanningReadOrder(purpose)).toEqual(orders[purpose]);
+    expect(screen.getByTestId('planning-read-stance').textContent).toBe(copy.confirmation(copy.answers[purpose]));
+    expect(screen.getByTestId('planning-read-stance').textContent).toBe(`You said this portion is meant to support ${copy.answers[purpose]}. A planning view, not money set aside.`);
+    expect(screen.getByTestId('planning-read-why').textContent).toBe(copy.why[orders[purpose][0]]);
+    const rows = within(screen.getByTestId('planning-read-labels')).getAllByRole('listitem');
+    expect(rows.map(row => row.textContent)).toEqual(orders[purpose].map(label => copy.labels[label] + copy.sentences[label]));
+    expect(screen.queryByTestId('planning-read-dated')?.textContent ?? null).toBe(purpose === 'dated' ? copy.dated : null);
+    fireEvent.click(screen.getByRole('radio', { name: copy.answers.skip }));
+    expect(screen.getByTestId('planning-read-stance').textContent).toBe(copy.skipped);
+    expect(getPlanningReadOrder(getSimulationIntent())).toEqual(['regular', 'reserve', 'goals']);
+  });
+}
+
+test('choice changes affect the words and order only, and survive an in-session remount without persistence', () => {
+  const storageRead = vi.spyOn(Storage.prototype, 'getItem');
+  const storageWrite = vi.spyOn(Storage.prototype, 'setItem');
+  const storageRemove = vi.spyOn(Storage.prototype, 'removeItem');
+  const view = render(<PlanningReadCard />);
+  for (const purpose of ['regular', 'reserve', 'dated'] as const) {
+    fireEvent.click(screen.getByRole('radio', { name: copy.answers[purpose], exact: true }));
+    expect(getSimulationIntent()).toBe(purpose);
+  }
+  view.unmount(); render(<PlanningReadCard />);
+  expect((screen.getByRole('radio', { name: copy.answers.dated, exact: true }) as HTMLInputElement).checked).toBe(true);
+  expect(storageRead).not.toHaveBeenCalled();
+  expect(storageWrite).not.toHaveBeenCalled();
+  expect(storageRemove).not.toHaveBeenCalled();
+});
+
+for (const route of ['/dashboard', '/dashboard?example=own', '/dashboard-synthetic-journey?example=sarah', '/dashboard-synthetic-journey?example=daniel', '/dashboard?journey=class-a-val-002&example=sarah', '/dashboard?journey=class-a-val-002&example=daniel']) {
+  test(`no card on ${route}`, async () => {
+    await home(route);
+    expect(screen.queryByTestId('planning-read-card')).toBeNull();
+  });
+}
+test('the existing journey parameter also gates own simulation', async () => {
+  await home('/dashboard?journey=class-a-val-002&example=own');
+  checkCard();
+});
+
+test('locked copy is exact and includes no removed confirmation variant', () => {
+  expect(copy.question).toBe('What is this portion meant to support?');
+  expect(copy.answers).toEqual({ regular: 'A regular cost', dated: 'A payment on a date', reserve: 'A reserve for the unexpected', skip: 'Skip for now' });
+  expect(copy.skipped).toBe('This portion could go towards regular costs, a reserve, or something ahead. A planning view, not money set aside.');
+  expect(copy.dated).toBe('A payment on a date: see the Planning read.');
+  expect(copy.why).toEqual({ regular: "Regular costs: you'd use this for costs that come round often.", reserve: "Reserve: you'd want this to cover a surprise.", goals: "Goals: you'd keep this in view for something you're planning." });
+  expect(copy.sentences).toEqual({ regular: 'For costs that come round often, like rent or bills.', reserve: 'For something unexpected.', goals: "For something you're planning, like a payment on a date." });
+  expect(Object.keys(copy).join(' ')).not.toMatch(/standalone|toggle/i);
 });

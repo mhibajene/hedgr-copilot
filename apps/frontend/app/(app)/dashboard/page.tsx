@@ -18,6 +18,7 @@ import { formatLocalCurrency } from "../../../lib/utils/money";
 import { DanielExampleHome } from './DanielExampleHome';
 import { SarahExampleHome } from './SarahExampleHome';
 import { HomeHero } from './HomeHero';
+import { PlanningReadCard } from './PlanningReadCard';
 import { RateLine } from './RateLine';
 import { CurrencyInsight } from "./CurrencyInsight";
 import { EngineProtectiveGuidance } from "./EngineProtectiveGuidance";
@@ -414,9 +415,12 @@ export default function DashboardPage() {
       ) : null}
   </>;
   const balanceHero = syntheticJourneyActive ? (
+    <>
     <HomeHero label="Simulated Hedgr balance" labelId="dashboard-total-balance-label" usdAmount={ready && !cleanStartRequested ? displayedTotal : 0} currency={displayCurrency} ownSimulation figureTestId="usd-balance" testId="dashboard-balance" selector={<SimulationDisplayCurrencySelector placement="position" />} loading={positionLoading} isLoading={isLoading}>
       {balanceHeroTail}
     </HomeHero>
+    {selectedExample === "own" ? <PlanningReadCard /> : null}
+    </>
   ) : (
     <section
       className={`space-y-1 ${home.position}`}
