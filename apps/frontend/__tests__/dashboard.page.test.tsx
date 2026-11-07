@@ -1043,20 +1043,31 @@ const RESEARCH_PRE_RUNTIME_HASHES: Record<string, string> = {
   "app/research/stability-scenarios/page.tsx": "f45d77e2bbac700da54b6e6c2884b6c128b181a9256119cfc7002313baed4b32"
 };
 function s18ExcludedDigest() {
+  // PLAN-INTENT-001: only this exact new file is removed from the old inventory.
+  const intentPath = 'lib/state/simulation-intent.ts';
+  expect(s18Digest(readFileSync(resolve(intentPath), 'utf8'))).toBe('b3f8fd083a4f2ac3cfece67ce4668ac7f05ebada3adffc1c8b3914eaff0d1078');
   // Prove only the additive Sarah field changed before retaining the historical pin.
   expect(s18Digest(releaseGate003PreRuntime('lib/state/synthetic-journey.ts', readFileSync(resolve('lib/state/synthetic-journey.ts')).toString()))).toBe('ac3d3d29607619c2f8196a5ef062677c8a2796a531e87b31ad90106cce78a9f9');
   const files: string[] = [];
   function visit(path: string) {
     if (statSync(resolve(path)).isDirectory()) {
       for (const child of readdirSync(resolve(path)).sort()) visit(`${path}/${child}`);
-    } else files.push(path);
+    } else if (path !== intentPath) files.push(path);
   }
   S18_EXCLUDED_ROOTS.forEach(visit);
   return s18Digest(files.sort().map((path) => `${path}\0${RESEARCH_PRE_RUNTIME_HASHES[path] ?? (path === 'lib/state/synthetic-journey.ts' ? 'd1f5117cd75691c4d7404dbe7746673e3bdbd168c225f10bb5447163e3584366' : s18Digest(scPreRuntime(releaseGatePreRuntime(path, studyBridgePreRuntime(path, releaseGate002PreRuntime(path, releaseGate003PreRuntime(path, readFileSync(resolve(path)).toString())))), SC_ENGINE_SOURCE_EDITS[path] ?? [])))}`).join('\n'));
 }
 
-function s18OutsideTile(view: HTMLElement) {
+function s18OutsideTile(view: HTMLElement, ownSimulation = false) {
   const clone = view.cloneNode(true) as HTMLElement;
+  // PLAN-INTENT-001: verify the complete approved default card before reversal.
+  const cards = clone.querySelectorAll('[data-testid="planning-read-card"]');
+  expect(cards).toHaveLength(ownSimulation ? 1 : 0);
+  if (ownSimulation) {
+    expect(clone.querySelector('[data-component="HomeHero"]')?.nextElementSibling).toBe(cards[0]);
+    expect(s18Digest(cards[0].outerHTML)).toBe('53404db4ce0a35139d82a281f5b968eb77328c0ebd037d54136ecf7d295670cd');
+    cards[0].remove();
+  }
   clone.querySelector('[data-testid="dashboard-earn-tile"]')?.parentElement?.remove();
   if (clone.querySelector('#dashboard-example-picker')) {
     // HOME-SOFTHALO-RATESLIDER-BUNDLE-001: only the replaced modal/launcher region.
@@ -1194,7 +1205,7 @@ describe('S18 earn tile fence sweep (§384)', () => {
     for (const [route, mode] of cases) {
       setupS18(route, mode as 'simulated' | 'live');
       const view = await renderS18();
-      baseline[`${mode}:${route}`] = s18Digest(s18OutsideTile(view.container));
+      baseline[`${mode}:${route}`] = s18Digest(s18OutsideTile(view.container, route.includes('example=own')));
       if (route.includes('example=daniel')) {
         expect(screen.getByTestId('daniel-invariant').textContent).toBe('He made two deposits and none since. Each kwacha figure uses the example rate for its date.');
         expect(screen.getByTestId('chart-event-list').textContent).toContain('First deposit · 12 Jun · +$500.00');
@@ -1220,6 +1231,28 @@ describe('S18 earn tile fence sweep (§384)', () => {
     setupS18();
     await renderS18();
     expectS18Lock(screen.getByTestId('dashboard-earn-tile'), '5.00%');
+  });
+  test('PLAN-INTENT-001 reversal rejects altered, duplicate, missing and unexpected cards; other DOM stays pinned', async () => {
+    setupS18(`${B_ROUTES[0]}?example=own`);
+    const view = await renderS18();
+    const baseline = s18Digest(s18OutsideTile(view.container, true));
+    const mutate = () => view.container.cloneNode(true) as HTMLElement;
+    const duplicate = mutate();
+    duplicate.append(duplicate.querySelector('[data-testid="planning-read-card"]')!.cloneNode(true));
+    expect(() => s18OutsideTile(duplicate, true)).toThrow();
+    const misplaced = mutate();
+    misplaced.append(misplaced.querySelector('[data-testid="planning-read-card"]')!);
+    expect(() => s18OutsideTile(misplaced, true)).toThrow();
+    const altered = mutate();
+    altered.querySelector('[data-testid="planning-read-stance"]')!.append('PLAN-INTENT-001 mutation');
+    expect(() => s18OutsideTile(altered, true)).toThrow();
+    const missing = mutate();
+    missing.querySelector('[data-testid="planning-read-card"]')!.remove();
+    expect(() => s18OutsideTile(missing, true)).toThrow();
+    expect(() => s18OutsideTile(view.container, false)).toThrow();
+    const unrelated = mutate();
+    unrelated.append('PLAN-INTENT-001 mutation');
+    expect(s18Digest(s18OutsideTile(unrelated, true))).not.toBe(baseline);
   });
 });
 
