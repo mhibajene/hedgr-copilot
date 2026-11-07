@@ -811,10 +811,10 @@ export default function DashboardPage() {
           }`}
         >
           {currentOverview}
-          <EngineAllocationBands
+          {!syntheticJourneyActive ? <EngineAllocationBands
             engineState={engineState}
             collapsed={productSimulationActive}
-          />
+          /> : null}
           <ErrorState
             title="Unable to load your balance"
             description="We couldn't fetch your account balance. Please try again."

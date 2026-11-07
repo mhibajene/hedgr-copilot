@@ -88,7 +88,7 @@ test('SC13 labels-listed-once', () => {
 });
 test('SC14 held-strings-byte-identical and exact bounded runtime diff', () => {
   // PLAN-INTENT-001: pin the approved additions, never substitute old baselines.
-  for (const [path, hash] of Object.entries(PLAN_INTENT_ADDITIONS)) expect(digest(source(path)), path).toBe(hash);
+  for (const [path, hash] of Object.entries(PLAN_INTENT_ADDITIONS)) expect(digest(hierarchyPreRuntime(path, source(path))), path).toBe(hash);
   for (const [path, hash] of Object.entries(PROTECTED_BLOBS)) expect(digest(bundlePreRuntime(path, source(path))), path).toBe(hash);
   for (const {path, baseline, edits} of APPROVED_EDITS) {
     const original = ORIGINAL_SOURCES[path]; let approved = original;
@@ -518,6 +518,7 @@ const PLAN_INTENT_PAGE_EDITS = [
 ] as const;
 
 function bundlePreRuntime(path: string, value: string): string {
+  value = hierarchyPreRuntime(path, value);
   if (path === 'app/(app)/dashboard/page.tsx') {
     for (const [old, replacement] of PLAN_INTENT_PAGE_EDITS) {
       expect(value.split(replacement), 'PLAN-INTENT-001 exact page addition').toHaveLength(2);
@@ -643,6 +644,50 @@ function releaseGate003PreRuntime(path: string, value: string): string {
   for (const [old, replacement] of RELEASE_GATE_003_SOURCE_EDITS[path] ?? []) {
     expect(value.split(replacement), path).toHaveLength(2);
     value = value.replace(replacement, old);
+  }
+  return value;
+}
+
+// PLAN-INTENT-001: exact approved hierarchy edits, before every historical lock.
+const HIERARCHY_PAGE_EDITS: readonly (readonly [string, string])[] = [
+  [
+    "          ) : null}\n        </p>\n      ) : null}\n  </>;\n  const balanceHero = syntheticJourneyActive ? (\n    <>\n    <HomeHero label=\"Simulated Hedgr balance\" labelId=\"dashboard-total-balance-label\" usdAmount={ready && !cleanStartRequested ? displayedTotal : 0} currency={displayCurrency} ownSimulation figureTestId=\"usd-balance\" testId=\"dashboard-balance\" selector={<SimulationDisplayCurrencySelector placement=\"position\" />} loading={positionLoading} isLoading={isLoading}>\n      {balanceHeroTail}\n    </HomeHero>\n    {selectedExample === \"own\" ? <PlanningReadCard /> : null}\n    </>\n  ) : (\n    <section\n      className={`space-y-1 ${home.position}`}\n      aria-labelledby=\"dashboard-total-balance-label\"\n      data-testid=\"dashboard-balance\"\n",
+    "          ) : null}\n        </p>\n      ) : null}\n  </>;\n  const balanceHero = syntheticJourneyActive ? (\n    <HomeHero label=\"Simulated Hedgr balance\" labelId=\"dashboard-total-balance-label\" usdAmount={ready && !cleanStartRequested ? displayedTotal : 0} currency={displayCurrency} ownSimulation figureTestId=\"usd-balance\" testId=\"dashboard-balance\" selector={<SimulationDisplayCurrencySelector placement=\"position\" />} loading={positionLoading} isLoading={isLoading}>\n      {balanceHeroTail}\n    </HomeHero>\n  ) : (\n    <section\n      className={`space-y-1 ${home.position}`}\n      aria-labelledby=\"dashboard-total-balance-label\"\n      data-testid=\"dashboard-balance\"\n"
+  ],
+  [
+    "        latestChangeAmountUSD={syntheticComparison.lastEvent?.amountUSD}\n        latestChangeCreatedAt={syntheticComparison.lastEvent?.createdAt}\n        homeDate={today}\n        changeIncludedInBalance={positionDerivable}\n      />\n      {ownRateLine}\n    </div>\n  );\n\n  const positionLine = positionDerivable ? (\n    <ChartSourceAmountsContext.Provider value={sourceAmounts}><PositionLine entries={positionEntries} lastVisit={previousVisit} settle={arrivalSettle} visualise={syntheticJourneyActive} heroAmount={total} /></ChartSourceAmountsContext.Provider>\n",
+    "        latestChangeAmountUSD={syntheticComparison.lastEvent?.amountUSD}\n        latestChangeCreatedAt={syntheticComparison.lastEvent?.createdAt}\n        homeDate={today}\n        changeIncludedInBalance={positionDerivable}\n      />\n    </div>\n  );\n\n  const positionLine = positionDerivable ? (\n    <ChartSourceAmountsContext.Provider value={sourceAmounts}><PositionLine entries={positionEntries} lastVisit={previousVisit} settle={arrivalSettle} visualise={syntheticJourneyActive} heroAmount={total} /></ChartSourceAmountsContext.Provider>\n"
+  ],
+  [
+    "              {syntheticJourneyActive ? <strong>How you can tell</strong> : null}\n              <span>Check both entries in Activity.</span>\n            </li>\n          </ol>\n        </section>\n        {ownRateLine}\n      </div>\n    );\n  } else if (normalPosture && sinceSummary) {\n    homeObservation = (\n      <div className={home.observation}>\n",
+    "              {syntheticJourneyActive ? <strong>How you can tell</strong> : null}\n              <span>Check both entries in Activity.</span>\n            </li>\n          </ol>\n        </section>\n      </div>\n    );\n  } else if (normalPosture && sinceSummary) {\n    homeObservation = (\n      <div className={home.observation}>\n"
+  ],
+  [
+    "          {guaranteeLine}\n          {syntheticJourneyActive && sinceSummary.kind !== \"no-change\"\n            ? sinceLink(sinceSummary.kind === \"one\" ? \"See the entry\" : \"See all in Activity\")\n            : null}\n        </section>\n        {ownRateLine}\n      </div>\n    );\n  }\n\n  const currencyContext = currencyContextVisible ? (\n",
+    "          {guaranteeLine}\n          {syntheticJourneyActive && sinceSummary.kind !== \"no-change\"\n            ? sinceLink(sinceSummary.kind === \"one\" ? \"See the entry\" : \"See all in Activity\")\n            : null}\n        </section>\n      </div>\n    );\n  }\n\n  const currencyContext = currencyContextVisible ? (\n"
+  ],
+  [
+    "      }\n      className={home.overview}\n      data-testid=\"dashboard-current-overview\"\n    >\n      {syntheticJourneyActive ? (\n        <>\n          <div className={home.overviewGrid}>\n            <div className={home.positionPanel}>\n              {balanceHero}\n              {positionLine}\n            </div>\n            <div className={home.insights}>\n              {homeObservation}\n              {homeUtilities}\n            </div>\n          </div>\n          {currencyContext}\n        </>\n      ) : productSimulationActive ? (\n        <div className={home.overviewGrid}>\n          <div className={home.positionPanel}>{balanceHero}{positionLine}</div>\n          <div className={home.insights}>\n          {homeObservation}\n",
+    "      }\n      className={home.overview}\n      data-testid=\"dashboard-current-overview\"\n    >\n      {syntheticJourneyActive ? (\n        <div className=\"min-w-0 space-y-6\">\n          <div className={home.positionPanel}>{balanceHero}</div>\n          {homeObservation}\n          {homeUtilities}\n          {positionLine}\n          {selectedExample === \"own\" ? <PlanningReadCard /> : null}\n          <div className=\"min-w-0 space-y-2\">\n            {currencyContext}\n            {ownRateLine}\n          </div>\n        </div>\n      ) : productSimulationActive ? (\n        <div className={home.overviewGrid}>\n          <div className={home.positionPanel}>{balanceHero}{positionLine}</div>\n          <div className={home.insights}>\n          {homeObservation}\n"
+  ],
+  [
+    "          className={`mx-auto space-y-6 sm:space-y-8 ${\n            productSimulationActive ? \"max-w-5xl\" : \"max-w-2xl\"\n          }`}\n        >\n          {currentOverview}\n          <EngineAllocationBands\n            engineState={engineState}\n            collapsed={productSimulationActive}\n          />\n          <ErrorState\n            title=\"Unable to load your balance\"\n            description=\"We couldn't fetch your account balance. Please try again.\"\n            primaryAction={{ label: \"Retry\", onClick: refresh }}\n            data-testid=\"dashboard-error-state\"\n",
+    "          className={`mx-auto space-y-6 sm:space-y-8 ${\n            productSimulationActive ? \"max-w-5xl\" : \"max-w-2xl\"\n          }`}\n        >\n          {currentOverview}\n          {!syntheticJourneyActive ? <EngineAllocationBands\n            engineState={engineState}\n            collapsed={productSimulationActive}\n          /> : null}\n          <ErrorState\n            title=\"Unable to load your balance\"\n            description=\"We couldn't fetch your account balance. Please try again.\"\n            primaryAction={{ label: \"Retry\", onClick: refresh }}\n            data-testid=\"dashboard-error-state\"\n"
+  ],
+  [
+    "\n        {exampleActive ? (\n          <div className={home.support}>{disclosureSection}</div>\n        ) : syntheticJourneyActive ? (\n          <div className={home.support}>\n            <details className={home.accordion} data-testid=\"research-planning-targets\">\n              <summary className={home.accordionSummary}>\n                <span>Planning targets<span className={home.accordionSubtitle}>Targets only \u00b7 No money moved</span></span>\n                {accordionChevron}\n              </summary>\n              <div className={home.accordionContent}><EngineAllocationBands engineState={engineState} collapsed /></div>\n            </details>\n            {disclosureSection}\n          </div>\n        ) : null}\n\n\n",
+    "\n        {exampleActive ? (\n          <div className={home.support}>{disclosureSection}</div>\n        ) : syntheticJourneyActive ? (\n          <div className={home.support}>\n            {disclosureSection}\n          </div>\n        ) : null}\n\n\n"
+  ]
+];
+function hierarchyPreRuntime(path: string, value: string): string {
+  const edits = path === 'app/(app)/dashboard/page.tsx' ? HIERARCHY_PAGE_EDITS :
+    path === 'app/(app)/dashboard/PlanningReadCard.tsx' ? [
+      ['        <ul className="space-y-3" data-testid="planning-read-labels">', '        {intent !== \'skip\' ? <ul className="space-y-3" data-testid="planning-read-labels">'],
+      ['        </ul>', '        </ul> : null}'],
+    ] : [];
+  for (const [old, replacement] of [...edits].reverse()) {
+    expect(value.split(replacement), path).toHaveLength(2);
+    value = value.replace(replacement, () => old);
   }
   return value;
 }

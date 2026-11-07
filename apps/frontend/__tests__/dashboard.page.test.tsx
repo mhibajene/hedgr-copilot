@@ -14,6 +14,8 @@ import {
   waitFor,
   within,
 } from "@testing-library/react";
+import { EngineAllocationBands } from "../app/(app)/dashboard/EngineAllocationBands";
+import home from "../app/(app)/dashboard/synthetic-home.module.css";
 import { ENGINE_NOTICE_COPY } from "../lib/engine/notices";
 import type { EngineState } from "../lib/engine/types";
 import {
@@ -309,6 +311,10 @@ describe("DashboardPage engine trust surface", () => {
       screen.getByTestId("dashboard-current-status").querySelector("img")
     ).toBeNull();
 
+    expect(screen.queryByTestId("research-planning-targets")).toBeNull();
+    expect(screen.queryByTestId("engine-allocation-bands")).toBeNull();
+    // Retain the original target-copy/disclosure contract on the component.
+    render(<EngineAllocationBands engineState={getMockEngineState('normal')} collapsed />);
     const allocation = screen.getByTestId("engine-allocation-bands");
     expect(allocation.getAttribute("data-presentation")).toBe("collapsed");
     expect(allocation.textContent).toContain("What you are building toward");
@@ -927,7 +933,8 @@ test('Posture qualifier integrates across journey default live and balance-error
         render(<DashboardPage />);
         const header = screen.getByTestId('dashboard-current-status');
         expect(header.textContent?.split(B_QUALIFIER).length).toBe(mode === 'live' || posture !== 'normal' ? 2 : 1);
-        expect(screen.getByTestId('engine-allocation-bands').textContent?.split(B_QUALIFIER).length).toBe(2);
+        if (mode === 'journey') expect(screen.queryByTestId('engine-allocation-bands')).toBeNull();
+        else expect(screen.getByTestId('engine-allocation-bands').textContent?.split(B_QUALIFIER).length).toBe(2);
         if (mode !== 'journey') {
           const snapshot = screen.getByTestId('engine-stability-review-snapshot');
           expect(snapshot.textContent?.split(B_QUALIFIER).length).toBe(2);
@@ -1064,7 +1071,7 @@ function s18OutsideTile(view: HTMLElement, ownSimulation = false) {
   const cards = clone.querySelectorAll('[data-testid="planning-read-card"]');
   expect(cards).toHaveLength(ownSimulation ? 1 : 0);
   if (ownSimulation) {
-    expect(clone.querySelector('[data-component="HomeHero"]')?.nextElementSibling).toBe(cards[0]);
+    reverseHierarchyDom(clone, cards[0]);
     expect(s18Digest(cards[0].outerHTML)).toBe('53404db4ce0a35139d82a281f5b968eb77328c0ebd037d54136ecf7d295670cd');
     cards[0].remove();
   }
@@ -1250,6 +1257,13 @@ describe('S18 earn tile fence sweep (§384)', () => {
     missing.querySelector('[data-testid="planning-read-card"]')!.remove();
     expect(() => s18OutsideTile(missing, true)).toThrow();
     expect(() => s18OutsideTile(view.container, false)).toThrow();
+    const extra = mutate();
+    extra.querySelector('[data-testid="dashboard-simulation-utilities"]')!.insertAdjacentHTML('afterend', '<p>PLAN-INTENT-001 mutation</p>');
+    expect(() => s18OutsideTile(extra, true)).toThrow();
+    const reordered = mutate();
+    const nav = reordered.querySelector('[data-testid="dashboard-simulation-utilities"]')!;
+    nav.parentElement!.prepend(nav);
+    expect(() => s18OutsideTile(reordered, true)).toThrow();
     const unrelated = mutate();
     unrelated.append('PLAN-INTENT-001 mutation');
     expect(s18Digest(s18OutsideTile(unrelated, true))).not.toBe(baseline);
@@ -1590,4 +1604,34 @@ function qolPreRuntime(path: string, value: string): string {
   }
   expect(s18Digest(value), path).toBe(QOL_SOURCE_BASE[path]);
   return value;
+}
+
+// PLAN-INTENT-001: immutable removed region; other markup is moved, never discarded.
+const HISTORICAL_HOME_TARGETS = "<details class=\"_accordion_e19afb\" data-testid=\"research-planning-targets\"><summary class=\"_accordionSummary_e19afb\"><span>Planning targets<span class=\"_accordionSubtitle_e19afb\">Targets only \u00b7 No money moved</span></span><span class=\"_chevron_e19afb\" aria-hidden=\"true\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" focusable=\"false\"><path d=\"m7 10 5 5 5-5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg></span></summary><div class=\"_accordionContent_e19afb\"><section aria-labelledby=\"engine-allocation-bands-title\" class=\"space-y-4 border-t border-hedgr-100 bg-white pt-5 sm:pt-6\" data-testid=\"engine-allocation-bands\" data-presentation=\"collapsed\"><div class=\"space-y-2\"><h2 id=\"engine-allocation-bands-title\" class=\"text-lg font-semibold tracking-tight text-hedgr-800\">What you are building toward</h2><p class=\"max-w-xl text-sm leading-relaxed text-hedgr-500\" data-testid=\"engine-allocation-bands-caption\">Three purposes for planning ahead. They are guidance, not money set aside.</p></div><div class=\"space-y-4\"><dl class=\"overflow-hidden _purposes_2e9a7a\" data-testid=\"engine-allocation-target-roles\" aria-label=\"Planning purposes\"><div class=\"_purpose_2e9a7a\" data-testid=\"engine-allocation-role-coreTargetPct\"><dt class=\"text-sm font-semibold text-hedgr-800\">Now</dt><dd class=\"mt-1 text-xs leading-relaxed text-hedgr-500 sm:text-sm\">For what matters in the near term.</dd></div><div class=\"_purpose_2e9a7a\" data-testid=\"engine-allocation-role-liquidityTargetPct\"><dt class=\"text-sm font-semibold text-hedgr-800\">Reserve</dt><dd class=\"mt-1 text-xs leading-relaxed text-hedgr-500 sm:text-sm\">A buffer for surprises and setbacks.</dd></div><div class=\"_purpose_2e9a7a\" data-testid=\"engine-allocation-role-yieldCapPct\"><dt class=\"text-sm font-semibold text-hedgr-800\">Growth</dt><dd class=\"mt-1 text-xs leading-relaxed text-hedgr-500 sm:text-sm\">For future opportunities.</dd></div></dl><p class=\"max-w-2xl text-hedgr-dark _planningBoundary_2e9a7a\" data-testid=\"engine-allocation-boundary\">These are planning purposes, not separate balances. They do not divide or move simulated money.</p><details data-testid=\"engine-allocation-values-details\"><summary class=\"inline-flex min-h-11 cursor-pointer items-center text-sm font-semibold text-hedgr-600 hover:text-hedgr-primary focus:outline-none focus:ring-2 focus:ring-hedgr-500 focus:ring-offset-2\">View planning percentages</summary><p class=\"mt-4 text-xs leading-relaxed text-hedgr-500\">Illustrative example values, not live targets or advice</p><dl class=\"mt-4 divide-y divide-hedgr-100 border-y border-hedgr-100\" data-testid=\"engine-allocation-structure\"><div class=\"flex items-center justify-between gap-4 py-3\" data-testid=\"engine-allocation-band-coreTargetPct\" data-guidance-row=\"true\"><dt class=\"text-sm font-medium text-hedgr-800\">Now</dt><dd class=\"text-sm font-semibold tabular-nums text-hedgr-800\">50%</dd></div><div class=\"flex items-center justify-between gap-4 py-3\" data-testid=\"engine-allocation-band-liquidityTargetPct\" data-guidance-row=\"true\"><dt class=\"text-sm font-medium text-hedgr-800\">Reserve</dt><dd class=\"text-sm font-semibold tabular-nums text-hedgr-800\">30%</dd></div><div class=\"flex items-center justify-between gap-4 py-3\" data-testid=\"engine-allocation-band-yieldCapPct\" data-guidance-row=\"true\"><dt class=\"text-sm font-medium text-hedgr-800\">Growth</dt><dd class=\"text-sm font-semibold tabular-nums text-hedgr-800\">20%</dd></div></dl><p class=\"mt-3 text-xs leading-relaxed text-hedgr-500\">The percentages show how the plan is divided in this example. No real money is split or moved.</p></details></div></section></div></details>";
+function reverseHierarchyDom(clone: HTMLElement, card: Element) {
+  const overview = clone.querySelector('[data-testid="dashboard-current-overview"]')!;
+  const stack = overview.firstElementChild!;
+  expect(stack.getAttributeNames()).toEqual(['class']);
+  expect(stack.className).toBe('min-w-0 space-y-6');
+  const hero = stack.firstElementChild!;
+  const observation = stack.querySelector('[data-testid="dashboard-current-status"]')!.parentElement!;
+  const utilities = stack.querySelector('[data-testid="dashboard-simulation-utilities"]')!;
+  const position = stack.querySelector('[data-testid="dashboard-position-line"]');
+  const context = stack.lastElementChild!;
+  expect(Array.from(stack.children)).toEqual([hero, observation, utilities, ...(position ? [position] : []), card, context]);
+  expect(context.getAttributeNames()).toEqual(['class']);
+  expect(context.className).toBe('min-w-0 space-y-2');
+  const currency = context.querySelector('[data-testid="currency-insight"]');
+  const rate = context.querySelector('[data-component="RateLine"]')!;
+  expect(Array.from(context.children)).toEqual([...(currency ? [currency] : []), rate]);
+  observation.append(rate);
+  if (position) hero.append(position);
+  const grid = document.createElement('div'); grid.className = home.overviewGrid;
+  const insights = document.createElement('div'); insights.className = home.insights;
+  insights.append(observation, utilities); grid.append(hero, insights);
+  stack.replaceWith(grid, ...(currency ? [currency] : []));
+  const disclosures = clone.querySelector('[data-testid="dashboard-disclosures"]')!;
+  expect(clone.querySelectorAll('[data-testid="research-planning-targets"]')).toHaveLength(0);
+  expect(s18Digest(HISTORICAL_HOME_TARGETS)).toBe("cc61667a2911a632a287a0e8dc2db352ff2e61fb5140121858038b3b780f7994");
+  disclosures.insertAdjacentHTML('beforebegin', HISTORICAL_HOME_TARGETS);
 }

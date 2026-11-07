@@ -341,7 +341,11 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   await expect(page.getByTestId('dashboard-current-status')).not.toContainText(
     /score|gauge|safe|all clear/i
   );
-  await page.getByTestId('research-planning-targets').locator(':scope > summary').click();
+  await expect(page.getByTestId('research-planning-targets')).toHaveCount(0);
+  await expect(page.getByTestId('planning-read-card')).toBeVisible();
+  // The unchanged planning contract remains on ordinary Home.
+  await page.goto('/dashboard');
+  await page.getByTestId('dashboard-planning-targets').locator(':scope > summary').click();
   const stabilityGuidance = page.getByTestId('engine-allocation-bands');
   await expect(stabilityGuidance).toHaveAttribute(
     'data-presentation',
@@ -386,6 +390,7 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
   await expect(page.getByTestId('engine-allocation-boundary')).toContainText(
     'do not divide or move simulated money'
   );
+  await page.goto('/dashboard-synthetic-journey');
   await expect(page.getByTestId('dashboard-optional-actions')).toHaveCount(0);
   await expect(
     page.getByTestId('engine-stability-review-snapshot')
@@ -730,7 +735,7 @@ test('mobile keeps the persistent boundary and current research step visible', a
     .getByTestId('dashboard-current-overview')
     .boundingBox();
   const planningBox = await page
-    .getByTestId('research-planning-targets')
+    .getByTestId('planning-read-card')
     .boundingBox();
   expect(currentOverviewBox?.y).toBeLessThan(844);
   expect(planningBox?.y).toBeLessThan(844 * 2);
