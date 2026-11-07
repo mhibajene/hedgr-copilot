@@ -10,6 +10,33 @@ test.beforeEach(async ({ context, page }) => {
   await expect(page).toHaveURL(/\/dashboard/);
 });
 
+test('PLAN-INTENT-001 hierarchy places movement before intent and removes Home targets', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.evaluate(() => {
+    localStorage.setItem('hedgr:ledger', JSON.stringify({ version: 2, transactions: [
+      { txn_ref: 'plan-intent-deposit', type: 'deposit', status: 'settled', amount_zmw: 100, amount_usd: 5, fx_rate: 20, created_at: 1000, updated_at: 1000 },
+      { txn_ref: 'plan-intent-withdrawal', type: 'withdrawal', status: 'settled', amount_zmw: 0, amount_usd: 2, fx_rate: 0, created_at: 2000, updated_at: 2000 },
+    ] }));
+    localStorage.setItem('hedgr:last-home-visit', String(Date.now()));
+  });
+  await page.goto('/dashboard-synthetic-journey');
+  await expect(page.getByTestId('usd-balance')).toHaveText('$3.00');
+  const regions = [page.locator('[data-component="HomeHero"]'), ...[
+    'dashboard-current-status', 'dashboard-simulation-utilities', 'dashboard-position-line',
+    'planning-read-card', 'currency-insight', 'dashboard-disclosures', 'dashboard-restart-journey',
+  ].map(id => page.getByTestId(id))];
+  for (let i = 1; i < regions.length; i++) {
+    const previous = (await regions[i - 1].boundingBox())!;
+    const next = (await regions[i].boundingBox())!;
+    expect(next.y).toBeGreaterThanOrEqual(previous.y + previous.height);
+  }
+  await expect(page.getByTestId('research-planning-targets')).toHaveCount(0);
+  const rate = page.locator('[data-component="RateLine"]');
+  await expect(rate).toHaveText('Example rate: ZMW 27 per US dollar. Not a live rate.');
+  await expect(page.getByTestId('currency-insight').locator('..').locator('[data-component="RateLine"]')).toHaveCount(1);
+  await expect(page.getByRole('button', { name: 'Currency context', exact: true })).toBeVisible();
+});
+
 test('PLAN-INTENT-001 own simulation offers an optional purpose question after its hero', async ({ page }) => {
   await page.goto('/dashboard-synthetic-journey');
   await expect(page.locator('[data-component="HomeHero"]')).toBeVisible();

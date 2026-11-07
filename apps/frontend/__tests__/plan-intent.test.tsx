@@ -133,3 +133,34 @@ test('locked copy is exact and includes no removed confirmation variant', () => 
   expect(copy.sentences).toEqual({ regular: 'For costs that come round often, like rent or bills.', reserve: 'For something unexpected.', goals: "For something you're planning, like a payment on a date." });
   expect(Object.keys(copy).join(' ')).not.toMatch(/standalone|toggle/i);
 });
+
+test('PLAN-INTENT-001 hierarchy keeps movement above intent, currency and disclosures without Home targets', async () => {
+  const view = await home();
+  const regions = [
+    view.container.querySelector('[data-component="HomeHero"]')!,
+    screen.getByTestId('dashboard-current-status'),
+    screen.getByTestId('dashboard-simulation-utilities'),
+    screen.getByTestId('dashboard-position-line'),
+    screen.getByTestId('planning-read-card'),
+    screen.getByTestId('currency-insight'),
+    screen.getByTestId('dashboard-disclosures'),
+  ];
+  for (let i = 1; i < regions.length; i++) {
+    expect(regions[i - 1].compareDocumentPosition(regions[i]) & Node.DOCUMENT_POSITION_FOLLOWING).not.toBe(0);
+  }
+  expect(screen.queryByTestId('research-planning-targets')).toBeNull();
+  const rate = view.container.querySelector('[data-component="RateLine"]')!;
+  expect(rate.textContent).toBe('Example rate: ZMW 27 per US dollar. Not a live rate.');
+  expect(screen.getByTestId('currency-insight').parentElement!.contains(rate)).toBe(true);
+  expect(screen.getByTestId('dashboard-current-status').parentElement!.contains(rate)).toBe(false);
+});
+
+test('PLAN-INTENT-001 skipped read omits every purpose definition and Why line', () => {
+  render(<PlanningReadCard />);
+  fireEvent.click(screen.getByRole('radio', { name: copy.answers.skip, exact: true }));
+  checkCard();
+  expect(screen.getByTestId('planning-read-stance').textContent).toBe(copy.skipped);
+  expect(screen.queryByTestId('planning-read-labels')).toBeNull();
+  expect(screen.queryByTestId('planning-read-why')).toBeNull();
+  for (const text of [...Object.values(copy.sentences), ...Object.values(copy.why)]) expect(screen.queryByText(text, { exact: true })).toBeNull();
+});
