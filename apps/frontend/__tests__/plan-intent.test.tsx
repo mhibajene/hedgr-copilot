@@ -14,7 +14,7 @@ import { usePathname, useSearchParams } from 'next/navigation';
 import { useLedgerStore } from '../lib/state/ledger';
 import { PlanningReadCard } from '../app/(app)/dashboard/PlanningReadCard';
 import { PLAN_INTENT_COPY as copy } from '../lib/copy/plan-intent-copy';
-import { getPlanningReadOrder, getSimulationIntent, setSimulationIntent, type SimulationPurpose } from '../lib/state/simulation-intent';
+import { getPlanningReadOrder, getSimulationIntent, setSimulationIntent, SIMULATION_INTENT_KEY, type SimulationPurpose } from '../lib/state/simulation-intent';
 
 beforeEach(() => {
   vi.stubEnv('NEXT_PUBLIC_AUTH_MODE', 'mock');
@@ -36,11 +36,7 @@ async function home(route = '/dashboard-synthetic-journey') {
   return view;
 }
 
-const orders = {
-  regular: ['regular', 'reserve', 'goals'],
-  dated: ['goals', 'regular', 'reserve'],
-  reserve: ['reserve', 'regular', 'goals'],
-} as const;
+const labels = { regular: 'regular', reserve: 'reserve', dated: 'goals' } as const;
 function checkCard() {
   const card = screen.getByTestId('planning-read-card');
   const text = card.textContent!;
@@ -51,80 +47,108 @@ function checkCard() {
   expect(text).not.toMatch(/You told us|Nothing has moved/);
   return card;
 }
-
-test('PLAN-INTENT-001 purpose selection preserves the hero after the movement group', async () => {
-  const view = await home();
-  const card = checkCard();
+function expectChooser() {
+  checkCard();
   expect(screen.getByRole('group', { name: copy.question })).not.toBeNull();
-  const hero = view.container.querySelector('[data-component="HomeHero"]')!;
-  expect(screen.getByTestId('dashboard-position-line').nextElementSibling).toBe(card);
-  expect(screen.queryByTestId('research-planning-targets')).toBeNull();
-  const heroBefore = hero.innerHTML;
-  fireEvent.click(screen.getByRole('radio', { name: copy.answers.dated, exact: true }));
-  expect(hero.innerHTML).toBe(heroBefore);
-  expect(screen.queryByTestId('research-planning-targets')).toBeNull();
-  expect(hero.querySelector('[data-testid="usd-balance"]')?.textContent).toBe('$0.00');
-});
-
-test('default read has the approved words-only order; Skip leaves only its stance', () => {
-  render(<PlanningReadCard />);
-  for (const skip of [false, true]) {
-    if (skip) fireEvent.click(screen.getByRole('radio', { name: copy.answers.skip }));
-    checkCard();
-    expect(screen.getByTestId('planning-read-stance').textContent).toBe(copy.skipped);
-    if (skip) expect(screen.queryByTestId('planning-read-labels')).toBeNull();
-    else expect(within(screen.getByTestId('planning-read-labels')).getAllByRole('heading').map(n => n.textContent)).toEqual(['Regular costs', 'Reserve', 'Goals']);
-    expect(screen.queryByTestId('planning-read-why')).toBeNull();
-    expect(screen.queryByTestId('planning-read-dated')).toBeNull();
-  }
-});
-
-for (const purpose of Object.keys(orders) as SimulationPurpose[]) {
-  test(`${purpose} choice, exact merged copy, mapping and change to skip`, () => {
-    render(<PlanningReadCard />);
-    fireEvent.click(screen.getByRole('radio', { name: copy.answers[purpose], exact: true }));
-    checkCard();
-    expect(getPlanningReadOrder(purpose)).toEqual(orders[purpose]);
-    expect(screen.getByTestId('planning-read-stance').textContent).toBe(copy.confirmation(copy.answers[purpose]));
-    expect(screen.getByTestId('planning-read-stance').textContent).toBe(`You said this portion is meant to support ${copy.answers[purpose]}. A planning view, not money set aside.`);
-    expect(screen.getByTestId('planning-read-why').textContent).toBe(copy.why[orders[purpose][0]]);
-    const rows = within(screen.getByTestId('planning-read-labels')).getAllByRole('listitem');
-    expect(rows.map(row => row.textContent)).toEqual(orders[purpose].map(label => copy.labels[label] + copy.sentences[label]));
-    expect(screen.queryByTestId('planning-read-dated')?.textContent ?? null).toBe(purpose === 'dated' ? copy.dated : null);
-    fireEvent.click(screen.getByRole('radio', { name: copy.answers.skip }));
-    expect(screen.getByTestId('planning-read-stance').textContent).toBe(copy.skipped);
-    expect(getPlanningReadOrder(getSimulationIntent())).toEqual(['regular', 'reserve', 'goals']);
-  });
+  expect(screen.getAllByRole('radio').map(n => n.parentElement!.textContent)).toEqual([copy.labels.regular, copy.labels.reserve, copy.labels.goals]);
+  expect(screen.getByRole('button', { name: copy.answers.skip })).not.toBeNull();
+  expect(screen.queryByRole('button', { name: copy.change })).toBeNull();
+  expect(screen.queryByTestId('planning-read-stance')).toBeNull();
+  expect(screen.queryByTestId('planning-read-why')).toBeNull();
+  expect(document.querySelectorAll('input:checked')).toHaveLength(0);
 }
 
-test('choice changes affect the words and order only, and survive an in-session remount without persistence', () => {
-  const storageRead = vi.spyOn(Storage.prototype, 'getItem');
-  const storageWrite = vi.spyOn(Storage.prototype, 'setItem');
-  const storageRemove = vi.spyOn(Storage.prototype, 'removeItem');
-  const view = render(<PlanningReadCard />);
-  for (const purpose of ['regular', 'reserve', 'dated'] as const) {
-    fireEvent.click(screen.getByRole('radio', { name: copy.answers[purpose], exact: true }));
-    expect(getSimulationIntent()).toBe(purpose);
-  }
-  view.unmount(); render(<PlanningReadCard />);
-  expect((screen.getByRole('radio', { name: copy.answers.dated, exact: true }) as HTMLInputElement).checked).toBe(true);
-  expect(storageRead).not.toHaveBeenCalled();
-  expect(storageWrite).not.toHaveBeenCalled();
-  expect(storageRemove).not.toHaveBeenCalled();
+test('PLAN-INTENT-001 fresh chooser has three purpose radios and no echo', () => {
+  render(<PlanningReadCard />); expectChooser();
 });
-
-for (const route of ['/dashboard', '/dashboard?example=own', '/dashboard-synthetic-journey?example=sarah', '/dashboard-synthetic-journey?example=daniel', '/dashboard?journey=class-a-val-002&example=sarah', '/dashboard?journey=class-a-val-002&example=daniel']) {
-  test(`no card on ${route}`, async () => {
-    await home(route);
-    expect(screen.queryByTestId('planning-read-card')).toBeNull();
+for (const purpose of Object.keys(labels) as SimulationPurpose[]) {
+  test(`${purpose}: collapse, exact merged echo/Why, Change clears the remembered answer`, () => {
+    render(<PlanningReadCard />);
+    const label = labels[purpose];
+    fireEvent.click(screen.getByRole('radio', { name: copy.labels[label], exact: true }));
+    const card = checkCard();
+    expect(screen.queryByRole('group')).toBeNull();
+    expect(screen.queryAllByRole('radio')).toHaveLength(0);
+    expect(screen.queryByRole('button', { name: copy.answers.skip })).toBeNull();
+    expect(screen.getByTestId('planning-read-stance').textContent).toBe(copy.confirmation(copy.labels[label]));
+    expect(screen.getByTestId('planning-read-stance').textContent).toBe(`You said this portion is meant to support ${copy.labels[label]}. A planning view, not money set aside.`);
+    expect(screen.getByTestId('planning-read-why').textContent).toBe(copy.why[label]);
+    expect(screen.getAllByTestId('planning-read-why')).toHaveLength(1);
+    for (const other of ['regular', 'reserve', 'goals'] as const) if (other !== label) expect(screen.queryByText(copy.why[other], { exact: true })).toBeNull();
+    for (const sentence of Object.values(copy.sentences)) expect(screen.queryByText(sentence, { exact: true })).toBeNull();
+    expect(within(card).queryByRole('list')).toBeNull();
+    expect(screen.queryByTestId('planning-read-dated')?.textContent ?? null).toBe(purpose === 'dated' ? copy.dated : null);
+    expect(getPlanningReadOrder(purpose)[0]).toBe(label);
+    expect(localStorage.getItem(SIMULATION_INTENT_KEY)).toBe(purpose);
+    fireEvent.click(screen.getByRole('button', { name: copy.change }));
+    expectChooser();
+    expect(getSimulationIntent()).toBeNull();
+    expect(localStorage.getItem(SIMULATION_INTENT_KEY)).toBeNull();
+    fireEvent.click(screen.getByRole('button', { name: copy.answers.skip }));
+    expect(screen.getByTestId('planning-read-stance').textContent).toBe(copy.skipped);
+    fireEvent.click(screen.getByRole('button', { name: copy.change }));
+    fireEvent.click(screen.getByRole('radio', { name: copy.labels[label], exact: true }));
+    expect(getSimulationIntent()).toBe(purpose);
   });
+}
+test('Skip collapses to only the exact skipped line and Change, with no Why or definitions', () => {
+  render(<PlanningReadCard />);
+  fireEvent.click(screen.getByRole('button', { name: copy.answers.skip }));
+  const card = checkCard();
+  expect(card.textContent).toBe(copy.skipped + copy.change);
+  expect(screen.queryByRole('group')).toBeNull();
+  expect(screen.queryByTestId('planning-read-why')).toBeNull();
+  expect(screen.queryByTestId('planning-read-dated')).toBeNull();
+  fireEvent.click(screen.getByRole('button', { name: copy.change })); expectChooser();
+});
+test('device storage hydrates valid answers, ignores malformed values and retains a blocked-store fallback', () => {
+  localStorage.setItem(SIMULATION_INTENT_KEY, 'dated');
+  const view = render(<PlanningReadCard />);
+  expect(screen.getByTestId('planning-read-stance').textContent).toBe(copy.confirmation(copy.labels.goals));
+  view.unmount(); localStorage.setItem(SIMULATION_INTENT_KEY, 'malformed'); render(<PlanningReadCard />); expectChooser();
+  const write = vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => { throw new Error('blocked fixture'); });
+  fireEvent.click(screen.getByRole('radio', { name: copy.labels.reserve, exact: true }));
+  expect(getSimulationIntent()).toBe('reserve');
+  fireEvent.click(screen.getByRole('button', { name: copy.change })); expectChooser();
+  write.mockRestore();
+});
+test('choice changes only intent; Restart cancel retains it and accepted Restart clears it', async () => {
+  await home();
+  const hero = screen.getByTestId('dashboard-balance').outerHTML;
+  const activity = screen.getByTestId('dashboard-position-line').outerHTML;
+  fireEvent.click(screen.getByRole('radio', { name: copy.labels.goals, exact: true }));
+  expect(screen.getByTestId('dashboard-balance').outerHTML).toBe(hero);
+  expect(screen.getByTestId('dashboard-position-line').outerHTML).toBe(activity);
+  cleanup();
+  const now = Date.now();
+  localStorage.setItem('hedgr:ledger', JSON.stringify({ version: 2, transactions: [{ txn_ref:'intent-reset', type:'deposit', status:'settled', amount_zmw:100, amount_usd:5, fx_rate:20, created_at:now, updated_at:now }] }));
+  await home();
+  const confirm = vi.spyOn(window, 'confirm').mockReturnValue(false);
+  fireEvent.click(screen.getByRole('button', { name: 'Restart simulated journey' }));
+  expect(getSimulationIntent()).toBe('dated');
+  confirm.mockReturnValue(true);
+  fireEvent.click(screen.getByRole('button', { name: 'Restart simulated journey' }));
+  expectChooser(); expect(localStorage.getItem(SIMULATION_INTENT_KEY)).toBeNull();
+});
+test('eligible reset URL clears intent, while Sarah and Daniel neither render nor clear it', async () => {
+  setSimulationIntent('reserve');
+  await home('/dashboard?reset=1');
+  expect(getSimulationIntent()).toBe('reserve'); cleanup();
+  for (const example of ['sarah','daniel']) {
+    await home(`/dashboard-synthetic-journey?example=${example}`);
+    expect(screen.queryByTestId('planning-read-card')).toBeNull(); expect(getSimulationIntent()).toBe('reserve'); cleanup();
+  }
+  await home('/dashboard-synthetic-journey?reset=1');
+  expectChooser(); expect(getSimulationIntent()).toBeNull();
+});
+for (const route of ['/dashboard', '/dashboard?example=own', '/dashboard-synthetic-journey?example=sarah', '/dashboard-synthetic-journey?example=daniel', '/dashboard?journey=class-a-val-002&example=sarah', '/dashboard?journey=class-a-val-002&example=daniel']) {
+  test(`no card on ${route}`, async () => { await home(route); expect(screen.queryByTestId('planning-read-card')).toBeNull(); });
 }
 test('the existing journey parameter also gates own simulation', async () => {
-  await home('/dashboard?journey=class-a-val-002&example=own');
-  checkCard();
+  await home('/dashboard?journey=class-a-val-002&example=own'); expectChooser();
 });
-
 test('locked copy is exact and includes no removed confirmation variant', () => {
+  expect(copy.change).toBe('Change');
   expect(copy.question).toBe('What is this portion meant to support?');
   expect(copy.answers).toEqual({ regular: 'A regular cost', dated: 'A payment on a date', reserve: 'A reserve for the unexpected', skip: 'Skip for now' });
   expect(copy.skipped).toBe('This portion could go towards regular costs, a reserve, or something ahead. A planning view, not money set aside.');
@@ -153,27 +177,4 @@ test('PLAN-INTENT-001 hierarchy keeps movement above intent, currency and disclo
   expect(rate.textContent).toBe('Example rate: ZMW 27 per US dollar. Not a live rate.');
   expect(screen.getByTestId('currency-insight').parentElement!.contains(rate)).toBe(true);
   expect(screen.getByTestId('dashboard-current-status').parentElement!.contains(rate)).toBe(false);
-});
-
-test('PLAN-INTENT-001 skipped read omits every purpose definition and Why line', () => {
-  render(<PlanningReadCard />);
-  fireEvent.click(screen.getByRole('radio', { name: copy.answers.skip, exact: true }));
-  checkCard();
-  expect(screen.getByTestId('planning-read-stance').textContent).toBe(copy.skipped);
-  expect(screen.queryByTestId('planning-read-labels')).toBeNull();
-  expect(screen.queryByTestId('planning-read-why')).toBeNull();
-  for (const text of [...Object.values(copy.sentences), ...Object.values(copy.why)]) expect(screen.queryByText(text, { exact: true })).toBeNull();
-});
-
-test('PLAN-INTENT-001 fresh chooser has three purpose radios and no echo', () => {
-  render(<PlanningReadCard />);
-  expect(screen.getAllByRole('radio')).toHaveLength(3);
-  expect(screen.queryByTestId('planning-read-stance')).toBeNull();
-});
-
-test('PLAN-INTENT-001 selecting a purpose collapses the chooser', () => {
-  render(<PlanningReadCard />);
-  fireEvent.click(screen.getAllByRole('radio')[0]);
-  expect(screen.queryByRole('group', { name: copy.question })).toBeNull();
-  expect(screen.getByTestId('planning-read-stance')).not.toBeNull();
 });

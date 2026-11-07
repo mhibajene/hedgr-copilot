@@ -19,6 +19,7 @@ import { DanielExampleHome } from './DanielExampleHome';
 import { SarahExampleHome } from './SarahExampleHome';
 import { HomeHero } from './HomeHero';
 import { PlanningReadCard } from './PlanningReadCard';
+import { setSimulationIntent } from '../../../lib/state/simulation-intent';
 import { RateLine } from './RateLine';
 import { CurrencyInsight } from "./CurrencyInsight";
 import { EngineProtectiveGuidance } from "./EngineProtectiveGuidance";
@@ -169,6 +170,7 @@ export default function DashboardPage() {
     if (cleanStartRequested || (sarahExample && searchParams?.has(CLASS_A_VAL_002_RESET_PARAM))) {
       // §374: eligible Sarah consumes reset while refusing all simulation writes.
       if (!sarahExample) {
+        if (syntheticJourneyActive && selectedExample === "own") setSimulationIntent(null);
         clearTransactions();
         clearSimulationReceipt();
         removeRetiredWalletBalance();
@@ -230,6 +232,7 @@ export default function DashboardPage() {
     );
     if (!confirmed) return;
 
+    setSimulationIntent(null);
     clearTransactions();
     removeRetiredWalletBalance();
     clearLastVisit();

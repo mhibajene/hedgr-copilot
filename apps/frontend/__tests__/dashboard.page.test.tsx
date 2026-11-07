@@ -1052,7 +1052,7 @@ const RESEARCH_PRE_RUNTIME_HASHES: Record<string, string> = {
 function s18ExcludedDigest() {
   // PLAN-INTENT-001: only this exact new file is removed from the old inventory.
   const intentPath = 'lib/state/simulation-intent.ts';
-  expect(s18Digest(readFileSync(resolve(intentPath), 'utf8'))).toBe('b3f8fd083a4f2ac3cfece67ce4668ac7f05ebada3adffc1c8b3914eaff0d1078');
+  expect(s18Digest(postSelectStatePreRuntime(readFileSync(resolve(intentPath), 'utf8')))).toBe('b3f8fd083a4f2ac3cfece67ce4668ac7f05ebada3adffc1c8b3914eaff0d1078');
   // Prove only the additive Sarah field changed before retaining the historical pin.
   expect(s18Digest(releaseGate003PreRuntime('lib/state/synthetic-journey.ts', readFileSync(resolve('lib/state/synthetic-journey.ts')).toString()))).toBe('ac3d3d29607619c2f8196a5ef062677c8a2796a531e87b31ad90106cce78a9f9');
   const files: string[] = [];
@@ -1072,7 +1072,7 @@ function s18OutsideTile(view: HTMLElement, ownSimulation = false) {
   expect(cards).toHaveLength(ownSimulation ? 1 : 0);
   if (ownSimulation) {
     reverseHierarchyDom(clone, cards[0]);
-    expect(s18Digest(cards[0].outerHTML)).toBe('53404db4ce0a35139d82a281f5b968eb77328c0ebd037d54136ecf7d295670cd');
+    expect(s18Digest(postSelectCardPreRuntime(cards[0].outerHTML))).toBe('53404db4ce0a35139d82a281f5b968eb77328c0ebd037d54136ecf7d295670cd');
     cards[0].remove();
   }
   clone.querySelector('[data-testid="dashboard-earn-tile"]')?.parentElement?.remove();
@@ -1251,7 +1251,7 @@ describe('S18 earn tile fence sweep (§384)', () => {
     misplaced.append(misplaced.querySelector('[data-testid="planning-read-card"]')!);
     expect(() => s18OutsideTile(misplaced, true)).toThrow();
     const altered = mutate();
-    altered.querySelector('[data-testid="planning-read-stance"]')!.append('PLAN-INTENT-001 mutation');
+    altered.querySelector('legend')!.append('PLAN-INTENT-001 mutation');
     expect(() => s18OutsideTile(altered, true)).toThrow();
     const missing = mutate();
     missing.querySelector('[data-testid="planning-read-card"]')!.remove();
@@ -1634,4 +1634,29 @@ function reverseHierarchyDom(clone: HTMLElement, card: Element) {
   expect(clone.querySelectorAll('[data-testid="research-planning-targets"]')).toHaveLength(0);
   expect(s18Digest(HISTORICAL_HOME_TARGETS)).toBe("cc61667a2911a632a287a0e8dc2db352ff2e61fb5140121858038b3b780f7994");
   disclosures.insertAdjacentHTML('beforebegin', HISTORICAL_HOME_TARGETS);
+}
+
+const POST_SELECT_STATE_EDITS: readonly (readonly [string, string])[] = [
+  [
+    "\nexport type SimulationPurpose = 'regular' | 'dated' | 'reserve';\nexport type SimulationIntent = SimulationPurpose | 'skip' | null;\nexport type PlanningReadLabel = 'regular' | 'reserve' | 'goals';\n\nconst DEFAULT_ORDER: readonly PlanningReadLabel[] = ['regular', 'reserve', 'goals'];\nconst PURPOSE_LABEL: Record<SimulationPurpose, PlanningReadLabel> = {\n  regular: 'regular', dated: 'goals', reserve: 'reserve',\n};\n\n",
+    "\nexport type SimulationPurpose = 'regular' | 'dated' | 'reserve';\nexport type SimulationIntent = SimulationPurpose | 'skip' | null;\nexport type PlanningReadLabel = 'regular' | 'reserve' | 'goals';\n\nexport const SIMULATION_INTENT_KEY = 'hedgr.simulation.intent';\nconst DEFAULT_ORDER: readonly PlanningReadLabel[] = ['regular', 'reserve', 'goals'];\nconst PURPOSE_LABEL: Record<SimulationPurpose, PlanningReadLabel> = {\n  regular: 'regular', dated: 'goals', reserve: 'reserve',\n};\n\n"
+  ],
+  [
+    "  if (intent === null || intent === 'skip') return DEFAULT_ORDER;\n  const selected = PURPOSE_LABEL[intent];\n  return [selected, ...DEFAULT_ORDER.filter(label => label !== selected)];\n}\n\n// PLAN-INTENT-001: document-lifetime state only; no browser storage or external events.\nlet intent: SimulationIntent = null;\nconst listeners = new Set<() => void>();\nconst serverSnapshot = (): SimulationIntent => null;\n\nexport function getSimulationIntent(): SimulationIntent { return intent; }\n\nexport function setSimulationIntent(value: SimulationIntent): void {\n  if (value === intent) return;\n  intent = value;\n  listeners.forEach(listener => listener());\n}\n\nfunction subscribe(listener: () => void): () => void {\n  listeners.add(listener);\n  return () => { listeners.delete(listener); };\n}\n\nexport function useSimulationIntent(): SimulationIntent {\n  return useSyncExternalStore(subscribe, getSimulationIntent, serverSnapshot);\n}\n",
+    "  if (intent === null || intent === 'skip') return DEFAULT_ORDER;\n  const selected = PURPOSE_LABEL[intent];\n  return [selected, ...DEFAULT_ORDER.filter(label => label !== selected)];\n}\n\nlet intent: SimulationIntent = null;\nlet memoryOnly = false;\nconst listeners = new Set<() => void>();\nconst serverSnapshot = (): SimulationIntent => null;\nconst valid = (value: unknown): value is Exclude<SimulationIntent, null> =>\n  value === 'regular' || value === 'dated' || value === 'reserve' || value === 'skip';\n\nexport function getSimulationIntent(): SimulationIntent {\n  if (typeof window === 'undefined') return null;\n  if (memoryOnly) return intent;\n  try {\n    const stored = window.localStorage.getItem(SIMULATION_INTENT_KEY);\n    return valid(stored) ? stored : null;\n  } catch {\n    return intent;\n  }\n}\n\nexport function setSimulationIntent(value: SimulationIntent): void {\n  if ((value !== null && !valid(value)) || typeof window === 'undefined') return;\n  intent = value;\n  try {\n    if (value === null) window.localStorage.removeItem(SIMULATION_INTENT_KEY);\n    else window.localStorage.setItem(SIMULATION_INTENT_KEY, value);\n    memoryOnly = false;\n  } catch {\n    // Match the existing display preference's in-memory fallback for blocked storage.\n    memoryOnly = true;\n  }\n  listeners.forEach(listener => listener());\n}\n\nfunction subscribe(listener: () => void): () => void {\n  listeners.add(listener);\n  const onStorage = (event: StorageEvent) => {\n    if (event.key === SIMULATION_INTENT_KEY || event.key === null) {\n      memoryOnly = false;\n      listener();\n    }\n  };\n  window.addEventListener('storage', onStorage);\n  return () => { listeners.delete(listener); window.removeEventListener('storage', onStorage); };\n}\n\nexport function useSimulationIntent(): SimulationIntent {\n  return useSyncExternalStore(subscribe, getSimulationIntent, serverSnapshot);\n}\n"
+  ]
+];
+function postSelectStatePreRuntime(value: string): string {
+  for (const [old, replacement] of [...POST_SELECT_STATE_EDITS].reverse()) {
+    expect(value.split(replacement), 'PLAN-INTENT-001 state boundaries').toHaveLength(2);
+    value = value.replace(replacement, () => old);
+  }
+  return value;
+}
+
+// Exact approved default-card reversal; unexpected markup cannot be hidden.
+const POST_SELECT_CARD = ["<section class=\"min-w-0 space-y-4 rounded-2xl border border-hedgr-200 bg-white p-4 text-sm leading-relaxed text-hedgr-800\" aria-labelledby=\"planning-read-question\" data-testid=\"planning-read-card\"><fieldset class=\"min-w-0 space-y-2\"><legend id=\"planning-read-question\" class=\"mb-2 font-semibold\">What is this portion meant to support?</legend><label class=\"flex min-h-11 cursor-pointer items-center gap-3 rounded-lg border border-hedgr-200 px-3 py-2 focus-within:outline focus-within:outline-2 focus-within:outline-hedgr-500\"><input class=\"shrink-0 accent-hedgr-primary\" type=\"radio\" value=\"regular\" name=\"planning-purpose\"><span>A regular cost</span></label><label class=\"flex min-h-11 cursor-pointer items-center gap-3 rounded-lg border border-hedgr-200 px-3 py-2 focus-within:outline focus-within:outline-2 focus-within:outline-hedgr-500\"><input class=\"shrink-0 accent-hedgr-primary\" type=\"radio\" value=\"dated\" name=\"planning-purpose\"><span>A payment on a date</span></label><label class=\"flex min-h-11 cursor-pointer items-center gap-3 rounded-lg border border-hedgr-200 px-3 py-2 focus-within:outline focus-within:outline-2 focus-within:outline-hedgr-500\"><input class=\"shrink-0 accent-hedgr-primary\" type=\"radio\" value=\"reserve\" name=\"planning-purpose\"><span>A reserve for the unexpected</span></label><label class=\"flex min-h-11 cursor-pointer items-center gap-3 rounded-lg border border-hedgr-200 px-3 py-2 focus-within:outline focus-within:outline-2 focus-within:outline-hedgr-500\"><input class=\"shrink-0 accent-hedgr-primary\" type=\"radio\" value=\"skip\" name=\"planning-purpose\"><span>Skip for now</span></label></fieldset><div class=\"space-y-3\"><h2 class=\"text-base font-semibold\">Planning read</h2><p aria-live=\"polite\" data-testid=\"planning-read-stance\">This portion could go towards regular costs, a reserve, or something ahead. A planning view, not money set aside.</p><ul class=\"space-y-3\" data-testid=\"planning-read-labels\"><li><h3 class=\"font-semibold\">Regular costs</h3><p>For costs that come round often, like rent or bills.</p></li><li><h3 class=\"font-semibold\">Reserve</h3><p>For something unexpected.</p></li><li><h3 class=\"font-semibold\">Goals</h3><p>For something you're planning, like a payment on a date.</p></li></ul></div></section>", "<section class=\"min-w-0 space-y-4 rounded-2xl border border-hedgr-200 bg-white p-4 text-sm leading-relaxed text-hedgr-800\" aria-label=\"Planning read\" data-testid=\"planning-read-card\"><fieldset class=\"min-w-0 space-y-2\"><legend id=\"planning-read-question\" class=\"mb-2 font-semibold\">What is this portion meant to support?</legend><label class=\"flex min-h-11 cursor-pointer items-center gap-2 rounded-lg border border-hedgr-200 px-2 py-2 focus-within:outline focus-within:outline-2 focus-within:outline-hedgr-500\"><input class=\"shrink-0 accent-hedgr-primary\" type=\"radio\" value=\"regular\" name=\"planning-purpose\"><span>Regular costs</span></label><label class=\"flex min-h-11 cursor-pointer items-center gap-2 rounded-lg border border-hedgr-200 px-2 py-2 focus-within:outline focus-within:outline-2 focus-within:outline-hedgr-500\"><input class=\"shrink-0 accent-hedgr-primary\" type=\"radio\" value=\"reserve\" name=\"planning-purpose\"><span>Reserve</span></label><label class=\"flex min-h-11 cursor-pointer items-center gap-2 rounded-lg border border-hedgr-200 px-2 py-2 focus-within:outline focus-within:outline-2 focus-within:outline-hedgr-500\"><input class=\"shrink-0 accent-hedgr-primary\" type=\"radio\" value=\"dated\" name=\"planning-purpose\"><span>Goals</span></label></fieldset><button type=\"button\" class=\"min-h-11 underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-hedgr-500\">Skip for now</button><p>A planning view, not money set aside.</p></section>"] as const;
+function postSelectCardPreRuntime(value: string): string {
+  expect(value.split(POST_SELECT_CARD[1])).toHaveLength(2);
+  return value.replace(POST_SELECT_CARD[1], () => POST_SELECT_CARD[0]);
 }

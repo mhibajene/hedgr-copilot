@@ -88,7 +88,7 @@ test('SC13 labels-listed-once', () => {
 });
 test('SC14 held-strings-byte-identical and exact bounded runtime diff', () => {
   // PLAN-INTENT-001: pin the approved additions, never substitute old baselines.
-  for (const [path, hash] of Object.entries(PLAN_INTENT_ADDITIONS)) expect(digest(hierarchyPreRuntime(path, source(path))), path).toBe(hash);
+  for (const [path, hash] of Object.entries(PLAN_INTENT_ADDITIONS)) expect(digest(hierarchyPreRuntime(path, postSelectPreRuntime(path, source(path)))), path).toBe(hash);
   for (const [path, hash] of Object.entries(PROTECTED_BLOBS)) expect(digest(bundlePreRuntime(path, source(path))), path).toBe(hash);
   for (const {path, baseline, edits} of APPROVED_EDITS) {
     const original = ORIGINAL_SOURCES[path]; let approved = original;
@@ -518,7 +518,7 @@ const PLAN_INTENT_PAGE_EDITS = [
 ] as const;
 
 function bundlePreRuntime(path: string, value: string): string {
-  value = hierarchyPreRuntime(path, value);
+  value = hierarchyPreRuntime(path, postSelectPreRuntime(path, value));
   if (path === 'app/(app)/dashboard/page.tsx') {
     for (const [old, replacement] of PLAN_INTENT_PAGE_EDITS) {
       expect(value.split(replacement), 'PLAN-INTENT-001 exact page addition').toHaveLength(2);
@@ -686,6 +686,53 @@ function hierarchyPreRuntime(path: string, value: string): string {
       ['        </ul>', '        </ul> : null}'],
     ] : [];
   for (const [old, replacement] of [...edits].reverse()) {
+    expect(value.split(replacement), path).toHaveLength(2);
+    value = value.replace(replacement, () => old);
+  }
+  return value;
+}
+
+// PLAN-INTENT-001: exact post-select/state/reset edits before the retained hierarchy and historical locks.
+const POST_SELECT_EDITS: Record<string, readonly (readonly [string, string])[]> = {
+  "app/(app)/dashboard/page.tsx": [
+    [
+      "import { formatLocalCurrency } from \"../../../lib/utils/money\";\nimport { DanielExampleHome } from './DanielExampleHome';\nimport { SarahExampleHome } from './SarahExampleHome';\nimport { HomeHero } from './HomeHero';\nimport { PlanningReadCard } from './PlanningReadCard';\nimport { RateLine } from './RateLine';\nimport { CurrencyInsight } from \"./CurrencyInsight\";\nimport { EngineProtectiveGuidance } from \"./EngineProtectiveGuidance\";\nimport { EngineStabilityExplainer } from \"./EngineStabilityExplainer\";\nimport { EngineStabilityReviewSnapshot } from \"./EngineStabilityReviewSnapshot\";\n",
+      "import { formatLocalCurrency } from \"../../../lib/utils/money\";\nimport { DanielExampleHome } from './DanielExampleHome';\nimport { SarahExampleHome } from './SarahExampleHome';\nimport { HomeHero } from './HomeHero';\nimport { PlanningReadCard } from './PlanningReadCard';\nimport { setSimulationIntent } from '../../../lib/state/simulation-intent';\nimport { RateLine } from './RateLine';\nimport { CurrencyInsight } from \"./CurrencyInsight\";\nimport { EngineProtectiveGuidance } from \"./EngineProtectiveGuidance\";\nimport { EngineStabilityExplainer } from \"./EngineStabilityExplainer\";\nimport { EngineStabilityReviewSnapshot } from \"./EngineStabilityReviewSnapshot\";\n"
+    ],
+    [
+      "\n  useEffect(() => {\n    if (cleanStartRequested || (sarahExample && searchParams?.has(CLASS_A_VAL_002_RESET_PARAM))) {\n      // \u00a7374: eligible Sarah consumes reset while refusing all simulation writes.\n      if (!sarahExample) {\n        clearTransactions();\n        clearSimulationReceipt();\n        removeRetiredWalletBalance();\n        if (searchParams?.get(\"study\") === \"1\") setSimulationDisplayCurrency(\"ZMW\");\n      }\n",
+      "\n  useEffect(() => {\n    if (cleanStartRequested || (sarahExample && searchParams?.has(CLASS_A_VAL_002_RESET_PARAM))) {\n      // \u00a7374: eligible Sarah consumes reset while refusing all simulation writes.\n      if (!sarahExample) {\n        if (syntheticJourneyActive && selectedExample === \"own\") setSimulationIntent(null);\n        clearTransactions();\n        clearSimulationReceipt();\n        removeRetiredWalletBalance();\n        if (searchParams?.get(\"study\") === \"1\") setSimulationDisplayCurrency(\"ZMW\");\n      }\n"
+    ],
+    [
+      "    const confirmed = window.confirm(\n      \"Restart the simulated journey? This clears only the simulated balance and Activity stored on this device. No real money or external records are affected.\"\n    );\n    if (!confirmed) return;\n\n    clearTransactions();\n    removeRetiredWalletBalance();\n    clearLastVisit();\n    setPreviousVisit(null);\n  };\n",
+      "    const confirmed = window.confirm(\n      \"Restart the simulated journey? This clears only the simulated balance and Activity stored on this device. No real money or external records are affected.\"\n    );\n    if (!confirmed) return;\n\n    setSimulationIntent(null);\n    clearTransactions();\n    removeRetiredWalletBalance();\n    clearLastVisit();\n    setPreviousVisit(null);\n  };\n"
+    ]
+  ],
+  "app/(app)/dashboard/PlanningReadCard.tsx": [
+    [
+      "import { PLAN_INTENT_COPY as copy } from '../../../lib/copy/plan-intent-copy';\nimport { getPlanningReadOrder, setSimulationIntent, useSimulationIntent } from '../../../lib/state/simulation-intent';\n\nexport function PlanningReadCard() {\n  const intent = useSimulationIntent();\n  const order = getPlanningReadOrder(intent);\n  const answered = intent !== null && intent !== 'skip';\n  return (\n    <section className=\"min-w-0 space-y-4 rounded-2xl border border-hedgr-200 bg-white p-4 text-sm leading-relaxed text-hedgr-800\" aria-labelledby=\"planning-read-question\" data-testid=\"planning-read-card\">\n      <fieldset className=\"min-w-0 space-y-2\">\n        <legend id=\"planning-read-question\" className=\"mb-2 font-semibold\">{copy.question}</legend>\n        {(['regular', 'dated', 'reserve', 'skip'] as const).map(value => (\n          <label key={value} className=\"flex min-h-11 cursor-pointer items-center gap-3 rounded-lg border border-hedgr-200 px-3 py-2 focus-within:outline focus-within:outline-2 focus-within:outline-hedgr-500\">\n            <input type=\"radio\" name=\"planning-purpose\" value={value} checked={intent === value} onChange={() => setSimulationIntent(value)} className=\"shrink-0 accent-hedgr-primary\" />\n            <span>{copy.answers[value]}</span>\n          </label>\n        ))}\n      </fieldset>\n      {intent === 'dated' ? <p data-testid=\"planning-read-dated\">{copy.dated}</p> : null}\n      <div className=\"space-y-3\">\n        <h2 className=\"text-base font-semibold\">{copy.title}</h2>\n        <p aria-live=\"polite\" data-testid=\"planning-read-stance\">{answered ? copy.confirmation(copy.answers[intent]) : copy.skipped}</p>\n        {answered ? <p data-testid=\"planning-read-why\">{copy.why[order[0]]}</p> : null}\n        {intent !== 'skip' ? <ul className=\"space-y-3\" data-testid=\"planning-read-labels\">\n          {order.map(label => (\n            <li key={label}>\n              <h3 className=\"font-semibold\">{copy.labels[label]}</h3>\n              <p>{copy.sentences[label]}</p>\n            </li>\n          ))}\n        </ul> : null}\n      </div>\n    </section>\n  );\n}\n",
+      "import { PLAN_INTENT_COPY as copy } from '../../../lib/copy/plan-intent-copy';\nimport { getPlanningReadOrder, setSimulationIntent, useSimulationIntent } from '../../../lib/state/simulation-intent';\n\nexport function PlanningReadCard() {\n  const intent = useSimulationIntent();\n  const selected = getPlanningReadOrder(intent)[0];\n  return (\n    <section className=\"min-w-0 space-y-4 rounded-2xl border border-hedgr-200 bg-white p-4 text-sm leading-relaxed text-hedgr-800\" aria-label={copy.title} data-testid=\"planning-read-card\">\n      {intent === null ? <>\n        <fieldset className=\"min-w-0 space-y-2\">\n          <legend id=\"planning-read-question\" className=\"mb-2 font-semibold\">{copy.question}</legend>\n          {(['regular', 'reserve', 'dated'] as const).map(value => (\n            <label key={value} className=\"flex min-h-11 cursor-pointer items-center gap-2 rounded-lg border border-hedgr-200 px-2 py-2 focus-within:outline focus-within:outline-2 focus-within:outline-hedgr-500\">\n              <input type=\"radio\" name=\"planning-purpose\" value={value} checked={false} onChange={() => setSimulationIntent(value)} className=\"shrink-0 accent-hedgr-primary\" />\n              <span>{copy.labels[getPlanningReadOrder(value)[0]]}</span>\n            </label>\n          ))}\n        </fieldset>\n        <button type=\"button\" onClick={() => setSimulationIntent('skip')} className=\"min-h-11 underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-hedgr-500\">{copy.answers.skip}</button>\n        <p>{copy.limits}</p>\n      </> : <>\n        <div className=\"flex flex-wrap items-baseline gap-x-4 gap-y-1\">\n          <p className=\"min-w-0 flex-1 basis-48\" aria-live=\"polite\" data-testid=\"planning-read-stance\">{intent === 'skip' ? copy.skipped : copy.confirmation(copy.labels[selected])}</p>\n          <button type=\"button\" onClick={() => setSimulationIntent(null)} className=\"min-h-11 shrink-0 underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-hedgr-500\">{copy.change}</button>\n        </div>\n        {intent !== 'skip' ? <p data-testid=\"planning-read-why\">{copy.why[selected]}</p> : null}\n        {intent === 'dated' ? <p data-testid=\"planning-read-dated\">{copy.dated}</p> : null}\n      </>}\n    </section>\n  );\n}\n"
+    ]
+  ],
+  "lib/state/simulation-intent.ts": [
+    [
+      "\nexport type SimulationPurpose = 'regular' | 'dated' | 'reserve';\nexport type SimulationIntent = SimulationPurpose | 'skip' | null;\nexport type PlanningReadLabel = 'regular' | 'reserve' | 'goals';\n\nconst DEFAULT_ORDER: readonly PlanningReadLabel[] = ['regular', 'reserve', 'goals'];\nconst PURPOSE_LABEL: Record<SimulationPurpose, PlanningReadLabel> = {\n  regular: 'regular', dated: 'goals', reserve: 'reserve',\n};\n\n",
+      "\nexport type SimulationPurpose = 'regular' | 'dated' | 'reserve';\nexport type SimulationIntent = SimulationPurpose | 'skip' | null;\nexport type PlanningReadLabel = 'regular' | 'reserve' | 'goals';\n\nexport const SIMULATION_INTENT_KEY = 'hedgr.simulation.intent';\nconst DEFAULT_ORDER: readonly PlanningReadLabel[] = ['regular', 'reserve', 'goals'];\nconst PURPOSE_LABEL: Record<SimulationPurpose, PlanningReadLabel> = {\n  regular: 'regular', dated: 'goals', reserve: 'reserve',\n};\n\n"
+    ],
+    [
+      "  if (intent === null || intent === 'skip') return DEFAULT_ORDER;\n  const selected = PURPOSE_LABEL[intent];\n  return [selected, ...DEFAULT_ORDER.filter(label => label !== selected)];\n}\n\n// PLAN-INTENT-001: document-lifetime state only; no browser storage or external events.\nlet intent: SimulationIntent = null;\nconst listeners = new Set<() => void>();\nconst serverSnapshot = (): SimulationIntent => null;\n\nexport function getSimulationIntent(): SimulationIntent { return intent; }\n\nexport function setSimulationIntent(value: SimulationIntent): void {\n  if (value === intent) return;\n  intent = value;\n  listeners.forEach(listener => listener());\n}\n\nfunction subscribe(listener: () => void): () => void {\n  listeners.add(listener);\n  return () => { listeners.delete(listener); };\n}\n\nexport function useSimulationIntent(): SimulationIntent {\n  return useSyncExternalStore(subscribe, getSimulationIntent, serverSnapshot);\n}\n",
+      "  if (intent === null || intent === 'skip') return DEFAULT_ORDER;\n  const selected = PURPOSE_LABEL[intent];\n  return [selected, ...DEFAULT_ORDER.filter(label => label !== selected)];\n}\n\nlet intent: SimulationIntent = null;\nlet memoryOnly = false;\nconst listeners = new Set<() => void>();\nconst serverSnapshot = (): SimulationIntent => null;\nconst valid = (value: unknown): value is Exclude<SimulationIntent, null> =>\n  value === 'regular' || value === 'dated' || value === 'reserve' || value === 'skip';\n\nexport function getSimulationIntent(): SimulationIntent {\n  if (typeof window === 'undefined') return null;\n  if (memoryOnly) return intent;\n  try {\n    const stored = window.localStorage.getItem(SIMULATION_INTENT_KEY);\n    return valid(stored) ? stored : null;\n  } catch {\n    return intent;\n  }\n}\n\nexport function setSimulationIntent(value: SimulationIntent): void {\n  if ((value !== null && !valid(value)) || typeof window === 'undefined') return;\n  intent = value;\n  try {\n    if (value === null) window.localStorage.removeItem(SIMULATION_INTENT_KEY);\n    else window.localStorage.setItem(SIMULATION_INTENT_KEY, value);\n    memoryOnly = false;\n  } catch {\n    // Match the existing display preference's in-memory fallback for blocked storage.\n    memoryOnly = true;\n  }\n  listeners.forEach(listener => listener());\n}\n\nfunction subscribe(listener: () => void): () => void {\n  listeners.add(listener);\n  const onStorage = (event: StorageEvent) => {\n    if (event.key === SIMULATION_INTENT_KEY || event.key === null) {\n      memoryOnly = false;\n      listener();\n    }\n  };\n  window.addEventListener('storage', onStorage);\n  return () => { listeners.delete(listener); window.removeEventListener('storage', onStorage); };\n}\n\nexport function useSimulationIntent(): SimulationIntent {\n  return useSyncExternalStore(subscribe, getSimulationIntent, serverSnapshot);\n}\n"
+    ]
+  ],
+  "lib/copy/plan-intent-copy.ts": [
+    [
+      "export const PLAN_INTENT_COPY = {\n  title: 'Planning read',\n  question: 'What is this portion meant to support?',\n  answers: {\n    regular: 'A regular cost',\n    dated: 'A payment on a date',\n    reserve: 'A reserve for the unexpected',\n",
+      "export const PLAN_INTENT_COPY = {\n  title: 'Planning read',\n  change: 'Change',\n  question: 'What is this portion meant to support?',\n  answers: {\n    regular: 'A regular cost',\n    dated: 'A payment on a date',\n    reserve: 'A reserve for the unexpected',\n"
+    ]
+  ]
+};
+function postSelectPreRuntime(path: string, value: string): string {
+  for (const [old, replacement] of [...(POST_SELECT_EDITS[path] ?? [])].reverse()) {
     expect(value.split(replacement), path).toHaveLength(2);
     value = value.replace(replacement, () => old);
   }
