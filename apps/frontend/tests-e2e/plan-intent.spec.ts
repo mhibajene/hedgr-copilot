@@ -1,5 +1,7 @@
 import { expect, test, type Locator } from '@playwright/test';
 import { PLAN_INTENT_COPY as copy } from '../lib/copy/plan-intent-copy';
+import { formatExampleRateLine } from '../app/(app)/dashboard/RateLine';
+import { getSimulationDisplayRate } from '../lib/state/simulation-display-currency';
 
 test.beforeEach(async ({ context, page }) => {
   await context.route('**/*', route => ['localhost', '127.0.0.1', '::1'].includes(new URL(route.request().url()).hostname) ? route.continue() : route.abort());
@@ -37,7 +39,7 @@ test('PLAN-INTENT-001 hierarchy places movement before intent and removes Home t
   await expect(page.getByRole('button', { name: 'Currency context', exact: true })).toBeVisible();
 });
 
-test('PLAN-INTENT-001 own simulation offers an optional purpose question after its hero', async ({ page }) => {
+test('PLAN-INTENT-001 own simulation offers its optional purpose question', async ({ page }) => {
   await page.goto('/dashboard-synthetic-journey');
   await expect(page.locator('[data-component="HomeHero"]')).toBeVisible();
   const card = page.getByTestId('planning-read-card');
@@ -58,15 +60,15 @@ async function checkCard(card: Locator) {
   expect(text).not.toMatch(/You told us|Nothing has moved/);
 }
 
-test('merged default, each answer, changing choice and skip preserve hero and Planning targets', async ({ page }) => {
+test('merged default, each answer, changing choice and Skip preserve hero without Home targets', async ({ page }) => {
   await page.goto('/dashboard?journey=class-a-val-002&example=own');
   const card = page.getByTestId('planning-read-card');
   const hero = page.locator('[data-component="HomeHero"]');
-  const targets = page.getByTestId('research-planning-targets');
   await expect(hero.getByTestId('usd-balance')).toHaveText('$0.00');
   await expect(card.getByTestId('planning-read-stance')).toHaveText(copy.skipped);
-  expect(await hero.evaluate(n => n.nextElementSibling?.getAttribute('data-testid'))).toBe('planning-read-card');
-  const original = { hero: await hero.innerHTML(), targets: await targets.innerHTML() };
+  expect(await page.getByTestId('dashboard-position-line').evaluate(n => n.nextElementSibling?.getAttribute('data-testid'))).toBe('planning-read-card');
+  const originalHero = await hero.innerHTML();
+  await expect(page.getByTestId('research-planning-targets')).toHaveCount(0);
   const orders = { regular: ['regular', 'reserve', 'goals'], dated: ['goals', 'regular', 'reserve'], reserve: ['reserve', 'regular', 'goals'] } as const;
   for (const purpose of ['regular', 'dated', 'reserve'] as const) {
     await card.getByRole('radio', { name: copy.answers[purpose], exact: true }).check();
@@ -76,12 +78,13 @@ test('merged default, each answer, changing choice and skip preserve hero and Pl
     await expect(card.getByTestId('planning-read-dated')).toHaveCount(purpose === 'dated' ? 1 : 0);
     if (purpose === 'dated') await expect(card.getByTestId('planning-read-dated')).toHaveText(copy.dated);
     await checkCard(card);
-    expect(await hero.innerHTML()).toBe(original.hero);
-    expect(await targets.innerHTML()).toBe(original.targets);
+    expect(await hero.innerHTML()).toBe(originalHero);
+    await expect(page.getByTestId('research-planning-targets')).toHaveCount(0);
   }
   await card.getByRole('radio', { name: copy.answers.skip, exact: true }).check();
   await expect(card.getByTestId('planning-read-stance')).toHaveText(copy.skipped);
-  await expect(card.getByTestId('planning-read-labels').getByRole('heading')).toHaveText(['Regular costs', 'Reserve', 'Goals']);
+  await expect(card.getByTestId('planning-read-labels')).toHaveCount(0);
+  await expect(card.getByTestId('planning-read-why')).toHaveCount(0);
   await checkCard(card);
 });
 
@@ -108,13 +111,14 @@ test('intent survives client navigation in the session and resets on a document 
   expect(keys.join(' ')).not.toMatch(/intent|purpose|planning-read/);
 });
 
-for (const currency of ['ZMW', 'KES', 'NGN', 'GHS', 'PHP']) for (const [width, textScale] of [[390, 1], [320, 2]]) {
+for (const currency of ['ZMW', 'KES', 'NGN', 'GHS', 'PHP'] as const) for (const [width, textScale] of [[390, 1], [320, 2]]) {
   test(`${currency} at ${width}px with ${textScale * 100}% root text: words only, scroll and nav clearance`, async ({ page }, info) => {
     await page.setViewportSize({ width, height: 844 });
     await page.goto('/dashboard-synthetic-journey');
     const hero = page.locator('[data-component="HomeHero"]');
     await hero.getByRole('combobox').selectOption(currency);
     await expect(hero.getByTestId('local-balance-figure')).toContainText(`≈ ${currency} `);
+    await expect(page.locator('[data-component="RateLine"]')).toHaveText(formatExampleRateLine(currency, getSimulationDisplayRate(currency)));
     const card = page.getByTestId('planning-read-card');
     const normalFont = await card.evaluate(n => parseFloat(getComputedStyle(n).fontSize));
     if (textScale === 2) await page.addStyleTag({ content: 'html { font-size: 200% !important; }' });

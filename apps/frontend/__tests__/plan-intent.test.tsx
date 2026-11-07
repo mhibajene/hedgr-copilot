@@ -52,28 +52,28 @@ function checkCard() {
   return card;
 }
 
-test('PLAN-INTENT-001 own simulation offers its purpose question after the unchanged hero', async () => {
+test('PLAN-INTENT-001 purpose selection preserves the hero after the movement group', async () => {
   const view = await home();
   const card = checkCard();
   expect(screen.getByRole('group', { name: copy.question })).not.toBeNull();
   const hero = view.container.querySelector('[data-component="HomeHero"]')!;
-  expect(hero.nextElementSibling).toBe(card);
-  const targets = screen.getByTestId('research-planning-targets');
+  expect(screen.getByTestId('dashboard-position-line').nextElementSibling).toBe(card);
+  expect(screen.queryByTestId('research-planning-targets')).toBeNull();
   const heroBefore = hero.innerHTML;
-  const targetsBefore = targets.innerHTML;
   fireEvent.click(screen.getByRole('radio', { name: copy.answers.dated, exact: true }));
   expect(hero.innerHTML).toBe(heroBefore);
-  expect(targets.innerHTML).toBe(targetsBefore);
+  expect(screen.queryByTestId('research-planning-targets')).toBeNull();
   expect(hero.querySelector('[data-testid="usd-balance"]')?.textContent).toBe('$0.00');
 });
 
-test('default and skipped reads have the approved stance and default words-only order', () => {
+test('default read has the approved words-only order; Skip leaves only its stance', () => {
   render(<PlanningReadCard />);
   for (const skip of [false, true]) {
     if (skip) fireEvent.click(screen.getByRole('radio', { name: copy.answers.skip }));
     checkCard();
     expect(screen.getByTestId('planning-read-stance').textContent).toBe(copy.skipped);
-    expect(within(screen.getByTestId('planning-read-labels')).getAllByRole('heading').map(n => n.textContent)).toEqual(['Regular costs', 'Reserve', 'Goals']);
+    if (skip) expect(screen.queryByTestId('planning-read-labels')).toBeNull();
+    else expect(within(screen.getByTestId('planning-read-labels')).getAllByRole('heading').map(n => n.textContent)).toEqual(['Regular costs', 'Reserve', 'Goals']);
     expect(screen.queryByTestId('planning-read-why')).toBeNull();
     expect(screen.queryByTestId('planning-read-dated')).toBeNull();
   }

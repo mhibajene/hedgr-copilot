@@ -23,14 +23,14 @@ export function PlanningReadCard() {
         <h2 className="text-base font-semibold">{copy.title}</h2>
         <p aria-live="polite" data-testid="planning-read-stance">{answered ? copy.confirmation(copy.answers[intent]) : copy.skipped}</p>
         {answered ? <p data-testid="planning-read-why">{copy.why[order[0]]}</p> : null}
-        <ul className="space-y-3" data-testid="planning-read-labels">
+        {intent !== 'skip' ? <ul className="space-y-3" data-testid="planning-read-labels">
           {order.map(label => (
             <li key={label}>
               <h3 className="font-semibold">{copy.labels[label]}</h3>
               <p>{copy.sentences[label]}</p>
             </li>
           ))}
-        </ul>
+        </ul> : null}
       </div>
     </section>
   );
