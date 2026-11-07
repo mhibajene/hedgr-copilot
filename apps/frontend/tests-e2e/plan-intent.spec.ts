@@ -12,6 +12,14 @@ test.beforeEach(async ({ context, page }) => {
   await expect(page).toHaveURL(/\/dashboard/);
 });
 
+test('PLAN-INTENT-001 post-select collapses the chooser and offers Change', async ({ page }) => {
+  await page.goto('/dashboard-synthetic-journey');
+  const card = page.getByTestId('planning-read-card');
+  await card.getByRole('radio').first().check();
+  await expect(card.getByRole('group', { name: copy.question })).toHaveCount(0);
+  await expect(card.getByRole('button', { name: 'Change', exact: true })).toBeVisible();
+});
+
 test('PLAN-INTENT-001 hierarchy places movement before intent and removes Home targets', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.evaluate(() => {

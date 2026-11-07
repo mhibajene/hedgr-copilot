@@ -164,3 +164,16 @@ test('PLAN-INTENT-001 skipped read omits every purpose definition and Why line',
   expect(screen.queryByTestId('planning-read-why')).toBeNull();
   for (const text of [...Object.values(copy.sentences), ...Object.values(copy.why)]) expect(screen.queryByText(text, { exact: true })).toBeNull();
 });
+
+test('PLAN-INTENT-001 fresh chooser has three purpose radios and no echo', () => {
+  render(<PlanningReadCard />);
+  expect(screen.getAllByRole('radio')).toHaveLength(3);
+  expect(screen.queryByTestId('planning-read-stance')).toBeNull();
+});
+
+test('PLAN-INTENT-001 selecting a purpose collapses the chooser', () => {
+  render(<PlanningReadCard />);
+  fireEvent.click(screen.getAllByRole('radio')[0]);
+  expect(screen.queryByRole('group', { name: copy.question })).toBeNull();
+  expect(screen.getByTestId('planning-read-stance')).not.toBeNull();
+});
