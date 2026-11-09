@@ -129,7 +129,7 @@ describe('VIS-SCALE-001 fixed own-simulation scale', () => {
   });
   afterEach(() => { measure.mockRestore(); document.documentElement.style.fontSize = ''; });
 
-  for (const count of [1, 2, 4, 5, 6, 12]) test(`fixed pitch and dollar height across ${count} real events`, () => {
+  for (const count of [1, 2, 3, 4, 5, 6, 8, 9, 12]) test(`fixed pitch and dollar height across ${count} real events`, () => {
     const balances = count === 1 ? [10] : Array.from({ length: count }, (_, i) => 500 + i * 10);
     render(<PositionLine entries={ledger(balances)} lastVisit={null} visualise />);
     const visible = points();

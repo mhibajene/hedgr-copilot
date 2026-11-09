@@ -50,7 +50,7 @@ async function geometry(page: Page) {
 for (const width of [390, 320]) for (const rootText of [100, 200]) test(`VIS-SCALE-001 geometry and copy fit ${width}px ${rootText}% root text`, async ({ page }, info) => {
   test.setTimeout(90000);
   await page.setViewportSize({ width, height: 900 });
-  for (const count of [1, 2, 4, 5, 6, 12]) {
+  for (const count of [1, 2, 3, 4, 5, 6, 8, 9, 12]) {
     const balances = count === 1 ? [10] : Array.from({ length: count }, (_, i) => 500 + i * 10);
     await seed(page, balances);
     if (rootText === 200) await page.addStyleTag({ content: 'html {font-size:200% !important}' });
