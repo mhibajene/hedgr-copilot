@@ -19,5 +19,5 @@ export function PositionLine({ visualise = false, heroAmount, ...props }: Positi
   if (!props.entries.length) return <div className={`${home.positionLineEmpty} ${home.visualiserEmpty}`} data-testid="dashboard-position-line" data-state="empty"><span className={home.positionLineRing} aria-hidden="true" /><p>No deposits yet. Your first one will start this chart.</p></div>;
   const series = props.entries.map(entry => ({ at: new Date(entry.at).toISOString(), value: entry.balanceAfter, currency: 'USD' as const }));
   const events = props.entries.map(entry => ({ id: entry.id, at: entry.at, kind: entry.type === 'DEPOSIT' ? 'deposit' as const : 'withdrawal' as const, amount: entry.amountUSD, currency: 'USD' as const }));
-  return <div data-testid="dashboard-position-line" data-state="line"><ExampleLineChart mode="step" series={series} events={events} lastVisit={props.lastVisit} settle={props.settle} heroAmount={heroAmount} /></div>;
+  return <div data-testid="dashboard-position-line" data-state="line"><ExampleLineChart mode="step" series={series} events={events} lastVisit={props.lastVisit} settle={props.settle} heroAmount={heroAmount} ownSimulation={props.entries} /></div>;
 }

@@ -5,6 +5,7 @@ import { resolve } from 'node:path';
 import { act, cleanup, fireEvent, render, screen, within } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 import { PositionLine } from '../app/(app)/dashboard/PositionLine';
+import { VIS_SCALE_COPY } from '../lib/copy/vis-scale-copy';
 import type { PositionEntry } from '../lib/state/last-visit';
 
 (globalThis as typeof globalThis & { React: typeof React }).React = React;
@@ -118,7 +119,7 @@ describe('VIS-SCALE-001 fixed own-simulation scale', () => {
     const [x, y] = node.getAttribute('transform')!.match(/-?\d+(?:\.\d+)?/g)!.map(Number);
     return { x, y, value: Number(node.getAttribute('data-series-value')) };
   });
-  const fallback = "The chart can't be drawn at its fixed scale for these changes. Every change is still listed in All changes.";
+  const fallback = VIS_SCALE_COPY.fallback;
   beforeEach(() => {
     width = 300;
     document.documentElement.style.fontSize = '16px';
@@ -187,17 +188,41 @@ describe('VIS-SCALE-001 fixed own-simulation scale', () => {
     fireEvent.click(screen.getByRole('button', { name: 'All changes' }));
     fireEvent.click(screen.getByRole('button', { name: 'All changes' }));
     expect(chart.getAttribute('data-vis-scale-start')).toBe('1');
-    for (let i = 0; i < 4; i++) fireEvent.click(screen.getByRole('button', { name: 'Later change' }));
+    for (let i = 0; i < 3; i++) {
+      fireEvent.click(screen.getByRole('button', { name: 'Later change' }));
+      expect(chart.getAttribute('data-vis-scale-start')).toBe('1');
+    }
+    fireEvent.click(screen.getByRole('button', { name: 'Later change' }));
     expect(screen.queryByText(fallback)).toBeNull();
     width = 210; fireEvent(window, new Event('resize'));
     expect(points()).toHaveLength(2);
     expect(chart.querySelector('[data-chart-selected]')?.getAttribute('data-event-id')).toBe('scale-5');
   });
 
+  test('locked plain-text fallback copy and no participant range label', () => {
+    expect(fallback).toBe("The chart can't be drawn at its fixed scale for these changes. Every change is still listed in All changes.");
+  });
+  for (const [plotWidth, slots] of [[900, 8], [300, 4], [210, 2]]) test(`measured width ${plotWidth} has ${slots} fixed slots`, () => {
+    width = plotWidth;
+    render(<PositionLine entries={ledger(Array.from({ length: 12 }, (_, i) => 500 + i * 10))} lastVisit={null} visualise />);
+    expect(points()).toHaveLength(slots);
+    expect(screen.getByTestId('example-line-chart').getAttribute('data-vis-scale-slots')).toBe(String(slots));
+  });
+  test('existing keyboard and swipe selection keep the selected real ID visible', () => {
+    render(<PositionLine entries={ledger([500, 510, 520, 530, 540, 550])} lastVisit={null} visualise />);
+    const stack = screen.getByTestId('activity-stack');
+    fireEvent.keyDown(stack, { key: 'ArrowLeft' });
+    fireEvent.touchStart(stack, { touches: [{ clientX: 100, clientY: 0 }] });
+    fireEvent.touchEnd(stack, { changedTouches: [{ clientX: 0, clientY: 0 }] });
+    expect(screen.getByTestId('example-line-chart').querySelector('[data-chart-selected]')?.getAttribute('data-event-id')).toBe('scale-3');
+  });
+
   test('actual and interpolated outside values trigger fallback without changing settle inputs', () => {
     const view = render(<PositionLine entries={ledger([1200, 900, 800, 700, 600, 500])} lastVisit={FIRST} settle={0} visualise />);
     expect(screen.getByText(fallback)).toBeDefined();
+    const announcement = screen.getByTestId('activity-announcement').textContent;
     view.rerender(<PositionLine entries={ledger([1200, 900, 800, 700, 600, 500])} lastVisit={FIRST} settle={1} visualise />);
     expect(screen.queryByText(fallback)).toBeNull();
+    expect(screen.getByTestId('activity-announcement').textContent).toBe(announcement);
   });
 });
