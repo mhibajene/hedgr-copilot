@@ -3,7 +3,7 @@ import React from 'react';
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { act, cleanup, fireEvent, render, screen, within } from '@testing-library/react';
-import { afterEach, beforeEach, expect, test, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 import { PositionLine } from '../app/(app)/dashboard/PositionLine';
 import type { PositionEntry } from '../lib/state/last-visit';
 
@@ -104,4 +104,100 @@ test('V10 say-it-once-incl-what-changed, V11 caption-and-rate-27, V13 no-arrow-l
     const inclusion = visit === NEXT + 1 ? 'Includes your simulated activity.' : visit === FIRST - 1 ? 'These simulated entries are included in the balance above.' : 'This simulated withdrawal is included in the balance above.';
     expect(screen.getAllByText(inclusion, { exact: true })).toHaveLength(1);
   }
+});
+
+
+describe('VIS-SCALE-001 fixed own-simulation scale', () => {
+  let measure: ReturnType<typeof vi.spyOn>;
+  let width = 300;
+  const ledger = (balances: number[], sameTime = false): PositionEntry[] => balances.map((balanceAfter, index) => {
+    const balanceBefore = index === 0 ? 0 : balances[index - 1];
+    return { id: `scale-${index}`, at: FIRST + (sameTime ? 0 : index * 1000), type: balanceAfter < balanceBefore ? 'WITHDRAW' : 'DEPOSIT', amountUSD: Math.abs(balanceAfter - balanceBefore), balanceBefore, balanceAfter };
+  });
+  const points = () => Array.from(screen.getByTestId('example-line-chart').querySelectorAll('svg [data-series-at]')).map(node => {
+    const [x, y] = node.getAttribute('transform')!.match(/-?\d+(?:\.\d+)?/g)!.map(Number);
+    return { x, y, value: Number(node.getAttribute('data-series-value')) };
+  });
+  const fallback = "The chart can't be drawn at its fixed scale for these changes. Every change is still listed in All changes.";
+  beforeEach(() => {
+    width = 300;
+    document.documentElement.style.fontSize = '16px';
+    measure = vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(function(this: HTMLElement) {
+      return { x: 0, y: 0, width: this.className.includes('visualiserPlot') ? width : 0, height: 160, top: 0, left: 0, right: width, bottom: 160, toJSON() {} };
+    });
+  });
+  afterEach(() => { measure.mockRestore(); document.documentElement.style.fontSize = ''; });
+
+  for (const count of [1, 2, 4, 5, 6, 12]) test(`fixed pitch and dollar height across ${count} real events`, () => {
+    const balances = count === 1 ? [10] : Array.from({ length: count }, (_, i) => 500 + i * 10);
+    render(<PositionLine entries={ledger(balances)} lastVisit={null} visualise />);
+    const visible = points();
+    expect(visible).toHaveLength(Math.min(count, 4));
+    visible.forEach((point, index) => {
+      expect(point.x).toBeCloseTo(288 - (visible.length - 1 - index) * 69, 8);
+      expect(point.y).toBeCloseTo(94 - point.value * 0.088, 8);
+    });
+    if (count > 1) expect((visible[0].y - visible[1].y) * 1.6).toBeCloseTo(1.408, 8);
+    const path = screen.getByTestId('example-line-chart').querySelector('svg path[fill="none"]')!.getAttribute('d')!;
+    const boundary = count <= 4 ? 0 : balances[count - 5];
+    const start = path.match(/^M ([^ ]+) ([^ ]+) H /)!;
+    expect(Number(start?.[1])).toBeCloseTo(12, 8);
+    expect(Number(start?.[2])).toBeCloseTo(94 - boundary * 0.088, 8);
+  });
+
+  test('lastVisit never adds a slot and same-timestamp IDs stay aligned', () => {
+    const entries = ledger([500, 510, 520, 530, 540, 550], true);
+    for (const lastVisit of [null, FIRST - 1, FIRST, FIRST + 1]) {
+      const view = render(<PositionLine entries={entries} lastVisit={lastVisit} visualise />);
+      expect(points().map(point => point.x)).toEqual([81, 150, 219, 288]);
+      expect(screen.getByTestId('example-line-chart').querySelector('[data-chart-selected]')?.getAttribute('data-event-id')).toBe('scale-5');
+      fireEvent.click(screen.getByRole('button', { name: 'Earlier change' }));
+      expect(screen.getByTestId('example-line-chart').querySelector('[data-chart-selected]')?.getAttribute('data-event-id')).toBe('scale-4');
+      expect(screen.getByTestId('activity-announcement').textContent).toContain('10 US dollars');
+      view.unmount();
+    }
+  });
+
+  for (const [name, balances, outside] of [
+    ['boundaries', [0, 1000], false], ['zero', [0, 0], false], ['equal', [500, 500], false],
+    ['just above', [1000.01], true], ['negative', [-0.01], true], ['large', [1000000], true],
+    ['real pre-window boundary', [1200, 900, 800, 700, 600], true], ['six large deposits', [500, 1000, 1500, 2000, 2500, 3000], true],
+  ] as const) test(`whole-plot eligibility: ${name}`, () => {
+    render(<PositionLine entries={ledger([...balances])} lastVisit={null} visualise />);
+    const chart = screen.getByTestId('example-line-chart');
+    expect(chart.querySelector('svg') === null).toBe(outside);
+    expect(screen.queryByText(fallback) !== null).toBe(outside);
+    if (outside) {
+      expect(chart.querySelectorAll('[data-chart-label], [data-chart-selected], [data-testid="chart-event-dot"], [data-chart-wash]')).toHaveLength(0);
+      expect(screen.getByText(fallback).closest('[aria-live], [role="status"], [role="alert"]')).toBeNull();
+    } else expect(points().every(point => Number.isFinite(point.y))).toBe(true);
+    expect(chart.querySelectorAll('[aria-live]')).toHaveLength(1);
+    fireEvent.click(screen.getByRole('button', { name: 'All changes' }));
+    expect(within(screen.getByTestId('chart-event-list')).getAllByRole('listitem')).toHaveLength(balances.length);
+  });
+
+  test('edge following, fallback transitions, list open/close and resize preserve selected ID', () => {
+    render(<PositionLine entries={ledger([1200, 900, 800, 700, 600, 500, 400, 300])} lastVisit={null} visualise />);
+    const chart = screen.getByTestId('example-line-chart');
+    const earlier = screen.getByRole('button', { name: 'Earlier change' });
+    for (let i = 0; i < 6; i++) fireEvent.click(earlier);
+    expect(screen.getByText(fallback)).toBeDefined();
+    expect(chart.getAttribute('data-vis-scale-start')).toBe('1');
+    expect(screen.getByTestId('activity-card').textContent).toContain('300.00');
+    fireEvent.click(screen.getByRole('button', { name: 'All changes' }));
+    fireEvent.click(screen.getByRole('button', { name: 'All changes' }));
+    expect(chart.getAttribute('data-vis-scale-start')).toBe('1');
+    for (let i = 0; i < 4; i++) fireEvent.click(screen.getByRole('button', { name: 'Later change' }));
+    expect(screen.queryByText(fallback)).toBeNull();
+    width = 210; fireEvent(window, new Event('resize'));
+    expect(points()).toHaveLength(2);
+    expect(chart.querySelector('[data-chart-selected]')?.getAttribute('data-event-id')).toBe('scale-5');
+  });
+
+  test('actual and interpolated outside values trigger fallback without changing settle inputs', () => {
+    const view = render(<PositionLine entries={ledger([1200, 900, 800, 700, 600, 500])} lastVisit={FIRST} settle={0} visualise />);
+    expect(screen.getByText(fallback)).toBeDefined();
+    view.rerender(<PositionLine entries={ledger([1200, 900, 800, 700, 600, 500])} lastVisit={FIRST} settle={1} visualise />);
+    expect(screen.queryByText(fallback)).toBeNull();
+  });
 });
