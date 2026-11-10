@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
-import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
+import '../../scripts/verifier/admission.test.mjs';
 import { runInNewContext } from 'node:vm';
 
 const read = (name) => readFileSync(new URL(`../workflows/${name}`, import.meta.url), 'utf8');
@@ -9,76 +9,113 @@ const verifier = read('verifier-gate.yml');
 const condition = (text) => text.match(/^    if: >-\n((?:      .+\n)+)/m)[1].trim();
 const eligible = (text, github) => Boolean(runInNewContext(condition(text)
   .replace('labels.*.name', 'labels.map(label => label.name)'), {
-  github,
-  contains: (value, search) => value?.includes(search) ?? false,
+  github, contains: (value, search) => value?.includes(search) ?? false,
 }));
-const binding = verifier.split('          script: |\n')[1];
+const source = verifier.split('          script: |\n')[1].replace(/^            /gm, '');
 const AsyncFunction = Object.getPrototypeOf(async function () {}).constructor;
-const bind = new AsyncFunction('github', 'context', 'core', binding.replace(/^            /gm, ''));
-const head = '1234567890abcdef1234567890abcdef12345678';
-const event = (action, body, isPr = true) => ({
-  event_name: 'issue_comment',
-  event: { action, issue: { pull_request: isPr ? {} : undefined }, comment: { body } },
-});
-
-async function status(comments) {
-  const written = [];
-  const listComments = () => {};
-  await bind({
-    rest: {
-      pulls: { get: async (args) => {
-        assert.equal(args.pull_number, 1);
-        return { data: { head: { sha: head, repo: { full_name: 'example/example' } } } };
-      } },
-      issues: { listComments },
-      repos: { createCommitStatus: async (value) => written.push(value) },
+const head = '1'.repeat(40); const old = '2'.repeat(40); const base = '3'.repeat(40);
+const iris = 353659287; // Confirmed public bot-user mapping, distinct from App ID.
+const time = '2026-11-09T12:00:00Z';
+const raw = () => ({ id: 5, context: 'hedgr/verifier', state: 'success', created_at: time,
+  creator: { id: iris, type: 'Bot' }, description: 'v1 PASS pr=1 run=fixture author=hedgr-dex[bot] starter=216588125' });
+const comment = () => ({ id: 1, author_association: 'OWNER', created_at: time, updated_at: time,
+  body: `Hedgr-Verifier: PASS sha=${head} run=https://github.com/example/example/actions/runs/1` });
+const pr = () => ({ number: 1, state: 'open', commits: 1,
+  user: { id: 347652043, login: 'hedgr-dex[bot]' },
+  head: { sha: head, repo: { full_name: 'example/example' } },
+  base: { ref: 'main', sha: base, repo: { full_name: 'example/example' } } });
+async function evaluate(options = {}) {
+  const writes = []; const reads = []; let gets = 0; let statusGets = 0;
+  const response = (data, headers = {}) => ({ status: 200, data, headers });
+  const current = options.pr ?? pr();
+  const github = { rest: {
+    pulls: {
+      get: async () => response(++gets > 1 && options.fresh ? options.fresh : current),
+      list: async () => response([current]),
+      listCommits: async () => options.incomplete ?? response([{ sha: head, author: { id: 347652043 }, committer: { id: 347652043 } }]),
     },
-    paginate: async (method, args) => {
-      assert.equal(method, listComments);
-      assert.equal(args.per_page, 100);
-      return comments;
+    issues: { listComments: async () => response(options.comments ?? [comment()]) },
+    repos: {
+      listCommitStatusesForRef: async (args) => {
+        reads.push(args.ref); statusGets++;
+        const attestation = options.raw === null ? [] : [options.raw ?? raw()];
+        return response([...(options.revoke && statusGets > 1 ? [{ ...raw(), id: 20, state: 'failure' }] : attestation), {
+          id: 4, context: 'E2E smoke (@hedgr/frontend)', state: 'success', created_at: time,
+          creator: { id: 41898282 }, target_url: 'https://github.com/example/example/actions/runs/1',
+        }]);
+      },
+      createCommitStatus: async (s) => writes.push(s),
     },
-  }, { repo: { owner: 'example', repo: 'example' }, eventName: 'issue_comment', payload: { issue: { number: 1 } } },
-  { info() {}, warning() {}, setFailed: assert.fail });
-  assert.equal(written.length, 1);
-  assert.equal(written[0].sha, head);
-  assert.equal(written[0].context, 'hedgr/verifier');
-  return written[0];
+    actions: { getWorkflowRun: async () => response({ head_sha: options.e2eHead ?? head,
+      status: 'completed', conclusion: 'success', path: '.github/workflows/e2e-smoke.yml',
+      event: 'pull_request', repository: { full_name: 'example/example' } }) },
+  } };
+  const code = source.replace("const TRANSITION_MODE = 'legacy'", `const TRANSITION_MODE = '${options.mode ?? 'iris'}'`)
+    .replace('const IRIS_BOT_USER_ID = 353659287', `const IRIS_BOT_USER_ID = ${options.unknown ? 'null' : iris}`);
+  await new AsyncFunction('github', 'context', 'core', code)(github, {
+    repo: { owner: 'example', repo: 'example' }, eventName: options.event ?? 'pull_request_target',
+    payload: options.payload ?? { pull_request: { number: 1, head: { sha: old } } },
+  }, { info() {} });
+  for (const s of writes) { assert.equal(s.sha, head); assert.equal(s.target_url, undefined); }
+  return { writes, reads, policy: writes.find((w) => w.context === 'hedgr/verifier-policy') };
 }
 
-test('CI-EFF-001 verifier binding script is unchanged', () => {
-  assert.equal(createHash('sha256').update(binding).digest('hex'), 'ef8dc2e1fe7ffca269902bf482349e0b013cf547682bb200825b4039e3246eef');
+test('PR B actual inline policy accepts exact-head Iris metadata and never writes raw after cutover', async () => {
+  const r = await evaluate(); assert.equal(r.policy.state, 'success');
+  assert.deepEqual([...new Set(r.reads)], [head]);
+  assert.equal(r.writes.some((w) => w.context === 'hedgr/verifier'), false);
 });
-
-test('CI-EFF-001 verifier processes PR events and every edited PR comment', () => {
-  for (const action of ['opened', 'synchronize', 'reopened', 'ready_for_review']) {
-    assert.ok(eligible(verifier, { event_name: 'pull_request', event: { action } }));
-  }
-  assert.ok(eligible(verifier, event('edited', 'ordinary comment')));
-  assert.ok(eligible(verifier, event('edited', '')));
-  assert.ok(eligible(verifier, event('created', 'Hedgr-Verifier:')));
-  assert.equal(eligible(verifier, event('created', 'ordinary comment')), false);
-  assert.equal(eligible(verifier, event('created', '')), false);
-  assert.equal(eligible(verifier, event('edited', 'Hedgr-Verifier:', false)), false);
-});
-
-for (const result of ['PASS', 'FAIL']) {
-  test(`CI-EFF-001 edited ${result} marker removal returns current head to pending`, async () => {
-    const comment = {
-      id: 1, author_association: 'OWNER', updated_at: '2026-01-01T00:00:00Z',
-      body: `Hedgr-Verifier: ${result} sha=${head} run=https://github.com/example/example/actions/runs/1`,
-    };
-    assert.ok(eligible(verifier, event('created', comment.body)));
-    const before = await status([comment]);
-    assert.equal(before.state, result === 'PASS' ? 'success' : 'failure');
-    const edited = { ...comment, body: 'CI-EFF-001 comment updated', updated_at: '2026-01-01T00:01:00Z' };
-    assert.ok(eligible(verifier, event('edited', edited.body)));
-    const after = await status([edited]);
-    assert.equal(after.state, 'pending');
-    assert.equal(after.description, 'Verification required: no PASS on current head');
-    assert.equal(after.target_url, undefined);
+for (const [login, id, type] of [['mhibajene',216588125,'User'], ['github-actions[bot]',41898282,'Bot'], ['cursor[bot]',123,'Bot'], ['wrong-app[bot]',5653778,'Bot']]) {
+  test(`PR B identical PASS by ${login} rejects`, async () => {
+    assert.equal((await evaluate({ raw: { ...raw(), creator: { login, id, type } } })).policy.state, 'failure');
   });
 }
+test('PR B unknown Iris mapping rejects', async () => assert.equal((await evaluate({ unknown: true })).policy.state, 'failure'));
+test('PR B stale-head PASS cannot satisfy newly fetched head', async () => assert.equal((await evaluate({ raw: null })).policy.state, 'failure'));
+test('PR B OWNER PASS after cutover is only legacy evidence', async () => {
+  const r = await evaluate({ raw: null }); assert.equal(r.policy.state, 'failure');
+  assert.equal(r.writes.find((w) => w.context === 'hedgr/verifier-legacy').state, 'success');
+  assert.equal(r.writes.some((w) => w.context === 'hedgr/verifier'), false);
+});
+test('PR B transition retains effective binder only before cutover', async () => {
+  assert.equal((await evaluate({ mode: 'legacy' })).writes.find((w) => w.context === 'hedgr/verifier').state, 'success');
+});
+for (const result of ['PASS', 'FAIL']) {
+  test(`CI-EFF-001 edited ${result} marker removal returns legacy current head to pending`, async () => {
+    const c = { ...comment(), body: comment().body.replace('PASS', result) };
+    assert.equal((await evaluate({ comments: [c] })).writes.find((s) => s.context === 'hedgr/verifier-legacy').state, result === 'PASS' ? 'success' : 'failure');
+    const edited = { ...c, body: 'CI-EFF-001 comment updated', updated_at: '2026-11-09T12:01:00Z' };
+    assert.equal((await evaluate({ comments: [edited] })).writes.find((s) => s.context === 'hedgr/verifier-legacy').state, 'pending');
+  });
+}
+test('PR B edited legacy PASS is pending', async () => {
+  const r = await evaluate({ comments: [{ ...comment(), updated_at: '2026-11-09T12:01:00Z' }] });
+  assert.equal(r.writes.find((s) => s.context === 'hedgr/verifier-legacy').state, 'pending');
+});
+for (const change of [{ state: 'pending' }, { state: 'failure' }, { description: 'invalid' }, { target_url: 'https://example.test' },
+  { description: raw().description.replace('starter=216588125','starter=347652043') },
+  { description: raw().description.replace('pr=1','pr=2') }]) {
+  test(`PR B invalid latest raw status ${JSON.stringify(change)} rejects`, async () => assert.equal((await evaluate({ raw: { ...raw(), ...change } })).policy.state, 'failure'));
+}
+test('PR B incomplete commit API response rejects', async () => assert.equal((await evaluate({ incomplete: { status: 200, data: [] } })).policy.state, 'failure'));
+test('PR B head race aborts output', async () => assert.rejects(evaluate({ fresh: { ...pr(), head: { ...pr().head, sha: old } } }), /changed/));
+test('PR B later revocation wins', async () => assert.equal((await evaluate({ revoke: true })).policy.state, 'failure'));
+test('PR B old E2E head rejects', async () => assert.equal((await evaluate({ e2eHead: old })).policy.state, 'failure'));
+test('PR B status events cannot trigger themselves recursively', async () => {
+  for (const name of ['hedgr/verifier-policy', 'hedgr/verifier-legacy']) {
+    assert.equal(eligible(verifier, { event_name: 'status', event: { context: name } }), false);
+    assert.deepEqual((await evaluate({ event: 'status', payload: { context: name } })).writes, []);
+  }
+  const r = await evaluate({ mode: 'legacy', event: 'status', payload: { context: 'hedgr/verifier', sha: head } });
+  assert.equal(r.writes.some((w) => w.context === 'hedgr/verifier'), false);
+});
+test('PR B default-branch event and least-permission constraints', () => {
+  assert.match(verifier, /pull_request_target:/); assert.doesNotMatch(verifier, /^  pull_request:/m);
+  assert.doesNotMatch(verifier, /actions\/checkout|secrets\.|\$\{\{\s*github\.event\./);
+  assert.doesNotMatch(verifier, /^  (contents|checks|actions): write/m);
+  for (const action of ['created','edited','deleted']) assert.ok(eligible(verifier, { event_name: 'issue_comment', event: { action, issue: { pull_request: {} } } }));
+  assert.equal(eligible(verifier, { event_name: 'issue_comment', event: { issue: {} } }), false);
+});
 
 test('CI-EFF-001 evidence-pack event condition', () => {
   const workflow = read('agent-evidence-pack.yml');

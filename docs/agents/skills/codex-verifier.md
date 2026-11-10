@@ -4,6 +4,14 @@ Reading scope: follow AGENTS reading procedure: standing contract first; STATUS 
 
 # Skill: codex-verifier
 
+## MERGE-TIERS-ACT-001 PR B staged contract (§471)
+
+Tier 1 stays OFF. Before cutover, the expressly permitted single Founder-account legacy attestation below remains the effective process. After Founder-coordinated cutover, Iris alone may publish raw `hedgr/verifier` through App 5653778 on the independently reviewed exact head; never convert a legacy comment into Iris evidence. The status description is `v1 PASS|FAIL pr=<n> run=<id> author=<login> starter=<numeric id>`, within 140 characters and §471's bounds. No target_url. The session ID is distinct from the exact-head hosted E2E run retained privately; §443's full-E2E/docs-only distinction remains unchanged.
+
+Iris runs `scripts/verifier/admission.mjs` from main through her trusted controller with directly fetched request/PR/commit metadata. Never execute PR code beside signing credentials. The controller fixes the private request repository/ticket, supplies the confirmed numeric identity map, atomically persists the returned one-use reservation before review, serialises/supersedes active runs, binds a native session ID and records pending privately/shadow-only before cutover. Unknown mappings, edits, 24-hour expiry, replay, human-author/unsigned/unknown-bot commits, partial APIs, >250 commits or requester/author overlap reject. ops-dex cannot request hedgr-dex reviews; Founder, ops-hedgrops and ops-barry are eligible only with proven numeric/App mappings and independence. Dex and live-confirmed Vera bot authors are supported; unconfirmed App mappings for bot-origin requests fail closed.
+
+Immediately before publication, run `guardPublication`, verify exact-head hosted E2E and independent findings, and re-read current H/B. A changed head/base, request or run aborts. Commit the private receipt first; only then publish raw status and retain its returned status ID privately. Later pending/FAIL supersedes PASS. The public metadata gate cannot authenticate a private receipt or session. Credential/runtime isolation remains an accepted interim open risk, not a technical boundary or Tier 1 go. The controller integration and identity/shadow evidence must be reviewed before use; this library does not launch or sign reviews. No raw/status publication is permitted to implementers or stewards.
+
 ## Purpose
 Perform a **bounded verification pass** on code, documents, UI artifacts, or implementation outputs within the Hedgr system while strictly adhering to `AGENTS.md`, ADRs, and repo authority.
 

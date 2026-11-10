@@ -10,7 +10,7 @@ A change to the PR head after verification returns the PR to `VERIFYING`.
 
 No implementation PR may merge to `main` until an independent verifier, distinct from the authoring/implementing role, has reported PASS against the **current** PR head SHA. Verification applies only to the SHA reviewed. Any subsequent commit invalidates the previous PASS.
 
-Verifier attestations are PR comments whose first matching line is exactly:
+Before the PR B cutover, verifier attestations are legacy PR comments with exactly one matching line:
 
 ```text
 Hedgr-Verifier: PASS sha=<40-hex head sha> run=<exact-head hosted GitHub Actions E2E run URL>
@@ -28,25 +28,23 @@ Anchored at line start. Strict form: `Hedgr-Verifier: ` then `PASS` or `FAIL`, t
 
 The independent Verifier remains READ_ONLY except for one permitted write: a single attestation comment in this exact format on the PR under review for the head SHA it reviewed. The Verifier brief must explicitly permit that post. Immediately before posting, the Verifier re-reads the current PR head SHA and aborts without posting if it differs from the reviewed SHA. Implementers and stewards never post `Hedgr-Verifier:` attestations, even though all agents share the Founder's GitHub account.
 
-### Mechanical gate (what actually exists)
+### Mechanical gate (MERGE-TIERS-ACT-001 staging and cutover)
 
-`.github/workflows/verifier-gate.yml` reads PR comments and sets commit status context **`hedgr/verifier`** on the current head SHA fetched from the GitHub API (never from an `issue_comment` payload SHA).
+PR B stages a trusted default-branch metadata-only workflow (§471). In literal `TRANSITION_MODE = 'legacy'`, the existing OWNER/MEMBER/COLLABORATOR comment path remains the effective raw `hedgr/verifier` binder. Only one unedited matching line on the current fetched head can pass. Edits/deletions re-evaluate; malformed/latest non-success evidence cannot resurrect an older PASS. Legacy evidence is separately labelled under `hedgr/verifier-legacy`; it never satisfies the Iris policy or Tier 1.
 
-Latest eligible attestation (by comment `updated_at`, then comment id; all pages):
+The Founder alone coordinates native protection cutover and the governed literal change to `'iris'`. Then only Iris App 5653778 publishes raw `hedgr/verifier`; the workflow stops writing it. The single active ruleset `main` (26932204) must pin that context to 5653778 and require `hedgr/verifier-policy` from Actions 15368. Classic protection has no required checks (GET returns 404); old ruleset 25778284 was deleted. No classic PATCH is proposed. Preserve all other current ruleset controls, parameters and its empty bypass list. The creator **user** ID is 353659287, confirmed through the public users API; App 5653778 is Founder-confirmed. Unknown mappings fail closed. Actions policy and legacy statuses are defence in depth, not security boundaries. No output has a target_url. The workflow performs API metadata reads only, without checkout, PR code, PR-text script interpolation or custom secrets.
 
-- **success** — latest is `PASS` and `sha` equals the current head.
-- **failure** — latest is `FAIL` and `sha` equals the current head.
-- **pending** — no eligible attestation; latest `PASS`/`FAIL` is for a different SHA (including `FAIL` on an older SHA); or the comment is ineligible.
+Raw schema: `v1 PASS|FAIL pr=<n> run=<id> author=<login> starter=<numeric id>`, at most 140 characters (§471 bounds); SHA comes from the exact-head status resource. Iris's opaque `run=` names her admitted verifier session; it is separate from the legacy comment's hosted E2E URL. Receipts stay private. Iris runs main's deterministic admission/publication guard with authenticated request provenance, complete signed-bot commit enumeration, one-use protected state, expiry and H/B rereads. OWNER/comment, wrong-App and stale-head statuses cannot satisfy Iris-only verification. Native pins, protected producer checks and the immediate pre-merge request/run/receipt/head reread are essential; the public workflow cannot authenticate private receipts or a local session.
 
-Labels are not consulted. `product:approved`, `qa:approved`, `area:*` and `risk:*` are descriptive metadata only. They are never merge authority, ticket authority, or release/launch authority.
+Tier 1 stays OFF. Existing independent exact-head PASS, Wes same-head security sign-off and separate Founder go remain required. The shared-host key-isolation risk is open; behavioural non-access is not technical isolation. Valid code-owner review/enforcement remains prerequisite under IDENTITY-001; no settings change, dry-run or cutover is performed by this text.
 
-Trust model: only comments whose `author_association` is `OWNER`, `MEMBER`, or `COLLABORATOR` are eligible. Cloud agents typically post as the connected write-capable account. `CONTRIBUTOR` / `NONE` / first-timer comments and unverified bots are ignored.
+### Builder branch updates (documented; dry-run deferred)
 
-`issue_comment` workflows run from the default branch, so the comment path only evaluates this workflow after `verifier-gate.yml` is on `main`. Fork PRs receive a read-only `GITHUB_TOKEN` on `pull_request`; `statuses: write` may fail there. In-repo branches are the supported path.
+At the governed updater transition, each owning builder App updates its own branch using an installation-authenticated API path with expected-head protection. Never use owner-authored web/update commits for Iris admission; verified allowlisted App-bot authors may use GitHub service committer web-flow/19864447. The App update-branch dry-run is separately authorised later: prove author/committer, valid signed-bot provenance and automatic checks before adopting it; no guarantee is inferred from the endpoint name. Until that evidence and Founder disposition exist, stop when an update would require unsupported provenance. Existing legacy owner-update procedures below apply only to separately dispositioned legacy completion before cutover. Final Founder merges remain distinct from PR-branch updates. Every H/B change voids review evidence and needs fresh checks, request, verification, Wes sign-off and applicable Founder go.
 
 ### Auto-merge
 
-**Live protection precondition (§392, Founder 15 Oct 2026 21:10 AWST):** Immediately before every `gh pr merge --auto` command, including recovery re-arming, GET live `main` protection and retain the read-back JSON. Abort if protection is absent or differs from the restored posture: exactly `validate`, `E2E smoke (@hedgr/frontend)` and `hedgr/verifier` required with `strict=true`; admin enforcement, required linear history and conversation resolution enabled; force pushes/deletions disabled; required reviews/restrictions null. A recorded past configuration is insufficient. Do not fall back to direct/admin merge or silently repair settings; stop for a separately authorised evidence-backed Founder disposition. PR #898 merged immediately before verification while protection was mistakenly removed; its retrospective technical PASS does not cure that deviation.
+**Live protection precondition (§471, superseding the historical two-source assumption):** Immediately before any separately authorised merge or auto-merge action, GET the ruleset inventory, `main` ruleset **26932204** and effective main rules; retain the readback. Require active enforcement, main-only condition, no bypass actors, strict status checks, linear history, deletion/non-fast-forward prevention and review-thread resolution. Before cutover required checks are exactly validate/15368, E2E smoke (@hedgr/frontend)/15368 and hedgr/verifier/15368; after separately approved cutover, raw verifier is 5653778 and policy/15368 is added. Code-owner review stays OFF and Tier 1 stays OFF. Founder receipt MERGE-TIERS-ACT-001 SHA-256 `b994c05efb45aabf7318a247f1ab5af36d5280ea62b029f0fc28f5840e140a94` records consolidation, the bounded Workflows grant and accepted §445 deviation. Classic protection GET returning 404 is expected after consolidation; no classic PATCH is needed. Missing/drifted effective rules or bypasses stop; never silently repair settings or direct/admin merge. PR B remains DRAFT/UNARMED; existing independent exact-head PASS, Wes sign-off and Founder go remain required.
 
 Once implementation is complete, the implementing or steward agent may mark the PR ready and arm auto-merge with `gh pr merge --auto --squash` after the branch is updated and current-head checks have started. Check any stricter ticket gate before arming. Arming auto-merge is not merging: required `hedgr/verifier` remains pending until an independent Verifier attests PASS on that exact up-to-date head. GitHub then enforces required `validate`, `E2E smoke (@hedgr/frontend)`, `hedgr/verifier`, the standing invariant, and other applicable merge gates before completing the merge. Keep at most one PR in the merge step at a time.
 
@@ -64,7 +62,7 @@ gh pr merge "$PR" --auto --squash
 gh pr view "$PR" --json headRefOid,mergeStateStatus,autoMergeRequest,state,mergedAt,mergeCommit
 ```
 
-Never direct/admin merge, bypass protection, weaken a check or repeat the re-toggle. A changed head requires fresh independent verification under §331. If the gates are absent or the one recovery does not lead to merge, retain the evidence and stop for the coordinator; this procedure does not claim to repair GitHub's underlying fault. The recorded protection requires the three checks above, strict up-to-date branches and admin enforcement; no rulesets were present. Confirm current protection/rulesets read-only when diagnosing a new stall. An external-setting fix requires an exact old/new proposal, evidence and trade-off, then separate Dex/Founder confirmation before any change or merge.
+Never direct/admin merge, bypass protection, weaken a check or repeat the re-toggle. A changed head requires fresh independent verification under §331. If the gates are absent or the one recovery does not lead to merge, retain the evidence and stop for the coordinator; this procedure does not claim to repair GitHub's underlying fault. The recorded protection requires the three checks above, strict up-to-date branches and admin enforcement; no rulesets were present at that historical observation; the current consolidated main ruleset 26932204 now controls. Confirm current protection/rulesets read-only when diagnosing a new stall. An external-setting fix requires an exact old/new proposal, evidence and trade-off, then separate Dex/Founder confirmation before any change or merge.
 
 ### Vercel Git-info diagnosis
 
@@ -98,7 +96,7 @@ The stale-activation guard is “projection on main binds this ticket's activati
 
 `.github/workflows/validate.yml` runs `trust:check`, `trust:phrases`, the route-conflict guard, typecheck, lint, and unit tests. It does **not** enforce labels. There is no `QA_GATE_BYPASS` implementation in `validate.yml`. Do not claim a Solo QA label gate in validate.
 
-Hosted checks on PRs include `validate` and `E2E smoke (@hedgr/frontend)`. The Founder added `validate` to main's required checks on 2026-09-29 as part of §331. Classic branch protection on `main` now requires `validate`, `E2E smoke (@hedgr/frontend)`, and `hedgr/verifier`, requires branches up to date with `main` (`strict=true`), and enforces for admins. The repository allows auto-merge and has no rulesets.
+Hosted checks on PRs include `validate` and `E2E smoke (@hedgr/frontend)`. The Founder added `validate` to main's required checks on 2026-09-29 as part of §331. The active no-bypass `main` ruleset (26932204) requires `validate`, `E2E smoke (@hedgr/frontend)` and `hedgr/verifier`, all from Actions 15368 before cutover, with strict up-to-date branches. The Founder consolidated protection on 10 Nov 2026; classic protection is absent and old ruleset 25778284 is deleted. The repository allows auto-merge, but PR B is explicitly DRAFT/UNARMED. Read the ruleset inventory, details and effective main rules; do not use obsolete classic or deleted-ruleset payloads.
 
 ### Process
 

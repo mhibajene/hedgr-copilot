@@ -1,132 +1,163 @@
-# Binds independent verifier PASS/FAIL comments to commit status hedgr/verifier
-# on the current PR head SHA. Does not checkout PR code. Does not use
-# pull_request_target. Labels are not consulted.
-#
-# issues: read is required to paginate PR issue comments (attestations live
-# on the PR conversation, not review threads).
+# MERGE-TIERS-ACT-001: trusted default-branch metadata only. No PR checkout.
 name: Verifier gate
 
 on:
-  pull_request:
-    types: [opened, synchronize, reopened, ready_for_review]
+  pull_request_target:
+    types: [opened, synchronize, reopened, ready_for_review, closed]
+  status:
   issue_comment:
-    types: [created, edited]
+    types: [created, edited, deleted]
 
 permissions:
-  contents: read
-  pull-requests: read
-  issues: read
-  statuses: write
+  statuses: write # Policy/legacy output; temporary legacy raw binder before cutover.
+  pull-requests: read # Fresh head/base, PR discovery and complete commit attribution.
+  issues: read # Legacy conversation evidence, including edits/deletions.
+  actions: read # Exact-head hosted E2E run metadata; verifier session is separate.
+
+# Serialize every event, including status events lacking a PR number. Recompute
+# from the API rather than trusting the queued event's verdict or SHA.
+concurrency:
+  group: verifier-policy-${{ github.repository }}
+  cancel-in-progress: false
 
 jobs:
   bind-verifier-attestation:
     name: Bind verifier attestation
     if: >-
-      github.event_name == 'pull_request' ||
-      (github.event.issue.pull_request &&
-       (github.event.action == 'edited' || contains(github.event.comment.body, 'Hedgr-Verifier:')))
-    runs-on: ubuntu-latest
+      github.event_name == 'pull_request_target' ||
+      (github.event_name == 'status' && github.event.context == 'hedgr/verifier') ||
+      (github.event_name == 'issue_comment' && github.event.issue.pull_request)
+    runs-on: ubuntu-24.04
     steps:
-      - name: Bind hedgr/verifier to current head
+      - name: Evaluate verifier metadata on current head
         uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b # v7
         with:
           script: |
-            const owner = context.repo.owner;
-            const repo = context.repo.repo;
-            const ATTESTATION =
-              /^Hedgr-Verifier: (PASS|FAIL) sha=([0-9a-fA-F]{40}) run=(\S+)$/;
-            const TRUSTED = new Set(['OWNER', 'MEMBER', 'COLLABORATOR']);
-
-            let prNumber;
-            if (context.eventName === 'pull_request') {
-              prNumber = context.payload.pull_request.number;
+            // Founder flips this default-branch constant to 'iris' at cutover.
+            // Unknown values fail closed. No PR input or repository variable can flip it.
+            const TRANSITION_MODE = 'legacy';
+            const IRIS_APP_ID = 5653778;
+            const IRIS_BOT_USER_ID = 353659287; // Public users API; App 5653778 Founder-confirmed (§471).
+            const { owner, repo } = context.repo;
+            const repository = `${owner}/${repo}`;
+            const requireThat = (ok, reason) => { if (!ok) throw new Error(reason); };
+            const positive = (n) => Number.isSafeInteger(n) && n > 0;
+            const fullSha = (s) => /^[0-9a-f]{40}$/.test(s ?? '');
+            const validTime = (s) => typeof s === 'string' && Number.isFinite(Date.parse(s));
+            const latest = (items) => items.sort((a, b) => {
+              requireThat(positive(a.id) && positive(b.id) && validTime(a.created_at) && validTime(b.created_at), 'invalid status metadata');
+              return Date.parse(b.created_at) - Date.parse(a.created_at) || b.id - a.id;
+            })[0];
+            async function pages(method, args, count, max = 10000) {
+              const items = []; let page = 1;
+              while (page) {
+                const response = await method({ owner, repo, ...args, per_page: 100, page });
+                requireThat(response.status === 200 && Array.isArray(response.data) && response.headers && response.data.length <= 100, 'incomplete API response');
+                items.push(...response.data);
+                requireThat(items.length <= max, 'enumeration limit');
+                const link = response.headers.link;
+                if (!link) {
+                  requireThat(response.data.length < 100 || (count !== undefined && count === items.length), 'missing pagination link');
+                  page = 0;
+                } else {
+                  const next = link.split(',').find((part) => /rel="next"/.test(part));
+                  if (next) {
+                    const match = /^\s*<([^>]+)>;\s*rel="next"\s*$/.exec(next);
+                    requireThat(match && Number(new URL(match[1]).searchParams.get('page')) === page + 1, 'invalid pagination link');
+                    page += 1;
+                  } else {
+                    requireThat(/rel="(?:prev|first|last)"/.test(link), 'invalid pagination link'); page = 0;
+                  }
+                }
+              }
+              if (count !== undefined) requireThat(items.length === count, 'commit count mismatch');
+              return items;
+            }
+            const getPR = async (number) => (await github.rest.pulls.get({ owner, repo, pull_number: number })).data;
+            const statuses = (sha) => pages(github.rest.repos.listCommitStatusesForRef, { ref: sha });
+            const write = (sha, name, state, description) => github.rest.repos.createCommitStatus({
+              owner, repo, sha, context: name, state, description,
+            }); // Deliberately no target_url, including legacy outputs.
+            function legacy(comments, head) {
+              const candidates = comments.filter((c) => ['OWNER', 'MEMBER', 'COLLABORATOR'].includes(c.author_association) &&
+                (c.body ?? '').includes('Hedgr-Verifier:'));
+              for (const c of candidates) requireThat(positive(c.id) && validTime(c.updated_at), 'invalid comment metadata');
+              candidates.sort((a, b) => Date.parse(b.updated_at) - Date.parse(a.updated_at) || b.id - a.id);
+              const comment = candidates[0];
+              if (!comment || comment.updated_at !== comment.created_at) return 'pending';
+              const matches = comment.body.split(/\r?\n/).map((line) =>
+                /^Hedgr-Verifier: (PASS|FAIL) sha=([0-9a-f]{40}) run=(\S+)$/.exec(line)).filter(Boolean);
+              if (matches.length !== 1 || matches[0][2] !== head) return 'pending';
+              return matches[0][1] === 'PASS' ? 'success' : 'failure';
+            }
+            async function policy(pr, raw) {
+              requireThat(positive(IRIS_BOT_USER_ID) && IRIS_APP_ID === 5653778, 'Iris creator mapping UNVERIFIED');
+              requireThat(raw && positive(raw.id) && validTime(raw.created_at) &&
+                raw.creator?.id === IRIS_BOT_USER_ID && raw.creator.type === 'Bot' && !raw.target_url, 'invalid raw creator/head/link');
+              requireThat(typeof raw.description === 'string' && raw.description.length <= 140, 'invalid description');
+              const match = /^v1 (PASS|FAIL) pr=([1-9][0-9]{0,9}) run=([a-zA-Z0-9_-]{1,32}) author=([a-zA-Z0-9][a-zA-Z0-9-]{0,38}(?:\[bot\])?) starter=([1-9][0-9]{0,15})$/.exec(raw.description);
+              requireThat(match && Number(match[2]) === pr.number && match[4] === pr.user.login &&
+                positive(Number(match[5])) && Number(match[5]) !== pr.user.id, 'invalid status binding');
+              requireThat(match[1] === 'PASS' && raw.state === 'success', 'latest raw verdict is not PASS');
+              requireThat(positive(pr.commits) && pr.commits <= 250, 'unsupported commit count');
+              const commits = await pages(github.rest.pulls.listCommits, { pull_number: pr.number }, pr.commits, 250);
+              requireThat(new Set(commits.map((c) => c.sha)).size === pr.commits && commits.at(-1)?.sha === pr.head.sha, 'incomplete commits');
+              for (const c of commits) {
+                requireThat(fullSha(c.sha) && positive(c.author?.id) && positive(c.committer?.id) &&
+                  c.author.id !== Number(match[5]) && c.committer.id !== Number(match[5]) &&
+                  c.author.id !== IRIS_BOT_USER_ID && c.committer.id !== IRIS_BOT_USER_ID, 'starter/author overlap');
+              }
+              // Private launch, signature provenance, replay, receipt and actual
+              // review are Iris producer checks. An opaque run= cannot prove them here.
+              const e2e = latest((await statuses(pr.head.sha)).filter((s) => s.context === 'E2E smoke (@hedgr/frontend)'));
+              requireThat(e2e?.state === 'success' && e2e.creator?.id === 41898282, 'missing E2E evidence');
+              const url = new RegExp(`^https://github[.]com/${owner}/${repo}/actions/runs/([1-9][0-9]*)$`).exec(e2e.target_url ?? '');
+              requireThat(url, 'invalid E2E run link');
+              const run = (await github.rest.actions.getWorkflowRun({ owner, repo, run_id: url[1] })).data;
+              requireThat(run.head_sha === pr.head.sha && run.status === 'completed' && run.conclusion === 'success' &&
+                run.path === '.github/workflows/e2e-smoke.yml' && run.event === 'pull_request' &&
+                run.repository?.full_name === repository, 'E2E run mismatch');
+              return 'success';
+            }
+            requireThat(['legacy', 'iris'].includes(TRANSITION_MODE), 'unknown transition mode');
+            // Defence in depth ONLY: another Actions writer shares App 15368.
+            // Native App 5653778 pin in ruleset main/26932204 remains essential.
+            let numbers;
+            if (context.eventName === 'status') {
+              if (context.payload.context !== 'hedgr/verifier') return;
+              const prs = await pages(github.rest.pulls.list, { state: 'open', base: 'main' });
+              numbers = prs.filter((p) => p.head?.sha === context.payload.sha).map((p) => p.number);
             } else {
-              prNumber = context.payload.issue.number;
+              numbers = [context.payload.pull_request?.number ?? context.payload.issue?.number];
             }
-
-            const { data: pr } = await github.rest.pulls.get({
-              owner,
-              repo,
-              pull_number: prNumber,
-            });
-            const headSha = pr.head.sha;
-
-            const comments = await github.paginate(
-              github.rest.issues.listComments,
-              { owner, repo, issue_number: prNumber, per_page: 100 }
-            );
-
-            const attestations = [];
-            for (const comment of comments) {
-              if (!TRUSTED.has(comment.author_association)) continue;
-              const body = comment.body || '';
-              let lastMatch = null;
-              for (const line of body.split(/\r?\n/)) {
-                const match = ATTESTATION.exec(line);
-                if (match) lastMatch = match;
+            for (const number of numbers) {
+              const pr = await getPR(number);
+              if (pr.state !== 'open') continue;
+              requireThat(pr.base?.ref === 'main' && pr.base.repo?.full_name === repository &&
+                pr.head?.repo?.full_name === repository && fullSha(pr.head.sha) && fullSha(pr.base.sha) &&
+                positive(pr.user?.id), 'unsupported PR binding');
+              const head = pr.head.sha; const base = pr.base.sha;
+              let legacyState = 'pending'; let policyState = 'failure';
+              let raw; let rawId;
+              try {
+                const comments = await pages(github.rest.issues.listComments, { issue_number: number });
+                legacyState = legacy(comments, head);
+                raw = latest((await statuses(head)).filter((s) => s.context === 'hedgr/verifier'));
+                rawId = raw?.id;
+                policyState = await policy(pr, raw);
+              } catch {
+                core.info('Verifier policy evidence missing or invalid; no policy success.');
               }
-              if (!lastMatch) continue;
-              attestations.push({
-                result: lastMatch[1],
-                sha: lastMatch[2].toLowerCase(),
-                run: lastMatch[3],
-                updatedAt: Date.parse(comment.updated_at || comment.created_at),
-                id: comment.id,
-              });
-            }
-
-            attestations.sort((a, b) => {
-              if (a.updatedAt !== b.updatedAt) return a.updatedAt - b.updatedAt;
-              return a.id - b.id;
-            });
-            const latest = attestations.length
-              ? attestations[attestations.length - 1]
-              : null;
-
-            const head = headSha.toLowerCase();
-            let state = 'pending';
-            let description = 'Verification required: no PASS on current head';
-            let targetUrl = undefined;
-
-            if (latest && latest.sha === head) {
-              if (latest.result === 'PASS') {
-                state = 'success';
-                description = 'Independent verifier PASS on current head';
-                targetUrl = latest.run.startsWith('http') ? latest.run : undefined;
-              } else {
-                state = 'failure';
-                description = 'Independent verifier FAIL on current head';
-                targetUrl = latest.run.startsWith('http') ? latest.run : undefined;
-              }
-            } else if (latest) {
-              state = 'pending';
-              description =
-                latest.result === 'FAIL'
-                  ? 'FAIL attestation is for another SHA; current head pending'
-                  : 'PASS attestation is for another SHA; current head pending';
-            }
-
-            try {
-              const status = {
-                owner,
-                repo,
-                sha: headSha,
-                state,
-                context: 'hedgr/verifier',
-                description: description.slice(0, 140),
-              };
-              if (targetUrl) status.target_url = targetUrl;
-              await github.rest.repos.createCommitStatus(status);
-              core.info(
-                `hedgr/verifier ${state} on ${headSha} (PR #${prNumber})`
-              );
-            } catch (error) {
-              core.warning(
-                `Could not write hedgr/verifier status: ${error.message}. ` +
-                  'Fork pull_request tokens are often read-only; comment path ' +
-                  'requires this workflow on the default branch.'
-              );
-              if (pr.head.repo && pr.head.repo.full_name === `${owner}/${repo}`) {
-                core.setFailed(error.message);
+              const fresh = await getPR(number);
+              requireThat(fresh.state === 'open' && fresh.head.sha === head && fresh.base.sha === base &&
+                fresh.commits === pr.commits && fresh.user.id === pr.user.id, 'PR changed during evaluation');
+              const currentRaw = latest((await statuses(head)).filter((s) => s.context === 'hedgr/verifier'));
+              if (currentRaw?.id !== rawId) policyState = 'failure';
+              await write(head, 'hedgr/verifier-policy', policyState, policyState === 'success' ? 'Iris metadata accepted; native source pins required' : 'Iris metadata missing or invalid');
+              await write(head, 'hedgr/verifier-legacy', legacyState, 'Legacy comment evidence only; never Iris or Tier 1');
+              // Keep the effective binder only until the Founder-coordinated cutover.
+              // Status events NEVER write raw status, preventing recursive self-triggering.
+              if (TRANSITION_MODE === 'legacy' && context.eventName !== 'status') {
+                await write(head, 'hedgr/verifier', legacyState, 'Legacy transition; OWNER-comment evidence');
               }
             }
