@@ -125,6 +125,10 @@ test('all five Settings estimates preserve USD, market, Activity and planning wi
   await seedPosition(page);
   await expect(page.getByTestId('local-balance')).toHaveText('≈ ZMW 81.00 Example figure, not a quote');
   const originalStorage = await financialStorage(page);
+  await expect(page.getByTestId('engine-allocation-bands')).toHaveCount(0);
+  await expect(page.getByTestId('dashboard-planning-targets')).toHaveCount(0);
+  await expect(page.getByTestId('planning-read-card')).toHaveCount(1);
+  await page.goto('/dashboard');
   const planning = await page.getByTestId('engine-allocation-structure').textContent();
   await page.goto('/activity?journey=class-a-val-002');
   const activity = await page.locator('main').textContent();
@@ -152,8 +156,13 @@ test('all five Settings estimates preserve USD, market, Activity and planning wi
     await expect(page.getByTestId('usd-balance')).toHaveText('$3.00');
     await expect(page.getByTestId('local-balance')).toHaveText(`≈ ${code} ${amount} Example figure, not a quote`);
     await expect(page.getByTestId('dashboard-synthetic-balance-explainer')).toHaveText('Includes your simulated activity.');
-    expect(await page.getByTestId('engine-allocation-structure').textContent()).toBe(planning);
+    await expect(page.getByTestId('engine-allocation-bands')).toHaveCount(0);
+    await expect(page.getByTestId('dashboard-planning-targets')).toHaveCount(0);
+    await expect(page.getByTestId('planning-read-card')).toHaveCount(1);
     await expect(page.getByRole('combobox', { name: 'Display currency for this simulation' })).toHaveValue(code);
+    await page.goto('/dashboard');
+    expect(await page.getByTestId('engine-allocation-structure').textContent()).toBe(planning);
+    expect(await financialStorage(page)).toEqual(originalStorage);
   }
   await page.goto('/dashboard?journey=class-a-val-002');
   await expect(page.getByTestId('local-balance')).toHaveText('≈ PHP 168.00 Example figure, not a quote');
