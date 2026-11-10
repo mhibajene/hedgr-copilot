@@ -25,7 +25,7 @@ const pr = () => ({ number: 1, state: 'open', commits: 1,
   head: { sha: head, repo: { full_name: 'example/example' } },
   base: { ref: 'main', sha: base, repo: { full_name: 'example/example' } } });
 async function evaluate(options = {}) {
-  const writes = []; const reads = []; let gets = 0; let statusGets = 0;
+  const writes = []; const reads = []; let gets = 0; let statusGets = 0; let commentGets = 0;
   const response = (data, headers = {}) => ({ status: 200, data, headers });
   const current = options.pr ?? pr();
   const github = { rest: {
@@ -34,17 +34,21 @@ async function evaluate(options = {}) {
       list: async () => response([current]),
       listCommits: async () => options.incomplete ?? response([{ sha: head, author: { id: 347652043 }, committer: { id: 347652043 } }]),
     },
-    issues: { listComments: async () => response(options.comments ?? [comment()]) },
+    issues: { listComments: async () => response(++commentGets > 1 && options.freshComments ? options.freshComments : options.comments ?? [comment()]) },
     repos: {
       listCommitStatusesForRef: async (args) => {
         reads.push(args.ref); statusGets++;
         const attestation = options.raws ?? (options.raw === null ? [] : [options.raw ?? raw()]);
-        return response([...(options.revoke && statusGets > 1 ? [{ ...raw(), id: 20, state: 'failure' }] : attestation), {
+        return response([...(options.history ?? []), ...(options.revoke && statusGets > 1 ? [{ ...raw(), id: 20, state: 'failure' }] : attestation), {
           id: 4, context: 'E2E smoke (@hedgr/frontend)', state: 'success', created_at: time,
           creator: { id: 41898282 }, target_url: 'https://github.com/example/example/actions/runs/1',
         }]);
       },
-      createCommitStatus: async (s) => writes.push(s),
+      createCommitStatus: async (s) => {
+        writes.push(s);
+        if (options.history) options.history.push({ ...s, id: 100 + options.history.length,
+          created_at: options.now, creator: { id: 41898282, type: 'Bot' } });
+      },
     },
     actions: { getWorkflowRun: async () => response({ head_sha: options.e2eHead ?? head,
       status: 'completed', conclusion: 'success', path: '.github/workflows/e2e-smoke.yml',
@@ -190,8 +194,8 @@ test('PR B pending FAIL, edit and delete remain queued; unrelated events cannot 
     { name: 'FAIL', comments: [comment(), { ...comment(), id: 2,
       updated_at: '2026-11-09T12:02:00Z', created_at: '2026-11-09T12:02:00Z',
       body: comment().body.replace('PASS', 'FAIL') }], action: 'created', state: 'failure' },
-    { name: 'edit', comments: [{ ...comment(), body: 'marker removed', updated_at: '2026-11-09T12:03:00Z' }], action: 'edited', state: 'pending' },
-    { name: 'delete', comments: [], action: 'deleted', state: 'pending' },
+    { name: 'edit', comments: [{ ...comment(), body: 'marker removed', updated_at: '2026-11-09T12:03:00Z' }], action: 'edited', state: 'failure' },
+    { name: 'delete', comments: [], action: 'deleted', state: 'failure' },
   ];
   // Model queue=max preserving all pending entries, instead of replacing its sole slot.
   for (const mutation of mutations) queued.push({ ...mutation, group: key });
@@ -213,4 +217,83 @@ test('PR B a delayed older event still evaluates the newest FAIL comment and raw
     payload: { issue: { number: 1 }, action: 'created', comment: { body: comment().body } } });
   assert.equal(result.writes.find((status) => status.context === 'hedgr/verifier').state, 'failure');
   assert.equal(result.policy.state, 'failure');
+});
+
+const at = (minute) => `2026-11-09T12:${minute}:00Z`;
+const failComment = () => ({ ...comment(), id: 2, created_at: at('02'), updated_at: at('02'),
+  body: comment().body.replace('PASS', 'FAIL') });
+const legacyOutputs = (result) => result.writes.filter((s) => ['hedgr/verifier', 'hedgr/verifier-legacy'].includes(s.context));
+const assertLegacy = (result, state) => {
+  assert.equal(legacyOutputs(result).length, 2);
+  for (const status of legacyOutputs(result)) assert.equal(status.state, state, status.context);
+};
+test('F1 older PASS then newer FAIL writes failure in both legacy contexts', async () => {
+  assertLegacy(await evaluate({ mode: 'legacy', raw: null, comments: [comment(), failComment()] }), 'failure');
+});
+test('F1 editing newer FAIL to remove its marker cannot revive older PASS, even without edit history', async () => {
+  const edited = { ...failComment(), body: 'marker removed', updated_at: at('03') };
+  for (const changes of [undefined, { body: { from: failComment().body } }]) {
+    assertLegacy(await evaluate({ mode: 'legacy', raw: null, event: 'issue_comment', comments: [comment(), edited],
+      payload: { issue: { number: 1 }, action: 'edited', comment: edited, changes } }), 'failure');
+  }
+});
+test('F1 deleting newer FAIL cannot revive older PASS', async () => {
+  assertLegacy(await evaluate({ mode: 'legacy', raw: null, event: 'issue_comment', comments: [comment()],
+    payload: { issue: { number: 1 }, action: 'deleted', comment: failComment() } }), 'failure');
+});
+for (const action of ['edited', 'deleted']) {
+  test(`F1 unrelated later events after ${action} revocation stay failure; fresh PASS can recover`, async () => {
+    const history = [];
+    const edited = { ...failComment(), body: 'marker removed', updated_at: at('03') };
+    const comments = action === 'edited' ? [comment(), edited] : [comment()];
+    const run = (options, now) => evaluate({ mode: 'legacy', raw: null, history, comments, now, ...options });
+    assertLegacy(await run({ comments: [comment(), failComment()] }, at('02')), 'failure');
+    assertLegacy(await run({ event: 'issue_comment', payload: { issue: { number: 1 }, action,
+      comment: action === 'edited' ? edited : failComment(), changes: { body: { from: failComment().body } } } }, at('03')), 'failure');
+    for (const options of [{}, { event: 'issue_comment', payload: { issue: { number: 1 }, action: 'created', comment: { body: 'unrelated' } } },
+      { event: 'issue_comment', payload: { issue: { number: 1 }, action: 'edited', comment: { body: 'unrelated edit' }, changes: { body: { from: 'unrelated' } } } }]) {
+      assertLegacy(await run(options, at('04')), 'failure');
+    }
+    const statusEvent = await run({ event: 'status', payload: { context: 'hedgr/verifier', sha: head } }, at('04'));
+    assert.equal(statusEvent.writes.find((s) => s.context === 'hedgr/verifier-legacy').state, 'failure');
+    assert.equal(statusEvent.writes.some((s) => s.context === 'hedgr/verifier'), false);
+    const fresh = { ...comment(), id: 3, created_at: at('05'), updated_at: at('05') };
+    assertLegacy(await run({ comments: [...comments, fresh] }, at('06')), 'success');
+    assertLegacy(await run({ comments: [...comments, fresh] }, at('07')), 'success');
+  });
+}
+for (const context of ['hedgr/verifier', 'hedgr/verifier-legacy']) {
+  test(`F1 ${context} non-success history blocks older and same-second PASS despite newer success`, async () => {
+    for (const state of ['failure', 'pending', 'error']) {
+      for (const created_at of [time, at('01')]) {
+        const history = [{ ...raw(), id: 6, context, state, created_at }, { ...raw(), id: 7, context, created_at: at('02') }];
+        assertLegacy(await evaluate({ mode: 'legacy', raw: null, history, now: at('03') }), 'failure');
+      }
+    }
+  });
+}
+test('F1 edited PASS cannot recover from recorded revocation', async () => {
+  assertLegacy(await evaluate({ mode: 'legacy', raw: null,
+    history: [{ ...raw(), id: 6, state: 'failure', created_at: at('01') }], now: at('04'),
+    comments: [comment(), { ...comment(), id: 3, created_at: at('02'), updated_at: at('03') }] }), 'pending');
+});
+test('F1 editing a marker-bearing PASS writes failure even when current text still says PASS', async () => {
+  const edited = { ...comment(), updated_at: at('03') };
+  assertLegacy(await evaluate({ mode: 'legacy', raw: null, comments: [edited], event: 'issue_comment',
+    payload: { issue: { number: 1 }, action: 'edited', comment: edited, changes: { body: { from: comment().body } } } }), 'failure');
+});
+test('F1 revocation arriving during evaluation is re-read before legacy success', async () => {
+  assertLegacy(await evaluate({ mode: 'legacy', raw: null, revoke: true }), 'failure');
+});
+test('F1 FAIL removed during evaluation cannot upgrade that run to older PASS', async () => {
+  assertLegacy(await evaluate({ mode: 'legacy', raw: null,
+    comments: [comment(), failComment()], freshComments: [comment()] }), 'failure');
+});
+test('F1 edited PASS arriving during evaluation is re-read before output', async () => {
+  assertLegacy(await evaluate({ mode: 'legacy', raw: null,
+    freshComments: [{ ...comment(), updated_at: at('03') }] }), 'pending');
+});
+test('F1 invalid revocation metadata fails closed', async () => {
+  assertLegacy(await evaluate({ mode: 'legacy', raw: null,
+    history: [{ ...raw(), id: 6, state: 'failure', created_at: 'invalid' }], now: at('04') }), 'failure');
 });

@@ -77,17 +77,31 @@ jobs:
             const write = (sha, name, state, description) => github.rest.repos.createCommitStatus({
               owner, repo, sha, context: name, state, description,
             }); // Deliberately no target_url, including legacy outputs.
-            function legacy(comments, head) {
+            const hasMarker = (body) => typeof body === 'string' && body.includes('Hedgr-Verifier:');
+            const changedCommentRevokes = context.eventName === 'issue_comment' &&
+              ['edited', 'deleted'].includes(context.payload.action) &&
+              (hasMarker(context.payload.comment?.body) || hasMarker(context.payload.changes?.body?.from) ||
+                // Missing edit/delete provenance is ambiguous: require a fresh PASS.
+                typeof context.payload.comment?.body !== 'string' ||
+                (context.payload.action === 'edited' && typeof context.payload.changes?.body?.from !== 'string'));
+            function legacy(comments, head, records) {
+              if (changedCommentRevokes) return 'failure';
               const candidates = comments.filter((c) => ['OWNER', 'MEMBER', 'COLLABORATOR'].includes(c.author_association) &&
-                (c.body ?? '').includes('Hedgr-Verifier:'));
-              for (const c of candidates) requireThat(positive(c.id) && validTime(c.updated_at), 'invalid comment metadata');
+                hasMarker(c.body));
+              for (const c of candidates) requireThat(positive(c.id) && validTime(c.created_at) && validTime(c.updated_at), 'invalid comment metadata');
               candidates.sort((a, b) => Date.parse(b.updated_at) - Date.parse(a.updated_at) || b.id - a.id);
               const comment = candidates[0];
               if (!comment || comment.updated_at !== comment.created_at) return 'pending';
               const matches = comment.body.split(/\r?\n/).map((line) =>
                 /^Hedgr-Verifier: (PASS|FAIL) sha=([0-9a-f]{40}) run=(\S+)$/.exec(line)).filter(Boolean);
               if (matches.length !== 1 || matches[0][2] !== head) return 'pending';
-              return matches[0][1] === 'PASS' ? 'success' : 'failure';
+              if (matches[0][1] !== 'PASS') return 'failure';
+              // Exact-head status history is append-only even if a comment disappears.
+              // Both contexts revoke; an intervening success never erases a revocation.
+              const revocations = records.filter((s) => ['hedgr/verifier', 'hedgr/verifier-legacy'].includes(s.context) && s.state !== 'success');
+              for (const s of revocations) requireThat(positive(s.id) && validTime(s.created_at), 'invalid revocation metadata');
+              if (revocations.some((s) => Date.parse(comment.created_at) <= Date.parse(s.created_at))) return 'failure';
+              return 'success';
             }
             async function policy(pr, raw) {
               requireThat(positive(IRIS_BOT_USER_ID) && IRIS_APP_ID === 5653778, 'Iris creator mapping UNVERIFIED');
@@ -136,12 +150,13 @@ jobs:
                 pr.head?.repo?.full_name === repository && fullSha(pr.head.sha) && fullSha(pr.base.sha) &&
                 positive(pr.user?.id), 'unsupported PR binding');
               const head = pr.head.sha; const base = pr.base.sha;
-              let legacyState = 'pending'; let policyState = 'failure';
+              let legacyState = 'failure'; let policyState = 'failure';
               let raw; let rawId;
               try {
                 const comments = await pages(github.rest.issues.listComments, { issue_number: number });
-                legacyState = legacy(comments, head);
-                raw = latest((await statuses(head)).filter((s) => s.context === 'hedgr/verifier'));
+                const records = await statuses(head);
+                legacyState = legacy(comments, head, records);
+                raw = latest(records.filter((s) => s.context === 'hedgr/verifier'));
                 rawId = raw?.id;
                 policyState = await policy(pr, raw);
               } catch {
@@ -150,8 +165,17 @@ jobs:
               const fresh = await getPR(number);
               requireThat(fresh.state === 'open' && fresh.head.sha === head && fresh.base.sha === base &&
                 fresh.commits === pr.commits && fresh.user.id === pr.user.id, 'PR changed during evaluation');
-              const currentRaw = latest((await statuses(head)).filter((s) => s.context === 'hedgr/verifier'));
+              // Re-read comments and the revocation journal immediately before output.
+              const currentComments = await pages(github.rest.issues.listComments, { issue_number: number });
+              const currentRecords = await statuses(head);
+              const currentRaw = latest(currentRecords.filter((s) => s.context === 'hedgr/verifier'));
               if (currentRaw?.id !== rawId) policyState = 'failure';
+              try {
+                const currentLegacyState = legacy(currentComments, head, currentRecords);
+                // A changing evidence snapshot may revoke, never upgrade this run.
+                legacyState = currentLegacyState === 'success' && legacyState !== 'success' ? 'failure' : currentLegacyState;
+              }
+              catch { legacyState = 'failure'; }
               await write(head, 'hedgr/verifier-policy', policyState, policyState === 'success' ? 'Iris metadata accepted; native source pins required' : 'Iris metadata missing or invalid');
               await write(head, 'hedgr/verifier-legacy', legacyState, 'Legacy comment evidence only; never Iris or Tier 1');
               // Keep the effective binder only until the Founder-coordinated cutover.
