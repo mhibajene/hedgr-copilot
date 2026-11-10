@@ -1,3 +1,4 @@
+import { VIS_SCALE_COPY } from '../lib/copy/vis-scale-copy';
 import { expect, test, type Page } from '@playwright/test';
 const HOME = ['/dashboard-synthetic-journey', '/dashboard?journey=class-a-val-002'];
 const FIRST = Date.parse('2026-10-05T12:00:00Z');
@@ -32,7 +33,14 @@ for (const [width, scale] of [[1440, 1], [390, 1], [320, 2]]) test(`T1-T6/T10 sh
     await expect(card).toHaveText(example === 'own' ? 'Withdrawal · 9 Oct · −$20.50' : example === 'daniel' ? 'Deposit · 14 Aug · +$300.00' : 'Deposit · 21 Jul · +ZMW 2,000.00');
     await expect(page.getByTestId('activity-announcement')).toHaveText(example === 'own' ? `${width <= 360 ? 'Since your last visit. ' : ''}Withdrawal, minus 20.50 US dollars, 9 October.` : example === 'daniel' ? 'Deposit, plus 300 US dollars, 14 August.' : 'Deposit, plus 2,000 Zambian kwacha, 21 July.');
     await expect(page.getByTestId('dashboard-position-line-visit')).toHaveCount(0);
-    await expect(page.locator('[data-chart-selected]')).toHaveCount(1);
+    const chart = page.getByTestId('example-line-chart');
+    if (example === 'own') {
+      await expect(chart).toHaveAttribute('data-vis-scale-state', 'activity-only');
+      await expect(chart.getByTestId('vis-scale-fallback')).toHaveText(VIS_SCALE_COPY.fallback);
+      await expect(chart.locator('svg, [data-chart-selected], [data-chart-wash], [data-testid="chart-event-dot"], [data-chart-label]')).toHaveCount(0);
+    } else {
+      await expect(page.locator('[data-chart-selected]')).toHaveCount(1);
+    }
     if (currency === 'ZMW') await page.screenshot({ path: info.outputPath(`${example}-${HOME.indexOf(route)}-${width}-newest.png`), fullPage: true });
     const earlier = page.getByRole('button', { name: 'Earlier change', exact: true });
     await earlier.focus(); expect(await earlier.evaluate(n => getComputedStyle(n).outlineStyle)).not.toBe('none');
