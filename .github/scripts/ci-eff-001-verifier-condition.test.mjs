@@ -38,7 +38,7 @@ async function evaluate(options = {}) {
     repos: {
       listCommitStatusesForRef: async (args) => {
         reads.push(args.ref); statusGets++;
-        const attestation = options.raw === null ? [] : [options.raw ?? raw()];
+        const attestation = options.raws ?? (options.raw === null ? [] : [options.raw ?? raw()]);
         return response([...(options.revoke && statusGets > 1 ? [{ ...raw(), id: 20, state: 'failure' }] : attestation), {
           id: 4, context: 'E2E smoke (@hedgr/frontend)', state: 'success', created_at: time,
           creator: { id: 41898282 }, target_url: 'https://github.com/example/example/actions/runs/1',
@@ -111,7 +111,8 @@ test('PR B status events cannot trigger themselves recursively', async () => {
 });
 test('PR B default-branch event and least-permission constraints', () => {
   assert.match(verifier, /pull_request_target:/); assert.doesNotMatch(verifier, /^  pull_request:/m);
-  assert.doesNotMatch(verifier, /actions\/checkout|secrets\.|\$\{\{\s*github\.event\./);
+  assert.doesNotMatch(verifier, /actions\/checkout|secrets\./);
+  assert.doesNotMatch(source, /\$\{\{/);
   assert.doesNotMatch(verifier, /^  (contents|checks|actions): write/m);
   for (const action of ['created','edited','deleted']) assert.ok(eligible(verifier, { event_name: 'issue_comment', event: { action, issue: { pull_request: {} } } }));
   assert.equal(eligible(verifier, { event_name: 'issue_comment', event: { issue: {} } }), false);
@@ -153,4 +154,63 @@ test('CI-EFF-001 E2E reporters and cache paths are mutually exclusive', () => {
     assert.equal(enabled('Report E2E status (docs-only)', docsOnly, '', false), false);
     assert.ok(enabled('Report E2E status (failure)', docsOnly, '', false, false, true));
   }
+});
+
+const concurrencyBlock = () => {
+  assert.doesNotMatch(verifier, /^concurrency:/m, 'No workflow-wide pending slot');
+  const block = verifier.match(/^    concurrency:\n((?:      .+\n)+)/m)?.[1];
+  assert.ok(block, 'Eligible job has concurrency');
+  assert.match(block, /^      cancel-in-progress: false$/m);
+  assert.match(block, /^      queue: max$/m);
+  assert.doesNotMatch(block, /cancel-in-progress: true|queue: single|title|body|head_ref/);
+  return block;
+};
+const concurrencyGroup = (github) => concurrencyBlock().match(/^      group: (.+)$/m)[1]
+  .replace(/\$\{\{(.*?)\}\}/g, (_, expression) => String(runInNewContext(expression, {
+    github, format: (pattern, value) => pattern.replace('{0}', String(value)),
+  })));
+const queueEvent = (name, number, extra = {}) => ({ repository: 'example/example', event_name: name,
+  run_id: 99, event: { pull_request: { number }, issue: { number }, ...extra } });
+test('PR B job queues bind PR and comment events to the same PR, with separate SHA groups', () => {
+  const pull = concurrencyGroup(queueEvent('pull_request_target', 1));
+  assert.equal(pull, 'verifier-policy-example/example-pr-1');
+  assert.equal(concurrencyGroup(queueEvent('issue_comment', 1)), pull);
+  assert.notEqual(concurrencyGroup(queueEvent('issue_comment', 2)), pull);
+  const status = concurrencyGroup(queueEvent('status', undefined, { sha: head }));
+  assert.equal(status, `verifier-policy-example/example-status-${head}`);
+  assert.notEqual(status, pull);
+  assert.notEqual(concurrencyGroup(queueEvent('status', undefined, { sha: old })), status);
+  assert.equal(concurrencyGroup(queueEvent('status')), 'verifier-policy-example/example-status-99');
+});
+test('PR B pending FAIL, edit and delete remain queued; unrelated events cannot cancel them', async () => {
+  concurrencyBlock(); // Actual queue=max / cancel=false contract, within GitHub queue capacity.
+  const key = concurrencyGroup(queueEvent('issue_comment', 1));
+  const queued = [];
+  const mutations = [
+    { name: 'FAIL', comments: [comment(), { ...comment(), id: 2,
+      updated_at: '2026-11-09T12:02:00Z', created_at: '2026-11-09T12:02:00Z',
+      body: comment().body.replace('PASS', 'FAIL') }], action: 'created', state: 'failure' },
+    { name: 'edit', comments: [{ ...comment(), body: 'marker removed', updated_at: '2026-11-09T12:03:00Z' }], action: 'edited', state: 'pending' },
+    { name: 'delete', comments: [], action: 'deleted', state: 'pending' },
+  ];
+  // Model queue=max preserving all pending entries, instead of replacing its sole slot.
+  for (const mutation of mutations) queued.push({ ...mutation, group: key });
+  const other = concurrencyGroup(queueEvent('issue_comment', 2));
+  assert.notEqual(other, key);
+  assert.equal(eligible(verifier, { event_name: 'status', event: { context: 'Vercel' } }), false);
+  assert.equal(eligible(verifier, { event_name: 'issue_comment', event: { issue: {} } }), false);
+  assert.deepEqual(queued.map((entry) => entry.name), ['FAIL', 'edit', 'delete']);
+  for (const entry of queued) {
+    const result = await evaluate({ mode: 'legacy', event: 'issue_comment', comments: entry.comments,
+      payload: { issue: { number: 1 }, action: entry.action, comment: { body: comment().body } } });
+    assert.equal(result.writes.find((status) => status.context === 'hedgr/verifier').state, entry.state);
+  }
+});
+test('PR B a delayed older event still evaluates the newest FAIL comment and raw status', async () => {
+  const fail = { ...comment(), id: 2, created_at: '2026-11-09T12:04:00Z', updated_at: '2026-11-09T12:04:00Z', body: comment().body.replace('PASS', 'FAIL') };
+  const result = await evaluate({ mode: 'legacy', event: 'issue_comment', comments: [fail, comment()],
+    raws: [{ ...raw(), id: 6, state: 'failure' }, raw()],
+    payload: { issue: { number: 1 }, action: 'created', comment: { body: comment().body } } });
+  assert.equal(result.writes.find((status) => status.context === 'hedgr/verifier').state, 'failure');
+  assert.equal(result.policy.state, 'failure');
 });

@@ -14,12 +14,6 @@ permissions:
   issues: read # Legacy conversation evidence, including edits/deletions.
   actions: read # Exact-head hosted E2E run metadata; verifier session is separate.
 
-# Serialize every event, including status events lacking a PR number. Recompute
-# from the API rather than trusting the queued event's verdict or SHA.
-concurrency:
-  group: verifier-policy-${{ github.repository }}
-  cancel-in-progress: false
-
 jobs:
   bind-verifier-attestation:
     name: Bind verifier attestation
@@ -27,6 +21,11 @@ jobs:
       github.event_name == 'pull_request_target' ||
       (github.event_name == 'status' && github.event.context == 'hedgr/verifier') ||
       (github.event_name == 'issue_comment' && github.event.issue.pull_request)
+    # Filter unrelated events before entering a PR/SHA queue. Recompute from API.
+    concurrency:
+      group: verifier-policy-${{ github.repository }}-${{ github.event_name == 'pull_request_target' && format('pr-{0}', github.event.pull_request.number) || github.event_name == 'issue_comment' && format('pr-{0}', github.event.issue.number) || format('status-{0}', github.event.sha || github.run_id) }}
+      cancel-in-progress: false
+      queue: max
     runs-on: ubuntu-24.04
     steps:
       - name: Evaluate verifier metadata on current head
@@ -120,7 +119,7 @@ jobs:
               return 'success';
             }
             requireThat(['legacy', 'iris'].includes(TRANSITION_MODE), 'unknown transition mode');
-            // Defence in depth ONLY: another Actions writer shares App 15368.
+            // An interim verifier-runtime isolation risk is accepted by the Founder; details in a private receipt (MERGE-TIERS-ACT-001 SHA-256 28c61a5380abacf51065140a641b1cec4e11919ba19bdc1a46762499ecc660a2).
             // Native App 5653778 pin in ruleset main/26932204 remains essential.
             let numbers;
             if (context.eventName === 'status') {
