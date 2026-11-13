@@ -42,9 +42,9 @@ Non-repo evidence gap: this review uses only git first-parent history and repo-n
 
 | Uncertainty tested | Evidence obtained | Belief changed? | Disposition | Unresolved uncertainty |
 | --- | --- | --- | --- | --- |
-| Hosted backend pytest on non-docs-only PRs | `ZOD-CVE-CI-001` runtime #1090 (`7fa75829`) from head `17ef679f`; closeout #1091 / RAP #1092 | Hosted E2E job now runs the complete backend pytest suite on non-docs-only PRs; 63/63 recorded on that head | Closed under effective §460 at `cb514acb`; §6f.40 expired | `#34` follow-ups remain unactivated; ticket IDs only |
-| Whether RAP rebinds can be carried on the next same-ticket source PR | `OPS-RAP-BATCH-001` implementation #1101; closeout #1102 / RAP #1103 | Generator full-source equality guard cannot bind RAP to a prior permanent-main SHA when STATUS changes; no carried rebind occurred | Founder “Close honestly (Recommended)” recorded in §467; ticket closed; §6f.41 expired | §464 locked carry text remains; §467 records it as not executable; `#36` ≤10% measure is recorded as not achievable under current fallback |
-| Remaining `SEC-DEPS-003` sharp pin | Runtime #1105 (`fee3e76c`) from head `1e620798`; closeout source #1106 / RAP #1107 | Root `package.json` sharp range moved to `^0.35.5`; override and lock SHA unchanged; three high-severity Dependabot alerts recorded as `fixed` | §468 exists as sharp-slice closeout; #1106 and #1107 merged in this window | Live §7 / §7a still describe remaining §468 source/rebind/RAP gates; parent `#24` remains open; four critical instances remain open; ticket IDs and severity counts only |
+| Hosted backend pytest on non-docs-only PRs | `ZOD-CVE-CI-001` runtime #1090 (`7fa75829`) from head `17ef679f`; closeout #1091 / RAP #1092 | Hosted E2E job now runs the complete backend pytest suite on non-docs-only PRs; 63/63 recorded on that head | Closed under effective §460 at `cb514acb`; §6f.40 expired | `ZOD-CVE-CI-001` follow-ups remain unactivated; ticket IDs only |
+| Whether RAP rebinds can be carried on the next same-ticket source PR | `OPS-RAP-BATCH-001` implementation #1101; closeout #1102 / RAP #1103 | Generator full-source equality guard cannot bind RAP to a prior permanent-main SHA when STATUS changes; no carried rebind occurred | Founder “Close honestly (Recommended)” recorded in §467; ticket closed; §6f.41 expired | §464 locked carry text remains; §467 records it as not executable; RAP ≤10% measure is recorded as not achievable under current fallback |
+| Remaining `SEC-DEPS-003` sharp pin | Runtime #1105 (`fee3e76c`) from head `1e620798`; closeout source #1106 / RAP #1107 | Root `package.json` sharp range moved to `^0.35.5`; override and lock SHA unchanged; three high-severity Dependabot alerts recorded as `fixed` | §468 exists as sharp-slice closeout; #1106 and #1107 merged in this window | Live §7 / §7a still describe remaining §468 source/rebind/RAP gates; parent `SEC-DEPS-003` remains open; four critical instances remain open; ticket IDs and severity counts only |
 | HedgrOps / team registration | §461 `#1081` / RAP `#1093` / heading `#1094`; §462 `#1095`; §463 `#1096`; §469 `#1108` / RAP `#1110` | Role pointers landed in AGENTS §9.12–§9.16; Wes registration recorded | Founder decision records; §461 and §462 state they change no §7 / §7a occupancy | Standing auto-merge of queued tickets is recorded in §461 as reported, pending confirmation, and not a standing approval |
 | Two-tier merge mandate | Proposal `#1097`; activation/renumber `#1111` / RAP `#1112` as §470 | Mandate amendment recorded: Tier 1 would omit Founder go after verifier PASS plus Wes same-head sign-off | Recorded as PR A only | §470 states Tier 1 is unusable until Founder-reserved PR B and verifier-provenance prerequisites; live §7 remaining-queue cell still lists `MERGE-TIERS-ACT-001` among unactivated items |
 | Invited-participant comprehension | No nested Home/Engine closeout; no in-repo session or readout | Unchanged | Parents remain open under live §7 / §7a | Same product uncertainty as prior week |
@@ -81,7 +81,7 @@ Window cutoff is explicit: **from after Fri 30 Oct 2026 18:00 AWST to Fri 6 Nov 
 ### 2026-11-03 — `SEC-DEPS-003` sharp slice
 
 - Activation `#1099` / RAP `#1104`; runtime `#1105`; closeout source `#1106` / RAP `#1107`.
-- Public review uses ticket ID and severity counts only: three high-severity alerts recorded `fixed`; inventory 57 open to 55 open (three left, one unrelated medium entered); four critical instances remain open; parent `#24` remains open.
+- Public review uses ticket ID and severity counts only: three high-severity alerts recorded `fixed`; inventory 57 open to 55 open (three left, one unrelated medium entered); four critical instances remain open; parent `SEC-DEPS-003` remains open.
 - Live §7 table still describes remaining §468 closeout gates after `#1106` / `#1107` merged. This review surfaces that wording and does not reconcile occupancy by inference.
 
 ### 2026-11-04–05 to cutoff — Wes registration; merge-tier PR A
@@ -90,7 +90,7 @@ Window cutoff is explicit: **from after Fri 30 Oct 2026 18:00 AWST to Fri 6 Nov 
 - `MERGE-TIERS-ACT-001` source `#1111` / RAP `#1112` (`40dc0ce8`) as §470 PR A, last in-window first-parent commit.
 - No first-parent commit on fetched `origin/main` after 2026-11-05 22:54 AWST through the 2026-11-06 18:00 AWST cutoff.
 
-Same-run MVP process review covers this week’s completed-ticket closeouts under §364 after-catch-up weekly-window rules. It does not treat still-open `CI-EFF-001`, `IDENTITY-001`, parent `#24`, or Founder-reserved merge-tier PR B as completed tickets.
+Same-run MVP process review covers this week’s completed-ticket closeouts under §364 after-catch-up weekly-window rules. It does not treat still-open `CI-EFF-001`, `IDENTITY-001`, parent `SEC-DEPS-003`, or Founder-reserved merge-tier PR B as completed tickets.
 
 ## 7. Process assessment
 
@@ -100,13 +100,17 @@ Source-first authority, separate projection-only RAP rebinds, exact-head indepen
 
 Repo evidence from this window only. No time or spend figures exist in-repo; that non-repo evidence gap is stated rather than inferred. Prior-week baseline figures (~54% docs-only share; ~400 PRs/month; ~11,960 billable minutes/month) are not independently recomputed here.
 
-PR-volume picture (first-parent `origin/main`, this window):
+PR-volume picture (first-parent `origin/main`, this window). Categories overlap; they are not a partition:
+
+- **Docs-only:** first-parent commits whose changed paths are entirely under `docs/**`.
+- **Projection-only:** the subset of docs-only commits that touch only `docs/ops/bridge/repo-authority-projection.json`.
+- **Authority-source:** first-parent commits that edit `HEDGR_STATUS.md` and/or `AGENTS.md` (often with RAP JSON and the `currentSequencing` fixture). Three of these 13 are also docs-only (`#1094`, `#1097`, `#1108`: STATUS plus RAP JSON only). The other 10 fall outside the docs-only set because they also touch non-`docs/**` paths (typically `scripts/rap/tests/fork1-authority.test.mjs` and/or `AGENTS.md` with other files).
 
 - **26 first-parent commits** on `origin/main`.
-- **Docs-only share:** 11/26 (**42.3%**) touch only `docs/**` (including RAP-JSON-only rebinds and the 30 Oct review publication). Of those, **9/26 (34.6%)** touch only `docs/ops/bridge/repo-authority-projection.json`.
-- **Authority-record share:** a further 13/26 also edit `HEDGR_STATUS.md` and/or `AGENTS.md` (often with RAP JSON and the `currentSequencing` fixture). Combined docs/authority-record share is **24/26 (92.3%)**.
+- **Docs-only share:** 14/26 (**53.8%**), including the nine projection-only rebinds, the 30 Oct review publication `#1087`, RAP-process docs `#1101`, and the three STATUS/RAP-only authority-source commits named above. **Projection-only** remains **9/26 (34.6%)**.
+- **Authority-source share:** 13/26, of which 10 fall outside the docs-only set. Combined docs-only ∪ authority-source is **24/26 (92.3%)**.
 - **Application / CI merges:** `#1090` (`.github/workflows/e2e-smoke.yml` only) and `#1105` (root `package.json` one-line sharp range). No nested Lane V Home runtime closed.
-- **§464 / §467 #36 observation (required report, not a target claim):** §464 baseline was 25/64 merged PRs (39%) that touched only the projection JSON in the seven days ending 31 Oct 2026 00:28 AWST. This window’s RAP-JSON-only first-parent share is 9/26 (34.6%). §467 records the ≤10% measure as **not achievable** under the current generator fallback. This review reports that basis and does not claim the measure met or successful batching.
+- **§464 / §467 RAP ≤10% observation (required report, not a target claim):** §464 baseline was 25/64 merged PRs (39%) that touched only the projection JSON in the seven days ending 31 Oct 2026 00:28 AWST. This window’s RAP-JSON-only first-parent share is 9/26 (34.6%). §467 records the ≤10% measure as **not achievable** under the current generator fallback. This review reports that basis and does not claim the measure met or successful batching.
 - **Re-verification / merge-path signals:** `#1088` BEHIND after `#1087`, old PASS not carried; `#1090` Q4 never-armed squash; RAP-batch and sharp-slice records stayed UNARMED; §467 honest close of a carry that did not execute.
 
 Capability delivered (completed tickets with source closeout and final RAP rebind in-window, plus sharp-slice closeout PRs merged): `ZOD-CVE-CI-001`, `OPS-RAP-BATCH-001`, and `SEC-DEPS-003` sharp-slice closeout PRs `#1106` / `#1107` (live §7 still describes remaining gates). Founder records §461–§463, §469, and §470 PR A are occupancy-neutral in their own text except where §470 mechanically updates remaining-queue references.
@@ -133,7 +137,7 @@ Current posture remains **Class A / informational and synthetic**. Completed wor
 
 Reinforced: synthetic/live distinction; fail-closed exact-head verification including BEHIND re-verification; docs-only E2E skip never described as executed E2E; public security references limited to ticket IDs and counts; sharp-slice `fixed` versus dismissed distinguished in §468; §467 refusal to invent a carrier.
 
-Unaddressed in this window: invited participant response; customer-money, custody, rails, conversion, settlement; Class B / Class C; SME Engine slices; TalkBack and fractional-ZMW actual speech (INCOMPLETE); remaining `SEC-DEPS-003` / `#24` including four critical instances; operational successor to retired `BRIDGE-MCP-001`; merge-tier PR B / verifier-provenance prerequisites.
+Unaddressed in this window: invited participant response; customer-money, custody, rails, conversion, settlement; Class B / Class C; SME Engine slices; TalkBack and fractional-ZMW actual speech (INCOMPLETE); remaining `SEC-DEPS-003` including four critical instances; operational successor to retired `BRIDGE-MCP-001`; merge-tier PR B / verifier-provenance prerequisites.
 
 This coverage list is not completeness.
 
@@ -152,8 +156,8 @@ These labels are descriptive review language, not acceptance gates or maturity l
 ## 12. Risks / notes
 
 - High RAP-pair volume could be mistaken for product convergence; 24/26 first-parent commits were docs/authority records.
-- `OPS-RAP-BATCH-001` closeout could be mistaken for a working carry or for meeting `#36`; §467 records the opposite.
-- Sharp-slice closeout PRs could be mistaken for parent `#24` closure or for a clean-audit claim; parent and four critical instances remain open; ticket IDs and counts only.
+- `OPS-RAP-BATCH-001` closeout could be mistaken for a working carry or for meeting the RAP ≤10% measure; §467 records the opposite.
+- Sharp-slice closeout PRs could be mistaken for parent `SEC-DEPS-003` closure or for a clean-audit claim; parent and four critical instances remain open; ticket IDs and counts only.
 - Live §7 / §7a remaining-gate wording for the sharp slice, and remaining-queue listing of `MERGE-TIERS-ACT-001`, can be mistaken for unmerged closeout or unmerged activation; this review surfaces that wording and does not reconcile it.
 - §470 could be mistaken for operational Tier 1 merges; the record states every merge still needs the Founder go until PR B.
 - §461 reported standing auto-merge language could be mistaken for a standing approval; the record says it is not.
@@ -169,7 +173,7 @@ These labels are descriptive review language, not acceptance gates or maturity l
 | `REPLIT-PURGE-001` | Recorded as closed without activation (no-build). |
 | `HEDGROPS-MANDATE-001` / §461; `VERA-MANDATE-001` / §462; `TEAM-LINES-001` / §463; `WES-REG-001` / §469 | Recorded as Founder decision / registration records. Their own text states no §7 / §7a occupancy change and no ticket activation. |
 | `OPS-RAP-BATCH-001` / §§464, 467 | Recorded as a finite governance-process closeout. Locked §464 carry text remains; operating consequence is §467 fallback. |
-| `SEC-DEPS-003` sharp / §468; `#1105`–`#1107` | Runtime and closeout PRs merged. Live §7 / §7a still describe remaining closeout gates; ambiguity preserved. Parent `#24` remains open. Ticket ID only. |
+| `SEC-DEPS-003` sharp / §468; `#1105`–`#1107` | Runtime and closeout PRs merged. Live §7 / §7a still describe remaining closeout gates; ambiguity preserved. Parent `SEC-DEPS-003` remains open. Ticket ID only. |
 | `MERGE-TIERS-001` / `MERGE-TIERS-ACT-001` / §470 | Recorded as PR A activation/renumber. PR B remains Founder-reserved and unmerged. Live remaining-queue wording still lists the ticket among unactivated items; ambiguity preserved. |
 | Friday 30 Oct reviews `#1087` | Included as merged support evidence only. |
 | `CI-EFF-001`; `IDENTITY-001` Steps 0/2 | Recorded occupancy from prior windows; not closeouts in this window. |
@@ -184,7 +188,7 @@ Draft, in-progress, unmerged, external-only, and unrecorded work is excluded as 
 | `completed` / `closeout` | §§460, 467, 468 | Could imply parent closure, participant validation, or product launch | Only the named bounded nested, finite, or slice ticket reached its recorded technical closeout, subject to live §7 lag on the sharp slice | No review-created action; qualify the completed object |
 | `verified` / `PASS` | PR posture, closeouts | Could imply product acceptance or operational safety beyond the reviewed SHA | The named head, tree, checks, or research-gate reading passed its recorded verification | No; retain the verification object, SHA, and limits |
 | `READY` / preview | §468 preview label | Could imply participant release or financial operation | Quoted Vercel/GitHub deployment status for the named revision | No; do not broaden deployment evidence |
-| `fixed` (alerts) | §468 | Could imply all Dependabot risk closed or a clean audit | Three named high-severity alerts recorded `fixed`; inventory still open; four critical instances remain | No; keep counts and parent `#24` visible |
+| `fixed` (alerts) | §468 | Could imply all Dependabot risk closed or a clean audit | Three named high-severity alerts recorded `fixed`; inventory still open; four critical instances remain | No; keep counts and parent `SEC-DEPS-003` visible |
 | `release` / `invite` | Inherited §437 | Could imply the product shipped or that session results exist | Recorded as mechanics closeout; invitations checksum-only; sessions/readout not claimed | No |
 | `VoiceOver PASS` | Inherited §431 / §438 D1 | Could imply full accessibility certification | Actual VoiceOver checklist only; TalkBack and fractional-ZMW speech INCOMPLETE | No; keep the incompleteness visible |
 | `SKIPPED` E2E | §443 / RAP rebinds | Could be described as passed E2E | Recorded as `SKIPPED (docs-only, E2E not executed) CI-EFF-001` | No; keep the skip label |
@@ -201,14 +205,14 @@ Draft, in-progress, unmerged, external-only, and unrecorded work is excluded as 
 | Bridge / review support | 30 Oct review publication `#1087`; RAP-process docs in `#1101` | No verified authenticated MCP connection as a completed successor ticket | No | Indirectly — institutional memory | `#1087`; `#1101`; §438 D2 |
 | Off-ramp / rails | No completed change | Provider, market, conversion, settlement, and withdrawal capability remained unestablished | No | No | §7 / §7a; accepted ADRs |
 | Custody / customer-money movement | No completed change | No custody, customer-money movement, Class B, or Class C authority | No | No | §7 / §7a; ADR-0013 / ADR-0014 |
-| Repo tooling / security-support | Hosted pytest `#1090`; sharp range `#1105`; `ZOD-CVE-CI-001` and RAP-batch closeouts | Remaining `#24`; open CI-EFF observation; Identity steps open | No | Indirectly — verification and dependency hygiene | §§460, 467, 468 |
+| Repo tooling / security-support | Hosted pytest `#1090`; sharp range `#1105`; `ZOD-CVE-CI-001` and RAP-batch closeouts | Remaining `SEC-DEPS-003`; open CI-EFF observation; Identity steps open | No | Indirectly — verification and dependency hygiene | §§460, 467, 468 |
 | Merge / role mandates | §§461–463, 469, 470 PR A recorded | Operational Founder-go requirement remains until §470 PR B; no workflow change in PR A | No (gated §470 amendment is recorded, not operational) | Indirectly — who may merge later | §§461–463, 469, 470 |
 
 ## 16. Decision pressure
 
-**Clarification useful:** whether this window’s **9/26 RAP-JSON-only first-parent commits (34.6%)**, against the §464 baseline of 25/64 merged PRs (39%) and the §467 statement that the `#36` ≤10% measure is not achievable under the current generator fallback, is the operating-cost observation that record asked weekly reviews to report.
+**Clarification useful:** whether this window’s **9/26 RAP-JSON-only first-parent commits (34.6%)**, against the §464 baseline of 25/64 merged PRs (39%) and the §467 statement that the RAP ≤10% measure is not achievable under the current generator fallback, is the operating-cost observation that record asked weekly reviews to report.
 
-This is a bounded Founder governance question about operating cost versus provenance. It is not a ticket, sequence, or implementation recommendation. If the Founder does not take it up, this review manufactures no further pressure from the absence of invited-participant evidence, the open `CI-EFF-001` / `IDENTITY-001` occupancy, remaining `#24`, TalkBack incompleteness, or the unused merge-tier PR B.
+This is a bounded Founder governance question about operating cost versus provenance. It is not a ticket, sequence, or implementation recommendation. If the Founder does not take it up, this review manufactures no further pressure from the absence of invited-participant evidence, the open `CI-EFF-001` / `IDENTITY-001` occupancy, remaining `SEC-DEPS-003`, TalkBack incompleteness, or the unused merge-tier PR B.
 
 ## 17. Completion / non-authorising statement
 
