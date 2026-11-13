@@ -126,7 +126,15 @@ for (const synthetic of [true, false]) {
     await expect(deposit).toHaveAttribute('href', route('/deposit'));
     await expect(activity).toHaveAttribute('href', route('/activity'));
     await expect(page.getByTestId('dashboard-simulated-withdraw')).toHaveCount(synthetic ? 0 : 1);
-    await expect(page.getByTestId('engine-allocation-boundary')).toContainText('not separate balances');
+    if (synthetic) {
+      await expect(page.getByTestId('engine-allocation-bands')).toHaveCount(0);
+      await expect(page.getByTestId('engine-allocation-boundary')).toHaveCount(0);
+      await expect(page.getByTestId('dashboard-planning-targets')).toHaveCount(0);
+      await expect(page.getByTestId('planning-read-card')).toHaveCount(1);
+    } else {
+      await expect(page.getByTestId('engine-allocation-boundary')).toContainText('not separate balances');
+      await expect(page.getByTestId('planning-read-card')).toHaveCount(0);
+    }
     await expectMainFits(page);
     await page.screenshot({ path: testInfo.outputPath(`${family}-home.png`), fullPage: true });
     await deposit.focus();

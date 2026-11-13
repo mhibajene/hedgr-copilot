@@ -87,6 +87,8 @@ test('SC13 labels-listed-once', () => {
   render(<EngineAllocationBands engineState={getMockEngineState()} />); for (const label of ['Main target', 'Conservative yield', 'Reserve']) expect(screen.getAllByText(label, { exact: true })).toHaveLength(1); expect(screen.queryByTestId('engine-allocation-target-roles')).toBeNull(); cleanup(); render(<EngineAllocationBands engineState={getMockEngineState()} collapsed />); const purposes = screen.getByTestId('engine-allocation-target-roles'); expect(Array.from(purposes.querySelectorAll('dt')).map(n => n.textContent)).toEqual(['Now', 'Reserve', 'Growth']); expect(within(purposes).getByText('For what matters in the near term.')).toBeDefined();
 });
 test('SC14 held-strings-byte-identical and exact bounded runtime diff', () => {
+  // PLAN-INTENT-001: pin the approved additions, never substitute old baselines.
+  for (const [path, hash] of Object.entries(PLAN_INTENT_ADDITIONS)) expect(digest(hierarchyPreRuntime(path, postSelectPreRuntime(path, source(path)))), path).toBe(hash);
   for (const [path, hash] of Object.entries(PROTECTED_BLOBS)) expect(digest(bundlePreRuntime(path, source(path))), path).toBe(hash);
   for (const {path, baseline, edits} of APPROVED_EDITS) {
     const original = ORIGINAL_SOURCES[path]; let approved = original;
@@ -116,6 +118,22 @@ test('SC14 held-strings-byte-identical and exact bounded runtime diff', () => {
 });
 test('SC15 banned-terms-and-spelling-scan', () => {
   const changed = [...Object.values(ENGINE_POSTURE_CONTEXT), ...Object.values(ENGINE_NOTICE_COPY).flatMap(n => [n.title,n.body]), explainer.ENGINE_STABILITY_EXPLAINER_TERMS[0].term, explainer.ENGINE_STABILITY_EXPLAINER_TERMS[0].definition, ...explainer.ENGINE_STABILITY_EXPLAINER_PRINCIPLES, guidance.ENGINE_PROTECTIVE_GUIDANCE_TITLE, guidance.ENGINE_PROTECTIVE_GUIDANCE_FRAMING, guidance.ENGINE_PROTECTIVE_GUIDANCE_POINTS.at(-1)!, ...POSTURES.map(review.getEngineStabilityReviewSnapshotStance), review.ENGINE_STABILITY_REVIEW_CADENCE_CUE]; for (const text of changed) expect(text).not.toMatch(/stability|stable|protect|preserv|held steady|steadier|[→←↑↓]|\b\w+iz(?:e|ed|ing)\b|\d/i);
+});
+
+test('PLAN-INTENT-001 exact source reversal rejects unrelated edits and changed or duplicate insertions', () => {
+  const path = 'app/(app)/dashboard/page.tsx';
+  const page = source(path);
+  const addedImport = "import { PlanningReadCard } from './PlanningReadCard';\n";
+  for (const mutation of [
+    `${page}\n// PLAN-INTENT-001 mutation\n`,
+    page.replace(addedImport, addedImport + addedImport),
+    page.replace(addedImport, ''),
+    page.replace('<PlanningReadCard />', '<PlanningReadCard /><PlanningReadCard />'),
+    page.replace('selectedExample === "own"', 'selectedExample !== "own"'),
+  ]) {
+    expect(mutation).not.toBe(page);
+    expect(() => bundlePreRuntime(path, mutation)).toThrow();
+  }
 });
 
 // Immutable 97c864e source, captured before runtime; no green-source hashes.
@@ -488,7 +506,25 @@ function qolPreRuntime(path: string, value: string): string {
   return value;
 }
 
+const PLAN_INTENT_ADDITIONS: Record<string, string> = {
+  'app/(app)/dashboard/PlanningReadCard.tsx': '6bba18d44a8375214976138e3db870540ed005f06e1666977901c14cd6469e34',
+  'lib/state/simulation-intent.ts': 'b3f8fd083a4f2ac3cfece67ce4668ac7f05ebada3adffc1c8b3914eaff0d1078',
+  'lib/copy/plan-intent-copy.ts': '9fd4c8bf5d3c731a1f443fea78f3a723a4804d580e64e4030ea2358cd53b13ff',
+};
+const PLAN_INTENT_PAGE_EDITS = [
+  ["import { HomeHero } from './HomeHero';\n", "import { HomeHero } from './HomeHero';\nimport { PlanningReadCard } from './PlanningReadCard';\n"],
+  ['  const balanceHero = syntheticJourneyActive ? (\n', '  const balanceHero = syntheticJourneyActive ? (\n    <>\n'],
+  ['    </HomeHero>\n  ) : (', '    </HomeHero>\n    {selectedExample === "own" ? <PlanningReadCard /> : null}\n    </>\n  ) : ('],
+] as const;
+
 function bundlePreRuntime(path: string, value: string): string {
+  value = hierarchyPreRuntime(path, postSelectPreRuntime(path, value));
+  if (path === 'app/(app)/dashboard/page.tsx') {
+    for (const [old, replacement] of PLAN_INTENT_PAGE_EDITS) {
+      expect(value.split(replacement), 'PLAN-INTENT-001 exact page addition').toHaveLength(2);
+      value = value.replace(replacement, () => old);
+    }
+  }
   value = qolPreRuntime(path, value);
   value = releaseGatePreRuntime(path, releaseGate002PreRuntime(path, releaseGate003PreRuntime(path, value)));
   for (const [old, replacement] of BUNDLE_SOURCE_EDITS[path] ?? []) {
@@ -608,6 +644,97 @@ function releaseGate003PreRuntime(path: string, value: string): string {
   for (const [old, replacement] of RELEASE_GATE_003_SOURCE_EDITS[path] ?? []) {
     expect(value.split(replacement), path).toHaveLength(2);
     value = value.replace(replacement, old);
+  }
+  return value;
+}
+
+// PLAN-INTENT-001: exact approved hierarchy edits, before every historical lock.
+const HIERARCHY_PAGE_EDITS: readonly (readonly [string, string])[] = [
+  [
+    "          ) : null}\n        </p>\n      ) : null}\n  </>;\n  const balanceHero = syntheticJourneyActive ? (\n    <>\n    <HomeHero label=\"Simulated Hedgr balance\" labelId=\"dashboard-total-balance-label\" usdAmount={ready && !cleanStartRequested ? displayedTotal : 0} currency={displayCurrency} ownSimulation figureTestId=\"usd-balance\" testId=\"dashboard-balance\" selector={<SimulationDisplayCurrencySelector placement=\"position\" />} loading={positionLoading} isLoading={isLoading}>\n      {balanceHeroTail}\n    </HomeHero>\n    {selectedExample === \"own\" ? <PlanningReadCard /> : null}\n    </>\n  ) : (\n    <section\n      className={`space-y-1 ${home.position}`}\n      aria-labelledby=\"dashboard-total-balance-label\"\n      data-testid=\"dashboard-balance\"\n",
+    "          ) : null}\n        </p>\n      ) : null}\n  </>;\n  const balanceHero = syntheticJourneyActive ? (\n    <HomeHero label=\"Simulated Hedgr balance\" labelId=\"dashboard-total-balance-label\" usdAmount={ready && !cleanStartRequested ? displayedTotal : 0} currency={displayCurrency} ownSimulation figureTestId=\"usd-balance\" testId=\"dashboard-balance\" selector={<SimulationDisplayCurrencySelector placement=\"position\" />} loading={positionLoading} isLoading={isLoading}>\n      {balanceHeroTail}\n    </HomeHero>\n  ) : (\n    <section\n      className={`space-y-1 ${home.position}`}\n      aria-labelledby=\"dashboard-total-balance-label\"\n      data-testid=\"dashboard-balance\"\n"
+  ],
+  [
+    "        latestChangeAmountUSD={syntheticComparison.lastEvent?.amountUSD}\n        latestChangeCreatedAt={syntheticComparison.lastEvent?.createdAt}\n        homeDate={today}\n        changeIncludedInBalance={positionDerivable}\n      />\n      {ownRateLine}\n    </div>\n  );\n\n  const positionLine = positionDerivable ? (\n    <ChartSourceAmountsContext.Provider value={sourceAmounts}><PositionLine entries={positionEntries} lastVisit={previousVisit} settle={arrivalSettle} visualise={syntheticJourneyActive} heroAmount={total} /></ChartSourceAmountsContext.Provider>\n",
+    "        latestChangeAmountUSD={syntheticComparison.lastEvent?.amountUSD}\n        latestChangeCreatedAt={syntheticComparison.lastEvent?.createdAt}\n        homeDate={today}\n        changeIncludedInBalance={positionDerivable}\n      />\n    </div>\n  );\n\n  const positionLine = positionDerivable ? (\n    <ChartSourceAmountsContext.Provider value={sourceAmounts}><PositionLine entries={positionEntries} lastVisit={previousVisit} settle={arrivalSettle} visualise={syntheticJourneyActive} heroAmount={total} /></ChartSourceAmountsContext.Provider>\n"
+  ],
+  [
+    "              {syntheticJourneyActive ? <strong>How you can tell</strong> : null}\n              <span>Check both entries in Activity.</span>\n            </li>\n          </ol>\n        </section>\n        {ownRateLine}\n      </div>\n    );\n  } else if (normalPosture && sinceSummary) {\n    homeObservation = (\n      <div className={home.observation}>\n",
+    "              {syntheticJourneyActive ? <strong>How you can tell</strong> : null}\n              <span>Check both entries in Activity.</span>\n            </li>\n          </ol>\n        </section>\n      </div>\n    );\n  } else if (normalPosture && sinceSummary) {\n    homeObservation = (\n      <div className={home.observation}>\n"
+  ],
+  [
+    "          {guaranteeLine}\n          {syntheticJourneyActive && sinceSummary.kind !== \"no-change\"\n            ? sinceLink(sinceSummary.kind === \"one\" ? \"See the entry\" : \"See all in Activity\")\n            : null}\n        </section>\n        {ownRateLine}\n      </div>\n    );\n  }\n\n  const currencyContext = currencyContextVisible ? (\n",
+    "          {guaranteeLine}\n          {syntheticJourneyActive && sinceSummary.kind !== \"no-change\"\n            ? sinceLink(sinceSummary.kind === \"one\" ? \"See the entry\" : \"See all in Activity\")\n            : null}\n        </section>\n      </div>\n    );\n  }\n\n  const currencyContext = currencyContextVisible ? (\n"
+  ],
+  [
+    "      }\n      className={home.overview}\n      data-testid=\"dashboard-current-overview\"\n    >\n      {syntheticJourneyActive ? (\n        <>\n          <div className={home.overviewGrid}>\n            <div className={home.positionPanel}>\n              {balanceHero}\n              {positionLine}\n            </div>\n            <div className={home.insights}>\n              {homeObservation}\n              {homeUtilities}\n            </div>\n          </div>\n          {currencyContext}\n        </>\n      ) : productSimulationActive ? (\n        <div className={home.overviewGrid}>\n          <div className={home.positionPanel}>{balanceHero}{positionLine}</div>\n          <div className={home.insights}>\n          {homeObservation}\n",
+    "      }\n      className={home.overview}\n      data-testid=\"dashboard-current-overview\"\n    >\n      {syntheticJourneyActive ? (\n        <div className=\"min-w-0 space-y-6\">\n          <div className={home.positionPanel}>{balanceHero}</div>\n          {homeObservation}\n          {homeUtilities}\n          {positionLine}\n          {selectedExample === \"own\" ? <PlanningReadCard /> : null}\n          <div className=\"min-w-0 space-y-2\">\n            {currencyContext}\n            {ownRateLine}\n          </div>\n        </div>\n      ) : productSimulationActive ? (\n        <div className={home.overviewGrid}>\n          <div className={home.positionPanel}>{balanceHero}{positionLine}</div>\n          <div className={home.insights}>\n          {homeObservation}\n"
+  ],
+  [
+    "          className={`mx-auto space-y-6 sm:space-y-8 ${\n            productSimulationActive ? \"max-w-5xl\" : \"max-w-2xl\"\n          }`}\n        >\n          {currentOverview}\n          <EngineAllocationBands\n            engineState={engineState}\n            collapsed={productSimulationActive}\n          />\n          <ErrorState\n            title=\"Unable to load your balance\"\n            description=\"We couldn't fetch your account balance. Please try again.\"\n            primaryAction={{ label: \"Retry\", onClick: refresh }}\n            data-testid=\"dashboard-error-state\"\n",
+    "          className={`mx-auto space-y-6 sm:space-y-8 ${\n            productSimulationActive ? \"max-w-5xl\" : \"max-w-2xl\"\n          }`}\n        >\n          {currentOverview}\n          {!syntheticJourneyActive ? <EngineAllocationBands\n            engineState={engineState}\n            collapsed={productSimulationActive}\n          /> : null}\n          <ErrorState\n            title=\"Unable to load your balance\"\n            description=\"We couldn't fetch your account balance. Please try again.\"\n            primaryAction={{ label: \"Retry\", onClick: refresh }}\n            data-testid=\"dashboard-error-state\"\n"
+  ],
+  [
+    "\n        {exampleActive ? (\n          <div className={home.support}>{disclosureSection}</div>\n        ) : syntheticJourneyActive ? (\n          <div className={home.support}>\n            <details className={home.accordion} data-testid=\"research-planning-targets\">\n              <summary className={home.accordionSummary}>\n                <span>Planning targets<span className={home.accordionSubtitle}>Targets only \u00b7 No money moved</span></span>\n                {accordionChevron}\n              </summary>\n              <div className={home.accordionContent}><EngineAllocationBands engineState={engineState} collapsed /></div>\n            </details>\n            {disclosureSection}\n          </div>\n        ) : null}\n\n\n",
+    "\n        {exampleActive ? (\n          <div className={home.support}>{disclosureSection}</div>\n        ) : syntheticJourneyActive ? (\n          <div className={home.support}>\n            {disclosureSection}\n          </div>\n        ) : null}\n\n\n"
+  ]
+];
+function hierarchyPreRuntime(path: string, value: string): string {
+  const edits = path === 'app/(app)/dashboard/page.tsx' ? HIERARCHY_PAGE_EDITS :
+    path === 'app/(app)/dashboard/PlanningReadCard.tsx' ? [
+      ['        <ul className="space-y-3" data-testid="planning-read-labels">', '        {intent !== \'skip\' ? <ul className="space-y-3" data-testid="planning-read-labels">'],
+      ['        </ul>', '        </ul> : null}'],
+    ] : [];
+  for (const [old, replacement] of [...edits].reverse()) {
+    expect(value.split(replacement), path).toHaveLength(2);
+    value = value.replace(replacement, () => old);
+  }
+  return value;
+}
+
+// PLAN-INTENT-001: exact post-select/state/reset edits before the retained hierarchy and historical locks.
+const POST_SELECT_EDITS: Record<string, readonly (readonly [string, string])[]> = {
+  "app/(app)/dashboard/page.tsx": [
+    [
+      "import { formatLocalCurrency } from \"../../../lib/utils/money\";\nimport { DanielExampleHome } from './DanielExampleHome';\nimport { SarahExampleHome } from './SarahExampleHome';\nimport { HomeHero } from './HomeHero';\nimport { PlanningReadCard } from './PlanningReadCard';\nimport { RateLine } from './RateLine';\nimport { CurrencyInsight } from \"./CurrencyInsight\";\nimport { EngineProtectiveGuidance } from \"./EngineProtectiveGuidance\";\nimport { EngineStabilityExplainer } from \"./EngineStabilityExplainer\";\nimport { EngineStabilityReviewSnapshot } from \"./EngineStabilityReviewSnapshot\";\n",
+      "import { formatLocalCurrency } from \"../../../lib/utils/money\";\nimport { DanielExampleHome } from './DanielExampleHome';\nimport { SarahExampleHome } from './SarahExampleHome';\nimport { HomeHero } from './HomeHero';\nimport { PlanningReadCard } from './PlanningReadCard';\nimport { setSimulationIntent } from '../../../lib/state/simulation-intent';\nimport { RateLine } from './RateLine';\nimport { CurrencyInsight } from \"./CurrencyInsight\";\nimport { EngineProtectiveGuidance } from \"./EngineProtectiveGuidance\";\nimport { EngineStabilityExplainer } from \"./EngineStabilityExplainer\";\nimport { EngineStabilityReviewSnapshot } from \"./EngineStabilityReviewSnapshot\";\n"
+    ],
+    [
+      "\n  useEffect(() => {\n    if (cleanStartRequested || (sarahExample && searchParams?.has(CLASS_A_VAL_002_RESET_PARAM))) {\n      // \u00a7374: eligible Sarah consumes reset while refusing all simulation writes.\n      if (!sarahExample) {\n        clearTransactions();\n        clearSimulationReceipt();\n        removeRetiredWalletBalance();\n        if (searchParams?.get(\"study\") === \"1\") setSimulationDisplayCurrency(\"ZMW\");\n      }\n",
+      "\n  useEffect(() => {\n    if (cleanStartRequested || (sarahExample && searchParams?.has(CLASS_A_VAL_002_RESET_PARAM))) {\n      // \u00a7374: eligible Sarah consumes reset while refusing all simulation writes.\n      if (!sarahExample) {\n        if (syntheticJourneyActive && selectedExample === \"own\") setSimulationIntent(null);\n        clearTransactions();\n        clearSimulationReceipt();\n        removeRetiredWalletBalance();\n        if (searchParams?.get(\"study\") === \"1\") setSimulationDisplayCurrency(\"ZMW\");\n      }\n"
+    ],
+    [
+      "    const confirmed = window.confirm(\n      \"Restart the simulated journey? This clears only the simulated balance and Activity stored on this device. No real money or external records are affected.\"\n    );\n    if (!confirmed) return;\n\n    clearTransactions();\n    removeRetiredWalletBalance();\n    clearLastVisit();\n    setPreviousVisit(null);\n  };\n",
+      "    const confirmed = window.confirm(\n      \"Restart the simulated journey? This clears only the simulated balance and Activity stored on this device. No real money or external records are affected.\"\n    );\n    if (!confirmed) return;\n\n    setSimulationIntent(null);\n    clearTransactions();\n    removeRetiredWalletBalance();\n    clearLastVisit();\n    setPreviousVisit(null);\n  };\n"
+    ]
+  ],
+  "app/(app)/dashboard/PlanningReadCard.tsx": [
+    [
+      "import { PLAN_INTENT_COPY as copy } from '../../../lib/copy/plan-intent-copy';\nimport { getPlanningReadOrder, setSimulationIntent, useSimulationIntent } from '../../../lib/state/simulation-intent';\n\nexport function PlanningReadCard() {\n  const intent = useSimulationIntent();\n  const order = getPlanningReadOrder(intent);\n  const answered = intent !== null && intent !== 'skip';\n  return (\n    <section className=\"min-w-0 space-y-4 rounded-2xl border border-hedgr-200 bg-white p-4 text-sm leading-relaxed text-hedgr-800\" aria-labelledby=\"planning-read-question\" data-testid=\"planning-read-card\">\n      <fieldset className=\"min-w-0 space-y-2\">\n        <legend id=\"planning-read-question\" className=\"mb-2 font-semibold\">{copy.question}</legend>\n        {(['regular', 'dated', 'reserve', 'skip'] as const).map(value => (\n          <label key={value} className=\"flex min-h-11 cursor-pointer items-center gap-3 rounded-lg border border-hedgr-200 px-3 py-2 focus-within:outline focus-within:outline-2 focus-within:outline-hedgr-500\">\n            <input type=\"radio\" name=\"planning-purpose\" value={value} checked={intent === value} onChange={() => setSimulationIntent(value)} className=\"shrink-0 accent-hedgr-primary\" />\n            <span>{copy.answers[value]}</span>\n          </label>\n        ))}\n      </fieldset>\n      {intent === 'dated' ? <p data-testid=\"planning-read-dated\">{copy.dated}</p> : null}\n      <div className=\"space-y-3\">\n        <h2 className=\"text-base font-semibold\">{copy.title}</h2>\n        <p aria-live=\"polite\" data-testid=\"planning-read-stance\">{answered ? copy.confirmation(copy.answers[intent]) : copy.skipped}</p>\n        {answered ? <p data-testid=\"planning-read-why\">{copy.why[order[0]]}</p> : null}\n        {intent !== 'skip' ? <ul className=\"space-y-3\" data-testid=\"planning-read-labels\">\n          {order.map(label => (\n            <li key={label}>\n              <h3 className=\"font-semibold\">{copy.labels[label]}</h3>\n              <p>{copy.sentences[label]}</p>\n            </li>\n          ))}\n        </ul> : null}\n      </div>\n    </section>\n  );\n}\n",
+      "import { PLAN_INTENT_COPY as copy } from '../../../lib/copy/plan-intent-copy';\nimport { getPlanningReadOrder, setSimulationIntent, useSimulationIntent } from '../../../lib/state/simulation-intent';\n\nexport function PlanningReadCard() {\n  const intent = useSimulationIntent();\n  const selected = getPlanningReadOrder(intent)[0];\n  return (\n    <section className=\"min-w-0 space-y-4 rounded-2xl border border-hedgr-200 bg-white p-4 text-sm leading-relaxed text-hedgr-800\" aria-label={copy.title} data-testid=\"planning-read-card\">\n      {intent === null ? <>\n        <fieldset className=\"min-w-0 space-y-2\">\n          <legend id=\"planning-read-question\" className=\"mb-2 font-semibold\">{copy.question}</legend>\n          {(['regular', 'reserve', 'dated'] as const).map(value => (\n            <label key={value} className=\"flex min-h-11 cursor-pointer items-center gap-2 rounded-lg border border-hedgr-200 px-2 py-2 focus-within:outline focus-within:outline-2 focus-within:outline-hedgr-500\">\n              <input type=\"radio\" name=\"planning-purpose\" value={value} checked={false} onChange={() => setSimulationIntent(value)} className=\"shrink-0 accent-hedgr-primary\" />\n              <span>{copy.labels[getPlanningReadOrder(value)[0]]}</span>\n            </label>\n          ))}\n        </fieldset>\n        <button type=\"button\" onClick={() => setSimulationIntent('skip')} className=\"min-h-11 underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-hedgr-500\">{copy.answers.skip}</button>\n        <p>{copy.limits}</p>\n      </> : <>\n        <div className=\"flex flex-wrap items-baseline gap-x-4 gap-y-1\">\n          <p className=\"min-w-0 flex-1 basis-48\" aria-live=\"polite\" data-testid=\"planning-read-stance\">{intent === 'skip' ? copy.skipped : copy.confirmation(copy.labels[selected])}</p>\n          <button type=\"button\" onClick={() => setSimulationIntent(null)} className=\"min-h-11 shrink-0 underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-hedgr-500\">{copy.change}</button>\n        </div>\n        {intent !== 'skip' ? <p data-testid=\"planning-read-why\">{copy.why[selected]}</p> : null}\n        {intent === 'dated' ? <p data-testid=\"planning-read-dated\">{copy.dated}</p> : null}\n      </>}\n    </section>\n  );\n}\n"
+    ]
+  ],
+  "lib/state/simulation-intent.ts": [
+    [
+      "\nexport type SimulationPurpose = 'regular' | 'dated' | 'reserve';\nexport type SimulationIntent = SimulationPurpose | 'skip' | null;\nexport type PlanningReadLabel = 'regular' | 'reserve' | 'goals';\n\nconst DEFAULT_ORDER: readonly PlanningReadLabel[] = ['regular', 'reserve', 'goals'];\nconst PURPOSE_LABEL: Record<SimulationPurpose, PlanningReadLabel> = {\n  regular: 'regular', dated: 'goals', reserve: 'reserve',\n};\n\n",
+      "\nexport type SimulationPurpose = 'regular' | 'dated' | 'reserve';\nexport type SimulationIntent = SimulationPurpose | 'skip' | null;\nexport type PlanningReadLabel = 'regular' | 'reserve' | 'goals';\n\nexport const SIMULATION_INTENT_KEY = 'hedgr.simulation.intent';\nconst DEFAULT_ORDER: readonly PlanningReadLabel[] = ['regular', 'reserve', 'goals'];\nconst PURPOSE_LABEL: Record<SimulationPurpose, PlanningReadLabel> = {\n  regular: 'regular', dated: 'goals', reserve: 'reserve',\n};\n\n"
+    ],
+    [
+      "  if (intent === null || intent === 'skip') return DEFAULT_ORDER;\n  const selected = PURPOSE_LABEL[intent];\n  return [selected, ...DEFAULT_ORDER.filter(label => label !== selected)];\n}\n\n// PLAN-INTENT-001: document-lifetime state only; no browser storage or external events.\nlet intent: SimulationIntent = null;\nconst listeners = new Set<() => void>();\nconst serverSnapshot = (): SimulationIntent => null;\n\nexport function getSimulationIntent(): SimulationIntent { return intent; }\n\nexport function setSimulationIntent(value: SimulationIntent): void {\n  if (value === intent) return;\n  intent = value;\n  listeners.forEach(listener => listener());\n}\n\nfunction subscribe(listener: () => void): () => void {\n  listeners.add(listener);\n  return () => { listeners.delete(listener); };\n}\n\nexport function useSimulationIntent(): SimulationIntent {\n  return useSyncExternalStore(subscribe, getSimulationIntent, serverSnapshot);\n}\n",
+      "  if (intent === null || intent === 'skip') return DEFAULT_ORDER;\n  const selected = PURPOSE_LABEL[intent];\n  return [selected, ...DEFAULT_ORDER.filter(label => label !== selected)];\n}\n\nlet intent: SimulationIntent = null;\nlet memoryOnly = false;\nconst listeners = new Set<() => void>();\nconst serverSnapshot = (): SimulationIntent => null;\nconst valid = (value: unknown): value is Exclude<SimulationIntent, null> =>\n  value === 'regular' || value === 'dated' || value === 'reserve' || value === 'skip';\n\nexport function getSimulationIntent(): SimulationIntent {\n  if (typeof window === 'undefined') return null;\n  if (memoryOnly) return intent;\n  try {\n    const stored = window.localStorage.getItem(SIMULATION_INTENT_KEY);\n    return valid(stored) ? stored : null;\n  } catch {\n    return intent;\n  }\n}\n\nexport function setSimulationIntent(value: SimulationIntent): void {\n  if ((value !== null && !valid(value)) || typeof window === 'undefined') return;\n  intent = value;\n  try {\n    if (value === null) window.localStorage.removeItem(SIMULATION_INTENT_KEY);\n    else window.localStorage.setItem(SIMULATION_INTENT_KEY, value);\n    memoryOnly = false;\n  } catch {\n    // Match the existing display preference's in-memory fallback for blocked storage.\n    memoryOnly = true;\n  }\n  listeners.forEach(listener => listener());\n}\n\nfunction subscribe(listener: () => void): () => void {\n  listeners.add(listener);\n  const onStorage = (event: StorageEvent) => {\n    if (event.key === SIMULATION_INTENT_KEY || event.key === null) {\n      memoryOnly = false;\n      listener();\n    }\n  };\n  window.addEventListener('storage', onStorage);\n  return () => { listeners.delete(listener); window.removeEventListener('storage', onStorage); };\n}\n\nexport function useSimulationIntent(): SimulationIntent {\n  return useSyncExternalStore(subscribe, getSimulationIntent, serverSnapshot);\n}\n"
+    ]
+  ],
+  "lib/copy/plan-intent-copy.ts": [
+    [
+      "export const PLAN_INTENT_COPY = {\n  title: 'Planning read',\n  question: 'What is this portion meant to support?',\n  answers: {\n    regular: 'A regular cost',\n    dated: 'A payment on a date',\n    reserve: 'A reserve for the unexpected',\n",
+      "export const PLAN_INTENT_COPY = {\n  title: 'Planning read',\n  change: 'Change',\n  question: 'What is this portion meant to support?',\n  answers: {\n    regular: 'A regular cost',\n    dated: 'A payment on a date',\n    reserve: 'A reserve for the unexpected',\n"
+    ]
+  ]
+};
+function postSelectPreRuntime(path: string, value: string): string {
+  for (const [old, replacement] of [...(POST_SELECT_EDITS[path] ?? [])].reverse()) {
+    expect(value.split(replacement), path).toHaveLength(2);
+    value = value.replace(replacement, () => old);
   }
   return value;
 }

@@ -18,6 +18,8 @@ import { formatLocalCurrency } from "../../../lib/utils/money";
 import { DanielExampleHome } from './DanielExampleHome';
 import { SarahExampleHome } from './SarahExampleHome';
 import { HomeHero } from './HomeHero';
+import { PlanningReadCard } from './PlanningReadCard';
+import { setSimulationIntent } from '../../../lib/state/simulation-intent';
 import { RateLine } from './RateLine';
 import { CurrencyInsight } from "./CurrencyInsight";
 import { EngineProtectiveGuidance } from "./EngineProtectiveGuidance";
@@ -168,6 +170,7 @@ export default function DashboardPage() {
     if (cleanStartRequested || (sarahExample && searchParams?.has(CLASS_A_VAL_002_RESET_PARAM))) {
       // §374: eligible Sarah consumes reset while refusing all simulation writes.
       if (!sarahExample) {
+        if (syntheticJourneyActive && selectedExample === "own") setSimulationIntent(null);
         clearTransactions();
         clearSimulationReceipt();
         removeRetiredWalletBalance();
@@ -229,6 +232,7 @@ export default function DashboardPage() {
     );
     if (!confirmed) return;
 
+    setSimulationIntent(null);
     clearTransactions();
     removeRetiredWalletBalance();
     clearLastVisit();
@@ -505,7 +509,6 @@ export default function DashboardPage() {
         homeDate={today}
         changeIncludedInBalance={positionDerivable}
       />
-      {ownRateLine}
     </div>
   );
 
@@ -577,7 +580,6 @@ export default function DashboardPage() {
             </li>
           </ol>
         </section>
-        {ownRateLine}
       </div>
     );
   } else if (normalPosture && sinceSummary) {
@@ -656,7 +658,6 @@ export default function DashboardPage() {
             ? sinceLink(sinceSummary.kind === "one" ? "See the entry" : "See all in Activity")
             : null}
         </section>
-        {ownRateLine}
       </div>
     );
   }
@@ -736,19 +737,17 @@ export default function DashboardPage() {
       data-testid="dashboard-current-overview"
     >
       {syntheticJourneyActive ? (
-        <>
-          <div className={home.overviewGrid}>
-            <div className={home.positionPanel}>
-              {balanceHero}
-              {positionLine}
-            </div>
-            <div className={home.insights}>
-              {homeObservation}
-              {homeUtilities}
-            </div>
+        <div className="min-w-0 space-y-6">
+          <div className={home.positionPanel}>{balanceHero}</div>
+          {homeObservation}
+          {homeUtilities}
+          {positionLine}
+          {selectedExample === "own" ? <PlanningReadCard /> : null}
+          <div className="min-w-0 space-y-2">
+            {currencyContext}
+            {ownRateLine}
           </div>
-          {currencyContext}
-        </>
+        </div>
       ) : productSimulationActive ? (
         <div className={home.overviewGrid}>
           <div className={home.positionPanel}>{balanceHero}{positionLine}</div>
@@ -815,10 +814,10 @@ export default function DashboardPage() {
           }`}
         >
           {currentOverview}
-          <EngineAllocationBands
+          {!syntheticJourneyActive ? <EngineAllocationBands
             engineState={engineState}
             collapsed={productSimulationActive}
-          />
+          /> : null}
           <ErrorState
             title="Unable to load your balance"
             description="We couldn't fetch your account balance. Please try again."
@@ -895,13 +894,6 @@ export default function DashboardPage() {
           <div className={home.support}>{disclosureSection}</div>
         ) : syntheticJourneyActive ? (
           <div className={home.support}>
-            <details className={home.accordion} data-testid="research-planning-targets">
-              <summary className={home.accordionSummary}>
-                <span>Planning targets<span className={home.accordionSubtitle}>Targets only · No money moved</span></span>
-                {accordionChevron}
-              </summary>
-              <div className={home.accordionContent}><EngineAllocationBands engineState={engineState} collapsed /></div>
-            </details>
             {disclosureSection}
           </div>
         ) : null}

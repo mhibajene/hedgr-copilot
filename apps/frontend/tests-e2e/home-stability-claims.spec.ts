@@ -36,6 +36,7 @@ for (const [width, scale] of [[1440, 1], [390, 1], [320, 2]]) for (const posture
     else if (i > 0) await expect(page.getByTestId('engine-posture-context')).toHaveText(STATUS[i - 1]);
     if (i > 0) { const banner = page.getByTestId('engine-posture-banner'); await expect(banner.locator('p').first()).toHaveText(TITLES[i - 1]); await expect(banner.locator('p').last()).toHaveText(BODIES[i - 1]); }
     const panel = page.getByTestId('engine-allocation-bands');
+    if (!own) await expect(page.getByTestId('planning-read-card')).toHaveCount(0);
     if (LIVE) {
       await page.getByTestId('dashboard-planning-targets').locator('summary').first().click();
       await expect(panel).toHaveAttribute('data-presentation', 'expanded'); await expect(panel.getByRole('heading', { name: 'Planning targets', exact: true })).toBeVisible();
@@ -43,6 +44,10 @@ for (const [width, scale] of [[1440, 1], [390, 1], [320, 2]]) for (const posture
       await expect(panel.getByText('Planning target', { exact: true })).toBeVisible(); await expect(panel.getByText('One of the three targets.', { exact: true })).toBeVisible();
       await expect(panel.getByTestId('engine-allocation-target-roles')).toHaveCount(0); await expect(panel).not.toContainText('in this simulation');
       if (posture === 'tightened') { await expect(panel.getByTestId('engine-allocation-band-coreTargetPct')).toContainText('35%'); await expect(panel.getByTestId('engine-allocation-band-liquidityTargetPct')).toContainText('55%'); }
+    } else if (own) {
+      await expect(panel).toHaveCount(0);
+      await expect(page.getByTestId('dashboard-planning-targets')).toHaveCount(0);
+      await expect(page.getByTestId('planning-read-card')).toHaveCount(1);
     } else { await expect(panel).toHaveAttribute('data-presentation', 'collapsed'); for (const label of ['Now', 'Reserve', 'Growth']) await expect(panel.getByTestId('engine-allocation-target-roles').getByText(label, { exact: true })).toHaveCount(1); }
     const directory = process.env.SC_SCREENSHOT_DIR ?? info.outputPath('claims'); mkdirSync(directory, { recursive: true });
     const prefix = `${LIVE ? 'live' : own ? 'own' : 'default'}-${posture}-${width}-${scale * 100}pct`;

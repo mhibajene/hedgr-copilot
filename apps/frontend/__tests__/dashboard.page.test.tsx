@@ -14,6 +14,8 @@ import {
   waitFor,
   within,
 } from "@testing-library/react";
+import { EngineAllocationBands } from "../app/(app)/dashboard/EngineAllocationBands";
+import home from "../app/(app)/dashboard/synthetic-home.module.css";
 import { ENGINE_NOTICE_COPY } from "../lib/engine/notices";
 import type { EngineState } from "../lib/engine/types";
 import {
@@ -309,6 +311,10 @@ describe("DashboardPage engine trust surface", () => {
       screen.getByTestId("dashboard-current-status").querySelector("img")
     ).toBeNull();
 
+    expect(screen.queryByTestId("research-planning-targets")).toBeNull();
+    expect(screen.queryByTestId("engine-allocation-bands")).toBeNull();
+    // Retain the original target-copy/disclosure contract on the component.
+    render(<EngineAllocationBands engineState={getMockEngineState('normal')} collapsed />);
     const allocation = screen.getByTestId("engine-allocation-bands");
     expect(allocation.getAttribute("data-presentation")).toBe("collapsed");
     expect(allocation.textContent).toContain("What you are building toward");
@@ -927,7 +933,8 @@ test('Posture qualifier integrates across journey default live and balance-error
         render(<DashboardPage />);
         const header = screen.getByTestId('dashboard-current-status');
         expect(header.textContent?.split(B_QUALIFIER).length).toBe(mode === 'live' || posture !== 'normal' ? 2 : 1);
-        expect(screen.getByTestId('engine-allocation-bands').textContent?.split(B_QUALIFIER).length).toBe(2);
+        if (mode === 'journey') expect(screen.queryByTestId('engine-allocation-bands')).toBeNull();
+        else expect(screen.getByTestId('engine-allocation-bands').textContent?.split(B_QUALIFIER).length).toBe(2);
         if (mode !== 'journey') {
           const snapshot = screen.getByTestId('engine-stability-review-snapshot');
           expect(snapshot.textContent?.split(B_QUALIFIER).length).toBe(2);
@@ -1043,20 +1050,31 @@ const RESEARCH_PRE_RUNTIME_HASHES: Record<string, string> = {
   "app/research/stability-scenarios/page.tsx": "f45d77e2bbac700da54b6e6c2884b6c128b181a9256119cfc7002313baed4b32"
 };
 function s18ExcludedDigest() {
+  // PLAN-INTENT-001: only this exact new file is removed from the old inventory.
+  const intentPath = 'lib/state/simulation-intent.ts';
+  expect(s18Digest(postSelectStatePreRuntime(readFileSync(resolve(intentPath), 'utf8')))).toBe('b3f8fd083a4f2ac3cfece67ce4668ac7f05ebada3adffc1c8b3914eaff0d1078');
   // Prove only the additive Sarah field changed before retaining the historical pin.
   expect(s18Digest(releaseGate003PreRuntime('lib/state/synthetic-journey.ts', readFileSync(resolve('lib/state/synthetic-journey.ts')).toString()))).toBe('ac3d3d29607619c2f8196a5ef062677c8a2796a531e87b31ad90106cce78a9f9');
   const files: string[] = [];
   function visit(path: string) {
     if (statSync(resolve(path)).isDirectory()) {
       for (const child of readdirSync(resolve(path)).sort()) visit(`${path}/${child}`);
-    } else files.push(path);
+    } else if (path !== intentPath) files.push(path);
   }
   S18_EXCLUDED_ROOTS.forEach(visit);
   return s18Digest(files.sort().map((path) => `${path}\0${RESEARCH_PRE_RUNTIME_HASHES[path] ?? (path === 'lib/state/synthetic-journey.ts' ? 'd1f5117cd75691c4d7404dbe7746673e3bdbd168c225f10bb5447163e3584366' : s18Digest(scPreRuntime(releaseGatePreRuntime(path, studyBridgePreRuntime(path, releaseGate002PreRuntime(path, releaseGate003PreRuntime(path, readFileSync(resolve(path)).toString())))), SC_ENGINE_SOURCE_EDITS[path] ?? [])))}`).join('\n'));
 }
 
-function s18OutsideTile(view: HTMLElement) {
+function s18OutsideTile(view: HTMLElement, ownSimulation = false) {
   const clone = view.cloneNode(true) as HTMLElement;
+  // PLAN-INTENT-001: verify the complete approved default card before reversal.
+  const cards = clone.querySelectorAll('[data-testid="planning-read-card"]');
+  expect(cards).toHaveLength(ownSimulation ? 1 : 0);
+  if (ownSimulation) {
+    reverseHierarchyDom(clone, cards[0]);
+    expect(s18Digest(postSelectCardPreRuntime(cards[0].outerHTML))).toBe('53404db4ce0a35139d82a281f5b968eb77328c0ebd037d54136ecf7d295670cd');
+    cards[0].remove();
+  }
   clone.querySelector('[data-testid="dashboard-earn-tile"]')?.parentElement?.remove();
   if (clone.querySelector('#dashboard-example-picker')) {
     // HOME-SOFTHALO-RATESLIDER-BUNDLE-001: only the replaced modal/launcher region.
@@ -1194,7 +1212,7 @@ describe('S18 earn tile fence sweep (§384)', () => {
     for (const [route, mode] of cases) {
       setupS18(route, mode as 'simulated' | 'live');
       const view = await renderS18();
-      baseline[`${mode}:${route}`] = s18Digest(s18OutsideTile(view.container));
+      baseline[`${mode}:${route}`] = s18Digest(s18OutsideTile(view.container, route.includes('example=own')));
       if (route.includes('example=daniel')) {
         expect(screen.getByTestId('daniel-invariant').textContent).toBe('He made two deposits and none since. Each kwacha figure uses the example rate for its date.');
         expect(screen.getByTestId('chart-event-list').textContent).toContain('First deposit · 12 Jun · +$500.00');
@@ -1220,6 +1238,35 @@ describe('S18 earn tile fence sweep (§384)', () => {
     setupS18();
     await renderS18();
     expectS18Lock(screen.getByTestId('dashboard-earn-tile'), '5.00%');
+  });
+  test('PLAN-INTENT-001 reversal rejects altered, duplicate, missing and unexpected cards; other DOM stays pinned', async () => {
+    setupS18(`${B_ROUTES[0]}?example=own`);
+    const view = await renderS18();
+    const baseline = s18Digest(s18OutsideTile(view.container, true));
+    const mutate = () => view.container.cloneNode(true) as HTMLElement;
+    const duplicate = mutate();
+    duplicate.append(duplicate.querySelector('[data-testid="planning-read-card"]')!.cloneNode(true));
+    expect(() => s18OutsideTile(duplicate, true)).toThrow();
+    const misplaced = mutate();
+    misplaced.append(misplaced.querySelector('[data-testid="planning-read-card"]')!);
+    expect(() => s18OutsideTile(misplaced, true)).toThrow();
+    const altered = mutate();
+    altered.querySelector('legend')!.append('PLAN-INTENT-001 mutation');
+    expect(() => s18OutsideTile(altered, true)).toThrow();
+    const missing = mutate();
+    missing.querySelector('[data-testid="planning-read-card"]')!.remove();
+    expect(() => s18OutsideTile(missing, true)).toThrow();
+    expect(() => s18OutsideTile(view.container, false)).toThrow();
+    const extra = mutate();
+    extra.querySelector('[data-testid="dashboard-simulation-utilities"]')!.insertAdjacentHTML('afterend', '<p>PLAN-INTENT-001 mutation</p>');
+    expect(() => s18OutsideTile(extra, true)).toThrow();
+    const reordered = mutate();
+    const nav = reordered.querySelector('[data-testid="dashboard-simulation-utilities"]')!;
+    nav.parentElement!.prepend(nav);
+    expect(() => s18OutsideTile(reordered, true)).toThrow();
+    const unrelated = mutate();
+    unrelated.append('PLAN-INTENT-001 mutation');
+    expect(s18Digest(s18OutsideTile(unrelated, true))).not.toBe(baseline);
   });
 });
 
@@ -1557,4 +1604,59 @@ function qolPreRuntime(path: string, value: string): string {
   }
   expect(s18Digest(value), path).toBe(QOL_SOURCE_BASE[path]);
   return value;
+}
+
+// PLAN-INTENT-001: immutable removed region; other markup is moved, never discarded.
+const HISTORICAL_HOME_TARGETS = "<details class=\"_accordion_e19afb\" data-testid=\"research-planning-targets\"><summary class=\"_accordionSummary_e19afb\"><span>Planning targets<span class=\"_accordionSubtitle_e19afb\">Targets only \u00b7 No money moved</span></span><span class=\"_chevron_e19afb\" aria-hidden=\"true\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" focusable=\"false\"><path d=\"m7 10 5 5 5-5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg></span></summary><div class=\"_accordionContent_e19afb\"><section aria-labelledby=\"engine-allocation-bands-title\" class=\"space-y-4 border-t border-hedgr-100 bg-white pt-5 sm:pt-6\" data-testid=\"engine-allocation-bands\" data-presentation=\"collapsed\"><div class=\"space-y-2\"><h2 id=\"engine-allocation-bands-title\" class=\"text-lg font-semibold tracking-tight text-hedgr-800\">What you are building toward</h2><p class=\"max-w-xl text-sm leading-relaxed text-hedgr-500\" data-testid=\"engine-allocation-bands-caption\">Three purposes for planning ahead. They are guidance, not money set aside.</p></div><div class=\"space-y-4\"><dl class=\"overflow-hidden _purposes_2e9a7a\" data-testid=\"engine-allocation-target-roles\" aria-label=\"Planning purposes\"><div class=\"_purpose_2e9a7a\" data-testid=\"engine-allocation-role-coreTargetPct\"><dt class=\"text-sm font-semibold text-hedgr-800\">Now</dt><dd class=\"mt-1 text-xs leading-relaxed text-hedgr-500 sm:text-sm\">For what matters in the near term.</dd></div><div class=\"_purpose_2e9a7a\" data-testid=\"engine-allocation-role-liquidityTargetPct\"><dt class=\"text-sm font-semibold text-hedgr-800\">Reserve</dt><dd class=\"mt-1 text-xs leading-relaxed text-hedgr-500 sm:text-sm\">A buffer for surprises and setbacks.</dd></div><div class=\"_purpose_2e9a7a\" data-testid=\"engine-allocation-role-yieldCapPct\"><dt class=\"text-sm font-semibold text-hedgr-800\">Growth</dt><dd class=\"mt-1 text-xs leading-relaxed text-hedgr-500 sm:text-sm\">For future opportunities.</dd></div></dl><p class=\"max-w-2xl text-hedgr-dark _planningBoundary_2e9a7a\" data-testid=\"engine-allocation-boundary\">These are planning purposes, not separate balances. They do not divide or move simulated money.</p><details data-testid=\"engine-allocation-values-details\"><summary class=\"inline-flex min-h-11 cursor-pointer items-center text-sm font-semibold text-hedgr-600 hover:text-hedgr-primary focus:outline-none focus:ring-2 focus:ring-hedgr-500 focus:ring-offset-2\">View planning percentages</summary><p class=\"mt-4 text-xs leading-relaxed text-hedgr-500\">Illustrative example values, not live targets or advice</p><dl class=\"mt-4 divide-y divide-hedgr-100 border-y border-hedgr-100\" data-testid=\"engine-allocation-structure\"><div class=\"flex items-center justify-between gap-4 py-3\" data-testid=\"engine-allocation-band-coreTargetPct\" data-guidance-row=\"true\"><dt class=\"text-sm font-medium text-hedgr-800\">Now</dt><dd class=\"text-sm font-semibold tabular-nums text-hedgr-800\">50%</dd></div><div class=\"flex items-center justify-between gap-4 py-3\" data-testid=\"engine-allocation-band-liquidityTargetPct\" data-guidance-row=\"true\"><dt class=\"text-sm font-medium text-hedgr-800\">Reserve</dt><dd class=\"text-sm font-semibold tabular-nums text-hedgr-800\">30%</dd></div><div class=\"flex items-center justify-between gap-4 py-3\" data-testid=\"engine-allocation-band-yieldCapPct\" data-guidance-row=\"true\"><dt class=\"text-sm font-medium text-hedgr-800\">Growth</dt><dd class=\"text-sm font-semibold tabular-nums text-hedgr-800\">20%</dd></div></dl><p class=\"mt-3 text-xs leading-relaxed text-hedgr-500\">The percentages show how the plan is divided in this example. No real money is split or moved.</p></details></div></section></div></details>";
+function reverseHierarchyDom(clone: HTMLElement, card: Element) {
+  const overview = clone.querySelector('[data-testid="dashboard-current-overview"]')!;
+  const stack = overview.firstElementChild!;
+  expect(stack.getAttributeNames()).toEqual(['class']);
+  expect(stack.className).toBe('min-w-0 space-y-6');
+  const hero = stack.firstElementChild!;
+  const observation = stack.querySelector('[data-testid="dashboard-current-status"]')!.parentElement!;
+  const utilities = stack.querySelector('[data-testid="dashboard-simulation-utilities"]')!;
+  const position = stack.querySelector('[data-testid="dashboard-position-line"]');
+  const context = stack.lastElementChild!;
+  expect(Array.from(stack.children)).toEqual([hero, observation, utilities, ...(position ? [position] : []), card, context]);
+  expect(context.getAttributeNames()).toEqual(['class']);
+  expect(context.className).toBe('min-w-0 space-y-2');
+  const currency = context.querySelector('[data-testid="currency-insight"]');
+  const rate = context.querySelector('[data-component="RateLine"]')!;
+  expect(Array.from(context.children)).toEqual([...(currency ? [currency] : []), rate]);
+  observation.append(rate);
+  if (position) hero.append(position);
+  const grid = document.createElement('div'); grid.className = home.overviewGrid;
+  const insights = document.createElement('div'); insights.className = home.insights;
+  insights.append(observation, utilities); grid.append(hero, insights);
+  stack.replaceWith(grid, ...(currency ? [currency] : []));
+  const disclosures = clone.querySelector('[data-testid="dashboard-disclosures"]')!;
+  expect(clone.querySelectorAll('[data-testid="research-planning-targets"]')).toHaveLength(0);
+  expect(s18Digest(HISTORICAL_HOME_TARGETS)).toBe("cc61667a2911a632a287a0e8dc2db352ff2e61fb5140121858038b3b780f7994");
+  disclosures.insertAdjacentHTML('beforebegin', HISTORICAL_HOME_TARGETS);
+}
+
+const POST_SELECT_STATE_EDITS: readonly (readonly [string, string])[] = [
+  [
+    "\nexport type SimulationPurpose = 'regular' | 'dated' | 'reserve';\nexport type SimulationIntent = SimulationPurpose | 'skip' | null;\nexport type PlanningReadLabel = 'regular' | 'reserve' | 'goals';\n\nconst DEFAULT_ORDER: readonly PlanningReadLabel[] = ['regular', 'reserve', 'goals'];\nconst PURPOSE_LABEL: Record<SimulationPurpose, PlanningReadLabel> = {\n  regular: 'regular', dated: 'goals', reserve: 'reserve',\n};\n\n",
+    "\nexport type SimulationPurpose = 'regular' | 'dated' | 'reserve';\nexport type SimulationIntent = SimulationPurpose | 'skip' | null;\nexport type PlanningReadLabel = 'regular' | 'reserve' | 'goals';\n\nexport const SIMULATION_INTENT_KEY = 'hedgr.simulation.intent';\nconst DEFAULT_ORDER: readonly PlanningReadLabel[] = ['regular', 'reserve', 'goals'];\nconst PURPOSE_LABEL: Record<SimulationPurpose, PlanningReadLabel> = {\n  regular: 'regular', dated: 'goals', reserve: 'reserve',\n};\n\n"
+  ],
+  [
+    "  if (intent === null || intent === 'skip') return DEFAULT_ORDER;\n  const selected = PURPOSE_LABEL[intent];\n  return [selected, ...DEFAULT_ORDER.filter(label => label !== selected)];\n}\n\n// PLAN-INTENT-001: document-lifetime state only; no browser storage or external events.\nlet intent: SimulationIntent = null;\nconst listeners = new Set<() => void>();\nconst serverSnapshot = (): SimulationIntent => null;\n\nexport function getSimulationIntent(): SimulationIntent { return intent; }\n\nexport function setSimulationIntent(value: SimulationIntent): void {\n  if (value === intent) return;\n  intent = value;\n  listeners.forEach(listener => listener());\n}\n\nfunction subscribe(listener: () => void): () => void {\n  listeners.add(listener);\n  return () => { listeners.delete(listener); };\n}\n\nexport function useSimulationIntent(): SimulationIntent {\n  return useSyncExternalStore(subscribe, getSimulationIntent, serverSnapshot);\n}\n",
+    "  if (intent === null || intent === 'skip') return DEFAULT_ORDER;\n  const selected = PURPOSE_LABEL[intent];\n  return [selected, ...DEFAULT_ORDER.filter(label => label !== selected)];\n}\n\nlet intent: SimulationIntent = null;\nlet memoryOnly = false;\nconst listeners = new Set<() => void>();\nconst serverSnapshot = (): SimulationIntent => null;\nconst valid = (value: unknown): value is Exclude<SimulationIntent, null> =>\n  value === 'regular' || value === 'dated' || value === 'reserve' || value === 'skip';\n\nexport function getSimulationIntent(): SimulationIntent {\n  if (typeof window === 'undefined') return null;\n  if (memoryOnly) return intent;\n  try {\n    const stored = window.localStorage.getItem(SIMULATION_INTENT_KEY);\n    return valid(stored) ? stored : null;\n  } catch {\n    return intent;\n  }\n}\n\nexport function setSimulationIntent(value: SimulationIntent): void {\n  if ((value !== null && !valid(value)) || typeof window === 'undefined') return;\n  intent = value;\n  try {\n    if (value === null) window.localStorage.removeItem(SIMULATION_INTENT_KEY);\n    else window.localStorage.setItem(SIMULATION_INTENT_KEY, value);\n    memoryOnly = false;\n  } catch {\n    // Match the existing display preference's in-memory fallback for blocked storage.\n    memoryOnly = true;\n  }\n  listeners.forEach(listener => listener());\n}\n\nfunction subscribe(listener: () => void): () => void {\n  listeners.add(listener);\n  const onStorage = (event: StorageEvent) => {\n    if (event.key === SIMULATION_INTENT_KEY || event.key === null) {\n      memoryOnly = false;\n      listener();\n    }\n  };\n  window.addEventListener('storage', onStorage);\n  return () => { listeners.delete(listener); window.removeEventListener('storage', onStorage); };\n}\n\nexport function useSimulationIntent(): SimulationIntent {\n  return useSyncExternalStore(subscribe, getSimulationIntent, serverSnapshot);\n}\n"
+  ]
+];
+function postSelectStatePreRuntime(value: string): string {
+  for (const [old, replacement] of [...POST_SELECT_STATE_EDITS].reverse()) {
+    expect(value.split(replacement), 'PLAN-INTENT-001 state boundaries').toHaveLength(2);
+    value = value.replace(replacement, () => old);
+  }
+  return value;
+}
+
+// Exact approved default-card reversal; unexpected markup cannot be hidden.
+const POST_SELECT_CARD = ["<section class=\"min-w-0 space-y-4 rounded-2xl border border-hedgr-200 bg-white p-4 text-sm leading-relaxed text-hedgr-800\" aria-labelledby=\"planning-read-question\" data-testid=\"planning-read-card\"><fieldset class=\"min-w-0 space-y-2\"><legend id=\"planning-read-question\" class=\"mb-2 font-semibold\">What is this portion meant to support?</legend><label class=\"flex min-h-11 cursor-pointer items-center gap-3 rounded-lg border border-hedgr-200 px-3 py-2 focus-within:outline focus-within:outline-2 focus-within:outline-hedgr-500\"><input class=\"shrink-0 accent-hedgr-primary\" type=\"radio\" value=\"regular\" name=\"planning-purpose\"><span>A regular cost</span></label><label class=\"flex min-h-11 cursor-pointer items-center gap-3 rounded-lg border border-hedgr-200 px-3 py-2 focus-within:outline focus-within:outline-2 focus-within:outline-hedgr-500\"><input class=\"shrink-0 accent-hedgr-primary\" type=\"radio\" value=\"dated\" name=\"planning-purpose\"><span>A payment on a date</span></label><label class=\"flex min-h-11 cursor-pointer items-center gap-3 rounded-lg border border-hedgr-200 px-3 py-2 focus-within:outline focus-within:outline-2 focus-within:outline-hedgr-500\"><input class=\"shrink-0 accent-hedgr-primary\" type=\"radio\" value=\"reserve\" name=\"planning-purpose\"><span>A reserve for the unexpected</span></label><label class=\"flex min-h-11 cursor-pointer items-center gap-3 rounded-lg border border-hedgr-200 px-3 py-2 focus-within:outline focus-within:outline-2 focus-within:outline-hedgr-500\"><input class=\"shrink-0 accent-hedgr-primary\" type=\"radio\" value=\"skip\" name=\"planning-purpose\"><span>Skip for now</span></label></fieldset><div class=\"space-y-3\"><h2 class=\"text-base font-semibold\">Planning read</h2><p aria-live=\"polite\" data-testid=\"planning-read-stance\">This portion could go towards regular costs, a reserve, or something ahead. A planning view, not money set aside.</p><ul class=\"space-y-3\" data-testid=\"planning-read-labels\"><li><h3 class=\"font-semibold\">Regular costs</h3><p>For costs that come round often, like rent or bills.</p></li><li><h3 class=\"font-semibold\">Reserve</h3><p>For something unexpected.</p></li><li><h3 class=\"font-semibold\">Goals</h3><p>For something you're planning, like a payment on a date.</p></li></ul></div></section>", "<section class=\"min-w-0 space-y-4 rounded-2xl border border-hedgr-200 bg-white p-4 text-sm leading-relaxed text-hedgr-800\" aria-label=\"Planning read\" data-testid=\"planning-read-card\"><fieldset class=\"min-w-0 space-y-2\"><legend id=\"planning-read-question\" class=\"mb-2 font-semibold\">What is this portion meant to support?</legend><label class=\"flex min-h-11 cursor-pointer items-center gap-2 rounded-lg border border-hedgr-200 px-2 py-2 focus-within:outline focus-within:outline-2 focus-within:outline-hedgr-500\"><input class=\"shrink-0 accent-hedgr-primary\" type=\"radio\" value=\"regular\" name=\"planning-purpose\"><span>Regular costs</span></label><label class=\"flex min-h-11 cursor-pointer items-center gap-2 rounded-lg border border-hedgr-200 px-2 py-2 focus-within:outline focus-within:outline-2 focus-within:outline-hedgr-500\"><input class=\"shrink-0 accent-hedgr-primary\" type=\"radio\" value=\"reserve\" name=\"planning-purpose\"><span>Reserve</span></label><label class=\"flex min-h-11 cursor-pointer items-center gap-2 rounded-lg border border-hedgr-200 px-2 py-2 focus-within:outline focus-within:outline-2 focus-within:outline-hedgr-500\"><input class=\"shrink-0 accent-hedgr-primary\" type=\"radio\" value=\"dated\" name=\"planning-purpose\"><span>Goals</span></label></fieldset><button type=\"button\" class=\"min-h-11 underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-hedgr-500\">Skip for now</button><p>A planning view, not money set aside.</p></section>"] as const;
+function postSelectCardPreRuntime(value: string): string {
+  expect(value.split(POST_SELECT_CARD[1])).toHaveLength(2);
+  return value.replace(POST_SELECT_CARD[1], () => POST_SELECT_CARD[0]);
 }

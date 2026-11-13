@@ -72,7 +72,7 @@ for (const viewport of [{ width: 390, height: 844 }, { width: 1440, height: 1024
     if (viewport.width < 1024) {
       expect(observation.y).toBeGreaterThan((await context.boundingBox())!.y);
       await expect(page.getByTestId('dashboard-balance').locator('..')).toHaveCSS('border-bottom-width', '1px');
-    } else expect(observation.x).toBeGreaterThan(balance.x + balance.width);
+    } else expect(observation.y).toBeGreaterThan(balance.y + balance.height);
     await expect(page.getByTestId('currency-insight-headline')).not.toBeVisible();
     await expect(page.getByRole('button', { name: 'Currency context', exact: true })).toBeVisible();
     // Keep the login pointer off actions when capturing their resting appearance.
@@ -118,13 +118,15 @@ test('activity context, actions and retained disclosures reflow at 320px and enl
   for (const id of ['dashboard-add-simulated-deposit', 'dashboard-view-activity']) {
     expect((await page.getByTestId(id).boundingBox())!.height).toBeGreaterThanOrEqual(44);
   }
-  for (const id of ['research-planning-targets', 'dashboard-disclosures']) {
+  for (const id of ['dashboard-disclosures']) {
     const details = page.getByTestId(id);
     await details.locator(':scope > summary').focus();
     await page.keyboard.press('Enter');
     await expect(details).toHaveAttribute('open', '');
   }
-  await expect(page.getByTestId('engine-allocation-boundary')).toBeVisible();
+  await expect(page.getByTestId('research-planning-targets')).toHaveCount(0);
+  await expect(page.getByTestId('engine-allocation-boundary')).toHaveCount(0);
+  await expect(page.getByTestId('planning-read-card')).toBeVisible();
   await expect(page.getByRole('button', { name: 'Restart simulated journey' })).toBeVisible();
 });
 
