@@ -42,7 +42,7 @@ Non-repo evidence gap: this review uses only git first-parent history and repo-n
 
 | Uncertainty tested | Evidence obtained | Belief changed? | Disposition | Unresolved uncertainty |
 | --- | --- | --- | --- | --- |
-| Hosted backend pytest on non-docs-only PRs | `ZOD-CVE-CI-001` runtime #1090 (`7fa75829`) from head `17ef679f`; closeout #1091 / RAP #1092 | Hosted E2E job now runs the complete backend pytest suite on non-docs-only PRs; 63/63 recorded on that head | Closed under effective §460 at `cb514acb`; §6f.40 expired | `ZOD-CVE-CI-001` follow-ups remain unactivated; ticket IDs only |
+| Hosted backend pytest on non-docs-only PRs | `ZOD-CVE-FLASK-001` runtime #1090 (`7fa75829`) from head `17ef679f`; closeout #1091 / RAP #1092 | Hosted E2E job now runs the complete backend pytest suite on non-docs-only PRs; 63/63 recorded on that head | Closed under effective §460 at `cb514acb`; §6f.40 expired | `ZOD-CVE-FLASK-001` follow-ups remain unactivated; ticket IDs only |
 | Whether RAP rebinds can be carried on the next same-ticket source PR | `OPS-RAP-BATCH-001` implementation #1101; closeout #1102 / RAP #1103 | Generator full-source equality guard cannot bind RAP to a prior permanent-main SHA when STATUS changes; no carried rebind occurred | Founder “Close honestly (Recommended)” recorded in §467; ticket closed; §6f.41 expired | §464 locked carry text remains; §467 records it as not executable; RAP ≤10% measure is recorded as not achievable under current fallback |
 | Remaining `SEC-DEPS-003` sharp pin | Runtime #1105 (`fee3e76c`) from head `1e620798`; closeout source #1106 / RAP #1107 | Root `package.json` sharp range moved to `^0.35.5`; override and lock SHA unchanged; three high-severity Dependabot alerts recorded as `fixed` | §468 exists as sharp-slice closeout; #1106 and #1107 merged in this window | Live §7 / §7a still describe remaining §468 source/rebind/RAP gates; parent `SEC-DEPS-003` remains open; four critical instances remain open; ticket IDs and severity counts only |
 | HedgrOps / team registration | §461 `#1081` / RAP `#1093` / heading `#1094`; §462 `#1095`; §463 `#1096`; §469 `#1108` / RAP `#1110` | Role pointers landed in AGENTS §9.12–§9.16; Wes registration recorded | Founder decision records; §461 and §462 state they change no §7 / §7a occupancy | Standing auto-merge of queued tickets is recorded in §461 as reported, pending confirmation, and not a standing approval |
@@ -55,14 +55,14 @@ Artifact-level notes in this ledger are evidence only. They are not institutiona
 
 Window cutoff is explicit: **from after Fri 30 Oct 2026 18:00 AWST to Fri 6 Nov 2026 18:00 AWST**.
 
-### 2026-10-30 after 18:00 AWST — Friday reviews; `ZOD-CVE-CI-001` activation
+### 2026-10-30 after 18:00 AWST — Friday reviews; `ZOD-CVE-FLASK-001` activation
 
 - `#1087` published the 30 Oct weekly review and weekly-window MVP slice (merged support evidence).
-- `ZOD-CVE-CI-001` activation source `#1088` and RAP `#1089`. §460 records `#1088` went BEHIND after `#1087`; the old-head PASS was not carried; a fresh PASS preceded merge.
+- `ZOD-CVE-FLASK-001` activation source `#1088` and RAP `#1089`. §460 records `#1088` went BEHIND after `#1087`; the old-head PASS was not carried; a fresh PASS preceded merge.
 
 ### 2026-10-31 — CI runtime; HedgrOps mandate
 
-- `ZOD-CVE-CI-001` runtime `#1090` (`7fa75829`); closeout `#1091` / RAP `#1092` (`cb514acb`). §7 / §7a record the ticket closed under effective §460; §6f.40 expired. `#1090` was never armed; §460 records a Founder-account head-matched squash after verifier then Wes sign-off (Q4 path for that implementation PR only).
+- `ZOD-CVE-FLASK-001` runtime `#1090` (`7fa75829`); closeout `#1091` / RAP `#1092` (`cb514acb`). §7 / §7a record the ticket closed under effective §460; §6f.40 expired. `#1090` was never armed; §460 records a Founder-account head-matched squash after verifier then Wes sign-off (Q4 path for that implementation PR only).
 - `REPLIT-PURGE-001` is recorded in §460 as closed without activation (no-build).
 - `HEDGROPS-MANDATE-001` source `#1081` and RAP `#1093`.
 
@@ -82,7 +82,7 @@ Window cutoff is explicit: **from after Fri 30 Oct 2026 18:00 AWST to Fri 6 Nov 
 ### 2026-11-03 — `SEC-DEPS-003` sharp slice
 
 - Activation `#1099` / RAP `#1104`; runtime `#1105`; closeout source `#1106` / RAP `#1107`.
-- Public review uses ticket ID and severity counts only: three high-severity alerts recorded `fixed`; inventory 57 open to 55 open (three left, one unrelated medium entered); four critical instances remain open; parent `SEC-DEPS-003` remains open.
+- Public review uses ticket ID and severity counts only: three high-severity alerts recorded `fixed`; inventory 57 open to 54 open (three high alerts fixed on 3 Nov, no medium entering in that window; the new medium arrived 11 Nov, after the window); four critical instances remain open; parent `SEC-DEPS-003` remains open.
 - Live §7 table still describes remaining §468 closeout gates after `#1106` / `#1107` merged. This review surfaces that wording and does not reconcile occupancy by inference.
 
 ### 2026-11-04–05 to cutoff — Wes registration; merge-tier PR A
@@ -114,7 +114,7 @@ PR-volume picture (first-parent `origin/main`, this window). Categories overlap;
 - **§464 / §467 RAP ≤10% observation (required report, not a target claim):** §464 baseline was 25/64 merged PRs (39%) that touched only the projection JSON in the seven days ending 31 Oct 2026 00:28 AWST. This window’s RAP-JSON-only first-parent share is 9/26 (34.6%). §467 records the ≤10% measure as **not achievable** under the current generator fallback. This review reports that basis and does not claim the measure met or successful batching.
 - **Re-verification / merge-path signals:** `#1088` BEHIND after `#1087`, old PASS not carried; `#1090` Q4 never-armed squash; RAP-batch and sharp-slice records stayed UNARMED; §467 honest close of a carry that did not execute.
 
-Capability delivered (completed tickets with source closeout and final RAP rebind in-window, plus sharp-slice closeout PRs merged): `ZOD-CVE-CI-001`, `OPS-RAP-BATCH-001`, and `SEC-DEPS-003` sharp-slice closeout PRs `#1106` / `#1107` (live §7 still describes remaining gates). Founder records §461–§463, §469, and §470 PR A are occupancy-neutral in their own text except where §470 mechanically updates remaining-queue references.
+Capability delivered (completed tickets with source closeout and final RAP rebind in-window, plus sharp-slice closeout PRs merged): `ZOD-CVE-FLASK-001`, `OPS-RAP-BATCH-001`, and `SEC-DEPS-003` sharp-slice closeout PRs `#1106` / `#1107` (live §7 still describes remaining gates). Founder records §461–§463, §469, and §470 PR A are occupancy-neutral in their own text except where §470 mechanically updates remaining-queue references.
 
 Operating cost relative to that capability: first-parent volume fell versus the prior window’s 66 merges, while RAP-JSON-only share stayed about one-third of first-parent commits because separate sole-JSON rebinds continued after §467. Capability added was one CI job expansion, one dependency-range line, RAP-process documentation, and role/mandate records. No product surface was added. Rework signals: BEHIND re-verification on `#1088`; honest close of non-executable RAP carry; STATUS-table lag versus merged sharp closeout and merge-tier activation PRs.
 
@@ -170,7 +170,7 @@ These labels are descriptive review language, not acceptance gates or maturity l
 
 | Included item | Authority treatment |
 | --- | --- |
-| `ZOD-CVE-CI-001` / §460 | Recorded as a finite non-lane CI closeout in `HEDGR_STATUS.md`. |
+| `ZOD-CVE-FLASK-001` / §460 | Recorded as a finite non-lane CI closeout in `HEDGR_STATUS.md`. |
 | `REPLIT-PURGE-001` | Recorded as closed without activation (no-build). |
 | `HEDGROPS-MANDATE-001` / §461; `VERA-MANDATE-001` / §462; `TEAM-LINES-001` / §463; `WES-REG-001` / §469 | Recorded as Founder decision / registration records. Their own text states no §7 / §7a occupancy change and no ticket activation. |
 | `OPS-RAP-BATCH-001` / §§464, 467 | Recorded as a finite governance-process closeout. Locked §464 carry text remains; operating consequence is §467 fallback. |
@@ -206,7 +206,7 @@ Draft, in-progress, unmerged, external-only, and unrecorded work is excluded as 
 | Bridge / review support | 30 Oct review publication `#1087`; RAP-process docs in `#1101` | No verified authenticated MCP connection as a completed successor ticket | No | Indirectly — institutional memory | `#1087`; `#1101`; §438 D2 |
 | Off-ramp / rails | No completed change | Provider, market, conversion, settlement, and withdrawal capability remained unestablished | No | No | §7 / §7a; accepted ADRs |
 | Custody / customer-money movement | No completed change | No custody, customer-money movement, Class B, or Class C authority | No | No | §7 / §7a; ADR-0013 / ADR-0014 |
-| Repo tooling / security-support | Hosted pytest `#1090`; sharp range `#1105`; `ZOD-CVE-CI-001` and RAP-batch closeouts | Remaining `SEC-DEPS-003`; open CI-EFF observation; Identity steps open | No | Indirectly — verification and dependency hygiene | §§460, 467, 468 |
+| Repo tooling / security-support | Hosted pytest `#1090`; sharp range `#1105`; `ZOD-CVE-FLASK-001` and RAP-batch closeouts | Remaining `SEC-DEPS-003`; open CI-EFF observation; Identity steps open | No | Indirectly — verification and dependency hygiene | §§460, 467, 468 |
 | Merge / role mandates | §§461–463, 469, 470 PR A recorded | Operational Founder-go requirement remains until §470 PR B; no workflow change in PR A | No (gated §470 amendment is recorded, not operational) | Indirectly — who may merge later | §§461–463, 469, 470 |
 
 ## 16. Decision pressure

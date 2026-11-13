@@ -1,10 +1,10 @@
-# HEDGR MVP Process Review — ZOD-CVE-CI-001 to SEC-DEPS-003 sharp slice
+# HEDGR MVP Process Review — ZOD-CVE-FLASK-001 to SEC-DEPS-003 sharp slice
 
 ## 1. Status / Authority / Scope / Last updated
 
 Status: bounded, non-authoritative evidence artifact (`codex-synthesizer`, `READ_ONLY`). Scope: completed delivery in the weekly window after Friday 2026-10-30 18:00 AWST to Fri 6 Nov 2026 18:00 AWST, matching `docs/ops/reviews/weekly/2026-11-06-weekly-review.md`. This is an after-catch-up Friday MVP process review under `HEDGR_STATUS.md` §364 (series treated as current after Fri 16 Oct 2026). It is not the next sequential 3–5-ticket catch-up slice.
 
-Completed tickets counted (closeout records / merged closeout PRs only): `ZOD-CVE-CI-001`, `OPS-RAP-BATCH-001`, and `SEC-DEPS-003` sharp slice (closeouts in `HEDGR_STATUS.md` §§460, 467, and 468). Counting follows the prior review boundary: only ticket closeout records count. Combined finite support closeouts count once. Activations, Founder decision/registration records, queue records, and occupancy records §§461–466, 469, and 470 PR A are not additional completed tickets. `CI-EFF-001`, `IDENTITY-001` Steps 0 and 2, and `SEC-DEPS-003` remain open occupancy and are outside the completed slice except where named to prevent a historical artifact from being mistaken for current occupancy. Live §7 / §7a still describe remaining §468 gates after sharp closeout PRs `#1106` / `#1107` merged; that lag is surfaced, not reconciled. Last prior MVP file: `docs/ops/reviews/MVP/HEDGR_MVP_PROCESS_REVIEW_SEC_NODE_001_TO_DOCS_DRIFT_001.md`. `HEDGR_STATUS.md` remains the execution source of truth.
+Completed tickets counted (closeout records / merged closeout PRs only): `ZOD-CVE-FLASK-001`, `OPS-RAP-BATCH-001`, and `SEC-DEPS-003` sharp slice (closeouts in `HEDGR_STATUS.md` §§460, 467, and 468). Counting follows the prior review boundary: only ticket closeout records count. Combined finite support closeouts count once. Activations, Founder decision/registration records, queue records, and occupancy records §§461–466, 469, and 470 PR A are not additional completed tickets. `CI-EFF-001`, `IDENTITY-001` Steps 0 and 2, and `SEC-DEPS-003` remain open occupancy and are outside the completed slice except where named to prevent a historical artifact from being mistaken for current occupancy. Live §7 / §7a still describe remaining §468 gates after sharp closeout PRs `#1106` / `#1107` merged; that lag is surfaced, not reconciled. Last prior MVP file: `docs/ops/reviews/MVP/HEDGR_MVP_PROCESS_REVIEW_SEC_NODE_001_TO_DOCS_DRIFT_001.md`. `HEDGR_STATUS.md` remains the execution source of truth.
 
 Last updated: 2026-11-06
 
@@ -31,9 +31,9 @@ Assess whether the week improved participant-facing Stability capability or main
 
 | Completed ticket | Recorded change and evidence limit |
 | --- | --- |
-| `ZOD-CVE-CI-001` (§460) | Hosted E2E job runs complete backend pytest on every non-docs-only PR. Runtime #1090 at `7fa75829` from head `17ef679f`; one file `.github/workflows/e2e-smoke.yml` (+14/−4). Closeout #1091 / RAP #1092 at `cb514acb`. Hosted run recorded 63/63 pytest and 418/418 Playwright at retry index 0. Ticket ID only. `ZOD-CVE-CI-001` follow-ups unactivated. |
+| `ZOD-CVE-FLASK-001` (§460) | Hosted E2E job runs complete backend pytest on every non-docs-only PR. Runtime #1090 at `7fa75829` from head `17ef679f`; one file `.github/workflows/e2e-smoke.yml` (+14/−4). Closeout #1091 / RAP #1092 at `cb514acb`. Hosted run recorded 63/63 pytest and 418/418 Playwright at retry index 0. Ticket ID only. `ZOD-CVE-FLASK-001` follow-ups unactivated. |
 | `OPS-RAP-BATCH-001` (§467) | Runbook / bridge README / verifier-guard docs only. Implementation #1101 at `73532211` from head `4caaf046`. Closeout #1102 / RAP #1103 at `e8a60f39`. Founder “Close honestly” disposition: carry provision is not executable with the current generator; no carried rebind. RAP ≤10% measure recorded as not achievable under fallback. |
-| `SEC-DEPS-003` sharp slice (§468) | Root `package.json` sharp `^0.34.3` → `^0.35.5`; override and lock SHA unchanged. Runtime #1105 at `fee3e76c` from head `1e620798`. Closeout source #1106 / RAP #1107 merged. Three high-severity Dependabot alerts recorded `fixed`; inventory 57→55 open (unrelated medium entered); four critical instances remain. Parent `SEC-DEPS-003` remains open. Live §7 / §7a still describe remaining closeout gates. Ticket ID and counts only. |
+| `SEC-DEPS-003` sharp slice (§468) | Root `package.json` sharp `^0.34.3` → `^0.35.5`; override and lock SHA unchanged. Runtime #1105 at `fee3e76c` from head `1e620798`. Closeout source #1106 / RAP #1107 merged. Three high-severity Dependabot alerts recorded `fixed`; inventory 57→54 open (three high alerts fixed on 3 Nov, no medium entering in that window; the new medium arrived 11 Nov, after the window); four critical instances remain. Parent `SEC-DEPS-003` remains open. Live §7 / §7a still describe remaining closeout gates. Ticket ID and counts only. |
 
 Parents `CLASS-A-VAL-002` and `SE-REASON-001` remained open. SME remained held. `CI-EFF-001` and `IDENTITY-001` remained open occupancy. `SEC-DEPS-003` remained open after the sharp slice. `REPLIT-PURGE-001` is recorded closed without activation and is not a third implementation closeout. Founder records §461–§463, §469, and §470 PR A are outside this completed-ticket count.
 
@@ -57,7 +57,7 @@ These gains do not constitute product-capability convergence. The repo records n
 
 | Surface | Covered here | Still outside the evidence |
 | --- | --- | --- |
-| Hosted backend tests | Pytest on non-docs-only PRs | `ZOD-CVE-CI-001` follow-ups unactivated |
+| Hosted backend tests | Pytest on non-docs-only PRs | `ZOD-CVE-FLASK-001` follow-ups unactivated |
 | RAP provenance | Honest non-carry closeout | RAP ≤10% not claimed; generator unchanged |
 | Repo / security hygiene | Named sharp-slice pin; three high alerts `fixed` | Parent `SEC-DEPS-003`; four critical instances; remaining inventory |
 | Governance legibility | §467 fallback recorded beside locked §464 text | §7 table lag vs merged sharp closeout PRs, surfaced not reconciled |
