@@ -64,10 +64,11 @@ Window cutoff is explicit: **from after Fri 30 Oct 2026 18:00 AWST to Fri 6 Nov 
 
 - `ZOD-CVE-CI-001` runtime `#1090` (`7fa75829`); closeout `#1091` / RAP `#1092` (`cb514acb`). §7 / §7a record the ticket closed under effective §460; §6f.40 expired. `#1090` was never armed; §460 records a Founder-account head-matched squash after verifier then Wes sign-off (Q4 path for that implementation PR only).
 - `REPLIT-PURGE-001` is recorded in §460 as closed without activation (no-build).
-- `HEDGROPS-MANDATE-001` source `#1081` and RAP `#1093`; heading finalisation `#1094` as §461.
+- `HEDGROPS-MANDATE-001` source `#1081` and RAP `#1093`.
 
 ### 2026-11-01 — Vera / team lines; RAP-batch activation; merge-tier proposal
 
+- `HEDGROPS-MANDATE-001` heading finalisation `#1094` as §461.
 - `VERA-MANDATE-001` `#1095` as §462.
 - `TEAM-LINES-001` `#1096` as §463.
 - `MERGE-TIERS-001` proposal `#1097`.
