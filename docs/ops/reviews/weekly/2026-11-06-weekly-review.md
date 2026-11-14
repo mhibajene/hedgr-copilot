@@ -82,7 +82,7 @@ Window cutoff is explicit: **from after Fri 30 Oct 2026 18:00 AWST to Fri 6 Nov 
 ### 2026-11-03 — `SEC-DEPS-003` sharp slice
 
 - Activation `#1099` / RAP `#1104`; runtime `#1105`; closeout source `#1106` / RAP `#1107`.
-- Public review uses ticket ID and severity counts only: three high-severity alerts recorded `fixed`; inventory 57 open to 54 open (three high alerts fixed on 3 Nov, no medium entering in that window; the new medium arrived 11 Nov, after the window); four critical instances remain open; parent `SEC-DEPS-003` remains open.
+- Public review uses ticket ID and severity counts only: three high-severity alerts recorded `fixed`; inventory 57→55 (three highs left the open set and one unrelated medium entered); four critical instances remain open; parent `SEC-DEPS-003` remains open.
 - Live §7 table still describes remaining §468 closeout gates after `#1106` / `#1107` merged. This review surfaces that wording and does not reconcile occupancy by inference.
 
 ### 2026-11-04–05 to cutoff — Wes registration; merge-tier PR A
