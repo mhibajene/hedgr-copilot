@@ -3,16 +3,16 @@ import { VIS_SCALE_COPY } from '../lib/copy/vis-scale-copy';
 import { expect, test, type Page } from '@playwright/test';
 
 const home = '/dashboard-synthetic-journey';
-async function seed(page: Page, balances: number[], visit: number | null = null, sameTime = false) {
+async function seed(page: Page, balances: number[], visit: number | null = null, sameTime = false, newJourney = true) {
   await page.goto('/api/policy');
-  await page.evaluate(({ balances, visit, sameTime }) => {
-    localStorage.clear();
+  await page.evaluate(({ balances, visit, sameTime, newJourney }) => {
+    if (newJourney) localStorage.clear();
     localStorage.setItem('hedgr:ledger', JSON.stringify({ version: 2, transactions: balances.map((value, index) => {
       const delta = value - (balances[index - 1] ?? 0);
       return { txn_ref: `scale-${index}`, type: delta < 0 ? 'withdrawal' : 'deposit', status: 'settled', amount_usd: Math.abs(delta), amount_zmw: Math.abs(delta) * 27, fx_rate: 27, created_at: sameTime ? 1000 : 1000 + index * 1000, updated_at: sameTime ? 1000 : 1000 + index * 1000 };
     }) }));
     if (visit !== null) localStorage.setItem('hedgr:last-home-visit', String(visit));
-  }, { balances, visit, sameTime });
+  }, { balances, visit, sameTime, newJourney });
   await page.goto(home);
   await expect(page.getByTestId('usd-balance')).toHaveText(`$${balances.at(-1)!.toFixed(2)}`);
 }
@@ -29,9 +29,9 @@ test('VIS-SCALE-001 fixed own-only window and full fallback retain real history'
   await expect(chart.locator('svg [data-series-at]')).toHaveCount(4);
   await expect(chart).toHaveAttribute('data-vis-scale-state', 'plot');
   await seed(page, [500, 1000, 1500, 2000, 2500, 3000]);
-  await expect(chart).toHaveAttribute('data-vis-scale-state', 'activity-only');
-  await expect(chart.locator('svg')).toHaveCount(0);
-  await expect(chart).toContainText(VIS_SCALE_COPY.fallback);
+  await expect(chart).toHaveAttribute('data-vis-scale-state', 'plot');
+  await expect(chart.locator('svg')).toHaveCount(1);
+  await expect(chart).not.toContainText(VIS_SCALE_COPY.fallback);
   await page.getByRole('button', { name: 'All changes', exact: true }).click();
   await expect(chart.getByTestId('chart-event-list').locator('li')).toHaveCount(6);
 });
@@ -69,10 +69,16 @@ for (const width of [390, 320]) for (const rootText of [100, 200]) test(`VIS-SCA
   }
   await seed(page, [500, 1000, 1500, 2000, 2500, 3000]);
   if (rootText === 200) await page.addStyleTag({ content: 'html {font-size:200% !important}' });
+  await expect(page.getByTestId('example-line-chart')).toHaveAttribute('data-vis-scale-state', 'plot');
+  await seed(page, [-0.01, 0]);
+  if (rootText === 200) await page.addStyleTag({ content: 'html {font-size:200% !important}' });
   const fallback = page.getByTestId('vis-scale-fallback');
   await expect(fallback).toHaveText(VIS_SCALE_COPY.fallback);
   const plot = await fallback.evaluate(n => ({ plot: n.parentElement!.getBoundingClientRect().toJSON(), text: n.getBoundingClientRect().toJSON() }));
   expect(plot.text.bottom).toBeLessThanOrEqual(plot.plot.bottom + 1);
+  const spacing = await fallback.evaluate(n => { const s = getComputedStyle(n.parentElement!); return [s.marginTop, s.marginBottom, s.minHeight]; });
+  expect(spacing).toEqual(['0px', '0px', '0px']);
+  expect(plot.plot.height).toBeCloseTo(plot.text.height, 1);
   const earlier = page.getByRole('button', { name: 'Earlier change', exact: true });
   await earlier.scrollIntoViewIfNeeded();
   const a = (await earlier.boundingBox())!; const b = (await fallback.boundingBox())!;
@@ -87,10 +93,11 @@ test('VIS-SCALE-001 fallback transitions and selection/list/resize agreement', a
   const chart = page.getByTestId('example-line-chart');
   for (let i = 0; i < 6; i++) await page.getByRole('button', { name: 'Earlier change', exact: true }).click();
   await expect(chart).toHaveAttribute('data-vis-scale-start', '1');
-  await expect(chart.locator('svg, [data-chart-selected], [data-chart-label], [data-testid="chart-event-dot"]')).toHaveCount(0);
-  await expect(page.getByTestId('vis-scale-fallback')).toHaveText(VIS_SCALE_COPY.fallback);
+  await expect(chart.locator('svg')).toHaveCount(1);
+  await expect(page.getByTestId('vis-scale-fallback')).toHaveCount(0);
+  (await geometry(page)).points.forEach(point => expect(point.xy[1]).toBeCloseTo(94 - point.value / 2000 * 88, 6));
   await expect(page.getByTestId('activity-card')).toContainText('300.00');
-  await expect(page.getByTestId('vis-scale-fallback')).not.toHaveAttribute('aria-live');
+  await expect(page.getByTestId('vis-scale-fallback')).toHaveCount(0);
   await expect(chart.locator('[aria-live]')).toHaveCount(1);
   await page.getByRole('button', { name: 'All changes', exact: true }).click();
   await expect(chart.getByTestId('chart-event-list').locator('li')).toHaveCount(8);
@@ -138,8 +145,8 @@ test('VIS-SCALE-001 boundary cases retain every change and emit fixture-only fal
   const observations = [];
   for (const [name, balances, outside] of [
     ['endpoints', [0, 1000], false], ['zero', [0, 0], false], ['equal', [500, 500], false],
-    ['just above', [1000.01], true], ['negative segment ending at zero', [-0.01, 0], true], ['large', [1000000], true],
-    ['pre-window boundary', [1200, 900, 800, 700, 600], true], ['six500', [500, 1000, 1500, 2000, 2500, 3000], true],
+    ['just above', [1000.01], false], ['negative segment ending at zero', [-0.01, 0], true], ['large', [1000000], false],
+    ['pre-window boundary', [1200, 900, 800, 700, 600], false], ['six500', [500, 1000, 1500, 2000, 2500, 3000], false],
   ] as const) {
     await seed(page, [...balances]);
     const chart = page.getByTestId('example-line-chart');
@@ -178,4 +185,36 @@ test('VIS-SCALE-001 query journey alias opts in; default Home retains its legacy
   await page.goto('/dashboard');
   await expect(page.locator('[data-vis-scale-state]')).toHaveCount(0);
   await expect(page.getByTestId('dashboard-position-line')).toHaveAttribute('data-state', 'line');
+});
+
+
+test('VIS-SCALE-001 journey high-water persists through windows, deletion, navigation, refresh and resets only on confirmed Restart', async ({ page }) => {
+  test.setTimeout(90000);
+  await page.setViewportSize({ width: 390, height: 900 });
+  await seed(page, [6000]);
+  for (const count of [1, 2, 6, 12]) {
+    await seed(page, Array.from({ length: count }, (_, i) => (i + 1) * 10), null, false, false);
+    const g = await geometry(page);
+    g.points.forEach(point => expect(point.xy[1]).toBeCloseTo(94 - point.value / 10000 * 88, 6));
+    if (g.points.length > 1) expect((g.points[0].xy[1] - g.points[1].xy[1]) * g.height / 100).toBeCloseTo(g.height * 0.00088, 5);
+    for (let i = 1; i < count; i++) await page.getByRole('button', { name: 'Earlier change', exact: true }).click();
+    (await geometry(page)).points.forEach(point => expect(point.xy[1]).toBeCloseTo(94 - point.value / 10000 * 88, 6));
+  }
+  await page.getByRole('radio', { name: 'Regular costs', exact: true }).click();
+  await expect(page.getByRole('radio')).toHaveCount(0);
+  await page.getByRole('button', { name: 'Change', exact: true }).click();
+  await page.reload();
+  expect((await geometry(page)).points.at(-1)!.xy[1]).toBeCloseTo(94 - 120 / 10000 * 88, 6);
+  page.once('dialog', dialog => dialog.dismiss());
+  await page.getByRole('button', { name: 'Restart simulated journey', exact: true }).click();
+  await seed(page, [10], null, false, false);
+  expect((await geometry(page)).points[0].xy[1]).toBeCloseTo(94 - 10 / 10000 * 88, 6);
+  page.once('dialog', dialog => dialog.accept());
+  await page.getByRole('button', { name: 'Restart simulated journey', exact: true }).click();
+  await expect(page.getByTestId('dashboard-position-line')).toHaveAttribute('data-state', 'empty');
+  await seed(page, [10], null, false, false);
+  expect((await geometry(page)).points[0].xy[1]).toBeCloseTo(94 - 10 / 1000 * 88, 6);
+  await seed(page, [500, 510, 520, 530, 540, 550, 6000], null, false, false);
+  for (let i = 0; i < 6; i++) await page.getByRole('button', { name: 'Earlier change', exact: true }).click();
+  (await geometry(page)).points.forEach(point => expect(point.xy[1]).toBeCloseTo(94 - point.value / 10000 * 88, 6));
 });

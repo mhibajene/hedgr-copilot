@@ -5,6 +5,7 @@ import { resolve } from 'node:path';
 import { act, cleanup, fireEvent, render, screen, within } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 import { PositionLine } from '../app/(app)/dashboard/PositionLine';
+import { resetOwnSimulationScale } from '../app/(app)/dashboard/ExampleLineChart';
 import { VIS_SCALE_COPY } from '../lib/copy/vis-scale-copy';
 import type { PositionEntry } from '../lib/state/last-visit';
 
@@ -161,8 +162,8 @@ describe('VIS-SCALE-001 fixed own-simulation scale', () => {
 
   for (const [name, balances, outside] of [
     ['boundaries', [0, 1000], false], ['zero', [0, 0], false], ['equal', [500, 500], false],
-    ['just above', [1000.01], true], ['negative', [-0.01], true], ['large', [1000000], true],
-    ['real pre-window boundary', [1200, 900, 800, 700, 600], true], ['six large deposits', [500, 1000, 1500, 2000, 2500, 3000], true],
+    ['just above', [1000.01], false], ['negative', [-0.01], true], ['large', [1000000], false],
+    ['real pre-window boundary', [1200, 900, 800, 700, 600], false], ['six large deposits', [500, 1000, 1500, 2000, 2500, 3000], false],
   ] as const) test(`whole-plot eligibility: ${name}`, () => {
     render(<PositionLine entries={ledger([...balances])} lastVisit={null} visualise />);
     const chart = screen.getByTestId('example-line-chart');
@@ -182,7 +183,7 @@ describe('VIS-SCALE-001 fixed own-simulation scale', () => {
     const chart = screen.getByTestId('example-line-chart');
     const earlier = screen.getByRole('button', { name: 'Earlier change' });
     for (let i = 0; i < 6; i++) fireEvent.click(earlier);
-    expect(screen.getByText(fallback)).toBeDefined();
+    expect(screen.queryByText(fallback)).toBeNull();
     expect(chart.getAttribute('data-vis-scale-start')).toBe('1');
     expect(screen.getByTestId('activity-card').textContent).toContain('300.00');
     fireEvent.click(screen.getByRole('button', { name: 'All changes' }));
@@ -199,6 +200,49 @@ describe('VIS-SCALE-001 fixed own-simulation scale', () => {
     expect(chart.querySelector('[data-chart-selected]')?.getAttribute('data-event-id')).toBe('scale-5');
   });
 
+  test('journey tier stays fixed across one, two, six, twelve changes, windows and remounts', () => {
+    const view = render(<PositionLine entries={ledger([6000])} lastVisit={null} visualise />);
+    for (const count of [1, 2, 6, 12]) {
+      view.rerender(<PositionLine entries={ledger(Array.from({ length: count }, (_, i) => (i + 1) * 10))} lastVisit={null} visualise />);
+      points().forEach(point => expect(point.y).toBeCloseTo(94 - point.value / 10000 * 88, 8));
+      if (count > 1) expect((points()[0].y - points()[1].y) * 1.6).toBeCloseTo(0.1408, 8);
+      for (let i = 1; i < count; i++) fireEvent.click(screen.getByRole('button', { name: 'Earlier change' }));
+      points().forEach(point => expect(point.y).toBeCloseTo(94 - point.value / 10000 * 88, 8));
+    }
+    view.unmount();
+    render(<PositionLine entries={ledger([10])} lastVisit={null} visualise />);
+    expect(points()[0].y).toBeCloseTo(94 - 10 / 10000 * 88, 8);
+    act(() => resetOwnSimulationScale());
+    expect(points()[0].y).toBeCloseTo(94 - 10 / 1000 * 88, 8);
+  });
+  test('whole-ledger tiers use the smallest one-two-five step and grow globally', () => {
+    for (const [balance, tier] of [[1000, 1000], [1000.01, 2000], [2000, 2000], [2000.01, 5000], [5000, 5000], [5000.01, 10000], [10000.01, 20000], [20000.01, 50000], [1000000, 1000000]]) {
+      act(() => resetOwnSimulationScale());
+      const view = render(<PositionLine entries={ledger([balance])} lastVisit={null} visualise />);
+      expect(points()[0].y).toBeCloseTo(94 - balance / tier * 88, 8);
+      view.unmount();
+    }
+    act(() => resetOwnSimulationScale());
+    const view = render(<PositionLine entries={ledger([500, 510, 520, 530, 540, 550])} lastVisit={null} visualise />);
+    view.rerender(<PositionLine entries={ledger([500, 510, 520, 530, 540, 550, 6000])} lastVisit={null} visualise />);
+    for (let i = 0; i < 6; i++) fireEvent.click(screen.getByRole('button', { name: 'Earlier change' }));
+    expect(points()[0].value).toBe(500);
+    points().forEach(point => expect(point.y).toBeCloseTo(94 - point.value / 10000 * 88, 8));
+  });
+  test('initial tier includes a highest balance outside the newest window', () => {
+    render(<PositionLine entries={ledger([6000, 10, 20, 30, 40, 50])} lastVisit={null} visualise />);
+    points().forEach(point => expect(point.y).toBeCloseTo(94 - point.value / 10000 * 88, 8));
+    expect(points().map(point => point.value)).toEqual([20, 30, 40, 50]);
+  });
+  test('negative and non-finite own values keep the entire plot hidden', () => {
+    for (const balance of [-0.01, NaN, Infinity, -Infinity]) {
+      const invalid = [{ ...entries[0], amountUSD: 10, balanceAfter: balance }];
+      const view = render(<PositionLine entries={invalid} lastVisit={null} visualise />);
+      expect(screen.getByText(fallback)).toBeDefined();
+      expect(screen.getByTestId('example-line-chart').querySelectorAll('svg, [data-chart-wash], [data-chart-selected], [data-testid="chart-event-dot"], [data-chart-label]')).toHaveLength(0);
+      view.unmount();
+    }
+  });
   test('locked plain-text fallback copy and no participant range label', () => {
     expect(fallback).toBe("The chart can't be drawn at its fixed scale for these changes. Every change is still listed in All changes.");
   });
@@ -219,11 +263,13 @@ describe('VIS-SCALE-001 fixed own-simulation scale', () => {
 
   test('actual and interpolated outside values trigger fallback without changing settle inputs', () => {
     const view = render(<PositionLine entries={ledger([1200, 900, 800, 700, 600, 500])} lastVisit={FIRST} settle={0} visualise />);
-    expect(screen.getByText(fallback)).toBeDefined();
+    expect(screen.queryByText(fallback)).toBeNull();
     const announcement = screen.getByTestId('activity-announcement').textContent;
+    expect(points().every(point => point.y >= 6 && point.y <= 94)).toBe(true);
     view.rerender(<PositionLine entries={ledger([1200, 900, 800, 700, 600, 500])} lastVisit={FIRST} settle={1} visualise />);
     expect(screen.queryByText(fallback)).toBeNull();
     expect(screen.getByTestId('activity-announcement').textContent).toBe(announcement);
+    points().forEach(point => expect(point.y).toBeCloseTo(94 - point.value / 2000 * 88, 8));
   });
 });
 
@@ -239,4 +285,26 @@ test('VIS-SCALE-001 Option A chooses a whole-journey tier for eligible balances 
   expect(screen.queryByText(VIS_SCALE_COPY.fallback)).toBeNull();
   const point = chart.querySelector('svg [data-event-id="tier-withdrawal"]')!;
   expect(Number(point.getAttribute('data-series-y'))).toBeCloseTo(94 - 900 / 2000 * 88, 8);
+});
+
+
+test('VIS-SCALE-001 confirmed Restart alone resets; cancel, Change and deleted history keep the tier', async () => {
+  const tx = (id: string, amount: number) => ({ txn_ref: id, type: 'deposit' as const, status: 'settled' as const, amount_usd: amount, amount_zmw: amount * 27, fx_rate: 27, created_at: FIRST, updated_at: FIRST });
+  useLedgerStore.setState({ transactions: [tx('high', 6000)] });
+  const confirm = vi.spyOn(window, 'confirm').mockReturnValueOnce(false).mockReturnValueOnce(true);
+  await act(async () => { render(<DashboardPage />); });
+  const y = () => Number(screen.getByTestId('example-line-chart').querySelector('[data-series-y]')!.getAttribute('data-series-y'));
+  expect(y()).toBeCloseTo(94 - 6000 / 10000 * 88, 8);
+  fireEvent.click(screen.getByRole('radio', { name: 'Regular costs', exact: true }));
+  fireEvent.click(screen.getByRole('button', { name: 'Change', exact: true }));
+  fireEvent.click(screen.getByRole('button', { name: 'Restart simulated journey', exact: true }));
+  expect(y()).toBeCloseTo(94 - 6000 / 10000 * 88, 8);
+  await act(async () => { useLedgerStore.setState({ transactions: [tx('low', 10)] }); });
+  expect(y()).toBeCloseTo(94 - 10 / 10000 * 88, 8);
+  fireEvent.click(screen.getByRole('button', { name: 'Restart simulated journey', exact: true }));
+  expect(confirm).toHaveBeenCalledTimes(2);
+  await act(async () => { useLedgerStore.setState({ transactions: [tx('new', 10)] }); });
+  expect(y()).toBeCloseTo(94 - 10 / 1000 * 88, 8);
+  confirm.mockRestore();
+  useLedgerStore.setState({ transactions: [] });
 });

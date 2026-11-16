@@ -35,9 +35,13 @@ for (const [width, scale] of [[1440, 1], [390, 1], [320, 2]]) test(`T1-T6/T10 sh
     await expect(page.getByTestId('dashboard-position-line-visit')).toHaveCount(0);
     const chart = page.getByTestId('example-line-chart');
     if (example === 'own') {
-      await expect(chart).toHaveAttribute('data-vis-scale-state', 'activity-only');
-      await expect(chart.getByTestId('vis-scale-fallback')).toHaveText(VIS_SCALE_COPY.fallback);
-      await expect(chart.locator('svg, [data-chart-selected], [data-chart-wash], [data-testid="chart-event-dot"], [data-chart-label]')).toHaveCount(0);
+      await expect(chart).toHaveAttribute('data-vis-scale-state', 'plot');
+      await expect(chart.getByTestId('vis-scale-fallback')).toHaveCount(0);
+      await expect(chart).not.toContainText(VIS_SCALE_COPY.fallback);
+      await expect(chart.locator('svg')).toHaveCount(1);
+      await expect(chart.locator('[data-chart-selected]')).toHaveCount(1);
+      await expect(chart.locator('[data-chart-selected]')).toHaveAttribute('data-event-id', 'last');
+      await expect(chart.locator('[data-chart-wash]')).toHaveCount(1);
     } else {
       await expect(page.locator('[data-chart-selected]')).toHaveCount(1);
     }

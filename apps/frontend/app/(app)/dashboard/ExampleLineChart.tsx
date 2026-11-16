@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useEffect, useId, useRef, useState } from 'react';
+import { createContext, useEffect, useId, useRef, useState, useSyncExternalStore } from 'react';
 
 /** Optional presentation lookup supplied by Home; position and series facts stay unchanged. */
 export const ChartSourceAmountsContext = createContext<ReadonlyMap<string, string>>(new Map());
@@ -9,6 +9,52 @@ import { balanceAt, type PositionEntry } from '../../../lib/state/last-visit';
 import { activityText, formatEventDate, mergeDots, placeLabels, selectLabels, type BalanceSample, type ChartEvent } from './lineLabels';
 import type { DanielRead } from '../../../lib/engine/daniel-read';
 import home from './synthetic-home.module.css';
+
+// Internal own-journey calibration; never a deposit limit or participant label.
+const OWN_SCALE_KEY = 'hedgr.simulation.chart-scale';
+const ownScaleListeners = new Set<() => void>();
+let memoryScale = 1000;
+let scaleMemoryOnly = false;
+const scaleFloor = () => 1000;
+
+function journeyTier(maximum: number): number {
+  let decade = 1000;
+  while (maximum > decade * 5) decade *= 10;
+  return maximum <= decade ? decade : maximum <= decade * 2 ? decade * 2 : decade * 5;
+}
+function readOwnSimulationScale(): number {
+  if (typeof window === 'undefined') return 1000;
+  if (scaleMemoryOnly) return memoryScale;
+  try {
+    const stored = Number(window.localStorage.getItem(OWN_SCALE_KEY));
+    return Number.isFinite(stored) && stored >= 1000 && journeyTier(stored) === stored ? stored : 1000;
+  } catch { return memoryScale; }
+}
+function subscribeOwnSimulationScale(listener: () => void): () => void {
+  ownScaleListeners.add(listener);
+  const onStorage = (event: StorageEvent) => {
+    if (event.key === OWN_SCALE_KEY || event.key === null) {
+      scaleMemoryOnly = false;
+      listener();
+    }
+  };
+  window.addEventListener('storage', onStorage);
+  return () => { ownScaleListeners.delete(listener); window.removeEventListener('storage', onStorage); };
+}
+function rememberOwnSimulationScale(value: number): void {
+  const next = Math.max(readOwnSimulationScale(), value);
+  if (!Number.isFinite(next) || next === readOwnSimulationScale()) return;
+  memoryScale = next;
+  try { window.localStorage.setItem(OWN_SCALE_KEY, String(next)); scaleMemoryOnly = false; }
+  catch { scaleMemoryOnly = true; }
+  ownScaleListeners.forEach(listener => listener());
+}
+export function resetOwnSimulationScale(): void {
+  memoryScale = 1000;
+  try { window.localStorage.removeItem(OWN_SCALE_KEY); scaleMemoryOnly = false; }
+  catch { scaleMemoryOnly = true; }
+  ownScaleListeners.forEach(listener => listener());
+}
 
 /** §389: decorative reading-derived geometry; the consumer supplies the text alternative. */
 function ReadingsLine({ reads }: { reads: readonly Pick<DanielRead, 'asOf' | 'localAmountZmwMinor'>[] }) {
@@ -149,7 +195,7 @@ function LegacyLine({ entries, lastVisit, settle = 1, visitLabel = 'Your last vi
 type ChartProps =
   | { mode?: 'readings'; reads: readonly Pick<DanielRead, 'asOf' | 'localAmountZmwMinor'>[] }
   | ({ mode: 'legacy' } & LegacyProps)
-  | { mode: 'step'; series: readonly BalanceSample[]; events: readonly ChartEvent[]; lastVisit?: number | null; settle?: number; example?: boolean; heroAmount?: number; ownSimulation?: readonly Pick<PositionEntry, 'id' | 'balanceBefore'>[] };
+  | { mode: 'step'; series: readonly BalanceSample[]; events: readonly ChartEvent[]; lastVisit?: number | null; settle?: number; example?: boolean; heroAmount?: number; ownSimulation?: readonly Pick<PositionEntry, 'id' | 'balanceBefore' | 'balanceAfter'>[] };
 
 type LegacyProps = { entries: PositionEntry[]; lastVisit: number | null; settle?: number; visitLabel?: string };
 
@@ -161,6 +207,13 @@ export function ExampleLineChart(props: ChartProps) {
 }
 
 function ActivityLine({ series, events, lastVisit = null, settle = 1, example = false, ownSimulation }: Extract<ChartProps, { mode: 'step' }>) {
+  const fixedOwn = !example && ownSimulation !== undefined;
+  const storedScale = useSyncExternalStore(subscribeOwnSimulationScale, fixedOwn ? readOwnSimulationScale : scaleFloor, scaleFloor);
+  const maximum = fixedOwn ? ownSimulation.reduce((high, entry) => Math.max(high,
+    Number.isFinite(entry.balanceBefore) ? entry.balanceBefore : 0,
+    Number.isFinite(entry.balanceAfter) ? entry.balanceAfter : 0), 1000) : 1000;
+  const journeyScale = Math.max(storedScale, journeyTier(maximum));
+  useEffect(() => { if (fixedOwn) rememberOwnSimulationScale(journeyScale); }, [fixedOwn, journeyScale]);
   const plot = useRef<HTMLDivElement>(null);
   const listId = useId();
   const [size, setSize] = useState({ plot: 300, screen: 1440, gutter: 12 });
@@ -197,11 +250,10 @@ function ActivityLine({ series, events, lastVisit = null, settle = 1, example = 
     if (plot.current) observer?.observe(plot.current);
     return () => { window.removeEventListener('resize', measure); observer?.disconnect(); };
   }, []);
-  if (!series.length || series.some(point => !Number.isFinite(point.value) || !Number.isFinite(Date.parse(point.at)))) {
+  if (!series.length || series.some(point => !Number.isFinite(Date.parse(point.at)) || (!fixedOwn && !Number.isFinite(point.value)))) {
     throw new RangeError('ExampleLineChart needs non-empty finite readings');
   }
-  const fixedOwn = !example && ownSimulation !== undefined;
-  if (fixedOwn && (ownSimulation.length !== series.length || ownSimulation.some(entry => !Number.isFinite(entry.balanceBefore)))) {
+  if (fixedOwn && ownSimulation.length !== series.length) {
     throw new RangeError('ExampleLineChart needs non-empty finite readings');
   }
   const firstDeposit = events.find(event => event.kind === 'deposit');
@@ -228,12 +280,12 @@ function ActivityLine({ series, events, lastVisit = null, settle = 1, example = 
   const low = Math.min(...series.map(point => point.value / scale), ...(lastVisit === null ? [] : [seen / scale]));
   const high = Math.max(...series.map(point => point.value / scale), ...(lastVisit === null ? [] : [seen / scale]));
   const padding = high === low ? Math.max(Math.abs(low) * 0.1, 1 / scale) : (high - low) * 0.1;
-  const y = (value: number) => fixedOwn ? 94 - value / 1000 * 88 : 94 - (value / scale - low + padding) / (high - low + padding * 2) * 88;
+  const y = (value: number) => fixedOwn ? 94 - value / journeyScale * 88 : 94 - (value / scale - low + padding) / (high - low + padding * 2) * 88;
   const allPoints = series.map((point, index) => ({ ...point, x: fixedOwn ? 300 - gutter - (end - index) * (300 - 2 * gutter) / capacity : x(index + (visitIndex >= 0 && index >= visitIndex ? 1 : 0)), y: y(values[index]) }));
   const points = fixedOwn ? allPoints.slice(start, end + 1) : allPoints;
   const boundary = fixedOwn ? ownSimulation[start].balanceBefore : 0;
   const rangeValues = fixedOwn ? [boundary, ...ownSimulation.slice(start, end + 1).map(entry => entry.balanceBefore), ...series.slice(start, end + 1).map(point => point.value), ...values.slice(start, end + 1)] : [];
-  const fallback = fixedOwn && rangeValues.some(value => value < 0 || value > 1000 || !Number.isFinite(value));
+  const fallback = fixedOwn && (!Number.isFinite(journeyScale) || rangeValues.some(value => value < 0 || !Number.isFinite(value)));
   const path = fixedOwn
     ? `M ${gutter} ${y(boundary)} ${points.map(point => `H ${point.x} V ${point.y}`).join(' ')}`
     : points.map((point, index) => index === 0 ? `M ${point.x} ${point.y}` : `H ${point.x} V ${point.y}`).join(' ');
@@ -273,7 +325,7 @@ function ActivityLine({ series, events, lastVisit = null, settle = 1, example = 
   const selectedPoint = located.find(event => event.id === selected?.id);
   return (
     <div className={home.visualiser} data-testid="example-line-chart" data-vis-scale-state={fixedOwn ? fallback ? 'activity-only' : 'plot' : undefined} data-vis-scale-start={fixedOwn ? start : undefined} data-vis-scale-end={fixedOwn ? end : undefined} data-vis-scale-slots={fixedOwn ? capacity : undefined} data-vis-scale-boundary={fixedOwn ? boundary : undefined}>
-      <div ref={plot} className={home.visualiserPlot} style={fallback ? { height: 'auto', minHeight: size.screen >= size.gutter / 0.75 * 64 ? 180 : size.gutter / 0.75 * 10 } : undefined}>
+      <div ref={plot} className={home.visualiserPlot}>
         {fallback ? <p data-testid="vis-scale-fallback">{VIS_SCALE_COPY.fallback}</p> : <>
         <svg className={home.visualiserSvg} aria-hidden="true" viewBox="0 0 300 100" preserveAspectRatio="none" focusable="false">
           <path className={home.visualiserWash} data-chart-wash d={`${path} V 100 H ${fixedOwn ? gutter : points[0].x} Z`} />

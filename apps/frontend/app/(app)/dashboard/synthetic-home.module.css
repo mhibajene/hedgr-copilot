@@ -287,3 +287,6 @@
 .activityControls button:focus-visible { outline: 2px solid var(--color-hedgr-800); outline-offset: 3px; }
 .activityHint { margin-top: .75rem; font-size: .875rem; color: var(--color-hedgr-600); }
 @media (prefers-reduced-motion: reduce) { .activityStack, .activityCard { animation: none; transition: none; } .activityHint { display: none; } }
+
+/* The own activity-only state occupies only its explanation; drawn plots stay exact. */
+[data-vis-scale-state="activity-only"] > .visualiserPlot { height: auto; min-height: 0; margin-block: 0; }

@@ -731,10 +731,38 @@ const POST_SELECT_EDITS: Record<string, readonly (readonly [string, string])[]> 
     ]
   ]
 };
+// VIS-SCALE-001 proposed amendment: reverse only the explicit confirmed-Restart hook.
+function journeyScalePreRuntime(path: string, value: string): string {
+  if (path !== 'app/(app)/dashboard/page.tsx') return value;
+  const edits = [
+    ["import { ChartSourceAmountsContext } from \"./ExampleLineChart\";", "import { ChartSourceAmountsContext, resetOwnSimulationScale } from \"./ExampleLineChart\";"],
+    ["    setSimulationIntent(null);\n    clearTransactions();", "    setSimulationIntent(null);\n    resetOwnSimulationScale();\n    clearTransactions();"],
+  ] as const;
+  for (const [before, after] of edits) {
+    expect(value.split(after), 'VIS-SCALE-001 exact Restart hook').toHaveLength(2);
+    value = value.replace(after, () => before);
+  }
+  return value;
+}
+
 function postSelectPreRuntime(path: string, value: string): string {
+  value = journeyScalePreRuntime(path, value);
   for (const [old, replacement] of [...(POST_SELECT_EDITS[path] ?? [])].reverse()) {
     expect(value.split(replacement), path).toHaveLength(2);
     value = value.replace(replacement, () => old);
   }
   return value;
 }
+
+// This new hook exception must fail closed on altered/duplicate/moved reset snippets.
+test('VIS-SCALE-001 Restart reversal rejects unexpected source hooks', () => {
+  const path = 'app/(app)/dashboard/page.tsx';
+  const actual = source(path);
+  expect(() => journeyScalePreRuntime(path, actual)).not.toThrow();
+  for (const changed of [
+    actual.replace('resetOwnSimulationScale();', 'resetOwnSimulationScale(); resetOwnSimulationScale();'),
+    actual.replace('resetOwnSimulationScale();', ''),
+    actual.replace('resetOwnSimulationScale();', 'resetOwnSimulationScale(false);'),
+    actual.replace('    resetOwnSimulationScale();\n    clearTransactions();', '    clearTransactions();\n    resetOwnSimulationScale();'),
+  ]) expect(() => journeyScalePreRuntime(path, changed)).toThrow();
+});

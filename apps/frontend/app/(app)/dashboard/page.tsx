@@ -12,7 +12,7 @@ import { EngineAllocationBands } from "./EngineAllocationBands";
 import { EnginePostureHeader } from "./EnginePostureHeader";
 import { countChanges } from "./lineLabels";
 import { PositionLine } from "./PositionLine";
-import { ChartSourceAmountsContext } from "./ExampleLineChart";
+import { ChartSourceAmountsContext, resetOwnSimulationScale } from "./ExampleLineChart";
 import { clearSimulationReceipt } from "../simulation-receipt";
 import { formatLocalCurrency } from "../../../lib/utils/money";
 import { DanielExampleHome } from './DanielExampleHome';
@@ -233,6 +233,7 @@ export default function DashboardPage() {
     if (!confirmed) return;
 
     setSimulationIntent(null);
+    resetOwnSimulationScale();
     clearTransactions();
     removeRetiredWalletBalance();
     clearLastVisit();
