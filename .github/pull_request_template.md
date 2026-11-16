@@ -33,6 +33,8 @@ Unchecked or inaccurate items may block merge.
 - `E2E smoke (@hedgr/frontend)`
 - `hedgr/verifier`
 
+After the Founder-coordinated MERGE-TIERS-ACT-001 cutover, raw `hedgr/verifier` must come from Iris App 5653778, with required `hedgr/verifier-policy` from Actions 15368 in the single main ruleset 26932204; no classic PATCH. The latter is defence in depth. Legacy comments never satisfy Iris/Tier 1. Tier 1 stays OFF during staging. Private receipts have no public status link. Each PR still requires exact-head hosted E2E under §443, independent PASS, Wes's same-head sign-off and applicable Founder go. PR B is READY/UNARMED.
+
 **Independent verifier**
 - [ ] Independent verifier PASS on the exact current head SHA (`Hedgr-Verifier:` attestation in runbook form)
 - Any subsequent commit invalidates the previous PASS and returns the PR to verification-required state.
