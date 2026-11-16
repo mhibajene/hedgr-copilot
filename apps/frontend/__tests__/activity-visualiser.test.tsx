@@ -226,3 +226,17 @@ describe('VIS-SCALE-001 fixed own-simulation scale', () => {
     expect(screen.getByTestId('activity-announcement').textContent).toBe(announcement);
   });
 });
+
+
+test('VIS-SCALE-001 Option A chooses a whole-journey tier for eligible balances above one thousand', () => {
+  const journey: PositionEntry[] = [
+    { ...entries[0], id: 'tier-deposit', amountUSD: 1200, balanceBefore: 0, balanceAfter: 1200 },
+    { ...entries[1], id: 'tier-withdrawal', amountUSD: 300, balanceBefore: 1200, balanceAfter: 900 },
+  ];
+  render(<PositionLine entries={journey} lastVisit={null} visualise />);
+  const chart = screen.getByTestId('example-line-chart');
+  expect(chart.getAttribute('data-vis-scale-state')).toBe('plot');
+  expect(screen.queryByText(VIS_SCALE_COPY.fallback)).toBeNull();
+  const point = chart.querySelector('svg [data-event-id="tier-withdrawal"]')!;
+  expect(Number(point.getAttribute('data-series-y'))).toBeCloseTo(94 - 900 / 2000 * 88, 8);
+});
