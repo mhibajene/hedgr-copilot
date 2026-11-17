@@ -56,7 +56,7 @@ async function chooser(card: Locator) {
   await expect(card.getByRole('radio')).toHaveCount(3);
   await expect(card.locator('input:checked')).toHaveCount(0);
   await expect(card.getByRole('button', { name: copy.answers.skip })).toBeVisible();
-  await expect(card.getByRole('button', { name: copy.change })).toHaveCount(0);
+  await expect(card.getByRole('button', { name: copy.changeAccessibleName })).toHaveCount(0);
   await expect(card.getByTestId('planning-read-stance')).toHaveCount(0);
 }
 async function seedHistory(page: Page) {
@@ -72,7 +72,7 @@ test('PLAN-INTENT-001 post-select collapses the chooser and offers Change', asyn
   const card = page.getByTestId('planning-read-card'); await chooser(card);
   await card.getByRole('radio', { name: copy.labels.regular, exact: true }).click();
   await expect(card.getByRole('group', { name: copy.question })).toHaveCount(0);
-  await expect(card.getByRole('button', { name: copy.change, exact: true })).toBeVisible();
+  await expect(card.getByRole('button', { name: copy.changeAccessibleName, exact: true })).toBeVisible();
 });
 test('all purpose/Skip transitions update only intent; Change clears immediately', async ({ page }) => {
   await seedHistory(page);
@@ -93,7 +93,7 @@ test('all purpose/Skip transitions update only intent; Change clears immediately
     if (label === 'goals') await expect(card.getByTestId('planning-read-dated')).toHaveText(copy.dated);
     expect([await hero.innerHTML(), await activity.innerHTML(), page.url()]).toEqual(original);
     await expect(page.getByRole('dialog')).toHaveCount(0);
-    await card.getByRole('button', { name: copy.change, exact: true }).click();
+    await card.getByRole('button', { name: copy.changeAccessibleName, exact: true }).click();
     await chooser(card);
     expect(await page.evaluate(key => localStorage.getItem(key), SIMULATION_INTENT_KEY)).toBeNull();
   }
@@ -103,7 +103,7 @@ test('all purpose/Skip transitions update only intent; Change clears immediately
   await expect(card.getByTestId('planning-read-why')).toHaveCount(0);
   await expect(card.getByRole('radio')).toHaveCount(0);
   expect((await card.innerText()).replace(/\s+/g,' ').trim()).toBe(copy.skipped + ' ' + copy.change);
-  await card.getByRole('button', { name: copy.change }).click(); await chooser(card);
+  await card.getByRole('button', { name: copy.changeAccessibleName }).click(); await chooser(card);
   expect([await hero.innerHTML(), await activity.innerHTML(), page.url()]).toEqual(original);
 });
 test('all answers survive refresh/client navigation; Change removes stored choice across refresh', async ({ page }) => {
@@ -117,7 +117,7 @@ test('all answers survive refresh/client navigation; Change removes stored choic
     await page.getByTestId('synthetic-bottom-nav').getByRole('link', { name:'Activity',exact:true }).click();
     await page.getByTestId('synthetic-bottom-nav').getByRole('link', { name:'Home',exact:true }).click();
     await expect(card.getByTestId('planning-read-stance')).toHaveText(stance);
-    await card.getByRole('button', { name:copy.change }).click();
+    await card.getByRole('button', { name:copy.changeAccessibleName }).click();
     expect(await page.evaluate(key => localStorage.getItem(key), SIMULATION_INTENT_KEY)).toBeNull();
     await page.reload(); await chooser(card);
   }
@@ -180,7 +180,7 @@ for (const currency of ['ZMW','KES','NGN','GHS','PHP'] as const) for (const [wid
       });
     });
     expect(wordLines).toEqual([1, 1]);
-    const change=card.getByRole('button',{name:copy.change});await change.scrollIntoViewIfNeeded();
+    const change=card.getByRole('button',{name:copy.changeAccessibleName});await change.scrollIntoViewIfNeeded();
     const box=(await change.boundingBox())!;const nav=(await page.getByTestId('synthetic-bottom-nav').boundingBox())!;
     expect(box.y+box.height).toBeLessThanOrEqual(nav.y+1);
     expect(await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth)).toBeLessThanOrEqual(1);

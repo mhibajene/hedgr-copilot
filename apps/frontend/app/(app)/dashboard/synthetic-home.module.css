@@ -290,3 +290,7 @@
 
 /* The own activity-only state occupies only its explanation; drawn plots stay exact. */
 [data-vis-scale-state="activity-only"] > .visualiserPlot { height: auto; min-height: 0; margin-block: 0; }
+
+@media (max-width: 1023px) {
+  :global(html):has(.scopeNavigation) { scroll-padding-bottom: calc(3.75rem + 1px); }
+}

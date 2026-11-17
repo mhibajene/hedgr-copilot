@@ -202,7 +202,7 @@ test('VIS-SCALE-001 journey high-water persists through windows, deletion, navig
   }
   await page.getByRole('radio', { name: 'Regular costs', exact: true }).click();
   await expect(page.getByRole('radio')).toHaveCount(0);
-  await page.getByRole('button', { name: 'Change', exact: true }).click();
+  await page.getByRole('button', { name: 'Change what this portion is meant to support', exact: true }).click();
   await page.reload();
   expect((await geometry(page)).points.at(-1)!.xy[1]).toBeCloseTo(94 - 120 / 10000 * 88, 6);
   page.once('dialog', dialog => dialog.dismiss());
@@ -217,4 +217,28 @@ test('VIS-SCALE-001 journey high-water persists through windows, deletion, navig
   await seed(page, [500, 510, 520, 530, 540, 550, 6000], null, false, false);
   for (let i = 0; i < 6; i++) await page.getByRole('button', { name: 'Earlier change', exact: true }).click();
   (await geometry(page)).points.forEach(point => expect(point.xy[1]).toBeCloseTo(94 - point.value / 10000 * 88, 6));
+});
+
+
+for (const viewport of [{ width: 390, height: 844 }, { width: 320, height: 568 }, { width: 320, height: 400 }]) test(`VIS-SCALE-001 keyboard focus clears the fixed navigation at ${viewport.width}x${viewport.height}`, async ({ page }, info) => {
+  await page.setViewportSize(viewport);
+  await seed(page, [500, 510]);
+  await page.getByRole('radio', { name: 'Regular costs', exact: true }).click();
+  // Start outside the fixed navigation and traverse actual controls using native Tab scrolling.
+  await page.getByTestId('activity-card').evaluate(n => { n.setAttribute('tabindex', '-1'); n.focus(); });
+  const measurements = [];
+  for (let step = 0; step < 15; step++) {
+    await page.keyboard.press('Tab');
+    const focus = await page.evaluate(() => {
+      const n = document.activeElement!; const nav = document.querySelector('[data-testid="synthetic-bottom-nav"]')!;
+      return { text: n.textContent, tag: n.tagName, inNav: nav.contains(n), box: n.getBoundingClientRect().toJSON(), nav: nav.getBoundingClientRect().toJSON(), viewport: innerHeight, scrollingElement: document.scrollingElement?.tagName };
+    });
+    if (focus.inNav) break;
+    measurements.push(focus);
+    expect(focus.box.top, focus.text ?? focus.tag).toBeGreaterThanOrEqual(-1);
+    expect(focus.box.bottom, focus.text ?? focus.tag).toBeLessThanOrEqual(focus.nav.top + 1);
+    if (focus.text?.includes('Restart simulated journey')) break;
+  }
+  expect(measurements.length).toBeGreaterThan(3);
+  await info.attach('native-focus-clearance', { body: JSON.stringify(measurements), contentType: 'application/json' });
 });

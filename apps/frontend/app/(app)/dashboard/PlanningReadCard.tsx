@@ -23,7 +23,7 @@ export function PlanningReadCard() {
       </> : <>
         <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
           <p className="min-w-0 flex-1 basis-48" aria-live="polite" data-testid="planning-read-stance">{intent === 'skip' ? copy.skipped : copy.confirmation(copy.labels[selected])}</p>
-          <button type="button" onClick={() => setSimulationIntent(null)} className="min-h-11 shrink-0 underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-hedgr-500">{copy.change}</button>
+          <button type="button" onClick={() => setSimulationIntent(null)} aria-label={copy.changeAccessibleName} className="min-h-11 shrink-0 underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-hedgr-500">{copy.change}</button>
         </div>
         {intent !== 'skip' ? <p data-testid="planning-read-why">{copy.why[selected]}</p> : null}
         {intent === 'dated' ? <p data-testid="planning-read-dated">{copy.dated}</p> : null}

@@ -52,7 +52,7 @@ function expectChooser() {
   expect(screen.getByRole('group', { name: copy.question })).not.toBeNull();
   expect(screen.getAllByRole('radio').map(n => n.parentElement!.textContent)).toEqual([copy.labels.regular, copy.labels.reserve, copy.labels.goals]);
   expect(screen.getByRole('button', { name: copy.answers.skip })).not.toBeNull();
-  expect(screen.queryByRole('button', { name: copy.change })).toBeNull();
+  expect(screen.queryByRole('button', { name: copy.changeAccessibleName })).toBeNull();
   expect(screen.queryByTestId('planning-read-stance')).toBeNull();
   expect(screen.queryByTestId('planning-read-why')).toBeNull();
   expect(document.querySelectorAll('input:checked')).toHaveLength(0);
@@ -80,13 +80,13 @@ for (const purpose of Object.keys(labels) as SimulationPurpose[]) {
     expect(screen.queryByTestId('planning-read-dated')?.textContent ?? null).toBe(purpose === 'dated' ? copy.dated : null);
     expect(getPlanningReadOrder(purpose)[0]).toBe(label);
     expect(localStorage.getItem(SIMULATION_INTENT_KEY)).toBe(purpose);
-    fireEvent.click(screen.getByRole('button', { name: copy.change }));
+    fireEvent.click(screen.getByRole('button', { name: copy.changeAccessibleName }));
     expectChooser();
     expect(getSimulationIntent()).toBeNull();
     expect(localStorage.getItem(SIMULATION_INTENT_KEY)).toBeNull();
     fireEvent.click(screen.getByRole('button', { name: copy.answers.skip }));
     expect(screen.getByTestId('planning-read-stance').textContent).toBe(copy.skipped);
-    fireEvent.click(screen.getByRole('button', { name: copy.change }));
+    fireEvent.click(screen.getByRole('button', { name: copy.changeAccessibleName }));
     fireEvent.click(screen.getByRole('radio', { name: copy.labels[label], exact: true }));
     expect(getSimulationIntent()).toBe(purpose);
   });
@@ -99,7 +99,7 @@ test('Skip collapses to only the exact skipped line and Change, with no Why or d
   expect(screen.queryByRole('group')).toBeNull();
   expect(screen.queryByTestId('planning-read-why')).toBeNull();
   expect(screen.queryByTestId('planning-read-dated')).toBeNull();
-  fireEvent.click(screen.getByRole('button', { name: copy.change })); expectChooser();
+  fireEvent.click(screen.getByRole('button', { name: copy.changeAccessibleName })); expectChooser();
 });
 test('device storage hydrates valid answers, ignores malformed values and retains a blocked-store fallback', () => {
   localStorage.setItem(SIMULATION_INTENT_KEY, 'dated');
@@ -109,7 +109,7 @@ test('device storage hydrates valid answers, ignores malformed values and retain
   const write = vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => { throw new Error('blocked fixture'); });
   fireEvent.click(screen.getByRole('radio', { name: copy.labels.reserve, exact: true }));
   expect(getSimulationIntent()).toBe('reserve');
-  fireEvent.click(screen.getByRole('button', { name: copy.change })); expectChooser();
+  fireEvent.click(screen.getByRole('button', { name: copy.changeAccessibleName })); expectChooser();
   write.mockRestore();
 });
 test('choice changes only intent; Restart cancel retains it and accepted Restart clears it', async () => {
@@ -177,4 +177,36 @@ test('PLAN-INTENT-001 hierarchy keeps movement above intent, currency and disclo
   expect(rate.textContent).toBe('Example rate: ZMW 27 per US dollar. Not a live rate.');
   expect(screen.getByTestId('currency-insight').parentElement!.contains(rate)).toBe(true);
   expect(screen.getByTestId('dashboard-current-status').parentElement!.contains(rate)).toBe(false);
+});
+
+
+test('PLAN-INTENT-001 Change has the locked descriptive accessible name and keeps its visible label', () => {
+  setSimulationIntent('regular');
+  render(<PlanningReadCard />);
+  const change = screen.getByRole('button', { name: 'Change what this portion is meant to support', exact: true });
+  expect(change.textContent).toBe(copy.change);
+  fireEvent.click(change);
+  expectChooser();
+});
+for (const reducedMotion of [true, false]) test(`VIS-SCALE-001 confirmed Restart resets the live balance; cancelled Restart retains it (reduced motion ${reducedMotion})`, async () => {
+  vi.stubGlobal('matchMedia', () => ({ matches: reducedMotion }));
+  let frame: FrameRequestCallback | undefined;
+  vi.stubGlobal('requestAnimationFrame', (callback: FrameRequestCallback) => { frame = callback; return 1; });
+  vi.stubGlobal('cancelAnimationFrame', vi.fn());
+  localStorage.setItem('hedgr:last-home-visit', '500');
+  localStorage.setItem('hedgr:ledger', JSON.stringify({ version: 2, transactions: [{ txn_ref: 'live-reset', type: 'deposit', status: 'settled', amount_usd: 500, amount_zmw: 13500, fx_rate: 27, created_at: 1000, updated_at: 1000 }] }));
+  await home();
+  if (!reducedMotion) await act(async () => { frame!(performance.now() + 2000); });
+  const live = screen.getByTestId('dashboard-arrival-announcement');
+  expect(live.textContent).toContain('$500.00');
+  const before = live.textContent;
+  const confirm = vi.spyOn(window, 'confirm').mockReturnValue(false);
+  fireEvent.click(screen.getByRole('button', { name: 'Restart simulated journey', exact: true }));
+  expect(live.textContent).toBe(before);
+  expect(screen.getByTestId('usd-balance').textContent).toBe('$500.00');
+  confirm.mockReturnValue(true);
+  fireEvent.click(screen.getByRole('button', { name: 'Restart simulated journey', exact: true }));
+  await act(async () => { await Promise.resolve(); });
+  expect(live.textContent).toBe('$0.00');
+  expect(screen.getByTestId('usd-balance').textContent).toBe('$0.00');
 });

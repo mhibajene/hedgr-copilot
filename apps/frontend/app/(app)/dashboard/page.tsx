@@ -234,6 +234,7 @@ export default function DashboardPage() {
 
     setSimulationIntent(null);
     resetOwnSimulationScale();
+    setArrivalAnnouncement(formatUsd(0));
     clearTransactions();
     removeRetiredWalletBalance();
     clearLastVisit();
@@ -332,7 +333,7 @@ export default function DashboardPage() {
     const finish = () => {
       setArrivalProgress(1);
       setArrivalPhase("done");
-      setArrivalAnnouncement(sentence);
+      setArrivalAnnouncement(current => current === formatUsd(0) ? current : sentence);
     };
     if (!motionAllowed()) {
       finish();

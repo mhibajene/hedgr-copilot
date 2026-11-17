@@ -296,7 +296,7 @@ test('VIS-SCALE-001 confirmed Restart alone resets; cancel, Change and deleted h
   const y = () => Number(screen.getByTestId('example-line-chart').querySelector('[data-series-y]')!.getAttribute('data-series-y'));
   expect(y()).toBeCloseTo(94 - 6000 / 10000 * 88, 8);
   fireEvent.click(screen.getByRole('radio', { name: 'Regular costs', exact: true }));
-  fireEvent.click(screen.getByRole('button', { name: 'Change', exact: true }));
+  fireEvent.click(screen.getByRole('button', { name: 'Change what this portion is meant to support', exact: true }));
   fireEvent.click(screen.getByRole('button', { name: 'Restart simulated journey', exact: true }));
   expect(y()).toBeCloseTo(94 - 6000 / 10000 * 88, 8);
   await act(async () => { useLedgerStore.setState({ transactions: [tx('low', 10)] }); });

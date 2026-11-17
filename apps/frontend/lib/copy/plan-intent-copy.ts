@@ -1,6 +1,7 @@
 export const PLAN_INTENT_COPY = {
   title: 'Planning read',
   change: 'Change',
+  changeAccessibleName: 'Change what this portion is meant to support',
   question: 'What is this portion meant to support?',
   answers: {
     regular: 'A regular cost',

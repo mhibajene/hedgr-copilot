@@ -733,6 +733,7 @@ const POST_SELECT_EDITS: Record<string, readonly (readonly [string, string])[]> 
 };
 // VIS-SCALE-001 proposed amendment: reverse only the explicit confirmed-Restart hook.
 function journeyScalePreRuntime(path: string, value: string): string {
+  value = fixPreRuntime(path, value);
   if (path !== 'app/(app)/dashboard/page.tsx') return value;
   const edits = [
     ["import { ChartSourceAmountsContext } from \"./ExampleLineChart\";", "import { ChartSourceAmountsContext, resetOwnSimulationScale } from \"./ExampleLineChart\";"],
@@ -763,6 +764,52 @@ test('VIS-SCALE-001 Restart reversal rejects unexpected source hooks', () => {
     actual.replace('resetOwnSimulationScale();', 'resetOwnSimulationScale(); resetOwnSimulationScale();'),
     actual.replace('resetOwnSimulationScale();', ''),
     actual.replace('resetOwnSimulationScale();', 'resetOwnSimulationScale(false);'),
-    actual.replace('    resetOwnSimulationScale();\n    clearTransactions();', '    clearTransactions();\n    resetOwnSimulationScale();'),
+    actual.replace('    resetOwnSimulationScale();\n    setArrivalAnnouncement(formatUsd(0));\n    clearTransactions();', '    setArrivalAnnouncement(formatUsd(0));\n    clearTransactions();\n    resetOwnSimulationScale();'),
   ]) expect(() => journeyScalePreRuntime(path, changed)).toThrow();
+});
+
+// VIS-SCALE-001 bounded accessible-name/live-reset fixes; historical hashes stay unchanged.
+const FIX_EDITS: Record<string, readonly (readonly [string, string])[]> = {
+  "app/(app)/dashboard/page.tsx": [
+    [
+      "    resetOwnSimulationScale();\n    clearTransactions();",
+      "    resetOwnSimulationScale();\n    setArrivalAnnouncement(formatUsd(0));\n    clearTransactions();"
+    ],
+    [
+      "      setArrivalAnnouncement(sentence);",
+      "      setArrivalAnnouncement(current => current === formatUsd(0) ? current : sentence);"
+    ]
+  ],
+  "app/(app)/dashboard/PlanningReadCard.tsx": [
+    [
+      "onClick={() => setSimulationIntent(null)} className=",
+      "onClick={() => setSimulationIntent(null)} aria-label={copy.changeAccessibleName} className="
+    ]
+  ],
+  "lib/copy/plan-intent-copy.ts": [
+    [
+      "  change: 'Change',",
+      "  change: 'Change',\n  changeAccessibleName: 'Change what this portion is meant to support',"
+    ]
+  ]
+};
+function fixPreRuntime(path: string, value: string): string {
+  for (const [before, after] of FIX_EDITS[path] ?? []) {
+    expect(value.split(after), "VIS-SCALE-001 exact fix boundary").toHaveLength(2);
+    value = value.replace(after, () => before);
+  }
+  return value;
+}
+
+test('VIS-SCALE-001 fix reversal rejects changed, duplicate, moved and unrelated fixes', () => {
+  for (const path of Object.keys(FIX_EDITS)) {
+    const actual = source(path);
+    expect(() => bundlePreRuntime(path, actual)).not.toThrow();
+    for (const [, after] of FIX_EDITS[path]) {
+      for (const changed of [actual.replace(after, ''), actual.replace(after, after + after), actual.replace(after, after + ' '), actual + '\n// unrelated change']) {
+        expect(changed).not.toBe(actual);
+        expect(() => { expect(digest(bundlePreRuntime(path, changed))).toBe(digest(bundlePreRuntime(path, actual))); }).toThrow();
+      }
+    }
+  }
 });
