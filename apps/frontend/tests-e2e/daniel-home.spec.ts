@@ -356,7 +356,7 @@ test('normalizes non-ZMW synthetic deposit ZMW legs at the Engine fixture with u
     await page.goto('/deposit?journey=class-a-val-002');
     await expect(page.getByTestId('deposit-fx-block')).toHaveText(`Simulated example rate: 1 USD = ${rate.toFixed(2)} ${currency}`);
     await page.getByTestId('deposit-amount').fill(input);
-    await expect(page.getByTestId('deposit-balance-change')).toContainText(`shows ${input} ${currency} as +$5.00`);
+    await expect(page.getByTestId('deposit-balance-change')).toContainText(`shows ${currency} ${Number(input).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} as +$5.00`);
     await page.getByRole('button', { name: 'Confirm', exact: true }).click();
     await expect(page.getByTestId('deposit-confirmation-region')).toContainText('You added $5.00 to your simulated balance');
     const records = await page.evaluate(() => JSON.parse(localStorage.getItem('hedgr:ledger')!).transactions);

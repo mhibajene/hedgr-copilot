@@ -163,7 +163,7 @@ test('all five Settings estimates preserve USD, market, Activity and planning wi
   await expect(page.getByTestId('deposit-fx-block')).toContainText('Simulated example rate: 1 USD = 56.00 PHP');
   await page.getByTestId('deposit-amount').fill('280');
   await expect(page.getByTestId('deposit-conversion-preview')).toContainText('$5.00');
-  await expect(page.getByTestId('deposit-balance-change')).toContainText('shows 280 PHP as +$5.00');
+  await expect(page.getByTestId('deposit-balance-change')).toContainText('shows PHP 280.00 as +$5.00');
   await expect(page.getByLabel('Simulation currency display')).toHaveCount(0);
   await page.goto('/withdraw?journey=class-a-val-002');
   await page.getByTestId('withdraw-amount').fill('2');
@@ -285,7 +285,7 @@ for (const [currency, rate, localFive, localThree] of [
     await expect(page.locator('label[for="deposit-amount"]')).toHaveText(`Amount to simulate (${currency})`);
     await expect(input).toHaveAccessibleName('Simulated deposit amount');
     await input.fill(String(rate * 5));
-    await expect(page.getByTestId('deposit-balance-change')).toContainText(`shows ${rate * 5} ${currency} as +$5.00`);
+    await expect(page.getByTestId('deposit-balance-change')).toContainText(`shows ${currency} ${(rate * 5).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} as +$5.00`);
     await page.getByRole('button', { name: 'Confirm', exact: true }).click();
     await expect(page.getByTestId('deposit-confirmation-region')).toContainText('You added $5.00 to your simulated balance');
     const deposits = await page.evaluate(() => JSON.parse(localStorage.getItem('hedgr:ledger')!).transactions);
