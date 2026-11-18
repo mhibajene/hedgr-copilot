@@ -433,17 +433,23 @@ test('Own-simulation card and caption reflow at root200', async ({ page }, testI
           expect(await limit.evaluate(el => getComputedStyle(el).textOverflow)).not.toBe('ellipsis');
           const link = card.getByTestId('dashboard-since-link');
           if (await link.count()) { await link.focus(); await expect(link).toBeFocused(); }
-          await page.getByTestId('research-planning-targets').locator(':scope > summary').click();
-          const percentages = page.getByTestId('engine-allocation-values-details');
-          await percentages.locator(':scope > summary').focus();
-          await page.keyboard.press('Enter');
-          await expect(percentages.getByText('Illustrative example values, not live targets or advice', { exact: true })).toBeVisible();
-          expect(await percentages.evaluate(el => el.scrollWidth - el.clientWidth)).toBeLessThanOrEqual(1);
+          await expect(page.getByTestId('research-planning-targets')).toHaveCount(0);
+          await expect(page.getByTestId('planning-read-card')).toBeVisible();
           if (currency.code === 'NGN' && state === 'several') await page.screenshot({ path: testInfo.outputPath(`ticket-b-${viewport.width}-${route.includes('?') ? 'query' : 'path'}.png`), fullPage: true });
         }
       }
     }
   }
+  // Retain the percentage disclosure/caption contract on ordinary Home.
+  await page.goto('/dashboard');
+  await applyTextSize(page, 200);
+          await page.getByTestId('dashboard-planning-targets').locator(':scope > summary').click();
+          const percentages = page.getByTestId('engine-allocation-values-details');
+          await percentages.locator(':scope > summary').focus();
+          await page.keyboard.press('Enter');
+          await expect(percentages.getByText('Illustrative example values, not live targets or advice', { exact: true })).toBeVisible();
+          expect(await percentages.evaluate(el => el.scrollWidth - el.clientWidth)).toBeLessThanOrEqual(1);
+
 });
 
 test('Journey What changed states type amount and actual event date once', async ({ page }) => {

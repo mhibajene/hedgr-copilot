@@ -90,11 +90,31 @@ test('polished Home accordions preserve keyboard operation, planning and researc
   await page.setViewportSize({ width: 390, height: 844 });
   await seed(page);
   const before = await financialState(page);
-  const planning = page.getByTestId('research-planning-targets');
-  const planningSummary = planning.locator(':scope > summary');
+  await expect(page.getByTestId('research-planning-targets')).toHaveCount(0);
   const disclosures = page.getByTestId('dashboard-disclosures');
+  await expect(disclosures).not.toHaveAttribute('open');
+  await disclosures.locator(':scope > summary').focus();
+  await page.keyboard.press('Enter');
+  await expect(disclosures).toHaveAttribute('open', '');
+  await expect(disclosures.locator(':scope > summary')).toBeFocused();
+  await expect(disclosures).toContainText('This research prototype is not a live service. The display currency preference changes illustrative simulation estimates only.');
+  await expect(disclosures).toContainText('This research walkthrough creates no real financial exposure. It does not hold assets, accept real deposits, or move money.');
+  await expect(disclosures).toContainText('This research prototype is not a bank account and does not accept deposits. No real money is held or moved.');
+  await page.screenshot({ path: testInfo.outputPath('home-accordions-open-390.png'), fullPage: true });
+  for (const accordion of [disclosures]) {
+    const summary = accordion.locator(':scope > summary');
+    await summary.focus();
+    await page.keyboard.press('Space');
+    await expect(accordion).not.toHaveAttribute('open');
+    await expect(summary).toBeFocused();
+  }
+  await expect(disclosures.locator('[data-disclosure-key="risk-warning"]')).not.toBeVisible();
+  // Preserve planning copy and keyboard behaviour on ordinary Home.
+  await page.goto('/dashboard');
+  const planning = page.getByTestId('dashboard-planning-targets');
+  const planningSummary = planning.locator(':scope > summary');
   await expect(planningSummary).toContainText('Targets only · No money moved');
-  for (const accordion of [planning, disclosures]) {
+  for (const accordion of [planning]) {
     await expect(accordion).not.toHaveAttribute('open');
     const summary = accordion.locator(':scope > summary');
     await summary.focus();
@@ -114,19 +134,12 @@ test('polished Home accordions preserve keyboard operation, planning and researc
   for (const key of ['coreTargetPct', 'liquidityTargetPct', 'yieldCapPct']) {
     await expect(values.getByTestId(`engine-allocation-band-${key}`)).toBeVisible();
   }
-  await expect(disclosures).toContainText('This research prototype is not a live service. The display currency preference changes illustrative simulation estimates only.');
-  await expect(disclosures).toContainText('This research walkthrough creates no real financial exposure. It does not hold assets, accept real deposits, or move money.');
-  await expect(disclosures).toContainText('This research prototype is not a bank account and does not accept deposits. No real money is held or moved.');
-  await page.screenshot({ path: testInfo.outputPath('home-accordions-open-390.png'), fullPage: true });
-  for (const accordion of [planning, disclosures]) {
-    const summary = accordion.locator(':scope > summary');
-    await summary.focus();
-    await page.keyboard.press('Space');
-    await expect(accordion).not.toHaveAttribute('open');
-    await expect(summary).toBeFocused();
-  }
+  await planningSummary.focus();
+  await page.keyboard.press('Space');
+  await expect(planning).not.toHaveAttribute('open');
+  await expect(planningSummary).toBeFocused();
   await expect(planning.getByTestId('engine-allocation-boundary')).not.toBeVisible();
-  await expect(disclosures.locator('[data-disclosure-key="risk-warning"]')).not.toBeVisible();
+  await page.goto(home);
   expect(await financialState(page)).toEqual(before);
 });
 
@@ -138,7 +151,8 @@ test('Shared baseline supports both journeys while preserving query-route eligib
   await expect(page.getByRole('heading', { name: 'Your simulation', exact: true })).toBeVisible();
   await expect(page.getByRole('main')).toHaveCSS('background-color', 'rgb(250, 248, 245)');
   await expect(page.getByTestId('usd-balance')).toHaveText('$300.00');
-  await expect(page.getByTestId('research-planning-targets')).toBeVisible();
+  await expect(page.getByTestId('research-planning-targets')).toHaveCount(0);
+  await expect(page.getByTestId('planning-read-card')).toBeVisible();
   await page.getByRole('navigation', { name: 'Primary' }).getByRole('link', { name: 'Activity', exact: true }).click();
   await expect(page).toHaveURL(/activity\?journey=class-a-val-002/);
   await expect(page.getByRole('main')).toHaveCSS('background-color', 'rgb(250, 248, 245)');
@@ -163,7 +177,7 @@ test('research Home, Activity and dialog reflow at narrow/enlarged and desktop w
     await page.setViewportSize({ width, height: 900 });
     for (const size of ['100%', '200%']) {
       await page.evaluate(size => { document.documentElement.style.fontSize = size; }, size);
-      for (const id of ['research-planning-targets', 'dashboard-disclosures']) {
+      for (const id of ['dashboard-disclosures']) {
         const details = page.getByTestId(id);
         if (!(await details.evaluate(el => (el as HTMLDetailsElement).open))) {
           await details.locator(':scope > summary').click();
@@ -177,7 +191,7 @@ test('research Home, Activity and dialog reflow at narrow/enlarged and desktop w
       if (width < 1024) {
         expect(observation!.y).toBeGreaterThan(balance!.y + balance!.height);
       } else {
-        expect(observation!.x).toBeGreaterThan(balance!.x + balance!.width);
+        expect(observation!.y).toBeGreaterThan(balance!.y + balance!.height);
       }
       const overflow = await page.evaluate(() => Array.from(document.querySelectorAll('body *')).filter(el => {
         const rect = el.getBoundingClientRect();
@@ -202,8 +216,13 @@ test('Posture and percentage regions identify illustrative values before the rea
   const label = 'Illustrative example values, not live targets or advice';
   for (const route of [home, '/dashboard?journey=class-a-val-002', '/dashboard']) {
     await page.goto(route);
+    if (route !== '/dashboard') {
+      await expect(page.getByTestId('research-planning-targets')).toHaveCount(0);
+      await expect(page.getByTestId('planning-read-card')).toBeVisible();
+      await page.goto('/dashboard');
+    }
     // The native planning disclosure remains the visibility and keyboard boundary.
-    const planning = page.getByTestId(route === '/dashboard' ? 'dashboard-planning-targets' : 'research-planning-targets');
+    const planning = page.getByTestId('dashboard-planning-targets');
     const summary = planning.locator(':scope > summary');
     await summary.focus();
     await page.keyboard.press('Enter');

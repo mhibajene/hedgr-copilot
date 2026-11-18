@@ -1,13 +1,60 @@
 'use client';
 
-import { createContext, useEffect, useId, useRef, useState } from 'react';
+import { createContext, useEffect, useId, useRef, useState, useSyncExternalStore } from 'react';
 
 /** Optional presentation lookup supplied by Home; position and series facts stay unchanged. */
 export const ChartSourceAmountsContext = createContext<ReadonlyMap<string, string>>(new Map());
+import { VIS_SCALE_COPY } from '../../../lib/copy/vis-scale-copy';
 import { balanceAt, type PositionEntry } from '../../../lib/state/last-visit';
 import { activityText, formatEventDate, mergeDots, placeLabels, selectLabels, type BalanceSample, type ChartEvent } from './lineLabels';
 import type { DanielRead } from '../../../lib/engine/daniel-read';
 import home from './synthetic-home.module.css';
+
+// Internal own-journey calibration; never a deposit limit or participant label.
+const OWN_SCALE_KEY = 'hedgr.simulation.chart-scale';
+const ownScaleListeners = new Set<() => void>();
+let memoryScale = 1000;
+let scaleMemoryOnly = false;
+const scaleFloor = () => 1000;
+
+function journeyTier(maximum: number): number {
+  let decade = 1000;
+  while (maximum > decade * 5) decade *= 10;
+  return maximum <= decade ? decade : maximum <= decade * 2 ? decade * 2 : decade * 5;
+}
+function readOwnSimulationScale(): number {
+  if (typeof window === 'undefined') return 1000;
+  if (scaleMemoryOnly) return memoryScale;
+  try {
+    const stored = Number(window.localStorage.getItem(OWN_SCALE_KEY));
+    return Number.isFinite(stored) && stored >= 1000 && journeyTier(stored) === stored ? stored : 1000;
+  } catch { return memoryScale; }
+}
+function subscribeOwnSimulationScale(listener: () => void): () => void {
+  ownScaleListeners.add(listener);
+  const onStorage = (event: StorageEvent) => {
+    if (event.key === OWN_SCALE_KEY || event.key === null) {
+      scaleMemoryOnly = false;
+      listener();
+    }
+  };
+  window.addEventListener('storage', onStorage);
+  return () => { ownScaleListeners.delete(listener); window.removeEventListener('storage', onStorage); };
+}
+function rememberOwnSimulationScale(value: number): void {
+  const next = Math.max(readOwnSimulationScale(), value);
+  if (!Number.isFinite(next) || next === readOwnSimulationScale()) return;
+  memoryScale = next;
+  try { window.localStorage.setItem(OWN_SCALE_KEY, String(next)); scaleMemoryOnly = false; }
+  catch { scaleMemoryOnly = true; }
+  ownScaleListeners.forEach(listener => listener());
+}
+export function resetOwnSimulationScale(): void {
+  memoryScale = 1000;
+  try { window.localStorage.removeItem(OWN_SCALE_KEY); scaleMemoryOnly = false; }
+  catch { scaleMemoryOnly = true; }
+  ownScaleListeners.forEach(listener => listener());
+}
 
 /** §389: decorative reading-derived geometry; the consumer supplies the text alternative. */
 function ReadingsLine({ reads }: { reads: readonly Pick<DanielRead, 'asOf' | 'localAmountZmwMinor'>[] }) {
@@ -148,7 +195,7 @@ function LegacyLine({ entries, lastVisit, settle = 1, visitLabel = 'Your last vi
 type ChartProps =
   | { mode?: 'readings'; reads: readonly Pick<DanielRead, 'asOf' | 'localAmountZmwMinor'>[] }
   | ({ mode: 'legacy' } & LegacyProps)
-  | { mode: 'step'; series: readonly BalanceSample[]; events: readonly ChartEvent[]; lastVisit?: number | null; settle?: number; example?: boolean; heroAmount?: number };
+  | { mode: 'step'; series: readonly BalanceSample[]; events: readonly ChartEvent[]; lastVisit?: number | null; settle?: number; example?: boolean; heroAmount?: number; ownSimulation?: readonly Pick<PositionEntry, 'id' | 'balanceBefore' | 'balanceAfter'>[] };
 
 type LegacyProps = { entries: PositionEntry[]; lastVisit: number | null; settle?: number; visitLabel?: string };
 
@@ -159,12 +206,20 @@ export function ExampleLineChart(props: ChartProps) {
   return <ReadingsLine reads={props.reads} />;
 }
 
-function ActivityLine({ series, events, lastVisit = null, settle = 1, example = false }: Extract<ChartProps, { mode: 'step' }>) {
+function ActivityLine({ series, events, lastVisit = null, settle = 1, example = false, ownSimulation }: Extract<ChartProps, { mode: 'step' }>) {
+  const fixedOwn = !example && ownSimulation !== undefined;
+  const storedScale = useSyncExternalStore(subscribeOwnSimulationScale, fixedOwn ? readOwnSimulationScale : scaleFloor, scaleFloor);
+  const maximum = fixedOwn ? ownSimulation.reduce((high, entry) => Math.max(high,
+    Number.isFinite(entry.balanceBefore) ? entry.balanceBefore : 0,
+    Number.isFinite(entry.balanceAfter) ? entry.balanceAfter : 0), 1000) : 1000;
+  const journeyScale = Math.max(storedScale, journeyTier(maximum));
+  useEffect(() => { if (fixedOwn) rememberOwnSimulationScale(journeyScale); }, [fixedOwn, journeyScale]);
   const plot = useRef<HTMLDivElement>(null);
   const listId = useId();
   const [size, setSize] = useState({ plot: 300, screen: 1440, gutter: 12 });
   const [opened, setOpened] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [windowEnd, setWindowEnd] = useState(series.length - 1);
   const [touchHint, setTouchHint] = useState(false);
   const [hintDismissed, setHintDismissed] = useState(false);
   const touchStart = useRef<{ x: number; y: number } | null>(null);
@@ -195,10 +250,23 @@ function ActivityLine({ series, events, lastVisit = null, settle = 1, example = 
     if (plot.current) observer?.observe(plot.current);
     return () => { window.removeEventListener('resize', measure); observer?.disconnect(); };
   }, []);
-  if (!series.length || series.some(point => !Number.isFinite(point.value) || !Number.isFinite(Date.parse(point.at)))) {
+  if (!series.length || series.some(point => !Number.isFinite(Date.parse(point.at)) || (!fixedOwn && !Number.isFinite(point.value)))) {
+    throw new RangeError('ExampleLineChart needs non-empty finite readings');
+  }
+  if (fixedOwn && ownSimulation.length !== series.length) {
     throw new RangeError('ExampleLineChart needs non-empty finite readings');
   }
   const firstDeposit = events.find(event => event.kind === 'deposit');
+  const cards = [...events].filter(event => event.kind !== 'reading').sort((a, b) => b.at - a.at || events.indexOf(b) - events.indexOf(a));
+  const selectedIndex = Math.max(0, cards.findIndex(event => event.id === selectedId));
+  const selected = cards[selectedIndex];
+  const capacity = size.plot >= 768 ? 8 : size.plot >= 240 ? 4 : 2;
+  const selectedRealIndex = fixedOwn ? ownSimulation.findIndex(entry => entry.id === selected?.id) : -1;
+  let end = Math.min(series.length - 1, Math.max(0, windowEnd));
+  let start = Math.max(0, end - capacity + 1);
+  // Resize and newly appended entries keep the real selected event in view.
+  if (selectedRealIndex < start && selectedRealIndex >= 0) { start = selectedRealIndex; end = Math.min(series.length - 1, start + capacity - 1); }
+  else if (selectedRealIndex > end) { end = selectedRealIndex; start = Math.max(0, end - capacity + 1); }
   const firstIndex = series.findIndex(point => lastVisit !== null && Date.parse(point.at) > lastVisit);
   const visitIndex = lastVisit === null ? -1 : firstIndex < 0 ? series.length : firstIndex;
   const slots = series.length + (lastVisit === null ? 0 : 1);
@@ -207,28 +275,36 @@ function ActivityLine({ series, events, lastVisit = null, settle = 1, example = 
   const x = (index: number) => slots <= 1 ? gutter : gutter + index / (slots - 1) * (300 - gutter * 2);
   const seen = series.filter(point => lastVisit !== null && Date.parse(point.at) <= lastVisit).at(-1)?.value ?? 0;
   const values = series.map(point => lastVisit !== null && Date.parse(point.at) > lastVisit ? seen + (point.value - seen) * settle : point.value);
-  // Match reading-derived padding, without a zero floor or fabricated initial balance.
+  // The unopted step modes retain their reading-derived domain exactly.
   const scale = Math.max(...series.map(point => Math.abs(point.value)), 1);
   const low = Math.min(...series.map(point => point.value / scale), ...(lastVisit === null ? [] : [seen / scale]));
   const high = Math.max(...series.map(point => point.value / scale), ...(lastVisit === null ? [] : [seen / scale]));
   const padding = high === low ? Math.max(Math.abs(low) * 0.1, 1 / scale) : (high - low) * 0.1;
-  const y = (value: number) => 94 - (value / scale - low + padding) / (high - low + padding * 2) * 88;
-  const points = series.map((point, index) => ({ ...point, x: x(index + (visitIndex >= 0 && index >= visitIndex ? 1 : 0)), y: y(values[index]) }));
-  const path = points.map((point, index) => index === 0 ? `M ${point.x} ${point.y}` : `H ${point.x} V ${point.y}`).join(' ');
+  const y = (value: number) => fixedOwn ? 94 - value / journeyScale * 88 : 94 - (value / scale - low + padding) / (high - low + padding * 2) * 88;
+  const allPoints = series.map((point, index) => ({ ...point, x: fixedOwn ? 300 - gutter - (end - index) * (300 - 2 * gutter) / capacity : x(index + (visitIndex >= 0 && index >= visitIndex ? 1 : 0)), y: y(values[index]) }));
+  const points = fixedOwn ? allPoints.slice(start, end + 1) : allPoints;
+  const boundary = fixedOwn ? ownSimulation[start].balanceBefore : 0;
+  const rangeValues = fixedOwn ? [boundary, ...ownSimulation.slice(start, end + 1).map(entry => entry.balanceBefore), ...series.slice(start, end + 1).map(point => point.value), ...values.slice(start, end + 1)] : [];
+  const fallback = fixedOwn && (!Number.isFinite(journeyScale) || rangeValues.some(value => value < 0 || !Number.isFinite(value)));
+  const path = fixedOwn
+    ? `M ${gutter} ${y(boundary)} ${points.map(point => `H ${point.x} V ${point.y}`).join(' ')}`
+    : points.map((point, index) => index === 0 ? `M ${point.x} ${point.y}` : `H ${point.x} V ${point.y}`).join(' ');
   const occurrences = new Map<number, number>();
-  const located = events.filter(event => event.kind !== 'reading').map(event => {
+  const allLocated = events.filter(event => event.kind !== 'reading').map(event => {
     const occurrence = occurrences.get(event.at) ?? 0;
     occurrences.set(event.at, occurrence + 1);
-    const point = points.filter(point => Date.parse(point.at) === event.at)[occurrence];
+    const ownIndex = fixedOwn ? ownSimulation.findIndex(entry => entry.id === event.id) : -1;
+    const point = fixedOwn ? allPoints[ownIndex] : allPoints.filter(point => Date.parse(point.at) === event.at)[occurrence];
     if (!point) throw new RangeError('ExampleLineChart needs non-empty finite readings');
     return { ...event, x: (point.x / 300) * size.plot, y: point.y };
   });
+  const visibleIds = fixedOwn ? new Set(ownSimulation.slice(start, end + 1).map(entry => entry.id)) : null;
+  const located = visibleIds ? allLocated.filter(event => visibleIds.has(event.id)) : allLocated;
   const groups = mergeDots(located);
-  const cards = [...events].filter(event => event.kind !== 'reading').sort((a, b) => b.at - a.at || events.indexOf(b) - events.indexOf(a));
-  const selectedIndex = Math.max(0, cards.findIndex(event => event.id === selectedId));
-  const selected = cards[selectedIndex];
   const noChange = !example && lastVisit !== null && !cards.some(event => event.at > lastVisit);
-  const labels = example || lastVisit === null ? [] : placeLabels(selectLabels(located, lastVisit, size.screen), size.plot);
+  const labelAnchor = fixedOwn ? located.filter(event => lastVisit !== null && event.at > lastVisit).at(-1) : null;
+  const labelInputs = selectLabels(allLocated, lastVisit, size.screen);
+  const labels = example || lastVisit === null ? [] : placeLabels(fixedOwn ? (labelAnchor ? labelInputs.map(label => ({ ...label, id: labelAnchor.id, x: labelAnchor.x })) : []) : labelInputs, size.plot);
   const summaryVisible = labels.length > 0 && size.screen > 360;
   const since = (event: ChartEvent) => lastVisit !== null && event.at > lastVisit && !summaryVisible;
   const eventText = new Map(cards.map(event => [event.id, activityText(event, firstDeposit?.id, example, since(event))]));
@@ -238,20 +314,28 @@ function ActivityLine({ series, events, lastVisit = null, settle = 1, example = 
   const listEvents = events.filter(event => event.kind !== 'reading' || event.suffix !== ' · shown above');
   const move = (offset: number) => {
     const next = cards[selectedIndex + offset];
-    if (next) { setSelectedId(next.id); setHintDismissed(true); }
+    if (next) {
+      setSelectedId(next.id); setHintDismissed(true);
+      if (fixedOwn) {
+        const q = ownSimulation.findIndex(entry => entry.id === next.id);
+        setWindowEnd(q < start ? Math.min(series.length - 1, q + capacity - 1) : q > end ? q : end);
+      }
+    }
   };
   const selectedPoint = located.find(event => event.id === selected?.id);
   return (
-    <div className={home.visualiser} data-testid="example-line-chart">
+    <div className={home.visualiser} data-testid="example-line-chart" data-vis-scale-state={fixedOwn ? fallback ? 'activity-only' : 'plot' : undefined} data-vis-scale-start={fixedOwn ? start : undefined} data-vis-scale-end={fixedOwn ? end : undefined} data-vis-scale-slots={fixedOwn ? capacity : undefined} data-vis-scale-boundary={fixedOwn ? boundary : undefined}>
       <div ref={plot} className={home.visualiserPlot}>
+        {fallback ? <p data-testid="vis-scale-fallback">{VIS_SCALE_COPY.fallback}</p> : <>
         <svg className={home.visualiserSvg} aria-hidden="true" viewBox="0 0 300 100" preserveAspectRatio="none" focusable="false">
-          <path className={home.visualiserWash} data-chart-wash d={`${path} V 100 H ${points[0].x} Z`} />
+          <path className={home.visualiserWash} data-chart-wash d={`${path} V 100 H ${fixedOwn ? gutter : points[0].x} Z`} />
           <path d={path} fill="none" stroke="currentColor" strokeWidth="2" vectorEffect="non-scaling-stroke" />
-          {points.map((point, index) => <g key={index} transform={`translate(${point.x} ${point.y})`} data-series-at={point.at} data-series-value={point.value} data-series-y={point.y} data-series-currency={point.currency} />)}
+          {points.map((point, index) => <g key={index} transform={`translate(${point.x} ${point.y})`} data-series-at={point.at} data-series-value={point.value} data-series-y={point.y} data-series-currency={point.currency} data-event-id={fixedOwn ? ownSimulation[start + index].id : undefined} />)}
         </svg>
         {groups.map(group => <span key={group.events[0].id} aria-hidden="true" data-testid="chart-event-dot" className={home.visualiserPoint} style={{ left: `${group.x / size.plot * 100}%`, top: `${group.events[0].y}%` }} />)}
-        {!noChange && selectedPoint ? <span aria-hidden="true" data-chart-selected className={home.visualiserLatest} style={{ left: `${selectedPoint.x / size.plot * 100}%`, top: `${selectedPoint.y}%` }} /> : null}
+        {(fixedOwn || !noChange) && selectedPoint ? <span aria-hidden="true" data-chart-selected data-event-id={fixedOwn ? selected?.id : undefined} className={home.visualiserLatest} style={{ left: `${selectedPoint.x / size.plot * 100}%`, top: `${selectedPoint.y}%` }} /> : null}
         {labels.map(label => <span key={label.id} className={home.visualiserLabel} data-chart-label data-placement={label.placement} style={{ left: `${label.left / size.plot * 100}%`, maxWidth: `${label.width}px`, top: `${located.find(event => event.id === label.id)?.y ?? 50}%`, transform: label.placement === 'below' ? `translateY(${1 + label.lane * 3}rem)` : undefined }}>{label.text}</span>)}
+        </>}
       </div>
       {!opened && selected ? <div
         className={home.activityStack} data-testid="activity-stack" data-depth={cards.length > 1 ? 'stack' : 'single'}
