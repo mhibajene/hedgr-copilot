@@ -317,7 +317,7 @@ for (const [currency, rate, localFive, localThree] of [
     const storageBeforeDefault = await financialStorage(page);
     await page.goto('/deposit');
     await page.getByTestId('deposit-amount').fill('100');
-    await expect(page.getByTestId('deposit-conversion-preview')).toContainText('shows 100 ZMW as +$5.00');
+    await expect(page.getByTestId('deposit-conversion-preview')).toContainText('shows ZMW 100.00 as +$5.00');
     await page.goto('/withdraw');
     await expect(page.getByTestId('local-balance')).toHaveText('≈ ZMW 60.00');
     await page.goto('/deposit?journey=class-a-val-002&scenario=unavailable-data');

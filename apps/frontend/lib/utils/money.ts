@@ -13,14 +13,14 @@
  * ISO 4217 currency code for clarity.
  *
  * @param amount - The numeric amount to format
- * @param currencyCode - The ISO 4217 currency code (e.g., "ZMW", "NGN", "KES")
+ * @param currencyCode - Optional ISO 4217 prefix; omit when the caller supplies the currency label
  * @returns Formatted string, e.g., "ZMW 24,850.00"
  */
-export function formatLocalCurrency(amount: number, currencyCode: string): string {
+export function formatLocalCurrency(amount: number, currencyCode = ''): string {
   const formattedNumber = new Intl.NumberFormat('en-US', {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   }).format(amount);
 
-  return `${currencyCode} ${formattedNumber}`;
+  return currencyCode ? `${currencyCode} ${formattedNumber}` : formattedNumber;
 }

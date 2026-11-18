@@ -1,6 +1,7 @@
 'use client';
 
 import { useSyncExternalStore } from 'react';
+import { formatLocalCurrency } from '../utils/money';
 import { DANIEL_FIXTURE_RATE_ZMW_PER_USD } from '../engine/daniel-read';
 
 export const SIMULATION_DISPLAY_CURRENCY_KEY = 'hedgr.simulation.display-currency';
@@ -29,11 +30,7 @@ export function getSimulationDisplayRate(currency: SimulationDisplayCurrency): n
 export const SIMULATION_DISPLAY_ESTIMATE_CAPTION = 'Example figure, not a quote';
 
 export function formatSimulationDisplayFigure(usd: number, currency: SimulationDisplayCurrency): string {
-  const amount = (usd * getSimulationDisplayRate(currency)).toLocaleString('en-US', {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  });
-  return `≈ ${currency} ${amount}`;
+  return `≈ ${formatLocalCurrency(usd * getSimulationDisplayRate(currency), currency)}`;
 }
 
 export function formatSimulationDisplayEstimate(usd: number, currency: SimulationDisplayCurrency): string {

@@ -1,6 +1,7 @@
 'use client';
 
 import { PublicTxStatus, type TxLifecycle } from '../tx';
+import { formatLocalCurrency } from '../utils/money';
 
 /**
  * HOME-EXPERIENCE-001 T3 (decision 7): the one approved local value — the time
@@ -121,5 +122,5 @@ export function formatChangeCount(count: number): string {
 }
 
 export function formatUsd(amount: number): string {
-  return `$${Math.abs(amount).toFixed(2)}`;
+  return `$${formatLocalCurrency(Math.abs(amount))}`;
 }

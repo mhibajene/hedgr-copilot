@@ -331,7 +331,7 @@ test('normalizes new synthetic ZMW deposit rows at the Engine fixture without ch
   await page.goto('/deposit?journey=class-a-val-002');
   await expect(page.getByTestId('deposit-fx-block')).toHaveText('Simulated example rate: 1 USD = 27.00 ZMW');
   await page.getByTestId('deposit-amount').fill(String(DANIEL_FIXTURE_RATE_ZMW_PER_USD * 5));
-  await expect(page.getByTestId('deposit-balance-change')).toContainText('shows 135 ZMW as +$5.00');
+  await expect(page.getByTestId('deposit-balance-change')).toContainText('shows ZMW 135.00 as +$5.00');
   await page.getByRole('button', { name: 'Confirm', exact: true }).click();
   await expect(page.getByTestId('deposit-confirmation-region')).toContainText('You added $5.00 to your simulated balance');
   const records = await page.evaluate(() => JSON.parse(localStorage.getItem('hedgr:ledger')!).transactions);
@@ -342,7 +342,7 @@ test('normalizes new synthetic ZMW deposit rows at the Engine fixture without ch
   // The default (non-journey) Deposit keeps the backend/fixed 20 boundary.
   await page.goto('/deposit');
   await page.getByTestId('deposit-amount').fill('100');
-  await expect(page.getByTestId('deposit-conversion-preview')).toContainText('shows 100 ZMW as +$5.00');
+  await expect(page.getByTestId('deposit-conversion-preview')).toContainText('shows ZMW 100.00 as +$5.00');
   // Daniel is unchanged by the new row.
   await gotoDaniel(page, '/dashboard-synthetic-journey');
   await expect(page.getByTestId('daniel-read-figure')).toHaveText(FIGURE);

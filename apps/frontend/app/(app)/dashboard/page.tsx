@@ -401,13 +401,13 @@ export default function DashboardPage() {
         <p className={home.available}>
           {syntheticJourneyActive ? "Available in simulation:" : "Available now:"}{" "}
           <span className="font-medium text-hedgr-dark tabular-nums">
-            ${available.toFixed(2)}
+            ${formatLocalCurrency(available)}
           </span>
           {pending !== 0 ? (
             <span className="text-hedgr-400">
               {" "}
               · Pending {pending > 0 ? "+" : ""}
-              {pending.toFixed(2)} {currency}
+              {formatLocalCurrency(pending)} {currency}
             </span>
           ) : null}
         </p>
@@ -983,7 +983,7 @@ export default function DashboardPage() {
                     }`}
                   >
                     {tx.type === "DEPOSIT" ? "+" : "-"}$
-                    {tx.amountUSD.toFixed(2)}
+                    {formatLocalCurrency(tx.amountUSD)}
                     {sourceAmounts.has(tx.id) ? <span className="block text-sm font-normal">{sourceAmounts.get(tx.id)}</span> : null}
                   </p>
                 </li>

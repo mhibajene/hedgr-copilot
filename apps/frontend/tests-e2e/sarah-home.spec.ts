@@ -199,8 +199,8 @@ test('Sarah Home uses locked copy and no funding claims', async ({ page }) => {
   for (const route of ROUTES) {
     await page.goto(routeFor(route)); await assertRead(page);
     await expect(page.locator('#dashboard-sarah-label')).toHaveText(COPY.heading); await expect(page.getByTestId('sarah-read-figure')).toHaveText(COPY.figure);
-    expect(await panel(page).evaluate(n => { const copy = n.cloneNode(true) as HTMLElement; copy.querySelector('[data-testid="example-line-chart"]')?.remove(); return copy.textContent; })).toBe(COPY.heading + COPY.figure + COPY.caption + COPY.date + COPY.card + '$1000.00 USD' + COPY.due + COPY.rate + COPY.limits);
-    expect(await page.getByTestId('sarah-fee-card').evaluate(n => { const copy = n.cloneNode(true) as HTMLElement; copy.querySelector('[data-testid="example-line-chart"]')?.remove(); return copy.textContent; })).toBe(COPY.card + '$1000.00 USD' + COPY.due + COPY.rate + COPY.limits);
+    expect(await panel(page).evaluate(n => { const copy = n.cloneNode(true) as HTMLElement; copy.querySelector('[data-testid="example-line-chart"]')?.remove(); return copy.textContent; })).toBe(COPY.heading + COPY.figure + COPY.caption + COPY.date + COPY.card + '$1,000.00 USD' + COPY.due + COPY.rate + COPY.limits);
+    expect(await page.getByTestId('sarah-fee-card').evaluate(n => { const copy = n.cloneNode(true) as HTMLElement; copy.querySelector('[data-testid="example-line-chart"]')?.remove(); return copy.textContent; })).toBe(COPY.card + '$1,000.00 USD' + COPY.due + COPY.rate + COPY.limits);
     await expect(page.getByText(COPY.rate, { exact: true })).toHaveCount(1);
     await expect(page.getByText(COPY.limits, { exact: true })).toBeVisible();
     const text = (await panel(page).textContent())!.replace(COPY.limits, '');

@@ -269,14 +269,14 @@ function DepositPageContent() {
   const confirmationReceipt = (
         <div data-simulation-receipt className="space-y-4" data-testid="deposit-confirmation-region">
           <ReceiptCard
-            headline={`You added $${usdToCredit.toFixed(2)} to your simulated balance`}
+            headline={`You added $${formatLocalCurrency(usdToCredit)} to your simulated balance`}
             headlineTestId="deposit-confirmed"
             time={formatRecordedTime(recordedAt ?? Date.now())}
             rows={[
-              ...(amountLocalNum !== null ? [{ label: 'Amount', value: receiptSource?.source_local_amount !== undefined && receiptSource.source_local_currency ? formatLocalCurrency(receiptSource.source_local_amount, receiptSource.source_local_currency) : `${receiptQuote} ${amountLocalNum.toFixed(2)}` }] : []),
-              { label: 'Shown as', value: `+$${usdToCredit.toFixed(2)}` },
+              ...(amountLocalNum !== null ? [{ label: 'Amount', value: receiptSource?.source_local_amount !== undefined && receiptSource.source_local_currency ? formatLocalCurrency(receiptSource.source_local_amount, receiptSource.source_local_currency) : formatLocalCurrency(amountLocalNum, receiptQuote) }] : []),
+              { label: 'Shown as', value: `+$${formatLocalCurrency(usdToCredit)}` },
               ...(syntheticJourneyActive && receiptRate !== null ? [{ label: 'Example rate', value: `1 USD = ${receiptRate.toFixed(2)} ${receiptQuote}` }] : []),
-              ...(balanceBefore !== null ? [{ label: 'Balance now ', value: <b>${(balanceBefore + usdToCredit).toFixed(2)}</b> }] : []),
+              ...(balanceBefore !== null ? [{ label: 'Balance now ', value: <b>${formatLocalCurrency(balanceBefore + usdToCredit)}</b> }] : []),
               { label: 'Real money moved', value: 'None' },
             ]}
           />
@@ -449,9 +449,9 @@ function DepositPageContent() {
                 Simulated balance change
               </p>
               <p>
-                The simulation shows {amountLocalNum.toFixed(0)} {quote} as{' '}
+                The simulation shows {formatLocalCurrency(amountLocalNum, quote)} as{' '}
                 <strong className="tabular-nums text-hedgr-800">
-                  +${usdPreview.toFixed(2)}
+                  +${formatLocalCurrency(usdPreview)}
                 </strong>
                 .
               </p>
@@ -463,7 +463,7 @@ function DepositPageContent() {
             </div>
           ) : (
             <>
-              FX Preview: <strong>${usdPreview.toFixed(2)}</strong>
+              FX Preview: <strong>${formatLocalCurrency(usdPreview)}</strong>
             </>
           )
         ) : (

@@ -125,7 +125,7 @@ for (const [width, scale] of [[1440, 1], [390, 1], [320, 2]]) {
     await expect(hero.getByTestId('local-balance-figure')).toHaveText('≈ ZMW 5,999.94');
     await expect(hero.getByTestId('local-balance-caption')).toHaveText('Example figure, not a quote');
     await expect(hero).not.toContainText(/6,000|6000|1000/);
-    await expect(page.getByTestId('sarah-fee-card')).toContainText('$1000.00');
+    await expect(page.getByTestId('sarah-fee-card')).toContainText('$1,000.00');
     await expect(page.getByTestId('sarah-fee-card')).toContainText('This read does not establish whether Sarah can pay the fee.');
   });
   test(`RELEASE-GATE-FIX-001 T7 example counts ${width}`, async ({ page }) => {

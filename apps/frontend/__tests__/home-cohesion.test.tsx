@@ -58,7 +58,7 @@ test('T1 each-figure-renders-once on all three real Homes', async () => {
     const main = view.container.querySelector('main')!.cloneNode(true) as HTMLElement;
     main.querySelector('label[for="dashboard-example-picker"]')?.parentElement?.remove();
     main.querySelectorAll('details:not([open]), .sr-only, [aria-hidden="true"]').forEach(n => n.remove());
-    const usd = example === 'sarah' ? '$1000.00' : '$800.00';
+    const usd = example === 'sarah' ? '$1,000.00' : '$800.00';
     const local = example === 'sarah' ? '≈ ZMW 5,999.94' : '≈ ZMW 21,600.00';
     for (const figure of [usd, local, RATE]) expect(main.textContent!.split(figure).length - 1, `${example}: ${figure}`).toBe(1);
   }
@@ -123,7 +123,7 @@ test('T7 one-name-per-example excludes the complete unchanged picker', async () 
 });
 test('T8 single-formatUsd feeds all real heroes and shared UTC date formatting', async () => {
   expect(source('lib/utils/money.ts')).not.toMatch(/export function formatUsd/);
-  expect(lastVisit.formatUsd(1000)).toBe('$1000.00');
+  expect(lastVisit.formatUsd(1000)).toBe('$1,000.00');
   const heroPath = resolve(__dirname, '../app/(app)/dashboard/HomeHero.tsx');
   expect(existsSync(heroPath), 'shared canonical hero is absent').toBe(true);
   expect(source('app/(app)/dashboard/HomeHero.tsx')).toMatch(/import.*formatUsd.*last-visit/);

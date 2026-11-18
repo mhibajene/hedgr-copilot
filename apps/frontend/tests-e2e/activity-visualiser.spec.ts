@@ -82,7 +82,7 @@ for (const [width, scale] of [[1440, 1], [390, 1], [320, 2]]) test(`V7 V8 V10 V1
         'First deposit · 12 Jun · +$500.00', 'Deposit · 14 Aug · +$300.00', '≈ ZMW 19,600.00 · 9 Sep · example rate 24.5', '≈ ZMW 23,600.00 · 25 Sep · example rate 29.5',
       ] : ['First deposit · 14 Apr · +ZMW 4,000.00', 'Deposit · 21 Jul · +ZMW 2,000.00']);
       const panel = page.getByTestId(`dashboard-${example}-read`); const text = await panel.innerText();
-      for (const amount of example === 'daniel' ? ['$500.00', '$300.00', '$800.00'] : ['ZMW 4,000.00', 'ZMW 2,000.00', '$1000.00']) expect(text.split(amount).length - 1).toBe(1);
+      for (const amount of example === 'daniel' ? ['$500.00', '$300.00', '$800.00'] : ['ZMW 4,000.00', 'ZMW 2,000.00', '$1,000.00']) expect(text.split(amount).length - 1).toBe(1);
       const outsideHero = await panel.evaluate(n => { const copy = n.cloneNode(true) as HTMLElement; copy.querySelector('[data-testid="sarah-read-figure"]')?.remove(); return copy.textContent; });
       expect(outsideHero).not.toMatch(/6,000|K\d|grow|rising|increase|progress|towards|funded|enough|cover|remaining|left to|% of|→/i);
       expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(1);

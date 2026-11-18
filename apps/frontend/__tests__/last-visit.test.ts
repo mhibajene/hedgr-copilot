@@ -112,7 +112,7 @@ describe('formatting', () => {
     expect(formatShortDate(T0)).toBe('20 Sep');
     expect(formatDateLine(T0)).toBe('Sunday 20 September');
     expect(formatUsd(-2)).toBe('$2.00');
-    expect(formatUsd(1234.5)).toBe('$1234.50');
+    expect(formatUsd(1234.5)).toBe('$1,234.50');
   });
 
   test('change counts', () => {

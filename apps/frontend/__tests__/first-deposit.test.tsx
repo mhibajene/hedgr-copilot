@@ -57,7 +57,7 @@ test('V19 deposit-amounts-once-no-total, V22 daniel-list-exact, V24 sarah-two-zm
   for (const id of ['daniel', 'sarah'] as const) {
     const view = example(id); fireEvent.click(screen.getByRole('button', { name: 'All changes · example dates' }));
     expect(within(screen.getByTestId('chart-event-list')).getAllByRole('listitem').map(row => row.textContent)).toEqual(id === 'daniel' ? DANIEL_ROWS : SARAH_ROWS);
-    for (const amount of id === 'daniel' ? ['$500.00', '$300.00', '$800.00'] : ['ZMW 4,000.00', 'ZMW 2,000.00', '$1000.00']) expect(view.container.textContent!.split(amount).length - 1).toBe(1);
+    for (const amount of id === 'daniel' ? ['$500.00', '$300.00', '$800.00'] : ['ZMW 4,000.00', 'ZMW 2,000.00', '$1,000.00']) expect(view.container.textContent!.split(amount).length - 1).toBe(1);
     expect(screen.getByTestId('chart-event-list').textContent).not.toMatch(/\$800|\$1000|total|towards|progress|→|%/i);
   }
 });

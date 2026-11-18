@@ -80,7 +80,7 @@ for(const [width,scale] of [[1440,1],[390,1],[320,2]])test(`HOME-SOFTHALO-RATESL
   await retained(page,kind,state);const launcher=page.getByRole('button',{name:'Currency context',exact:true});await expect(launcher).toHaveCount(kind==='sarah'?0:1);
   await expect(page.getByRole('heading',{name:'Currency context',exact:true})).toHaveCount(0);
   const before=await visibleText(page);once(before,MEANING,0);once(before,LIMIT,0);
-  const usdFigure=kind==='sarah'?'$1000.00':kind==='daniel'?'$800.00':'$480.00';
+  const usdFigure=kind==='sarah'?'$1,000.00':kind==='daniel'?'$800.00':'$480.00';
   once(before,usdFigure);
   const localRate={ZMW:27,KES:130,NGN:1500,GHS:15,PHP:56}[currency]!;
   const homeLocal=kind==='sarah'?'≈ ZMW 5,999.94':`≈ ${currency} ${((kind==='sarah'?1000:kind==='daniel'?800:480)*localRate).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}`;

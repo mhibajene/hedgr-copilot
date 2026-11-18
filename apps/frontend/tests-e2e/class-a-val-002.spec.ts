@@ -440,7 +440,7 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
     '$5.00'
   );
   await expect(page.getByTestId('deposit-balance-change')).toContainText(
-    `shows ${ZMW_FOR_USD_5} ZMW as +$5.00`
+    `shows ZMW ${Number(ZMW_FOR_USD_5).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} as +$5.00`
   );
   await depositConfirm.click();
   await expect(page.getByTestId('deposit-confirmation-region')).toContainText(

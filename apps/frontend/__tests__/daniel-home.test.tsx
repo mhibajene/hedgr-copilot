@@ -630,7 +630,7 @@ test("Daniel change card consumes Engine explanations verbatim without a compute
     localAmountZmwMinor: [1500000,750000,2250000][index], localDisplay: `ENGINE FIGURE ${index}`,
     declaredHolding: {...read.declaredHolding, amount: 1234.56}, explanation: {holding:`ENGINE HOLDING ${index}`,rateAssumption:`ENGINE RATE ${index}`}}));
   homeMocks.danielOverride = homeMocks.timelineOverride[2]; await renderDaniel('journey');
-  expect(screen.getByTestId('daniel-read-figure').textContent).toBe('$1234.56 USD');
+  expect(screen.getByTestId('daniel-read-figure').textContent).toBe('$1,234.56 USD');
   expect(screen.getByTestId('daniel-read-caption').textContent).toBe('≈ ZMW 33,333.12 Example figure, not a quote');
   expect(screen.getAllByTestId('daniel-observation').map(n=>n.textContent)).toEqual(['First deposit · 12 Jun · +$500.00', 'Deposit · 14 Aug · +$300.00', '≈ ZMW 15,000.00 · 1 Jan · example rate 24.5', '≈ ZMW 7,500.00 · 3 Jan · example rate 29.5']);
   expect(screen.getByTestId('daniel-read-rate').textContent).toBe('ENGINE RATE 2');

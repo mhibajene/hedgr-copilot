@@ -151,7 +151,7 @@ function ThreadCardContent({ tx, completed, sourceAmount }: { tx: TxLifecycle; c
       </span>
       <span className={finish.threadCardAmount}>
         <strong data-testid={`activity-delta-${tx.type.toLowerCase()}`}>
-          {tx.type === 'DEPOSIT' ? '+' : '−'}${tx.amountUSD.toFixed(2)}
+          {tx.type === 'DEPOSIT' ? '+' : '−'}${formatLocalCurrency(tx.amountUSD)}
         </strong>
         {sourceAmount ? <small className="block text-sm font-normal">{sourceAmount}</small> : null}
       </span>
@@ -253,14 +253,14 @@ function ActivityRow({
             className={`tabular-nums ${finish.eventDelta}`}
             data-testid={`activity-delta-${tx.type.toLowerCase()}`}
           >
-            {tx.type === 'DEPOSIT' ? '+' : '-'}${tx.amountUSD.toFixed(2)}
+            {tx.type === 'DEPOSIT' ? '+' : '-'}${formatLocalCurrency(tx.amountUSD)}
           </div>
           {sourceAmount ? <span className="block text-sm font-normal">{sourceAmount}</span> : null}
           {!sourceAmount && !syntheticJourneyActive &&
           tx.amountZMW !== undefined &&
           tx.amountZMW > 0 ? (
             <div className="text-sm tabular-nums text-hedgr-500">
-              {tx.amountZMW.toFixed(2)} ZMW
+              {formatLocalCurrency(tx.amountZMW, 'ZMW')}
             </div>
           ) : null}
         </div>
@@ -286,7 +286,7 @@ function ActivityRow({
               className={baseline.balanceAfter}
               data-testid={`activity-result-${tx.type.toLowerCase()}`}
             >
-              <span>Balance after</span>{' '}<span>${resultingBalance.toFixed(2)}</span>
+              <span>Balance after</span>{' '}<span>${formatLocalCurrency(resultingBalance)}</span>
             </div>
           ) : null}
     </button>
@@ -508,7 +508,7 @@ export default function ActivityPage() {
       <header><h1>Activity</h1><p className="mt-1 text-sm text-hedgr-600" data-testid="activity-simulation-context">Follow the balance</p></header>
       <section className={`${wallet.position} ${wallet.activityBalance} ${baseline.balance}`} data-testid="activity-balance-reconciliation" aria-labelledby="activity-balance-reconciliation-heading">
         <h2 id="activity-balance-reconciliation-heading">Simulated balance</h2>
-        <strong><span data-testid="activity-reconciliation-remaining">${syntheticBalanceReconciliation.remaining.toFixed(2)}</span> <small>USD</small></strong>
+        <strong><span data-testid="activity-reconciliation-remaining">${formatLocalCurrency(syntheticBalanceReconciliation.remaining)}</span> <small>USD</small></strong>
         <p className="text-xs text-hedgr-500">From completed simulated entries only.</p>
       </section>
       {transactions.length > 0 ? <div className={wallet.filters} aria-label="Activity filters">
@@ -518,7 +518,7 @@ export default function ActivityPage() {
         {threadDays.map(day => <li key={day.key} className={finish.threadDay}>
           <div className={finish.threadDayHeader}>
             <h2 data-testid="activity-day-header">{day.label}</h2>
-            {day.balance !== undefined ? <span data-testid="activity-day-balance">Balance ${day.balance.toFixed(2)}</span> : null}
+            {day.balance !== undefined ? <span data-testid="activity-day-balance">Balance ${formatLocalCurrency(day.balance)}</span> : null}
           </div>
           <ul className={finish.threadEntries}>
           {day.txs.map(tx => {
@@ -535,9 +535,9 @@ export default function ActivityPage() {
               <div data-testid="research-activity-detail">
                 <p>{label} detail · {formatTime(tx.createdAt)}</p>
                 {completed ? <dl>
-                  <div><dt>Before</dt><dd>${before!.toFixed(2)}</dd></div>
-                  <div><dt>{tx.type === 'DEPOSIT' ? 'Deposit' : 'Withdrawal'}</dt><dd>{tx.type === 'DEPOSIT' ? '+' : '−'}${tx.amountUSD.toFixed(2)}</dd></div>
-                  <div><dt>After</dt><dd>${after.toFixed(2)}</dd></div>
+                  <div><dt>Before</dt><dd>${formatLocalCurrency(before!)}</dd></div>
+                  <div><dt>{tx.type === 'DEPOSIT' ? 'Deposit' : 'Withdrawal'}</dt><dd>{tx.type === 'DEPOSIT' ? '+' : '−'}${formatLocalCurrency(tx.amountUSD)}</dd></div>
+                  <div><dt>After</dt><dd>${formatLocalCurrency(after)}</dd></div>
                 </dl> : <p>This event has no completed balance effect.</p>}
                 {tx.failureReason ? <p data-testid="research-activity-failure">{tx.failureReason}</p> : null}
                 {tx.note ? <p data-testid="research-activity-note">{tx.note}</p> : null}
@@ -595,25 +595,19 @@ export default function ActivityPage() {
               className={`tabular-nums text-hedgr-800 ${finish.reconciliationAmount}`}
               data-testid="activity-reconciliation-remaining"
             >
-              ${syntheticBalanceReconciliation.remaining.toFixed(2)}
+              ${formatLocalCurrency(syntheticBalanceReconciliation.remaining)}
             </span>
           </div>
           <p
             className="flex flex-wrap items-baseline gap-x-1.5 gap-y-1 text-xs text-hedgr-500"
-            aria-label={`Completed simulated changes: plus $${syntheticBalanceReconciliation.deposits.toFixed(
-              2
-            )} deposits, minus $${syntheticBalanceReconciliation.withdrawals.toFixed(
-              2
-            )} withdrawals, equals $${syntheticBalanceReconciliation.remaining.toFixed(
-              2
-            )} remaining`}
+            aria-label={`Completed simulated changes: plus $${formatLocalCurrency(syntheticBalanceReconciliation.deposits)} deposits, minus $${formatLocalCurrency(syntheticBalanceReconciliation.withdrawals)} withdrawals, equals $${formatLocalCurrency(syntheticBalanceReconciliation.remaining)} remaining`}
           >
             <span>From completed entries:</span>
             <span
               className="font-medium tabular-nums text-hedgr-600"
               data-testid="activity-reconciliation-deposits"
             >
-              +${syntheticBalanceReconciliation.deposits.toFixed(2)}
+              +${formatLocalCurrency(syntheticBalanceReconciliation.deposits)}
             </span>
             <span aria-hidden="true" className="text-hedgr-400">
               −
@@ -622,7 +616,7 @@ export default function ActivityPage() {
               className="font-medium tabular-nums text-hedgr-600"
               data-testid="activity-reconciliation-withdrawals"
             >
-              ${syntheticBalanceReconciliation.withdrawals.toFixed(2)}
+              ${formatLocalCurrency(syntheticBalanceReconciliation.withdrawals)}
             </span>
           </p>
         </section>
@@ -662,7 +656,7 @@ export default function ActivityPage() {
               <div className={finish.threadDayHeader}>
                 <h2 data-testid="activity-day-header">{day.label}</h2>
                 {day.balance !== undefined ? (
-                  <span data-testid="activity-day-balance">Balance ${day.balance.toFixed(2)}</span>
+                  <span data-testid="activity-day-balance">Balance ${formatLocalCurrency(day.balance)}</span>
                 ) : null}
               </div>
               <ul className={finish.threadEntries}>

@@ -168,7 +168,7 @@ describe('TxDetailModal', () => {
       '$5.00',
     );
     expect(screen.getByTestId('tx-detail-amount').textContent).toContain(
-      '100.00 ZMW',
+      'ZMW 100.00',
     );
   });
 });
