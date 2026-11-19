@@ -326,7 +326,7 @@ describe.each(["default", "journey"] as const)(
       if (route === "journey") {
         expect(sinceContext).toBeNull();
         const inclusion = Array.from(sinceCard.querySelectorAll("p")).find(
-          (node) => node.textContent === "This simulated withdrawal is included in the balance above."
+          (node) => node.textContent === "1 new simulated entry since your last visit. It's included in the balance above."
         );
         expect(inclusion).toBeDefined();
         expect(inclusion!.compareDocumentPosition(sinceAttribution!) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();

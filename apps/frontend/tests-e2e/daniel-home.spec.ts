@@ -558,7 +558,7 @@ test("Founder-locked copy and dates are character-exact across Daniel's example 
 });
 
 const LEGIBILITY = {
-  invariant: 'He made two deposits and none since. Each kwacha figure uses the example rate for its date.',
+  invariant: 'He made two deposits and none since. The chart below shows each kwacha figure, using the example rate for its date.',
   ownLimitation: 'This is what happened in your simulation. It doesn’t tell you what will happen next.',
   start: 'Practise with pretend money first. See what changes, and why.',
   currency: 'Shown in ZMW, Daniel’s currency',
@@ -671,7 +671,7 @@ test('Journey arrival announces current and prior simulated balances without a d
         expect(await status.ariaSnapshot()).toContain('Your simulated balance is now');
         // The visible summary still describes the transaction and has not been rewritten as S17.
         await expect(page.getByTestId('engine-posture-context')).toHaveCount(0);
-        await expect(page.getByTestId('dashboard-current-status')).toContainText(rising ? 'This simulated deposit is included in the balance above.' : 'This simulated withdrawal is included in the balance above.');
+        await expect(page.getByTestId('dashboard-current-status')).toContainText("1 new simulated entry since your last visit. It's included in the balance above.");
         await expect(page.getByTestId('example-line-chart').locator('[data-chart-label]')).toHaveText('1 change since your last visit');
       }
     }

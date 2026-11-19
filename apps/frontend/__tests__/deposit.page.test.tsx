@@ -590,7 +590,7 @@ describe('D-132 selected simulation deposit currency', () => {
     render(<DepositPage />);
     await act(async () => { await vi.advanceTimersByTimeAsync(350); });
     const code = currency === 'invalid' ? 'ZMW' : currency;
-    expect(screen.getByTestId('deposit-fx-block').textContent).toContain(`1 USD = ${rate.toFixed(2)} ${code}`);
+    expect(screen.getByTestId('deposit-fx-block').textContent).toContain(`1 USD = ${rate.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${code}`);
     fireEvent.change(screen.getByTestId('deposit-amount'), { target: { value: input } });
     expect(screen.getByTestId('deposit-balance-change').textContent).toContain(`shows ${code} ${Number(input).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} as +$${usd.toFixed(2)}`);
     expect(depositStateMocks.append).not.toHaveBeenCalled();
@@ -690,7 +690,7 @@ describe('§359 synthetic ZMW normalization at the Engine fixture', () => {
     stubJourney(currency);
     render(<DepositPage />);
     await act(async () => { await vi.advanceTimersByTimeAsync(350); });
-    expect(screen.getByTestId('deposit-fx-block').textContent).toContain(`1 USD = ${rate.toFixed(2)} ${currency}`);
+    expect(screen.getByTestId('deposit-fx-block').textContent).toContain(`1 USD = ${rate.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${currency}`);
     expect(screen.getByText(`Amount to simulate (${currency})`)).toBeTruthy();
     fireEvent.change(screen.getByTestId('deposit-amount'), { target: { value: input } });
     expect(screen.getByTestId('deposit-balance-change').textContent).toContain(`shows ${currency} ${Number(input).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} as +$5.00`);

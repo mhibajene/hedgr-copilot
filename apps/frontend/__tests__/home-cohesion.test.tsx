@@ -27,7 +27,8 @@ const source = (path: string) => readFileSync(resolve(__dirname, '..', path), 'u
 const digest = (value: string) => createHash('sha256').update(value).digest('hex');
 const ROUTES = ['/dashboard-synthetic-journey', '/dashboard?journey=class-a-val-002'];
 const OPTIONS = ['Your own simulation', "Daniel's reserve", "Sarah's course fee"];
-const RATE = 'Example rate: ZMW 27 per US dollar. Not a live rate.';
+const ENGINE_RATE = 'Example rate: ZMW 27 per US dollar. Not a live rate.';
+const RATE = 'Example rate: 1 USD = 27.00 ZMW. Not a live rate.';
 const NOW = Date.parse('2026-10-15T00:00:00Z');
 const row = (type: Tx['type'], amount: number, at: number, status: Tx['status'] = 'settled'): Tx => ({
   txn_ref: `${type}-${at}`, type, status, amount_usd: amount, amount_zmw: amount * 20, fx_rate: 20, created_at: at, updated_at: at,
@@ -61,7 +62,7 @@ test('T1 each-figure-renders-once on all three real Homes', async () => {
     main.querySelectorAll('details:not([open]), .sr-only, [aria-hidden="true"]').forEach(n => n.remove());
     const usd = example === 'sarah' ? '$1,000.00' : '$800.00';
     const local = example === 'sarah' ? '≈ ZMW 5,999.94' : '≈ ZMW 21,600.00';
-    for (const figure of [usd, local, RATE]) expect(main.textContent!.split(figure).length - 1, `${example}: ${figure}`).toBe(1);
+    for (const figure of [usd, local, example === 'own' ? RATE : ENGINE_RATE]) expect(main.textContent!.split(figure).length - 1, `${example}: ${figure}`).toBe(1);
   }
 });
 test('T2 shared-component-used-by-all-three and T3 caption-constant', async () => {
@@ -78,15 +79,18 @@ test('T2 shared-component-used-by-all-three and T3 caption-constant', async () =
     expect(contents).not.toMatch(/exampleHero|gridColumn|gridRow|function exampleDate|Example figure, not a quote/);
   }
 });
-test('T4 rate-line-matches-engine byte for byte', async () => {
+test('T4 own-simulation rate form is pinned separately from Engine prose', async () => {
   const path = resolve(__dirname, '../app/(app)/dashboard/RateLine.tsx');
   expect(existsSync(path), 'shared rate rendering is absent').toBe(true);
   const modulePath = '../app/(app)/dashboard/RateLine';
   const { formatExampleRateLine } = await import(modulePath);
   expect(formatExampleRateLine('ZMW', getSimulationDisplayRate('ZMW'))).toBe(RATE);
-  expect(DANIEL_HOME_READ.explanation.rateAssumption).toBe(RATE);
-  expect(SARAH_HOME_READ.explanation.rateAssumption).toBe(RATE);
+
   await home(); expect(screen.getByText(RATE, { exact: true })).toBeDefined();
+});
+test('T4 Engine rate prose remains byte-identical for both independent examples', () => {
+  expect(DANIEL_HOME_READ.explanation.rateAssumption).toBe(ENGINE_RATE);
+  expect(SARAH_HOME_READ.explanation.rateAssumption).toBe(ENGINE_RATE);
 });
 test('T5 engine-byte-identical including tests and goldens', () => {
   // Immutable 56ce3e6 Git blob IDs, copied from the activation receipt before green.
@@ -191,7 +195,7 @@ test('T10 preservation: immutable default/live text at and above grouping thresh
   expect(results).toEqual(PRE_GREEN_HOME_TEXT);
 });
 test('T11 own-sim-rate-line-all-currencies from the unedited registry', async () => {
-  const locked = ['Example rate: ZMW 27 per US dollar. Not a live rate.', 'Example rate: KES 130 per US dollar. Not a live rate.', 'Example rate: NGN 1,500 per US dollar. Not a live rate.', 'Example rate: GHS 15 per US dollar. Not a live rate.', 'Example rate: PHP 56 per US dollar. Not a live rate.'];
+  const locked = ['Example rate: 1 USD = 27.00 ZMW. Not a live rate.', 'Example rate: 1 USD = 130.00 KES. Not a live rate.', 'Example rate: 1 USD = 1,500.00 NGN. Not a live rate.', 'Example rate: 1 USD = 15.00 GHS. Not a live rate.', 'Example rate: 1 USD = 56.00 PHP. Not a live rate.'];
   for (const [index, { code }] of SIMULATION_DISPLAY_CURRENCIES.entries()) {
     localStorage.setItem('hedgr.simulation.display-currency', code); const view = await home();
     expect(within(view.container).getAllByText(locked[index], { exact: true })).toHaveLength(1);

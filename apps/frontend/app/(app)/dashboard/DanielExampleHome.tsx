@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import type { ReactNode } from 'react';
+import { useRef, type ReactNode } from 'react';
 import type { DanielRead } from '../../../lib/engine/daniel-read';
 import { CLASS_A_VAL_002_DANIEL_EXAMPLE, SYNTHETIC_JOURNEY_EXAMPLES } from '../../../lib/state/synthetic-journey';
 import { DANIEL_HOME_TIMELINE_INPUTS } from '../../../lib/state/daniel-home-fixture';
@@ -8,7 +8,7 @@ import { exampleBalanceSeries, type ChartEvent } from './lineLabels';
 import { formatExampleDate } from '../../../lib/utils/date';
 import { HomeHero } from './HomeHero';
 import { ExampleCard } from './ExampleCard';
-import { ExampleLineChart } from './ExampleLineChart';
+import { ExampleLineChart, type ChartActions } from './ExampleLineChart';
 import { RateLine } from './RateLine';
 import home from './synthetic-home.module.css';
 
@@ -27,6 +27,7 @@ type DanielExampleHomeProps = {
 
 /** §389: shared journey presentation; Engine reads and fixture inputs stay unchanged. */
 export function DanielExampleHome({ currentRead, timeline, returnHref, onReturn, limitation }: DanielExampleHomeProps) {
+  const chartActions = useRef<ChartActions>(null);
   const example = SYNTHETIC_JOURNEY_EXAMPLES.find(item => item.id === CLASS_A_VAL_002_DANIEL_EXAMPLE)!;
   const series = exampleBalanceSeries(example.deposits, currentRead.asOf);
   const events: ChartEvent[] = [
@@ -36,15 +37,16 @@ export function DanielExampleHome({ currentRead, timeline, returnHref, onReturn,
   return (
     <section className={`${home.overview} ${home.exampleHome}`} aria-labelledby="dashboard-daniel-label" data-testid="dashboard-daniel-read">
       <div className={home.overviewGrid} data-testid="daniel-home-grid">
-        <div className={home.positionPanel}>
+        <div id="daniel-all-changes" className={home.positionPanel}>
           <HomeHero label={`Fictional example · ${example.name}`} labelId="dashboard-daniel-label" usdAmount={currentRead.declaredHolding.amount} figureTestId="daniel-read-figure" localTestId="daniel-read-caption" />
-          <ExampleLineChart mode="step" series={series} events={events} example />
+          <ExampleLineChart mode="step" series={series} events={events} example actionsRef={chartActions} />
           <p className="text-sm leading-relaxed text-hedgr-600" data-testid="daniel-read-as-of">Example date: <time dateTime={currentRead.asOf}>{formatExampleDate(currentRead.asOf)}</time></p>
         </div>
         <div className={home.insights}>
           <div className={home.observation} data-testid="daniel-read-disclosure">
             <ExampleCard title={DANIEL_EXAMPLE_COPY.since} testId="daniel-since-card" rate={<RateLine text={currentRead.explanation.rateAssumption} data-testid="daniel-read-rate" />} limits={limitation}>
-              <p className="mt-3 text-sm leading-relaxed text-hedgr-dark" data-testid="daniel-invariant">He made two deposits and none since. Each kwacha figure uses the example rate for its date.</p>
+              <p className="mt-3 text-sm leading-relaxed text-hedgr-dark" data-testid="daniel-invariant">He made two deposits and none since. The chart below shows each kwacha figure, using the example rate for its date.</p>
+              <a href="#daniel-all-changes" className={home.sinceLink} onClick={event => { event.preventDefault(); chartActions.current?.openAll(); }}>Show the figures</a>
             </ExampleCard>
             <Link href={returnHref} className={home.sinceLink} onClick={(event) => {
               if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;

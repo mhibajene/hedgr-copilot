@@ -19,13 +19,13 @@ for (const width of [320, 390, 1440]) {
     for (const count of [0, 1, 3]) {
       await seed(page, count); await page.goto('/dashboard-synthetic-journey'); const section = page.getByTestId('dashboard-current-status');
       await expect(section.getByRole('heading')).toHaveText('Recent changes'); await expect(section.locator('ul')).toHaveCount(0);
-      if (!count) { await expect(section.getByRole('link', { name: /below/ })).toHaveCount(0); await expect(section).toContainText('No new simulated entries'); continue; }
+      if (!count) { await expect(section.getByRole('link', { name: /below/ })).toHaveCount(0); await expect(section).toContainText('No changes since your last visit'); continue; }
       await expect(section).toContainText(count === 1 ? "1 new simulated entry since your last visit. It's included in the balance above." : "3 new simulated entries since your last visit. They're included in the balance above.");
       const link = section.getByRole('link', { name: count === 1 ? 'See this change below' : 'See the newest change below' }); await target(link); await target(section.getByRole('link', { name: 'See all in Activity' }));
       const latest = await page.getByTestId('activity-card').textContent(); await page.getByRole('button', { name: 'Earlier change' }).click();
       await page.getByRole('button', { name: 'All changes', exact: true }).click(); await expect(page.getByTestId('activity-card')).toHaveCount(0);
       await keyboardActivate(page, link); const card = page.getByTestId('activity-card').locator('..');
-      await expect(card).toBeFocused(); await expect(page.getByTestId('activity-card')).toHaveText(latest!); await expect(page.getByRole('button', { name: 'All changes', exact: true })).toHaveAttribute('aria-expanded', 'false');
+      await expect(card).toBeFocused(); await expect(page.getByTestId('activity-card')).toHaveText(latest!); await expect(page.getByRole('button', { name: 'Later change' })).toHaveAttribute('aria-disabled', 'true'); await expect(page.getByRole('button', { name: 'All changes', exact: true })).toHaveAttribute('aria-expanded', 'false');
       await expect(card).toHaveAttribute('tabindex', '-1'); expect(await card.getAttribute('aria-label')).toBe(await page.getByTestId('activity-announcement').textContent());
       expect(await card.evaluate(n => getComputedStyle(n).outlineWidth)).toBe('2px');
       const rect = await card.boundingBox(); expect(rect!.y).toBeGreaterThanOrEqual(0); expect(rect!.y + rect!.height).toBeLessThanOrEqual(900 - (width < 1024 ? 61 : 0));

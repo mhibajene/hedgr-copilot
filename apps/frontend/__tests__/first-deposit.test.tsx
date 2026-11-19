@@ -14,7 +14,7 @@ import { SARAH_EXAMPLE_INPUTS } from '../lib/engine/sarah-read';
 (globalThis as typeof globalThis & { React: typeof React }).React = React;
 const DANIEL_ROWS = ['First deposit · 12 Jun · +$500.00', 'Deposit · 14 Aug · +$300.00', '≈ ZMW 19,600.00 · 9 Sep · example rate 24.5', '≈ ZMW 23,600.00 · 25 Sep · example rate 29.5'];
 const SARAH_ROWS = ['First deposit · 14 Apr · +ZMW 4,000.00', 'Deposit · 21 Jul · +ZMW 2,000.00'];
-const NOTE = 'He made two deposits and none since. Each kwacha figure uses the example rate for its date.';
+const NOTE = 'He made two deposits and none since. The chart below shows each kwacha figure, using the example rate for its date.';
 const LIMITS = 'Fictional course fee. This figure is not a payment quote. This read does not establish whether Sarah can pay the fee.';
 function example(id: 'daniel' | 'sarah') {
   cleanup();

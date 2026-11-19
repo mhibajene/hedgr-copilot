@@ -833,7 +833,7 @@ test('Journey change inclusion replaces the hero claim and precedes visible limi
     for (const state of ['fallback', 'one', 'several', 'no-change'] as const) {
       setupTicketB(route, state);
       const card = await screen.findByTestId('dashboard-current-status');
-      const claim = state === 'several' ? 'These simulated entries are included in the balance above.' : 'This simulated withdrawal is included in the balance above.';
+      const claim = state === 'fallback' ? 'This simulated withdrawal is included in the balance above.' : state === 'several' ? "2 new simulated entries since your last visit. They're included in the balance above." : "1 new simulated entry since your last visit. It's included in the balance above.";
       expect(card.textContent).toContain(B_LIMIT);
       if (state === 'no-change') {
         expect(screen.getByText('Includes your simulated activity.')).toBeDefined();
@@ -877,8 +877,8 @@ test('S9 status-line-no-count-in-sim', async () => {
       setupTicketB(route, state);
       const card = await screen.findByTestId('dashboard-current-status');
       expect(screen.queryByTestId('engine-posture-context')).toBeNull();
-      expect(within(card).getByRole('heading', { name: 'Since you were last here' })).toBeDefined();
-      expect(card.textContent).toContain(count === 1 ? 'This simulated withdrawal is included in the balance above.' : 'These simulated entries are included in the balance above.');
+      expect(within(card).getByRole('heading', { name: 'Recent changes' })).toBeDefined();
+      expect(card.textContent).toContain(count === 1 ? "1 new simulated entry since your last visit. It's included in the balance above." : "2 new simulated entries since your last visit. They're included in the balance above.");
       expect(screen.getByTestId('example-line-chart').querySelector('[data-chart-label]')!.textContent).toBe(`${count} ${count === 1 ? 'change' : 'changes'} since your last visit`);
     }
     setupTicketB(route, 'no-change');
@@ -1208,7 +1208,7 @@ describe('S18 earn tile fence sweep (§384)', () => {
       const view = await renderS18();
       baseline[`${mode}:${route}`] = s18Digest(s18OutsideTile(view.container));
       if (route.includes('example=daniel')) {
-        expect(screen.getByTestId('daniel-invariant').textContent).toBe('He made two deposits and none since. Each kwacha figure uses the example rate for its date.');
+        expect(screen.getByTestId('daniel-invariant').textContent).toBe('He made two deposits and none since. The chart below shows each kwacha figure, using the example rate for its date.');
         expect(screen.getByTestId('chart-event-list').textContent).toContain('First deposit · 12 Jun · +$500.00');
       } else if (route.includes('example=sarah')) {
         expect(screen.getByTestId('chart-event-list').textContent).toBe('First deposit · 14 Apr · +ZMW 4,000.00Deposit · 21 Jul · +ZMW 2,000.00');

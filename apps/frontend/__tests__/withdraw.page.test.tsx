@@ -717,7 +717,7 @@ describe('D-132 selected simulation withdrawal estimate', () => {
     vi.mocked(useLatestFx).mockReturnValue({ status: 'error', retry: vi.fn() });
     render(<WithdrawPage />);
     await act(async () => { await vi.advanceTimersByTimeAsync(350); });
-    expect(screen.getByTestId('withdraw-fx-block').textContent).toContain(`1 USD = ${rate.toFixed(2)} ${currency}`);
+    expect(screen.getByTestId('withdraw-fx-block').textContent).toContain(`1 USD = ${rate.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${currency}`);
     expect(screen.getByTestId('withdraw-local-estimate').textContent).toBe(`≈ ${currency} ${estimate} Example figure, not a quote`);
     const amount = screen.getByLabelText('Amount to simulate (USD)');
     fireEvent.change(amount, { target: { value: '6' } });

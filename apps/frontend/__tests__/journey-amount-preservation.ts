@@ -1,3 +1,4 @@
+import { journeyPreRuntime } from './journey-quality-preservation';
 import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { resolve } from 'node:path';
@@ -123,6 +124,7 @@ const BEFORE_AMOUNT_SHA256: Record<string, string> = {
 };
 
 export function amountSourceBefore(path: string, value: string): string {
+  value = journeyPreRuntime(path, value);
   for (const [before, after, count] of [...(AMOUNT_EDITS[path] ?? [])].reverse()) {
     if (value.split(after).length - 1 !== count) throw new Error(`JOURNEY-REVIEW-001 exact amount source mismatch: ${path}`);
     value = value.split(after).join(before);

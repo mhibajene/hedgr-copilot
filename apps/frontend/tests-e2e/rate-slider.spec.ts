@@ -27,7 +27,7 @@ const FIRST=Date.parse('2026-10-08T12:00:00Z');const NEXT=Date.parse('2026-10-09
 const LIMIT='Three example rates. Not a live rate and not a forecast.';
 const MEANING='The dollar amount is the same at each rate. The rate sets the local figure.';
 const CALC='Your US dollar amount is multiplied by each example rate and rounded to two decimal places. Deposits, withdrawals, fees and spreads are not included. This is not your account history or live market data. No money moves.';
-const INVARIANT='He made two deposits and none since. Each kwacha figure uses the example rate for its date.';
+const INVARIANT='He made two deposits and none since. The chart below shows each kwacha figure, using the example rate for its date.';
 const row=(type:'deposit'|'withdrawal',amount:number,at:number)=>({txn_ref:`${type}-${at}`,type,status:'settled',amount_usd:amount,amount_zmw:amount*27,fx_rate:27,created_at:at,updated_at:at});
 const rows=[row('deposit',500,FIRST),row('withdrawal',20,NEXT)];
 test.use({timezoneId:'UTC'});
@@ -54,7 +54,7 @@ async function retained(page:Page,kind:string,state:string){
  if(kind==='daniel'){once(text,INVARIANT);once(text,'Example rate: ZMW 27 per US dollar. Not a live rate.');}
  else if(kind==='sarah'){once(text,'Fictional course fee. This figure is not a payment quote. This read does not establish whether Sarah can pay the fee.');once(text,'Due 1 Oct 2027.');}
  else{
-  once(text,state==='no-change'?'Includes your simulated activity.':'This simulated withdrawal is included in the balance above.');
+  once(text,state==='no-change'?'Includes your simulated activity.':state==='no-visit'?'This simulated withdrawal is included in the balance above.':"1 new simulated entry since your last visit. It's included in the balance above.");
   once(text,'This is what happened in your simulation. It doesn’t tell you what will happen next.');
   if(state==='no-change')once(text,'No changes since your last visit');
  }
@@ -101,7 +101,7 @@ for(const [width,scale] of [[1440,1],[390,1],[320,2]])test(`HOME-SOFTHALO-RATESL
    await slider.focus();await page.keyboard.press('ArrowLeft');await expect(slider).toHaveValue('0');await expect(dialog.getByTestId('currency-rate-figure')).toHaveText(`≈ ZMW ${(usd*24.5).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}`);
    await page.keyboard.press('ArrowRight');await page.keyboard.press('ArrowRight');await expect(slider).toHaveValue('2');await expect(dialog.getByTestId('currency-rate-figure')).toHaveText(`≈ ZMW ${(usd*29.5).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}`);
    await expect(dialog.getByTestId('currency-rate-figure')).toHaveCSS('transition-duration','0s');
-  }else{once(openText,`Example rate: ${currency} ${rate.toLocaleString('en-US')} per US dollar. Not a live rate.`);expect(await dialog.innerText()).not.toMatch(/ZMW|forecast|Three example rates/);}
+  }else{once(openText,`Example rate: 1 USD = ${rate.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${currency}. Not a live rate.`);expect(await dialog.innerText()).not.toMatch(/ZMW|forecast|Three example rates/);}
   const summary=dialog.locator('summary');await summary.focus();await page.keyboard.press('Enter');await expect(dialog.getByText(CALC,{exact:true})).toBeVisible();once(await visibleText(page),CALC);
   await page.keyboard.press('Tab');await expect(dialog.getByRole('button',{name:'Back to Home'})).toBeFocused();await page.keyboard.press('Shift+Tab');await expect(summary).toBeFocused();
   expect(await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth)).toBeLessThanOrEqual(1);

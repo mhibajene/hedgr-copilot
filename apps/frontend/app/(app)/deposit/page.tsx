@@ -379,7 +379,7 @@ function DepositPageContent() {
           className={`text-sm text-hedgr-dark ${finish.rate}`}
           data-testid="deposit-fx-block"
         >
-          Simulated example rate: 1 USD = {rate?.toFixed(2)} {quote}
+          Example rate: 1 USD = {rate === null ? null : formatLocalCurrency(rate)} {quote}. Not a live rate.
         </div>
       ) : unavailableDataScenario || fx.status === 'error' ? (
         <MarketDataContinuityPanel

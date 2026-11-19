@@ -1,3 +1,4 @@
+import { assertJourneySourceReversals } from './journey-quality-preservation';
 // @vitest-environment jsdom
 import React, { createRef } from 'react';
 import { act, cleanup, fireEvent, render, screen, within } from '@testing-library/react';
@@ -40,7 +41,7 @@ test.each([0, 1, 3])('JOURNEY-REVIEW-001 own recent changes count %s and links',
   await home('own', count); const section = screen.getByTestId('dashboard-current-status');
   expect(within(section).getByRole('heading').textContent).toBe('Recent changes');
   expect(section.querySelector('ul')).toBeNull();
-  if (count === 0) { expect(within(section).queryByRole('link', { name: /below/ })).toBeNull(); expect(section.textContent).toContain('No new simulated entries'); }
+  if (count === 0) { expect(within(section).queryByRole('link', { name: /below/ })).toBeNull(); expect(section.textContent).toContain('No changes since your last visit'); }
   else {
     expect(section.textContent).toContain(count === 1 ? "1 new simulated entry since your last visit. It's included in the balance above." : "3 new simulated entries since your last visit. They're included in the balance above.");
     const link = within(section).getByRole('link', { name: count === 1 ? 'See this change below' : 'See the newest change below' });
@@ -70,3 +71,5 @@ test('JOURNEY-REVIEW-001 Daniel opens and focuses existing figures disclosure wi
   expect(card.querySelector('[data-testid="daniel-observation"]')).toBeNull(); fireEvent.click(within(card).getByRole('link', { name: 'Show the figures' }));
   expect(toggle.getAttribute('aria-expanded')).toBe('true'); expect(document.activeElement).toBe(toggle);
 });
+
+test("JOURNEY-REVIEW-001 every bounded literal reverses exactly and rejects old source", () => { expect(() => assertJourneySourceReversals()).not.toThrow(); });

@@ -12,7 +12,7 @@ import { EngineAllocationBands } from "./EngineAllocationBands";
 import { EnginePostureHeader } from "./EnginePostureHeader";
 import { countChanges } from "./lineLabels";
 import { PositionLine } from "./PositionLine";
-import { ChartSourceAmountsContext } from "./ExampleLineChart";
+import { type ChartActions, ChartSourceAmountsContext } from "./ExampleLineChart";
 import { clearSimulationReceipt } from "../simulation-receipt";
 import { formatLocalCurrency } from "../../../lib/utils/money";
 import { DanielExampleHome } from './DanielExampleHome';
@@ -194,6 +194,7 @@ export default function DashboardPage() {
   const [visitRead, setVisitRead] = useState(false);
   const [today, setToday] = useState<number | null>(null);
   const visitRecorded = useRef(false);
+  const chartActions = useRef<ChartActions>(null);
   // §362: an example never records a visit; arriving on one and returning records none either.
   const arrivedOnExample = useRef(exampleActive);
   useEffect(() => {
@@ -510,7 +511,7 @@ export default function DashboardPage() {
   );
 
   const positionLine = positionDerivable ? (
-    <ChartSourceAmountsContext.Provider value={sourceAmounts}><PositionLine entries={positionEntries} lastVisit={previousVisit} settle={arrivalSettle} visualise={syntheticJourneyActive} heroAmount={total} /></ChartSourceAmountsContext.Provider>
+    <ChartSourceAmountsContext.Provider value={sourceAmounts}><PositionLine entries={positionEntries} lastVisit={previousVisit} settle={arrivalSettle} visualise={syntheticJourneyActive} heroAmount={total} actionsRef={syntheticJourneyActive ? chartActions : undefined} /></ChartSourceAmountsContext.Provider>
   ) : null;
 
   const ObservationHeading = syntheticJourneyActive ? "h2" : "p";
@@ -589,7 +590,7 @@ export default function DashboardPage() {
           data-testid="dashboard-current-status"
           data-home-state={`since-${sinceSummary.kind}`}
         >
-          {observationLabel("Since you were last here")}
+          {observationLabel(syntheticJourneyActive ? "Recent changes" : "Since you were last here")}
           {sinceSummary.kind === "no-change" ? (
             <>
               <p className="max-w-xl text-sm leading-relaxed text-hedgr-dark" data-testid="engine-posture-context">
@@ -615,7 +616,7 @@ export default function DashboardPage() {
               </p>)}
               {syntheticJourneyActive ? (
                 <p className="text-sm leading-relaxed text-hedgr-dark">
-                  This simulated {sinceSummary.entry.type === "DEPOSIT" ? "deposit" : "withdrawal"} is included in the balance above.
+                  1 new simulated entry since your last visit. It's included in the balance above.
                 </p>
               ) : sinceLink("See the entry")}
             </>
@@ -646,15 +647,18 @@ export default function DashboardPage() {
               </ul>}
               {syntheticJourneyActive ? (
                 <p className="text-sm leading-relaxed text-hedgr-dark">
-                  These simulated entries are included in the balance above.
+                  {sinceSummary.entries.length} new simulated entries since your last visit. They're included in the balance above.
                 </p>
               ) : sinceLink("See all in Activity")}
             </>
           )}
           {guaranteeLine}
-          {syntheticJourneyActive && sinceSummary.kind !== "no-change"
-            ? sinceLink(sinceSummary.kind === "one" ? "See the entry" : "See all in Activity")
-            : null}
+          {syntheticJourneyActive && sinceSummary.kind !== "no-change" ? <>
+            <a href="#dashboard-position-line" className={home.sinceLink} onClick={event => { event.preventDefault(); chartActions.current?.focusNewest(); }}>
+              {sinceSummary.kind === "one" ? "See this change below" : "See the newest change below"}
+            </a>
+            {sinceLink("See all in Activity")}
+          </> : null}
         </section>
         {ownRateLine}
       </div>

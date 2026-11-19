@@ -648,7 +648,7 @@ test("Founder-locked copy and dates are character-exact across Daniel's example 
 
 // §367: Founder-locked legibility contract; Engine strings remain deferred.
 const LEGIBILITY = {
-  invariant: 'He made two deposits and none since. Each kwacha figure uses the example rate for its date.',
+  invariant: 'He made two deposits and none since. The chart below shows each kwacha figure, using the example rate for its date.',
   ownLimitation: 'This is what happened in your simulation. It doesn’t tell you what will happen next.',
   start: 'Practise with pretend money first. See what changes, and why.',
   currency: 'Shown in ZMW, Daniel’s currency',

@@ -1,7 +1,8 @@
+import { formatLocalCurrency } from '../../../lib/utils/money';
 import type { SimulationDisplayCurrency } from '../../../lib/state/simulation-display-currency';
 
 export function formatExampleRateLine(code: SimulationDisplayCurrency, rate: number): string {
-  return `Example rate: ${code} ${rate.toLocaleString('en-US')} per US dollar. Not a live rate.`;
+  return `Example rate: 1 USD = ${formatLocalCurrency(rate)} ${code}. Not a live rate.`;
 }
 
 type RateLineProps = ({ text: string | undefined } | { code: SimulationDisplayCurrency; rate: number }) & { 'data-testid'?: string };

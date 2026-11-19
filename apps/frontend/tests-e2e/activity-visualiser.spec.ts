@@ -103,11 +103,11 @@ test('V2 V3 V4 responsive label budgets and count-only overflow on real route', 
   }
 });
 test('V11 all five currencies preserve caption/rate/current figures and V16 2027 year rule', async ({ page }) => {
-  for (const [currency, amount, rate] of [['ZMW', '12,960.00', '27'], ['KES', '62,400.00', '130'], ['NGN', '720,000.00', '1,500'], ['GHS', '7,200.00', '15'], ['PHP', '26,880.00', '56']]) {
+  for (const [currency, amount, rate] of [['ZMW', '12,960.00', '27.00'], ['KES', '62,400.00', '130.00'], ['NGN', '720,000.00', '1,500.00'], ['GHS', '7,200.00', '15.00'], ['PHP', '26,880.00', '56.00']]) {
     await seed(page, STATES.returning, currency); await page.goto(ROUTES[0]);
     await expect(page.getByTestId('local-balance-figure')).toHaveText(`≈ ${currency} ${amount}`);
     await expect(page.getByText('Example figure, not a quote', { exact: true })).toBeVisible();
-    await expect(page.locator('[data-component="RateLine"]')).toHaveText(`Example rate: ${currency} ${rate} per US dollar. Not a live rate.`);
+    await expect(page.locator('[data-component="RateLine"]')).toHaveText(`Example rate: 1 USD = ${rate} ${currency}. Not a live rate.`);
   }
   await page.clock.setFixedTime(Date.parse('2027-10-15T12:00:00Z'));
   for (const example of ['daniel', 'sarah']) {
