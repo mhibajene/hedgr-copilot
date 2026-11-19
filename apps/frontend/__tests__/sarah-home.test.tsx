@@ -1,3 +1,4 @@
+import { journeyPreRuntime } from './journey-quality-preservation';
 // @vitest-environment jsdom
 import React from 'react';
 import { createHash } from 'node:crypto';
@@ -350,6 +351,7 @@ const BUNDLE_SOURCE_EDITS: Record<string, [string, string][]> = {
   ]
 };
 function bundlePreRuntime(path: string, value: string): string {
+  value = journeyPreRuntime(path, value);
   for (const [old, replacement] of BUNDLE_SOURCE_EDITS[path] ?? []) {
     if (value.includes(replacement)) {
       expect(value.split(replacement), path).toHaveLength(2);

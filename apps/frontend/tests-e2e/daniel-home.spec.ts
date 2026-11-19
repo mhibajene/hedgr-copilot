@@ -308,7 +308,7 @@ test('keeps the Daniel read identical when display currency or simulated activit
     for (const state of ['empty', 'changed', 'pending', 'failed']) {
       await seed(page, ACTIVITY[state], code);
       await gotoDaniel(page, '/dashboard?journey=class-a-val-002');
-      const html = await panel(page).evaluate((node) => { const clone = node.cloneNode(true) as HTMLElement; clone.querySelector('a')?.remove(); return clone.innerHTML.replace(/«r[0-9a-z]+»|_r_[0-9a-z]+_/g, ':react-id:'); });
+      const html = await panel(page).evaluate((node, returnLabel) => { const clone = node.cloneNode(true) as HTMLElement; Array.from(clone.querySelectorAll('a')).find(link => link.textContent === returnLabel)?.remove(); return clone.innerHTML.replace(/«r[0-9a-z]+»|_r_[0-9a-z]+_/g, ':react-id:'); }, COPY.back);
       reference ??= html;
       expect(html).toBe(reference);
     }
@@ -317,7 +317,7 @@ test('keeps the Daniel read identical when display currency or simulated activit
   await seed(page, ACTIVITY.changed, 'KES');
   await page.evaluate(() => localStorage.setItem('hedgr:last-home-visit', '1500'));
   await gotoDaniel(page, '/dashboard-synthetic-journey');
-  expect(await panel(page).evaluate((node) => { const clone = node.cloneNode(true) as HTMLElement; clone.querySelector('a')?.remove(); return clone.innerHTML.replace(/«r[0-9a-z]+»|_r_[0-9a-z]+_/g, ':react-id:'); })).toBe(reference);
+  expect(await panel(page).evaluate((node, returnLabel) => { const clone = node.cloneNode(true) as HTMLElement; Array.from(clone.querySelectorAll('a')).find(link => link.textContent === returnLabel)?.remove(); return clone.innerHTML.replace(/«r[0-9a-z]+»|_r_[0-9a-z]+_/g, ':react-id:'); }, COPY.back)).toBe(reference);
 });
 
 test('normalizes new synthetic ZMW deposit rows at the Engine fixture without changing the live API boundary', async ({ page }) => {
@@ -329,7 +329,7 @@ test('normalizes new synthetic ZMW deposit rows at the Engine fixture without ch
   const requests: string[] = [];
   page.on('request', (request) => requests.push(request.url()));
   await page.goto('/deposit?journey=class-a-val-002');
-  await expect(page.getByTestId('deposit-fx-block')).toHaveText('Simulated example rate: 1 USD = 27.00 ZMW');
+  await expect(page.getByTestId('deposit-fx-block')).toHaveText('Example rate: 1 USD = 27.00 ZMW. Not a live rate.');
   await page.getByTestId('deposit-amount').fill(String(DANIEL_FIXTURE_RATE_ZMW_PER_USD * 5));
   await expect(page.getByTestId('deposit-balance-change')).toContainText('shows ZMW 135.00 as +$5.00');
   await page.getByRole('button', { name: 'Confirm', exact: true }).click();
@@ -354,7 +354,7 @@ test('normalizes non-ZMW synthetic deposit ZMW legs at the Engine fixture with u
   for (const [currency, rate, input] of [['KES', 130, '650'], ['NGN', 1500, '7500'], ['GHS', 15, '75'], ['PHP', 56, '280']] as const) {
     await seed(page, [], currency);
     await page.goto('/deposit?journey=class-a-val-002');
-    await expect(page.getByTestId('deposit-fx-block')).toHaveText(`Simulated example rate: 1 USD = ${rate.toFixed(2)} ${currency}`);
+    await expect(page.getByTestId('deposit-fx-block')).toHaveText(`Example rate: 1 USD = ${rate.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${currency}. Not a live rate.`);
     await page.getByTestId('deposit-amount').fill(input);
     await expect(page.getByTestId('deposit-balance-change')).toContainText(`shows ${currency} ${Number(input).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} as +$5.00`);
     await page.getByRole('button', { name: 'Confirm', exact: true }).click();
@@ -413,7 +413,8 @@ test("Daniel's example offers no actions on your simulation", async ({ page }) =
   for (const route of JOURNEY_ROUTES) {
     await gotoDaniel(page, route);
     await expect(panel(page).getByRole('link', { name: COPY.back })).toBeVisible();
-    await expect(panel(page).locator('a')).toHaveCount(1);
+    await expect(panel(page).locator('a')).toHaveCount(2);
+    await expect(panel(page).getByRole('link', { name: 'Show the figures', exact: true })).toHaveCount(1);
     await expect(panel(page).locator('button:not([aria-controls]), input, select')).toHaveCount(0);
     await expect(panel(page).getByRole('button', { name: 'All changes · example dates', exact: true })).toHaveCount(1);
     await expect(panel(page).getByTestId('chart-event-dot')).toHaveCount(2);
@@ -452,11 +453,11 @@ test("Daniel's example ignores your simulation", async ({ page }) => {
       const before = await storageSnapshot(page);
       await gotoDaniel(page, route);
       await expectCurrencyContext(page);
-      const html = await panel(page).evaluate((node) => {
+      const html = await panel(page).evaluate((node, returnLabel) => {
         const clone = node.cloneNode(true) as HTMLElement;
-        clone.querySelector('a')?.remove();
+        Array.from(clone.querySelectorAll('a')).find(link => link.textContent === returnLabel)?.remove();
         return clone.innerHTML.replace(/«r[0-9a-z]+»|_r_[0-9a-z]+_/g, ':react-id:');
-      });
+      }, COPY.back);
       reference ??= html;
       expect(html).toBe(reference);
       expect(await storageSnapshot(page)).toEqual(before);

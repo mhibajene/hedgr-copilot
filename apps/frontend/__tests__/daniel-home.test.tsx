@@ -437,7 +437,7 @@ describe("keeps the Daniel read identical when display currency or simulated act
           const view = await renderDaniel(route, state);
           expect(screen.getByTestId("daniel-read-figure").textContent).toBe("$800.00 USD");
           const content = panel().cloneNode(true) as HTMLElement;
-          content.querySelector("a")?.remove();
+          Array.from(content.querySelectorAll("a")).find(link => link.textContent === LOCKED_COPY.back)?.remove();
           const html = content.outerHTML.replace(/«r[a-z0-9]+»/g, ':react-id:');
           reference ??= html;
           expect(html).toBe(reference);
@@ -491,7 +491,8 @@ describe("contains no prohibited claims in Daniel Home copy", () => {
     expect(text).toContain("Fictional");
     expect(text).toContain("Not a live rate.");
     expect(text).not.toContain("9 Oct · shown above");
-    expect(panel().querySelectorAll("a")).toHaveLength(1);
+    expect(panel().querySelectorAll("a")).toHaveLength(2);
+    expect(within(panel()).getByRole("link", { name: "Show the figures" })).toBeDefined();
     expect(panel().querySelectorAll("button:not([aria-controls]), input, select, progress, meter, [role='progressbar']")).toHaveLength(0);
     // The picker's locked option names carry no currency or claim.
     const pickerText = Array.from(picker().options).map((o) => o.textContent).join(" ");
@@ -546,7 +547,8 @@ test("Daniel's example timeline comes only from the Engine", () => {
 test("Daniel's example offers no actions on your simulation", async () => {
   await renderDaniel("journey", "settled");
   expect(within(panel()).getByRole("link", { name: LOCKED_COPY.back })).toBeDefined();
-  expect(panel().querySelectorAll("a")).toHaveLength(1);
+  expect(panel().querySelectorAll("a")).toHaveLength(2);
+    expect(within(panel()).getByRole("link", { name: "Show the figures" })).toBeDefined();
   expect(panel().querySelectorAll("button:not([aria-controls]), input, select")).toHaveLength(0);
   expect(document.querySelectorAll('main a[href*="/deposit"], main a[href*="/withdraw"], main a[href*="/activity"]')).toHaveLength(0);
   expect(document.body.textContent).not.toMatch(/View Activity|Restart simulated journey|Simulate a withdrawal/);
@@ -578,7 +580,7 @@ test("Daniel's example ignores your simulation", async () => {
       await screen.findByTestId("daniel-since-card");
       // Compare fictional content; the return href intentionally preserves each route.
       const content = panel().cloneNode(true) as HTMLElement;
-      content.querySelector("a")?.remove();
+      Array.from(content.querySelectorAll("a")).find(link => link.textContent === LOCKED_COPY.back)?.remove();
       const html = content.innerHTML.replace(/«r[a-z0-9]+»/g, ':react-id:');
       reference ??= html;
       expect(html).toBe(reference);

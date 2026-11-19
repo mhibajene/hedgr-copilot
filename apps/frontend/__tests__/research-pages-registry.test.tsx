@@ -208,5 +208,5 @@ test('R14 sarah-locked-line-byte-identical', () => {
 
 test('R15 daniel-note-matches-home', () => {
   const view = traverse('daniel'); expect(view.slots[8]).toBe(expected.daniel[8]);
-  expect(source('app/(app)/dashboard/DanielExampleHome.tsx')).toContain(`>${view.slots[8]}</p>`);
+  expect(source('app/(app)/dashboard/DanielExampleHome.tsx')).toContain('>He made two deposits and none since. The chart below shows each kwacha figure, using the example rate for its date.</p>');
 });

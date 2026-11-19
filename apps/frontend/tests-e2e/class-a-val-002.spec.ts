@@ -422,7 +422,7 @@ test('CLASS-A-VAL-002 traverses Dashboard → Deposit → Withdraw → Activity 
     'see how the simulated position changes'
   );
   await expect(page.getByTestId('deposit-fx-block')).toContainText(
-    `Simulated example rate: 1 USD = ${DANIEL_FIXTURE_RATE_ZMW_PER_USD.toFixed(2)} ZMW`
+    `Example rate: 1 USD = ${DANIEL_FIXTURE_RATE_ZMW_PER_USD.toFixed(2)} ZMW. Not a live rate.`
   );
 
   const depositAmount = page.getByTestId('deposit-amount');
@@ -785,7 +785,7 @@ test('Home explains what changed since the last visit and clears it on reset', a
   await page.getByRole('link', { name: 'Back to your position' }).click();
 
   await expect(page.getByTestId('usd-balance')).toHaveText('$3.00');
-  await expect(page.getByTestId('dashboard-current-status')).toContainText('Since you were last here');
+  await expect(page.getByTestId('dashboard-current-status')).toContainText('Recent changes');
   await expect(page.getByTestId('engine-posture-context')).toHaveCount(0);
   await expect(page.getByTestId('example-line-chart').locator('[data-chart-label]')).toHaveText('2 changes since your last visit');
   await page.getByRole('button', { name: 'All changes', exact: true }).click();
