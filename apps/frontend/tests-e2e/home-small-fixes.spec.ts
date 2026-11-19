@@ -150,7 +150,7 @@ test('Home change amounts use the sentence ink, not emphasis, on either route', 
     await seed(page, [deposit(), withdraw()], 500);
     await gotoHome(page, route);
     const since = page.getByTestId('dashboard-current-status');
-    await expect(since).toContainText('Since you were last here');
+    await expect(since).toContainText(route.includes('journey=') ? 'Recent changes' : 'Since you were last here');
     for (const amount of await since.locator('[data-observation-amount]').all()) {
       const colors = await amount.evaluate((el) => {
         const parent = el.closest('p');
@@ -173,16 +173,16 @@ test('Home shows no change chip after a deposit or withdrawal on either route', 
   for (const route of HOME_ROUTES) {
     await seed(page, [deposit()], 500);
     await gotoHome(page, route);
-    await expect(page.getByTestId('dashboard-current-status')).toContainText('Since you were last here');
+    await expect(page.getByTestId('dashboard-current-status')).toContainText(route.includes('journey=') ? 'Recent changes' : 'Since you were last here');
     await expect(page.getByTestId('dashboard-change-chip')).toHaveCount(0);
 
     await seed(page, [deposit(), withdraw()], 500);
     await gotoHome(page, route);
-    await expect(page.getByTestId('dashboard-current-status')).toContainText('Since you were last here');
+    await expect(page.getByTestId('dashboard-current-status')).toContainText(route.includes('journey=') ? 'Recent changes' : 'Since you were last here');
     await expect(page.getByTestId('dashboard-change-chip')).toHaveCount(0);
 
     await page.reload();
-    await expect(page.getByTestId('dashboard-current-status')).toContainText('Since you were last here');
+    await expect(page.getByTestId('dashboard-current-status')).toContainText(route.includes('journey=') ? 'Recent changes' : 'Since you were last here');
     await expect(page.getByTestId('dashboard-change-chip')).toHaveCount(0);
   }
 });

@@ -229,11 +229,11 @@ test.describe('STUDY-ENTRY-CURRENCY-ALIGN-001', () => {
     await page.goto('/dashboard-synthetic-journey');
     await expect(page.getByTestId('local-balance')).toHaveText('≈ KES 650.00 Example figure, not a quote');
     await page.goto('/deposit?journey=class-a-val-002');
-    await expect(page.getByTestId('deposit-fx-block')).toHaveText('Simulated example rate: 1 USD = 130.00 KES');
+    await expect(page.getByTestId('deposit-fx-block')).toHaveText('Example rate: 1 USD = 130.00 KES. Not a live rate.');
     await page.getByTestId('deposit-amount').fill('130');
     await expect(page.getByTestId('deposit-conversion-preview')).toContainText('shows KES 130.00 as +$1.00');
     await page.goto('/withdraw?journey=class-a-val-002');
-    await expect(page.getByTestId('withdraw-fx-block')).toHaveText('Simulated example rate: 1 USD = 130.00 KES');
+    await expect(page.getByTestId('withdraw-fx-block')).toHaveText('Example rate: 1 USD = 130.00 KES. Not a live rate.');
     await expect(page.getByTestId('local-balance')).toHaveText('≈ KES 650.00 Example figure, not a quote');
     expect(await page.evaluate(key => localStorage.getItem(key), preferenceKey)).toBe('KES');
     expect(writes).toEqual([]);

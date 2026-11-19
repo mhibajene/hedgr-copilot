@@ -47,7 +47,7 @@ for (const [currency, rate] of [
     await expect(page.getByText('No position to compare yet.')).toBeVisible();
     await expect(page.getByTestId('currency-insight-direction')).toHaveCount(0);
     await page.getByRole('link', { name: 'Add simulated deposit', exact: true }).click();
-    await expect(page.getByTestId('deposit-fx-block')).toContainText(`${rate.toFixed(2)} ${currency}`);
+    await expect(page.getByTestId('deposit-fx-block')).toContainText(`${rate.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${currency}`);
     await page.getByTestId('deposit-amount').fill(String(rate * 5));
     await expect(page.getByTestId('deposit-balance-change')).toContainText('+$5.00');
     await page.getByRole('button', { name: 'Confirm', exact: true }).click();
@@ -61,7 +61,7 @@ for (const [currency, rate] of [
     await page.getByRole('button', { name: 'Back to Home' }).click();
     await expect(page.getByTestId('engine-posture-context')).toHaveText('Your first simulated position is now visible. This is your starting point.');
     await page.goto('/withdraw?journey=class-a-val-002');
-    await expect(page.getByTestId('withdraw-fx-block')).toContainText(`${rate.toFixed(2)} ${currency}`);
+    await expect(page.getByTestId('withdraw-fx-block')).toContainText(`${rate.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${currency}`);
     await page.getByTestId('withdraw-amount').fill('2');
     await expect(page.getByTestId('withdraw-balance-preview')).toContainText('What would remain: $3.00');
     await page.getByRole('button', { name: 'Confirm', exact: true }).click();
