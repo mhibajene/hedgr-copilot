@@ -46,13 +46,6 @@ const AMOUNT_EDITS: Record<string, readonly (readonly [string, string, number])[
       1
     ]
   ],
-  "components/BalanceWithLocalEstimate.tsx": [
-    [
-      "const formattedUsd = `$${usdAmount.toFixed(2)}`;",
-      "const formattedUsd = `$${formatLocalCurrency(usdAmount)}`;",
-      1
-    ]
-  ],
   "app/(app)/deposit/page.tsx": [
     [
       "usdToCredit.toFixed(2)",
@@ -118,102 +111,15 @@ const AMOUNT_EDITS: Record<string, readonly (readonly [string, string, number])[
       "formatLocalCurrency(tx.amountUSD)",
       1
     ]
-  ],
-  "app/(app)/activity/page.tsx": [
-    [
-      "tx.amountUSD.toFixed(2)",
-      "formatLocalCurrency(tx.amountUSD)",
-      3
-    ],
-    [
-      "resultingBalance.toFixed(2)",
-      "formatLocalCurrency(resultingBalance)",
-      1
-    ],
-    [
-      "syntheticBalanceReconciliation.remaining.toFixed(2)",
-      "formatLocalCurrency(syntheticBalanceReconciliation.remaining)",
-      2
-    ],
-    [
-      "day.balance.toFixed(2)",
-      "formatLocalCurrency(day.balance)",
-      2
-    ],
-    [
-      "before!.toFixed(2)",
-      "formatLocalCurrency(before!)",
-      1
-    ],
-    [
-      "after.toFixed(2)",
-      "formatLocalCurrency(after)",
-      1
-    ],
-    [
-      "syntheticBalanceReconciliation.deposits.toFixed(2)",
-      "formatLocalCurrency(syntheticBalanceReconciliation.deposits)",
-      1
-    ],
-    [
-      "syntheticBalanceReconciliation.withdrawals.toFixed(2)",
-      "formatLocalCurrency(syntheticBalanceReconciliation.withdrawals)",
-      1
-    ],
-    [
-      "{tx.amountZMW.toFixed(2)} ZMW",
-      "{formatLocalCurrency(tx.amountZMW, 'ZMW')}",
-      1
-    ],
-    [
-      "syntheticBalanceReconciliation.deposits.toFixed(\n              2\n            )",
-      "formatLocalCurrency(syntheticBalanceReconciliation.deposits)",
-      1
-    ],
-    [
-      "syntheticBalanceReconciliation.withdrawals.toFixed(\n              2\n            )",
-      "formatLocalCurrency(syntheticBalanceReconciliation.withdrawals)",
-      1
-    ],
-    [
-      "syntheticBalanceReconciliation.remaining.toFixed(\n              2\n            )",
-      "formatLocalCurrency(syntheticBalanceReconciliation.remaining)",
-      1
-    ]
-  ],
-  "components/TxDetailModal.tsx": [
-    [
-      "import React, { useEffect, useRef } from 'react';",
-      "import React, { useEffect, useRef } from 'react';\nimport { formatLocalCurrency } from '../lib/utils/money';",
-      1
-    ],
-    [
-      "transaction.amountUSD.toFixed(2)",
-      "formatLocalCurrency(transaction.amountUSD)",
-      2
-    ],
-    [
-      "{transaction.amountZMW.toFixed(2)} ZMW",
-      "{formatLocalCurrency(transaction.amountZMW, 'ZMW')}",
-      1
-    ],
-    [
-      "resultingBalance.toFixed(2)",
-      "formatLocalCurrency(resultingBalance)",
-      1
-    ]
   ]
 };
 const BEFORE_AMOUNT_SHA256: Record<string, string> = {
   "lib/utils/money.ts": "4e8b5facdb53cb181daf3a6d9d886b2ef5fdb462d819d7772f388794edc436f7",
   "lib/state/last-visit.ts": "bd69972757312288a5b6cdc91043713aa544fb207880973d6913d016d29e6fe9",
   "lib/state/simulation-display-currency.ts": "11f5e8da325a2bd94f5922d68ec532b7e538c3d5cbed8c00f0a9b361a05a93d0",
-  "components/BalanceWithLocalEstimate.tsx": "b5ecccff8111a7476b445fad0064244c80c2aeb4af99f3d6f2e5b90b8bc15af1",
   "app/(app)/deposit/page.tsx": "5ef2ffc71d0b97de531972b0641cae304e37c86f2450c205bcad0e9f3c0aa14c",
   "app/(app)/withdraw/page.tsx": "78f973bdb609fad1ac9b56f303e32d52eff1137d1123558f32088780d94b10d5",
-  "app/(app)/dashboard/page.tsx": "d17265d76fb92c07b9467f57fd5d30646737157ab35acf80fc50206563e7da59",
-  "app/(app)/activity/page.tsx": "5bc31f83af192caca53d63a56024e135e6675146e64ed87d386354267c12ba50",
-  "components/TxDetailModal.tsx": "74f1771c651e8e4f44a0c7233c4611d0c836840330448f258ab9e5c493fffb5b"
+  "app/(app)/dashboard/page.tsx": "d17265d76fb92c07b9467f57fd5d30646737157ab35acf80fc50206563e7da59"
 };
 
 export function amountSourceBefore(path: string, value: string): string {
