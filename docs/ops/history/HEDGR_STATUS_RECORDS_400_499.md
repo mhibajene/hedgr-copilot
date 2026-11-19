@@ -678,3 +678,19 @@ Fetch/update onto main, reconfirm numbers and shared-file occupancy, regenerate 
 
 
 <!-- End SEC-DEPS-003 sharp complete §466 activation record. -->
+
+
+<!-- SEC-DEPS-003 Vitest complete §472 activation record; source faf86b4e50dd68ed7b7de9d543670368b2f03c92:L4279–L4287. -->
+<a id="472-activation-sec-deps-003-vitest-major-slice-2026-11-16"></a>
+
+## 472. Activation (`SEC-DEPS-003` Vitest-major slice, 2026-11-16)
+
+Only this finite dev-tooling security-support slice activates under §6f.43 after independently verified source merge, separate independently verified sole-JSON permanent-main §364 rebind and fetched-main RAP PASS. Founder selection and Vite/CPU-preservation amendment are checksum-bound in §7a. MERGE-TIERS-ACT-001 PR A is effective; PR B is delivered in legacy mode, Tier 1 OFF. No immediate runtime implementation, settings action, successor or cutover is authorised. Separate rebinds continue under §364/§467; no carrier is claimed.
+
+The exact five-path §7a patch locks Vitest 4.1.0, Vite 6.4.6 as a frontend devDependency, the dependency-only lock graph and only four bump-broken tests' repairs across three existing files. The S18 dashboard normalizer is authorised only by the SEC-DEPS-003 Founder protected-harness disposition, SHA-256 `acae3bff20afc6c2a83ea901eaa6123a00040088c4289c277d9d69f765f7974c`, for the exact two §7a suffix mappings with all historical DOM hashes, excluded-source digest, source pins, copy assertions and exclusions unchanged; no other S18 amendment or precedent is granted. Preserve lightningcss CPU metadata through the reviewed frozen-validated recipe. No app runtime code, root dependency, override, unrelated major/config, test skip or assertion weakening. Candidate evidence: 1,227 tests, full frontend typecheck and lint pass; all common package/snapshot records unchanged. Default-branch critical-zero fixed-not-dismissed Dependabot acceptance remains future work, not inferred from the candidate; Medium/Low stay out of scope.
+
+Every slice PR stays UNARMED: current-head independent PASS, then Wes same-head sign-off and required checks, then Dex head-matched squash under the receipt-bound slice go. New H/B requires fresh evidence. Installation-authenticated signed-bot publication, source-first/separate deterministic RAP commit, full pinned local validate and full executed hosted exact-head E2E apply. No self-attestation, verifier request, Wes contact, merge, arming, settings or private-channel comment by this Steward; STOP at the green activation source head. After later source/rebind/fetched-main effectivity, Steward records the effective SHA and stops for Dex's distinct Implementer under §363.
+
+Source allowlist and complete executable contract are §7a; existing numbered records stay verbatim, AGENTS byte/mode-identical and within cap, §7 ≤6,500 B. §6f.43 fixes finite coexistence, no same-file/manifest/lockfile work, serial sources/research priority, independent stops, expiry only on governed closeout and one-governed-implementation-revert with occupancy reconciliation/separate rebind. Preceding no-ticket-lockfile-authority statements describe closed predecessors; from effectivity only this exact slice receives the stated finite exception. No other permission resumes. Existing parent, bounded research/Founder custody, SME, §409/navigation and §438 D1 controls remain. No broader exposure or financial capability. NO CROSS-LANE IMPACT.
+
+<!-- End SEC-DEPS-003 Vitest complete §472 activation record. -->
