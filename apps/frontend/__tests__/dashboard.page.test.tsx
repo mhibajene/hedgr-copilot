@@ -1,3 +1,4 @@
+import { amountSourceBefore, assertAmountSourceReversal } from './journey-amount-preservation';
 // @vitest-environment jsdom
 
 import React from "react";
@@ -1561,6 +1562,7 @@ const QOL_SOURCE_BASE: Record<string, string> = {
   "app/(app)/withdraw/page.tsx": "78cd6abcbf6b375769783bc4da819bf9ae9e779235df14764fbd66370668c3dd"
 };
 function qolPreRuntime(path: string, value: string): string {
+  value = amountSourceBefore(path, value);
   if (!QOL_SOURCE_EDITS[path]) return value;
   for (const [old, replacement] of [...QOL_SOURCE_EDITS[path]].reverse()) {
     expect(value.split(replacement), path).toHaveLength(2);
@@ -1569,3 +1571,8 @@ function qolPreRuntime(path: string, value: string): string {
   expect(s18Digest(value), path).toBe(QOL_SOURCE_BASE[path]);
   return value;
 }
+
+// JOURNEY-REVIEW-001 amount-only source-reversal control, 2026-11-19.
+test('JOURNEY-REVIEW-001 S18 rejects reversed amount source', () => {
+  expect(() => assertAmountSourceReversal(['lib/state/last-visit.ts', 'lib/state/simulation-display-currency.ts', 'app/(app)/withdraw/page.tsx'])).not.toThrow();
+});

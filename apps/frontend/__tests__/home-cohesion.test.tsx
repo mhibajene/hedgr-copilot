@@ -1,3 +1,4 @@
+import { assertAmountSourceReversal } from './journey-amount-preservation';
 // @vitest-environment jsdom
 import React from 'react';
 import { createHash } from 'node:crypto';
@@ -238,14 +239,22 @@ const ENGINE_BASELINE_BLOBS: Record<string, string> = {
 };
 // Captured on unmodified 56ce3e6 runtime, before any runtime edit.
 const PRE_GREEN_HOME_TEXT: Record<string, string> = {
-  "simulated:first": "b256944abf408147d8bfd059698808f6431e9e9c81f98ecfe8f9a7b1760603d2",
-  "simulated:one": "65e44f78957f3c6ed5ff5abb373571d23627737ec93874028e0b62a2619dade8",
-  "simulated:several": "99be6737c14c52a34bf1c25d726c5ec1e66ec14166441f206bedc14a42189afb",
-  "simulated:no-change": "935f9ef0f12d445e86bf31fa7c0b21fb5db08e0819aa9efd0c5af9b363d22dfc",
-  "live:first": "aea467a989b8c20eef1c88965b2ceda682c18f5f392d48d1b9e4e6cc23b33559",
-  "live:one": "65a2a38a5367633f1ccf741885fc1cc99ab23dd9c647263f00a9baf57c126e0f",
-  "live:several": "de8f413795146782a68694e37fdd0cda95d31d459a60d853e4a6ef488894136b",
-  "live:no-change": "65a2a38a5367633f1ccf741885fc1cc99ab23dd9c647263f00a9baf57c126e0f"
+  // JOURNEY-REVIEW-001 2026-11-19 amount formatting; prior b256944abf408147d8bfd059698808f6431e9e9c81f98ecfe8f9a7b1760603d2
+  "simulated:first": "9ca0836a830775154daaa8388407202639079c8d139c315ffd9d1bde4cc08190",
+  // JOURNEY-REVIEW-001 2026-11-19 amount formatting; prior 65e44f78957f3c6ed5ff5abb373571d23627737ec93874028e0b62a2619dade8
+  "simulated:one": "9ceeadcaba67388e8c973dd098fff97254ec1b8a0207e2392540d8c1821c867d",
+  // JOURNEY-REVIEW-001 2026-11-19 amount formatting; prior 99be6737c14c52a34bf1c25d726c5ec1e66ec14166441f206bedc14a42189afb
+  "simulated:several": "9d5eaa2eb4803dbe99f7ca381cafdcc112d0e19d108cb76e591e55b435c3237b",
+  // JOURNEY-REVIEW-001 2026-11-19 amount formatting; prior 935f9ef0f12d445e86bf31fa7c0b21fb5db08e0819aa9efd0c5af9b363d22dfc
+  "simulated:no-change": "3932f79f058fa2d7541f7e55d6335e91bb3dfab2f57fe7f15b9d3ca4a899040b",
+  // JOURNEY-REVIEW-001 2026-11-19 amount formatting; prior aea467a989b8c20eef1c88965b2ceda682c18f5f392d48d1b9e4e6cc23b33559
+  "live:first": "3c9a288cf918ea3c3b346a4d66f99fda3c3237c2f7471fe92aeb8cc39bc3a4c1",
+  // JOURNEY-REVIEW-001 2026-11-19 amount formatting; prior 65a2a38a5367633f1ccf741885fc1cc99ab23dd9c647263f00a9baf57c126e0f
+  "live:one": "1c9edd48173e66df923f472a10527bd8bdfdd6e33e84585723b14b45310410a1",
+  // JOURNEY-REVIEW-001 2026-11-19 amount formatting; prior de8f413795146782a68694e37fdd0cda95d31d459a60d853e4a6ef488894136b
+  "live:several": "a9931f9f14e1223d9c36fc305fa59409553817e59203758d38b3b4b534d6d74c",
+  // JOURNEY-REVIEW-001 2026-11-19 amount formatting; prior 65a2a38a5367633f1ccf741885fc1cc99ab23dd9c647263f00a9baf57c126e0f
+  "live:no-change": "1c9edd48173e66df923f472a10527bd8bdfdd6e33e84585723b14b45310410a1"
 };
 
 // §394: reverse only exact approved edits against immutable pre-runtime receipts.
@@ -448,3 +457,8 @@ function scPreRuntime(value: string, edits: readonly (readonly string[])[]): str
   for (const [before, after] of edits) value = value.replaceAll(after, before);
   return value;
 }
+
+// JOURNEY-REVIEW-001 amount-only source-reversal control, 2026-11-19.
+test('JOURNEY-REVIEW-001 T10 rejects reversed amount source', () => {
+  expect(() => assertAmountSourceReversal(['lib/utils/money.ts', 'lib/state/last-visit.ts', 'app/(app)/deposit/page.tsx'])).not.toThrow();
+});

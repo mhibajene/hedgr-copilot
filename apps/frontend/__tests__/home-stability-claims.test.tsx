@@ -1,3 +1,4 @@
+import { amountSourceBefore, assertAmountSourceReversal } from './journey-amount-preservation';
 // @vitest-environment jsdom
 import React from 'react';
 import { createHash } from 'node:crypto';
@@ -489,6 +490,7 @@ function qolPreRuntime(path: string, value: string): string {
 }
 
 function bundlePreRuntime(path: string, value: string): string {
+  value = amountSourceBefore(path, value);
   value = qolPreRuntime(path, value);
   value = releaseGatePreRuntime(path, releaseGate002PreRuntime(path, releaseGate003PreRuntime(path, value)));
   for (const [old, replacement] of BUNDLE_SOURCE_EDITS[path] ?? []) {
@@ -611,3 +613,8 @@ function releaseGate003PreRuntime(path: string, value: string): string {
   }
   return value;
 }
+
+// JOURNEY-REVIEW-001 amount-only source-reversal control, 2026-11-19.
+test('JOURNEY-REVIEW-001 SC14 rejects reversed amount source', () => {
+  expect(() => assertAmountSourceReversal(['lib/state/last-visit.ts', 'lib/state/simulation-display-currency.ts', 'app/(app)/withdraw/page.tsx'])).not.toThrow();
+});

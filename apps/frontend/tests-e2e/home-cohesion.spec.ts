@@ -1,3 +1,4 @@
+import { assertAmountSourceReversal } from '../__tests__/journey-amount-preservation';
 import { createHash } from 'node:crypto';
 import { mkdirSync } from 'node:fs';
 import { join } from 'node:path';
@@ -162,22 +163,38 @@ test('screenshots of three Homes at required viewports', async ({ page }, info) 
 // Captured from immutable red 78077ea (runtime 56ce3e6), browser UTC, fixed 2026-10-15T00:00:00Z.
 // Complete main.textContent() for all 16 original cells; raw text/provenance retained in runtime/.
 const PRE_GREEN_ROUTE_TEXT: Record<string, string> = {
-  "/dashboard:first": "0d8a91740ac80d8b36f5bdd5d533fb65ef4106912e570c8f7081369dd6b6c15e",
-  "/dashboard:one": "beff4e250408d854186d41887fe771e9c27b702eaba81034e05482ffaea3c8a9",
-  "/dashboard:several": "8cac9770753067e14e237e1f692a05518d340787861769ff7c8ae37136bb227a",
-  "/dashboard:no-change": "86533c41f41b82f22ed48f8b7ef524309b44b2380778f0b8f25426287454a576",
-  "/withdraw?journey=class-a-val-002:first": "4ca20d49912f152257d74097f80839480988a373f94b6f2b5bad4ee9e829be86",
-  "/withdraw?journey=class-a-val-002:one": "33d1a8c0fdecb65aca6620d21cd46178dc0a566f7efb1a130385fdb2dc69d3b8",
-  "/withdraw?journey=class-a-val-002:several": "747cb2e5ad12be67aefb663b81dd094d014852ba8017df5f571dde2066bb560f",
-  "/withdraw?journey=class-a-val-002:no-change": "33d1a8c0fdecb65aca6620d21cd46178dc0a566f7efb1a130385fdb2dc69d3b8",
-  "/deposit?journey=class-a-val-002:first": "02de236cb1e593ea7227f666157337e898070af2382002126d58d693b7f032cb",
-  "/deposit?journey=class-a-val-002:one": "02de236cb1e593ea7227f666157337e898070af2382002126d58d693b7f032cb",
-  "/deposit?journey=class-a-val-002:several": "02de236cb1e593ea7227f666157337e898070af2382002126d58d693b7f032cb",
-  "/deposit?journey=class-a-val-002:no-change": "02de236cb1e593ea7227f666157337e898070af2382002126d58d693b7f032cb",
-  "/activity?journey=class-a-val-002:first": "6f6d9903f428aa8ac62d1c9fc292cb40581f1063f1774a3de30b287c90166f59",
-  "/activity?journey=class-a-val-002:one": "c98ed8633a47f9776883b2f4128b89d51c967f1c491011cb19ebcd5f46e91a7b",
-  "/activity?journey=class-a-val-002:several": "c86e810a8df4b46acc740898a477d6910da04889d7eff822d325c0825a61de64",
-  "/activity?journey=class-a-val-002:no-change": "c98ed8633a47f9776883b2f4128b89d51c967f1c491011cb19ebcd5f46e91a7b"
+  // JOURNEY-REVIEW-001 2026-11-19 amount formatting; prior 0d8a91740ac80d8b36f5bdd5d533fb65ef4106912e570c8f7081369dd6b6c15e
+  "/dashboard:first": "c86a7b30c7e6a6a53bda74960915629aa14e3a5be756b0947c6eeeb4e0e449a9",
+  // JOURNEY-REVIEW-001 2026-11-19 amount formatting; prior beff4e250408d854186d41887fe771e9c27b702eaba81034e05482ffaea3c8a9
+  "/dashboard:one": "220deebf3f3bfa9d5a9df0bf7615f12df4a8b42cf7c4df9456cce1647a0bd8d4",
+  // JOURNEY-REVIEW-001 2026-11-19 amount formatting; prior 8cac9770753067e14e237e1f692a05518d340787861769ff7c8ae37136bb227a
+  "/dashboard:several": "cc117f722612068b69ec91737990fc1716eef2b0cb66062145d34796c6732430",
+  // JOURNEY-REVIEW-001 2026-11-19 amount formatting; prior 86533c41f41b82f22ed48f8b7ef524309b44b2380778f0b8f25426287454a576
+  "/dashboard:no-change": "b62f1fe817211ab4ad4b853130dd7154aba7c7f062064172226313b349b4316d",
+  // JOURNEY-REVIEW-001 2026-11-19 amount formatting; prior 4ca20d49912f152257d74097f80839480988a373f94b6f2b5bad4ee9e829be86
+  "/withdraw?journey=class-a-val-002:first": "319862fb1cce367b842833d88ea0c60f6ba1f17e29492b435cc420b989d8a99f",
+  // JOURNEY-REVIEW-001 2026-11-19 amount formatting; prior 33d1a8c0fdecb65aca6620d21cd46178dc0a566f7efb1a130385fdb2dc69d3b8
+  "/withdraw?journey=class-a-val-002:one": "335f8afda0c9180681213a8c2b3e206a15d73295eda31c8d58af6e299e552250",
+  // JOURNEY-REVIEW-001 2026-11-19 amount formatting; prior 747cb2e5ad12be67aefb663b81dd094d014852ba8017df5f571dde2066bb560f
+  "/withdraw?journey=class-a-val-002:several": "3a2fbe17679609d3693c01a4248a0343af42599bf6d362ed92bea91ca2f99484",
+  // JOURNEY-REVIEW-001 2026-11-19 amount formatting; prior 33d1a8c0fdecb65aca6620d21cd46178dc0a566f7efb1a130385fdb2dc69d3b8
+  "/withdraw?journey=class-a-val-002:no-change": "335f8afda0c9180681213a8c2b3e206a15d73295eda31c8d58af6e299e552250",
+  // JOURNEY-REVIEW-001 2026-11-19 amount formatting; prior 02de236cb1e593ea7227f666157337e898070af2382002126d58d693b7f032cb
+  "/deposit?journey=class-a-val-002:first": "90995a193fbbb0c1d35b3d11b88d744aa73c2e263f0cb299c00b74ff9b1a07fb",
+  // JOURNEY-REVIEW-001 2026-11-19 amount formatting; prior 02de236cb1e593ea7227f666157337e898070af2382002126d58d693b7f032cb
+  "/deposit?journey=class-a-val-002:one": "90995a193fbbb0c1d35b3d11b88d744aa73c2e263f0cb299c00b74ff9b1a07fb",
+  // JOURNEY-REVIEW-001 2026-11-19 amount formatting; prior 02de236cb1e593ea7227f666157337e898070af2382002126d58d693b7f032cb
+  "/deposit?journey=class-a-val-002:several": "90995a193fbbb0c1d35b3d11b88d744aa73c2e263f0cb299c00b74ff9b1a07fb",
+  // JOURNEY-REVIEW-001 2026-11-19 amount formatting; prior 02de236cb1e593ea7227f666157337e898070af2382002126d58d693b7f032cb
+  "/deposit?journey=class-a-val-002:no-change": "90995a193fbbb0c1d35b3d11b88d744aa73c2e263f0cb299c00b74ff9b1a07fb",
+  // JOURNEY-REVIEW-001 2026-11-19 amount formatting; prior 6f6d9903f428aa8ac62d1c9fc292cb40581f1063f1774a3de30b287c90166f59
+  "/activity?journey=class-a-val-002:first": "754d8e43f950b54e6dcce739263cda84f9be7d2dd71c13449ab88aca3abcc1b3",
+  // JOURNEY-REVIEW-001 2026-11-19 amount formatting; prior c98ed8633a47f9776883b2f4128b89d51c967f1c491011cb19ebcd5f46e91a7b
+  "/activity?journey=class-a-val-002:one": "446356c6629030eba2d9936ff246e6ae1d363a2f1d2c0160c20bdf4a529f1870",
+  // JOURNEY-REVIEW-001 2026-11-19 amount formatting; prior c86e810a8df4b46acc740898a477d6910da04889d7eff822d325c0825a61de64
+  "/activity?journey=class-a-val-002:several": "0210b0f1ec4603ce5ec7027fdc2788e65ea49e017b7d625fe4c399854f3a06ad",
+  // JOURNEY-REVIEW-001 2026-11-19 amount formatting; prior c98ed8633a47f9776883b2f4128b89d51c967f1c491011cb19ebcd5f46e91a7b
+  "/activity?journey=class-a-val-002:no-change": "446356c6629030eba2d9936ff246e6ae1d363a2f1d2c0160c20bdf4a529f1870"
 };
 
 // §391: deterministic event dates and current-year presentation.
@@ -263,3 +280,8 @@ function scPreRuntime(value: string, edits: readonly (readonly string[])[]): str
   for (const [before, after] of edits) value = value.replaceAll(after, before);
   return value;
 }
+
+// JOURNEY-REVIEW-001 amount-only source-reversal control, 2026-11-19.
+test('JOURNEY-REVIEW-001 T10 rejects reversed amount source', () => {
+  expect(() => assertAmountSourceReversal(['lib/utils/money.ts', 'lib/state/last-visit.ts', 'app/(app)/deposit/page.tsx'])).not.toThrow();
+});
