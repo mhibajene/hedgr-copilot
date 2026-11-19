@@ -45,6 +45,9 @@ test('JOURNEY-REVIEW-001 deposit preview groups ZMW and retains the rounded USD 
   await act(async () => { fireEvent.click(screen.getByRole('button', { name: 'Confirm', exact: true })); });
   await act(async () => { await vi.advanceTimersByTimeAsync(1600); });
   expect(screen.getByTestId('deposit-confirmation-region').textContent).toContain('ZMW 5,000.00');
+  expect(screen.getByTestId('deposit-fx-block').textContent).toBe('Example rate: 1 USD = 27.00 ZMW. Not a live rate.');
+  expect(document.body.textContent!.split('Not a live rate.')).toHaveLength(2);
+  expect(screen.getByTestId('deposit-confirmation-region').textContent).not.toContain('Not a live rate.');
   expect(useLedgerStore.getState().transactions).toEqual([expect.objectContaining({ amount_usd: 185.19, amount_zmw: 5000.13, source_local_amount: 5000, source_local_currency: 'ZMW', fx_rate: 27, status: 'settled' })]);
   expect(postDeposit).not.toHaveBeenCalled();
 });
@@ -56,6 +59,9 @@ test('JOURNEY-REVIEW-001 withdrawal receipt groups ZMW and retains the requested
   await act(async () => { fireEvent.click(screen.getByRole('button', { name: 'Confirm', exact: true })); });
   await act(async () => { await vi.advanceTimersByTimeAsync(600); });
   expect(screen.getByTestId('withdraw-status-region').textContent).toContain('ZMW 1,350.00');
+  expect(screen.getByTestId('withdraw-fx-block').textContent).toBe('Example rate: 1 USD = 27.00 ZMW. Not a live rate.');
+  expect(document.body.textContent!.split('Not a live rate.')).toHaveLength(2);
+  expect(screen.getByTestId('withdraw-status-region').textContent).not.toContain('Not a live rate.');
   expect(withdrawMock.createWithdraw).toHaveBeenCalledWith(50, { skipAutoConfirm: false });
   expect(screen.getByTestId('withdraw-balance-reconciliation').textContent).toBe('$1,950.00');
 });
