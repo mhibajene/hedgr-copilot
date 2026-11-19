@@ -6,11 +6,13 @@ const mockGetMetadataByToken = vi.fn();
 
 vi.mock('@magic-sdk/admin', () => {
   return {
-    Magic: vi.fn().mockImplementation(() => ({
-      users: {
-        getMetadataByToken: mockGetMetadataByToken,
-      },
-    })),
+    Magic: vi.fn().mockImplementation(function () {
+      return {
+        users: {
+          getMetadataByToken: mockGetMetadataByToken,
+        },
+      };
+    }),
   };
 });
 

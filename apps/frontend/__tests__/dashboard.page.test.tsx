@@ -1057,6 +1057,17 @@ function s18ExcludedDigest() {
 
 function s18OutsideTile(view: HTMLElement) {
   const clone = view.cloneNode(true) as HTMLElement;
+  // Vitest 4 hashes stable CSS-module names with SHA-1; retain the MD5-era pins.
+  // Map only generated suffixes, before the existing exact HTML normalizers.
+  for (const path of ['app/(app)/dashboard/synthetic-home.module.css', 'app/(app)/product-finish.module.css']) {
+    const current = createHash('sha1').update(path).digest('hex').slice(0, 6);
+    const legacy = createHash('md5').update(path).digest('hex').slice(0, 6);
+    for (const node of clone.querySelectorAll('[class]')) {
+      for (const name of Array.from(node.classList)) {
+        if (name.endsWith(`_${current}`)) node.classList.replace(name, `${name.slice(0, -6)}${legacy}`);
+      }
+    }
+  }
   clone.querySelector('[data-testid="dashboard-earn-tile"]')?.parentElement?.remove();
   if (clone.querySelector('#dashboard-example-picker')) {
     // HOME-SOFTHALO-RATESLIDER-BUNDLE-001: only the replaced modal/launcher region.

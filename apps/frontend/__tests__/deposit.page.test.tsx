@@ -406,6 +406,7 @@ describe('DepositPage CLASS-A-VAL-002 primary and exception conditions', () => {
 
   test('uses a fixed simulated preview and never calls the backend deposit contract', async () => {
     stubSyntheticEnvironment();
+    vi.mocked(postDeposit).mockClear();
     vi.useFakeTimers();
     vi.mocked(useSearchParams).mockReturnValue(
       new URLSearchParams('journey=class-a-val-002') as ReturnType<typeof useSearchParams>,
