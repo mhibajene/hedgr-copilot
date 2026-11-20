@@ -1,3 +1,4 @@
+import { amountSourceBefore, assertAmountSourceReversal } from './journey-amount-preservation';
 // @vitest-environment jsdom
 import React from 'react';
 import { createHash } from 'node:crypto';
@@ -74,11 +75,11 @@ test('SC9 currency-insight-limit-locked', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Currency context', exact: true }));
     const dialog = screen.getByRole('dialog');
     expect(within(dialog).queryAllByText(LIMIT)).toHaveLength(currency === 'ZMW' ? 1 : 0);
-    if (currency !== 'ZMW') expect(dialog.textContent!.split(`Example rate: ${currency} ${rate.toLocaleString('en-US')} per US dollar. Not a live rate.`)).toHaveLength(2);
+    if (currency !== 'ZMW') expect(dialog.textContent!.split(`Example rate: 1 USD = ${rate.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${currency}. Not a live rate.`)).toHaveLength(2);
     expect(within(dialog).queryAllByRole('slider')).toHaveLength(currency === 'ZMW' ? 1 : 0);
   }
 });
-test('SC10 daniel-invariant-preserved (explicit already-green exception)', () => { expect(source('app/(app)/dashboard/DanielExampleHome.tsx')).toContain('He made two deposits and none since. Each kwacha figure uses the example rate for its date.'); });
+test('SC10 daniel-invariant-preserved (explicit already-green exception)', () => { expect(source('app/(app)/dashboard/DanielExampleHome.tsx')).toContain('He made two deposits and none since. The chart below shows each kwacha figure, using the example rate for its date.'); });
 test('SC11 say-it-once-withdrawal', () => { render(<><EngineProtectiveGuidance /><EngineStabilityReviewSnapshot engineState={getMockEngineState('normal')} /></>); expect(screen.getAllByText(WITHDRAWAL, { exact: true })).toHaveLength(1); });
 test('SC12 say-it-once-header-notice', () => {
   for (const synthetic of [false, true]) POSTURES.slice(1).forEach((posture, i) => { cleanup(); render(<EnginePostureHeader engineState={getMockEngineState(posture)} syntheticJourneyActive={synthetic} />); const body = screen.getByTestId('engine-posture-banner').querySelector('p:last-child')!.textContent!; expect(body).toBe(BODIES[i]); expect(screen.getByTestId('engine-posture-context').textContent).toBe(synthetic ? STATUS[i] : CONTEXT[i+1]); for (const sentence of body.match(/[^.!?]+[.!?]/g) ?? []) expect(screen.getByTestId('engine-posture-context').textContent).not.toContain(sentence.trim()); });
@@ -489,6 +490,7 @@ function qolPreRuntime(path: string, value: string): string {
 }
 
 function bundlePreRuntime(path: string, value: string): string {
+  value = amountSourceBefore(path, value);
   value = qolPreRuntime(path, value);
   value = releaseGatePreRuntime(path, releaseGate002PreRuntime(path, releaseGate003PreRuntime(path, value)));
   for (const [old, replacement] of BUNDLE_SOURCE_EDITS[path] ?? []) {
@@ -611,3 +613,8 @@ function releaseGate003PreRuntime(path: string, value: string): string {
   }
   return value;
 }
+
+// JOURNEY-REVIEW-001 amount-only source-reversal control, 2026-11-19.
+test('JOURNEY-REVIEW-001 SC14 rejects reversed amount source', () => {
+  expect(() => assertAmountSourceReversal(['lib/state/last-visit.ts', 'lib/state/simulation-display-currency.ts', 'app/(app)/withdraw/page.tsx'])).not.toThrow();
+});

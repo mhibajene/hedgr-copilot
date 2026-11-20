@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef } from 'react';
+import { formatLocalCurrency } from '../lib/utils/money';
 import {
   type TxLifecycle,
   type TxTimelineStep,
@@ -200,7 +201,7 @@ export function TxDetailModal({
   if (!isOpen || !transaction) return null;
 
   const timelineSteps = simulated ? [] : generateTimelineSteps(transaction);
-  const signedAmount = `${transaction.type === 'DEPOSIT' ? '+' : '−'}$${transaction.amountUSD.toFixed(2)}`;
+  const signedAmount = `${transaction.type === 'DEPOSIT' ? '+' : '−'}$${formatLocalCurrency(transaction.amountUSD)}`;
 
   return (
     <div
@@ -279,13 +280,13 @@ export function TxDetailModal({
                 <p className={simulated ? "text-5xl font-bold tracking-tight text-hedgr-800" : "text-3xl font-bold text-hedgr-800"}>
                   {simulated
                     ? signedAmount
-                    : `$${transaction.amountUSD.toFixed(2)}`}
+                    : `$${formatLocalCurrency(transaction.amountUSD)}`}
                 </p>
                 {!simulated &&
                 transaction.amountZMW !== undefined &&
                 transaction.amountZMW > 0 ? (
                   <p className="mt-1 text-sm text-hedgr-500">
-                    {transaction.amountZMW.toFixed(2)} ZMW
+                    {formatLocalCurrency(transaction.amountZMW, 'ZMW')}
                   </p>
                 ) : null}
               </div>
@@ -311,7 +312,7 @@ export function TxDetailModal({
                       className="font-semibold tabular-nums text-hedgr-800"
                       data-testid="tx-detail-resulting-position"
                     >
-                      ${resultingBalance.toFixed(2)}
+                      ${formatLocalCurrency(resultingBalance)}
                     </dd>
                   </div>
                 ) : null}

@@ -82,7 +82,7 @@ for (const [width, scale] of [[1440, 1], [390, 1], [320, 2]]) test(`V7 V8 V10 V1
         'First deposit · 12 Jun · +$500.00', 'Deposit · 14 Aug · +$300.00', '≈ ZMW 19,600.00 · 9 Sep · example rate 24.5', '≈ ZMW 23,600.00 · 25 Sep · example rate 29.5',
       ] : ['First deposit · 14 Apr · +ZMW 4,000.00', 'Deposit · 21 Jul · +ZMW 2,000.00']);
       const panel = page.getByTestId(`dashboard-${example}-read`); const text = await panel.innerText();
-      for (const amount of example === 'daniel' ? ['$500.00', '$300.00', '$800.00'] : ['ZMW 4,000.00', 'ZMW 2,000.00', '$1000.00']) expect(text.split(amount).length - 1).toBe(1);
+      for (const amount of example === 'daniel' ? ['$500.00', '$300.00', '$800.00'] : ['ZMW 4,000.00', 'ZMW 2,000.00', '$1,000.00']) expect(text.split(amount).length - 1).toBe(1);
       const outsideHero = await panel.evaluate(n => { const copy = n.cloneNode(true) as HTMLElement; copy.querySelector('[data-testid="sarah-read-figure"]')?.remove(); return copy.textContent; });
       expect(outsideHero).not.toMatch(/6,000|K\d|grow|rising|increase|progress|towards|funded|enough|cover|remaining|left to|% of|→/i);
       expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(1);
@@ -103,11 +103,11 @@ test('V2 V3 V4 responsive label budgets and count-only overflow on real route', 
   }
 });
 test('V11 all five currencies preserve caption/rate/current figures and V16 2027 year rule', async ({ page }) => {
-  for (const [currency, amount, rate] of [['ZMW', '12,960.00', '27'], ['KES', '62,400.00', '130'], ['NGN', '720,000.00', '1,500'], ['GHS', '7,200.00', '15'], ['PHP', '26,880.00', '56']]) {
+  for (const [currency, amount, rate] of [['ZMW', '12,960.00', '27.00'], ['KES', '62,400.00', '130.00'], ['NGN', '720,000.00', '1,500.00'], ['GHS', '7,200.00', '15.00'], ['PHP', '26,880.00', '56.00']]) {
     await seed(page, STATES.returning, currency); await page.goto(ROUTES[0]);
     await expect(page.getByTestId('local-balance-figure')).toHaveText(`≈ ${currency} ${amount}`);
     await expect(page.getByText('Example figure, not a quote', { exact: true })).toBeVisible();
-    await expect(page.locator('[data-component="RateLine"]')).toHaveText(`Example rate: ${currency} ${rate} per US dollar. Not a live rate.`);
+    await expect(page.locator('[data-component="RateLine"]')).toHaveText(`Example rate: 1 USD = ${rate} ${currency}. Not a live rate.`);
   }
   await page.clock.setFixedTime(Date.parse('2027-10-15T12:00:00Z'));
   for (const example of ['daniel', 'sarah']) {

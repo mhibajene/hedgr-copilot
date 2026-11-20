@@ -59,7 +59,7 @@ export function BalanceWithLocalEstimate({
   const localAmount = hasFxRate && fxRate.rate !== null ? usdAmount * fxRate.rate : 0;
   
   // Format USD amount
-  const formattedUsd = `$${usdAmount.toFixed(2)}`;
+  const formattedUsd = `$${formatLocalCurrency(usdAmount)}`;
   
   // Format local amount with currency code (not symbol)
   const formattedLocal = displayEstimate ?? (

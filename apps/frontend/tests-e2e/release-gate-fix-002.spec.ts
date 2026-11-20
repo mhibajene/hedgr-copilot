@@ -1,3 +1,4 @@
+import { assertAmountSourceReversal } from '../__tests__/journey-amount-preservation';
 import { expect, test, type Page } from '@playwright/test';
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
@@ -152,7 +153,8 @@ test('RELEASE-GATE-FIX-002 T4 immutable Engine golden Engine-test and D-132 cont
 test('RELEASE-GATE-FIX-002 T4 ordinary no-journey rendered content matches immutable baseline', async ({ page }) => {
   const pins: Record<string, string> = {
   "/dashboard": "8c0fcbf6675babec381acb47a24afb57c176def6a227866d6f86b60565f8297e",
-  "/deposit": "b8e15226a4e10650fe0427940bc09e42494508f48a8f7ce31ba84b70946d66b9",
+  // JOURNEY-REVIEW-001 2026-11-19 amount formatting; prior b8e15226a4e10650fe0427940bc09e42494508f48a8f7ce31ba84b70946d66b9
+  "/deposit": "4b835fb9ffaf04e8d9b1688774042241a2a2d3a6805b0b9a096f15f4bbdbdde1",
   "/withdraw": "655673bedb4d34feee76b506bfaa59108e458364077ff4f3229f6871be5ab675"
 };
   for (const [path, hash] of Object.entries(pins)) {
@@ -160,4 +162,9 @@ test('RELEASE-GATE-FIX-002 T4 ordinary no-journey rendered content matches immut
     if (path !== '/dashboard') await expect(page.getByRole('button', { name: 'Confirm', exact: true })).toBeVisible();
     await expect.poll(async () => createHash('sha256').update(await page.locator('main').first().innerText()).digest('hex'), { message: path }).toBe(hash);
   }
+});
+
+// JOURNEY-REVIEW-001 amount-only source-reversal control, 2026-11-19.
+test('JOURNEY-REVIEW-001 T4 rejects reversed amount source', () => {
+  expect(() => assertAmountSourceReversal(['lib/utils/money.ts', 'lib/state/last-visit.ts', 'app/(app)/deposit/page.tsx'])).not.toThrow();
 });

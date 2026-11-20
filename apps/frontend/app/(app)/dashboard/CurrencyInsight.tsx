@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react';
+import { formatExampleRateLine } from './RateLine';
 import wallet from '../research-wallet.module.css';
 import type { SimulationDisplayCurrency } from '../../../lib/state/simulation-display-currency';
 import { computeRateFigure, formatRateCents, ZMW_EXAMPLE_RATES } from '../../../lib/narrative/simulation-currency-insight';
@@ -66,7 +67,7 @@ export function CurrencyInsight({
             <input id="currency-example-rate" type="range" min="0" max="2" step="1" value={stop} aria-valuetext={`Example rate ZMW ${selectedRate} per US dollar, about ${localFigure}`} onChange={event => setStop(Number(event.currentTarget.value))} />
             <div className={styles.stops}>{ZMW_EXAMPLE_RATES.map(rate => <span key={rate}>ZMW {rate}</span>)}</div>
             <p className={styles.limit}>Three example rates. Not a live rate and not a forecast.</p>
-          </div> : !rateLineOnHome ? <p className={styles.limit}>Example rate: {currency} {latestDisplayRate.toLocaleString('en-US', { maximumFractionDigits: 20 })} per US dollar. Not a live rate.</p> : null}
+          </div> : !rateLineOnHome ? <p className={styles.limit}>{formatExampleRateLine(currency, latestDisplayRate)}</p> : null}
           <section className={styles.meaning}><h2>What this means</h2><p>The dollar amount is the same at each rate. The rate sets the local figure.</p></section>
           <details className={styles.calculation}><summary>How this is calculated</summary>
             <p>Your US dollar amount is multiplied by each example rate and rounded to two decimal places. Deposits, withdrawals, fees and spreads are not included. This is not your account history or live market data. No money moves.</p>

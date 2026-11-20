@@ -437,7 +437,7 @@ describe("keeps the Daniel read identical when display currency or simulated act
           const view = await renderDaniel(route, state);
           expect(screen.getByTestId("daniel-read-figure").textContent).toBe("$800.00 USD");
           const content = panel().cloneNode(true) as HTMLElement;
-          content.querySelector("a")?.remove();
+          Array.from(content.querySelectorAll("a")).find(link => link.textContent === LOCKED_COPY.back)?.remove();
           const html = content.outerHTML.replace(/«r[a-z0-9]+»/g, ':react-id:');
           reference ??= html;
           expect(html).toBe(reference);
@@ -491,7 +491,8 @@ describe("contains no prohibited claims in Daniel Home copy", () => {
     expect(text).toContain("Fictional");
     expect(text).toContain("Not a live rate.");
     expect(text).not.toContain("9 Oct · shown above");
-    expect(panel().querySelectorAll("a")).toHaveLength(1);
+    expect(panel().querySelectorAll("a")).toHaveLength(2);
+    expect(within(panel()).getByRole("link", { name: "Show the figures" })).toBeDefined();
     expect(panel().querySelectorAll("button:not([aria-controls]), input, select, progress, meter, [role='progressbar']")).toHaveLength(0);
     // The picker's locked option names carry no currency or claim.
     const pickerText = Array.from(picker().options).map((o) => o.textContent).join(" ");
@@ -546,7 +547,8 @@ test("Daniel's example timeline comes only from the Engine", () => {
 test("Daniel's example offers no actions on your simulation", async () => {
   await renderDaniel("journey", "settled");
   expect(within(panel()).getByRole("link", { name: LOCKED_COPY.back })).toBeDefined();
-  expect(panel().querySelectorAll("a")).toHaveLength(1);
+  expect(panel().querySelectorAll("a")).toHaveLength(2);
+    expect(within(panel()).getByRole("link", { name: "Show the figures" })).toBeDefined();
   expect(panel().querySelectorAll("button:not([aria-controls]), input, select")).toHaveLength(0);
   expect(document.querySelectorAll('main a[href*="/deposit"], main a[href*="/withdraw"], main a[href*="/activity"]')).toHaveLength(0);
   expect(document.body.textContent).not.toMatch(/View Activity|Restart simulated journey|Simulate a withdrawal/);
@@ -578,7 +580,7 @@ test("Daniel's example ignores your simulation", async () => {
       await screen.findByTestId("daniel-since-card");
       // Compare fictional content; the return href intentionally preserves each route.
       const content = panel().cloneNode(true) as HTMLElement;
-      content.querySelector("a")?.remove();
+      Array.from(content.querySelectorAll("a")).find(link => link.textContent === LOCKED_COPY.back)?.remove();
       const html = content.innerHTML.replace(/«r[a-z0-9]+»/g, ':react-id:');
       reference ??= html;
       expect(html).toBe(reference);
@@ -630,7 +632,7 @@ test("Daniel change card consumes Engine explanations verbatim without a compute
     localAmountZmwMinor: [1500000,750000,2250000][index], localDisplay: `ENGINE FIGURE ${index}`,
     declaredHolding: {...read.declaredHolding, amount: 1234.56}, explanation: {holding:`ENGINE HOLDING ${index}`,rateAssumption:`ENGINE RATE ${index}`}}));
   homeMocks.danielOverride = homeMocks.timelineOverride[2]; await renderDaniel('journey');
-  expect(screen.getByTestId('daniel-read-figure').textContent).toBe('$1234.56 USD');
+  expect(screen.getByTestId('daniel-read-figure').textContent).toBe('$1,234.56 USD');
   expect(screen.getByTestId('daniel-read-caption').textContent).toBe('≈ ZMW 33,333.12 Example figure, not a quote');
   expect(screen.getAllByTestId('daniel-observation').map(n=>n.textContent)).toEqual(['First deposit · 12 Jun · +$500.00', 'Deposit · 14 Aug · +$300.00', '≈ ZMW 15,000.00 · 1 Jan · example rate 24.5', '≈ ZMW 7,500.00 · 3 Jan · example rate 29.5']);
   expect(screen.getByTestId('daniel-read-rate').textContent).toBe('ENGINE RATE 2');
@@ -648,7 +650,7 @@ test("Founder-locked copy and dates are character-exact across Daniel's example 
 
 // §367: Founder-locked legibility contract; Engine strings remain deferred.
 const LEGIBILITY = {
-  invariant: 'He made two deposits and none since. Each kwacha figure uses the example rate for its date.',
+  invariant: 'He made two deposits and none since. The chart below shows each kwacha figure, using the example rate for its date.',
   ownLimitation: 'This is what happened in your simulation. It doesn’t tell you what will happen next.',
   start: 'Practise with pretend money first. See what changes, and why.',
   currency: 'Shown in ZMW, Daniel’s currency',

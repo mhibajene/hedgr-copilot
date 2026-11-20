@@ -19,6 +19,7 @@ import {
   TxReviewSimulatorBanner,
 } from '../../../components';
 import { useLatestFx } from '../../../lib/hooks/useLatestFx';
+import { formatLocalCurrency } from '../../../lib/utils/money';
 import { resolveMarket, resolveLocalCurrencyCode } from '../../../config/market';
 import { formatSimulationDisplayEstimate, getSimulationDisplayRate, useSimulationDisplayCurrency } from '../../../lib/state/simulation-display-currency';
 import {
@@ -288,14 +289,14 @@ function WithdrawPageContent() {
   const confirmationReceipt = (
         <div data-simulation-receipt className="space-y-4" data-testid="withdraw-status-region" data-status={activeStatus?.publicStatus}>
           <ReceiptCard
-            headline={`You took $${usd.toFixed(2)} out of your simulated balance`}
+            headline={`You took $${formatLocalCurrency(usd)} out of your simulated balance`}
             headlineTestId="withdraw-status-title"
             time={formatRecordedTime(recordedAt ?? Date.now())}
             rows={[
-              ...(receiptRate !== null ? [{ label: 'Amount', value: `${receiptQuote} ${(usd * receiptRate).toFixed(2)}` }] : []),
-              { label: 'Shown as', value: `−$${usd.toFixed(2)}` },
+              ...(receiptRate !== null ? [{ label: 'Amount', value: formatLocalCurrency(usd * receiptRate, receiptQuote) }] : []),
+              { label: 'Shown as', value: `−$${formatLocalCurrency(usd)}` },
               ...(syntheticJourneyActive && receiptRate !== null ? [{ label: 'Example rate', value: `1 USD = ${receiptRate.toFixed(2)} ${receiptQuote}` }] : []),
-              ...(remainingAfterWithdrawal !== null ? [{ label: 'Balance now ', value: <span data-testid="withdraw-balance-reconciliation"><b>${remainingAfterWithdrawal.toFixed(2)}</b></span> }] : []),
+              ...(remainingAfterWithdrawal !== null ? [{ label: 'Balance now ', value: <span data-testid="withdraw-balance-reconciliation"><b>${formatLocalCurrency(remainingAfterWithdrawal)}</b></span> }] : []),
               { label: 'Real money moved', value: 'None' },
             ]}
           />
@@ -474,7 +475,7 @@ function WithdrawPageContent() {
           className={`text-sm text-hedgr-dark ${finish.rate}`}
           data-testid="withdraw-fx-block"
         >
-          Simulated example rate: 1 USD = {rate?.toFixed(2)} {quote}
+          Example rate: 1 USD = {rate === null ? null : formatLocalCurrency(rate)} {quote}. Not a live rate.
         </div>
       ) : unavailableDataScenario || fx.status === 'error' ? (
         <MarketDataContinuityPanel
@@ -559,7 +560,7 @@ function WithdrawPageContent() {
           aria-label="Simulated balance preview"
         >
           <p className="mt-1 text-lg font-semibold tabular-nums text-hedgr-800">
-            What would remain: ${remainingAfterWithdrawal.toFixed(2)}
+            What would remain: ${formatLocalCurrency(remainingAfterWithdrawal)}
           </p>
           <p className="mt-1 text-sm leading-relaxed text-hedgr-500">
             This is an example calculation. Confirming records only a simulated

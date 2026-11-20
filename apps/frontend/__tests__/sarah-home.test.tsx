@@ -1,3 +1,4 @@
+import { journeyPreRuntime } from './journey-quality-preservation';
 // @vitest-environment jsdom
 import React from 'react';
 import { createHash } from 'node:crypto';
@@ -151,7 +152,7 @@ test('Sarah hero uses $222.22 USD and one independent fee observation', async ()
   const sentinel = {...read, rateBasis:{kind:'example-rate' as const,zmwPerUsd:DANIEL_FIXTURE_RATE_ZMW_PER_USD}, asOf:'2030-02-03T23:45:00.000Z',declaredFee:{...read.declaredFee,amount:1234.56,dueDate:'2031-04-05'},localDisplay:'ENGINE FIGURE',
     explanation:{fee:'ENGINE FEE',rateAssumption:'ENGINE RATE',limits:'ENGINE LIMITS'}};
   render(<SarahExampleHome read={sentinel}/>);
-  expect(screen.getByTestId('sarah-fee-figure').textContent).toBe('$1234.56 USD');
+  expect(screen.getByTestId('sarah-fee-figure').textContent).toBe('$1,234.56 USD');
   expect(screen.getByTestId('sarah-read-figure').textContent).toBe(COPY.figure);
   expect(screen.getByTestId('local-balance').textContent).toBe(COPY.caption);
   expect(screen.getByTestId('sarah-read-as-of').textContent).toBe('Example date: 3 Feb 2030');
@@ -243,8 +244,8 @@ test('Sarah Home uses locked copy and no funding claims', () => {
     expect(document.getElementById('dashboard-sarah-label')?.textContent).toBe(COPY.heading);
     expect(screen.getByTestId('sarah-read-figure').textContent).toBe(COPY.figure);
     expect(screen.getByTestId('local-balance').textContent).toBe(COPY.caption);
-    expect(withoutChart(screen.getByTestId('sarah-fee-card'))).toBe(COPY.card + '$1000.00 USD' + COPY.due + COPY.rate + COPY.limits);
-    expect(withoutChart(panel())).toBe(COPY.heading + COPY.figure + COPY.caption + COPY.date + COPY.card + '$1000.00 USD' + COPY.due + COPY.rate + COPY.limits);
+    expect(withoutChart(screen.getByTestId('sarah-fee-card'))).toBe(COPY.card + '$1,000.00 USD' + COPY.due + COPY.rate + COPY.limits);
+    expect(withoutChart(panel())).toBe(COPY.heading + COPY.figure + COPY.caption + COPY.date + COPY.card + '$1,000.00 USD' + COPY.due + COPY.rate + COPY.limits);
     expect(picker().selectedOptions[0].textContent).toBe(OPTIONS[2]);
     expect(screen.getAllByText(COPY.rate, { exact: true })).toHaveLength(1);
     const text = panel().textContent!.replace(COPY.limits, ''); // Keep the exact negative payment-ability statement.
@@ -350,6 +351,7 @@ const BUNDLE_SOURCE_EDITS: Record<string, [string, string][]> = {
   ]
 };
 function bundlePreRuntime(path: string, value: string): string {
+  value = journeyPreRuntime(path, value);
   for (const [old, replacement] of BUNDLE_SOURCE_EDITS[path] ?? []) {
     if (value.includes(replacement)) {
       expect(value.split(replacement), path).toHaveLength(2);

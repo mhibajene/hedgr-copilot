@@ -287,3 +287,7 @@
 .activityControls button:focus-visible { outline: 2px solid var(--color-hedgr-800); outline-offset: 3px; }
 .activityHint { margin-top: .75rem; font-size: .875rem; color: var(--color-hedgr-600); }
 @media (prefers-reduced-motion: reduce) { .activityStack, .activityCard { animation: none; transition: none; } .activityHint { display: none; } }
+
+@media (max-width: 1023px) {
+  :global(html):has(.scopeNavigation) { scroll-padding-bottom: calc(3.75rem + 1px); }
+}

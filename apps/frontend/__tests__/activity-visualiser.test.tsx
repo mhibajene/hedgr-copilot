@@ -94,14 +94,14 @@ test('V10 say-it-once-incl-what-changed, V11 caption-and-rate-27, V13 no-arrow-l
     expect(screen.queryByTestId('dashboard-since-entries')).toBeNull(); expect(screen.queryByTestId('dashboard-change-chip')).toBeNull();
     expect(screen.getAllByText('Example figure, not a quote', { exact: true })).toHaveLength(1);
     expect(screen.getByTestId('local-balance-figure').textContent).toBe('≈ ZMW 12,960.00');
-    expect(screen.getByText('Example rate: ZMW 27 per US dollar. Not a live rate.', { exact: true })).toBeDefined();
+    expect(screen.getByText('Example rate: 1 USD = 27.00 ZMW. Not a live rate.', { exact: true })).toBeDefined();
     expect(screen.getByText('This is what happened in your simulation. It doesn’t tell you what will happen next.', { exact: true })).toBeDefined();
     const expected = visit === null ? 'A simulated withdrawal on 9 Oct.' : visit < FIRST ? '2 changes since your last visit' : visit < NEXT ? '1 change since your last visit' : 'No changes since your last visit';
     if (visit !== null && visit < NEXT) {
       expect(screen.queryByTestId('engine-posture-context')).toBeNull();
       expect(screen.getByTestId('example-line-chart').querySelector('[data-chart-label]')!.textContent).toBe(expected);
     } else expect(screen.getByTestId('engine-posture-context').textContent).toBe(expected);
-    const inclusion = visit === NEXT + 1 ? 'Includes your simulated activity.' : visit === FIRST - 1 ? 'These simulated entries are included in the balance above.' : 'This simulated withdrawal is included in the balance above.';
+    const inclusion = visit === NEXT + 1 ? 'Includes your simulated activity.' : visit === FIRST - 1 ? "2 new simulated entries since your last visit. They're included in the balance above." : visit === null ? 'This simulated withdrawal is included in the balance above.' : "1 new simulated entry since your last visit. It's included in the balance above.";
     expect(screen.getAllByText(inclusion, { exact: true })).toHaveLength(1);
   }
 });

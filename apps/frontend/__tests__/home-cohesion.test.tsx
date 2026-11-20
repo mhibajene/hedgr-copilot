@@ -1,3 +1,4 @@
+import { assertAmountSourceReversal } from './journey-amount-preservation';
 // @vitest-environment jsdom
 import React from 'react';
 import { createHash } from 'node:crypto';
@@ -26,7 +27,8 @@ const source = (path: string) => readFileSync(resolve(__dirname, '..', path), 'u
 const digest = (value: string) => createHash('sha256').update(value).digest('hex');
 const ROUTES = ['/dashboard-synthetic-journey', '/dashboard?journey=class-a-val-002'];
 const OPTIONS = ['Your own simulation', "Daniel's reserve", "Sarah's course fee"];
-const RATE = 'Example rate: ZMW 27 per US dollar. Not a live rate.';
+const ENGINE_RATE = 'Example rate: ZMW 27 per US dollar. Not a live rate.';
+const RATE = 'Example rate: 1 USD = 27.00 ZMW. Not a live rate.';
 const NOW = Date.parse('2026-10-15T00:00:00Z');
 const row = (type: Tx['type'], amount: number, at: number, status: Tx['status'] = 'settled'): Tx => ({
   txn_ref: `${type}-${at}`, type, status, amount_usd: amount, amount_zmw: amount * 20, fx_rate: 20, created_at: at, updated_at: at,
@@ -58,9 +60,9 @@ test('T1 each-figure-renders-once on all three real Homes', async () => {
     const main = view.container.querySelector('main')!.cloneNode(true) as HTMLElement;
     main.querySelector('label[for="dashboard-example-picker"]')?.parentElement?.remove();
     main.querySelectorAll('details:not([open]), .sr-only, [aria-hidden="true"]').forEach(n => n.remove());
-    const usd = example === 'sarah' ? '$1000.00' : '$800.00';
+    const usd = example === 'sarah' ? '$1,000.00' : '$800.00';
     const local = example === 'sarah' ? '≈ ZMW 5,999.94' : '≈ ZMW 21,600.00';
-    for (const figure of [usd, local, RATE]) expect(main.textContent!.split(figure).length - 1, `${example}: ${figure}`).toBe(1);
+    for (const figure of [usd, local, example === 'own' ? RATE : ENGINE_RATE]) expect(main.textContent!.split(figure).length - 1, `${example}: ${figure}`).toBe(1);
   }
 });
 test('T2 shared-component-used-by-all-three and T3 caption-constant', async () => {
@@ -77,15 +79,18 @@ test('T2 shared-component-used-by-all-three and T3 caption-constant', async () =
     expect(contents).not.toMatch(/exampleHero|gridColumn|gridRow|function exampleDate|Example figure, not a quote/);
   }
 });
-test('T4 rate-line-matches-engine byte for byte', async () => {
+test('T4 own-simulation rate form is pinned separately from Engine prose', async () => {
   const path = resolve(__dirname, '../app/(app)/dashboard/RateLine.tsx');
   expect(existsSync(path), 'shared rate rendering is absent').toBe(true);
   const modulePath = '../app/(app)/dashboard/RateLine';
   const { formatExampleRateLine } = await import(modulePath);
   expect(formatExampleRateLine('ZMW', getSimulationDisplayRate('ZMW'))).toBe(RATE);
-  expect(DANIEL_HOME_READ.explanation.rateAssumption).toBe(RATE);
-  expect(SARAH_HOME_READ.explanation.rateAssumption).toBe(RATE);
+
   await home(); expect(screen.getByText(RATE, { exact: true })).toBeDefined();
+});
+test('T4 Engine rate prose remains byte-identical for both independent examples', () => {
+  expect(DANIEL_HOME_READ.explanation.rateAssumption).toBe(ENGINE_RATE);
+  expect(SARAH_HOME_READ.explanation.rateAssumption).toBe(ENGINE_RATE);
 });
 test('T5 engine-byte-identical including tests and goldens', () => {
   // Immutable 56ce3e6 Git blob IDs, copied from the activation receipt before green.
@@ -123,7 +128,7 @@ test('T7 one-name-per-example excludes the complete unchanged picker', async () 
 });
 test('T8 single-formatUsd feeds all real heroes and shared UTC date formatting', async () => {
   expect(source('lib/utils/money.ts')).not.toMatch(/export function formatUsd/);
-  expect(lastVisit.formatUsd(1000)).toBe('$1000.00');
+  expect(lastVisit.formatUsd(1000)).toBe('$1,000.00');
   const heroPath = resolve(__dirname, '../app/(app)/dashboard/HomeHero.tsx');
   expect(existsSync(heroPath), 'shared canonical hero is absent').toBe(true);
   expect(source('app/(app)/dashboard/HomeHero.tsx')).toMatch(/import.*formatUsd.*last-visit/);
@@ -190,7 +195,7 @@ test('T10 preservation: immutable default/live text at and above grouping thresh
   expect(results).toEqual(PRE_GREEN_HOME_TEXT);
 });
 test('T11 own-sim-rate-line-all-currencies from the unedited registry', async () => {
-  const locked = ['Example rate: ZMW 27 per US dollar. Not a live rate.', 'Example rate: KES 130 per US dollar. Not a live rate.', 'Example rate: NGN 1,500 per US dollar. Not a live rate.', 'Example rate: GHS 15 per US dollar. Not a live rate.', 'Example rate: PHP 56 per US dollar. Not a live rate.'];
+  const locked = ['Example rate: 1 USD = 27.00 ZMW. Not a live rate.', 'Example rate: 1 USD = 130.00 KES. Not a live rate.', 'Example rate: 1 USD = 1,500.00 NGN. Not a live rate.', 'Example rate: 1 USD = 15.00 GHS. Not a live rate.', 'Example rate: 1 USD = 56.00 PHP. Not a live rate.'];
   for (const [index, { code }] of SIMULATION_DISPLAY_CURRENCIES.entries()) {
     localStorage.setItem('hedgr.simulation.display-currency', code); const view = await home();
     expect(within(view.container).getAllByText(locked[index], { exact: true })).toHaveLength(1);
@@ -238,14 +243,22 @@ const ENGINE_BASELINE_BLOBS: Record<string, string> = {
 };
 // Captured on unmodified 56ce3e6 runtime, before any runtime edit.
 const PRE_GREEN_HOME_TEXT: Record<string, string> = {
-  "simulated:first": "b256944abf408147d8bfd059698808f6431e9e9c81f98ecfe8f9a7b1760603d2",
-  "simulated:one": "65e44f78957f3c6ed5ff5abb373571d23627737ec93874028e0b62a2619dade8",
-  "simulated:several": "99be6737c14c52a34bf1c25d726c5ec1e66ec14166441f206bedc14a42189afb",
-  "simulated:no-change": "935f9ef0f12d445e86bf31fa7c0b21fb5db08e0819aa9efd0c5af9b363d22dfc",
-  "live:first": "aea467a989b8c20eef1c88965b2ceda682c18f5f392d48d1b9e4e6cc23b33559",
-  "live:one": "65a2a38a5367633f1ccf741885fc1cc99ab23dd9c647263f00a9baf57c126e0f",
-  "live:several": "de8f413795146782a68694e37fdd0cda95d31d459a60d853e4a6ef488894136b",
-  "live:no-change": "65a2a38a5367633f1ccf741885fc1cc99ab23dd9c647263f00a9baf57c126e0f"
+  // JOURNEY-REVIEW-001 2026-11-19 amount formatting; prior b256944abf408147d8bfd059698808f6431e9e9c81f98ecfe8f9a7b1760603d2
+  "simulated:first": "9ca0836a830775154daaa8388407202639079c8d139c315ffd9d1bde4cc08190",
+  // JOURNEY-REVIEW-001 2026-11-19 amount formatting; prior 65e44f78957f3c6ed5ff5abb373571d23627737ec93874028e0b62a2619dade8
+  "simulated:one": "9ceeadcaba67388e8c973dd098fff97254ec1b8a0207e2392540d8c1821c867d",
+  // JOURNEY-REVIEW-001 2026-11-19 amount formatting; prior 99be6737c14c52a34bf1c25d726c5ec1e66ec14166441f206bedc14a42189afb
+  "simulated:several": "9d5eaa2eb4803dbe99f7ca381cafdcc112d0e19d108cb76e591e55b435c3237b",
+  // JOURNEY-REVIEW-001 2026-11-19 amount formatting; prior 935f9ef0f12d445e86bf31fa7c0b21fb5db08e0819aa9efd0c5af9b363d22dfc
+  "simulated:no-change": "3932f79f058fa2d7541f7e55d6335e91bb3dfab2f57fe7f15b9d3ca4a899040b",
+  // JOURNEY-REVIEW-001 2026-11-19 amount formatting; prior aea467a989b8c20eef1c88965b2ceda682c18f5f392d48d1b9e4e6cc23b33559
+  "live:first": "3c9a288cf918ea3c3b346a4d66f99fda3c3237c2f7471fe92aeb8cc39bc3a4c1",
+  // JOURNEY-REVIEW-001 2026-11-19 amount formatting; prior 65a2a38a5367633f1ccf741885fc1cc99ab23dd9c647263f00a9baf57c126e0f
+  "live:one": "1c9edd48173e66df923f472a10527bd8bdfdd6e33e84585723b14b45310410a1",
+  // JOURNEY-REVIEW-001 2026-11-19 amount formatting; prior de8f413795146782a68694e37fdd0cda95d31d459a60d853e4a6ef488894136b
+  "live:several": "a9931f9f14e1223d9c36fc305fa59409553817e59203758d38b3b4b534d6d74c",
+  // JOURNEY-REVIEW-001 2026-11-19 amount formatting; prior 65a2a38a5367633f1ccf741885fc1cc99ab23dd9c647263f00a9baf57c126e0f
+  "live:no-change": "1c9edd48173e66df923f472a10527bd8bdfdd6e33e84585723b14b45310410a1"
 };
 
 // §394: reverse only exact approved edits against immutable pre-runtime receipts.
@@ -448,3 +461,8 @@ function scPreRuntime(value: string, edits: readonly (readonly string[])[]): str
   for (const [before, after] of edits) value = value.replaceAll(after, before);
   return value;
 }
+
+// JOURNEY-REVIEW-001 amount-only source-reversal control, 2026-11-19.
+test('JOURNEY-REVIEW-001 T10 rejects reversed amount source', () => {
+  expect(() => assertAmountSourceReversal(['lib/utils/money.ts', 'lib/state/last-visit.ts', 'app/(app)/deposit/page.tsx'])).not.toThrow();
+});

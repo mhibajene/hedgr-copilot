@@ -83,7 +83,7 @@ for (const width of [1440, 390]) {
     await expect(hero.getByTestId('local-balance-caption')).toHaveText('Example figure, not a quote');
     await expect(hero.locator('[data-component="LocalFigure"]')).toHaveCount(1);
     await expect(hero).not.toContainText(/6,000|1000/);
-    await expect(page.getByTestId('sarah-fee-card')).toContainText('$1000.00 USD');
+    await expect(page.getByTestId('sarah-fee-card')).toContainText('$1,000.00 USD');
     await expect(page.getByTestId('sarah-fee-card')).toContainText('This read does not establish whether Sarah can pay the fee.');
     await expect(page.locator('main').first()).not.toContainText(/\b(?:sufficiency|progress|gap|funded|enough)\b/i);
   });

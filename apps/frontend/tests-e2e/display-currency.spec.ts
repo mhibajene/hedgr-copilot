@@ -160,10 +160,10 @@ test('all five Settings estimates preserve USD, market, Activity and planning wi
   await page.goto('/activity?journey=class-a-val-002');
   expect(await page.locator('main').textContent()).toBe(activity);
   await page.goto('/deposit?journey=class-a-val-002');
-  await expect(page.getByTestId('deposit-fx-block')).toContainText('Simulated example rate: 1 USD = 56.00 PHP');
+  await expect(page.getByTestId('deposit-fx-block')).toContainText('Example rate: 1 USD = 56.00 PHP. Not a live rate.');
   await page.getByTestId('deposit-amount').fill('280');
   await expect(page.getByTestId('deposit-conversion-preview')).toContainText('$5.00');
-  await expect(page.getByTestId('deposit-balance-change')).toContainText('shows 280 PHP as +$5.00');
+  await expect(page.getByTestId('deposit-balance-change')).toContainText('shows PHP 280.00 as +$5.00');
   await expect(page.getByLabel('Simulation currency display')).toHaveCount(0);
   await page.goto('/withdraw?journey=class-a-val-002');
   await page.getByTestId('withdraw-amount').fill('2');
@@ -249,7 +249,7 @@ for (const width of [320, 390, 1280]) {
       for (const route of ['deposit', 'withdraw']) {
         await page.goto(`/${route}?journey=class-a-val-002`);
         await page.addStyleTag({ content: `html { font-size: ${textSize}%; }` });
-        await expect(page.getByTestId(`${route}-fx-block`)).toContainText('1500.00 NGN');
+        await expect(page.getByTestId(`${route}-fx-block`)).toContainText('1,500.00 NGN');
         await page.getByTestId(`${route}-amount`).fill(route === 'deposit' ? '7500' : '2');
         await checkFits(page);
         await expect(page.getByRole('button', { name: 'Confirm', exact: true })).toBeEnabled();
@@ -280,12 +280,12 @@ for (const [currency, rate, localFive, localThree] of [
     await page.getByRole('link', { name: 'Add simulated deposit' }).click();
     await expect(page).toHaveURL(/\/deposit\?journey=class-a-val-002$/);
     await page.reload();
-    await expect(page.getByTestId('deposit-fx-block')).toHaveText(`Simulated example rate: 1 USD = ${rate.toFixed(2)} ${currency}`);
+    await expect(page.getByTestId('deposit-fx-block')).toHaveText(`Example rate: 1 USD = ${rate.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${currency}. Not a live rate.`);
     const input = page.getByTestId('deposit-amount');
     await expect(page.locator('label[for="deposit-amount"]')).toHaveText(`Amount to simulate (${currency})`);
     await expect(input).toHaveAccessibleName('Simulated deposit amount');
     await input.fill(String(rate * 5));
-    await expect(page.getByTestId('deposit-balance-change')).toContainText(`shows ${rate * 5} ${currency} as +$5.00`);
+    await expect(page.getByTestId('deposit-balance-change')).toContainText(`shows ${currency} ${(rate * 5).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} as +$5.00`);
     await page.getByRole('button', { name: 'Confirm', exact: true }).click();
     await expect(page.getByTestId('deposit-confirmation-region')).toContainText('You added $5.00 to your simulated balance');
     const deposits = await page.evaluate(() => JSON.parse(localStorage.getItem('hedgr:ledger')!).transactions);
@@ -293,7 +293,7 @@ for (const [currency, rate, localFive, localThree] of [
     expect(deposits[0]).toMatchObject({ type: 'deposit', status: 'settled', amount_usd: 5, amount_zmw: 135, fx_rate: DANIEL_FIXTURE_RATE_ZMW_PER_USD });
     await page.getByRole('link', { name: 'Continue to simulated withdrawal' }).click();
     await expect(page).toHaveURL(/\/withdraw\?journey=class-a-val-002$/);
-    await expect(page.getByTestId('withdraw-fx-block')).toHaveText(`Simulated example rate: 1 USD = ${rate.toFixed(2)} ${currency}`);
+    await expect(page.getByTestId('withdraw-fx-block')).toHaveText(`Example rate: 1 USD = ${rate.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${currency}. Not a live rate.`);
     await expect(page.getByTestId('local-balance')).toHaveText(`≈ ${currency} ${localFive} Example figure, not a quote`);
     await page.getByLabel('Amount to simulate (USD)', { exact: true }).fill('2');
     await expect(page.getByTestId('withdraw-balance-preview')).toContainText('What would remain: $3.00');
@@ -317,7 +317,7 @@ for (const [currency, rate, localFive, localThree] of [
     const storageBeforeDefault = await financialStorage(page);
     await page.goto('/deposit');
     await page.getByTestId('deposit-amount').fill('100');
-    await expect(page.getByTestId('deposit-conversion-preview')).toContainText('shows 100 ZMW as +$5.00');
+    await expect(page.getByTestId('deposit-conversion-preview')).toContainText('shows ZMW 100.00 as +$5.00');
     await page.goto('/withdraw');
     await expect(page.getByTestId('local-balance')).toHaveText('≈ ZMW 60.00');
     await page.goto('/deposit?journey=class-a-val-002&scenario=unavailable-data');

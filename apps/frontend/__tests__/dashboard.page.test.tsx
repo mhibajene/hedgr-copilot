@@ -1,3 +1,4 @@
+import { amountSourceBefore, assertAmountSourceReversal } from './journey-amount-preservation';
 // @vitest-environment jsdom
 
 import React from "react";
@@ -832,7 +833,7 @@ test('Journey change inclusion replaces the hero claim and precedes visible limi
     for (const state of ['fallback', 'one', 'several', 'no-change'] as const) {
       setupTicketB(route, state);
       const card = await screen.findByTestId('dashboard-current-status');
-      const claim = state === 'several' ? 'These simulated entries are included in the balance above.' : 'This simulated withdrawal is included in the balance above.';
+      const claim = state === 'fallback' ? 'This simulated withdrawal is included in the balance above.' : state === 'several' ? "2 new simulated entries since your last visit. They're included in the balance above." : "1 new simulated entry since your last visit. It's included in the balance above.";
       expect(card.textContent).toContain(B_LIMIT);
       if (state === 'no-change') {
         expect(screen.getByText('Includes your simulated activity.')).toBeDefined();
@@ -876,8 +877,8 @@ test('S9 status-line-no-count-in-sim', async () => {
       setupTicketB(route, state);
       const card = await screen.findByTestId('dashboard-current-status');
       expect(screen.queryByTestId('engine-posture-context')).toBeNull();
-      expect(within(card).getByRole('heading', { name: 'Since you were last here' })).toBeDefined();
-      expect(card.textContent).toContain(count === 1 ? 'This simulated withdrawal is included in the balance above.' : 'These simulated entries are included in the balance above.');
+      expect(within(card).getByRole('heading', { name: 'Recent changes' })).toBeDefined();
+      expect(card.textContent).toContain(count === 1 ? "1 new simulated entry since your last visit. It's included in the balance above." : "2 new simulated entries since your last visit. They're included in the balance above.");
       expect(screen.getByTestId('example-line-chart').querySelector('[data-chart-label]')!.textContent).toBe(`${count} ${count === 1 ? 'change' : 'changes'} since your last visit`);
     }
     setupTicketB(route, 'no-change');
@@ -1207,7 +1208,7 @@ describe('S18 earn tile fence sweep (§384)', () => {
       const view = await renderS18();
       baseline[`${mode}:${route}`] = s18Digest(s18OutsideTile(view.container));
       if (route.includes('example=daniel')) {
-        expect(screen.getByTestId('daniel-invariant').textContent).toBe('He made two deposits and none since. Each kwacha figure uses the example rate for its date.');
+        expect(screen.getByTestId('daniel-invariant').textContent).toBe('He made two deposits and none since. The chart below shows each kwacha figure, using the example rate for its date.');
         expect(screen.getByTestId('chart-event-list').textContent).toContain('First deposit · 12 Jun · +$500.00');
       } else if (route.includes('example=sarah')) {
         expect(screen.getByTestId('chart-event-list').textContent).toBe('First deposit · 14 Apr · +ZMW 4,000.00Deposit · 21 Jul · +ZMW 2,000.00');
@@ -1561,6 +1562,7 @@ const QOL_SOURCE_BASE: Record<string, string> = {
   "app/(app)/withdraw/page.tsx": "78cd6abcbf6b375769783bc4da819bf9ae9e779235df14764fbd66370668c3dd"
 };
 function qolPreRuntime(path: string, value: string): string {
+  value = amountSourceBefore(path, value);
   if (!QOL_SOURCE_EDITS[path]) return value;
   for (const [old, replacement] of [...QOL_SOURCE_EDITS[path]].reverse()) {
     expect(value.split(replacement), path).toHaveLength(2);
@@ -1569,3 +1571,8 @@ function qolPreRuntime(path: string, value: string): string {
   expect(s18Digest(value), path).toBe(QOL_SOURCE_BASE[path]);
   return value;
 }
+
+// JOURNEY-REVIEW-001 amount-only source-reversal control, 2026-11-19.
+test('JOURNEY-REVIEW-001 S18 rejects reversed amount source', () => {
+  expect(() => assertAmountSourceReversal(['lib/state/last-visit.ts', 'lib/state/simulation-display-currency.ts', 'app/(app)/withdraw/page.tsx'])).not.toThrow();
+});

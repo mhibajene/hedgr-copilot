@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useEffect, useId, useRef, useState } from 'react';
+import { createContext, useEffect, useId, useImperativeHandle, useLayoutEffect, useRef, useState, type Ref } from 'react';
 
 /** Optional presentation lookup supplied by Home; position and series facts stay unchanged. */
 export const ChartSourceAmountsContext = createContext<ReadonlyMap<string, string>>(new Map());
@@ -145,10 +145,12 @@ function LegacyLine({ entries, lastVisit, settle = 1, visitLabel = 'Your last vi
 }
 
 
+export type ChartActions = { focusNewest(): void; openAll(): void };
+
 type ChartProps =
   | { mode?: 'readings'; reads: readonly Pick<DanielRead, 'asOf' | 'localAmountZmwMinor'>[] }
   | ({ mode: 'legacy' } & LegacyProps)
-  | { mode: 'step'; series: readonly BalanceSample[]; events: readonly ChartEvent[]; lastVisit?: number | null; settle?: number; example?: boolean; heroAmount?: number };
+  | { mode: 'step'; series: readonly BalanceSample[]; events: readonly ChartEvent[]; lastVisit?: number | null; settle?: number; example?: boolean; heroAmount?: number; actionsRef?: Ref<ChartActions> };
 
 type LegacyProps = { entries: PositionEntry[]; lastVisit: number | null; settle?: number; visitLabel?: string };
 
@@ -159,7 +161,7 @@ export function ExampleLineChart(props: ChartProps) {
   return <ReadingsLine reads={props.reads} />;
 }
 
-function ActivityLine({ series, events, lastVisit = null, settle = 1, example = false }: Extract<ChartProps, { mode: 'step' }>) {
+function ActivityLine({ series, events, lastVisit = null, settle = 1, example = false, actionsRef }: Extract<ChartProps, { mode: 'step' }>) {
   const plot = useRef<HTMLDivElement>(null);
   const listId = useId();
   const [size, setSize] = useState({ plot: 300, screen: 1440, gutter: 12 });
@@ -168,6 +170,20 @@ function ActivityLine({ series, events, lastVisit = null, settle = 1, example = 
   const [touchHint, setTouchHint] = useState(false);
   const [hintDismissed, setHintDismissed] = useState(false);
   const touchStart = useRef<{ x: number; y: number } | null>(null);
+  const selectedCard = useRef<HTMLDivElement>(null);
+  const allChanges = useRef<HTMLButtonElement>(null);
+  const [focusTarget, setFocusTarget] = useState<'newest' | 'all' | null>(null);
+  useImperativeHandle(actionsRef, () => ({
+    focusNewest() { setOpened(false); setSelectedId(null); setFocusTarget('newest'); },
+    openAll() { setOpened(true); setFocusTarget('all'); },
+  }), []);
+  useLayoutEffect(() => {
+    if (!actionsRef || !focusTarget) return;
+    const target = focusTarget === 'newest' ? selectedCard.current : allChanges.current;
+    target?.focus({ preventScroll: true });
+    target?.scrollIntoView({ block: 'center' });
+    setFocusTarget(null);
+  }, [actionsRef, focusTarget]);
   useEffect(() => {
     const coarse = window.matchMedia?.('(pointer: coarse)');
     const reduced = window.matchMedia?.('(prefers-reduced-motion: reduce)');
@@ -266,7 +282,7 @@ function ActivityLine({ series, events, lastVisit = null, settle = 1, example = 
           if (start && end && Math.abs(end.clientX - start.x) > 40 && Math.abs(end.clientX - start.x) > Math.abs(end.clientY - start.y)) move(end.clientX < start.x ? 1 : -1);
         }}
       >
-        <div id={`${listId}-selected`} className={home.activityCard}>
+        <div id={`${listId}-selected`} ref={actionsRef ? selectedCard : undefined} className={actionsRef ? `${home.activityCard} focus-visible:outline focus-visible:outline-2 focus-visible:outline-hedgr-500` : home.activityCard} {...(actionsRef ? { tabIndex: -1, 'aria-label': text(selected).spoken } : {})}>
           {since(selected) ? <p className={home.activityEyebrow} aria-hidden="true">Since your last visit</p> : null}
           <p data-testid="activity-card" aria-hidden="true">{text(selected).visible}</p>
           <p className={`sr-only ${home.activityAnnouncement}`} role="status" aria-live="polite" aria-atomic="true" data-testid="activity-announcement">{text(selected).spoken}</p>
@@ -277,7 +293,7 @@ function ActivityLine({ series, events, lastVisit = null, settle = 1, example = 
         </div>
         {touchHint && !hintDismissed && selectedIndex < cards.length - 1 ? <p className={home.activityHint}>Swipe to see earlier changes</p> : null}
       </div> : null}
-      <div className={home.visualiserHeading}><button type="button" className={home.visualiserToggle} aria-expanded={opened} aria-controls={listId} onClick={() => setOpened(!opened)}>{title}</button></div>
+      <div className={home.visualiserHeading}><button ref={actionsRef ? allChanges : undefined} type="button" className={home.visualiserToggle} aria-expanded={opened} aria-controls={listId} onClick={() => setOpened(!opened)}>{title}</button></div>
       <ol id={listId} data-testid="chart-event-list" aria-label={title} className={home.visualiserList} hidden={!opened}>
         {listEvents.map(event => <li key={event.id} id={`${listId}-${event.id}`} data-testid={event.testId} aria-label={event.kind === 'reading' ? undefined : text(event).spoken}>
           {event.kind === 'reading' ? <>{event.prefix}<time dateTime={new Date(event.at).toISOString()}>{formatEventDate(event.at, example)}</time>{event.suffix}</> : <span aria-hidden="true">{text(event).type} · <time dateTime={new Date(event.at).toISOString()}>{text(event).date}</time> · {text(event).sign}{text(event).visibleAmount}</span>}

@@ -63,7 +63,7 @@ test.describe('Balance SSoT - Ledger as Single Source of Truth', () => {
     const preview = page.getByTestId('deposit-conversion-preview');
     await expect(preview).toBeVisible();
     await expect(preview).toContainText(/Simulated balance change/);
-    await expect(preview).toContainText(/shows 100 ZMW as \+\$5\.00/);
+    await expect(preview).toContainText(/shows ZMW 100\.00 as \+\$5\.00/);
 
     await page.getByRole('button', { name: 'Confirm' }).click();
 
