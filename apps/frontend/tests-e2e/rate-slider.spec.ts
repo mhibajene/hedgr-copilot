@@ -26,6 +26,8 @@ const NOW=Date.parse('2026-10-15T12:00:00Z');
 const FIRST=Date.parse('2026-10-08T12:00:00Z');const NEXT=Date.parse('2026-10-09T12:00:00Z');
 const LIMIT='Three example rates. Not a live rate and not a forecast.';
 const MEANING='The dollar amount is the same at each rate. The rate sets the local figure.';
+const PAIRED='Same USD amount. Only the example rate changed.';
+const TODAY_ONLY="The USD amount is shown at today's example rate.";
 const CALC='Your US dollar amount is multiplied by each example rate and rounded to two decimal places. Deposits, withdrawals, fees and spreads are not included. This is not your account history or live market data. No money moves.';
 const INVARIANT='He made two deposits and none since. The chart below shows each kwacha figure, using the example rate for its date.';
 const row=(type:'deposit'|'withdrawal',amount:number,at:number)=>({txn_ref:`${type}-${at}`,type,status:'settled',amount_usd:amount,amount_zmw:amount*27,fx_rate:27,created_at:at,updated_at:at});
@@ -36,12 +38,15 @@ test.beforeEach(async({page,context})=>{
  await page.clock.install({time:NOW});await page.clock.setFixedTime(NOW);await page.emulateMedia({reducedMotion:'reduce'});
  await page.goto('/login');await page.getByPlaceholder('you@example.com').fill('rate-slider@hedgr.test');await page.getByRole('button',{name:'Continue',exact:true}).click();await expect(page).toHaveURL(/\/dashboard$/);
 });
-async function seed(page:Page,state:string,currency='ZMW'){
- await page.goto('/api/policy');await page.evaluate(({state,currency,rows,FIRST,NEXT})=>{
+async function seed(page:Page,state:string,currency='ZMW',priorRate?:number){
+ await page.goto('/api/policy');await page.evaluate(({state,currency,rows,FIRST,NEXT,priorRate})=>{
   localStorage.setItem('hedgr:ledger',JSON.stringify({version:2,transactions:rows}));
   if(state==='no-visit')localStorage.removeItem('hedgr:last-home-visit');else localStorage.setItem('hedgr:last-home-visit',String(state==='no-change'?NEXT+1:FIRST+1));
   localStorage.setItem('hedgr.simulation.display-currency',currency);
- },{state,currency,rows,FIRST,NEXT});
+  const visit=Number(localStorage.getItem('hedgr:last-home-visit'));
+  if(priorRate===undefined) localStorage.removeItem('hedgr:example-rate-history');
+  else localStorage.setItem('hedgr:example-rate-history',JSON.stringify({visit,rate:priorRate}));
+ },{state,currency,rows,FIRST,NEXT,priorRate});
 }
 async function visibleText(page:Page){return page.locator('main').evaluate(main=>{
  const clone=main.cloneNode(true) as HTMLElement;clone.querySelector('label[for="dashboard-example-picker"]')?.parentElement?.remove();
@@ -62,11 +67,14 @@ async function retained(page:Page,kind:string,state:string){
 for(const [width,scale] of [[1440,1],[390,1],[320,2]])test(`HOME-SOFTHALO-RATESLIDER-BUNDLE-001 AC1 AC2 AC6 ${width}`,async({page},info)=>{
  test.setTimeout(180000);await page.setViewportSize({width,height:1000});
  for(const route of ROUTES)for(const cell of [
-  {kind:'own',state:'no-visit',currency:'ZMW'},{kind:'own',state:'returning',currency:'ZMW'},{kind:'own',state:'no-change',currency:'ZMW'},
+  {kind:'own',state:'no-visit',currency:'ZMW'},
+  {kind:'own',state:'returning',currency:'ZMW',priorRate:24.5},
+  {kind:'own',state:'returning',currency:'ZMW',priorRate:29.5},
+  {kind:'own',state:'no-change',currency:'ZMW',priorRate:27},
   {kind:'daniel',state:'no-visit',currency:'ZMW'},{kind:'sarah',state:'no-visit',currency:'ZMW'},
   ...['KES','NGN','GHS','PHP'].map(currency=>({kind:'own',state:'returning',currency})),
  ]){
-  const {kind,state,currency}=cell;await seed(page,state,currency);await page.goto(`${route}${route.includes('?')?'&':'?'}example=${kind}`);
+  const {kind,state,currency,priorRate}=cell;await seed(page,state,currency,priorRate);await page.goto(`${route}${route.includes('?')?'&':'?'}example=${kind}`);
   await page.getByTestId(kind==='own'?'usd-balance':`${kind}-read-figure`).waitFor();await page.evaluate(scale=>document.documentElement.style.fontSize=`${16*scale}px`,scale);
   const chart=page.getByTestId('example-line-chart');await expect(chart).toHaveCount(1);await expect(chart.locator('[data-chart-wash]')).toHaveCount(1);await expect(chart.locator('[data-chart-selected]')).toHaveCount(kind==='own'&&state==='no-change'?0:1);
   const plot=chart.locator('[class*="visualiserPlot"]');await expect(plot).toHaveCSS('height',`${width===1440?180:160*scale}px`);
@@ -79,7 +87,7 @@ for(const [width,scale] of [[1440,1],[390,1],[320,2]])test(`HOME-SOFTHALO-RATESL
   if(kind!=='own')expect(await chart.evaluate(n=>n.previousElementSibling?.getAttribute('data-component'))).toBe('HomeHero');
   await retained(page,kind,state);const launcher=page.getByRole('button',{name:'Currency context',exact:true});await expect(launcher).toHaveCount(kind==='sarah'?0:1);
   await expect(page.getByRole('heading',{name:'Currency context',exact:true})).toHaveCount(0);
-  const before=await visibleText(page);once(before,MEANING,0);once(before,LIMIT,0);
+  const before=await visibleText(page);once(before,MEANING,0);once(before,LIMIT,0);once(before,PAIRED,0);once(before,TODAY_ONLY,0);
   const usdFigure=kind==='sarah'?'$1,000.00':kind==='daniel'?'$800.00':'$480.00';
   once(before,usdFigure);
   const localRate={ZMW:27,KES:130,NGN:1500,GHS:15,PHP:56}[currency]!;
@@ -87,19 +95,45 @@ for(const [width,scale] of [[1440,1],[390,1],[320,2]])test(`HOME-SOFTHALO-RATESL
   once(before,homeLocal);
   if(kind==='sarah'){await expect(page.getByRole('slider')).toHaveCount(0);continue;}
   await expect(launcher).toHaveAccessibleDescription('Try example exchange rates');expect((await launcher.boundingBox())!.height).toBeGreaterThanOrEqual(44);
-  await launcher.click();const dialog=page.getByRole('dialog',{name:'Currency context',exact:true});await expect(dialog).toBeVisible();await expect(page.getByRole('heading',{level:2,name:'Currency context',exact:true})).toHaveCount(1);
+  await launcher.focus();await page.keyboard.press('Enter');
+  const dialog=page.getByRole('dialog',{name:'Currency context',exact:true});await expect(dialog).toBeVisible();await expect(page.getByRole('heading',{level:2,name:'Currency context',exact:true})).toHaveCount(1);
   // The one Home launcher remains in the DOM; the native dialog owns keyboard focus.
   await expect(page.getByRole('button',{name:'Currency context',exact:true})).toHaveCount(1);
-  await retained(page,kind,state);const openText=await visibleText(page);once(openText,MEANING);once(openText,LIMIT,currency==='ZMW'?1:0);once(openText,usdFigure,2);once(openText,homeLocal,2);
+  await retained(page,kind,state);const openText=await visibleText(page);
+  const ownZmw=kind==='own'&&currency==='ZMW';
+  once(openText,MEANING,ownZmw?0:1);once(openText,LIMIT,currency==='ZMW'?1:0);once(openText,usdFigure,2);once(openText,homeLocal,2);
+  if(ownZmw){
+   const paired=priorRate===24.5||priorRate===29.5;
+   const exact=async(text:string,count=1)=>{
+    const line=dialog.getByText(text,{exact:true});
+    await expect(line).toHaveCount(count);
+    if(count) await expect(line).toBeVisible();
+   };
+   await exact('Today');await exact('1 USD = 27.00 ZMW');await exact('Not a live rate.');await exact(LIMIT);
+   await exact('At your last visit',paired?1:0);
+   await exact('1 USD = 24.50 ZMW',priorRate===24.5?1:0);
+   await exact('1 USD = 29.50 ZMW',priorRate===29.5?1:0);
+   await exact(PAIRED,paired?1:0);await exact(TODAY_ONLY,paired?0:1);
+   expect(await dialog.getByTestId('currency-rate-card').count()).toBe(1);
+   once(before,'Not a live rate.');once(openText,'Not a live rate.',2);
+  }
   const slider=dialog.getByRole('slider',{name:'Try an example rate'});await expect(slider).toHaveCount(currency==='ZMW'?1:0);
   const usd=kind==='daniel'?800:480;const rate={ZMW:27,KES:130,NGN:1500,GHS:15,PHP:56}[currency]!;
   const amount=(usd*rate).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});await expect(dialog.getByTestId('currency-rate-figure')).toHaveText(`≈ ${currency} ${amount}`);
   await expect(dialog.getByTestId('currency-rate-figure')).toHaveAttribute('aria-live','polite');
   if(currency==='ZMW'){
-   await expect(slider).toHaveAttribute('type','range');await expect(slider).toHaveAttribute('step','1');await expect(slider).toHaveValue('1');await expect(slider).toHaveAttribute('aria-valuetext',`Example rate ZMW 27 per US dollar, about ZMW ${amount}`);
+   await expect(slider).toHaveAttribute('type','range');await expect(slider).toHaveAttribute('step','1');await expect(slider).toHaveValue('1');await expect(slider).toHaveAttribute('aria-valuetext',ownZmw?'Example rate: 1 USD = 27.00 ZMW.':`Example rate ZMW 27 per US dollar, about ZMW ${amount}`);
    expect((await slider.boundingBox())!.height).toBeGreaterThanOrEqual(44);
-   await slider.focus();await page.keyboard.press('ArrowLeft');await expect(slider).toHaveValue('0');await expect(dialog.getByTestId('currency-rate-figure')).toHaveText(`≈ ZMW ${(usd*24.5).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}`);
+   const back=dialog.getByRole('button',{name:'Back to Home'});
+   await expect(back).toBeFocused();
+   await page.keyboard.press('Shift+Tab');await expect(dialog.locator('summary')).toBeFocused();
+   await page.keyboard.press('Tab');await expect(back).toBeFocused();
+   await page.keyboard.press('Tab');await expect(slider).toBeFocused();
+   expect(await slider.evaluate(n=>getComputedStyle(n).outlineStyle)).toBe('solid');
+   await page.keyboard.press('ArrowLeft');await expect(slider).toHaveValue('0');await expect(dialog.getByTestId('currency-rate-figure')).toHaveText(`≈ ZMW ${(usd*24.5).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}`);
+   if(ownZmw) await expect(slider).toHaveAttribute('aria-valuetext','Example rate: 1 USD = 24.50 ZMW.');
    await page.keyboard.press('ArrowRight');await page.keyboard.press('ArrowRight');await expect(slider).toHaveValue('2');await expect(dialog.getByTestId('currency-rate-figure')).toHaveText(`≈ ZMW ${(usd*29.5).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}`);
+   if(ownZmw) await expect(slider).toHaveAttribute('aria-valuetext','Example rate: 1 USD = 29.50 ZMW.');
    await expect(dialog.getByTestId('currency-rate-figure')).toHaveCSS('transition-duration','0s');
   }else{once(openText,`Example rate: 1 USD = ${rate.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${currency}. Not a live rate.`);expect(await dialog.innerText()).not.toMatch(/ZMW|forecast|Three example rates/);}
   const summary=dialog.locator('summary');await summary.focus();await page.keyboard.press('Enter');await expect(dialog.getByText(CALC,{exact:true})).toBeVisible();once(await visibleText(page),CALC);
@@ -108,7 +142,9 @@ for(const [width,scale] of [[1440,1],[390,1],[320,2]])test(`HOME-SOFTHALO-RATESL
   expect(await dialog.evaluate(n=>n.scrollWidth-n.clientWidth)).toBeLessThanOrEqual(1);
   if(route===ROUTES[0]&&currency==='ZMW'&&state==='no-visit')await page.screenshot({path:info.outputPath(`${kind}-${width}-modal.png`),fullPage:true});
   await page.keyboard.press('Escape');await expect(dialog).not.toBeVisible();await expect(launcher).toBeFocused();await retained(page,kind,state);
-  await launcher.click();if(currency==='ZMW')await expect(slider).toHaveValue('1');await page.keyboard.press('Escape');
+  await launcher.click();if(currency==='ZMW')await expect(slider).toHaveValue('1');
+  await dialog.getByRole('button',{name:'Back to Home'}).press('Enter');
+  await expect(dialog).not.toBeVisible();await expect(launcher).toBeFocused();
  }
 });
 test('HOME-SOFTHALO-RATESLIDER-BUNDLE-001 AC3 AC4',async({page})=>{

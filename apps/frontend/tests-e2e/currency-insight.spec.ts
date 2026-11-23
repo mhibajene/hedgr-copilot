@@ -210,8 +210,11 @@ test('inline insight is one keyboard launcher with a complete unchanged shelf an
   await expect(dialog.getByRole('slider', {name:'Try an example rate'})).toHaveValue('1');
   await expect(dialog).not.toContainText('Day 0');
   await expect(dialog.getByTestId('currency-rate-figure')).toHaveText('≈ ZMW 8,100.00');
-  await expect(dialog).toContainText('Three example rates. Not a live rate and not a forecast.');
-  await expect(dialog).toContainText('The dollar amount is the same at each rate. The rate sets the local figure.');
+  await expect(dialog.getByText('Three example rates. Not a live rate and not a forecast.', { exact: true })).toHaveCount(1);
+  await expect(dialog.getByText("The USD amount is shown at today's example rate.", { exact: true })).toBeVisible();
+  await expect(dialog.getByText('Today', { exact: true })).toBeVisible();
+  await expect(dialog.getByText('1 USD = 27.00 ZMW', { exact: true })).toBeVisible();
+  await expect(dialog.getByText('Not a live rate.', { exact: true })).toHaveCount(1);
   await expect(dialog).not.toContainText('Day 30');
   await expect(dialog.locator('details')).toContainText('This is not your account history or live market data. No money moves.');
   await page.keyboard.press('Escape');
@@ -266,7 +269,9 @@ for (const width of [320, 390, 700, 1280, 1440]) {
           expect(await summary.evaluate(el => getComputedStyle(el).outlineStyle)).not.toBe('none');
         }
         await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)).toBeLessThanOrEqual(1);
-        await expect(dialog.getByText('Three example rates. Not a live rate and not a forecast.')).toBeVisible();
+        const limit = dialog.getByText('Three example rates. Not a live rate and not a forecast.', { exact: true });
+        await expect(limit).toHaveCount(1);
+        await expect(limit).toBeVisible();
         const observation = (await page.getByTestId('dashboard-current-status').boundingBox())!;
         const utilities = (await page.getByTestId('dashboard-simulation-utilities').boundingBox())!;
         expect(utilities.y).toBeGreaterThanOrEqual(observation.y + observation.height);
@@ -281,3 +286,86 @@ for (const width of [320, 390, 700, 1280, 1440]) {
     expect(errors).toEqual([]);
   });
 }
+
+test('JOURNEY-REVIEW-001 Step 3a advances one local marker per eligible visit and clears it on Restart', async ({ page }) => {
+  const historyKey = 'hedgr:example-rate-history';
+  const markerKey = 'hedgr:last-home-visit';
+  const start = Date.parse('2026-11-23T04:00:00Z');
+  const readHistory = () => page.evaluate(({ historyKey, markerKey }) => ({
+    history: JSON.parse(localStorage.getItem(historyKey) ?? 'null'),
+    visit: Number(localStorage.getItem(markerKey)),
+  }), { historyKey, markerKey });
+  await page.clock.setFixedTime(start);
+  await seedPosition(page);
+  const original = await storedState(page);
+
+  for (const [index, prior, recorded] of [[0, null, 24.5], [1, 24.5, 27], [2, 27, 29.5], [3, 29.5, 24.5]] as const) {
+    const visit = start + index * 60_000;
+    if (index) {
+      await page.clock.setFixedTime(visit);
+      await page.reload();
+    }
+    const launcher = page.getByRole('button', { name: 'Currency context', exact: true });
+    await expect(launcher).toBeVisible();
+    await expect.poll(readHistory).toEqual({ history: { visit, rate: recorded }, visit });
+    await launcher.click();
+    const dialog = page.getByRole('dialog', { name: 'Currency context', exact: true });
+    await expect(dialog.getByTestId('currency-rate-figure')).toHaveText('≈ ZMW 8,100.00');
+    if (prior === null || prior === 27) {
+      await expect(dialog.getByText("The USD amount is shown at today's example rate.", { exact: true })).toBeVisible();
+      await expect(dialog.getByText('At your last visit', { exact: true })).toHaveCount(0);
+    } else {
+      await expect(dialog.getByText('At your last visit', { exact: true })).toBeVisible();
+      await expect(dialog.getByText(`1 USD = ${prior.toFixed(2)} ZMW`, { exact: true })).toBeVisible();
+    }
+    await dialog.getByRole('button', { name: 'Back to Home' }).click();
+    await expect(launcher).toBeFocused();
+    expect(await readHistory()).toEqual({ history: { visit, rate: recorded }, visit });
+    expect(await storedState(page)).toEqual(original);
+  }
+
+  const restart = page.getByRole('button', { name: 'Restart simulated journey', exact: true });
+  page.once('dialog', dialog => dialog.dismiss());
+  await restart.click();
+  expect((await readHistory()).history?.rate).toBe(24.5);
+  page.once('dialog', dialog => dialog.accept());
+  await restart.click();
+  await expect.poll(readHistory).toEqual({ history: null, visit: 0 });
+});
+
+test('JOURNEY-REVIEW-001 Step 3a ignores stale, invalid and unavailable history', async ({ page }) => {
+  await page.addInitScript(() => {
+    if (!new URL(location.href).searchParams.has('block-history')) return;
+    const read = Storage.prototype.getItem;
+    const write = Storage.prototype.setItem;
+    Storage.prototype.getItem = function (key) {
+      if (key === 'hedgr:example-rate-history') throw new Error('Test storage unavailable');
+      return read.call(this, key);
+    };
+    Storage.prototype.setItem = function (key, value) {
+      if (key === 'hedgr:example-rate-history') throw new Error('Test storage unavailable');
+      return write.call(this, key, value);
+    };
+  });
+  await seedPosition(page);
+  const previousVisit = 1_000_000;
+  for (const [stored, query] of [
+    ['not-json', ''],
+    [JSON.stringify({ visit: previousVisit, rate: 20 }), ''],
+    [JSON.stringify({ visit: previousVisit - 1, rate: 29.5 }), ''],
+    [JSON.stringify({ visit: previousVisit, rate: 29.5 }), '?block-history'],
+  ]) {
+    await page.evaluate(({ previousVisit, stored }) => {
+      localStorage.setItem('hedgr:last-home-visit', String(previousVisit));
+      Storage.prototype.setItem.call(localStorage, 'hedgr:example-rate-history', stored);
+    }, { previousVisit, stored });
+    await page.goto(home + query);
+    await page.getByRole('button', { name: 'Currency context', exact: true }).click();
+    const dialog = page.getByRole('dialog', { name: 'Currency context', exact: true });
+    await expect(dialog.getByText("The USD amount is shown at today's example rate.", { exact: true })).toBeVisible();
+    await expect(dialog.getByText('At your last visit', { exact: true })).toHaveCount(0);
+  }
+  await page.goto(home + '?reset=1');
+  await expect(page.getByTestId('usd-balance')).toHaveText('$0.00');
+  await expect.poll(() => page.evaluate(() => localStorage.getItem('hedgr:example-rate-history'))).toBeNull();
+});

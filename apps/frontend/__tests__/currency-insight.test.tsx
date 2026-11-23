@@ -56,3 +56,36 @@ test.each([['KES',130,'104,000.00'],['NGN',1500,'1,200,000.00'],['GHS',15,'12,00
 test('HOME-SOFTHALO-RATESLIDER-BUNDLE-001 D1 once',()=>{
  render(<><p>Example rate: 1 USD = 130.00 KES. Not a live rate.</p><CurrencyInsight {...props} currency="KES" latestDisplayRate={130} rateLineOnHome/></>);open();expect(document.body.textContent!.split('Example rate: 1 USD = 130.00 KES. Not a live rate.')).toHaveLength(2);expect(screen.getByTestId('currency-rate-figure').getAttribute('aria-live')).toBe('polite');expect(screen.getByTestId('currency-rate-figure').getAttribute('aria-atomic')).toBe('true');
 });
+
+test.each([
+  [24.5, '1 USD = 24.50 ZMW', '≈ ZMW 7,350.00'],
+  [29.5, '1 USD = 29.50 ZMW', '≈ ZMW 8,850.00'],
+  [null, null, null],
+  [27, null, null],
+] as const)('JOURNEY-REVIEW-001 Step 3a exact comparison with prior rate %s', (previousExampleRate, earlier, earlierFigure) => {
+  const comparison = { previousExampleRate };
+  render(<CurrencyInsight {...props} {...comparison} usdAmount={300} />);
+  const dialog = open();
+  const sheet = within(dialog);
+  const paired = 'Same USD amount. Only the example rate changed.';
+  const todayOnly = "The USD amount is shown at today's example rate.";
+  const exactCount = (text: string, count: number) => expect(sheet.queryAllByText(text, { exact: true })).toHaveLength(count);
+
+  exactCount('Today', 1);
+  exactCount('1 USD = 27.00 ZMW', 1);
+  exactCount('Not a live rate.', 1);
+  exactCount(limits, 1);
+  exactCount(meaning, 0);
+  exactCount('At your last visit', earlier ? 1 : 0);
+  exactCount('1 USD = 24.50 ZMW', previousExampleRate === 24.5 ? 1 : 0);
+  exactCount('1 USD = 29.50 ZMW', previousExampleRate === 29.5 ? 1 : 0);
+  exactCount(paired, earlier ? 1 : 0);
+  exactCount(todayOnly, earlier ? 0 : 1);
+  exactCount('Same USD amount', 0);
+  expect(dialog.textContent).not.toMatch(/Day 0|Day 30|30-day|What this does not show|Invented research example|Different local estimate|yield|forecast[^.] /i);
+  expect(sheet.getByTestId('currency-rate-card').textContent).toBe('$300.00≈ ZMW 8,100.00');
+  if (earlier && earlierFigure) {
+    fireEvent.change(sheet.getByRole('slider'), { target: { value: previousExampleRate === 24.5 ? '0' : '2' } });
+    expect(sheet.getByTestId('currency-rate-card').textContent).toBe('$300.00' + earlierFigure);
+  }
+});

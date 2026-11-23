@@ -32,3 +32,25 @@ test('HOME-SOFTHALO-RATESLIDER-BUNDLE-001 AC1',()=>{
  expect(within(chart).getByRole('button',{name:'All changes · example dates'}).getAttribute('aria-controls')).toBe(screen.getByTestId('chart-event-list').id);
  expect(chart.querySelector('[data-testid="dashboard-position-line-visit"]')).toBeNull();
 });
+
+test('JOURNEY-REVIEW-001 Step 3a own ZMW slider speaks only the selected example rate', () => {
+  Object.defineProperty(HTMLDialogElement.prototype, 'showModal', { configurable: true, value() { this.open = true; } });
+  const comparison = { previousExampleRate: 24.5 };
+  render(<CurrencyInsight usdAmount={800} currency="ZMW" latestDisplayRate={27} ready {...comparison} />);
+  fireEvent.click(screen.getByRole('button', { name: 'Currency context', exact: true }));
+  const dialog = within(screen.getByRole('dialog'));
+  const slider = dialog.getByRole('slider', { name: 'Try an example rate' });
+  expect(slider.getAttribute('aria-valuetext')).toBe('Example rate: 1 USD = 27.00 ZMW.');
+  for (const [stop, spoken] of [['0', 'Example rate: 1 USD = 24.50 ZMW.'], ['2', 'Example rate: 1 USD = 29.50 ZMW.']]) {
+    fireEvent.change(slider, { target: { value: stop } });
+    expect(slider.getAttribute('aria-valuetext')).toBe(spoken);
+  }
+  for (const [base, label, rate] of [
+    ['ZMW 24.5', 'At your last visit', '1 USD = 24.50 ZMW'],
+    ['ZMW 27', 'Today', '1 USD = 27.00 ZMW'],
+  ]) {
+    const tick = dialog.getByText(base, { exact: true });
+    expect(within(tick).getByText(label, { exact: true }).textContent).toBe(label);
+    expect(within(tick).getByText(rate, { exact: true }).textContent).toBe(rate);
+  }
+});
