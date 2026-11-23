@@ -5,18 +5,24 @@ import type { SimulationDisplayCurrency } from '../../../lib/state/simulation-di
 import { computeRateFigure, formatRateCents, ZMW_EXAMPLE_RATES } from '../../../lib/narrative/simulation-currency-insight';
 import styles from './currency-insight.module.css';
 
+function exampleRateText(rate: number): string {
+  return `1 USD = ${rate.toFixed(2)} ZMW`;
+}
+
 type CurrencyInsightProps = {
   usdAmount: number;
   currency: SimulationDisplayCurrency;
   latestDisplayRate: number;
   ready: boolean;
   pending?: boolean;
+  /** Own journey only. Null selects the Today-only comparison. */
+  previousExampleRate?: number | null;
   /** The frozen Home rate line already supplies the non-ZMW limit. */
   rateLineOnHome?: boolean;
 };
 
 export function CurrencyInsight({
-  usdAmount, currency, latestDisplayRate, ready, pending = false, rateLineOnHome = false,
+  usdAmount, currency, latestDisplayRate, ready, pending = false, rateLineOnHome = false, previousExampleRate,
 }: CurrencyInsightProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
@@ -33,6 +39,9 @@ export function CurrencyInsight({
     </section>;
   }
   const localFigure = `${currency} ${formatRateCents(result.cents)}`;
+  const ownZmwComparison = currency === 'ZMW' && previousExampleRate !== undefined;
+  const todayRate = ZMW_EXAMPLE_RATES[1];
+  const paired = ownZmwComparison && (previousExampleRate === ZMW_EXAMPLE_RATES[0] || previousExampleRate === ZMW_EXAMPLE_RATES[2]);
   return (
     <section className={styles.context} aria-label="Currency context" data-testid="currency-insight">
       <button ref={triggerRef} type="button" className={styles.launcher} aria-label="Currency context" aria-describedby="currency-context-description" aria-haspopup="dialog" onClick={() => {
@@ -64,11 +73,24 @@ export function CurrencyInsight({
           </div>
           {currency === 'ZMW' ? <div className={styles.slider}>
             <label htmlFor="currency-example-rate">Try an example rate</label>
-            <input id="currency-example-rate" type="range" min="0" max="2" step="1" value={stop} aria-valuetext={`Example rate ZMW ${selectedRate} per US dollar, about ${localFigure}`} onChange={event => setStop(Number(event.currentTarget.value))} />
-            <div className={styles.stops}>{ZMW_EXAMPLE_RATES.map(rate => <span key={rate}>ZMW {rate}</span>)}</div>
+            <input id="currency-example-rate" type="range" min="0" max="2" step="1" value={stop} aria-valuetext={ownZmwComparison ? `Example rate: ${exampleRateText(selectedRate)}.` : `Example rate ZMW ${selectedRate} per US dollar, about ${localFigure}`} onChange={event => setStop(Number(event.currentTarget.value))} />
+            <div className={styles.stops}>{ZMW_EXAMPLE_RATES.map(rate => <span key={rate}>ZMW {rate}
+              {ownZmwComparison && (rate === todayRate || (paired && rate === previousExampleRate)) ? (
+                <small className={styles.tickAnnotation}>
+                  <strong>{rate === todayRate ? 'Today' : 'At your last visit'}</strong>
+                  <small>{exampleRateText(rate)}</small>
+                </small>
+              ) : null}
+            </span>)}</div>
+            {ownZmwComparison ? <p className={styles.limit}>Not a live rate.</p> : null}
             <p className={styles.limit}>Three example rates. Not a live rate and not a forecast.</p>
           </div> : !rateLineOnHome ? <p className={styles.limit}>{formatExampleRateLine(currency, latestDisplayRate)}</p> : null}
-          <section className={styles.meaning}><h2>What this means</h2><p>The dollar amount is the same at each rate. The rate sets the local figure.</p></section>
+          <section className={styles.meaning}>
+            <h2>What this means</h2>
+            <p>{ownZmwComparison ? (
+              paired ? 'Same USD amount. Only the example rate changed.' : "The USD amount is shown at today's example rate."
+            ) : 'The dollar amount is the same at each rate. The rate sets the local figure.'}</p>
+          </section>
           <details className={styles.calculation}><summary>How this is calculated</summary>
             <p>Your US dollar amount is multiplied by each example rate and rounded to two decimal places. Deposits, withdrawals, fees and spreads are not included. This is not your account history or live market data. No money moves.</p>
           </details>
