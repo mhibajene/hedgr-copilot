@@ -1,6 +1,6 @@
 "use client";
 
-import { getSimulationDisplayRate, setSimulationDisplayCurrency, useSimulationDisplayCurrency } from "../../../lib/state/simulation-display-currency";
+import { getSimulationDisplayCurrency, getSimulationDisplayRate, setSimulationDisplayCurrency, useSimulationDisplayCurrency } from "../../../lib/state/simulation-display-currency";
 import finish from '../product-finish.module.css';
 import home from './synthetic-home.module.css';
 import { SimulationDisplayCurrencySelector } from '../../../components/SimulationDisplayCurrencySelector';
@@ -20,6 +20,7 @@ import { SarahExampleHome } from './SarahExampleHome';
 import { HomeHero } from './HomeHero';
 import { RateLine } from './RateLine';
 import { CurrencyInsight } from "./CurrencyInsight";
+import { clearExampleRateHistory, readPreviousExampleRate, recordExampleRateVisit } from "./example-rate-history";
 import { EngineProtectiveGuidance } from "./EngineProtectiveGuidance";
 import { EngineStabilityExplainer } from "./EngineStabilityExplainer";
 import { EngineStabilityReviewSnapshot } from "./EngineStabilityReviewSnapshot";
@@ -153,6 +154,7 @@ export default function DashboardPage() {
     syntheticJourneyActive || simulatedEnvironment;
   const explicitSyntheticJourney =
     syntheticJourneyActive;
+  const [previousExampleRate, setPreviousExampleRate] = useState<number | null>(null);
   const cleanStartRequested = isSyntheticJourneyResetRequested(
     searchParams?.toString()
   );
@@ -171,6 +173,10 @@ export default function DashboardPage() {
         clearTransactions();
         clearSimulationReceipt();
         removeRetiredWalletBalance();
+        if (syntheticJourneyActive && !exampleActive) {
+          clearExampleRateHistory();
+          setPreviousExampleRate(null);
+        }
         if (searchParams?.get("study") === "1") setSimulationDisplayCurrency("ZMW");
       }
       const resetParams = new URLSearchParams(searchParams?.toString());
@@ -186,7 +192,7 @@ export default function DashboardPage() {
       );
     }
     setReady(true);
-  }, [cleanStartRequested, clearTransactions, pathname, searchParams, selectedExample, syntheticJourneyActive, sarahExample]);
+  }, [cleanStartRequested, clearTransactions, pathname, searchParams, selectedExample, syntheticJourneyActive, exampleActive, sarahExample]);
 
   // HOME-EXPERIENCE-001 T3: read the previous Home visit once, then record this one.
   // A journey reset only clears the value; the next ordinary Home visit records it.
@@ -209,12 +215,18 @@ export default function DashboardPage() {
       clearLastVisit();
       setPreviousVisit(null);
     } else {
-      setPreviousVisit(readLastVisit());
+      const priorVisit = readLastVisit();
+      setPreviousVisit(priorVisit);
+      if (syntheticJourneyActive && getSimulationDisplayCurrency() === "ZMW") {
+        const priorRate = readPreviousExampleRate(priorVisit);
+        setPreviousExampleRate(priorRate);
+        if (!arrivedOnExample.current) recordExampleRateVisit(now, priorRate);
+      }
       if (!arrivedOnExample.current) writeLastVisit(now);
     }
     setToday(now);
     setVisitRead(true);
-  }, [productSimulationActive, cleanStartRequested, exampleActive, danielExample]);
+  }, [productSimulationActive, cleanStartRequested, exampleActive, danielExample, syntheticJourneyActive]);
 
   const hasNoTransactions = transactions.length === 0;
   const isFirstTimeUser =
@@ -234,6 +246,8 @@ export default function DashboardPage() {
     removeRetiredWalletBalance();
     clearLastVisit();
     setPreviousVisit(null);
+    clearExampleRateHistory();
+    setPreviousExampleRate(null);
   };
 
   const recentActivity = useMemo(() => {
@@ -673,6 +687,7 @@ export default function DashboardPage() {
       latestDisplayRate={getSimulationDisplayRate(displayCurrency)}
       ready={currencyContextVisible}
       pending={currencyComparisonPending}
+      previousExampleRate={previousExampleRate}
     />
   ) : null;
 

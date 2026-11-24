@@ -19,6 +19,7 @@
 .stops span { flex: 1; }
 .stops span:nth-child(2) { text-align: center; }
 .stops span:last-child { text-align: right; }
+.tickAnnotation, .tickAnnotation strong, .tickAnnotation small { display: block; font-size: inherit; }
 .limit { margin-top: .75rem; font-size: .875rem; }
 .meaning { margin-block: 1.25rem; }
 .meaning h2 { font-weight: 600; margin-bottom: .5rem; }
