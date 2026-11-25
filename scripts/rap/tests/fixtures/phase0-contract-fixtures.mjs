@@ -89,7 +89,7 @@ function repoAuthorityProjection() {
         "§7a Lane R"
       )
     }
-  });
+  }, authoritySources.map((entry) => ({ ...entry, content_sha256: "a".repeat(64) })));
 }
 
 function evidenceEnvelope(authorityClass) {

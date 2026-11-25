@@ -108,6 +108,33 @@ test("Fork 1 retains the standing AGENTS execution contract without dated overri
   assert.equal((after.match(/^Current parallelism posture:/gm) ?? []).length, 1);
 });
 
+function extractSequencingPosture(status) {
+  const lines = status.split("\n");
+  const sectionStart = lines.indexOf("## 7. Current sequence and active status");
+  const sectionEnd = lines.findIndex((line) => line.startsWith("## 7a. "));
+  assert.ok(sectionStart >= 0 && sectionStart < sectionEnd);
+  assert.equal(lines.lastIndexOf("## 7. Current sequence and active status"), sectionStart);
+  const prefix = "- **Sequencing posture:**";
+  const matches = lines.slice(sectionStart + 1, sectionEnd)
+    .filter((line) => line.trimStart().startsWith(prefix));
+  assert.equal(matches.length, 1, "Expected exactly one §7 sequencing-posture line");
+  assert.ok(matches[0].startsWith(prefix + " "));
+  const posture = matches[0].slice(prefix.length + 1);
+  assert.ok(posture.length > 0 && posture === posture.trim() && !/[\r\u2028\u2029]/u.test(posture));
+  return posture;
+}
+
+test("the independent extractor rejects a duplicate §7 sequencing posture", () => {
+  const fixture = [
+    "## 7. Current sequence and active status",
+    "- **Sequencing posture:** First fixture line.",
+    "## 7a. Fixture brief"
+  ];
+  assert.equal(extractSequencingPosture(fixture.join("\n")), "First fixture line.");
+  fixture.splice(2, 0, "- **Sequencing posture:** Duplicate fixture line.");
+  assert.throws(() => extractSequencingPosture(fixture.join("\n")), /exactly one §7 sequencing-posture line/);
+});
+
 test("Fork 1 preserves projected occupancy, sequencing and all non-authorising flags", async () => {
   const current = await sources();
   const history = await read("docs/ops/HEDGR_AUTHORITY_HISTORY_PRE_FORK_1.md");
@@ -115,6 +142,7 @@ test("Fork 1 preserves projected occupancy, sequencing and all non-authorising f
     "AGENTS.md": original(await read("docs/ops/governance/AGENTS_PRE_FORK_1.md"), "AGENTS"),
     "docs/ops/HEDGR_STATUS.md": original(history, "PREFIX") + original(history, "LIVE SECTIONS")
   };
+  const currentSequencing = extractSequencingPosture(current["docs/ops/HEDGR_STATUS.md"]);
   const before = project(baseline);
   const after = project(current);
   assert.equal(before.validation.ok, true);
@@ -129,11 +157,18 @@ test("Fork 1 preserves projected occupancy, sequencing and all non-authorising f
   );
   const oldRelease = "draft PR #550 and existing unfinished Form are preserved. Participant distribution remains paused; no runtime scope beyond the bounded synthetic Home compact FX insight amendment, Lane G change, standing delegation, parent closeout or financial capability.";
   assert.equal(sequencing.value.split(oldRelease).length - 1, 1);
-  const currentSequencing = "RESEARCH-RELEASE-001 closes only through §437 source/rebind/fetched-main RAP gates. §410 D3/D4/D7 lifts research-unreleased/participant-paused holds only for the named route and authorised pool; invitation/pause/withdrawal custody stays exclusively Founder-owned, SME held. CLASS-A-VAL-002 and SE-REASON-001 stay open, no exit verdict or active nested successor; E has no nested ticket, G deferred. §431 bounded VoiceOver PASS remains; actual TalkBack/fractional-ZMW speech INCOMPLETE, never PASS. §438 D1 requires both closed before the next research pass, superseding the research-only non-blocking treatment for that pass only and activating no testing. §409/navigation limits remain. Post-invite fixes stay checksum-only, unactivated and not pre-staged; other QoL/§387 items queued only. SEC-DEPS-003 is closed at facdcaa0 under §473; §6f.43 expired. SEC-DEPS-006 closed at b95bd339 under §475; §6f.44 expired. SEC-DEPS-007 #1136 delivered. §477 source/separate-rebind/RAP gates close the ticket and expire §6f.45. OPS-RAP-BIND-001 activates on §478/§6f.46 gates. OPS-AGENTS-TRIM-001 is next, unactivated. REPLIT spec-v0 hygiene stays queued. MERGE-TIERS-ACT-001 PR B build: §471, Tier 1 OFF. Queue, unactivated: OPS-AGENTS-TRIM-001 (Barry; serialised with MERGE-TIERS-ACT-001); ZOD-CVE-001 follow-ups (ZOD-CVE-FLASK-001 deferred, hash-lock pins, split backend-test job without statuses: write; pre-existing condition, no new privilege); env-name drift; Q2 hosted RAP-check step. OPS-RAP-BATCH-001 is closed under effective §467; §6f.41 expired. No permission transfers. CI-EFF-001 keeps §6f.31/§442 activation and §443 runtime prerequisites; docs-only requires classifier on main; otherwise full exact-head hosted E2E. IDENTITY-001 Step 0 keeps §6f.32/§444 gates and separate A/B/C/deferred-D PRs; Step 2 keeps §6f.33/§445 gates. D waits for the CI-EFF scanner switch; Step 0 stays open through D and closeout. Code-owner review stays OFF; only Founder enables after D3/scanner switch/PR-D and both cutover dry-runs pass. No concurrent open validate.yml PRs or same-file/lockfile work; source records serialise with research priority. OPS-GOV-STATUS-RESTRUCTURE-001 retains only §441 closeout gates and §6f.30 expiry; no continuing support/successor. Under §364/§467, separate sole-JSON permanent-main rebinds continue; §464 carry is not executable. No carried rebind is claimed. Rebind-share ≤10% unachievable before OPS-RAP-BIND-001; report basis. Fork 2 stays inactive. §438 D1/D2 and §439 provenance correction stay current; completed material: history/RELOCATION_INDEX.md. BRIDGE-MCP-001 is closed/retired under §438 D2. observability.md:30 dev:docker remains an unauthorised follow-up. No permission inheritance, parent closure, Lane E/G activation, broader participant exposure or financial capability. NO CROSS-LANE IMPACT.";
   assert.equal(after.projection.payload.fields.sequencing_posture.value, currentSequencing);
   sequencing.value = currentSequencing;
+  for (const [projection, inputs] of [[before.projection, baseline], [after.projection, current]]) {
+    for (const source of projection.sources) {
+      assert.equal(source.content_sha256, createHash("sha256").update(inputs[source.source_path]).digest("hex"));
+    }
+  }
   const normalized = structuredClone(after.projection);
   normalized.payload.fields.authority_boundaries.value = before.projection.payload.fields.authority_boundaries.value;
+  normalized.sources.forEach((source, index) => {
+    source.content_sha256 = before.projection.sources[index].content_sha256;
+  });
   assert.deepEqual(normalized, before.projection);
   assert.match(after.projection.payload.fields.authority_boundaries.value, /Historical passes and completed briefs cannot supply current occupancy/);
   assert.match(after.projection.payload.fields.authority_boundaries.value, /Accepted ADRs, active doctrine, AGENTS/);

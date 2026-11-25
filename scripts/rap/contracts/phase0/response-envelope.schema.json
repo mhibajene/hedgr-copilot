@@ -37,15 +37,25 @@
     "freshness": { "enum": ["CURRENT", "STALE", "UNKNOWN"] },
     "coverage": { "enum": ["COMPLETE", "PARTIAL", "INSUFFICIENT"] },
     "sources": {
-      "type": "array",
-      "items": {
-        "$ref": "source-manifest.schema.json#/$defs/sourceEntry"
-      }
+      "type": "array"
     },
     "conflicts": {
       "type": "array",
       "items": { "$ref": "conflict-record.schema.json" }
     },
     "payload": { "type": "object" }
+  },
+  "if": {
+    "properties": { "authority_class": { "const": "REPO_AUTHORITY_PROJECTION" } }
+  },
+  "then": {
+    "properties": {
+      "sources": { "items": { "$ref": "source-manifest.schema.json#/$defs/rapSourceEntry" } }
+    }
+  },
+  "else": {
+    "properties": {
+      "sources": { "items": { "$ref": "source-manifest.schema.json#/$defs/sourceEntry" } }
+    }
   }
 }

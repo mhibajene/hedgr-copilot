@@ -26,8 +26,19 @@
   },
   "$defs": {
     "sourceEntry": {
+      "$ref": "#/$defs/sourceFields",
+      "unevaluatedProperties": false
+    },
+    "rapSourceEntry": {
+      "$ref": "#/$defs/sourceFields",
+      "required": ["content_sha256"],
+      "properties": {
+        "content_sha256": { "type": "string", "minLength": 64, "maxLength": 64, "pattern": "^[0-9a-f]{64}$" }
+      },
+      "unevaluatedProperties": false
+    },
+    "sourceFields": {
       "type": "object",
-      "additionalProperties": false,
       "required": [
         "source_path",
         "source_role",

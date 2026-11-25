@@ -60,7 +60,11 @@ function fixture(t) {
     sourceDocuments
   });
   assert.equal(projection.validation.ok, true);
-  write(root, OUTPUT_PATH, serializeProjection(projection.projection));
+  const legacySources = projection.projection.sources.map(({ content_sha256, ...source }) => ({
+    ...source,
+    reason: "Loaded from the explicit Phase 1 allow-list at the bound git commit."
+  }));
+  write(root, OUTPUT_PATH, serializeProjection({ ...projection.projection, sources: legacySources }));
   commit(root, "source-bound RAP");
   return { root, sourceCommit };
 }
@@ -131,6 +135,8 @@ test("mechanical write is deterministic, read-only and becomes a no-event merge"
   assert.equal(projection.sequencing_allowed, false);
   assert.deepEqual(projection.conflicts, []);
   assert.ok(projection.sources.every((source) => source.actual_revision === target));
+  assert.ok(projection.sources.every((source) => !Object.hasOwn(source, "content_sha256") &&
+    source.reason === "Loaded from the explicit Phase 1 allow-list at the bound git commit."));
   commit(root, "mechanical artifact only");
   assert.equal(planRebind(root).kind, "no_event");
 });

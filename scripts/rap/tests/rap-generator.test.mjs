@@ -285,11 +285,13 @@ async function gitFixture(t, sources) {
 test("RAP commands keep clean state quiet and warn on lag without rewriting sources", async (t) => {
   for (const lag of [false, true]) {
     const sources = legibilityFixture({ lag });
-    const { repoRoot, cli } = await gitFixture(t, sources);
+    const { repoRoot, cli, runGit, mainCommit } = await gitFixture(t, sources);
     const written = await cli("--write");
     const artifact = await readFile(path.join(repoRoot, "docs/ops/bridge/repo-authority-projection.json"), "utf8");
+    await runGit("add", "docs/ops/bridge/repo-authority-projection.json");
+    await runGit("commit", "-m", "commit generated fixture");
     const checked = await cli("--check");
-    const stdout = await cli();
+    const stdout = await cli("--source-commit", mainCommit);
     assert.equal(stdout.stdout, artifact);
     assert.equal(await readFile(path.join(repoRoot, "docs/ops/bridge/repo-authority-projection.json"), "utf8"), artifact);
     for (const result of [written, checked, stdout]) {
@@ -316,6 +318,8 @@ test("draft decision references and missing local main history cannot become acc
   assert.equal(draft.validation.ok, true);
   assert.equal(draft.hygieneWarnings[0].code, "MAIN_HISTORY_UNVERIFIED");
   assert.equal(draft.hygieneWarnings[0].observed_main_commit, mainCommit);
+  assert.equal(draft.hygieneWarnings[0].observed_content, "MISMATCH");
+  assert.deepEqual(draft.hygieneWarnings[0].differing_paths, ["AGENTS.md"]);
   assert.equal(draft.hygieneWarnings[0].effect_on_authority, "none");
   assert.equal(await runGit("rev-parse", "refs/remotes/origin/main"), mainCommit);
   assert.equal(await runGit("rev-parse", "main"), mainCommit);
@@ -333,6 +337,7 @@ test("draft decision references and missing local main history cannot become acc
   const withoutMain = await generateFromGit({ repoRoot, requestedCommit: draftCommit });
   assert.equal(withoutMain.validation.ok, true);
   assert.equal(withoutMain.hygieneWarnings[0].observed_main_commit, null);
+  assert.equal(withoutMain.hygieneWarnings[0].observed_content, "UNKNOWN");
 });
 
 test("conflict and deterministic-artifact failures retain command exit failure ahead of warnings", async (t) => {
@@ -345,10 +350,12 @@ test("conflict and deterministic-artifact failures retain command exit failure a
   });
   const clean = await gitFixture(t, legibilityFixture({ lag: true }));
   await clean.cli("--write");
-  await writeFile(path.join(clean.repoRoot, "docs/ops/bridge/repo-authority-projection.json"), "{}\n");
+  await writeFile(path.join(clean.repoRoot, "docs/ops/bridge/repo-authority-projection.json"), "{ }\n");
+  await clean.runGit("add", "docs/ops/bridge/repo-authority-projection.json");
+  await clean.runGit("commit", "-m", "invalid artifact fixture");
   await assert.rejects(clean.cli("--check", "--source-commit", clean.mainCommit), (error) => {
     assert.equal(error.code, 1);
-    assert.match(error.stderr, /does not match deterministic generation/);
+    assert.match(error.stderr, /source_commit must be a full lowercase/);
     assert.doesNotMatch(error.stderr, /Authority legibility WARN/);
     return true;
   });
@@ -359,7 +366,10 @@ test("historical active-ticket markers outside live §7 cannot supply sequencing
   const historical = "\nCurrent active ticket status:\n- **Lane X:** `HISTORICAL-001`\n- **Sequencing posture:** Resume historical work.\n\n---\n";
   const expected = projectFixture(sources).projection;
   sources["docs/ops/HEDGR_STATUS.md"] = historical + sources["docs/ops/HEDGR_STATUS.md"] + historical;
-  assert.deepEqual(projectFixture(sources).projection, expected);
+  const actual = projectFixture(sources).projection;
+  assert.notEqual(actual.sources[0].content_sha256, expected.sources[0].content_sha256);
+  expected.sources[0].content_sha256 = actual.sources[0].content_sha256;
+  assert.deepEqual(actual, expected);
 });
 
 test("a historical marker cannot replace a missing live §7 marker", () => {
@@ -378,4 +388,13 @@ test("missing or duplicate live §7 headings fail closed without a history fallb
     );
     assert.throws(() => projectFixture(sources), /exactly one explicit live §7 heading/);
   }
+});
+
+test("live posture is pinned and duplicate sequencing lines fail closed", () => {
+  const sources = legibilityFixture();
+  const status = "docs/ops/HEDGR_STATUS.md";
+  assert.equal(projectFixture(sources).projection.payload.fields.sequencing_posture.value,
+    "Only ACTIVE-001 is active; consult §7a.");
+  sources[status] = sources[status].replace("\n---", "\n- **Sequencing posture:** A second line.\n---");
+  assert.throws(() => projectFixture(sources), /exactly one valid §7 sequencing-posture field/);
 });
