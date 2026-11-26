@@ -142,7 +142,9 @@ test("Fork 1 preserves projected occupancy, sequencing and all non-authorising f
     "AGENTS.md": original(await read("docs/ops/governance/AGENTS_PRE_FORK_1.md"), "AGENTS"),
     "docs/ops/HEDGR_STATUS.md": original(history, "PREFIX") + original(history, "LIVE SECTIONS")
   };
-  const currentSequencing = extractSequencingPosture(current["docs/ops/HEDGR_STATUS.md"]);
+  const currentSequencing = extractSequencingPosture(
+    current["docs/ops/HEDGR_STATUS.md"].replace(/^- \*\*Sequencing posture:\*\* .+$/m,
+      "- **Sequencing posture:** Deliberately wrong hosted fixture."));
   const before = project(baseline);
   const after = project(current);
   assert.equal(before.validation.ok, true);
