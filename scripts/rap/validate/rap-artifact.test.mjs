@@ -9,7 +9,7 @@ import { fileURLToPath } from "node:url";
 
 import {
   OUTPUT_PATH, SOURCE_DEFINITIONS, assertFullGitSha, buildProjection, compareVectors, exactCommit,
-  generateFromGit, git, readCheckout, readVector, serializeProjection, verifyArtifact
+  generateFromGit, git, readCheckout, readVector, serializeProjection, standaloneProofMessage, verifyArtifact
 } from "../generate-repo-authority-projection.mjs";
 
 const ROOT = fileURLToPath(new URL("../../../", import.meta.url));
@@ -73,7 +73,7 @@ test("live strict RAP proof", async (t) => {
       return;
     }
     const { projection } = await verifyArtifact({ repoRoot: ROOT, strict: true, mainAdvisory: true });
-    t.diagnostic(`STRICT_OPTION_A_VERIFIED S=${projection.source_commit}`);
+    t.diagnostic(standaloneProofMessage(projection.source_commit));
   } catch (error) {
     t.diagnostic("UNKNOWN / INSUFFICIENT");
     throw error;
@@ -116,6 +116,12 @@ async function temporary(t) {
   const root = await realpath(await mkdtemp(path.join(tmpdir(), "rap-attribution-")));
   t.after(() => rm(root, { recursive: true, force: true }));
   return root;
+}
+
+async function bareRemote(t) {
+  const remote = await temporary(t);
+  fixtureGit(remote, "init", "--bare", "-q");
+  return remote;
 }
 
 async function put(root, file, contents) {
@@ -203,10 +209,18 @@ test("strict source edit and RAP-only migration reproduce canonical bytes from S
   }
 });
 
-test("squash and later unchanged PR with S unavailable, explicit transport, and depth-one content", async (t) => {
+test("squash, source-ref deletion, later unchanged PR with S absent, and depth-one content", async (t) => {
   const { root, B, H, S } = await fixture(t);
   const M = commitTree(root, H, [B], "squash seed");
+  const archive = await bareRemote(t);
+  const producingRef = "refs/pull/41/head";
+  fixtureGit(root, "push", "--quiet", archive, `${H}:${producingRef}`);
   fixtureGit(root, "update-ref", "refs/heads/main", M);
+  fixtureGit(root, "switch", "-q", "main");
+  fixtureGit(root, "update-ref", "-d", "refs/heads/head", H);
+  assert.throws(() => fixtureGit(root, "show-ref", "--verify", "refs/heads/head"));
+  assert.equal(fixtureGit(root, "rev-parse", "--verify", "main"), M);
+  t.diagnostic(`ISOLATED_FIXTURE SOURCE_REF_DELETED H=${H} M=${M}`);
   const fresh = await temporary(t);
   fixtureGit(fresh, "clone", "--quiet", "--no-local", "--single-branch", "--branch", "main", root, ".");
   await assert.rejects(exactCommit(fresh, S), /missing, unreadable or not a commit/);
@@ -232,14 +246,20 @@ test("squash and later unchanged PR with S unavailable, explicit transport, and 
     t.diagnostic(`ISOLATED_FIXTURE CONTENT_ONLY ${branch}`);
     await assert.rejects(verifyArtifact({ repoRoot: shallow, strict: true }), /missing/);
     await assert.rejects(runFixture(t, shallow, { ...env, GITHUB_WORKSPACE: shallow }), /requires full history/);
-    fixtureGit(shallow, "fetch", "--quiet", root, H);
+    fixtureGit(shallow, "fetch", "--quiet", archive, producingRef);
+    assert.equal(fixtureGit(shallow, "rev-parse", "FETCH_HEAD"), H);
     await verifyArtifact({ repoRoot: shallow, strict: true });
   }
 
-  fixtureGit(fresh, "fetch", "--quiet", root, H);
+  fixtureGit(fresh, "fetch", "--quiet", archive, producingRef);
+  assert.equal(fixtureGit(fresh, "rev-parse", "FETCH_HEAD"), H);
   assert.equal(await runFixture(t, fresh, env), "UNCHANGED_FROM_BASE");
   fixtureGit(fresh, "switch", "-q", "--detach", M);
-  await verifyArtifact({ repoRoot: fresh, strict: true });
+  assert.throws(() => fixtureGit(fresh, "merge-base", "--is-ancestor", S, M), { status: 1 });
+  assert.equal(fixtureGit(fresh, "merge-base", S, H), S);
+  const { projection } = await verifyArtifact({ repoRoot: fresh, strict: true });
+  assert.equal(standaloneProofMessage(projection.source_commit),
+    `STANDALONE_BYTES_VERIFIED S=${S}. Lineage not verified. The operator must separately verify the producing-head ancestry and squash lineage under §7a condition 11.`);
   // The same source state would be a changed-path revert against the seeded base.
   fixtureGit(root, "switch", "-q", "--detach", M);
   await put(root, SOURCES[2], DOCUMENTS[SOURCES[2]]);
@@ -499,4 +519,113 @@ test("replacement objects and grafts cannot influence immutable selection or anc
   fixtureGit(root, "replace", B, H);
   await put(root, ".git/info/grafts", `${C} ${H}\n`);
   assert.equal(await runFixture(t, root, env), "STRICT_OPTION_A");
+});
+
+test("an isolated force-push during the strict check leaves proof pinned to the old tuple", async (t) => {
+  const { root, B, H, S } = await fixture(t);
+  const remote = await bareRemote(t);
+  const ref = "refs/heads/pr-head";
+  const replacement = commitTree(root, B, [B], "non-fast-forward replacement head");
+  assert.throws(() => fixtureGit(root, "merge-base", "--is-ancestor", H, replacement), { status: 1 });
+  fixtureGit(root, "push", "--quiet", remote, `${H}:${ref}`);
+  const { C, env, event, eventPath } = await hosted(root, B, H);
+  const tuple = `N=41 B=${B} H=${H} C=${C}`;
+  const diagnostics = [];
+  assert.equal(await hostedValidation(root, env, (message) => {
+    diagnostics.push(message);
+    if (message === `STRICT_OPTION_A ${tuple}`) {
+      fixtureGit(root, "push", "--quiet", `--force-with-lease=${ref}:${H}`, remote, `${replacement}:${ref}`);
+      assert.equal(fixtureGit(remote, "rev-parse", ref), replacement);
+      t.diagnostic(`ISOLATED_FIXTURE FORCE_PUSH_AFTER_SELECTION ${tuple} replacement=${replacement}`);
+    }
+  }), "STRICT_OPTION_A");
+  assert.deepEqual(diagnostics, [`STRICT_OPTION_A ${tuple}`, `STRICT_OPTION_A_VERIFIED ${tuple} S=${S}`]);
+  for (const message of diagnostics) t.diagnostic(`ISOLATED_FIXTURE ${message}`);
+
+  event.pull_request.head.sha = fixtureGit(remote, "rev-parse", ref);
+  await writeFile(eventPath, JSON.stringify(event));
+  await assert.rejects(runFixture(t, root, env), /Raw merge parents differ/);
+  const fresh = await hosted(root, B, replacement);
+  assert.notEqual(fresh.C, C);
+  assert.equal(await runFixture(t, root, fresh.env), "UNCHANGED_FROM_BASE");
+});
+
+// The review fixtures apply §7a's independent continuity check outside hosted routing.
+const EVALUATORS = [
+  "package.json", "scripts/rap", "scripts/bridge", ".github", "scripts/ci",
+  ".nvmrc", "pnpm-lock.yaml", "turbo.json", ":(glob)**/.gitattributes"
+];
+
+function reviewedChanges(root, left, right, paths) {
+  const names = fixtureGit(root, "diff", "--no-renames", "--name-only", "-z", left, right, "--", ...paths);
+  return names.split("\0").filter(Boolean);
+}
+
+function reviewAnchorContinuity(root, record, tip, receipt) {
+  const history = fixtureGit(root, "rev-list", "--first-parent", tip).split("\n");
+  const anchorIndex = history.indexOf(record);
+  if (anchorIndex < 0 || (receipt && receipt !== record)) return "NO_TRUSTED_ANCHOR";
+  for (let index = anchorIndex; index > 0; index -= 1) {
+    if (reviewedChanges(root, history[index], history[index - 1], [...INPUTS, ...EVALUATORS]).length) {
+      return "CONTINUITY_BROKEN";
+    }
+  }
+  return receipt ? "EFFECTIVE_ANCHOR" : "PENDING_EFFECTIVITY";
+}
+
+test("an admitted unchanged squash preserves pending effectivity and a source-changing squash breaks continuity", async (t) => {
+  const { root, B, H } = await fixture(t);
+  const record = commitTree(root, H, [B], "record delivered, receipt pending");
+  fixtureGit(root, "switch", "-q", "--detach", record);
+  // The fixture stipulates independent authorisation and ordinary gates for this separate change.
+  await put(root, "admitted-work.txt", "Separately authorised non-dependent fixture.\n");
+  const admitted = commit(root, "admitted unrelated work");
+  assert.equal(await runFixture(t, root, (await hosted(root, record, admitted)).env), "UNCHANGED_FROM_BASE");
+  const intervening = commitTree(root, admitted, [record], "admitted squash");
+  assert.equal(reviewAnchorContinuity(root, record, intervening), "PENDING_EFFECTIVITY");
+  assert.equal(reviewAnchorContinuity(root, record, intervening, record), "EFFECTIVE_ANCHOR");
+  assert.equal(reviewAnchorContinuity(root, record, intervening, admitted), "NO_TRUSTED_ANCHOR");
+  assert.equal(reviewAnchorContinuity(root, H, intervening), "NO_TRUSTED_ANCHOR");
+
+  fixtureGit(root, "switch", "-q", "--detach", intervening);
+  const source = SOURCES[2];
+  await put(root, source, (await readFile(path.join(root, source), "utf8")) + "\nGoverned byte change.\n");
+  const changedSource = commit(root, "source change during hold");
+  await generate(root, changedSource);
+  const changedHead = commit(root, "technically valid artifact");
+  assert.equal(await runFixture(t, root, (await hosted(root, intervening, changedHead)).env), "STRICT_OPTION_A");
+  const forbiddenSquash = commitTree(root, changedHead, [intervening], "hypothetical forbidden squash");
+  assert.equal(reviewAnchorContinuity(root, record, forbiddenSquash), "CONTINUITY_BROKEN");
+  assert.equal(reviewAnchorContinuity(root, record, forbiddenSquash, record), "CONTINUITY_BROKEN");
+  t.diagnostic(`ISOLATED_FIXTURE PENDING_WINDOW record=${record} admitted=${intervening} forbidden=${forbiddenSquash} pending=PENDING_EFFECTIVITY forbidden_result=CONTINUITY_BROKEN`);
+});
+
+test("independent evaluator review rejects dispatch and selector rewrites on a green continuity tuple", async (t) => {
+  const { root } = await fixture(t);
+  const dispatch = "package.json";
+  const selector = "scripts/rap/validate/rap-artifact.test.mjs";
+  function manifest(trustCheck) {
+    return JSON.stringify({ scripts: { "trust:check": trustCheck } }) + "\n";
+  }
+  await put(root, dispatch, manifest("node ./scripts/ci/trust-check.mjs && pnpm -w bridge:rap:test:strict"));
+  await put(root, selector,
+    'export const select = (changed) => changed ? "STRICT_OPTION_A" : "UNCHANGED_FROM_BASE";\n');
+  const base = commit(root, "reviewed synthetic evaluator");
+  for (const [file, contents] of [
+    [dispatch, manifest("node --version")],
+    [selector, 'export const select = () => "UNCHANGED_FROM_BASE";\n']
+  ]) {
+    await t.test(file, async (subtest) => {
+      fixtureGit(root, "switch", "-q", "--detach", base);
+      await put(root, file, contents);
+      const changed = commit(root, "unreviewed evaluator rewrite");
+      const { C, env } = await hosted(root, base, changed);
+      assert.deepEqual(reviewedChanges(root, base, C, INPUTS), []);
+      assert.equal(await runFixture(subtest, root, env), "UNCHANGED_FROM_BASE");
+      assert.deepEqual(reviewedChanges(root, base, changed, EVALUATORS), [file]);
+      const attempted = commitTree(root, changed, [base], "hypothetical evaluator rewrite squash");
+      assert.equal(reviewAnchorContinuity(root, base, attempted, base), "CONTINUITY_BROKEN");
+      subtest.diagnostic(`ISOLATED_FIXTURE EVALUATOR_REWRITE_REJECTED B=${base} H=${changed} C=${C} path=${file}`);
+    });
+  }
 });

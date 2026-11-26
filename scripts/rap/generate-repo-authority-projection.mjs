@@ -633,6 +633,10 @@ async function verifyArtifact({ repoRoot, checkout, strict, requestedCommit, anc
   return result;
 }
 
+function standaloneProofMessage(sourceCommit) {
+  return `STANDALONE_BYTES_VERIFIED S=${sourceCommit}. Lineage not verified. The operator must separately verify the producing-head ancestry and squash lineage under §7a condition 11.`;
+}
+
 function parseArgs(args) {
   const options = { mode: "stdout", requestedCommit: undefined };
   for (let index = 0; index < args.length; index += 1) {
@@ -693,7 +697,7 @@ async function main() {
   if (options.mode === "check") {
     reportWarnings();
     process.stdout.write(
-      `${OUTPUT_PATH} matches deterministic generation for ${result.projection.source_commit}.\n`
+      `${standaloneProofMessage(result.projection.source_commit)}\n`
     );
     return;
   }
@@ -721,6 +725,7 @@ export {
   extractStatusProjection,
   generateFromGit,
   serializeProjection,
+  standaloneProofMessage,
   git,
   exactCommit,
   compareVectors,

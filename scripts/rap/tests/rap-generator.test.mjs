@@ -291,6 +291,8 @@ test("RAP commands keep clean state quiet and warn on lag without rewriting sour
     await runGit("add", "docs/ops/bridge/repo-authority-projection.json");
     await runGit("commit", "-m", "commit generated fixture");
     const checked = await cli("--check");
+    assert.equal(checked.stdout,
+      `STANDALONE_BYTES_VERIFIED S=${mainCommit}. Lineage not verified. The operator must separately verify the producing-head ancestry and squash lineage under §7a condition 11.\n`);
     const stdout = await cli("--source-commit", mainCommit);
     assert.equal(stdout.stdout, artifact);
     assert.equal(await readFile(path.join(repoRoot, "docs/ops/bridge/repo-authority-projection.json"), "utf8"), artifact);
