@@ -35,6 +35,7 @@ const SOURCE_FIELDS = new Set([
   "reason",
   "conflict_status"
 ]);
+const RAP_SOURCE_FIELDS = new Set([...SOURCE_FIELDS, "content_sha256"]);
 
 const PROVENANCE_FIELDS = new Set([
   "value",
@@ -177,7 +178,7 @@ function inspectProhibitedFields(value, path, errors) {
   }
 }
 
-function validateSourceEntry(source, path = "$.sources[0]") {
+function validateSourceEntry(source, path = "$.sources[0]", { requireHash = false } = {}) {
   const errors = [];
 
   if (!isRecord(source)) {
@@ -190,7 +191,18 @@ function validateSourceEntry(source, path = "$.sources[0]") {
     ];
   }
 
-  checkUnknownKeys(source, SOURCE_FIELDS, path, errors);
+  checkUnknownKeys(source, requireHash ? RAP_SOURCE_FIELDS : SOURCE_FIELDS, path, errors);
+  if (requireHash && (
+    typeof source.content_sha256 !== "string" ||
+    source.content_sha256.length !== 64 ||
+    !/^[0-9a-f]{64}$/.test(source.content_sha256)
+  )) {
+    errors.push(failClosedError(
+      "STRUCTURALLY_INVALID_SOURCE",
+      `${path}.content_sha256`,
+      "RAP source content hash must be lowercase SHA-256 hexadecimal."
+    ));
+  }
 
   if (!isRepoRelativePath(source.source_path)) {
     errors.push(
@@ -306,7 +318,7 @@ function validateSourceEntry(source, path = "$.sources[0]") {
   return sortErrors(errors);
 }
 
-function evaluateSourceSet(sources, commonRevision, { requireAuthoritySet = false } = {}) {
+function evaluateSourceSet(sources, commonRevision, { requireAuthoritySet = false, requireHash = false } = {}) {
   const errors = [];
   const sortedSources = Array.isArray(sources)
     ? [...sources].sort((a, b) =>
@@ -326,7 +338,7 @@ function evaluateSourceSet(sources, commonRevision, { requireAuthoritySet = fals
 
   sortedSources.forEach((source, index) => {
     const path = `$.sources[${index}]`;
-    errors.push(...validateSourceEntry(source, path));
+    errors.push(...validateSourceEntry(source, path, { requireHash }));
     if (!isRecord(source)) return;
 
     const mandatory = source.requirement === "MANDATORY";
@@ -843,7 +855,8 @@ function validateResponseEnvelope(value) {
   }
 
   const sourceEvaluation = evaluateSourceSet(value.sources, value.source_commit, {
-    requireAuthoritySet: value.authority_class === READ_ONLY_AUTHORITY_CLASS
+    requireAuthoritySet: value.authority_class === READ_ONLY_AUTHORITY_CLASS,
+    requireHash: value.authority_class === READ_ONLY_AUTHORITY_CLASS
   });
   errors.push(...sourceEvaluation.errors);
 

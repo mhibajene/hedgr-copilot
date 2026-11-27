@@ -123,6 +123,15 @@ function validatedProjection(revision, documents, timestamp) {
   return projection;
 }
 
+// Fork 2 remains dormant and retains its historical artifact serialization.
+function serializeLegacyProjection(projection) {
+  const sources = projection.sources.map(({ content_sha256, ...source }) => ({
+    ...source,
+    reason: "Loaded from the explicit Phase 1 allow-list at the bound git commit."
+  }));
+  return serializeProjection({ ...projection, sources });
+}
+
 function liveSection(statusSource) {
   const start = statusSource.indexOf("## 7. Current sequence and active status");
   const end = statusSource.indexOf("\n## 7a.", start);
@@ -187,7 +196,7 @@ export function planRebind(root = REPO_ROOT, { requireActive = false, testTarget
   }
   const oldProjection = validatedProjection(bound, before, commitTime(root, bound));
   requireCondition(
-    artifactText === serializeProjection(oldProjection),
+    artifactText === serializeLegacyProjection(oldProjection),
     "RAP artifact does not match deterministic generation for its bound sources."
   );
   if (requireActive) assertLiveActivation(after["docs/ops/HEDGR_STATUS.md"]);
@@ -216,7 +225,7 @@ export function writeRebind(root = REPO_ROOT, { requireActive = false, testTarge
     currentSources,
     commitTime(root, plan.target_commit)
   );
-  const serialized = serializeProjection(projection);
+  const serialized = serializeLegacyProjection(projection);
   writeFileSync(path.join(root, OUTPUT_PATH), serialized);
   return {
     ...plan,

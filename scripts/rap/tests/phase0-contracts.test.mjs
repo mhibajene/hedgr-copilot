@@ -232,3 +232,42 @@ test("fixtures contain no secrets, credentials, user data, or financial data", (
   assert.doesNotMatch(serialized, /email|phone|account[_-]?number|customer[_-]?balance/i);
   assert.equal(GENERATED_AT, "2026-07-16T00:00:00.000Z");
 });
+
+test("schema and runtime agree on the closed RAP-only source hash", async () => {
+  const envelope = await readJson("response-envelope.schema.json");
+  const manifest = await readJson("source-manifest.schema.json");
+  const rap = manifest.$defs.rapSourceEntry;
+  const legacy = manifest.$defs.sourceEntry;
+  assert.deepEqual(envelope.properties.sources, { type: "array" });
+  assert.equal(envelope.if.properties.authority_class.const, "REPO_AUTHORITY_PROJECTION");
+  assert.match(envelope.then.properties.sources.items.$ref, /#\/\$defs\/rapSourceEntry$/);
+  assert.match(envelope.else.properties.sources.items.$ref, /#\/\$defs\/sourceEntry$/);
+  assert.deepEqual(manifest.properties.sources.items, { $ref: "#/$defs/sourceEntry" });
+  assert.equal(legacy.$ref, rap.$ref);
+  assert.equal(legacy.unevaluatedProperties, false);
+  assert.equal(rap.unevaluatedProperties, false);
+  assert.deepEqual(rap.required, ["content_sha256"]);
+
+  const digest = rap.properties.content_sha256;
+  const digestPattern = new RegExp(digest.pattern, "u");
+  const cases = ["0".repeat(64), undefined, "a".repeat(63), "a".repeat(65),
+    "a".repeat(64) + "\n", "A".repeat(64), "g".repeat(64), 100];
+  for (const hash of cases) {
+    const candidate = repoAuthorityProjection();
+    if (hash === undefined) delete candidate.sources[0].content_sha256;
+    else candidate.sources[0].content_sha256 = hash;
+    const schemaAccepts = typeof hash === digest.type &&
+      hash.length >= digest.minLength && hash.length <= digest.maxLength && digestPattern.test(hash);
+    assert.equal(validateResponseEnvelope(candidate).ok, schemaAccepts, String(hash));
+  }
+  const unknown = repoAuthorityProjection();
+  unknown.sources[0].unknown = "closed";
+  assert.equal(validateResponseEnvelope(unknown).ok, false);
+  for (const authority of ["REVIEW_EVIDENCE", "SUPPORTING_EVIDENCE"]) {
+    const valid = structuredClone(validFixtures.find(({ value }) => value.authority_class === authority).value);
+    assert.equal(validateResponseEnvelope(valid).ok, true);
+    assert.equal(Object.hasOwn(manifest.$defs.sourceFields.properties, "content_sha256"), false);
+    valid.sources[0].content_sha256 = "0".repeat(64);
+    assert.ok(validateResponseEnvelope(valid).errors.some(({ code }) => code === "UNKNOWN_SCHEMA_CONCEPT"));
+  }
+});
