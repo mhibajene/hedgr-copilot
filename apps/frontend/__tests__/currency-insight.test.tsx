@@ -76,6 +76,7 @@ test.each([
   exactCount('Not a live rate.', 1);
   exactCount(limits, 1);
   exactCount(meaning, 0);
+  expect(sheet.getByText('Your US dollar amount is multiplied by each example rate and rounded to two decimal places. Deposits, withdrawals, fees and spreads are not included. These figures use example rates only. They are not your account history. No money moves.', { exact: true })).toBeDefined();
   exactCount('At your last visit', earlier ? 1 : 0);
   exactCount('1 USD = 24.50 ZMW', previousExampleRate === 24.5 ? 1 : 0);
   exactCount('1 USD = 29.50 ZMW', previousExampleRate === 29.5 ? 1 : 0);
