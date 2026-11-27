@@ -425,6 +425,7 @@ test('JOURNEY-REVIEW-001 item 3 (d)/(d2): first open uses only the same-origin r
   await expect(dialog.getByTestId('currency-rate-figure')).toHaveText('≈ ZMW 8,850.00');
 
   await page.getByRole('button', { name: 'Back to Home' }).click();
+  await expect(attribution).toHaveCount(0);
   expect(await accordion.evaluate(node => node.outerHTML)).toBe(initialDisclosure);
   expect(await page.getByTestId('dashboard-balance').evaluate(node => node.outerHTML)).toBe(homeFigures);
   expect(await storedState(page)).toEqual(stored);
@@ -464,4 +465,61 @@ test('JOURNEY-REVIEW-001 item 3 (d)/(d2): CI same-origin response leaves the exa
   await expect(dialog.getByTestId('currency-rate-figure')).toHaveText('≈ ZMW 8,100.00');
   expect(await accordion.evaluate(node => node.outerHTML)).toBe(initialDisclosure);
   expect(await storedState(page)).toEqual(before);
+});
+
+test('JOURNEY-REVIEW-001 item 3 (d): simulated preview and receipt figures are byte-identical with 20.58 and unavailable', async ({ page }) => {
+  await seedPosition(page);
+  const initial = await storedState(page);
+  const samples: Record<string, string>[] = [];
+
+  for (const available of [false, true]) {
+    await page.unroute('**/api/live-rate');
+    await page.route('**/api/live-rate', route => route.fulfill({
+      json: available ? { rate: 20.58, asOf: new Date().toISOString(), available }
+        : { rate: null, asOf: null, available },
+    }));
+    await page.goto('/api/policy');
+    await page.evaluate(record => {
+      sessionStorage.clear();
+      for (const [key, value] of Object.entries(record)) {
+        if (value === null) localStorage.removeItem(key);
+        else localStorage.setItem(key, value);
+      }
+    }, initial);
+    await page.goto(home);
+    await expect(page.getByTestId('usd-balance')).toHaveText('$300.00');
+    const rateReply = page.waitForResponse(response => new URL(response.url()).pathname === '/api/live-rate');
+    await page.getByRole('button', { name: 'Currency context', exact: true }).click();
+    await rateReply;
+    const sheet = page.getByRole('dialog', { name: 'Currency context', exact: true });
+    await sheet.locator('summary').click();
+    await expect(sheet.getByText('Daily rate', { exact: true })).toHaveCount(available ? 1 : 0);
+    if (available) await expect(sheet.getByText('1 USD = 20.58 ZMW', { exact: true })).toBeVisible();
+    expect(await storedState(page)).toEqual(initial);
+    await page.getByRole('button', { name: 'Back to Home' }).click();
+
+    await page.goto('/deposit?journey=class-a-val-002');
+    await page.getByTestId('deposit-amount').fill('135');
+    const depositPreview = page.getByTestId('deposit-balance-change');
+    await expect(depositPreview).toContainText('+$5.00');
+    const depositPreviewBytes = await depositPreview.evaluate(node => node.outerHTML);
+    await page.getByRole('button', { name: 'Confirm', exact: true }).click();
+    const depositReceipt = page.getByTestId('deposit-confirmation-region');
+    await expect(depositReceipt).toContainText('You added $5.00 to your simulated balance');
+    await expect(depositReceipt.locator('dl')).toContainText('1 USD = 27.00 ZMW');
+    const depositReceiptBytes = await depositReceipt.locator('dl').evaluate(node => node.outerHTML);
+
+    await page.goto('/withdraw?journey=class-a-val-002');
+    await page.getByTestId('withdraw-amount').fill('2');
+    const withdrawPreview = page.getByTestId('withdraw-balance-preview');
+    await expect(withdrawPreview).toContainText('What would remain: $303.00');
+    const withdrawPreviewBytes = await withdrawPreview.evaluate(node => node.outerHTML);
+    await page.getByRole('button', { name: 'Confirm', exact: true }).click();
+    const withdrawReceipt = page.getByTestId('withdraw-status-region');
+    await expect(withdrawReceipt).toHaveAttribute('data-status', 'SUCCESS');
+    await expect(withdrawReceipt.locator('dl')).toContainText('1 USD = 27.00 ZMW');
+    const withdrawReceiptBytes = await withdrawReceipt.locator('dl').evaluate(node => node.outerHTML);
+    samples.push({ depositPreviewBytes, depositReceiptBytes, withdrawPreviewBytes, withdrawReceiptBytes });
+  }
+  expect(samples[1]).toEqual(samples[0]);
 });

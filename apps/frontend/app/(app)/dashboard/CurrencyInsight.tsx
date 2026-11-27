@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react';
+import { LiveRateRow, useDailyRate } from './LiveRateRow';
 import { formatExampleRateLine } from './RateLine';
 import wallet from '../research-wallet.module.css';
 import type { SimulationDisplayCurrency } from '../../../lib/state/simulation-display-currency';
@@ -28,6 +29,8 @@ export function CurrencyInsight({
   const triggerRef = useRef<HTMLButtonElement>(null);
   const [stop, setStop] = useState(1);
   const [opened, setOpened] = useState(false);
+  const ownZmwComparison = currency === 'ZMW' && previousExampleRate !== undefined;
+  const dailyRate = useDailyRate(ready && ownZmwComparison, opened);
   if (!ready) return null;
   const selectedRate = currency === 'ZMW' ? ZMW_EXAMPLE_RATES[stop] : latestDisplayRate;
   const result = computeRateFigure({ usdAmount, rate: selectedRate, pending });
@@ -39,7 +42,6 @@ export function CurrencyInsight({
     </section>;
   }
   const localFigure = `${currency} ${formatRateCents(result.cents)}`;
-  const ownZmwComparison = currency === 'ZMW' && previousExampleRate !== undefined;
   const todayRate = ZMW_EXAMPLE_RATES[1];
   const paired = ownZmwComparison && (previousExampleRate === ZMW_EXAMPLE_RATES[0] || previousExampleRate === ZMW_EXAMPLE_RATES[2]);
   return (
@@ -92,7 +94,8 @@ export function CurrencyInsight({
             ) : 'The dollar amount is the same at each rate. The rate sets the local figure.'}</p>
           </section>
           <details className={styles.calculation}><summary>How this is calculated</summary>
-            <p>Your US dollar amount is multiplied by each example rate and rounded to two decimal places. Deposits, withdrawals, fees and spreads are not included. This is not your account history or live market data. No money moves.</p>
+            <p>Your US dollar amount is multiplied by each example rate and rounded to two decimal places. Deposits, withdrawals, fees and spreads are not included. {ownZmwComparison ? 'These figures use example rates only. They are not your account history.' : 'This is not your account history or live market data.'} No money moves.</p>
+            {ownZmwComparison && dailyRate ? <LiveRateRow rate={dailyRate} /> : null}
           </details>
           </> : null}
         </div>

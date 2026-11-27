@@ -4,9 +4,9 @@ import { act, cleanup, fireEvent, render, screen, within } from '@testing-librar
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 import { CurrencyInsight } from '../app/(app)/dashboard/CurrencyInsight';
 
-const attributionFiles = import.meta.glob<{ mountRateAttribution: (element: HTMLDivElement | null) => void }>(
-  '../app/(app)/dashboard/RateAttribution.tsx',
-);
+import { mountRateAttribution } from '../app/(app)/dashboard/RateAttribution';
+
+(globalThis as typeof globalThis & { React: typeof React }).React = React;
 const own = { usdAmount: 300, currency: 'ZMW' as const, latestDisplayRate: 27, ready: true, previousExampleRate: null };
 const asOf = '2026-11-27T23:30:00.000Z';
 const now = '2026-11-28T03:00:00.000Z';
@@ -34,12 +34,6 @@ afterEach(() => {
   }
 });
 
-async function mount() {
-  const load = attributionFiles['../app/(app)/dashboard/RateAttribution.tsx'];
-  expect(load, 'attribution mount exists').toBeDefined();
-  return (await load()).mountRateAttribution;
-}
-
 function openSheet() {
   fireEvent.click(screen.getByRole('button', { name: 'Currency context' }));
   return within(screen.getByRole('dialog'));
@@ -56,11 +50,10 @@ describe('JOURNEY-REVIEW-001 item 3 (d) Daily rate row', () => {
   });
 
   test('20.58 supplies only the Daily rate and provider date, leaving every example figure and storage intact', async () => {
-    const attribution = await mount();
     const setItem = vi.spyOn(Storage.prototype, 'setItem');
     render(<main>
       <CurrencyInsight {...own} />
-      <details data-testid="dashboard-disclosures"><summary>Important disclosures</summary><div ref={attribution} /></details>
+      <details data-testid="dashboard-disclosures"><summary>Important disclosures</summary><div ref={mountRateAttribution} /></details>
     </main>);
     expect(readRoute).not.toHaveBeenCalled();
     const sheet = openSheet();

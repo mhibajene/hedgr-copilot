@@ -4,9 +4,9 @@ import { act, cleanup, fireEvent, render, screen, within } from '@testing-librar
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 import { CurrencyInsight } from '../app/(app)/dashboard/CurrencyInsight';
 
-const attributionFiles = import.meta.glob<{ mountRateAttribution: (element: HTMLDivElement | null) => void }>(
-  '../app/(app)/dashboard/RateAttribution.tsx',
-);
+import { mountRateAttribution } from '../app/(app)/dashboard/RateAttribution';
+
+(globalThis as typeof globalThis & { React: typeof React }).React = React;
 const props = { usdAmount: 300, currency: 'ZMW' as const, latestDisplayRate: 27, ready: true, previousExampleRate: null };
 const now = Date.parse('2026-11-27T16:00:00Z');
 const fresh = { rate: 20.58, asOf: '2026-11-27T08:21:00.000Z', available: true };
@@ -32,9 +32,6 @@ afterEach(() => {
 });
 
 async function home(showMount = true) {
-  const load = attributionFiles['../app/(app)/dashboard/RateAttribution.tsx'];
-  expect(load, 'attribution mount exists').toBeDefined();
-  const { mountRateAttribution } = await load();
   render(<main>
     <CurrencyInsight {...props} />
     <details data-testid="dashboard-disclosures"><summary>Important disclosures</summary><div ref={showMount ? mountRateAttribution : undefined}><p>Existing disclosure</p></div></details>

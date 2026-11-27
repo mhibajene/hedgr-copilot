@@ -20,6 +20,7 @@ import { SarahExampleHome } from './SarahExampleHome';
 import { HomeHero } from './HomeHero';
 import { RateLine } from './RateLine';
 import { CurrencyInsight } from "./CurrencyInsight";
+import { mountRateAttribution } from "./RateAttribution";
 import { clearExampleRateHistory, readPreviousExampleRate, recordExampleRateVisit } from "./example-rate-history";
 import { EngineProtectiveGuidance } from "./EngineProtectiveGuidance";
 import { EngineStabilityExplainer } from "./EngineStabilityExplainer";
@@ -817,7 +818,7 @@ export default function DashboardPage() {
       data-testid="dashboard-disclosures"
     >
       <summary className={home.accordionSummary}><span>Important disclosures</span>{accordionChevron}</summary>
-      <div className={home.accordionContent}>
+      <div className={home.accordionContent} ref={mountRateAttribution}>
         <PolicyDisclosure
           context={syntheticJourneyActive ? "synthetic-research" : "default"}
         />

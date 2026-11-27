@@ -1,12 +1,5 @@
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 
-type Rate = { rate: number | null; asOf: string | null; available: boolean };
-const adapterFiles = import.meta.glob<{ readDailyRate: () => Promise<Rate> }>(
-  '../lib/live-rate/exchange-rate-api.ts',
-);
-const routeFiles = import.meta.glob<{ GET: () => Promise<Response>; dynamic: string }>(
-  '../app/api/live-rate/route.ts',
-);
 const provider = 'https://open.er-api.com/v6/latest/USD';
 const unavailable = { rate: null, asOf: null, available: false };
 const day = 86_400_000;
@@ -15,17 +8,8 @@ const providerTime = start - 3_600_000;
 let clock: number;
 let upstream: ReturnType<typeof vi.fn<typeof fetch>>;
 
-async function adapter() {
-  const load = adapterFiles['../lib/live-rate/exchange-rate-api.ts'];
-  expect(load, 'server-only Daily rate adapter exists').toBeDefined();
-  return load();
-}
-
-async function route() {
-  const load = routeFiles['../app/api/live-rate/route.ts'];
-  expect(load, 'same-origin Daily rate GET exists').toBeDefined();
-  return load();
-}
+const adapter = () => import('../lib/live-rate/exchange-rate-api');
+const route = () => import('../app/api/live-rate/route');
 
 function payload(rate: unknown = 20.58, updated = providerTime) {
   return {

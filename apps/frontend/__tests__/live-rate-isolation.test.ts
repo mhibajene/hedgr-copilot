@@ -31,6 +31,7 @@ test('JOURNEY-REVIEW-001 item 3 (e) provider, route and view imports stay strict
   expect(references(/from ['"]\.\/LiveRateRow['"]/)).toEqual([sheet]);
   expect(references(/from ['"]\.\/RateAttribution['"]/)).toEqual([dashboard, row].sort());
   expect(source(route)).toContain("export const dynamic = 'force-dynamic';");
+  expect(source(credit)).toContain('href="https://www.exchangerate-api.com" target="_blank" rel="noopener noreferrer"');
   expect(source(adapter)).toContain("from 'node:process'");
   expect(source(adapter)).not.toMatch(/next:\s*\{|revalidate|Bank of Zambia/);
   expect(source(row)).not.toMatch(/localStorage|sessionStorage|lib\/(?:engine|state|fx|defi)/);
