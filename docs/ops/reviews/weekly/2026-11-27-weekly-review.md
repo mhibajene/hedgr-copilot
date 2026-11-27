@@ -61,9 +61,9 @@ Non-repo evidence gap: this review uses only git first-parent history, public Gi
 | Uncertainty tested | Evidence obtained | Belief changed? | Disposition | Unresolved uncertainty |
 | --- | --- | --- | --- | --- |
 | Friday 20 Nov review publication | `#1129` squash `2211e46c` from independently attested head `f4f53741a48bf936ec05b417fa28157dee354c3c` | That weekly file and the Vitest/parent MVP file are on permanent-main | Included as merged support evidence only | Publication does not change §7 occupancy |
-| SEC-DEPS-006 implementation and closeout | Runtime `#1128` squash `8d752d80` from independently attested head `417486ffa8bd36ff8357f55913cd0395f75b2470` (PASS also recorded on earlier head `1ea58e36`); closeout source `#1132` squash `ab3d2c07` from independently attested head `ac7d145ca08d444393f33119e57bfa9b69d832d3`; sole-JSON RAP `#1133` squash `b95bd339` from independently attested head `61fc6ab1b1aadc9f8051d1a1f5a9f97f910dcc3e` | Live §7 records `SEC-DEPS-006` closed at `b95bd339`; §6f.44 expired | Counted as this window’s STATUS-table completed-ticket closeout | Medium/Low remain out of scope |
-| SEC-DEPS-007 Next patch | Activation `#1134` squash `75e123e6` from independently attested head `1d8fb63118a53b77f100444bee1610c94d314217`; RAP `#1135` squash `fd02174e` from independently attested head `8f89c8a37ebd5873e060100689dd9ecfc4f17bc8`; runtime `#1136` squash `ced424e6` from independently attested head `cbed00cbb0577efdfde95995f288124593f7cbff`; closeout source `#1139` squash `c3c75368` from independently attested head `6d36e5d22e6ed6fff8d1e17bb30fb2204d051372`; RAP `#1140` squash `33400136` from independently attested head `602d48e7f8799f3fe0f463a19413f91e65806b4c` | Implementation and the closeout chain merged; a public `#1140` comment records fetched-main RAP PASS and §477 EFFECTIVE | Occupancy/closeout-chain evidence. Live §7 **table** still lists remaining §477 gates | Live §7 table vs `#1140` comment is authority-shaped lag; not reconciled here |
-| OPS-RAP-BIND-001 A-lite | Activation `#1141` squash `f9296273` from independently attested head `960cd2c819503fdf4a9f0bd29481799dbdf02768` after FAIL on `85b58bf8`; RAP `#1142` squash `de0344e3` from independently attested head `fbac8e413d0d014f8836ddb6c9e57b52d8300fee`; implementation `#1143` squash `2ba162af` from independently attested head `4dbf3c122f98a73c8ae23dcb407c3cbe2b801e9a` after FAIL on `9aa98932` | Activation and implementation merges exist; a public `#1142` comment records §478 activation EFFECTIVE | Occupancy/implementation evidence, not a completed-ticket closeout | Live §7 table still says the ticket activates on §478 gates; closeout not merged |
+| SEC-DEPS-006 implementation and closeout | Runtime `#1128` squash `8d752d80` from independently attested head `417486ffa8bd36ff8357f55913cd0395f75b2470` (PASS also recorded on earlier head `1ea58e36`); closeout source `#1132` squash `ab3d2c07` from independently attested head `ac7d145ca08d444393f33119e57bfa9b69d832d3`; sole-JSON RAP `#1133` squash `b95bd339` from independently attested head `61fc6ab1b1aadc9f8051d1a1f5a9f97f910dcc3e` | Live §7 records `SEC-DEPS-006` closed at `b95bd339`; §6f.44 expired | Counted as a completed-ticket closeout | Medium/Low remain out of scope |
+| SEC-DEPS-007 Next patch | Activation `#1134` squash `75e123e6` from independently attested head `1d8fb63118a53b77f100444bee1610c94d314217`; RAP `#1135` squash `fd02174e` from independently attested head `8f89c8a37ebd5873e060100689dd9ecfc4f17bc8`; runtime `#1136` squash `ced424e6` from independently attested head `cbed00cbb0577efdfde95995f288124593f7cbff`; closeout source `#1139` squash `c3c75368` from independently attested head `6d36e5d22e6ed6fff8d1e17bb30fb2204d051372`; RAP `#1140` squash `33400136` from independently attested head `602d48e7f8799f3fe0f463a19413f91e65806b4c` | Current §6f.46 and the OPS-RAP-BIND-001 §7a brief record `SEC-DEPS-007` closed under effective §477 at `33400136`, with §6f.45 expired | Counted as a completed-ticket closeout | Live §7 table row still lists remaining §477 gates; that table lag is surfaced and does not change the count |
+| OPS-RAP-BIND-001 A-lite | Activation `#1141` squash `f9296273` from independently attested head `960cd2c819503fdf4a9f0bd29481799dbdf02768` after FAIL on `85b58bf8`; RAP `#1142` squash `de0344e3` from independently attested head `fbac8e413d0d014f8836ddb6c9e57b52d8300fee`; implementation `#1143` squash `2ba162af` from independently attested head `4dbf3c122f98a73c8ae23dcb407c3cbe2b801e9a` after FAIL on `9aa98932` | Activation and implementation merges exist; a public `#1142` comment records §478 activation EFFECTIVE | Occupancy/implementation evidence, not a completed-ticket closeout | The §7 sequencing paragraph and §7a still carry activation-gate wording; closeout/procedure effectivity remains pending under §6f.46 |
 | JOURNEY-REVIEW-001 steps | `#1121` squash `24a06efd` from independently attested head `7da318f947abdd0b892e75f0c7246e9d9cbb6b45` (PASS also on `71b9ac06`); `#1137` squash `19425ccd` from independently attested head `465ce71646ef0ef6241ac0dcd3c92ce47bb15913` (PASS also on `9c1dfbd9` and `dc8842a4`) | Journey amount/rate/copy and example-rate-context slices merged | Merged Class A Home slices, not a ticket closeout | Open `#1150`; no participant result |
 | Invited-participant comprehension | No nested Home/Engine parent closeout; no in-repo session or readout | Unchanged | Parents remain open under live §7 / §7a | Same product uncertainty as prior week |
 
@@ -132,7 +132,7 @@ Window cutoff is explicit: **from after Fri 20 Nov 2026 18:00 AWST to Fri 27 Nov
 
 - GitHub `merged_at` `2026-11-24T14:37:09Z` converts to **2026-11-24 22:37:09 AWST**.
 - One file: `docs/ops/bridge/repo-authority-projection.json`.
-- Independent comment: PASS on `602d48e7`. A later public comment on the same PR records fetched-main RAP PASS and §477 EFFECTIVE. Live §7 **table** still lists remaining §477 closeout gates. That lag is surfaced, not reconciled.
+- Independent comment: PASS on `602d48e7`. Current §6f.46 and the OPS-RAP-BIND-001 §7a brief record `SEC-DEPS-007` closed under effective §477 at `33400136`, with §6f.45 expired. The live §7 table row still lists remaining §477 gates; that table lag is surfaced and does not change the completed-ticket count.
 
 ### 2026-11-24 23:32 AWST — JOURNEY-REVIEW-001 Step 3a (`#1137`)
 
@@ -150,7 +150,7 @@ Window cutoff is explicit: **from after Fri 20 Nov 2026 18:00 AWST to Fri 27 Nov
 
 - GitHub `merged_at` `2026-11-25T14:53:54Z` converts to **2026-11-25 22:53:54 AWST**.
 - One file: `docs/ops/bridge/repo-authority-projection.json`.
-- Independent comment: PASS on `fbac8e41`. A public comment records fetched-main RAP PASS and §478 activation EFFECTIVE. Live §7 table still describes activation gates as remaining. Lag surfaced, not reconciled.
+- Independent comment: PASS on `fbac8e41`. A public comment records fetched-main RAP PASS and §478 activation EFFECTIVE. The §7 sequencing paragraph and §7a still carry `OPS-RAP-BIND-001` activation-gate wording. Closeout and procedure effectivity remain pending under §6f.46.
 
 ### 2026-11-27 14:00 AWST — OPS-RAP-BIND-001 implementation (`#1143`)
 
@@ -164,7 +164,7 @@ Window cutoff is explicit: **from after Fri 20 Nov 2026 18:00 AWST to Fri 27 Nov
 - Closed unmerged: Dependabot `#1130` (`closed_at` `2026-11-20T23:16:10Z`) and `#1131` (`closed_at` `2026-11-24T08:43:40Z`); OPS-RAP-BIND-001 probe drafts `#1144`–`#1149` (closed unmerged `2026-11-25T15:22:09Z`–`2026-11-26T03:30:41Z`). These are not completed delivery.
 - No nested Home/Engine parent ticket closed.
 
-**No new MVP process-review slice since `HEDGR_MVP_PROCESS_REVIEW_SEC_DEPS_003_VITEST_PARENT`.** Founder direction of 21 Nov 2026 is to batch MVP slices until 3–5 tickets have closed (closeout on main). STATUS-table completed-ticket closeouts in this window: **`SEC-DEPS-006` at `b95bd339`**. Tickets accumulating toward the next batch, not counted as a 3–5 completed slice here: `SEC-DEPS-007` (closeout chain `#1139`/`#1140` merged; live §7 table still lists remaining §477 gates); `JOURNEY-REVIEW-001` (merged steps `#1121`/`#1137`; ticket not closed; `#1150` open); `OPS-RAP-BIND-001` (activation/implementation merged; closeout not merged). That is one STATUS-table closeout, which is below the 3–5 batch. No MVP file is written and no placeholder is committed.
+**No new MVP process-review slice since `HEDGR_MVP_PROCESS_REVIEW_SEC_DEPS_003_VITEST_PARENT`.** Founder direction of 21 Nov 2026 is to batch MVP slices until 3–5 tickets have closed (closeout on main). Completed-ticket closeouts in this window: **`SEC-DEPS-006` at `b95bd339` (21 Nov)** and **`SEC-DEPS-007` at `33400136` (24 Nov)**. Current §6f.46 and the OPS-RAP-BIND-001 §7a brief record `SEC-DEPS-007` closed under effective §477 with §6f.45 expired; the live §7 table row still lists remaining §477 gates and is treated as stale table wording, not as a second occupancy. Tickets accumulating toward the next batch: `JOURNEY-REVIEW-001` (merged steps `#1121`/`#1137`; ticket not closed; `#1150` open); `OPS-RAP-BIND-001` (activation/implementation merged; closeout and procedure effectivity pending under §6f.46). Two closed tickets remain below the 3–5 batch. No MVP file is written and no placeholder is committed.
 
 ## 7. Process assessment
 
@@ -183,7 +183,7 @@ PR-volume picture (GitHub search `created:2026-11-20T10:00:00Z..2026-11-27T10:00
 - **Sole-JSON RAP rebind share:** 4/14 (`#1133`, `#1135`, `#1140`, `#1142`) = **29%**. Live §7 still records that the ≤10% rebind-share target is not achievable until `OPS-RAP-BIND-001` lands; `#1143` is the implementation merge in this window, and live STATUS does not record closeout effectivity for that ticket. This review reports that basis and does not claim the target met.
 - **Re-verification heads (merged PRs):** `#1128` PASS on `1ea58e36` then PASS on `417486ff`; `#1121` PASS on `71b9ac06` then PASS on `7da318f9`; `#1137` PASS on `9c1dfbd9`, `dc8842a4`, then `465ce716`; `#1141` FAIL on `85b58bf8` then PASS on `960cd2c8`; `#1143` FAIL on `9aa98932` then PASS on `4dbf3c12`; `#1129`, `#1132`, `#1133`, `#1134`, `#1135`, `#1136`, `#1139`, `#1140`, `#1142` each show one recorded PASS on the merged head in the comments retrieved for this review.
 
-Capability delivered as **completed tickets** (STATUS-table closeout): **`SEC-DEPS-006`** at `b95bd339`. Capability delivered as **merged occupancy/build evidence:** `SEC-DEPS-007` implementation plus closeout chain with live-table lag; `OPS-RAP-BIND-001` activation plus implementation; `JOURNEY-REVIEW-001` two Home slices. Friday review `#1129` landed as a support artifact.
+Capability delivered as **completed tickets**: **`SEC-DEPS-006`** at `b95bd339` and **`SEC-DEPS-007`** at `33400136` (current §6f.46 / §7a; live §7 table row for `SEC-DEPS-007` remains stale). Capability delivered as **merged occupancy/build evidence:** `OPS-RAP-BIND-001` activation plus implementation, with closeout still pending; `JOURNEY-REVIEW-001` two Home slices. Friday review `#1129` landed as a support artifact.
 
 Operating cost relative to that capability: volume is fourteen merges, of which four are sole-JSON rebinds and one is a Friday-review publication, plus eight closed-unmerged PRs of which six are named RAP-bind probe drafts. The cost signal that does appear is FAIL/PASS cycles on `#1141` and `#1143`, and multi-head re-verification on `#1121` / `#1128` / `#1137`. Standing product surfaces were not added by RAP/dependency work. No distinct efficiency recommendation stands out beyond the already-recorded `OPS-RAP-BIND-001` / rebind-share basis in live §7. Efficiency does not justify relaxing an authority, verification, synthetic-state, or trust boundary, and this assessment creates no authority, ticket, or sequencing.
 
@@ -197,7 +197,7 @@ Current posture remains **Class A / informational and synthetic**. Completed mer
 
 **Technical verification:** `#1128` / `#1136` moved lock/Next pins. `#1143` moved RAP attribution/validator tests. `#1128` and `#1136` recorded executed hosted E2E. Sole-JSON rebinds remain docs-only. Independent FAIL/PASS comments are public on the merged PRs named above.
 
-**Governance / provenance:** Improved as `SEC-DEPS-006` STATUS-table closeout at `b95bd339` plus `SEC-DEPS-007` / `OPS-RAP-BIND-001` occupancy records. MERGE-TIERS occupancy and Tier 1 remain as live STATUS states them. Live §7 table lag versus merged `#1140` / `#1142` / `#1143` is visible.
+**Governance / provenance:** Improved as completed-ticket closeouts `SEC-DEPS-006` at `b95bd339` and `SEC-DEPS-007` at `33400136` (current §6f.46 / §7a), plus `OPS-RAP-BIND-001` occupancy/implementation. MERGE-TIERS occupancy and Tier 1 remain as live STATUS states them. Stale §7 table wording for `SEC-DEPS-007`, and remaining activation-gate wording in the §7 sequencing paragraph and §7a for `OPS-RAP-BIND-001`, remain visible.
 
 **Actual capability:** Limited. No financial execution capability progressed. No parent `CLASS-A-VAL-002` / `SE-REASON-001` closeout. No invited-participant result is in-repo. Dependency and RAP-tooling work is not participant-facing Stability capability. Journey-copy slices change synthetic Home wording, not in-field comprehension.
 
@@ -213,7 +213,7 @@ This coverage list is not completeness.
 
 ### Governance & Trust Alignment — Mixed, still bounded
 
-The `SEC-DEPS-006` closeout stayed inside recorded scope and kept parents `CLASS-A-VAL-002` / `SE-REASON-001` open in live STATUS. Independent FAIL then PASS cycles on `#1141` and `#1143` are retained as process evidence. Live §7 still lists remaining §477 gates after the `#1139`/`#1140` chain and still describes `OPS-RAP-BIND-001` activation gates after `#1141`/`#1142`/`#1143`; that lag is visible rather than inferred away.
+The `SEC-DEPS-006` and `SEC-DEPS-007` closeouts stayed inside recorded scope and kept parents `CLASS-A-VAL-002` / `SE-REASON-001` open in live STATUS. Independent FAIL then PASS cycles on `#1141` and `#1143` are retained as process evidence. Current §6f.46 / §7a record `SEC-DEPS-007` closed at `33400136`; the live §7 table row still lists remaining §477 gates. `OPS-RAP-BIND-001` activation-gate wording remains in the §7 sequencing paragraph and §7a, with closeout/procedure effectivity still pending under §6f.46. Those lags are visible rather than inferred away.
 
 ### Product Convergence — Limited
 
@@ -223,9 +223,9 @@ These labels are descriptive review language, not acceptance gates or maturity l
 
 ## 12. Risks / notes
 
-- Fourteen first-parent merges could be mistaken for several ticket closeouts; live §7 records one STATUS-table closeout in this window (`SEC-DEPS-006` at `b95bd339`) plus remaining occupancy language for `SEC-DEPS-007` and `OPS-RAP-BIND-001`.
-- Live §7 table still lists remaining §477 closeout gates after `#1140`; a public `#1140` comment records EFFECTIVE/closed. This review surfaces both and does not reconcile occupancy by inference.
-- Live §7 table still describes `OPS-RAP-BIND-001` as activating on §478 gates after `#1141`/`#1142`/`#1143`; `#1143` could be mistaken for ticket closeout. It is implementation evidence.
+- Fourteen first-parent merges could be mistaken for several ticket closeouts; this window’s completed-ticket closeouts are `SEC-DEPS-006` at `b95bd339` and `SEC-DEPS-007` at `33400136`. `OPS-RAP-BIND-001` remains occupancy/implementation with closeout pending.
+- The live §7 table row for `SEC-DEPS-007` still lists remaining §477 gates after `#1140`. Current §6f.46 and the OPS-RAP-BIND-001 §7a brief record the ticket closed at `33400136` with §6f.45 expired. That table lag is surfaced; the completed-ticket count follows the current records, not the stale table row.
+- The §7 sequencing paragraph and §7a still carry `OPS-RAP-BIND-001` activation-gate wording after `#1141`/`#1142`/`#1143`; `#1143` could be mistaken for ticket closeout. It is implementation evidence. Closeout and procedure effectivity remain pending under §6f.46.
 - `legacy` / `verifier` / `PASS` language on gate PRs could be mistaken for Tier 1 being in force; live records keep Tier 1 OFF.
 - Nested/finite occupancy does not close parent `CLASS-A-VAL-002` or `SE-REASON-001`.
 - Private research receipts and security-finding detail are outside this public review by design. Dependabot live API was 403 here; counts follow §477 only.
@@ -239,9 +239,9 @@ These labels are descriptive review language, not acceptance gates or maturity l
 | Friday 20 Nov reviews `#1129` | Merged support evidence (weekly + MVP files + snapshots). Not sequencing authority. |
 | SEC-DEPS-006 runtime `#1128` | Merged implementation evidence under the then-active lock-only slice. |
 | SEC-DEPS-006 closeout `#1132` / RAP `#1133` | Recorded as completed-ticket closeout in live §7 at `b95bd339`. |
-| SEC-DEPS-007 activation `#1134` / RAP `#1135` / runtime `#1136` | Merged occupancy/implementation evidence. |
-| SEC-DEPS-007 closeout `#1139` / RAP `#1140` | Merged closeout-chain evidence. Live §7 table still lists remaining §477 gates; not upgraded here to a STATUS-table closeout. |
-| OPS-RAP-BIND-001 source `#1141` / RAP `#1142` / implementation `#1143` | Merged occupancy/implementation evidence. Live §7 / §7a still name the ticket; not a completed-ticket closeout. |
+| SEC-DEPS-007 activation `#1134` / RAP `#1135` / runtime `#1136` | Merged occupancy/implementation evidence later closed in-window under effective §477. |
+| SEC-DEPS-007 closeout `#1139` / RAP `#1140` | Recorded as completed-ticket closeout in current §6f.46 and the OPS-RAP-BIND-001 §7a brief at `33400136`; §6f.45 expired. Live §7 table row still lists remaining gates (stale table wording). |
+| OPS-RAP-BIND-001 source `#1141` / RAP `#1142` / implementation `#1143` | Merged occupancy/implementation evidence. The §7 sequencing paragraph and §7a still carry activation-gate wording; closeout/procedure effectivity pending under §6f.46. Not a completed-ticket closeout. |
 | JOURNEY-REVIEW-001 `#1121` / `#1137` | Merged Class A Home-slice evidence. Ticket not closed. |
 | `#1117`, `#1109`, `#1138`, `#1150` | Excluded as draft / in-progress / unmerged / non-authorizing material. |
 | Dependabot `#1130` / `#1131`; probes `#1144`–`#1149` | Excluded as closed unmerged. |
@@ -252,9 +252,9 @@ Draft, in-progress, unmerged, external-only, and unrecorded work is excluded as 
 
 | Term | Location / artifact | Why it may be risky | Repo-authorized meaning | Action required? |
 | --- | --- | --- | --- | --- |
-| `completed` / `closeout` | This review vs live §7 | Could imply `SEC-DEPS-007`, `OPS-RAP-BIND-001`, `JOURNEY-REVIEW-001`, MERGE-TIERS, or research parents closed | Only `SEC-DEPS-006` is recorded closed at `b95bd339` in the live §7 table | No review-created action; qualify the object |
+| `completed` / `closeout` | This review vs live §7 | Could imply `OPS-RAP-BIND-001`, `JOURNEY-REVIEW-001`, MERGE-TIERS, or research parents closed | `SEC-DEPS-006` closed at `b95bd339`; `SEC-DEPS-007` closed at `33400136` per current §6f.46 / §7a | No review-created action; qualify the object |
 | `verified` / `PASS` | Public PR comments | Could imply product acceptance or operational safety beyond the named SHA | Independent attestation on the named head | No; retain SHA and limits |
-| `EFFECTIVE` | Public comments on `#1135`, `#1140`, `#1142` | Could imply live §7 table already matches | Comments are public evidence; live table still lists remaining gates for `#1140`/`#1142` subjects | No; keep table wording visible |
+| `EFFECTIVE` | Public comments on `#1135`, `#1140`, `#1142` | Could imply every live §7 surface already matches | `SEC-DEPS-007` closeout is current in §6f.46 / §7a; the §7 table row lags. `OPS-RAP-BIND-001` activation-gate wording remains in the §7 sequencing paragraph and §7a | No; keep each surface’s wording visible |
 | `legacy` / `Tier 1` | §471; PR comments | Could imply the new gate is the live merge authority | Records keep `TRANSITION_MODE` `legacy` and Tier 1 OFF | No; keep OFF visible |
 | `SKIPPED` E2E | RAP/review PR comments | Could be described as passed E2E | Recorded as `SKIPPED (docs-only, E2E not executed) CI-EFF-001` where used | No; keep the skip label |
 | `fixed` / inventory `10` | §477 | Could imply a clean audit or remaining-risk zero | §477 names 0 critical / 0 high / 9 medium / 1 low after Next; Medium/Low out of scope | No; counts only, STATUS-cited |
@@ -277,7 +277,7 @@ Draft, in-progress, unmerged, external-only, and unrecorded work is excluded as 
 
 **None**
 
-The window contains one STATUS-table completed-ticket closeout (`SEC-DEPS-006` at `b95bd339`) and occupancy/implementation merges that live §7 already names or still lists with remaining-gate wording. Live §7 already records that the ≤10% rebind-share target is not achievable until `OPS-RAP-BIND-001` lands. No additional bounded Founder governance question is raised here. Absence of invited-participant evidence, remaining MERGE-TIERS occupancy, TalkBack incompleteness, and §7 table lag versus merged `#1140`/`#1142`/`#1143` do not manufacture further pressure.
+The window contains two completed-ticket closeouts (`SEC-DEPS-006` at `b95bd339` and `SEC-DEPS-007` at `33400136`) and occupancy/implementation merges for `OPS-RAP-BIND-001` whose closeout remains pending. Live §7 already records that the ≤10% rebind-share target is not achievable until `OPS-RAP-BIND-001` lands. No additional bounded Founder governance question is raised here. Absence of invited-participant evidence, remaining MERGE-TIERS occupancy, TalkBack incompleteness, stale §7 table wording for `SEC-DEPS-007`, and remaining activation-gate wording in the §7 sequencing paragraph / §7a do not manufacture further pressure.
 
 ## 17. Completion / non-authorising statement
 
