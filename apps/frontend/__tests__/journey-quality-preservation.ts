@@ -276,6 +276,55 @@ const STEP_3A_EDITS: Record<string, readonly (readonly [string, string])[]> = {
   ]
 };
 
+// JOURNEY-REVIEW-001 item 3 source pins, 25 Nov 2026, 19425ccd.
+const ITEM_3_BASE: Record<string, string> = {
+  "app/(app)/dashboard/CurrencyInsight.tsx": "89d50ad679391dee40fa99bb916a18de180d77990c4e8e4004c31af7e2786daf",
+  "app/(app)/dashboard/page.tsx": "0dc28d7fda3688e85744b7bf0c01421923734f1854f9e6136ea0ddf0b1d5e537"
+};
+const ITEM_3_EDITS: Record<string, readonly (readonly [string, string])[]> = {
+  "app/(app)/dashboard/CurrencyInsight.tsx": [
+    [
+      "import { useRef, useState } from 'react';",
+      "import { useRef, useState } from 'react';\nimport { LiveRateRow, useDailyRate } from './LiveRateRow';"
+    ],
+    [
+      "  const [opened, setOpened] = useState(false);\n  if (!ready) return null;",
+      "  const [opened, setOpened] = useState(false);\n  const ownZmwComparison = currency === 'ZMW' && previousExampleRate !== undefined;\n  const dailyRate = useDailyRate(ready && ownZmwComparison, opened);\n  if (!ready) return null;"
+    ],
+    [
+      "  const localFigure = `${currency} ${formatRateCents(result.cents)}`;\n  const ownZmwComparison = currency === 'ZMW' && previousExampleRate !== undefined;\n  const todayRate = ZMW_EXAMPLE_RATES[1];",
+      "  const localFigure = `${currency} ${formatRateCents(result.cents)}`;\n  const todayRate = ZMW_EXAMPLE_RATES[1];"
+    ],
+    [
+      "            <p>Your US dollar amount is multiplied by each example rate and rounded to two decimal places. Deposits, withdrawals, fees and spreads are not included. This is not your account history or live market data. No money moves.</p>",
+      "            <p>Your US dollar amount is multiplied by each example rate and rounded to two decimal places. Deposits, withdrawals, fees and spreads are not included. {ownZmwComparison ? 'These figures use example rates only. They are not your account history.' : 'This is not your account history or live market data.'} No money moves.</p>\n            {ownZmwComparison && dailyRate ? <LiveRateRow rate={dailyRate} /> : null}"
+    ]
+  ],
+  "app/(app)/dashboard/page.tsx": [
+    [
+      "import { CurrencyInsight } from \"./CurrencyInsight\";",
+      "import { CurrencyInsight } from \"./CurrencyInsight\";\nimport { mountRateAttribution } from \"./RateAttribution\";"
+    ],
+    [
+      "      <div className={home.accordionContent}>\n        <PolicyDisclosure",
+      "      <div className={home.accordionContent} ref={mountRateAttribution}>\n        <PolicyDisclosure"
+    ]
+  ]
+};
+
+export function reverseDailyRate(path: string, value: string): string {
+  const edits = ITEM_3_EDITS[path];
+  if (!edits) return value;
+  for (const [before, after] of [...edits].reverse()) {
+    if (value.split(after).length - 1 !== 1) throw new Error(`Item 3 literal count mismatch: ${path}`);
+    value = value.replace(after, () => before);
+  }
+  if (createHash('sha256').update(value).digest('hex') !== ITEM_3_BASE[path]) {
+    throw new Error(`Item 3 unrelated source drift: ${path}`);
+  }
+  return value;
+}
+
 function reverseStep3a(path: string, value: string): string {
   const edits = STEP_3A_EDITS[path];
   if (!edits) return value;
@@ -290,7 +339,7 @@ function reverseStep3a(path: string, value: string): string {
 }
 
 export function journeyPreRuntime(path: string, value: string): string {
-  return reverseStep2(path, reverseStep3a(path, value));
+  return reverseStep2(path, reverseStep3a(path, reverseDailyRate(path, value)));
 }
 
 function reverseStep2(path: string, value: string): string {
@@ -312,7 +361,7 @@ function assertStep3aRejection(path: string, value: string, error: string): void
 
 export function assertJourneySourceReversals(): void {
   for (const [path, edits] of Object.entries(STEP_3A_EDITS)) {
-    const current = readFileSync(resolve(__dirname, '..', path), 'utf8');
+    const current = reverseDailyRate(path, readFileSync(resolve(__dirname, '..', path), 'utf8'));
     reverseStep3a(path, current);
     for (const [before, after] of edits) {
       assertStep3aRejection(path, current.replace(after, () => before), 'literal count mismatch');
@@ -321,7 +370,7 @@ export function assertJourneySourceReversals(): void {
     assertStep3aRejection(path, current + '\n', 'unrelated source drift');
   }
   for (const [path, edits] of Object.entries(EDITS)) {
-    const current = reverseStep3a(path, readFileSync(resolve(__dirname, '..', path), 'utf8'));
+    const current = reverseStep3a(path, reverseDailyRate(path, readFileSync(resolve(__dirname, '..', path), 'utf8')));
     const original = reverseStep2(path, current);
     if (createHash('sha256').update(original).digest('hex') !== BASE[path]) throw new Error(`JOURNEY-REVIEW-001 unrelated source drift: ${path}`);
     for (const [before, after, count] of edits) {

@@ -216,7 +216,7 @@ test('inline insight is one keyboard launcher with a complete unchanged shelf an
   await expect(dialog.getByText('1 USD = 27.00 ZMW', { exact: true })).toBeVisible();
   await expect(dialog.getByText('Not a live rate.', { exact: true })).toHaveCount(1);
   await expect(dialog).not.toContainText('Day 30');
-  await expect(dialog.locator('details')).toContainText('This is not your account history or live market data. No money moves.');
+  await expect(dialog.locator('details')).toContainText('These figures use example rates only. They are not your account history. No money moves.');
   await page.keyboard.press('Escape');
   await expect(dialog).not.toBeVisible();
   await expect(launcher).toBeFocused();
@@ -368,4 +368,158 @@ test('JOURNEY-REVIEW-001 Step 3a ignores stale, invalid and unavailable history'
   await page.goto(home + '?reset=1');
   await expect(page.getByTestId('usd-balance')).toHaveText('$0.00');
   await expect.poll(() => page.evaluate(() => localStorage.getItem('hedgr:example-rate-history'))).toBeNull();
+});
+
+test('JOURNEY-REVIEW-001 item 3 (d)/(d2): first open uses only the same-origin route and 20.58 changes no figure', async ({ page }) => {
+  await seedPosition(page);
+  await page.clock.setFixedTime(new Date('2026-11-28T02:00:00Z'));
+  await page.goto('/dashboard?journey=class-a-val-002');
+  await expect(page.getByTestId('usd-balance')).toHaveText('$300.00');
+
+  const stored = await storedState(page);
+  const homeFigures = await page.getByTestId('dashboard-balance').evaluate(node => node.outerHTML);
+  const accordion = page.getByTestId('dashboard-disclosures');
+  const initialDisclosure = await accordion.evaluate(node => node.outerHTML);
+  const requests: Array<{ url: string; method: string; headers: Record<string, string>; body: string | null }> = [];
+  page.on('request', request => {
+    if (request.resourceType() === 'fetch' || new URL(request.url()).hostname === 'open.er-api.com') {
+      requests.push({ url: request.url(), method: request.method(), headers: request.headers(), body: request.postData() });
+    }
+  });
+  await page.route('**/api/live-rate', route => route.fulfill({
+    json: { rate: 20.58, asOf: '2026-11-27T23:30:00.000Z', available: true },
+  }));
+
+  await page.getByRole('button', { name: 'Currency context', exact: true }).click();
+  const dialog = page.getByRole('dialog', { name: 'Currency context', exact: true });
+  const calculation = dialog.locator('details');
+  await calculation.locator('summary').click();
+  await expect(calculation.getByText('Daily rate', { exact: true })).toBeVisible();
+  await expect(calculation.getByText('1 USD = 20.58 ZMW', { exact: true })).toBeVisible();
+  await expect(calculation.getByText('As of 27 November 2026. Not used in any figure on this sheet.', { exact: true })).toBeVisible();
+  await expect(calculation.locator('a')).toHaveCount(0);
+  await expect(dialog.getByText('Daily rate', { exact: true })).toHaveCount(1);
+  await expect(dialog.getByText('Not a live rate.', { exact: true })).toHaveCount(1);
+  await expect(dialog.getByText('Three example rates. Not a live rate and not a forecast.', { exact: true })).toHaveCount(1);
+
+  const origin = new URL(page.url()).origin;
+  expect(requests.filter(request => new URL(request.url).hostname === 'open.er-api.com')).toEqual([]);
+  expect(requests.map(request => [request.url, request.method, request.body])).toEqual([[origin + '/api/live-rate', 'GET', null]]);
+  expect(requests[0].headers.cookie).toBeUndefined();
+  expect(requests[0].headers.authorization).toBeUndefined();
+  expect(await accordion.evaluate(node => (node as HTMLDetailsElement).open)).toBe(false);
+  const attribution = accordion.getByText('Rates By Exchange Rate API', { exact: true });
+  await expect(attribution).toHaveCount(1);
+  await expect(attribution).toHaveAttribute('href', 'https://www.exchangerate-api.com');
+  await expect(attribution).toHaveAttribute('target', '_blank');
+  await expect(attribution).toHaveAttribute('rel', 'noopener noreferrer');
+  await expect(attribution.locator('..')).toHaveText('The daily rate on the currency sheet is for display only and is not used in any figure. Rates By Exchange Rate API.');
+
+  const slider = dialog.getByRole('slider', { name: 'Try an example rate' });
+  await expect(slider).toHaveValue('1');
+  await expect(dialog.getByTestId('currency-rate-figure')).toHaveText('≈ ZMW 8,100.00');
+  await slider.press('ArrowLeft');
+  await expect(dialog.getByTestId('currency-rate-figure')).toHaveText('≈ ZMW 7,350.00');
+  await slider.press('ArrowRight');
+  await slider.press('ArrowRight');
+  await expect(dialog.getByTestId('currency-rate-figure')).toHaveText('≈ ZMW 8,850.00');
+
+  await page.getByRole('button', { name: 'Back to Home' }).click();
+  await expect(attribution).toHaveCount(0);
+  expect(await accordion.evaluate(node => node.outerHTML)).toBe(initialDisclosure);
+  expect(await page.getByTestId('dashboard-balance').evaluate(node => node.outerHTML)).toBe(homeFigures);
+  expect(await storedState(page)).toEqual(stored);
+  await page.getByRole('button', { name: 'Currency context', exact: true }).click();
+  await expect(calculation.getByText('Daily rate', { exact: true })).toHaveCount(1);
+  await expect(attribution).toHaveCount(1);
+  expect(requests.filter(request => request.url === origin + '/api/live-rate')).toHaveLength(1);
+
+  for (const persona of ['daniel', 'sarah']) {
+    const url = `/dashboard?journey=class-a-val-002&example=${persona}`;
+    await page.goto(url);
+    await expect(page.getByTestId(`dashboard-${persona}-read`)).toBeVisible();
+    await expect(attribution).toHaveCount(0);
+    const personaDisclosure = await accordion.evaluate(node => node.outerHTML);
+    await page.unroute('**/api/live-rate');
+    await page.reload();
+    await expect(page.getByTestId(`dashboard-${persona}-read`)).toBeVisible();
+    expect(await accordion.evaluate(node => node.outerHTML)).toBe(personaDisclosure);
+    await page.route('**/api/live-rate', route => route.fulfill({
+      json: { rate: 20.58, asOf: '2026-11-27T23:30:00.000Z', available: true },
+    }));
+  }
+});
+
+test('JOURNEY-REVIEW-001 item 3 (d)/(d2): CI same-origin response leaves the example and disclosure unchanged', async ({ page }) => {
+  await seedPosition(page);
+  const accordion = page.getByTestId('dashboard-disclosures');
+  const initialDisclosure = await accordion.evaluate(node => node.outerHTML);
+  const before = await storedState(page);
+  const unavailableReply = page.waitForResponse(response => new URL(response.url()).pathname === '/api/live-rate', { timeout: 5000 });
+  await page.getByRole('button', { name: 'Currency context', exact: true }).click();
+  expect(await (await unavailableReply).json()).toEqual({ rate: null, asOf: null, available: false });
+  const dialog = page.getByRole('dialog', { name: 'Currency context', exact: true });
+  await dialog.locator('summary').click();
+  await expect(dialog.getByText('Daily rate', { exact: true })).toHaveCount(0);
+  await expect(accordion.getByText('Rates By Exchange Rate API', { exact: true })).toHaveCount(0);
+  await expect(dialog.getByTestId('currency-rate-figure')).toHaveText('≈ ZMW 8,100.00');
+  expect(await accordion.evaluate(node => node.outerHTML)).toBe(initialDisclosure);
+  expect(await storedState(page)).toEqual(before);
+});
+
+test('JOURNEY-REVIEW-001 item 3 (d): simulated preview and receipt figures are byte-identical with 20.58 and unavailable', async ({ page }) => {
+  await seedPosition(page);
+  const initial = await storedState(page);
+  const samples: Record<string, string>[] = [];
+
+  for (const available of [false, true]) {
+    await page.unroute('**/api/live-rate');
+    await page.route('**/api/live-rate', route => route.fulfill({
+      json: available ? { rate: 20.58, asOf: new Date().toISOString(), available }
+        : { rate: null, asOf: null, available },
+    }));
+    await page.goto('/api/policy');
+    await page.evaluate(record => {
+      sessionStorage.clear();
+      for (const [key, value] of Object.entries(record)) {
+        if (value === null) localStorage.removeItem(key);
+        else localStorage.setItem(key, value);
+      }
+    }, initial);
+    await page.goto(home);
+    await expect(page.getByTestId('usd-balance')).toHaveText('$300.00');
+    const rateReply = page.waitForResponse(response => new URL(response.url()).pathname === '/api/live-rate');
+    await page.getByRole('button', { name: 'Currency context', exact: true }).click();
+    await rateReply;
+    const sheet = page.getByRole('dialog', { name: 'Currency context', exact: true });
+    await sheet.locator('summary').click();
+    await expect(sheet.getByText('Daily rate', { exact: true })).toHaveCount(available ? 1 : 0);
+    if (available) await expect(sheet.getByText('1 USD = 20.58 ZMW', { exact: true })).toBeVisible();
+    expect(await storedState(page)).toEqual(initial);
+    await page.getByRole('button', { name: 'Back to Home' }).click();
+
+    await page.goto('/deposit?journey=class-a-val-002');
+    await page.getByTestId('deposit-amount').fill('135');
+    const depositPreview = page.getByTestId('deposit-balance-change');
+    await expect(depositPreview).toContainText('+$5.00');
+    const depositPreviewBytes = await depositPreview.evaluate(node => node.outerHTML);
+    await page.getByRole('button', { name: 'Confirm', exact: true }).click();
+    const depositReceipt = page.getByTestId('deposit-confirmation-region');
+    await expect(depositReceipt).toContainText('You added $5.00 to your simulated balance');
+    await expect(depositReceipt.locator('dl')).toContainText('1 USD = 27.00 ZMW');
+    const depositReceiptBytes = await depositReceipt.locator('dl').evaluate(node => node.outerHTML);
+
+    await page.goto('/withdraw?journey=class-a-val-002');
+    await page.getByTestId('withdraw-amount').fill('2');
+    const withdrawPreview = page.getByTestId('withdraw-balance-preview');
+    await expect(withdrawPreview).toContainText('What would remain: $303.00');
+    const withdrawPreviewBytes = await withdrawPreview.evaluate(node => node.outerHTML);
+    await page.getByRole('button', { name: 'Confirm', exact: true }).click();
+    const withdrawReceipt = page.getByTestId('withdraw-status-region');
+    await expect(withdrawReceipt).toHaveAttribute('data-status', 'SUCCESS');
+    await expect(withdrawReceipt.locator('dl')).toContainText('1 USD = 27.00 ZMW');
+    const withdrawReceiptBytes = await withdrawReceipt.locator('dl').evaluate(node => node.outerHTML);
+    samples.push({ depositPreviewBytes, depositReceiptBytes, withdrawPreviewBytes, withdrawReceiptBytes });
+  }
+  expect(samples[1]).toEqual(samples[0]);
 });

@@ -136,7 +136,8 @@ for(const [width,scale] of [[1440,1],[390,1],[320,2]])test(`HOME-SOFTHALO-RATESL
    if(ownZmw) await expect(slider).toHaveAttribute('aria-valuetext','Example rate: 1 USD = 29.50 ZMW.');
    await expect(dialog.getByTestId('currency-rate-figure')).toHaveCSS('transition-duration','0s');
   }else{once(openText,`Example rate: 1 USD = ${rate.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${currency}. Not a live rate.`);expect(await dialog.innerText()).not.toMatch(/ZMW|forecast|Three example rates/);}
-  const summary=dialog.locator('summary');await summary.focus();await page.keyboard.press('Enter');await expect(dialog.getByText(CALC,{exact:true})).toBeVisible();once(await visibleText(page),CALC);
+  const calculation = ownZmw ? 'Your US dollar amount is multiplied by each example rate and rounded to two decimal places. Deposits, withdrawals, fees and spreads are not included. These figures use example rates only. They are not your account history. No money moves.' : CALC;
+  const summary=dialog.locator('summary');await summary.focus();await page.keyboard.press('Enter');await expect(dialog.getByText(calculation,{exact:true})).toBeVisible();once(await visibleText(page),calculation);
   await page.keyboard.press('Tab');await expect(dialog.getByRole('button',{name:'Back to Home'})).toBeFocused();await page.keyboard.press('Shift+Tab');await expect(summary).toBeFocused();
   expect(await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth)).toBeLessThanOrEqual(1);
   expect(await dialog.evaluate(n=>n.scrollWidth-n.clientWidth)).toBeLessThanOrEqual(1);
